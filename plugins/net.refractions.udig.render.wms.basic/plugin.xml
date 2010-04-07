@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         id="BasicWMSRenderer"
+         name="BasicWMSRenderer"
+         point="net.refractions.udig.project.renderer">
+      <renderer
+            class="net.refractions.udig.render.internal.wms.basic.BasicWMSMetricsFactory2"
+            id="net.refractions.udig.render.internal.wms.basic.basicwmsrenderer"
+            name="%renderer.name">
+         <description>
+            %renderer.desc
+         </description>
+         
+      </renderer>
+      <renderer
+            class="net.refractions.udig.render.internal.wmsc.basic.BasicWMSCMetricsFactory"
+            id="net.refractions.udig.render.internal.wmsc.basic.basicwmscrenderer"
+            name="WMSC Renderer">
+      </renderer>
+      <!--renderer
+            class="net.refractions.udig.render.internal.wms.basic.BasicWMSMetricsFactory2"
+            id="net.refractions.udig.render.internal.wms.basic.wmsrenderer"
+            name="WMS Renderer">
+      </renderer-->
+   </extension>
+     <extension
+           point="org.eclipse.core.runtime.preferences">
+        <initializer class="net.refractions.udig.render.wms.basic.preferences.PreferenceInitializer"/>
+     </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="net.refractions.udig.project.ui.preferences.render"
+            class="net.refractions.udig.render.wms.basic.preferences.BasicWMSRendererPreferencePage"
+            id="net.refractions.udig.render.wms.basic.preferences.BasicWMSRendererPreferencePage"
+            name="%BasicWMSPreference"/>
+      <page
+            class="net.refractions.udig.render.internal.wmsc.basic.WMSCTilePreferencesPage"
+            id="net.refractions.udig.render.internal.wmsc.basic.wmsctile"
+            name="%wmscPref.name">
+      </page>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.operation">
+      <operation
+            class="net.refractions.udig.catalog.wmsc.WMSCPreloadTilesOp"
+            enablesFor="1"
+            id="net.refractions.udig.catalog.wmsc.wmscpreloadtiles"
+            name="Preload all WMS-C Tiles"
+            targetClass="net.refractions.udig.catalog.internal.wmsc.WMSCGeoResourceImpl">
+         <enablement></enablement>
+      </operation>
+   </extension>   
+</plugin>

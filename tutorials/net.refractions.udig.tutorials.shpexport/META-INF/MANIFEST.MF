@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Shapefile Export Plug-in
+Bundle-SymbolicName: net.refractions.udig.tutorials.shpexport;singleton:=true
+Bundle-Version: 1.2.0
+Bundle-Activator: net.refractions.udig.tutorials.shpexport.Activator
+Bundle-Vendor: Student
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.ui
+Bundle-ActivationPolicy: lazy

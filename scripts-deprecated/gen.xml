@@ -1,0 +1,56 @@
+<project name="gen" default="info">
+
+	<property name="manifest" value="build${file.separator}doc${file.separator}uDig.psf"/>
+
+	<target name="info">
+		<echo message="Build script for auto generation of other build scripts"/>
+		<echo message="Targets:"/>
+		<echo message=" custom : generate targets for the build"/>
+		<echo message="	log : generate build script to log previous build"/>
+		<echo message="	clean : generate build script to clean previous build"/>
+		<echo message=" all : generate all build scripts"/>
+		<echo message=" clean-gen : delete generated build scripts"/>
+	</target>
+
+	<!-- creates the customTargets.xml ant build script to complete the
+       custom eclipse build script -->
+ 	<target name="customTargets">
+		<available property="customTargets.exists" file="customTargets.xml"/>
+		<antcall target="moveCustomTargets"/>
+    <xslt style="customTargets.xsl" in="${manifest}" out="customTargets.xml"/>
+  </target>
+
+	<target name="moveCustomTargets" if="customTargets.exists">
+			<move file="customTargets.xml" tofile="customTargets.xml.old"/>
+	</target>
+
+  <!-- contcatenate all the plugin log files into one file -->
+ 	<target name="log">
+    <xslt style="log.xsl" in="${manifest}" out="log.xml"/>
+  </target>
+
+  <!-- generate the clean build file from plugin and feature manifest -->
+	<target name="clean">
+    <xslt style="clean.xsl" in="${manifest}" out="clean.xml"/>
+  </target>
+
+	<!-- generete the javadoc build file from plugin manifest -->
+	<target name="doc">
+    <xslt style="doc.xsl" in="${manifest}" out="doc.xml"/>
+	</target>
+
+	<!-- call all other targets -->
+	<target name="all">
+		<antcall target="log"/>
+		<antcall target="clean"/>
+		<antcall target="doc"/>
+	</target>
+
+	<!-- remove all generated -->
+	<target name="clean-gen">
+		<delete file="log.xml"/>
+		<delete file="clean.xml"/>
+		<delete file="doc.xml"/>
+	</target>
+	
+</project>

@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="net.refractions.udig.project">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="net.refractions.udig.project" id="resourceInterceptor" name="resourceInterceptor"/>
+      </appInfo>
+      <documentation>
+         resourceInterceptors are ran when getResource(Class&lt;?&gt;, IProgressMonitor) is called on a Layer.  It allows the returned resource to be modified.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <complexType>
+         <sequence>
+            <element ref="interceptor" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="cachingStrategy" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  id of the extension
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="interceptor">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="class"/>
+         </appInfo>
+         <documentation>
+            Declares an interceptor to run when a resource is obtained from a layer.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of the interceptor
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The resource intercepter to run if the target type is correct.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.IResourceInterceptor"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="target" type="string">
+            <annotation>
+               <documentation>
+                  If provided, the interceptor will only be called when the resource being requested is of the type declared as the target.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="order" use="required">
+            <annotation>
+               <documentation>
+                  Indicates when, with respect to other interceptors, that this interceptor will be ran.  Interceptors in a category are ran in random order.  
+&lt;ul&gt;
+&lt;li&gt;PRE-CACHING - The first category of interceptors to run.  This will be ran only if the cache claims to not contain the resource.  If a PRE-CACHING interceptor needs to affect the state of the resource each time then consider making it a POST-CACHING interceptor or implementing a custom CACHING strategy.  See the cachingInterceptor extension element for more details.&lt;p&gt;Example: SetTransactionInterceptor sets the transaction on FeatureStores.  It only needs to be done once per FeatureStore so it can be done before the caching takes place.&lt;/li&gt;
+&lt;li&gt;POST-CACHING - These interceptors are ran after the resource has been obtained from the cache.  So the effects will affect all resources regarless of whether the cache takes place.&lt;/li&gt;
+&lt;/ul&gt;
+               </documentation>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <enumeration value="POST">
+                  </enumeration>
+                  <enumeration value="PRE">
+                  </enumeration>
+               </restriction>
+            </simpleType>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="cachingStrategy">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="class"/>
+         </appInfo>
+         <documentation>
+            Declares an caching strategy for Resources fetched from a Layer.  Becareful changing this can have unexpected side effects.  Make sure you test the entire application well.
+&lt;p&gt;
+For example if a new feature store was returned each time then every plugin that is interested in events would need to create a resource interceptor and every request for a FeatureStore would result in both a new FeatureStore and a new listener for every interested plugin.  Since the Datastore&apos;s Listener manager often keeps the listeners indefinately then we would very quickly have 10s to 100s of listeners that can&apos;t be garbage collected and possibly featurestores as well.
+&lt;/p&gt;
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of the interceptor
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The resource caching intercepter to run if the target type is correct.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.IResourceCachingInterceptor"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         1.1
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         An example is the case where a FeatureStore is requested.  All features stores need a transaction set on them.  The setTransaction functionality could be implemented as a resourceInterceptor
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         
+      </documentation>
+   </annotation>
+
+</schema>

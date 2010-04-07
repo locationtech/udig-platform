@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://udig.refractions.net/update-community">
+      This is the Refractions Research update site for the User-friendly Desktop Internet GIS (uDig) community contributions.
+   </description>
+   <feature url="features/org.cgiar.cip_diva_1.0.0.jar" id="org.cgiar.cip_diva" version="1.0.0">
+      <category name="Luis Avila"/>
+   </feature>
+   <feature url="features/net.refractions.udig_catalog.dxf_1.0.0.jar" id="net.refractions.udig_catalog.dxf" version="1.0.0">
+      <category name="Wendy Edwards"/>
+   </feature>
+   <feature url="features/org.tcat.citd.sim.udig_bookmarks_1.0.0.jar" id="org.tcat.citd.sim.udig_bookmarks" version="1.0.0">
+      <category name="Cole Markham"/>
+   </feature>
+   <feature url="features/net.refractions.udig_sld.export_1.0.0.jar" id="net.refractions.udig_sld.export" version="1.0.0">
+      <category name="Jesse Eichar"/>
+   </feature>
+   <feature url="features/net.refractions.udig_shape_1.0.0.jar" id="net.refractions.udig_shape" version="1.0.0">
+      <category name="Jody Garnett"/>
+   </feature>
+   <category-def name="Luis Avila" label="Luis Avila">
+      <description>
+         Community contributions to uDig (User-friendly Desktop Internet GIS) by Luis Avila.
+      </description>
+   </category-def>
+   <category-def name="Wendy Edwards" label="Wendy Edwards">
+      <description>
+         Community contributions to uDig (User-friendly Desktop Internet GIS) by Wendy Edwards.
+      </description>
+   </category-def>
+   <category-def name="Jody Garnett" label="Jody Garnett">
+      <description>
+         Community contributions to uDig (User-friendly Desktop Internet GIS) by Jody Garnett.
+      </description>
+   </category-def>
+   <category-def name="Jesse Eichar" label="Jesse Eichar">
+      <description>
+         Community contributions to uDig (User-friendly Desktop Internet GIS) by Jesse Eichar.
+      </description>
+   </category-def>
+   <category-def name="Cole Markham" label="Cole Markham">
+      <description>
+         Community contributions to uDig (User-friendly Desktop Internet GIS) by Cole Markham.
+      </description>
+   </category-def>
+</site>

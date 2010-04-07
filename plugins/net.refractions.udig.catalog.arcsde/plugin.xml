@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+    	<extension
+         point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.refractions.udig.catalog.internal.arcsde.ArcServiceExtension"
+            id="ArcSDE"
+            name="ArcSDE"/>
+   	</extension>
+ <extension
+       point="net.refractions.udig.catalog.ui.connectionFactory">
+	<factory class="net.refractions.udig.catalog.internal.arcsde.ui.ArcSDEConnectionFactory"
+          id="net.refractions.udig.catalog.ui.arcsde"/>
+    <wizardPage
+          banner="icons/wizban/arcsde_wiz.gif"
+          class="net.refractions.udig.catalog.internal.arcsde.ui.ArcSDEWizardPage"
+          description="%wizard.description"
+          icon="icons/etool16/acrsde_wiz.gif"
+          name="%wizard.name"/>
+
+ </extension>
+    <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="net.refractions.udig.catalog.ui.preferences.CatalogPreferencePage"
+            class="net.refractions.udig.catalog.internal.arcsde.ui.ArcSDEPreferences"
+            id="net.refractions.udig.catalog.arcsde.preference"
+            name="%SDEPreference"/>
+   </extension>
+</plugin>

@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="net.refractions.udig.ui">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="net.refractions.udig.ui" id="tip" name="tip"/>
+      </appInfo>
+      <documentation>
+         A tip is a usage tip that will be displayed upon startup.  A single tip will be shows each startup.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <documentation>
+            Tip extension declaration.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="tip" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="configuration" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="activeConfiguration" minOccurs="0" maxOccurs="1"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="tip">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="name" translatable="true"/>
+         </appInfo>
+         <documentation>
+            A single tip to be displayed.  The text that will be displayed is the body text of the tip element.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  id of the tip
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of the tip.  This will be displayed in the title bar of the tip dialog
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="icon" type="string">
+            <annotation>
+               <documentation>
+                  Icon shown in the tip dialog
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="resource"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="configuration">
+      <annotation>
+         <documentation>
+            configuration declares a configuration of tips that will be shown.
+&lt;p&gt;By default all tips are shown&lt;/p&gt;
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="tipRef" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="tipExtensionRef" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  ID of the configuration
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Human readable and translateable name of the configuration.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="activeConfiguration">
+      <complexType>
+         <attribute name="configurationID" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Defines which configuration is active.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="tipRef">
+      <annotation>
+         <documentation>
+            References a tip.  This is a reference to a tip used for defining a configuration.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="tipID" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="tipExtensionRef">
+      <annotation>
+         <documentation>
+            References an extension of tips.  This is a reference to a tip used for defining a configuration.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="extensionID" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         [Enter the first release in which this extension point appears.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         
+      </documentation>
+   </annotation>
+
+</schema>

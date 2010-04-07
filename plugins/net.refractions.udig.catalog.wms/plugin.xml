@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+    	<extension
+         point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.refractions.udig.catalog.internal.wms.WMSServiceExtension"
+            id="wms"
+            name="Web Map Service"/>
+      <service
+            class="net.refractions.udig.catalog.internal.wmsc.WMSCServiceExtension"
+            id="wmsc"
+            name="Tiled Client Web Map Service">
+      </service>
+   	</extension>
+ <extension
+       point="net.refractions.udig.catalog.ui.connectionFactory">
+    <factory class="net.refractions.udig.catalog.internal.wms.ui.WMSConnectionFactory"
+          id="net.refractions.udig.catalog.ui.WMS"/>
+    <wizardPage
+          banner="icons/wizban/wms_wiz.gif"
+          class="net.refractions.udig.catalog.internal.wms.ui.WMSWizardPage"
+          description="%wizard.description"
+          icon="icons/etool16/wms_wiz.gif"
+          name="%wizard.name">
+    </wizardPage>
+
+ </extension>
+ <extension
+       point="net.refractions.udig.catalog.friendly">
+    <friend
+          class="net.refractions.catalog.util.internal.GeoServerFriend"
+          contain="geoserver/wms"
+          source="net.refractions.udig.catalog.internal.wms.WMSGeoResourceImpl"/>
+    <friend
+          class="net.refractions.catalog.util.internal.GeoServerTileSetFriend"
+          contain="geoserver/wms"
+          source="net.refractions.udig.catalog.internal.wms.WMSGeoResourceImpl">
+    </friend>
+ </extension>
+ <extension
+       point="net.refractions.udig.catalog.ui.connectionFactory">
+    <factory
+          class="net.refractions.udig.catalog.internal.wmsc.ui.WMSCConnectionFactory"
+          id="net.refractions.udig.catalog.ui.WMSC">
+    </factory>
+    <wizardPage
+          banner="icons/wizban/wms_wiz.gif"
+          class="net.refractions.udig.catalog.internal.wmsc.ui.WMSCWizardPage"
+          description="%wmsc.wizard.description"
+          icon="icons/etool16/wms_wiz.gif"
+          name="%wmsc.wizard.name">
+    </wizardPage>
+ </extension>
+</plugin>

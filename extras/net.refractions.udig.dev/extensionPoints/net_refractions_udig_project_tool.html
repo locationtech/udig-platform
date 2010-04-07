@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Tool</title>
+<!-- default platform documentation stylesheets -->
+<style>@import url("book.css");</style>
+<!-- default schema documentation stylesheets -->
+<style>@import url("schema.css");</style>
+</HEAD>
+<BODY>
+<H1><CENTER>Tool</CENTER></H1>
+<p></p>
+<h6 class=CaptionFigColumn id=header>Identifier: </h6>net.refractions.udig.render.Tool<p></p>
+<h6 class=CaptionFigColumn id=header>Since: </h6>0.1.1
+<p></p>
+
+<p>
+<h6 class=CaptionFigColumn id=header>Description: </h6><p>The tool extension point allows third-party developers to develop new tools for UDIG and is one of the most used points of extension.  There are three different type of tools and two ways of grouping tools.  The three type of tools are as follows:</p>
+
+<ul>
+<li>Action Tool - A single fire tool that performs a single action and is not modal, a buttons that sets the viewport so it frames the current selection is an example of an action tool.  Action tools must implement the ActionTool interface.</li>
+<li>Modal Tool - A tool that has on and off modes. When a modal tool is "on" it waits for user input and reacts on it.  An example of a modal tool is the zoom tool.  Modal tools must implement the ModalTool interface and are recommended to implement the AbstractModalTool class.</li>
+<li>Background Tool - A tool that is always active in the background. A typical background tool would be limited to providing user feedback. An example is the cursor position tool that displays the current mouse location in world coordinates. Background tools must implement the Tool interface and are recommended to implement the AbstractTool class.</li>
+</ul>
+
+<p>To address the need to provide locations for large numbers of tools developers can add tools to views.  In addition, a standard tool views is defined and new tools are added to the tool viewer by default.  It is recommended that if a large number of tools are being added then a new view should be created to hold the tool set.</p>
+
+<p>The setToolkit method is called by UDIG in order to provide a tools with a toolkit object that it can use as a facade for access UDIG, UDIG command factories and send command object to UDIG.</p></p>
+<p><h6 class=CaptionFigColumn id=header>Configuration Markup:</h6></p>
+<p class=code id=dtd>&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.category">category</a> | <a href="#e.mode">mode</a>)&gt;</p>
+<p class=code id=dtd>&lt;!ATTLIST extension</p>
+<p class=code id=dtdAttlist>point&nbsp;CDATA #REQUIRED<p class=code id=dtdAttlist>id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>name&nbsp;&nbsp;CDATA #IMPLIED&gt;</p>
+<p></p>
+<ul class=ConfigMarkup id=attlistDesc>
+</ul>
+<br><p class=code id=dtd>&lt;!ELEMENT <a name="e.category">category</a> (<a href="#e.modalTool">modalTool</a> | <a href="#e.backgroundTool">backgroundTool</a> | <a href="#e.actionTool">actionTool</a>)&gt;</p>
+<p class=code id=dtd>&lt;!ATTLIST category</p>
+<p class=code id=dtdAttlist>id&nbsp;CDATA #IMPLIED&gt;</p>
+<p></p>
+<p class=ConfigMarkup id=elementDesc>
+A category represents a collection of tools.  In toolbars tools within a category are grouped together.</p>
+<br>
+<ul class=ConfigMarkup id=attlistDesc>
+<li><b>id</b> - A category to used to group buttons.  The standard categories are found as constants in Tool.</li>
+</ul>
+<br><p class=code id=dtd>&lt;!ELEMENT <a name="e.modalTool">modalTool</a> EMPTY&gt;</p>
+<p class=code id=dtd>&lt;!ATTLIST modalTool</p>
+<p class=code id=dtdAttlist>tooltip&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>icon&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>cursor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA "default"<p class=code id=dtdAttlist>id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED<p class=code id=dtdAttlist>name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>hasCustomControl&nbsp;(true | false) <p class=code id=dtdAttlist>inMenu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(true | false) <p class=code id=dtdAttlist>onToolbar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(true | false) <p class=code id=dtdAttlist>onStatusLine&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(true | false) &gt;</p>
+<p></p>
+<p class=ConfigMarkup id=elementDesc>
+A modal tool is a tool that has an on and an off.  Examples are the zoom tool.  Some types of tools may be exclusive, for example the zoom tool cannot be on at the same time as other exclusively modal tools, such as the pan tool.</p>
+<br>
+<ul class=ConfigMarkup id=attlistDesc>
+<li><b>tooltip</b> - The tooltip that will be displayed</li>
+<li><b>class</b> - The Tool implementation.  It is recommended that the AbstractTool class is exteneded for mouse tools.</li>
+<li><b>icon</b> - The icon that will be used as a display for the icon</li>
+<li><b>cursor</b> - The mouse cursor that will used when the tool is active.</li>
+<li><b>id</b> - A unique id for tool extension</li>
+<li><b>name</b> - The human readable, display, name of the tool</li>
+<li><b>hasCustomControl</b> - True if the tool will be called to create the widget that will be used to display the tool.</li>
+<li><b>inMenu</b> - True if the the tool will appear in the menu.</li>
+<li><b>onToolbar</b> - True if the the tool will appear on the Toolbar.</li>
+<li><b>onStatusLine</b> - True if the the tool will appear on the status line.</li>
+</ul>
+<br><p class=code id=dtd>&lt;!ELEMENT <a name="e.backgroundTool">backgroundTool</a> EMPTY&gt;</p>
+<p class=code id=dtd>&lt;!ATTLIST backgroundTool</p>
+<p class=code id=dtdAttlist>tooltip&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>icon&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED<p class=code id=dtdAttlist>name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>hasCustomControl&nbsp;(true | false) <p class=code id=dtdAttlist>inMenu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(true | false) <p class=code id=dtdAttlist>onToolbar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(true | false) <p class=code id=dtdAttlist>onStatusLine&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(true | false) &gt;</p>
+<p></p>
+<p class=ConfigMarkup id=elementDesc>
+A background tool is a tool that runs the entire time an editor is active.</p>
+<br>
+<ul class=ConfigMarkup id=attlistDesc>
+<li><b>tooltip</b> - The tooltip that will be displayed</li>
+<li><b>class</b> - The Tool implementation.  It is recommended that the AbstractTool class is exteneded for mouse tools.</li>
+<li><b>icon</b> - The icon that will be used as a display for the icon</li>
+<li><b>id</b> - A unique id for tool extension</li>
+<li><b>name</b> - The human readable, display, name of the tool</li>
+<li><b>hasCustomControl</b> - True if the tool will be called to create the widget that will be used to display the tool.</li>
+<li><b>inMenu</b> - True if the the tool will appear in the menu.</li>
+<li><b>onToolbar</b> - True if the the tool will appear on the Toolbar.</li>
+<li><b>onStatusLine</b> - True if the the tool will appear on the status line.</li>
+</ul>
+<br><p class=code id=dtd>&lt;!ELEMENT <a name="e.actionTool">actionTool</a> EMPTY&gt;</p>
+<p class=code id=dtd>&lt;!ATTLIST actionTool</p>
+<p class=code id=dtdAttlist>tooltip&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>icon&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED<p class=code id=dtdAttlist>name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>hasCustomControl&nbsp;(true | false) <p class=code id=dtdAttlist>inMenu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(true | false) <p class=code id=dtdAttlist>onToolbar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(true | false) <p class=code id=dtdAttlist>onStatusLine&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(true | false) &gt;</p>
+<p></p>
+<p class=ConfigMarkup id=elementDesc>
+An action tool is a tool that is equivalent to a eclipse action.  The only difference is that it implements the ActionTool interface</p>
+<br>
+<ul class=ConfigMarkup id=attlistDesc>
+<li><b>tooltip</b> - The tooltip that will be displayed</li>
+<li><b>class</b> - The Tool implementation.  It is recommended that the AbstractTool class is exteneded for mouse tools.</li>
+<li><b>icon</b> - The icon that will be used as a display for the icon</li>
+<li><b>id</b> - A unique id for tool extension</li>
+<li><b>name</b> - The human readable, display, name of the tool</li>
+<li><b>hasCustomControl</b> - True if the tool will be called to create the widget that will be used to display the tool.</li>
+<li><b>inMenu</b> - True if the the tool will appear in the menu.</li>
+<li><b>onToolbar</b> - True if the the tool will appear on the Toolbar.</li>
+<li><b>onStatusLine</b> - True if the the tool will appear on the status line.</li>
+</ul>
+<br><p class=code id=dtd>&lt;!ELEMENT <a name="e.mode">mode</a> (<a href="#e.modalTool">modalTool</a> | <a href="#e.backgroundTool">backgroundTool</a> | <a href="#e.actionTool">actionTool</a>)&gt;</p>
+<p class=code id=dtd>&lt;!ATTLIST mode</p>
+<p class=code id=dtdAttlist>id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED<p class=code id=dtdAttlist>icon&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>tooltip&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>inMenu&nbsp;&nbsp;&nbsp;&nbsp;(true | false) <p class=code id=dtdAttlist>onToolbar&nbsp;(true | false) "true"<p class=code id=dtdAttlist>class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED&gt;</p>
+<p></p>
+<p class=ConfigMarkup id=elementDesc>
+A mode is a special category that can be turned on and off.  It has a name, tooltip, icon like tools but it is not a tool.  Rather it enables a set of tools.  
+In other words it is a category that can be enabled and disabled.</p>
+<br>
+<ul class=ConfigMarkup id=attlistDesc>
+<li><b>id</b> - The identifier of the mode</li>
+<li><b>icon</b> - The icon used when the mode button is displayed.</li>
+<li><b>tooltip</b> - The tooltip that will be displayed</li>
+<li><b>name</b> - The human readable, display, name of the mode</li>
+<li><b>inMenu</b> - True if the the mode will appear in the menu.</li>
+<li><b>onToolbar</b> - True if the the mode will appear on the Toolbar.</li>
+<li><b>class</b> - </li>
+</ul>
+<br><h6 class=CaptionFigColumn id=header>Examples: </h6>[Enter extension point usage example here.]
+<p></p>
+
+<h6 class=CaptionFigColumn id=header>API Information: </h6>[Enter API information here.]
+<p></p>
+
+<h6 class=CaptionFigColumn id=header>Supplied Implementation: </h6>[Enter information about supplied implementation of this extension point.]
+<p></p>
+
+<br>
+<p class=note id=copyright>
+Refractions Research Inc.
+<p></p>
+
+</p>
+</BODY>
+</HTML>

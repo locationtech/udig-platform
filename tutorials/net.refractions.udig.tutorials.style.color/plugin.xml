@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="net.refractions.udig.project.style">
+      <style
+            class="net.refractions.udig.tutorials.style.color.ColorStyle"
+            id="net.refractions.udig.tutorials.style.color.colorStyle"
+            name="Color">
+      </style>
+   </extension>
+   <extension
+         point="net.refractions.udig.catalog.resolvers">
+      <factory
+            class="net.refractions.udig.tutorials.style.color.CSVColorFactory"
+            resolveableType="net.refractions.udig.tutorials.catalog.csv.CSVGeoResource">
+         <resolve
+               type="java.awt.Color"></resolve>
+      </factory>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.renderer">
+      <renderer
+            class="net.refractions.udig.tutorials.style.color.ColorCSVRenderMetricsFactory"
+            id="net.refractions.udig.tutorials.style.color.render.csvRender"
+            name="Color CSV Render">
+      </renderer>
+   </extension>
+   <extension
+         point="net.refractions.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="net.refractions.udig.tutorials.style.color.ColorConfigurator"
+            id="net.refractions.udig.tutorials.style.color.colorConfigurator"
+            label="Color"
+            requires="net.refractions.udig.tutorials.catalog.csv.CSVGeoResource"
+            styleId="net.refractions.udig.tutorials.style.color.colorStyle">
+      </styleConfigurator>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.operation">
+      <operation
+            class="net.refractions.udig.tutorials.style.color.RemoveColorOp"
+            enablesFor="1"
+            id="net.refractions.udig.tutorials.style.color.removeOp"
+            name="Remove Color"
+            targetClass="net.refractions.udig.project.internal.Layer">
+         <enablement></enablement>
+      </operation>
+   </extension>
+
+</plugin>

@@ -1,0 +1,23 @@
+<project name="gt2eclipse.xml" default="gt2eclipse" basedir="."> 
+
+	<target name="check.sub" unless="sub">
+		<fail message="sub not set"/>
+	</target>
+
+	<target name="check.module.dir" unless="module.dir">
+		<fail message="module.dir not set"/>
+	</target>
+
+	<target name="gt2eclipse">
+		<!-- execute the maven eclipse to generate .project and .classpath files-->
+		<exec executable="maven" dir="${module.dir}" failonerror="true">
+			<arg line="eclipse"/>
+		</exec>
+
+		<xslt style="plugin-single.xsl" in="${module.dir}/.classpath" out="${module.dir}/plugin.xml.part"/>
+
+		<xslt style="build-single.xsl" in="${module.dir}/.classpath" out="${module.dir}/build.xml.part"/>
+
+	</target>
+
+</project>

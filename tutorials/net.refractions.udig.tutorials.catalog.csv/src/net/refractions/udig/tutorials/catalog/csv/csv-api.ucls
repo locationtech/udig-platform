@@ -1,0 +1,20 @@
+<class-diagram generalizations="true" realizations="true" associations="true" dependencies="false" 
+  nesting-relationships="true">  
+  <classifier-display autosize="true" package="true" attributes="true" operations="true" initial-value="false" 
+    signature="true" visibility="true"/>  
+  <association-display labels="true" multiplicity="true"/>  
+  <class type="java" name="net.refractions.udig.tutorials.catalog.csv.CSV" 
+    project="net.refractions.udig.tutorials.catalog.csv" 
+    file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSV.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="277" y="232" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="com.csvreader.CsvReader" project="com.csvreader" file="/com.csvreader/javacsv.jar" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" 
+      signature="false" visibility="true"/>    
+    <position x="484" y="218" width="-1" height="-1"/>  
+  </class>
+</class-diagram>

@@ -1,0 +1,32 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Catalog UI Test Plug-in
+Bundle-SymbolicName: net.refractions.udig.catalog.tests.ui; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Require-Bundle: net.refractions.udig.catalog,
+ org.eclipse.core.runtime,
+ org.eclipse.swt,
+ net.refractions.udig.catalog.ui,
+ org.eclipse.jface,
+ net.refractions.udig.libs,
+ org.eclipse.ui,
+ net.refractions.udig.catalog.db2,
+ net.refractions.udig.catalog.geotiff,
+ net.refractions.udig.catalog.google2,
+ net.refractions.udig.catalog.oracle,
+ net.refractions.udig.catalog.postgis,
+ net.refractions.udig.catalog.rasterings,
+ net.refractions.udig.catalog.shp,
+ net.refractions.udig.catalog.wfs,
+ net.refractions.udig.catalog.wms,
+ net.refractions.udig.catalog.worldimage,
+ net.refractions.udig.catalog.tests;visibility:=reexport,
+ net.refractions.udig.ui.tests;visibility:=reexport,
+ org.junit4;bundle-version="4.3.1"
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: net.refractions.udig.catalog.tests.ui.CatalogTestsUIPlugin
+Export-Package: net.refractions.udig.catalog.tests.ui,
+ net.refractions.udig.catalog.tests.ui.dnd,
+ net.refractions.udig.catalog.tests.ui.workflow
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

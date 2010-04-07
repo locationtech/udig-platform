@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="net.refractions.udig.project.ui.tool">
+            <modalTool
+                  categoryId="net.refractions.udig.tool.category.selection"
+                  class="net.refractions.udig.tool.select.BBoxSelection"
+                  icon="icons/etool16/selection_mode.gif"
+                  id="net.refractions.udig.tools.BBoxSelect"
+                  name="%selection.bbox.name"
+                  onToolbar="true"
+                  toolCursorId="bboxCursor"
+                  tooltip="%selection.bbox.tooltip">
+   			<cursor
+            hotspotY="10"
+            hotspotX="10"
+            image="icons/pointers/select_source.png"
+            id="bbox_cursor"/>
+         </modalTool>
+                     <modalTool
+                           categoryId="net.refractions.udig.tool.category.selection"
+                           class="net.refractions.udig.tool.select.ArrowSelection"
+                           icon="icons/etool16/select_feature_mode.gif"
+                           id="net.refractions.udig.tools.ArrowSelect"
+                           name="%selection.arrow.name"
+                           onToolbar="false"
+                           toolCursorId="selectFeatureCursor"
+                           tooltip="%selection.arrow.tooltip">
+   			<cursor
+            hotspotY="10"
+            hotspotX="10"
+            image="icons/pointers/select_feature_cursor.gif"
+            id="arrow_cursor"/>
+         </modalTool>
+                <actionTool
+                     categoryId="net.refractions.udig.tool.category.zoom"
+                     class="net.refractions.udig.tool.select.internal.ZoomSelection"
+                     icon="icons/elcl16/zoom_select_co.png"
+                     id="net.refractions.udig.tool.default.show.selection"
+                     menuPath="navigate/zoom.ext"
+                     name="%zoom.select.name"
+                     onToolbar="true"
+                     tooltip="%zoom.select.tooltip">
+                  <enablement>
+                     <property
+                           expectedValue="unimportant"
+                           propertyId="net.refractions.udig.tool.select.layerHasSelectionProperty"/>
+                  </enablement>
+               </actionTool>
+               <toolCursor
+                     hotspotX="10"
+                     hotspotY="10"
+                     id="bboxCursor"
+                     image="icons/pointers/select_source.png"/>
+               <toolCursor
+                     hotspotX="10"
+                     hotspotY="10"
+                     id="selectFeatureCursor"
+                     image="icons/pointers/select_feature_cursor.gif"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            category="layer"
+            class="net.refractions.udig.tool.select.TableView"
+            fastViewWidthRatio="30%"
+            icon="icons/eview16/table_view.gif"
+            id="net.refractions.udig.tool.select.TableView"
+            name="%TableViewName"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
+         <view
+               id="net.refractions.udig.tool.select.TableView"
+               relationship="stack"
+               relative="net.refractions.udig.catalog.ui.CatalogView"
+               visible="true"/>
+         <viewShortcut id="net.refractions.udig.tool.select.TableView"/>
+      </perspectiveExtension>
+   </extension>
+      <extension
+            point="net.refractions.udig.ui.objectProperty">
+         <object targetClass="net.refractions.udig.project.ILayer">
+            <property
+                  id="layerHasSelectionProperty"
+                  class="net.refractions.udig.tool.select.internal.LayerHasSelectionProperty"/>
+         </object>
+      </extension>
+      <extension
+            point="net.refractions.udig.project.ui.featureEditor">
+         <editor
+               icon="icons/eview16/table_view.gif"
+               id="net.refractions.udig.tool.select.view"
+               name="Table View"
+               viewId="net.refractions.udig.tool.select.TableView"/>
+      </extension>
+</plugin>

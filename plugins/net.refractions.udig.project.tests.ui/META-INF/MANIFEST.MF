@@ -1,0 +1,34 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Project UI Test Plug-in
+Bundle-SymbolicName: net.refractions.udig.project.tests.ui; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: net.refractions.udig.project.ui.TestsUIPlugin
+Bundle-Localization: plugin
+Export-Package: net.refractions.udig,
+ net.refractions.udig.feature.editor,
+ net.refractions.udig.project.tests.ui,
+ net.refractions.udig.project.tests.ui.dnd,
+ net.refractions.udig.project.tests.ui.internal.commands,
+ net.refractions.udig.project.ui,
+ net.refractions.udig.project.ui.internal,
+ net.refractions.udig.project.ui.internal.actions,
+ net.refractions.udig.project.ui.internal.render.displayAdapter.impl,
+ net.refractions.udig.project.ui.tool
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.project,
+ net.refractions.udig.project.edit,
+ net.refractions.udig.project.ui,
+ org.junit,
+ net.refractions.udig.catalog.shp,
+ net.refractions.udig.project.tests;visibility:=reexport,
+ net.refractions.udig.ui,
+ net.refractions.udig.catalog.ui,
+ net.refractions.udig.catalog.tests,
+ net.refractions.udig.catalog.tests.ui;visibility:=reexport,
+ net.refractions.udig.mapgraphic,
+ net.refractions.udig.ui.tests;visibility:=reexport,
+ net.refractions.udig.issues
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="net.refractions.udig_printing"
+      label="net.refractions.udig_printing-feature"
+      version="1.2.0"
+      provider-name="Refractions Research">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <url>
+      <update label="User-friendly Desktop Internet GIS Updates" url="http://udig.refractions.net/update/"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.emf.common"/>
+      <import plugin="net.refractions.udig.project"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.draw2d"/>
+      <import plugin="net.refractions.udig.project.ui"/>
+      <import plugin="net.refractions.udig.mapgraphic"/>
+      <import plugin="net.refractions.udig.project.edit"/>
+      <import plugin="net.refractions.udig.ui"/>
+      <import plugin="org.eclipse.gef"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.emf.edit"/>
+      <import plugin="net.refractions.udig.catalog.ui"/>
+      <import plugin="net.refractions.udig.catalog"/>
+      <import plugin="net.refractions.udig.style"/>
+      <import feature="net.refractions.udig_application" version="1.0.0"/>
+      <import plugin="net.refractions.udig.legend"/>
+      <import plugin="net.refractions.udig.style.sld"/>
+      <import plugin="com.lowagie.itext"/>
+   </requires>
+
+   <plugin
+         id="net.refractions.udig.printing.model"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.refractions.udig.printing.model.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.refractions.udig.printing.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

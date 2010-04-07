@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+    	<extension
+         point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.refractions.udig.catalog.internal.wfs.WFSServiceExtension"
+            id="wfs"
+            name="Web Feature Service"/>
+   	</extension>
+ <extension
+       point="net.refractions.udig.catalog.ui.connectionFactory">
+       <factory class="net.refractions.udig.catalog.internal.wfs.ui.WFSConnectionFactory"
+          id="net.refractions.udig.catalog.ui.wfs"/>
+    <wizardPage
+          banner="icons/wizban/wfs_wiz.gif"
+          class="net.refractions.udig.catalog.internal.wfs.ui.WFSRegistryWizardPage"
+          description="%wizard.description"
+          icon="icons/etool16/wfs_wiz.gif"
+          name="%wizard.name"/>
+
+ </extension>
+</plugin>

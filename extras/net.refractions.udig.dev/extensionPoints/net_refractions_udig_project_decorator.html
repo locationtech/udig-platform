@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>decorator</title>
+<!-- default platform documentation stylesheets -->
+<style>@import url("book.css");</style>
+<!-- default schema documentation stylesheets -->
+<style>@import url("schema.css");</style>
+</HEAD>
+<BODY>
+<H1><CENTER>decorator</CENTER></H1>
+<p></p>
+<h6 class=CaptionFigColumn id=header>Identifier: </h6>net.refractions.udig.project.decorator<p></p>
+<h6 class=CaptionFigColumn id=header>Since: </h6>[Enter the first release in which this extension point appears.]
+<p></p>
+
+<p>
+<h6 class=CaptionFigColumn id=header>Description: </h6><p>A Decorator is a adds meaning to a map or page.  The Decorator interface that a decorator extension must extend consists of a draw() method and a setToolkit() method.  The toolkit passed in provides context for the decorator.  For example, a scalebar requires a viewport model and the ability to calculate the extent of a map; the toolkit provides access to that data.  The toolkit the decorator receives is a read only toolkit.  A decorator is not permitted to change UDIG model information.  It can only display information.</p></p>
+<p><h6 class=CaptionFigColumn id=header>Configuration Markup:</h6></p>
+<p class=code id=dtd>&lt;!ELEMENT <a name="e.extension">extension</a> EMPTY&gt;</p>
+<p class=code id=dtd>&lt;!ATTLIST extension</p>
+<p class=code id=dtdAttlist>point&nbsp;CDATA #REQUIRED<p class=code id=dtdAttlist>id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>name&nbsp;&nbsp;CDATA #IMPLIED&gt;</p>
+<p></p>
+<ul class=ConfigMarkup id=attlistDesc>
+<li><b>point</b> - a fully qualified identifier of the target extension point</li>
+<li><b>id</b> - an optional identifier of the extension instance</li>
+<li><b>name</b> - an optional name of the extension instance</li>
+</ul>
+<br><p class=code id=dtd>&lt;!ELEMENT <a name="e.decorator">decorator</a> EMPTY&gt;</p>
+<p class=code id=dtd>&lt;!ATTLIST decorator</p>
+<p class=code id=dtdAttlist>icon&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>name&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED<p class=code id=dtdAttlist>class&nbsp;CDATA #IMPLIED&gt;</p>
+<p></p>
+<ul class=ConfigMarkup id=attlistDesc>
+<li><b>icon</b> - An icon that represents the decorator the extension draws.</li>
+<li><b>name</b> - A human readable and sensible name for the decorator</li>
+<li><b>id</b> - An ID for the decorator extension</li>
+<li><b>class</b> - The implementation of the the Decorator interface</li>
+</ul>
+<br><h6 class=CaptionFigColumn id=header>Examples: </h6><p>
+<code>
+public class ImageDecorator implements Decorator {<br>
+&nbsp; RenderedImage image;<br>
+&nbsp; private Toolkit toolkit;<br>
+&nbsp; public void draw( ViewportGraphics graphics ) {<br>
+&nbsp;&nbsp;  graphics.drawImage(image, 0,0 );<br>
+&nbsp;}<br>
+&nbsp;public void setToolkit( Toolkit toolkit ) {<br>
+&nbsp;&nbsp;this.toolkit=toolkit;<br>
+&nbsp;}<br>
+}<br>
+</code>
+</p>
+<p></p>
+
+<h6 class=CaptionFigColumn id=header>API Information: </h6>[Enter API information here.]
+<p></p>
+
+<h6 class=CaptionFigColumn id=header>Supplied Implementation: </h6>[Enter information about supplied implementation of this extension point.]
+<p></p>
+
+<br>
+<p class=note id=copyright>
+</p>
+</BODY>
+</HTML>

@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: net.refractions.udig.project.edit; singleton:=true
+Bundle-Version: 1.2.0
+Bundle-Activator: net.refractions.udig.project.internal.provider.ProjectEditPlugin$Implementation
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Export-Package: net.refractions.udig.project.internal.provider,
+ net.refractions.udig.project.internal.render.provider
+Require-Bundle: net.refractions.udig.project;visibility:=reexport,
+ org.eclipse.jface,
+ net.refractions.udig.catalog,
+ net.refractions.udig.ui,
+ org.eclipse.emf.edit.ui;visibility:=reexport,
+ org.eclipse.core.runtime,
+ net.refractions.udig.catalog.ui
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

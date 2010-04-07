@@ -1,0 +1,87 @@
+--------------------------------------------------------------------------------
+About
+--------------------------------------------------------------------------------
+This directory contains all the files for creating the fully packaged App and Sdk.  By fully packaged I mean, the application is ready to be given directly to users. (Has the .exe installer and so on). 
+
+The one exception is that for the mac the application is a Zip containing a Mac application bundle rather than being in a .dmg file.  
+
+--------------------------------------------------------------------------------
+WARNING
+--------------------------------------------------------------------------------
+The most difficult part about the build is creating a good 'buildtarget'.  The build target is an
+eclipse with all the dependencies and the delta pack.  Because the error messages are poor it can be quite challenging
+getting it right.
+
+--------------------------------------------------------------------------------
+Requirements
+--------------------------------------------------------------------------------
+- Maven 2.0.7 or higher
+- Subversion commandline tool if you wish to use the update target.
+- NSIS must be installed for creating the windows .exe 
+  (and Wine or Darwine if you are not on windows)
+
+--------------------------------------------------------------------------------
+Setup
+--------------------------------------------------------------------------------
+ The following steps must be taken to setup a headless build:
+ 1. Update the shared.properties file
+    - Update the 'version' if necessary
+    - Update the 'makensis' property so that it is the platform dependent command used to run the makensis command.  
+      This is to make the windows installer.  
+        - If it takes multiple commands to run makensis the commands must be comma separated
+        - If you are on linux you must install wine and include both the wine command as one of the comma-separated commands.
+            For example: wine,${user.home}/.wine/drive_c/Program Files/NSIS/makensis.exe 
+ 2. Create '${user.home}/tmp/udig-build' this is the directory where the build will take place.  If you want the build to take place else where
+   change 'buildRoot'
+ 3. Create a Sym link in buildRoot (defined in the last step, by default it is '${user.home}/tmp/udig-build') the link must be named build-target3.4
+    - The name of the build target can be changed in the shared.properties if desired.  It is the property: 'base'
+ 4. Put the jre.zip files (required by the package target) in the src/resource/jre/<platform> directories.  The jres are not in 
+    subersion because they would take too much space.  They are normally available at http://udig.refractions.net/files/downloads/jre
+    - The directory structure is there.  Simply download the zip file, put it in the correct directory for that platform and rename it to
+      jre.zip
+    - NOTE:  The zip file can have anyname but must end in zip.  The script looks for the first zip file and assumes it is the jre.
+
+--------------------------------------------------------------------------------
+Usage
+--------------------------------------------------------------------------------
+        
+To run a build you must use maven:
+
+mvn [-Dtargets=...] [-DANT_OPTS=...] [-Dconfigs=...]
+
+Default targets are: update, app, package, sdk
+- Available targets are:
+    clean - deletes the build directory but not the deploy directory
+    update - run svn up --  Only works if the subversion commandline tool is installed
+    app - builds the application for the configs defined in the app.properties file
+    sdk - builds the sdk
+    package - packages a previously built application and places the packaged application into 
+              the deploy directory.  This requres that app was previously ran
+- ANT_OPTS are passed to ant when ant executes
+- configs is an override for the config property that is set in app.properties and sdk.properties. 
+    
+    
+Example: 
+    mvn -Dtargets=update,app,package -Dconfigs=macosx,carbon,x86&linux,gtk,x86
+  
+--------------------------------------------------------------------------------
+Design
+--------------------------------------------------------------------------------
+
+The intent is to be a build system for any eclipse based project.  It extends the basic 
+eclipse ant build system with:
+  - being able to inject the version number into the about box
+  - adding support for building the SDK at the same time
+  - packaging the application in a way that is more acceptable for
+    the different platform
+  - adding a specific JRE to the different packages.
+  
+The configuration is controlled by:
+  - shared.properties - this is the parts of the default 
+uDig all that needs to be changed normally are the
+The build system is a maven project that is run by invoking:
+
+- mvn compile
+
+The shared, app, sdk properties files are used for configuring the build.  They 
+are combined by a scala script: 

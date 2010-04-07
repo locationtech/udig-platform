@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   
+   <extension
+         point="net.refractions.udig.catalog.ui.connectionFactory">
+      <factory class="net.refractions.udig.catalog.tests.ui.DummyConnectionFactory"
+            id="net.refractions.udig.catalog.tests.ui.dummyPage"/>
+      <wizardPage
+		    class=""
+            name="Dummy"/>
+   </extension>
+      
+   <extension
+         point="net.refractions.udig.catalog.ui.connectionFactory">
+      <factory class="net.refractions.udig.catalog.tests.ui.DummyMulitResourceConnectionFactory"
+            id="net.refractions.udig.catalog.tests.ui.DummyMulitResourcePage"/>
+      <wizardPage
+		    class=""
+            name="DummyMulitResource"/>
+   </extension>
+
+</plugin>

@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-Name: %pluginName
+Bundle-SymbolicName: net.refractions.udig_printing.source;singleton:=true
+Bundle-Version: 1.2.0
+Bundle-Vendor: %providerName
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

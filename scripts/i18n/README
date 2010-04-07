@@ -1,0 +1,42 @@
+These scripts were used to convert uDig from Policy-based internationalization 
+to Eclipse NLS-based internationalization. For more information, see
+http://udig.refractions.net/confluence/display/DEV/4+Plugin+Internationalization+with+ResourceBundles
+
+Written by Richard Gould
+rgould@refractions.net
+
+The following files are used:
+fix.sh - Perform conversion on all plug-ins
+createMessages.pl - Create Messages.java and convert messages*.properties
+policy2messages.pl - Convert all java files
+
+*** fix.sh ***
+
+fix.sh is a bash script that is intended to be run from the plugins/ directory.
+It does the following:
+For each plug-in: 
+- execute createMessages.pl on each messages*.properties file
+- create a messages.properties file in the proper internal directory
+- replace all instances of FIXME in Messages.java with the plug-in name 
+  (this doesn't work)
+- execute policy2messages.pl on every .java file
+- delete all files named Policy.java
+
+*** createMessages.pl ***
+
+- runs through all messages*.properties files, converting all periods (".")
+  in the key names to underscores ("_")
+- creates a Messages.java class using keys from messages.properties
+
+*** policy2messages.pl ***
+
+- runs through the .java files, replacing instances of Policy.bind($key) with
+  Messages.$key. This does not work if the call to Policy.bind is split across
+  multiple lines (bad code formatter!), or if extra parameters are used in
+  the call. 
+- converts all periods (".") in the key names to underscores ("_") in keys
+  that are referenced
+- removes all NON-NLS tags on lines that have been changed
+- removes all calls to Policy.localize or Policy.cleanup
+- removes all Policy imports
+

@@ -1,0 +1,2 @@
+net.refractions.udig.render.wms.basic/debug=true
+net.refractions.udig.render.wms.basic/debug/render/trace=true

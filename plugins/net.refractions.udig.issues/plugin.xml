@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension-point id="issue" name="issue" schema="schema/issue.exsd"/>
+   <extension-point id="issuesList" name="issuesList" schema="schema/issuesList.exsd"/>
+   <extension-point id="issueFixer" name="issueFixer" schema="schema/issueFixer.exsd"/>
+   <extension-point id="issuesViewConfiguration" name="issuesViewConfiguration" schema="schema/issuesViewConfiguration.exsd"/>
+      <extension
+         point="net.refractions.udig.issues.issuesList">
+      <list
+            class="net.refractions.udig.issues.IssuesList"
+            id="memory"
+            name="%issues.list.memory.name"/>
+      <list
+            class="net.refractions.udig.issues.StrategizedIssuesList"
+            configurator="net.refractions.udig.issues.internal.datastore.PostgisIssuesListConfigurator"
+            id="issuesList"
+            name="%issues.list.wfs.name"/>
+   </extension>
+      <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="net.refractions.udig.project.ui.project"
+            class="net.refractions.udig.issues.internal.view.IssuesView"
+            icon="icons/eview/issues_view.gif"
+            id="net.refractions.udig.issues.view.issues"
+            name="%issues.view.name"/>
+   </extension>
+      <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="net.refractions.udig.ui.mapPerspective">
+         <viewShortcut id="net.refractions.udig.issues.view.issues"/>
+      </perspectiveExtension>
+   </extension>
+      <extension
+         id="net.refractions.udig.issue.standard"
+         name="%issues.name"
+         point="net.refractions.udig.issues.issue">
+      <Issue
+            class="net.refractions.udig.issues.FeatureIssue"
+            id="featureIssue"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+     <page
+           category="net.refractions.udig.ui.page.general"
+           class="net.refractions.udig.issues.internal.IssuesPreferencePage"
+           id="net.refractions.udig.issues.preference.issues"
+           name="%preferences.issues.name"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="net.refractions.udig.issues.internal.IssuesPreferenceInitializer"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.operation">
+      <operation
+            categoryId="net.refractions.udig.project.ui.operation.selectionCategory"
+            class="net.refractions.udig.issues.AddIssueOperation"
+            enablesFor="+"
+            icon="icons/eview/issues_view.gif"
+            id="net.refractions.udig.issues.operation.addTask"
+            name="%Add.Task"
+            targetClass="java.lang.Object">
+         <enablement>
+            <and>
+               <adaptsTo target="net.refractions.udig.project.ILayer"/>
+               <or>
+                  <adaptsTo target="org.opengis.feature.Feature"/>
+                  <adaptsTo target="org.geotools.filter.Filter"/>
+               </or>
+            </and>
+         </enablement>
+      </operation>
+   </extension>
+</plugin>

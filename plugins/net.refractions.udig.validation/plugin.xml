@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="net.refractions.udig.ui.operation">
+      <operation
+            class="net.refractions.udig.validation.ui.ValidationDialogOp"
+            id="net.refractions.udig.validation.validationDialog"
+            name="%validation.menuTitle"
+            targetClass="net.refractions.udig.project.ILayer"/>
+   </extension>
+
+</plugin>

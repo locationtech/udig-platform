@@ -1,0 +1,123 @@
+ECW/JP2 CODEC SDK End-User License Agreement
+
+IMPORTANT—READ CAREFULLY: This ECW/JP2 CODEC SDK End-User License Agreement ("EULA") is a legal agreement between You (either an individual or a single entity) and Erdas, Inc. (“ERDAS”), having a principal place of business at 5051 Peachtree Corners Cir., Suite 100, Norcross, Georgia, for the ECW/JP2 CODEC SDK software product. By installing, copying, downloading, accessing or otherwise using the ECW/JP2 CODEC SDK, You agree to be bound by the terms of this EULA. If You do not agree to the terms of this EULA, do not install or use the ECW/JP2 CODEC SDK.
+1. DEFINITIONS
+
+1.1. COMMERCIAL USE means use that inures to the benefit of or is intended to inure to the benefit of  (a) any governmental unit or agency; (b) any profit-seeking enterprise, or (c) any entity, whether or not for profit, that provides services or products for consideration (for example, an educational institution that performs sponsored research), regardless of whether those services or products directly relate to the ECW/JP2 CODEC SDK or were performed or produced using the ECW/JP2 CODEC SDK. Notwithstanding the foregoing, COMMERCIAL USE does not include use in a classroom or laboratory setting by a non-profit or governmental educational institution, purely for teaching and academic research purposes and not in connection with any revenue-producing activity. Open-source projects are non-commercial until packaged in a form that the package inures to the benefit of a profit-seeking enterprise or an enterprise that provides services or products for consideration.  
+
+1.2. DECODE means to view files compressed either using Enhanced Compression Wavelet (ECW) technology or otherwise compressed using the ECW/JP2 CODEC SDK.
+
+1.3. ECW/JP2 CODEC SDK means the computer software marketed and licensed by ERDAS under that name, consisting of libraries and supporting documents that enable You to write software, or engineer a process, that enables end-users to DECODE files and/or to ENCODE   files.  Among other things, the software enables compression of images according to the JPEG2000 standard, enables reading ECWP streams and enables decompression of files having an *.ecw extension.  The ECW/JP2 CODEC SDK may include associated media, printed materials, and "online" or electronic documentation. The ECW/JP2 CODEC SDK also includes any UPDATES to the original SDK provided to You by ERDAS, but not ENHANCEMENTS.  
+
+1.4. ECWP is the Enhanced Wavelet Compression Protocol, by which compressed files residing on a SERVER may be streamed to an END APPLICATION and DECODED.
+
+1.5. ENCODE means to compress files using ECW technology or to otherwise compress using the ECW/JP2 CODEC SDK.
+
+1.6. END APPLICATION means desktop or mobile software products that You develop and that permit an end-user to ENCODE and/or DECODE (among other functionality You develop), and that are intended to be used as self-contained programs for displaying and processing imagery.  The source code of END APPLICATIONS is not intended to be delivered to or modified by a user.  END APPLICATIONS do not run on a SERVER.
+
+1.7. ENHANCEMENTS means non-maintenance improvements, such as new features or versions.
+
+1.8. LIBRARIES means programs that are not END APPLICATIONS and are to be used by programmers, instead of end users who use an END APPLICATION.  LIBRARIES do not, by themselves, ENCODE or DECODE files, but instead are intended to be linked to by END APPLICATIONS that may ENCODE or DECODE files.
+
+1.9. NON-COMMERCIAL USE means use of the END APPLICATION in accordance with the terms of this Agreement, other than COMMERCIAL USE.  .
+
+1.10. SERVER means a computing device in a network that is used to provide services (such as access to files or shared peripherals) to other computing devices in the network. 
+
+1.11. UPDATES means maintenance revisions that correct identified errors in or provide bug fixes for the ECW/JP2 CODEC SDK originally provided to You. 
+2. LICENSE GRANT
+
+2.1. Non-Commercial Use.
+
+2.1.1. Subject to all other terms of this Agreement, You are hereby granted a royalty-free, nonexclusive, worldwide license to use the ECW/JP2 CODEC SDK to create, use and distribute, for NON-COMMERCIAL USES, END APPLICATIONS that DECODE and/or ENCODE. 
+
+2.1.2. Subject to all other terms of this Agreement, You are hereby granted a royalty-free, nonexclusive, worldwide license to use the ECW/JP2 CODEC SDK to create, use and supply SERVICES, for NON-COMMERCIAL USES, that DECODE and/or ENCODE.
+
+2.1.3. Subject to all other terms of this Agreement, You are hereby granted a royalty-free, worldwide license to use the ECW/JP2 CODEC SDK to create, use and distribute LIBRARIES.  In distributing LIBRARIES, You are licensed only to distribute those compiled portions of the ECW/JP2 CODEC SDK in the "redistributables" directory, which contains binaries that another application using the LIBRARY will link to.
+
+2.2. Commercial Use.
+
+2.2.1. Subject to all other terms of this Agreement, You are hereby granted a nonexclusive, worldwide, royalty-free license to use the ECW/JP2 CODEC SDK to create, use and distribute END APPLICATIONS that DECODE for COMMERCIAL USES.
+
+2.2.2. If and only if You have validly entered into a Royalty Agreement with ERDAS, and subject to all other terms of this Agreement and the Royalty Agreement, including payment of commercial developer license fees and use and distribution royalties, You are hereby granted a royalty-bearing, nonexclusive, worldwide license to use the ECW/JP2 CODEC SDK to create, use and distribute, for COMMERCIAL USES, one or both of the following: (i) END APPLICATIONS that ENCODE and (ii) SERVICES that ENCODE or DECODE.   The royalty rate is listed in the Royalty Agreement that is attached to this License Agreement and that forms a part of this Agreement.  Note that internal use by the developer of an END APPLICATION is a royalty-bearing COMMERCIAL USE if the elements of the definition of COMMERCIAL USE are present.  
+
+ABSENT PAYMENT OF A ROYALTY AND YOUR CONTINUING ADHERENCE TO THE TERMS OF THIS AGREEMENT, YOU ARE NOT LICENSED TO USE THE ECW/JP2 CODEC SDK TO ENCODE FILES FOR COMMERCIAL USES OR TO DEVELOP END APPLICATIONS OR SUPPLY SERVICES THAT ENCODE FOR COMMERCIAL USES.
+
+The ECW/JP2 CODEC SDK may be obtained directly from ERDAS or from a person who distributes LIBRARIES containing portions of the ECW/JP2 CODEC SDK.  Regardless of the source of distribution and regardless of whether You receive the complete ECW/JP2 CODEC SDK with supporting documentation, as a compiled LIBRARY or otherwise, You must adhere to the terms of this license grant.
+3. OBLIGATIONS AND RESTRICTIONS
+
+3.1. Obligation to Support ECWP Read. You agree to do each of the following that applies to Your END APPLICATION and/or SERVICE: (i) supporting the reading of ECWP streams as well as ECW files so that Your END APPLICATION or SERVICE  is capable of receiving streamed, compressed files that adhere to the ECWP; and (ii) your END APPLICATION must provide a means for specifying or selecting an ECWP stream that is consistent with the means for specifying or selecting other data sources in the END APPLICATION.  For the avoidance of doubt, the previous sentence means that if You create or distribute END APPLICATIONS or SERVICES, those END APPLICATIONS or SERVICES must read ECWP streams and must allow a user to access the ECWP stream conveniently, with no more steps than is typical for access to other data formats in Your END APPLICATION or SERVICE.
+
+3.2. Special Obligations for Distributors of SERVICES.  The ENCODE and DECODE SERVICE must be disabled by default in your SERVICES for distribution, but you may permit the user to enable it. The user instructions for enabling must instruct the user that a license is required from ERDAS for the ENCODE and DECODE SERVICE. You may indicate that users of the ERDAS Image Manager or Image Web Server are not required to pay an additional license fee.
+
+3.3. No Source Code Distribution.  Components of the ECW/JP2 SDK used in END APPLICATIONS may be distributed only in object code or executable form; you may not distribute any source code of the ECW/JP2 CODEC SDK, or any source code generated by the ECW/JP2 CODEC SDK.
+
+3.4. License Requirements for END APPLICATIONS and SERVICES Using ECW/JP2 CODEC SDK. You shall distribute the END APPLICATIONS or SERVICES to end-users pursuant to a conspicuous, legally enforceable end-user license that provides ERDAS with substantially the same protections as set forth in Appendix A hereto.  You agree to take all necessary steps to ensure the enforceability of the end-user license, including, as appropriate: (i) offering a refund of at least a portion of the purchase price of END APPLICATIONS to end-users who disagree with the terms of the end-user license including the terms set forth in Appendix A; or (ii) preventing downloading of END APPLICATIONS or SERVICES without acceptance of the end-user license.  You also agree to take adequate steps to prevent unauthorized use of the ECW/JP2 CODEC SDK or its derivatives by end users who decline the end-user license offer, such as by disabling access to Your END APPLICATION or preventing access to features or SERVICES made possible by the ECW/JP2 CODEC SDK, including ENCODING or DECODING in Your END APPLICATION or as part of your SERVICES.
+
+3.5. Obligations for Persons Distributing Libraries or Participating in Open Source Projects including the ECW/JP2 CODEC SDK.  If You will distribute a LIBRARY or are using the ECW/JP2 CODEC SDK in connection with an open-source project or other, similar work, You must distribute this license along with the object or source code of the work and give Your end users the opportunity to decline these license terms and cease downloading the work that contains or uses the ECW/JP2 CODEC SDK in whole or in part.
+
+3.6. ERDAS Proprietary Rights Notice. You must include the following statement of ownership/copyright notice in the About Box for Your END APPLICATION, or any other similar location where You place proprietary rights notices pertaining to third party software incorporated in the END APPLICATION:
+
+Portions of this computer program are copyright ©2007 Erdas, Inc. All rights reserved.  Creating compressed files using ECW technology is protected by one or more of U.S. Patent No. 6,201,897, No. 6,442,298 and No. 6,633,688.
+
+3.7. Prohibition of other actions not explicitly permitted.  You are not licensed to, and You agree to refrain from, any use, copying, or distribution of the ECW/JP2 CODEC SDK, or the creation of derivative works thereof, not explicitly permitted under this Agreement.
+
+3.8. Export Controls. You acknowledge and understand that the export or re-export of certain goods or technical data from the United States requires an export control license from the United States Government, and that failure to obtain an export control license may result in a violation of U.S. laws. The ECW/JP2 CODEC SDK may not be shipped, transferred, exported or re-exported into any country or used in any manner prohibited by the United States Export Administration Act or any other export laws, restrictions, or regulations. Each party is responsible for obtaining any and all appropriate permission prior to exporting or re-exporting END APPLICATIONS or LIBRARIES.
+
+3.9. Hold Harmless. You shall hold harmless ERDAS from and against any claims or lawsuits which arise or result from the use or distribution of the END APPLICATIONS or LIBRARIES.
+4. DISCLAIMER OF WARRANTIES AND LIMITATION OF LIABILITY
+
+4.1. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, ERDAS AND ITS SUPPLIERS PROVIDE THE ECW/JP2 CODEC SDK "AS IS" AND WITH ALL FAULTS. ERDAS, ON BEHALF OF ITSELF AND ITS SUPPLIERS, DISCLAIMS ALL WARRANTIES, EXPRESS, IMPLIED OR STATUTORY, AS TO ANY MATTER WHATSOEVER RELATING TO THE ECW/JP2 CODEC SDK, INCLUDING BUT NOT LIMITED TO ANY (IF ANY) IMPLIED WARRANTIES OR CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OF REASONABLE CARE OR WORKMANLIKE EFFORT, OF RESULTS, OF LACK OF NEGLIGENCE, OR OF A LACK OF VIRUSES, ALL WITH REGARD TO THE ECW/JP2 CODEC SDK. THERE IS NO WARRANTY OF TITLE, CORRESPONDENCE TO DESCRIPTION, AUTHORITY, OR NONINFRINGEMENT WITH RESPECT TO THE ECW/JP2 CODEC SDK.
+
+4.2. Limited Liability. You hereby agree that ERDAS shall not be liable for damages for any cause whatsoever, regardless of the form of action whether in contract or in tort, including negligence, related to this Agreement. IN NO EVENT SHALL ERDAS BE LIABLE FOR LOST PROFITS OR REVENUE, INCIDENTAL, DIRECT, INDIRECT, OR SPECIAL, CONSEQUENTIAL OR PUNITIVE DAMAGES, WHETHER OR NOT ERDAS HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, ARISING FROM, RELATED TO OR PERTAINING IN ANY WAY TO THIS AGREEMENT.
+5. TERM AND TERMINATION
+
+5.1. Term. The term of this Agreement commences as of Your acceptance of this Agreement and payment of a royalty, if required, and will extend until terminated.
+
+5.2. Termination for Breach. If You materially breach this Agreement and fail to cure that breach within thirty (30) days after receiving written notice of the breach, ERDAS shall have the right to terminate this Agreement any time after the end of such period.
+
+5.3. Survival Provisions. Notwithstanding termination of this Agreement, ERDAS shall enjoy freedom from liability under Section 4; and Your hold harmless obligations under Section  shall also survive.
+
+5.4. Obligations Upon Termination. Upon termination of this Agreement, all licenses shall terminate and You must return to ERDAS or destroy all copies of the ECW/JP2 CODEC SDK or END APPLICATIONS in Your possession, custody, or control, except that You may retain a reasonable number of copies of END APPLICATIONS, not to exceed five (5), for purposes of internal use to facilitate customer support for existing customers only. Upon termination, You must cease distribution of END APPLICATIONS or LIBRARIES.
+6. MISCELLANEOUS
+
+6.1. Venue and Jurisdiction. The parties agree that the courts in or of the State of Georgia having jurisdiction over disputes arising under this Agreement are convenient to hear such disputes. The official language for this Agreement is English.
+
+6.2. Entire Agreement. This Agreement together with the attached Exhibits sets forth the entire agreement and understanding of the parties relating to the subject matter herein and merges all prior discussion(s) between them. No modification of or amendment to this Agreement, nor any waiver of any rights under this Agreement, will be effective unless set forth in writing signed by officers of both parties hereto.  
+
+6.3. Notices. Any notice to ERDAS required or permitted by this Agreement shall be in writing and either delivered by hand or sent by prepaid, registered or certified mail, return receipt requested, or by nationally recognized overnight courier service, addressed to ERDAS, attention: President, at the address shown at the beginning of this Agreement. 
+
+6.4. Assignment and Binding Effect. You may not transfer or assign Your rights or obligations under this Agreement without the prior written consent of ERDAS.  This Agreement will be binding upon and inure to the benefit of the parties hereto, and to ERDAS's successors and assigns and Your permitted successor and assigns, if any.
+
+6.5. Partial Invalidity. If any provision of this Agreement is held to be invalid by a court of competent jurisdiction, then the remaining provisions will nevertheless remain in full force and effect. 
+
+6.6. No Waiver. No waiver of any term or condition of this Agreement will be valid or binding on either party unless the same will have been mutually assented to in writing by an officer of both parties. ERDAS's decision at any time to refrain from enforcing any of the provisions of the Agreement, or the failure to require at any time performance by You of any of the provisions of this Agreement, will in no way be construed to be a present or future waiver of such provisions, nor in any way affect the validity of an effort by ERDAS to enforce each and every such provision thereafter.
+
+6.7. Interpretation.  Headings are provided for convenience but are not part of this Agreement.  Words in the plural have the same meaning as words in the singular, except multiplied.  Defined conjugate verbs have the same meaning as the defined derivative, modified as appropriate in context.  (For example, DECODING has similar meaning to the defined term DECODE.)
+
+5051 Peachtree Corners Circle
+, Suite 100
+, Norcross, GA 30092-2500 770-776-3400
+
+
+ 
+
+APPENDIX A
+
+Required EULA Terms for ECW/JP2 CODEC SDK
+
+You shall distribute the END APPLICATION to end users by means of an End User License Agreement ("EULA").  You shall provide clear notice to end users before or at the time of delivery of the END APPLICATION that the END APPLICATION contains technology owned by ERDAS.
+
+You shall distribute the END APPLICATION with the EULA in a manner that forms a contract binding the end user to the EULA terms under applicable law.
+
+You may include in the EULA additional notices or other provisions, so long as they are no less protective of ERDAS than the terms set forth below. 
+
+The EULA shall substantially contain the following terms:
+
+    * You have acquired a product ("PRODUCT") that includes software licensed from Erdas, Inc., having a principal place of business at 5051 Peachtree Corners Cir., Ste 100, Norcross, GA 30092 USA ("ERDAS") . Those installed software products of ERDAS origin, as well as any associated media, printed materials, and "online" or electronic documentation ("SOFTWARE) are protected by copyright laws and international copyright treaties. The SOFTWARE is licensed, not sold. 
+    * [If license is for Non-Commercial Use, include the following:]  The license to the SOFTWARE is strictly for Non-Commercial Use.   You may not use the Software (a) for the benefit of any for-profit enterprise or business; (b) for the benefit of any governmental unit or agency; (c) in any activity in which you are compensated for using the SOFTWARE or for the direct or indirect output of the SOFTWARE; or (d) for the benefit of any non-profit entity, if that entity provides products or services in exchange for compensation or other consideration, regardless of whether the SOFTWARE is used in connection with such products or services.  Notwithstanding the foregoing, Non-Commercial Use includes use by non-profit or governmental educational institutions exclusively for  teaching and academic research purposes and not in connection with sponsored or funded  research or any other revenue-producing activity.
+    * [If you distribute SERVICES distributed over a network, include the following:] Users of this PRODUCT who do not use it in connection with the ERDAS Image Manager (or other ERDAS image server products such as Image Web Server, aka “IWS”) must pay a royalty fee.  Contact ERDAS for information.
+    * If You do not agree to this End User License Agreement ("EULA"), do not use [or download] the PRODUCT. If you have paid consideration in return for authorization to use the PRODUCT, promptly contact the person from whom You received this PRODUCT for instructions on return of the unused PRODUCT(S) for a refund. Any use of the SOFTWARE, including but not limited to use of the PRODUCT, will constitute Your agreement to this EULA (or ratification of any previous consent).
+    * NO WARRANTIES FOR THE SOFTWARE. The SOFTWARE is provided "AS IS" and with all faults. THE ENTIRE RISK AS TO SATISFACTORY QUALITY, PERFORMANCE AND ACCURACY IS WITH YOU. ALSO, THERE IS NO WARRANTY AGAINST INTERFERENCE WITH YOUR ENJOYMENT OF THE SOFTWARE OR AGAINST INFRINGEMENT. IF YOU HAVE RECEIVED ANY WARRANTIES REGARDING THE PRODUCT OR THE SOFTWARE, THOSE WARRANTIES DO NOT ORIGINATE FROM, AND ARE NOT BINDING ON, ERDAS. 
+    * NO LIABILITY FOR CERTAIN DAMAGES. EXCEPT AS PROHIBITED BY LAW, ERDAS SHALL HAVE NO LIABILITY FOR ANY INDIRECT, SPECIAL, CONSEQUENTIAL OR INCIDENTAL DAMAGES ARISING FROM OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THE SOFTWARE. THIS LIMITATION SHALL APPLY EVEN IF ANY REMEDY FAILS IN ITS ESSENTIAL PURPOSE.
+    * Limitations on Reverse Engineering, Decompilation and Disassembly. You may not reverse engineer, decompile, or disassemble the SOFTWARE.  If You wish to use the SOFTWARE to create Your own applications, You must adhere to the ECW/JP2 CODEC SDK End-User License Agreement, which is available by contacting ERDAS or by visiting www.ERDAS.com.
+    * Export Restrictions. You acknowledge that the SOFTWARE, or any part thereof, or any process or service that is the direct product of the SOFTWARE is of U.S. origin. You agree to comply with all applicable international and national laws that apply to these products, including the U.S. Export Administration Regulations, as well as end-user, end-use and destination restrictions issued by U.S. and other governments.

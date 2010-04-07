@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Url Adapter Plug-in
+Bundle-SymbolicName: net.refractions.udig.tutorials.urladapter;singleton:=true
+Bundle-Version: 1.2.0
+Bundle-Activator: net.refractions.udig.tutorials.urladapter.Activator
+Bundle-Vendor: Student
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.ui,
+ net.refractions.udig.catalog,
+ net.refractions.udig.catalog.shp
+Bundle-ActivationPolicy: lazy

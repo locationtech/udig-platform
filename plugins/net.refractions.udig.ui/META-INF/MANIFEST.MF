@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: net.refractions.udig.ui; singleton:=true
+Bundle-Version: 1.2.0
+Bundle-Activator: net.refractions.udig.internal.ui.UiPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Eclipse-ExtensibleAPI: true
+Eclipse-BuddyPolicy: ext
+Require-Bundle: org.eclipse.ui;visibility:=reexport,
+ org.eclipse.core.runtime,
+ net.refractions.udig.libs;visibility:=reexport,
+ net.refractions.udig.core;visibility:=reexport,
+ org.eclipse.update.ui,
+ org.eclipse.core.expressions;visibility:=reexport
+Bundle-ActivationPolicy: lazy
+Export-Package: net.refractions.udig,
+ net.refractions.udig.internal.ui,
+ net.refractions.udig.internal.ui.operations,
+ net.refractions.udig.ui,
+ net.refractions.udig.ui.graphics,
+ net.refractions.udig.ui.internal,
+ net.refractions.udig.ui.operations,
+ net.refractions.udig.ui.palette,
+ net.refractions.udig.ui.preferences
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

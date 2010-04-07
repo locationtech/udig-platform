@@ -1,0 +1,127 @@
+test
+<project name="publish" basedir="." default="publish">
+
+	<property file="build.properties"/>
+	<property file="dist.properties"/>
+	<property file="publish.properties"/>
+
+	<target name="init">
+		<!-- determine if build was successful -->
+		<available file="${build.marker}" property="build.ok"/>
+		<condition property="test.ok">
+			<and>
+				<available file="${build.marker}"/>
+				<available file="${testResults.archive}"/>
+			</and>
+		</condition>
+	</target>
+
+	<target name="dist" if="build.ok">
+		<ant antfile="dist.xml"/>
+	</target>
+
+	<target name="test" if="build.ok">
+		<ant antfile="test.xml"/>
+	</target>
+
+	<target name="doc" if="build.ok">
+		<ant antfile="doc.xml"/>
+	</target>
+
+	<target name="notify" unless="build.ok">
+		<echo message="${cctimestamp}"/>
+		<!--mail from="${mail.from}" subject="${mail.subject}" tolist="${mail.to}">
+			<message>Build log: ${publish.url}/${build.datestamp}/udig-buildlog-${build.timestamp}</message>
+		</mail-->
+	</target>
+
+	<target name="publishArchive" if="build.ok">
+		<copy todir="${publish.dir}">
+			<fileset dir="${basedir}">
+				<include name="${udig.win32.archive}"/>
+			</fileset>
+			<mapper type="glob" from="*.zip" to="*-${publish.stamp}.zip"/>
+		</copy>
+		<copy todir="${publish.dir}">
+			<fileset dir="${basedir}">
+				<include name="${udig.linux.archive}"/>
+			</fileset>
+			<mapper type="glob" from="*.tgz" to="*-${publish.stamp}.tgz"/>
+		</copy>
+	</target>
+
+	<target name="publishTestResults" if="test.ok">
+		<copy file="${testResults.archive}" tofile="${publish.dir}/udig-testResults-${publish.stamp}.zip"/>
+
+		<delete dir="${publish.dir}/tests"/>
+		<mkdir dir="${publish.dir}/tests"/>
+		<unzip src="${testResults.archive}" dest="${publish.dir}/tests"/>
+	</target>
+
+	<target name="publishDocs" if="build.ok">
+		<delete dir="${publish.dir}/docs"/>
+		<mkdir dir="${publish.dir}/docs"/>
+		<mkdir dir="${publish.dir}/docs/javadoc"/>
+		<mkdir dir="${publish.dir}/docs/schema"/>
+
+		<!-- publish the javadocs -->
+		<!--copy file="${javadoc.archive}" tofile="${publish.dir}/udig-javadocs-${publish.stamp}.zip"/>
+		<unzip src="${javadoc.archive}" dest="${publish.dir}/docs/javadoc"/-->
+
+		<!-- pubish the schema docs -->
+		<!--copy file="${schemadoc.archive}" tofile="${publish.dir}/udig-schemdocs-${publish.stamp}.zip"/>
+		<unzip src="${schemadoc.archive}" dest="${publish.dir}/docs/schema"/-->
+	</target>
+
+	<target name="clearLatest" if="build.ok">
+		<delete dir="${publish.latest.dir}"/>
+		<mkdir dir="${publish.latest.dir}"/>
+	</target>
+
+	<!--target name="publish" depends="init,dist,test,doc"-->
+	<target name="publish" depends="init,dist">
+		<!-- stamp the build -->
+		<tstamp/>
+		<property name="build.datestamp" value="${buildType}${DSTAMP}"/>
+		<property name="build.timestamp" value="${buildType}${DSTAMP}-${TSTAMP}"/>
+		<property name="publish.stamp.dir" value="${publish.root}/${build.datestamp}"/>
+		<property name="publish.latest.dir" value="${publish.root}/latest"/>
+
+		<!-- only clear latest if build compiled -->
+		<antcall target="clearLatest"/>
+
+		<!-- always publish the build log -->
+		<copy file="${build.log}" tofile="${publish.stamp.dir}/udig-buildlog-${build.timestamp}"/>
+		<copy file="${build.log}" tofile="${publish.latest.dir}/udig-buildlog-${build.timestamp}"/>
+
+		<!-- publish the distros,test results,and docs if build ok -->
+		<antcall target="publishArchive">
+			<param name="publish.dir" value="${publish.stamp.dir}"/>
+			<param name="publish.stamp" value="${build.datestamp}"/>
+		</antcall>
+		<antcall target="publishArchive">
+			<param name="publish.dir" value="${publish.latest.dir}"/>
+			<param name="publish.stamp" value="latest"/>
+		</antcall>
+		<antcall target="publishTestResults">
+			<param name="publish.dir" value="${publish.stamp.dir}"/>
+			<param name="publish.stamp" value="${build.datestamp}"/>
+		</antcall>
+		<antcall target="publishTestResults">
+			<param name="publish.dir" value="${publish.latest.dir}"/>
+			<param name="publish.stamp" value="latest"/>
+		</antcall>
+		<antcall target="publishDocs">
+			<param name="publish.dir" value="${publish.stamp.dir}"/>
+			<param name="publish.stamp" value="${build.datestamp}"/>
+		</antcall>
+		<antcall target="publishDocs">
+			<param name="publish.dir" value="${publish.latest.dir}"/>
+			<param name="publish.stamp" value="latest"/>
+		</antcall>
+
+		<!-- notify via email if build failed -->
+		<antcall target="notify"/>
+	</target>
+
+</project>

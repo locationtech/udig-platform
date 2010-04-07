@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="build" default="feature_export">
+	<target name="feature_export">
+		<pde.exportFeatures features="uCore,uLibs" destination="${basedir}" exportType="update" exportSource="false"/>
+	</target>
+</project>

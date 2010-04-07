@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="net.refractions.udig.tutorials.shpexport.operations"
+         name="shpExportOperations"
+         point="net.refractions.udig.ui.operation">
+      <category
+            description="Additional operations for exporting shapefiles"
+            id="net.refractions.udig.tutorials.shpexport.category"
+            name="Shapefile Export Operations">
+      </category>
+      <operation
+            categoryId="net.refractions.udig.tutorials.shpexport.category"
+            class="net.refractions.udig.tutorials.shpexport.ShpExportOp"
+            id="net.refractions.udig.tutorials.shpexport.operation"
+            name="Export to Shapefile"
+            targetClass="org.geotools.data.FeatureSource">
+      </operation>
+      <operation
+            class="net.refractions.udig.tutorials.shpexport.CalculateLengthOp"
+            enablesFor="1"
+            id="net.refractions.udig.tutorials.shpexport.operation1"
+            name="Calculate Length"
+            targetClass="org.geotools.data.FeatureSource">
+         <enablement></enablement>
+      </operation>
+      <operation
+            class="net.refractions.udig.tutorials.shpexport.Op1"
+            enablesFor="1"
+            id="net.refractions.udig.tutorials.shpexport.operation1"
+            name="name"
+            targetClass="net.refractions.udig.tutorials.shpexport.Object1">
+         <enablement></enablement>
+      </operation>
+   </extension>
+
+</plugin>

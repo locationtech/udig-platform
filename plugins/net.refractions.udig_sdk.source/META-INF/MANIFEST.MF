@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Source Plug-in
+Bundle-SymbolicName: net.refractions.udig_sdk.source;singleton:=true
+Bundle-Version: 1.0.0

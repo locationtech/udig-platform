@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="net.refractions.udig.project">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="net.refractions.udig.project" id="layerOp" name="LayerOp"/>
+      </appInfo>
+      <documentation>
+         A layer operation extension is an extension that performs an operation on one or more layers in a map.  Since the layer op extension point is not yet defined this section is a recommendation.  The layer op extension point will allow programatical access to a layer.  Layer operations would be listed under the layer menu and in context menus in the layer view when a layer is right clicked.  In order provide a scalable solution the layer operation extension point will require a extension to declare a filter that will allow the menu managers to determine whether the layer operation is interested in the layer.  If it is then the operation will be added to the menu.  Otherwise the operation will be left out of the menu.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <documentation>
+            A layer operation extension is an extension that performs an operation on one or more layers in a map.  Layer operations are listed under the layer menu and in context menus in the layer view when a layer is right clicked.  In order provide a scalable solution the layer operation extension point requires a extension to declare a filter that will allow the menu managers to determine whether the layer operation is interested in the layer.  If it is then the operation will be added to the menu.  Otherwise the operation will be left out of the menu.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  a fully qualified identifier of the target extension point
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  an optional identifier of the extension instance
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  an optional name of the extension instance
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="operation">
+      <annotation>
+         <appInfo>
+            <meta.element icon="icon"/>
+         </appInfo>
+      </annotation>
+      <complexType>
+         <attribute name="icon" type="string">
+            <annotation>
+               <documentation>
+                  An icon to display in the menu
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="resource"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.LayerOp"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A unique ID of the operation
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  A human readable name of the operation
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         [Enter the first release in which this extension point appears.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         
+      </documentation>
+   </annotation>
+
+</schema>

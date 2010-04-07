@@ -1,0 +1,123 @@
+<project name="Automated Eclipse Testing" default="all"  basedir="." >
+
+	<!--properties file containing the plugin directory name including version number-->
+	<property file="test.properties" />
+	<property file="../build.properties"/>
+
+	<!--properties file containing the build information-->
+	<property file="label.properties" />
+	
+	<!--default directory where test-eclipse will be installed-->
+	<property name="install" value="${basedir}/test-eclipse" />
+	
+	<!--name that can be added to report name to identify which platform tests results come from-->
+	<property name="platform" value="" />
+
+	<!-- The root of the eclipse installation -->
+	<property name="eclipse-home" value="${install}/${archivePrefix}" />
+
+	<!-- The directory that will contain the xml and html results from the tests that are run -->
+ 	<property name="results" value="${basedir}/results" />
+	
+	<target name="setup" unless="noclean">
+		<!--condition property="tar.gz">
+			<not>
+   				<equals arg1="${os}" arg2="win32" />
+			</not>
+		</condition-->
+		<antcall target="setup-zip" />
+		<!--antcall target="setup-tar.gz" /-->
+	</target>
+	
+	<!--use zip if not testing on Linux-->
+	<target name="setup-zip" unless="tar.gz" description="Reinstall the test Eclipse installation if specified by user">
+		<delete dir="${install}" />
+		<mkdir dir="${install}" />
+		<exec dir="." executable="unzip">
+			<!--arg line="-o -qq eclipse-SDK-*.zip -d ${install}"/-->
+			<arg line="-o -qq udig.zip -d ${install}"/>
+	    </exec>
+	    <exec dir="." executable="unzip">
+			<!--arg line="-o -qq eclipse-junit-tests-*.zip -d ${install}"/-->
+			<arg line="-o -qq udig-junit-tests.zip -d ${install}"/>
+    	</exec>
+  	</target>
+	
+	<target name="junit" depends="setup">
+		<ant antfile="${eclipse-home}/plugins/${testPlugin}/test.xml" dir="${eclipse-home}" />
+		<copy file="${eclipse-home}/${report}.xml" tofile="${results}/xml/${report}_${platform}.xml" failonerror="false" />
+		<antcall target="genHtml" />
+	</target>
+
+	<target name="performance" if="performance.target.present">
+		<antcall target="setup" />
+		<ant antfile="${eclipse-home}/plugins/${testPlugin}/test.xml" dir="${eclipse-home}" target="performance" />
+		<copy file="${eclipse-home}/${report}.xml" tofile="${results}/xml/${report}_${platform}.xml" failonerror="false" />
+		<antcall target="genHtml" />
+	</target>
+
+	<target name="clean">
+		<delete dir="results"/>
+		<delete dir="${archivePrefix}"/>
+		<delete dir="test-eclipse"/>
+		<delete dir="workspace"/>
+	</target>
+
+	<target name="runtests">
+		<condition property="performance.target.present" value="true">
+			<isset property="${testPlugin}.has.performance.target"/>
+		</condition>
+		
+		<!--override the value of this property with performance if the tests run on performance machine-->
+		<property name="test.target" value="junit" />
+		<antcall target="${test.target}"/>
+	</target>
+
+	<target name="catalog">
+		<antcall target="runtests">
+			<param name="testPlugin" value="${net.refractions.udig.catalog.tests}"/>
+			<param name="report" value="net.refractions.udig.catalog.tests"/>
+		</antcall>
+	</target>
+	
+	<target name="catalog.ui">
+		<antcall target="runtests">
+			<param name="testPlugin" value="${net.refractions.udig.catalog.tests.ui}"/>
+			<param name="report" value="net.refractions.udig.catalog.tests.ui"/>
+		</antcall>
+	</target>
+	
+	<target name="catalog.wfs">
+		<antcall target="runtests">
+			<param name="testPlugin" value="${net.refractions.udig.catalog.tests.wfs}"/>
+			<param name="report" value="net.refractions.udig.catalog.tests.wfs"/>
+		</antcall>
+	</target>
+	
+	<target name="project">
+		<antcall target="runtests">
+			<param name="testPlugin" value="${net.refractions.udig.project.tests}"/>
+			<param name="report" value="net.refractions.udig.project.tests"/>
+		</antcall>
+	</target>
+	
+	<target name="project.ui">
+		<antcall target="runtests">
+			<param name="testPlugin" value="${net.refractions.udig.project.tests.ui}"/>
+			<param name="report" value="net.refractions.udig.project.tests.ui"/>
+		</antcall>
+	</target>
+	
+	<target name="all">
+		<antcall target="catalog" />
+		<antcall target="catalog.ui" />
+		<antcall target="catalog.wfs" />
+		<!--antcall target="project" /-->
+		<antcall target="project.ui" />
+	</target>
+	
+	<target name="genHtml" description="Generates HTML results with provided JUNIT.XSL provided">
+		<style style="JUNIT.XSL" basedir="${results}/xml" destdir="${results}/html" />
+	</target>
+
+</project>

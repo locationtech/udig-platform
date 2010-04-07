@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="net.refractions.udig.libs.source" default="download.src" basedir=".">
+	
+	<dirname file="${ant.file.net.refractions.udig.libs.source}" property="refresh_libs_src_basedir"/>	
+	<import file="${refresh_libs_src_basedir}/../net.refractions.udig.libs/refresh.xml" />
+
+	<!-- ================================= 
+          target: download.src              
+         ================================= -->
+	<target name="download.src" depends="load_m2_deps" description="Download the source jars for the jars in the net.refractions.udig.libs plugin">
+		<mkdir dir="${basedir}/util/bin" />
+		<javac fork="true" srcdir="${basedir}/util/src" destdir="${basedir}/util/bin" debug="on" />
+		<java classpath="util/bin" failonerror="true" fork="false" classname="util.Mkdir" >
+			 <arg value="${refresh_libs_src_basedir}"/>
+		</java>
+		<loadproperties srcfile="${basedir}/dest.properties" />
+
+
+		<copy todir="${libs_src_dir}" verbose="true">
+			<fileset refid="sources.dependency.fileset" />
+			<chainedmapper>
+				<mapper type="flatten" />
+				<mapper type="glob" from="*-sources.jar" to="*src.zip" />
+			</chainedmapper>
+		</copy>
+		<!--antcall target="fix" /-->
+	</target>
+
+	<!-- ================================= 
+          target: clean              
+         ================================= -->
+	<target name="clean" description="delete src directory">
+		<delete dir="${basedir}/src" />
+		<delete file="dest.properties" />
+	</target>
+
+	<target name="fix">
+		<move file="${libs_src_dir}/geoapi-2.3-SNAPSHOTsrc.zip" tofile="${libs_src_dir}/geoapi-2.2-PREVIOUSsrc.zip" verbose="true" failonerror="no" />
+		<move todir="${libs_src_dir}" verbose="true" failonerror="no">
+			<fileset dir="${libs_src_dir}">
+				<include name="geoapi-2.3-*.zip" />
+			</fileset>
+			<mapper type="regexp" from="^.*$" to="geoapi-2\.3-SNAPSHOTsrc\.zip" />
+		</move>
+	</target>
+
+	<!-- Used by headless build please make sure this does everthing from clean to download and fix etc.. -->
+	<target name="full-build" depends="clean, download.src" description="clean and build">
+	</target>
+
+</project>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="net.refractions.udig.mapgraphic.mapgraphic">
+		 <mapGraphic
+         class="net.refractions.udig.legend.ui.LegendGraphic"
+         icon="icons/obj16/legend_obj.gif"
+         id="legend"
+         name="%legend.name"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="net.refractions.udig.legend.ui.LegendGraphicStyleConfigurator"
+            id="legend"
+            label="%legend.style.conf.label"
+            requires="net.refractions.udig.legend.ui.LegendGraphic"
+            styleId="net.refractions.udig.legend.style"/>
+      <styleConfigurator
+            class="net.refractions.udig.mapgraphic.style.LocationStyleConfigurator"
+            id="net.refractions.udig.legend.location"
+            label="%location.label"
+            requires="net.refractions.udig.legend.ui.LegendGraphic"
+            styleId="net.refractions.udig.printing.ui.locationStyle"/>
+      <styleConfigurator
+            class="net.refractions.udig.mapgraphic.style.FontStyleConfigurator"
+            id="net.refractions.udig.legend.ui.style.font"
+            label="Font"
+            requires="net.refractions.udig.legend.ui.LegendGraphic"
+            styleId="net.refractions.udig.mapgraphic.style.font">
+      </styleConfigurator>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.style">
+      <style
+            class="net.refractions.udig.legend.ui.LegendStyleContent"
+            id="net.refractions.udig.legend.legendStyle"
+            name="%legend.style.name"/>
+   </extension>
+      <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="net.refractions.udig.legend.mapGraphic.action"
+            label="%actionset.mapgraphic.label"
+            visible="false">
+         <action
+               class="net.refractions.udig.legend.ui.actions.LegendAction"
+               icon="icons/obj16/legend_obj.gif"
+               id="net.refractions.udig.project.ui.action.addlegend"
+               label="%action.addlegend.label"
+               menubarPath="layer/mapGraphic.ext"
+               style="push"/>
+      </actionSet>
+   </extension>
+      <extension
+            point="org.eclipse.ui.perspectiveExtensions">
+         <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
+            <actionSet id="net.refractions.udig.legend.mapGraphic.action"/>
+         </perspectiveExtension>
+         <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
+            <actionSet id="net.refractions.udig.legend.mapGraphic.action"/>
+         </perspectiveExtension>
+      </extension>
+      <extension
+            point="net.refractions.udig.catalog.resolvers">
+         <factory
+               class="net.refractions.udig.legend.internal.ResolversFactory"
+               resolveableType="net.refractions.udig.mapgraphic.internal.MapGraphicResource">
+            <resolve
+                  type="java.awt.Rectangle">
+            </resolve>
+         </factory>
+      </extension>
+</plugin>

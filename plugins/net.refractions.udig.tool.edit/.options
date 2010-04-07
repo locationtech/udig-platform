@@ -1,0 +1,6 @@
+net.refractions.udig.tools.edit/debug=true
+net.refractions.udig.tools.edit/selection=true
+net.refractions.udig.tools.edit/activator=true
+net.refractions.udig.tools.edit/behaviour=true
+net.refractions.udig.tools.edit/handler/lock=true
+net.refractions.udig.tools.edit/debug/assertions=true

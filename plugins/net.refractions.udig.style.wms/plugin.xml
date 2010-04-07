@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="net.refractions.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="net.refractions.udig.style.wms.WMSStyleConfigurator"
+            id="wms-style"
+            label="%WMSStyle.label"
+            requires="org.eclipse.jface.resource.ImageDescriptor"
+            styleId="net.refractions.udig.render.wmsStyle"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.style">
+      <style
+            class="net.refractions.udig.style.wms.WMSStyleContent"
+            id="net.refractions.udig.render.wmsStyle"
+            name="%style.name"/>
+   </extension>
+
+</plugin>

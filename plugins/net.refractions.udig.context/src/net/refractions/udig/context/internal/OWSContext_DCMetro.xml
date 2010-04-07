@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!-- $Id$ -->
+<OWSContext id="20051005" version="0.0.13" xmlns="http://www.opengis.net/oc" xmlns:ogc="http://www.opengis.net/ogc" xmlns:ows="http://www.opengis.net/ows" xmlns:param="http;//www.opengis.net/param" xmlns:sld="http://www.opengis.net/sld" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/oc oc_0_0_13.xsd">
+  <General>
+    <Window height="512" width="512"/>
+    <ows:BoundingBox crs="EPSG:4326">
+      <ows:LowerCorner>-78.1 38.0</ows:LowerCorner>
+      <ows:UpperCorner>-76.3 39.8</ows:UpperCorner>
+    </ows:BoundingBox>
+    <Title>Simple Context of Washington, DC Metro Area for OWS-3 TIE Testing</Title>
+    <ows:ServiceProvider>
+      <ows:ProviderName>Intergraph Corporation</ows:ProviderName>
+      <ows:ServiceContact>
+        <ows:IndividualName>David Rosinger</ows:IndividualName>
+      </ows:ServiceContact>
+    </ows:ServiceProvider>
+  </General>
+  <ResourceList>
+    <Layer hidden="0" queryable="0">
+      <Server service="OGC:WMS" title="DC Metro Area" version="1.1.1">
+        <OnlineResource xlink:href="http://regis.intergraph.com/wms/dcmetro/request.asp" xlink:type="simple"/>
+      </Server>
+      <Name>Counties</Name>
+      <Title>Counties</Title>
+      <sld:MinScaleDenominator>10000000</sld:MinScaleDenominator>
+      <sld:MaxScaleDenominator>25000</sld:MaxScaleDenominator>
+      <SRS>EPSG:4326</SRS>
+      <FormatList>
+        <Format current="1">image/png</Format>
+        <Format>image/jpeg</Format>
+      </FormatList>
+      <StyleList>
+        <Style current="1">
+          <Name>Default</Name>
+          <Title>Default</Title>
+        </Style>
+      </StyleList>
+    </Layer>
+    <FeatureType hidden="0">
+      <Server service="OGC:WFS" title="DC Metro Area" version="1.0.0">
+        <OnlineResource method="GET" xlink:href="http://regis.intergraph.com/wfs/dcmetro/request.asp" xlink:type="simple"/>
+      </Server>
+      <Name>MetroLines</Name>
+      <Title>MetroLines</Title>
+      <sld:MinScaleDenominator>10000000</sld:MinScaleDenominator>
+      <sld:MaxScaleDenominator>25000</sld:MaxScaleDenominator>
+      <SRS>EPSG:4326</SRS>
+    </FeatureType>
+  </ResourceList>
+</OWSContext>

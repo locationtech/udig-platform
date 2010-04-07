@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Custom" id="net.refractions.udig.tutorials.customapp.customapp" application="net.refractions.udig.tutorials.customapp.id1" useFeatures="true" includeLaunchers="true">
+
+   <aboutInfo>
+      <image path="/net.refractions.udig.tutorials.customapp/nl/en/about.gif"/>
+      <text>
+         Hello World
+
+This is a custom application generated using the uDig SDK.
+For more information visit http://udig.refractions.net
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <vmArgs>-Xmx386M -Dosgi.parentClassloader=ext</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages i16="/net.refractions.udig.tutorials.customapp/icons/world16.gif" i32="/net.refractions.udig.tutorials.customapp/icons/world32.gif" i48="/net.refractions.udig.tutorials.customapp/icons/world48.gif" i64="/net.refractions.udig.tutorials.customapp/icons/world64.gif" i128="/net.refractions.udig.tutorials.customapp/icons/world128.gif"/>
+
+   <splash
+      startupProgressRect="0,196,500,10"
+      startupMessageRect="7,180,445,16"
+      startupForegroundColor="FFFFFF" />
+   <launcher name="custom">
+      <linux icon="/net.refractions.udig/icons/udig.xpm"/>
+      <solaris/>
+      <win useIco="true">
+         <ico path="/net.refractions.udig.tutorials.customapp/icons/world.ico"/>
+         <bmp/>
+      </win>
+   </launcher>
+
+
+   <vm>
+      <macos>JVM 1.5</macos>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="net.refractions.udig_tutorials.custom_feature" version="1.2.0"/>
+      <feature id="net.refractions.udig_base" version="1.2.0"/>
+      <feature id="net.refractions.udig_platform" version="1.2.0"/>
+      <feature id="net.refractions.udig_application" version="1.2.0"/>
+      <feature id="net.refractions.udig_printing" version="1.2.0"/>
+      <feature id="org.eclipse.rcp" version="3.5.2.R35x_v20100119-9SA0FxwFnoCU5XxWItFdXXb27BA6"/>
+   </features>
+
+
+</product>

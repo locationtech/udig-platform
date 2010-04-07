@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Developers Documentation Plug-in
+Bundle-SymbolicName: net.refractions.udig.dev;singleton:=true
+Bundle-Version: 1.1.0
+Bundle-Vendor: refractions.net
+Bundle-Localization: plugin
+Eclipse-LazyStart: true

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/Users/Jesse/Applications/eclipse3.2.2/plugins/org.codehaus.groovy.eclipse_1.0.0.20070118/lib/commons-lang-2.1.jar"/>
+	<classpathentry kind="lib" path="/Users/Jesse/Applications/eclipse3.2.2/plugins/org.codehaus.groovy.eclipse_1.0.0.20070118/lib/groovy-all-1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/Jesse/Applications/eclipse3.2.2/plugins/org.codehaus.groovy.eclipse_1.0.0.20070118/lib/commons-io-1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="bin-groovy"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

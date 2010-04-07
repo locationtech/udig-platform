@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="net.refractions.udig.printing.ui">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="net.refractions.udig.printing.ui" id="editAction" name="%editAction.label"/>
+      </appInfo>
+      <documentation>
+         Defines an actions that can be performed on a type of Page layout &quot;Box&quot;.  If the box&apos;s BoxPrinter can adapt to the class specified by the extension then the action will be enabled for the Box.  For example the Font Edit action works on all Boxes whose BoxPrinter adapts to a FontStyle
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <complexType>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="editActionGroup"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="editActionGroup">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="acceptable"/>
+         </appInfo>
+         <documentation>
+            A group of edit actions that can operate on a given class.  
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="editAction" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="acceptable" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The type of object that the BoxPrinter must adapt to in order for the actions to be enabled.  When an object is right clicked the actions that can run on the Box are loaded.  If the BoxPrinter for that box is an instanceof or can adapt to the &quot;acceptable&quot; type then the actions in the group can be executed on the printer
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="editAction">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="name" icon="image"/>
+         </appInfo>
+         <documentation>
+            an edit action that will operate on the &quot;acceptable&quot; type of boxprinter.  See editActionGroup for the definition of acceptable.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The action that will perform the changes indicated by the policy.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.printing.ui.IBoxEditAction"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The display name of the action
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="image" type="string">
+            <annotation>
+               <documentation>
+                  The image that will appear in the context menu.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="resource"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Must be a unique ID (within plugin) of the action
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         [Enter the first release in which this extension point appears.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         
+      </documentation>
+   </annotation>
+
+</schema>

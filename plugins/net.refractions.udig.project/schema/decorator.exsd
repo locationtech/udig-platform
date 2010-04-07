@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="net.refractions.udig.project">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="net.refractions.udig.project" id="decorator" name="decorator"/>
+      </appInfo>
+      <documentation>
+         &lt;p&gt;A Decorator is a adds meaning to a map or page.  The Decorator interface that a decorator extension must extend consists of a draw() method and a setToolkit() method.  The toolkit passed in provides context for the decorator.  For example, a scalebar requires a viewport model and the ability to calculate the extent of a map; the toolkit provides access to that data.  The toolkit the decorator receives is a read only toolkit.  A decorator is not permitted to change UDIG model information.  It can only display information.&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <documentation>
+            A Decorator is a renderer that renders a purely fabricated Layer. It is not backed by any &quot;real&quot; data. Examples could include layers of gridlines, a scalebar, a legend, etc...
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="decorator" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  a fully qualified identifier of the target extension point
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="decorator">
+      <annotation>
+         <appInfo>
+            <meta.element icon="icon"/>
+         </appInfo>
+      </annotation>
+      <complexType>
+         <attribute name="icon" type="string">
+            <annotation>
+               <documentation>
+                  An icon that represents the decorator the extension draws.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="resource"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A human readable name for the decorator used to provide a breif description of the decorator.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  An identifier for the decorator.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The class which decorators must extend.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.render.decorator.Decorator"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         [Enter the first release in which this extension point appears.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         &lt;p&gt;
+&lt;code&gt;
+public class ImageDecorator implements Decorator {&lt;br&gt;
+&amp;nbsp; RenderedImage image;&lt;br&gt;
+&amp;nbsp; private Toolkit toolkit;&lt;br&gt;
+&amp;nbsp; public void draw( ViewportGraphics graphics ) {&lt;br&gt;
+&amp;nbsp;&amp;nbsp;  graphics.drawImage(image, 0,0 );&lt;br&gt;
+&amp;nbsp;}&lt;br&gt;
+&amp;nbsp;public void setToolkit( Toolkit toolkit ) {&lt;br&gt;
+&amp;nbsp;&amp;nbsp;this.toolkit=toolkit;&lt;br&gt;
+&amp;nbsp;}&lt;br&gt;
+}&lt;br&gt;
+&lt;/code&gt;
+&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         
+      </documentation>
+   </annotation>
+
+</schema>

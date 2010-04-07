@@ -1,0 +1,165 @@
+<project name="dist" basedir="." default="dist">
+
+	<property file="build.properties"/>	
+	<property file="dist.properties"/>
+	<property file="publish.properties"/>
+
+	<property name="build.archive.internal" value="${buildDirectory}/${buildLabel}/${udig.releaseFeature}-${buildId}.zip"/> 
+	<property name="sdk.archive.internal" value="${buildDirectory}/${buildLabel}/${udig.sdkFeature}-${buildId}.zip"/> 
+	<property name="test.archive.internal" value="${buildDirectory}/${buildLabel}/${udig.testFeature}-${buildId}.zip"/>
+
+	<target name="clean">
+		<delete dir="dist"/>
+		<delete dir="dist-sdk"/>
+		<delete dir="${udig.artifact.dir}"/>
+		<delete file="${build.archive}"/>
+		<delete file="${test.archive}"/>
+		<delete file="${udig.linux.archive}"/>
+		<delete file="${udig.macosx.archive}"/>
+		<delete file="${udig.win32.archive}"/>
+	</target>
+
+	<target name="patchIcon">
+		<!-- patch the exe, with the correct icon -->
+		<java classname="org.eclipse.swt.tools.internal.IconExe" failonerror="false">
+			<classpath>
+				<pathelement location="swt-tools.jar"/>
+			</classpath>
+			<arg line="${exe}"/>
+			<!--arg line="${buildDirectory}/../dist/${archivePrefix}/${archivePrefix}.exe"/-->
+			<arg line="${udig.exeIcon}"/>
+		</java>
+
+	</target>
+
+	<target name="buildDist">
+		<!-- unpack the rcp + rename -->
+		<unzip src="${rcp.archive}" dest="dist"/>
+		<move todir="dist/${archivePrefix}">
+			<fileset dir="dist/eclipse"/>
+		</move>
+		<move todir="dist/${archivePrefix}"> 
+			<fileset dir="dist/${archivePrefix}">
+				<include name="eclipse"/>	
+				<include name="eclipse.exe"/>	
+			</fileset>
+			<mapper type="glob" from="eclipse*" to="${archivePrefix}*"/>
+		</move>
+
+		<!-- unpack the build --> 
+		<unzip src="${build.archive.internal}" dest="dist"/>
+
+		<!-- patch the icon -->	
+		<antcall target="patchIcon">	
+			<param name="exe" value="${buildDirectory}/../dist/${archivePrefix}/${archivePrefix}.exe"/>
+		</antcall>
+
+		<!-- copy in a jre -->
+		<unzip src="${jre.archive}" dest="dist/${archivePrefix}"/>
+
+		<!-- build the sdk -->
+ 		<!-- unpack the rcp, delta pack and rename them -->
+    <unzip src="${rcp.archive}" dest="dist-sdk"/>
+    <unzip src="${rcp.delta.pack.archive}" dest="dist-sdk"/>
+    <move todir="dist-sdk/${archivePrefix}">
+      <fileset dir="dist-sdk/eclipse"/>
+    </move>
+    
+    <move todir="dist-sdk/${archivePrefix}">
+      <fileset dir="dist-sdk/${archivePrefix}">
+        <include name="eclipse"/>
+        <include name="eclipse.exe"/>
+      </fileset>
+      <mapper type="glob" from="eclipse*" to="${archivePrefix}*"/>
+    </move>
+
+		<!-- unpack the sdk -->
+<!--    <unzip src="${sdk.archive.internal}" dest="dist-sdk"/>
+-->
+		<!-- patch the icon -->	
+		<antcall target="patchIcon">	
+			<param name="exe" value="${buildDirectory}/../dist-sdk/${archivePrefix}/${archivePrefix}.exe"/>
+		</antcall>
+	</target>
+
+	<target name="packageDistMacOSX">
+		<tar destfile="${udig.macosx.archive}" compression="gzip">
+		</tar>
+
+		<!-- delete old archive -->
+		<delete dir="dist/${archivePrefix}"/>
+	</target>
+	<target name="packageDistLinux">
+		<tar destfile="${udig.linux.archive}" compression="gzip">
+			<tarfileset dir="dist" excludes="${archivePrefix}/${archivePrefix},${archivePrefix}/jre/bin/*"/>
+			<tarfileset dir="dist" includes="${archivePrefix}/${archivePrefix},${archivePrefix}/jre/bin/*" mode="755"/>
+		</tar>
+<!--		<tar destfile="${udig.linux.sdk.archive}" compression="gzip">
+			<tarfileset dir="dist-sdk" excludes="${archivePrefix}/${archivePrefix},${archivePrefix}/jre/bin/*"/>
+			<tarfileset dir="dist-sdk" includes="${archivePrefix}/${archivePrefix},${archivePrefix}/jre/bin/*" mode="755"/>
+		</tar>
+-->
+		<!-- delete old archives -->
+		<delete dir="dist/${archivePrefix}"/>
+<!--		<delete dir="dist-sdk/${archivePrefix}"/>
+-->	</target>
+
+	<target name="packageDistWin32">
+		<zip destfile="${udig.win32.archive}" basedir="dist"/>
+<!--		<zip destfile="${udig.win32.sdk.archive}" basedir="dist-sdk"/>
+-->
+		<!-- delete old archives -->
+		<delete dir="dist/${archivePrefix}"/>
+<!--		<delete dir="dist-sdk/${archivePrefix}"/>
+-->	</target>
+
+	<target name="dist" depends="clean">
+		<mkdir dir="dist"/>
+
+		<antcall target="buildDist">
+			<param name="rcp.archive" value="${rcp.linux.archive}"/>
+			<param name="udig.archive" value="${udig.linux.archive}"/>
+			<param name="jre.archive" value="${jre.linux.archive}"/>
+<!--			<param name="sdk.archive" value="${udig.linux.sdk.archive}"/>
+-->		</antcall>
+		<antcall target="packageDistLinux"/>
+		
+		<!--make linux the default, used for testing and such -->
+		<copy file="${udig.linux.archive}" tofile="${build.archive}"/>
+
+		<antcall target="buildDist">
+			<param name="rcp.archive" value="${rcp.win32.archive}"/>
+			<param name="udig.archive" value="${udig.win32.archive}"/>
+			<param name="jre.archive" value="${jre.win32.archive}"/>
+<!--			<param name="sdk.archive" value="${jre.win32.sdk.archive}"/>
+-->		</antcall>
+		<antcall target="packageDistWin32"/>	
+
+		<!-- copy over the build without the rcp -->
+		<copy file="${build.archive.internal}" tofile="${build.norcp.archive}"/>
+
+		<antcall target="buildDist">
+			<param name="rcp.archive" value="${rcp.macosx.archive}"/>
+			<param name="udig.archive" value="${udig.macosx.archive}"/>
+			<param name="jre.archive" value="${jre.macosx.archive}"/>
+<!--			<param name="sdk.archive" value="${jre.macosx.sdk.archive}"/>
+-->		</antcall>
+		<!--antcall target="packageDistMacOSX"/-->
+		
+		<!-- grab the tests -->
+		<!--copy file="${test.archive.internal}" tofile="${test.archive}"/--> 
+
+		<!-- copy all artifacts to a seperate directory -->
+		<mkdir dir="${udig.artifact.dir}"/>
+		<move file="${udig.win32.archive}" todir="${udig.artifact.dir}"/>
+<!--		<move file="${udig.win32.sdk.archive}" todir="${udig.artifact.dir}"/>
+-->		<move file="${udig.linux.archive}" todir="${udig.artifact.dir}"/>
+<!--		<move file="${udig.linux.sdk.archive}" todir="${udig.artifact.dir}"/>
+-->
+		<!-- TODO: replace this when upgrade to next version of CC -->
+		<copy todir="${publish.root}">
+			<fileset dir="${udig.artifact.dir}" includes="*"/>
+		</copy>
+	</target>
+
+</project>

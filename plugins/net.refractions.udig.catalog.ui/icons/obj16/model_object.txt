@@ -1,0 +1,18 @@
+STATE: n/a
+TYPE: model object
+SIZE: 16x16
+PALETTE: Eclipse 256 colour palette
+
+Model Objects
+-------------
+    Model Object icons are found in tree views, list views, and on Editor Tabs
+within the the workbench (such as files, folders, projects and so on).
+
+Model Object Icon Size & Placement
+----------------------------------
+- Maximum 16 pixels wide x 15 pixels high, always centered.
+- Model Object icons must be no greater than 15 pixels high.
+
+    Designed within an area of 16 x 16 pixels. Within that area, a 16 x 15 pixel
+space is reserved for the image itself, leaving horizontal line of empty pixels
+to allow for proper placement of the image within the interface.

@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="net.refractions.udig.printing">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="net.refractions.udig.printing" id="templateFactories" name="Template Factories"/>
+      </appInfo>
+      <documentation>
+         A Template is used to layout elements on a Page that will be use for printing.
+
+See net.refractions.udig.printing.ui.internal.BasicTemplate for an example of how to create a template.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <documentation>
+            Defines a page template.  A Template creates a bunch of boxes and and sets the box printer for each box.  It also sets the size and location of each box.  To create a box use:
+Box box = ModelFactory.eINSTANCE.createBox();
+
+&lt;p&gt;An important point to note is that each box printer must have a boxprinter extension definition OR IT WON&apos;T BE SAVED!!!!&lt;/p&gt;
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <choice minOccurs="0" maxOccurs="unbounded">
+               <element ref="templateFactory"/>
+               <element ref="template"/>
+            </choice>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="templateFactory">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="class" deprecated="true"/>
+         </appInfo>
+         <documentation>
+            Defines a page template.  A Template creates a bunch of boxes and and sets the box printer for each box.  It also sets the size and location of each box.  To create a box use:
+Box box = ModelFactory.eINSTANCE.createBox();
+
+&lt;p&gt;An important point to note is that each box printer must have a boxprinter extension definition OR IT WON&apos;T BE SAVED!!!!&lt;/p&gt;
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The class that will produce a template for us.
+Must implement net.refractions.udig.printing.TemplateFactory
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.printing.ui.TemplateFactory"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="template">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="name"/>
+         </appInfo>
+         <documentation>
+            Defines a page template.  A Template creates a bunch of boxes and and sets the box printer for each box.  It also sets the size and location of each box.  To create a box use:
+Box box = ModelFactory.eINSTANCE.createBox();
+
+&lt;p&gt;An important point to note is that each box printer must have a boxprinter extension definition OR IT WON&apos;T BE SAVED!!!!&lt;/p&gt;
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of the Template (as displayed to the user)
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The net.refractions.udig.printing.Template used to create a Page
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.printing.ui.Template"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         0.3
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         &lt;pre&gt;
+ &lt;extension point=&quot;net.refractions.udig.printing.templates&quot;
+            id=&quot;net.refractions.udig.examples.template&quot;&gt;
+     &lt;template name=&quot;%Basic%&quot; id=&quot;basic&quot;
+               class=&quot;net.refractions.udig.printing.internal.BasicTemplate&quot;/&gt;
+ &lt;/extension&gt;
+&lt;/pre&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         See the &lt;code&gt;net.refractions.udig.printing&lt;/code&gt; package.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         See the &lt;code&gt;net.refractions.udig.printing&lt;/code&gt; package.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         uDig - User Friendly Desktop Internet GIS client
+&lt;A HREF=&quot;http://udig.refractions.net&quot;&gt;http://udig.refractions.net&lt;/A&gt;
+(C) 2004, Refractions Research Inc.
+
+This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License.
+
+This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+      </documentation>
+   </annotation>
+
+</schema>

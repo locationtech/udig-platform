@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension-point id="ServiceExtension" name="%services.name" schema="schema/serviceExtension.exsd"/>
+   <extension-point id="ICatalog" name="%catalogs.name" schema="schema/catalog.exsd"/>
+   <extension-point id="temporaryResource" name="%temp_resource.name" schema="schema/temporaryResource.exsd"/>
+   <extension-point id="resolvers" name="%resolvers.name" schema="schema/resolvers.exsd"/>
+   <extension-point id="friendly" name="%friendly.name" schema="schema/friendly.exsd"/>
+   <extension
+         point="net.refractions.udig.catalog.ICatalog">
+      <catalog class="net.refractions.udig.catalog.internal.CatalogImpl"/>
+   </extension>
+  <extension
+        point="org.eclipse.core.runtime.preferences">
+     <initializer class="net.refractions.udig.catalog.internal.PreferenceInitializer"/>
+  </extension>
+       <extension
+         point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.refractions.udig.catalog.memory.MemoryServiceExtensionImpl"
+            id="memory"
+            name="In-Memory Datastore"/>
+      <service
+            class="net.refractions.udig.catalog.moved.MovedServiceExtention"
+            id="moved"
+            name="Moved Service">
+      </service>
+   </extension>
+    <extension
+          point="net.refractions.udig.catalog.temporaryResource">
+       <resource
+             descriptorClass="org.opengis.feature.simple.SimpleFeatureType"
+             factory="net.refractions.udig.catalog.memory.internal.TemporaryResourceFactory"/>
+    </extension>
+  
+</plugin>

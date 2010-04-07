@@ -1,0 +1,74 @@
+                              User Interface Guidelines
+                              -------------------------
+Please Read the Eclipse User Interface Guidelines:
+- http://www.eclipse.org/articles/Article-UI-Guidelines/Contents.html
+                   
+ DIRECTORY      color     distabled enabled   Other     Banner    Size
+ -------------- --------- --------- --------- --------- --------- -----
+ local toolbar  clcl16/   dlcl16/   elcl16/                       16x16
+ toolbar        ctool16/  dtool16/  etool16/                      16x16
+ view           cview16/  dview16/  eview16/                      16x16
+ model object                                 obj16/              16x16
+ overlay                                      ovr16/              7x8
+ wizard banner                                          wizban/   55x45                                              
+ -------------- --------- --------- --------- --------- --------- -----
+ PALETTE        256 color 2 color   8 color   256 color 183 color
+
+ TYPE           type   description
+ -------------- ----   ----------------------------------------------------                
+ local toolbar  lcl    found on the far right of the title area of a view
+ toolbar        tool   used in cascading menus, and the global toolbar
+ view           view   found in the top, left corner of a new view
+ model object   obj    used in the tree, list, properties views, and editor tabs
+ overlay        ovr    placed on top of model object to indicate a change
+ wizard banner  wizban used in wizard dialog windows
+ -------------- ----   ----------------------------------------------------
+                      
+ FILENAME SUFFIX                          lcl   tool  view  obj  ovr  wizban
+ ---------------------------------------- ----- ----- ----- ---- ---- ------
+ invoke a wizard, or graphics in a wizard       _wiz                  _wiz
+ invoke executable file                         _exec
+ in an editor view                              _edit
+ in a navigator view                      _nav  _nav  _nav
+ do not fit into a category               _misc       _misc
+ represent tasks that user can do         _tsk        _tsk  _tsk _tsk
+ toggles the working mode of the view     _mode 
+ found in a menu                          _menu
+ found in a property sheet                _ps         _ps
+ used in the tree, list, or property view                   _obj
+ model object icons on object palettes                      _pal
+ commands that engage the system          _co   _co
+ ---------------------------------------- ----- ----- ----- ---- ---- ------
+   
+  Eclipse constructs with well defined representations:
+  ------------ ------------ ------------ ------------   ------------
+  create, new  compare      forward      jar            plugin
+  save         debug        backward     WAR            extention
+  cut          run, execute previous     EAR            extention point
+  copy         import       next         windows        thread
+  paste        export       project      perspective    process
+  add          play, resume openproject  property sheet mapping
+  remove       suspend      folder       table          error
+  delete       terminate    open folder  database       warning
+  erase, clear stop         file         repository     alert
+  search       undo         library      class          conflict
+  find         redo         package      interface      public
+  help         refresh      session bean attribute      protected
+  edit         filter       server       element        private
+                                                        default     
+  ------------ ------------ ------------ ------------   ------------
+  
+  UDig constructs with well defined representation:
+  ------------ ------------ 
+  wms
+  wfs
+  feature
+  gridcoverage 
+  
+  Notes
+  -----
+       The provided 8 color enabled palette is based on the eclipse platform
+ guidelines swatches (which are different from the RGB values they say to use)
+ 
+     The provided 2 color disabled palette should be a drop in replacement
+ for any image created with the 8 color enabled palette.

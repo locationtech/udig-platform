@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="net.refractions.udig.project.ui">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="net.refractions.udig.project.ui" id="objectProperty" name="%objectProperty.point"/>
+      </appInfo>
+      <documentation>
+         This point allows a true or false property to defined for an arbitrary object.  It is used by the enablesFor element of the tool extension point.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <documentation>
+            This point allows a true or false property to defined for an arbitrary object.  It is used by the enablesFor element of the tool extension point.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="object" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="object">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="targetClass"/>
+         </appInfo>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="property" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="targetClass" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The class that the property operates on.  It will be passed in as a parameter of the property&apos;s isTrue method.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="property">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="id"/>
+         </appInfo>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  the id of the property value that will be used.  It will be concatenated with the namespace identifier of the plugin defining the extension.  For example a property &quot;prop&quot; in plugin &quot;example.plugin&quot; is referenced by &quot;example.plugin.prop&quot;.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The PropertyValue implementation.  It is not required to be an net.refractions.udig.ui.operations.AbstractPropertyValue but it is recommended.  At minimum it must be a net.refractions.udig.ui.operations.PropertyValue
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.ui.operations.AbstractPropertyValue:net.refractions.udig.ui.operations.PropertyValue"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         1.1.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         &lt;extension
+         point=&quot;net.refractions.udig.project.ui.objectProperty&quot;&gt;
+      &lt;object class=&quot;net.refractions.udig.project.ILayer&quot;&gt;
+         &lt;property
+               id=&quot;GeometryType&quot;
+               value=&quot;net.refractions.udig.project.ui.internal.tool.display.GeometryProperty&quot;/&gt;
+      &lt;/object&gt;
+   &lt;/extension&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         One of the default properties that tools (for example) can use to determine if they are legal for a given selection.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         
+      </documentation>
+   </annotation>
+
+</schema>

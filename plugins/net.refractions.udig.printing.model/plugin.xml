@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="net.refractions.udig.project.projectElementFactories">
+      <projectElementFactory
+            class="net.refractions.udig.printing.model.PageProjectElementFactory"
+            id="net.refractions.udig.printing.model.pageProjectElementFactory"/>
+   </extension>
+
+</plugin>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="net.refractions.udig.tutorials.featureeditor.views"
+         name="Feature Editor Views"
+         point="org.eclipse.ui.views">
+      <view
+            class="net.refractions.udig.tutorials.featureeditor.CountryView"
+            id="net.refractions.udig.tutorials.featureeditor.views.country"
+            name="Country">
+      </view>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.ui.featureEditor">
+      <editor
+            id="net.refractions.udig.tutorials.featureeditor.countriesEditor"
+            name="Country"
+            viewId="net.refractions.udig.tutorials.featureeditor.views.country">
+         <featureType>
+            <attribute
+                  type="com.vividsolutions.jts.geom.MultiPolygon">
+            </attribute>
+            <attribute
+                  name="CNTRY_NAME"
+                  type="java.lang.String">
+            </attribute>
+            <attribute
+                  name="GMI_CNTRY"
+                  type="java.lang.String">
+            </attribute>
+            <attribute
+                  name="COLOR_MAP"
+                  type="java.lang.String">
+            </attribute></featureType>
+      </editor>
+   </extension>
+
+</plugin>

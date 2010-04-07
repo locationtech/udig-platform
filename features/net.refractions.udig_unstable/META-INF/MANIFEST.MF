@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: net.refractions.udig_unstable
+Bundle-Version: 1.0.0
+Bundle-Vendor: Udig.Refractions.net
+Bundle-Localization: plugin

@@ -1,0 +1,85 @@
+<class-diagram generalizations="true" realizations="true" associations="true" dependencies="false" 
+  nesting-relationships="true">  
+  <classifier-display autosize="true" package="true" attributes="false" operations="false" initial-value="false" 
+    signature="true" visibility="true"/>  
+  <association-display labels="true" multiplicity="true"/>  
+  <interface type="java" name="net.refractions.udig.tools.edit.Activator" project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/Activator.java" corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="true" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="202" y="142" width="-1" height="-1"/>  
+  </interface>  
+  <class type="java" name="net.refractions.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator" 
+    project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/activator/DrawCurrentGeomVerticesActivator.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="484" y="52" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.tools.edit.activator.DrawEndPointsActivator" 
+    project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/activator/DrawEndPointsActivator.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="462" y="123" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.tools.edit.activator.DrawGeomsActivator" 
+    project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/activator/DrawGeomsActivator.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="462" y="188" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.tools.edit.activator.EditStateListenerActivator" 
+    project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/activator/EditStateListenerActivator.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="144" y="329" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.tools.edit.EditManagerListenerActivator" 
+    project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/EditManagerListenerActivator.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="333" y="331" width="-1" height="-1"/>  
+  </class>  
+  <realization>    
+    <source project="net.refractions.udig.tool.edit" 
+      name="net.refractions.udig.tools.edit.activator.DrawEndPointsActivator" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/activator/DrawEndPointsActivator.java"/>    
+    <target project="net.refractions.udig.tool.edit" name="net.refractions.udig.tools.edit.Activator" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/Activator.java"/>  
+  </realization>  
+  <realization>    
+    <source project="net.refractions.udig.tool.edit" 
+      name="net.refractions.udig.tools.edit.activator.EditStateListenerActivator" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/activator/EditStateListenerActivator.java"/>    
+    <target project="net.refractions.udig.tool.edit" name="net.refractions.udig.tools.edit.Activator" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/Activator.java"/>  
+  </realization>  
+  <realization>    
+    <source project="net.refractions.udig.tool.edit" name="net.refractions.udig.tools.edit.EditManagerListenerActivator" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/EditManagerListenerActivator.java"/>    
+    <target project="net.refractions.udig.tool.edit" name="net.refractions.udig.tools.edit.Activator" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/Activator.java"/>  
+  </realization>  
+  <realization>    
+    <source project="net.refractions.udig.tool.edit" name="net.refractions.udig.tools.edit.activator.DrawGeomsActivator" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/activator/DrawGeomsActivator.java"/>    
+    <target project="net.refractions.udig.tool.edit" name="net.refractions.udig.tools.edit.Activator" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/Activator.java"/>  
+  </realization>  
+  <realization>    
+    <source project="net.refractions.udig.tool.edit" 
+      name="net.refractions.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/activator/DrawCurrentGeomVerticesActivator.java"/>    
+    <target project="net.refractions.udig.tool.edit" name="net.refractions.udig.tools.edit.Activator" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/Activator.java"/>  
+  </realization>
+</class-diagram>

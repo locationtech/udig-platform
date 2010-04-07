@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>StyleDefinition</title>
+<!-- default platform documentation stylesheets -->
+<style>@import url("book.css");</style>
+<!-- default schema documentation stylesheets -->
+<style>@import url("schema.css");</style>
+</HEAD>
+<BODY>
+<H1><CENTER>StyleDefinition</CENTER></H1>
+<p></p>
+<h6 class=CaptionFigColumn id=header>Identifier: </h6>net.refractions.udig.core.StyleDefinition<p></p>
+<h6 class=CaptionFigColumn id=header>Since: </h6>0.3.0
+<p></p>
+
+<p>
+<h6 class=CaptionFigColumn id=header>Description: </h6>Styles are represented as a Memento object which contains style information as a tree of mementos each of which contains strings.  Only the renderers that render a layer know the concrete style class.  This means that only certain renderers are capable of rendering certain styles.  However as far as UDig is concerned a style is a memento.  This causes problems with the user interface because udig does not know anything about the style.  To overcome this limitation a style must be associated with an editor dialog.  The editor must extend the StyleEditor class.</p>
+<p><h6 class=CaptionFigColumn id=header>Configuration Markup:</h6></p>
+<p class=code id=dtd>&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.style">style</a>+)&gt;</p>
+<p class=code id=dtd>&lt;!ATTLIST extension</p>
+<p class=code id=dtdAttlist>point&nbsp;CDATA #REQUIRED&gt;</p>
+<p></p>
+<p class=ConfigMarkup id=elementDesc>
+A Style provided by a plugin author.  Styles are only useful if they can be rendered so a style that extends this extension point should also have an associated renderer that know how to use the style.</p>
+<br>
+<ul class=ConfigMarkup id=attlistDesc>
+</ul>
+<br><p class=code id=dtd>&lt;!ELEMENT <a name="e.style">style</a> EMPTY&gt;</p>
+<p class=code id=dtd>&lt;!ATTLIST style</p>
+<p class=code id=dtdAttlist>id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED<p class=code id=dtdAttlist>name&nbsp;&nbsp;&nbsp;CDATA #REQUIRED<p class=code id=dtdAttlist>editor&nbsp;CDATA #REQUIRED&gt;</p>
+<p></p>
+<p class=ConfigMarkup id=elementDesc>
+A Style provided by a plugin author.  Styles are only useful if they can be rendered so a style that extends this extension point should also have an associated renderer that know how to use the style.</p>
+<br>
+<ul class=ConfigMarkup id=attlistDesc>
+<li><b>id</b> - An id that will be used to identify the plugin.  Will be used internally.</li>
+<li><b>name</b> - A name readable name that will be used as a display name for users to read.</li>
+<li><b>editor</b> - Since the UDIG is not concerned with what the concrete Style object is no style class must be declared in a style extension.  However, UDIG does need to allow users to edit custom styles so a style extension must provide a StyleEditor class.</li>
+</ul>
+<br><h6 class=CaptionFigColumn id=header>Examples: </h6>net.refractions.udig.project.render.SLDEditor
+net.refractions.udig.project.render.SLDStyle
+<p></p>
+
+<h6 class=CaptionFigColumn id=header>API Information: </h6>A plugin that defines a style (Note: a single plugin could define a style and a renderer) must implement a net.refractions.udig.project.render.StyleEditor and a class that implements the Style interface.  The StyleEditor interface extends eclipse's IDialogPage interface and contains an additional init() method that accepts a StyleMemento object as a parameter.    The StyleMemento contains the style information that the editor can edit.  The other method is getMemento which returns a StyleMemento object.
+<p></p>
+
+<h6 class=CaptionFigColumn id=header>Supplied Implementation: </h6><p>SLDStyle is the Style included with uDig.  It is essentially a adapter for Geotool's Style objects.  The StyleMemento created by SLDStyle contains two properties: a <b>type</b> property which is set to <b>SLDStyle</b> and a <b>version</b> property which at the time of the UDIG version 1.0 release is set to <b>1.0</b>.  The StyleMemento contains an SLD document formatted string in its text field.  The SLD document can be retrieved using the getTextData() method call.
+SLDEditor is the default Style Editor class has been included since the 0.5 release.
+<p>
+The following the code SLDStyle uses to create its StyleMemento:
+</p>
+<p><code>
+<i>//Write Style to a string in SLD format</i>
+SLDTransformer transformer=new SLDTransformer();<br>
+String out=null;<br>
+try {<br>
+&nbsp;&nbsp;out = transformer.transform(this);<br>
+} catch (TransformerException e) {<br>
+&nbsp;&nbsp; // TODO Auto-generated catch block<br>
+&nbsp;&nbsp;e.printStackTrace();<br>
+}<br>
+<i>//create and fill out StyleMemento object</i><br>
+StyleMemento memo=new StyleMemento("SLDStyle", getName(), "net.refractions.udig.project.SLDStyle");<br>
+memo.putTextData(out);<br>
+memo.putString("type","SLDStyle");<br>
+memo.putString("version","1.0");<br>
+return memo;<br>
+</code></p>
+<p></p>
+
+<br>
+<p class=note id=copyright>
+Refractions Research Inc. 2004
+<p></p>
+
+</p>
+</BODY>
+</HTML>

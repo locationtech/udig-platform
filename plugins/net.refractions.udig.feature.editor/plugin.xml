@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="net.refractions.udig.feature.editor.DefaultEditor"
+            icon="icons/eview16/view_obj.gif"
+            id="net.refractions.udig.feature.editor.default"
+            name="%name"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.ui.featureEditor">
+      <editor
+            id="net.refractions.udig.feature.editor.default"
+            name="%name"
+            viewId="net.refractions.udig.feature.editor.default"/>
+   </extension>
+</plugin>

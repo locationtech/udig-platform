@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+<project name="refresh_libs" default="build" basedir="." xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+	<description>Download open source jars from the internet.</description>
+
+	<property name="lib" value="${basedir}${file.separator}lib" />
+	<property name="libs_src_dir" value="${lib}${file.separator}sources" />
+	<property environment="env" />
+	<dirname file="${ant.file.refresh_libs}" property="refresh_libs_basedir"/>
+	<property file="${refresh_libs_basedir}${file.separator}copy.properties"/>
+
+	<!-- remote repositories as defined in copy.properties -->
+	<artifact:remoteRepository id="udig.snapshot.repository" url="${updateSnapshotURL}" />
+	<artifact:remoteRepository id="udig.stable.repository" url="${updateStableURL}" />
+	<artifact:remoteRepository id="remote.repository" url="${mirror1}" />
+	<artifact:remoteRepository id="jaitoolsmaven.repository" url="${jaitoolsmaven}" />
+	<artifact:remoteRepository id="geosolutionsmaven.repository" url="${geosolutionsmaven}" />
+
+	<!-- local repository i.e. folder to be used as storage for downloaded library files -->
+	<artifact:localRepository id="local.repository" path="${repo}" />
+
+	<target name="clean" description="deletes external libraries folder">
+		<delete dir="${lib}" />
+	</target>
+
+	<target name="load_m2_deps">
+		<!-- we can probably replace this with a reference to a pom.xml file -->
+		<!-- Use http://mvnrepository.com/ to look stuff up -->
+		<artifact:dependencies
+			filesetId="dependency.fileset"
+			sourcesFilesetId="sources.dependency.fileset"
+			versionsId="dependency.versions" useScope="runtime"
+			cacheDependencyRefs="false">
+
+			<!-- local repository as defined above-->
+			<localRepository refid="local.repository"/>
+
+			<!-- remote repositories as defined above -->
+			<remoteRepository refid="udig.stable.repository" />
+			<remoteRepository refid="udig.snapshot.repository" />
+			<remoteRepository refid="remote.repository" />
+			<remoteRepository refid="jaitoolsmaven.repository" />
+			<remoteRepository refid="geosolutionsmaven.repository" />
+
+			<!-- uDig Specific Extras -->
+			<!--dependency groupId="xmlrpc" artifactId="xmlrpc" version="2.0" /-->
+			<dependency groupId="org.apache.xmlrpc" artifactId="xmlrpc-client" version="3.0" />
+			<dependency groupId="org.apache.xmlrpc" artifactId="xmlrpc-common" version="3.0" />
+			<!--dependency groupId="commons-codec" artifactId="commons-codec" version="1.2" /-->
+			<dependency groupId="com.google" artifactId="google-collect-snapshot" version="20080321" />
+			<dependency groupId="jaxb" artifactId="jaxb-impl" version="1.3" />
+			<dependency groupId="net.sourceforge.findbugs" artifactId="jsr305" version="1.3.2" />
+			<dependency groupId="com.miglayout" artifactId="miglayout" version="3.7" />
+
+			<!-- geotools library -->
+			<dependency groupId="org.geotools" artifactId="gt-main" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-render" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-xml" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-cql" version="${geotools.version}" />
+
+			<!-- geotools extentions -->
+			<dependency groupId="org.geotools" artifactId="gt-brewer" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-shapefile-renderer" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-validation" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-wms" version="${geotools.version}" />
+
+			<!-- geotools plug-ins -->
+			<dependency groupId="org.geotools" artifactId="gt-arcgrid" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-arcsde-common" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-arcsde" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-epsg-h2" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-geotiff" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-image" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-imagemosaic" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-imageio-ext-gdal" version="${geotools.version}" />
+			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-db2" version="${geotools.version}" />
+			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-mysql" version="${geotools.version}" />
+			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-oracle" version="${geotools.version}" />
+			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-postgis" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-shapefile" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-wfs" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-process" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-charts" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-svg" version="${geotools.version}" />
+
+			<!-- geotools unsupported modules that we only need for some community modules? -->
+			<dependency groupId="org.geotools" artifactId="gt-wps" version="${geotools.version}" />
+			<dependency groupId="org.geotools.xsd" artifactId="gt-xsd-kml" version="${geotools.version}" />
+
+			<!-- geotools unsupported modules (ie legacy) -->
+			<!--dependency groupId="org.geotools" artifactId="gt-postgis" version="${geotools.version}" /-->
+
+			<!-- imageio-ext plug-ins 
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-arcgrid" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-customstreams" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdaldted" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalecw" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalecwjp2" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalehdr" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalerdasimg" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalframework" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalkakadujp2" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalmrsid" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalmrsidjp2" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalnitf" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-geocore" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-imagereadmt" version="1.0.2" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-utilities" version="1.0.2" />
+			-->
+
+			<!-- stuff for netcdf -->
+			<dependency groupId="org.geotools" artifactId="gt-temporal" version="${geotools.version}" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf-core" version="1.1-SNAPSHOT" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf" version="1.1-SNAPSHOT" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-utilities" version="1.1-SNAPSHOT" />
+			<dependency groupId="opendap" artifactId="opendap" version="2.1" />
+
+			<!-- jfreechart -->
+			<dependency groupId="jfree" artifactId="jfreechart" version="1.0.13" />
+			
+			<!-- these may already be accounted for by the above plug-ins -->
+			<!--
+			<dependency groupId="org.geotools.xsd" artifactId="gt-gml2" version="${geotools.version}" />
+			<dependency groupId="org.geotools.xsd" artifactId="gt-gml3" version="${geotools.version}" />
+			<dependency groupId="org.geotools.xsd" artifactId="gt-core" version="${geotools.version}" />
+			<dependency groupId="org.geotools.xsd" artifactId="gt-xsd-wfs" version="${geotools.version}" />
+			<dependency groupId="org.geotools.xsd" artifactId="gt-xsd-wps" version="${geotools.version}" />
+			<dependency groupId="org.geotools.xsd" artifactId="gt-ows" version="${geotools.version}" />
+			<dependency groupId="org.geotools.xsd" artifactId="gt-filter" version="${geotools.version}" />
+	        -->
+
+			<!-- Java Advanced Imaging is bundled into our JRE - as such we don't need them to be -->
+			<!-- downloaded now; however we must run with: -Dosgi.parentClassloader=ext -->
+			<dependency groupId="javax.media" artifactId="jai_imageio" version="1.1" scope="provided" />
+			<dependency groupId="javax.media" artifactId="jai_codec" version="1.1.3" scope="provided" />
+			<dependency groupId="javax.media" artifactId="jai_core" version="1.1.3" scope="provided" />
+
+			<!-- These GeoTools dependencies are required for compile only - we are using gt-epsg-h2 -->
+			<dependency groupId="org.geotools" artifactId="gt-epsg-hsql" version="${geotools.version}" scope="provided" />
+			<dependency groupId="org.geotools" artifactId="gt-epsg-wkt" version="${geotools.version}" scope="provided" />
+			<dependency groupId="org.geotools" artifactId="gt-sample-data" version="${geotools.version}" scope="provided" />
+			<dependency groupId="ant" artifactId="ant-optional" version="1.5.1" scope="provided" />
+
+			<!-- We get this from the base RCP as such they are already provided by -->
+			<!-- our net.refractions.udig.libs dependencies in the MANIFEST.MF -->
+			<!-- and we don't need to ask for them to be downloaded now.       -->
+			<dependency groupId="org.apache" artifactId="xerces" version="2.7.1" scope="provided" />
+			<dependency groupId="xerces" artifactId="xercesImpl" version="2.7.1" scope="provided" />
+
+			<!-- the followin is provided by the eclipse modeling target platform -->
+			<dependency groupId="com.ibm.icu" artifactid="icu4j" version="3.4.4" scope="provided" />
+			<!-- batik jars - used by geotools renderer -->
+			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-transcoder" version="1.7" scope="provided"/>  
+			<!-- using batik from eclipse 
+		    <dependency groupId="org.apache.xmlgraphics" artifactId="batik-dom" version="1.7" />
+			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-svg-dom" version="1.7" />
+			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-css" version="1.7" />
+			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-bridge" version="1.7" />
+			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-gvt" version="1.7" />
+			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-ext" version="1.7" />
+			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-xml" version="1.7" />
+			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-script" version="1.7" />
+			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-awt-util" version="1.7" />
+			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-parser" version="1.7" />-->
+			<!-- These dependencies are for optional batik components and are not used -->
+			<!--dependency groupId="xml-apis" artifactId="xml-apis-xerces" version="2.7.1" scope="provided" />
+			<dependency groupId="xml-apis" artifactId="xml-apis" version="1.0.b2" scope="provided" /-->
+			
+			<!--dependency groupId="commons-io" artifactId="commons-io" version="1.0.b2" scope="provided" /-->
+			<dependency groupId="commons-codec" artifactid="commons-codec" version="1.2" scope="provided" />
+			<dependency groupId="commons-httpclient" artifactid="commons-httpclient" version="3.1" scope="provided" />
+			<!--dependency groupId="commons-lang" artifactid="commons-lang" version="2.1" scope="provided" /-->
+			<dependency groupId="commons-logging" artifactid="commons-logging" version="1.0.3" scope="provided" />
+
+			<dependency groupId="log4j" artifactId="log4j" version="1.2" scope="provided" />
+			<dependency groupId="org.eclipse.xsd" artifactId="xsd" version="2.2.2" scope="provided" />
+			<dependency groupId="org.eclipse.emf" artifactId="ecore" version="2.2.2" scope="provided" />
+			<dependency groupId="org.eclipse.emf" artifactId="common" version="2.2.1" scope="provided" />
+			<dependency groupId="junit" artifactId="junit" version="3.8.1" scope="provided" />
+			<dependency groupId="velocity" artifactId="velocity" version="1.4" scope="provided" />
+			<dependency groupId="joda-time" artifactId="joda-time" version="1.6" />
+			
+		</artifact:dependencies>
+	</target>
+
+	<target name="print" depends="load_m2_deps">
+		<description>Print the dependencies the jars</description>
+
+		<!--setproxy proxyhost="192.168.20.1" proxyport="8080"/-->
+		<path id="jars">
+			<fileset refid="dependency.fileset" />
+		</path>
+		<property name="myjars" refid="jars"/>
+		<echo message="Jars = ${myjars}" />
+		<!--propertyregex property="listjars"
+		              input="${myjars}"
+		              regexp="\;"
+		              select="{$line.seperator}"
+		              casesensitive="false" /-->
+		<echo message="Jars = ${myjars}" />
+		<echo message="Jars = ${listjars}" />
+	</target>
+
+	<target name="build" depends="load_m2_deps">
+		<description>Download the jars - used by a manual "clean"</description>
+		<available property="already_downloaded" type="dir" file="${lib}" />
+
+		<!--setproxy proxyhost="192.168.20.1" proxyport="8080"/-->
+
+		<antcall target="create" />
+
+		<!-- (flat) copy all downloaded JARs (classes) to plugin directory ${lib} -->
+		<copy todir="${lib}" verbose="true" flatten="true" >
+			<fileset refid="dependency.fileset" />
+		</copy>
+
+		<!-- (flat) copy downloaded source JARs (sources) to plugin directory ${libs_src_dir} -->
+		<!--
+		<copy todir="${libs_src_dir}" flatten="true" verbose="true">
+			<fileset refid="sources.dependency.fileset" />
+			<chainedmapper>
+				<mapper type="flatten" />
+				<globmapper from="*-sources.jar" to="*-sources.zip" />
+			</chainedmapper>
+		</copy>
+		-->
+		<!-- not needed right now -->
+		<!--<antcall target="fix" /> -->
+		
+		<!-- <eclipse.refreshLocal resource="net.refractions.udig.libs/lib" depth="infinite"/>	-->
+	</target>
+
+	<target name="create" unless="already_downloaded">
+		<description>creates the lib directory if needed</description>
+		<mkdir dir="${lib}" />
+		<mkdir dir="${libs_src_dir}"/>
+	</target>
+
+	<!-- target to use to "fix" geoapi SNAPSHOT to a consistent format -->
+	<!-- otherwise it appears witha  different name depending on if    -->
+	<!-- it got it locally or from the repmote repository              -->
+	<!-- This is not needed right now as geotools is depending on a    -->
+	<!-- specific GeoAPI tag                                           -->
+	<target name="fix">
+		<move file="${lib}/geoapi-${geoapi.version}.jar" tofile="${lib}/geoapi-2.3-PREVIOUS.jar" verbose="true" failonerror="no" />
+		<move file="${lib}/geoapi-pending-${geoapi.version}.jar" tofile="${lib}/geoapi-pending-2.3-PREVIOUS.jar" verbose="true" failonerror="no" />
+		<move todir="${lib}" verbose="true" failonerror="no">
+			<fileset dir="${lib}">
+				<include name="geoapi-2.3-*.jar" />
+			</fileset>
+			<mapper type="regexp" from="^.*$" to="geoapi-2\.3-SNAPSHOT\.jar" />
+		</move>
+		<move todir="${lib}" verbose="true" failonerror="no">
+			<fileset dir="${lib}">
+				<include name="geoapi-pending-2.3-*.jar" />
+			</fileset>
+			<mapper type="regexp" from="^.*$" to="geoapi-pending-2\.3-SNAPSHOT\.jar" />
+		</move>
+	</target>
+
+	<!-- Used by headless build please make sure this does everthing from clean to download and fix etc.. -->
+	<target name="full-build" depends="clean, build" description="clean and build">
+	</target>
+
+	<!-- target: extSources_to_project_classpath (manual Build of project n.r.udig/libs as trigger via ".externalToolBuilders/Refresh Libs.launch") -->
+    <target name="extSources_to_project_classpath" description="augments eclipse project .classpath file to link sources to library jars (F3 key)">
+    	<!-- eclipse project .classpath file -->
+		<property name="project_classpath" value="${basedir}${file.separator}.classpath"/>
+    	
+		<!-- prepare Path containing all source library jars from ${libs_src_dir} to be compared with library jars in RegExp of Replace -->
+		<pathconvert property="sourceJars" pathsep="|">	<!-- temporary Path/FileSet with all source library jars -->
+			<fileset dir="${libs_src_dir}" includes="*-sources.zip"/> <!-- directory containing sources archives -->
+    		<globmapper handledirsep="true" from="${libs_src_dir}/*-sources.zip" to="*"/>
+	   	</pathconvert>
+
+    	<!-- update only .classpath entries WITH corresponding source library archive and NO preexisiting attributes after "path" attribute -->
+    	<replaceregexp file="${project_classpath}" flags="gm" byline="true" description="default: linking all available sources archives to corresponding library jars">
+    		<regexp pattern="(.* path=&quot;lib/)(${sourceJars})\.jar&quot; */&gt;"/>
+    		<substitution expression="\1\2\.jar&quot; sourcepath=&quot;lib/sources/\2-sources.zip&quot;/&gt;"/>
+    	</replaceregexp>
+
+    	<!-- example to specify different source locations of special/defined library jars -->
+    	<!-- overwrite/update .classpath entries WITH corresponding sources in local project "geotools_trunk XSD" -->
+<!--    <replaceregexp file="${project_classpath}" flags="gm" byline="true">
+    		<regexp pattern="(.* path=&quot;lib/)gt-(xsd-.*)(-\d\..*)\.jar&quot; *.*/&gt;"/>
+    		<substitution expression="\1gt-\2\3.jar&quot; sourcepath=&quot;/geotools_trunk/modules/extension/xsd/\2/src/main/java&quot;/&gt;"/>
+    	</replaceregexp>
+-->    	
+    	<echo level="info" message="updated ${project_classpath} with links to source archives"/>
+    </target>
+</project>

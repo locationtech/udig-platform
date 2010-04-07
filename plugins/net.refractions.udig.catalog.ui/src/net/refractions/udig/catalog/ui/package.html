@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+</head>
+<body bgcolor="white">
+Provides for single shared catalog of spatial data.
+<p>
+The Local Registry View is a user interface that provides access to the
+Local Registry. The Local Registry View allows the user to define and modify the
+Data Sources known locally as well as provide functionality for adding the
+Data Sources to Maps.
+</p>
+<center><img src="doc-files/example.png"/></center>
+<p>
+The example shown above lists a server with defined (layers, road and
+stream) and a filesystem (local or remote) is also listed as part of the Local
+Registry View. The Layers can be added to a Map. New servers may be
+added to the Local Registry.
+</p>
+<p>
+The Local Registry (not the user interface component) is
+persistent and can be exported and transferred to other systems.
+</p>
+
+<h2>Package Specification</h2>
+
+<b>Non-Functional Requirements:</b>
+<ul>
+<li>Tree View, displays repositories as a list, and services as branches of a
+repository.
+<li>Drag and Drop, integrate with Viewport to allow quick visualization of data.
+</ul>
+
+<b>Functional Requirements:</b>
+<ul>
+<li>Add Data Wizard, a wizard for adding a new Data Repository.
+<li>Remove Data Repository, remove a Repository from the Data Manager.
+<li>Refresh Data Repository, refresh the service entries of a Repository.
+<li>List Repositories, lists the repositories and ping rate of the Repositories.
+<li>List Services, provide a list of services for each Repository.
+</ul>
+
+<h2>Related Documentation</h2>
+
+For overviews, tutorials, examples, guides, and tool documentation, please see:
+<ul>
+  <li><a href="http://udig.refractions.net/docs/Requirements.pdf">
+      uDig Requirements Document</a>
+  </li>
+</ul>
+
+@see net.refractions.udig.registry.ui.CatalogView
+@since 0.2
+
+</body>
+</html>

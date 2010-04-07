@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Project Tests Plug-in
+Bundle-SymbolicName: net.refractions.udig.project.tests; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Export-Package: net.refractions.udig.project.command,
+ net.refractions.udig.project.internal,
+ net.refractions.udig.project.internal.commands.edit,
+ net.refractions.udig.project.internal.impl,
+ net.refractions.udig.project.internal.render,
+ net.refractions.udig.project.internal.render.impl,
+ net.refractions.udig.project.render,
+ net.refractions.udig.project.tests.internal.commands,
+ net.refractions.udig.project.tests.support
+Require-Bundle: org.junit,
+ net.refractions.udig.project,
+ org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.style,
+ net.refractions.udig.style.sld,
+ net.refractions.udig.catalog.tests;visibility:=reexport,
+ net.refractions.udig.ui.tests,
+ net.refractions.udig.ui,
+ net.refractions.udig.project.edit
+Bundle-ActivationPolicy: lazy
+Import-Package: org.junit
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

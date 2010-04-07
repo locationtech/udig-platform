@@ -1,0 +1,43 @@
+<class-diagram generalizations="true" realizations="true" associations="true" dependencies="false" 
+  nesting-relationships="true">  
+  <classifier-display autosize="true" package="true" attributes="true" operations="true" initial-value="false" 
+    signature="true" visibility="true"/>  
+  <association-display labels="true" multiplicity="true"/>  
+  <class type="java" name="net.refractions.udig.catalog.imageio.internal.ImageGeoResourceImpl" 
+    project="net.refractions.udig.catalog.imageio" 
+    file="/net.refractions.udig.catalog.imageio/src/net/refractions/udig/catalog/imageio/internal/ImageGeoResourceImpl.java">    
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="232" y="445" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.catalog.imageio.internal.ImageGeoResourceInfo" 
+    project="net.refractions.udig.catalog.imageio" 
+    file="/net.refractions.udig.catalog.imageio/src/net/refractions/udig/catalog/imageio/internal/ImageGeoResourceInfo.java">    
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="620" y="444" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource" 
+    project="net.refractions.udig.catalog.imageio" 
+    file="C:/java/sdk/plugins/net.refractions.udig.catalog.rasterings_1.2.0.jar">    
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="232" y="178" width="-1" height="-1"/>  
+  </class>  
+  <generalization>    
+    <source project="net.refractions.udig.catalog.imageio" 
+      name="net.refractions.udig.catalog.imageio.internal.ImageGeoResourceImpl"/>    
+    <target project="net.refractions.udig.catalog.imageio" 
+      name="net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource"/>  
+  </generalization>  
+  <association>    
+    <display labels="true" multiplicity="true"/>    
+    <source project="net.refractions.udig.catalog.imageio" 
+      name="net.refractions.udig.catalog.imageio.internal.ImageGeoResourceInfo" navigable="false">      
+      <attribute name="resource"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="net.refractions.udig.catalog.imageio" 
+      name="net.refractions.udig.catalog.imageio.internal.ImageGeoResourceImpl" navigable="true"/>  
+  </association>
+</class-diagram>

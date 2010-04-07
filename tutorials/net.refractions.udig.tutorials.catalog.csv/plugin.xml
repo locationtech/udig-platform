@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="net.refractions.udig.tutorials.catalog.csv"
+         name="Service Extentions"
+         point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.refractions.udig.tutorials.catalog.csv.CSVServiceExtension"
+            id="net.refractions.udig.tutorials.catalog.csv.service"
+            name="CSV Service Extention">
+      </service>
+   </extension>
+   <extension
+         point="net.refractions.udig.catalog.ui.fileFormat">
+      <fileService
+            fileExtension="*.csv"
+            name="comma seperated value"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.operation">
+      <operation
+            class="net.refractions.udig.tutorials.catalog.csv.internal.SaveCSVOp"
+            enablesFor="1"
+            id="net.refractions.udig.tutorials.catalog.csv.operation.save"
+            name="Save CSV"
+            targetClass="org.geotools.data.FeatureSource">
+      </operation>
+   </extension>
+</plugin>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+    <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http:///net/refractions/udig/project/internal/render.ecore" 
+       class = "net.refractions.udig.project.internal.render.RenderPackage" />
+  </extension>
+
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http:///net/refractions/udig/project/internal.ecore" 
+       class = "net.refractions.udig.project.internal.ProjectPackage" />
+  </extension>
+
+
+   <extension-point id="style" name="style" schema="schema/style.exsd"/>
+   <extension-point id="renderer" name="renderer" schema="schema/renderer.exsd"/>
+   <extension-point id="projectElementFactories" name="%projectElementFactories" schema="schema/projectElementFactories.exsd"/>
+   <extension-point id="decorator" name="%decorator.name" schema="schema/decorator.exsd"/>
+   <extension-point id="renderExecutor" name="renderExecutor" schema="schema/renderExecutor.exsd"/>
+   <extension-point id="persister" name="Persister" schema="schema/persister.exsd"/>
+   <extension-point id="provider" name="Provider" schema="schema/provider.exsd"/>
+   <extension-point id="mapInterceptor" name="mapInterceptor" schema="schema/mapInterceptor.exsd"/>
+   <extension-point id="resourceInterceptor" name="resourceInterceptor" schema="schema/resourceInterceptor.exsd"/>
+   <extension-point id="layerInterceptor" name="layerInterceptor" schema="schema/layerInterceptor.exsd"/>
+   <extension-point id="element" name="element" schema="schema/element.exsd"/>
+   <extension
+         point="net.refractions.udig.project.projectElementFactories">
+      <projectElementFactory
+            class="net.refractions.udig.project.internal.MapFactory"
+            id="net.refractions.udig.project.mapFactory"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.style">
+      <style
+            class="net.refractions.udig.project.internal.render.SelectionStyleContent"
+            name="%selectionStyle.name"
+            id="net.refractions.udig.project.selectionStyle"/>
+      <style
+            class="net.refractions.udig.project.interceptor.ShowViewInterceptor$ViewStyleContent"
+            id="net.refractions.udig.project.view"
+            name="net.refractions.udig.project.View">
+      </style>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.renderExecutor">
+      <RenderExecutor
+            executorClass="net.refractions.udig.project.internal.render.impl.RenderExecutorImpl"
+            name="%default.name"
+            rendererClass="net.refractions.udig.project.render.IRenderer">
+         <Description>
+            %default.description
+         </Description>
+      </RenderExecutor>
+      <RenderExecutor
+            executorClass="net.refractions.udig.project.internal.render.impl.RenderExecutorMultiLayer"
+            name="%default.multiLayer.name"
+            rendererClass="net.refractions.udig.project.render.IMultiLayerRenderer">
+         <Description>
+            %default.multiLayer.description
+         </Description>
+      </RenderExecutor>
+      <RenderExecutor
+            executorClass="net.refractions.udig.project.internal.render.impl.RenderExecutorComposite"
+            name="%composite.name"
+            rendererClass="net.refractions.udig.project.internal.render.impl.CompositeRendererImpl">
+         <Description>
+            %composite.description
+         </Description>
+      </RenderExecutor>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.persister">
+      <persister class="net.refractions.udig.project.internal.ColorPersister"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="net.refractions.udig.project.preferences.PreferenceInitializer"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.resourceInterceptor">
+      <cachingStrategy
+            class="net.refractions.udig.project.internal.interceptor.ResourceCacheInterceptor"
+            id="caching"
+            />
+      <interceptor
+            class="net.refractions.udig.project.internal.interceptor.WrapFeatureStore"
+            id="net.refractions.udig.project.wrap.featurestore"
+            order="PRE"
+            target="org.geotools.data.FeatureStore"/>
+      <interceptor
+            class="net.refractions.udig.project.internal.impl.ListenerAddingInterceptor"
+            id="net.refractions.udig.project.AddEditingListener"
+            order="PRE"
+            target="org.geotools.data.FeatureSource"/>
+      <interceptor
+            class="net.refractions.udig.project.interceptor.ShowViewInterceptor"
+            id="net.refractions.udig.project.showViewInterceptor"
+            order="POST"
+            target="org.geotools.data.FeatureSource"/>
+      <interceptor
+            class="net.refractions.udig.project.internal.impl.GeoResourceInfoInterceptor"
+            id="net.refractions.udig.project.interceptor.info"
+            order="POST"
+            target="net.refractions.udig.catalog.IGeoResourceInfo"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.layerInterceptor">
+      <layerCreated
+            class="net.refractions.udig.project.internal.impl.SetStyleInterceptor"
+            id="net.refractions.udig.project.setStyleInterceptor"
+            name="Set Layer Style"/>
+      <layerCreated
+            class="net.refractions.udig.project.internal.impl.SetLayerNameInterceptor"
+            id="net.refractions.udig.project.layercreated.set.name"
+            name="SetLayerName"/>
+      <layerAdded
+            class="net.refractions.udig.project.internal.impl.InitMapCRS"
+            id="net.refractions.udig.project.initmapcrs"
+            name="Initialize Map CRS">
+      </layerAdded>
+      <layerAdded
+            class="net.refractions.udig.project.internal.impl.InitMapBoundsInterceptor"
+            id="net.refractions.udig.project.setmapbounds"
+            name="InitializeMapBounds">
+      </layerAdded>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.objectProperty">
+      <object
+            targetClass="net.refractions.udig.project.ILayer">
+         <property
+               class="net.refractions.udig.project.internal.property.FeatureStoreResourceProperty"
+               id="FeatureStoreResourceProperty"/>
+      </object>
+   </extension>
+</plugin>
+

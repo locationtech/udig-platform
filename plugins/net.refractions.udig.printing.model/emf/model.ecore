@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model"
+    nsURI="http:///net/refractions/udig/printing/model.ecore" nsPrefix="net.refractions.udig.printing.model">
+  <eClassifiers xsi:type="ecore:EClass" name="Box" eSuperTypes="#//Element">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceConnections" upperBound="-1"
+        eType="#//Connection"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetConnections" upperBound="-1"
+        eType="#//Connection"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="boxPrinter" eType="#//BoxPrinter"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="iD" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Connection" eSuperTypes="#//Element">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="connected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//Box"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//Box"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Element">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" eType="#//Point"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="#//Dimension"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="paperSize" eType="#//Dimension"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Page" eSuperTypes="#//Element ../../net.refractions.udig.project/emf/internal.ecore#//ProjectElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="boxes" upperBound="-1"
+        eType="#//Box" containment="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Graphics2D" instanceClassName="java.awt.Graphics2D"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Dimension" instanceClassName="org.eclipse.draw2d.geometry.Dimension"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="org.eclipse.draw2d.geometry.Point"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IProgressMonitor" instanceClassName="org.eclipse.core.runtime.IProgressMonitor"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="BoxPrinter" instanceClassName="net.refractions.udig.printing.model.BoxPrinter"/>
+</ecore:EPackage>

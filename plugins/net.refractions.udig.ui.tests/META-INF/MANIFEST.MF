@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: UI Tests Plug-in
+Bundle-SymbolicName: net.refractions.udig.ui.tests;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: net.refractions.udig.ui.tests.TestsPlugin
+Bundle-Vendor: Refractions Research Inc.
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.junit,
+ net.refractions.udig.libs,
+ net.refractions.udig.ui
+Bundle-ActivationPolicy: lazy
+Export-Package: net.refractions.udig.ui,
+ net.refractions.udig.ui.tests,
+ net.refractions.udig.ui.tests.support,
+ org.jmock,
+ org.jmock.api,
+ org.jmock.lib.action
+Bundle-ClassPath: lib/jmock-2.3.0-RC2.jar,
+ lib/jmock-junit3-2.3.0-RC2.jar,
+ .,
+ lib/cglib-nodep-2.1_3.jar,
+ lib/hamcrest-core-1.1.jar,
+ lib/hamcrest-library-1.1.jar,
+ lib/objenesis-1.0.jar
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   id="net.refractions.udig.catalog.db2"
+   name="%plugin.name"
+   version="1.0.1"
+   provider-name="Justin Deoliveira, Refractions Research"
+   class="net.refractions.udig.catalog.internal.db2.DB2Plugin">
+
+
+   	<extension
+         point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.refractions.udig.catalog.internal.db2.DB2ServiceExtension"
+            id="DB2"
+            name="DB2"/>
+   	</extension>
+   <extension
+         point="net.refractions.udig.catalog.ui.connectionFactory">
+     <factory class="net.refractions.udig.catalog.internal.db2.ui.DB2ConnectionFactory"
+            id="net.refractions.udig.catalog.ui.db2"/>
+      <wizardPage
+            banner="icons/wizban/repository_wiz.gif"
+            class="net.refractions.udig.catalog.internal.db2.ui.DB2WizardPage"
+            description="%wizard.description"
+            icon="icons/etool16/database_obj.gif"
+            name="%wizard.name"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="net.refractions.udig.catalog.ui.preferences.CatalogPreferencePage"
+            class="net.refractions.udig.catalog.internal.db2.ui.DB2Preferences"
+            id="net.refractions.udig.catalog.db2.preference"
+            name="%DB2Preference"/>
+   </extension>
+
+
+</plugin>

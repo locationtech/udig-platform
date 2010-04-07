@@ -1,0 +1,12 @@
+<project name="doc" basedir="." default="doc">
+
+	<property file="build.properties"/>
+
+	<target name="doc">
+		<!-- auto generate the java doc script -->
+		<ant antfile="psf.xml"/>
+		<xslt style="doc.xsl" in="${psf}" out="doc-gen.xml"/>
+		<ant antfile="doc-gen.xml"/>
+		<!--delete file="doc-gen.xml"/-->
+	</target>
+</project>

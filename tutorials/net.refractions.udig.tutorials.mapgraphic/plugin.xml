@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="net.refractions.udig.tutorials.mapgraphic.mapgraphics"
+         point="net.refractions.udig.mapgraphic.mapgraphic">
+      <mapGraphic
+            class="net.refractions.udig.tutorials.mapgraphic.CoordinateGraphic"
+            icon="icons/etool16/xy.png"
+            id="net.refractions.udig.tutorials.mapgraphic.coordinate"
+            name="Coordinate Graphic">
+      </mapGraphic>
+   </extension>
+
+</plugin>

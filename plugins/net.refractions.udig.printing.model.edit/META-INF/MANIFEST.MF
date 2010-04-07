@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: net.refractions.udig.printing.model.edit; singleton:=true
+Bundle-Version: 1.2.0
+Bundle-Activator: net.refractions.udig.printing.model.provider.PageEditPlugin$Implementation
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Require-Bundle: net.refractions.udig.printing.model;visibility:=reexport,
+ net.refractions.udig.project;visibility:=reexport,
+ net.refractions.udig.project.edit;visibility:=reexport,
+ org.eclipse.core.runtime,
+ net.refractions.udig.project.ui,
+ org.eclipse.draw2d,
+ net.refractions.udig.ui
+Bundle-ActivationPolicy: lazy
+Export-Package: net.refractions.udig.printing.model.provider
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -1,0 +1,309 @@
+<html>
+<head>
+<title>Instructions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<font size="+2"> Automated Testing of Eclipse Builds</font>
+<p>last updated: August 25, 2003</p>
+<p><font size="+1">Description</font></p>
+<p>This document describes how to run JUnit test plugins in Eclipse from the command 
+  line using Eclipse JUnit test plugins (see <a href="#appendixa">Appendix A</a> 
+  for listing) and a testing framework. This method of running tests is intended 
+  for anyone who wishes to automate their testing process or reproduce the testing 
+  mechanism used in Eclipse builds by the Eclipse Release Engineering team.</p>
+<p>Click <a href="testframework.html">here</a> for a description of the testing 
+  framework, and how it can be used outside of the setup described here.</p>
+<p>If you simply wish to write and run JUnit tests interactively from an Eclipse 
+  workbench, try one of the links below:</p>
+<p><a href="http://dev.eclipse.org/viewcvs/index.cgi/%7Echeckout%7E/jdt-ui-home/plugins/org.eclipse.jdt.junit/index.html">JUnit 
+  Support in Eclipse</a><br>
+<a href="http://dev.eclipse.org:8080/help/content/help:/org.eclipse.jdt.doc.user/tasks/tasks-207.htm?resultof=%6a%75%6e%69%74%20&toc=%2Forg.eclipse.jdt.doc.user%2Ftoc.xml">Using 
+  JUnit</a></p>
+
+<p><font size="+1">Requirements</font></p>
+<p>1. All test machines will require a java runtime environment (version 1.4 or 
+  higher) installed and optionally added to the path environment variable (see 
+  <a href="#vm">-vm</a> parameter below).<br>
+  2. <a href="http://www.info-zip.org/pub/infozip/UnZip.html">Info-ZIP UnZip</a> 
+  version 5.41 or later installed and added to the path.<br>
+  3. The Automated Test feature from an Eclipse build (<a href="http://www.eclipse.org/downloads/index.php">http://www.eclipse.org/downloads/index.php</a>). 
+  This contains the test framework plugin and the test plugins to run.<br>
+  4. An Eclipse SDK zip file (<a href="http://www.eclipse.org/downloads/index.php">http://www.eclipse.org/downloads/index.php</a>) 
+  to test. Usually you will want to test a particular Eclipse build using a matching 
+  Automated Tests feature.</p>
+<p>To run the Team CVS tests you will need extssh access to a CVS repository. 
+  The tests create a lot of junk modules and tags so you will want to keep the 
+  test repository seperate from your development repository. While it is not necessary 
+  to clean up the repository between each Team test run you will probably want 
+  to clean it up periodically.</p>
+<p><font size="+1">Setup</font></p>
+<p>1. Extract the eclipse-Automated-Tests-&lt;buildid&gt;.zip. On Window, extract 
+  this file close to the root of the drive to prevent some path names from exceeding 
+  the 255 character limit. This will create a top-level directory &quot;<b>eclipse-testing</b>&quot;.<br>
+  2. Place the Eclipse SDK zip file to test in the eclipse-testing directory. 
+  Do not unzip this file. (The test scripts will take care of this)<br>
+  3. To run the Team CVS tests edit the test.xml script to provide connection 
+  information.</p>
+<blockquote> 
+  <p>Replace the following strings in the &quot;teamcvs&quot; target of the test.xml 
+    file with the information described below:</p>
+</blockquote>
+<ul>
+  <li>@cvs_user@ - the account used to connect to the cvs repository</li>
+  <li>@cvs_password@- the account password</li>
+  <li>@cvs_host@- the name of the cvs server</li>
+  <li>@cvs_root@- the repository path 
+    <p>These values are used at test time to automatically replace strings in 
+      org.eclipse.team.tests.cvs.core/repository.properties. For more information 
+      on how this file is used in the team CVS tests, click <a href="http://dev.eclipse.org/viewcvs/index.cgi/%7Echeckout%7E/org.eclipse.team.tests.cvs.core/readme.html?rev=HEAD&content-type=text/html">here</a>. 
+    </p>
+  </li>
+</ul>
+<p><font size="+1">Running Tests</font></p>
+<p>1. cd to the eclipse-testing directory<br>
+  2. Run the following script:</p>
+<p><b>runtests [-os &lt;operating system&gt;] [-ws &lt;windowing system&gt;] [-arch 
+  &lt;architecture&gt;] [-noclean] [&lt;testTarget&gt;][-properties &lt;path&gt;][-vm 
+  &lt;path to java executable&gt;]</b></p>
+<p>All parameters and targets are optional on windows systems. Just running &quot;runtests&quot; 
+  will run <b>ALL</b> tests on Windows, installing a clean Eclipse between each 
+  test target. On *nix systems, the os, ws and arch parameters must be specified. 
+</p>
+<p>Test results are produced in an individual xml files for each component. These 
+  results are copied to the eclipse-testing\results\xml directory. These results 
+  can be converted into html by running the &quot;genHtml&quot; target as described 
+  in the table below. Please be aware that &quot;Build Successful&quot; printed 
+  to the console is NOT indicative of tests passing.</p>
+<p><font size="+1"><a name="vm"></a>Parameters</font></p>
+<table width="90%" border="1">
+  <tr> 
+    <td>Parameter</td>
+    <td>Description</td>
+  </tr>
+  <tr> 
+    <td>-os &lt;operating system&gt;</td>
+    <td>The OS the tests are being run on. One of: aix, hpux, linux, qnx, solaris, 
+      win32. <b>Default win32</b></td>
+  </tr>
+  <tr> 
+    <td>-ws &lt;windowing system&gt;</td>
+    <td>The windowing system the tests are being run on. One of: motif, gtk, photon, 
+      win32. <b>Default win32</b></td>
+  </tr>
+  <tr> 
+    <td>-arch &lt;architecture&gt;</td>
+    <td>The architecture the tests are being run on. One of: ppc, PA_RISC, x86, 
+      sparc. <b>Default x86</b></td>
+  </tr>
+  <tr> 
+    <td>-noclean</td>
+    <td>Run tests without installing a clean Eclipse between test targets. Default 
+      is to install a clean Eclipse between test targets.</td>
+  </tr>
+  <tr> 
+    <td>-properties</td>
+    <td>Used to reference a properties file containing additional Ant properties 
+      used in running tests.Can be used to pass additional vm arguments to the 
+      Java virtual machine running the tests by adding the entry &quot;extraVMargs=&lt;the 
+      args to pass to the vm&gt;&quot; to the specified properties file.</td>
+  </tr>
+  <tr>
+    <td>-vm</td>
+    <td>The full path to the java executable with which to run the tests. Use 
+      this to specify a specific virtual machine with which to run the tests. 
+      For example, &quot;-vm c:\jdk142\jre\bin\java&quot;. Default set to &quot;java&quot; 
+      (i.e. java executable on system path). </td>
+  </tr>
+</table>
+  
+<p><font size="+1">Test Targets</font></p>
+<p>Specifies which ant target to run in the main test.xml. Typically this corresponds 
+  to a test project's tests. If you do not specify a test target then the <b>all</b> 
+  test target is run.</p>
+
+<table width="90%" border="1">
+  <tr> 
+    <td>all</td>
+    <td>Runs all the targets below.</td>
+  </tr>
+  <tr> 
+    <td>ant</td>
+    <td>Runs the JUnit plugin tests for the Platform-Ant component.</td>
+  </tr>
+  <tr> 
+    <td>core</td>
+    <td>Runs the JUnit plugin tests for the Platform-Core component.</td>
+  </tr>
+  <tr> 
+    <td>help</td>
+    <td>Runs the JUnit plugin tests for the Platform-Help component.</td>
+  </tr>
+  <tr> 
+    <td>jdtcorebuilder</td>
+    <td>Runs the JUnit plugin tests for the JDT-Core component. This target is 
+      executed on Windows operating systems only.</td>
+  </tr>
+  <tr> 
+    <td height="20">jdtcorecompiler</td>
+    <td height="20">Runs the JUnit plugin tests for the JDT-Core component. This 
+      target is executed on Windows operating systems only.</td>
+  </tr>
+  <tr> 
+    <td>jdtcoremodel</td>
+    <td>Runs the JUnit plugin tests for the JDT-Core component. This target is 
+      executed on Windows operating systems only.</td>
+  </tr>
+  <tr> 
+    <td>jdtdebug</td>
+    <td>Runs the JUnit plugin tests for the JDT-Debug component.</td>
+  </tr>
+  <tr> 
+    <td>jdtui</td>
+    <td>Runs the JUnit plugin tests for the JDT-UI component.</td>
+  </tr>
+  <tr> 
+    <td>jdtuirefactoring</td>
+    <td>Rruns additional JUnit plugin tests for the JDT-UI component.</td>
+  </tr>
+  <tr> 
+    <td>swt</td>
+    <td>Runs the JUnit plugin tests for the Platform-SWT component. This target 
+      is executed on Windows operating systems only.</td>
+  </tr>
+  <tr> 
+    <td>teamcore</td>
+    <td>Runs the JUnit plugin tests for the Platform-VCM component.</td>
+  </tr>
+  <tr> 
+    <td>teamcvs</td>
+    <td>Runs additional JUnit plugin tests for the Platform-VCM component.</td>
+  </tr>
+  <tr> 
+    <td>ui</td>
+    <td>Runs the JUnit plugin tests for the Platform-UI component.</td>
+  </tr>
+  <tr> 
+    <td>update</td>
+    <td>Runs the JUnit plugin tests for the Platform-Update component.</td>
+  </tr>
+  <tr> 
+    <td>genHtml</td>
+    <td>Converts xml test results in the &quot;eclipse-testing\results&quot; directory 
+      to html.</td>
+  </tr>
+</table>
+<p><br>
+</p>
+<p><font size="+1"><a name="appendixa"></a>Appendix A - JUnit test plugins</font></p>
+<p>The test plugins listed below are available from the dev.eclipse.org cvs repository 
+  and are available in binary distributable format from the Eclipse downloads 
+  page. </p>
+<p>* indicates the plugin that contains the test.xml if component has more than 
+  one JUnit test plugin</p>
+<table width="75%" border="1">
+  <tr> 
+    <td>Component</td>
+    <td>JUnit plugin tests</td>
+  </tr>
+  <tr> 
+    <td>Jdt-Core</td>
+    <td> 
+      <p>org.eclipse.jdt.core.tests.builder *<br>
+        org.eclipse.jdt.core.tests.compiler *<br>
+        org.eclipse.jdt.core.tests.model *</p>
+    </td>
+  </tr>
+  <tr> 
+    <td>Jdt-Debug</td>
+    <td>org.eclipse.jdt.debug.tests</td>
+  </tr>
+  <tr> 
+    <td>Jdt-UI</td>
+    <td> 
+      <p>org.eclipse.jdt.ui.tests *<br>
+        org.eclipse.jdt.ui.tests.refactoring *</p>
+    </td>
+  </tr>
+  <tr> 
+    <td>Platform-Core</td>
+    <td>
+      <p>org.eclipse.core.tests.harness *<br>
+        org.eclipse.core.tests.runtime<br>
+        org.eclipse.core.tests.resources</p>
+      </td>
+  </tr>
+  <tr> 
+    <td>Platform-Help</td>
+    <td>org.eclipse.help.tests</td>
+  </tr>
+  <tr> 
+    <td>Platform-SWT</td>
+    <td>org.eclipse.swt.tests</td>
+  </tr>
+  <tr> 
+    <td>Platform-UI</td>
+    <td>org.eclipse.ui.tests</td>
+  </tr>
+  <tr> 
+    <td>Platform-Update</td>
+    <td>org.eclipse.update.tests.core</td>
+  </tr>
+  <tr> 
+    <td>Platform-VCM(Team)</td>
+    <td> 
+      <p>org.eclipse.team.tests.cvs.core<br>
+      org.eclipse.team.tests.core</p>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p><font size="+1"><a name="appendixb"></a>Appendix B- Supported os, ws, and arch 
+  value combinations</font></p>
+<p>The following table contains the values that can be used with the -os, -ws, 
+  and -arch switches.</p>
+<table width="75%" border="1">
+  <tr> 
+    <td>Operating System (os)</td>
+    <td>Windowing System (ws)</td>
+    <td>Architecture (arch)</td>
+  </tr>
+  <tr> 
+    <td>aix</td>
+    <td>motif</td>
+    <td>ppc</td>
+  </tr>
+  <tr> 
+    <td>hpux</td>
+    <td>motif</td>
+    <td>PA_RISC</td>
+  </tr>
+  <tr> 
+    <td>linux</td>
+    <td>gtk</td>
+    <td>x86</td>
+  </tr>
+  <tr> 
+    <td>linux</td>
+    <td>motif</td>
+    <td>x86</td>
+  </tr>
+  <tr> 
+    <td height="24">qnx</td>
+    <td height="24">photon</td>
+    <td height="24">x86</td>
+  </tr>
+  <tr> 
+    <td>solaris</td>
+    <td>motif</td>
+    <td>sparc</td>
+  </tr>
+  <tr> 
+    <td>win32</td>
+    <td>win32</td>
+    <td>x86</td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension-point id="sldEditorPart" name="%sldEditorParts.name" schema="schema/sldEditorPart.exsd"/>
+     <extension-point id="StyleEditorPage" name="%StyleEditor.name" schema="schema/StyleEditorPage.exsd"/>
+   <extension
+         point="net.refractions.udig.project.style">
+      <style
+            class="net.refractions.udig.style.sld.SLDContent"
+            name="%sld.name"
+            id="net.refractions.udig.style.sld"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="net.refractions.udig.style.sld.SimpleStyleConfigurator"
+            id="simple"
+            label="%simpleStyle.label"
+            requires="org.geotools.data.FeatureSource"
+            styleId="net.refractions.udig.style.sld"/>
+      <styleConfigurator
+            class="net.refractions.udig.style.sld.SimpleGridConfigurator"
+            id="simple-gridcoverage"
+            label="%simpleRaster.label"
+            requires="org.opengis.coverage.grid.GridCoverage"
+            styleId="net.refractions.udig.style.sld">
+      </styleConfigurator>
+      <styleConfigurator
+            class="net.refractions.udig.style.sld.SimpleRasterConfigurator"
+            id="simple-raster"
+            label="%simple.label"
+            requires="org.opengis.coverage.grid.GridCoverage"
+            styleId="net.refractions.udig.style.sld">
+      </styleConfigurator>
+      <styleConfigurator
+            class="net.refractions.udig.style.sld.SimpleRasterConfigurator"
+            id="simple-raster-wms"
+            label="%simple.label"
+            requires="org.geotools.data.ows.Layer"
+            styleId="net.refractions.udig.style.sld"/>           
+   </extension>
+   <extension
+         point="net.refractions.udig.style.sld.sldEditorPart">
+      <sldEditorPart
+            label="%line.label"
+            class="net.refractions.udig.style.sld.internal.SLDLineEditorPart"
+            contentType="org.geotools.styling.LineSymbolizer"/>
+      <sldEditorPart
+            label="%text.label"
+            class="net.refractions.udig.style.sld.internal.SLDTextEditorPart"
+            contentType="org.geotools.styling.TextSymbolizer"/>
+      <sldEditorPart
+            label="%polygon.label"
+            class="net.refractions.udig.style.sld.internal.SLDPolygonEditorPart"
+            contentType="org.geotools.styling.PolygonSymbolizer"/>
+      <sldEditorPart
+            label="%point.label"
+            class="net.refractions.udig.style.sld.internal.SLDMarkerEditorPart"
+            contentType="org.geotools.styling.PointSymbolizer"/>
+      <sldEditorPart
+            label="%raster.label"
+            class="net.refractions.udig.style.sld.internal.SLDRasterEditorPart"
+            contentType="org.geotools.styling.RasterSymbolizer"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="net.refractions.udig.style.sld.editor.LayerContribution"
+            objectClass="net.refractions.udig.project.ILayer">
+         <action
+               class="net.refractions.udig.style.sld.editor.OpenStyleEditorAction"
+               enablesFor="1"
+               icon="icons/style_tsk.gif"
+               id="net.refractions.udig.style.sld.editor.StyleEditor"
+               label="%StyleEditor.label"
+               style="push">
+            <enablement>
+               <objectClass name="net.refractions.udig.project.ILayer"/>
+            </enablement>
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="net.refractions.udig.style.sld.editor.layerAction"
+            label="%StyleActionSet.label"
+            visible="false">
+         <action
+               class="net.refractions.udig.style.sld.editor.OpenStyleEditorAction"
+               enablesFor="1"
+               icon="icons/style_tsk.gif"
+               id="net.refractions.udig.style.sld.editor.OpenStyleEditorAction"
+               label="%StyleEditor.label"
+               menubarPath="layer/additions"
+               style="push"
+               tooltip="%StyleEditor.tooltip">
+            <enablement>
+               <objectClass name="net.refractions.udig.project.ILayer"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="net.refractions.udig.style.sld.StyleEditorPage">
+      <StyleEditorPage
+            class="net.refractions.udig.style.sld.editor.StyleThemePage"
+            contentType="net.refractions.udig.project.ILayer"
+            id="theme"
+            label="%themePage.label"
+            requires="org.geotools.data.FeatureSource"/>
+      <StyleEditorPage
+            class="net.refractions.udig.style.sld.editor.StyleXMLPage"
+            contentType="net.refractions.udig.project.ILayer"
+            id="xml"
+            label="%xmlPage.label"
+            requires="org.geotools.data.FeatureSource"/>
+      <StyleEditorPage
+            class="net.refractions.udig.style.sld.editor.StyleXMLPage"
+            contentType="net.refractions.udig.project.ILayer"
+            id="xml"
+            label="%xmlPage.label"
+            requires="org.opengis.coverage.grid.GridCoverage"/>
+<!--
+      <StyleEditorPage
+            class="net.refractions.udig.style.sld.editor.PointEditorPage"
+            contentType="net.refractions.udig.project.ILayer"
+            id="net.refractions.udig.style.sld.PointStyleEditorPage"
+            label="Default Point"
+            requires="org.geotools.data.FeatureSource">
+      </StyleEditorPage>
+      <StyleEditorPage
+            class="net.refractions.udig.style.sld.editor.LineEditorPage"
+            contentType="net.refractions.udig.project.ILayer"
+            id="net.refractions.udig.style.sld.LineStyleEditorPage"
+            label="Default Line"
+            requires="org.geotools.data.FeatureSource">
+      </StyleEditorPage>
+-->      
+   </extension>
+   <extension
+         point="org.eclipse.ui.viewActions">
+      <viewContribution
+            id="net.refractions.udig.style.sld.styleAction"
+            targetID="net.refractions.udig.project.ui.layerManager">
+         <action
+               class="net.refractions.udig.style.sld.editor.OpenStyleEditorAction"
+               enablesFor="1"
+               icon="icons/style_tsk.gif"
+               id="net.refractions.udig.style.sld.view.openStyling"
+               label="%StyleEditor.label"
+               style="push"
+               toolbarPath="additions"
+               tooltip="%StyleEditor.tooltip">
+            <enablement>
+               <objectClass name="net.refractions.udig.project.ILayer"/>
+            </enablement>
+         </action>
+      </viewContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
+         <actionSet id="net.refractions.udig.style.sld.editor.layerAction"/>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
+         <actionSet id="net.refractions.udig.style.sld.editor.layerAction"/>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.style">
+      <style
+            class="net.refractions.udig.style.sld.editor.DialogSettingsStyleContent"
+            id="net.refractions.udig.style.dialogSettings"
+            name="Dialog Settings">
+      </style>
+   </extension>
+
+</plugin>

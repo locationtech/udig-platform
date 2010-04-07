@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<introContent>
+  <page alt-style="css/root_swt.properties" style="css/root.css" id="root" style-id="page">
+    <title style-id="intro-header">Willkommen zu uDig</title>
+	<group id="links-background">
+	<group id="page-links">
+	  <link label="Erste Schritte" url="http://org.eclipse.ui.intro/showHelpTopic?id=/net.refractions.udig.help/DE/3741.html" id="tutorials" style-id="left">
+        <img id="tutorial_img" style-id="content-img" src="css/graphics/icons/etool/tutorials72.gif" alt="Getting Started"></img>
+	    <text>Zum einführenden Tutorial.</text>
+	  </link>
+	  <link label="Offizielle Webseite" url="http://udig.refractions.net/" id="news" style-id="left">
+	    <img id="site_img" style-id="content-img" src="css/graphics/icons/etool/whatsnew72.gif" alt="Official Site"></img>
+	    <text>Zur Webseite von uDig.</text>
+	  </link>
+	</group>
+	</group>
+	
+	<group id="action-links">
+	  <link url="http://org.eclipse.ui.intro/close" label="Arbeitsplatz" id="workbench" style-id="right">
+        <img id="workbench_img" style-id="content-img" src="css/graphics/icons/etool/wb48.gif" alt="Close Introduction"></img>
+        <text>Zum uDig-Arbeitsplatz</text>
+      </link>
+	</group>
+  </page>
+  
+    <!--  Hack to fix null pointer exception don't ask me why... Maybe the anchors? -->
+  <page alt-style="css/standby_swt.properties" style="css/standby_root.css" id="standby" style-id="page">
+        <title style-id="intro-header">Welcome to uDig</title>
+        <group id="links-background">
+            <group id="page-links">
+				<anchor id="beginAnchor"/>
+			  <link label="Getting Started" url="http://org.eclipse.ui.intro/showHelpTopic?id=/net.refractions.udig.help/DE/3741.html" id="tutorials" style-id="left">
+			    <text>Access the introductory tutorial.</text>
+			  </link>
+			  <!--link label="Walkthrough" url="http://udig.refractions.net/confluence/display/UDIG/Walkthrough+1" id="walkthrough" style-id="left">
+			    <text>View the first walkthrough.</text>
+			  </link-->
+			  <link label="Official Website" url="http://udig.refractions.net/" id="news" style-id="left">
+			    <text>Check out the official uDig website.</text>
+			  </link>
+				<anchor id="endAnchor"/>
+            </group>
+        </group>
+    </page>
+</introContent>

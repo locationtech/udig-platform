@@ -1,0 +1,27 @@
+<h2>Printing User Interface</h2>
+<h3>Purpose:</h3>
+<p>Provides a user-interface to the model and controller code in the
+udig.printing.* plugins.</p>
+
+<h3>TODO</h3>
+<p>There is still a lot of work that needs to be done on the printing user
+interface. </p>
+
+<ul>
+<li>Currently the PageEditor does not permit saving, because there is no
+persistence system hooked up. 
+<li>The notion of the LabelBox needs to be abstracted more. 
+<li>It should be possible to create Map Boxes from the Palette. 
+<li>There needs to be the ability to add Boxes to a Page or delete them from a Page.
+<li>Pages should be able to be resized (landscape, portrait, A4, etc.).
+<li>MapBox should display an image instead of the map name
+<li>The duplication of the map might be hard for user's to understand. (Selecting
+Edit Map on the MapBox opens a different map from the original one that the Page
+was created with. Need ideas here.
+<li>LabelBox's text should be centered within the box.
+<li>The font (style, colour, size) of the text in a LabelBox should be changeable.
+<li>It should be possible to scroll to the bottom of the Page. Currently it is
+not, unless there is a Box down there already.
+<li>Printed WMS images should be higher DPI
+</ul>
+

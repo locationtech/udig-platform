@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Build specific targets and properties" default="noDefault">
+
+		<property file="build.properties"/>
+			<target name="allElements">
+				
+					<ant antfile="${genericTargets}" target="${target}">
+						<property name="type" value="feature"/>
+						<property name="id" value="uDigCore"/></ant>
+					
+					<ant antfile="${genericTargets}" target="${target}">
+						<property name="type" value="feature"/>
+						<property name="id" value="uDigProj"/></ant>
+					
+					<ant antfile="${genericTargets}" target="${target}"> <property name="type" value="feature"/> <property name="id" value="uDigEclipse"/></ant>
+					
+					<ant antfile="${genericTargets}" target="${target}">
+						<property name="type" value="feature"/>
+						<property name="id" value="uDigPrint"/></ant>
+					
+					<ant antfile="${genericTargets}" target="${target}">
+						<property name="type" value="feature"/>
+						<property name="id" value="uDigRelease"/></ant>
+					
+					<ant antfile="${genericTargets}" target="${target}">
+						<property name="type" value="feature"/>
+						<property name="id" value="uDigTest"/></ant>
+
+				</target>
+				<target name="assemble.uDigCore">
+					<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/></target>
+				<target name="assemble.uDigProj">
+					<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/></target>
+				<target name="assemble.uDigPrint">
+					<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/></target>
+				<target name="assemble.uDigEclipse">
+					<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/></target>
+				<target name="assemble.uDigRelease">
+					<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/></target>
+				<target name="assemble.uDigTest">
+					<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/></target>
+
+			<target name="preSetup">
+				<!-- set up a timestamp -->
+				<tstamp/>
+				<copy todir="build/plugins"><fileset dir="build/fragments" excludes="**/.svn"/></copy>
+				</target>
+			<target name="postSetup"/>
+			<target name="preFetch"/>
+			<target name="postFetch"/>
+			<target name="preGenerate"/>
+			<target name="postGenerate"/>
+			<target name="preProcess"/>
+			<target name="postProcess"/>
+			<target name="preAssemble"/>
+			<target name="postAssemble"/>
+			<target name="postBuild">
+				<available property="build.exists" file="build/${buildLabel}/uDigRelease-${buildId}.zip"/>
+				<antcall target="package"/>
+				<!--ant antfile="gen.xml" target="log"/>
+				<ant antfile="log.xml"/-->
+
+				<!--ant antfile="gen.xml" target="doc"/>
+				<antcall target="doc"/>
+				<antcall target="test"/-->
+			</target>
+			<target name="test">
+				<tstamp/>
+				<delete dir="${test.dir}"/>
+				<mkdir dir="${test.dir}"/>
+				<unzip src="${rcp.file}" dest="${test.dir}"/>
+				<unzip src="uDig-${buildLabel}${cctimestamp}.zip" dest="${test.dir}"/>
+				<zip destfile="uDig.zip" basedir="${test.dir}"><fileset dir="${test.dir}" includes="eclipse"/>
+					</zip><copy file="uDig.zip" todir="${test.dir}"/>
+				<delete dir="${test.dir}${file.separator}eclipse"/>
+				<copy file="uDig-tests-${buildLabel}${cctimestamp}.zip" todir="${test.dir}"/>
+				<copy file="test.xml" todir="${test.dir}"/>
+				<copy file="test.properties" todir="${test.dir}"/>
+				<copy file="JUNIT.XSL" todir="${test.dir}"/>
+				<copy file="runtests.sh" todir="${test.dir}"/>
+				<exec dir="${test.dir}" executable="sh">
+					<arg line="runtests.sh -os ${baseos} -ws ${basews} -arch ${basearch}"/>
+					</exec>
+				<zip destfile="uDig-testreport-${buildLabel}${cctimestamp}.zip" basedir="${test.dir}${file.separator}results${file.separator}html"><fileset dir="${test.dir}${file.separator}results${file.separator}html" includes="*.html"/>
+					</zip></target>
+			<target name="doc" if="doc.exists">
+				<tstamp/><ant antfile="doc.xml"/>
+				<zip destfile="uDig-javadoc-${buildLabel}${cctimestamp}.zip" basedir="build/doc"/></target>
+			<target name="package" if="build.exists">
+				<tstamp/><copy file="build/${buildType}/uDigRelease-${buildId}.zip" tofile="uDig-${buildLabel}${cctimestamp}.zip"/><copy file="build/${buildType}/uDigTest-${buildId}.zip" tofile="uDig-tests-${buildLabel}${cctimestamp}.zip"/></target>
+			<target name="noDefault">
+				<echo message="You must specify a target when invoking this file"/></target></project>

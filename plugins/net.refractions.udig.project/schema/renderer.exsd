@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="net.refractions.udig.render">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="net.refractions.udig.render" id="renderer" name="renderer"/>
+      </appInfo>
+      <documentation>
+         &lt;p&gt;A Renderer interprets spatial data and represents the data in a visual manner.  In UDIG there are different types of renderers that can render different types of data.  For example, a feature renderer can render features data.  A WMS renderer can communicate with and render images from a web map server.&lt;/p&gt;
+&lt;p&gt;The API requires that a Renderer extension must create a RenderMetrics class, which can provide metrics about how fast a renderer can provide its service, a RenderMetricsFactory class, which can determine if a data source can be rendered by the renderer and can create RenderMetrics that provide metrics with regard to a particular data source and, last, a renderer extension must provide an implementation of the Renderer Interface.  Normally by extending the abstract superclass which handles threading and event notification for the renderer.  &lt;/p&gt;
+&lt;p&gt;For the sake of simplicity and security a toolkit object is provided that the renderer can use.  This provides the user with a buffered image that the renderer can write on and provide a single interface for obtaining all information that the renderer may need.&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <documentation>
+            This extension point is used to list renderer extensions.
+
+Renderer extentions are options the RendererManager can when visualizing a Layer. Often several Renderer extenentions could be used for a given Layer. The RendererCreationDecisive is used to provide enough metadata to RendererManager so an informed choice can be made.
+
+Note PrintManager will also make use of this extention point.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="renderer" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  a fully qualified identifier of the target extension point
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  an optional identifier of the extension instance
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  an optional name of the extension instance
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="renderer">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="name"/>
+         </appInfo>
+         <documentation>
+            Declares a renderer extension.  Make sure that the body of the extension provides a description of the renderer as it is used in User interfaces.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="1">
+            <element ref="description"/>
+         </sequence>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The implementation class of the Renderer.  The Renderer interface must also be implemented
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.render.IRenderMetricsFactory"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  A unique ID of the renderer
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  A human readable name of the renderer
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="description" type="string">
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         0.1.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         &lt;extension point=&quot;net.refractions.udig.project.impl.renderer&quot;&gt;
+   &lt;renderer class=&quot;net.refractions.udig.render.internal.feature.basic.BasicFeatureMetricsFactory&quot;&gt;
+   &lt;/renderer&gt;
+&lt;/extension&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         &lt;p&gt;A renderer extension must implement three interfaces:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;RenderMetrics&lt;/li&gt;
+&lt;li&gt;RenderMetricsFactory&lt;/li&gt;
+&lt;li&gt;Renderer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In addition to implementing these three interfaces a renderer may optionally implement the FeatureRenderer, GridCoverageRenderer, or WMSRenderer interfaces.&lt;/p&gt;
+&lt;p&gt;The RenderMetric&apos;s renderer creation method is supplied with a toolkit object.  The toolkit object is a facade for the renderers into the UDIG system.  It provides access to the current map, project, viewport, display and the command factories.  It provides methods for sending commands objects to UDIG also provides support methods such as pixelToWorld() which calculates the world location corresponding to a pixel in the display.  Lastly, the renderer toolkit provides acess to the layer to render and the service object that will provide the spatial data.&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         net.refractions.udig.render.feature.basic
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         2004 Refractions Research
+      </documentation>
+   </annotation>
+
+</schema>

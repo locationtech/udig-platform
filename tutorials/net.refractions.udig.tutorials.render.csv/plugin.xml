@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="net.refractions.udig.project.renderer">
+      <renderer
+            class="net.refractions.udig.tutorials.render.csv.CSVRenderMetricsFactory"
+            id="net.refractions.udig.tutorials.renderer.csv.csvRenderer"
+            name="CSV Renderer">
+      </renderer>
+   </extension>
+</plugin>

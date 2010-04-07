@@ -1,0 +1,28 @@
+<project name="test" basedir="." default="test">
+
+	<property file="build.properties"/> 
+
+	<target name="test"> 
+		<!-- clean the last tests -->
+		<delete file="${testResults.archive}"/>
+		<delete dir="${test.dir}/${archivePrefix}"/>
+		<delete dir="${test.dir}/results"/>
+		<delete dir="${test.dir}/test-eclipse"/>
+		<delete>
+			<fileset dir="${test.dir}" includes="*.zip"/>
+		</delete>
+ 
+		<!-- copy the build and test archives over -->
+		<copy file="${build.archive}" todir="${test.dir}"/>
+		<copy file="${test.archive}" todir="${test.dir}"/>
+
+		<!-- fire up the test script -->
+		<exec executable="sh" dir="${test.dir}">
+			<arg line="runtests"/>
+		</exec>
+
+		<!-- zip up the results -->
+		<zip destfile="${testResults.archive}" basedir="${test.dir}/results"/>
+	</target>
+
+</project>

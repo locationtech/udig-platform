@@ -1,0 +1,23 @@
+STATE: color
+TYPE: local toolbar
+SIZE: 16x16
+PALETTE: Eclipse 256 colour palette
+
+Local (View) Toolbar
+--------------------
+    Local toolbar icons are found to the right of the view icon on the titlebar
+of each view within the workbench. These icons invoke an command on objects in
+that view only.
+
+    Local toolbar icons are also found in all menus, including main, pull down,
+and context menus.
+
+Local Toolbar Icon Size & Placement
+-----------------------------------
+- Maximum 16 pixels wide x 16 pixels high, always centered.
+- Empty pixels should be on the left, and top.
+
+    Designed within an area of 16 x 16 pixels. Within that area, a 15 x 15 pixel
+space is reserved for the image itself, leaving both a vertical and horizontal
+line of empty pixels to allow for proper placement of the image within the
+interface.

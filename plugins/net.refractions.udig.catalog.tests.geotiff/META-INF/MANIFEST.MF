@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Geotiff Test Plug-in
+Bundle-SymbolicName: net.refractions.udig.catalog.test.geotiff;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: net.refractions.udig.catalog.tests.internal.geotiff.GeoTiffPlugin
+Bundle-Vendor: udig.refractions.net
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.catalog.tests,
+ net.refractions.udig.catalog.geotiff
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

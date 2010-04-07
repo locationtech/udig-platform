@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension-point id="externalCatalogWizard" name="externalCatalogWizard" schema="schema/externalCatalogWizard.exsd"/>
+
+   <extension
+         point="net.refractions.udig.browser.externalCatalogWizard">
+         <externalCatalogue
+               description="%external.catalogue.desc"
+               icon="icons/sample.gif"
+               id="net.refractions.udig.uid.browser.generic"
+               name="%external.catalogue.name"
+               viewName="net.refractions.udig.browser.default">
+             <externalCataloguePage
+                 class="net.refractions.udig.browser.ui.URLImportPage"/>
+         </externalCatalogue>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="net.refractions.udig.browser.ui.BrowserContainerView"
+            id="net.refractions.udig.browser.ui.browserContainerView"
+            name="%view.name"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
+         <viewShortcut id="net.refractions.udig.browser.ui.browserContainerView"/>
+         <view
+               id="net.refractions.udig.browser.ui.browserContainerView"
+               relationship="stack"
+               relative="net.refractions.udig.catalog.ui.CatalogView"
+               visible="true"/>
+      </perspectiveExtension>
+   </extension>
+</plugin>

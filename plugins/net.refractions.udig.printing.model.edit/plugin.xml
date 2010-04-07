@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+/**
+ * <copyright>
+ * </copyright>
+ *
+ * $Id$
+ */
+-->
+
+<plugin>
+
+    <extension
+        point="net.refractions.udig.project.ui.itemProviderAdapterFactories">
+     <itemProviderAdapterFactory class="net.refractions.udig.printing.model.provider.ModelItemProviderAdapterFactory"/>
+  </extension>
+
+</plugin>
+

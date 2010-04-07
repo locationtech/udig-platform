@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Socket Plug-in
+Bundle-SymbolicName: net.refractions.udig.socket;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: net.refractions.udig.socket.Activator
+Bundle-Vendor: Camptocamp SA
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.project.ui,
+ org.junit4;bundle-version="4.3.1"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

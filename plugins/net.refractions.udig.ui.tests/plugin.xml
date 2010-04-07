@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="net.refractions.udig.ui.tests.actionSet1"
+            label="net.refractions.udig.ui.tests.actionSet1"
+            visible="true">
+         <action
+               class="net.refractions.udig.ui.TestZoomDialogAction"
+               id="net.refractions.udig.ui.tests.action1"
+               label="TestZoomDialog"
+               style="push"
+               toolbarPath="additions"/>
+      </actionSet>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.dropAction">
+      <action
+            class="net.refractions.udig.ui.AlwaysAcceptDropAction"
+            name="net.refractions.udig.ui.tests.action1">
+         <acceptedType
+               class="java.lang.String"/>
+         <destination
+               class="net.refractions.udig.ui.TestDropDestination"/>
+         <acceptedType
+               adapt="true"
+               class="java.lang.Integer"/>
+      </action>
+      <action
+            class="net.refractions.udig.ui.AlwaysAcceptDropAction"
+            enablesFor="1+"
+            name="net.refractions.udig.ui.tests.action2">
+         <destination class="net.refractions.udig.ui.TestDropDestination"/>
+         <acceptedType class="java.lang.Double"/>
+         <acceptedType class="java.lang.Character"/>
+      </action>
+      <action
+            class="net.refractions.udig.ui.AlwaysAcceptDropAction"
+            enablesFor="2"
+            name="net.refractions.udig.ui.tests.action3">
+         <destination class="net.refractions.udig.ui.TestDropDestination"/>
+         <acceptedType class="java.lang.Byte"/>
+      </action>
+      <action
+            class="net.refractions.udig.ui.AlwaysAcceptDropAction"
+            enablesFor="+"
+            name="net.refractions.udig.ui.tests.action4">
+         <destination class="net.refractions.udig.ui.TestDropDestination"/>
+         <acceptedType class="java.lang.Long"/>
+      </action>
+      <action
+            class="net.refractions.udig.ui.AlwaysAcceptDropAction"
+            enablesFor="10+"
+            name="net.refractions.udig.ui.tests.action5">
+         <destination class="net.refractions.udig.ui.TestDropDestination"/>
+         <acceptedType class="java.lang.Short"/>
+      </action>
+      <action
+            class="net.refractions.udig.ui.AcceptLessTen"
+            enablesFor="1"
+            name="net.refractions.udig.ui.tests.action6">
+         <destination class="net.refractions.udig.ui.TestDropDestination"/>
+         <acceptedType class="net.refractions.udig.ui.AcceptLessTen$Data"/>
+      </action>
+   </extension>
+
+</plugin>

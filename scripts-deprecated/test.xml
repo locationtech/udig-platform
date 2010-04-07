@@ -1,0 +1,89 @@
+<project name="Automated Eclipse Testing" default="all"  basedir="." >
+
+	<!--properties file containing the plugin directory name including version number-->
+	<property file="test.properties" />
+
+	<!--properties file containing the build information-->
+	<!--property file="label.properties" /-->
+	
+	<!--default directory where test-eclipse will be installed-->
+	<property name="install" value="${basedir}/test-eclipse" />
+	
+	<!--name that can be added to report name to identify which platform tests results come from-->
+	<property name="platform" value="" />
+
+	<!-- The root of the eclipse installation -->
+	<property name="eclipse-home" value="${install}/eclipse" />
+
+	<!-- The path to libary.xml -->
+	<!--property name="library-file" value="${eclipse-home}/plugins/${org.eclipse.test}/library.xml" /-->
+
+	<!-- The directory that will contain the xml and html results from the tests that are run -->
+ 	<property name="results" value="${basedir}/results" />
+
+	<!--override the value of this property with performance if the tests run on performance machine-->
+	<property name="test.target" value="junit" />
+
+	<target name="setup" if="clean" description="Reinstall the test Eclipse installation if specified by user">
+		<delete dir="${install}" />
+		<mkdir dir="${install}" />
+		<exec dir="." executable="unzip">
+			<arg line="-o -qq uDig.zip -d ${install}"/>
+	    </exec>
+	    <exec dir="." executable="unzip">
+			<arg line="-o -qq uDig-tests-*.zip -d ${install}"/>
+    	</exec>
+		
+		<!-- Fill in cvs repository information -->
+		<!--replace file="${eclipse-home}/plugins/${org.eclipse.team.tests.cvs.core}/repository.properties" token="@user@" value="@cvs_user@"/>
+		<replace file="${eclipse-home}/plugins/${org.eclipse.team.tests.cvs.core}/repository.properties" token="@password@" value="@cvs_password@"/>
+		<replace file="${eclipse-home}/plugins/${org.eclipse.team.tests.cvs.core}/repository.properties" token="@host@" value="@cvs_host@"/>
+		<replace file="${eclipse-home}/plugins/${org.eclipse.team.tests.cvs.core}/repository.properties" token="@root@" value="@cvs_root@"/-->
+	
+  	</target>
+
+	<target name="junit" depends="setup">
+		<ant antfile="${eclipse-home}/plugins/${testPlugin}/test.xml" dir="${eclipse-home}" />
+		<copy file="${eclipse-home}/${report}.xml" tofile="${results}/xml/${report}_${platform}.xml" failonerror="false" />
+		<antcall target="genHtml" />
+	</target>
+
+	<target name="performance" if="performance.target.present">
+		<antcall target="setup" />
+		<ant antfile="${eclipse-home}/plugins/${testPlugin}/test.xml" dir="${eclipse-home}" target="performance" />
+		<copy file="${eclipse-home}/${report}.xml" tofile="${results}/xml/${report}_${platform}.xml" failonerror="false" />
+		<antcall target="genHtml" />
+	</target>
+
+	<target name="runtests">
+		<condition property="performance.target.present" value="true">
+			<isset property="${testPlugin}.has.performance.target"/>
+		</condition>
+		<antcall target="${test.target}"/>
+	</target>
+
+	<target name="catalog">
+		<antcall target="runtests">
+			<param name="testPlugin" value="${net.refractions.udig.catalog.tests}"/>
+			<param name="report" value="net.refractions.udig.catalog.tests"/>
+		</antcall>
+	</target>
+
+	<target name="catalog-wfs">
+		<antcall target="runtests">
+			<param name="testPlugin" value="${net.refractions.udig.catalog.tests.wfs}"/>
+			<param name="report" value="net.refractions.udig.catalog.tests.wfs"/>
+		</antcall>
+	</target>
+
+	<target name="all">
+		<antcall target="catalog-wfs"/>
+		<antcall target="catalog" />
+	</target>
+	
+
+	<target name="genHtml" description="Generates HTML results with provided JUNIT.XSL provided">
+		<style style="JUNIT.XSL" basedir="${results}/xml" destdir="${results}/html" />
+	</target>
+
+</project>

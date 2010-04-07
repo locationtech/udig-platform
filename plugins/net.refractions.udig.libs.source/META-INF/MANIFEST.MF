@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Source Plug-in
+Bundle-SymbolicName: net.refractions.udig.libs.source;singleton:=true
+Bundle-Version: 1.2.0
+Bundle-Vendor: Refractions Research Inc.
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

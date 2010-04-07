@@ -1,0 +1,90 @@
+<class-diagram generalizations="true" realizations="true" associations="true" dependencies="true" 
+  nesting-relationships="true">  
+  <classifier-display autosize="true" package="true" attributes="false" operations="false" initial-value="false" 
+    signature="true" visibility="true"/>  
+  <association-display labels="true" multiplicity="true"/>  
+  <class type="java" name="net.refractions.udig.tutorials.catalog.csv.CSVGeoResource" 
+    project="net.refractions.udig.tutorials.catalog.csv" 
+    file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVGeoResource.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="237" y="377" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.tutorials.catalog.csv.CSVGeoResourceInfo" 
+    project="net.refractions.udig.tutorials.catalog.csv" 
+    file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVGeoResourceInfo.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="true" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="553" y="376" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.catalog.IGeoResource" project="net.refractions.udig.catalog" 
+    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IGeoResource.java" corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="233" y="199" width="-1" height="-1"/>  
+  </class>  
+  <interface type="java" name="net.refractions.udig.catalog.IResolve" project="net.refractions.udig.catalog" 
+    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IResolve.java" corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="232" y="113" width="-1" height="-1"/>  
+  </interface>  
+  <class type="java" name="net.refractions.udig.catalog.IGeoResourceInfo" project="net.refractions.udig.catalog" 
+    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IGeoResourceInfo.java" corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="552" y="200" width="-1" height="-1"/>  
+  </class>  
+  <generalization>    
+    <source project="net.refractions.udig.tutorials.catalog.csv" 
+      name="net.refractions.udig.tutorials.catalog.csv.CSVGeoResource" 
+      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVGeoResource.java"/>    
+    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IGeoResource" 
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IGeoResource.java"/>  
+  </generalization>  
+  <dependency>    
+    <source project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IGeoResource" 
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IGeoResource.java"/>    
+    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IGeoResourceInfo" 
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IGeoResourceInfo.java"/>  
+  </dependency>  
+  <association>    
+    <display labels="true" multiplicity="true"/>    
+    <source navigable="false" project="net.refractions.udig.tutorials.catalog.csv" 
+      name="net.refractions.udig.tutorials.catalog.csv.CSVGeoResource" 
+      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVGeoResource.java">      
+      <attribute name="info"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target navigable="true" project="net.refractions.udig.tutorials.catalog.csv" 
+      name="net.refractions.udig.tutorials.catalog.csv.CSVGeoResourceInfo" 
+      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVGeoResourceInfo.java"/>  
+  </association>  
+  <realization>    
+    <source project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IGeoResource" 
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IGeoResource.java"/>    
+    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IResolve" 
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IResolve.java"/>  
+  </realization>  
+  <association>    
+    <display labels="true" multiplicity="true"/>    
+    <source navigable="false" project="net.refractions.udig.tutorials.catalog.csv" 
+      name="net.refractions.udig.tutorials.catalog.csv.CSVGeoResourceInfo" 
+      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVGeoResourceInfo.java">      
+      <attribute name="handle"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target navigable="true" project="net.refractions.udig.tutorials.catalog.csv" 
+      name="net.refractions.udig.tutorials.catalog.csv.CSVGeoResource" 
+      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVGeoResource.java"/>  
+  </association>  
+  <generalization>    
+    <source project="net.refractions.udig.tutorials.catalog.csv" 
+      name="net.refractions.udig.tutorials.catalog.csv.CSVGeoResourceInfo" 
+      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVGeoResourceInfo.java"/>    
+    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IGeoResourceInfo" 
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IGeoResourceInfo.java"/>  
+  </generalization>
+</class-diagram>

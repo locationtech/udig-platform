@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Panel" x="136" y="64" width="601" height="649"/>
+  <widgets xsi:type="model:HLine" x="152" y="116" width="569"/>
+  <widgets xsi:type="model:Spinner" x="152" y="128" width="206" text="the_geom"/>
+  <widgets xsi:type="model:List" x="152" y="176" width="185" height="209" text="External Graphic (PNG)&#xA;External Graphic (BMP)&#xA;Well Known Name (STAR)" selection="2"/>
+  <widgets xsi:type="model:VScrollbar" x="336" y="176" height="209"/>
+  <widgets xsi:type="model:Button" x="368" y="176" width="81" text="Add "/>
+  <widgets xsi:type="model:Icon" x="429" y="180" icon="filled-arrow-down (small)"/>
+  <widgets xsi:type="model:Button" x="368" y="362" width="81" text="Remove"/>
+  <widgets xsi:type="model:Button" x="368" y="219" width="81" text="Move Up"/>
+  <widgets xsi:type="model:Button" x="369" y="251" width="81" text="Move Down"/>
+  <widgets xsi:type="model:Panel" x="464" y="176" width="257" height="521"/>
+  <widgets xsi:type="model:Label" x="503" y="253" text="Fill">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Combo" x="483" y="344" width="228" text="Insert Colour Swatch"/>
+  <widgets xsi:type="model:Combo" x="483" y="388" width="228" text="50%"/>
+  <widgets xsi:type="model:Label" x="503" y="416" text="Stroke">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Combo" x="547" y="528" width="114" text="3 pt"/>
+  <widgets xsi:type="model:Combo" x="547" y="552" width="114" text="[FISH_COUNT] * 5"/>
+  <widgets xsi:type="model:Combo" x="547" y="576" width="113" text="Bevel"/>
+  <widgets xsi:type="model:Combo" x="547" y="600" width="113" text="Butt"/>
+  <widgets xsi:type="model:Combo" x="547" y="625" width="114" text="2-1-3-1"/>
+  <widgets xsi:type="model:Combo" x="547" y="650" width="114" text="2"/>
+  <widgets xsi:type="model:Label" x="474" y="206" text="Marker Type">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Icon" x="474" y="256" icon="filled-arrow-down (small)"/>
+  <widgets xsi:type="model:Label" x="483" y="280" text="Graphic Fill">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" x="483" y="324" text="Fill Colour">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" x="483" y="368" text="Fill Opacity">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Icon" x="474" y="419" icon="filled-arrow-down (small)"/>
+  <widgets xsi:type="model:Label" x="483" y="528" text="Width">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" x="483" y="552" text="Opacity">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" x="483" y="577" text="Line Join">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" x="483" y="602" text="Line Cap">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" x="483" y="625" text="Dash Array">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" x="483" y="651" text="Dash Offset">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" x="483" y="436" text="Graphic Fill">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" x="483" y="480" text="Graphic Stroke">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Combo" x="483" y="300" width="228" text="&lt;none>"/>
+  <widgets xsi:type="model:Combo" x="483" y="456" width="177" text="&lt;none>"/>
+  <widgets xsi:type="model:Combo" x="483" y="500" width="177" text="&lt;none>"/>
+  <widgets xsi:type="model:Label" x="152" y="74" text="Point">
+    <font size="22"/>
+  </widgets>
+  <widgets xsi:type="model:WidgetGroup" x="152" y="400">
+    <widgets xsi:type="model:Label" text="Opacity">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Combo" x="67" width="177" text="75%"/>
+    <widgets xsi:type="model:Combo" x="67" y="32" text="[DEATHS_2008]/[POPULATION]"/>
+    <widgets xsi:type="model:Label" y="32" text="Size">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Combo" x="67" y="64" width="177" text="0 deg"/>
+    <widgets xsi:type="model:Label" y="64" text="Rotation">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" y="96" text="Anchor">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" x="148" y="128" text="X">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" y="128" text="Displacement">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" x="148" y="96" text="X">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Combo" x="67" y="96" width="78" text="50%"/>
+    <widgets xsi:type="model:Combo" x="156" y="96" width="78" text="50%"/>
+    <widgets xsi:type="model:Combo" x="67" y="128" width="78" text="56"/>
+    <widgets xsi:type="model:Combo" x="156" y="128" width="78" text="56"/>
+  </widgets>
+  <widgets xsi:type="model:Label" x="474" y="186" text="Well Known Name (STAR)">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Combo" x="474" y="226" width="237" text="STAR"/>
+  <hRuler/>
+  <vRuler/>
+  <font/>
+</model:Screen>

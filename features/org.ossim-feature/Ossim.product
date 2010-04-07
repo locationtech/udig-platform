@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.1"?>
+
+<product name="%product.name" id="net.refractions.udig.product" application="net.refractions.udig.ui.application" useFeatures="true">
+
+   <aboutInfo>
+      <image path="icons/about.gif"/>
+      <text>
+         %verboseAboutText
+      </text>
+   </aboutInfo>
+
+   <configIni use="default"/>
+
+   <launcherArgs>
+      <programArgs>-consoleLog</programArgs>
+      <vmArgs>-Xmx512M</vmArgs>
+   </launcherArgs>
+
+   <windowImages i16="icons/icon16.gif" i32="icons/icon32.gif" i48="icons/icon64.gif" i64="icons/icon128.gif"/>
+
+   <splash
+      startupProgressRect="0,0,500,40" />
+   <launcher>
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <plugins>
+      <plugin id="com.ibm.icu"/>
+      <plugin id="net.refractions.udig"/>
+      <plugin id="net.refractions.udig.browser"/>
+      <plugin id="net.refractions.udig.catalog"/>
+      <plugin id="net.refractions.udig.catalog.cgdi"/>
+      <plugin id="net.refractions.udig.catalog.db2"/>
+      <plugin id="net.refractions.udig.catalog.geotiff"/>
+      <plugin id="net.refractions.udig.catalog.google2"/>
+      <plugin id="net.refractions.udig.catalog.hsql"/>
+      <plugin id="net.refractions.udig.catalog.oracle"/>
+      <plugin id="net.refractions.udig.catalog.postgis"/>
+      <plugin id="net.refractions.udig.catalog.rasterings"/>
+      <plugin id="net.refractions.udig.catalog.shp"/>
+      <plugin id="net.refractions.udig.catalog.ui"/>
+      <plugin id="net.refractions.udig.catalog.wfs"/>
+      <plugin id="net.refractions.udig.catalog.wms"/>
+      <plugin id="net.refractions.udig.catalog.worldimage"/>
+      <plugin id="net.refractions.udig.context"/>
+      <plugin id="net.refractions.udig.core"/>
+      <plugin id="net.refractions.udig.feature.editor"/>
+      <plugin id="net.refractions.udig.help"/>
+      <plugin id="net.refractions.udig.help.nl1" fragment="true"/>
+      <plugin id="net.refractions.udig.issues"/>
+      <plugin id="net.refractions.udig.legend"/>
+      <plugin id="net.refractions.udig.libs"/>
+      <plugin id="net.refractions.udig.libs.db2"/>
+      <plugin id="net.refractions.udig.libs.oracle"/>
+      <plugin id="net.refractions.udig.libs.postgis"/>
+      <plugin id="net.refractions.udig.location"/>
+      <plugin id="net.refractions.udig.mapgraphic"/>
+      <plugin id="net.refractions.udig.printing.model"/>
+      <plugin id="net.refractions.udig.printing.model.edit"/>
+      <plugin id="net.refractions.udig.printing.ui"/>
+      <plugin id="net.refractions.udig.project"/>
+      <plugin id="net.refractions.udig.project.edit"/>
+      <plugin id="net.refractions.udig.project.ui"/>
+      <plugin id="net.refractions.udig.render.feature.basic"/>
+      <plugin id="net.refractions.udig.render.feature.shapefile"/>
+      <plugin id="net.refractions.udig.render.gridcoverage.basic"/>
+      <plugin id="net.refractions.udig.render.wms.basic"/>
+      <plugin id="net.refractions.udig.style"/>
+      <plugin id="net.refractions.udig.style.sld"/>
+      <plugin id="net.refractions.udig.style.wms"/>
+      <plugin id="net.refractions.udig.tool.default"/>
+      <plugin id="net.refractions.udig.tool.info"/>
+      <plugin id="net.refractions.udig.tool.select"/>
+      <plugin id="net.refractions.udig.tools.edit"/>
+      <plugin id="net.refractions.udig.ui"/>
+      <plugin id="net.refractions.udig.validation"/>
+      <plugin id="org.apache.ant"/>
+      <plugin id="org.apache.lucene"/>
+      <plugin id="org.eclipse.core.commands"/>
+      <plugin id="org.eclipse.core.commands.nl1" fragment="true"/>
+      <plugin id="org.eclipse.core.contenttype"/>
+      <plugin id="org.eclipse.core.expressions"/>
+      <plugin id="org.eclipse.core.expressions.nl1" fragment="true"/>
+      <plugin id="org.eclipse.core.filesystem"/>
+      <plugin id="org.eclipse.core.filesystem.win32.x86" fragment="true"/>
+      <plugin id="org.eclipse.core.jobs"/>
+      <plugin id="org.eclipse.core.resources"/>
+      <plugin id="org.eclipse.core.resources.compatibility" fragment="true"/>
+      <plugin id="org.eclipse.core.runtime"/>
+      <plugin id="org.eclipse.core.runtime.compatibility"/>
+      <plugin id="org.eclipse.core.runtime.compatibility.auth"/>
+      <plugin id="org.eclipse.core.runtime.nl1" fragment="true"/>
+      <plugin id="org.eclipse.draw2d"/>
+      <plugin id="org.eclipse.emf.common"/>
+      <plugin id="org.eclipse.emf.common.ui"/>
+      <plugin id="org.eclipse.emf.ecore"/>
+      <plugin id="org.eclipse.emf.ecore.xmi"/>
+      <plugin id="org.eclipse.emf.edit"/>
+      <plugin id="org.eclipse.emf.edit.ui"/>
+      <plugin id="org.eclipse.equinox.common"/>
+      <plugin id="org.eclipse.equinox.preferences"/>
+      <plugin id="org.eclipse.equinox.registry"/>
+      <plugin id="org.eclipse.gef"/>
+      <plugin id="org.eclipse.help"/>
+      <plugin id="org.eclipse.help.appserver"/>
+      <plugin id="org.eclipse.help.base"/>
+      <plugin id="org.eclipse.help.nl1" fragment="true"/>
+      <plugin id="org.eclipse.help.ui"/>
+      <plugin id="org.eclipse.help.webapp"/>
+      <plugin id="org.eclipse.jface"/>
+      <plugin id="org.eclipse.jface.databinding"/>
+      <plugin id="org.eclipse.jface.nl1" fragment="true"/>
+      <plugin id="org.eclipse.osgi"/>
+      <plugin id="org.eclipse.osgi.nl1" fragment="true"/>
+      <plugin id="org.eclipse.rcp"/>
+      <plugin id="org.eclipse.rcp.nl1" fragment="true"/>
+      <plugin id="org.eclipse.swt"/>
+      <plugin id="org.eclipse.swt.nl1" fragment="true"/>
+      <plugin id="org.eclipse.swt.win32.win32.x86" fragment="true"/>
+      <plugin id="org.eclipse.tomcat"/>
+      <plugin id="org.eclipse.ui"/>
+      <plugin id="org.eclipse.ui.cheatsheets"/>
+      <plugin id="org.eclipse.ui.cheatsheets.nl1" fragment="true"/>
+      <plugin id="org.eclipse.ui.forms"/>
+      <plugin id="org.eclipse.ui.intro"/>
+      <plugin id="org.eclipse.ui.nl1" fragment="true"/>
+      <plugin id="org.eclipse.ui.views"/>
+      <plugin id="org.eclipse.ui.workbench"/>
+      <plugin id="org.eclipse.ui.workbench.nl1" fragment="true"/>
+      <plugin id="org.eclipse.update.configurator"/>
+      <plugin id="org.eclipse.update.configurator.nl1" fragment="true"/>
+      <plugin id="org.eclipse.update.core"/>
+      <plugin id="org.eclipse.update.core.nl1" fragment="true"/>
+      <plugin id="org.eclipse.update.core.win32" fragment="true"/>
+      <plugin id="org.eclipse.update.ui"/>
+      <plugin id="org.eclipse.update.ui.nl1" fragment="true"/>
+      <plugin id="org.tcat.citd.sim.udig.bookmarks"/>
+      <plugin id="testing"/>
+   </plugins>
+
+   <features>
+      <feature id="net.refractions.udig" version="1.1.0"/>
+      <feature id="org.eclipse.rcp" version="3.2.1.r321_v20060801-2ekW2BxmcpPUOoq"/>
+      <feature id="org.ossim" version="1.0.1"/>
+   </features>
+
+</product>

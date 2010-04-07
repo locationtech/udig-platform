@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Raster Plug-in
+Bundle-SymbolicName: net.refractions.udig.tutorials.raster;singleton:=true
+Bundle-Version: 1.2.0
+Bundle-Activator: net.refractions.udig.tutorials.raster.Activator
+Bundle-Vendor: Student
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.project.ui
+Bundle-ActivationPolicy: lazy

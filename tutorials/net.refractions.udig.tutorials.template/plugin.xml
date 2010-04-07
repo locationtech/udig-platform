@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="net.refractions.udig.printing.ui.templateFactories">
+      <templateFactory
+            class="net.refractions.udig.tutorials.template.ImageTemplateFactory"
+            id="net.refractions.udig.tutorials.template.imageTemplateFactory"/>
+   </extension>
+   <extension
+         id="image"
+         point="net.refractions.udig.printing.ui.boxprinter">
+      <boxprinter
+            class="net.refractions.udig.tutorials.template.ImageBoxPrinter"
+            name="net.refractions.udig.tutorials.template.imageBoxPrinter"
+            visible="true"/>
+   </extension>
+
+</plugin>

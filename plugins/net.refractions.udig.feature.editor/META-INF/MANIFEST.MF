@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: FeatureEditor Plug-in
+Bundle-SymbolicName: net.refractions.udig.feature.editor; singleton:=true
+Bundle-Version: 1.2.0
+Bundle-Activator: net.refractions.udig.featureEditor.FeatureEditorPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Export-Package: net.refractions.udig.feature.editor,
+ net.refractions.udig.featureEditor
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.views,
+ net.refractions.udig.project.ui,
+ net.refractions.udig.libs
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %plugin.name
+Bundle-SymbolicName: net.refractions.udig.render.wms.basic; singleton:=true
+Bundle-Version: 1.2.0
+Bundle-Activator: net.refractions.udig.render.wms.basic.WMSPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Export-Package: net.refractions.udig.render.internal.wms.basic,
+ net.refractions.udig.render.internal.wmsc.basic,
+ net.refractions.udig.render.wms.basic,
+ net.refractions.udig.render.wms.basic.internal,
+ net.refractions.udig.render.wms.basic.preferences
+Require-Bundle: net.refractions.udig.project,
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+ net.refractions.udig.style.sld,
+ net.refractions.udig.ui,
+ net.refractions.udig.render.gridcoverage.basic,
+ net.refractions.udig.style.wms,
+ net.refractions.udig.catalog.wms
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

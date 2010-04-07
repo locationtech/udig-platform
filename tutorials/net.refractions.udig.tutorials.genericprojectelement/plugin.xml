@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="net.refractions.udig.project.element">
+      <element
+            class="net.refractions.udig.tutorials.genericprojectelement.MyProjectElement"
+            fileExtension=".my"
+            icon="icons/obj/object_obj.gif"
+            id="net.refractions.udig.tutorials.genericprojectelement.element1"
+            label="MyElement"
+            labelProvider="net.refractions.udig.tutorials.genericprojectelement.MyProjectElementLabelProvider">
+      </element>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="net.refractions.udig.tutorials.genericprojectelement.actionSet1"
+            label="ProjectElementTutorials"
+            visible="true">
+         <action
+               class="net.refractions.udig.tutorials.genericprojectelement.AddElementAction"
+               id="net.refractions.udig.tutorials.genericprojectelement.action1"
+               label="AddElement"
+               menubarPath="additions"
+               style="push"
+               toolbarPath="additions">
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="net.refractions.udig.tutorials.genericprojectelement.MyElementEditor"
+            default="true"
+            icon="icons/obj/object_obj.gif"
+            id="net.refractions.udig.tutorials.genericprojectelement.editor2"
+            name="MyElementEditor">
+      </editor>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.ui.editorInputs">
+      <editorInput
+            class="net.refractions.udig.tutorials.genericprojectelement.MyElementEditorInput"
+            editorPartID="net.refractions.udig.tutorials.genericprojectelement.editor2"
+            name="MyElementEditorInput"
+            projectElement="net.refractions.udig.tutorials.genericprojectelement.MyProjectElement">
+      </editorInput>
+   </extension>
+
+</plugin>

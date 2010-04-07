@@ -1,0 +1,8 @@
+net.refractions.udig.project/debug=true
+net.refractions.udig.project/debug/render/trace=true
+net.refractions.udig.project/debug/commands/trace=true
+net.refractions.udig.project/debug/model/trace=true
+
+net.refractions.udig.project.undoableCommandWarning=true
+trace/keyBindings=true
+trace/keyBindings.verbose=true

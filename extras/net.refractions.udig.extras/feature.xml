@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="net.refractions.udig.extras"
+      label="Extras"
+      version="1.2.0"
+      provider-name="uDig">
+
+   <description url="http://udig.refractions.net/developers/">
+      Welcome to uDig Development; this set of extras includes some plugins we recommend for development along with our developers guide.  If you are having any trouble running your refresh.xml script be sure to check the maven ant tasks plugin included here.
+   </description>
+
+   <copyright url="http://udig.refractions.net/confluence/display/ADMIN/About+this+Project">
+      2010 Refractions Research and others
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <plugin
+         id="net.refractions.udig.dev"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.maven_ant_tasks"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

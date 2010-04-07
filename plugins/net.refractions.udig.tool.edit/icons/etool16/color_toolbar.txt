@@ -1,0 +1,25 @@
+STATE: color
+TYPE: toolbar
+SIZE: 16x16
+PALETTE: Eclipse 256 colour palette
+
+Toolbar
+-------
+    Toolbar icons are found on the main toolbar across the top of the
+workbench. These icons invoke an command, either globally or within the editor.
+
+Toolbar Wizard 
+--------------
+    Toolbar wizard icons are found on the main toolbar across the top of the
+workbench. They are easily recognized by their wand and sparkle. Selecting one
+of these icons will launch a wizard. 
+
+Toolbar Icon Size & Placement
+-----------------------------
+- Maximum 16 pixels wide x 16 pixels high, always centered.
+- Empty pixels should be on the left, and top.
+
+    Designed within an area of 16 x 16 pixels. Within that area, a 15 x 15 pixel
+space is reserved for the image itself, leaving both a vertical and horizontal
+line of empty pixels to allow for proper placement of the image within the
+interface.

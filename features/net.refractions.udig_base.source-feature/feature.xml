@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="net.refractions.udig_base.source"
+      label="net.refractions.udig_base.source"
+      version="1.2.0"
+      provider-name="Udig.Refractions.net">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="org.eclipse.emf.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.gef.source"
+         version="0.0.0"/>
+
+</feature>

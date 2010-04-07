@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         id="net.refractions.udig.project.ui.mapEditor"
+         name="%context.name"
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="context/mapEditor.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml"
+            primary="true">
+      </toc>
+      <toc
+            extradir=""
+            file="livetoc.xml"
+            primary="true">
+      </toc>
+   </extension>
+
+</plugin>

@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Workbench Plug-in
+Bundle-SymbolicName: net.refractions.udig.tutorials.workbench;singleton:=true
+Bundle-Version: 1.1.2
+Bundle-Activator: net.refractions.udig.tutorials.workbench.Activator
+Bundle-Vendor: Student
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.catalog,
+ net.refractions.udig.project
+Eclipse-LazyStart: true

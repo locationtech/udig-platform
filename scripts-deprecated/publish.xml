@@ -1,0 +1,39 @@
+<project name="publish" default="notify" basedir=".">
+
+	<property file="build.properties"/>
+
+	<target name="log">
+		<tstamp/>
+		<ant antfile="log.xml" target="log"/>
+		<property name="build.log.file" value="${log.dir}/build-N${DSTAMP}${TSTAMP}.log"/>
+		<property name="build.log.url" value="http://udig.refractions.net/nightly/udig/build-N${DSTAMP}${TSTAMP}.log"/>
+		<echo file="${build.log.file}" message="uDig Build Log ${DSTAMP} ${TSTAMP} ${line.separator}"/>
+		<concat destfile="${build.log.file}" append="true">
+			<fileset dir="${basedir}" includes="build.log"/>
+		</concat>
+		<!--copy file="build.log" tofile="${log.dir}/build-N${DSTAMP}${TSTAMP}.log"/-->
+	</target>
+
+	<target name="check">
+		<touch file="${lastbuildsuccessful}.status"/>	
+	</target>
+
+	<target name="notify" depends="log,check">
+		<available file="${basedir}/false.status" property="build.failed"/>
+		<antcall target="mail"/>
+		<delete> 
+			<fileset dir="." includes="*.status"/>
+		</delete>
+	</target>
+
+	<target name="mail" if="build.failed">
+		<mail from="cruise@refractions.net" tolist="jdeolive@refractions.net"
+					subject="Build Failed">
+			<message>Build log: ${build.log.url}</message>
+		</mail>	
+ 
+	</target>
+
+
+
+</project>

@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Graph Plug-in
+Bundle-SymbolicName: net.refractions.udig.graph;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Vendor: Rerfractions
+Require-Bundle: net.refractions.udig.project.ui,
+ net.refractions.udig.mapgraphic,
+ org.eclipse.core.runtime
+Export-Package: net.refractions.udig.graph.internal;x-internal:=true
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
