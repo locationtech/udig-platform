@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.refractions.udig.catalog.geotools.data.DataStoreServiceExtension"
+            id="net.refractions.udig.catalog.geotools.serviceDataStore"
+            name="DataStore">
+      </service>
+   </extension>
+
+</plugin>
