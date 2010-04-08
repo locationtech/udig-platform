@@ -37,4 +37,8 @@ public class DataStoreServiceInfo extends IServiceInfo {
         this.icon = images.getImageDescriptor( ISharedImages.DATASTORE_OBJ ); // generic!
     }
     
+    public ServiceInfo toServiceInfo(){
+        return info;
+    }
+    
 }

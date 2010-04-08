@@ -23,5 +23,9 @@ public class FeatureSourceGeoResourceInfo extends IGeoResourceInfo {
         ISharedImages images = CatalogUIPlugin.getDefault().getImages();
         this.icon = images.getImageDescriptor( ISharedImages.FEATURE_OBJ ); // generic!
     }
-
+ 
+    public ResourceInfo toResourceInfo(){
+        return info;
+    }
+    
 }

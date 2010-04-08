@@ -9,7 +9,6 @@ import java.util.Map;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.DataAccess;
@@ -49,7 +48,7 @@ public class DataStoreService extends IService {
     }
     
     @Override
-    protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+    protected DataStoreServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
         DataAccess<?,?> access = toDataAccess();
         ServiceInfo gtInfo = access.getInfo();
         return new DataStoreServiceInfo( gtInfo );

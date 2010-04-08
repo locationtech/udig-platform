@@ -1,7 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+ *    (C) 2010, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -159,20 +159,6 @@ public abstract class IRepository extends ISearch {
     public ICatalogInfo getInfo( IProgressMonitor monitor ) throws IOException {
         return resolve(ICatalogInfo.class, monitor);
     }
-
-    /**
-     * Find resources for this resourceId from the Catalog.
-     * <p>
-     * Please note that a List of resources Services, Resources, and friends are returned by this
-     * method. While the first result returned may be the most appropriate; you may need to try some
-     * of the other values (if for example the first service is unavailable).
-     * <p>
-     * 
-     * @param resource used to match resolves
-     * @param monitor used to show the progress of the find.
-     * @return List (possibly empty) of matching Resolves
-     */
-    public abstract List<IResolve> find( ID resourceId, IProgressMonitor monitor );
 
     /**
      * Add a listener to notice when the a resource changes.
