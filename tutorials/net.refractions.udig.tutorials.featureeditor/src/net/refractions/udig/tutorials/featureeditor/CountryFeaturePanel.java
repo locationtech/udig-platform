@@ -44,19 +44,18 @@ public class CountryFeaturePanel extends IFeaturePanel {
     ComboViewer colorMap;
     private Button apply;
     private Button reset;
-    
+
     private SimpleFeature oldFeature;
-    
+
     /** Used send commands to the edit blackboard */
     private IToolContext context;
 
     /**
      * Listen to the selection change.
      * <p>
-     * It is poliet to keep your listeners internal and not pollute
-     * your class definition with extra interfaces that have nothing
-     * to do with your interaction with the outside world (and are basically
-     * an internal detail).
+     * It is poliet to keep your listeners internal and not pollute your class definition with extra
+     * interfaces that have nothing to do with your interaction with the outside world (and are
+     * basically an internal detail).
      */
     private ISelectionChangedListener selectionListener = new ISelectionChangedListener(){
         public void selectionChanged( SelectionChangedEvent event ) {
@@ -69,7 +68,7 @@ public class CountryFeaturePanel extends IFeaturePanel {
     /**
      * List to the fields change as keys are pressed.
      */
-    private KeyListener keyListener = new KeyListener(){        
+    private KeyListener keyListener = new KeyListener(){
         public void keyPressed( KeyEvent e ) {
             // do nothing
         }
@@ -78,9 +77,10 @@ public class CountryFeaturePanel extends IFeaturePanel {
             setEnabled(true);
         }
     };
-    
+
     /**
      * Enable the apply/reset buttons...
+     * 
      * @param enabled
      */
     private void setEnabled( boolean enabled ) {
@@ -90,9 +90,10 @@ public class CountryFeaturePanel extends IFeaturePanel {
         apply.setEnabled(enabled);
         reset.setEnabled(enabled);
     }
-    
+
     private void applyChanges() {
-        SimpleFeature editedFeature = getSite().getEditFeature();        
+        SimpleFeature editedFeature = getSite().getEditManager().getEditFeature();
+
         try {
             editedFeature.setAttribute(NAME, name.getText());
             editedFeature.setAttribute(GMI_CNTRY, gmiCntry.getText());
@@ -111,21 +112,21 @@ public class CountryFeaturePanel extends IFeaturePanel {
         context.sendASyncCommand(compComm);
         setEnabled(false);
     }
-    
+
     /**
      * Step 0 - Default constructor.
      */
-    public CountryFeaturePanel(){        
+    public CountryFeaturePanel() {
     }
 
     /**
      * Step 1 - init using the editor site and memento holding any information from last time
      */
     @Override
-    public void init( EditManager site, IMemento memento ) throws PartInitException {
+    public void init( IToolContext site, IMemento memento ) throws PartInitException {
         super.init(site, memento);
     }
-    
+
     @Override
     public void createPartControl( Composite parent ) {
         parent.setLayout(new MigLayout("", "[right]10[left, grow][min!][min!]", "30"));
@@ -135,7 +136,7 @@ public class CountryFeaturePanel extends IFeaturePanel {
 
         name = new Text(parent, SWT.SHADOW_IN | SWT.BORDER);
         name.setLayoutData("span 3, growx, wrap");
-        name.addKeyListener( keyListener );
+        name.addKeyListener(keyListener);
 
         label = new Label(parent, SWT.SHADOW_IN);
         label.setText("Code:");
@@ -150,7 +151,7 @@ public class CountryFeaturePanel extends IFeaturePanel {
 
         colorMap = new ComboViewer(parent, SWT.SHADOW_IN);
         colorMap.getControl().setLayoutData("wrap");
-        colorMap.addSelectionChangedListener( selectionListener );
+        colorMap.addSelectionChangedListener(selectionListener);
 
         // hook up to data
         colorMap.setContentProvider(new IStructuredContentProvider(){
@@ -174,7 +175,7 @@ public class CountryFeaturePanel extends IFeaturePanel {
             }
         });
         colorMap.setInput(COLOR_MAP_OPTS);
-        
+
         // Buttons
         apply = new Button(parent, SWT.PUSH);
         apply.setLayoutData("skip2");
