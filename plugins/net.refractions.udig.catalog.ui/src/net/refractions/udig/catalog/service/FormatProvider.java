@@ -1,5 +1,7 @@
 package net.refractions.udig.catalog.service;
 
+import java.util.Set;
+
 /**
  * Used to dynamically generate a list of supported formats.
  * <p>
@@ -10,5 +12,14 @@ package net.refractions.udig.catalog.service;
  * @since 1.2.0
  */
 public interface FormatProvider {
+
+    /**
+     * Generated supported format extensions.
+     * <p>
+     * Extensions used directly and should be provided in the format "*.xxx".
+     * 
+     * @return Set of format extensions
+     */
+    Set<String> getExtensions();
 
 }

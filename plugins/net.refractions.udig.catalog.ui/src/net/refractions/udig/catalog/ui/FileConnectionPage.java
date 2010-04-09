@@ -82,6 +82,14 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         super(Messages.OpenFilePage_pageTitle);
     }
 
+    /**
+     * Process a list of URLs resulting in candidate IService instances
+     * that may need to be added to the catalog.
+     *
+     * @param urls
+     * @param monitor
+     * @return Candidate IServices
+     */
     List<IService> process( List<URL> urls, IProgressMonitor monitor ) {
         List<IService> resources = new ArrayList<IService>();
         monitor.beginTask(Messages.OpenFilePage_1, list.size());
@@ -131,6 +139,15 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         }
         return null;
     }
+    
+    /**
+     * Check if only one resource is available; in which case we can skip asking.
+     *
+     * @param monitor
+     * @param services
+     * @return
+     * @throws IOException
+     */
     protected boolean hasOneResource( SubProgressMonitor monitor, List<IService> services )
             throws IOException {
         if (services.size() > 1 || services.isEmpty())
