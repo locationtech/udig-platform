@@ -81,7 +81,16 @@
 			<dependency groupId="org.geotools" artifactId="gt-process" version="${geotools.version}" />
 			<dependency groupId="org.geotools" artifactId="gt-charts" version="${geotools.version}" />
 			<dependency groupId="org.geotools" artifactId="gt-svg" version="${geotools.version}" />
-
+			
+			<!-- additional untested plugins so we can connect using generic geotools datastore -->
+			<dependency groupId="org.geotools" artifactId="gt-postgis-versioned" version="${geotools.version}" />
+			<dependency groupId="org.geotools" artifactId="gt-property" version="${geotools.version}" />
+			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-sqlserver" version="${geotools.version}" />
+			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-spatialite" version="${geotools.version}" />
+			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-h2" version="${geotools.version}" />
+			
+			<dependency groupId="org.geotools" artifactId="gt-app-schema" version="${geotools.version}" />
+			
 			<!-- geotools unsupported modules that we only need for some community modules? -->
 			<dependency groupId="org.geotools" artifactId="gt-wps" version="${geotools.version}" />
 			<dependency groupId="org.geotools.xsd" artifactId="gt-xsd-kml" version="${geotools.version}" />

@@ -25,5 +25,11 @@
             name="DataStore">
       </wizardPage>
    </extension>
+   <extension
+         point="net.refractions.udig.catalog.ui.fileFormat">
+      <provider
+            class="net.refractions.udig.catalog.geotools.data.FileDataStoreFormatProvider">
+      </provider>
+   </extension>
 
 </plugin>

@@ -6,8 +6,9 @@
          <meta.schema plugin="net.refractions.udig.project.ui" id="featurePanel" name="Feature Panel"/>
       </appInfo>
       <documentation>
-         Declares a panel used to edit feature content.  The columns the panel works against are registered
-and the panel will only be shown for features with matching columns.
+         Declares a panel used to edit feature content.
+
+The panel is setup to work only against specific feature content. The panel is available in the feature view when editing a selected feature (or optionally displayed in a wizard when creating a new feature).
       </documentation>
    </annotation>
 
@@ -56,6 +57,10 @@ All communication with the current feature is handled through a FeatureSite ... 
          </documentation>
       </annotation>
       <complexType>
+         <choice>
+            <element ref="featureType"/>
+            <element ref="attribute" minOccurs="1" maxOccurs="unbounded"/>
+         </choice>
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>

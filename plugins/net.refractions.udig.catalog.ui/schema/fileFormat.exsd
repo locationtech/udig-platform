@@ -1,19 +1,27 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog.ui">
+<schema targetNamespace="net.refractions.udig.catalog.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
          <meta.schema plugin="net.refractions.udig.catalog.ui" id="fileFormat" name="fileFormat"/>
       </appInfo>
       <documentation>
-         [Enter description of this extension point.]
+         Used to teach uDig about new file extensions suitable for use in the File wizard page.
       </documentation>
    </annotation>
 
    <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
       <complexType>
          <sequence>
-            <element ref="fileService" minOccurs="1" maxOccurs="unbounded"/>
+            <choice minOccurs="0" maxOccurs="unbounded">
+               <element ref="fileService"/>
+               <element ref="provider"/>
+            </choice>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -43,11 +51,16 @@
    </element>
 
    <element name="fileService">
+      <annotation>
+         <documentation>
+            Used to register a static file extension (such as &quot;*.txt&quot; or &quot;*.shp) for use.
+         </documentation>
+      </annotation>
       <complexType>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  
+                  Name of the file format (may be translated into the local language)
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -57,8 +70,30 @@
          <attribute name="fileExtension" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  This is the actual file extension being declaired.
                </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="provider">
+      <annotation>
+         <documentation>
+            Dynamically generate a list of supported file formats. Used to communicate the capabilieis of an external library such as GDAL, ImageIO-Ext or GeoTools.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  FormatProvider instance used to list file format extensions and translated file format names.
+
+Should only be used to sort out &quot;optional&quot; file formats where supporting the format is sorted out at runtime. For static listing of a file format please use the normal fileService element.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.catalog.service.FormatProvider"/>
+               </appInfo>
             </annotation>
          </attribute>
       </complexType>
@@ -69,7 +104,7 @@
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         1.0
       </documentation>
    </annotation>
 
@@ -78,7 +113,7 @@
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         [Enter extension point usage example here.]
+         net.refractions.udig.catalog.shp contrinutes the &quot;*.shp&quot; format; and provides a service connection factory capable of working with &quot;*.shp&quot; files.
       </documentation>
    </annotation>
 
@@ -87,7 +122,7 @@
          <meta.section type="apiInfo"/>
       </appInfo>
       <documentation>
-         [Enter API information here.]
+         Implement a FormatProvider to list your supported file extensions (along with their format names).
       </documentation>
    </annotation>
 
@@ -96,7 +131,7 @@
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         Day 4 tutorial materials cover the addition of a &quot;*.csv&quot; file; you may review this source code in the tutorials directory.
       </documentation>
    </annotation>
 
@@ -105,7 +140,7 @@
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         
+         http://udig.refractions.net/
       </documentation>
    </annotation>
 

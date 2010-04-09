@@ -20,13 +20,15 @@
             name="Map Graphic"/>
    </extension>
    <extension
+         id="net.refractions.udig.mapgraphic.decoratorConnection"
          point="net.refractions.udig.catalog.ui.connectionFactory">
          <factory class="net.refractions.udig.mapgraphic.internal.ui.MapGraphicConnectionFactory"
-            id="net.refractions.udig.mapgraphic.wizardPageId"/>
+            id="net.refractions.udig.mapgraphic.decoratorFactory"/>
       <wizardPage
             class="net.refractions.udig.mapgraphic.internal.ui.MapGraphicWizardPage"
             description="%mapGraphic.wizardPageDescription"
             icon="icons/obj16/graphic_obj.gif"
+            id="net.refractions.udig.mapgraphic.decoratorPage"
             name="%mapGraphic.wizardPageName"/>
    </extension>
    <extension
