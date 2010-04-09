@@ -16,6 +16,11 @@ public abstract class IFeaturePanel {
     public static final String XPID = "net.refractions.udig.project.ui.featurePanel"; //$NON-NLS-1$
     
     /**
+     * Access to the feature being edited
+     */
+    private EditManager site;
+    
+    /**
      * Returns the label describing the feature panel.
      * <p>
      * Used to represent the feature panel in a list, tab or wizard
@@ -33,39 +38,25 @@ public abstract class IFeaturePanel {
      * 
      * @return EditManager until we figure the right thing
      */
-    public abstract EditManager getSite();
-
-    /**
-     * Initializes the feature panel with a site. 
-     * <p>
-     * This method is automatically shortly after the part is instantiated.
-     * It marks the start of the panel's lifecycle.
-     * <p>
-     * Clients must not call this method.
-     * </p>
-     *
-     * @param site Allows access to user interface facilities
-     * @param memento Used to access any prior history recorded by this feature panel
-     * @throws PartInitException 
-     */
-    public void init(EditManager site) throws PartInitException{        
+    public EditManager getSite(){
+        return site;
     }
-
+    
     /**
-     * Initializes the feature panel with a site. 
+     * Initialises the feature panel with a site. 
      * <p>
-     * This method is automatically shortly after the part is instantiated.
-     * It marks the start of the panel's lifecycle.
-     * <p>
-     * Clients must not call this method.
+     * This method is called automatically shortly after the part is instantiated.
+     * It marks the start of the panel's lifecycle (clients are not expected
+     * to call this method themsleves)
      * </p>
+     * When overriding this method please remember to call super.init( site, memento)
      *
      * @param site Allows access to user interface facilities
      * @param memento Used to access any prior history recorded by this feature panel
      * @throws PartInitException 
      */
     public void init(EditManager site, IMemento memento) throws PartInitException{
-        init( site );
+        this.site = site;
     }
      
     /**

@@ -29,27 +29,11 @@ import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
- * Provides ...TODO summary sentence
+ * Present a feature as a tree for JFace use.
  * <p>
- * TODO Description
+ * Seems to actuall work around the FeatureViewerProvider.Databag class
+ * which provides a IPropertySource and IPropertyDescriptor.
  * </p>
- * <p>
- * Responsibilities:
- * <ul>
- * <li>
- * <li>
- * </ul>
- * </p>
- * <p>
- * Example Use:
- * 
- * <pre><code>
- *  FeatureViewerProvider x = new FeatureViewerProvider( ... );
- *  TODO code example
- * </code></pre>
- * 
- * </p>
- * 
  * @author jones
  * @since 0.3
  */

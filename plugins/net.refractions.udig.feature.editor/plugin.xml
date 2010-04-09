@@ -5,16 +5,36 @@
      <extension
          point="org.eclipse.ui.views">
       <view
+            category="net.refractions.udig.feature.editor.featureCategory"
             class="net.refractions.udig.feature.editor.DefaultEditor"
             icon="icons/eview16/view_obj.gif"
             id="net.refractions.udig.feature.editor.default"
-            name="%name"/>
+            name="%editor.name"/>
+      <view
+            category="net.refractions.udig.feature.editor.featureCategory"
+            class="net.refractions.udig.feature.editor.FeatureView"
+            icon="icons/eview16/view_obj.gif"
+            id="net.refractions.udig.feature.editor.featureView"
+            name="%feature.name"
+            restorable="true">
+      </view>
+      <category
+            id="net.refractions.udig.feature.editor.featureCategory"
+            name="%category.name">
+      </category>
    </extension>
    <extension
          point="net.refractions.udig.project.ui.featureEditor">
       <editor
             id="net.refractions.udig.feature.editor.default"
             name="%name"
-            viewId="net.refractions.udig.feature.editor.default"/>
+            viewId="net.refractions.udig.feature.editor.default">
+         <featureType>
+            <typeName
+                  name="Feature"
+                  namespace="*">
+            </typeName>
+         </featureType>
+      </editor>
    </extension>
 </plugin>

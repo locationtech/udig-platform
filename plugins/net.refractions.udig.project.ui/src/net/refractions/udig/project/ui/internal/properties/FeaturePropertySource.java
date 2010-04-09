@@ -46,7 +46,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * An adapter that allows features to act as a property source for a property sheet. The sheet
- * allows the victim's attributes to be editted and viewed.
+ * allows the victim's attributes to be edited and viewed.
  * 
  * @author jeichar
  * @since 0.3
