@@ -110,6 +110,7 @@ UDIGConnectionPage{
     private String url = ""; //$NON-NLS-1$
     
     WFSConnectionFactory wfsConnFactory = new WFSConnectionFactory();
+    
     public WFSRegistryWizardPage( String name ) {
         super(name);
         settings = WfsPlugin.getDefault().getDialogSettings().getSection(WFS_WIZARD_ID);
@@ -125,30 +126,6 @@ UDIGConnectionPage{
 	public String getId() {
 		return "net.refractions.udig.catalog.ui.wfs"; //$NON-NLS-1$
 	}
-	
-//	/**
-//     * True if this is a *real* wfs, or plays one on tv.
-//     * <p>
-//     * If this is real WFS, toWFS( Object data ) can be used to check for
-//     * explict parameter settings.
-//     * </p>
-//     * 
-//     * @param data
-//     * @return boolean
-//     */
-//    protected boolean isWFS( Object data ){
-//       if( data instanceof WFSServiceImpl ){
-//           return true;
-//       }
-//       URL url = wfsConnFactory.toCapabilitiesURL( data );
-//       if( url == null ) return false;
-//       List<IResolve> list = CatalogPlugin.getDefault().getLocalCatalog().find( url, blm );
-//       for( IResolve resolve : list ){
-//           if( resolve instanceof WFSServiceImpl) return true;
-//       }
-//       return false;       
-//    }
-    
 
     /** Can be called during createControl */
     protected Map<String,Serializable> defaultParams(){

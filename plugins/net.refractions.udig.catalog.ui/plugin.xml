@@ -257,12 +257,13 @@
    <extension
          point="net.refractions.udig.catalog.ui.connectionFactory">
      <factory class="net.refractions.udig.catalog.ui.FileConnectionFactory"
-            id="net.refractions.udig.catalog.ui.openFilePage"/>
+            id="net.refractions.udig.catalog.ui.openFileConnection"/>
       <wizardPage
             banner="icons/wizban/feature_file_wiz.gif"
             class="net.refractions.udig.catalog.ui.FileConnectionPage"
             description="%wizard.fileopen.description"
             icon="icons/etool16/file_wiz.gif"
+            id="net.refractions.udig.catalog.ui.openFilePage"
             name="%wizard.fileopen.name"/>
    </extension>
    <extension

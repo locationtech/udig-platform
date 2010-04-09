@@ -12,24 +12,20 @@ import net.refractions.udig.catalog.IService;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.DataAccess;
-import org.geotools.data.DataStore;
-import org.geotools.data.DataStoreFactorySpi;
+import org.geotools.data.DataAccessFactory;
 import org.geotools.data.ServiceInfo;
 import org.opengis.feature.type.Name;
 
 public class DataStoreService extends IService {
     private ID id;
     private Map<String, Serializable> connectionParams;
-    private DataStore dataStore;
-    private DataStoreFactorySpi factory;
+    private DataAccess<?,?> dataStore;
+    private DataAccessFactory factory;
     private IOException message;
     private List<FeatureSourceGeoResource> resources;
     
-    public DataStoreService( URL url, DataStoreFactorySpi factory, Map<String, Serializable> params ) {
-        if( url == null ){
-            // we need something here!
-        }
-        id = new ID( url, factory.getDisplayName() );
+    public DataStoreService( ID id, DataAccessFactory factory, Map<String, Serializable> params ) {
+        this.id = id;
         connectionParams = params;
         this.factory = factory;
     }

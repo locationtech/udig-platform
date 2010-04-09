@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog.ui">
+<schema targetNamespace="net.refractions.udig.catalog.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
          <meta.schema plugin="net.refractions.udig.catalog.ui" id="connectionFactory" name="Connection Factory"/>
@@ -12,6 +12,9 @@
 
    <element name="extension">
       <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
          <documentation>
             This extension point provides a factory which is used to provide connection information for a specific service based on context.
          </documentation>
@@ -55,6 +58,13 @@
          </documentation>
       </annotation>
       <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
@@ -65,6 +75,11 @@
                </appInfo>
             </annotation>
          </attribute>
+      </complexType>
+   </element>
+
+   <element name="wizardPage">
+      <complexType>
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
@@ -72,29 +87,17 @@
                </documentation>
             </annotation>
          </attribute>
-      </complexType>
-   </element>
-
-   <element name="wizardPage">
-      <complexType>
-         <attribute name="id" type="string">
+         <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
                   
                </documentation>
                <appInfo>
-                  <meta.attribute deprecated="true"/>
+                  <meta.attribute translatable="true"/>
                </appInfo>
             </annotation>
          </attribute>
          <attribute name="helpHref" type="string">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
                   
@@ -126,6 +129,9 @@
                <documentation>
                   
                </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
             </annotation>
          </attribute>
          <attribute name="class" type="string" use="required">
@@ -146,34 +152,18 @@
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         
+         UDIG 1.1
       </documentation>
    </annotation>
 
-   <annotation>
-      <appInfo>
-         <meta.section type="examples"/>
-      </appInfo>
-      <documentation>
-         
-      </documentation>
-   </annotation>
 
-   <annotation>
-      <appInfo>
-         <meta.section type="apiInfo"/>
-      </appInfo>
-      <documentation>
-         
-      </documentation>
-   </annotation>
 
    <annotation>
       <appInfo>
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         
+         Day 4 training materials covering disk to screen.
       </documentation>
    </annotation>
 
@@ -182,7 +172,7 @@
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         
+         http://udig.refractions.net/
       </documentation>
    </annotation>
 

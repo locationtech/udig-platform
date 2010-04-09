@@ -25,51 +25,37 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.geotools.data.DataStoreFactorySpi;
 
 /**
- * Provides ...TODO summary sentence
- * <p>
- * TODO Description
- * </p>
- * <p>
- * Responsibilities:
- * <ul>
- * <li>
- * <li>
- * </ul>
- * </p>
- * <p>
- * Example Use:
- * 
- * <pre><code>
- *  DataStoreWizardPage x = new DataStoreWizardPage( ... );
- *  TODO code example
- * </code></pre>
- * 
- * </p>
+ * Extend this page to connect to your own DataStore.
  * 
  * @author dzwiers
  * @since 0.3
  */
 public abstract class DataStoreWizardPage extends AbstractUDIGImportPage /* extends WizardPage */{
     protected boolean canFlipToNextPage = false;
+    
     public DataStoreWizardPage( String name ) {
         super(name);
     }
-    public DataStoreWizardPage() {
-        super(""); //$NON-NLS-1$
-    }
-    public abstract Map<String, Serializable> getParams();
-    protected abstract DataStoreFactorySpi getDataStoreFactorySpi();
+    
     /**
-     * @see org.eclipse.jface.wizard.IWizardPage#isPageComplete()
+     * Return your connection parameters here.
+     * <p>
+     * Connection parameters are used with getDataStoreFactorySpi
+     * to "connect" to a DataStore.
      */
+    public abstract Map<String, Serializable> getParams();
+    
+    /**
+     * Return your factory here.
+     * <p>
+     * Connection parameters are used with getDataStoreFactorySpi
+     * to "connect" to a DataStore.
+     */
+    protected abstract DataStoreFactorySpi getDataStoreFactorySpi();
+    
     @Override
     public abstract boolean isPageComplete();
-    /**
-     * TODO summary sentence for canFlipToNextPage ...
-     * 
-     * @see net.refractions.udig.catalog.internal.ui.datastore.DataStoreWizardPage#canFlipToNextPage()
-     * @return
-     */
+    
     @Override
     final public boolean canFlipToNextPage() {
         IWizardPage[] pages = getWizard().getPages();

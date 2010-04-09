@@ -377,11 +377,6 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
         super(header);
     }
 
-    // TODO: is this ever used?
-    public DataBaseRegistryWizardPage() {
-        super(""); //$NON-NLS-1$
-    }
-
     // UTILITY METHODS
     /**
      * Checks if the DBMS uses Schema or not; if true, the schema widget will be shown and the
