@@ -98,9 +98,13 @@ public class ServiceFactoryImpl extends IServiceFactory {
                                         // extentionIdentifier used to report any problems;
                                         // in the event of failure we want to be able to report
                                         // who had the problem
-                                        String id = extension.getUniqueIdentifier();
+                                        String extensionId = extension.getUniqueIdentifier();
+                                        String id = element.getAttribute("id");
                                         ServiceExtension se = (ServiceExtension) element
                                                 .createExecutableExtension("class");
+                                        if( id == null || id.length()==0){
+                                            id = se.getClass().getSimpleName();
+                                        }
                                         registered.put(id, se);
                                     }
                                 });

@@ -3,11 +3,13 @@
 <plugin>
 
      <extension
-         point="net.refractions.udig.catalog.ServiceExtension">
+           id="net.refractions.udig.catalog.worldimage.services"
+           name="World Image Services"
+           point="net.refractions.udig.catalog.ServiceExtension">
       <service
             class="net.refractions.udig.catalog.internal.worldimage.WorldImageServiceExtension"
             id="worldimage"
-            name="World + Image"/>
+            name="World plus Image"/>
    </extension>
    <extension
          point="net.refractions.udig.catalog.ui.fileFormat">

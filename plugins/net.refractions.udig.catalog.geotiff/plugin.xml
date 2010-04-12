@@ -3,16 +3,24 @@
 <plugin>
 
      <extension
-         point="net.refractions.udig.catalog.ServiceExtension">
+           id="net.refractions.udig.catalog.geotiff.services"
+           name="GeoTiff Services"
+           point="net.refractions.udig.catalog.ServiceExtension">
       <service
             class="net.refractions.udig.catalog.internal.geotiff.GeoTiffServiceExtension"
             id="GeoTiff"
             name="GeoTiff"/>
    </extension>
    <extension
+         id="net.refractions.udig.catalog.geotiff.fileFormats"
+         name="GeoTiff File Formats"
          point="net.refractions.udig.catalog.ui.fileFormat">
-      <fileService fileExtension="*.tif"/>
-      <fileService fileExtension="*.tiff"/>
+      <fileService
+            fileExtension="*.tif"
+            name="Tif"/>
+      <fileService
+            fileExtension="*.tiff"
+            name="Tiff"/>
    </extension>
 
 </plugin>
