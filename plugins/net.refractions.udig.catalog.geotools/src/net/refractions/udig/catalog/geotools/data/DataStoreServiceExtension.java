@@ -10,13 +10,13 @@ import java.util.Map;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceExtension;
+import net.refractions.udig.catalog.IServiceExtension;
 import net.refractions.udig.catalog.geotools.Activator;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.geotools.data.DataAccessFactory;
 import org.geotools.data.DataAccessFinder;
-import org.geotools.data.DataStoreFactorySpi;
-import org.geotools.data.DataStoreFinder;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.FileDataStoreFactorySpi;
 import org.geotools.data.DataAccessFactory.Param;
@@ -32,8 +32,7 @@ import org.geotools.jdbc.JDBCDataStoreFactory;
  * @author Jody Garnett
  * @since 1.2.0
  */
-public class DataStoreServiceExtension implements ServiceExtension {
-
+public class DataStoreServiceExtension extends IServiceExtension {
     /**
      * GeoTools does not have an intrinsic concept of a "url" or identifier for each resource. Here
      * is our stratagy:
@@ -57,14 +56,22 @@ public class DataStoreServiceExtension implements ServiceExtension {
         Iterator<DataAccessFactory> available = DataAccessFinder.getAvailableDataStores();
         while( available.hasNext() ) {
             DataAccessFactory factory = available.next();
-
-            if (!consider(factory, url)) {
-                continue;
-            }
-            Map<String, Serializable> params = createConnectionParameters(url, factory);
-            if (params != null && factory.canProcess(params)) {
-                // oh this actually worked!
-                return params;
+            try {
+                if (!consider(factory, url)) {
+                    continue;
+                }
+                Map<String, Serializable> params = createConnectionParameters(url, factory);
+                if (params != null && factory.canProcess(params)) {
+                    // oh this actually worked!
+                    return params;
+                }
+            } catch (Throwable t) {
+                if (Activator.getDefault().isDebugging()) {
+                    IStatus warning = new Status(IStatus.WARNING, Activator.PLUGIN_ID, factory
+                            .getDisplayName()
+                            + " unable to process " + url, t);
+                    Activator.getDefault().getLog().log(warning);
+                }
             }
         }
         return null; // could not make use of the provided URL
@@ -169,7 +176,7 @@ public class DataStoreServiceExtension implements ServiceExtension {
         while( available.hasNext() ) {
             DataAccessFactory factory = available.next();
             if (factory.canProcess(params)) {
-                ID id = createID( providedId, factory, params);
+                ID id = createID(providedId, factory, params);
                 return new DataStoreService(id, factory, params);
             }
         }
@@ -181,58 +188,62 @@ public class DataStoreServiceExtension implements ServiceExtension {
          * Activator.getDefault().getLog().log(status); } } return null;
          */
     }
-    public static Param lookupParam( DataAccessFactory factory, Class<?> type ){
-        if( type == null ) return null;
-        for( Param param : factory.getParametersInfo() ){
-            if( type.isAssignableFrom( param.type ) ){
+    public static Param lookupParam( DataAccessFactory factory, Class< ? > type ) {
+        if (type == null)
+            return null;
+        for( Param param : factory.getParametersInfo() ) {
+            if (type.isAssignableFrom(param.type)) {
                 return param;
             }
         }
         return null;
     }
-    public static Param lookupParam( DataAccessFactory factory,String key ){        
-        if( key == null ) return null;
-        for( Param param : factory.getParametersInfo() ){
-            if( key.equalsIgnoreCase( param.key ) ){
+    public static Param lookupParam( DataAccessFactory factory, String key ) {
+        if (key == null)
+            return null;
+        for( Param param : factory.getParametersInfo() ) {
+            if (key.equalsIgnoreCase(param.key)) {
                 return param;
             }
         }
         return null;
     }
-    
+
     @SuppressWarnings("unchecked")
-    public static <T> T lookup( DataAccessFactory factory,  Map<String, Serializable> params, Class<T> type ){
-        Param param = lookupParam( factory, URL.class );
-        if( param != null ){
+    public static <T> T lookup( DataAccessFactory factory, Map<String, Serializable> params,
+            Class<T> type ) {
+        Param param = lookupParam(factory, URL.class);
+        if (param != null) {
             T value;
             try {
-                value = (T) param.lookUp( params );  // find the value
-                if( value != null ){
+                value = (T) param.lookUp(params); // find the value
+                if (value != null) {
                     return value;
                 }
             } catch (IOException e) {
-                if( Activator.getDefault().isDebugging()){
+                if (Activator.getDefault().isDebugging()) {
                     e.printStackTrace();
                 }
             }
         }
         return null; // not found!
     }
-    
-    public static ID createID( URL providedId, DataAccessFactory factory, Map<String, Serializable> params ) {
+
+    public static ID createID( URL providedId, DataAccessFactory factory,
+            Map<String, Serializable> params ) {
         if (providedId != null) {
-            // one was already provided! 
+            // one was already provided!
             return new ID(providedId, factory.getDisplayName());
         }
-        URL url = lookup( factory, params, URL.class );
-        if( url != null ){
+        URL url = lookup(factory, params, URL.class);
+        if (url != null) {
             // this should handle all files and wfs :-)
             return new ID(url, factory.getDisplayName());
         }
-        File file = lookup( factory, params, File.class );
-        if( file != null ){
+        File file = lookup(factory, params, File.class);
+        if (file != null) {
             URL fileUrl = DataUtilities.fileToURL(file);
-            if( fileUrl != null ){
+            if (fileUrl != null) {
                 return new ID(fileUrl, factory.getDisplayName());
             }
         }
@@ -240,30 +251,31 @@ public class DataStoreServiceExtension implements ServiceExtension {
             // dbtype://host:port/schema
             JDBCDataStoreFactory jdbcFactory = (JDBCDataStoreFactory) factory;
             try {
-                final Param DBTYPE = lookupParam( factory, JDBCDataStoreFactory.DBTYPE.key );
+                final Param DBTYPE = lookupParam(factory, JDBCDataStoreFactory.DBTYPE.key);
                 String dbType = (String) DBTYPE.lookUp(params);
-                
-                final Param HOST = lookupParam( factory, JDBCDataStoreFactory.HOST.key );                
+
+                final Param HOST = lookupParam(factory, JDBCDataStoreFactory.HOST.key);
                 String host = (String) HOST.lookUp(params);
-                
-                // needed to look up the actual PORT 
-                final Param PORT = lookupParam( factory, JDBCDataStoreFactory.PORT.key );                
+
+                // needed to look up the actual PORT
+                final Param PORT = lookupParam(factory, JDBCDataStoreFactory.PORT.key);
                 Integer port = (Integer) PORT.lookUp(params);
-                
-                final Param SCHEMA = lookupParam( factory, JDBCDataStoreFactory.SCHEMA.key );                                
+
+                final Param SCHEMA = lookupParam(factory, JDBCDataStoreFactory.SCHEMA.key);
                 String schema = (String) SCHEMA.lookUp(params);
-                if( schema == null ) schema = "";
-                
+                if (schema == null)
+                    schema = "";
+
                 ID id = new ID(dbType + "://" + host + ":" + port + "/" + schema, factory
                         .getDisplayName());
-                
+
                 return id;
             } catch (IOException e) {
-                if( Activator.getDefault().isDebugging()){
+                if (Activator.getDefault().isDebugging()) {
                     e.printStackTrace();
                 }
-            }      
-        }       
+            }
+        }
         return null;
     }
 

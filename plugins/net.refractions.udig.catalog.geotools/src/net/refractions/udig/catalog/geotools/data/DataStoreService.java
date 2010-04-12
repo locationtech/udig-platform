@@ -11,6 +11,7 @@ import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IService;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataAccess;
 import org.geotools.data.DataAccessFactory;
 import org.geotools.data.ServiceInfo;
@@ -19,22 +20,22 @@ import org.opengis.feature.type.Name;
 public class DataStoreService extends IService {
     private ID id;
     private Map<String, Serializable> connectionParams;
-    private DataAccess<?,?> dataStore;
+    private DataAccess< ? , ? > dataStore;
     private DataAccessFactory factory;
     private IOException message;
     private List<FeatureSourceGeoResource> resources;
-    
+
     public DataStoreService( ID id, DataAccessFactory factory, Map<String, Serializable> params ) {
         this.id = id;
         connectionParams = params;
         this.factory = factory;
     }
 
-    public synchronized DataAccess<?,?> toDataAccess() throws IOException {
-        if( dataStore == null ){
+    public synchronized DataAccess< ? , ? > toDataAccess() throws IOException {
+        if (dataStore == null) {
             // connect!
             try {
-                dataStore = factory.createDataStore( connectionParams );
+                dataStore = factory.createDataStore(connectionParams);
             } catch (IOException e) {
                 message = e;
                 throw e;
@@ -42,12 +43,12 @@ public class DataStoreService extends IService {
         }
         return dataStore;
     }
-    
+
     @Override
     protected DataStoreServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        DataAccess<?,?> access = toDataAccess();
+        DataAccess< ? , ? > access = toDataAccess();
         ServiceInfo gtInfo = access.getInfo();
-        return new DataStoreServiceInfo( gtInfo );
+        return new DataStoreServiceInfo(gtInfo);
     }
 
     @Override
@@ -56,14 +57,15 @@ public class DataStoreService extends IService {
     }
 
     @Override
-    public synchronized List<FeatureSourceGeoResource> resources( IProgressMonitor monitor ) throws IOException {
-        if( resources == null ){
-            DataAccess<?,?> access = toDataAccess();
+    public synchronized List<FeatureSourceGeoResource> resources( IProgressMonitor monitor )
+            throws IOException {
+        if (resources == null) {
+            DataAccess< ? , ? > access = toDataAccess();
             resources = new ArrayList<FeatureSourceGeoResource>();
-            for( Name name : access.getNames() ){
-                FeatureSourceGeoResource geoResource = new FeatureSourceGeoResource( this, name );
-                resources.add( geoResource );
-            }            
+            for( Name name : access.getNames() ) {
+                FeatureSourceGeoResource geoResource = new FeatureSourceGeoResource(this, name);
+                resources.add(geoResource);
+            }
         }
         return resources;
     }
@@ -71,7 +73,7 @@ public class DataStoreService extends IService {
     public URL getIdentifier() {
         return id.toURL();
     }
-    
+
     public ID getID() {
         return id;
     }
@@ -81,15 +83,34 @@ public class DataStoreService extends IService {
     }
 
     public Status getStatus() {
-        if( dataStore != null ){
+        if (dataStore != null) {
             return Status.CONNECTED;
         }
-        if( message != null ){
+        if (message != null) {
             return Status.BROKEN;
-        }
-        else {
+        } else {
             return Status.NOTCONNECTED;
         }
+    }
+
+    @Override
+    public <T> boolean canResolve( Class<T> adaptee ) {
+        return adaptee == null || DataAccess.class.isAssignableFrom(adaptee)
+                || super.canResolve(adaptee);
+    }
+    @Override
+    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
+        if (monitor == null)
+            monitor = new NullProgressMonitor();
+
+        if (adaptee == null) {
+            throw new NullPointerException("No adaptor specified"); //$NON-NLS-1$
+        }
+        
+        if( DataAccess.class.isAssignableFrom( adaptee )){
+            return adaptee.cast( toDataAccess() );
+        }
+        return super.resolve(adaptee, monitor);
     }
 
 }

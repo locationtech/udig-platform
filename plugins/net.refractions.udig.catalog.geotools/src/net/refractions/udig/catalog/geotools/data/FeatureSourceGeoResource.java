@@ -7,6 +7,7 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataAccess;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.ResourceInfo;
@@ -31,7 +32,7 @@ public class FeatureSourceGeoResource extends IGeoResource {
     protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
         FeatureSource< ? , ? > featureSource = toFeatureSource();
         ResourceInfo gtInfo = featureSource.getInfo();
-        return new FeatureSourceGeoResourceInfo( gtInfo );
+        return new FeatureSourceGeoResourceInfo(gtInfo);
     }
 
     @Override
@@ -45,6 +46,28 @@ public class FeatureSourceGeoResource extends IGeoResource {
 
     public Status getStatus() {
         return null;
+    }
+
+    @Override
+    public <T> boolean canResolve( Class<T> adaptee ) {
+        return adaptee != null || FeatureSource.class.isAssignableFrom(adaptee)
+                || super.canResolve(adaptee);
+    }
+
+    @Override
+    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
+        if (monitor == null)
+            monitor = new NullProgressMonitor();
+
+        if (adaptee == null) {
+            throw new NullPointerException("No adaptor specified"); //$NON-NLS-1$
+        }
+
+        if (DataAccess.class.isAssignableFrom(adaptee)) {
+            return adaptee.cast(toFeatureSource());
+        }
+
+        return super.resolve(adaptee, monitor);
     }
 
 }

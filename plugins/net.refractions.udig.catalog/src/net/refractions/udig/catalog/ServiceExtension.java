@@ -21,7 +21,8 @@ import java.net.URL;
 import java.util.Map;
 
 /**
- * This is the required addition on the part of a data provider.
+ * Used to advertise the availability of an IService implementation
+ * to the catalog.
  * 
  * Example:<pre><code>
  * public class MyService implements ServiceExtension {

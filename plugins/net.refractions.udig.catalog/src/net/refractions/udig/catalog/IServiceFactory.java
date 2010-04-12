@@ -70,7 +70,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  *          separate steps
  * @author Jody Garnett (Refractions Research)
  */
-public interface IServiceFactory {
+public abstract class IServiceFactory {
 
     /**
      * Generate a list of candidate services each with their own connection parameters.
@@ -84,7 +84,7 @@ public interface IServiceFactory {
      * @param connectionParameters
      * @return List of candidate IService handles, list may be empty but is never null
      */
-    List<IService> createService( Map<String, Serializable> connectionParameters );
+    public abstract List<IService> createService( Map<String, Serializable> connectionParameters );
 
     /**
      * Will generate a list of candidate services; each with their own default parameters based on
@@ -97,7 +97,7 @@ public interface IServiceFactory {
      * @param dragNdrop Target url provided by a drag and drop operation
      * @return List of candidate IService handles, list may be empty but is never null
      */
-    List<IService> createService( URL dragNdrop );
+    public abstract List<IService> createService( URL dragNdrop );
 
     /**
      * Helper method used to clean up "unused" services in a list returned by createService.
@@ -117,7 +117,7 @@ public interface IServiceFactory {
      * @param List of services to be disposed, each in turn
      * @param monitor Used to track what is going on
      */
-    void dispose( List<IService> list, IProgressMonitor monitor );
+    public abstract void dispose( List<IService> list, IProgressMonitor monitor );
     
     /**
      * Generate a list of candidate services each with their own connection parameters.
@@ -132,7 +132,7 @@ public interface IServiceFactory {
      * @return List of candidate IService handles, list may be empty but is never null
      * @deprecated Use createService( Map )
      */
-    List<IService> acquire( Map<String, Serializable> connectionParameter );
+    public abstract List<IService> acquire( Map<String, Serializable> connectionParameter );
 
     /**
      * Will generate a list of candidate services; each with their own default parameters based on
@@ -142,7 +142,7 @@ public interface IServiceFactory {
      * @return List of candidate services
      * @deprecated Use createService( URL )
      */
-    List<IService> acquire( URL dragNdrop ); // creates a map, may look up authentication
+    public abstract List<IService> acquire( URL dragNdrop ); // creates a map, may look up authentication
 
     /**
      * Will generate a list of candidate services; each with their own default parameters.
@@ -157,17 +157,17 @@ public interface IServiceFactory {
      * @deprecated Use createService( Map )
      * @return List of candidate services
      */
-    List<IService> acquire( URL id, Map<String, Serializable> params );
+    public abstract List<IService> acquire( URL id, Map<String, Serializable> params );
     /**
      * @deprecated use {@link #acquire(Map)}
      */
-    List<IService> aquire( Map<String, Serializable> params ); // may look up authentication
+    public abstract List<IService> aquire( Map<String, Serializable> params ); // may look up authentication
     /**
      * @deprecated use {@link #acquire(URL)}
      */
-    List<IService> aquire( URL target ); // creates a map, may look up authentication
+    public abstract List<IService> aquire( URL target ); // creates a map, may look up authentication
     /**
      * @deprecated use {@link #acquire(URL, Map)}
      */
-    List<IService> aquire( URL id, Map<String, Serializable> params ); // may not look up
+    public abstract List<IService> aquire( URL id, Map<String, Serializable> params ); // may not look up
 }

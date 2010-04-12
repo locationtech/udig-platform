@@ -21,6 +21,7 @@ Require-Bundle: net.refractions.udig.catalog,
  net.refractions.udig.catalog.wfs,
  net.refractions.udig.catalog.wms,
  net.refractions.udig.catalog.worldimage,
+ net.refractions.udig.catalog.geotools,
  net.refractions.udig.catalog.tests;visibility:=reexport,
  net.refractions.udig.ui.tests;visibility:=reexport,
  org.junit4;bundle-version="4.3.1"
