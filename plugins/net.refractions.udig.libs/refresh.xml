@@ -89,7 +89,8 @@
 			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-spatialite" version="${geotools.version}" />
 			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-h2" version="${geotools.version}" />
 			
-			<dependency groupId="org.geotools" artifactId="gt-app-schema" version="${geotools.version}" />
+			<!-- pending -->			
+			<!--dependency groupId="org.geotools" artifactId="gt-app-schema" version="${geotools.version}" /-->
 			
 			<!-- geotools unsupported modules that we only need for some community modules? -->
 			<dependency groupId="org.geotools" artifactId="gt-wps" version="${geotools.version}" />

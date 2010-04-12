@@ -12,6 +12,7 @@ import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.geotools.Activator;
 import net.refractions.udig.catalog.internal.ServiceFactoryImpl;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.geotools.data.DataAccess;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
@@ -51,6 +52,10 @@ public class GeoToolsDataStoreService {
         DataStoreServiceExtension serviceExtension = serviceFactory.serviceImplementation(DataStoreServiceExtension.class);
         
         URL target = GeoToolsDataStoreService.class.getResource("test-data/sample_data.properties");
+        if( "bundleresource".equals(target.getProtocol())){
+            target = FileLocator.toFileURL( target );
+        }
+        
         assertNotNull("sample data found", target );
         Map<String, Serializable> params = serviceExtension.createParams( target );
         
@@ -67,7 +72,7 @@ public class GeoToolsDataStoreService {
         Name typeName = (Name) dataStore.getNames().get(0);;
         FeatureSource featureSource = dataStore.getFeatureSource( typeName );
         
-        assertEquals( 3, featureSource.getCount( Query.ALL ) );
+        assertEquals( 4, featureSource.getCount( Query.ALL ) );
         
     }
 }
