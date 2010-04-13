@@ -18,4 +18,3 @@ Require-Bundle: net.refractions.udig.project,
  net.refractions.udig.catalog.rasterings,
  net.refractions.udig.style.sld
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5

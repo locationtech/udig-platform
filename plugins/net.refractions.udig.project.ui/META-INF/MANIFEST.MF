@@ -52,4 +52,3 @@ Require-Bundle: net.refractions.udig.style.sld,
  org.eclipse.core.expressions,
  com.lowagie.itext
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5

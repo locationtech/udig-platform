@@ -1,6 +1,7 @@
-#Tue Nov 25 18:54:36 EST 2008
+#Tue Apr 13 11:32:00 EST 2010
 eclipse.preferences.version=1
 org.eclipse.jdt.core.builder.resourceCopyExclusionFilter=*.launch,*.groovy,.svn
+org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5
 org.eclipse.jdt.core.compiler.compliance=1.5
 org.eclipse.jdt.core.compiler.problem.assertIdentifier=error

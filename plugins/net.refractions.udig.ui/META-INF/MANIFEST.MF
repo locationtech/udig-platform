@@ -24,4 +24,3 @@ Export-Package: net.refractions.udig,
  net.refractions.udig.ui.operations,
  net.refractions.udig.ui.palette,
  net.refractions.udig.ui.preferences
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
