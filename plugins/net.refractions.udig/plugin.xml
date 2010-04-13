@@ -102,6 +102,10 @@
       <product
             application="net.refractions.udig.ui.application"
             name="uDig SDK">
+         <property
+               name="appName"
+               value="uDig SDK">
+         </property>
       </product>
    </extension>
 </plugin>
