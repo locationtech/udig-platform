@@ -30,4 +30,3 @@ Bundle-Activator: net.refractions.udig.catalog.tests.ui.CatalogTestsUIPlugin
 Export-Package: net.refractions.udig.catalog.tests.ui,
  net.refractions.udig.catalog.tests.ui.dnd,
  net.refractions.udig.catalog.tests.ui.workflow
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
