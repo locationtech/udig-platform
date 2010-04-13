@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Legend Plug-in
 Bundle-SymbolicName: net.refractions.udig.legend; singleton:=true
-Bundle-Version: 1.2.0
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.legend.LegendPlugin
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,

@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Generic JAI Fragment
 Bundle-SymbolicName: net.refractions.udig.jai
-Bundle-Version: 1.2.0
+Bundle-Version: 1.2.0.qualifier
 Fragment-Host: net.refractions.udig.core;bundle-version="1.1.0"
-Bundle-Vendor: Refractions Research Inc
+Bundle-Vendor: udig.refractions.net
 Eclipse-PlatformFilter: (!(osgi.os=macosx))
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

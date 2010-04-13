@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Basic Feature Renderer Test Plug-in
 Bundle-SymbolicName: net.refractions.udig.render.feature.basic.test
-Bundle-Version: 1.0.0
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.render.feature.basic.test.Activator
-Bundle-Vendor: Refractions Research Inc.
+Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.core.runtime,
  org.junit,
  net.refractions.udig.render.feature.basic,

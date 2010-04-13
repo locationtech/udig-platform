@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Oracle Libs Plug-in
 Bundle-SymbolicName: net.refractions.udig.libs.oracle
-Bundle-Version: 1.2.0
-Bundle-Vendor: Refractions Research Inc
+Bundle-Version: 1.2.0.qualifier
+Bundle-Vendor: udig.refractions.net
 Bundle-ClassPath: libs/oracle-driver.jar,
  libs/oracle-classes.jar
 Eclipse-RegisterBuddy: net.refractions.udig.libs, 

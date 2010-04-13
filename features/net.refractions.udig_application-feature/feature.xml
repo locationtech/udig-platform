@@ -2,7 +2,7 @@
 <feature
       id="net.refractions.udig_application"
       label="net.refractions.udig_application-feature"
-      version="1.2.0"
+      version="1.2.0.qualifier"
       provider-name="Refractions Research">
 
    <description url="http://www.example.com/description">
@@ -40,7 +40,7 @@
       <import plugin="org.eclipse.help"/>
       <import plugin="org.eclipse.ui.views"/>
       <import plugin="net.refractions.udig.catalog.rasterings"/>
-      <import feature="net.refractions.udig_platform" version="1.2.0"/>
+      <import feature="net.refractions.udig_platform" version="1.2.0.qualifier"/>
       <import plugin="org.eclipse.ui.forms"/>
    </requires>
 

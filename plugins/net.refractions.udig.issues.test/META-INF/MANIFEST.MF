@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Issues Test Plug-in
 Bundle-SymbolicName: net.refractions.udig.issues.test;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.issues.test.IssuesTestActivator
-Bundle-Vendor: Refractions Research
+Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.issues,

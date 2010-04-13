@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Coordinate Tool Plug-in
 Bundle-SymbolicName: net.refractions.udig.tutorials.tool.coordinate; singleton:=true
-Bundle-Version: 1.2.0
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.tutorial.tool.coordinate.Activator
-Bundle-Vendor: Student
+Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.project,

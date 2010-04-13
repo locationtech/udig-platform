@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Rcp Plug-in
 Bundle-SymbolicName: net.refractions.udig.tutorials.rcp; singleton:=true
-Bundle-Version: 1.2.0
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.tutorials.rcp.Activator
-Bundle-Vendor: refractions.net
+Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.tutorials.tracking;bundle-version="1.0.0",

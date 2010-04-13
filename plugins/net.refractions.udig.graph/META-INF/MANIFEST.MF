@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Graph Plug-in
 Bundle-SymbolicName: net.refractions.udig.graph;singleton:=true
-Bundle-Version: 1.0.0
-Bundle-Vendor: Rerfractions
+Bundle-Version: 1.2.0.qualifier
+Bundle-Vendor: udig.refractions.net
 Require-Bundle: net.refractions.udig.project.ui,
  net.refractions.udig.mapgraphic,
  org.eclipse.core.runtime

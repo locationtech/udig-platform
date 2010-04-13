@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Project Tests Plug-in
 Bundle-SymbolicName: net.refractions.udig.project.tests; singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.2.0.qualifier
 Bundle-Localization: plugin
 Export-Package: net.refractions.udig.project.command,
  net.refractions.udig.project.internal,

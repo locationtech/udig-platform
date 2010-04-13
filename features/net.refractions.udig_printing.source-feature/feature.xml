@@ -2,7 +2,7 @@
 <feature
       id="net.refractions.udig_printing.source"
       label="net.refractions.udig_printing.source"
-      version="1.2.0"
+      version="1.2.0.qualifier"
       provider-name="Udig.Refractions.net">
 
    <description url="http://www.example.com/description">

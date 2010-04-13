@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Validation Plug-in
 Bundle-SymbolicName: net.refractions.udig.validation; singleton:=true
-Bundle-Version: 1.2.0
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.validation.ValidationPlugin
-Bundle-Vendor: Refractions Research Inc.
+Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui;visibility:=reexport,
  org.eclipse.core.runtime;visibility:=reexport,

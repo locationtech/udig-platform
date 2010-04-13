@@ -2,7 +2,7 @@
 <feature
       id="net.refractions.udig.extras"
       label="Extras"
-      version="1.2.0"
+      version="1.2.0.qualifier"
       provider-name="uDig">
 
    <description url="http://udig.refractions.net/developers/">

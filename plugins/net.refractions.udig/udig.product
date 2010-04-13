@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="%product.name" uid="1.2Trunk" id="net.refractions.udig.product" application="net.refractions.udig.ui.application" version="1.2" useFeatures="true" includeLaunchers="true">
+<product name="%product.name" uid="udig" id="net.refractions.udig.product" application="net.refractions.udig.ui.application" version="1.2" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/net.refractions.udig/icons/about.gif"/>
@@ -67,8 +67,8 @@
    </plugins>
 
    <features>
-      <feature id="net.refractions.udig" version="1.2.0"/>
-      <feature id="net.refractions.udig_language" version="1.2.0"/>
+      <feature id="net.refractions.udig" version="1.2.0.qualifier"/>
+      <feature id="net.refractions.udig_language" version="1.2.0.qualifier"/>
    </features>
 
 

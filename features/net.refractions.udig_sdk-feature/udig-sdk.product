@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="uDig SDK" uid="1.2Trunk" id="net.refractions.udig.sdk" application="net.refractions.udig.ui.application" version="1.2" useFeatures="true" includeLaunchers="false">
-
+<product name="uDig SDK" uid="1.2Trunk" id="net.refractions.udig.sdk" application="net.refractions.udig.ui.application" version="1.2.0.qualifier" useFeatures="true" includeLaunchers="false">
 
    <configIni use="default" path="/net.refractions.udig-feature/config.files/configuration/config.ini">
    </configIni>
@@ -14,7 +13,6 @@
 
    <windowImages/>
 
-
    <launcher>
       <linux icon="/net.refractions.udig/icons/udig.xpm"/>
       <macosx icon="/net.refractions.udig/icons/icon128.icns"/>
@@ -24,7 +22,6 @@
          <bmp/>
       </win>
    </launcher>
-
 
    <vm>
    </vm>

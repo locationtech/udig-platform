@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: FeatureEditor Plug-in
 Bundle-SymbolicName: net.refractions.udig.feature.editor; singleton:=true
-Bundle-Version: 1.2.0
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.featureEditor.FeatureEditorPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin

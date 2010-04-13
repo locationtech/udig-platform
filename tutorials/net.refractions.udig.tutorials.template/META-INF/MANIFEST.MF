@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Template Tutorial
 Bundle-SymbolicName: net.refractions.udig.tutorials.template; singleton:=true
-Bundle-Version: 1.2.0
-Bundle-Vendor: Richard Gould, Refractions Research
+Bundle-Version: 1.2.0.qualifier
+Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  net.refractions.udig.printing.model,

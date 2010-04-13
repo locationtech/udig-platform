@@ -2,8 +2,8 @@
 <feature
       id="net.refractions.udig_unstable"
       label="%feature.name"
-      version="1.2.0"
-      provider-name="Refractions Research"
+      version="1.2.0.qualifier"
+      provider-name="udig.refractions.net"
       plugin="net.refractions.udig_unstable">
 
    <description>

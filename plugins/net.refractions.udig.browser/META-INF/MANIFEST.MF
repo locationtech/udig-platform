@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Manifest.name
 Bundle-SymbolicName: net.refractions.udig.browser; singleton:=true
-Bundle-Version: 1.2.0
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.browser.BrowserPlugin
-Bundle-Vendor: %Manifest.provider
+Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

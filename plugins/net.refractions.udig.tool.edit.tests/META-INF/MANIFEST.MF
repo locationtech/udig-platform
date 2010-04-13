@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests Plug-in
 Bundle-SymbolicName: net.refractions.udig.tool.edit.tests
-Bundle-Version: 1.0.0
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.tool.edit.tests.TestsPlugin
-Bundle-Vendor: Refractions Research Inc
+Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.libs,

@@ -2,8 +2,8 @@
 <feature
       id="net.refractions.udig.rcp_feature"
       label="uDig RCP Feature"
-      version="1.2.0"
-      provider-name="refractions.net">
+      version="1.2.0.qualifier"
+      provider-name="udig.refractions.net">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]

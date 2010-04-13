@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Catalog UI Test Plug-in
 Bundle-SymbolicName: net.refractions.udig.catalog.tests.ui; singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.2.0.qualifier
 Bundle-Localization: plugin
 Require-Bundle: net.refractions.udig.catalog,
  org.eclipse.core.runtime,

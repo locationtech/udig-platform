@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Catalog Test Plug In
 Bundle-SymbolicName: net.refractions.udig.catalog.tests; singleton:=true
-Bundle-Version: 1.1.0
+Bundle-Version: 1.2.0.qualifier
 Export-Package: net.refractions.udig.catalog.tests,
  net.refractions.udig.catalog.tests.internal;x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,

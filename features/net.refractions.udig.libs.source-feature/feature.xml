@@ -2,8 +2,8 @@
 <feature
       id="net.refractions.udig.libs.source_feature"
       label="Libs Source Feature"
-      version="1.2.0"
-      provider-name="Refractions Research Inc">
+      version="1.2.0.qualifier"
+      provider-name="udig.refractions.net">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]

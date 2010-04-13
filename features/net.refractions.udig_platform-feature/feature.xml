@@ -2,7 +2,7 @@
 <feature
       id="net.refractions.udig_platform"
       label="net.refractions.udig_platform-feature"
-      version="1.2.0"
+      version="1.2.0.qualifier"
       provider-name="Refractions Research">
 
    <description url="http://udig.refractions.net/confluence/display/DEV/1+GIS+Platform">
@@ -199,6 +199,13 @@ This library is distributed in the hope that it will be useful, but WITHOUT ANY 
 
    <plugin
          id="net.refractions.udig.catalog.arcsde"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.refractions.udig.catalog.geotools"
          download-size="0"
          install-size="0"
          version="0.0.0"

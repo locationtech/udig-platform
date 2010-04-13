@@ -2,7 +2,7 @@
 <feature
       id="net.refractions.udig.tutorials.rcp_feature"
       label="Rcp_feature Feature"
-      version="1.2.0"
+      version="1.2.0.qualifier"
       provider-name="student">
 
    <description url="http://www.example.com/description">

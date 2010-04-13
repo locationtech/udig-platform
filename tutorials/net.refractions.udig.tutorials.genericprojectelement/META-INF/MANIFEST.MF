@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GenericProjectElement Plug-in
 Bundle-SymbolicName: net.refractions.udig.tutorials.genericprojectelement;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.tutorials.genericprojectelement.Activator
 Require-Bundle: org.eclipse.core.runtime,
  net.refractions.udig.project.ui
