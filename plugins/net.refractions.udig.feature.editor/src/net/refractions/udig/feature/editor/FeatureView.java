@@ -3,26 +3,19 @@ package net.refractions.udig.feature.editor;
 import net.refractions.udig.feature.editor.internal.Messages;
 import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.IEditManagerListener;
+import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.ui.IFeatureSite;
 import net.refractions.udig.project.ui.IUDIGView;
 import net.refractions.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IPerspectiveDescriptor;
-import org.eclipse.ui.IPerspectiveListener;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.part.IPageBookViewPage;
-import org.eclipse.ui.part.MessagePage;
 import org.eclipse.ui.part.PageBook;
-import org.eclipse.ui.part.PageBookView;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
@@ -37,54 +30,23 @@ import org.opengis.feature.simple.SimpleFeature;
  * @author jodyg
  * @since 1.2.0
  */
-public class FeatureView extends PageBookView implements IUDIGView {
+public class FeatureView extends AbstractPageBookView<ILayer> implements IUDIGView {
     public static final String ID = "net.refractions.udig.feature.editor.featureView";
     
-    private boolean viewInPage = true;
-    
-    private IPerspectiveListener perspectiveListener = new IPerspectiveListener() {
-        public void perspectiveChanged(IWorkbenchPage page,
-                IPerspectiveDescriptor perspective, String changeId) {
-        }
-        // fix for bug 109245 and 69098 - fake a partActivated when the perpsective is switched
-        public void perspectiveActivated(IWorkbenchPage page,
-                IPerspectiveDescriptor perspective) {
-            viewInPage = page.findViewReference(ID) != null;
-            // getBootstrapPart could return null; but isImportant() can handle null
-            partActivated(getBootstrapPart());
-        }
-    };
-    
-    /**
-     * Add a perspective listener so we can update when the perspective is switched.
-     */
-    public void createPartControl(Composite parent) {
-        super.createPartControl(parent);
-        getSite().getPage().getWorkbenchWindow().addPerspectiveListener(perspectiveListener);
-    }
-
-    /**
-     * Remove the perspective listener.
-     * @see org.eclipse.ui.IWorkbenchPart#dispose()
-     */
-    public void dispose() {
-        getSite().getPage().getWorkbenchWindow().removePerspectiveListener(perspectiveListener);
-        super.dispose();
-    }
+    private IFeatureSite context;
+    private SimpleFeature current;
     
     @Override
     protected IPage createDefaultPage( PageBook book ) {
-        /*MessagePage page = new MessagePage();
-        initPage(page);
-        page.createControl(book);
-        page.setMessage("Please select a feature"); //$NON-NLS-1$
-        return page;
-        */
+        /*
+         * MessagePage page = new MessagePage(); initPage(page); page.createControl(book);
+         * page.setMessage("Please select a feature"); //$NON-NLS-1$ return page;
+         */
         PropertySheetPage page = new PropertySheetPage();
         initPage(page);
         page.createControl(book);
-        
-        final IMap map = ApplicationGIS.getActiveMap();        
+
+        final IMap map = ApplicationGIS.getActiveMap();
         if (map != ApplicationGIS.NO_MAP) {
             try {
                 editFeatureChanged(map.getEditManager().getEditFeature());
@@ -94,7 +56,7 @@ public class FeatureView extends PageBookView implements IUDIGView {
         }
         return page;
     }
-    
+
     public void editFeatureChanged( SimpleFeature feature ) {
         current = feature;
         StructuredSelection selection;
@@ -105,56 +67,63 @@ public class FeatureView extends PageBookView implements IUDIGView {
             value = defaultSource;
         selection = new StructuredSelection(value);
         IPage currentPage = getCurrentPage();
-        if( currentPage instanceof PropertySheetPage){
+        if (currentPage instanceof PropertySheetPage) {
             PropertySheetPage sheet = (PropertySheetPage) currentPage;
-            sheet.selectionChanged( null, selection );
+            sheet.selectionChanged(null, selection);
         }
-    }    
+    }
 
     @Override
-    protected PageRec doCreatePage( IWorkbenchPart part ) {
+    protected PageRec<ILayer> doCreatePage( ILayer part ) {
         // Try to get a IMap
-        IMap map = (IMap) part.getAdapter(IMap.class);        
+        IMap map = part.getMap();
         if (map != null && map instanceof IMap) {
             IEditManager editManager = map.getEditManager();
-            
-            IPage page = (IPage) new FeaturePage( editManager );
+
+            IPage page = (IPage) new FeaturePage(editManager);
             page.createControl(getPageBook());
             initPage((IPageBookViewPage) page);
-            return new PageRec(part, page);
+            return new PageRec<ILayer>(part, page);
         }
         // Use the default page by returning null
         return null;
     }
 
     @Override
-    protected void doDestroyPage( IWorkbenchPart part, PageRec pageRecord ) {
-        
+    protected void doDestroyPage( ILayer part, PageRec<ILayer> pageRecord ) {
+
         pageRecord.page.dispose();
     }
 
-    @Override
-    protected IWorkbenchPart getBootstrapPart() {
-        IWorkbenchPage page = getSite().getPage();
-        if (page != null)
-            return page.getActiveEditor();
-        return null;
+    /**
+     * Will grab the active Map's selected layer, if available as the initial bootstrap part for our
+     * feature view.
+     */
+    protected ILayer getBootstrapTarget() {
+        IMap map = ApplicationGIS.getActiveMap();
+        if (map == null)
+            return null;
+
+        ILayer selectedLayer = map.getEditManager().getSelectedLayer();
+
+        return selectedLayer;
     }
 
-    @Override
-    protected boolean isImportant( IWorkbenchPart part ) {
-        return false;
-        /*
-        IMap map = (IMap) part.getAdapter(IMap.class);
-        return map != null; */
+    /**
+     * Only consider the selectedLayer important enough to force a refresh.
+     */
+    protected boolean isImportant( ILayer layer ) {
+        if (layer.getMap().getEditManager().getSelectedLayer() == layer) {
+            return true;
+        }
+        return layer.isVisible();
     }
 
-    private IToolContext context;
-    //private PropertySheetPage featureDisplay;
-    private SimpleFeature current;
-    
+    public void partActivated(IWorkbenchPart part) {
+        
+    };
     IAdaptable defaultSource = new IAdaptable(){
-
+        @SuppressWarnings("unchecked")
         public Object getAdapter( Class adapter ) {
             if (IPropertySource.class.isAssignableFrom(adapter))
                 return new IPropertySource(){
@@ -192,8 +161,7 @@ public class FeatureView extends PageBookView implements IUDIGView {
         }
 
     };
-    
-    
+
     public void setContext( IToolContext context ) {
         this.context = context;
     }
@@ -201,8 +169,10 @@ public class FeatureView extends PageBookView implements IUDIGView {
     /**
      * @see net.refractions.udig.project.ui.IUDIGView#getContext()
      */
-    public IToolContext getContext() {
+    public IFeatureSite getContext() {
         return context;
     }
+
+
 
 }

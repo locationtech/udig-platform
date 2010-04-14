@@ -1,14 +1,7 @@
 package net.refractions.udig.project.ui;
 
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.ui.tool.IToolContext;
-
-import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IMemento;
-import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 
 public abstract class IFeaturePanel {
@@ -19,7 +12,7 @@ public abstract class IFeaturePanel {
     /**
      * Access to the feature being edited
      */
-    private IToolContext site;
+    private IFeatureSite site;
     
     /**
      * Returns the label describing the feature panel.
@@ -39,7 +32,7 @@ public abstract class IFeaturePanel {
      * 
      * @return EditManager until we figure the right thing
      */
-    public IToolContext getSite(){
+    public IFeatureSite getSite(){
         return site;
     }
     
@@ -56,7 +49,7 @@ public abstract class IFeaturePanel {
      * @param memento Used to access any prior history recorded by this feature panel
      * @throws PartInitException 
      */
-    public void init(IToolContext site, IMemento memento) throws PartInitException{
+    public void init(IFeatureSite site, IMemento memento) throws PartInitException{
         this.site = site;
     }
      

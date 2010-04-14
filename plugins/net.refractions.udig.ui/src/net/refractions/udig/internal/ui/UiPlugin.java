@@ -45,6 +45,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.internal.misc.StatusUtil;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -273,6 +274,26 @@ public class UiPlugin extends AbstractUIPlugin  {
         plugin = null;
     }
     /**
+     * Logs the given throwable to the platform log, indicating the class and
+     * method from where it is being logged (this is not necessarily where it
+     * occurred).
+     * 
+     * This convenience method is for internal use by the Workbench only and
+     * must not be called outside the Workbench.
+     * 
+     * @param clazz
+     *            The calling class.
+     * @param methodName
+     *            The calling method name.
+     * @param t
+     *            The throwable from where the problem actually occurred.
+     */
+    public static void log(Class clazz, String methodName, Throwable t) {
+        String msg = MessageFormat.format("Exception in {0}.{1}: {2}", //$NON-NLS-1$
+                new Object[] { clazz.getName(), methodName, t });
+        log(msg, t);
+    }
+    /**
      * Writes an info log in the plugin's log.
      * <p>
      * This should be used for user level messages.
@@ -283,6 +304,14 @@ public class UiPlugin extends AbstractUIPlugin  {
         if (message == null)
             message = ""; //$NON-NLS-1$
         getDefault().getLog().log(new Status(IStatus.INFO, ID, 0, message, e));
+    }
+
+    /**
+     * Log the status to the default log.
+     * @param status
+     */
+    public static void log(IStatus status) {
+        getDefault().getLog().log(status);
     }
     /**
      * Messages that only engage if getDefault().isDebugging()
