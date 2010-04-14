@@ -58,35 +58,35 @@ public class ExtensionPointList extends ArrayList<IConfigurationElement> {
                 Bundle bundle = Platform.getBundle(extensionPoint.getNamespaceIdentifier());
                 if (bundle == null) {
                     if (CorePlugin.getDefault().isDebugging()) {
-                        System.out.println("Could not locate bundle for " + extensionPoint.getUniqueIdentifier()); //$NON-NLS-1$
+                        System.out
+                                .println("Could not locate bundle for " + extensionPoint.getUniqueIdentifier()); //$NON-NLS-1$
                     }
                     bundle = CorePlugin.getDefault().getBundle();
                 }
                 ILog log = Platform.getLog(bundle);
-                log.log(new Status(Status.ERROR, extension.getNamespaceIdentifier(), 0, extensionPoint
-                        .getUniqueIdentifier()
-                        + Messages.ExtensionPointList_problem + e, e) 
-                        );
+                log.log(new Status(Status.ERROR, extension.getNamespaceIdentifier(), 0,
+                        extensionPoint.getUniqueIdentifier() + Messages.ExtensionPointList_problem
+                                + e, e));
             }
         }
     }
-    
-    private static Map<String, List<IConfigurationElement>> cache=new WeakHashMap<String, List<IConfigurationElement>>(); 
-    
+
+    private static Map<String, List<IConfigurationElement>> cache = new WeakHashMap<String, List<IConfigurationElement>>();
+
     /**
      * Gets a ExtensionPointList for the provided extensionPoint
-     *
+     * 
      * @param extensionPointId id of the extension point to get the list of extensions for.
-     * @return 
+     * @return
      */
     public static List<IConfigurationElement> getExtensionPointList( String extensionPointId ) {
-       List<IConfigurationElement> list= cache.get(extensionPointId);
-       if( list==null ){
-           list=new ExtensionPointList(extensionPointId);
-           cache.put(extensionPointId, list);
-       }
-       
-       list=new ArrayList<IConfigurationElement>(list);
-       return list;
+        List<IConfigurationElement> list = cache.get(extensionPointId);
+        if (list == null) {
+            list = new ExtensionPointList(extensionPointId);
+            cache.put(extensionPointId, list);
+        }
+
+        list = new ArrayList<IConfigurationElement>(list);
+        return list;
     }
 }

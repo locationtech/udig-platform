@@ -38,7 +38,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
- * Responsible for listing available feature editors.
+ * Class used to represent a feature Editor; can perform "matches" against
+ * a provided feature; and will create the view or dialog on request.
  * 
  * @author jones
  * @since 1.1.0
