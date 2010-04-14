@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.feature.type.Name;
 
 /**
  * This class is used to determine whether a FeatureEditor can be used to edit a feature of a given
@@ -126,6 +127,17 @@ public class FeatureTypeMatch {
 
     }
     /**
+     * @param element
+     * @return true if matches( element ) is greater the -1
+     */
+    public boolean isMatch( Object element ){
+    	int matches = matches( element);
+    	return matches > -1;
+    }
+    
+    public static int PERFECT = 0;
+    public static int NO_MATCH = -1;
+    /**
      * Returns >-1 if the editor has specified a SimpleFeatureType declaration that matches the SimpleFeature
      * passed in as a parameter. Each inaccuracy increases the count by 1. a 0 is a perfect match,
      * using the featureType name and namespace. 1 would be all the attributeTypes have a name and
@@ -148,45 +160,54 @@ public class FeatureTypeMatch {
      * </ul>
      * 
      * @param element
-     * @return true if the editor has specified a SimpleFeatureType declaration that matches the SimpleFeature
-     *         passed in as a parameter.
+     * @return 0 for a perfect match, 
      */
     public int matches( Object element ) {
-        int accuracy = 0;
         if (element instanceof SimpleFeature) {
             SimpleFeature feature = (SimpleFeature) element;
+            SimpleFeatureType schema = feature.getFeatureType();
+			Name featureName = schema.getName();
+            
             if (namespace != null) {
-                if (namespace.equals(feature.getFeatureType().getName().getNamespaceURI())
-                        && typeName.equals(feature.getName().getLocalPart()))
-                    return 0;
-                return -1;
+            	
+                if (namespace.equals(featureName.getNamespaceURI()) && typeName.equals(featureName.getLocalPart())){
+                    return PERFECT;
+                }
+                return NO_MATCH;
             }
-            if (attributes.length == 0)
-                return -1;
+            if (attributes.length == 0){
+                return NO_MATCH; 
+            }
+            int accuracy = 0;            
             accuracy++;
             List<AttributeDescriptor> matched = new ArrayList<AttributeDescriptor>();
+            // 1st pass check all named attributes are accounted for
             for( AttributeMatcher current : attributes ) {
-                if (current.name == null)
-                    continue;
-                AttributeDescriptor currentMatch = current.match(feature.getFeatureType(), matched);
-                if (currentMatch == null)
-                    return -1;
+                if (current.name == null){
+                    continue; // skip
+                }
+                AttributeDescriptor currentMatch = current.match(schema, matched);
+                if (currentMatch == null){
+                    return NO_MATCH;
+                }
                 matched.add(currentMatch);
             }
+            // section pass check unnamed attributes ... match default geometry type?
             for( AttributeMatcher current : attributes ) {
-                if (current.name != null)
+                if (current.name != null){
                     continue;
-
+                }
                 accuracy++;
 
-                AttributeDescriptor currentMatch = current.match(feature.getFeatureType(), matched);
-                if (currentMatch == null)
-                    return -1;
+                AttributeDescriptor currentMatch = current.match(schema, matched);
+                if (currentMatch == null){
+                    return NO_MATCH;
+                }
                 matched.add(currentMatch);
             }
-            accuracy += feature.getFeatureType().getAttributeCount() - matched.size();
+            accuracy += schema.getAttributeCount() - matched.size();
             return accuracy;
         }
-        return -1;
+        return NO_MATCH;
     }
 }

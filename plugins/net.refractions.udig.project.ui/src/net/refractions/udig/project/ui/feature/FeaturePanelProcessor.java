@@ -1,21 +1,19 @@
 package net.refractions.udig.project.ui.feature;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.refractions.udig.core.internal.ExtensionPointProcessor;
+import net.refractions.udig.core.internal.ExtensionPointUtil;
+import net.refractions.udig.project.internal.ProjectPlugin;
+import net.refractions.udig.project.ui.IFeaturePanel;
+import net.refractions.udig.project.ui.internal.FeatureTypeMatch;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.resource.ImageDescriptor;
-
-import com.sun.tools.doclets.internal.toolkit.Configuration;
-
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.ui.IFeaturePanel;
-import net.refractions.udig.project.ui.internal.FeatureTypeMatch;
 
 /**
  * Utility class assisting in processing the feature panel extension point.
@@ -31,15 +29,36 @@ import net.refractions.udig.project.ui.internal.FeatureTypeMatch;
 public class FeaturePanelProcessor {
 
     private static final String FEATURE_PANEL_ID = "net.refractions.udig.project.ui.featurePanel"; //$NON-NLS-1$
+    private static List<FeaturePanelEntry> featurePanelList;
 
     public FeaturePanelProcessor() {
+        featurePanelList = new ArrayList<FeaturePanelEntry>();
         ExtensionPointUtil.process(ProjectPlugin.getPlugin(), FEATURE_PANEL_ID,
                 new ExtensionPointProcessor(){
                     public void process( IExtension extension, IConfigurationElement element )
                             throws Exception {
-                        FeaturePanelEntry entry = new FeaturePanelEntry(extension,element);
+                        FeaturePanelEntry entry = new FeaturePanelEntry(extension, element);
+                        featurePanelList.add(entry);
                     }
-                });
+                }
+        );
+    }
+    /**
+     * List of FeaturePanelEntry that can match the provided element (usually a SimpleFeature).
+     * <p>
+     * You can use these FeaturePanelEntry to make feature panels to edit the indicated element.
+     * 
+     * @param element
+     * @return List matching FeaturePanelEntry
+     */
+    public List<FeaturePanelEntry> search( Object element ){
+        List<FeaturePanelEntry> search = new ArrayList<FeaturePanelEntry>();
+        for( FeaturePanelEntry entry : featurePanelList ){
+            if( entry.isMatch( element )){
+                search.add( entry );
+            }
+        }
+        return search;
     }
 
     /**
@@ -47,36 +66,27 @@ public class FeaturePanelProcessor {
      * <p>
      * Can perform several common tasks; and will lazily create a real FeaturePanel if needed. You
      * are responsible for managing the FeaturePanel at the end of the day.
-     * 
-     * @author jody
-     * @since 1.2.0
      */
     public class FeaturePanelEntry {
         /** Used on logging errors */
         private final String PLUGIN_ID;
         private String EXTENSION_ID;
-        
+
         private String id;
         private String name;
         private String title;
         private String description;
         private String afterPanel;
-
-        ImageDescriptor icon;
-
-        IAction contribution;
-
         private IConfigurationElement definition;
 
         private FeatureTypeMatch matcher;
-        
+
         public FeaturePanelEntry( IExtension extension, IConfigurationElement definition ) {
             this.PLUGIN_ID = extension.getContributor().getName();
-            if( extension.getUniqueIdentifier() == null ){
+            if (extension.getUniqueIdentifier() == null) {
                 this.EXTENSION_ID = "";
-            }
-            else {
-                this.EXTENSION_ID = "("+extension.getUniqueIdentifier()+")";
+            } else {
+                this.EXTENSION_ID = "(" + extension.getUniqueIdentifier() + ")";
             }
             this.definition = definition;
             id = definition.getAttribute("id");
@@ -92,6 +102,10 @@ public class FeaturePanelProcessor {
             } else {
                 matcher = FeatureTypeMatch.ALL;
             }
+        }
+
+        public String getId() {
+            return id;
         }
 
         public String getName() {
@@ -113,16 +127,28 @@ public class FeaturePanelProcessor {
         public String getDescription() {
             return description;
         }
-        
+
         /**
          * Used in "sorting" feature panels.
-         *
+         * 
          * @return reference to another feature panel
          */
         public String getAfterPanel() {
             return afterPanel;
         }
-        
+
+        /**
+         * Check the provided element (usually a simple feature) against the featureType
+         * declairation for this FeaturePanelEntry. Returns true if the attributes match well enough
+         * to display the featurePanel.
+         * 
+         * @param element
+         * @return true if the feature panel can be used
+         */
+        boolean isMatch( Object element ) {
+            return matcher.isMatch(element);
+        }
+
         /**
          * Create an IFeaturePanel for use.
          * <p>
@@ -143,19 +169,19 @@ public class FeaturePanelProcessor {
                 return (IFeaturePanel) definition.createExecutableExtension("panel");
             } catch (CoreException e) {
                 String target = definition.getAttribute("panel");
-                log( "Could not create feature "+target, e );
+                log("Could not create feature " + target, e);
                 return null;
-            }            
+            }
         }
-        
+
         /**
          * Report an issue, blaming the plugin implementing the feature panel.
-         *
+         * 
          * @param message
          * @param t
          */
-        public void log( String message, Throwable t ){
-            IStatus error = new Status(IStatus.ERROR, PLUGIN_ID, message+EXTENSION_ID, t);
+        public void log( String message, Throwable t ) {
+            IStatus error = new Status(IStatus.ERROR, PLUGIN_ID, message + EXTENSION_ID, t);
             ProjectPlugin.getPlugin().getLog().log(error);
         }
     }

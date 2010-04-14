@@ -1,5 +1,7 @@
 package net.refractions.udig.feature.editor;
 
+import java.util.List;
+
 import net.refractions.udig.feature.editor.internal.Messages;
 import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.project.IEditManager;
@@ -7,11 +9,15 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.IFeatureSite;
+import net.refractions.udig.project.ui.feature.FeaturePanelProcessor;
+import net.refractions.udig.project.ui.feature.FeaturePanelProcessor.FeaturePanelEntry;
+import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.part.IPageBookViewPage;
+import org.eclipse.ui.part.MessagePage;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -35,23 +41,26 @@ public class FeatureView extends AbstractPageBookView<ILayer> {
 
     @Override
     protected IPage createDefaultPage( PageBook book ) {
-        /*
-         * MessagePage page = new MessagePage(); initPage(page); page.createControl(book);
-         * page.setMessage("Please select a feature"); //$NON-NLS-1$ return page;
-         */
-        PropertySheetPage page = new PropertySheetPage();
-        initPage(page);
-        page.createControl(book);
-
+        
         final IMap map = ApplicationGIS.getActiveMap();
         if (map != ApplicationGIS.NO_MAP) {
             try {
+                PropertySheetPage page = new PropertySheetPage();
+                initPage(page);
+                page.createControl(book);
                 editFeatureChanged(map.getEditManager().getEditFeature());
+                return page;
             } catch (Throwable e) {
                 UiPlugin.log("Default SimpleFeature Editor threw an exception", e); //$NON-NLS-1$
             }
         }
+
+        MessagePage page = new MessagePage();
+        initPage(page);
+        page.createControl(book);
+        page.setMessage("Please select a feature"); //$NON-NLS-1$ return page;
         return page;
+
     }
 
     public void editFeatureChanged( SimpleFeature feature ) {
@@ -75,16 +84,28 @@ public class FeatureView extends AbstractPageBookView<ILayer> {
     protected PageRec<ILayer> doCreatePage( ILayer layer ) {
         // Try to get a IMap
         IMap map = layer.getMap();
-        if (map != null && map instanceof IMap) {
-            IEditManager editManager = map.getEditManager();
+        if (map == null)
+            return null; // nothing to edit
 
+        IEditManager editManager = map.getEditManager();
+        SimpleFeature element = editManager.getEditFeature();
+        if (element == null)
+            return null; // no feature yet
+
+        FeaturePanelProcessor panels = ProjectUIPlugin.getDefault().getFeaturePanelProcessor();
+        List<FeaturePanelEntry> avaialble = panels.search(element);
+
+        if (!avaialble.isEmpty()) {
+            MessagePage page = new MessagePage();
+            initPage(page);
+            page.setMessage("Found "+avaialble.size()); //$NON-NLS-1$ return page;
+            return new PageRec<ILayer>(layer, page);
+        } else {
             IPage page = (IPage) new FeaturePage(editManager);
             page.createControl(getPageBook());
             initPage((IPageBookViewPage) page);
             return new PageRec<ILayer>(layer, page);
         }
-        // Use the default page by returning null
-        return null;
     }
 
     @Override

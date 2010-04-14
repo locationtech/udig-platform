@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.refractions.udig.project.ui.feature.FeaturePanelProcessor;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.CoreException;
@@ -94,7 +95,9 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
     }
 
     FeatureEditorExtensionProcessor featureEditProcessor = new FeatureEditorExtensionProcessor();
-
+    
+    FeaturePanelProcessor featurePanelProcessor = new FeaturePanelProcessor();
+    
     /**
      * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
      */
@@ -238,10 +241,19 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
      * @return
      */
     public FeatureEditorExtensionProcessor getFeatureEditProcessor() {
-        if (!featureEditProcessor.isRunning())
+        if (!featureEditProcessor.isRunning()){
             featureEditProcessor.startPartListener();
-
+        }
         return featureEditProcessor;
+    }
+    
+    /**
+     * Gets the FeatureEditorProcessor instance.
+     * 
+     * @return
+     */
+    public FeaturePanelProcessor getFeaturePanelProcessor() {
+        return featurePanelProcessor;
     }
 
     /**
