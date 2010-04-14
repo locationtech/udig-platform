@@ -37,5 +37,4 @@ public class CountryView extends ViewPart implements IUDIGView {
     public void editFeatureChanged( SimpleFeature feature ) {
         panel.setEditFeature(feature, context);
     }
-
 }

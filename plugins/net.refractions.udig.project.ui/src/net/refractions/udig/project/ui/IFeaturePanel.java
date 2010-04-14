@@ -1,19 +1,18 @@
 package net.refractions.udig.project.ui;
 
+import net.refractions.udig.project.ui.tool.IToolContext;
+
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PartInitException;
 
 public abstract class IFeaturePanel {
-    
     /** extension point id **/
     public static final String XPID = "net.refractions.udig.project.ui.featurePanel"; //$NON-NLS-1$
-    
     /**
      * Access to the feature being edited
      */
     private IFeatureSite site;
-    
     /**
      * Returns the label describing the feature panel.
      * <p>
@@ -35,24 +34,22 @@ public abstract class IFeaturePanel {
     public IFeatureSite getSite(){
         return site;
     }
-    
     /**
      * Initializes the feature panel with a site. 
      * <p>
-     * This method is called automatically shortly after the part is instantiated.
-     * It marks the start of the panel's lifecycle (clients are not expected
-     * to call this method themsleves)
+     * This method is automatically shortly after the part is instantiated.
+     * It marks the start of the panel's lifecycle.
+     * <p>
+     * Clients must not call this method.
      * </p>
-     * When overriding this method please remember to call super.init( site, memento)
      *
      * @param site Allows access to user interface facilities
      * @param memento Used to access any prior history recorded by this feature panel
      * @throws PartInitException 
      */
     public void init(IFeatureSite site, IMemento memento) throws PartInitException{
-        this.site = site;
-    }
-     
+        init( site, memento );
+    }     
     /**
      * Creates the control that is to be used to configure the style.
      * <p>
@@ -67,8 +64,7 @@ public abstract class IFeaturePanel {
      * </p>
      * @param parent 
      */
-    public abstract void createPartControl( Composite parent );
-    
+    public abstract void createPartControl( Composite parent );    
     /**
      * Cleans up any resources (like icons) held by this StyleConfigurator.
      * <p>
@@ -78,6 +74,5 @@ public abstract class IFeaturePanel {
      */
     public void dispose(){
         // subclass should override
-    }
-    
+    }   
 }

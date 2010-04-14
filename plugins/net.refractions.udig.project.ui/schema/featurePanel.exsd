@@ -64,7 +64,7 @@ All communication with the current feature is handled through a FeatureSite ... 
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
-                  The name of the feature panel; displayed to the user as a tab or wizard dialog title. You can consider this a &quot;short name&quot; used to indicate what the user is working on.
+                  The name of the feature panel; displayed to the user as a tab or wizard dialog title. This name should be concise ( read short ) but sufficient to communicate to the user what he or she is working on.
 
 This field is translatable using&quot;%key&quot; to indicate which plugin.properties definition to use.
                </documentation>
