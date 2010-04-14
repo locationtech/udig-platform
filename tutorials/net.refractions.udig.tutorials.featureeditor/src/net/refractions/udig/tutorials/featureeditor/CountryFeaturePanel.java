@@ -1,5 +1,11 @@
 package net.refractions.udig.tutorials.featureeditor;
 
+import net.miginfocom.swt.MigLayout;
+import net.refractions.udig.project.command.CompositeCommand;
+import net.refractions.udig.project.ui.IFeaturePanel;
+import net.refractions.udig.project.ui.IFeatureSite;
+import net.refractions.udig.project.ui.tool.IToolContext;
+
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -20,12 +26,6 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PartInitException;
 import org.opengis.feature.IllegalAttributeException;
 import org.opengis.feature.simple.SimpleFeature;
-
-import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.project.command.CompositeCommand;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.ui.IFeaturePanel;
-import net.refractions.udig.project.ui.tool.IToolContext;
 
 public class CountryFeaturePanel extends IFeaturePanel {
     /** Attribute name for attribute GMI_CNTRY */
@@ -123,7 +123,7 @@ public class CountryFeaturePanel extends IFeaturePanel {
      * Step 1 - init using the editor site and memento holding any information from last time
      */
     @Override
-    public void init( IToolContext site, IMemento memento ) throws PartInitException {
+    public void init( IFeatureSite site, IMemento memento ) throws PartInitException {
         super.init(site, memento);
     }
 

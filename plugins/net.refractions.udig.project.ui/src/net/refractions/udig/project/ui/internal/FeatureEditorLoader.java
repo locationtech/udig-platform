@@ -37,6 +37,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.opengis.feature.simple.SimpleFeature;
 
+/**
+ * Responsible for listing available feature editors.
+ * 
+ * @author jones
+ * @since 1.1.0
+ */
 public class FeatureEditorLoader {
     /** FeatureEditorLoader processor field */
     final FeatureEditorExtensionProcessor processor;
@@ -61,7 +67,8 @@ public class FeatureEditorLoader {
         this.processor = processor;
         String iconID = definition.getAttribute("icon"); //$NON-NLS-1$
         if (iconID != null) {
-            icon = AbstractUIPlugin.imageDescriptorFromPlugin(definition.getNamespaceIdentifier(), iconID);
+            icon = AbstractUIPlugin.imageDescriptorFromPlugin(definition.getNamespaceIdentifier(),
+                    iconID);
         }
 
         id = definition.getAttribute("id"); //$NON-NLS-1$
@@ -77,16 +84,19 @@ public class FeatureEditorLoader {
     }
 
     IAction getAction( final ISelection selection ) {
-        if (!(selection instanceof IStructuredSelection))
+        if (!(selection instanceof IStructuredSelection)){
             return null;
+        }
 
         IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-        if (!processor.sameFeatureTypes(structuredSelection))
-            return null; 
+        if (!processor.sameFeatureTypes(structuredSelection)){
+            return null;
+        }
 
         final SimpleFeature feature = (SimpleFeature) structuredSelection.getFirstElement();
-        if (featureTypeMatcher.matches(feature) == -1)
-            return null;
+        if (featureTypeMatcher.matches(feature) == -1){
+            return null; // no match
+        }
         contribution = new Action(name, IAction.AS_RADIO_BUTTON){
             public void runWithEvent( org.eclipse.swt.widgets.Event event ) {
 
@@ -100,11 +110,12 @@ public class FeatureEditorLoader {
         };
         contribution.setId(id);
         contribution.setImageDescriptor(icon);
-        EditActionContribution selected = this.processor.selectedEditors.get(feature.getFeatureType());
+        EditActionContribution selected = this.processor.selectedEditors.get(feature
+                .getFeatureType());
         if (selected == null) {
             selected = processor.createEditAction(processor.getClosestMatch(selection), selection,
                     feature);
-        }else{
+        } else {
             selected.setSelection(selection);
         }
         if (selected != null && selected.getId().equals(id))
@@ -116,16 +127,17 @@ public class FeatureEditorLoader {
     }
 
     public void open( Display display, ISelection selection ) {
-        SimpleFeature feature = (SimpleFeature) ((IStructuredSelection) selection).getFirstElement();
+        SimpleFeature feature = (SimpleFeature) ((IStructuredSelection) selection)
+                .getFirstElement();
 
         if (viewId != null) {
             try {
                 IUDIGView view = (IUDIGView) PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                         .getActivePage().showView(viewId, null, IWorkbenchPage.VIEW_VISIBLE);
-                try{
+                try {
                     view.editFeatureChanged(feature);
-                }catch (Throwable e) {
-                    UiPlugin.log(view+" threw an exception", e); //$NON-NLS-1$
+                } catch (Throwable e) {
+                    UiPlugin.log(view + " threw an exception", e); //$NON-NLS-1$
                 }
             } catch (PartInitException e) {
                 ProjectUIPlugin.log(null, e);
@@ -139,8 +151,8 @@ public class FeatureEditorLoader {
                     toolContext = this.processor.partListener.currentContext;
                 }
                 page.setContext(toolContext);
-                Dialog dialog = new FeatureEditorExtensionProcessor.EditorDialog(new Shell(display.getActiveShell(),
-                        SWT.RESIZE | SWT.PRIMARY_MODAL), page);
+                Dialog dialog = new FeatureEditorExtensionProcessor.EditorDialog(new Shell(display
+                        .getActiveShell(), SWT.RESIZE | SWT.PRIMARY_MODAL), page);
                 dialog.setBlockOnOpen(false);
                 page.setFeature(feature);
                 dialog.open();
@@ -169,7 +181,7 @@ public class FeatureEditorLoader {
     public int match( ISelection selection ) {
         IStructuredSelection structuredSelection = (IStructuredSelection) selection;
         if (!processor.sameFeatureTypes(structuredSelection))
-            return -1; 
+            return -1;
 
         final SimpleFeature feature = (SimpleFeature) structuredSelection.getFirstElement();
         return featureTypeMatcher.matches(feature);

@@ -35,5 +35,33 @@
             </attribute></featureType>
       </editor>
    </extension>
+   <extension
+         id="net.refractions.udig.tutorials.featureeditor.panels"
+         name="Tutorials Feature Panels"
+         point="net.refractions.udig.project.ui.featurePanel">
+      <featurePanel
+            description="Edit Country information using this handy form."
+            id="net.refractions.udig.tutorials.featureeditor.panels.countryPanel"
+            name="Country"
+            panel="net.refractions.udig.tutorials.featureeditor.CountryFeaturePanel"
+            title="Country Feature">
+         <featureType>
+            <attribute
+                  type="com.vividsolutions.jts.geom.MultiPolygon">
+            </attribute>
+            <attribute
+                  name="CNTRY_NAME"
+                  type="java.lang.String">
+            </attribute>
+            <attribute
+                  name="GMI_CNTRY"
+                  type="java.lang.String">
+            </attribute>
+            <attribute
+                  name="COLOR_MAP"
+                  type="java.lang.String">
+            </attribute></featureType>
+      </featurePanel>
+   </extension>
 
 </plugin>

@@ -19,7 +19,6 @@ public class CountryView extends ViewPart implements IUDIGView {
 
     @Override
     public void init(IViewSite site) throws PartInitException {
-        // TODO Auto-generated method stub
         super.init(site);
     }
     public void setFocus() {

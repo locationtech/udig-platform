@@ -10,7 +10,6 @@ import net.refractions.udig.project.ui.IFeatureSite;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.part.IPageBookViewPage;
 import org.eclipse.ui.part.PageBook;
@@ -30,10 +29,10 @@ import org.opengis.feature.simple.SimpleFeature;
  */
 public class FeatureView extends AbstractPageBookView<ILayer> {
     public static final String ID = "net.refractions.udig.feature.editor.featureView";
-    
+
     private IFeatureSite context;
     private SimpleFeature current;
-    
+
     @Override
     protected IPage createDefaultPage( PageBook book ) {
         /*
@@ -59,10 +58,11 @@ public class FeatureView extends AbstractPageBookView<ILayer> {
         current = feature;
         StructuredSelection selection;
         Object value = defaultSource;
-        if (current != null)
+        if (current != null) {
             value = current;
-        else
+        } else {
             value = defaultSource;
+        }
         selection = new StructuredSelection(value);
         IPage currentPage = getCurrentPage();
         if (currentPage instanceof PropertySheetPage) {
@@ -72,16 +72,16 @@ public class FeatureView extends AbstractPageBookView<ILayer> {
     }
 
     @Override
-    protected PageRec<ILayer> doCreatePage( ILayer part ) {
+    protected PageRec<ILayer> doCreatePage( ILayer layer ) {
         // Try to get a IMap
-        IMap map = part.getMap();
+        IMap map = layer.getMap();
         if (map != null && map instanceof IMap) {
             IEditManager editManager = map.getEditManager();
 
             IPage page = (IPage) new FeaturePage(editManager);
             page.createControl(getPageBook());
             initPage((IPageBookViewPage) page);
-            return new PageRec<ILayer>(part, page);
+            return new PageRec<ILayer>(layer, page);
         }
         // Use the default page by returning null
         return null;
@@ -89,7 +89,6 @@ public class FeatureView extends AbstractPageBookView<ILayer> {
 
     @Override
     protected void doDestroyPage( ILayer part, PageRec<ILayer> pageRecord ) {
-
         pageRecord.page.dispose();
     }
 
@@ -117,30 +116,18 @@ public class FeatureView extends AbstractPageBookView<ILayer> {
         return layer.isVisible();
     }
 
-    public void partActivated(IWorkbenchPart part) {
-        
-    };
     IAdaptable defaultSource = new IAdaptable(){
         @SuppressWarnings("unchecked")
         public Object getAdapter( Class adapter ) {
             if (IPropertySource.class.isAssignableFrom(adapter))
                 return new IPropertySource(){
-
                     public void setPropertyValue( Object id, Object value ) {
-                        // TODO Auto-generated method stub
-
                     }
-
                     public void resetPropertyValue( Object id ) {
-                        // TODO Auto-generated method stub
-
                     }
-
                     public boolean isPropertySet( Object id ) {
-                        // TODO Auto-generated method stub
                         return false;
                     }
-
                     public Object getPropertyValue( Object id ) {
                         return ""; //$NON-NLS-1$
                     }
@@ -149,24 +136,17 @@ public class FeatureView extends AbstractPageBookView<ILayer> {
                         return new PropertyDescriptor[]{new PropertyDescriptor(
                                 "ID", Messages.DefaultEditor_1)}; //$NON-NLS-1$
                     }
-
                     public Object getEditableValue() {
                         return null;
                     }
-
                 };
             return null;
         }
 
     };
 
-    /**
-     * @see net.refractions.udig.project.ui.IUDIGView#getContext()
-     */
     public IFeatureSite getContext() {
         return context;
     }
-
-
 
 }
