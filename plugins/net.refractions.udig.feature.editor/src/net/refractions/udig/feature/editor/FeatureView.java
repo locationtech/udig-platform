@@ -7,8 +7,6 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.IFeatureSite;
-import net.refractions.udig.project.ui.IUDIGView;
-import net.refractions.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -30,7 +28,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * @author jodyg
  * @since 1.2.0
  */
-public class FeatureView extends AbstractPageBookView<ILayer> implements IUDIGView {
+public class FeatureView extends AbstractPageBookView<ILayer> {
     public static final String ID = "net.refractions.udig.feature.editor.featureView";
     
     private IFeatureSite context;
@@ -161,10 +159,6 @@ public class FeatureView extends AbstractPageBookView<ILayer> implements IUDIGVi
         }
 
     };
-
-    public void setContext( IToolContext context ) {
-        this.context = context;
-    }
 
     /**
      * @see net.refractions.udig.project.ui.IUDIGView#getContext()
