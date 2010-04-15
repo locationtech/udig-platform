@@ -4,7 +4,10 @@ import java.util.List;
 
 import net.refractions.udig.feature.editor.internal.Messages;
 import net.refractions.udig.internal.ui.UiPlugin;
+import net.refractions.udig.project.AdaptingFeatureType;
+import net.refractions.udig.project.EditManagerEvent;
 import net.refractions.udig.project.IEditManager;
+import net.refractions.udig.project.IEditManagerListener;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.ApplicationGIS;
@@ -14,7 +17,9 @@ import net.refractions.udig.project.ui.feature.FeaturePanelProcessor.FeaturePane
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.part.IPageBookViewPage;
 import org.eclipse.ui.part.MessagePage;
@@ -24,6 +29,7 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * View allowing direct editing of the currently selected feature.
@@ -33,34 +39,45 @@ import org.opengis.feature.simple.SimpleFeature;
  * @author jodyg
  * @since 1.2.0
  */
-public class FeatureView extends AbstractPageBookView<ILayer> {
+public class FeatureView extends AbstractPageBookView<SimpleFeatureType> {
     public static final String ID = "net.refractions.udig.feature.editor.featureView";
 
     private IFeatureSite context;
     private SimpleFeature current;
 
+    private IEditManagerListener editListener = new IEditManagerListener(){        
+        public void changed( EditManagerEvent event ) {
+            if( event.getType() == EditManagerEvent.EDIT_LAYER ){
+                //ILayer previousLayer = (ILayer) event.getOldValue();
+                ILayer editLayer = (ILayer) event.getNewValue();                
+                if( editLayer != null ){
+                    activated( editLayer.getSchema() );
+                }
+                else {
+                    activated( null ); // show default page
+                }
+            }
+        }
+    };
+
+    public FeatureView(){
+    }
+    
     @Override
     protected IPage createDefaultPage( PageBook book ) {
+        PropertySheetPage page = new PropertySheetPage();
+        initPage(page);
+        page.createControl(getPageBook());
         
-        final IMap map = ApplicationGIS.getActiveMap();
-        if (map != ApplicationGIS.NO_MAP) {
+        IMap map = ApplicationGIS.getActiveMap();
+        if (map != null && map != ApplicationGIS.NO_MAP) {
             try {
-                PropertySheetPage page = new PropertySheetPage();
-                initPage(page);
-                page.createControl(book);
                 editFeatureChanged(map.getEditManager().getEditFeature());
-                return page;
             } catch (Throwable e) {
                 UiPlugin.log("Default SimpleFeature Editor threw an exception", e); //$NON-NLS-1$
             }
         }
-
-        MessagePage page = new MessagePage();
-        initPage(page);
-        page.createControl(book);
-        page.setMessage("Please select a feature"); //$NON-NLS-1$ return page;
         return page;
-
     }
 
     public void editFeatureChanged( SimpleFeature feature ) {
@@ -81,62 +98,137 @@ public class FeatureView extends AbstractPageBookView<ILayer> {
     }
 
     @Override
-    protected PageRec<ILayer> doCreatePage( ILayer layer ) {
-        // Try to get a IMap
-        IMap map = layer.getMap();
-        if (map == null)
-            return null; // nothing to edit
-
-        IEditManager editManager = map.getEditManager();
-        SimpleFeature element = editManager.getEditFeature();
-        if (element == null)
+    protected PageRec<SimpleFeatureType> doCreatePage( SimpleFeatureType schema ) {
+        if (schema == null)
             return null; // no feature yet
 
         FeaturePanelProcessor panels = ProjectUIPlugin.getDefault().getFeaturePanelProcessor();
-        List<FeaturePanelEntry> avaialble = panels.search(element);
+        List<FeaturePanelEntry> avaialble = panels.search(schema);
 
+        IMap map = ApplicationGIS.getActiveMap();
         if (!avaialble.isEmpty()) {
             MessagePage page = new MessagePage();
+            page.setMessage(schema.getTypeName() + " has " + avaialble.size() + " panels");
+            
             initPage(page);
-            page.setMessage("Found "+avaialble.size()); //$NON-NLS-1$ return page;
-            return new PageRec<ILayer>(layer, page);
-        } else {
-            IPage page = (IPage) new FeaturePage(editManager);
-            page.createControl(getPageBook());
+            page.createControl( getPageBook() );
+
+            return new PageRec<SimpleFeatureType>(schema, page);
+        } else if (map != null) {
+            IPage page = (IPage) new FeaturePage(map.getEditManager());
             initPage((IPageBookViewPage) page);
-            return new PageRec<ILayer>(layer, page);
+            page.createControl(getPageBook());
+            return new PageRec<SimpleFeatureType>(schema, page);
+        } else {
+            MessagePage page = new MessagePage();
+            page.setMessage(schema.getTypeName() + " has no pannels");
+            
+            initPage(page);
+            page.createControl( getPageBook() );
+
+
+            return new PageRec<SimpleFeatureType>(schema, page);
         }
     }
 
     @Override
-    protected void doDestroyPage( ILayer part, PageRec<ILayer> pageRecord ) {
+    protected void doDestroyPage( SimpleFeatureType part, PageRec<SimpleFeatureType> pageRecord ) {
         pageRecord.page.dispose();
     }
+    
+    @Override
+    protected SimpleFeatureType getCurrent( IWorkbenchPart part ) {
+        if (part == null) {
+            return null;
+        }
+        IMap map = (IMap) part.getAdapter(IMap.class);
+        if (map == null) {
+            return null;
+        }
+        IEditManager manager = map.getEditManager();
+        ILayer editLayer = manager.getEditLayer();
+        if( editLayer == null ){
+            return null; // not editing
+        }
+        SimpleFeatureType schema = editLayer.getSchema();
+        SimpleFeatureType schema2 = new AdaptingFeatureType( schema, manager );
+        return schema2;
+    }
 
+    /**
+     * We are interested in grabbing the schema of the current editLayer
+     * (if such a beast is available).
+     * @return SimpleFeatureType that can adapt to it's edit manager if needed
+     */
+    protected SimpleFeatureType getCurrent( ISelection selection ) {
+        IMap map = selection( selection, IMap.class );
+        if( map == null ){
+            return null;
+        }
+        IEditManager manager = map.getEditManager();
+        ILayer editLayer = manager.getEditLayer();
+        if( editLayer == null ){
+            return null; // not editing
+        }
+        SimpleFeatureType schema = editLayer.getSchema();
+        SimpleFeatureType schema2 = new AdaptingFeatureType( schema, manager );
+        return schema2; 
+    }
+    
     /**
      * Will grab the active Map's selected layer, if available as the initial bootstrap part for our
      * feature view.
      */
-    protected ILayer getBootstrapTarget() {
+    protected SimpleFeatureType getBootstrapTarget() {
         IMap map = ApplicationGIS.getActiveMap();
-        if (map == null)
+        if (map == null){
             return null;
-
-        ILayer selectedLayer = map.getEditManager().getSelectedLayer();
-
-        return selectedLayer;
+        }
+        ILayer editLayer = map.getEditManager().getEditLayer();
+        if( editLayer == null ){
+            return null;
+        }
+        return editLayer.getSchema();
     }
 
     /**
      * Only consider the selectedLayer important enough to force a refresh.
      */
-    protected boolean isImportant( ILayer layer ) {
-        if (layer.getMap().getEditManager().getSelectedLayer() == layer) {
+    protected boolean isImportant( SimpleFeatureType schema ) {
+        if( schema == null ) return false;
+
+        if( schema instanceof AdaptingFeatureType){
+            schema = ((AdaptingFeatureType)schema).getObject();
+        }
+        
+        IMap map = ApplicationGIS.getActiveMap();
+        if (map == null) {
+            return false;
+        }
+        ILayer selectedLayer = map.getEditManager().getSelectedLayer();
+        if (schema == selectedLayer.getSchema()) {
             return true;
         }
-        return layer.isVisible();
+        return false;
     }
 
+    protected void listen( boolean listen, IWorkbenchPart part ){
+        if( part == null){
+            return; // we cannot listen to what does not exist
+        }
+        
+        IMap map = (IMap) part.getAdapter( IMap.class );
+        if( map == null ){
+            return; // nothing to attach to
+        }
+        if(listen){
+            map.getEditManager().addListener(editListener);
+        }
+        else {
+            map.getEditManager().removeListener(editListener);
+        }
+    }
+    
     IAdaptable defaultSource = new IAdaptable(){
         @SuppressWarnings("unchecked")
         public Object getAdapter( Class adapter ) {

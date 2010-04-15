@@ -9,8 +9,10 @@ import java.util.Set;
 
 import net.refractions.udig.core.Util;
 import net.refractions.udig.internal.ui.UiPlugin;
+import net.refractions.udig.project.IMap;
 
 import org.eclipse.core.commands.common.EventManager;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -20,6 +22,7 @@ import org.eclipse.jface.viewers.IPostSelectionProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
@@ -29,6 +32,8 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveListener;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPage;
@@ -64,7 +69,7 @@ import org.eclipse.ui.part.ViewPart;
  * @author Jody Garnett
  * @since 1.2.0
  */
-public abstract class AbstractPageBookView<K> extends ViewPart implements IPartListener2 {
+public abstract class AbstractPageBookView<K> extends ViewPart {
     /**
      * The pagebook control, or <code>null</code> if not initialized.
      */
@@ -80,17 +85,6 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
      * <code>PartRec</code>).
      */
     private Map<K, PageRec<K>> mapPartToRec = new HashMap<K, PageRec<K>>();
-
-    /**
-     * Map from pages to view sites Note that view sites were not added to page recs to avoid
-     * breaking binary compatibility with previous builds
-     */
-    // private Map mapPageToSite = new HashMap();
-
-    /**
-     * Map from pages to the number of pageRecs actively associated with a page.
-     */
-    // private Map mapPageToNumRecs = new HashMap();
 
     /**
      * The page rec which provided the current page or <code>null</code>
@@ -144,6 +138,254 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
             viewInPage = page.findViewReference(getViewSite().getId()) != null;
             // getBootstrapPart could return null; but isImportant() can handle null
             activated(getBootstrapTarget());
+        }
+    };
+
+    /**
+     * Used to listen to workbench selection events.
+     * <p>
+     * The workbench part (view or editor) is passed in along with the current value; this is enough
+     * information to:
+     * <ul>
+     * <li>Track an IMap if that is what you are interested in...</li>
+     * <li>Track changes to ILayer if that is what you are interested in ...</li>
+     * </ul>
+     * Do remember to use IAdaptable as chances are the selection is not an actual instance of an
+     * IMap. If you are interested in some aspect of the map (such as map blackboard or EditManager)
+     * you will need to register
+     */
+    ISelectionListener selectionListener = new ISelectionListener(){
+        public void selectionChanged( IWorkbenchPart part, ISelection selection ) {
+            track(part, selection);
+        }
+    };
+
+    IWorkbenchPart currentPart = null;
+
+    /**
+     * Used by subclass to track workbench or selection information as required.
+     * 
+     * @param part
+     * @param selection
+     */
+    public void track( IWorkbenchPart part, ISelection selection ) {
+        K target;
+        if (part != null && currentPart != part) {
+            // check if this is something we should track
+            target = getCurrent(part);
+            boolean canTrack = target != null; // this is the kind of thing we can track
+            if (canTrack) {
+                // okay so we should switch
+                listen(false, currentPart);
+                listen(true, part);
+            }
+        } else {
+            // okay lets try the selection
+            target = getCurrent(selection);
+        }
+
+        if (target == null) {
+            // no change (user is looking at something we don't care about)
+            // Continue to display previous target
+            //
+            showPageRec(defaultPageRec);
+            return;
+        }
+        activated(target);
+    }
+
+    protected <T> T selection( ISelection selection, Class<T> adapter ) {
+        if (selection.isEmpty())
+            return null;
+        if (selection instanceof IStructuredSelection) {
+            IStructuredSelection sel = (IStructuredSelection) selection;
+            for( Iterator< ? > i = sel.iterator(); i.hasNext(); ) {
+                Object value = i.next();
+                if (adapter.isInstance(value)) {
+                    return adapter.cast(value);
+                }
+                if (value instanceof IAdaptable) {
+                    IAdaptable adaptable = (IAdaptable) value;
+                    Object obj = adaptable.getAdapter(adapter);
+                    if (obj != null) {
+                        return adapter.cast(obj);
+                    }
+                }
+            }
+        }
+        return null; // could not find a selection of the requested adapter class
+    }
+
+    /**
+     * Called to control listening to the indicated workbench part.
+     * <p>
+     * You can use this method to attach listeners to any content provided by the site; usually this
+     * is done by adapting to the content you care about: <code>
+     * IMap map = (IMap) part.getAdapter( IMap.class );
+     * if( listen ){
+     *   map.addMapListener( ... );
+     * }
+     * else {
+     *   map.removeMapListener( ... );
+     * }    
+     * </code> Note you do not need to listen to part.getSite().getSelectionProvider() as this is
+     * handled by the ISelectionService.
+     * 
+     * @param listen
+     * @param part
+     */
+    protected abstract void listen( boolean listen, IWorkbenchPart part );
+
+    /**
+     * Listen to the workbench parts change; if the part can adapt to our target using getCurrent(
+     * part ) we will latch onto it.
+     */
+    private IPartListener2 partListener = new IPartListener2(){
+        public void partActivated( IWorkbenchPartReference partRef ) {
+            IWorkbenchPart part = partRef.getPart(false);
+            partActivated(part);
+        }
+        public void partActivated( IWorkbenchPart part ) {
+            if (part == null) {
+                return;
+            }
+            K target = getCurrent(part);
+            if (target != null) {
+                activated(target);
+            }
+        }
+        /**
+         * Calls broughtToTop if we can determine the target for the provided workbench part.
+         */
+        public void partBroughtToTop( IWorkbenchPart part ) {
+            K target = getCurrent(part);
+            if (target != null) {
+                activated(target);
+            }
+        }
+
+        public void partClosed( IWorkbenchPart part ) {
+            if (part == null)
+                return;
+            K target = getCurrent(part);
+            if (target != null) {
+                closed(target);
+            }
+        }
+
+        public void partClosed( IWorkbenchPartReference partRef ) {
+            IWorkbenchPart part = partRef.getPart(false);
+            if (part != null) {
+                K target = getCurrent(part);
+                if (target != null) {
+                    closed(target);
+                }
+            }
+        }
+
+        public void partBroughtToTop( IWorkbenchPartReference partRef ) {
+            K target = getCurrent(partRef);
+            if (target != null) {
+                broughtToTop(target);
+            }
+        }
+
+        public void partDeactivated( IWorkbenchPartReference partRef ) {
+            K target = getCurrent(partRef);
+            if (target != null) {
+                deactivated(target);
+            }
+        }
+
+        public void partHidden( IWorkbenchPartReference partRef ) {
+            K target = getCurrent(partRef);
+            if (target != null) {
+                hidden(target);
+            }
+        }
+
+        /**
+         * Make sure that the part is not considered if it is hidden.
+         * 
+         * @param part
+         * @since 3.5
+         */
+        protected void partVisible( IWorkbenchPart part ) {
+            if (part == null || part != hiddenPart) {
+                return;
+            }
+            partActivated(part);
+        }
+
+        /**
+         * Make sure that the part is not considered if it is hidden.
+         * 
+         * @param part
+         * @since 3.5
+         */
+        protected void partHidden( IWorkbenchPart part ) {
+            if (part == null || part != getCurrentContributingPart()) {
+                return;
+            }
+            // if we've minimized the editor stack, that's no reason to
+            // drop our content
+            if (getSite().getPage().getPartState(getSite().getPage().getReference(part)) == IWorkbenchPage.STATE_MINIMIZED) {
+                return;
+            }
+            // if we're switching from a part source in our own stack,
+            // we also don't want to clear our content.
+            if (part instanceof IViewPart) {
+                final IViewPart[] viewStack = getSite().getPage().getViewStack(
+                        AbstractPageBookView.this);
+                if (containsPart(viewStack, part)) {
+                    return;
+                }
+            }
+            hiddenPart = part;
+            showPageRec(defaultPageRec);
+        }
+
+        public void partOpened( IWorkbenchPartReference partRef ) {
+            K target = getCurrent(partRef);
+            if (target != null) {
+                opened(target);
+            }
+        }
+
+        public void partVisible( IWorkbenchPartReference partRef ) {
+            K target = getCurrent(partRef);
+            if (target != null) {
+                visible(target);
+            }
+        }
+
+        public void partInputChanged( IWorkbenchPartReference partRef ) {
+            K target = getCurrent(partRef);
+            if (target != null) {
+                inputChanged(target);
+            }
+        }
+
+        /**
+         * Calls deactivated if possible from the provided workbench part.
+         * 
+         * @param part
+         */
+        public void partDeactivated( IWorkbenchPart part ) {
+            K target = getCurrent(part);
+            if (target != null) {
+                deactivated(target);
+            }
+        }
+
+        /**
+         * Call to opened if possible
+         */
+        public void partOpened( IWorkbenchPart part ) {
+            K target = getCurrent(part);
+            if (target != null) {
+                opened(target);
+            }
         }
     };
 
@@ -356,7 +598,6 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
      * Creates a new pagebook view.
      */
     protected AbstractPageBookView() {
-        super();
     }
 
     /**
@@ -418,7 +659,9 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
             // count = new Integer(0);
         } else {
             site = (IPageSite) rec.pageSite;
-            rec.subActionBars = (SubActionBars) site.getActionBars();
+            if (site != null) {
+                rec.subActionBars = (SubActionBars) site.getActionBars();
+            }
             // count = ((Integer) mapPageToNumRecs.get(rec.page));
         }
         // mapPageToNumRecs.put(rec.page, new Integer(count.intValue() + 1));
@@ -462,7 +705,10 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
         showPageRec(defaultPageRec);
 
         // Listen to part activation events.
-        getSite().getPage().addPartListener(this);
+        getSite().getPage().addPartListener(partListener);
+        ISelectionService workbenchSelection = (ISelectionService) getSite().getService(
+                ISelectionService.class);
+        workbenchSelection.addPostSelectionListener(selectionListener);
         showBootstrapPart();
 
         getSite().getPage().getWorkbenchWindow().addPerspectiveListener(perspectiveListener);
@@ -477,7 +723,10 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
         getSite().getPage().getWorkbenchWindow().removePerspectiveListener(perspectiveListener);
 
         // stop listening to part activation
-        getSite().getPage().removePartListener(this);
+        getSite().getPage().removePartListener(partListener);
+        ISelectionService workbenchSelection = (ISelectionService) getSite().getService(
+                ISelectionService.class);
+        workbenchSelection.addPostSelectionListener(selectionListener);
 
         // Deref all of the pages.
         activeRec = null;
@@ -487,7 +736,8 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
             defaultPageRec.page.dispose();
             defaultPageRec = null;
         }
-        Map<K, PageRec<K>> clone = (Map<K, PageRec<K>>) ((HashMap<K, PageRec<K>>) mapPartToRec).clone();
+        Map<K, PageRec<K>> clone = (Map<K, PageRec<K>>) ((HashMap<K, PageRec<K>>) mapPartToRec)
+                .clone();
         Iterator<PageRec<K>> itr = clone.values().iterator();
         while( itr.hasNext() ) {
             PageRec<K> rec = itr.next();
@@ -621,9 +871,19 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
      * @param part WorkbenchPart
      * @return target if available, or null otherwise.
      */
-    protected K getCurrent( IWorkbenchPart part ) {
-        return null;
-    }
+    protected abstract K getCurrent( IWorkbenchPart part );
+
+    protected abstract K getCurrent( ISelection selection );
+
+    /**
+     * Return the target for the partRef.
+     * <p>
+     * Default implementation will delegate to getCurrent( IWorkbenchPart) if the part is currently
+     * restored, if not returning null resulting in the default page being displayed.
+     * 
+     * @param partRef
+     * @return Target for the partRef
+     */
     protected K getCurrent( IWorkbenchPartReference partRef ) {
         IWorkbenchPart part = partRef.getPart(false);
         if (part == null)
@@ -762,19 +1022,6 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
         }
     }
 
-    public void partActivated( IWorkbenchPartReference partRef ) {
-        IWorkbenchPart part = partRef.getPart(false);
-        partActivated(part);
-    }
-    public void partActivated( IWorkbenchPart part ) {
-        if (part != null) {
-            K target = getCurrent(part);
-            if (target != null) {
-                activated(target);
-            }
-        }
-    }
-
     /**
      * Default implementation does nothing
      * 
@@ -782,35 +1029,6 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
      */
     public void broughtToTop( K target ) {
 
-    }
-
-    /**
-     * Calls broughtToTop if we can determine the target for the provided workbench part.
-     */
-    public void partBroughtToTop( IWorkbenchPart part ) {
-        K target = getCurrent(part);
-        if (target != null) {
-            activated(target);
-        }
-    }
-
-    public void partClosed( IWorkbenchPart part ) {
-        if (part == null)
-            return;
-        K target = getCurrent(part);
-        if (target != null) {
-            closed(target);
-        }
-    }
-
-    public void partClosed( IWorkbenchPartReference partRef ) {
-        IWorkbenchPart part = partRef.getPart(false);
-        if (part != null) {
-            K target = getCurrent(part);
-            if (target != null) {
-                closed(target);
-            }
-        }
     }
 
     /**
@@ -838,33 +1056,13 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
     public void deactivated( K target ) {
         // Do nothing.
     }
-    /**
-     * Calls deactivated if possible from the provided workbench part.
-     * 
-     * @param part
-     */
-    public void partDeactivated( IWorkbenchPart part ) {
-        K target = getCurrent(part);
-        if (target != null) {
-            deactivated(target);
-        }
-    }
+
     /**
      * Called when an opened workbench part can provided a target.
      * 
      * @param target
      */
     public void opened( K target ) {
-    }
-
-    /**
-     * Call to opened if possible
-     */
-    public void partOpened( IWorkbenchPart part ) {
-        K target = getCurrent(part);
-        if (target != null) {
-            opened(target);
-        }
     }
 
     /**
@@ -877,13 +1075,15 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
         bars.clearGlobalActionHandlers();
 
         // Set new actions.
-        Map newActionHandlers = activeRec.subActionBars.getGlobalActionHandlers();
-        if (newActionHandlers != null) {
-            Set keys = newActionHandlers.entrySet();
-            Iterator iter = keys.iterator();
-            while( iter.hasNext() ) {
-                Map.Entry entry = (Map.Entry) iter.next();
-                bars.setGlobalActionHandler((String) entry.getKey(), (IAction) entry.getValue());
+        if( activeRec.subActionBars != null ){
+            Map newActionHandlers = activeRec.subActionBars.getGlobalActionHandlers();
+            if (newActionHandlers != null) {
+                Set keys = newActionHandlers.entrySet();
+                Iterator iter = keys.iterator();
+                while( iter.hasNext() ) {
+                    Map.Entry entry = (Map.Entry) iter.next();
+                    bars.setGlobalActionHandler((String) entry.getKey(), (IAction) entry.getValue());
+                }
             }
         }
     }
@@ -954,7 +1154,7 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
             book.setFocus();
         }
         // then set focus on the page, if any
-        if (activeRec != null) {
+        if (activeRec != null && activeRec.page != null) {
             activeRec.page.setFocus();
         }
     }
@@ -1020,24 +1220,26 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
         // Hide old page.
         if (activeRec != null) {
             IPageSite pageSite = activeRec.pageSite;
-
-            activeRec.subActionBars.deactivate();
+            if (activeRec.subActionBars != null) {
+                activeRec.subActionBars.deactivate();
+            }
 
             // deactivate the nested services
             if (pageSite instanceof PageSite) {
                 ((PageSite) pageSite).deactivate();
             }
             // remove our selection listener
-            ISelectionProvider provider = pageSite.getSelectionProvider();
-            if (provider != null) {
-                provider.removeSelectionChangedListener(selectionChangedListener);
-                if (provider instanceof IPostSelectionProvider) {
-                    ((IPostSelectionProvider) provider)
-                            .removePostSelectionChangedListener(postSelectionListener);
+            if (pageSite != null) {
+                ISelectionProvider provider = pageSite.getSelectionProvider();
+                if (provider != null) {
+                    provider.removeSelectionChangedListener(selectionChangedListener);
+                    if (provider instanceof IPostSelectionProvider) {
+                        ((IPostSelectionProvider) provider)
+                                .removePostSelectionChangedListener(postSelectionListener);
+                    }
                 }
             }
         }
-
         // Show new page.
         activeRec = pageRec;
         Control pageControl = activeRec.page.getControl();
@@ -1047,7 +1249,9 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
             // Verify that the page control is not disposed
             // If we are closing, it may have already been disposed
             book.showPage(pageControl);
-            activeRec.subActionBars.activate();
+            if (activeRec.subActionBars != null) {
+                activeRec.subActionBars.activate();
+            }
             refreshGlobalActionHandlers();
 
             // activate the nested services
@@ -1079,33 +1283,6 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
     }
 
     /**
-     * Make sure that the part is not considered if it is hidden.
-     * 
-     * @param part
-     * @since 3.5
-     */
-    protected void partHidden( IWorkbenchPart part ) {
-        if (part == null || part != getCurrentContributingPart()) {
-            return;
-        }
-        // if we've minimized the editor stack, that's no reason to
-        // drop our content
-        if (getSite().getPage().getPartState(getSite().getPage().getReference(part)) == IWorkbenchPage.STATE_MINIMIZED) {
-            return;
-        }
-        // if we're switching from a part source in our own stack,
-        // we also don't want to clear our content.
-        if (part instanceof IViewPart) {
-            final IViewPart[] viewStack = getSite().getPage().getViewStack(this);
-            if (containsPart(viewStack, part)) {
-                return;
-            }
-        }
-        hiddenPart = part;
-        showPageRec(defaultPageRec);
-    }
-
-    /**
      * @param viewStack
      * @param part
      * @return <code>true</code> if the part is in the viewStack
@@ -1122,66 +1299,11 @@ public abstract class AbstractPageBookView<K> extends ViewPart implements IPartL
         return false;
     }
 
-    /**
-     * Make sure that the part is not considered if it is hidden.
-     * 
-     * @param part
-     * @since 3.5
-     */
-    protected void partVisible( IWorkbenchPart part ) {
-        if (part == null || part != hiddenPart) {
-            return;
-        }
-        partActivated(part);
-    }
-
-    public void partBroughtToTop( IWorkbenchPartReference partRef ) {
-        K target = getCurrent(partRef);
-        if (target != null) {
-            broughtToTop(target);
-        }
-    }
-
-    public void partDeactivated( IWorkbenchPartReference partRef ) {
-        K target = getCurrent(partRef);
-        if (target != null) {
-            deactivated(target);
-        }
-    }
-
-    public void partHidden( IWorkbenchPartReference partRef ) {
-        K target = getCurrent(partRef);
-        if (target != null) {
-            hidden(target);
-        }
-    }
-
     protected void hidden( K target ) {
-    }
-
-    public void partInputChanged( IWorkbenchPartReference partRef ) {
-        K target = getCurrent(partRef);
-        if (target != null) {
-            inputChanged(target);
-        }
     }
 
     protected void inputChanged( K target ) {
 
-    }
-
-    public void partOpened( IWorkbenchPartReference partRef ) {
-        K target = getCurrent(partRef);
-        if (target != null) {
-            opened(target);
-        }
-    }
-
-    public void partVisible( IWorkbenchPartReference partRef ) {
-        K target = getCurrent(partRef);
-        if (target != null) {
-            visible(target);
-        }
     }
 
     protected void visible( K target ) {
