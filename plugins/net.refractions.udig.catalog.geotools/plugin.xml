@@ -24,6 +24,11 @@
             id="net.refractions.udig.catalog.geotools.connection.dataStorePage"
             name="DataStore">
       </wizardPage>
+      <wizardPage
+            class="net.refractions.udig.catalog.geotools.data.DataStoreParameterPage"
+            id="net.refractions.udig.catalog.geotools.connection.dataStoreParametersPage"
+            name="DataStore Parameters">
+      </wizardPage>
    </extension>
    <extension
          point="net.refractions.udig.catalog.ui.fileFormat">
