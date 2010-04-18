@@ -172,9 +172,11 @@ public class DataStoreConnectionPage extends AbstractUDIGImportPage implements U
         });
         ScrolledComposite scroll = new ScrolledComposite( composite, SWT.V_SCROLL|SWT.BORDER);
         scroll.setLayoutData("growx");
+        scroll.setAlwaysShowScrollBars(true);
         scroll.setExpandHorizontal(true);
         scroll.setExpandVertical(true);
-        scroll.setMinHeight(100);
+        scroll.setMinSize(300,100);
+        
         viewer = new ListViewer(scroll, SWT.SINGLE);
         scroll.setContent( viewer.getControl()); // scroll this thing!
         viewer.setLabelProvider(labelProvider);
