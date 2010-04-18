@@ -174,10 +174,12 @@ public class CatalogImport {
     protected WorkflowWizard createWorkflowWizard(Workflow workflow, Map<Class<? extends State>, WorkflowWizardPageProvider> map) {
 		return new CatalogImportWizard(workflow,map);
 	}
-	
+	/**
+	 * Workflow wizard going through the motions of importing a new IService into the catalog.
+	 */
 	public static class CatalogImportWizard extends WorkflowWizard {
 
-        
+        /** The provided workflow is used for import */
 		public CatalogImportWizard( Workflow workflow,
                 Map<Class< ? extends State>, WorkflowWizardPageProvider> map ) {
             super(workflow, map);

@@ -19,7 +19,9 @@ import java.io.IOException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * A state that tracks intermediate pages.  They have no purpose beyond matching the state of a wizard page.
+ * A state that tracks intermediate pages.
+ * <p>
+ * They have no purpose beyond matching the state of a wizard page.
  * 
  * @author jesse
  * @since 1.1.0

@@ -11,7 +11,15 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Descriptor for net.refractions.udig.catalog.ui.connectionFactory extensions.
- * 
+ * <p>
+ * The initial data source selection state/page allows the user to choose a wizard
+ * to go forward with. Each available wizard is represented as one of these
+ * UDIGConnectionFactoryDescriptor; with the list of wizardPages defined by the
+ * extension point.
+ * </p>
+ * This is also used to support lazy loading of the UDIGConnectionFactory so we can
+ * put it off until needed.
+ * </p>
  * @author Justin Deoliveira,Refractions Research Inc.,jdeolive@refractions.net
  */
 public class UDIGConnectionFactoryDescriptor {
@@ -27,12 +35,21 @@ public class UDIGConnectionFactoryDescriptor {
         wizardPages = ConnectionFactoryManager.instance().getPageDescriptor(factoryDescriptor);
     }
 
+    /**
+     * The connection factory being used to create an IService on the successful
+     * completion of this wizard.
+     *
+     * @return connection factory used to create an IService
+     */
     public UDIGConnectionFactory getConnectionFactory() {
         return factory;
     }
 
     /**
      * Return the wizard page for the provided index
+     * <p>
+     * The page will be initialized with the label, description and banner defined
+     * for it in the extension point.
      * 
      * @param pageIndex of the page to return
      * @return the wizard page for the provided index
@@ -47,10 +64,22 @@ public class UDIGConnectionFactoryDescriptor {
         return page;
     }
 
+    /**
+     * Name for the indicated wizard page
+     *
+     * @param pageIndex
+     * @return name for the indicated wizard page
+     */
     public String getLabel( int pageIndex ) {
         return wizardPages.get(pageIndex).getConfigurationElement().getAttribute("name"); //$NON-NLS-1$
     }
 
+    /**
+     * Description for the indicated wizard page
+     *
+     * @param pageIndex
+     * @return description for the indicated wizard page
+     */
     public String getDescription( int pageIndex ) {
         String desc = wizardPages.get(pageIndex).getConfigurationElement().getAttribute(
                 "description"); //$NON-NLS-1$
@@ -60,6 +89,11 @@ public class UDIGConnectionFactoryDescriptor {
         return desc.trim();
     }
 
+    /**
+     * Id for this connection factory; mostly used in reporting problems.
+     *
+     * @return id for this connection factory
+     */
     public String getId() {
 	    // check for backwards compatibility
 		IConfigurationElement configurationElement = wizardPages.get(0).getConfigurationElement();
@@ -70,6 +104,13 @@ public class UDIGConnectionFactoryDescriptor {
          }
         return deprecatedId; //$NON-NLS-1$
 	}
+    
+    /**
+     * Icon for the indicated wizard page
+     *
+     * @param pageIndex
+     * @return icon for the indicated wizard page
+     */
     public ImageDescriptor getImage( int pageIndex ) {
         String ns = wizardPages.get(pageIndex).getConfigurationElement().getNamespaceIdentifier();
         String banner = wizardPages.get(pageIndex).getConfigurationElement().getAttribute("icon"); //$NON-NLS-1$
@@ -80,6 +121,12 @@ public class UDIGConnectionFactoryDescriptor {
         return AbstractUIPlugin.imageDescriptorFromPlugin(ns, banner);
     }
 
+    /**
+     * The Banner for the indicated wizard page.
+     *
+     * @param pageIndex
+     * @return Banner for the indicated wizard page
+     */
     public ImageDescriptor getDescriptionImage( int pageIndex ) {
         String ns = wizardPages.get(pageIndex).getConfigurationElement().getNamespaceIdentifier();
         String banner = wizardPages.get(pageIndex).getConfigurationElement().getAttribute("banner"); //$NON-NLS-1$
@@ -89,7 +136,15 @@ public class UDIGConnectionFactoryDescriptor {
 
         return AbstractUIPlugin.imageDescriptorFromPlugin(ns, banner);
     }
-
+    
+    /**
+     * Retrieves the "type" attribute for the indicated wizard page.
+     * <p>
+     * Note: "type" does not seem to be defined in the extension point schema so
+     * I am unsure if this method is in use.
+     * @param pageIndex
+     * @return Returns the type if availale, appears to always be null
+     */
     public String getServiceType( int pageIndex ) {
         return wizardPages.get(pageIndex).getConfigurationElement().getAttribute("type"); //$NON-NLS-1$
     }

@@ -5,8 +5,11 @@ import java.util.List;
 
 import net.refractions.udig.core.internal.ExtensionPointProcessor;
 import net.refractions.udig.core.internal.ExtensionPointUtil;
+import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.ui.IFeaturePanel;
+import net.refractions.udig.project.ui.IFeaturePanelCheck;
+import net.refractions.udig.project.ui.IFeatureSite;
 import net.refractions.udig.project.ui.internal.FeatureTypeMatch;
 
 import org.eclipse.core.runtime.CoreException;
@@ -14,6 +17,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Utility class assisting in processing the feature panel extension point.
@@ -51,10 +55,10 @@ public class FeaturePanelProcessor {
      * @param element
      * @return List matching FeaturePanelEntry
      */
-    public List<FeaturePanelEntry> search( Object element ){
+    public List<FeaturePanelEntry> search( Object element, IFeatureSite site ){
         List<FeaturePanelEntry> search = new ArrayList<FeaturePanelEntry>();
         for( FeaturePanelEntry entry : featurePanelList ){
-            if( entry.isMatch( element )){
+            if( entry.isChecked( site )){
                 search.add( entry );
             }
         }
@@ -103,7 +107,31 @@ public class FeaturePanelProcessor {
                 matcher = FeatureTypeMatch.ALL;
             }
         }
+        /**
+         * We are going to check against the FeaturePanelCheck if available.
+         *
+         * @param site
+         * @return true if the form should be used
+         */
+        public boolean isChecked( IFeatureSite site ) {
+            IFeaturePanelCheck check = getFeaturePanelCheck();
+            if( check != null && check.check( site )){
+                return true; // this one works!
+            }
+            return false;
+        }
 
+        /** Default implementation just checks schema implementation */
+        private IFeaturePanelCheck getFeaturePanelCheck() {
+            return new IFeaturePanelCheck(){
+                public boolean check( IFeatureSite site ) {
+                    ILayer editLayer = site.getEditManager().getEditLayer();
+                    SimpleFeatureType featureType = editLayer.getSchema();                    
+                    return isMatch( featureType );
+                }
+            };
+        }
+        
         public String getId() {
             return id;
         }

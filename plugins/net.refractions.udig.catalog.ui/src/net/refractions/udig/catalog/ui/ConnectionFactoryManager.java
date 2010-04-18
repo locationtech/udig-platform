@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.refractions.udig.catalog.CatalogPlugin;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -22,13 +24,32 @@ import org.eclipse.core.runtime.Platform;
  * @author jeichar
  */
 public class ConnectionFactoryManager {
+    /**
+     * Connection factory to the list of wizard pages providing connection information.
+     * @see #pageToFactory
+     */
 	Map<Descriptor<UDIGConnectionFactory>, List<Descriptor<UDIGConnectionPage>>> factoryToPage=
 		new HashMap<Descriptor<UDIGConnectionFactory>, List<Descriptor<UDIGConnectionPage>>>();
+	
+	/**
+	 * Map of wizard pages (a list of one or more, to the connection factory responsible for them).
+	 * <p>
+	 * Not sure I see the need for a List here, as it compicates normal lookup.
+	 * @see #factoryToPage
+	 */
 	Map<List<Descriptor<UDIGConnectionPage>>, Descriptor<UDIGConnectionFactory>> pageToFactory=
 		new HashMap<List<Descriptor<UDIGConnectionPage>>, Descriptor<UDIGConnectionFactory>>();
+	/**
+	 * List of avaialble UDIGConnectionFactory descriptors.
+	 */
 	List<UDIGConnectionFactoryDescriptor> descriptors;
+	
+	/** Singleton instance */
 	private static ConnectionFactoryManager manager;
 	
+	/**
+	 * Will process the extension point when first constructed.
+	 */
 	protected ConnectionFactoryManager() {
 		IExtension[] extension = Platform.getExtensionRegistry().getExtensionPoint(UDIGConnectionFactory.XPID).getExtensions();
 		
@@ -54,6 +75,11 @@ public class ConnectionFactoryManager {
 		}
 	}
 	
+	/**
+	 * Access to connection factory manager singleton.
+	 *
+	 * @return connection factory manager
+	 */
 	public static synchronized ConnectionFactoryManager instance(){
 		if (manager == null) {
 			manager = new ConnectionFactoryManager();
@@ -62,6 +88,13 @@ public class ConnectionFactoryManager {
 		return manager;
 	}
 
+	/**
+	 * Look up list of pages associated with the indicated factory.
+	 *
+	 * @param factory
+	 * @return List of wizard pages for the provided factory
+	 * @throws CoreException
+	 */
 	public List<Descriptor<UDIGConnectionPage>> getPageDescriptor(Descriptor<UDIGConnectionFactory> factory) throws CoreException{
 		return factoryToPage.get(factory);
 	}
@@ -70,14 +103,28 @@ public class ConnectionFactoryManager {
 //		return pageToFactory.get(page);
 //	}
 	
+	/** Access to List of wizard pages */
 	public Collection<List<Descriptor<UDIGConnectionPage>>> getPages(){
 		return factoryToPage.values();
 	}
 	
+	/**
+	 * Access to list of available connection factories.
+	 * <p>
+	 * Note descriptor is returned to allow for lazy loading
+	 * @return list of available connection factories
+	 */
 	public Collection<Descriptor<UDIGConnectionFactory>> getFactories(){
 		return factoryToPage.keySet();
 	}
-
+	/**
+     * Access to list of available connection factories (sorted by title).
+     * <p>
+     * A more useful/formal UDIGConnectionFactoryDescriptor is provided this time
+     * with additional methods to query assocaited wizard information.
+     * @see #getFactories()
+     * @return list of available connection factories
+     */
 	public synchronized List<UDIGConnectionFactoryDescriptor> getConnectionFactoryDescriptors() {
 		if (descriptors == null) {
 			descriptors = new ArrayList<UDIGConnectionFactoryDescriptor>();
@@ -141,11 +188,14 @@ public class ConnectionFactoryManager {
 		@SuppressWarnings("unchecked") 
 		public synchronized T getConcreteInstance() throws CoreException{
 			if( instance==null ){
-			    String toLoad = element.getAttribute( classAttribute );
 			    try {
 			        instance=(T) element.createExecutableExtension( classAttribute );
 			    }
-			    catch( CoreException eek){			        
+			    catch( CoreException eek){
+			        if(CatalogPlugin.getDefault().isDebugging()){
+			            String toLoad = element.getAttribute( classAttribute );
+	                    System.out.println("Unable to load:"+toLoad+":"+eek);   
+	                }
 			        throw eek;
 			    }
 			}

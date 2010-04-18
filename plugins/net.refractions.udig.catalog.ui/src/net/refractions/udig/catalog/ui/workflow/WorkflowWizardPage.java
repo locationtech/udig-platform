@@ -11,7 +11,11 @@ import org.eclipse.jface.wizard.WizardPage;
  * input is needed - at that point we can pop open the correct wizard page.
  */
 public abstract class WorkflowWizardPage extends WizardPage {
-
+    /**
+     * State used to perform the function of this wizard
+     * page during DragNDrop; in the event of failure
+     * this wizard page will be shown.
+     */
 	State state;
 	
 	protected WorkflowWizardPage(
@@ -23,15 +27,31 @@ public abstract class WorkflowWizardPage extends WizardPage {
     protected WorkflowWizardPage(String pageName) {
         super(pageName);
     }
-    	
+    
+    /**
+     * State used to perform the function of this wizard page
+     * during DragNDrop; in the event of failure
+     * this wizard page will be shown to allow the user
+     * to complete the tasks manually.
+     *
+     * @return State for this wizard page
+     */
 	public State getState() {
 		return state;
 	}
 	
+	/**
+	 * Pass in the state for this wizard page.
+	 *
+	 * @param state
+	 */
 	public void setState(State state) {
 		this.state = state;
 	}
 	
+	/**
+	 * Specifically access the WorkflowWizard containing this page.
+	 */
     @Override
     public WorkflowWizard getWizard() {
         return (WorkflowWizard) super.getWizard();

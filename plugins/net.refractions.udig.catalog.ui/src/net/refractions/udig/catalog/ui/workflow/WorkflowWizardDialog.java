@@ -51,9 +51,9 @@ public class WorkflowWizardDialog extends WizardDialog implements Listener {
     @Override
     protected void nextPressed() {
         // if there are no more states, do nothing
-        if (getWorkflowWizard().getWorkflow().isFinished())
+        if (getWorkflowWizard().getWorkflow().isFinished()){
             return;
-
+        }
         if( !getCurrentPage().leavingPage() ){
             return;
         }

@@ -1,12 +1,18 @@
 package net.refractions.udig.tutorials.featureeditor;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import net.miginfocom.swt.MigLayout;
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.CompositeCommand;
 import net.refractions.udig.project.command.factory.EditCommandFactory;
 import net.refractions.udig.project.ui.IFeaturePanel;
 import net.refractions.udig.project.ui.IFeatureSite;
 import net.refractions.udig.project.ui.tool.IToolContext;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -136,8 +142,9 @@ public class CountryFeaturePanel extends IFeaturePanel {
 
 	@Override
 	public void createPartControl(Composite parent) {
-		parent.setLayout(new MigLayout("", "[right]10[left, grow][min!][min!]",
+	    parent.setLayout(new MigLayout("", "[right]10[left, grow][min!][min!]",
 				"30"));
+		
 		// SWT Widgets
 		Label label = new Label(parent, SWT.SHADOW_IN);
 		label.setText("Country:");

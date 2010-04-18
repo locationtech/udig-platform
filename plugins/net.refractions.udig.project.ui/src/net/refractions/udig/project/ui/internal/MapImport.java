@@ -65,6 +65,9 @@ public class MapImport extends CatalogImport {
         return new MapImportWizard(workflow, map);
     }
 
+    /**
+     * Provided workflow is used to add Data to the map.
+     */
     protected class MapImportWizard extends CatalogImport.CatalogImportWizard {
 
         public MapImportWizard( Workflow workflow,

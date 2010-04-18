@@ -22,10 +22,12 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -51,6 +53,8 @@ import net.refractions.udig.catalog.ui.UDIGConnectionPage;
 
 /**
  * Wizard page constructed based on datastore factory params.
+ * <p>
+ * This wizard page allows the user to choose a factory for use by the next page.
  * 
  * @author Jody Garnett
  * @since 1.2.0
@@ -59,7 +63,10 @@ public class DataStoreConnectionPage extends AbstractUDIGImportPage implements U
 
     private static final String DEFAULT_PROMPT = "Choose a data store you wish to connect to.";
     private static final String TYPE_FILTER_TEXT = "type filter text";
-
+    
+    /** Currently selected factory */
+    protected DataAccessFactory factory = null;
+    
     public class DataStoreLabelProvider extends LabelProvider {
         @Override
         public String getText( Object element ) {
@@ -100,12 +107,13 @@ public class DataStoreConnectionPage extends AbstractUDIGImportPage implements U
             search = search.toUpperCase();
             if( factory.getDisplayName().toUpperCase().contains(search)||
                     factory.getDescription().toUpperCase().contains(search)){
-                System.out.println("Search:<"+search+"> "+factory.getDisplayName());
+                // System.out.println("Search:<"+search+"> "+factory.getDisplayName());
                 return true; // this one is okay
             }
             return false; // not included
         }
     };
+    
     private ISelectionChangedListener listener = new ISelectionChangedListener(){        
         public void selectionChanged( SelectionChangedEvent event ) {
             if( event.getSelection() instanceof IStructuredSelection){
@@ -124,9 +132,16 @@ public class DataStoreConnectionPage extends AbstractUDIGImportPage implements U
     };
 
     public DataAccessFactory getFactory(){
-        IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-        if( selection.isEmpty() ) return null;
-        return (DataAccessFactory) selection.getFirstElement();
+        if( viewer != null && !viewer.getControl().isDisposed()){
+            IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+            if( selection.isEmpty() ) {
+                factory = null;
+            }
+            else {
+                factory = (DataAccessFactory) selection.getFirstElement();
+            }
+        }
+        return factory;
     }
     
     public DataStoreConnectionPage() {
@@ -155,8 +170,13 @@ public class DataStoreConnectionPage extends AbstractUDIGImportPage implements U
             public void keyPressed( KeyEvent e ) {
             }
         });
-        viewer = new ListViewer(composite, SWT.V_SCROLL|SWT.BORDER|SWT.SINGLE);
-        viewer.getControl().setLayoutData("growx,growy");
+        ScrolledComposite scroll = new ScrolledComposite( composite, SWT.V_SCROLL|SWT.BORDER);
+        scroll.setLayoutData("growx");
+        scroll.setExpandHorizontal(true);
+        scroll.setExpandVertical(true);
+        scroll.setMinHeight(100);
+        viewer = new ListViewer(scroll, SWT.SINGLE);
+        scroll.setContent( viewer.getControl()); // scroll this thing!
         viewer.setLabelProvider(labelProvider);
         viewer.setContentProvider(ArrayContentProvider.getInstance());
 

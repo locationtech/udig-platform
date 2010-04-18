@@ -57,9 +57,9 @@ All communication with the current feature is handled through a FeatureSite ... 
          </documentation>
       </annotation>
       <complexType>
-         <choice>
+         <choice minOccurs="0" maxOccurs="1">
             <element ref="featureType"/>
-            <element ref="attribute" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="checkForm"/>
          </choice>
          <attribute name="name" type="string" use="required">
             <annotation>
@@ -138,10 +138,10 @@ Please do use a good layout manager as the panel may be displayed in a horizonta
          </documentation>
       </annotation>
       <complexType>
-         <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="typeName" minOccurs="0" maxOccurs="1"/>
-            <element ref="attribute" minOccurs="0" maxOccurs="unbounded"/>
-         </sequence>
+         <choice>
+            <element ref="typeName"/>
+            <element ref="attribute" minOccurs="1" maxOccurs="unbounded"/>
+         </choice>
       </complexType>
    </element>
 
@@ -192,6 +192,33 @@ Please do use a good layout manager as the panel may be displayed in a horizonta
                <documentation>
                   name of the featuretype, without the namespace.
                </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="checkForm">
+      <annotation>
+         <documentation>
+            Used to check if the form contribution works on the currently selected editLayer. This facility should be used with care as it will force your contributing plugin to be loaded (indeed checking with featureType is much more efficient).
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Check the feature site to ensure your form is able to operate.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.IFeaturePanelCheck:"/>
+               </appInfo>
             </annotation>
          </attribute>
       </complexType>

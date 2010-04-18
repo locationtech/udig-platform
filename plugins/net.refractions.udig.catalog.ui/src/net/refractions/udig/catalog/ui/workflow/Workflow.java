@@ -6,9 +6,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.internal.Messages;
@@ -19,7 +17,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.swt.widgets.Display;
 
 /**
  * Basically is a state machine. It has a set of states and handles the stepping through the states
@@ -34,10 +31,10 @@ import org.eclipse.swt.widgets.Display;
  */
 public class Workflow {
 
-    /** set of primary states * */
+    /** set of primary states */
     private State[] states;
 
-    /** map of class to objects for states * */
+    /** map of class to objects for states */
     private Map<Class<State>, State> lookup;
 
     /** queue of primary states* */

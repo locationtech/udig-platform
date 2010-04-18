@@ -99,11 +99,12 @@ public class FeatureView extends AbstractPageBookView<SimpleFeatureType> {
 
     @Override
     protected PageRec<SimpleFeatureType> doCreatePage( SimpleFeatureType schema ) {
-        if (schema == null)
+        if (schema == null){
             return null; // no feature yet
-
+        }
         FeaturePanelProcessor panels = ProjectUIPlugin.getDefault().getFeaturePanelProcessor();
-        List<FeaturePanelEntry> avaialble = panels.search(schema);
+        IFeatureSite site = null;
+        List<FeaturePanelEntry> avaialble = panels.search(schema, site);
 
         IMap map = ApplicationGIS.getActiveMap();
         if (!avaialble.isEmpty()) {
