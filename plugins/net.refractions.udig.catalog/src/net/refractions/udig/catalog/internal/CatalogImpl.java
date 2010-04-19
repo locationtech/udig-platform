@@ -256,7 +256,7 @@ public class CatalogImpl extends ICatalog {
         monitor.worked(10);
         try {
             if (possible.isEmpty()) {
-                throw new IOException("Unable to connect to any service supporting "+url);
+                throw new IOException("Unable to connect to any service supporting " + url);
             }
             IProgressMonitor monitor2 = new SubProgressMonitor(monitor, 20);
             monitor2.beginTask("search", possible.size());
@@ -299,12 +299,12 @@ public class CatalogImpl extends ICatalog {
             monitor3.done();
         } finally {
             factory.dispose(possible, new SubProgressMonitor(monitor, 10)); // clean up any unused
-                                                                            // services
+            // services
             monitor.done();
         }
         return null; // unable to connect
     }
-    
+
     /**
      * Implementation uses default service factory to produce a service for the provided connection
      * parameters.
@@ -366,7 +366,7 @@ public class CatalogImpl extends ICatalog {
             monitor3.done();
         } finally {
             factory.dispose(possible, new SubProgressMonitor(monitor, 10)); // clean up any unused
-                                                                            // services
+            // services
             monitor.done();
         }
         return null; // unable to connect
@@ -674,41 +674,41 @@ public class CatalogImpl extends ICatalog {
                 && (bbox == null || bbox.isNull())) {
             return new LinkedList<IResolve>();
         }
-
-        AST ast = null;
-        if (pattern != null && !"".equals(pattern.trim())) //$NON-NLS-1$
-            ast = ASTFactory.parse(pattern);
-
-        // TODO check cuncurrency issues here
-
         List<IResolve> result = new LinkedList<IResolve>();
-        HashSet<IService> tmp = new HashSet<IService>();
-        tmp.addAll(this.services);
+        AST ast = ASTFactory.parse(pattern);
+        if (ast == null) {
+            return result;
+        }
+        HashSet<IService> searchScope = new HashSet<IService>();
+        searchScope.addAll(this.services);
         try {
-            monitor.beginTask(Messages.CatalogImpl_finding, tmp.size() * 10);
-            Iterator<IService> services = tmp.iterator();
-            if (services != null) {
-                while( services.hasNext() ) {
-                    IService service = services.next();
-                    if (check(service, ast)) {
-                        result.add(service);
+            monitor.beginTask(Messages.CatalogImpl_finding, searchScope.size() * 10);
+            SERVICE: for( IService service : searchScope ) {
+                ID serviceID = service.getID();
+                if (check(service, ast)) {
+                    result.add(service);
+                }
+                Iterator< ? extends IGeoResource> resources;
+                SubProgressMonitor submonitor = new SubProgressMonitor(monitor, 10);
+                try {
+                    List< ? extends IGeoResource> members = service.resources(submonitor);
+                    if (members == null) {
+                        continue SERVICE;
                     }
-                    Iterator< ? extends IGeoResource> resources;
-                    SubProgressMonitor submonitor = new SubProgressMonitor(monitor, 10);
-                    try {
-                        List< ? extends IGeoResource> t = service.resources(submonitor);
-                        resources = t == null ? null : t.iterator();
-                        while( resources != null && resources.hasNext() ) {
-                            IGeoResource resource = resources.next();
+                    for( IGeoResource resource : members ) {
+                        ID resoruceID = resource.getID();
+                        try {
                             if (check(resource, ast, bbox)) {
                                 result.add(resource);
                             }
+                        } catch (Throwable t) {
+                            CatalogPlugin.log("Could not search in resource:" + resoruceID, t);
                         }
-                    } catch (IOException e) {
-                        CatalogPlugin.log(null, e);
-                    } finally {
-                        submonitor.done();
                     }
+                } catch (IOException e) {
+                    CatalogPlugin.log("Could not search in service:" + serviceID, e);
+                } finally {
+                    submonitor.done();
                 }
             }
             return result;
@@ -751,8 +751,9 @@ public class CatalogImpl extends ICatalog {
 
     /* check the fields we catre about */
     protected static boolean check( IGeoResource resource, AST pattern ) {
-        if (pattern == null)
+        if (pattern == null) {
             return true;
+        }
         IGeoResourceInfo info;
         try {
             info = (resource == null ? null : resource.getInfo(null));
@@ -760,31 +761,38 @@ public class CatalogImpl extends ICatalog {
             CatalogPlugin.log(null, e);
             info = null;
         }
-        boolean t = false;
-        if (info != null) {
-            if (info.getTitle() != null)
-                t = pattern.accept(info.getTitle());
-            if (!t && info.getName() != null)
-                t = pattern.accept(info.getName());
-            if (!t && info.getKeywords() != null) {
-                String[] keys = info.getKeywords().toArray(new String[0]);
-                for( int i = 0; !t && i < keys.length; i++ )
-                    if (keys[i] != null)
-                        t = pattern.accept(keys[i]);
-            }
-            if (!t && info.getSchema() != null)
-                t = pattern.accept(info.getSchema().toString());
-            if (!t && info.getDescription() != null)
-                t = pattern.accept(info.getDescription());
+        if (info == null) {
+            return false;
         }
-        return t;
+        if (pattern.accept(info.getTitle())) {
+            return true;
+        }
+        if (pattern.accept(info.getName())) {
+            return true;
+        }
+        if (info.getKeywords() != null) {
+            for( String key : info.getKeywords() ) {
+                if (pattern.accept(key)) {
+                    return true;
+                }
+            }
+        }
+        if (info.getSchema() != null && pattern.accept(info.getSchema().toString())) {
+            return true;
+        }
+        if (pattern.accept(info.getDescription())) {
+            return true;
+        }
+        return false;
     }
 
     protected static boolean check( IGeoResource resource, AST pattern, Envelope bbox ) {
-        if (!check(resource, pattern))
+        if (!check(resource, pattern)){
             return false;
-        if (bbox == null || bbox.isNull())
+        }
+        if (bbox == null || bbox.isNull()){
             return true; // no checking here
+        }
         try {
             ReferencedEnvelope bounds = resource.getInfo(null).getBounds();
             return bbox.intersects(bounds);

@@ -33,6 +33,7 @@ import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.Name;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
@@ -137,7 +138,13 @@ class PostgisResourceInfo extends IGeoResourceInfo {
         if( owner.getStatus()==Status.BROKEN || owner.getStatus()==Status.RESTRICTED_ACCESS )
             return null;
         try {
-			return new URI( ft.getName().getNamespaceURI());
+            Name typeName = ft.getName();
+            if( typeName.getNamespaceURI() != null ){
+                return new URI( ft.getName().getNamespaceURI() );
+            }
+            else {
+                return null; // should probably be GML?
+            }
 		} catch (URISyntaxException e) {
 			return null;
 		}

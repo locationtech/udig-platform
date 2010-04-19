@@ -29,6 +29,9 @@ public class ASTFactory {
      * @return AST
      */
     public static AST parse( String str ) {
+        if( str == null || str.trim().length() == 0){
+            return null;
+        }
         List<String> tokens = tokenize(str);
         Stack<AST> s = new Stack<AST>();
         ListIterator<String> li = tokens.listIterator();
@@ -174,6 +177,7 @@ public class ASTFactory {
          * @return
          */
         public boolean accept( String datum ) {
+            if( datum == null ) return false;
             return left != null && right != null && left.accept(datum) && right.accept(datum);
         }
 
@@ -223,6 +227,7 @@ public class ASTFactory {
          * @return
          */
         public boolean accept( String datum ) {
+            if( datum == null ) return false;
             return (right != null && right.accept(datum)) || (left != null && left.accept(datum));
         }
 
@@ -272,6 +277,7 @@ public class ASTFactory {
          * @return
          */
         public boolean accept( String datum ) {
+            if( datum == null ) return false;
             return !(child != null && child.accept(datum));
         }
 
@@ -320,7 +326,6 @@ public class ASTFactory {
          * @return
          */
         public boolean accept( String datum ) {
-            // TODO check this
             return value != null && datum != null
                     && datum.toUpperCase().indexOf(value.toUpperCase()) > -1;
         }
