@@ -1,5 +1,6 @@
 package net.refractions.udig.catalog.geotools.data;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,7 +26,11 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
@@ -41,12 +46,12 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
     private KeyListener listener = new KeyListener(){
         public void keyReleased( KeyEvent e ) {
             Text field = (Text) e.getSource();
-            if( field.isDisposed() ) {
+            if (field.isDisposed()) {
                 return;
             }
-            
+
             Param param = (Param) field.getData();
-            validate( param, field );
+            validate(param, field);
         }
         public void keyPressed( KeyEvent e ) {
         }
@@ -57,12 +62,12 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
     protected boolean validate( Param param, Text field ) {
         try {
             Object value = param.handle(field.getText());
-            if( value == null && param.required ){
+            if (value == null && param.required) {
                 field.setToolTipText("Required");
                 return false;
             }
         } catch (IOException e) {
-            field.setToolTipText( e.getLocalizedMessage() );
+            field.setToolTipText(e.getLocalizedMessage());
             return false;
         }
         return true;
@@ -116,29 +121,20 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         // do the layout thing
         //
         setControl(new Composite(parent, SWT.NONE));
-        getControl().setLayout(new MigLayout("", "[right,pref!]para[grow]", ""));
+        getControl().setLayout(new MigLayout("", "[right,pref!]para[grow]rel[pref!]", ""));
 
         for( Param param : getParameterInfo() ) {
-            String check = param.metadata == null ? "user" : (String) param.metadata
-                    .get(Param.LEVEL);
-            if (check == null) {
-                check = "user";
-            }
-            if (!"user".equals(check)) {
+            if (!"user".equals(param.getLevel())) {
                 continue;
             }
             Text field = addField(getControl(), param);
             fields.put(param, field);
         }
-        Label sepearator = new Label(getControl(), SWT.SEPARATOR);
-        sepearator.setLayoutData("span,wrap");
+        //Label sepearator = new Label(getControl(), SWT.SEPARATOR|SWT.HORIZONTAL);
+        //sepearator.setLayoutData("growx,span,wrap");
         for( Param param : getParameterInfo() ) {
-            String check = param.metadata == null ? "user" : (String) param.metadata
-                    .get(Param.LEVEL);
-            if (check == null) {
-                check = "user";
-            }
-            if (!"advanced".equals(check)) {
+            
+            if (!"advanced".equals(param.getLevel())) {
                 continue;
             }
             Text field = addField(getControl(), param);
@@ -149,49 +145,79 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
     private void listen( boolean listen ) {
         if (listen) {
             for( Text field : fields.values() ) {
-                if( field.isDisposed()){
+                if (field.isDisposed()) {
                     continue;
                 }
                 field.addKeyListener(listener);
             }
         } else {
             for( Text field : fields.values() ) {
-                if( field.isDisposed()){
+                if (field.isDisposed()) {
                     continue;
                 }
                 field.removeKeyListener(listener);
             }
         }
     }
-    
+
     public void dispose() {
-        if( getControl() != null ){
+        if (getControl() != null) {
             listen(false);
             fields.clear();
             fields = null;
         }
         paramFactory = null;
-        if( paramInfo != null){
+        if (paramInfo != null) {
             paramInfo.clear();
             paramInfo = null;
         }
         super.dispose();
     }
-    
-    protected Text addField( Composite parent, Param param ) {
+
+    protected Text addField( final Composite parent, Param param ) {
         Label label = new Label(parent, SWT.RIGHT);
         String name = param.title == null ? param.key : param.title.toString();
         String suffix = param.required ? "*:" : ":";
         label.setText(name + suffix);
 
         Text field;
+        
+        final String EXTENSION = (String) (param.metadata != null ? param.metadata.get(Param.EXT) : null);
+        final Integer LENGTH = (Integer) (param.metadata != null ? param.metadata.get(Param.LENGTH) : null);
+        final Object MIN = (param.metadata != null ? param.metadata.get(Param.MIN) : null);
+        final Object MAX = (param.metadata != null ? param.metadata.get(Param.MAX) : null);
+        
         if (param.isPassword()) {
             field = new Text(parent, SWT.SINGLE | SWT.BORDER | SWT.PASSWORD);
+            field.setLayoutData("span, growx, wrap unrelated");            
+        } else if (File.class.isAssignableFrom(param.type)) {
+            field = new Text(parent, SWT.SINGLE | SWT.BORDER);
+            field.setLayoutData("growx");            
+            Button button = new Button( parent, SWT.DEFAULT );
+            button.setText("Browse");
+            button.setLayoutData("wrap unrelated");
+            final Text target = field;
+            button.addSelectionListener( new SelectionListener(){                
+                public void widgetSelected( SelectionEvent e ) {
+                    FileDialog browse = new FileDialog(parent.getShell(), SWT.OPEN );
+                    if( EXTENSION != null ){
+                        browse.setFilterExtensions( new String[]{ EXTENSION });
+                    }
+                    String path = browse.open();
+                    if( path != null ){
+                        target.setText( path );
+                    }
+                }                
+                public void widgetDefaultSelected( SelectionEvent e ) {
+                    widgetSelected(e);
+                }
+            });
         } else {
             field = new Text(parent, SWT.SINGLE | SWT.BORDER);
+            field.setLayoutData("span, growx, wrap unrelated");            
         }
-        field.setData( param );
-        
+        field.setData(param);
+
         Object value = param.sample;
         if (getParams() != null && getParams().containsKey(param.key)) {
             value = getParams().get(param.key);
@@ -200,7 +226,6 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         if (value != null) {
             field.setText(text);
         }
-        field.setLayoutData("span, growx, wrap");
         return field;
     }
 

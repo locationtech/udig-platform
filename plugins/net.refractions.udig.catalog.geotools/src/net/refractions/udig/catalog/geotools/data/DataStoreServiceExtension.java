@@ -43,6 +43,9 @@ public class DataStoreServiceExtension extends IServiceExtension {
      * </ul>
      */
     public Map<String, Serializable> createParams( URL url ) {
+        if( DataStoreConnectionFactory.DO_NOTHING){
+            return null;
+        }        
         return createDataAcessParameters(url);
     }
 
@@ -172,6 +175,9 @@ public class DataStoreServiceExtension extends IServiceExtension {
      * @param params ConnectionParameters
      */
     public IService createService( URL providedId, Map<String, Serializable> params ) {
+        if( DataStoreConnectionFactory.DO_NOTHING){
+            return null;
+        }
         Iterator<DataAccessFactory> available = DataAccessFinder.getAvailableDataStores();
         while( available.hasNext() ) {
             DataAccessFactory factory = available.next();
