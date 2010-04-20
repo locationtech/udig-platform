@@ -12,14 +12,17 @@ import java.util.Map;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IRepository;
 import net.refractions.udig.catalog.IService;
+import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.geotools.Activator;
 import net.refractions.udig.catalog.internal.ServiceFactoryImpl;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataAccess;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.data.postgis.VersionedPostgisDataStore;
+import org.geotools.data.postgis.VersionedPostgisDataStoreFactory;
 import org.geotools.data.postgis.WrappingPostgisFeatureSource;
 import org.geotools.feature.NameImpl;
 import org.junit.BeforeClass;
@@ -42,7 +45,7 @@ public class VersionedPostgisDataStoreService {
     private static Activator activator;
     private static ServiceFactoryImpl serviceFactory;
     private static IRepository local;
-    private VersionedPostgisUtils.Fixture f;
+    private FixtureUtils.Fixture f;
     
     @BeforeClass
     public static void onlyOnce() {
@@ -62,16 +65,12 @@ public class VersionedPostgisDataStoreService {
     @Test
     public void testDataStoreServiceExtension() throws Exception {
         // DataStoreServiceExtension extension = new DataStoreServiceExtension();
-        f = VersionedPostgisUtils.newFixture("test-data/versioned.properties");
+        f = FixtureUtils.newFixture("test-data/versioned.properties");
         DataStoreServiceExtension serviceExtension = serviceFactory.serviceImplementation(DataStoreServiceExtension.class);
         
-//        URL target = VersionedPostgisDataStoreService.class.getResource("test-data/sample_data.properties");
         assertNotNull("Fixture created", f);
-//        Map<String, Serializable> params = serviceExtension.createParams( target );
         
-//        assertNotNull("canProcess", params );
-        
-        IService service = serviceExtension.createService( null, VersionedPostgisUtils.getParams(f));
+        IService service = serviceExtension.createService( null, FixtureUtils.getParams(f));
         assertNotNull("connected", service );
         
         assertTrue("Datastore available", service.canResolve( DataStore.class));
@@ -80,12 +79,22 @@ public class VersionedPostgisDataStoreService {
         assertNotNull("DataStore connected", dataStore );
         
         List list = dataStore.getNames();
-        Name typeName = new NameImpl(null, "versioned_test");
-        FeatureSource featureSource = dataStore.getFeatureSource( typeName );
+        assertTrue("VersionedPostgisDataStore connected", dataStore instanceof VersionedPostgisDataStore);
+        VersionedPostgisDataStore vpDataStore = (VersionedPostgisDataStore)dataStore;
         
-        assertEquals( 3, featureSource.getCount( Query.ALL ) );
+        for(Object typeNameObj : list) {
+        	String typeName = ((Name)typeNameObj).toString();
+        	if(typeName.equals("road") || typeName.equals("river")) {
+        		assertTrue(typeName + " is versioned", vpDataStore.isVersioned(typeName));
+        	} else {
+        	    assertTrue(typeName + " is unversioned", !vpDataStore.isVersioned(typeName));
+        	}
+        }
         
-        
-        
+        IServiceInfo info = service.getInfo(new NullProgressMonitor());
+        assertEquals("Database name used for title", 
+                f.database, info.getTitle());
+        assertEquals("Data store description used for description",
+                "Features from PostGIS, managed with a version history", info.getDescription());
     }
 }

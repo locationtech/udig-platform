@@ -1,6 +1,7 @@
 package net.refractions.udig.catalog.geotools.data;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,16 +9,17 @@ import java.util.PropertyResourceBundle;
 
 import org.geotools.data.postgis.VersionedPostgisDataStoreFactory;
     
-public class VersionedPostgisUtils {
+public class FixtureUtils {
 
         public static Fixture newFixture(String props) throws IOException {
             PropertyResourceBundle resource;
             resource = new PropertyResourceBundle(
-                VersionedPostgisUtils.class.getResourceAsStream(props)
+                FixtureUtils.class.getResourceAsStream(props)
             );
 
             Fixture f = new Fixture();
             
+            f.dbtype = resource.getString("dbtype");
             f.namespace = resource.getString("namespace");
             f.host = resource.getString("host");
             f.port = Integer.valueOf(resource.getString("port"));
@@ -50,6 +52,7 @@ public class VersionedPostgisUtils {
         }
         
         public static class Fixture {
+            public String dbtype;
             public String namespace;
             public String host;
             public String database;
@@ -61,10 +64,10 @@ public class VersionedPostgisUtils {
             public Boolean looseBbox;
         }
         
-        public static Map getParams(Fixture f) {
-            Map params = new HashMap();
+        public static Map<String, Serializable> getParams(Fixture f) {
+            Map<String, Serializable> params = new HashMap<String, Serializable>();
             
-            params.put(VersionedPostgisDataStoreFactory.DBTYPE.key, "postgis-versioned");
+            params.put(VersionedPostgisDataStoreFactory.DBTYPE.key, f.dbtype);
             params.put(VersionedPostgisDataStoreFactory.HOST.key, f.host);
             params.put(VersionedPostgisDataStoreFactory.PORT.key, f.port);
             params.put(VersionedPostgisDataStoreFactory.DATABASE.key, f.database);
