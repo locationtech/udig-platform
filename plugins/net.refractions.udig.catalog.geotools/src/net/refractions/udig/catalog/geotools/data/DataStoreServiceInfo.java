@@ -27,7 +27,7 @@ public class DataStoreServiceInfo extends IServiceInfo {
         this.info = gtInfo;
         this._abstract = info.getDescription();
         this.description = info.getDescription();
-        this.keywords = info.getKeywords().toArray(new String[0]);
+        this.keywords = (info.getKeywords() != null ? info.getKeywords().toArray(new String[0]) : new String[0]);
         this.publisher = info.getPublisher();
         this.schema = info.getSchema();
         this.source = info.getSource();
