@@ -22,13 +22,8 @@ import org.geotools.data.DataUtilities;
  */
 public class DataStoreConnectionFactory extends UDIGConnectionFactory {
 
-    public static final boolean DO_NOTHING = true;
-
-    @Override
+        @Override
     public Map<String, Serializable> createConnectionParameters( Object context ) {
-        if( DO_NOTHING ){
-            return null;
-        }
         try {
             if (context instanceof URL) {
                 URL url = (URL) context;
@@ -67,9 +62,6 @@ public class DataStoreConnectionFactory extends UDIGConnectionFactory {
 
     @Override
     public URL createConnectionURL( Object context ) {
-        if( DO_NOTHING ){
-            return null;
-        }
         try {
             if (context instanceof URL) {
                 URL url = (URL) context;

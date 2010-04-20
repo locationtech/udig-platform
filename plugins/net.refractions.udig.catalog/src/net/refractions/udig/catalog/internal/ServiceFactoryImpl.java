@@ -60,19 +60,19 @@ public class ServiceFactoryImpl extends IServiceFactory {
 
     /** @deprecated use createService */
     public List<IService> aquire( final URL id, final Map<String, Serializable> params ) {
-        return acquire(id, params);
+        return createService(params);
     }
     /** @deprecated use createService */
     public List<IService> aquire( Map<String, Serializable> params ) {
-        return acquire(params);
+        return createService(params);
     }
     /** @deprecated use createService */
     public List<IService> acquire( Map<String, Serializable> params ) {
-        return acquire(null, params);
+        return createService(params);
     }
     /** @deprecated use createService */
     public List<IService> aquire( final URL target ) {
-        return acquire(target);
+        return createService(target);
     }
     /** @deprecated use createService */
     public List<IService> acquire( URL target ) {
@@ -83,11 +83,43 @@ public class ServiceFactoryImpl extends IServiceFactory {
     public List<IService> acquire( final URL id, final Map<String, Serializable> params ) {
         return createService(params);
     }
-
+    
+    /**
+     * Check if the service extension is "generic" placeholder
+     * where a more specific implementation may exist.
+     * <p>
+     * An extension point flag should be used; for now we will just
+     * check the identifier itself.
+     * @param serviceExtId
+     * @return true if this service extension is generic
+     */
+    private boolean isGeneric( String serviceExtId ){
+        return serviceExtId.toLowerCase().contains("geotools");
+    }
+    
+    /*
+    private <X> Map<String, X> selectGeneric(Map<String, X> map, boolean generic) {
+        Map<String,X> selected = new HashMap<String,X>();
+        
+        for( Map.Entry<String, X> entry : map.entrySet() ) {
+            String id = entry.getKey();            
+            X value = entry.getValue();
+            
+            if( isGeneric(id) == generic ){
+                selected.put( id, value);
+            }
+        }
+        return selected;
+    }
+    */
+    
     Map<String, ServiceExtension> getRegisteredExtensions() {
         try {
             lock.lock();
             if (registered == null) { // load available
+                // we are going to sort the map so that
+                // "generic" fallback datastores are selected last
+                //                
                 registered = new HashMap<String, ServiceExtension>();
                 ExtensionPointUtil
                         .process(
@@ -98,7 +130,7 @@ public class ServiceFactoryImpl extends IServiceFactory {
                                         // extentionIdentifier used to report any problems;
                                         // in the event of failure we want to be able to report
                                         // who had the problem
-                                        String extensionId = extension.getUniqueIdentifier();
+                                        //String extensionId = extension.getUniqueIdentifier();
                                         String id = element.getAttribute("id");
                                         ServiceExtension se = (ServiceExtension) element
                                                 .createExecutableExtension("class");
@@ -129,6 +161,8 @@ public class ServiceFactoryImpl extends IServiceFactory {
      */
     public List<IService> createService( final URL targetUrl ) {
         final Map<String, Map<String, Serializable>> available = new HashMap<String, Map<String, Serializable>>();
+        final Map<String, Map<String, Serializable>> generic = new HashMap<String, Map<String, Serializable>>();
+        
         for( Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet() ) {
             if (entry == null)
                 continue;
@@ -137,7 +171,12 @@ public class ServiceFactoryImpl extends IServiceFactory {
             try {
                 Map<String, Serializable> defaultParams = serviceExtension.createParams(targetUrl);
                 if (defaultParams != null) {
-                    available.put(id, defaultParams);
+                    if( isGeneric(id)){
+                        generic.put(id, defaultParams);
+                    }
+                    else {
+                        available.put(id, defaultParams);
+                    }
                 }
             } catch (Throwable t) {
                 if (CatalogPlugin.getDefault().isDebugging()) {
@@ -148,25 +187,45 @@ public class ServiceFactoryImpl extends IServiceFactory {
             }
         }
         List<IService> candidates = new LinkedList<IService>();
-        for( Map.Entry<String, Map<String, Serializable>> candidateEntry : available.entrySet() ) {
-            String extentionIdentifier = candidateEntry.getKey();
-            Map<String, Serializable> connectionParameters = candidateEntry.getValue();
-            try {
-                List<IService> service = createService(connectionParameters);
-                if (service != null && !service.isEmpty()) {
-                    candidates.addAll(service);
+        if( !available.isEmpty()){
+            for( Map.Entry<String, Map<String, Serializable>> candidateEntry : available.entrySet() ) {
+                String extentionIdentifier = candidateEntry.getKey();
+                Map<String, Serializable> connectionParameters = candidateEntry.getValue();
+                try {
+                    List<IService> service = createService(connectionParameters);
+                    if (service != null && !service.isEmpty()) {                    
+                        candidates.addAll(service);
+                    }
+                } catch (Throwable deadService) {
+                    CatalogPlugin.log(extentionIdentifier + " could not create service", deadService); //$NON-NLS-1$
                 }
-            } catch (Throwable deadService) {
-                CatalogPlugin.log(extentionIdentifier + " could not create service", deadService); //$NON-NLS-1$
+            }
+        }
+        if( !candidates.isEmpty() && generic.isEmpty()){
+            // add generic entries if needed
+            for( Map.Entry<String, Map<String, Serializable>> candidateEntry : generic.entrySet() ) {
+                String extentionIdentifier = candidateEntry.getKey();
+                Map<String, Serializable> connectionParameters = candidateEntry.getValue();
+                try {
+                    List<IService> service = createService(connectionParameters);
+                    if (service != null && !service.isEmpty()) {                    
+                        candidates.addAll(service);
+                    }
+                } catch (Throwable deadService) {
+                    CatalogPlugin.log(extentionIdentifier + " could not create service", deadService); //$NON-NLS-1$
+                }
             }
         }
         return candidates;
     }
-
+    
     public List<IService> createService( final Map<String, Serializable> connectionParameters ) {
         final List<IService> services = new LinkedList<IService>();
+        
         for( Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet() ) {
             String id = entry.getKey();
+            if( isGeneric(id)) continue; // skip generic for this passs
+            
             ServiceExtension serviceExtension = entry.getValue();
             try {
                 // Attempt to construct a service, and add to the list if available.
@@ -177,6 +236,23 @@ public class ServiceFactoryImpl extends IServiceFactory {
             } catch (Throwable deadService) {
                 CatalogPlugin.log(id + " could not create service", deadService); //$NON-NLS-1$
             }
+        }
+        if( services.isEmpty()){
+            for( Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet() ) {
+                String id = entry.getKey();
+                if( !isGeneric(id)) continue; // Do not use generic this pass
+                
+                ServiceExtension serviceExtension = entry.getValue();
+                try {
+                    // Attempt to construct a service, and add to the list if available.
+                    IService service = serviceExtension.createService(null, connectionParameters);
+                    if (service != null) {
+                        services.add(service);
+                    }
+                } catch (Throwable deadService) {
+                    CatalogPlugin.log(id + " could not create service", deadService); //$NON-NLS-1$
+                }
+            }    
         }
         return services;
     }

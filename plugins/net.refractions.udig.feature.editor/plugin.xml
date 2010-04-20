@@ -12,7 +12,7 @@
             name="%editor.name"/>
       <view
             category="net.refractions.udig.feature.editor.featureCategory"
-            class="net.refractions.udig.feature.editor.FeatureView"
+            class="net.refractions.udig.feature.editor.FeatureView3"
             icon="icons/eview16/view_obj.gif"
             id="net.refractions.udig.feature.editor.featureView"
             name="%feature.name"

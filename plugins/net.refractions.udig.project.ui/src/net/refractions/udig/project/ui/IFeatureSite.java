@@ -26,8 +26,11 @@ import net.refractions.udig.project.command.factory.SelectionCommandFactory;
 import net.refractions.udig.project.ui.commands.DrawCommandFactory;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars2;
+import org.eclipse.ui.IWorkbench;
 
 /**
  * Allows access to the site hosting the IFeaturePanel.
@@ -127,5 +130,35 @@ public interface IFeatureSite extends IAbstractContext {
      */
     public void updateUI( Runnable runnable );
 
+    /**
+     * Returns the current workbench.
+     * <p>
+     * Convenience for PlatformUI.getWorkbench()
+     * 
+     * @return the current workbench.
+     */
+    IWorkbench getWorkbench();
+    /**
+     * Returns the default display.
+     * <p>
+     * Convenience for Display.getDefault()
+     * </p>
+     * 
+     * @return the default display.
+     */
+    Display getDisplay();
+    /**
+     * Logs an exception to the current plugin.
+     * 
+     * @param currentPlugin the plugin that the exception will be logged in.
+     * @param message the message to log
+     * @param severity the severity of the exception. IF null ERROR will be assumed.
+     *        {@linkplain org.eclipse.core.runtime.IStatus#ERROR},
+     *        {@linkplain org.eclipse.core.runtime.IStatus#INFO},
+     *        {@linkplain org.eclipse.core.runtime.IStatus#WARNING}
+     * @param exception the exception to log. Can be null.
+     */
+    void log( Plugin currentPlugin, String message, int severity, Throwable exception );
+    
     public IFeatureSite copy();
 }
