@@ -107,6 +107,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
 
         DataAccessFactory factory = getPreviousPage().getFactory();
         connectionParameters = getPreviousPage().getParams();
+        
         if (connectionParameters == null) {
             connectionParameters = new HashMap<String, Serializable>();
             for( Param param : getParameterInfo() ) {

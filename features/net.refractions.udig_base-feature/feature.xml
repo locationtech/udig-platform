@@ -7,8 +7,9 @@
       plugin="net.refractions.udig_base">
 
    <description url="http://eclipse.org/">
-      Elements of the Eclipse RCP, PDE and Modeling that are required
-by uDig in order to run.
+      Elements of the Eclipse RCP, PDE and Modeling that are required by uDig in order to run.
+
+If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please add the required plugins to this feature so they are picked up for the SDK.
    </description>
 
    <copyright url="http://www.example.com/copyright">
@@ -540,6 +541,27 @@ by uDig in order to run.
 
    <plugin
          id="org.w3c.dom.events"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.navigator"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.views.properties.tabbed"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.workbench"
          download-size="0"
          install-size="0"
          version="0.0.0"
