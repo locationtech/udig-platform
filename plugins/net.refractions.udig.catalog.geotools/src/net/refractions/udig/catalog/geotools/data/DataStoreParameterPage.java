@@ -114,16 +114,6 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             }
         } else {
             Object value;
-            if( param.type == Integer.class){
-                try {
-                    Integer number =  Integer.parseInt(text);
-                    System.out.println("Number:"+number);
-                }
-                catch( NumberFormatException eek){
-                    // yeah
-                }
-            }
-            
             try {
                 value = param.parse(text);
                 setErrorMessage(null); // all good
