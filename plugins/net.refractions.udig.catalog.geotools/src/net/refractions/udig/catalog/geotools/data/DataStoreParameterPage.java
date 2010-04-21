@@ -70,9 +70,9 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
 
             Param param = (Param) field.getData();
             sync(param, field);
-            
+
             getContainer().updateButtons();
-            //setPageComplete(isParametersComplete(false));
+            // setPageComplete(isParametersComplete(false));
         }
         public void keyPressed( KeyEvent e ) {
         }
@@ -90,48 +90,60 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
      * connect.
      */
     protected boolean sync( Param param, Text field ) {
-        try {
-            boolean isValid;
-            String text = field.getText();
+        boolean isValid;
+        String text = field.getText();
 
-            if (text.length() == 0) {
-                // use default value if available
-                // connection will end up using default value
-                connectionParameters.remove(param.key);
-                if (param.sample != null) {
-                    field.setToolTipText("Default: " + param.text(param.sample));
-                    isValid = true;
-                } else {
-                    field.setToolTipText("Empty");
-                    isValid = !param.required;
-                }
+        if (text.length() == 0) {
+            // use default value if available
+            // connection will end up using default value
+            connectionParameters.remove(param.key);
+            if (param.sample != null) {
+                field.setToolTipText("Default: " + param.text(param.sample));
+                isValid = true;
+                setErrorMessage(null); // using default or empty
             } else {
-                Object value = param.handle(text);
-                if( value == null && URL.class.isAssignableFrom(param.type)){
-                    // try parsing it as a File
-                    try {
-                        File file = new File( text );
-                        value = DataUtilities.fileToURL(file);
-                    }
-                    catch( Throwable t){
-                        // it was a wild shot anyways
-                    }
-                }
-                
-                if (value == null && param.required) {
-                    field.setToolTipText("Required");
-                    connectionParameters.remove(param.key);
+                field.setToolTipText("Empty");
+                if( param.required && param.sample == null ){
                     isValid = false;
-                } else {
-                    connectionParameters.put(param.key, (Serializable) value);
+                    setErrorMessage(param.key +" is required");
+                }
+                else {
                     isValid = true;
+                    setErrorMessage(null); // using default or empty
                 }
             }
-            return isValid;
-        } catch (IOException e) {
-            field.setToolTipText(e.getLocalizedMessage());
-            return false;
+        } else {
+            Object value;
+            try {
+                value = param.parse(text);
+                setErrorMessage(null); // all good
+            } catch (Throwable e) {
+                setErrorMessage( e.getLocalizedMessage() );
+                value = null;
+            }               
+            //Object value = param.handle(text);
+            //field.setToolTipText( "Value: "+value );                
+//                if (value == null && URL.class.isAssignableFrom(param.type)) {
+//                    // try parsing it as a File
+//                    try {
+//                        File file = new File(text);
+//                        value = DataUtilities.fileToURL(file);
+//                    } catch (Throwable t) {
+//                        // it was a wild shot anyways
+//                    }
+//                }
+
+            if (value == null && param.required) {
+                field.setToolTipText("Required");
+                connectionParameters.remove(param.key);
+                isValid = false;
+            } else {
+                field.setToolTipText("Value: "+value);                    
+                connectionParameters.put(param.key, (Serializable) value);
+                isValid = true;
+            }
         }
+        return isValid;
     };
 
     public DataStoreParameterPage() {
@@ -194,8 +206,12 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             Text field = addField(getControl(), param);
             fields.put(param, field);
         }
-        // Label sepearator = new Label(getControl(), SWT.SEPARATOR|SWT.HORIZONTAL);
-        // sepearator.setLayoutData("growx,span,wrap");
+        
+        Label seperator = new Label(getControl(), SWT.HORIZONTAL | SWT.SEPARATOR );
+        seperator.setLayoutData("growx,span,wrap");
+        Label advanced = new Label(getControl(), SWT.LEFT);
+        advanced.setLayoutData("growx,span,wrap");
+        
         for( Param param : getParameterInfo() ) {
 
             if (!"advanced".equals(param.getLevel())) {
@@ -204,6 +220,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             Text field = addField(getControl(), param);
             fields.put(param, field);
         }
+        
         listen(true);
     }
     private void listen( boolean listen ) {
@@ -243,6 +260,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         String name = param.title == null ? param.key : param.title.toString();
         String suffix = param.required ? "*:" : ":";
         label.setText(name + suffix);
+        label.setToolTipText( param.description.toString() );
 
         Text field;
 
@@ -274,8 +292,34 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
                     String path = browse.open();
                     if (path != null) {
                         target.setText(path);
-                        
-                        sync((Param)target.getData(), target);
+
+                        sync((Param) target.getData(), target);
+                    }
+                }
+                public void widgetDefaultSelected( SelectionEvent e ) {
+                    widgetSelected(e);
+                }
+            });
+        } else if (URL.class.isAssignableFrom(param.type)) {
+            field = new Text(parent, SWT.SINGLE | SWT.BORDER);
+            field.setLayoutData("growx");
+            Button button = new Button(parent, SWT.DEFAULT);
+            button.setText("Browse");
+            button.setLayoutData("wrap unrelated");
+            final Text target = field;
+            button.addSelectionListener(new SelectionListener(){
+                public void widgetSelected( SelectionEvent e ) {
+                    FileDialog browse = new FileDialog(parent.getShell(), SWT.OPEN);
+                    if (EXTENSION != null) {
+                        browse.setFilterExtensions(new String[]{EXTENSION});
+                    }
+                    String path = browse.open();
+                    if (path != null) {
+                        File file = new File(path);
+                        URL url = DataUtilities.fileToURL(file);                        
+                        target.setText( url.toString() );
+
+                        sync((Param) target.getData(), target);
                     }
                 }
                 public void widgetDefaultSelected( SelectionEvent e ) {
@@ -287,10 +331,18 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             field.setLayoutData("span, growx, wrap unrelated");
         }
         field.setData(param);
+        
+        if( "dbtype".equals( param.key)){
+            // cannot modify dbtype
+            field.setEditable(false);
+        }
 
-        Object value = param.sample;
+        Object value = null;
         if (getParams() != null && getParams().containsKey(param.key)) {
             value = getParams().get(param.key);
+        }
+        if( value == null && param.required && param.sample != null ){
+            value = param.sample;
         }
         String text = value != null ? param.text(value) : "";
         if (value != null) {
@@ -315,10 +367,10 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         return connectionParameters;
     }
 
-//    @Override
-//    public boolean leavingPage() {
-//        return super.leavingPage(); //isParametersComplete(true);
-//    }
+    // @Override
+    // public boolean leavingPage() {
+    // return super.leavingPage(); //isParametersComplete(true);
+    // }
 
     @Override
     public boolean canFlipToNextPage() {
@@ -331,7 +383,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         }
         return false;
     }
-    
+
     /**
      * Check if the parameters can connect and update setPageComplete if possible
      */
