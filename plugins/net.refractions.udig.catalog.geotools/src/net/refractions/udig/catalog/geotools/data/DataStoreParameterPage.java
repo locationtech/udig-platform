@@ -16,6 +16,7 @@ import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
 import net.refractions.udig.catalog.ui.UDIGConnectionPage;
 import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
+import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -26,9 +27,11 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.geotools.data.DataAccessFactory;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.DataAccessFactory.Param;
@@ -89,51 +92,51 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
      * doPageComplete to verify if the connection parameters result in something that can actually
      * connect.
      */
-    protected boolean sync( Param param, Text field ) {
-        boolean isValid;
-        String text = field.getText();
-
-        if (text.length() == 0) {
-            // use default value if available
-            // connection will end up using default value
-            connectionParameters.remove(param.key);
-            if (param.sample != null) {
-                field.setToolTipText("Default: " + param.text(param.sample));
-                isValid = true;
-                setErrorMessage(null); // using default or empty
-            } else {
-                field.setToolTipText("Empty");
-                if( param.required && param.sample == null ){
-                    isValid = false;
-                    setErrorMessage(param.key +" is required");
+    protected void sync( final Param param, final Text field ) {
+        Display display = getControl().getDisplay();
+        PlatformGIS.asyncInDisplayThread(display, new Runnable(){
+            public void run() {
+                if( field.isDisposed()){
+                    return;
                 }
-                else {
-                    isValid = true;
-                    setErrorMessage(null); // using default or empty
+                String text = field.getText();
+                if (text.length() == 0) {
+                    // use default value if available
+                    // connection will end up using default value
+                    connectionParameters.remove(param.key);
+                    if (param.sample != null) {
+                        field.setToolTipText("Default: " + param.text(param.sample));
+                        setErrorMessage(null); // using default or empty
+                    } else {
+                        field.setToolTipText("Empty");
+                        if( param.required && param.sample == null ){
+                            setErrorMessage(param.key +" is required");
+                        }
+                        else {
+                            setErrorMessage(null); // using default or empty
+                        }
+                    }
+                } else {
+                    Object value;
+                    try {
+                        value = param.parse(text);
+                        setErrorMessage(null); // all good
+                    } catch (Throwable e) {
+                        setErrorMessage( e.getLocalizedMessage() );
+                        value = null;
+                    }               
+                    
+                    if (value == null && param.required) {
+                        field.setToolTipText("Required");
+                        connectionParameters.remove(param.key);
+                    } else {
+                        field.setToolTipText("Value: "+value);                    
+                        connectionParameters.put(param.key, (Serializable) value);
+                    }
                 }
             }
-        } else {
-            Object value;
-            try {
-                value = param.parse(text);
-                setErrorMessage(null); // all good
-            } catch (Throwable e) {
-                setErrorMessage( e.getLocalizedMessage() );
-                value = null;
-            }               
-            
-            if (value == null && param.required) {
-                field.setToolTipText("Required");
-                connectionParameters.remove(param.key);
-                isValid = false;
-            } else {
-                field.setToolTipText("Value: "+value);                    
-                connectionParameters.put(param.key, (Serializable) value);
-                isValid = true;
-            }
-        }
-        return isValid;
-    };
+        }, false);
+    }
 
     public DataStoreParameterPage() {
         super("Parameters");
@@ -281,7 +284,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
                     String path = browse.open();
                     if (path != null) {
                         target.setText(path);
-
+                        
                         sync((Param) target.getData(), target);
                     }
                 }
