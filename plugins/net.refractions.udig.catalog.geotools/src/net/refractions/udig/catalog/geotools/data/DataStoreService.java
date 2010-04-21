@@ -48,7 +48,7 @@ public class DataStoreService extends IService {
     protected DataStoreServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
         DataAccess< ? , ? > access = toDataAccess();
         ServiceInfo gtInfo = access.getInfo();
-        return new DataStoreServiceInfo(gtInfo);
+        return new DataStoreServiceInfo(factory,connectionParams,gtInfo);
     }
 
     @Override

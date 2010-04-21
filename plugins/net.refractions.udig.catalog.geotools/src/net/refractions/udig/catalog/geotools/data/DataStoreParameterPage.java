@@ -3,7 +3,7 @@ package net.refractions.udig.catalog.geotools.data;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -13,16 +13,11 @@ import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.internal.ui.CatalogImport.CatalogImportWizard;
 import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
 import net.refractions.udig.catalog.ui.UDIGConnectionPage;
-import net.refractions.udig.catalog.ui.workflow.IntermediateState;
 import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.wizard.IWizardPage;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -32,7 +27,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.data.DataAccessFactory;
 import org.geotools.data.DataAccessFactory.Param;
@@ -58,6 +52,26 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
     };
 
     private Map<String, Serializable> connectionParameters;
+    
+    private IRunnableWithProgress connect = new IRunnableWithProgress(){
+        public void run( IProgressMonitor monitor ) throws InvocationTargetException,
+                InterruptedException {
+            boolean isComplete = false;
+            
+            DataAccessFactory factory = getPreviousPage().getFactory();
+            connectionParameters = getParams();
+            
+            if( factory.canProcess( connectionParameters ) ){
+                try {
+                    factory.createDataStore( connectionParameters );
+                    isComplete = true;
+                } catch (IOException e) {
+                    setErrorMessage( e.toString() );
+                }
+            }
+            setPageComplete( isComplete );
+        }
+    };
 
     protected boolean validate( Param param, Text field ) {
         try {
@@ -107,6 +121,8 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
 
         DataAccessFactory factory = getPreviousPage().getFactory();
         connectionParameters = getPreviousPage().getParams();
+        
+        getParams();
         
         if (connectionParameters == null) {
             connectionParameters = new HashMap<String, Serializable>();
@@ -246,4 +262,17 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         return connectionParameters;
     }
 
+    /**
+     * Check if the parameters can connect and update setPageComplete if possible
+     */
+    protected void doPageComplete(){
+        try {
+            getWizard().getContainer().run(true, true, connect );
+        } catch (InvocationTargetException e) {
+            setErrorMessage(e.getCause().toString());
+        } catch (InterruptedException e) {
+            // canceled
+        }
+    }
+    
 }

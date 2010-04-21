@@ -1,9 +1,13 @@
 package net.refractions.udig.catalog.geotools.data;
 
+import java.io.Serializable;
+import java.util.Map;
+
 import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.ISharedImages;
 
+import org.geotools.data.DataAccessFactory;
 import org.geotools.data.ServiceInfo;
 
 /**
@@ -19,12 +23,14 @@ import org.geotools.data.ServiceInfo;
  */
 public class DataStoreServiceInfo extends IServiceInfo {
 
-    //private DataStoreService service;
     private ServiceInfo info;
+    private DataAccessFactory factory;
+    private GTFormat format;
 
-    public DataStoreServiceInfo( ServiceInfo gtInfo ) {
-        //this.service = dataStoreService;
+    public DataStoreServiceInfo( DataAccessFactory factory, Map<String, Serializable> params, ServiceInfo gtInfo ) {
+        this.factory = factory;
         this.info = gtInfo;
+        this.format = GTFormat.format(factory);
         this._abstract = info.getDescription();
         this.description = info.getDescription();
         this.keywords = (info.getKeywords() != null ? info.getKeywords().toArray(new String[0]) : new String[0]);
@@ -32,9 +38,10 @@ public class DataStoreServiceInfo extends IServiceInfo {
         this.schema = info.getSchema();
         this.source = info.getSource();
         this.title = info.getTitle();
-
-        ISharedImages images = CatalogUIPlugin.getDefault().getImages();
-        this.icon = images.getImageDescriptor( ISharedImages.DATASTORE_OBJ ); // generic!
+        if( title == null ){
+            title = format.getTitle(factory, params);
+        }
+        this.icon = format.getIcon();
     }
     
     public ServiceInfo toServiceInfo(){

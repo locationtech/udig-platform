@@ -228,13 +228,18 @@ public class DataStoreServiceExtension extends IServiceExtension {
         }
         return null; // not found!
     }
-
+        
     public static ID createID( URL providedId, DataAccessFactory factory,
             Map<String, Serializable> params ) {
+        
         if (providedId != null) {
             // one was already provided!
             return new ID(providedId, factory.getDisplayName());
         }
+        
+        GTFormat format = GTFormat.format(factory);
+        return format.toID(factory, params);
+        /*
         URL url = lookup(factory, params, URL.class);
         if (url != null) {
             // this should handle all files and wfs :-)
@@ -277,6 +282,7 @@ public class DataStoreServiceExtension extends IServiceExtension {
             }
         }
         return null;
+        */
     }
 
 }
