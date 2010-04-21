@@ -177,112 +177,66 @@ public class DataStoreServiceExtension extends IServiceExtension {
             DataAccessFactory factory = available.next();
             if (factory.canProcess(params)) {
                 ID id = createID(providedId, factory, params);
+                if( id == null ){
+                    // cannot represent this in our catalog as we have
+                    // no idea how to create an "id" for it
+                    continue;
+                }
                 return new DataStoreService(id, factory, params);
             }
         }
         return null; // could not use
-        /*
-         * try { DataStore dataStore = DataStoreFinder.getDataStore( params ); } catch (IOException
-         * e) { if( Activator.getDefault().isDebugging() ){ IStatus status = new Status(
-         * IStatus.OK,Activator.PLUGIN_ID, "Could not connect to GeoTools Datastore", e );
-         * Activator.getDefault().getLog().log(status); } } return null;
-         */
     }
-    public static Param lookupParam( DataAccessFactory factory, Class< ? > type ) {
-        if (type == null)
-            return null;
-        for( Param param : factory.getParametersInfo() ) {
-            if (type.isAssignableFrom(param.type)) {
-                return param;
-            }
-        }
-        return null;
-    }
-    public static Param lookupParam( DataAccessFactory factory, String key ) {
-        if (key == null)
-            return null;
-        for( Param param : factory.getParametersInfo() ) {
-            if (key.equalsIgnoreCase(param.key)) {
-                return param;
-            }
-        }
-        return null;
-    }
+//    private static Param lookupParam( DataAccessFactory factory, Class< ? > type ) {
+//        if (type == null)
+//            return null;
+//        for( Param param : factory.getParametersInfo() ) {
+//            if (type.isAssignableFrom(param.type)) {
+//                return param;
+//            }
+//        }
+//        return null;
+//    }
+//    private static Param lookupParam( DataAccessFactory factory, String key ) {
+//        if (key == null)
+//            return null;
+//        for( Param param : factory.getParametersInfo() ) {
+//            if (key.equalsIgnoreCase(param.key)) {
+//                return param;
+//            }
+//        }
+//        return null;
+//    }
 
-    @SuppressWarnings("unchecked")
-    public static <T> T lookup( DataAccessFactory factory, Map<String, Serializable> params,
-            Class<T> type ) {
-        Param param = lookupParam(factory, URL.class);
-        if (param != null) {
-            T value;
-            try {
-                value = (T) param.lookUp(params); // find the value
-                if (value != null) {
-                    return value;
-                }
-            } catch (IOException e) {
-                if (Activator.getDefault().isDebugging()) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null; // not found!
-    }
-        
+//    @SuppressWarnings("unchecked")
+//    private static <T> T lookup( DataAccessFactory factory, Map<String, Serializable> params,
+//            Class<T> type ) {
+//        Param param = lookupParam(factory, URL.class);
+//        if (param != null) {
+//            T value;
+//            try {
+//                value = (T) param.lookUp(params); // find the value
+//                if (value != null) {
+//                    return value;
+//                }
+//            } catch (IOException e) {
+//                if (Activator.getDefault().isDebugging()) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//        return null; // not found!
+//    }
+
     public static ID createID( URL providedId, DataAccessFactory factory,
             Map<String, Serializable> params ) {
-        
+
         if (providedId != null) {
             // one was already provided!
             return new ID(providedId, factory.getDisplayName());
         }
-        
+
         GTFormat format = GTFormat.format(factory);
         return format.toID(factory, params);
-        /*
-        URL url = lookup(factory, params, URL.class);
-        if (url != null) {
-            // this should handle all files and wfs :-)
-            return new ID(url, factory.getDisplayName());
-        }
-        File file = lookup(factory, params, File.class);
-        if (file != null) {
-            URL fileUrl = DataUtilities.fileToURL(file);
-            if (fileUrl != null) {
-                return new ID(fileUrl, factory.getDisplayName());
-            }
-        }
-        if (factory instanceof JDBCDataStoreFactory) {
-            // dbtype://host:port/schema
-            JDBCDataStoreFactory jdbcFactory = (JDBCDataStoreFactory) factory;
-            try {
-                final Param DBTYPE = lookupParam(factory, JDBCDataStoreFactory.DBTYPE.key);
-                String dbType = (String) DBTYPE.lookUp(params);
-
-                final Param HOST = lookupParam(factory, JDBCDataStoreFactory.HOST.key);
-                String host = (String) HOST.lookUp(params);
-
-                // needed to look up the actual PORT
-                final Param PORT = lookupParam(factory, JDBCDataStoreFactory.PORT.key);
-                Integer port = (Integer) PORT.lookUp(params);
-
-                final Param SCHEMA = lookupParam(factory, JDBCDataStoreFactory.SCHEMA.key);
-                String schema = (String) SCHEMA.lookUp(params);
-                if (schema == null)
-                    schema = "";
-
-                ID id = new ID(dbType + "://" + host + ":" + port + "/" + schema, factory
-                        .getDisplayName());
-
-                return id;
-            } catch (IOException e) {
-                if (Activator.getDefault().isDebugging()) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-        */
     }
-
 }

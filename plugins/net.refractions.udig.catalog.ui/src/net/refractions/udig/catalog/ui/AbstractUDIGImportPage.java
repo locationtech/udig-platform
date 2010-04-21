@@ -140,6 +140,9 @@ public abstract class AbstractUDIGImportPage extends WorkflowWizardPage implemen
             setErrorMessage( "Canceled");
             throw (RuntimeException) new RuntimeException( ).initCause( e );
         }
+        if( !services.isEmpty() ){
+            return services; // found!
+        }
         return services;
     }
     

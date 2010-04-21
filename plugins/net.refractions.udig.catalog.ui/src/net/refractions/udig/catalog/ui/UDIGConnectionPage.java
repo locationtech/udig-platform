@@ -47,10 +47,12 @@ public interface UDIGConnectionPage extends IWizardPage {
      * @deprecated
      */
     Map<String, Serializable> getParams();
+    
     /**
      * Returns the services that the wizard needs to add to the catalog.
      */
     Collection<IService> getServices();
+    
     /**
      * Returns the ids of the GeoResource to use as the "selected" resources. If a non-empty
      * collection is returned then the next states in the wizard "should" use these as the items
@@ -67,6 +69,7 @@ public interface UDIGConnectionPage extends IWizardPage {
      * @return the ids of the GeoResource to use as the "selected" resources.
      */
     public Collection<URL> getResourceIDs();
+    
     /**
      * Sets or clears the error message for this page.
      * 

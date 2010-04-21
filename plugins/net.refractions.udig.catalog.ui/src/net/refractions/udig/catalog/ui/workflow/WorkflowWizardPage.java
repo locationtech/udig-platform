@@ -95,8 +95,7 @@ public abstract class WorkflowWizardPage extends WizardPage {
      * @return true if it is acceptable to leave the page false if the page must not be left
      */
     public boolean leavingPage() {
-        // default does nothing
-        return true;
+        return true; // default does nothing        
     }
 
 	/**

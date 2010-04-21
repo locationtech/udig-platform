@@ -3,6 +3,7 @@ package net.refractions.udig.catalog.geotools.data;
 import java.io.IOException;
 import java.net.URL;
 
+import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 
@@ -16,10 +17,12 @@ import org.opengis.feature.type.Name;
 public class FeatureSourceGeoResource extends IGeoResource {
 
     protected Name name;
+    private ID id;
 
     public FeatureSourceGeoResource( DataStoreService service, Name name ) {
         this.service = service;
         this.name = name;
+        this.id = new ID( service.getID(), name.getLocalPart() );
     }
     public DataStoreService service( IProgressMonitor monitor ) throws IOException {
         return (DataStoreService) this.service;
@@ -36,8 +39,13 @@ public class FeatureSourceGeoResource extends IGeoResource {
     }
 
     @Override
+    public ID getID() {
+        return id;
+    }
+    
+    @Override
     public URL getIdentifier() {
-        return null;
+        return id.toURL();
     }
 
     public Throwable getMessage() {
