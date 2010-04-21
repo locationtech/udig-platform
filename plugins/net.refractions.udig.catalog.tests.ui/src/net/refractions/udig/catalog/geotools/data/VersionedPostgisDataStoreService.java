@@ -10,7 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.CatalogPlugin;
+import net.refractions.udig.catalog.ID;
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IRepository;
+import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.geotools.Activator;
@@ -65,7 +69,7 @@ public class VersionedPostgisDataStoreService {
     @Test
     public void testDataStoreServiceExtension() throws Exception {
         // DataStoreServiceExtension extension = new DataStoreServiceExtension();
-        f = FixtureUtils.newFixture("test-data/versioned.properties");
+        f = FixtureUtils.newFixture("test-fixture/versioned.properties");
         DataStoreServiceExtension serviceExtension = serviceFactory.serviceImplementation(DataStoreServiceExtension.class);
         
         assertNotNull("Fixture created", f);
@@ -92,9 +96,33 @@ public class VersionedPostgisDataStoreService {
         }
         
         IServiceInfo info = service.getInfo(new NullProgressMonitor());
-        assertEquals("Database name used for title", 
-                f.database, info.getTitle());
+        assertEquals("Database host used for title", 
+                f.host + ":" + f.port, info.getTitle());
         assertEquals("Data store description used for description",
                 "Features from PostGIS, managed with a version history", info.getDescription());
+        
+        List<? extends IGeoResource> m = service.resources(new NullProgressMonitor());
+        boolean hasLake = false, 
+                hasRoad = false, 
+                hasRiver = false, 
+                hasStuff = false;
+        for(IGeoResource resource: m) {
+            ID id = resource.getID();
+            assertNotNull(id);
+            IGeoResourceInfo grinfo = resource.getInfo(new NullProgressMonitor());
+            assertNotNull(grinfo);
+            if("lake".equals(grinfo.getTitle()))
+                hasLake = true;
+            if("river".equals(grinfo.getTitle()))
+                hasRiver = true;
+            if("road".equals(grinfo.getTitle()))
+                hasRoad = true;
+            if("stuff".equals(grinfo.getTitle()))
+                hasStuff = true;
+        }
+        assertTrue("Lake table accessible", hasLake);
+        assertTrue("Road table accessible", hasRoad);
+        assertTrue("River table accessible", hasRiver);
+        assertTrue("Stuff table accessible", hasStuff);
     }
 }

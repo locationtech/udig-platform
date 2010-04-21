@@ -4,15 +4,21 @@ import static org.junit.Assert.*;
 
 import java.io.Serializable;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.CatalogPlugin;
+import net.refractions.udig.catalog.ID;
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IRepository;
 import net.refractions.udig.catalog.IService;
+import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.geotools.Activator;
 import net.refractions.udig.catalog.internal.ServiceFactoryImpl;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataAccess;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
@@ -73,6 +79,19 @@ public class GeoToolsDataStoreService {
         FeatureSource featureSource = dataStore.getFeatureSource( typeName );
         
         assertEquals( 4, featureSource.getCount( Query.ALL ) );
+        
+        IServiceInfo info = service.getInfo(new NullProgressMonitor());
+        assertNotNull("Title available", info.getTitle());
+        assertNotNull("Description available", info.getDescription());
+        
+        List<? extends IGeoResource> m = service.resources(new NullProgressMonitor());
+        for(IGeoResource resource: m) {
+            ID id = resource.getID();
+            assertNotNull(id);
+            IGeoResourceInfo grinfo = resource.getInfo(new NullProgressMonitor());
+            assertNotNull(grinfo);
+            assertEquals("GeoResource title matches filename", "sample_data", grinfo.getTitle());
+        }
         
     }
 }
