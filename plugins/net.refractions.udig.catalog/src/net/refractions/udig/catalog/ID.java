@@ -483,9 +483,13 @@ public class ID implements Serializable {
         } else if (isJDBC()) {
             int split2 = HOST.lastIndexOf('.');
             int split1 = HOST.lastIndexOf('.', split2 - 1);
-            label.append(HOST.substring(split1 + 1, split2));
-            label.append("://"); //$NON-NLS-1$
-            label.append(HOST.subSequence(0, split1));
+            if(split1 != -1 && split2 != -1) {
+                label.append(HOST.substring(split1 + 1, split2));
+                label.append("://"); //$NON-NLS-1$
+                label.append(HOST.subSequence(0, split1));
+            } else {
+                label.append(HOST);
+            }
         } else if ("http".equals(PROTOCOL) || "https".equals(PROTOCOL)) { //$NON-NLS-1$ //$NON-NLS-2$
             if (isWMS()) {
                 label.append("wms://"); //$NON-NLS-1$
