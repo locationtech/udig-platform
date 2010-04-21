@@ -114,6 +114,16 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             }
         } else {
             Object value;
+            if( param.type == Integer.class){
+                try {
+                    Integer number =  Integer.parseInt(text);
+                    System.out.println("Number:"+number);
+                }
+                catch( NumberFormatException eek){
+                    // yeah
+                }
+            }
+            
             try {
                 value = param.parse(text);
                 setErrorMessage(null); // all good
@@ -121,18 +131,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
                 setErrorMessage( e.getLocalizedMessage() );
                 value = null;
             }               
-            //Object value = param.handle(text);
-            //field.setToolTipText( "Value: "+value );                
-//                if (value == null && URL.class.isAssignableFrom(param.type)) {
-//                    // try parsing it as a File
-//                    try {
-//                        File file = new File(text);
-//                        value = DataUtilities.fileToURL(file);
-//                    } catch (Throwable t) {
-//                        // it was a wild shot anyways
-//                    }
-//                }
-
+            
             if (value == null && param.required) {
                 field.setToolTipText("Required");
                 connectionParameters.remove(param.key);

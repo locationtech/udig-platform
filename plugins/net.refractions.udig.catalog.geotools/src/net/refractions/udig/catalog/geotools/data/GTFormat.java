@@ -58,19 +58,23 @@ enum GTFormat {
 
         @Override
         public String getTitle( DataAccessFactory factory, Map<String, ? > params ) {
-            String dbtype = (String) params.get("dbtype");            
-            String the_host = (String) params.get("host");
-            Integer intPort = (Integer) params.get("port");
-            String the_database = (String) params.get("database");
-            String the_username = (String) params.get("user");
-            String the_password = (String) params.get("passwd");
+            Params keys = new Params( factory );
+            String dbtype = keys.lookup( String.class,"dbtype",params );            
+            String the_host = keys.lookup( String.class,"host",params );
+            Integer intPort = keys.lookup( Integer.class,"port",params );
+            String the_database = keys.lookup( String.class,"database",params);
+            String the_username = keys.lookup( String.class,"user",params);
+            String the_password = keys.lookup( String.class,"passwd",params);
 
             ID id = toID( dbtype, the_username, the_password, the_host, intPort, the_database);           
             return id.labelServer();
         }
 
         public ID toID( String dbtype, String the_username, String the_password, String the_host,
-                Integer intPort, String the_database ) {
+                Object intPort, String the_database ) {
+            if( intPort == null ){
+                intPort = "";
+            }
             String the_spec = "jdbc://" + the_username //$NON-NLS-1$
                     + ":" + the_password + "@" + the_host //$NON-NLS-1$ //$NON-NLS-2$
                     + ":" + intPort + "/" + the_database; //$NON-NLS-1$  //$NON-NLS-2$
@@ -79,12 +83,13 @@ enum GTFormat {
         
         @Override
         public ID toID( DataAccessFactory factory, Map<String, ? > params ) {
-            String dbtype = (String) params.get("dbtype");            
-            String the_host = (String) params.get("host");
-            Integer intPort = (Integer) params.get("port");
-            String the_database = (String) params.get("database");
-            String the_username = (String) params.get("user");
-            String the_password = (String) params.get("passwd");
+            Params keys = new Params( factory );
+            String dbtype = keys.lookup( String.class,"dbtype",params );            
+            String the_host = keys.lookup( String.class,"host",params );
+            Integer intPort = keys.lookup( Integer.class,"port",params );
+            String the_database = keys.lookup( String.class,"database",params);
+            String the_username = keys.lookup( String.class,"user",params);
+            String the_password = keys.lookup( String.class,"passwd",params);
 
             ID id = toID( dbtype, the_username, the_password, the_host, intPort, the_database);
             return id;
@@ -107,12 +112,13 @@ enum GTFormat {
 
         @Override
         public String getTitle( DataAccessFactory factory, Map<String, ? > params ) {
-            File file = lookup(File.class, factory, params);
+            Params keys = new Params( factory );
+            File file = keys.lookup(File.class,params );
             if (file != null) {
                 ID id = new ID(file, factory.getDisplayName());
                 return id.labelServer();
             }
-            URL url = lookup(URL.class, factory, params);
+            URL url = keys.lookup(URL.class,params );          
             if (url != null) {
                 ID id = new ID(url, factory.getDisplayName());
                 return id.labelServer();
@@ -122,12 +128,13 @@ enum GTFormat {
 
         @Override
         public ID toID( DataAccessFactory factory, Map<String, ? > params ) {
-            File file = lookup(File.class, factory, params);
+            Params keys = new Params( factory );
+            File file = keys.lookup(File.class,params );
             if (file != null) {
                 ID id = new ID(file, factory.getDisplayName());
                 return id;
             }
-            URL url = lookup(URL.class, factory, params);
+            URL url = keys.lookup(URL.class,params );                      
             if (url != null) {
                 ID id = new ID(url, factory.getDisplayName());
                 return id;
@@ -148,7 +155,8 @@ enum GTFormat {
 
         @Override
         public String getTitle( DataAccessFactory factory, Map<String, ? > params ) {
-            URL url = lookup(URL.class, factory, params);
+            Params keys = new Params( factory );
+            URL url = keys.lookup(URL.class,params );                      
             if (url != null) {
                 ID id = new ID(url, factory.getDisplayName());
                 return id.labelServer();
@@ -173,7 +181,8 @@ enum GTFormat {
         }
         @Override
         public String getTitle( DataAccessFactory factory, Map<String, ? > params ) {
-            File file = lookup(File.class, factory, params);
+            Params keys = new Params( factory );
+            File file = keys.lookup(File.class,params );                       
             if (file != null) {
                 ID id = new ID(file, factory.getDisplayName());
                 return id.labelServer();
@@ -182,7 +191,8 @@ enum GTFormat {
         }
         @Override
         public ID toID( DataAccessFactory factory, Map<String, ? > params ) {
-            File file = lookup(File.class, factory, params);
+            Params keys = new Params( factory );
+            File file = keys.lookup(File.class,params );                       
             if (file != null) {
                 ID id = new ID(file, factory.getDisplayName());
                 return id;
@@ -203,28 +213,36 @@ enum GTFormat {
 
         @Override
         public String getTitle( DataAccessFactory factory, Map<String, ? > params ) {
-            File file = lookup(File.class, factory, params);
+            Params keys = new Params( factory );
+            File file = keys.lookup(File.class,params );                                   
             if (file != null) {
                 ID id = new ID(file, factory.getDisplayName());
                 return id.labelServer();
             }
-            URL url = lookup(URL.class, factory, params);
+            URL url = keys.lookup(URL.class,params );                                   
             if (url != null) {
                 ID id = new ID(url, factory.getDisplayName());
                 return id.labelServer();
             }
-            String str = lookup(String.class, factory, params);
-            return str;
+            StringBuffer buf = new StringBuffer();
+            buf.append("unknown:/");
+            for( Object value : params.values() ){
+                if( value == null ) continue;
+                buf.append("/");
+                buf.append( value );
+            }
+            return buf.toString();
         }
 
         @Override
         public ID toID( DataAccessFactory factory, Map<String, ? > params ) {
-            File file = lookup(File.class, factory, params);
+            Params keys = new Params( factory );
+            File file = keys.lookup(File.class,params ); 
             if (file != null) {
                 ID id = new ID(file, factory.getDisplayName());
                 return id;
             }
-            URL url = lookup(URL.class, factory, params);
+            URL url = keys.lookup(URL.class,params ); 
             if (url != null) {
                 ID id = new ID(url, factory.getDisplayName());
                 return id;
@@ -267,23 +285,6 @@ enum GTFormat {
         return OTHER;
     }
 
-    <T> T lookup( Class<T> type, DataAccessFactory factory, Map<String, ? > params ) {
-        for( Param param : factory.getParametersInfo() ) {
-            if (param.type.isAssignableFrom(type)) {
-                // we have a match!
-                Object value;
-                try {
-                    value = param.lookUp(params);
-                } catch (IOException e) {
-                    continue;
-                }
-                if (value != null) {
-                    return type.cast(value);
-                }
-            }
-        }
-        return null; // not found
-    }
     public abstract ImageDescriptor getIcon();
 
 }
