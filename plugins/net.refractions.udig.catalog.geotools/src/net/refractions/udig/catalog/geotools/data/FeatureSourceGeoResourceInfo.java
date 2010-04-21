@@ -1,5 +1,8 @@
 package net.refractions.udig.catalog.geotools.data;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.ISharedImages;
@@ -17,7 +20,15 @@ public class FeatureSourceGeoResourceInfo extends IGeoResourceInfo {
         this.description = info.getDescription();
         this.keywords = info.getKeywords().toArray(new String[0]);
         this.name = info.getName();
-        this.schema = info.getSchema();
+        /* 
+         * This is a horrible hack to handle null namespaces in Name
+         * If the namespace NPE's, we can just leave schema as it is.
+         */
+        try {
+            this.schema = info.getSchema();
+        } catch(NullPointerException ex) {
+            ;
+        }
         this.title = info.getTitle();
         
         ISharedImages images = CatalogUIPlugin.getDefault().getImages();

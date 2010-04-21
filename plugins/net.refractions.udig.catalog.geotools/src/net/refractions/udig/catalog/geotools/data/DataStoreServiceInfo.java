@@ -35,7 +35,15 @@ public class DataStoreServiceInfo extends IServiceInfo {
         this.description = info.getDescription();
         this.keywords = (info.getKeywords() != null ? info.getKeywords().toArray(new String[0]) : new String[0]);
         this.publisher = info.getPublisher();
-        this.schema = info.getSchema();
+        /* 
+         * This is a horrible hack to handle null namespaces in Name
+         * If the namespace NPE's, we can just leave schema as it is.
+         */
+        try {
+            this.schema = info.getSchema();
+        } catch(NullPointerException ex) {
+            ;
+        }
         this.source = info.getSource();
         this.title = info.getTitle();
         if( title == null ){
