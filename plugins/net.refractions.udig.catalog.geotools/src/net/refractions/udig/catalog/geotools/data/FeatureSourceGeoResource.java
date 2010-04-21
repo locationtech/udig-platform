@@ -11,6 +11,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataAccess;
 import org.geotools.data.FeatureSource;
+import org.geotools.data.FeatureStore;
 import org.geotools.data.ResourceInfo;
 import org.opengis.feature.type.Name;
 
@@ -22,7 +23,7 @@ public class FeatureSourceGeoResource extends IGeoResource {
     public FeatureSourceGeoResource( DataStoreService service, Name name ) {
         this.service = service;
         this.name = name;
-        this.id = new ID( service.getID(), name.getLocalPart() );
+        this.id = new ID(service.getID(), name.getLocalPart());
     }
     public DataStoreService service( IProgressMonitor monitor ) throws IOException {
         return (DataStoreService) this.service;
@@ -42,7 +43,7 @@ public class FeatureSourceGeoResource extends IGeoResource {
     public ID getID() {
         return id;
     }
-    
+
     @Override
     public URL getIdentifier() {
         return id.toURL();
@@ -58,10 +59,19 @@ public class FeatureSourceGeoResource extends IGeoResource {
 
     @Override
     public <T> boolean canResolve( Class<T> adaptee ) {
-        return adaptee != null || FeatureSource.class.isAssignableFrom(adaptee)
+        if (adaptee == null) {
+            return false;
+        }
+        return adaptee.isInstance(this) ||
+            adaptee.isAssignableFrom( FeatureSourceGeoResourceInfo.class )
+            ||  adaptee.isAssignableFrom( FeatureSource.class ) ||
+            adaptee.isAssignableFrom(  FeatureStore.class )
+         
+         
                 || super.canResolve(adaptee);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
         if (monitor == null)
@@ -70,11 +80,21 @@ public class FeatureSourceGeoResource extends IGeoResource {
         if (adaptee == null) {
             throw new NullPointerException("No adaptor specified"); //$NON-NLS-1$
         }
-
-        if (DataAccess.class.isAssignableFrom(adaptee)) {
+        if (adaptee.isInstance(this)) {
+            return adaptee.cast(this);
+        }
+        if (adaptee.isAssignableFrom(FeatureSourceGeoResourceInfo.class)) {
+            return adaptee.cast(createInfo(monitor));
+        }
+        if (adaptee.isAssignableFrom(FeatureStore.class)) {
+            FeatureSource fs = toFeatureSource();
+            if (fs instanceof FeatureStore) {
+                return adaptee.cast(fs);
+            }
+        }
+        if (adaptee.isAssignableFrom(FeatureSource.class)) {
             return adaptee.cast(toFeatureSource());
         }
-
         return super.resolve(adaptee, monitor);
     }
 

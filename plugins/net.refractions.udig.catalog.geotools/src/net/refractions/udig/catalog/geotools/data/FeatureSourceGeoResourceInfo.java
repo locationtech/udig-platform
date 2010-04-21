@@ -28,4 +28,8 @@ public class FeatureSourceGeoResourceInfo extends IGeoResourceInfo {
         return info;
     }
     
+    public ResourceInfo getInfo() {
+        return info;
+    }
+    
 }
