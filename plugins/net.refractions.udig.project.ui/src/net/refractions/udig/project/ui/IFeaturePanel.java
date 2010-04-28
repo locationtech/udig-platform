@@ -65,6 +65,29 @@ public abstract class IFeaturePanel {
      * @param parent 
      */
     public abstract void createPartControl( Composite parent );    
+    
+    /**
+     * Called when the panel is about to be shown.
+     * <p>
+     * This is your chance to listen to the user interface fields
+     */
+    public void aboutToBeShown() {
+    }      
+    
+    /**
+     * Called when the panel is about to be hidden.
+     * <p>
+     * This is your chance to stop listening to the user interface fields
+     * </p>
+     */
+    public void aboutToBeHidden(){        
+    }
+    
+    /**
+     * Called to refresh screen contents; usually in response to a selection change.
+     */
+    public void refresh() {
+    }
     /**
      * Cleans up any resources (like icons) held by this StyleConfigurator.
      * <p>
@@ -74,5 +97,10 @@ public abstract class IFeaturePanel {
      */
     public void dispose(){
         // subclass should override
-    }   
+    }
+
+    public boolean controlsHaveBeenCreated() {
+        return false;
+    }
+ 
 }

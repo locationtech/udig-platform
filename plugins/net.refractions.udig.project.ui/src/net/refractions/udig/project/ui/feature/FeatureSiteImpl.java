@@ -12,6 +12,7 @@ import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.command.factory.SelectionCommandFactory;
 import net.refractions.udig.project.internal.impl.AbstractContextImpl;
 import net.refractions.udig.project.internal.render.RenderManager;
+import net.refractions.udig.project.ui.IFeatureSite;
 import net.refractions.udig.project.ui.commands.DrawCommandFactory;
 import net.refractions.udig.project.ui.commands.IDrawCommand;
 import net.refractions.udig.project.ui.internal.MapEditor;
@@ -53,7 +54,7 @@ import org.eclipse.ui.PlatformUI;
  * </p>
  * 
  */
-public class FeatureSiteImpl extends AbstractContextImpl implements ToolContext {
+public class FeatureSiteImpl extends AbstractContextImpl implements IFeatureSite {
 
     /**
      * The cached value of the '{@link #getDrawFactory() <em>Draw Factory</em>}' attribute. 

@@ -1,7 +1,17 @@
 package net.refractions.udig.feature.editor;
 
+import java.util.List;
+
+import net.refractions.udig.feature.editor.AbstractPageBookView.PageRec;
 import net.refractions.udig.internal.ui.UiPlugin;
+import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.ui.IFeatureSite;
+import net.refractions.udig.project.ui.feature.FeaturePanelProcessor;
+import net.refractions.udig.project.ui.feature.FeatureSiteImpl;
+import net.refractions.udig.project.ui.feature.FeaturePanelProcessor.FeaturePanelEntry;
+import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -12,6 +22,8 @@ import org.eclipse.ui.part.IPageBookViewPage;
 import org.eclipse.ui.part.MessagePage;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.PageBookView;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.FeatureType;
 
 /**
  * View allowing direct editing of the currently selected feature.
@@ -38,10 +50,10 @@ public class FeatureView2 extends PageBookView {
 
     @Override
     protected PageRec doCreatePage( IWorkbenchPart part ) {
-        IMap map = (IMap) part.getAdapter( IMap.class );
+        IMap map = (IMap) part.getAdapter( IMap.class );        
         if( map == null ) {
             MessagePage page = new MessagePage();
-            page.setMessage( part.getTitle() );
+            page.setMessage( "Please select a Map" );
             initPage( page );
             page.createControl(getPageBook());
             
@@ -49,13 +61,10 @@ public class FeatureView2 extends PageBookView {
             return rec;
         }
         
-        MessagePage page = new MessagePage();
-        page.setMessage( map.getName() );
-        initPage( page );
+        IPage page = (IPage) new FeaturePage(map.getEditManager());
+        initPage((IPageBookViewPage) page);
         page.createControl(getPageBook());
-        
-        PageRec rec = new PageRec( part, page );        
-        return rec;
+        return new PageRec(part, page);    
     }
 
     @Override

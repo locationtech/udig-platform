@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.swt.graphics.Image;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
@@ -82,11 +83,12 @@ public class FeaturePanelProcessor {
         private String description;
         private String afterPanel;
         private IConfigurationElement definition;
-
+        private boolean indented;
         private FeatureTypeMatch matcher;
-
+        private String category;
+        
         public FeaturePanelEntry( IExtension extension, IConfigurationElement definition ) {
-            this.PLUGIN_ID = extension.getContributor().getName();
+            this.PLUGIN_ID = definition.getDeclaringExtension().getNamespaceIdentifier();
             if (extension.getUniqueIdentifier() == null) {
                 this.EXTENSION_ID = "";
             } else {
@@ -106,6 +108,9 @@ public class FeaturePanelProcessor {
             } else {
                 matcher = FeatureTypeMatch.ALL;
             }
+            // to be configured later
+            indented = false;
+            category = null;
         }
         /**
          * We are going to check against the FeaturePanelCheck if available.
@@ -176,7 +181,15 @@ public class FeaturePanelProcessor {
         boolean isMatch( Object element ) {
             return matcher.isMatch(element);
         }
+        
+        public boolean isIndented() {
+            return indented;
+        }
 
+        public String getCategory() {
+            return category;
+        }
+        
         /**
          * Create an IFeaturePanel for use.
          * <p>
@@ -192,7 +205,7 @@ public class FeaturePanelProcessor {
          * 
          * @return IFeaturePanel
          */
-        IFeaturePanel createFeaturePanel() {
+        public IFeaturePanel createFeaturePanel() {
             try {
                 return (IFeaturePanel) definition.createExecutableExtension("panel");
             } catch (CoreException e) {
@@ -212,5 +225,10 @@ public class FeaturePanelProcessor {
             IStatus error = new Status(IStatus.ERROR, PLUGIN_ID, message + EXTENSION_ID, t);
             ProjectPlugin.getPlugin().getLog().log(error);
         }
+        
+        public Image getImage() {
+            return null;
+        }
+
     }
 }
