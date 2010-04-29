@@ -16,29 +16,29 @@
  */
 package net.refractions.udig.project.ui.feature;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.CompositeCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.command.factory.EditCommandFactory;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
+import net.refractions.udig.project.internal.commands.edit.SetAttributesCommand;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.geotools.feature.DecoratingFeature;
-import org.geotools.feature.IllegalAttributeException;
 import org.opengis.feature.GeometryAttribute;
+import org.opengis.feature.IllegalAttributeException;
 import org.opengis.feature.Property;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.feature.type.Name;
+import org.opengis.feature.type.PropertyDescriptor;
 
 import com.vividsolutions.jts.geom.Geometry;
 
@@ -49,11 +49,8 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class EditFeature extends DecoratingFeature implements IAdaptable, SimpleFeature {
     private IEditManager manager;
-    
-    /**
-     * True if the feature has been edited.
-     */
-    boolean isDirty=true;
+
+    private Set<String> dirty = new LinkedHashSet<String>(); // we no longer need this
 
     /**
      * Construct <code>AdaptableFeature</code>.
@@ -62,21 +59,22 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
      * @param evaluationObject the layer that contains the feature.
      */
     public EditFeature( IEditManager manager ) {
-        super( manager.getEditFeature() );
+        super(manager.getEditFeature());
         this.manager = manager;
     }
 
     /**
      * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
      */
+    @SuppressWarnings("unchecked")
     public Object getAdapter( Class adapter ) {
         if (IEditManager.class.isAssignableFrom(adapter)) {
-            if (manager != null){
+            if (manager != null) {
                 return manager;
             }
         }
         if (ILayer.class.isAssignableFrom(adapter)) {
-            if (manager != null){
+            if (manager != null) {
                 return manager.getEditLayer();
             }
         }
@@ -84,62 +82,107 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
     }
 
     @Override
-    public boolean equals(Object obj) {
-    	return delegate.equals( obj );
+    public boolean equals( Object obj ) {
+        return delegate.equals(obj);
     }
     @Override
     public int hashCode() {
-    	return delegate.hashCode();
+        return delegate.hashCode();
     }
-    
+
     @Override
     public void setAttribute( int index, Object value ) {
-        isDirty = true;
         SimpleFeatureType schema = getFeatureType();
-        AttributeDescriptor attribute = schema.getAttributeDescriptors().get( index );
-        
-        SetAttributeCommand sync = new SetAttributeCommand( attribute.getLocalName(), value);
-        
-        manager.getMap().sendCommandASync( sync );
+        AttributeDescriptor attribute = schema.getAttributeDescriptors().get(index);
+        String name = attribute.getLocalName();
+        SetAttributeCommand sync = new SetAttributeCommand(name, value);
+        dirty.add(name);
+        manager.getMap().sendCommandASync(sync);
     }
     @Override
     public void setAttribute( Name name, Object value ) {
-        isDirty = true;
-        EditCommandFactory factory = EditCommandFactory.getInstance();
-
-        UndoableMapCommand sync = factory.createSetAttributeCommand( name.getLocalPart(), value);
-        manager.getMap().sendCommandASync( sync );
+        SetAttributeCommand sync = new SetAttributeCommand(name.getLocalPart(), value);
+        dirty.add(name.getLocalPart());
+        manager.getMap().sendCommandASync(sync);
     }
     @Override
-    public void setAttribute( String path, Object attribute ) {
-        // TODO: call edit manager with a setAttribute command!
+    public void setAttribute( String path, Object value ) {
+        //System.out.println("made it to set attribute");
+        SetAttributeCommand sync = new SetAttributeCommand(path, value);
+        //System.out.println("made it to before dirty");
+        dirty.add(path);
+        //System.out.println("made it to after dirty");
+        manager.getMap().sendCommandASync(sync);
     }
     @Override
-    public void setAttributes( List<Object> arg0 ) {
-        // TODO: call edit manager with a setAttribute command!
+    public void setAttributes( List<Object> values ) {
+        String[] xpath;
+        Object[] value;
+        ArrayList<String> xpathlist = new ArrayList<String>();
+        SimpleFeatureType schema = getFeatureType();
+        for( PropertyDescriptor x : schema.getDescriptors() ) {
+            xpathlist.add(x.getName().getLocalPart());
+            dirty.add(x.getName().getLocalPart());
+        }
+        xpath = xpathlist.toArray(new String[xpathlist.size()]);
+        value = values.toArray();
+        SetAttributesCommand sync = new SetAttributesCommand(xpath, value);
+        manager.getMap().sendCommandASync(sync);
     }
     @Override
-    public void setAttributes( Object[] arg0 ) {
-        // TODO: call edit manager with a setAttribute command!
+    public void setAttributes( Object[] values ) {
+        String[] xpath;
+        ArrayList<String> xpathlist = new ArrayList<String>();
+        SimpleFeatureType schema = getFeatureType();
+        for( PropertyDescriptor x : schema.getDescriptors() ) {
+            xpathlist.add(x.getName().getLocalPart());
+        }
+        dirty.addAll(xpathlist);
+        xpath = xpathlist.toArray( new String[xpathlist.size()]);
+        SetAttributesCommand sync = new SetAttributesCommand(xpath, values);
+        manager.getMap().sendCommandASync(sync);
     }
     @Override
+    // This is simply the same as in DecoratingFeature.class
     public void setDefaultGeometry( Object geometry ) {
-        // TODO: call edit manager with a setAttribute command!
+        GeometryDescriptor geometryDescriptor = getFeatureType().getGeometryDescriptor();
+        setAttribute(geometryDescriptor.getName(), geometry);
     }
     @Override
-    public void setDefaultGeometryProperty( GeometryAttribute arg0 ) {
-        // TODO: call edit manager with a setAttribute command!
+    public void setDefaultGeometryProperty( GeometryAttribute geometryAttribute ) {
+        if (geometryAttribute != null)
+            setDefaultGeometry(geometryAttribute.getValue());
+        else
+            setDefaultGeometry(null);
     }
+
     @Override
-    public void setValue( Collection<Property> arg0 ) {
-        // TODO: call edit manager with a setAttribute command!
+    public void setValue( Collection<Property> values ) {
+        throw new UnsupportedOperationException();
     }
+
     @Override
-    public void setValue( Object arg0 ) {
-        // TODO: call edit manager with a setAttribute command!
+    public void setValue( Object value ) {
+        throw new UnsupportedOperationException();
     }
+
     @Override
     public void setDefaultGeometry( Geometry geometry ) throws IllegalAttributeException {
-        // TODO: call edit manager with a setAttribute command!
+        GeometryDescriptor geometryDescriptor = getFeatureType().getGeometryDescriptor();
+        setAttribute(geometryDescriptor.getName(), geometry);
+    }
+
+    public boolean isDirty( String name ) {
+        //System.out.println("Inside is dirty");
+        // //System.out.println(name);
+        return dirty.contains((Object) name);
+    }
+
+    public void setDirty( String name ) {
+        dirty.add(name);
+    }
+
+    public void clean() {
+        dirty.clear();
     }
 }
