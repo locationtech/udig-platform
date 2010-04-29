@@ -28,9 +28,16 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.geotools.feature.FeatureTypes;
+import org.geotools.feature.Schema;
+import org.geotools.feature.type.Types;
 import org.geotools.util.Converters;
+import org.opengis.feature.Attribute;
+import org.opengis.feature.IllegalAttributeException;
+import org.opengis.feature.Property;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.filter.Filter;
 
 /**
  * Attribute field for a string type attribute.
@@ -209,7 +216,22 @@ public class StringAttributeField extends AttributeField {
      * @return <code>true</code> if the field value is valid, and <code>false</code> if invalid
      */
     protected boolean doCheckState() {
-        return true;
+        SimpleFeatureType schema = getFeature().getFeatureType();
+        AttributeDescriptor descriptor = schema.getDescriptor( getAttributeName());  
+        String text = textField.getText();
+        
+        if( text == null || text.length() == 0){
+            return !descriptor.isNillable();
+        }
+        Object value = Converters.convert( text, descriptor.getType().getBinding() );        
+        try {
+            Types.validate(descriptor, value);
+            return true;
+        }
+        catch (IllegalAttributeException bad){
+            errorMessage = bad.getLocalizedMessage();
+            return false;
+        }
     }
 
     /**
