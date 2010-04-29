@@ -1,11 +1,18 @@
 package net.refractions.udig.project.ui;
 
-import net.refractions.udig.project.ui.tool.IToolContext;
-
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PartInitException;
 
+/**
+ * Contribute a panel for editing a specific feature type to the user interface.
+ * <p>
+ * Panels are expected to be displayed in a view (using a series of tabs) and also in a dialog
+ * or wizard page.
+ * 
+ * @author Jody
+ * @since 1.2.0
+ */
 public abstract class IFeaturePanel {
     /** extension point id **/
     public static final String XPID = "net.refractions.udig.project.ui.featurePanel"; //$NON-NLS-1$

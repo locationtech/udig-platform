@@ -1,4 +1,4 @@
-package net.refractions.udig.featureEditor;
+package net.refractions.udig.feature.editor;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;

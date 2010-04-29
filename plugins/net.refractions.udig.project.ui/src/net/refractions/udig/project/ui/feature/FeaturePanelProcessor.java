@@ -130,6 +130,9 @@ public class FeaturePanelProcessor {
         private IFeaturePanelCheck getFeaturePanelCheck() {
             return new IFeaturePanelCheck(){
                 public boolean check( IFeatureSite site ) {
+                    if( site == null ){
+                        return false;
+                    }
                     ILayer editLayer = site.getEditManager().getEditLayer();
                     SimpleFeatureType featureType = editLayer.getSchema();                    
                     return isMatch( featureType );

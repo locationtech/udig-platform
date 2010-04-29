@@ -3,6 +3,8 @@ package net.refractions.udig.feature.editor;
 import java.util.List;
 
 import net.refractions.udig.feature.editor.AbstractPageBookView.PageRec;
+import net.refractions.udig.feature.panel.FeaturePanelPage;
+import net.refractions.udig.feature.panel.FeaturePanelPageContributor;
 import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
@@ -28,15 +30,40 @@ import org.opengis.feature.type.FeatureType;
 /**
  * View allowing direct editing of the currently selected feature.
  * <p>
- * The currently selected feature is handled by the EditManager.
+ * The currently selected feature is handled by the EditManager; and is communicated with
+ * the a page via a FeatureSite. We also have a special EditFeature implementation
+ * where each setAttribute call is backed by a command.
+ * </p>
  * 
- * @author jodyg
+ * @author Jody
  * @since 1.2.0
  */
-public class FeatureView2 extends PageBookView {
+public class FeatureView2 extends PageBookView implements FeaturePanelPageContributor {
 
     public static final String ID = "net.refractions.udig.feature.editor.featureView";
-
+    
+    private IWorkbenchPart contributor;
+    
+    public void setContributor( IWorkbenchPart part ) {
+        this.contributor = part;
+    }
+    
+    public SimpleFeatureType getSchema() {
+        if(  getCurrentContributingPart() != null ){
+            contributor = getCurrentContributingPart();
+        }
+        return getSchema( contributor );
+    }
+    
+    private SimpleFeatureType getSchema( IWorkbenchPart part ){
+        IMap map = (IMap) part.getAdapter( IMap.class );        
+        if( map == null ) {
+            return null; // not today!
+        }
+        return map.getEditManager().getSelectedLayer().getSchema();
+    }
+    
+    
     @Override
     protected IPage createDefaultPage( PageBook book ) {
         MessagePage page = new MessagePage();        
@@ -47,7 +74,7 @@ public class FeatureView2 extends PageBookView {
         
         return page;
     }
-
+    
     @Override
     protected PageRec doCreatePage( IWorkbenchPart part ) {
         IMap map = (IMap) part.getAdapter( IMap.class );        
@@ -60,8 +87,8 @@ public class FeatureView2 extends PageBookView {
             PageRec rec = new PageRec( part, page );        
             return rec;
         }
-        
-        IPage page = (IPage) new FeaturePage(map.getEditManager());
+        setContributor( part );
+        IPage page = (IPage) new FeaturePanelPage( this );
         initPage((IPageBookViewPage) page);
         page.createControl(getPageBook());
         return new PageRec(part, page);    
