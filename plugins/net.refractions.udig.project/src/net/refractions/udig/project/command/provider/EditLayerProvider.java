@@ -15,16 +15,18 @@ public class EditLayerProvider implements IBlockingProvider<ILayer> {
 
 	private MapCommand command;
     private IMap map;
-    public EditLayerProvider( SetAttributeCommand command, MapCommand command2 ) {
-        this.command = command;
-		this.command = command2;
+    
+    public EditLayerProvider( MapCommand command ) {
+		this.command = command;
     }
+    
     public EditLayerProvider( IMap map ) {
         this.map=map;
     }
     public ILayer get( IProgressMonitor monitor, Object... params ) {
-        if( map!=null )
+        if( map!=null ){
             return map.getEditManager().getEditLayer();
+        }
         return command.getMap().getEditManager().getEditLayer();
     }
 }

@@ -84,7 +84,7 @@ public class SetAttributeCommand extends AbstractEditCommand implements Undoable
      */
     public SetAttributeCommand( String xpath, Object value ) {
         editFeature=new EditFeatureProvider(this);
-        editLayer=new EditLayerProvider(this, this);
+        editLayer=new EditLayerProvider(this);
         this.xpath=xpath;
         this.value=value; 
     }
