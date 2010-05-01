@@ -134,7 +134,7 @@ public class StringAttributeField extends AttributeField {
         widthInChars = width;
         setValidateStrategy(strategy);
         isValid = false;
-        errorMessage = JFaceResources.getString("StringFieldEditor.errorMessage");//$NON-NLS-1$
+        errorMessage = JFaceResources.getString("StringAttributeField.errorMessage");//$NON-NLS-1$
         createControl(parent);
     }
 
@@ -164,7 +164,7 @@ public class StringAttributeField extends AttributeField {
     }
 
     /*
-     * (non-Javadoc) Method declared on FieldEditor.
+     * (non-Javadoc) Method declared on AttributeField.
      */
     protected void adjustForNumColumns( int numColumns ) {
         GridData gd = (GridData) textField.getLayoutData();
@@ -237,7 +237,7 @@ public class StringAttributeField extends AttributeField {
     /**
      * Fills this field editor's basic controls into the given parent.
      * <p>
-     * The string field implementation of this <code>FieldEditor</code> framework method contributes
+     * The string field implementation of this <code>AttributeField</code> framework method contributes
      * the text field. Subclasses may override but must call <code>super.doFillIntoGrid</code>.
      * </p>
      */
@@ -263,7 +263,7 @@ public class StringAttributeField extends AttributeField {
     }
 
     /*
-     * (non-Javadoc) Method declared on FieldEditor.
+     * (non-Javadoc) Method declared on AttributeField.
      */
     protected void doLoad() {
         if (textField != null) {
@@ -276,7 +276,7 @@ public class StringAttributeField extends AttributeField {
     }
 
     /*
-     * (non-Javadoc) Method declared on FieldEditor.
+     * (non-Javadoc) Method declared on AttributeField.
      */
     protected void doLoadDefault() {
         if (textField != null) {
@@ -291,7 +291,7 @@ public class StringAttributeField extends AttributeField {
     }
 
     /*
-     * (non-Javadoc) Method declared on FieldEditor.
+     * (non-Javadoc) Method declared on AttributeField.
      */
     protected void doStore() {
         SimpleFeatureType schema = getFeature().getFeatureType();
@@ -312,7 +312,7 @@ public class StringAttributeField extends AttributeField {
     }
 
     /*
-     * (non-Javadoc) Method declared on FieldEditor.
+     * (non-Javadoc) Method declared on AttributeField.
      */
     public int getNumberOfControls() {
         return 2;
@@ -425,14 +425,14 @@ public class StringAttributeField extends AttributeField {
     }
 
     /*
-     * (non-Javadoc) Method declared on FieldEditor.
+     * (non-Javadoc) Method declared on AttributeField.
      */
     public boolean isValid() {
         return isValid;
     }
 
     /*
-     * (non-Javadoc) Method declared on FieldEditor.
+     * (non-Javadoc) Method declared on AttributeField.
      */
     protected void refreshValidState() {
         isValid = checkState();
@@ -458,7 +458,7 @@ public class StringAttributeField extends AttributeField {
     }
 
     /*
-     * (non-Javadoc) Method declared on FieldEditor.
+     * (non-Javadoc) Method declared on AttributeField.
      */
     public void setFocus() {
         if (textField != null) {
@@ -546,7 +546,7 @@ public class StringAttributeField extends AttributeField {
     }
 
     /*
-     * @see FieldEditor.setEnabled(boolean,Composite).
+     * @see AttributeField.setEnabled(boolean,Composite).
      */
     public void setEnabled( boolean enabled, Composite parent ) {
         super.setEnabled(enabled, parent);
