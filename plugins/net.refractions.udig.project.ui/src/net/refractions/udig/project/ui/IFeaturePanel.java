@@ -54,9 +54,9 @@ public abstract class IFeaturePanel {
      * @param memento Used to access any prior history recorded by this feature panel
      * @throws PartInitException 
      */
-    public void init(IFeatureSite site, IMemento memento) throws PartInitException{
-        init( site, memento );
+    public void init(IFeatureSite site, IMemento memento) throws PartInitException{        
     }     
+    
     /**
      * Creates the control that is to be used to configure the style.
      * <p>
