@@ -13,12 +13,14 @@ import net.refractions.udig.project.ui.feature.FeatureSiteImpl;
 import net.refractions.udig.project.ui.feature.FeaturePanelProcessor.FeaturePanelEntry;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.Page;
@@ -29,6 +31,9 @@ import org.opengis.feature.simple.SimpleFeatureType;
 /**
  * FeaturePage is used to show a series of feature panels and allow interaction with
  * the EditManager.
+ * <p>
+ * Implement ILabelProviderListener if you would like FeatureView to notify you
+ * of workbench changes.
  * 
  * @since 1.2.0
  */
@@ -36,12 +41,15 @@ import org.opengis.feature.simple.SimpleFeatureType;
 public class FeaturePage extends Page implements IPage {
 
     private IEditManager editManager;
+    
     CLabel title;
+    
     private IEditManagerListener listener = new IEditManagerListener(){        
         public void changed( EditManagerEvent event ) {
             refresh( event );
         }
     };
+    
     /**
      * Refresh the user interface in response to an event from the edit manager
      * (currently only focuses on the EDIT_FEATURE events).

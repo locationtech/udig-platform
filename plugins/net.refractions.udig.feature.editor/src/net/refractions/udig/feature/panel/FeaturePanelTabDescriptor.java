@@ -62,20 +62,22 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 	 *            the configuration element for the tab descriptor.
 	 */
 	public FeaturePanelTabDescriptor(FeaturePanelEntry entry) {
-		if (entry != null) {
-			id = entry.getId(); 
-			label = entry.getName();
-			image = entry.getImage();			
-			indented = entry.isIndented();
-			category = entry.getCategory();
-			afterTab = entry.getAfterPanel();
-			if (id == null || label == null || category == null) {
-				// the tab id, label and category are mandatory - log error
-			    String message = MessageFormat.format(TAB_ERROR,
-		                new Object[] { entry.getId() });
-			    entry.log( message, null );
-			}
+		if (entry == null) {
+		    throw new NullPointerException("Feature Panel Entry required");
 		}
+		id = entry.getId(); 
+		label = entry.getName();
+		image = entry.getImage();			
+		indented = entry.isIndented();
+		category = entry.getCategory();
+		afterTab = entry.getAfterPanel();
+		if (id == null || label == null || category == null) {
+			// the tab id, label and category are mandatory - log error
+		    String message = MessageFormat.format(TAB_ERROR,
+	                new Object[] { entry.getId() });
+		    entry.log( message, null );
+		}
+		this.entry = entry;
 		selected = false;
 	}
 

@@ -885,6 +885,9 @@ public class FeaturePanelPage extends Page implements ILabelProviderListener, IS
         }
 
         SimpleFeatureType selectionSchema = newContributor.getSchema();
+        if( selectionSchema == null ){
+            return;
+        }
         if (selectionSchema.equals(currentSchema)) {
             // selection has the same contributor id as current, so leave existing registry.
             return;

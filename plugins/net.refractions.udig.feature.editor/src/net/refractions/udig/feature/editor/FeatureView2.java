@@ -16,15 +16,20 @@ import net.refractions.udig.project.ui.feature.FeatureSiteImpl;
 import net.refractions.udig.project.ui.feature.FeaturePanelProcessor.FeaturePanelEntry;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.part.IPageBookViewPage;
 import org.eclipse.ui.part.MessagePage;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.PageBookView;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.FeatureType;
 
@@ -42,21 +47,68 @@ import org.opengis.feature.type.FeatureType;
  * @author Jody
  * @since 1.2.0
  */
-public class FeatureView2 extends PageBookView implements FeaturePanelPageContributor {
+public class FeatureView2 extends PageBookView implements ISelectionListener, FeaturePanelPageContributor {
 
     public static final String ID = "net.refractions.udig.feature.editor.featureView";
     
-    private IWorkbenchPart contributor;
+    //private IWorkbenchPart contributor;
+        
+    /**
+     * The current selection of the property sheet
+     */
+    private ISelection currentSelection;
+
+    /**
+     * The current part for which this property sheets is active
+     */
+    private IWorkbenchPart currentPart;
     
     public void setContributor( IWorkbenchPart part ) {
-        this.contributor = part;
+        this.currentPart = part;
     }
+    
+    @Override
+    public void init( IViewSite site ) throws PartInitException {
+        site.getPage().addSelectionListener(this);
+        super.init(site);
+    }
+    
+    public void dispose() {
+        super.dispose(); // run super
+
+        // remove ourselves as a selection listener
+        getSite().getPage().removeSelectionListener(this);
+        
+        currentPart = null;
+        currentSelection = null;
+    }
+    
+    public void selectionChanged(IWorkbenchPart part, ISelection sel) {
+        if (sel == null || !isImportant(part) || sel.equals(currentSelection)) {
+            return;
+        }
+        
+        // we ignore selection if we are hidden OR selection is coming from another source as the last one
+        if(part == null || !part.equals(currentPart)){
+            return;
+        }
+        
+        currentPart = part;
+        currentSelection = sel;
+        
+        // pass the selection to the page       
+        IPage page = getCurrentPage(); // We are expecting a FeaturePanelPage here
+        if (page != null && page instanceof ISelectionListener) {
+            ISelectionListener notifyPage = (ISelectionListener) page;
+            notifyPage.selectionChanged(part, currentSelection);
+        }
+    }    
     
     public SimpleFeatureType getSchema() {
         if(  getCurrentContributingPart() != null ){
-            contributor = getCurrentContributingPart();
+            currentPart = getCurrentContributingPart();
         }
-        return getSchema( contributor );
+        return getSchema( currentPart );
     }
     
     private SimpleFeatureType getSchema( IWorkbenchPart part ){

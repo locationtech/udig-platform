@@ -202,10 +202,14 @@ public class FeaturePanelRegistry {
         
         List<FeaturePanelTabDescriptor> result = new ArrayList<FeaturePanelTabDescriptor>();
         for( FeaturePanelTabDescriptor descriptor : descriptors ) {
-            if (descriptor.getEntry().isMatch(schema)) {
+            FeaturePanelEntry entry = descriptor.getEntry();
+            if( entry == null ){
+                continue; // that is wrong!
+            }
+            if (entry.isMatch(schema)) {
                 result.add(descriptor);
             }
-            else if ( descriptor.getEntry().isChecked(site)){
+            else if ( entry.isChecked(site)){
                 result.add(descriptor);
             }
         }
