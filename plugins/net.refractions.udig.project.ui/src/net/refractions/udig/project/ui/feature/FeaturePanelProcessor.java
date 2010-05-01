@@ -1,6 +1,7 @@
 package net.refractions.udig.project.ui.feature;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.refractions.udig.core.internal.ExtensionPointProcessor;
@@ -45,8 +46,7 @@ public class FeaturePanelProcessor {
                         FeaturePanelEntry entry = new FeaturePanelEntry(extension, element);
                         featurePanelList.add(entry);
                     }
-                }
-        );
+                });
     }
     /**
      * List of FeaturePanelEntry that can match the provided element (usually a SimpleFeature).
@@ -56,14 +56,32 @@ public class FeaturePanelProcessor {
      * @param element
      * @return List matching FeaturePanelEntry
      */
-    public List<FeaturePanelEntry> search( Object element, IFeatureSite site ){
+    public List<FeaturePanelEntry> search( Object element ) {
         List<FeaturePanelEntry> search = new ArrayList<FeaturePanelEntry>();
-        for( FeaturePanelEntry entry : featurePanelList ){
-            if( entry.isChecked( site )){
-                search.add( entry );
+        for( FeaturePanelEntry entry : featurePanelList ) {
+            if (entry.isMatch(element)) {
+                search.add(entry);
             }
         }
         return search;
+    }
+    public List<FeaturePanelEntry> check( IFeatureSite site ) {
+        List<FeaturePanelEntry> search = new ArrayList<FeaturePanelEntry>();
+        for( FeaturePanelEntry entry : featurePanelList ) {
+            if (entry.isChecked(site)) {
+                search.add(entry);
+            }
+        }
+        return search;
+    }
+
+    /**
+     * Used to access all known FeaturePanelEntry.
+     * 
+     * @return List of all known FeaturePanelEntry
+     */
+    public List<FeaturePanelEntry> entries() {
+        return Collections.unmodifiableList(featurePanelList);
     }
 
     /**
@@ -86,7 +104,8 @@ public class FeaturePanelProcessor {
         private boolean indented;
         private FeatureTypeMatch matcher;
         private String category;
-        
+        private IFeaturePanelCheck check;
+
         public FeaturePanelEntry( IExtension extension, IConfigurationElement definition ) {
             this.PLUGIN_ID = definition.getDeclaringExtension().getNamespaceIdentifier();
             if (extension.getUniqueIdentifier() == null) {
@@ -114,32 +133,28 @@ public class FeaturePanelProcessor {
         }
         /**
          * We are going to check against the FeaturePanelCheck if available.
-         *
+         * 
          * @param site
          * @return true if the form should be used
          */
         public boolean isChecked( IFeatureSite site ) {
-            IFeaturePanelCheck check = getFeaturePanelCheck();
-            if( check != null && check.check( site )){
-                return true; // this one works!
+            if (site == null) {
+                return false; // cannot check an empty site
             }
-            return false;
+            if (check == null) {
+                if (definition.getAttribute("check") == null) {
+                    check = IFeaturePanelCheck.NONE;
+                } else {
+                    try {
+                        check = (IFeaturePanelCheck) definition.createExecutableExtension("check");
+                    } catch (CoreException e) {
+                        check = IFeaturePanelCheck.NONE; // fail!
+                    }
+                }
+            }
+            return check.check(site);
         }
 
-        /** Default implementation just checks schema implementation */
-        private IFeaturePanelCheck getFeaturePanelCheck() {
-            return new IFeaturePanelCheck(){
-                public boolean check( IFeatureSite site ) {
-                    if( site == null ){
-                        return false;
-                    }
-                    ILayer editLayer = site.getEditManager().getEditLayer();
-                    SimpleFeatureType featureType = editLayer.getSchema();                    
-                    return isMatch( featureType );
-                }
-            };
-        }
-        
         public String getId() {
             return id;
         }
@@ -181,10 +196,10 @@ public class FeaturePanelProcessor {
          * @param element
          * @return true if the feature panel can be used
          */
-        boolean isMatch( Object element ) {
+        public boolean isMatch( Object element ) {
             return matcher.isMatch(element);
         }
-        
+
         public boolean isIndented() {
             return indented;
         }
@@ -192,7 +207,7 @@ public class FeaturePanelProcessor {
         public String getCategory() {
             return category;
         }
-        
+
         /**
          * Create an IFeaturePanel for use.
          * <p>
@@ -228,7 +243,7 @@ public class FeaturePanelProcessor {
             IStatus error = new Status(IStatus.ERROR, PLUGIN_ID, message + EXTENSION_ID, t);
             ProjectPlugin.getPlugin().getLog().log(error);
         }
-        
+
         public Image getImage() {
             return null;
         }

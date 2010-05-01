@@ -105,7 +105,7 @@ public class FeatureView3 extends AbstractPageBookView<ILayer> {
         IFeatureSite site = null;
         SimpleFeatureType schema = layer.getSchema();
         
-        List<FeaturePanelEntry> avaialble = panels.search(schema, site);
+        List<FeaturePanelEntry> avaialble = panels.search(schema);
         
         IMap map = ApplicationGIS.getActiveMap();
         if (!avaialble.isEmpty()) {

@@ -104,7 +104,7 @@ public class FeatureView extends AbstractPageBookView<SimpleFeatureType> {
         }
         FeaturePanelProcessor panels = ProjectUIPlugin.getDefault().getFeaturePanelProcessor();
         IFeatureSite site = null;
-        List<FeaturePanelEntry> avaialble = panels.search(schema, site);
+        List<FeaturePanelEntry> avaialble = panels.search(schema);
 
         IMap map = ApplicationGIS.getActiveMap();
         if (!avaialble.isEmpty()) {

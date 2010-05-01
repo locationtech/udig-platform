@@ -8,9 +8,19 @@ package net.refractions.udig.project.ui;
  */
 public abstract class IFeaturePanelCheck {
     /**
+     * Used to indicate this feature panel is statically checked; and does not need to evaulate
+     * against the provided site.
+     */
+    public static IFeaturePanelCheck NONE = new IFeaturePanelCheck(){
+        public boolean check( IFeatureSite site ) {
+            return false; // not dynamic
+        }
+    };
+    
+    /**
      * Check the indicated feature site to see if your feature form
      * can operate.
-     *
+     * 
      * @param site
      * @return true if your feature form can operate.
      */

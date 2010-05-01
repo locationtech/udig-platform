@@ -82,7 +82,7 @@ public class FeaturePanelRegistryFactory {
 		CacheData data = (CacheData) idToCacheData.get(key);
 		if (data == null) {
 			data = new CacheData();
-			data.registry = new FeaturePanelRegistry(target);
+			data.registry = new FeaturePanelRegistry(key);
 			data.references = new ArrayList(5);
 			idToCacheData.put(key, data);
 		}

@@ -2,6 +2,8 @@ package net.refractions.udig.project.ui.feature;
 
 import java.awt.Rectangle;
 
+import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.Command;
 import net.refractions.udig.project.command.EditCommand;
 import net.refractions.udig.project.command.MapCommand;
@@ -92,6 +94,12 @@ public class FeatureSiteImpl extends AbstractContextImpl implements IFeatureSite
     private final BasicCommandFactory basicCommandFactory=BasicCommandFactory.getInstance();
 
     public FeatureSiteImpl( ) {        
+    }
+    public FeatureSiteImpl( ILayer layer ) {
+        this( layer.getMap() );
+    }
+    public FeatureSiteImpl( IMap map ) {
+        
     }
     
     /**

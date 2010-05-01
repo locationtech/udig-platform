@@ -44,7 +44,7 @@ import org.eclipse.ui.IWorkbenchPart;
 public class FeaturePanelViewer extends StructuredViewer {
 
 	protected FeaturePanelList list;
-	protected List elements;
+	protected List<FeaturePanelTabDescriptor> elements;
 	protected IWorkbenchPart part;
 
 	/**
@@ -56,7 +56,7 @@ public class FeaturePanelViewer extends StructuredViewer {
 	public FeaturePanelViewer(FeaturePanelList list) {
 		this.list = list;
 		hookControl(list);
-		elements = new ArrayList();
+		elements = new ArrayList<FeaturePanelTabDescriptor>();
 	}
 
 	/**
@@ -98,12 +98,12 @@ public class FeaturePanelViewer extends StructuredViewer {
 		/* not implemented */
 	}
 
-	protected List getSelectionFromWidget() {
+	protected List<Object> getSelectionFromWidget() {
 		int index = list.getSelectionIndex();
 		if (index == FeaturePanelList.NONE) {
 			return Collections.EMPTY_LIST;
 		}
-		List result = new ArrayList(1);
+		List<Object> result = new ArrayList<Object>(1);
 		result.add(getElementAt(index));
 		return result;
 	}
@@ -145,12 +145,12 @@ public class FeaturePanelViewer extends StructuredViewer {
 		Object[] children = getSortedChildren(getRoot());
 		list.removeAll();
 		for (int i = 0; i < children.length; i++) {
-			elements.add(children[i]);
+			elements.add( (FeaturePanelTabDescriptor) children[i]);
 			mapElement(children[i], list);
 		}
 		list.setElements(children);
 	}
-
+    
 	/**
 	 * Set the input for viewer.
 	 * 

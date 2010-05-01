@@ -22,16 +22,12 @@ package net.refractions.udig.feature.panel;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.feature.editor.FeatureEditorPlugin;
-import net.refractions.udig.feature.editor.FeatureView2;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.IFeaturePanel;
 import net.refractions.udig.project.ui.IFeatureSite;
 import net.refractions.udig.project.ui.feature.FeaturePanelProcessor.FeaturePanelEntry;
@@ -66,36 +62,29 @@ import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.internal.views.properties.tabbed.view.TabbedPropertyComposite;
-import org.eclipse.ui.internal.views.properties.tabbed.view.TabbedPropertyRegistry;
-import org.eclipse.ui.internal.views.properties.tabbed.view.TabbedPropertyRegistryFactory;
 import org.eclipse.ui.internal.views.properties.tabbed.view.TabbedPropertyTitle;
-import org.eclipse.ui.internal.views.properties.tabbed.view.TabbedPropertyViewer;
 import org.eclipse.ui.part.IContributedContentsView;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.part.PageBookView;
-import org.eclipse.ui.views.properties.IPropertySheetPage;
-import org.eclipse.ui.views.properties.PropertySheet;
+import org.eclipse.ui.views.properties.tabbed.AbstractOverridableTabListPropertySection;
 import org.eclipse.ui.views.properties.tabbed.IOverridableTabListContentProvider;
-import org.eclipse.ui.views.properties.tabbed.ITabItem;
-import org.eclipse.ui.views.properties.tabbed.ITabSelectionListener;
-import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabContents;
+import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.FeatureType;
 
 /**
  * A tabbed UI showing feature panels.
  * 
  * @see TabbedPropertySheetPage
  */
-public class FeaturePanelPage extends Page implements ILabelProviderListener {
+public class FeaturePanelPage extends Page implements ILabelProviderListener, ISelectionListener {
     private IFeatureSite site;
     
     /**
@@ -142,7 +131,7 @@ public class FeaturePanelPage extends Page implements ILabelProviderListener {
 
     private IWorkbenchWindow cachedWorkbenchWindow;
 
-    private boolean hasTitleBar;
+    private boolean hasTitleBar = true;
     
     /**
      * A listener that is interested in part activation events.
@@ -377,12 +366,11 @@ public class FeaturePanelPage extends Page implements ILabelProviderListener {
         formData.bottom = new FormAttachment(100, 0);
         tabbedPropertyComposite.setLayoutData(formData);
 
-        tabbedPropertyViewer =
-            new FeaturePanelViewer(tabbedPropertyComposite.getList());
+        FeaturePanelList list = tabbedPropertyComposite.getList();
+        tabbedPropertyViewer = new FeaturePanelViewer(list);
         tabbedPropertyViewer.setContentProvider(tabListContentProvider);
         tabbedPropertyViewer.setLabelProvider(new TabbedPropertySheetPageLabelProvider());
         tabbedPropertyViewer.addSelectionChangedListener(new SelectionChangedListener());
-
         tabbedPropertyComposite.getScrolledComposite().addControlListener(new ControlAdapter(){
 
             public void controlResized( ControlEvent e ) {
@@ -553,6 +541,7 @@ public class FeaturePanelPage extends Page implements ILabelProviderListener {
      */
     public void selectionChanged( IWorkbenchPart part, ISelection selection ) {
         setInput(part, selection);
+        tabbedPropertyViewer.refresh();
     }
 
     /**

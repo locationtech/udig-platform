@@ -98,8 +98,9 @@ public class FeaturePage extends Page implements IPage {
             return;
         }
         FeaturePanelProcessor panels = ProjectUIPlugin.getDefault().getFeaturePanelProcessor();
-        IFeatureSite site = new FeatureSiteImpl();
-        List<FeaturePanelEntry> avaialble = panels.search(schema, site);
+        IFeatureSite site = new FeatureSiteImpl(editManager.getMap());
+        
+        List<FeaturePanelEntry> avaialble = panels.search(schema);
         for( FeaturePanelEntry entry : avaialble ){
             
         }

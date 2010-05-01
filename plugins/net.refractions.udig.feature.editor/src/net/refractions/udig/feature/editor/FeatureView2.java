@@ -6,6 +6,7 @@ import net.refractions.udig.feature.editor.AbstractPageBookView.PageRec;
 import net.refractions.udig.feature.panel.FeaturePanelPage;
 import net.refractions.udig.feature.panel.FeaturePanelPageContributor;
 import net.refractions.udig.internal.ui.UiPlugin;
+import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.ApplicationGIS;
@@ -33,7 +34,10 @@ import org.opengis.feature.type.FeatureType;
  * The currently selected feature is handled by the EditManager; and is communicated with
  * the a page via a FeatureSite. We also have a special EditFeature implementation
  * where each setAttribute call is backed by a command.
- * </p>
+ * <p>
+ * This is the "most normal" implementation directly extending PageBookView resulting
+ * in one "feature panel page" per workbench part. This should provide exellent isolation
+ * between maps allowing the user to quickly switch between them.
  * 
  * @author Jody
  * @since 1.2.0
@@ -57,10 +61,15 @@ public class FeatureView2 extends PageBookView implements FeaturePanelPageContri
     
     private SimpleFeatureType getSchema( IWorkbenchPart part ){
         IMap map = (IMap) part.getAdapter( IMap.class );        
-        if( map == null ) {
-            return null; // not today!
-        }
-        return map.getEditManager().getSelectedLayer().getSchema();
+        if( map == null ) return null;
+        
+        IEditManager editManager = map.getEditManager();
+        if( editManager == null ) return null;
+                
+        ILayer selectedLayer = editManager.getSelectedLayer();
+        if( selectedLayer == null ) return null;
+        
+        return selectedLayer.getSchema();
     }
     
     
@@ -104,6 +113,8 @@ public class FeatureView2 extends PageBookView implements FeaturePanelPageContri
         if( window == null ) return null;
         
         IWorkbenchPage page = window.getActivePage();
+        if( page == null ) return null;
+        
         IEditorPart editor = page.getActiveEditor();
         if( editor == null ) return null;
         

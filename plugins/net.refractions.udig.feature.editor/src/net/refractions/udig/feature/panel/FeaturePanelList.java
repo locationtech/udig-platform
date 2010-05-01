@@ -369,7 +369,7 @@ public class FeaturePanelList
 				int height = fm.getHeight();
 				int textMiddle = (bounds.height - height) / 2;
 				e.gc.setForeground(widgetForeground);
-				String properties_not_available = "Properties are not available";
+				String properties_not_available = "Attributes are not available";
 				e.gc.drawText(properties_not_available, textIndent, textMiddle);
 			}
 
