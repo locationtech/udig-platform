@@ -18,6 +18,14 @@
             name="%feature.name"
             restorable="true">
       </view>
+      <view
+            category="net.refractions.udig.feature.editor.featureCategory"
+            class="net.refractions.udig.feature.editor.FeatureUDIGView"
+            icon="icons/eview16/feature_obj.gif"
+            id="net.refractions.udig.feature.editor.featureView2"
+            name="Feature2"
+            restorable="true">
+      </view>
       <category
             id="net.refractions.udig.feature.editor.featureCategory"
             name="%category.name">

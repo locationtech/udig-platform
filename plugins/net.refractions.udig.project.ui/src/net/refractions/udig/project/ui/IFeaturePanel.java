@@ -1,5 +1,7 @@
 package net.refractions.udig.project.ui;
 
+import net.refractions.udig.project.ui.feature.EditFeature;
+
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PartInitException;
@@ -54,7 +56,8 @@ public abstract class IFeaturePanel {
      * @param memento Used to access any prior history recorded by this feature panel
      * @throws PartInitException 
      */
-    public void init(IFeatureSite site, IMemento memento) throws PartInitException{        
+    public void init(IFeatureSite site, IMemento memento) throws PartInitException{  
+        this.site = site;
     }     
     
     /**

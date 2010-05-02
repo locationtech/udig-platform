@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.feature.editor.FeatureEditorPlugin;
+import net.refractions.udig.feature.editor.IFeaturePage;
 import net.refractions.udig.project.ui.IFeaturePanel;
 import net.refractions.udig.project.ui.IFeatureSite;
 import net.refractions.udig.project.ui.feature.FeaturePanelProcessor.FeaturePanelEntry;
@@ -77,6 +78,7 @@ import org.eclipse.ui.views.properties.tabbed.IOverridableTabListContentProvider
 import org.eclipse.ui.views.properties.tabbed.TabContents;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
+import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
@@ -92,7 +94,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * 
  * @see TabbedPropertySheetPage
  */
-public class FeaturePanelPage extends Page implements ILabelProviderListener, ISelectionListener {
+public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProviderListener, ISelectionListener {
     private IFeatureSite site;
     
     /**
@@ -607,7 +609,7 @@ public class FeaturePanelPage extends Page implements ILabelProviderListener, IS
 
     private void disposeTabs( Collection tabs ) {
         for( Iterator iter = tabs.iterator(); iter.hasNext(); ) {
-            TabContents tab = (TabContents) iter.next();
+            IFeaturePanel tab = (IFeaturePanel) iter.next();
             Composite composite = (Composite) tabToComposite.remove(tab);
             tab.dispose();
             if (composite != null) {
@@ -741,7 +743,9 @@ public class FeaturePanelPage extends Page implements ILabelProviderListener, IS
      * Refresh the currently active tab.
      */
     public void refresh() {
-        currentTab.refresh();
+        if( currentTab != null ){
+            currentTab.refresh();
+        }
     }
 
     /**
@@ -1025,5 +1029,23 @@ public class FeaturePanelPage extends Page implements ILabelProviderListener, IS
             selection = currentSelection;
         }
         return registry.getLabelProvider().getImage(selection);
+    }
+
+    public void editFeatureChanged( SimpleFeature feature ) {
+        if( feature != null ){
+            StructuredSelection selection = new StructuredSelection(feature);
+            selectionChanged(null, selection );
+        }
+        else {
+            selectionChanged(null, null);
+        }
+    }
+
+    public IFeatureSite getFeatureSite() {
+        return this.site;
+    }
+
+    public void setFeatureSite( IFeatureSite site ) {
+        this.site = site;
     }
 }

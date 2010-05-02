@@ -94,7 +94,10 @@ public abstract class AbstractContextImpl implements AbstractContext {
     }
 
     public IEditManager getEditManager() {
-        return getMapInternal().getEditManager();
+        if( getMapInternal() != null){
+            return getMapInternal().getEditManager();
+        }
+        return null;
     }
 
     public Coordinate getPixelSize() {
