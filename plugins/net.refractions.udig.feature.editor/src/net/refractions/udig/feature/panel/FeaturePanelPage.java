@@ -81,6 +81,14 @@ import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * A tabbed UI showing feature panels.
+ * <p>
+ * The use of ISelectionListener.selectionChanged(IWorkbenchPart,ISelection) is used to track
+ * what is going on; it is the responsibility of the container to feed this page events via
+ * this method.
+ * <ul>
+ * <li>IWorkbenchPart - is checked to see if it can adapt to a Map
+ * <li>ISelection - 
+ * </ul>
  * 
  * @see TabbedPropertySheetPage
  */
@@ -97,10 +105,17 @@ public class FeaturePanelPage extends Page implements ILabelProviderListener, IS
      */
     private TabbedPropertySheetWidgetFactory widgetFactory;
 
+    /**
+     * This is the contributor that is hosting this page
+     */
     private FeaturePanelPageContributor contributor;
 
     private FeaturePanelRegistry registry;
 
+    /**
+     * In the event we are provided a selection from another workbench
+     * part this selection contributor will due the dead.
+     */
     private FeaturePanelPageContributor selectionContributor = null;
 
     /**
@@ -397,8 +412,8 @@ public class FeaturePanelPage extends Page implements ILabelProviderListener, IS
      * 
      * @param contributorId the contributor id.
      */
-    private void initContributor( SimpleFeatureType schema ) {
-        descriptorToTab = new HashMap();
+    private void initContributor( SimpleFeatureType schema) {
+        descriptorToTab = new HashMap<FeaturePanelTabDescriptor,IFeaturePanel>();
         
         if (currentSchema == schema ) {
             // default contributor from the workbench part.
@@ -690,7 +705,7 @@ public class FeaturePanelPage extends Page implements ILabelProviderListener, IS
     }
 
     private void setInput( IWorkbenchPart part, ISelection selection ) {
-        if (selection.equals(currentSelection)) {
+        if (selection != null && selection.equals(currentSelection)) {
             return;
         }
 
@@ -909,8 +924,8 @@ public class FeaturePanelPage extends Page implements ILabelProviderListener, IS
                  */
                 if (selectionContributor != null) {
                     disposeContributor();
-                    currentSchema = contributor.getSchema();
-                    initContributor(currentSchema);
+                    //currentSchema = contributor.getSchema();
+                    initContributor( contributor.getSchema());
                 }
                 return;
             }

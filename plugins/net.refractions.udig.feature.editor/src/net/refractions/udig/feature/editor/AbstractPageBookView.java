@@ -69,7 +69,8 @@ import org.eclipse.ui.part.ViewPart;
  * @author Jody Garnett
  * @since 1.2.0
  */
-public abstract class AbstractPageBookView<K> extends ViewPart {
+// experiment; until I am confident that PageView will work as written I am not going to remove this
+abstract class AbstractPageBookView<K> extends ViewPart {
     /**
      * The pagebook control, or <code>null</code> if not initialized.
      */

@@ -715,8 +715,12 @@ public class LayersView extends ViewPart
      * @return An object of type key or null;
      */
     public Object getAdapter( Class key ) {
-        if (key.equals(IPropertySheetPage.class))
+        if (key.equals(IPropertySheetPage.class)){
             return ProjectUIPlugin.getDefault().getPropertySheetPage();
+        }
+        if( key.isAssignableFrom(IMap.class)){
+            return getCurrentMap();
+        }
         return super.getAdapter(key);
     }
 

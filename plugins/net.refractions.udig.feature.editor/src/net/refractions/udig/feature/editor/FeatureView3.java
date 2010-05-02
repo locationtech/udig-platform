@@ -33,12 +33,13 @@ import org.opengis.feature.simple.SimpleFeatureType;
 /**
  * View allowing direct editing of the currently selected feature.
  * <p>
- * The currently selected feature is handled by the EditManager.
+ * This implementation uses my own branch of PageBookView in order to record
+ * page by FeatureType (rather then by workbench editor)
  * 
  * @author jodyg
  * @since 1.2.0
  */
-public class FeatureView3 extends AbstractPageBookView<ILayer> {
+class FeatureView3 extends AbstractPageBookView<ILayer> {
     public static final String ID = "net.refractions.udig.feature.editor.featureView";
 
     private IFeatureSite context;
@@ -117,7 +118,7 @@ public class FeatureView3 extends AbstractPageBookView<ILayer> {
 
             return new PageRec<ILayer>(layer, page);
         } else if (map != null) {
-            IPage page = (IPage) new FeaturePage(map.getEditManager());
+            IPage page = null; // (IPage) new FeaturePage(map.getEditManager());
             initPage((IPageBookViewPage) page);
             page.createControl(getPageBook());
             return new PageRec<ILayer>(layer, page);

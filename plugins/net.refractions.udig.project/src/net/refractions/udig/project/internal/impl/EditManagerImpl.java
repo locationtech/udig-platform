@@ -54,6 +54,8 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
+import org.opengis.filter.Id;
+import org.opengis.filter.identity.Identifier;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -219,10 +221,10 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
             layer = editLayerInternal;
         }
 
-        if (isEditLayerLocked() && (layer != editLayerInternal && editLayerInternal != null))
+        if (isEditLayerLocked() && (layer != editLayerInternal && editLayerInternal != null)){
             throw new IllegalArgumentException(
                     "Edit Layer is locked so argument 'layer' should be not be changed."); //$NON-NLS-1$
-
+        }
         SimpleFeature value = getAdaptableFeature(feature, layer);
         SimpleFeature oldFeature = editFeature;
         if (editFeature != null) {
@@ -235,9 +237,11 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
             this.editLayerInternal = layer;
         }
 
-        if (eNotificationRequired())
-            if (oldFeature == value)
+        if (eNotificationRequired()){
+            if (oldFeature == value){
                 return;
+            }
+        }        
         eNotify(new ENotificationImpl(this, Notification.SET,
                 ProjectPackage.EDIT_MANAGER__EDIT_FEATURE, oldFeature, value));
     }
@@ -676,16 +680,24 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
      * @see net.refractions.udig.project.internal.EditManager#refreshEditFeature()
      */
     public void refreshEditFeature() {
+        Layer editLayer = getEditLayerInternal();
         try {
-            FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-            FeatureIterator<SimpleFeature> editFeatureReader = getEditLayerInternal().getResource(
-                    FeatureStore.class, null).getFeatures(
-                    filterFactory.id(FeatureUtils.stringToId(filterFactory, getEditFeature().getID())))
-                    .features();
-            setEditFeature(editFeatureReader.next(), getEditLayerInternal());
+            FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
+                    .getDefaultHints());
+            FeatureStore resource = editLayer.getResource(FeatureStore.class, null);
+            Set<Identifier> fids = FeatureUtils.stringToId(filterFactory, getEditFeature().getID());
+            Id filter = filterFactory.id(fids);
+            FeatureIterator<SimpleFeature> features = resource.getFeatures(filter).features();
+            if (features.hasNext()) {
+                SimpleFeature feature = features.next();
+                setEditFeature(feature, editLayer);
+            } else {
+                setEditFeature(null, editLayer);
+            }
+            
         } catch (Exception e) {
             ProjectPlugin.log(null, e);
-            setEditFeature(null, getEditLayerInternal());
+            setEditFeature(null, editLayer);
         }
 
     }
