@@ -1,5 +1,7 @@
 package net.refractions.udig.feature.editor.field;
 
+import java.util.List;
+
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -31,6 +33,19 @@ public class ComboAttributeField extends AttributeField {
      * arranged as: { {name1, value1}, {name2, value2}, ...}
      */
     private String[][] fEntryNamesAndValues;
+
+    public ComboAttributeField(String name, String labelText, List<Object> values, Composite parent) {
+        this( name, labelText, toNamesAndValues( values ), parent );
+    }
+    
+    private static String[][] toNamesAndValues( List<Object> values ) {
+        String namesAndValues[][] = new String[values.size()][2];
+        for( int i=0; i<values.size();i++){
+            namesAndValues[i][0] = values.get(i).toString();
+            namesAndValues[i][1] = values.get(i).toString();           
+        }
+        return namesAndValues;
+    }
 
     /**
      * Create the combo box attribute field.

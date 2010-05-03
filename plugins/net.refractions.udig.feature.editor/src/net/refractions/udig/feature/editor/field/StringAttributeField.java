@@ -28,16 +28,11 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
-import org.geotools.feature.FeatureTypes;
-import org.geotools.feature.Schema;
 import org.geotools.feature.type.Types;
 import org.geotools.util.Converters;
-import org.opengis.feature.Attribute;
 import org.opengis.feature.IllegalAttributeException;
-import org.opengis.feature.Property;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.filter.Filter;
 
 /**
  * Attribute field for a string type attribute.

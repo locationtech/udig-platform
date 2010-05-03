@@ -7,5 +7,6 @@ Bundle-Activator: net.refractions.udig.tutorials.featureeditor.Activator
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- net.refractions.udig.project.ui
+ net.refractions.udig.project.ui,
+ net.refractions.udig.feature.editor
 Bundle-ActivationPolicy: lazy
