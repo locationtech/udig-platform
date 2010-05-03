@@ -1,63 +1,29 @@
 package net.refractions.udig.tutorials.featureeditor;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.feature.editor.field.AttributeField;
-import net.refractions.udig.feature.editor.field.ComboAttributeField;
+import net.refractions.udig.feature.editor.field.ComboAttributeField2;
 import net.refractions.udig.feature.editor.field.StringAttributeField;
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.CompositeCommand;
-import net.refractions.udig.project.command.factory.EditCommandFactory;
 import net.refractions.udig.project.ui.IFeaturePanel;
 import net.refractions.udig.project.ui.IFeatureSite;
 import net.refractions.udig.project.ui.feature.EditFeature;
-import net.refractions.udig.project.ui.tool.IToolContext;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PartInitException;
-import org.opengis.feature.IllegalAttributeException;
-import org.opengis.feature.simple.SimpleFeature;
-
-import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 
 /**
  * Country Feature Panel used to show the use of AttributeFields.
  * @since 1.2.0
  */
 public class CountryFeaturePanel2 extends IFeaturePanel {
-    private static final String DIRTY = "DIRTY";
+    // private static final String DIRTY = "DIRTY";
 
     /** Attribute name for attribute GMI_CNTRY */
     public final static String GMI_CNTRY = "GMI_CNTRY";
@@ -72,7 +38,7 @@ public class CountryFeaturePanel2 extends IFeaturePanel {
 
     StringAttributeField gmiCntry;    
     StringAttributeField name;
-    ComboAttributeField colorMap;
+    ComboAttributeField2 colorMap;
 
     List<AttributeField> fields = new ArrayList<AttributeField>();
 
@@ -80,6 +46,12 @@ public class CountryFeaturePanel2 extends IFeaturePanel {
         public void propertyChange( PropertyChangeEvent event ) {
             AttributeField field = (AttributeField) event.getSource();
             System.out.println( field.getAttributeName() + " = "+event.getNewValue() );
+            if( field.isValid()){
+                field.store();
+            }
+            else {
+                System.out.println( field.getAttributeName() + " invalid!" );                
+            }
         }
     };
     
@@ -87,6 +59,7 @@ public class CountryFeaturePanel2 extends IFeaturePanel {
     public void aboutToBeShown() {
         for( AttributeField field : fields ){
             field.setPropertyChangeListener(listener);
+            field.setFeature(getSite().getEditFeature());
         }
     }
 
@@ -94,7 +67,18 @@ public class CountryFeaturePanel2 extends IFeaturePanel {
     public void aboutToBeHidden() {
         for( AttributeField field : fields ){
             field.setPropertyChangeListener(null);
+            // field.setFeature(null);
         }
+    }
+    
+    @Override
+    public void dispose() {
+        for( AttributeField field : fields ){
+            field.dispose();
+            field.setPropertyChangeListener(null);
+            field.setFeature(null);
+        }
+        super.dispose();        
     }
 
     /**
@@ -122,10 +106,9 @@ public class CountryFeaturePanel2 extends IFeaturePanel {
         fields.add(gmiCntry);
 
         // JFace Viewer
-        colorMap = new ComboAttributeField(COLOR_MAP, "Color Map", Arrays.asList(COLOR_MAP_OPTS),
+        colorMap = new ComboAttributeField2(COLOR_MAP, "Color Map", Arrays.asList(COLOR_MAP_OPTS),
                 parent);
         fields.add(colorMap);
-
     }
     
     @Override
@@ -133,6 +116,7 @@ public class CountryFeaturePanel2 extends IFeaturePanel {
         EditFeature feature = getSite().getEditFeature();
         for( AttributeField field : fields ){
             field.setFeature( feature );
+            field.load();
         }
     }
 
@@ -143,7 +127,7 @@ public class CountryFeaturePanel2 extends IFeaturePanel {
 
     @Override
     public String getName() {
-        return "Country";
+        return "Country2";
     }
 
     @Override

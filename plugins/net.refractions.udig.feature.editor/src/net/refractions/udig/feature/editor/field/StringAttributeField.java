@@ -14,6 +14,8 @@
  */
 package net.refractions.udig.feature.editor.field;
 
+import net.refractions.udig.project.ui.feature.EditFeature;
+
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
@@ -211,7 +213,9 @@ public class StringAttributeField extends AttributeField {
      * @return <code>true</code> if the field value is valid, and <code>false</code> if invalid
      */
     protected boolean doCheckState() {
-        SimpleFeatureType schema = getFeature().getFeatureType();
+        EditFeature feature = getFeature();
+        if( feature == null ) return true; // cannot check right now
+        SimpleFeatureType schema = feature.getFeatureType();
         AttributeDescriptor descriptor = schema.getDescriptor( getAttributeName());  
         String text = textField.getText();
         
@@ -261,8 +265,8 @@ public class StringAttributeField extends AttributeField {
      * (non-Javadoc) Method declared on AttributeField.
      */
     protected void doLoad() {
-        if (textField != null) {
-            Object value = getFeature().getAttribute( getAttributeName() );            
+        if (textField != null && getFeature() != null ) {
+            Object value = getFeature().getAttribute( getAttributeName() );
             String text = Converters.convert(value, String.class );
             
             textField.setText( text );

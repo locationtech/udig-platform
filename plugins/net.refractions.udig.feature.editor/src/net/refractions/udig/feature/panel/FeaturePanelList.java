@@ -170,7 +170,7 @@ public class FeaturePanelList
 						 * section.
 						 */
 						Composite tabbedPropertyComposite = getParent();
-						while (!(tabbedPropertyComposite instanceof TabbedPropertyComposite)) {
+						while (!(tabbedPropertyComposite instanceof FeaturePanelComposite)) {
 							tabbedPropertyComposite = tabbedPropertyComposite
 								.getParent();
 						}

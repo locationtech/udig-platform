@@ -48,13 +48,15 @@ import org.opengis.feature.type.FeatureType;
 /**
  * View allowing direct editing of the currently selected feature.
  * <p>
- * The currently selected feature is handled by the EditManager; and is communicated with the a page
- * via a FeatureSite. We also have a special EditFeature implementation where each setAttribute call
- * is backed by a command.
+ * The currently selected feature is handled by the EditManager; and is
+ * communicated with the a page via a FeatureSite. We also have a special
+ * EditFeature implementation where each setAttribute call is backed by a
+ * command.
  * <p>
- * This is the "most normal" implementation directly extending PageBookView resulting in one
- * "feature panel page" per workbench part. This should provide exellent isolation between maps
- * allowing the user to quickly switch between them.
+ * This is the "most normal" implementation directly extending PageBookView
+ * resulting in one "feature panel page" per workbench part. This should provide
+ * exellent isolation between maps allowing the user to quickly switch between
+ * them.
  * 
  * @author Jody
  * @since 1.2.0
@@ -74,15 +76,16 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     private IMap currentMap;
 
     /**
-     * We are listening to the workbench selection to see if our currentPart has anything to say to
-     * us.
+     * We are listening to the workbench selection to see if our currentPart has
+     * anything to say to us.
      */
-    private ISelectionListener workbenchListener = new ISelectionListener(){
-        public void selectionChanged( IWorkbenchPart part, ISelection sel ) {
+    private ISelectionListener workbenchListener = new ISelectionListener() {
+        public void selectionChanged(IWorkbenchPart part, ISelection sel) {
             if (sel == null || !isImportant(part)) {
                 return;
             }
-            // we ignore selection if we are hidden OR selection is coming from another source as
+            // we ignore selection if we are hidden OR selection is coming from
+            // another source as
             // the last one
             setContributor(part);
         }
@@ -91,16 +94,17 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     /**
      * We are listing to our map to see if the current layer changes.
      * <p>
-     * If the current layer changes we pass it on the the currentPage; with ourselves
-     * (ie the FeaturePanelPageContributor) as the provider.
+     * If the current layer changes we pass it on the the currentPage; with
+     * ourselves (ie the FeaturePanelPageContributor) as the provider.
      */
-    private IEditManagerListener editListener = new IEditManagerListener(){
-        public void changed( EditManagerEvent event ) {
+    private IEditManagerListener editListener = new IEditManagerListener() {
+        public void changed(EditManagerEvent event) {
             if (event.getType() == EditManagerEvent.SELECTED_LAYER) {
                 StructuredSelection sel = new StructuredSelection(event.getNewValue());
 
                 // pass the selection to the page
-                IPage page = getCurrentPage(); // We are expecting a FeaturePanelPage here
+                IPage page = getCurrentPage(); // We are expecting a
+                                               // FeaturePanelPage here
                 if (page != null && page instanceof ISelectionListener) {
                     ISelectionListener notifyPage = (ISelectionListener) page;
                     notifyPage.selectionChanged(FeatureView.this, sel);
@@ -110,7 +114,8 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
                 StructuredSelection sel = new StructuredSelection(event.getNewValue());
 
                 // pass the selection to the page
-                IPage page = getCurrentPage(); // We are expecting a FeaturePanelPage here
+                IPage page = getCurrentPage(); // We are expecting a
+                                               // FeaturePanelPage here
                 if (page != null && page instanceof ISelectionListener) {
                     ISelectionListener notifyPage = (ISelectionListener) page;
                     notifyPage.selectionChanged(FeatureView.this, sel);
@@ -119,8 +124,8 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
         }
     };
 
-    public void setContributor( IWorkbenchPart part ) {
-        if (currentPart == part){
+    public void setContributor(IWorkbenchPart part) {
+        if (currentPart == part) {
             return;
         }
         if (currentPart != null) {
@@ -128,7 +133,7 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
                 IEditManager editManager = currentMap.getEditManager();
                 editManager.removeListener(editListener);
             }
-        }        
+        }
         this.currentPart = part;
 
         StructuredSelection editSelection = null;
@@ -140,7 +145,8 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
             }
         }
         // pass the selection to the page
-        IPage page = getCurrentPage(); // We are expecting a FeaturePanelPage here
+        IPage page = getCurrentPage(); // We are expecting a FeaturePanelPage
+                                       // here
         if (page != null && page instanceof ISelectionListener) {
             ISelectionListener notifyPage = (ISelectionListener) page;
             notifyPage.selectionChanged(part, editSelection);
@@ -148,7 +154,7 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     }
 
     @Override
-    public void init( IViewSite site ) throws PartInitException {
+    public void init(IViewSite site) throws PartInitException {
         site.getPage().addSelectionListener(workbenchListener);
         super.init(site);
     }
@@ -178,24 +184,24 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
         return getSchema(currentPart);
     }
 
-    private SimpleFeatureType getSchema( IWorkbenchPart part ) {
+    private SimpleFeatureType getSchema(IWorkbenchPart part) {
         IMap map = (IMap) part.getAdapter(IMap.class);
-        if (map == null)
+        if (map == null) {
             return null;
-
+        }
         IEditManager editManager = map.getEditManager();
-        if (editManager == null)
+        if (editManager == null) {
             return null;
-
+        }
         ILayer selectedLayer = editManager.getSelectedLayer();
-        if (selectedLayer == null)
+        if (selectedLayer == null) {
             return null;
-
+        }
         return selectedLayer.getSchema();
     }
 
     @Override
-    protected IPage createDefaultPage( PageBook book ) {
+    protected IPage createDefaultPage(PageBook book) {
         MessagePage page = new MessagePage();
         page.setMessage("Default Page");
 
@@ -206,7 +212,7 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     }
 
     @Override
-    protected PageRec doCreatePage( IWorkbenchPart part ) {
+    protected PageRec doCreatePage(IWorkbenchPart part) {
         IMap map = (IMap) part.getAdapter(IMap.class);
         if (map == null) {
             MessagePage page = new MessagePage();
@@ -225,7 +231,7 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     }
 
     @Override
-    protected void doDestroyPage( IWorkbenchPart part, PageRec pageRecord ) {
+    protected void doDestroyPage(IWorkbenchPart part, PageRec pageRecord) {
     }
 
     @Override
@@ -250,15 +256,15 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     }
 
     /**
-     * IWorkbenchPart considered important if the part can adapt to an IMap (which allows us to
-     * track any changes to the edit feature).
+     * IWorkbenchPart considered important if the part can adapt to an IMap
+     * (which allows us to track any changes to the edit feature).
      */
     @Override
-    public boolean isImportant( IWorkbenchPart part ) {
+    public boolean isImportant(IWorkbenchPart part) {
         return toMap(part) != null;
     }
 
-    public static IMap toMap( IWorkbenchPart part ) {
+    public static IMap toMap(IWorkbenchPart part) {
         IMap map = (IMap) part.getAdapter(IMap.class);
         if (map != null)
             return map;
@@ -273,55 +279,56 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     /**
      * Determine an ILayer from a workbench part.
      * <p>
-     * If the part provides a layer it is used; if it only provides
-     * a Map the selected layer is used.
+     * If the part provides a layer it is used; if it only provides a Map the
+     * selected layer is used.
      * 
      * @param part
      * @param selection
      * @return layer, or null if not available
      */
-    public static ILayer toLayer( IWorkbenchPart part ) {
+    public static ILayer toLayer(IWorkbenchPart part) {
         // see if the part can turn into a layer
         //
         ILayer layer = (ILayer) part.getAdapter(ILayer.class);
-        if (layer != null){
+        if (layer != null) {
             return layer;
         }
 
         IMap map = (IMap) part.getAdapter(IMap.class);
-        if (map != null){
+        if (map != null) {
             return map.getEditManager().getSelectedLayer();
         }
         return null;
     }
-    
-    public static ILayer toEditLayer( IWorkbenchPart part ) {
+
+    public static ILayer toEditLayer(IWorkbenchPart part) {
         IMap map = (IMap) part.getAdapter(IMap.class);
-        if (map != null){
+        if (map != null) {
             return map.getEditManager().getEditLayer();
         }
         ILayer layer = (ILayer) part.getAdapter(ILayer.class);
-        if (layer != null){
-            if( layer == layer.getMap().getEditManager().getEditLayer() ){
+        if (layer != null) {
+            if (layer == layer.getMap().getEditManager().getEditLayer()) {
                 return layer;
             }
         }
         return null;
     }
-    
+
     /**
-     * ISelection considered important if we can determine a Layer from it; more importantly the
-     * layer needs to have a non null getSchema() so we can configure a FeaturePanelPage with it.
+     * ISelection considered important if we can determine a Layer from it; more
+     * importantly the layer needs to have a non null getSchema() so we can
+     * configure a FeaturePanelPage with it.
      * 
      * @param part
      * @param selection
      * @return layer, or null if not available
      */
-    public static ILayer toLayer( ISelection selection ) {
+    public static ILayer toLayer(ISelection selection) {
         // try the selection first
         if (selection != null && !selection.isEmpty() && selection instanceof IStructuredSelection) {
             IStructuredSelection sel = (IStructuredSelection) selection;
-            for( Iterator< ? > iter = sel.iterator(); iter.hasNext(); ) {
+            for (Iterator<?> iter = sel.iterator(); iter.hasNext();) {
                 Object item = iter.next();
                 if (item instanceof ILayer) {
                     return (ILayer) item;

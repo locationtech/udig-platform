@@ -103,9 +103,14 @@ public class FeatureUDIGView extends ViewPart implements FeaturePanelPageContrib
         
         IMap activeMap = ApplicationGIS.getActiveMap();
         IFeatureSite site = featurePage.getFeatureSite();
+        if( site == null ){
+            site = new FeatureSiteImpl(activeMap);
+            featurePage.setFeatureSite(site);            
+        }
         if( site.getMap() != activeMap ){
             ((FeatureSiteImpl)site).setMapInternal( (Map) activeMap );
-        }        
+            featurePage.setFeatureSite(site);
+        }
         featurePage.editFeatureChanged(feature);
         featurePage.refresh();
     }

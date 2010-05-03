@@ -166,7 +166,7 @@ public abstract class AttributeField {
      * Clears the error message from the message line.
      */
     protected void clearErrorMessage() {
-        if (page == null && page.getSite() == null ){
+        if (page == null || page.getSite() == null ){
             return;
         }
         IFeatureSite site = page.getSite();
@@ -180,7 +180,7 @@ public abstract class AttributeField {
      * Clears the normal message from the message line.
      */
     protected void clearMessage() {
-        if (page == null && page.getSite() == null ){
+        if (page == null || page.getSite() == null ){
             return;
         }
         IFeatureSite site = page.getSite();
