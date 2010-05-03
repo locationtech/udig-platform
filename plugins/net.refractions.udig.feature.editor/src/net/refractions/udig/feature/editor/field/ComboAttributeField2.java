@@ -5,10 +5,14 @@ import java.util.List;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -27,6 +31,13 @@ public class ComboAttributeField2 extends AttributeField {
     private ComboViewer viewer;
 
     private List<Object> options;
+
+    private ISelectionChangedListener listener = new ISelectionChangedListener() {                
+        public void selectionChanged(SelectionChangedEvent event) {                    
+            IStructuredSelection sel = (IStructuredSelection) event.getSelection();
+            fireValueChanged(VALUE, null, sel.getFirstElement() ); 
+        }
+    };
 
     /**
      * Create the combo box attribute field.
@@ -101,14 +112,21 @@ public class ComboAttributeField2 extends AttributeField {
      */
     protected void doLoad() {
         Object value = getFeature().getAttribute(getAttributeName());
-
+        if( value != null ){
+            int index = options.indexOf( value );
+            if( index == -1 ){
+                viewer.getCombo().setText( value.toString() );
+            }
+        }        
         ISelection selection;
         if (value == null) {
             selection = StructuredSelection.EMPTY;
         } else {
             selection = new StructuredSelection(value);
         }
+        viewer.removeSelectionChangedListener(listener);
         viewer.setSelection(selection, true);
+        viewer.addSelectionChangedListener(listener);
     }
 
     /*
@@ -121,7 +139,9 @@ public class ComboAttributeField2 extends AttributeField {
         AttributeDescriptor descriptor = schema.getDescriptor(getAttributeName());
         Object value = descriptor.getDefaultValue();
         ISelection selection = new StructuredSelection(value);
+        viewer.removeSelectionChangedListener(listener);
         viewer.setSelection(selection, true);
+        viewer.addSelectionChangedListener(listener);
     }
 
     /*
@@ -160,6 +180,7 @@ public class ComboAttributeField2 extends AttributeField {
             viewer.setContentProvider(ArrayContentProvider.getInstance());
             viewer.setLabelProvider(new LabelProvider());
             viewer.setInput(options);
+            viewer.addSelectionChangedListener( listener);
         }
         return viewer.getCombo();
     }

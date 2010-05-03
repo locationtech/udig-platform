@@ -105,11 +105,11 @@ public class FeatureUDIGView extends ViewPart implements FeaturePanelPageContrib
         IFeatureSite site = featurePage.getFeatureSite();
         if( site == null ){
             site = new FeatureSiteImpl(activeMap);
-            featurePage.setFeatureSite(site);            
+            featurePage.setFeatureSite(site);       
         }
-        if( site.getMap() != activeMap ){
-            ((FeatureSiteImpl)site).setMapInternal( (Map) activeMap );
-            featurePage.setFeatureSite(site);
+        else {
+            ((FeatureSiteImpl)site).setMapInternal( (Map) activeMap);
+            ((FeatureSiteImpl)site).setFeature( feature );
         }
         featurePage.editFeatureChanged(feature);
         featurePage.refresh();

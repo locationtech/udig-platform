@@ -34,7 +34,7 @@ public class CountryFeaturePanel2 extends IFeaturePanel {
     /** Attribute name for attribute NAME */
     public final static String NAME = "CNTRY_NAME";
 
-    public final static Object[] COLOR_MAP_OPTS = new Object[]{1, 2, 3, 4, 5, 6, 7, 8};
+    public final static Object[] COLOR_MAP_OPTS = new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"};
 
     StringAttributeField gmiCntry;    
     StringAttributeField name;

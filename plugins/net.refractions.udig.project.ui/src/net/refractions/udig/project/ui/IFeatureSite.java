@@ -16,24 +16,8 @@
  */
 package net.refractions.udig.project.ui;
 
-import net.refractions.udig.project.IAbstractContext;
-import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.factory.BasicCommandFactory;
-import net.refractions.udig.project.command.factory.EditCommandFactory;
-import net.refractions.udig.project.command.factory.NavigationCommandFactory;
-import net.refractions.udig.project.command.factory.SelectionCommandFactory;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.commands.DrawCommandFactory;
 import net.refractions.udig.project.ui.feature.EditFeature;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IToolContext;
-
-import org.eclipse.core.runtime.Plugin;
-import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IActionBars2;
-import org.eclipse.ui.IWorkbench;
 
 /**
  * Allows access to the site hosting the IFeaturePanel.

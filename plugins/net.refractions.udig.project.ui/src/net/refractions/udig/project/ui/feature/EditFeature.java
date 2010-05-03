@@ -49,7 +49,6 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class EditFeature extends DecoratingFeature implements IAdaptable, SimpleFeature {
     private IEditManager manager;
-
     private Set<String> dirty = new LinkedHashSet<String>(); // we no longer need this
 
     /**
@@ -62,7 +61,12 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
         super(manager.getEditFeature());
         this.manager = manager;
     }
-
+    
+    public EditFeature( IEditManager manager, SimpleFeature feature ) {
+        super( feature );
+        this.manager = manager;
+    }
+    
     /**
      * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
      */

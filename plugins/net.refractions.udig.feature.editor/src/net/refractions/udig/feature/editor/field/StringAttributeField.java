@@ -217,6 +217,10 @@ public class StringAttributeField extends AttributeField {
         if( feature == null ) return true; // cannot check right now
         SimpleFeatureType schema = feature.getFeatureType();
         AttributeDescriptor descriptor = schema.getDescriptor( getAttributeName());  
+        if( descriptor == null ){
+            // the schema changed on us! help ...
+            return false;
+        }
         String text = textField.getText();
         
         if( text == null || text.length() == 0){
@@ -268,7 +272,9 @@ public class StringAttributeField extends AttributeField {
         if (textField != null && getFeature() != null ) {
             Object value = getFeature().getAttribute( getAttributeName() );
             String text = Converters.convert(value, String.class );
-            
+            if( text == null ){
+                text = "";
+            }
             textField.setText( text );
             oldValue = text;
         }
