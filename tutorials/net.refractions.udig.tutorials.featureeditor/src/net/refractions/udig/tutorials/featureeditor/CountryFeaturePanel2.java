@@ -68,6 +68,7 @@ public class CountryFeaturePanel2 extends FeaturePanel {
         colorMap = addField(new ComboAttributeField2(COLOR_MAP, "Color Map", Arrays
                 .asList(COLOR_MAP_OPTS), parent));
 
+        adjustGridLayout( parent );
     }
 
     @Override

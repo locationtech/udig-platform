@@ -12,18 +12,10 @@
             name="%editor.name"/>
       <view
             category="net.refractions.udig.feature.editor.featureCategory"
-            class="net.refractions.udig.feature.editor.FeatureView"
+            class="net.refractions.udig.feature.editor.FeatureUDIGView"
             icon="icons/eview16/feature_obj.gif"
             id="net.refractions.udig.feature.editor.featureView"
             name="%feature.name"
-            restorable="true">
-      </view>
-      <view
-            category="net.refractions.udig.feature.editor.featureCategory"
-            class="net.refractions.udig.feature.editor.FeatureUDIGView"
-            icon="icons/eview16/feature_obj.gif"
-            id="net.refractions.udig.feature.editor.featureView2"
-            name="Feature2"
             restorable="true">
       </view>
       <category
@@ -34,9 +26,9 @@
    <extension
          point="net.refractions.udig.project.ui.featureEditor">
       <editor
-            id="net.refractions.udig.feature.editor.default"
+            id="net.refractions.udig.feature.editor.editor.default"
             name="%editor.name"
-            viewId="net.refractions.udig.feature.editor.default">
+            viewId="net.refractions.udig.feature.editor.views.default">
          <featureType>
             <typeName
                   name="Feature"
@@ -45,8 +37,9 @@
          </featureType>
       </editor>
       <editor
-            id="net.refractions.udig.feature.editor.featureView"
-            name="%feature.name">
+            id="net.refractions.udig.feature.editor.editors.feature"
+            name="%feature.name"
+            viewId="net.refractions.udig.feature.editor.featureView">
          <featureType>
             <typeName
                   name="Feature"

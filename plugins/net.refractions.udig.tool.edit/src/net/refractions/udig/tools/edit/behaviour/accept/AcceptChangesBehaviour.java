@@ -32,6 +32,9 @@ import net.refractions.udig.project.internal.commands.edit.SetGeometryCommand;
 import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 import net.refractions.udig.project.ui.IAnimation;
 import net.refractions.udig.project.ui.commands.DrawCommandFactory;
+import net.refractions.udig.project.ui.feature.FeaturePanelEntry;
+import net.refractions.udig.project.ui.feature.FeaturePanelProcessor;
+import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.tool.edit.internal.Messages;
 import net.refractions.udig.tools.edit.Behaviour;
 import net.refractions.udig.tools.edit.EditPlugin;
@@ -40,6 +43,7 @@ import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.animation.GeometryOperationAnimation;
 import net.refractions.udig.tools.edit.commands.AddVertexCommand;
 import net.refractions.udig.tools.edit.commands.CreateAndSelectNewFeature;
+import net.refractions.udig.tools.edit.commands.CreateDialogAndSelectNewFeature;
 import net.refractions.udig.tools.edit.commands.CreateNewOrSelectExitingFeatureCommand;
 import net.refractions.udig.tools.edit.commands.SetEditGeomChangedStateCommand;
 import net.refractions.udig.tools.edit.commands.SetEditStateCommand;
@@ -233,7 +237,7 @@ public class AcceptChangesBehaviour implements Behaviour {
 
 		    if (isCurrentGeometry(handler, editGeom)) {
 		        if( isCreatingNewFeature(handler) ) {
-		            int attributeCount = schema.getAttributeCount();    
+	                int attributeCount = schema.getAttributeCount();    
 		            SimpleFeature feature;
 		            try {
 		                feature = SimpleFeatureBuilder.build(schema, new Object[attributeCount], "newFeature");
@@ -241,9 +245,18 @@ public class AcceptChangesBehaviour implements Behaviour {
 		            } catch (IllegalAttributeException e) {
 		            	throw new IllegalStateException("Could not create an empty "+schema.getTypeName()+":"+e, e);  //$NON-NLS-1$//$NON-NLS-2$
 		            }
-		            CreateAndSelectNewFeature newFeatureCommand =
-		            	new CreateAndSelectNewFeature(handler.getCurrentGeom(), feature, layer, deselectCreatedFeatures);
-					commands.add(newFeatureCommand);
+		            
+		            FeaturePanelProcessor panels = ProjectUIPlugin.getDefault().getFeaturePanelProcessor();
+                    List<FeaturePanelEntry> popup = panels.search(schema);
+                    if (popup.isEmpty()) {
+                        CreateAndSelectNewFeature newFeatureCommand = new CreateAndSelectNewFeature(
+                                handler.getCurrentGeom(), feature, layer, deselectCreatedFeatures);
+                        commands.add(newFeatureCommand);
+                    } else {
+                        CreateDialogAndSelectNewFeature newFeatureCommand = new CreateDialogAndSelectNewFeature(
+                                handler.getCurrentGeom(), feature, layer, deselectCreatedFeatures, popup );
+                        commands.add(newFeatureCommand);
+                    }
 		        } else{
 		            // not creating it so don't need to set it.
 		            UndoableMapCommand setGeometryCommand =
