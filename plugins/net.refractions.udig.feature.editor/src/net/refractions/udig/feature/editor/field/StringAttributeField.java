@@ -30,6 +30,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.geotools.feature.FeatureTypes;
 import org.geotools.feature.type.Types;
 import org.geotools.util.Converters;
 import org.opengis.feature.IllegalAttributeException;
@@ -157,7 +158,7 @@ public class StringAttributeField extends AttributeField {
      * @param parent the parent of the field editor's control
      */
     public StringAttributeField( String name, String labelText, Composite parent ) {
-        this(name, labelText, UNLIMITED, parent);
+        this(name, labelText,UNLIMITED, parent); //UNLIMITED
     }
 
     /*
@@ -270,6 +271,9 @@ public class StringAttributeField extends AttributeField {
      */
     protected void doLoad() {
         if (textField != null && getFeature() != null ) {
+//            AttributeDescriptor descriptor = getFeature().getType().getDescriptor( getAttributeName() );
+//            int length = FeatureTypes.getFieldLength(descriptor);
+
             Object value = getFeature().getAttribute( getAttributeName() );
             String text = Converters.convert(value, String.class );
             if( text == null ){

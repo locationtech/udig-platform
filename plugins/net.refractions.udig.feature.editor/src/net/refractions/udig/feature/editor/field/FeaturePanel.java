@@ -1,14 +1,19 @@
 package net.refractions.udig.feature.editor.field;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import net.refractions.udig.project.ui.IFeaturePanel;
 
+import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -27,7 +32,8 @@ import org.opengis.feature.simple.SimpleFeatureType;
  */
 public abstract class FeaturePanel extends IFeaturePanel {
     protected List<AttributeField> fields = new ArrayList<AttributeField>();
-
+    private Composite parent;
+    
     private IPropertyChangeListener listener = new IPropertyChangeListener(){        
         public void propertyChange( PropertyChangeEvent event ) {
             AttributeField field = (AttributeField) event.getSource();
@@ -48,6 +54,51 @@ public abstract class FeaturePanel extends IFeaturePanel {
             }
         }
     };
+    
+    /**
+     * Subclasses should call adjustGridLayout after they have
+     * populated parent with their fields. 
+     */
+    public abstract void createPartControl( Composite parent );
+    
+    /**
+     * Calculates the number of columns needed to host all field editors.
+     *
+     * @return the number of columns
+     */
+    private int calcNumberOfColumns() {
+        int result = 0;
+        if (fields != null) {
+            for( AttributeField field : fields ){
+                result = Math.max(result, field.getNumberOfControls());
+            }
+        }
+        return result;
+    }
+    
+    /**
+     * Adjust the layout of the field editors so that
+     * they are properly aligned.
+     */
+    protected void adjustGridLayout(Composite parent) {
+        int numColumns = calcNumberOfColumns();
+        if( parent.getLayout() instanceof GridLayout){
+            ((GridLayout) parent.getLayout()).numColumns = numColumns;
+        }
+        else {
+            GridLayout layout = new GridLayout();
+            layout.numColumns = numColumns;
+            layout.marginHeight = 0;
+            layout.marginWidth = 0;
+            parent.setLayout(layout);
+        }
+        
+        if (fields != null) {
+            for (AttributeField field : fields ) {
+                field.adjustForNumColumns(numColumns);
+            }
+        }
+    }
     
     /**
      * Remember the provided field; so it can be used with refresh/dispose/etc.
@@ -73,9 +124,18 @@ public abstract class FeaturePanel extends IFeaturePanel {
         for( AttributeField field : fields ){
             field.setPropertyChangeListener(listener);
             field.setFeature(getSite().getEditFeature());
+            field.doLoad();
         }
     }
 
+    @Override
+    public void refresh() {
+        for( AttributeField field : fields ){
+            field.setFeature(getSite().getEditFeature());
+            field.doLoad();
+        }
+    }
+    
     @Override
     public void aboutToBeHidden() {
         for( AttributeField field : fields ){
