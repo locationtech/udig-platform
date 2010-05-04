@@ -586,7 +586,7 @@ public abstract class AttributeField {
      * @param msg the error message
      */
     protected void showErrorMessage(String msg) {
-        if (page == null && page.getSite() == null ){
+        if (page == null || page.getSite() == null ){
             return;
         }
         IFeatureSite site = page.getSite();

@@ -22,7 +22,7 @@ package net.refractions.udig.feature.panel;
 
 import java.text.MessageFormat;
 
-import net.refractions.udig.project.ui.feature.FeaturePanelProcessor.FeaturePanelEntry;
+import net.refractions.udig.project.ui.feature.FeaturePanelEntry;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.tabbed.ITabItem;

@@ -31,7 +31,7 @@ import net.refractions.udig.feature.editor.FeatureEditorPlugin;
 import net.refractions.udig.feature.editor.IFeaturePage;
 import net.refractions.udig.project.ui.IFeaturePanel;
 import net.refractions.udig.project.ui.IFeatureSite;
-import net.refractions.udig.project.ui.feature.FeaturePanelProcessor.FeaturePanelEntry;
+import net.refractions.udig.project.ui.feature.FeaturePanelEntry;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;

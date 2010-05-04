@@ -11,8 +11,8 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.IFeatureSite;
+import net.refractions.udig.project.ui.feature.FeaturePanelEntry;
 import net.refractions.udig.project.ui.feature.FeaturePanelProcessor;
-import net.refractions.udig.project.ui.feature.FeaturePanelProcessor.FeaturePanelEntry;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IAdaptable;
