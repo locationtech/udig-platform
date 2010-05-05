@@ -290,6 +290,7 @@ public class CatalogImpl extends ICatalog {
                     }
                     // connected!
                     iterator.remove(); // don't clean this one up!
+                    add( service );
                     return service;
                 } catch (Throwable t) {
                     // usually indicates an IOException as the service is unable to connect
@@ -313,7 +314,7 @@ public class CatalogImpl extends ICatalog {
             IProgressMonitor monitor ) throws IOException {
         if (monitor == null)
             monitor = new NullProgressMonitor();
-
+        
         IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
 
         monitor.beginTask("acquire", 100);
@@ -357,6 +358,7 @@ public class CatalogImpl extends ICatalog {
                     }
                     // connected!
                     iterator.remove(); // don't clean this one up!
+                    add( service );
                     return service;
                 } catch (Throwable t) {
                     // usually indicates an IOException as the service is unable to connect
