@@ -49,7 +49,11 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class EditFeature extends DecoratingFeature implements IAdaptable, SimpleFeature {
     private IEditManager manager;
+    
+    // not used yet; could be used to "batch up" changes to send in one command?
     private Set<String> dirty = new LinkedHashSet<String>(); // we no longer need this
+
+    private boolean batch;
 
     /**
      * Construct <code>AdaptableFeature</code>.
@@ -131,7 +135,7 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
         xpath = xpathlist.toArray(new String[xpathlist.size()]);
         value = values.toArray();
         SetAttributesCommand sync = new SetAttributesCommand(xpath, value);
-        manager.getMap().sendCommandASync(sync);
+        manager.getMap().sendCommandASync(sync);       
     }
     @Override
     public void setAttributes( Object[] values ) {
@@ -176,17 +180,7 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
         setAttribute(geometryDescriptor.getName(), geometry);
     }
 
-    public boolean isDirty( String name ) {
-        //System.out.println("Inside is dirty");
-        // //System.out.println(name);
-        return dirty.contains((Object) name);
-    }
-
-    public void setDirty( String name ) {
-        dirty.add(name);
-    }
-
-    public void clean() {
-        dirty.clear();
+    public void setBatch( boolean batch ){
+        this.batch = batch;
     }
 }

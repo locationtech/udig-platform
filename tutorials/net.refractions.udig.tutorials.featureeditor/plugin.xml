@@ -41,9 +41,9 @@
          point="net.refractions.udig.project.ui.featurePanel">
       <featurePanel
             description="Edit Country information using this handy form."
-            id="net.refractions.udig.tutorials.featureeditor.panels.countryPanel"
+            id="net.refractions.udig.tutorials.featureeditor.panels.countryPanel1"
             name="Country"
-            panel="net.refractions.udig.tutorials.featureeditor.CountryFeaturePanel"
+            panel="net.refractions.udig.tutorials.featureeditor.CountryFeaturePanel2"
             title="Country Feature">
          <featureType>
             <attribute
@@ -63,11 +63,11 @@
             </attribute></featureType>
       </featurePanel>
       <featurePanel
-            description="Edit Country information using this handy form."
+            description="Statistics and facts about this country"
             id="net.refractions.udig.tutorials.featureeditor.panels.countryPanel2"
-            name="Country2"
-            panel="net.refractions.udig.tutorials.featureeditor.CountryFeaturePanel2"
-            title="Country Feature 2">
+            name="Statistics"
+            panel="net.refractions.udig.tutorials.featureeditor.CountryFeaturePanel3"
+            title="Statistics">
          <featureType>
             <attribute
                   type="com.vividsolutions.jts.geom.MultiPolygon">

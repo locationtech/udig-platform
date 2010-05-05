@@ -308,7 +308,7 @@ public class StringAttributeField extends AttributeField {
         
         String text = textField.getText();
         Object value = Converters.convert( text, descriptor.getType().getBinding() );        
-        getFeature().setAttribute( getAttributeName(), textField.getText() );
+        getFeature().setAttribute( getAttributeName(), value );
     }
 
     /**
@@ -554,12 +554,21 @@ public class StringAttributeField extends AttributeField {
         }
     }
 
+    public void setVisible( boolean visible ) {
+        super.setVisible(visible);
+        if( textField != null && !textField.isDisposed()){
+            textField.setVisible(visible);    
+        }
+    }
+    
     /*
      * @see AttributeField.setEnabled(boolean,Composite).
      */
-    public void setEnabled( boolean enabled, Composite parent ) {
-        super.setEnabled(enabled, parent);
-        getTextControl(parent).setEnabled(enabled);
+    public void setEnabled( boolean enabled ) {
+        super.setEnabled(enabled);
+        if( textField != null && !textField.isDisposed()){
+            textField.setEnabled(enabled);    
+        }
     }
 
 }

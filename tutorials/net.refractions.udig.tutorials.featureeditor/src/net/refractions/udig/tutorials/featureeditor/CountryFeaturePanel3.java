@@ -20,7 +20,7 @@ import org.eclipse.ui.PartInitException;
  * 
  * @since 1.2.0
  */
-public class CountryFeaturePanel2 extends FeaturePanel {
+public class CountryFeaturePanel3 extends FeaturePanel {
     private static final String CURR_TYPE = "CURR_TYPE";
 
     /** Attribute name for attribute GMI_CNTRY */
@@ -42,7 +42,7 @@ public class CountryFeaturePanel2 extends FeaturePanel {
     /**
      * Step 0 - Default constructor.
      */
-    public CountryFeaturePanel2() {
+    public CountryFeaturePanel3() {
     }
 
     /**
@@ -55,25 +55,22 @@ public class CountryFeaturePanel2 extends FeaturePanel {
 
     @Override
     public void createFieldEditors() {
-        addField(new StringAttributeField("LONG_NAME", "Name", parent));
-        addField(new IntegerAttributeField("POP_CNTRY", "Population", parent));
-        addField(new StringAttributeField(CNTRY_NAME, "Country", parent));
+        StringAttributeField field = addField(new StringAttributeField("SQKM", "Area (square km)",
+                parent));
+        field.getLabelControl(parent).setToolTipText("Area km");
 
-        // one way to do things!
-        currCode = addField(new StringAttributeField("CURR_CODE", "Currancy", parent));
+        field = addField(new StringAttributeField("SQMI", "Square Miles:", parent));
+        field.getLabelControl(parent).setToolTipText("Area miles");
 
-        // another way to do things
-        currType = new StringAttributeField(CURR_TYPE, "Currancy Type", parent);
-        addField(currType);
-
-        addField(new StringAttributeField("FIPS_CNTRY", "FIPS", parent));
-        addField(new StringAttributeField(GMI_CNTRY, "Code", parent));
-        addField(new StringAttributeField("ISO_3DIGIT", "ISO 3", parent));
-        addField(new StringAttributeField("ISO_2DIGIT", "ISO 2", parent));
-
-        // combo box!
-        addField(new ComboAttributeField2("LANDLOCKED", "Landbound", Arrays.asList(new Object[]{
-                "Y", "N"}), parent));
+        ComboAttributeField2 combo = addField(new ComboAttributeField2(COLOR_MAP, "Color Map",
+                Arrays.asList(COLOR_MAP_OPTS), parent));
+        ComboViewer viewer = combo.getViewer();
+        viewer.setLabelProvider(new LabelProvider(){
+            @Override
+            public String getText( Object element ) {
+                return "Color " + element;
+            }
+        });
         
         adjustGridLayout(parent);
     }

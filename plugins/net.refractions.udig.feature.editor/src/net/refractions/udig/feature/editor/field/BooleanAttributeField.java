@@ -234,7 +234,7 @@ public class BooleanAttributeField extends AttributeField {
             checkBox.setFocus();
         }
     }
-
+    
     /*
      * (non-Javadoc) Method declared on AttributeField.
      */
@@ -263,15 +263,27 @@ public class BooleanAttributeField extends AttributeField {
         }
     }
 
+    @Override
+    public void setVisible( boolean visible ) {
+        // Only call super if there is a label already
+        if (style == SEPARATE_LABEL) {
+            super.setVisible(visible);
+        }
+        if( checkBox != null && !checkBox.isDisposed()){
+            checkBox.setVisible(visible);
+        }
+    }
     /*
      * @see AttributeField.setEnabled
      */
-    public void setEnabled(boolean enabled, Composite parent) {
+    public void setEnabled(boolean enabled) {
         // Only call super if there is a label already
         if (style == SEPARATE_LABEL) {
-            super.setEnabled(enabled, parent);
+            super.setEnabled(enabled);
         }
-        getChangeControl(parent).setEnabled(enabled);
+        if( checkBox != null && !checkBox.isDisposed()){
+            checkBox.setEnabled(enabled);
+        }
     }
 
 }

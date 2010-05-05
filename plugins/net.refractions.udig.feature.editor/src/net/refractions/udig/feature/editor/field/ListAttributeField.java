@@ -447,13 +447,26 @@ public abstract class ListAttributeField extends AttributeField {
     /*
      * @see FieldEditor.setEnabled(boolean,Composite).
      */
-    public void setEnabled(boolean enabled, Composite parent) {
-        super.setEnabled(enabled, parent);
-        getListControl(parent).setEnabled(enabled);
-        addButton.setEnabled(enabled);
-        removeButton.setEnabled(enabled);
-        upButton.setEnabled(enabled);
-        downButton.setEnabled(enabled);
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if( list != null && list.isDisposed() ){
+            list.setEnabled(enabled);
+            addButton.setEnabled(enabled);
+            removeButton.setEnabled(enabled);
+            upButton.setEnabled(enabled);
+            downButton.setEnabled(enabled);
+        }
+    }
+    
+    public void setVisible(boolean visble) {
+        super.setVisible(visble);
+        if( list != null && list.isDisposed() ){
+            list.setVisible(visble);
+            addButton.setVisible(visble);
+            removeButton.setVisible(visble);
+            upButton.setVisible(visble);
+            downButton.setVisible(visble);
+        }
     }
     
     /**

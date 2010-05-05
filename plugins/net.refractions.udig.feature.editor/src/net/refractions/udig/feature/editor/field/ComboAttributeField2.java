@@ -17,6 +17,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.geotools.util.Converters;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 
@@ -156,7 +157,12 @@ public class ComboAttributeField2 extends AttributeField {
             Object value = sel.getFirstElement();
             getFeature().setAttribute(getAttributeName(), value);
         } else {
-            getFeature().setAttribute(getAttributeName(), null);
+            SimpleFeatureType schema = getFeature().getFeatureType();
+            AttributeDescriptor descriptor = schema.getDescriptor( getAttributeName());  
+            
+            String text = viewer.getCombo().getText();
+            Object value = Converters.convert( text, descriptor.getType().getBinding() );        
+            getFeature().setAttribute( getAttributeName(), value );
         }
 
     }
@@ -185,14 +191,14 @@ public class ComboAttributeField2 extends AttributeField {
         return viewer.getCombo();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.AttributeField#setEnabled(boolean,
-     * org.eclipse.swt.widgets.Composite)
-     */
-    public void setEnabled(boolean enabled, Composite parent) {
-        super.setEnabled(enabled, parent);
-        getComboBoxControl(parent).setEnabled(enabled);
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if( viewer.getCombo() != null && !viewer.getCombo().isDisposed() ){
+            viewer.getCombo().setEnabled(enabled);
+        }
+    }
+
+    public ComboViewer getViewer() {
+        return viewer;
     }
 }
