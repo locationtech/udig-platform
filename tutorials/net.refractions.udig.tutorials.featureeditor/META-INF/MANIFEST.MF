@@ -8,5 +8,6 @@ Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.project.ui,
- net.refractions.udig.feature.editor
+ net.refractions.udig.feature.editor,
+ org.eclipse.ui.forms
 Bundle-ActivationPolicy: lazy

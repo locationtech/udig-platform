@@ -1,21 +1,23 @@
 package net.refractions.udig.feature.editor.field;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import net.refractions.udig.feature.panel.FeaturePanelWidgetFactory;
 import net.refractions.udig.project.ui.IFeaturePanel;
 
-import org.eclipse.jface.preference.FieldEditor;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.eclipse.ui.forms.IMessageManager;
+import org.eclipse.ui.forms.ManagedForm;
+import org.eclipse.ui.forms.widgets.Form;
+import org.eclipse.ui.forms.widgets.ScrolledForm;
 
 /**
  * Abstract FetaurePanel with some helper methods for the care and feeding of AttributeFields.
@@ -32,31 +34,53 @@ import org.opengis.feature.simple.SimpleFeatureType;
 public abstract class FeaturePanel extends IFeaturePanel implements IPropertyChangeListener {
     
     protected List<AttributeField> fields = new ArrayList<AttributeField>();
-    protected Composite parent;
+    protected ScrolledForm scrolled;
     private AttributeField invalidField;
     private boolean isValid;
+    private FeaturePanelWidgetFactory widgetFactory;
+    private IMessageManager messages;
+    private ManagedForm managedForm;
+    private Form form;
 
     /**
      * Subclasses should call adjustGridLayout after they have populated parent with their fields.
      */
     public void createPartControl( Composite parent ) {
-        this.parent = new Composite(parent, SWT.NULL);
+        FeaturePanelWidgetFactory factory = getWidgetFactory();        
+        this.scrolled = factory.createScrolledForm(parent);
+        this.form = scrolled.getForm();
+        form.setText( getTitle() );
+        factory.decorateFormHeading( form );
+        
+        managedForm = new ManagedForm( factory, scrolled );
+        messages = managedForm.getMessageManager();
+
+        
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
         layout.marginHeight = 0;
         layout.marginWidth = 0;
-        this.parent.setLayout(layout);
-        this.parent.setFont(parent.getFont());
+        this.scrolled.setLayout(layout);
+        this.scrolled.setFont(parent.getFont());
 
         createFieldEditors();
 
-        adjustGridLayout(this.parent);
+        adjustGridLayout(scrolled);
     }
 
     protected abstract void createFieldEditors();
 
     public Composite getParent() {
-        return parent;
+        return scrolled.getBody();
+    }
+    
+    public FeaturePanelWidgetFactory getWidgetFactory() {
+        synchronized (this){
+            if( widgetFactory == null ){
+                widgetFactory = new FeaturePanelWidgetFactory();
+            }
+            return widgetFactory;
+        }        
     }
     
     protected void checkState() {
@@ -145,6 +169,7 @@ public abstract class FeaturePanel extends IFeaturePanel implements IPropertyCha
 
     @Override
     public void aboutToBeShown() {
+        messages.setAutoUpdate(true);
         for( AttributeField field : fields ) {
             field.setPropertyChangeListener(this);
             field.setFeature(getSite().getEditFeature());
@@ -162,6 +187,7 @@ public abstract class FeaturePanel extends IFeaturePanel implements IPropertyCha
 
     @Override
     public void aboutToBeHidden() {
+        messages.setAutoUpdate(false);
         for( AttributeField field : fields ) {
             field.setPropertyChangeListener(null);
             // field.setFeature(null);
@@ -185,18 +211,24 @@ public abstract class FeaturePanel extends IFeaturePanel implements IPropertyCha
             // If the new value is true then we must check all field editors.
             // If it is false, then the page is invalid in any case.
             if (isValid) {
-                Label label = field.getLabelControl();
-                Color foreground = label.getDisplay().getSystemColor(SWT.COLOR_INFO_FOREGROUND);
-                label.setForeground(foreground);
-                label.setToolTipText(null);
+                messages.removeMessage( field.getAttributeName(), field.getLabelControl() );
+                
+//                Label label = field.getLabelControl();
+//                Color foreground = label.getDisplay().getSystemColor(SWT.COLOR_INFO_FOREGROUND);
+//                label.setForeground(foreground);
+//                label.setToolTipText(null);
                 
                 checkState();
             } else {
-                Label label = field.getLabelControl();
-                Color blue = label.getDisplay().getSystemColor(SWT.COLOR_BLUE);
-                label.setForeground(blue);
-                label.setToolTipText(field.getAttributeName() + " invalid!");
-            
+                String message = field.getAttributeName() + " invalid!";
+                
+                messages.addMessage(field.getAttributeName(), message,null, IMessageProvider.ERROR, field.getLabelControl() );
+
+//                Label label = field.getLabelControl();
+//                Color blue = label.getDisplay().getSystemColor(SWT.COLOR_BLUE);
+//                label.setForeground(blue);
+//                label.setToolTipText(field.getAttributeName() + " invalid!");
+                
                 invalidField = field;
                 setValid(isValid);
             }

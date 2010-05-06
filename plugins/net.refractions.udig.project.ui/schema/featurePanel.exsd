@@ -115,7 +115,7 @@ This field is translatable using&quot;%key&quot; to indicate which plugin.proper
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="panel" type="string">
+         <attribute name="panel" type="string" use="required">
             <annotation>
                <documentation>
                   The feature panel to display; please note the panel is displayed with context information provided by name, title and description so you do not need to repeate this information in your panel.
@@ -124,6 +124,18 @@ Please do use a good layout manager as the panel may be displayed in a horizonta
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.IFeaturePanel:"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="labelProvider" type="string">
+            <annotation>
+               <documentation>
+                  Optional LabelProvider if you would like to control how the current feature is described to the user in the header.
+
+By default the &quot;Feature ID&quot; will be shown; you may wish to override this entry if your feature content has a name attribute or similar.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.jface.viewers.ILabelProvider"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -156,14 +168,19 @@ Please do use a good layout manager as the panel may be displayed in a horizonta
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  
+                  The name of the expected attribute; if left empty we assume you are checking the default geometry.
                </documentation>
             </annotation>
          </attribute>
          <attribute name="type" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  This is the Java type of the expected attribute. 
+
+Examples:
+- java.lang.String
+- java.lang.Intenger
+- com.vividsolutions.jts.geom.MultiPolygon
                </documentation>
                <appInfo>
                   <meta.attribute kind="java"/>
@@ -207,7 +224,7 @@ Please do use a good layout manager as the panel may be displayed in a horizonta
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  id for check used in error reporting and logs
                </documentation>
             </annotation>
          </attribute>
@@ -215,6 +232,8 @@ Please do use a good layout manager as the panel may be displayed in a horizonta
             <annotation>
                <documentation>
                   Check the feature site to ensure your form is able to operate.
+
+A full IFeatureSite is provided allowing you to check the GeoResource and/or Layer.
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.IFeaturePanelCheck:"/>

@@ -56,14 +56,14 @@ public class CountryFeaturePanel3 extends FeaturePanel {
     @Override
     public void createFieldEditors() {
         StringAttributeField field = addField(new StringAttributeField("SQKM", "Area (square km)",
-                parent));
-        field.getLabelControl(parent).setToolTipText("Area km");
+                getParent()));
+        field.getLabelControl(getParent()).setToolTipText("Area km");
 
-        field = addField(new StringAttributeField("SQMI", "Square Miles:", parent));
-        field.getLabelControl(parent).setToolTipText("Area miles");
+        field = addField(new StringAttributeField("SQMI", "Square Miles:", getParent()));
+        field.getLabelControl(getParent()).setToolTipText("Area miles");
 
         ComboAttributeField2 combo = addField(new ComboAttributeField2(COLOR_MAP, "Color Map",
-                Arrays.asList(COLOR_MAP_OPTS), parent));
+                Arrays.asList(COLOR_MAP_OPTS), getParent()));
         ComboViewer viewer = combo.getViewer();
         viewer.setLabelProvider(new LabelProvider(){
             @Override
@@ -71,8 +71,6 @@ public class CountryFeaturePanel3 extends FeaturePanel {
                 return "Color " + element;
             }
         });
-        
-        adjustGridLayout(parent);
     }
 
     @Override

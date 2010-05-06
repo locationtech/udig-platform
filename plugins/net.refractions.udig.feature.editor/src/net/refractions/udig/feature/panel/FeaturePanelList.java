@@ -121,7 +121,7 @@ public class FeaturePanelList
 
 	private Color bottomNavigationElementShadowStroke2;
 
-	private TabbedPropertySheetWidgetFactory factory;
+	private FeaturePanelWidgetFactory factory;
 
 	/**
 	 * One of the tabs in the feature panel list.
@@ -490,7 +490,7 @@ public class FeaturePanelList
 	 *            the widget factory.
 	 */
 	public FeaturePanelList(Composite parent,
-			TabbedPropertySheetWidgetFactory factory) {
+	        FeaturePanelWidgetFactory factory) {
 		super(parent, SWT.NO_FOCUS);
 		this.factory = factory;
 		removeAll();

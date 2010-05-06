@@ -7,6 +7,7 @@ import net.refractions.udig.feature.editor.field.ComboAttributeField2;
 import net.refractions.udig.feature.editor.field.FeaturePanel;
 import net.refractions.udig.feature.editor.field.IntegerAttributeField;
 import net.refractions.udig.feature.editor.field.StringAttributeField;
+import net.refractions.udig.feature.panel.FeaturePanelWidgetFactory;
 import net.refractions.udig.project.ui.IFeatureSite;
 
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -14,6 +15,8 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.forms.IMessageManager;
+import org.eclipse.ui.forms.ManagedForm;
 
 /**
  * Country Feature Panel used to show the use of AttributeFields.
@@ -55,27 +58,25 @@ public class CountryFeaturePanel2 extends FeaturePanel {
 
     @Override
     public void createFieldEditors() {
-        addField(new StringAttributeField("LONG_NAME", "Name", parent));
-        addField(new IntegerAttributeField("POP_CNTRY", "Population", parent));
-        addField(new StringAttributeField(CNTRY_NAME, "Country", parent));
+        addField(new StringAttributeField("LONG_NAME", "Name", getParent()));
+        addField(new IntegerAttributeField("POP_CNTRY", "Population", getParent()));
+        addField(new StringAttributeField(CNTRY_NAME, "Country", getParent()));
 
         // one way to do things!
-        currCode = addField(new StringAttributeField("CURR_CODE", "Currancy", parent));
+        currCode = addField(new StringAttributeField("CURR_CODE", "Currancy", getParent()));
 
         // another way to do things
-        currType = new StringAttributeField(CURR_TYPE, "Currancy Type", parent);
+        currType = new StringAttributeField(CURR_TYPE, "Currancy Type", getParent());
         addField(currType);
 
-        addField(new StringAttributeField("FIPS_CNTRY", "FIPS", parent));
-        addField(new StringAttributeField(GMI_CNTRY, "Code", parent));
-        addField(new StringAttributeField("ISO_3DIGIT", "ISO 3", parent));
-        addField(new StringAttributeField("ISO_2DIGIT", "ISO 2", parent));
+        addField(new StringAttributeField("FIPS_CNTRY", "FIPS", getParent()));
+        addField(new StringAttributeField(GMI_CNTRY, "Code", getParent()));
+        addField(new StringAttributeField("ISO_3DIGIT", "ISO 3", getParent()));
+        addField(new StringAttributeField("ISO_2DIGIT", "ISO 2", getParent()));
 
         // combo box!
         addField(new ComboAttributeField2("LANDLOCKED", "Landbound", Arrays.asList(new Object[]{
-                "Y", "N"}), parent));
-        
-        adjustGridLayout(parent);
+                "Y", "N"}), getParent()));
     }
 
     @Override

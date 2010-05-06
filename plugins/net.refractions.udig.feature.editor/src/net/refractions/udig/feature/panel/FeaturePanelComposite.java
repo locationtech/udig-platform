@@ -36,7 +36,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
  */
 public class FeaturePanelComposite extends Composite {
 
-    private TabbedPropertySheetWidgetFactory factory;
+    private FeaturePanelWidgetFactory factory;
 
     private Composite mainComposite;
 
@@ -46,7 +46,7 @@ public class FeaturePanelComposite extends Composite {
 
     private Composite tabComposite;
 
-    private TabbedPropertyTitle title;
+    private FeaturePanelTitle title;
 
     private FeaturePanelList listComposite;
 
@@ -59,7 +59,7 @@ public class FeaturePanelComposite extends Composite {
      * @param factory the widget factory.
      * @param displayTitle if <code>true</code>, then the title bar will be displayed.
      */
-    public FeaturePanelComposite( Composite parent, TabbedPropertySheetWidgetFactory factory,
+    public FeaturePanelComposite( Composite parent, FeaturePanelWidgetFactory factory,
             boolean displayTitle ) {
         super(parent, SWT.NO_FOCUS);
         this.factory = factory;
@@ -89,7 +89,7 @@ public class FeaturePanelComposite extends Composite {
      */
     protected void createMainContents() {
         if (displayTitle) {
-            title = new TabbedPropertyTitle(mainComposite, factory);
+            title = new FeaturePanelTitle(mainComposite, factory);
 
             FormData data = new FormData();
             data.left = new FormAttachment(0, 0);
@@ -158,7 +158,7 @@ public class FeaturePanelComposite extends Composite {
      * 
      * @return the tabbed property title bar or <code>null</code> if not used.
      */
-    public TabbedPropertyTitle getTitle() {
+    public FeaturePanelTitle getTitle() {
         return title;
     }
 
@@ -185,7 +185,7 @@ public class FeaturePanelComposite extends Composite {
      * 
      * @return the widget factory.
      */
-    protected TabbedPropertySheetWidgetFactory getFactory() {
+    protected FeaturePanelWidgetFactory getFactory() {
         return factory;
     }
 

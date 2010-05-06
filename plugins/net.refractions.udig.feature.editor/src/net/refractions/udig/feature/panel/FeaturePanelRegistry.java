@@ -58,6 +58,7 @@ import org.opengis.feature.type.FeatureType;
  * 
  * @see TabbedPropertyRegistery
  */
+@SuppressWarnings("unused")
 public class FeaturePanelRegistry {
 
     private final static String NO_TAB_ERROR = "Schema {0} declares non-existing tab {1}";
@@ -67,6 +68,7 @@ public class FeaturePanelRegistry {
     private final static String TAB_ERROR = "Tab in {0} declares non-existing category {1}.";
 
     // extension point constants
+
     private static final String EXTPT_CONTRIBUTOR = "propertyContributor"; //$NON-NLS-1$
 
     private static final String EXTPT_TABS = "propertyTabs"; //$NON-NLS-1$
@@ -111,10 +113,6 @@ public class FeaturePanelRegistry {
 
     protected List<FeaturePanelTabDescriptor> tabDescriptors;
 
-    // private IFeatureSite site;
-
-    // private FeaturePanelPageContributor contributor;
-
     protected static final List<FeaturePanelTabDescriptor> EMPTY_DESCRIPTOR_ARRAY = Collections
             .emptyList();
 
@@ -128,9 +126,17 @@ public class FeaturePanelRegistry {
 
         FeaturePanelProcessor featurePanelProcessor = ProjectUIPlugin.getDefault()
                 .getFeaturePanelProcessor();
-        // List<FeaturePanelEntry> list = featurePanelProcessor.entries();
-
         labelProvider = new TabLabelProvider();
+
+        List<FeaturePanelEntry> list = featurePanelProcessor.search(schema);
+        for( FeaturePanelEntry entry : list ) {
+            ILabelProvider titleProivder = entry.getLabelProvider();
+            if (titleProivder != null) {
+                labelProvider = new TabLabelProvider(titleProivder);
+                break;
+            }
+        }
+
         actionProvider = null;
         typeMapper = null;
 
@@ -193,25 +199,23 @@ public class FeaturePanelRegistry {
      */
     protected List<FeaturePanelTabDescriptor> filterTabDescriptors(
             List<FeaturePanelTabDescriptor> descriptors, IWorkbenchPart part, ISelection selection ) {
-        IFeatureSite site = toFeatureSite( selection );
-        if( site == null && part.getAdapter(IMap.class) != null){
+        IFeatureSite site = toFeatureSite(selection);
+        if (site == null && part.getAdapter(IMap.class) != null) {
             IMap map = (IMap) part.getAdapter(IMap.class);
             site = new FeatureSiteImpl(map);
-        }
-        else {
+        } else {
             site = new FeatureSiteImpl(); // represents whatever is current?
         }
-        
+
         List<FeaturePanelTabDescriptor> result = new ArrayList<FeaturePanelTabDescriptor>();
         for( FeaturePanelTabDescriptor descriptor : descriptors ) {
             FeaturePanelEntry entry = descriptor.getEntry();
-            if( entry == null ){
+            if (entry == null) {
                 continue; // that is wrong!
             }
             if (entry.isMatch(schema)) {
                 result.add(descriptor);
-            }
-            else if ( entry.isChecked(site)){
+            } else if (entry.isChecked(site)) {
                 result.add(descriptor);
             }
         }
@@ -224,22 +228,21 @@ public class FeaturePanelRegistry {
     private IFeatureSite toFeatureSite( ISelection selection ) {
         if (!selection.isEmpty() && selection instanceof IStructuredSelection) {
             IStructuredSelection selected = (IStructuredSelection) selection;
-            for( Iterator<?> iter = selected.iterator(); iter.hasNext(); ) {
+            for( Iterator< ? > iter = selected.iterator(); iter.hasNext(); ) {
                 Object item = iter.next();
                 if (item instanceof ILayer) {
                     return new FeatureSiteImpl((ILayer) item);
                 } else if (item instanceof IMap) {
                     return new FeatureSiteImpl((IMap) item);
-                }
-                else if( item instanceof IAdaptable){
+                } else if (item instanceof IAdaptable) {
                     IAdaptable adaptable = (IAdaptable) item;
                     ILayer layer = (ILayer) adaptable.getAdapter(ILayer.class);
-                    if( layer != null ){
-                        return new FeatureSiteImpl( layer );
+                    if (layer != null) {
+                        return new FeatureSiteImpl(layer);
                     }
                     IMap map = (IMap) adaptable.getAdapter(IMap.class);
-                    if( map != null ){
-                        return new FeatureSiteImpl( map );
+                    if (map != null) {
+                        return new FeatureSiteImpl(map);
                     }
                 }
             }
@@ -269,7 +272,7 @@ public class FeaturePanelRegistry {
         FeaturePanelProcessor featurePanelProcessor = ProjectUIPlugin.getDefault()
                 .getFeaturePanelProcessor();
 
-        List<FeaturePanelEntry> list = featurePanelProcessor.entries();        
+        List<FeaturePanelEntry> list = featurePanelProcessor.entries();
         if (list.isEmpty()) {
             return result; // empty!
         }

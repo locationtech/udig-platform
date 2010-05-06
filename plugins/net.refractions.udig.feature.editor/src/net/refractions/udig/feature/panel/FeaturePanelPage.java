@@ -38,6 +38,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -69,15 +70,12 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.internal.views.properties.tabbed.view.TabbedPropertyTitle;
 import org.eclipse.ui.part.IContributedContentsView;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.part.PageBookView;
 import org.eclipse.ui.views.properties.tabbed.AbstractOverridableTabListPropertySection;
 import org.eclipse.ui.views.properties.tabbed.IOverridableTabListContentProvider;
-import org.eclipse.ui.views.properties.tabbed.TabContents;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
-import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -109,7 +107,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     /**
      * Subclass of form view tricked out for display
      */
-    private TabbedPropertySheetWidgetFactory widgetFactory;
+    private FeaturePanelWidgetFactory widgetFactory;
 
     /**
      * This is the contributor that is hosting this page
@@ -383,7 +381,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
      * @see org.eclipse.ui.part.IPage#createControl(org.eclipse.swt.widgets.Composite)
      */
     public void createControl(Composite parent) {
-        widgetFactory = new TabbedPropertySheetWidgetFactory();
+        widgetFactory = new FeaturePanelWidgetFactory();
         tabbedPropertyComposite = new FeaturePanelComposite(parent, widgetFactory, hasTitleBar);
         widgetFactory.paintBordersFor(tabbedPropertyComposite);
         tabbedPropertyComposite.setLayout(new FormLayout());
@@ -742,6 +740,11 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
         // input.
         if (!descriptors.isEmpty()) {
             updateTabs(descriptors);
+            ILabelProvider header = null;
+            for( FeaturePanelTabDescriptor descriptor : descriptors ){
+                header = descriptor.getEntry().getLabelProvider();
+            }
+            tabbedPropertyViewer.setLabelProvider( new TabLabelProvider( header ));
         }
         // update tabs list
         tabbedPropertyViewer.setInput(part, currentSelection);
@@ -836,7 +839,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
      * 
      * @return the widget factory.
      */
-    public TabbedPropertySheetWidgetFactory getWidgetFactory() {
+    public FeaturePanelWidgetFactory getWidgetFactory() {
         return widgetFactory;
     }
 
@@ -845,7 +848,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
      */
     private void refreshTitleBar() {
         if (hasTitleBar) {
-            TabbedPropertyTitle title = tabbedPropertyComposite.getTitle();
+            FeaturePanelTitle title = tabbedPropertyComposite.getTitle();
             if (currentTab == null) {
                 /**
                  * No tabs are shown so hide the title bar, otherwise you see
@@ -1007,8 +1010,6 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * Returns the list of currently active tabs.
-     * 
-     * @since 3.5
      */
     public List<FeaturePanelTabDescriptor> getActiveTabs() {
         List<FeaturePanelTabDescriptor> elements = tabbedPropertyViewer.getElements();
@@ -1023,7 +1024,6 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
      * 
      * @param id
      *            The string id of the tab to select.
-     * @since 3.5
      */
     public void setSelectedTab(String id) {
         List<FeaturePanelTabDescriptor> elements = tabbedPropertyViewer.getElements();
@@ -1043,7 +1043,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
      * @param selection
      *            Selection whose properties title text is to be returned
      * @return String representing title text.
-     * @since 3.5
+     * 
      */
     public String getTitleText(ISelection selection) {
         if (selection == null) {
@@ -1059,7 +1059,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
      * @param selection
      *            Selection whose properties title image is to be returned
      * @return Image that is used as a title image.
-     * @since 3.5
+     * 
      */
     public Image getTitleImage(ISelection selection) {
         if (selection == null) {

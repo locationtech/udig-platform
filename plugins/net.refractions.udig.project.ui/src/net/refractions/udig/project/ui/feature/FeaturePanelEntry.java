@@ -11,6 +11,8 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -34,6 +36,7 @@ public class FeaturePanelEntry {
     private FeatureTypeMatch matcher;
     private String category;
     private IFeaturePanelCheck check;
+    private ILabelProvider labelProvider;
 
     public FeaturePanelEntry( IExtension extension, IConfigurationElement definition ) {
         this.PLUGIN_ID = definition.getDeclaringExtension().getNamespaceIdentifier();
@@ -55,6 +58,14 @@ public class FeaturePanelEntry {
             matcher = new FeatureTypeMatch(featureTypeDefinition[0]);
         } else {
             matcher = FeatureTypeMatch.ALL;
+        }
+        if( definition.getAttribute("labelProvider") != null ){
+            try {
+                labelProvider = (ILabelProvider) definition.createExecutableExtension("labelProvider");
+            } catch (CoreException e) {
+                String target = definition.getAttribute("panel");
+                log("Could not create feature label provider" + target, e);
+            }
         }
         // to be configured later
         indented = false;
@@ -162,6 +173,16 @@ public class FeaturePanelEntry {
         }
     }
 
+    /**
+     * Optional Label Provider if you would like to control
+     * the appearance of your feature.
+     * @return LabelProvider or null
+     */
+    public ILabelProvider getLabelProvider() {
+        return labelProvider;
+    }
+    
+    
     /**
      * Report an issue, blaming the plugin implementing the feature panel.
      * 

@@ -42,6 +42,7 @@
       <featurePanel
             description="Edit Country information using this handy form."
             id="net.refractions.udig.tutorials.featureeditor.panels.countryPanel1"
+            labelProvider="net.refractions.udig.tutorials.featureeditor.CountryLabelProvider"
             name="Country"
             panel="net.refractions.udig.tutorials.featureeditor.CountryFeaturePanel2"
             title="Country Feature">

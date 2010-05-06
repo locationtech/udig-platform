@@ -1,5 +1,6 @@
 package net.refractions.udig.feature.panel;
 
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.opengis.feature.Feature;
@@ -7,7 +8,15 @@ import org.opengis.feature.simple.SimpleFeature;
 
 
 public class TabLabelProvider extends LabelProvider {
-
+    ILabelProvider delegate;
+    
+    public TabLabelProvider(){
+        this(null);
+    }
+    public TabLabelProvider( ILabelProvider delegate ){
+        this.delegate = delegate;
+    }
+    
     @Override
     public String getText( Object element ) {
         if( element instanceof StructuredSelection ){
@@ -22,6 +31,12 @@ public class TabLabelProvider extends LabelProvider {
         }
         if( element instanceof SimpleFeature ){
             SimpleFeature feature = (SimpleFeature) element;
+            if( delegate != null ){
+                String text = delegate.getText( feature );
+                if( text != null ){
+                    return text;
+                }
+            }
             return feature.getID();
         }
         if( element instanceof FeaturePanelTabDescriptor ){
