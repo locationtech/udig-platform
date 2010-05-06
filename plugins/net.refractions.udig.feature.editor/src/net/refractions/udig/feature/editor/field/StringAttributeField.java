@@ -164,7 +164,7 @@ public class StringAttributeField extends AttributeField {
     /*
      * (non-Javadoc) Method declared on AttributeField.
      */
-    protected void adjustForNumColumns( int numColumns ) {
+    public void adjustForNumColumns( int numColumns ) {
         GridData gd = (GridData) textField.getLayoutData();
         gd.horizontalSpan = numColumns - 1;
         // We only grab excess space if we have to
@@ -178,7 +178,7 @@ public class StringAttributeField extends AttributeField {
      * 
      * @return <code>true</code> if the field value is valid, and <code>false</code> if invalid
      */
-    protected boolean checkState() {
+    public boolean checkState() {
         boolean result = false;
         if (emptyStringAllowed) {
             result = true;
@@ -269,7 +269,7 @@ public class StringAttributeField extends AttributeField {
     /*
      * (non-Javadoc) Method declared on AttributeField.
      */
-    protected void doLoad() {
+    public void doLoad() {
         if (textField != null && getFeature() != null ) {
 //            AttributeDescriptor descriptor = getFeature().getType().getDescriptor( getAttributeName() );
 //            int length = FeatureTypes.getFieldLength(descriptor);
@@ -348,6 +348,10 @@ public class StringAttributeField extends AttributeField {
      * @return the text control, or <code>null</code> if no text field is created yet
      */
     protected Text getTextControl() {
+        return textField;
+    }
+    
+    public Text getControl(){
         return textField;
     }
 

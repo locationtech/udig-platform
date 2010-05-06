@@ -49,6 +49,11 @@ public class BooleanAttributeField extends AttributeField {
     protected BooleanAttributeField() {
     }
 
+    @Override
+    public Control getControl() {
+        return checkBox;
+    }
+    
     /**
      * Creates a boolean attribute field in the given style.
      * 
@@ -87,7 +92,7 @@ public class BooleanAttributeField extends AttributeField {
     /*
      * (non-Javadoc) Method declared on AttributeField.
      */
-    protected void adjustForNumColumns(int numColumns) {
+    public void adjustForNumColumns(int numColumns) {
         if (style == SEPARATE_LABEL) {
             numColumns--;
         }
@@ -141,7 +146,7 @@ public class BooleanAttributeField extends AttributeField {
      * (non-Javadoc) Method declared on AttributeField. Loads the value from the
      * feature type schema and sets it to the check box.
      */
-    protected void doLoad() {
+    public void doLoad() {
         if (checkBox != null) {
             Object value = getFeature().getAttribute( getAttributeName() );            
             Boolean check = Converters.convert(value, Boolean.class );

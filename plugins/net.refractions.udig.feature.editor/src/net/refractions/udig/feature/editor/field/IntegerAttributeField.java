@@ -78,7 +78,7 @@ public class IntegerAttributeField extends StringAttributeField {
      * (non-Javadoc) Method declared on StringAttributeField. Checks whether the entered String is a
      * valid integer or not.
      */
-    protected boolean checkState() {
+    public boolean checkState() {
 
         Text text = getTextControl();
 
@@ -107,7 +107,7 @@ public class IntegerAttributeField extends StringAttributeField {
     /*
      * (non-Javadoc) Method declared on AttributeField.
      */
-    protected void doLoad() {
+    public void doLoad() {
         Object value = getFeature().getAttribute(getAttributeName());
         Integer thenumber = Converters.convert(value, Integer.class);
         textField.setText("" + thenumber); //$NON-NLS-1$

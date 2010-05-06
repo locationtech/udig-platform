@@ -133,7 +133,7 @@ public abstract class AttributeField {
      * 
      * @param numColumns the number of columns
      */
-    protected abstract void adjustForNumColumns( int numColumns ); // TODO: revisit
+    public abstract void adjustForNumColumns( int numColumns ); // TODO: revisit
 
     /**
      * Applies a font.
@@ -230,7 +230,7 @@ public abstract class AttributeField {
      * </p>
      * Usually this is done with feature.getAttribute( name )
      */
-    protected abstract void doLoad();
+    public abstract void doLoad();
 
     /**
      * Initializes this attribute field with the default attribute value from the feature.
@@ -313,10 +313,16 @@ public abstract class AttributeField {
      * 
      * @return the label control, or <code>null</code> if no label control has been created
      */
-    protected Label getLabelControl() {
+    public Label getLabelControl() {
         return label;
     }
 
+    /**
+     * Control suitable for decorating
+     * @return
+     */
+    public abstract Control getControl();
+    
     /**
      * Returns this attribute field's label component.
      * <p>

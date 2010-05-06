@@ -101,7 +101,7 @@ public abstract class ListAttributeField extends AttributeField {
     /* (non-Javadoc)
      * Method declared on FieldEditor.
      */
-    protected void adjustForNumColumns(int numColumns) {
+    public void adjustForNumColumns(int numColumns) {
         Control control = getLabelControl();
         ((GridData) control.getLayoutData()).horizontalSpan = numColumns;
         ((GridData) list.getLayoutData()).horizontalSpan = numColumns - 1;
@@ -211,7 +211,7 @@ public abstract class ListAttributeField extends AttributeField {
     /* (non-Javadoc)
      * Method declared on FieldEditor.
      */
-    protected void doLoad() {
+    public void doLoad() {
         if (list != null) {
             Object value = getFeature().getAttribute( getAttributeName() );            
             String text = Converters.convert(value, String.class );
@@ -310,7 +310,10 @@ public abstract class ListAttributeField extends AttributeField {
         }
         return list;
     }
-
+    public List getControl(){
+        return list;
+    }
+    
     /**
      * Creates and returns a new item for the list.
      * <p>

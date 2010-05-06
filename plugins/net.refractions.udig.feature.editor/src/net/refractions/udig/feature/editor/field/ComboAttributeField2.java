@@ -58,12 +58,19 @@ public class ComboAttributeField2 extends AttributeField {
         createControl(parent);
     }
 
+    @Override
+    public Control getControl() {
+        if( viewer != null ){
+            return viewer.getControl();
+        }
+        return null;
+    }
     /*
      * (non-Javadoc)
      * 
      * @see org.eclipse.jface.preference.AttributeField#adjustForNumColumns(int)
      */
-    protected void adjustForNumColumns(int numColumns) {
+    public void adjustForNumColumns(int numColumns) {
         if (numColumns > 1) {
             Control control = getLabelControl();
             int left = numColumns;
@@ -111,7 +118,7 @@ public class ComboAttributeField2 extends AttributeField {
      * 
      * @see org.eclipse.jface.preference.AttributeField#doLoad()
      */
-    protected void doLoad() {
+    public void doLoad() {
         Object value = getFeature().getAttribute(getAttributeName());
         if( value != null ){
             int index = options.indexOf( value );
