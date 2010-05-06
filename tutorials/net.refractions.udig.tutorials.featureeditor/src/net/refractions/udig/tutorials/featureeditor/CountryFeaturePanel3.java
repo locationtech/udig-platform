@@ -102,7 +102,7 @@ public class CountryFeaturePanel3 extends FeaturePanel {
 
     @Override
     public String getTitle() {
-        return "Country Details";
+        return "Country Statis";
     }
 
 }
