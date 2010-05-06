@@ -13,11 +13,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.forms.IMessageManager;
+import org.eclipse.ui.forms.IMessagePrefixProvider;
 import org.eclipse.ui.forms.ManagedForm;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.eclipse.ui.internal.forms.MessageManager;
 
 /**
  * Abstract FetaurePanel with some helper methods for the care and feeding of AttributeFields.
@@ -54,7 +57,14 @@ public abstract class FeaturePanel extends IFeaturePanel implements IPropertyCha
         
         managedForm = new ManagedForm( factory, scrolled );
         messages = managedForm.getMessageManager();
-
+        messages.setMessagePrefixProvider( new IMessagePrefixProvider(){            
+            public String getPrefix( Control control ) {
+                if( control instanceof Label){
+                    return ((Label)control).getText();
+                }
+                return null;
+            }
+        });
         
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
@@ -223,7 +233,6 @@ public abstract class FeaturePanel extends IFeaturePanel implements IPropertyCha
                 String message = field.getAttributeName() + " invalid!";
                 
                 messages.addMessage(field.getAttributeName(), message,null, IMessageProvider.ERROR, field.getLabelControl() );
-
 //                Label label = field.getLabelControl();
 //                Color blue = label.getDisplay().getSystemColor(SWT.COLOR_BLUE);
 //                label.setForeground(blue);
