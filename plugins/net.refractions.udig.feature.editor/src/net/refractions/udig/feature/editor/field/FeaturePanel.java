@@ -35,6 +35,7 @@ public abstract class FeaturePanel extends IFeaturePanel implements IPropertyCha
     protected Composite parent;
     private AttributeField invalidField;
     private boolean isValid;
+
     /**
      * Subclasses should call adjustGridLayout after they have populated parent with their fields.
      */
@@ -150,7 +151,7 @@ public abstract class FeaturePanel extends IFeaturePanel implements IPropertyCha
             field.doLoad();
         }
     }
-
+    
     @Override
     public void refresh() {
         for( AttributeField field : fields ) {

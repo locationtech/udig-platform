@@ -17,6 +17,9 @@ public class TabLabelProvider extends LabelProvider {
             }
             element = sel.getFirstElement();
         }
+        if( element == null ){
+            return null;
+        }
         if( element instanceof SimpleFeature ){
             SimpleFeature feature = (SimpleFeature) element;
             return feature.getID();
