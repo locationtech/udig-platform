@@ -29,6 +29,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.feature.FeatureTypes;
 import org.geotools.feature.type.Types;
@@ -246,10 +247,14 @@ public class StringAttributeField extends AttributeField {
      * </p>
      */
     protected void doFillIntoGrid( Composite parent, int numColumns ) {
-        getLabelControl(parent);
-
-        textField = getTextControl(parent);
+        Label label = getLabelControl(parent);
         GridData gd = new GridData();
+        gd.horizontalSpan = 1;
+        label.setLayoutData(gd);
+        
+        textField = getTextControl(parent);
+        gd = new GridData();
+        gd.horizontalIndent=5;
         gd.horizontalSpan = numColumns - 1;
         if (widthInChars != UNLIMITED) {
             GC gc = new GC(textField);

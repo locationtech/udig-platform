@@ -193,7 +193,7 @@ public abstract class AttributeField {
     protected void createControl( Composite parent ) {
         GridLayout layout = new GridLayout();
         layout.numColumns = getNumberOfControls();
-        layout.marginWidth = 0;
+        layout.marginWidth = 5;
         layout.marginHeight = 0;
         layout.horizontalSpacing = 8; // use miglayout "realed" later
         parent.setLayout(layout);

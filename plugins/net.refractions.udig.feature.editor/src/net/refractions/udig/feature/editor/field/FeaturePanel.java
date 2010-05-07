@@ -65,11 +65,12 @@ public abstract class FeaturePanel extends IFeaturePanel implements IPropertyCha
                 return null;
             }
         });
-        
+
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
+        layout.marginWidth = 5;
         layout.marginHeight = 0;
-        layout.marginWidth = 0;
+        layout.horizontalSpacing = 8; // use miglayout "realed" later
         this.scrolled.setLayout(layout);
         this.scrolled.setFont(parent.getFont());
 
@@ -147,7 +148,7 @@ public abstract class FeaturePanel extends IFeaturePanel implements IPropertyCha
             GridLayout layout = new GridLayout();
             layout.numColumns = numColumns;
             layout.marginHeight = 0;
-            layout.marginWidth = 0;
+            layout.marginWidth = 8;
             parent.setLayout(layout);
         }
 
@@ -221,7 +222,8 @@ public abstract class FeaturePanel extends IFeaturePanel implements IPropertyCha
             // If the new value is true then we must check all field editors.
             // If it is false, then the page is invalid in any case.
             if (isValid) {
-                messages.removeMessage( field.getAttributeName(), field.getLabelControl() );
+                messages.removeMessage( field.getAttributeName(), field.getControl() );
+                field.getControl().setToolTipText(null);
                 
 //                Label label = field.getLabelControl();
 //                Color foreground = label.getDisplay().getSystemColor(SWT.COLOR_INFO_FOREGROUND);
@@ -232,7 +234,9 @@ public abstract class FeaturePanel extends IFeaturePanel implements IPropertyCha
             } else {
                 String message = field.getAttributeName() + " invalid!";
                 
-                messages.addMessage(field.getAttributeName(), message,null, IMessageProvider.ERROR, field.getLabelControl() );
+                messages.addMessage(field.getAttributeName(), message,null, IMessageProvider.ERROR, field.getControl() );
+                field.getControl().setToolTipText( message );
+                
 //                Label label = field.getLabelControl();
 //                Color blue = label.getDisplay().getSystemColor(SWT.COLOR_BLUE);
 //                label.setForeground(blue);
