@@ -24,6 +24,8 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.Name;
 
+import sun.tools.tree.ThisExpression;
+
 /**
  * This class is used to determine whether a FeatureEditor can be used to edit a feature of a given
  * SimpleFeatureType.
@@ -46,7 +48,7 @@ public class FeatureTypeMatch {
      */
     protected static class AttributeMatcher {
         String name;
-        Class<?> type;
+        Class< ? > type;
 
         /**
          * New instance.
@@ -85,6 +87,20 @@ public class FeatureTypeMatch {
                 }
             }
             return null;
+        }
+        @Override
+        public String toString() {
+            StringBuffer buf = new StringBuffer();
+            buf.append("match(");
+            if (this.name != null) {
+                buf.append(this.name);
+            }
+            if (this.type != null) {
+                buf.append(" ");
+                buf.append(type.getSimpleName());
+            }
+            buf.append(")");
+            return buf.toString();
         }
     }
     /** A matcher that matches all FeatureTypes */
@@ -216,5 +232,24 @@ public class FeatureTypeMatch {
             return accuracy;
         }
         return NO_MATCH;
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append("FeatureTypeMatch ");
+        if (this.namespace != null) {
+            buf.append(this.namespace);
+        }
+        buf.append(this.typeName);
+        if (this.attributes != null) {
+            for( int i = 0; i < this.attributes.length; i++ ) {
+                buf.append(this.attributes[i]);
+                if (i < this.attributes.length - 1) {
+                    buf.append(",");
+                }
+            }
+        }
+        return buf.toString();
     }
 }

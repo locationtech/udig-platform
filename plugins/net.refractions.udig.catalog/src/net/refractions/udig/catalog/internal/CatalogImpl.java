@@ -797,6 +797,9 @@ public class CatalogImpl extends ICatalog {
         }
         try {
             ReferencedEnvelope bounds = resource.getInfo(null).getBounds();
+            if( bounds == null ){
+                return true; // bounds are unknown!
+            }
             return bbox.intersects(bounds);
         } catch (Throwable e) {
             CatalogPlugin.log(null, e);

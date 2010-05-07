@@ -375,7 +375,12 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
                     RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                     g.setRenderingHints(hints);
                     Dimension displaySize = getContext().getMapDisplay().getDisplaySize();
-                    cache.end(g, new Rectangle(displaySize));
+                    try {
+                        cache.end(g, new Rectangle(displaySize));
+                    }
+                    catch( Throwable t ){
+                        ProjectPlugin.trace( CompositeRenderContextImpl.class,"painting labels failed", t );
+                    }
                 }
 
                 //update the context with the new image
