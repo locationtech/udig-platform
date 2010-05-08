@@ -24,6 +24,7 @@ import net.refractions.udig.project.internal.impl.AbstractContextImpl;
 import net.refractions.udig.project.internal.render.RenderContext;
 import net.refractions.udig.project.internal.render.SelectionLayer;
 import net.refractions.udig.project.render.ILabelPainter;
+import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.Query;
@@ -145,7 +146,11 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
      * @return BufferedImage for use by the Renderer
      */
     public BufferedImage getImage() {
-        return getImage(getImageSize().width, getImageSize().height);
+        Dimension size = getImageSize();
+        if( size == null || size.width < 1 || size.height <1 ){
+            return null; // dummy image
+        }
+        return getImage(size.width, size.height); // will create if needed
     }
     
     /**
@@ -169,9 +174,9 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
      * @return a BufferedImage of the requested size (the image is cached) 
      */
     public synchronized BufferedImage getImage( int width, int height ) {
-        if (width < 1 || height < 1)
+        if (width < 1 || height < 1){
             return dummyImage;
-
+        }
         if (image == null || image.getWidth() < width || image.getHeight() < height) {
             synchronized (this) {
                 if (image == null || image.getWidth() < width || image.getHeight() < height) {
@@ -496,7 +501,11 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
      */
     public Dimension getImageSize(){
         if (imagesize == null){
-            return getMapDisplay().getDisplaySize();
+            IMapDisplay mapDisplay = getMapDisplay();
+            if( mapDisplay == null ){
+                return null;
+            }
+            return mapDisplay.getDisplaySize();
         }else{
             return imagesize;
         }

@@ -121,9 +121,9 @@ public abstract class AbstractContextImpl implements AbstractContext {
     }
 
     public IMapDisplay getMapDisplay() {
-        if (getRenderManager() == null || getRenderManagerInternal().isDisposed() )
+        if (getRenderManager() == null || getRenderManagerInternal().isDisposed() ){
             return null;
-        
+        }        
         return getRenderManager().getMapDisplay();
     }
 
