@@ -272,8 +272,6 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
         else {
             geometryName.getCombo().setText(name);    
         }
-        
-
         Mode raw = determineMode(schema, false);
         pointMode.setEnabled(raw == Mode.ALL);
         polyMode.setEnabled(raw == Mode.ALL);
@@ -287,6 +285,7 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
 
         this.fill.setFill(fill, this.mode, defaultColor);
         this.point.setGraphic(graphic, this.mode, defaultColor);
+        
         this.label.set(schema, text, this.mode);
         this.minScale.setScale(minScaleDen, Math.round(getLayer().getMap().getViewportModel()
                 .getScaleDenominator()));

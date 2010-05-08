@@ -8,6 +8,8 @@ import net.refractions.udig.style.sld.internal.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -202,7 +204,15 @@ public class PointEditorPage extends StyleEditorPage {
         label.setToolTipText(Messages.StylingConstants_tooltip_size);
         sizeViewer = new ComboExpressionViewer(graphicComposite, SWT.SINGLE);
         sizeViewer.setOptions(getSizeList());
-        sizeViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false);
+        GC gc = new GC(sizeViewer.getControl());
+        try {
+            Point extent = gc.textExtent("X");//$NON-NLS-1$
+            gd.widthHint = 3 * extent.x;
+        } finally {
+            gc.dispose();
+        }
+        sizeViewer.getControl().setLayoutData( gd);
         sizeViewer.getControl().setToolTipText(Messages.StylingConstants_tooltip_size);
         
         label = new Label(graphicComposite, SWT.NONE);

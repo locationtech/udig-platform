@@ -19,6 +19,7 @@ import java.text.MessageFormat;
 
 import net.refractions.udig.style.sld.AbstractSimpleConfigurator;
 import net.refractions.udig.style.sld.internal.Messages;
+import net.refractions.udig.ui.graphics.SLDs;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyListener;
@@ -35,6 +36,7 @@ import org.geotools.styling.Mark;
 import org.geotools.styling.SLD;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.StyleBuilder;
+import org.opengis.style.GraphicalSymbol;
 
 /**
  * Allows editing/viewing of a Style Layer Descriptor "Graphic".
@@ -194,19 +196,36 @@ public class GraphicViewer {
      * @param mode 
      * @param enabled 
      */
-    public void setGraphic(Graphic graphic2, Mode mode, Color defaultColor ) {
-
+    public void setGraphic(Graphic graphic, Mode mode, Color defaultColor ) {
         boolean enabled=true;
-        Graphic graphic=graphic2;
         if( graphic==null ){
             StyleBuilder builder=new StyleBuilder(); 
             graphic=builder.createGraphic(null, builder.createMark(StyleBuilder.MARK_SQUARE, defaultColor), null);
             enabled=true;
         }
-        if(graphic == null || graphic.getMarks() == null || graphic.getMarks().length == 0) 
+        this.width = SLDs.size(graphic);
+        String text = MessageFormat.format( "{0,number,#0}", this.width); //$NON-NLS-1$
+        if(text != null) {
+            this.size.setText(text);
+            this.size.select(this.size.indexOf(text));
+        }
+       
+        boolean marked = false;
+        if (graphic != null && graphic.graphicalSymbols() != null
+                && !graphic.graphicalSymbols().isEmpty()) {
+        
+            for( GraphicalSymbol symbol : graphic.graphicalSymbols() ) {
+                if (symbol instanceof Mark) {
+                    Mark mark = (Mark) symbol;
+                    setMark(mark, mode);
+                    marked = true;
+                    break;
+                }
+            }
+        }
+        if( !marked ){
             setMark(null, mode );
-        else
-            setMark(graphic.getMarks()[0], mode );
+        }
         this.enabled=this.enabled&&enabled;
     }
     
@@ -214,21 +233,14 @@ public class GraphicViewer {
         listen(false);
         try {
             this.enabled = (mode == Mode.POINT && mark != null);
-            this.width = SLD.size(mark);
             this.type = SLD.wellKnownName(mark);
             
             // Stroke is used in line, point and polygon
             this.on.setEnabled(mode == Mode.POINT || mode == Mode.ALL);
             
-            String text = MessageFormat.format( "{0,number,#0}", this.width); //$NON-NLS-1$
-            if(text != null) {
-                this.size.setText(text);
-                this.size.select(this.size.indexOf(text));
-            }
-           
             if(this.type != null) {
                 this.name.setText(this.type);
-                this.name.select(this.name.indexOf(text));
+                this.name.select(this.name.indexOf(this.type));
             }
             
             this.on.setSelection( this.enabled );

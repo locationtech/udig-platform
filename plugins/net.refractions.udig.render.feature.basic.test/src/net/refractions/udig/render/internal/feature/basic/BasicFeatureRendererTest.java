@@ -26,6 +26,7 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.geometry.jts.JTS;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.ReferencingFactoryFinder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
@@ -90,19 +91,21 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
 
         map.getViewportModelInternal().setBounds(0,100,0,90);
         
-        Envelope result = BasicFeatureRenderer.validateBounds(new Envelope(0,50,0,10), new NullProgressMonitor(), context);
+        CoordinateReferenceSystem crs = DefaultGeographicCRS.WGS84;
+        Envelope result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope(0,50,0,10, crs), new NullProgressMonitor(), context);
         assertEquals( new Envelope( 0,50,0,10 ), result);
 
-        result = BasicFeatureRenderer.validateBounds(new Envelope( 0,170,0,10 ), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( 0,170,0,10, crs), new NullProgressMonitor(), context);
         assertEquals( new Envelope( 0,100,0,10 ), result);
 
-        result = BasicFeatureRenderer.validateBounds(new Envelope( 0,300,0,200 ), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( 0,300,0,200,crs ), new NullProgressMonitor(), context);
         assertEquals( new Envelope( 0,100,0,90 ), result);
 
-        result = BasicFeatureRenderer.validateBounds(new Envelope( -100,-80,-70,-50 ), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( -100,-80,-70,-50, crs ), new NullProgressMonitor(), context);
         assertTrue( result.isNull() );
     }
 
+    @SuppressWarnings("deprecation")
     public void testBC_ALBERS_Viewport() throws Exception {
         CRSFactory fac = (CRSFactory) ReferencingFactoryFinder.getCRSFactories(null).iterator().next();
         CoordinateReferenceSystem crs = fac.createFromWKT(BC_ALBERS_WKT);
@@ -133,29 +136,30 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
         
         map.getViewportModelInternal().setBounds(-150,-120,45,65);
         
-        Envelope result = BasicFeatureRenderer.validateBounds(new Envelope( minx,maxx,miny,maxy ), new NullProgressMonitor(), context);
+        Envelope result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny,maxy,crs ), new NullProgressMonitor(), context);
         compareEnvelopes( new Envelope( minx,maxx,miny,maxy ), result);
         
-        result = BasicFeatureRenderer.validateBounds(new Envelope( minx,maxx,miny,maxy-5 ), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny,maxy-5, crs), new NullProgressMonitor(), context);
         compareEnvelopes( new Envelope( minx,maxx,miny,maxy-5 ), result);
 
-        result = BasicFeatureRenderer.validateBounds(new Envelope( minx,maxx,miny-20,maxy+20 ), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny-20,maxy+20, crs ), new NullProgressMonitor(), context);
         compareEnvelopes( new Envelope( minx,maxx,50,60 ), result);
         
         map.getViewportModelInternal().setBounds(minx-5,minx+5,miny-5,miny+5);
 
-        result = BasicFeatureRenderer.validateBounds(new Envelope( minx,maxx,miny,maxy ), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny,maxy,crs ), new NullProgressMonitor(), context);
         compareEnvelopes( new Envelope( minx,minx+5,miny,miny+5 ), result);
         
         map.getViewportModelInternal().setBounds(minx+2,minx+4,miny+2,miny+4);
 
-        result = BasicFeatureRenderer.validateBounds(new Envelope( minx,maxx,miny,maxy ), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny,maxy,crs ), new NullProgressMonitor(), context);
         compareEnvelopes( new Envelope( minx+2,minx+4,miny+2,miny+4 ), result);
         
-        result = BasicFeatureRenderer.validateBounds(new Envelope( 0,20,0,20 ), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( 0,20,0,20,crs ), new NullProgressMonitor(), context);
         assertTrue( result.isNull() );
     }
     
+    @SuppressWarnings("deprecation")
     public void testLayerWithNoBounds() throws Exception {
         SimpleFeature[] features = UDIGTestUtil.createTestFeatures("testNoBounds_Viewport", new Geometry[]{ //$NON-NLS-1$
         }
@@ -168,8 +172,9 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
         createContext(map);
         
         map.getViewportModelInternal().setBounds(-150,-120,45,65);
+        CoordinateReferenceSystem crs = DefaultGeographicCRS.WGS84;
         
-        Envelope result = BasicFeatureRenderer.validateBounds(new Envelope( 0,20,0,20 ), new NullProgressMonitor(), context);
+        Envelope result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( 0,20,0,20,crs ), new NullProgressMonitor(), context);
         assertTrue( result.isNull() );
     }
     

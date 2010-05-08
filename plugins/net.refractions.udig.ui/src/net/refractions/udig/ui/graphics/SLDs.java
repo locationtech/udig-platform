@@ -26,6 +26,7 @@ import org.geotools.filter.Filters;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Font;
 import org.geotools.styling.LineSymbolizer;
+import org.geotools.styling.Mark;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
@@ -38,6 +39,7 @@ import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
+import org.opengis.style.Graphic;
 
 /**
  * Utility class for working with Geotools SLD objects.
@@ -65,6 +67,14 @@ public class SLDs extends SLD {
     public static final double ALIGN_BOTTOM = 1.0;
     public static final double ALIGN_MIDDLE = 0.5;
     public static final double ALIGN_TOP = 0.0;
+    
+    public static int size(Graphic graphic) {
+        if (graphic == null) {
+            return NOTFOUND;
+        }
+        return Filters.asInt(graphic.getSize());
+    }
+    
     
     /**
      * Grabs the font from the first TextSymbolizer.
