@@ -35,6 +35,7 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.jdbc.JDBCDataStore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -51,11 +52,8 @@ import com.vividsolutions.jts.geom.Envelope;
  * @since 0.6
  */
 public class OracleGeoResource extends IGeoResource {
-    OracleServiceImpl parent;
     String typename = null;
 
-    private OracleGeoResource() {/* not for use */
-    }
     /**
      * Construct <code>OracleGeoResource</code>.
      * 
@@ -63,15 +61,17 @@ public class OracleGeoResource extends IGeoResource {
      * @param typename
      */
     public OracleGeoResource( OracleServiceImpl parent, String typename ) {
-        this.parent = parent;
         this.typename = typename;
     }
 
+    OracleServiceImpl getService() {
+        return (OracleServiceImpl) service;
+    }
     public URL getIdentifier() {
         try {
-            return new URL(parent.getIdentifier().toString() + "#" + typename); //$NON-NLS-1$
+            return new URL(service.getIdentifier().toString() + "#" + typename); //$NON-NLS-1$
         } catch (MalformedURLException e) {
-            return parent.getIdentifier();
+            return service.getIdentifier();
         }
     }
 
@@ -79,14 +79,14 @@ public class OracleGeoResource extends IGeoResource {
      * @see net.refractions.udig.catalog.IGeoResource#getStatus()
      */
     public Status getStatus() {
-        return parent.getStatus();
+        return service.getStatus();
     }
 
     /*
      * @see net.refractions.udig.catalog.IGeoResource#getStatusMessage()
      */
     public Throwable getMessage() {
-        return parent.getMessage();
+        return service.getMessage();
     }
 
     /*
@@ -104,12 +104,19 @@ public class OracleGeoResource extends IGeoResource {
         if (adaptee.isAssignableFrom(IGeoResource.class))
             return adaptee.cast(this);
         if (adaptee.isAssignableFrom(FeatureStore.class)) {
-            FeatureSource<SimpleFeatureType, SimpleFeature> fs = parent.getDS(monitor)
+            JDBCDataStore dataStore = getService().getDS(monitor);
+
+            FeatureSource<SimpleFeatureType, SimpleFeature> fs = dataStore
                     .getFeatureSource(typename);
-            if (fs instanceof FeatureStore< ? , ? >)
+
+            if (fs instanceof FeatureStore< ? , ? >){
                 return adaptee.cast(fs);
-            if (adaptee.isAssignableFrom(FeatureSource.class))
-                return adaptee.cast(parent.getDS(monitor).getFeatureSource(typename));
+            }
+            if (adaptee.isAssignableFrom(FeatureSource.class)) {
+                dataStore = getService().getDS(monitor);
+
+                return adaptee.cast(dataStore.getFeatureSource(typename));
+            }
         }
         return super.resolve(adaptee, monitor);
     }
@@ -130,11 +137,11 @@ public class OracleGeoResource extends IGeoResource {
         if (getStatus() == Status.BROKEN) {
             return null; // could not connect
         }
-        parent.rLock.lock();
+        getService().rLock.lock();
         try {
             return new OracleResourceInfo();
         } finally {
-            parent.rLock.unlock();
+            getService().rLock.unlock();
         }
     }
 
@@ -142,10 +149,11 @@ public class OracleGeoResource extends IGeoResource {
 
         private SimpleFeatureType ft = null;
         OracleResourceInfo() throws IOException {
-            ft = parent.getDS(null).getSchema(typename);
+            JDBCDataStore dataStore = getService().getDS(null);
+            ft = dataStore.getSchema(typename);
 
             try {
-                FeatureSource<SimpleFeatureType, SimpleFeature> source = parent.getDS(null)
+                FeatureSource<SimpleFeatureType, SimpleFeature> source = dataStore
                         .getFeatureSource(typename);
                 bounds = (ReferencedEnvelope) source.getBounds();
                 if (bounds == null) {
