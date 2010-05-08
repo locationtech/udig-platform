@@ -26,7 +26,6 @@ public class FeatureSourceGeoResourceInfo extends IGeoResourceInfo {
     public FeatureSourceGeoResourceInfo( ResourceInfo info ) {
         this.info = info;
         
-        System.out.println("Getting a bounds: " + new GregorianCalendar().getTimeInMillis());
         this.bounds = ReferencedEnvelopeCache.getReferencedEnvelope(info.getCRS());
         
         this.description = info.getDescription();

@@ -40,7 +40,6 @@ public class ReferencedEnvelopeCache {
 			}
 			return envelope;
 		} catch(Throwable e) {
-			e.printStackTrace(System.out);
 			return new ReferencedEnvelope();
 		}
 	}
@@ -88,12 +87,10 @@ public class ReferencedEnvelopeCache {
 					ymin == Double.MAX_VALUE ||
 					xmax == Double.MIN_NORMAL ||
 					ymax == Double.MAX_VALUE) {
-				System.out.println("No sensible extents generated.");
 				return new ReferencedEnvelope(crs);
 			}
 			return new ReferencedEnvelope(xmin, xmax, ymin, ymax, crs);
 		} catch(Throwable ex) {
-			ex.printStackTrace(System.out);
 			return new ReferencedEnvelope(crs);
 		}
 	}
