@@ -10,6 +10,8 @@ import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
@@ -21,31 +23,47 @@ import org.opengis.filter.Id;
 
 public class FIDFeatureProvider implements IBlockingProvider<SimpleFeature> {
 
-    private IBlockingProvider<ILayer> layer;
+    private IBlockingProvider<ILayer> layerProvider;
     private String fid;
     private SimpleFeature feature;
 
     public FIDFeatureProvider( String fid2, IBlockingProvider<ILayer> layer2 ) {
-        this.layer = layer2;
+        this.layerProvider = layer2;
         this.fid = fid2;
     }
 
-    public synchronized SimpleFeature get( IProgressMonitor monitor, Object... params  ) {
+    public synchronized SimpleFeature get( IProgressMonitor monitor, Object... params ) {
         if (feature == null) {
-            FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-			Id fidFilter = filterFactory
-                    .id(FeatureUtils.stringToId(filterFactory, fid));
+            FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
+                    .getDefaultHints());
+            Id fidFilter = filterFactory.id(FeatureUtils.stringToId(filterFactory, fid));
+            
+            if( monitor == null ) monitor = new NullProgressMonitor();                
             try {
-                FeatureSource<SimpleFeatureType, SimpleFeature> source = layer.get(monitor).getResource(FeatureSource.class, monitor);
+                monitor.beginTask("Get Feature", 100 );
+                
+                ILayer layer = layerProvider.get( new SubProgressMonitor(monitor, 25) );
+                FeatureSource<SimpleFeatureType, SimpleFeature> source = layer
+                        .getResource(FeatureSource.class, new SubProgressMonitor(monitor, 25));
+                
                 FeatureIterator<SimpleFeature> iter = source.getFeatures(fidFilter).features();
+                monitor.worked(25);
                 try {
-                    feature=iter.next();
+                    if (iter.hasNext()) {
+                        feature = iter.next();
+                    }
+                    else {
+                        // feature not available
+                    }
+                    monitor.worked(25);
                 } finally {
                     iter.close();
                 }
-
             } catch (IOException e) {
                 throw (RuntimeException) new RuntimeException().initCause(e);
+            }
+            finally {
+                monitor.done();
             }
         }
         return feature;
