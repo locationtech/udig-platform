@@ -250,7 +250,7 @@ public class ServiceFactoryImpl extends IServiceFactory {
                         services.add(service);
                     }
                 } catch (Throwable deadService) {
-                    CatalogPlugin.log(id + " could not create service", deadService); //$NON-NLS-1$
+                    CatalogPlugin.trace(id + " could not create service", deadService); //$NON-NLS-1$
                 }
             }    
         }

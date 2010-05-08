@@ -55,6 +55,7 @@ import org.geotools.styling.Style;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.geometry.BoundingBox;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
@@ -227,7 +228,7 @@ public class BasicFeatureRenderer extends RendererImpl {
 	}
 
     @SuppressWarnings("unchecked")
-    private void render(Graphics2D graphics, Envelope bounds,
+    private void render(Graphics2D graphics, ReferencedEnvelope bounds,
 			IProgressMonitor monitor) throws RenderException {
         getContext().setStatus(ILayer.WAIT);
         getContext().setStatusMessage(Messages.BasicFeatureRenderer_rendering_status);
@@ -417,15 +418,16 @@ public class BasicFeatureRenderer extends RendererImpl {
 	 * <p>
 	 * It returns the validated bounds. 
 	 *
-	 * @param bounds
+	 * @param bounds requested bounds; if null the image bounds will be used
 	 * @param monitor
-	 * @param context
-	 * @return
+	 * @param context context allowing access to the layer and thus the data bounds
+	 * @return validated bounds used to request data for drawing on the screen
+	 * 
 	 * @throws IOException
 	 * @throws FactoryException
 	 * @throws RenderException
 	 */
-	public static ReferencedEnvelope validateBounds(Envelope bounds, IProgressMonitor monitor, IRenderContext context)
+	public static ReferencedEnvelope validateBounds(ReferencedEnvelope bounds, IProgressMonitor monitor, IRenderContext context)
 			throws IOException, FactoryException, RenderException {
         
 	    if (bounds == null){
@@ -434,10 +436,14 @@ public class BasicFeatureRenderer extends RendererImpl {
 	    }
         CoordinateReferenceSystem viewportCRS = context.getCRS();
         ReferencedEnvelope layerBounds = context.getLayer().getBounds(new SubProgressMonitor(monitor, 0), viewportCRS);
-        //if the bounds do not intersect the layer bounds then 
-        //we have nothing to render to return empty referenced envelope
-        if( !layerBounds.intersects(bounds) )
+        if( layerBounds == null || layerBounds.isNull() || layerBounds.isEmpty() ){
+            return context.getImageBounds(); // layer bounds are unknown so draw what is on screen!
+        }
+        // if the bounds do not intersect the layer bounds then 
+        // we have nothing to render to return empty referenced envelope
+        if( !layerBounds.intersects((BoundingBox) bounds) ){
             return new ReferencedEnvelope(context.getCRS());
+        }
         return new ReferencedEnvelope(bounds, viewportCRS);
 	}
 

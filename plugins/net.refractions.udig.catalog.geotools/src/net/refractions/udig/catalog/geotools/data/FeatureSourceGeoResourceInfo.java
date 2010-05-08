@@ -2,12 +2,17 @@ package net.refractions.udig.catalog.geotools.data;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collection;
 
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.ISharedImages;
 
 import org.geotools.data.ResourceInfo;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.opengis.metadata.extent.Extent;
+import org.opengis.metadata.extent.GeographicExtent;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 public class FeatureSourceGeoResourceInfo extends IGeoResourceInfo {
 
@@ -16,7 +21,10 @@ public class FeatureSourceGeoResourceInfo extends IGeoResourceInfo {
     public FeatureSourceGeoResourceInfo( ResourceInfo info ) {
         this.info = info;
         
-        this.bounds = info.getBounds();
+        CoordinateReferenceSystem crs = info.getCRS();
+        this.bounds = new ReferencedEnvelope(crs);
+        //this.bounds = info.getBounds();
+        
         this.description = info.getDescription();
         this.keywords = info.getKeywords().toArray(new String[0]);
         this.name = info.getName();
