@@ -137,7 +137,7 @@ public class PostgisSchemaFolder implements IResolveFolder {
             return adaptee.cast(this);
         if (adaptee.isAssignableFrom(IService.class))
             return adaptee.cast(service);
-        if (adaptee.isAssignableFrom(DataStore.class)) {
+        if (adaptee.isAssignableFrom(JDBCDataStore.class)) {
                 return adaptee.cast(getDataStore());
         }
         if (adaptee.isAssignableFrom(Connection.class)){
