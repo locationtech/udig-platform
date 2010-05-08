@@ -1,9 +1,9 @@
 package net.refractions.udig.core.jts;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.collections.map.AbstractReferenceMap;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.geometry.Envelope;
@@ -11,16 +11,19 @@ import org.opengis.metadata.extent.BoundingPolygon;
 import org.opengis.metadata.extent.Extent;
 import org.opengis.metadata.extent.GeographicBoundingBox;
 import org.opengis.metadata.extent.GeographicExtent;
+import org.opengis.referencing.ReferenceIdentifier;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
+import com.google.common.base.ReferenceType;
 import com.google.common.collect.ReferenceMap;
 
 public class ReferencedEnvelopeCache {
-	private static Map<CoordinateReferenceSystem, ReferencedEnvelope> crsCache;
+	private static Map<ReferenceIdentifier, ReferencedEnvelope> crsCache;
 	
-	private static synchronized Map<CoordinateReferenceSystem, ReferencedEnvelope> getCache() {
+	private static synchronized Map<ReferenceIdentifier, ReferencedEnvelope> getCache() {
 		if(crsCache == null) {
-			crsCache = new HashMap<CoordinateReferenceSystem, ReferencedEnvelope>();
+			crsCache = new ReferenceMap<ReferenceIdentifier, ReferencedEnvelope>(ReferenceType.STRONG, ReferenceType.WEAK);
+			
 		}
 		return crsCache;
 	}
@@ -29,10 +32,11 @@ public class ReferencedEnvelopeCache {
 		if(crs == null)
 			return new ReferencedEnvelope();
 		try {
-			Map<CoordinateReferenceSystem, ReferencedEnvelope> map = getCache();
-			ReferencedEnvelope envelope = map.get(crs);
+			Map<ReferenceIdentifier, ReferencedEnvelope> map = getCache();
+			ReferencedEnvelope envelope = map.get(crs.getName());
 			if(envelope == null) {
 				envelope = getCRSBounds(crs);
+				map.put(crs.getName(), envelope);
 			}
 			return envelope;
 		} catch(Throwable e) {
