@@ -29,6 +29,7 @@ import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IService;
+import net.refractions.udig.core.jts.ReferencedEnvelopeCache;
 import net.refractions.udig.ui.graphics.Glyph;
 
 import org.eclipse.core.runtime.ILog;
@@ -38,6 +39,7 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.ResourceInfo;
 import org.geotools.data.wfs.WFSDataStore;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
@@ -165,7 +167,10 @@ public class WFSGeoResourceImpl extends IGeoResource {
                     crippled.printStackTrace();
                 }
             }
-            bounds = resourceInfo.getBounds();
+            // bounds = resourceInfo.getBounds();
+            // relax bounds for wfs ...
+            bounds = ReferencedEnvelopeCache.getReferencedEnvelope( crs );
+            
             description = resourceInfo.getDescription();
             title = resourceInfo.getTitle();
 
@@ -173,6 +178,7 @@ public class WFSGeoResourceImpl extends IGeoResource {
             if (crs == null && ft != null) {
                 crs = ft.getCoordinateReferenceSystem();
             }
+            
             name = typename;
             schema = resourceInfo.getSchema();
             if (schema == null) {
