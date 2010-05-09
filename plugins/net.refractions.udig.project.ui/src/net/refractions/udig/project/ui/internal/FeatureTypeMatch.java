@@ -19,12 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.Name;
-
-import sun.tools.tree.ThisExpression;
 
 /**
  * This class is used to determine whether a FeatureEditor can be used to edit a feature of a given

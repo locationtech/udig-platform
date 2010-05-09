@@ -3,7 +3,6 @@ package net.refractions.udig.core.jts;
 import java.util.Collection;
 import java.util.Map;
 
-import org.apache.commons.collections.map.AbstractReferenceMap;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.geometry.Envelope;
@@ -85,7 +84,7 @@ public class ReferencedEnvelopeCache {
 			}
 			if(xmin == Double.MAX_VALUE || 
 					ymin == Double.MAX_VALUE ||
-					xmax == Double.MIN_NORMAL ||
+					xmax == Double.MIN_VALUE ||
 					ymax == Double.MAX_VALUE) {
 				return new ReferencedEnvelope(crs);
 			}

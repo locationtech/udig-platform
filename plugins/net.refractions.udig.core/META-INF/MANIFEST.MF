@@ -11,6 +11,7 @@ Export-Package: net.refractions.udig.core,
  net.refractions.udig.core.enums,
  net.refractions.udig.core.filter,
  net.refractions.udig.core.internal,
+ net.refractions.udig.core.jts,
  net.refractions.udig.core.opengis
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,

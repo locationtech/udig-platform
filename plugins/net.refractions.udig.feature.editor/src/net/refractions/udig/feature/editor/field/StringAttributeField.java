@@ -133,7 +133,7 @@ public class StringAttributeField extends AttributeField {
         widthInChars = width;
         setValidateStrategy(strategy);
         isValid = false;
-        errorMessage = JFaceResources.getString("StringAttributeField.errorMessage");//$NON-NLS-1$
+        errorMessage = "Text not valid";
         createControl(parent);
     }
 
