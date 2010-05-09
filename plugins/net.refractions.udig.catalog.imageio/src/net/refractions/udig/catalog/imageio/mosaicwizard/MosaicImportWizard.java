@@ -34,8 +34,11 @@ import net.refractions.udig.ui.PlatformGIS;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.geotools.gce.imagemosaic.ImageMosaicFormat;
@@ -44,6 +47,8 @@ import org.geotools.gce.imagemosaic.ImageMosaicFormat;
  * @author Andrea Antonello - www.hydrologis.com
  */
 public class MosaicImportWizard extends Wizard implements INewWizard {
+
+    private static final String WIZBAN_GIF = "icons/wizban/worldimage_wiz.gif";
 
     private MosaicImportWizardPage mainPage;
 
@@ -55,8 +60,16 @@ public class MosaicImportWizard extends Wizard implements INewWizard {
 
     public void init( IWorkbench workbench, IStructuredSelection selection ) {
         setWindowTitle("Imagery to Mosaic import");
-        // setDefaultPageImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(
-        //                DxfDwgPlugin.PLUGIN_ID, "icons/icon_dxf.png")); //$NON-NLS-1$
+        ImageRegistry imageRegistry = Activator.getDefault().getImageRegistry();
+        ImageDescriptor banner = imageRegistry.getDescriptor(WIZBAN_GIF);
+        if( banner == null ){
+            URL bannerURL = Activator.getDefault().getBundle().getEntry( WIZBAN_GIF );        
+            banner = ImageDescriptor.createFromURL( bannerURL );
+            imageRegistry.put( WIZBAN_GIF, banner );
+        }
+        Image image = banner.createImage();
+        
+        setDefaultPageImageDescriptor( banner );
         setNeedsProgressMonitor(true);
         mainPage = new MosaicImportWizardPage("Imagery to Mosaic import"); //$NON-NLS-1$
     }

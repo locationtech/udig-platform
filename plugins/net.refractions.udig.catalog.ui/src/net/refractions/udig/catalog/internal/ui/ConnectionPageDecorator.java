@@ -28,6 +28,13 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.DataSourceException;
 
+/**
+ * Wraps around a UDIGConnectionPage providing a list of services or resources
+ * selected.
+ * 
+ * @see UDIGConnectionPage
+ * @since 1.0
+ */
 public class ConnectionPageDecorator extends WorkflowWizardPage
         implements
             UDIGConnectionPage,

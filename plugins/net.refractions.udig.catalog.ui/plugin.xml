@@ -293,7 +293,7 @@
             icon="icons/obj16/repository_obj.gif"
             id="net.refractions.udig.catalog.ui.dataImportWizard"
             name="%dataImportWizard.name">
-         <description>Import from a data source.</description>
+         <description>Import a spatial data source into the catalog.</description>
       </wizard>
    </extension>
 

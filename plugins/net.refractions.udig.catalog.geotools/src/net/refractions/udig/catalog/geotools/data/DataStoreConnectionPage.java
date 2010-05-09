@@ -7,11 +7,15 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -19,13 +23,16 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -38,6 +45,9 @@ import org.geotools.data.DataAccessFactory;
 import org.geotools.data.DataAccessFinder;
 import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.FileDataStoreFactorySpi;
+import org.geotools.data.postgis.PostgisDataStoreFactory;
+import org.geotools.data.postgis.VersionedPostgisDataStoreFactory;
+import org.geotools.data.property.PropertyDataStoreFactory;
 import org.geotools.data.wfs.WFSDataStoreFactory;
 import org.geotools.jdbc.JDBCDataStoreFactory;
 
@@ -63,10 +73,10 @@ public class DataStoreConnectionPage extends AbstractUDIGImportPage implements U
 
     private static final String DEFAULT_PROMPT = "Choose a data store you wish to connect to.";
     private static final String TYPE_FILTER_TEXT = "type filter text";
-    
+
     /** Currently selected factory */
     protected DataAccessFactory factory = null;
-    
+
     public class DataStoreLabelProvider extends LabelProvider {
         @Override
         public String getText( Object element ) {
@@ -80,70 +90,116 @@ public class DataStoreConnectionPage extends AbstractUDIGImportPage implements U
         @Override
         public Image getImage( Object element ) {
             ISharedImages images = CatalogUIPlugin.getDefault().getImages();
+            String name = element.getClass().getSimpleName();
+            
             if (element instanceof JDBCDataStoreFactory) {
                 return images.get(ISharedImages.DATABASE_OBJ);
             }
             if (element instanceof FileDataStoreFactorySpi) {
-                return images.get(ISharedImages.FILE_OBJ);
+                return images.get(ISharedImages.FEATURE_FILE_OBJ);
             }
-            if (element instanceof WFSDataStoreFactory) {
+            if (name.indexOf("WFSDataStoreFactory") != -1) {
                 return images.get(ISharedImages.WFS_OBJ);
+            }
+            if (name.indexOf("PropertyDataStoreFactory") != -1){
+                return images.get(ISharedImages.FEATURE_FILE_OBJ );
+            }
+            if (name.indexOf("PostgisDataStoreFactory")!=-1){
+                return images.get(ISharedImages.DATABASE_OBJ);
+            }
+            if (element instanceof DataStoreFactorySpi) {
+                return images.get(ISharedImages.DATASTORE_OBJ );
             }
             return super.getImage(element);
         }
     }
 
     private LabelProvider labelProvider = new DataStoreLabelProvider();
-    private ListViewer viewer;
+    private TableViewer viewer;
     private Text filterText;
     private ViewerFilter filter = new ViewerFilter(){
         public boolean select( Viewer viewer, Object parentElement, Object element ) {
             DataAccessFactory factory = (DataAccessFactory) element;
             String search = filterText.getText();
-            if( search == null || search.length()==0 || search.equals(TYPE_FILTER_TEXT)){
+            if (search == null || search.length() == 0 || search.equals(TYPE_FILTER_TEXT)) {
                 return true; // it is all good
             }
             // promote to uppercase to ignore case when searching
             search = search.toUpperCase();
-            if( factory.getDisplayName().toUpperCase().contains(search)||
-                    factory.getDescription().toUpperCase().contains(search)){
+            if (factory.getDisplayName().toUpperCase().contains(search)
+                    || factory.getDescription().toUpperCase().contains(search)) {
                 // System.out.println("Search:<"+search+"> "+factory.getDisplayName());
                 return true; // this one is okay
             }
             return false; // not included
         }
     };
-    
-    private ISelectionChangedListener listener = new ISelectionChangedListener(){        
+
+    private ISelectionChangedListener listener = new ISelectionChangedListener(){
         public void selectionChanged( SelectionChangedEvent event ) {
-            if( event.getSelection() instanceof IStructuredSelection){
+            if (event.getSelection() instanceof IStructuredSelection) {
                 IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-                if( !selection.isEmpty() ){
+                if (!selection.isEmpty()) {
                     DataAccessFactory factory = (DataAccessFactory) selection.getFirstElement();
-                    if( !factory.isAvailable() ){
-                        setErrorMessage( "This factory is not avaiable, usually indicating a missing JDBC driver, or ImageIO-EXT not being installed in your JRE.");
-                        return;                        
+                    if (!factory.isAvailable()) {
+                        setErrorMessage("This factory is not avaiable, usually indicating a missing JDBC driver, or ImageIO-EXT not being installed in your JRE.");
+                        return;
                     }
-                    setMessage(factory.getDescription(), IMessageProvider.INFORMATION);  
+                    setMessage(factory.getDescription(), IMessageProvider.INFORMATION);
                 }
             }
             setErrorMessage(null);
         }
     };
+    private IDoubleClickListener clicked = new IDoubleClickListener(){
 
-    public DataAccessFactory getFactory(){
-        if( viewer != null && !viewer.getControl().isDisposed()){
-            IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-            if( selection.isEmpty() ) {
-                factory = null;
+        public void doubleClick( DoubleClickEvent event ) {
+            IWizardContainer container = getContainer();
+            if (container instanceof Dialog) {
+                Dialog d = (Dialog) container;
+                Button button = findButton(d.buttonBar, IDialogConstants.NEXT_ID);
+                if (button != null)
+                    button.notifyListeners(SWT.Selection, new Event());
             }
-            else {
+        }
+        protected Button findButton(Control buttonBar, int buttonID) {
+            if (buttonBar instanceof Composite) {
+                Composite composite = (Composite) buttonBar;
+                Control[] children = composite.getChildren();
+                for (Control control : children) {
+                    if (control instanceof Button) {
+                        Button button = (Button) control;
+                        if (((Integer) button.getData()).intValue() == buttonID)
+                            return button;
+                    } else if (control instanceof Composite) {
+                        Button button = findButton(control, buttonID);
+                        if (button != null)
+                            return button;
+                    }
+                }
+            }
+            if (buttonBar instanceof Button) {
+                Button button = (Button) buttonBar;
+                if (((Integer) button.getData()).intValue() == buttonID)
+                    return button;
+            }
+
+            return null;
+        }
+    };
+
+    public DataAccessFactory getFactory() {
+        if (viewer != null && !viewer.getControl().isDisposed()) {
+            IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+            if (selection.isEmpty()) {
+                factory = null;
+            } else {
                 factory = (DataAccessFactory) selection.getFirstElement();
             }
         }
         return factory;
     }
-    
+
     public DataStoreConnectionPage() {
         super("DataStore");
         setTitle("Select");
@@ -152,10 +208,10 @@ public class DataStoreConnectionPage extends AbstractUDIGImportPage implements U
 
     public void createControl( Composite parent ) {
         Composite composite = new Composite(parent, SWT.NONE);
-        composite.setLayout(new MigLayout("","[grow]","[pref!]rel[pref!]rel[grow]"));
-        setControl( composite );
+        composite.setLayout(new MigLayout("", "[grow]", "[pref!]rel[pref!]rel[grow]"));
+        setControl(composite);
 
-        Label prompt = new Label(composite, SWT.HORIZONTAL|SWT.LEFT);
+        Label prompt = new Label(composite, SWT.HORIZONTAL | SWT.LEFT);
         prompt.setLayoutData("wrap");
         prompt.setText("Select an input source:");
 
@@ -163,22 +219,23 @@ public class DataStoreConnectionPage extends AbstractUDIGImportPage implements U
         filterText.setLayoutData("growx,wrap");
         filterText.setText(TYPE_FILTER_TEXT);
         filterText.setSelection(0, filterText.getCharCount());
-        filterText.addKeyListener( new KeyListener(){            
+        filterText.addKeyListener(new KeyListener(){
             public void keyReleased( KeyEvent e ) {
                 viewer.refresh();
             }
             public void keyPressed( KeyEvent e ) {
             }
         });
-        ScrolledComposite scroll = new ScrolledComposite( composite, SWT.V_SCROLL|SWT.BORDER);
-        scroll.setLayoutData("growx");
+        ScrolledComposite scroll = new ScrolledComposite(composite, SWT.V_SCROLL | SWT.BORDER);
+        scroll.setLayoutData("growx,growy");
         scroll.setAlwaysShowScrollBars(true);
         scroll.setExpandHorizontal(true);
         scroll.setExpandVertical(true);
-        scroll.setMinSize(300,100);
-        
-        viewer = new ListViewer(scroll, SWT.SINGLE);
-        scroll.setContent( viewer.getControl()); // scroll this thing!
+        scroll.setMinSize(300, 100);
+        scroll.setSize(300,100);
+
+        viewer = new TableViewer(scroll, SWT.SINGLE);
+        scroll.setContent(viewer.getControl()); // scroll this thing!
         viewer.setLabelProvider(labelProvider);
         viewer.setContentProvider(ArrayContentProvider.getInstance());
 
@@ -189,11 +246,20 @@ public class DataStoreConnectionPage extends AbstractUDIGImportPage implements U
                     }
                 });
         for( Iterator<DataAccessFactory> iter = DataAccessFinder.getAllDataStores(); iter.hasNext(); ) {
-            sorted.add(iter.next());
+            DataAccessFactory entry = iter.next();
+            String name = entry.getDisplayName();
+//            if( !entry.isAvailable() ){
+//                continue;
+//            }
+            if( name == null || name.indexOf("JNDI") != -1){
+                continue;
+            }
+            sorted.add(entry);
         }
-        viewer.setInput(sorted);        
-        viewer.setFilters(new ViewerFilter[]{ filter });
+        viewer.setInput(sorted);
+        viewer.setFilters(new ViewerFilter[]{filter});
         viewer.addSelectionChangedListener(listener);
+        viewer.addDoubleClickListener(clicked);
     }
 
     @Override
@@ -201,5 +267,5 @@ public class DataStoreConnectionPage extends AbstractUDIGImportPage implements U
         DataAccessFactory factory = getFactory();
         return factory != null && factory.isAvailable();
     }
-    
+
 }

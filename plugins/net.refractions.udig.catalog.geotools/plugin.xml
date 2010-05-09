@@ -20,12 +20,17 @@
             id="net.refractions.udig.catalog.geotools.connection.dataStore">
       </factory>
       <wizardPage
+            banner="icons/wizban/datastore_wiz.gif"
             class="net.refractions.udig.catalog.geotools.data.DataStoreConnectionPage"
+            description="Direct access to GeoTools data stores"
+            icon="icons/obj16/datastore_obj.gif"
             id="net.refractions.udig.catalog.geotools.connection.dataStorePage"
             name="DataStore">
       </wizardPage>
       <wizardPage
+            banner="icons/wizban/datastore_wiz.gif"
             class="net.refractions.udig.catalog.geotools.data.DataStoreParameterPage"
+            icon="icons/obj16/datastore_obj.gif"
             id="net.refractions.udig.catalog.geotools.connection.dataStoreParametersPage"
             name="DataStore Parameters">
       </wizardPage>

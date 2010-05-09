@@ -140,8 +140,6 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent) {
-
-		
 		Composite comp = new Composite(parent, SWT.NONE);
         comp.setLayout(new FillLayout());
 		
@@ -163,9 +161,9 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 
 		// check the state for an initial selection
 		DataSourceSelectionState state = (DataSourceSelectionState) getState();
-		if (state.getDescriptor() != null)
+		if (state.getDescriptor() != null){
 			viewer.setSelection(new StructuredSelection(state.getDescriptor()));
-
+		}
 		setControl(comp);
 	}
 

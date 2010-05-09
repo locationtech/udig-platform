@@ -80,7 +80,7 @@ public class DateTimeAttributeField extends AttributeField {
 
     private DateTime getDateTimeControl( Composite parent ) {
         if( dateTime == null ){
-            dateTime = new DateTime( parent, SWT.DEFAULT );
+            dateTime = new DateTime( parent, SWT.DATE | SWT.DROP_DOWN | SWT.LONG );
             dateTime.setFont( parent.getFont() );
             dateTime.addKeyListener( new KeyAdapter(){
                 @Override

@@ -327,7 +327,7 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
         public WizardViewer(Composite parent, int style) {
             super(parent, style);
 
-            setContentProvider(new ArrayContentProvider());
+            setContentProvider( ArrayContentProvider.getInstance());
             setLabelProvider(new LabelProvider() {
                 public String getText(Object object) {
                     ExternalCatalogueImportDescriptor descriptor = 
