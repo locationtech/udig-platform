@@ -418,11 +418,11 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
 
         windowMenu.add(new GroupMarker(IWorkbenchActionConstants.WB_START));
 
-        IAction openNewWindow = ActionFactory.OPEN_NEW_WINDOW.create(window);
-        openNewWindow.setText(Messages.UDIGWorkbenchAdvisor_newWindow_text);
-        windowMenu.add(openNewWindow);
+        //IAction openNewWindow = ActionFactory.OPEN_NEW_WINDOW.create(window);
+        //openNewWindow.setText(Messages.UDIGWorkbenchAdvisor_newWindow_text);
+        //windowMenu.add(openNewWindow);
         
-        windowMenu.add( new Separator());
+        //windowMenu.add( new Separator());
 
         IMenuManager perspectiveMenu = new MenuManager(
                 Messages.UDIGWorkbenchAdvisor_open_perspective,
