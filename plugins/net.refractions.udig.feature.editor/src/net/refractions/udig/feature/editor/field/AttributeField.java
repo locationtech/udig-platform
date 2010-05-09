@@ -647,15 +647,23 @@ public abstract class AttributeField {
     }
 
     /**
-     * Subclass should hide/show attribute field as indicated, please call super in order to
-     * hide/show the label.
-     * 
+     * Hide attribute field.
+     * <p>
+     * The default implementation will call setVisible on both getLabelControl and getControl;
+     * override if you have several controls to take care of.
+     * </p>
      * @param visible true to show the attribute field
      */
     public void setVisible( boolean visible ) {
+        if( getLabelControl() != null && !getLabelControl().isDisposed()){
+            getLabelControl().setVisible(visible);
+        }
         getLabelControl().setVisible(visible);
+        if( getControl() != null && !getControl().isDisposed()){
+            getControl().setVisible(visible);    
+        }
     }
-
+    
     /** Default implementation checks the getLabelControl */
     public boolean isEnabled() {
         Label check = getLabelControl();
@@ -670,7 +678,13 @@ public abstract class AttributeField {
      *        required.
      */
     public void setEnabled( boolean enabled ) {
-        getLabelControl().setEnabled(enabled);
+        if( getLabelControl() != null && !getLabelControl().isDisposed()){
+            getLabelControl().setEnabled( enabled );
+        }
+        if( getControl() != null && !getControl().isDisposed()){
+            getControl().setEnabled(enabled);    
+        }
     }
+
 
 }

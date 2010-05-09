@@ -565,8 +565,8 @@ public class StringAttributeField extends AttributeField {
 
     public void setVisible( boolean visible ) {
         super.setVisible(visible);
-        if( textField != null && !textField.isDisposed()){
-            textField.setVisible(visible);    
+        if( getControl() != null && !getControl().isDisposed()){
+            getControl().setVisible(visible);    
         }
     }
     
@@ -575,8 +575,8 @@ public class StringAttributeField extends AttributeField {
      */
     public void setEnabled( boolean enabled ) {
         super.setEnabled(enabled);
-        if( textField != null && !textField.isDisposed()){
-            textField.setEnabled(enabled);    
+        if( getControl() != null && !getControl().isDisposed()){
+            getControl().setEnabled(enabled);    
         }
     }
 
