@@ -20,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 
@@ -36,10 +37,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
@@ -48,6 +51,8 @@ public final class RuntimeFieldEditor extends FieldEditor {
     private final String WORKSPACE_PATH = "WORKSPACE_PATH"; //$NON-NLS-1$
     private final String LANGUAGE = "LANGUAGE"; //$NON-NLS-1$
     private final String MEMORY = "MEMORY"; //$NON-NLS-1$
+    private final String PROXYHOST = "PROXYHOST"; //$NON-NLS-1$
+    private final String PROXYPORT = "PROXYPORT"; //$NON-NLS-1$
 
     private Text wkspaceText;
     private Combo langCombo;
@@ -56,6 +61,8 @@ public final class RuntimeFieldEditor extends FieldEditor {
 
     private static String[] langArray = new String[]{"de", "en", "es", "fr", "it", "ko"};
     private IPreferenceStore preferenceStore;
+    private Text proxyHostText;
+    private Text proxyPortText;
 
     public RuntimeFieldEditor( String name, String labelText, Composite parent ) {
         super(name, labelText, parent);
@@ -80,15 +87,31 @@ public final class RuntimeFieldEditor extends FieldEditor {
     }
     @Override
     protected void doLoad() {
-        wkspaceText.setText(preferenceStore.getString(WORKSPACE_PATH));
+        String workSpacePath = preferenceStore.getString(WORKSPACE_PATH);
+        if (workSpacePath == null || workSpacePath.equals("")) {
+            workSpacePath = getWorkspacePath();
+        }
+        wkspaceText.setText(workSpacePath);
         memoryText.setText(String.valueOf(getCurrentHeap()));
         String lang = preferenceStore.getString(LANGUAGE);
+        if (lang == null || lang.equals("")) {
+            Locale locale = Locale.getDefault();
+            lang = locale.getLanguage();
+        }
         for( int i = 0; i < langArray.length; i++ ) {
             if (lang.equals(langArray[i])) {
                 langCombo.select(i);
             }
         }
 
+        String host = preferenceStore.getString(PROXYHOST);
+        if (!host.equals("")) {
+            proxyHostText.setText(host);
+        }
+        String port = preferenceStore.getString(PROXYPORT);
+        if (!port.equals("")) {
+            proxyPortText.setText(port);
+        }
     }
 
     @Override
@@ -144,6 +167,28 @@ public final class RuntimeFieldEditor extends FieldEditor {
         long maxHeapMemory = getCurrentHeap();
         memoryText.setText(String.valueOf(maxHeapMemory));
 
+        // proxy
+        Group proxyGroup = new Group(parent, SWT.NONE);
+        GridData proxyGD = new GridData(SWT.FILL, SWT.FILL, true, false);
+        proxyGD.horizontalSpan = 3;
+        proxyGroup.setLayoutData(proxyGD);
+        proxyGroup.setLayout(new GridLayout(2, false));
+        proxyGroup.setText("Proxy");
+
+        Label proxyHostLabel = new Label(proxyGroup, SWT.NONE);
+        proxyHostLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        proxyHostLabel.setText("Proxy Server");
+        proxyHostText = new Text(proxyGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        proxyHostText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        proxyHostText.setText("");
+
+        Label proxyPortLabel = new Label(proxyGroup, SWT.NONE);
+        proxyPortLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        proxyPortLabel.setText("Proxy Port");
+        proxyPortText = new Text(proxyGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        proxyPortText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        proxyPortText.setText("");
+
         // restart
         Button restartButton = new Button(parent, SWT.PUSH);
         restartButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
@@ -168,7 +213,13 @@ public final class RuntimeFieldEditor extends FieldEditor {
     }
 
     private long getCurrentHeap() {
-        return Runtime.getRuntime().maxMemory() / 1024l / 1024l;
+        try {
+            int maxHeapSize = UiPlugin.getMaxHeapSize();
+            return maxHeapSize;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Runtime.getRuntime().maxMemory() / 1024l / 1024l;
+        }
     }
 
     private boolean checkValues() {
@@ -192,6 +243,7 @@ public final class RuntimeFieldEditor extends FieldEditor {
                     Messages.RuntimeFieldEditor_memory_positive);
             return false;
         }
+
         return true;
     }
 
@@ -200,6 +252,8 @@ public final class RuntimeFieldEditor extends FieldEditor {
             preferenceStore.setValue(WORKSPACE_PATH, wkspaceText.getText());
             preferenceStore.setValue(LANGUAGE, langCombo.getText());
             preferenceStore.setValue(MEMORY, memoryText.getText());
+            preferenceStore.setValue(PROXYHOST, proxyHostText.getText());
+            preferenceStore.setValue(PROXYPORT, proxyPortText.getText());
         }
     }
 
@@ -207,6 +261,10 @@ public final class RuntimeFieldEditor extends FieldEditor {
         try {
             String maxHeadSize = memoryText.getText();
             UiPlugin.setMaxHeapSize(maxHeadSize);
+
+            String host = proxyHostText.getText();
+            String port = proxyPortText.getText();
+            UiPlugin.setProxy(host, port);
 
             URL configUrlURL = Platform.getConfigurationLocation().getURL();
 
