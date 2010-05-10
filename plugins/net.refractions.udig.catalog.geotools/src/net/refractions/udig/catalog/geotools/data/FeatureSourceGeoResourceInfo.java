@@ -40,7 +40,11 @@ public class FeatureSourceGeoResourceInfo extends IGeoResourceInfo {
         } catch(NullPointerException ex) {
             ;
         }
-        this.title = info.getTitle();        
+        this.title = info.getTitle();
+        if( title != null ){
+            this.title = title.replace('_', ' ');
+        }
+        
         ISharedImages images = CatalogUIPlugin.getDefault().getImages();
         this.icon = images.getImageDescriptor( ISharedImages.FEATURE_OBJ ); // generic!
     }

@@ -66,6 +66,10 @@ enum GTFormat {
             String the_username = keys.lookup( String.class,"user",params);
             String the_password = keys.lookup( String.class,"passwd",params);
 
+            String port = intPort == null ? "" : ":"+intPort;
+            
+            String the_spec = the_host+port+"/"+the_database; //$NON-NLS-1$  //$NON-NLS-2$
+            
             ID id = toID( dbtype, the_username, the_password, the_host, intPort, the_database);           
             return id.labelServer();
         }

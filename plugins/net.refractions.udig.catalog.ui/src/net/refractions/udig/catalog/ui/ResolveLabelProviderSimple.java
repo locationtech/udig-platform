@@ -104,12 +104,11 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
                     }
         		    title = name.replace('_',' ');
 				}
-        		if( id.getTypeQualifier() != null ){
-        		    return title + "("+id.getTypeQualifier()+")";
-        		}
-        		else {
-        		    return title;
-        		}
+//        		if( id.getTypeQualifier() != null ){
+//        		    return title + "("+id.getTypeQualifier()+")";
+//        		}
+        		return title;
+        		
         	} else if(element instanceof IService) {
         		IService service = (IService) element;
         		ID id = service.getID();
@@ -143,7 +142,7 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
         		return folder.getID().toString();
         	}
         	} catch(IOException e) {
-        		CatalogUIPlugin.log("Error fetching the Title for the resource", e); //$NON-NLS-1$
+        		CatalogUIPlugin.trace("Error fetching the Title for the resource", e); //$NON-NLS-1$
         	}
         }
         return super.getText(element);

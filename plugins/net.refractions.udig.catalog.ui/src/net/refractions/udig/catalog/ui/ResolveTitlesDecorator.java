@@ -237,12 +237,12 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
             if (data == null){
                 return null;
             }
-            if( resolve.getID().getTypeQualifier() != null ){
-                return data.text + " ("+resolve.getID().getTypeQualifier() +")";
+            if( resolve instanceof IService ){
+                if( resolve.getID().getTypeQualifier() != null ){
+                    return data.text + " ("+resolve.getID().getTypeQualifier() +")";
+                }
             }
-            else {
-                return data.text;
-            }
+            return data.text;            
         }
 
         decorated.put(resolve, null);
@@ -251,12 +251,10 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
             data.text = resolve.getTitle();
             decorated.put(resolve, data);
             
-            if( resolve.getID().getTypeQualifier() != null ){
-                return data.text + " ("+resolve.getID().getTypeQualifier() +")";
-            }
-            else {
-                return data.text;
-            }
+//            if( resolve.getID().getTypeQualifier() != null ){
+//                return data.text + " ("+resolve.getID().getTypeQualifier() +")";
+//            }
+            return data.text;            
         }
         toDecorate.offer(resolve);
         textWorker.schedule();
