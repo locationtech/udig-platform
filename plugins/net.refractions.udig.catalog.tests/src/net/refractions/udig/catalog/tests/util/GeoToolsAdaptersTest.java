@@ -9,12 +9,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GeoToolsAdaptersTest {
-
+    /** Little progress monitor used for testing */
     private final class Monitor implements IProgressMonitor {
-        private String task;
-        private double work;
-        private double total;
-        private boolean isCanceled = false;
+        public String task = "not started";
+        public double work = Double.NaN;
+        public double total = Double.NaN;
+        public boolean isCanceled = false;
+        public boolean done = false;
+        
         public void beginTask( String name, int totalWork ) {
             this.task = name;
             this.total = totalWork;
@@ -22,6 +24,7 @@ public class GeoToolsAdaptersTest {
         }
         public void done() {
             this.work = total;
+            this.done = true;
         }
         public void internalWorked( double work ) {
             this.work = +work;
@@ -46,29 +49,29 @@ public class GeoToolsAdaptersTest {
     @Test
     public void testProgress() {
 
-        IProgressMonitor monitor = new Monitor();
+        Monitor monitor = new Monitor();
+        
         ProgressListener progress = GeoToolsAdapters.progress(monitor);
-        assertFalse( progress.isCanceled() );
-        assertEquals( progress.getProgress(), 0.0, 0.1f );
+        progress.setDescription("go");
+        progress.started();
         
-        monitor.beginTask("test", 100 );
-        assertFalse( progress.isCanceled() );
-        assertEquals( progress.getProgress(), 0.0, 0.01f );
-        //assertEquals( "test", progress.get());
+        assertEquals("test started", 0.0, monitor.work, 0.01 );
+        assertEquals("test started", 100.0, monitor.total, 0.01 );
         
-        monitor.setTaskName("skip");
-        monitor.worked(50);
-        assertEquals( 0.5, progress.getProgress(), 0.01 );
-        //assertEquals( "skip", progress.getDescription());
-
-        monitor.setTaskName("hop");
-        monitor.worked(25);
-        assertEquals( 0.75, progress.getProgress(), 0.01 );
-        //assertEquals( "hop", progress.getDescription());
-
-        monitor.setTaskName("jump");
-        monitor.worked(25);
-        assertEquals( 1.00, progress.getProgress(), 0.01f );
-        //assertEquals( "jump", progress.getDescription());
+        assertFalse( monitor.isCanceled );
+        assertEquals("task", "go", monitor.task );
+        
+        progress.progress( 0.5f );
+        assertEquals("test working", 50.0, monitor.work, 0.01 );
+        assertEquals("test working", 100.0, monitor.total, 0.01 );
+        
+        progress.progress( 1.0f );
+        assertEquals("test finished", 100.0, monitor.work, 0.01 );
+        assertEquals("test finished", 100.0, monitor.total, 0.01 );
+        
+        assertEquals("almost done", false, monitor.done );       
+        progress.complete();
+        assertEquals("test done", true, monitor.done );
+        
     }
 }
