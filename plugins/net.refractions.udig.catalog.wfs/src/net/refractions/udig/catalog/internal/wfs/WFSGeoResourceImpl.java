@@ -167,9 +167,10 @@ public class WFSGeoResourceImpl extends IGeoResource {
                     crippled.printStackTrace();
                 }
             }
-            // bounds = resourceInfo.getBounds();
+            bounds = resourceInfo.getBounds();
+            
             // relax bounds for wfs ...
-            bounds = ReferencedEnvelopeCache.getReferencedEnvelope( crs );
+            // bounds = ReferencedEnvelopeCache.getReferencedEnvelope( crs );
             
             description = resourceInfo.getDescription();
             title = resourceInfo.getTitle();

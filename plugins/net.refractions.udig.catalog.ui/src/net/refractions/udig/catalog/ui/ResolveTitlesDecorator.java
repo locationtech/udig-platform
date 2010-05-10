@@ -249,11 +249,12 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
         if (resolve.getTitle() != null) {
             LabelData data = new LabelData();
             data.text = resolve.getTitle();
-            decorated.put(resolve, data);
-            
-//            if( resolve.getID().getTypeQualifier() != null ){
-//                return data.text + " ("+resolve.getID().getTypeQualifier() +")";
-//            }
+            decorated.put(resolve, data);       
+            if( resolve instanceof IService ){
+                if( resolve.getID().getTypeQualifier() != null ){
+                    return data.text + " ("+resolve.getID().getTypeQualifier() +")";
+                }
+            }
             return data.text;            
         }
         toDecorate.offer(resolve);

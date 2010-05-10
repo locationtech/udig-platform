@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.refractions.udig.core.TransparencyRemovingVisitor;
+import net.refractions.udig.core.jts.ReferencedEnvelopeCache;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.StyleBlackboard;
@@ -273,16 +274,15 @@ public class BasicFeatureRenderer extends RendererImpl {
             
             
 			listener.init(monitor);
-			setQueries();
-			Point min = getContext()
-					.worldToPixel(
-							new Coordinate(validBounds.getMinX(), validBounds
-									.getMinY()));
-			Point max = getContext()
-					.worldToPixel(
-							new Coordinate(validBounds.getMaxX(), validBounds
-									.getMaxY()));
-			int width = Math.abs(max.x - min.x);
+            setQueries();
+            
+            Coordinate minCoord = new Coordinate(validBounds.getMinX(), validBounds.getMinY());
+            Point min = getContext().worldToPixel(minCoord);
+            
+            Coordinate maxCoord = new Coordinate(validBounds.getMaxX(), validBounds.getMaxY());
+            Point max = getContext().worldToPixel(maxCoord);
+			
+            int width = Math.abs(max.x - min.x);
 			int height = Math.abs(max.y - min.y);
 			//TODO: if width or height = 0, then it's a point...need to 
 			// figure out how much ti render (examine style)
@@ -436,14 +436,20 @@ public class BasicFeatureRenderer extends RendererImpl {
 	    }
         CoordinateReferenceSystem viewportCRS = context.getCRS();
         ReferencedEnvelope layerBounds = context.getLayer().getBounds(new SubProgressMonitor(monitor, 0), viewportCRS);
+        
         if( layerBounds == null || layerBounds.isNull() || layerBounds.isEmpty() ){
             return context.getImageBounds(); // layer bounds are unknown so draw what is on screen!
         }
-        // if the bounds do not intersect the layer bounds then 
-        // we have nothing to render to return empty referenced envelope
+        // if the bounds do not intersect the layer bounds then we probably have
+        // nothing to renderer
         if( !layerBounds.intersects((BoundingBox) bounds) ){
-            return new ReferencedEnvelope(context.getCRS());
+            ReferencedEnvelope crsBounds = ReferencedEnvelopeCache.getReferencedEnvelope(context.getCRS());
+            if( !crsBounds.intersects((BoundingBox) crsBounds )){              
+                // okay we are right off the map; return an empty envelope
+                return new ReferencedEnvelope(context.getCRS());
+            }
         }
+        // these bounds look okay; transform them to the viewportCRS
         return new ReferencedEnvelope(bounds, viewportCRS);
 	}
 
