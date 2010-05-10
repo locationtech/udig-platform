@@ -746,7 +746,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         List<IConfigurationElement> interceptors = ExtensionPointList
                 .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT);
         for( IConfigurationElement element : interceptors ) {
-            if (!"mapClosing".equals(element.getName())) //$NON-NLS-1$
+            if (!MapInterceptor.CLOSING_ID.equals(element.getName())) //$NON-NLS-1$
                 continue;
             try {
                 MapInterceptor interceptor = (MapInterceptor) element
@@ -1017,7 +1017,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         List<IConfigurationElement> interceptors = ExtensionPointList
                 .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT);
         for( IConfigurationElement element : interceptors ) {
-            if (!"mapOpening".equals(element.getName())) //$NON-NLS-1$
+            if (!MapInterceptor.OPENING_ID.equals(element.getName())) //$NON-NLS-1$
                 continue;
             try {
                 MapInterceptor interceptor = (MapInterceptor) element

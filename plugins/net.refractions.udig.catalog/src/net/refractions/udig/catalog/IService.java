@@ -24,10 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.internal.CatalogImpl;
 import net.refractions.udig.catalog.internal.Messages;
-import net.refractions.udig.catalog.internal.ResolveChangeEvent;
-import net.refractions.udig.catalog.internal.ResolveDelta;
 import net.refractions.udig.ui.ErrorManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;

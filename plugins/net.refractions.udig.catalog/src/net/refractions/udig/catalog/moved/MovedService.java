@@ -2,8 +2,6 @@ package net.refractions.udig.catalog.moved;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,7 +44,7 @@ public class MovedService extends IService implements IForward  {
 
     @Override
     public List< ? extends IGeoResource> resources( IProgressMonitor monitor ) throws IOException {
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
     
     public URL getIdentifier() {

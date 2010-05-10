@@ -61,7 +61,7 @@ public class IGeoResourceInfo {
     protected IGeoResourceInfo() {
         // for over-riding
     }
-
+    
     public IGeoResourceInfo( String title, String name, String description, URI schema,
             Envelope bounds, CoordinateReferenceSystem crs, String[] keywords, ImageDescriptor icon ) {
         this.title = title;

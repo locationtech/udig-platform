@@ -29,6 +29,7 @@ import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
 import net.refractions.udig.catalog.ServiceExtension;
+import net.refractions.udig.catalog.interceptor.ServiceInterceptor;
 import net.refractions.udig.core.internal.ExtensionPointProcessor;
 import net.refractions.udig.core.internal.ExtensionPointUtil;
 
@@ -193,8 +194,11 @@ public class ServiceFactoryImpl extends IServiceFactory {
                 Map<String, Serializable> connectionParameters = candidateEntry.getValue();
                 try {
                     List<IService> service = createService(connectionParameters);
-                    if (service != null && !service.isEmpty()) {                    
-                        candidates.addAll(service);
+                    if (service != null && !service.isEmpty()) {
+                        for( IService created : service ){
+                            CatalogImpl.runInterceptor(created, ServiceInterceptor.CREATED_ID);
+                            candidates.add(created);
+                        }
                     }
                 } catch (Throwable deadService) {
                     CatalogPlugin.log(extentionIdentifier + " could not create service", deadService); //$NON-NLS-1$
@@ -209,7 +213,10 @@ public class ServiceFactoryImpl extends IServiceFactory {
                 try {
                     List<IService> service = createService(connectionParameters);
                     if (service != null && !service.isEmpty()) {                    
-                        candidates.addAll(service);
+                        for( IService created : service ){
+                            CatalogImpl.runInterceptor(created, ServiceInterceptor.CREATED_ID);
+                            candidates.add(created);
+                        }
                     }
                 } catch (Throwable deadService) {
                     CatalogPlugin.log(extentionIdentifier + " could not create service", deadService); //$NON-NLS-1$
@@ -231,7 +238,8 @@ public class ServiceFactoryImpl extends IServiceFactory {
                 // Attempt to construct a service, and add to the list if available.
                 IService service = serviceExtension.createService(null, connectionParameters);
                 if (service != null) {
-                    services.add(service);
+                    CatalogImpl.runInterceptor(service, ServiceInterceptor.CREATED_ID);
+                    services.add(service);                    
                 }
             } catch (Throwable deadService) {
                 CatalogPlugin.log(id + " could not create service", deadService); //$NON-NLS-1$
@@ -247,6 +255,7 @@ public class ServiceFactoryImpl extends IServiceFactory {
                     // Attempt to construct a service, and add to the list if available.
                     IService service = serviceExtension.createService(null, connectionParameters);
                     if (service != null) {
+                        CatalogImpl.runInterceptor(service, ServiceInterceptor.CREATED_ID);
                         services.add(service);
                     }
                 } catch (Throwable deadService) {

@@ -482,19 +482,24 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
                         viewer.setInput( set.results );
                     }
                 }); 
-                PlatformGIS.runBlockingOperation(new IRunnableWithProgress(){
-
-                    public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
-                        searchImplementation( filter, monitor, set);
-                    }
-                    
-                }, monitor);
+                
+                searchImplementation( filter, monitor, set);
+                
+//                PlatformGIS.runBlockingOperation(new IRunnableWithProgress(){
+//
+//                    public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
+//                        searchImplementation( filter, monitor, set);
+//                    }
+//                    
+//                }, monitor);
+                
                 Display.getDefault().asyncExec(new Runnable(){
                     public void run() {
                         viewer.setSelection(getSelection(set.results), showSelection());
                     }
                 }); 
-            }                
+            }
+            
             catch (Throwable t ) {
                 //book.showPage( promptPage );                    
             }finally{

@@ -27,8 +27,6 @@ import net.refractions.udig.ui.ErrorManager;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
-import com.vividsolutions.jts.geom.Envelope;
-
 /**
  * Interface to capture both the Local Catalog resources and Web Registry Service.
  * <p>

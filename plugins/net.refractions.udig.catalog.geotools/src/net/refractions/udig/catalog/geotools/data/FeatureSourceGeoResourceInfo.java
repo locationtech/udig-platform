@@ -1,24 +1,24 @@
 package net.refractions.udig.catalog.geotools.data;
 
-import java.util.Collection;
-import java.util.GregorianCalendar;
-import java.util.WeakHashMap;
+import java.io.IOException;
 
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.ISharedImages;
 import net.refractions.udig.core.jts.ReferencedEnvelopeCache;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.ResourceInfo;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.geometry.Envelope;
-import org.opengis.metadata.extent.BoundingPolygon;
-import org.opengis.metadata.extent.Extent;
-import org.opengis.metadata.extent.GeographicBoundingBox;
-import org.opengis.metadata.extent.GeographicExtent;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
+/**
+ * Description of a FeatureSource.
+ * <p>
+ * This implementation is 
+ * @author jody
+ * @since 1.2.0
+ */
 public class FeatureSourceGeoResourceInfo extends IGeoResourceInfo {
 
 	private ResourceInfo info;
@@ -40,12 +40,26 @@ public class FeatureSourceGeoResourceInfo extends IGeoResourceInfo {
         } catch(NullPointerException ex) {
             ;
         }
-        this.title = info.getTitle();
-        
+        this.title = info.getTitle();        
         ISharedImages images = CatalogUIPlugin.getDefault().getImages();
         this.icon = images.getImageDescriptor( ISharedImages.FEATURE_OBJ ); // generic!
     }
- 
+    /**
+     * Can be called to refresh the bounds from the internal info object.
+     * 
+     * @param monitor
+     */
+    public void refresh( IProgressMonitor monitor ){
+        if ( monitor == null ) monitor = new NullProgressMonitor();
+        try {
+            monitor.beginTask("refresh bounds", 100 );
+            bounds = info.getBounds();
+        }
+        finally {
+            monitor.done();
+        }
+    }
+    
     public ResourceInfo toResourceInfo(){
         return info;
     }

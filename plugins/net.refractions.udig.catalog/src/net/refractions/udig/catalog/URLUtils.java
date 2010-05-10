@@ -19,12 +19,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
-
-import org.eclipse.core.runtime.Platform;
 
 import net.refractions.udig.core.internal.CorePlugin;
 

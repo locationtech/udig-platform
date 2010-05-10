@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog">
+<schema targetNamespace="net.refractions.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
          <meta.schema plugin="net.refractions.udig.catalog" id="ServiceExtension" name="Services"/>
@@ -11,6 +11,16 @@
    </annotation>
 
    <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+         <documentation>
+            Register new services for the udig catalog.
+
+This extension point is proccessed by the ServiceFactory and is used to create services to populate the local catalog.
+         </documentation>
+      </annotation>
       <complexType>
          <sequence>
             <element ref="service" minOccurs="0" maxOccurs="unbounded"/>
@@ -44,12 +54,17 @@
          <appInfo>
             <meta.element labelAttribute="name"/>
          </appInfo>
+         <documentation>
+            Service being registered with the uDig catalog
+         </documentation>
       </annotation>
       <complexType>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  Should implement the  net.refractions.udig.catalog.ServiceExtension2 interface for improved feedback
+                  Implemnetation of ServiceExtension, allowing service to be created from a URL or Map of connection parameters.
+
+ServiceExtension2 allows for better error reporting in the event a connection could not be made.
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.ServiceExtension"/>
@@ -59,14 +74,14 @@
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  An id for the service
+                  An id for the service; used in logs and error reporting to indicate the service used.
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  A human readable name of the service
+                  A human readable name of the Service
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -112,13 +127,5 @@
       </documentation>
    </annotation>
 
-   <annotation>
-      <appInfo>
-         <meta.section type="copyright"/>
-      </appInfo>
-      <documentation>
-         
-      </documentation>
-   </annotation>
 
 </schema>

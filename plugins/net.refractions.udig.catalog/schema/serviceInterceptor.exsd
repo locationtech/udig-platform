@@ -1,19 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="net.refractions.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project" id="mapInterceptor" name="mapInterceptor"/>
+         <meta.schema plugin="net.refractions.udig.catalog" id="serviceInterceptor" name="Service Interceptor"/>
       </appInfo>
       <documentation>
-         This extension point allows interceptor actions to be run at various points during the lifecycle of a Map.
+         Allows an interceptor to be run at various points during the lifecycle of a Service.
 &lt;ul&gt;
-&lt;li&gt;When a map is created&lt;/li&gt;
-&lt;li&gt;Before a map is opened&lt;/li&gt;
-&lt;li&gt;After a map is closed&lt;/li&gt;
-&lt;li&gt;When a layer is added&lt;/li&gt;
-&lt;li&gt;When a layer is removed&lt;/li&gt;
+&lt;li&gt;When a service is created&lt;/li&gt;
+&lt;li&gt;When a service is added to the local catalog&lt;/li&gt;
 &lt;/ul&gt;
+
+This extension point is used by the hosting application to update the service properties with a good title or sensible bounds.
       </documentation>
    </annotation>
 
@@ -25,11 +24,9 @@
       </annotation>
       <complexType>
          <choice minOccurs="0" maxOccurs="unbounded">
-            <element ref="mapCreation"/>
-            <element ref="mapOpening"/>
-            <element ref="mapClosing"/>
-            <element ref="layerAdded"/>
-            <element ref="layerRemoved"/>
+            <element ref="serviceAdded"/>
+            <element ref="serviceCreated"/>
+            <element ref="serviceRemoved"/>
          </choice>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -58,15 +55,7 @@
       </complexType>
    </element>
 
-   <element name="mapCreation">
-      <annotation>
-         <appInfo>
-            <meta.element labelAttribute="name"/>
-         </appInfo>
-         <documentation>
-            This element declares an interceptor that will be ran after the map is created but before any layers have been added.  So the default map name will have been assigned and the eResource will have already been set on the map.
-         </documentation>
-      </annotation>
+   <element name="serviceCreated">
       <complexType>
          <attribute name="id" type="string" use="required">
             <annotation>
@@ -78,7 +67,9 @@
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  A readable name for the interceptor.
+                  A human readable name for the interceptor.
+
+Will be displayed in the progesss view while the interceptor is running.
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -88,25 +79,17 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The interceptor that will be ran when the map is being created.
+                  Interceptor to run when the service is being created.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.MapInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.catalog.interceptor.ServiceInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
-   <element name="mapOpening">
-      <annotation>
-         <appInfo>
-            <meta.element labelAttribute="name"/>
-         </appInfo>
-         <documentation>
-            An interceptor that is ran before a map opens
-         </documentation>
-      </annotation>
+   <element name="serviceAdded">
       <complexType>
          <attribute name="id" type="string" use="required">
             <annotation>
@@ -118,7 +101,9 @@
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  A name for the interceptor
+                  A human readable name for the interceptor.
+
+Will be displayed in the progesss view while the interceptor is running.
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -128,25 +113,17 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The interceptor that will be ran when the map is opening.
+                  Interceptor to run when the service is being added to the local catalog
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.MapInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.catalog.interceptor.ServiceInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
-   <element name="mapClosing">
-      <annotation>
-         <appInfo>
-            <meta.element labelAttribute="name"/>
-         </appInfo>
-         <documentation>
-            An interceptor that is ran as the map is closing.  The map will still be open but will close.  This cannot cancel closing.
-         </documentation>
-      </annotation>
+   <element name="serviceRemoved">
       <complexType>
          <attribute name="id" type="string" use="required">
             <annotation>
@@ -158,7 +135,9 @@
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  A name for the interceptor
+                  A human readable name for the interceptor.
+
+Will be displayed in the progesss view while the interceptor is running.
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -168,37 +147,31 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The interceptor that will be ran when the map is closing.
+                  Interceptor to run when the service is being removed from the catalog
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.MapInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.catalog.interceptor.ServiceInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
-   <element name="layerAdded">
-      <annotation>
-         <appInfo>
-            <meta.element labelAttribute="name" deprecated="true"/>
-         </appInfo>
-         <documentation>
-            See the LayerInterceptor extension point
-         </documentation>
-      </annotation>
+<element name="resourceAdded">
       <complexType>
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  an id for the extension
+                  An id for the extension
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  A name for the interceptor
+                  A human readable name for the interceptor.
+
+Will be displayed in the progesss view while the interceptor is running.
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -208,37 +181,31 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The interceptor class.
+                  Interceptor to run when the resource is added to the catalog.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.LayerInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.catalog.interceptor.ResourceInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
-
-   <element name="layerRemoved">
-      <annotation>
-         <appInfo>
-            <meta.element labelAttribute="name" deprecated="true"/>
-         </appInfo>
-         <documentation>
-            See the LayerInterceptor extension point
-         </documentation>
-      </annotation>
+   
+   <element name="resourceRemoved">
       <complexType>
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  an id for the extension
+                  An id for the extension
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  A name for the interceptor
+                  A human readable name for the interceptor.
+
+Will be displayed in the progesss view while the interceptor is running.
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -248,22 +215,22 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The interceptor class.
+                  Interceptor to run when the resource is removed from the catalog.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.LayerInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.catalog.interceptor.ResourceInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
-
+   
    <annotation>
       <appInfo>
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         1.1
+         1.2
       </documentation>
    </annotation>
 
@@ -272,20 +239,17 @@
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         Example: Used to add a fixed set of default layers to every new map
-&lt;p&gt;
-Example: Used to configure layer with a default style
+         Used to supply a service with a more appropriate default title.
+Used to supply a georesource with a more appropriate default bounds.
       </documentation>
    </annotation>
 
    <annotation>
       <appInfo>
-         <meta.section type="apiInfo"/>
+         <meta.section type="apiinfo"/>
       </appInfo>
       <documentation>
-         MapInterceptor is used to apply actions against a Map.
-
-LayerInterceptor is used to apply actions against a Layer.
+         [Enter API information here.]
       </documentation>
    </annotation>
 
@@ -294,17 +258,9 @@ LayerInterceptor is used to apply actions against a Layer.
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         &lt;a href=&quot;http://udig.refractions.net/confluence/display/DEV/MapInterceptor+and+LayerInterceptor&quot;&gt;Developers Guide entry on MapInterceptor and LayerInterceptor&lt;/a&gt;
+         [Enter information about supplied implementation of this extension point.]
       </documentation>
    </annotation>
 
-   <annotation>
-      <appInfo>
-         <meta.section type="copyright"/>
-      </appInfo>
-      <documentation>
-         (c) 2006 udig.refractions.net
-      </documentation>
-   </annotation>
 
 </schema>

@@ -38,8 +38,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import javax.swing.ProgressMonitor;
-
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.ICatalogInfo;
@@ -56,6 +54,8 @@ import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.ServiceParameterPersister;
 import net.refractions.udig.catalog.TemporaryResourceFactory;
 import net.refractions.udig.catalog.URLUtils;
+import net.refractions.udig.catalog.interceptor.GeoResourceInterceptor;
+import net.refractions.udig.catalog.interceptor.ServiceInterceptor;
 import net.refractions.udig.catalog.moved.MovedService;
 import net.refractions.udig.catalog.util.AST;
 import net.refractions.udig.catalog.util.ASTFactory;
@@ -161,10 +161,13 @@ public class CatalogImpl extends ICatalog {
         }
 
         services.add(service);
+        runInterceptor(service, ServiceInterceptor.ADDED_ID);
+        
         IResolveDelta deltaAdded = new ResolveDelta(service, IResolveDelta.Kind.ADDED);
         IResolveDelta deltaChanged = new ResolveDelta(this, Collections.singletonList(deltaAdded));
         fire(new ResolveChangeEvent(CatalogImpl.this, IResolveChangeEvent.Type.POST_CHANGE,
                 deltaChanged));
+        
         return service;
     }
 
@@ -174,13 +177,17 @@ public class CatalogImpl extends ICatalog {
      * @throws UnsupportedOperationException
      */
     public void remove( IService entry ) throws UnsupportedOperationException {
-        if (entry == null || entry.getIdentifier() == null)
+        if (entry == null || entry.getIdentifier() == null){
             throw new NullPointerException("Cannot have a null id"); //$NON-NLS-1$
+        }
         IResolveDelta deltaRemoved = new ResolveDelta(entry, IResolveDelta.Kind.REMOVED);
         IResolveDelta deltaChanged = new ResolveDelta(this, Collections.singletonList(deltaRemoved));
         fire(new ResolveChangeEvent(CatalogImpl.this, IResolveChangeEvent.Type.PRE_DELETE,
                 deltaChanged));
+        
         services.remove(entry);
+        runInterceptor(entry, ServiceInterceptor.REMOVED_ID);
+        
         fire(new ResolveChangeEvent(CatalogImpl.this, IResolveChangeEvent.Type.POST_CHANGE,
                 deltaRemoved));
     }
@@ -217,6 +224,7 @@ public class CatalogImpl extends ICatalog {
                 IResolveChangeEvent.Type.PRE_DELETE, deltas);
         fire(event);
         services.remove(service);
+        runInterceptor(service, ServiceInterceptor.REMOVED_ID);
 
         PlatformGIS.run(new IRunnableWithProgress(){
 
@@ -232,12 +240,14 @@ public class CatalogImpl extends ICatalog {
         });
 
         services.add(replacement);
+        runInterceptor(replacement, ServiceInterceptor.ADDED_ID);
         event = new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, deltas);
 
         if (!id.equals(replacement.getIdentifier())) {
             // the service has actually moved
             IService moved = new MovedService(id, replacement.getID());
             services.add(moved);
+            runInterceptor(moved, ServiceInterceptor.ADDED_ID);
         }
         fire(event);
     }
@@ -290,7 +300,7 @@ public class CatalogImpl extends ICatalog {
                     }
                     // connected!
                     iterator.remove(); // don't clean this one up!
-                    add( service );
+                    add(service);
                     return service;
                 } catch (Throwable t) {
                     // usually indicates an IOException as the service is unable to connect
@@ -314,7 +324,7 @@ public class CatalogImpl extends ICatalog {
             IProgressMonitor monitor ) throws IOException {
         if (monitor == null)
             monitor = new NullProgressMonitor();
-        
+
         IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
 
         monitor.beginTask("acquire", 100);
@@ -358,7 +368,7 @@ public class CatalogImpl extends ICatalog {
                     }
                     // connected!
                     iterator.remove(); // don't clean this one up!
-                    add( service );
+                    add(service);
                     return service;
                 } catch (Throwable t) {
                     // usually indicates an IOException as the service is unable to connect
@@ -690,7 +700,7 @@ public class CatalogImpl extends ICatalog {
                 if (check(service, ast)) {
                     result.add(service);
                 }
-                Iterator< ? extends IGeoResource> resources;
+                //Iterator< ? extends IGeoResource> resources;
                 SubProgressMonitor submonitor = new SubProgressMonitor(monitor, 10);
                 try {
                     List< ? extends IGeoResource> members = service.resources(submonitor);
@@ -789,15 +799,15 @@ public class CatalogImpl extends ICatalog {
     }
 
     protected static boolean check( IGeoResource resource, AST pattern, Envelope bbox ) {
-        if (!check(resource, pattern)){
+        if (!check(resource, pattern)) {
             return false;
         }
-        if (bbox == null || bbox.isNull()){
+        if (bbox == null || bbox.isNull()) {
             return true; // no checking here
         }
         try {
             ReferencedEnvelope bounds = resource.getInfo(null).getBounds();
-            if( bounds == null ){
+            if (bounds == null) {
                 return true; // bounds are unknown!
             }
             return bbox.intersects(bounds);
@@ -1044,5 +1054,61 @@ public class CatalogImpl extends ICatalog {
             CatalogPlugin.log("Error saving services for the local catalog", t); //$NON-NLS-1$ 
         }
     }
+    //
+    // Interceptors
+    //
+    /**
+     * Run the service interceptors for the indicated activity.
+     * 
+     * @param activity ADDED_ID, CREATED_ID, REMOVED_ID
+     */
+    public static void runInterceptor( IService service, String activity ) {
+        if (!ServiceInterceptor.ADDED_ID.equals(activity)
+                && !ServiceInterceptor.REMOVED_ID.equals(activity)
+                && !ServiceInterceptor.CREATED_ID.equals(activity)) {
+            return; // no activities defined
+        }
+        List<IConfigurationElement> interceptors = ExtensionPointList
+                .getExtensionPointList(ServiceInterceptor.EXTENSION_ID);
 
+        for( IConfigurationElement element : interceptors ) {
+            if (!activity.equals(element.getName())) {
+                continue;
+            }
+            try {
+                ServiceInterceptor interceptor = (ServiceInterceptor) element
+                        .createExecutableExtension("class"); //$NON-NLS-1$
+                interceptor.run(service);
+            } catch (Exception e) {
+                CatalogPlugin.trace( activity +" "+element.getAttribute("class")+":"+e, e); //$NON-NLS-1$
+            }
+        }
+    }
+    
+    /**
+     * Run the resource interceptors for the indicated activity.
+     * 
+     * @param activity ADDED_ID, CREATED_ID, REMOVED_ID
+     */
+    public static void runInterceptor( IGeoResource resource, String activity ) {
+        if (!GeoResourceInterceptor.ADDED_ID.equals(activity)
+                && !GeoResourceInterceptor.REMOVED_ID.equals(activity)) {
+            return; // no activities defined
+        }
+        List<IConfigurationElement> interceptors = ExtensionPointList
+                .getExtensionPointList(ServiceInterceptor.EXTENSION_ID);
+
+        for( IConfigurationElement element : interceptors ) {
+            if (!activity.equals(element.getName())) {
+                continue;
+            }
+            try {
+                GeoResourceInterceptor interceptor = (GeoResourceInterceptor) element
+                        .createExecutableExtension("class"); //$NON-NLS-1$
+                interceptor.run(resource);
+            } catch (Exception e) {
+                CatalogPlugin.trace( activity +" "+element.getAttribute("class")+":"+e, e); //$NON-NLS-1$
+            }
+        }
+    }
 }

@@ -7,6 +7,7 @@
    <extension-point id="temporaryResource" name="%temp_resource.name" schema="schema/temporaryResource.exsd"/>
    <extension-point id="resolvers" name="%resolvers.name" schema="schema/resolvers.exsd"/>
    <extension-point id="friendly" name="%friendly.name" schema="schema/friendly.exsd"/>
+   <extension-point id="serviceInterceptor" name="Service Interceptor" schema="schema/serviceInterceptor.exsd"/>
    <extension
          point="net.refractions.udig.catalog.ICatalog">
       <catalog class="net.refractions.udig.catalog.internal.CatalogImpl"/>

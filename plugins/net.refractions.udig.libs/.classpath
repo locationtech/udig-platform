@@ -12,7 +12,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/geoapi-pending-2.3-M1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geodb-0.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/google-collect-snapshot-20080321.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-api-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-api-2.6-SNAPSHOT.jar" sourcepath="/Users/jody/java/geotools/2.6.x/modules/library/metadata/src"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-2.6-SNAPSHOT.jar" sourcepath="/Users/jody/java/geotools/2.6.x/modules/library/main/src"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-common-2.6-SNAPSHOT.jar"/>
