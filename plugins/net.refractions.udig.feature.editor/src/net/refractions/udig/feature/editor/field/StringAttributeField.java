@@ -94,6 +94,12 @@ public class StringAttributeField extends AttributeField {
     private int textLimit = UNLIMITED;
 
     /**
+     * Text field is single line or multi, we need to know if it's single line <code>false</code> by
+     * default
+     */
+    protected boolean multi = false;
+
+    /**
      * The error message, or <code>null</code> if none.
      */
     private String errorMessage;
@@ -128,7 +134,11 @@ public class StringAttributeField extends AttributeField {
      * @since 2.0
      */
     public StringAttributeField( String name, String labelText, int width, int strategy,
-            Composite parent ) {
+            Composite parent, int control_style ) {
+        if (control_style == 1) {
+            multi = true;
+            System.out.println("Multi is set to true!");
+        }
         init(name, labelText);
         widthInChars = width;
         setValidateStrategy(strategy);
@@ -146,8 +156,9 @@ public class StringAttributeField extends AttributeField {
      *        no limit
      * @param parent the parent of the field editor's control
      */
-    public StringAttributeField( String name, String labelText, int width, Composite parent ) {
-        this(name, labelText, width, VALIDATE_ON_KEY_STROKE, parent);
+    public StringAttributeField( String name, String labelText, int width, Composite parent,
+            int control_style ) {
+        this(name, labelText, width, VALIDATE_ON_KEY_STROKE, parent, control_style);
     }
 
     /**
@@ -158,9 +169,24 @@ public class StringAttributeField extends AttributeField {
      * @param labelText the label text of the field editor
      * @param parent the parent of the field editor's control
      */
-    public StringAttributeField( String name, String labelText, Composite parent ) {
-        this(name, labelText,UNLIMITED, parent); //UNLIMITED
+
+    public StringAttributeField( String name, String labelText, Composite parent, int control_style ) {
+        this(name, labelText, UNLIMITED, control_style, parent, control_style); // UNLIMITED
     }
+
+    public StringAttributeField( String name, String labelText, Composite parent ) {
+        this(name, labelText, UNLIMITED, parent, 0); // UNLIMITED
+    }
+
+    /**
+     * Creates a string field editor of unlimited width. Use the method <code>setTextLimit</code> to
+     * limit the text.
+     * 
+     * @param name the name of the preference this field editor works on
+     * @param labelText the label text of the field editor
+     * @param parent the parent of the field editor's control
+     * @param line text field type. True if multiline, false if single line
+     */
 
     /*
      * (non-Javadoc) Method declared on AttributeField.
@@ -216,24 +242,24 @@ public class StringAttributeField extends AttributeField {
      */
     protected boolean doCheckState() {
         EditFeature feature = getFeature();
-        if( feature == null ) return true; // cannot check right now
+        if (feature == null)
+            return true; // cannot check right now
         SimpleFeatureType schema = feature.getFeatureType();
-        AttributeDescriptor descriptor = schema.getDescriptor( getAttributeName());  
-        if( descriptor == null ){
+        AttributeDescriptor descriptor = schema.getDescriptor(getAttributeName());
+        if (descriptor == null) {
             // the schema changed on us! help ...
             return false;
         }
         String text = textField.getText();
-        
-        if( text == null || text.length() == 0){
+
+        if (text == null || text.length() == 0) {
             return !descriptor.isNillable();
         }
-        Object value = Converters.convert( text, descriptor.getType().getBinding() );        
+        Object value = Converters.convert(text, descriptor.getType().getBinding());
         try {
             Types.validate(descriptor, value);
             return true;
-        }
-        catch (IllegalAttributeException bad){
+        } catch (IllegalAttributeException bad) {
             errorMessage = bad.getLocalizedMessage();
             return false;
         }
@@ -242,19 +268,20 @@ public class StringAttributeField extends AttributeField {
     /**
      * Fills this field editor's basic controls into the given parent.
      * <p>
-     * The string field implementation of this <code>AttributeField</code> framework method contributes
-     * the text field. Subclasses may override but must call <code>super.doFillIntoGrid</code>.
+     * The string field implementation of this <code>AttributeField</code> framework method
+     * contributes the text field. Subclasses may override but must call
+     * <code>super.doFillIntoGrid</code>.
      * </p>
      */
-    protected void doFillIntoGrid( Composite parent, int numColumns ) {
+    protected void doFillIntoGrid( final Composite parent, int numColumns ) {
         Label label = getLabelControl(parent);
         GridData gd = new GridData();
         gd.horizontalSpan = 1;
         label.setLayoutData(gd);
-        
+
         textField = getTextControl(parent);
         gd = new GridData();
-        gd.horizontalIndent=5;
+        gd.horizontalIndent = 5;
         gd.horizontalSpan = numColumns - 1;
         if (widthInChars != UNLIMITED) {
             GC gc = new GC(textField);
@@ -268,23 +295,74 @@ public class StringAttributeField extends AttributeField {
             gd.horizontalAlignment = GridData.FILL;
             gd.grabExcessHorizontalSpace = true;
         }
+        if (multi) {
+            System.out.println("Multi is true");
+            // gd.grabExcessVerticalSpace = true;
+            GC gc = new GC(textField);
+            try {
+                Point extent = gc.textExtent("X");//$NON-NLS-1$
+                gd.heightHint = extent.y * 3;
+            } finally {
+                gc.dispose();
+            }
+        }
         textField.setLayoutData(gd);
+        if (multi) {
+            textField.addKeyListener(new KeyAdapter(){
+                @Override
+                public void keyReleased( KeyEvent e ) {
+                    int numLines = textField.getLineCount();
+                    GridData gd = (GridData) textField.getLayoutData();
+                    GC gc = new GC(textField);
+                    Point extent = gc.textExtent("X");//$NON-NLS-1$
+                    if (numLines >= 3) {
+                        if ((gd.heightHint / extent.y) > (numLines + 1)) {
+                            try {
+                                gd.heightHint = extent.y * (numLines--);
+                            } finally {
+                                gc.dispose();
+                            }
+
+                        } else {
+                            try {
+                                gd.heightHint = extent.y * (numLines++);
+                            } finally {
+                                gc.dispose();
+                            }
+
+                        }
+
+                    }
+                    else{
+                        try {
+                            gd.heightHint = extent.y * 3;
+                        } finally {
+                            gc.dispose();
+                        }
+                    }
+
+                    parent.layout();
+                }
+            });
+        }
+
     }
 
     /*
      * (non-Javadoc) Method declared on AttributeField.
      */
     public void doLoad() {
-        if (textField != null && getFeature() != null ) {
-//            AttributeDescriptor descriptor = getFeature().getType().getDescriptor( getAttributeName() );
-//            int length = FeatureTypes.getFieldLength(descriptor);
+        if (textField != null && getFeature() != null) {
+            // AttributeDescriptor descriptor = getFeature().getType().getDescriptor(
+            // getAttributeName() );
+            // int length = FeatureTypes.getFieldLength(descriptor);
 
-            Object value = getFeature().getAttribute( getAttributeName() );
-            String text = Converters.convert(value, String.class );
-            if( text == null ){
+            Object value = getFeature().getAttribute(getAttributeName());
+            String text = Converters.convert(value, String.class);
+            if (text == null) {
                 text = "";
             }
-            textField.setText( text );
+            textField.setText(text);
             oldValue = text;
         }
     }
@@ -295,10 +373,10 @@ public class StringAttributeField extends AttributeField {
     protected void doLoadDefault() {
         if (textField != null) {
             SimpleFeatureType schema = getFeature().getFeatureType();
-            AttributeDescriptor descriptor = schema.getDescriptor( getAttributeName());            
+            AttributeDescriptor descriptor = schema.getDescriptor(getAttributeName());
             Object value = descriptor.getDefaultValue();
-            
-            String text = Converters.convert(value, String.class );
+
+            String text = Converters.convert(value, String.class);
             textField.setText(text);
         }
         valueChanged();
@@ -309,11 +387,11 @@ public class StringAttributeField extends AttributeField {
      */
     protected void doStore() {
         SimpleFeatureType schema = getFeature().getFeatureType();
-        AttributeDescriptor descriptor = schema.getDescriptor( getAttributeName());  
-        
+        AttributeDescriptor descriptor = schema.getDescriptor(getAttributeName());
+
         String text = textField.getText();
-        Object value = Converters.convert( text, descriptor.getType().getBinding() );        
-        getFeature().setAttribute( getAttributeName(), value );
+        Object value = Converters.convert(text, descriptor.getType().getBinding());
+        getFeature().setAttribute(getAttributeName(), value);
     }
 
     /**
@@ -342,8 +420,8 @@ public class StringAttributeField extends AttributeField {
             return textField.getText();
         }
 
-        Object value = getFeature().getAttribute( getAttributeName());
-        String text = Converters.convert( value, String.class );
+        Object value = getFeature().getAttribute(getAttributeName());
+        String text = Converters.convert(value, String.class);
         return text;
     }
 
@@ -355,8 +433,8 @@ public class StringAttributeField extends AttributeField {
     protected Text getTextControl() {
         return textField;
     }
-    
-    public Text getControl(){
+
+    public Text getControl() {
         return textField;
     }
 
@@ -371,7 +449,13 @@ public class StringAttributeField extends AttributeField {
      */
     public Text getTextControl( Composite parent ) {
         if (textField == null) {
-            textField = new Text(parent, SWT.SINGLE | SWT.BORDER);
+            if (multi) {
+                textField = new Text(parent, SWT.MULTI | SWT.BORDER); // this is a multi-line text
+                // field
+            } else {
+                textField = new Text(parent, SWT.SINGLE | SWT.BORDER); // this is a single-line text
+                // field
+            }
             textField.setFont(parent.getFont());
             switch( validateStrategy ) {
             case VALIDATE_ON_KEY_STROKE:
@@ -565,18 +649,18 @@ public class StringAttributeField extends AttributeField {
 
     public void setVisible( boolean visible ) {
         super.setVisible(visible);
-        if( getControl() != null && !getControl().isDisposed()){
-            getControl().setVisible(visible);    
+        if (getControl() != null && !getControl().isDisposed()) {
+            getControl().setVisible(visible);
         }
     }
-    
+
     /*
      * @see AttributeField.setEnabled(boolean,Composite).
      */
     public void setEnabled( boolean enabled ) {
         super.setEnabled(enabled);
-        if( getControl() != null && !getControl().isDisposed()){
-            getControl().setEnabled(enabled);    
+        if (getControl() != null && !getControl().isDisposed()) {
+            getControl().setEnabled(enabled);
         }
     }
 

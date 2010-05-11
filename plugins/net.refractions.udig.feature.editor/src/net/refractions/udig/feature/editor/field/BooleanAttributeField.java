@@ -52,7 +52,7 @@ public class BooleanAttributeField extends AttributeField {
     final protected Object NO;
 
     @Override
-    public Control getControl() {
+    public Button getControl() {
         return checkBox;
     }
 
@@ -346,9 +346,12 @@ public class BooleanAttributeField extends AttributeField {
     public String getStringValue() {
         // TODO Auto-generated method stub
         if (YES == (Object)1){
+            System.out.println("Retired");
             return "1";
+            
         }
         else{
+            System.out.println("un Retired");
         return "0";
         }
     }

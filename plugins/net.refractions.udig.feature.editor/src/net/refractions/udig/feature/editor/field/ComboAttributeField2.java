@@ -31,7 +31,7 @@ public class ComboAttributeField2 extends AttributeField {
      */
     private ComboViewer viewer;
 
-    private List<Object> options;
+    private List<?> options;
 
     private ISelectionChangedListener listener = new ISelectionChangedListener() {                
         public void selectionChanged(SelectionChangedEvent event) {                    
@@ -52,7 +52,7 @@ public class ComboAttributeField2 extends AttributeField {
      * @param parent
      *            the parent composite
      */
-    public ComboAttributeField2(String name, String labelText, List<Object> values, Composite parent) {
+    public ComboAttributeField2(String name, String labelText, List<?> values, Composite parent) {
         init(name, labelText);
         options = values;
         createControl(parent);
