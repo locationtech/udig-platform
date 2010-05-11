@@ -36,6 +36,7 @@ import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Project;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
+import net.refractions.udig.project.internal.commands.ChangeCRSCommand;
 import net.refractions.udig.project.internal.commands.selection.SelectLayerCommand;
 import net.refractions.udig.project.internal.render.RenderManager;
 import net.refractions.udig.project.render.IViewportModelListener;
@@ -52,6 +53,8 @@ import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.project.ui.viewers.MapViewer;
+import net.refractions.udig.ui.CRSChooser;
+import net.refractions.udig.ui.CRSChooserDialog;
 import net.refractions.udig.ui.IBlockingSelection;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.PreShutdownTask;
@@ -509,6 +512,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         Shell popup;
 
         private void promptForCRS() {
+            /*
             CRSPropertyPage page = new CRSPropertyPage();
             page.setStrategy(new CRSPropertyPage.MapStrategy(getMap()));
             PreferenceManager mgr = new PreferenceManager();
@@ -519,7 +523,18 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             ZoomingDialog dialog = new ZoomingDialog(getSite().getShell(), pdialog, ZoomingDialog
                     .calculateBounds(button));
             dialog.open();
-            updateCRS();
+            */
+            CoordinateReferenceSystem crs = getMap().getViewportModel().getCRS();            
+            CRSChooserDialog dialog = new CRSChooserDialog( getSite().getShell(), crs );
+            int code = dialog.open();
+            if( Window.OK == code ){
+                CoordinateReferenceSystem result = dialog.getResult();
+                if( !result.equals(crs)){
+                    getMap().sendCommandSync(new ChangeCRSCommand(result));
+                    updateCRS();
+                }
+            }
+
         }
 
         void showFullText() {

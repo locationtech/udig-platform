@@ -208,7 +208,7 @@ public class CRSPropertyPage extends PropertyPage {
         chooser.setFocus();
         return control;
     }
-
+    
     /**
      * @see org.eclipse.jface.preference.PreferencePage#doComputeSize()
      */

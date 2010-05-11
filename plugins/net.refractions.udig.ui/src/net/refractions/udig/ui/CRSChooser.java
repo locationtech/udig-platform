@@ -249,7 +249,9 @@ public class CRSChooser {
          * flickers the window
          */
         fillCodesList();
-
+        
+        searchText.setFocus();
+        
         return composite;
     }
 
