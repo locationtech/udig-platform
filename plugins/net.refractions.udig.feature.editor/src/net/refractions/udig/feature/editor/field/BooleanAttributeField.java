@@ -343,4 +343,14 @@ public class BooleanAttributeField extends AttributeField {
         }
     }
 
+    public String getStringValue() {
+        // TODO Auto-generated method stub
+        if (YES == (Object)1){
+            return "1";
+        }
+        else{
+        return "0";
+        }
+    }
+
 }
