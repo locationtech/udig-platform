@@ -97,8 +97,9 @@ public class SelectionTool extends AbstractEditTool {
                 SimpleFeature feature = handler.getContext().getEditManager().getEditFeature();
                 if (feature == null)
                     return false;
-                Class< ? extends Geometry> class1 = ((Geometry) feature.getDefaultGeometry())
-                        .getClass();
+                Geometry geometry = (Geometry) feature.getDefaultGeometry();
+                Class< ? extends Geometry> class1 = geometry == null? null : geometry.getClass();
+                
                 return super.isValid(handler) && feature != null
                         && (class1 == Polygon.class || class1 == MultiPolygon.class);
             }
