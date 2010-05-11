@@ -401,8 +401,9 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
     }
 
     /**
-     *
-     * @return
+     * LabelProvider; override to take charge of your labels and icons.
+     * 
+     * @return LabelProvider for use with the viewer
      */
     protected IBaseLabelProvider createLabelProvider() {
         return new LabelProvider();

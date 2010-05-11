@@ -157,7 +157,7 @@ public class CountryFeaturePanel extends IFeaturePanel {
         parent.setLayout(new MigLayout("", "[right]10[left, grow][min!][min!]", "30"));
 
         // SWT Widgets
-        Label label = new Label(parent, SWT.SHADOW_IN);
+        Label label = new Label(parent, SWT.NONE);
         label.setText("Country:");
 
         name = new Text(parent, SWT.SHADOW_IN | SWT.BORDER);

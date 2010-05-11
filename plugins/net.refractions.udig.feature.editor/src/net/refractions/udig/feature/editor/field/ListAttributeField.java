@@ -22,9 +22,20 @@ import org.geotools.util.Converters;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 
+/**
+ * Abstract attribute field managing a list of contents.
+ * <p>
+ * To use an implementor will need to override a couple of methods:
+ * <ul>
+ * <li>parseString</li>
+ * <li>createList</li>
+ * <li>getNewInputObject</li>
+ * </p>
+ * @author Jody
+ * @since 1.2.0
+ * @see ListEditor
+ */
 public abstract class ListAttributeField extends AttributeField {
-
-
     /**
      * The list widget; <code>null</code> if none
      * (before creation or after disposal).

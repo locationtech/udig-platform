@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.geotools.coverage.grid.GridCoverage2D;
+import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.processing.OperationJAI;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.factory.CommonFactoryFinder;
@@ -86,7 +87,7 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
     private RGBChannelViewer rgbViewer = new RGBChannelViewer(redChannel, greenChannel, blueChannel);
 
     private final UpdateHistoJob updateJob = new UpdateHistoJob();
-    
+
     SelectionListener synchronize = new SelectionListener(){
         public void widgetSelected( SelectionEvent e ) {
             synchronize();
@@ -111,14 +112,16 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
 
     @Override
     public boolean canStyle( Layer aLayer ) {
-        if (aLayer.hasResource(GridCoverage.class) || aLayer.hasResource(WebMapServer.class))
+        if (aLayer.hasResource(GridCoverage.class) || aLayer.hasResource(WebMapServer.class)
+                || aLayer.hasResource(AbstractGridCoverage2DReader.class)){
             return true;
+        }
         return false;
     }
 
     @Override
     protected void refresh() {
-        
+
         Display.getCurrent().asyncExec(new Runnable(){
 
             public void run() {
@@ -140,11 +143,9 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
                     }
                     rgbViewer.setBands(bands);
                 } catch (Exception ex) {
-                    
+
                 }
 
-                
-               
                 Rule r = (SLD.rules(style))[0];
                 double minScaleDen = r.getMinScaleDenominator();
                 double maxScaleDen = r.getMaxScaleDenominator();
@@ -152,27 +153,27 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
                         .getScaleDenominator()));
                 maxScale.setScale(maxScaleDen, Math.round(getLayer().getMap().getViewportModel()
                         .getScaleDenominator()));
-                
-                //create a job to update histogram
-                if (gc == null){
-                    //we need to set the rgb viewer to invalid
+
+                // create a job to update histogram
+                if (gc == null) {
+                    // we need to set the rgb viewer to invalid
                     rgbViewer.setEditable(false);
-                }else{
+                } else {
                     rgbViewer.setEditable(true);
                     rgbViewer.set(sym);
-                    updateHistogram(sym, (GridCoverage2D)gc);
+                    updateHistogram(sym, (GridCoverage2D) gc);
                 }
-            }});
-        
+            }
+        });
 
     }
 
-    private void updateHistogram(RasterSymbolizer rs, GridCoverage2D gc){
+    private void updateHistogram( RasterSymbolizer rs, GridCoverage2D gc ) {
         updateJob.updateInfo(rs, gc);
         updateJob.schedule(500);
     }
-    
-     @Override
+
+    @Override
     public void createControl( Composite parent ) {
         // setLayout(parent);
         parent.setLayout(new GridLayout(1, false));
@@ -226,7 +227,7 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
 
         // setup opacity
         SLD.setRasterOpacity(s, this.opacity.getValue());
-        
+
         // setup channels
         SelectedChannelType red = null;
         SelectedChannelType green = null;
@@ -235,12 +236,12 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
         if (rgbViewer.isEnabled()) {
             SelectedChannelType[] channels = rs.getChannelSelection().getRGBChannels();
 
-            red = setChannel(rgbViewer.getRedChannel().getName(), rgbViewer
-                    .getRedChannel().getGamma());
-            green = setChannel(rgbViewer.getGreenChannel().getName(), rgbViewer
-                    .getGreenChannel().getGamma());
-            blue = setChannel(rgbViewer.getBlueChannel().getName(), rgbViewer
-                    .getBlueChannel().getGamma());
+            red = setChannel(rgbViewer.getRedChannel().getName(), rgbViewer.getRedChannel()
+                    .getGamma());
+            green = setChannel(rgbViewer.getGreenChannel().getName(), rgbViewer.getGreenChannel()
+                    .getGamma());
+            blue = setChannel(rgbViewer.getBlueChannel().getName(), rgbViewer.getBlueChannel()
+                    .getGamma());
         }
 
         SLD.setChannelSelection(s, new SelectedChannelType[]{red, green, blue}, null);
@@ -248,7 +249,7 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
         GridCoverage2D gc = null;
         try {
             gc = (GridCoverage2D) getLayer().getResource(GridCoverage.class, null);
-            if (gc != null){
+            if (gc != null) {
                 updateHistogram(rs, gc);
             }
         } catch (Exception ex) {
@@ -261,9 +262,9 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
     /*
      * sets up a channel based on the given values
      */
-    private SelectedChannelType setChannel(String name, double gamma ) {
-         return getStyleFactory().createSelectedChannelType(name,
-                    getStyleFactory().createContrastEnhancement(getFilterFactory().literal(gamma)));
+    private SelectedChannelType setChannel( String name, double gamma ) {
+        return getStyleFactory().createSelectedChannelType(name,
+                getStyleFactory().createContrastEnhancement(getFilterFactory().literal(gamma)));
     }
 
     private StyleFactory getStyleFactory() {
@@ -280,35 +281,35 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
         return ff;
 
     }
-    
+
     /**
      * Job of updating the histogram values.
      * <p>
-     *
      * </p>
+     * 
      * @author Emily Gouge
      * @since 1.1.0
      */
-    private class UpdateHistoJob extends Job{
+    private class UpdateHistoJob extends Job {
         private RasterSymbolizer rs;
         private GridCoverage2D gc;
-        
-        public UpdateHistoJob(){
+
+        public UpdateHistoJob() {
             super("Update Histogram Job"); //$NON-NLS-1$
         }
-        public void updateInfo(RasterSymbolizer rs, GridCoverage2D gd){
+        public void updateInfo( RasterSymbolizer rs, GridCoverage2D gd ) {
             this.gc = gd;
             this.rs = rs;
         }
-        
+
         @Override
         protected IStatus run( IProgressMonitor monitor ) {
             Display.getDefault().asyncExec(new Runnable(){
                 public void run() {
                     rgbViewer.updateHistograms(null);
-                } 
+                }
             });
-            
+
             RasterSymbolizerHelper rsp = new RasterSymbolizerHelper(gc, null);
             rsp.visit(rs);
             GridCoverage2D recoloredGridCoverage = (GridCoverage2D) rsp.getOutput();
@@ -316,18 +317,18 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
             final OperationJAI op = new OperationJAI("Histogram"); //$NON-NLS-1$
             ParameterValueGroup params = op.getParameters();
             params.parameter("Source").setValue(recoloredGridCoverage); //$NON-NLS-1$
-         
+
             recoloredGridCoverage = (GridCoverage2D) op.doOperation(params, null);
             final Histogram h = (Histogram) recoloredGridCoverage.getProperty("histogram"); //$NON-NLS-1$
-            
+
             Display.getDefault().asyncExec(new Runnable(){
                 public void run() {
                     rgbViewer.updateHistograms(h.getBins());
-                } 
+                }
             });
-            
+
             return Status.OK_STATUS;
         }
-    
+
     };
 }

@@ -10,6 +10,11 @@
             class="net.refractions.udig.style.sld.SLDContent"
             name="%sld.name"
             id="net.refractions.udig.style.sld"/>
+      <style
+            class="net.refractions.udig.style.cache.CacheContent"
+            id="net.refractions.udig.style.cache"
+            name="%cache.name">
+      </style>
    </extension>
    <extension
          point="net.refractions.udig.style.styleConfigurator">
@@ -38,7 +43,28 @@
             id="simple-raster-wms"
             label="%simple.label"
             requires="org.geotools.data.ows.Layer"
-            styleId="net.refractions.udig.style.sld"/>           
+            styleId="net.refractions.udig.style.sld"/>
+      <styleConfigurator
+            class="net.refractions.udig.style.sld.SimpleRasterConfigurator"
+            id="simple-raster"
+            label="%simple.label"
+            requires="org.geotools.coverage.grid.io.AbstractGridCoverage2DReader"
+            styleId="net.refractions.udig.style.sld">
+      </styleConfigurator>
+      <styleConfigurator
+            class="net.refractions.udig.style.cache.CacheConfigurator"
+            id="cache"
+            label="%cache.label"
+            requires="org.geotools.data.FeatureSource"
+            styleId="net.refractions.udig.style.cache">
+      </styleConfigurator>
+      <styleConfigurator
+            class="net.refractions.udig.style.cache.CacheConfigurator"
+            id="cache"
+            label="%cache.label"
+            requires="org.opengis.coverage.grid.GridCoverage"
+            styleId="net.refractions.udig.style.cache">
+      </styleConfigurator>           
    </extension>
    <extension
          point="net.refractions.udig.style.sld.sldEditorPart">

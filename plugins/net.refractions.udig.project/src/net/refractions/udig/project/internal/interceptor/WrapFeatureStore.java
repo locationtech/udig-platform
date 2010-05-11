@@ -23,7 +23,8 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
- * Wraps a FeatureStore in a UDIGFeatureStore
+ * Wraps a FeatureStore in a UDIGFeatureStore (ensuring that the transaction is only set once!).
+ * 
  * @author Jesse
  * @since 1.1.0
  */

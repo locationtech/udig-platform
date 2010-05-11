@@ -39,6 +39,7 @@ import net.refractions.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
+import org.geotools.data.CachingFeatureSource;
 import org.geotools.data.DataStore;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureSource;
@@ -57,90 +58,55 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
- * If a filter or a query is in the layer style blackboard under the key: the
- * {@link #KEY} then this interceptor will return the "view" see
- * {@link DataStore#getView(Query)}.
- * 
- * <p>
- * The style content class ensures that the view will be returned each time the
- * map is reloaded.
- * </p>
+ * If a cache flag is set in the layer style blackboard this interceptor will return a
+ * CacheFeatureSource wrapper.
  * 
  * @author Jesse
  * @since 1.1.0
  */
-public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<SimpleFeatureType, SimpleFeature>> {
+public class CacheInterceptor
+        implements
+            IResourceInterceptor<FeatureSource<SimpleFeatureType, SimpleFeature>> {
 
     /**
-     * The key that is checked to see if a filter is on the Map Blackboard or
-     * the Layer Properties.
+     * The key that is checked to see if a filter is on the Map Blackboard or the Layer Properties.
      */
-    public static final String KEY = ProjectBlackboardConstants.LAYER__DATA_QUERY;
+    public static final String KEY = "net.refractions.udig.style.cache";
 
-    public FeatureSource<SimpleFeatureType, SimpleFeature> run(ILayer layer, FeatureSource<SimpleFeatureType, SimpleFeature> resource,
-            Class<? super FeatureSource<SimpleFeatureType, SimpleFeature>> requestedType) {
+    @SuppressWarnings("unchecked")
+    public FeatureSource<SimpleFeatureType, SimpleFeature> run( ILayer layer,
+            FeatureSource<SimpleFeatureType, SimpleFeature> resource,
+            Class< ? super FeatureSource<SimpleFeatureType, SimpleFeature>> requestedType ) {
+
         Object prop = layer.getStyleBlackboard().get(KEY);
-        if( prop==null ){
+        if (prop == null) {
             prop = layer.getBlackboard().get(KEY);
         }
-        if (prop instanceof Filter || prop instanceof Query) {
+        if (prop instanceof Boolean && Boolean.TRUE.equals(prop)) {
             try {
-                IService service = layer.findGeoResource(FeatureSource.class)
-                        .service(ProgressManager.instance().get());
-                if (service != null) {
-                    DataStore ds = service.resolve(DataStore.class,
-                            ProgressManager.instance().get());
-                    if (ds == null){
-                        return resource;
-                    }
-                    String typeName = resource.getSchema().getTypeName();
-                    Query query;
-
-                    if (prop instanceof Filter) {
-                        query = new DefaultQuery(typeName, (Filter) prop);
-                    } else {
-                        query = (Query) prop;
-                    }
-                    if( !layer.getStyleBlackboard().contains(KEY) ){
-                        layer.getStyleBlackboard().put(KEY, query);
-                    }
-
-                    if (!typeName.equals(query.getTypeName())) {
-                        query = createQuery(query.getFilter(), query
-                                .getCoordinateSystem(), query
-                                .getCoordinateSystemReproject(), query
-                                .getHandle(), query.getMaxFeatures(), query
-                                .getNamespace(), query.getPropertyNames(),
-                                typeName);
-                    }
-
-                    FeatureSource<SimpleFeatureType, SimpleFeature> view = ds.getView(query);
-
-                    if (view != null) {
-                        if (requestedType.isAssignableFrom(FeatureSource.class)) {
-                            return view;
-                        } else {
-                            return null;
-                        }
-                    }
-                }
+                CachingFeatureSource cachingFeatureSource = (CachingFeatureSource) layer.getBlackboard().get("cache");
+                if( cachingFeatureSource != null ){
+                    return cachingFeatureSource;
+                }                
+                cachingFeatureSource = new CachingFeatureSource(resource);
+                layer.getBlackboard().put("cache", cachingFeatureSource);
+                return cachingFeatureSource;
             } catch (IOException e) {
-                ProjectPlugin.log("Error getting view", e); //$NON-NLS-1$
-            } catch (SchemaException e) {
-                ProjectPlugin.log("Error getting view", e); //$NON-NLS-1$
+                if ( ProjectPlugin.getPlugin().isDebugging()){
+                    ProjectPlugin.getPlugin().log("Unable to cache "+resource+":"+e.getLocalizedMessage());
+                    e.printStackTrace();
+                }
             }
         }
-        return resource;
+        return resource; // no wrapper needed
     }
 
-    private static DefaultQuery createQuery(Filter filter,
-            CoordinateReferenceSystem crs, CoordinateReferenceSystem reproject,
-            String handle, Integer maxFeature, URI namespace,
-            String[] propertyNames, String typeName) {
+    private static DefaultQuery createQuery( Filter filter, CoordinateReferenceSystem crs,
+            CoordinateReferenceSystem reproject, String handle, Integer maxFeature, URI namespace,
+            String[] propertyNames, String typeName ) {
         DefaultQuery query = new DefaultQuery();
         if (namespace != null) {
-            query = new DefaultQuery(typeName, namespace, filter, maxFeature,
-                    propertyNames, handle);
+            query = new DefaultQuery(typeName, namespace, filter, maxFeature, propertyNames, handle);
         }
         if (crs != null) {
             query.setCoordinateSystem(crs);
@@ -186,18 +152,18 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
         }
 
         @Override
-        public Object createDefaultStyle(IGeoResource resource, Color colour,
-                IProgressMonitor monitor) throws IOException {
+        public Object createDefaultStyle( IGeoResource resource, Color colour,
+                IProgressMonitor monitor ) throws IOException {
             return null;
         }
 
         @Override
-        public Class<? extends Object> getStyleClass() {
+        public Class< ? extends Object> getStyleClass() {
             return Query.class;
         }
 
         @Override
-        public Object load(IMemento memento) {
+        public Object load( IMemento memento ) {
             Filter filter;
             String textData = memento.getTextData();
             if (textData == null || textData.trim().length() == 0) {
@@ -206,8 +172,7 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                 filter = readFilter(decode(textData));
             }
             CoordinateReferenceSystem crs = readCRS(memento.getString(CRS));
-            CoordinateReferenceSystem reproject = readCRS(memento
-                    .getString(REPOJECT));
+            CoordinateReferenceSystem reproject = readCRS(memento.getString(REPOJECT));
             String handle = decode(memento.getString(HANDLE));
             Integer maxFeature = memento.getInteger(MAX_FEATURES);
             URI namespace;
@@ -230,12 +195,12 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
             }
             String typeName = decode(memento.getString(TYPENAME));
 
-            DefaultQuery query = createQuery(filter, crs, reproject, handle,
-                    maxFeature, namespace, propertyNames, typeName);
+            DefaultQuery query = createQuery(filter, crs, reproject, handle, maxFeature, namespace,
+                    propertyNames, typeName);
             return query;
         }
 
-        private CoordinateReferenceSystem readCRS(String string) {
+        private CoordinateReferenceSystem readCRS( String string ) {
             try {
                 return org.geotools.referencing.CRS.parseWKT(decode(string));
             } catch (Exception e) {
@@ -243,18 +208,15 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
             }
         }
 
-        private Filter readFilter(String textData) {
+        private Filter readFilter( String textData ) {
             if ("all".equals(textData)) {
                 return Filter.EXCLUDE;
             }
             InputSource input = new InputSource(new StringReader(textData));
             SimpleFilterHandler simpleFilterHandler = new SimpleFilterHandler();
-            FilterFilter filterFilter = new FilterFilter(simpleFilterHandler,
-                    null);
-            GMLFilterGeometry filterGeometry = new GMLFilterGeometry(
-                    filterFilter);
-            GMLFilterDocument filterDocument = new GMLFilterDocument(
-                    filterGeometry);
+            FilterFilter filterFilter = new FilterFilter(simpleFilterHandler, null);
+            GMLFilterGeometry filterGeometry = new GMLFilterGeometry(filterFilter);
+            GMLFilterDocument filterDocument = new GMLFilterDocument(filterGeometry);
 
             try {
                 // parse xml
@@ -269,13 +231,12 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
         }
 
         @Override
-        public Object load(URL url, IProgressMonitor monitor)
-                throws IOException {
+        public Object load( URL url, IProgressMonitor monitor ) throws IOException {
             return null;
         }
 
         @Override
-        public void save(IMemento memento, Object value) {
+        public void save( IMemento memento, Object value ) {
             Query viewRestriction;
             if (value instanceof Filter) {
                 Filter filter = (Filter) value;
@@ -302,7 +263,7 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
 
             StringBuilder propertyNamesString = new StringBuilder();
             if (propertyNames != null) {
-                for (String string : propertyNames) {
+                for( String string : propertyNames ) {
                     propertyNamesString.append(string);
                     propertyNamesString.append(',');
                 }
@@ -315,8 +276,7 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                     if (filter == Filter.EXCLUDE) {
                         memento.putTextData("all");
                     } else {
-                        memento.putTextData(encode(transformer
-                                .transform(filter)));
+                        memento.putTextData(encode(transformer.transform(filter)));
                     }
                 } catch (TransformerException e) {
                     throw new RuntimeException(
@@ -342,13 +302,12 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                 memento.putString(TYPENAME, encode(typeName));
             }
             if (propertyNames != null) {
-                memento.putString(PROPERTY_NAMES, encode(propertyNamesString
-                        .toString()));
+                memento.putString(PROPERTY_NAMES, encode(propertyNamesString.toString()));
             }
 
         }
 
-        private String encode(String toEncode) {
+        private String encode( String toEncode ) {
             if (toEncode == null) {
                 return null;
             }
@@ -359,7 +318,7 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
             }
         }
 
-        private String decode(String toDecode) {
+        private String decode( String toDecode ) {
             if (toDecode == null) {
                 return null;
             }

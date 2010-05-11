@@ -26,6 +26,8 @@ import org.opengis.coverage.grid.GridCoverage;
 
 /**
  * Caches all resources and returns the cached instance.
+ * <p>
+ * This is used to ensure layers do not request a new feature source on every use.
  * 
  * @author Jesse
  * @since 1.1.0

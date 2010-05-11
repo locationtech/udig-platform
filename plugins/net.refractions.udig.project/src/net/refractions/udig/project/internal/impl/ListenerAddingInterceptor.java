@@ -22,7 +22,10 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
- * This is a temporary hack and will be removed soon
+ * Each Layer is able to listen for feature events; this interceptor hooks them up.
+ * <p>
+ * This is not really an scalable solution; and should be replaced with an extension point
+ * that allows layers to listen to content changing in a generic way.
  * 
  * @author Jesse
  * @since 1.1.0
@@ -34,8 +37,9 @@ public class ListenerAddingInterceptor implements
 			ILayer layer,
 			FeatureSource<SimpleFeatureType, SimpleFeature> resource,
 			Class<? super FeatureSource<SimpleFeatureType, SimpleFeature>> requestedType) {
-		if (layer instanceof LayerImpl)
+		if (layer instanceof LayerImpl){
 			resource.addFeatureListener(((LayerImpl) layer).featureListener);
+		}
 		return resource;
 	}
 

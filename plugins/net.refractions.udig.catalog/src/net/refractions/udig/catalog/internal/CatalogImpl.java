@@ -77,6 +77,7 @@ import org.eclipse.core.runtime.preferences.IExportedPreferences;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.swt.widgets.Display;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
@@ -679,6 +680,13 @@ public class CatalogImpl extends ICatalog {
      */
     public synchronized List<IResolve> search( String pattern, Envelope bbox,
             IProgressMonitor monitor2 ) {
+        
+        if( CatalogPlugin.getDefault().isDebugging() ){
+            if( Display.getCurrent() != null ){
+                throw new IllegalStateException("search called from display thread");
+            }
+        }
+        
         IProgressMonitor monitor = monitor2;
         if (monitor == null)
             monitor = new NullProgressMonitor();
@@ -722,6 +730,7 @@ public class CatalogImpl extends ICatalog {
                 } finally {
                     submonitor.done();
                 }
+                Thread.yield(); // allow other threads to have a go... makes search view more responsive
             }
             return result;
         } finally {

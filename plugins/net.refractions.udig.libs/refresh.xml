@@ -81,7 +81,8 @@
 			<dependency groupId="org.geotools" artifactId="gt-process" version="${geotools.version}" />
 			<dependency groupId="org.geotools" artifactId="gt-charts" version="${geotools.version}" />
 			<dependency groupId="org.geotools" artifactId="gt-svg" version="${geotools.version}" />
-			
+			<dependency groupId="org.geotools" artifactId="gt-swing" version="${geotools.version}" />
+						
 			<!-- additional untested plugins so we can connect using generic geotools datastore -->
 			<dependency groupId="org.geotools" artifactId="gt-postgis-versioned" version="${geotools.version}" />
 			<dependency groupId="org.geotools" artifactId="gt-property" version="${geotools.version}" />
@@ -117,6 +118,8 @@
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-utilities" version="1.0.2" />
 			-->
 
+			<dependency groupId="joda-time" artifactId="joda-time" version="1.6" />
+				
 			<!-- stuff for netcdf -->
 			<dependency groupId="org.geotools" artifactId="gt-temporal" version="${geotools.version}" />
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf-core" version="1.1-SNAPSHOT" />
@@ -187,7 +190,7 @@
 			<dependency groupId="org.eclipse.emf" artifactId="common" version="2.2.1" scope="provided" />
 			<dependency groupId="junit" artifactId="junit" version="3.8.1" scope="provided" />
 			<dependency groupId="velocity" artifactId="velocity" version="1.4" scope="provided" />
-			<dependency groupId="joda-time" artifactId="joda-time" version="1.6" />
+			<dependency groupId="com.miglayout" artifactId="miglayout" version="3.7" classifier="swing" scope="provided"/>
 			
 		</artifact:dependencies>
 	</target>

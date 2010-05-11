@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.refractions.udig.catalog.CatalogPlugin;
+import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.AdaptableFeature;
 import net.refractions.udig.project.ILayer;
@@ -40,6 +42,8 @@ import net.refractions.udig.ui.SearchPart;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ISelection;
@@ -53,12 +57,16 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IMemento;
+import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.geotools.data.FeatureEvent;
@@ -93,8 +101,9 @@ public class InfoView2 extends SearchPart {
 	private ILayerListener layerListener;
 	private List<ILayer>  layerList;
 	private Thread	fatherThread= null;
+    protected ImageRegistry registry;
     
-    private static final class InfoViewLabelProvider extends LabelProvider implements IColorProvider {
+    private class InfoViewLabelProvider extends LabelProvider implements IColorProvider {
         public String getText(Object element) {
             if (element instanceof SimpleFeature) {
                 return ((SimpleFeature) element).getID();
@@ -134,6 +143,42 @@ public class InfoView2 extends SearchPart {
             }
             return null;
         }
+        
+        @Override
+        public Image getImage( Object element ) {
+            ILayer layer = null;
+            if( element instanceof AdaptableFeature){
+                AdaptableFeature feature = (AdaptableFeature) element;
+                layer = (ILayer) feature.getAdapter(ILayer.class);                
+            }
+            if( element instanceof LayerPointInfo){
+                LayerPointInfo info = (LayerPointInfo) element;
+                layer = info.getLayer();
+            }
+            String key = layer.getID().toExternalForm();                
+            Image image = registry.get( key );
+            if( image == null ){
+                ImageDescriptor icon;
+                icon = (ImageDescriptor) layer.getProperties().get("generated icon");
+                if( icon == null ){
+                    icon = layer.getGlyph();
+                }
+                if( icon == null ){
+                    IGeoResource resource = layer.getGeoResource();
+                    try {
+                        icon = resource.getInfo(null).getImageDescriptor();
+                    } catch (IOException e) {
+                        // not expecting this to block or throw IO as the layer was available
+                        // to be hit by the info tool
+                    }                    
+                }
+                if( icon != null ){
+                    registry.put( key, icon );
+                    image = registry.get(key);
+                }
+            }
+            return image;
+        }
     }
 
     public static class InfoRequest {
@@ -147,7 +192,7 @@ public class InfoView2 extends SearchPart {
     public InfoView2() {
         super( InfoPlugin.getDefault().getDialogSettings() );
     }
-    
+        
 	private void initiListeners() {
 
 		this.mapListener = new IMapCompositionListener() {
@@ -270,6 +315,7 @@ public class InfoView2 extends SearchPart {
     public void createPartControl( Composite aParent ) {
         super.createPartControl(aParent);
         ApplicationGIS.getToolManager().registerActionsWithPart(this);
+        registry = new ImageRegistry( aParent.getDisplay() );        
     }
     
     /**
@@ -303,7 +349,9 @@ public class InfoView2 extends SearchPart {
             if( layer.hasResource( FeatureSource.class ) ) {
                 try {
                     List<SimpleFeature> more = DataStoreDescribeLayer.info2( layer, request.bbox, monitor );
-                    if( !more.isEmpty() ) set.addAll( more );
+                    if( !more.isEmpty() ) {
+                        set.addAll( more );
+                    }
                 }
                 catch( Throwable t ) {
                     InfoPlugin.log( "Information request "+layer.getName()+" failed "+t, t ); //$NON-NLS-1$ //$NON-NLS-2$
@@ -311,7 +359,6 @@ public class InfoView2 extends SearchPart {
                 continue;
             }            
             if( layer.hasResource( Layer.class ) ) {
-                // TODO: freek out because WMS is so hard to use
                 try {
                     LayerPointInfo hit = WMSDescribeLayer.info2( layer, request.bbox );
                     if( hit != null ) set.add( hit );
@@ -522,5 +569,14 @@ public class InfoView2 extends SearchPart {
 
     private void addLayerListener( ILayer layer ) {
         layer.addListener(layerListener);
+    }
+    
+    @Override
+    public void dispose() {
+        if( registry != null ){
+            registry.dispose();
+            registry = null;
+        }
+        super.dispose();
     }
 }

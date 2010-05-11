@@ -103,6 +103,12 @@
             order="POST"
             target="org.geotools.data.FeatureSource"/>
       <interceptor
+            class="net.refractions.udig.project.interceptor.CacheInterceptor"
+            id="net.refractions.udig.project.cacheFeatureSourceInterceptor"
+            order="POST"
+            target="org.geotools.data.FeatureSource">
+      </interceptor>
+      <interceptor
             class="net.refractions.udig.project.internal.impl.GeoResourceInfoInterceptor"
             id="net.refractions.udig.project.interceptor.info"
             order="POST"
