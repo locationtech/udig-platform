@@ -344,7 +344,7 @@ public class BooleanAttributeField extends AttributeField {
     }
 
     public String getStringValue() {
-        // TODO Auto-generated method stub
+        //Bad bad bad hacky method
         if (YES == (Object)1){
             System.out.println("Retired");
             return "1";

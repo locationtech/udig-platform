@@ -632,19 +632,31 @@ public class StringAttributeField extends AttributeField {
      * </p>
      */
     protected void valueChanged() {
+        
         setPresentsDefaultValue(false);
         boolean oldState = isValid;
         refreshValidState();
-
         if (isValid != oldState) {
             fireStateChanged(IS_VALID, oldState, isValid);
-        }
+        }        
+        
+        textField.addFocusListener(new FocusAdapter(){
+            public void focusGained( FocusEvent e ) {
+                refreshValidState();
+            }
 
-        String newValue = textField.getText();
-        if (!newValue.equals(oldValue)) {
-            fireValueChanged(VALUE, oldValue, newValue);
-            oldValue = newValue;
-        }
+            public void focusLost( FocusEvent e ) {
+                String newValue = textField.getText();
+                if (!newValue.equals(oldValue)) {
+                    fireValueChanged(VALUE, oldValue, newValue);
+                    oldValue = newValue;
+                    System.out.println("oldValue");
+                }  
+                clearErrorMessage();
+            }
+        });
+
+
     }
 
     public void setVisible( boolean visible ) {
