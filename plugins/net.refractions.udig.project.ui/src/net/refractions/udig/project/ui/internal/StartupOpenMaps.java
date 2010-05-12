@@ -171,7 +171,7 @@ public class StartupOpenMaps implements IStartup {
                             (IProjectElement) object);
                     monitor.setTaskName(Messages.StartupOpenMaps_OpenTask + ": " //$NON-NLS-1$
                             + ((IProjectElement) object).getName());
-                    ApplicationGIS.getActiveProject().sendSync(command);
+                    ApplicationGIS.getActiveProject().sendASync(command);
                 }
             }
         }

@@ -1,6 +1,7 @@
 package net.refractions.udig.core.jts;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -17,27 +18,32 @@ import com.google.common.base.ReferenceType;
 import com.google.common.collect.ReferenceMap;
 
 public class ReferencedEnvelopeCache {
+    
 	private static Map<ReferenceIdentifier, ReferencedEnvelope> crsCache;
 	
 	private static synchronized Map<ReferenceIdentifier, ReferencedEnvelope> getCache() {
 		if(crsCache == null) {
-			crsCache = new ReferenceMap<ReferenceIdentifier, ReferencedEnvelope>(ReferenceType.STRONG, ReferenceType.WEAK);
-			
+			 ReferenceMap<ReferenceIdentifier, ReferencedEnvelope> content = new ReferenceMap<ReferenceIdentifier, ReferencedEnvelope>(ReferenceType.STRONG, ReferenceType.WEAK);			
+			 //crsCache = Collections.synchronizedMap(content);
+			 crsCache = content;
 		}
 		return crsCache;
 	}
 	
 	public static ReferencedEnvelope getReferencedEnvelope(CoordinateReferenceSystem crs) {
-		if(crs == null)
+		if(crs == null){
 			return new ReferencedEnvelope();
+		}
 		try {
 			Map<ReferenceIdentifier, ReferencedEnvelope> map = getCache();
-			ReferencedEnvelope envelope = map.get(crs.getName());
-			if(envelope == null) {
-				envelope = getCRSBounds(crs);
-				map.put(crs.getName(), envelope);
+			synchronized( map ){
+    			ReferencedEnvelope envelope = map.get(crs.getName());
+    			if(envelope == null) {
+    				envelope = getCRSBounds(crs);
+    				map.put(crs.getName(), envelope);
+    			}
+    	        return envelope;
 			}
-			return envelope;
 		} catch(Throwable e) {
 			return new ReferencedEnvelope();
 		}

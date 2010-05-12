@@ -549,8 +549,9 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     }
 
     public void clear() {
-        if( content==null )
+        if( content==null ){
             return;
+        }
         content.clear();
         
         for( IBlackboardListener l : listeners ) {
