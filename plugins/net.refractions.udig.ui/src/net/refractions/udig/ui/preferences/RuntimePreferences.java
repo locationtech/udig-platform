@@ -11,6 +11,8 @@ public class RuntimePreferences extends FieldEditorPreferencePage
         implements
             IWorkbenchPreferencePage {
 
+    private RuntimeFieldEditor fieldEditor;
+
     public RuntimePreferences() {
         super(GRID);
         setPreferenceStore(UiPlugin.getDefault().getPreferenceStore());
@@ -23,9 +25,25 @@ public class RuntimePreferences extends FieldEditorPreferencePage
      * itself.
      */
     public void createFieldEditors() {
-        addField(new RuntimeFieldEditor("RUNTIMEPREFERENCES", "Runtime preferences",
-                getFieldEditorParent()));
+        fieldEditor = new RuntimeFieldEditor("RUNTIMEPREFERENCES", "Runtime preferences",
+                getFieldEditorParent());
+        addField(fieldEditor);
 
+    }
+    
+    @Override
+    protected void performApply() {
+        super.performApply();
+        apply();
+    }
+    
+    public boolean performOk() {
+        apply();
+        return super.performOk();
+    }
+    
+    private void apply() {
+        fieldEditor.doStore();
     }
 
     /*

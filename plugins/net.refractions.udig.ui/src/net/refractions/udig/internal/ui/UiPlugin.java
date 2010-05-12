@@ -15,6 +15,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 import java.util.PropertyResourceBundle;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
@@ -32,6 +33,7 @@ import net.refractions.udig.ui.MenuBuilder;
 import net.refractions.udig.ui.UDIGMenuBuilder;
 import net.refractions.udig.ui.internal.Messages;
 import net.refractions.udig.ui.preferences.PreferenceConstants;
+import net.refractions.udig.ui.preferences.RuntimeFieldEditor;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
@@ -452,17 +454,21 @@ public class UiPlugin extends AbstractUIPlugin {
      *
      * @param proxyHost the proxy server. If null disables proxy.
      * @param proxyPort the server port. If null disables proxy.
+     * @param proxyNonHost the servers for which to bypass proxy.
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static void setProxy( final String proxyHost, final String proxyPort )
+    public static void setProxy( String proxyHost, String proxyPort, String proxyNonHost )
             throws FileNotFoundException, IOException {
         File iniFile = getIniFile();
         BufferedReader bR = new BufferedReader(new FileReader(iniFile));
         StringBuilder sB = new StringBuilder();
         String line = null;
         while( (line = bR.readLine()) != null ) {
-            if (line.matches(".*Dproxy.*")) {
+            if (line.matches(".*Dhttp.*proxy.*")) {
+                continue;
+            }
+            if (line.matches("")) {
                 continue;
             }
             sB.append(line).append("\n");
@@ -471,14 +477,48 @@ public class UiPlugin extends AbstractUIPlugin {
 
         if (proxyHost != null && proxyHost.length() > 0 && proxyPort != null
                 && proxyPort.length() > 0) {
-            sB.append("-DproxySet=true").append("\n");
-            sB.append("-DproxyHost=").append(proxyHost).append("\n");
-            sB.append("-DproxyPort=").append(proxyPort).append("\n");
+            sB.append("-D" + RuntimeFieldEditor.PROXYHOST + "=").append(proxyHost).append("\n");
+            sB.append("-D" + RuntimeFieldEditor.PROXYPORT + "=").append(proxyPort).append("\n");
+            if (proxyNonHost != null && proxyNonHost.length() > 0) {
+                sB.append("-D" + RuntimeFieldEditor.PROXYNONHOSTS + "=").append(proxyNonHost)
+                        .append("\n");
+            }
         }
         BufferedWriter bW = new BufferedWriter(new FileWriter(iniFile));
         bW.write(sB.toString());
         bW.close();
 
+    }
+
+    /**
+     * Gets the proxy settings.
+     *
+     * @return a {@link Properties} containing the proxy settings.
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static Properties getProxySettings() throws FileNotFoundException, IOException {
+        Properties properties = new Properties();
+        File iniFile = getIniFile();
+        BufferedReader bR = new BufferedReader(new FileReader(iniFile));
+        String line = null;
+        while( (line = bR.readLine()) != null ) {
+            if (line.matches(".*D" + RuntimeFieldEditor.PROXYHOST + ".*")) {
+                String set = line.split("=")[1].trim();
+                properties.put(RuntimeFieldEditor.PROXYHOST, set);
+            }
+            if (line.matches(".*D" + RuntimeFieldEditor.PROXYPORT + ".*")) {
+                String set = line.split("=")[1].trim();
+                properties.put(RuntimeFieldEditor.PROXYPORT, set);
+            }
+            if (line.matches(".*D" + RuntimeFieldEditor.PROXYNONHOSTS + ".*")) {
+                String set = line.split("=")[1].trim();
+                properties.put(RuntimeFieldEditor.PROXYNONHOSTS, set);
+            }
+        }
+        bR.close();
+
+        return properties;
     }
 
     private static void processAppIni( boolean readOnly, Function<String, String> func )
