@@ -511,6 +511,8 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
     private boolean formatSupportsTransparency( String format ) {
         if (format.equalsIgnoreCase("image/png")) //$NON-NLS-1$
             return true;
+        if (format.equalsIgnoreCase("image/png8")) //$NON-NLS-1$
+            return true;
         if (format.equalsIgnoreCase("image/gif")) //$NON-NLS-1$
             return true;
         if (format.equalsIgnoreCase("image/tiff")) //$NON-NLS-1$
