@@ -465,7 +465,7 @@ public class UiPlugin extends AbstractUIPlugin {
         StringBuilder sB = new StringBuilder();
         String line = null;
         while( (line = bR.readLine()) != null ) {
-            if (line.matches(".*Dhttp.*proxy.*")) {
+            if (line.matches(".*Dhttp.proxy.*") || line.matches(".*Dhttp.nonProxy.*")) {
                 continue;
             }
             if (line.matches("")) {

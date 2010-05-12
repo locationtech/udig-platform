@@ -295,6 +295,7 @@ public final class RuntimeFieldEditor extends FieldEditor {
             preferenceStore.setValue(PROXYNONHOSTS, proxyNonHostText.getText());
             preferenceStore.setValue(PROXYHOST, proxyHostText.getText());
             preferenceStore.setValue(PROXYPORT, proxyPortText.getText());
+            preferenceStore.setValue(PROXYSET, String.valueOf(proxyButton.getSelection()));
             System.setProperty(PROXYHOST, proxyHostText.getText());
             System.setProperty(PROXYPORT, proxyPortText.getText());
             System.setProperty(PROXYNONHOSTS, proxyNonHostText.getText());
