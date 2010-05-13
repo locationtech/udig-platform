@@ -738,7 +738,8 @@ public class LayersView extends ViewPart
             public void run() {
                 if( selection.isEmpty() ) return;
                 IMap map = getCurrentMap();
-                map.sendCommandSync( new LayerMoveDownCommand( selection ));
+                // map.sendCommandSync( new LayerMoveDownCommand( selection ));
+                map.sendCommandASync( new LayerMoveDownCommand( selection ));
             }
         };
         downAction.setEnabled(false);
@@ -758,7 +759,8 @@ public class LayersView extends ViewPart
             public void run() {
                 if( selection.isEmpty() ) return;
                 IMap map = getCurrentMap();
-                map.sendCommandSync( new LayerMoveUpCommand( selection ));
+                //map.sendCommandSync( new LayerMoveUpCommand( selection ));
+                map.sendCommandASync( new LayerMoveUpCommand( selection ));
             }
         };
         upAction.setEnabled(false);

@@ -21,6 +21,10 @@ import net.refractions.udig.project.internal.Layer;
  */
 public class LayerMoveUpCommand extends AbstractCommand implements UndoableMapCommand {
     private List<ILayer> selection;
+    public LayerMoveUpCommand( ILayer layer ) {
+        selection = new ArrayList<ILayer>();
+        selection.add(layer);
+    }
     public LayerMoveUpCommand( IStructuredSelection structuredSelection ) {
         selection = new ArrayList<ILayer>();
         if (structuredSelection.isEmpty()) {
