@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
@@ -20,7 +22,7 @@ public class AddsetAttributeField extends ListAttributeField {
      * The special label text for directory chooser, 
      * or <code>null</code> if none.
      */
-    private String dirChooserLabelText;
+    private String prompt;
 
     /**
      * Creates a new add set attribute field 
@@ -33,16 +35,19 @@ public class AddsetAttributeField extends ListAttributeField {
      * 
      * @param name the name of the preference this field editor works on
      * @param labelText the label text of the field editor
-     * @param dirChooserLabelText the label text displayed for the directory chooser
+     * @param prompt the label text displayed for the directory chooser
      * @param parent the parent of the field editor's control
      */
     public AddsetAttributeField(String name, String labelText,
-            String dirChooserLabelText, Composite parent) {
+            String prompt, Composite parent) {
+    //    System.out.println("Inside Addset Attribute");
         init(name, labelText);
-        this.dirChooserLabelText = dirChooserLabelText;
+        this.prompt = prompt;
         createControl(parent);
     }
 
+    final static String SEPARATOR = "\n";
+    
     /* (non-Javadoc)
      * Method declared on ListAttributeField.
      * Creates a single string from the given array by separating each
@@ -53,7 +58,7 @@ public class AddsetAttributeField extends ListAttributeField {
 
         for (int i = 0; i < items.length; i++) {
             path.append(items[i]);
-            path.append(File.pathSeparator);
+            path.append(SEPARATOR);
         }
         return path.toString();
     }
@@ -63,37 +68,33 @@ public class AddsetAttributeField extends ListAttributeField {
      * Creates a new path element by means of a directory dialog.
      */
     protected String getNewInputObject() {
-
-        DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.SHEET);
-        if (dirChooserLabelText != null) {
-            dialog.setMessage(dirChooserLabelText);
+        if( prompt == null ){
+            prompt = "Please enter:";
         }
-        if (lastPath != null) {
-            if (new File(lastPath).exists()) {
-                dialog.setFilterPath(lastPath);
-            }
-        }
-        String dir = dialog.open();
-        if (dir != null) {
-            dir = dir.trim();
-            if (dir.length() == 0) {
+        InputDialog dialog = new InputDialog( getShell(), "New "+getLabelText(), prompt, "", new IInputValidator(){
+            public String isValid( String newText ) {
+                if( newText == null || newText.isEmpty() ){
+                    return "Action is required";
+                }
                 return null;
             }
-            lastPath = dir;
+        });
+        
+        int sucess = dialog.open();
+        if( sucess == InputDialog.CANCEL ){
+            return null; // we may have to produce a default value here
         }
-        return dir;
+        return dialog.getValue();
     }
 
     /* (non-Javadoc)
      * Method declared on ListAttributeField.
      */
     protected String[] parseString(String stringList) {
-        StringTokenizer st = new StringTokenizer(stringList, File.pathSeparator
-                + "\n\r");//$NON-NLS-1$
-        ArrayList<Object> v = new ArrayList<Object>();
-        while (st.hasMoreElements()) {
-            v.add(st.nextElement());
+        if( stringList == null || stringList.length() == 0 ){
+            return new String[0];
         }
-        return v.toArray(new String[v.size()]);
+        String split[] = stringList.split(SEPARATOR);
+        return split;
     }
 }
