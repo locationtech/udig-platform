@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.imageio.spi.ImageReaderSpi;
 
+import org.eclipse.core.internal.runtime.InternalPlatform;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -16,6 +17,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.osgi.service.datalocation.Location;
+import org.eclipse.osgi.service.debug.DebugOptions;
 import org.geotools.factory.GeoTools;
 import org.geotools.factory.Hints;
 import org.geotools.factory.Hints.Key;
@@ -35,6 +37,7 @@ import org.opengis.referencing.operation.MathTransform;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The Activator for net.refractions.udig.libs provides global settings
@@ -90,6 +93,25 @@ public class Activator implements BundleActivator {
 		// initializeReferencingModule( context.getBundle(), null ); 		
 	}
 	
+    public static boolean isDebugging() {
+        Bundle bundle = Platform.getBundle(ID);        
+        String key = bundle.getSymbolicName() + "/debug"; //$NON-NLS-1$
+        // first check if platform debugging is enabled
+        BundleContext context = bundle.getBundleContext();
+        if (context == null){
+            return false;
+        }
+        ServiceTracker debugTracker = new ServiceTracker(context, DebugOptions.class.getName(), null);
+        debugTracker.open();
+        
+        DebugOptions debugOptions = (DebugOptions) debugTracker.getService();
+        if (debugOptions == null){
+            return false;
+        }
+        // if platform debugging is enabled, check to see if this plugin is enabled for debugging
+        return debugOptions.isDebugEnabled() ? InternalPlatform.getDefault().getBooleanOption(key, false) : false;
+    }
+    
     public static void initializeReferencingModule( IProgressMonitor monitor ) {
         Bundle bundle = Platform.getBundle(ID);
         if (monitor == null)
@@ -175,7 +197,7 @@ public class Activator implements BundleActivator {
 	        	    monitor.worked(1);
 			    }
 			    catch (Throwable t ){
-			    	if( Platform.inDebugMode()){
+			    	if( isDebugging() ){
 			    		System.out.println( "Could not find data directory epsg.properties"); //$NON-NLS-1$
 			    		t.printStackTrace();
 			    	}			        
@@ -195,7 +217,7 @@ public class Activator implements BundleActivator {
 	                monitor.worked(1);
 	            }
 	            catch (Throwable t ){
-	            	if( Platform.inDebugMode()){
+	            	if( isDebugging() ){
 			    		System.out.println( "Could not find configuration epsg.properties"); //$NON-NLS-1$
 			    		t.printStackTrace();
 			    	}
@@ -242,8 +264,8 @@ public class Activator implements BundleActivator {
             monitor.worked(1);
             
 			// Show EPSG authority chain if in debug mode
-			//
-			if( Platform.inDebugMode() ){
+			// 
+			if( isDebugging() ){
 	            CRS.main(new String[]{"-dependencies"}); //$NON-NLS-1$
 	        }
 			// Verify EPSG authority configured correctly

@@ -73,7 +73,7 @@ public class AddsetAttributeField extends ListAttributeField {
         }
         InputDialog dialog = new InputDialog( getShell(), "New "+getLabelText(), prompt, "", new IInputValidator(){
             public String isValid( String newText ) {
-                if( newText == null || newText.isEmpty() ){
+                if( newText == null || newText.length() == 0 ){
                     return "Action is required";
                 }
                 return null;

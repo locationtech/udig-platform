@@ -20,6 +20,11 @@ import net.refractions.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
+/**
+ * A CatalogImport that selects individual resources to form the layers
+ * of a new map (or add to an existing map).
+ * @since 1.1
+ */
 public class MapImport extends CatalogImport {
 
     private int layerPosition = -1;
