@@ -124,10 +124,10 @@ public abstract class ListAttributeField extends AttributeField {
      * @param box the box for the buttons
      */
     private void createButtons(Composite box) {
-        addButton = createPushButton(box, "ListAttributeField.add");//$NON-NLS-1$
-        removeButton = createPushButton(box, "ListAttributeField.remove");//$NON-NLS-1$
-        upButton = createPushButton(box, "ListAttributeField.up");//$NON-NLS-1$
-        downButton = createPushButton(box, "ListAttributeField.down");//$NON-NLS-1$
+        addButton = createPushButton(box, "add an Action");//$NON-NLS-1$
+        removeButton = createPushButton(box, "remove an Action");//$NON-NLS-1$
+        upButton = createPushButton(box, "move Action up");//$NON-NLS-1$
+        downButton = createPushButton(box, "move Action down");//$NON-NLS-1$
     }
 
     /**
