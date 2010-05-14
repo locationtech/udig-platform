@@ -14,6 +14,7 @@
  */
 package net.refractions.udig.feature.editor.field;
 
+import net.refractions.udig.internal.ui.SendLogDialog;
 import net.refractions.udig.project.ui.feature.EditFeature;
 
 import org.eclipse.core.runtime.Assert;
@@ -69,7 +70,7 @@ public class StringAttributeField extends AttributeField {
     /**
      * Cached valid state.
      */
-    private boolean isValid;
+    protected boolean isValid;
 
     /**
      * Old text value.
@@ -81,7 +82,7 @@ public class StringAttributeField extends AttributeField {
     /**
      * The text field, or <code>null</code> if none.
      */
-    Text textField;
+    protected Text textField;
 
     /**
      * Width of text field in characters; initially unlimited.
@@ -91,7 +92,7 @@ public class StringAttributeField extends AttributeField {
     /**
      * Text limit of text field in characters; initially unlimited.
      */
-    private int textLimit = UNLIMITED;
+    protected int textLimit = UNLIMITED;
 
     /**
      * Text field is single line or multi, we need to know if it's single line <code>false</code> by
@@ -114,6 +115,8 @@ public class StringAttributeField extends AttributeField {
      */
     private int validateStrategy = VALIDATE_ON_KEY_STROKE;
 
+    private boolean required;
+
     /**
      * Creates a new string field editor
      */
@@ -134,10 +137,9 @@ public class StringAttributeField extends AttributeField {
      * @since 2.0
      */
     public StringAttributeField( String name, String labelText, int width, int strategy,
-            Composite parent, int control_style ) {
+            Composite parent, int control_style) {
         if (control_style == 1) {
             multi = true;
-            System.out.println("Multi is set to true!");
         }
         init(name, labelText);
         widthInChars = width;
@@ -258,6 +260,11 @@ public class StringAttributeField extends AttributeField {
         Object value = Converters.convert(text, descriptor.getType().getBinding());
         try {
             Types.validate(descriptor, value);
+            if( isRequired() && value == null ){
+                errorMessage = getAttributeName() + " is required";
+                showErrorMessage(errorMessage);
+                return false;
+            }
             return true;
         } catch (IllegalAttributeException bad) {
             errorMessage = bad.getLocalizedMessage();
@@ -265,6 +272,13 @@ public class StringAttributeField extends AttributeField {
         }
     }
 
+    boolean isRequired(){
+        return required;
+    }
+    
+    public void setRequired( boolean required ) {
+        this.required = required;
+    }
     /**
      * Fills this field editor's basic controls into the given parent.
      * <p>
@@ -296,7 +310,7 @@ public class StringAttributeField extends AttributeField {
             gd.grabExcessHorizontalSpace = true;
         }
         if (multi) {
-            System.out.println("Multi is true");
+          //  System.out.println("Multi is true");
             // gd.grabExcessVerticalSpace = true;
             GC gc = new GC(textField);
             try {
@@ -456,6 +470,7 @@ public class StringAttributeField extends AttributeField {
                 textField = new Text(parent, SWT.SINGLE | SWT.BORDER); // this is a single-line text
                 // field
             }
+            
             textField.setFont(parent.getFont());
             switch( validateStrategy ) {
             case VALIDATE_ON_KEY_STROKE:

@@ -3,7 +3,15 @@
  */
 package net.refractions.udig.feature.editor.field;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.util.Converters;
@@ -151,5 +159,54 @@ public class IntegerAttributeField extends StringAttributeField {
     public int getIntValue() throws NumberFormatException {
         return new Integer(getStringValue()).intValue();
     }
+  
+    @Override
+    public Text getTextControl( Composite parent ) {
+        if (textField == null) {
+            
+            textField = new Text(parent, SWT.MULTI | SWT.BORDER); // this is a multi-line text
+                        
+            textField.setFont(parent.getFont());
 
+            textField.addKeyListener(new KeyAdapter(){
+                /*
+                 * (non-Javadoc)
+                 * @see
+                 * org.eclipse.swt.events.KeyAdapter#keyReleased(org.eclipse.swt.events.KeyEvent
+                 * )
+                 */
+                public void keyReleased( KeyEvent e ) {
+                    //backspace pressed
+                    if(e.keyCode == SWT.BS){
+                    valueChanged();                       
+                    }
+                    
+                    //numeric pressed
+                    if (e.keyCode >=48 && e.keyCode <=57){
+                    valueChanged();
+                    }
+                }
+            });
+            textField.addFocusListener(new FocusAdapter(){
+                // Ensure that the value is checked on focus loss in case we
+                // missed a keyRelease or user hasn't released key.
+                // See https://bugs.eclipse.org/bugs/show_bug.cgi?id=214716
+                public void focusLost( FocusEvent e ) {
+                    valueChanged();
+                }
+            });
+            
+            textField.addDisposeListener(new DisposeListener(){
+                public void widgetDisposed( DisposeEvent event ) {
+                    textField = null;
+                }
+            });
+            if (textLimit > 0) {// Only set limits above 0 - see SWT spec
+                textField.setTextLimit(textLimit);
+            }
+        } else {
+            checkParent(textField, parent);
+        }
+        return textField;
+    }
 }

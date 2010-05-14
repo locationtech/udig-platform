@@ -82,7 +82,7 @@ public abstract class AttributeField {
     /**
      * The label's text.
      */
-    private String labelText;
+    protected String labelText;
 
     /**
      * The label control.
