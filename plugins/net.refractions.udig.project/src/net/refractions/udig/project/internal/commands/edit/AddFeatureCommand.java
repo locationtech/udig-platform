@@ -16,6 +16,7 @@ package net.refractions.udig.project.internal.commands.edit;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
@@ -32,6 +33,7 @@ import org.geotools.feature.FeatureIterator;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
+import org.opengis.filter.identity.FeatureId;
 
 /**
  * Adds the new feature to the
@@ -84,7 +86,11 @@ public class AddFeatureCommand extends AbstractCommand implements UndoableMapCom
             protected void closeIterator( Iterator close ) {
             }
         };
-        fid = resource.addFeatures(c).iterator().next().getID();
+        List<FeatureId> added = resource.addFeatures(c);
+        for( FeatureId featureId : added){
+            fid = featureId.getID();
+            break;
+        }
     }
 
     public SimpleFeature getNewFeature() throws IOException {

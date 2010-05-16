@@ -14,7 +14,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/google-collect-snapshot-20080321.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-api-2.6.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-2.6.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-2.6.4.jar" sourcepath="/Users/jody/java/geotools/release/modules/library/jdbc/src"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-common-2.6.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-brewer-2.6.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-charts-2.6.4.jar"/>

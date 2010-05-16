@@ -29,6 +29,9 @@ public class FIDFeatureProvider implements IBlockingProvider<SimpleFeature> {
 
     public FIDFeatureProvider( String fid2, IBlockingProvider<ILayer> layer2 ) {
         this.layerProvider = layer2;
+        if( fid2 == null ){
+            throw new NullPointerException("Fid must not be null");
+        }
         this.fid = fid2;
     }
 
