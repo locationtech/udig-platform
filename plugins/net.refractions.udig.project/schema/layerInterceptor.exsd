@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project">
+<schema targetNamespace="net.refractions.udig.project" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
          <meta.schema plugin="net.refractions.udig.project" id="layerInterceptor" name="layerInterceptor"/>
@@ -11,6 +11,11 @@
    </annotation>
 
    <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
       <complexType>
          <sequence>
             <element ref="layerCreated" minOccurs="0" maxOccurs="unbounded"/>
@@ -178,7 +183,35 @@
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         [Enter extension point usage example here.]
+         An example use is:
+&lt;pre&gt;
+&lt;layerCreated
+  class=&quot;net.refractions.udig.project.internal.impl.SetStyleInterceptor&quot;
+  id=&quot;net.refractions.udig.project.setStyleInterceptor&quot;
+  name=&quot;Set Layer Style&quot;/&gt;
+&lt;/pre&gt;
+
+This entry is used to advertise the SetStyleInterceptor to uDig so that it can be used to configure a layer as it is created.
+
+A layer interceptor is free to change more then just the layer under observation; as an example a layer interceptor is used to expand or set the bounds of a map when it is added.
+
+&lt;pre&gt;
+public class InitMapBoundsInterceptor implements LayerInterceptor {
+    public void run( Layer layer ) {
+        if(layer.getMap()==null ){
+            return; // this check is here because we could be doing a copy            
+        }
+        Map map = layer.getMapInternal();
+        ReferencedEnvelope bounds = map.getViewportModelInternal().getBounds();
+        
+        //  If first layer or if the crs has been unchanged from the original BBox
+		if( map.getMapLayers().size()==1 || bounds==ViewportModel.NIL_BBOX){
+            bounds = map.getBounds(ProgressManager.instance().get());
+            map.getViewportModelInternal().setBounds(bounds);
+        }
+    }
+}
+&lt;/pre&gt;
       </documentation>
    </annotation>
 
@@ -187,7 +220,7 @@
          <meta.section type="apiInfo"/>
       </appInfo>
       <documentation>
-         [Enter API information here.]
+         Implementors are responsible for providing an implementation of LayerInterceptor.
       </documentation>
    </annotation>
 
@@ -196,17 +229,9 @@
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         The developers guide has a page on &lt;a href=&quot;http://udig.refractions.net/confluence/display/DEV/10+Interceptors&quot;&gt;Interceptors&lt;/a&gt;.
       </documentation>
    </annotation>
 
-   <annotation>
-      <appInfo>
-         <meta.section type="copyright"/>
-      </appInfo>
-      <documentation>
-         
-      </documentation>
-   </annotation>
 
 </schema>

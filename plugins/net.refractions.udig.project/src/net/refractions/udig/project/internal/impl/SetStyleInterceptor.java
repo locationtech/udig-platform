@@ -30,8 +30,8 @@ public class SetStyleInterceptor implements LayerInterceptor {
 
     public void run( Layer layer ) {
         if( layer.getStyleBlackboard().getContent().isEmpty()){
-            SetDefaultStyleProcessor scp = createDefaultStyles(layer.getGeoResource(), layer);
-            scp.run();
+            SetDefaultStyleProcessor defaultStyleProcessor = createDefaultStyles(layer.getGeoResource(), layer);
+            defaultStyleProcessor.run();
         }
     }
 

@@ -57,11 +57,13 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
      */
     public CreateFeatureCommand( Coordinate[] coordinates ) {
         int i = 0;
-        if( coordinates!=null )
+        if( coordinates!=null ){
             i=coordinates.length;
+        }
         Coordinate[] c=new Coordinate[i];
-        if( coordinates!=null )
+        if( coordinates!=null ){
             System.arraycopy(coordinates, 0, c, 0, c.length);
+        }
         this.coordinates = c;
     }
 
@@ -83,12 +85,13 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
         }
         FeatureStore<SimpleFeatureType, SimpleFeature> store = editLayer.getResource(FeatureStore.class, null);
         transform();
-        if (store.getTransaction() == Transaction.AUTO_COMMIT)
+        if (store.getTransaction() == Transaction.AUTO_COMMIT){
             throw new Exception("Error transaction has not been started"); //$NON-NLS-1$
+        }
         final SimpleFeatureType type = store.getSchema();
         Object[] attrs = new Object[type.getAttributeCount()];
         for( int i = 0; i < attrs.length; i++ ) {
-            attrs[i] = setDefaultValue(type.getDescriptor(i));
+            attrs[i] = toDefaultValue(type.getDescriptor(i));
         }
         final SimpleFeature newFeature = SimpleFeatureBuilder.build(type, attrs, "newFeature"+new Random().nextInt());
         Class geomType = type.getGeometryDescriptor().getType().getBinding();
@@ -101,23 +104,34 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
     }
 
     /**
-     * @param object
-     * @param object2
+     * Retrieves a default value for the provided descriptor.
+     * <p>
+     * The descriptor getDefaultValue() is used if available; if not
+     * a default value is created base on the descriptor binding. The default
+     * values mirror those used by Java; empty string, boolean false, 0 integer, 0.0 double, etc...
+     * >p>
+     * @param type attribute descriptor
      */
-    private Object setDefaultValue( AttributeDescriptor type ) {
-        if (type.getDefaultValue() != null)
+    private Object toDefaultValue( AttributeDescriptor type ) {
+        if (type.getDefaultValue() != null){
             return type.getDefaultValue();
+        }
         if (Boolean.class.isAssignableFrom(type.getType().getBinding())
-                || boolean.class.isAssignableFrom(type.getType().getBinding()))
+                || boolean.class.isAssignableFrom(type.getType().getBinding())){
             return Boolean.FALSE;
-        if (String.class.isAssignableFrom(type.getType().getBinding()))
+        }
+        if (String.class.isAssignableFrom(type.getType().getBinding())){
             return ""; //$NON-NLS-1$
-        if (Integer.class.isAssignableFrom(type.getType().getBinding()))
+        }
+        if (Integer.class.isAssignableFrom(type.getType().getBinding())){
             return Integer.valueOf(0);
-        if (Double.class.isAssignableFrom(type.getType().getBinding()))
+        }
+        if (Double.class.isAssignableFrom(type.getType().getBinding())){
             return  Double.valueOf(0);
-        if (Float.class.isAssignableFrom(type.getType().getBinding()))
+        }
+        if (Float.class.isAssignableFrom(type.getType().getBinding())){
             return Float.valueOf(0);
+        }
         if (CodeList.class.isAssignableFrom(type.getType().getBinding())) {
             return type.getDefaultValue();
         }

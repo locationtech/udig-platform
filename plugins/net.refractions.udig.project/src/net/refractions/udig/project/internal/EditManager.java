@@ -127,8 +127,7 @@ public interface EditManager extends EObject, IEditManager {
      * @throws IllegalAttributeException
      * @throws IllegalAttributeException
      */
-    public void addFeature( SimpleFeature feature, Layer layer ) throws IOException,
-            IllegalAttributeException, IllegalAttributeException;
+    public void addFeature( SimpleFeature feature, Layer layer ) throws IOException;
 
     /**
      * Reobtains the edit feature from the datastore to ensure that the currently stored feature
