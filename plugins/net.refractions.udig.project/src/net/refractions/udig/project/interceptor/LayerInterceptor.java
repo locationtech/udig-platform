@@ -23,7 +23,6 @@ import net.refractions.udig.project.internal.Layer;
  * @since 1.1.0
  */
 public interface LayerInterceptor {
-
     /**
      * Extension Point ID of Layer interceptors
      */

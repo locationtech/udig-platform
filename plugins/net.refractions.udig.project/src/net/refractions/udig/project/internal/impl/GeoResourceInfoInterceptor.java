@@ -30,7 +30,8 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
- * Intercepts the IGeoResource Info and wraps it with a decorator that modifies getCRS and getBounds if the CRS has been set on the layer.
+ * Intercepts the IGeoResource Info and wraps it with a decorator
+ * that modifies getCRS and getBounds if the CRS has been set on the layer.
  * <p>
  * This is for the use case where the CRS on the IGeoResource is wrong 
  * 
