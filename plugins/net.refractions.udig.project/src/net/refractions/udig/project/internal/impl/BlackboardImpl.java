@@ -29,10 +29,12 @@ import net.refractions.udig.project.internal.Blackboard;
 import net.refractions.udig.project.internal.BlackboardEntry;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
+import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -43,17 +45,17 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ui.XMLMemento;
+import org.osgi.framework.Bundle;
 
 import com.sun.org.apache.bcel.internal.generic.BALOAD;
 
 /**
- * 
  * @author Jesse
  * @since 1.0.0
  * @generated
  */
 public class BlackboardImpl extends EObjectImpl implements Blackboard {
-    
+
     /**
      * underlying container *
      * 
@@ -65,14 +67,15 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /** persisters */
     ArrayList<IPersister<Object>> persisters;
-    
+
     /** providers * */
     ArrayList<IProvider<Object>> providers;
 
-    boolean initialized=false;
+    boolean initialized = false;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
@@ -80,6 +83,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     /**
      * The cached value of the '{@link #getEntries() <em>Entries</em>}' containment reference list.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see #getEntries()
      * @generated
      * @ordered
@@ -88,6 +92,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected BlackboardImpl() {
@@ -96,6 +101,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected EClass eStaticClass() {
@@ -104,6 +110,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -117,6 +124,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -135,6 +143,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
@@ -147,6 +156,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @SuppressWarnings("unchecked")//$NON-NLS-1$
@@ -162,6 +172,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public void eUnset( EStructuralFeature eFeature ) {
@@ -175,6 +186,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public boolean eIsSet( EStructuralFeature eFeature ) {
@@ -187,7 +199,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * 
      * @see net.refractions.udig.project.IBlackboard#contains(java.lang.String)
      */
     public boolean contains( String key ) {
@@ -196,12 +207,11 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * 
      * @see net.refractions.udig.project.IBlackboard#get(java.lang.String)
      */
     @SuppressWarnings("unchecked")//$NON-NLS-1$
     public Object get( String key ) {
-        if( !initialized ){
+        if (!initialized) {
             initialize();
         }
         if (key == null)
@@ -218,8 +228,9 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                 try {
                     // have to load from memento
                     String memento2 = entry.getMemento();
-                    if( memento2==null || memento2.length()==0 )
+                    if (memento2 == null || memento2.length() == 0) {
                         return null;
+                    }
                     XMLMemento memento = XMLMemento.createReadRoot(new StringReader(memento2));
                     IPersister persister = findPersister(entry, memento);
                     if (persister != null) {
@@ -227,23 +238,23 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                         entry.setObject(object);
                         entry.setObjectClass(object.getClass());
                     } else {
-                        //do not check serializability here as this causes problems
-//                        // try serializability
-//                        if (entry.getObjectClass() != null
-//                                && entry.getObjectClass().isAssignableFrom(Serializable.class)) {
-//                            ByteArrayInputStream bin = new ByteArrayInputStream(memento2
-//                                    .getBytes());
-//                            ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(
-//                                    bin));
-//                            object = in.readObject();
-//                            in.close();
-//
-//                            entry.setObject(object);
-//                            entry.setObjectClass(object.getClass());
-//                        } else {
-//                            // either object not serializable, or type can not
-//                            // derminated
-//                        }
+                        // do not check serializability here as this causes problems
+                        // // try serializability
+                        // if (entry.getObjectClass() != null
+                        // && entry.getObjectClass().isAssignableFrom(Serializable.class)) {
+                        // ByteArrayInputStream bin = new ByteArrayInputStream(memento2
+                        // .getBytes());
+                        // ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(
+                        // bin));
+                        // object = in.readObject();
+                        // in.close();
+                        //
+                        // entry.setObject(object);
+                        // entry.setObjectClass(object.getClass());
+                        // } else {
+                        // // either object not serializable, or type can not
+                        // // derminated
+                        // }
 
                     }
                 } catch (Exception e) {
@@ -278,28 +289,28 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
 
     private void initialize() {
-        initialized=true;
+        initialized = true;
         for( BlackboardEntry entry : this.getEntries() ) {
             blackboard.put(entry.getKey(), entry);
         }
     }
 
     public Object remove( String key ) {
-        if( key == null )
+        if (key == null)
             return null;
-        
+
         // look up the entry
         BlackboardEntry entry = blackboard.remove(key);
         if (entry == null) {
             return null;
-        }        
-        Object oldValue=entry.getObject();
+        }
+        Object oldValue = entry.getObject();
         entry.setMemento(null);
         entry.setObject(null);
-        
-        BlackboardEvent event=new BlackboardEvent(this, key, oldValue, null);
+
+        BlackboardEvent event = new BlackboardEvent(this, key, oldValue, null);
         for( IBlackboardListener l : listeners ) {
-            try{
+            try {
                 l.blackBoardChanged(event);
             } catch (Exception e) {
                 ProjectPlugin.log("", e); //$NON-NLS-1$
@@ -309,29 +320,29 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
     /*
      * (non-Javadoc)
-     * 
      * @see net.refractions.udig.project.IBlackboard#put(java.lang.String, java.lang.Object)
      */
     public void put( String key, Object value ) {
-        if (key == null )
+        if (key == null) {
+            return; // top you fool!
+        }
+        if (value == null) {
+            this.remove(key);
             return;
-
-        // look up the entry
-        BlackboardEntry entry = blackboard.get(key);
+        }
         Object oldValue = null;
-        
+        BlackboardEntry entry = blackboard.get(key);
+
         if (entry == null) {
             entry = createEntry(key, value);
+        } else {
+            oldValue = entry.getObject();
         }
-        else {
-            oldValue=entry.getObject();
-        }
-        
         // set the cache
         entry.setObject(value);
 
         // find the persister to save the state
-        IPersister<Object> persister = findPersister(entry, null );
+        IPersister<Object> persister = findPersister(entry, null);
         try {
             if (persister != null) {
                 XMLMemento memento = XMLMemento.createWriteRoot("blackboardContent"); //$NON-NLS-1$
@@ -342,31 +353,34 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                 memento.save(writer);
                 entry.setMemento(writer.getBuffer().toString());
             } else {
-                // do not check for serializability as it may cause problems if children elements
-                //are not serializable
-//                if (value instanceof Serializable) {
-//                    ByteArrayOutputStream bout = new ByteArrayOutputStream();
-//
-//                    ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(bout));
-//                    out.writeObject(value);
-//
-//                    entry.setMemento(new String(bout.toByteArray()));
-//                    out.close();
-//                }
+                // do not check for serializability as it may cause problems if children
+                // elements
+                // are not serializable
+                // if (value instanceof Serializable) {
+                // ByteArrayOutputStream bout = new ByteArrayOutputStream();
+                //
+                // ObjectOutputStream out = new ObjectOutputStream(new
+                // BufferedOutputStream(bout));
+                // out.writeObject(value);
+                //
+                // entry.setMemento(new String(bout.toByteArray()));
+                // out.close();
+                // }
             }
         } catch (Exception e) {
             String msg = "Error persisting content: " + value.getClass(); //$NON-NLS-1$
-            if( persister!=null ){
+            if (persister != null) {
                 IExtension ext = persister.getExtension();
-                IStatus status = new Status(IStatus.WARNING, ext.getNamespaceIdentifier(), 0, msg, e);
+                IStatus status = new Status(IStatus.WARNING, ext.getNamespaceIdentifier(), 0, msg,
+                        e);
                 ProjectPlugin.getPlugin().getLog().log(status);
-            }else{
+            } else {
                 ProjectPlugin.log("error loading persister", e); //$NON-NLS-1$
             }
         }
-        BlackboardEvent event=new BlackboardEvent(this, key, oldValue, value);
+        BlackboardEvent event = new BlackboardEvent(this, key, oldValue, value);
         for( IBlackboardListener l : listeners ) {
-            try{
+            try {
                 l.blackBoardChanged(event);
             } catch (Exception e) {
                 ProjectPlugin.log("", e); //$NON-NLS-1$
@@ -376,7 +390,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * 
      * @see net.refractions.udig.project.IBlackboard#getFloat(java.lang.String)
      */
     public Float getFloat( String key ) {
@@ -390,7 +403,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * 
      * @see net.refractions.udig.project.IBlackboard#getInteger(java.lang.String)
      */
     public Integer getInteger( String key ) {
@@ -404,7 +416,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * 
      * @see net.refractions.udig.project.IBlackboard#getString(java.lang.String)
      */
     public String getString( String key ) {
@@ -418,7 +429,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * 
      * @see net.refractions.udig.project.IBlackboard#putFloat(java.lang.String, float)
      */
     public void putFloat( String key, float value ) {
@@ -427,7 +437,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * 
      * @see net.refractions.udig.project.IBlackboard#putInteger(java.lang.String, int)
      */
     public void putInteger( String key, int value ) {
@@ -437,7 +446,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * 
      * @see net.refractions.udig.project.IBlackboard#putString(java.lang.String, java.lang.String)
      */
     public void putString( String key, String value ) {
@@ -446,7 +454,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * 
      * @see net.refractions.udig.project.IBlackboard#clear()
      */
     public void clear() {
@@ -456,16 +463,15 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         }
     }
 
-    CopyOnWriteArraySet<IBlackboardListener> listeners=new CopyOnWriteArraySet<IBlackboardListener>(); 
+    CopyOnWriteArraySet<IBlackboardListener> listeners = new CopyOnWriteArraySet<IBlackboardListener>();
     public boolean addListener( IBlackboardListener listener ) {
         return listeners.add(listener);
     }
-    
 
     public boolean removeListener( IBlackboardListener listener ) {
         return listeners.remove(listener);
     }
-    
+
     /**
      * Flushes all the cached objects. Useful for testing.
      */
@@ -493,11 +499,11 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     @SuppressWarnings("unchecked")
     private BlackboardEntryImpl createEntry( String key, Object object ) {
-            
+
         BlackboardEntryImpl entry = new BlackboardEntryImpl();
 
         entry.setKey(key);
-        entry.setObjectClass(object!=null?object.getClass():null);
+        entry.setObjectClass(object != null ? object.getClass() : null);
         blackboard.put(key, entry);
 
         // add to entries for persistance
@@ -508,9 +514,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     @SuppressWarnings("unchecked")
     private IPersister<Object> findPersister( BlackboardEntry entry, XMLMemento memento ) {
-
-        if(persisters == null) {
-            synchronized(this){
+        if (persisters == null) {
+            synchronized (this) {
                 if (persisters == null) {
                     persisters = new ArrayList<IPersister<Object>>();
                     PersisterProcessor p = new PersisterProcessor(persisters);
@@ -523,33 +528,59 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         ArrayList<IPersister<Object>> possible = new ArrayList<IPersister<Object>>();
 
         for( IPersister<Object> persister : persisters ) {
-            Class persistee = persister.getPersistee();
-            if (persistee == null)
-                continue;
-
-            Class objectClass = entry.getObjectClass();
-            if( objectClass==null && memento!=null ){
-                try{
-                    objectClass=persister.getClass().getClassLoader().loadClass(memento.getString("internalObjectClassStorage")); //$NON-NLS-1$
-                }catch (Exception e) {
-                    ProjectPlugin.log("", e); //$NON-NLS-1$
+            Class< ? > persistenceTarget = persister.getPersistee();
+            if (persistenceTarget == null) {
+                continue; // this persister does not seem to be set up correctly
+            }
+            if (entry.getObjectClass() != null) {
+                Class< ? > type = entry.getObjectClass();
+                if (persistenceTarget.isAssignableFrom(type)) {
+                    possible.add(persister);
                     continue;
                 }
             }
-            if (objectClass!=null && objectClass.isAssignableFrom(persistee)) {
-                possible.add(persister);
+            Class objectClass = entry.getObjectClass();
+            if (objectClass == null && memento != null) {
+                String className = memento.getString("internalObjectClassStorage");
+                if (className.equals(persistenceTarget)) {
+                    possible.add(persister);
+                    continue; // we are good on this one
+                } else {
+                    try {
+                        ClassLoader classLoader = persistenceTarget.getClassLoader();
+                        if (classLoader != null) {
+                            objectClass = classLoader.loadClass(className);
+                        } else {
+                            objectClass = Class.forName(className);
+                        }
+                        if (objectClass != null && objectClass.isAssignableFrom(persistenceTarget)) {
+                            possible.add(persister);
+                        }
+                    } catch (Exception e) {
+                        if (ProjectPlugin.isDebugging("blackboard")) {
+                            ProjectPlugin.trace(BlackboardImpl.class, persister.getExtension()
+                                    .getExtensionPointUniqueIdentifier()
+                                    + "unable to load " + className, e); //$NON-NLS-1$
+                        }
+                        continue; // skip this one
+                    }
+                }
             }
         }
-        if (possible.isEmpty())
+        if (possible.isEmpty()) {
+            ProjectPlugin
+                    .trace(BlackboardImpl.class, entry.getKey() + " cannot be persisted", null); //$NON-NLS-1$
             return null;
+        }
 
         Collections.sort(possible, new Comparator<IPersister<Object>>(){
             public int compare( IPersister<Object> p1, IPersister<Object> p2 ) {
-                if (p1.getPersistee().equals(p2.getPersistee()))
+                if (p1.getPersistee().equals(p2.getPersistee())) {
                     return 0;
-                if (p1.getPersistee().isAssignableFrom(p2.getPersistee()))
+                }
+                if (p1.getPersistee().isAssignableFrom(p2.getPersistee())) {
                     return -1;
-
+                }
                 return 1;
             }
         });
@@ -608,7 +639,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
         }
     }
-
     public void addAll( IBlackboard blackboard ) {
         Set<String> keySet = blackboard.keySet();
         for( String key : keySet ) {
@@ -619,19 +649,19 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     public Set<String> keySet() {
         return this.blackboard.keySet();
     }
-    
+
     @SuppressWarnings("nls")
     @Override
     public String toString() {
         StringBuffer buf = new StringBuffer();
         buf.append("StyleBlackBoardImpl: ");
         buf.append(blackboard.size());
-        buf.append(" entries");        
-        for( Map.Entry entry : blackboard.entrySet() ){
+        buf.append(" entries");
+        for( Map.Entry entry : blackboard.entrySet() ) {
             buf.append("\n\t");
-            buf.append( entry.getKey() );
+            buf.append(entry.getKey());
             buf.append("=");
-            buf.append( entry.getValue() );
+            buf.append(entry.getValue());
         }
         return buf.toString();
     }

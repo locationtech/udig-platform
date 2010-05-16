@@ -1,11 +1,14 @@
 package net.refractions.udig.project;
 
 import java.awt.Color;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -24,8 +27,8 @@ import org.eclipse.ui.IMemento;
  */
 public abstract class StyleContent {
     /**
-     * StyleContent to be used as a default; willing to save Strings and Serializable
-     * content. Without class information we cannot do any better :-(
+     * StyleContent to be used as a default; willing to save Strings and Serializable content.
+     * Without class information we cannot do any better :-(
      */
     public static StyleContent DEFAULT = new StyleContent("StyleContent.DEFAULT"){
         public String toString() {
@@ -33,26 +36,37 @@ public abstract class StyleContent {
         }
         @Override
         public void save( IMemento memento, Object value ) {
-            if( value instanceof String ){
+            if (value instanceof String) {
                 String text = (String) value;
-                memento.putTextData( text );
-            }
-            else {
+                memento.putTextData(text);
+            } else if (value instanceof Serializable) {
+//                memento.putString("class", value.getClass().getName());
+//                try {
+//                    ByteArrayOutputStream bout = new ByteArrayOutputStream();
+//                    ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(bout));
+//                    out.writeObject(value);
+//
+//                    memento.putString("object", new String(bout.toByteArray()));
+//                    out.close();
+//                } catch (Throwable t) {
+//                    ProjectPlugin.trace(StyleContent.class, "Unable to persist:" + value, t);
+//                }
+//            }
+//            else {
                 try {
                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    ObjectOutputStream store = new ObjectOutputStream( bytes );
-                    store.writeObject( value );
+                    ObjectOutputStream store = new ObjectOutputStream(new BufferedOutputStream(bytes));
+                    store.writeObject(value);
                     store.close();
-                    
-                    memento.putString("object", bytes.toString( "UTF-8" ) );
-                    memento.putString("class", value.getClass().getName() );
-                }
-                catch( Throwable t ){
-                    ProjectPlugin.trace(StyleContent.class, "Unable to persist:"+value, t);
+
+                    memento.putString("object", new String( bytes.toByteArray()));
+                    memento.putString("class", value.getClass().getName());
+                } catch (Throwable t) {
+                    ProjectPlugin.trace(StyleContent.class, "Unable to persist:" + value, t);
                 }
             }
         }
-        
+
         @Override
         public Object load( URL url, IProgressMonitor monitor ) throws IOException {
             return null; // no default can be generated for default !
@@ -60,38 +74,37 @@ public abstract class StyleContent {
         @Override
         public Object load( IMemento memento ) {
             String text = memento.getTextData();
-            if( text != null ){
+            if (text != null) {
                 return text;
             }
             else {
-                String type = memento.getString("class");   
-                if( type == null ){
+                String type = memento.getString("class");
+                if (type == null) {
                     return null; // we did not manage to store anything here :-(
                 }
                 try {
                     text = memento.getString("object");
-                    ByteArrayInputStream bytes = new ByteArrayInputStream( text.getBytes("UTF-8") );
-                    ObjectInputStream restore = new ObjectInputStream( bytes );
+                    
+                    ByteArrayInputStream bytes = new ByteArrayInputStream(text.getBytes());
+                    ObjectInputStream restore = new ObjectInputStream(new BufferedInputStream(bytes));
                     Object value = restore.readObject();
                     restore.close();
                     return value;
-                }
-                catch( Throwable t ){
-                    ProjectPlugin.trace(StyleContent.class, "Unable to restore:"+type, t);
+                } catch (Throwable t) {
+                    ProjectPlugin.trace(StyleContent.class, "Unable to restore " + type+":"+t.getLocalizedMessage(), t);
                 }
             }
             return null;
         }
-        
+
         @Override
         public Class< ? > getStyleClass() {
-            // TODO Auto-generated method stub
-            return null;
+            return null; // not avaialble
         }
-        
+
         @Override
-        public Object createDefaultStyle( IGeoResource resource, Color colour, IProgressMonitor monitor )
-                throws IOException {
+        public Object createDefaultStyle( IGeoResource resource, Color colour,
+                IProgressMonitor monitor ) throws IOException {
             // TODO Auto-generated method stub
             return null;
         }
@@ -117,14 +130,15 @@ public abstract class StyleContent {
     }
 
     /**
-     * Construct with ID supplied by subclass.  This id must be the same as the id declared by the extension
-     * point.
+     * Construct with ID supplied by subclass. This id must be the same as the id declared by the
+     * extension point.
      * 
      * @param id
      */
     public StyleContent( String id ) {
-        if( id == null ) {
-            throw new NullPointerException("You MUST supply an ID when creating a Style Content. It is used as the 'key' when storing things on the blackboard");
+        if (id == null) {
+            throw new NullPointerException(
+                    "You MUST supply an ID when creating a Style Content. It is used as the 'key' when storing things on the blackboard");
         }
         this.id = id;
     }
@@ -134,7 +148,7 @@ public abstract class StyleContent {
      * 
      * @return the class of the style object.
      */
-    public abstract Class<?> getStyleClass();
+    public abstract Class< ? > getStyleClass();
 
     /**
      * Saves the state of a style object.
@@ -186,13 +200,13 @@ public abstract class StyleContent {
     public String toString() {
         StringBuilder buf = new StringBuilder();
         buf.append(getClass().getName());
-        buf.append( "( ");
-        if( id != null ){
-            buf.append( id );
+        buf.append("( ");
+        if (id != null) {
+            buf.append(id);
             buf.append(" ");
         }
-        if( getStyleClass() != null ){
-            buf.append( getStyleClass().getName() );
+        if (getStyleClass() != null) {
+            buf.append(getStyleClass().getName());
             buf.append(" ");
         }
         buf.append(")");
