@@ -10,4 +10,23 @@
       <category name="Axios Extensions for uDig"/>
    </feature>
    <category-def name="Axios Extensions for uDig" label="Axios Extensions for uDig"/>
+   <feature url="features/eu.hydrologis.jgrass.feature_3.0.0.jar" id="eu.hydrologis.jgrass.feature" version="3.0.0">
+      <category name="JGrass"/>
+   </feature>
+   <feature url="features/eu.hydrologis.jgrass.extras_1.2.0.jar" id="eu.hydrologis.jgrass.extras" version="1.2.0">
+      <category name="JGrass"/>
+   </feature>
+   <feature url="features/eu.hydrologis.jgrass.feature.gpls_3.0.0.jar" id="eu.hydrologis.jgrass.feature.gpls" version="3.0.0">
+      <category name="JGrass Import-Export"/>
+   </feature>
+   <category-def name="JGrass Extensions for uDig" label="JGrass Extensions for uDig">
+      <description>
+         The JGrass hydro-geomorphologic extentions.
+      </description>
+   </category-def>
+   <category-def name="JGrass Import-Export tools" label="JGrass Import-Export tools">
+      <description>
+         Extra gpl import-export features of JGrass (dxf, osm, etc...).
+      </description>
+   </category-def>
 </site>
