@@ -57,7 +57,6 @@ public class CacheConfigurator extends IStyleConfigurator {
         return isCached;
     }
     
-    
     @Override
     public void createControl( Composite parent ) {
         parent.setLayout(new MigLayout("", "[right]rel[left, grow]", "30"));

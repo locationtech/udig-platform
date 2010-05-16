@@ -15,6 +15,11 @@
             id="net.refractions.udig.style.cache"
             name="%cache.name">
       </style>
+      <style
+            class="net.refractions.udig.style.filter.FilterContent"
+            id="net.refractions.udig.style.filter"
+            name="%filter.name">
+      </style>
    </extension>
    <extension
          point="net.refractions.udig.style.styleConfigurator">
@@ -60,11 +65,18 @@
       </styleConfigurator>
       <styleConfigurator
             class="net.refractions.udig.style.cache.CacheConfigurator"
-            id="cache"
+            id="cache-gridcoverage"
             label="%cache.label"
             requires="org.opengis.coverage.grid.GridCoverage"
             styleId="net.refractions.udig.style.cache">
       </styleConfigurator>           
+      <styleConfigurator
+            class="net.refractions.udig.style.filter.FilterConfigurator"
+            id="filter"
+            label="%filter.label"
+            requires="org.geotools.data.FeatureSource"
+            styleId="net.refractions.udig.project.view">
+            </styleConfigurator>
    </extension>
    <extension
          point="net.refractions.udig.style.sld.sldEditorPart">
