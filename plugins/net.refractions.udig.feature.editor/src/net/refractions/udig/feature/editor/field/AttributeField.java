@@ -195,6 +195,7 @@ public abstract class AttributeField {
         layout.numColumns = getNumberOfControls();
         layout.marginWidth = 5;
         layout.marginHeight = 0;
+        layout.makeColumnsEqualWidth = false;
         layout.horizontalSpacing = 8; // use miglayout "realed" later
         parent.setLayout(layout);
         doFillIntoGrid(parent, layout.numColumns);

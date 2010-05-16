@@ -1,5 +1,6 @@
 package net.refractions.udig.feature.editor.field;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -120,12 +121,16 @@ public class ComboAttributeField2 extends AttributeField {
      */
     public void doLoad() {
         Object value = getFeature().getAttribute(getAttributeName());
-        if( value != null ){
-            int index = options.indexOf( value );
-            if( index == -1 ){
-                viewer.getCombo().setText( value.toString() );
-            }
-        }        
+//        int index = -1;
+//        if( value != null && options != null ){
+//            index = options.indexOf( value );
+//        }
+//        if( index == -1 ){
+//            viewer.getCombo().setText( value.toString() );
+//        }
+        if( viewer.getInput() == null ){
+            viewer.setInput( Collections.singletonList( value ));
+        }
         ISelection selection;
         if (value == null) {
             selection = StructuredSelection.EMPTY;
