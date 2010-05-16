@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISelectionListener;
@@ -59,10 +60,12 @@ public class FeatureUDIGView extends ViewPart implements FeaturePanelPageContrib
 
     private IToolContext context;
     private FeaturePanelPage featurePage;
+    private MessagePage messagePage;
+    private PageBook book;
     private SimpleFeature current;
 
     private PageSite pageSite;
-
+    
     @Override
     public void init( IViewSite site ) throws PartInitException {
         super.init(site);
@@ -70,11 +73,17 @@ public class FeatureUDIGView extends ViewPart implements FeaturePanelPageContrib
     }
     
     public void createPartControl( Composite parent ) {
+        book = new PageBook( parent, SWT.NONE );
+        messagePage = new MessagePage();
+        messagePage.setMessage("Please select a feature with the edit geometry tool");
+        messagePage.init( pageSite );
+        messagePage.createControl(book);
+        
         featurePage = new FeaturePanelPage(this);
         
         featurePage.init( pageSite );        
         featurePage.setFeatureSite(new FeatureSiteImpl());
-        featurePage.createControl(parent);
+        featurePage.createControl(book);
         final IMap map = ApplicationGIS.getActiveMap();
         if (map != ApplicationGIS.NO_MAP) {
             try {
@@ -83,6 +92,8 @@ public class FeatureUDIGView extends ViewPart implements FeaturePanelPageContrib
                 UiPlugin.log("Default SimpleFeature Editor threw an exception", e); //$NON-NLS-1$
             }
         }
+        
+        book.showPage( messagePage.getControl() );
     }
     
     public SimpleFeatureType getSchema() {
@@ -91,14 +102,27 @@ public class FeatureUDIGView extends ViewPart implements FeaturePanelPageContrib
     }
     
     public void setFocus() {
-        featurePage.setFocus();
         if (current == null){
+            book.showPage( messagePage.getControl() );
+            messagePage.setFocus();
+            
             featurePage.editFeatureChanged(null);
+        }
+        else {
+            book.showPage( featurePage.getControl() );
+            featurePage.setFocus();
+            if (current == null){
+                featurePage.editFeatureChanged(null);
+            }
         }
     }
     
     public void editFeatureChanged( SimpleFeature feature ) {
         this.current = feature;
+        if( feature == null ){
+            book.showPage( messagePage.getControl() );
+            return;
+        }
         // pass the selection to the page
         
         IMap activeMap = ApplicationGIS.getActiveMap();
@@ -113,6 +137,7 @@ public class FeatureUDIGView extends ViewPart implements FeaturePanelPageContrib
         }
         featurePage.editFeatureChanged(feature);
         featurePage.refresh();
+        book.showPage( featurePage.getControl() );
     }
 
     public IToolContext getContext() {

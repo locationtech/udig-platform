@@ -72,7 +72,7 @@ public class FeaturePanelComposite extends Composite {
      * Create the main composite.
      */
     protected void createMainComposite() {
-        mainComposite = factory.createComposite(this, SWT.NO_FOCUS);
+        mainComposite = factory.createComposite(this, SWT.NO_FOCUS | SWT.NO_SCROLL);
         mainComposite.setLayout(new FormLayout());
         FormData formData = new FormData();
         formData.left = new FormAttachment(0, 0);

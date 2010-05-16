@@ -339,7 +339,7 @@ public abstract class ListAttributeField extends AttributeField {
      * Method declared on FieldEditor.
      */
     public int getNumberOfControls() {
-        return 2;
+        return 3;
     }
 
     /**
