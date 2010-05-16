@@ -744,7 +744,12 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
             for( FeaturePanelTabDescriptor descriptor : descriptors ){
                 header = descriptor.getEntry().getLabelProvider();
             }
-            tabbedPropertyViewer.setLabelProvider( new TabLabelProvider( header ));
+            if( header != null ){
+                tabbedPropertyViewer.setLabelProvider( new TabLabelProvider( header ));
+            }
+            else {
+                tabbedPropertyViewer.setLabelProvider( null );
+            }
         }
         // update tabs list
         tabbedPropertyViewer.setInput(part, currentSelection);

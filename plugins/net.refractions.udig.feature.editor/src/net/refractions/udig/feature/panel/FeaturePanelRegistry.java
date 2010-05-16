@@ -126,7 +126,7 @@ public class FeaturePanelRegistry {
 
         FeaturePanelProcessor featurePanelProcessor = ProjectUIPlugin.getDefault()
                 .getFeaturePanelProcessor();
-        labelProvider = new TabLabelProvider();
+        labelProvider = null; // new TabLabelProvider();
 
         List<FeaturePanelEntry> list = featurePanelProcessor.search(schema);
         for( FeaturePanelEntry entry : list ) {
