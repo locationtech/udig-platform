@@ -1,10 +1,17 @@
 package net.refractions.udig.project;
 
 import java.awt.Color;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.StringWriter;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.project.internal.ProjectPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
@@ -16,7 +23,79 @@ import org.eclipse.ui.IMemento;
  * @since 1.0.0
  */
 public abstract class StyleContent {
-
+    /**
+     * StyleContent to be used as a default; willing to save Strings and Serializable
+     * content. Without class information we cannot do any better :-(
+     */
+    public static StyleContent DEFAULT = new StyleContent("StyleContent.DEFAULT"){
+        public String toString() {
+            return "StyleContent.DEFAULT";
+        }
+        @Override
+        public void save( IMemento memento, Object value ) {
+            if( value instanceof String ){
+                String text = (String) value;
+                memento.putTextData( text );
+            }
+            else {
+                try {
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    ObjectOutputStream store = new ObjectOutputStream( bytes );
+                    store.writeObject( value );
+                    store.close();
+                    
+                    memento.putString("object", bytes.toString( "UTF-8" ) );
+                    memento.putString("class", value.getClass().getName() );
+                }
+                catch( Throwable t ){
+                    ProjectPlugin.trace(StyleContent.class, "Unable to persist:"+value, t);
+                }
+            }
+        }
+        
+        @Override
+        public Object load( URL url, IProgressMonitor monitor ) throws IOException {
+            return null; // no default can be generated for default !
+        }
+        @Override
+        public Object load( IMemento memento ) {
+            String text = memento.getTextData();
+            if( text != null ){
+                return text;
+            }
+            else {
+                String type = memento.getString("class");   
+                if( type == null ){
+                    return null; // we did not manage to store anything here :-(
+                }
+                try {
+                    text = memento.getString("object");
+                    ByteArrayInputStream bytes = new ByteArrayInputStream( text.getBytes("UTF-8") );
+                    ObjectInputStream restore = new ObjectInputStream( bytes );
+                    Object value = restore.readObject();
+                    restore.close();
+                    return value;
+                }
+                catch( Throwable t ){
+                    ProjectPlugin.trace(StyleContent.class, "Unable to restore:"+type, t);
+                }
+            }
+            return null;
+        }
+        
+        @Override
+        public Class< ? > getStyleClass() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+        
+        @Override
+        public Object createDefaultStyle( IGeoResource resource, Color colour, IProgressMonitor monitor )
+                throws IOException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+    };
     /** <code>XPID</code> field */
     public static final String XPID = "net.refractions.udig.project.style"; //$NON-NLS-1$
 
@@ -103,4 +182,20 @@ public abstract class StyleContent {
     public abstract Object createDefaultStyle( IGeoResource resource, Color colour,
             IProgressMonitor monitor ) throws IOException;
 
+    @Override
+    public String toString() {
+        StringBuilder buf = new StringBuilder();
+        buf.append(getClass().getName());
+        buf.append( "( ");
+        if( id != null ){
+            buf.append( id );
+            buf.append(" ");
+        }
+        if( getStyleClass() != null ){
+            buf.append( getStyleClass().getName() );
+            buf.append(" ");
+        }
+        buf.append(")");
+        return buf.toString();
+    }
 }

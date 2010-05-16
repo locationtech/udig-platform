@@ -21,7 +21,8 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.SetDefaultStyleProcessor;
 
 /**
- * Sets the default style of the 
+ * Sets the default style of the layer.
+ * 
  * @author Jesse
  * @since 1.1.0
  */

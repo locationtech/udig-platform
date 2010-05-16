@@ -335,7 +335,7 @@ public interface ILayer extends Comparable<ILayer> {
      * @return the CoordinateReferenceSystem of the layer or if the CRS cannot be determined. the
      *         current map's CRS will be returned, or if this fails the CRS will be WGS84.
      * 
-     *  @deprecated
+     *  @deprecated use getCRS()
      */
     CoordinateReferenceSystem getCRS( IProgressMonitor monitor );
 

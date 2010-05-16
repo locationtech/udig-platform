@@ -28,7 +28,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
 
 /**
- * A command hander for the MapProperties command.
+ * A command hander for the LayerProperties command.
  * 
  * @author jesse
  * @since 1.1.0
