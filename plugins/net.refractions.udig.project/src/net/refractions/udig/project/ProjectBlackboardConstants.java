@@ -14,9 +14,9 @@
  */
 package net.refractions.udig.project;
 
-import net.refractions.udig.project.interceptor.ShowViewInterceptor;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.project.internal.impl.UDIGFeatureStore;
+import net.refractions.udig.project.internal.interceptor.ShowViewInterceptor;
 import net.refractions.udig.project.internal.render.RendererCreator;
 
 import org.geotools.data.DataStore;
