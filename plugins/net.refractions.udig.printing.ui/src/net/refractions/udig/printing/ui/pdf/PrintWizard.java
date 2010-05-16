@@ -229,10 +229,6 @@ public class PrintWizard extends Wizard implements IExportWizard {
             page.getBoxes().add(iter.next());
         }
         return page;
-        
-        
-        //TODO Throw some sort of exception if the page can't be created
-
     }
 
     

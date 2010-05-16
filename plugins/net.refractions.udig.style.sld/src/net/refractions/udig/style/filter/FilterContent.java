@@ -23,7 +23,6 @@ import java.net.URL;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.ProjectBlackboardConstants;
 import net.refractions.udig.project.StyleContent;
-import net.refractions.udig.project.interceptor.ShowViewInterceptor;
 import net.refractions.udig.style.sld.SLDPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;

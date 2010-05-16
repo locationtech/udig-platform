@@ -57,7 +57,6 @@ import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfWriter;
 
 /**
- * 
  * A user interface for choosing an export template and other export options.
  * The wizard is configurable by placing an ExportPDFWizardConfigBean on the
  * map blackboard (see ExportPDFWizardConfigBean for the blackboard key).

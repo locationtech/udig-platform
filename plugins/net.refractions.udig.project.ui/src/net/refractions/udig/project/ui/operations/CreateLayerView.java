@@ -5,7 +5,7 @@ package net.refractions.udig.project.ui.operations;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.interceptor.ShowViewInterceptor;
+import net.refractions.udig.project.ProjectBlackboardConstants;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.commands.AddLayerCommand;
 import net.refractions.udig.ui.operations.IOp;
@@ -26,7 +26,7 @@ public class CreateLayerView implements IOp {
         ILayer layer = (ILayer) target;
         IMap map = layer.getMap();
         Layer view = map.getLayerFactory().createLayer(layer.findGeoResource(FeatureSource.class));
-        view.getStyleBlackboard().put(ShowViewInterceptor.KEY, layer.getFilter());
+        view.getStyleBlackboard().put(ProjectBlackboardConstants.LAYER__DATA_QUERY, layer.getFilter());
         AddLayerCommand command = new AddLayerCommand(view);
         map.sendCommandASync(command);
     }

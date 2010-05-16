@@ -28,6 +28,7 @@
    <extension-point id="resourceInterceptor" name="resourceInterceptor" schema="schema/resourceInterceptor.exsd"/>
    <extension-point id="layerInterceptor" name="layerInterceptor" schema="schema/layerInterceptor.exsd"/>
    <extension-point id="element" name="element" schema="schema/element.exsd"/>
+   <extension-point id="featureInterceptor" name="Feature Interceptor" schema="schema/featureInterceptor.exsd"/>
    <extension
          point="net.refractions.udig.project.projectElementFactories">
       <projectElementFactory
@@ -41,7 +42,7 @@
             name="%selectionStyle.name"
             id="net.refractions.udig.project.selectionStyle"/>
       <style
-            class="net.refractions.udig.project.interceptor.ShowViewInterceptor$ViewStyleContent"
+            class="net.refractions.udig.project.internal.interceptor.ShowViewInterceptor$ViewStyleContent"
             id="net.refractions.udig.project.view"
             name="net.refractions.udig.project.View">
       </style>
@@ -98,12 +99,12 @@
             order="PRE"
             target="org.geotools.data.FeatureSource"/>
       <interceptor
-            class="net.refractions.udig.project.interceptor.ShowViewInterceptor"
+            class="net.refractions.udig.project.internal.interceptor.ShowViewInterceptor"
             id="net.refractions.udig.project.showViewInterceptor"
             order="POST"
             target="org.geotools.data.FeatureSource"/>
       <interceptor
-            class="net.refractions.udig.project.interceptor.CacheInterceptor"
+            class="net.refractions.udig.project.internal.interceptor.CacheInterceptor"
             id="net.refractions.udig.project.cacheFeatureSourceInterceptor"
             order="POST"
             target="org.geotools.data.FeatureSource">

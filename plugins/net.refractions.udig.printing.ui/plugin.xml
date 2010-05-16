@@ -192,15 +192,6 @@
       </editorContribution>
    </extension>
          <extension
-               point="org.eclipse.ui.perspectiveExtensions">
-            <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
-               <actionSet id="net.refractions.udig.printing.ui.mapGraphic.action"/>
-            </perspectiveExtension>
-            <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
-               <actionSet id="net.refractions.udig.printing.ui.mapGraphic.action"/>
-            </perspectiveExtension>
-         </extension>
-         <extension
                point="net.refractions.udig.printing.ui.editAction">
             <editActionGroup
                   acceptable="net.refractions.udig.printing.model.impl.LabelBoxPrinter">

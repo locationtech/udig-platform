@@ -40,6 +40,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 /**
+ * 
  * @author Richard Gould
  * @author Andrea Antonello (www.hydrologis.com)
  */

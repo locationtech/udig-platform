@@ -21,9 +21,10 @@ import junit.framework.TestCase;
 import net.refractions.udig.catalog.tests.CatalogTests;
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.interceptor.ShowViewInterceptor.ViewStyleContent;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
+import net.refractions.udig.project.internal.interceptor.ShowViewInterceptor;
+import net.refractions.udig.project.internal.interceptor.CacheInterceptor.ViewStyleContent;
 import net.refractions.udig.project.tests.support.MapTests;
 
 import org.eclipse.core.runtime.NullProgressMonitor;

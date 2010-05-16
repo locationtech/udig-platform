@@ -3,7 +3,7 @@ package net.refractions.udig.project.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.interceptor.ShowViewInterceptor;
+import net.refractions.udig.project.ProjectBlackboardConstants;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.render.SelectionLayer;
 
@@ -14,7 +14,7 @@ import org.opengis.filter.Filter;
  * 
  * @author Jesse
  */
-public class SelectionStyle{
+public class SelectionStyle {
     
     /**
      * Don't draw the selections
@@ -65,20 +65,20 @@ public class SelectionStyle{
             switch (style) {
             case EXCLUSIVE:
                 if( selectionFilter!=Filter.EXCLUDE){
-                    layer.getStyleBlackboard().put(ShowViewInterceptor.KEY, selectionFilter);
+                    layer.getStyleBlackboard().put(ProjectBlackboardConstants.LAYER__DATA_QUERY, selectionFilter);
                 } else {
                     toRender.remove(layer);
                 }
                 break;
             case EXCLUSIVE_ALL:
                 if( selectionFilter!=Filter.EXCLUDE){
-                    layer.getStyleBlackboard().put(ShowViewInterceptor.KEY, selectionFilter);
+                    layer.getStyleBlackboard().put(ProjectBlackboardConstants.LAYER__DATA_QUERY, selectionFilter);
                 }
                 break;
             case EXCLUSIVE_SELECTION:
                 if( selectionFilter!=Filter.EXCLUDE){
                     SelectionLayer selectionLayer = new SelectionLayer(layer);
-                    selectionLayer.getStyleBlackboard().put(ShowViewInterceptor.KEY, selectionFilter);
+                    selectionLayer.getStyleBlackboard().put(ProjectBlackboardConstants.LAYER__DATA_QUERY, selectionFilter);
                     toRender.set(toRender.indexOf(layer), selectionLayer);
                 }else{  
                     toRender.remove(layer);
@@ -87,7 +87,7 @@ public class SelectionStyle{
             case EXCLUSIVE_ALL_SELECTION:
                 if( selectionFilter!=Filter.EXCLUDE){
                     SelectionLayer selectionLayer = new SelectionLayer(layer);
-                    selectionLayer.getStyleBlackboard().put(ShowViewInterceptor.KEY, selectionFilter);
+                    selectionLayer.getStyleBlackboard().put(ProjectBlackboardConstants.LAYER__DATA_QUERY, selectionFilter);
                     toRender.set(toRender.indexOf(layer), selectionLayer);
                 }
                 break;
