@@ -17,11 +17,11 @@
          </appInfo>
       </annotation>
       <complexType>
-         <sequence>
-            <element ref="layerCreated" minOccurs="0" maxOccurs="unbounded"/>
-            <element ref="layerAdded" minOccurs="0" maxOccurs="unbounded"/>
-            <element ref="layerRemoved" minOccurs="0" maxOccurs="unbounded"/>
-         </sequence>
+         <choice minOccurs="0" maxOccurs="unbounded">
+            <element ref="layerAdded"/>
+            <element ref="layerCreated"/>
+            <element ref="layerRemoved"/>
+         </choice>
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
@@ -62,7 +62,7 @@
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  an id for the extension
+                  an id for the interceptor
                </documentation>
             </annotation>
          </attribute>
@@ -79,7 +79,7 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The interceptor class.
+                  The LayerInterceptor class.
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.LayerInterceptor"/>
@@ -102,7 +102,7 @@
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  an id for the extension
+                  an id for the interceptor
                </documentation>
             </annotation>
          </attribute>
@@ -119,7 +119,7 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The interceptor class.
+                  The LayerInterceptor class.
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.LayerInterceptor"/>
@@ -142,7 +142,7 @@
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  an id for the extension
+                  an id for the interceptor
                </documentation>
             </annotation>
          </attribute>
@@ -159,7 +159,7 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The interceptor class.
+                  The LayerInterceptor class.
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.LayerInterceptor"/>
@@ -174,7 +174,7 @@
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         1.1
       </documentation>
    </annotation>
 
@@ -205,7 +205,7 @@ public class InitMapBoundsInterceptor implements LayerInterceptor {
         ReferencedEnvelope bounds = map.getViewportModelInternal().getBounds();
         
         //  If first layer or if the crs has been unchanged from the original BBox
-		if( map.getMapLayers().size()==1 || bounds==ViewportModel.NIL_BBOX){
+  if( map.getMapLayers().size()==1 || bounds==ViewportModel.NIL_BBOX){
             bounds = map.getBounds(ProgressManager.instance().get());
             map.getViewportModelInternal().setBounds(bounds);
         }
@@ -233,5 +233,13 @@ public class InitMapBoundsInterceptor implements LayerInterceptor {
       </documentation>
    </annotation>
 
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         2007 udig.refractions.net
+      </documentation>
+   </annotation>
 
 </schema>

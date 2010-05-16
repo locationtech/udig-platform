@@ -157,10 +157,12 @@ public class LayerResource extends IGeoResource {
     private <T> T runInterceptors( Class<T> requestedType, T resource, List<Wrapper<T>> pre ) {
         T resource2 = resource;
         for( Wrapper<T> interceptor : pre ) {
-            if (resource2 == null)
+            if (resource2 == null){
                 return null;
-            if (isAssignable(resource2, interceptor.targetType))
+            }
+            if (isAssignable(resource2, interceptor.targetType)){
                 resource2 = interceptor.run(layer, resource2, requestedType);
+            }
         }
         return resource2;
     }

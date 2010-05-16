@@ -28,5 +28,5 @@ public interface FeatureInterceptor {
      * <p>
      * @param feature 
      */
-    public void run(Feature layer);
+    public void run(Feature feature);
 }

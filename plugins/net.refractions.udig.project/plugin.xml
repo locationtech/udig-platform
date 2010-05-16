@@ -145,5 +145,13 @@
                id="FeatureStoreResourceProperty"/>
       </object>
    </extension>
+   <extension
+         point="net.refractions.udig.project.featureInterceptor">
+      <featureCreated
+            class="net.refractions.udig.project.internal.interceptor.DefaultValueFeatureInterceptor"
+            id="net.refractions.udig.project.setDefaultValuesInterceptor"
+            name="Default Values">
+      </featureCreated>
+   </extension>
 </plugin>
 

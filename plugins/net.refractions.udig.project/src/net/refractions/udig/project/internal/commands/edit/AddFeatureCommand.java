@@ -34,7 +34,8 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
 
 /**
- * Adds the new feature to the 
+ * Adds the new feature to the
+ * 
  * @author jones
  * @since 1.1.0
  */
@@ -46,73 +47,70 @@ public class AddFeatureCommand extends AbstractCommand implements UndoableMapCom
     private String fid;
 
     public AddFeatureCommand( SimpleFeature feature, ILayer layer ) {
-        this.feature=feature;
-        this.layer=layer;
+        this.feature = feature;
+        this.layer = layer;
     }
 
     public void run( IProgressMonitor monitor ) throws Exception {
         resource = layer.getResource(FeatureStore.class, monitor);
-        if( resource == null )
+        if (resource == null) {
             return;
-        FeatureCollection<SimpleFeatureType, SimpleFeature> c=new org.geotools.feature.collection.AdaptorFeatureCollection("addFeatureCollection",resource.getSchema()){
-
+        }
+        FeatureCollection<SimpleFeatureType, SimpleFeature> c = new org.geotools.feature.collection.AdaptorFeatureCollection(
+                "addFeatureCollection", resource.getSchema()){
             @Override
             public int size() {
                 return 1;
             }
-
             @Override
             protected Iterator openIterator() {
                 return new Iterator(){
-                    SimpleFeature next=feature;
-
+                    SimpleFeature next = feature;
                     public Object next() {
-                        SimpleFeature tmp=next;
-                        next=null;
+                        SimpleFeature tmp = next;
+                        next = null;
                         return tmp;
                     }
-
-                    public boolean hasNext(){
-                        return next!=null;
+                    public boolean hasNext() {
+                        return next != null;
                     }
-
                     public void remove() {
                         throw new UnsupportedOperationException();
                     }
-                    
+
                 };
             }
-
             @Override
             protected void closeIterator( Iterator close ) {
             }
-            
         };
-        fid=resource.addFeatures(c).iterator().next().getID();
+        fid = resource.addFeatures(c).iterator().next().getID();
     }
 
-    public SimpleFeature getNewFeature() throws IOException{
-        if( resource!=null ){
-            FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-			FeatureCollection<SimpleFeatureType, SimpleFeature>  features = resource.getFeatures(filterFactory.id(
-					FeatureUtils.stringToId(filterFactory, fid)));
-            FeatureIterator<SimpleFeature> iter=features.features();
-            try{
+    public SimpleFeature getNewFeature() throws IOException {
+        if (resource != null) {
+            FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
+                    .getDefaultHints());
+            FeatureCollection<SimpleFeatureType, SimpleFeature> features = resource
+                    .getFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory, fid)));
+            FeatureIterator<SimpleFeature> iter = features.features();
+            try {
                 return iter.next();
-            }finally{
+            } finally {
                 features.close(iter);
             }
         }
         return null;
     }
-    
+
     public String getName() {
-        return Messages.AddFeatureCommand_name; 
+        return Messages.AddFeatureCommand_name;
     }
 
     public void rollback( IProgressMonitor monitor ) throws Exception {
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-		resource.removeFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory, fid)));
+        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
+                .getDefaultHints());
+        resource.removeFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory, fid)));
     }
 
     /**

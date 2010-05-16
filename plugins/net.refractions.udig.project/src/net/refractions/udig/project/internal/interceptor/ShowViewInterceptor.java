@@ -83,6 +83,9 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
         if( prop==null ){
             prop = layer.getBlackboard().get(KEY);
         }
+        if( prop instanceof Filter && prop == Filter.INCLUDE ){
+            return resource;
+        }
         if (prop instanceof Filter || prop instanceof Query) {
             try {
                 IService service = layer.findGeoResource(FeatureSource.class)
