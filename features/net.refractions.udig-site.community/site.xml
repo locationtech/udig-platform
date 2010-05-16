@@ -11,13 +11,13 @@
    </feature>
    <category-def name="Axios Extensions for uDig" label="Axios Extensions for uDig"/>
    <feature url="features/eu.hydrologis.jgrass.feature_3.0.0.jar" id="eu.hydrologis.jgrass.feature" version="3.0.0">
-      <category name="JGrass"/>
+      <category name="JGrass Extensions for uDig"/>
    </feature>
    <feature url="features/eu.hydrologis.jgrass.extras_1.2.0.jar" id="eu.hydrologis.jgrass.extras" version="1.2.0">
-      <category name="JGrass"/>
+      <category name="JGrass Extensions for uDig"/>
    </feature>
    <feature url="features/eu.hydrologis.jgrass.feature.gpls_3.0.0.jar" id="eu.hydrologis.jgrass.feature.gpls" version="3.0.0">
-      <category name="JGrass Import-Export"/>
+      <category name="JGrass Import-Export tools"/>
    </feature>
    <category-def name="JGrass Extensions for uDig" label="JGrass Extensions for uDig">
       <description>
