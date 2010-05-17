@@ -1,6 +1,7 @@
 package net.refractions.udig.filter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -27,6 +28,8 @@ import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.util.Utilities;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Function;
 
@@ -90,6 +93,8 @@ public class ExpressionViewer extends Viewer {
     };
 
     private ControlDecoration feedback;
+
+    private FunctionContentProposalProvider proposalProvider;
     
     public ExpressionViewer( Composite parent ){
         this( parent, SWT.SINGLE );
@@ -115,7 +120,7 @@ public class ExpressionViewer extends Viewer {
         
         FunctionFinder ff = new FunctionFinder(null);
 
-        FunctionContentProposalProvider proposalProvider = new FunctionContentProposalProvider();
+        proposalProvider = new FunctionContentProposalProvider();
         proposalProvider.setFiltering(true);
         ContentProposalAdapter adapter = new ContentProposalAdapter(
                 text, new TextContentAdapter(), 
@@ -329,6 +334,20 @@ public class ExpressionViewer extends Viewer {
         if( control != null && !control.isDisposed() ){
             control.setToolTipText( error +":"+ eek );
         }
+    }
+    /**
+     * Feature Type to use for attribute names.
+     * @param type
+     */
+    public void setSchema( SimpleFeatureType type ) {
+        if( type == null ){
+            return;
+        }
+        Set<String> names = new HashSet<String>();
+        for( AttributeDescriptor attribute : type.getAttributeDescriptors()){
+            names.add( attribute.getLocalName() );
+        }
+        proposalProvider.setExtra( names );
     }
 }
 

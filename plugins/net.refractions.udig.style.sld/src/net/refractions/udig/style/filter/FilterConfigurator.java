@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
-import org.geotools.filter.text.cql2.CQL;
+import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
 public class FilterConfigurator extends IStyleConfigurator {
@@ -84,10 +84,10 @@ public class FilterConfigurator extends IStyleConfigurator {
     public void createControl( Composite parent ) {
         parent.setLayout(new MigLayout("", "[right]rel[left, grow]", "[c,grow 75,fill]"));
 
-        Label label = new Label(parent, SWT.MULTI | SWT.WRAP );
+        Label label = new Label(parent, SWT.SINGLE );
         label.setText("Filter");
 
-        text = new FilterViewer(parent );
+        text = new FilterViewer(parent,  SWT.MULTI | SWT.V_SCROLL | SWT.BORDER );
         text.getControl().setLayoutData("growx, growy, span, wrap");
         listen(true);
     }
@@ -113,6 +113,9 @@ public class FilterConfigurator extends IStyleConfigurator {
         if (text == null || text.getControl() == null || text.getControl().isDisposed()) {
             return;
         }
+        SimpleFeatureType type = getLayer().getSchema();
+        text.setSchema( type );
+        
         final Filter style = getStyle();
 
         text.getControl().getDisplay().asyncExec(new Runnable(){
