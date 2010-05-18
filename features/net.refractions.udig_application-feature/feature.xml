@@ -38,10 +38,11 @@
       <import plugin="org.eclipse.core.expressions"/>
       <import plugin="net.refractions.udig.catalog.wms"/>
       <import plugin="org.eclipse.help"/>
+      <import plugin="org.eclipse.ui.forms"/>
       <import plugin="org.eclipse.ui.views"/>
       <import plugin="net.refractions.udig.catalog.rasterings"/>
-      <import feature="net.refractions.udig_platform" version="1.2.0.qualifier"/>
-      <import plugin="org.eclipse.ui.forms"/>
+      <import plugin="org.eclipse.ui.views.properties.tabbed"/>
+      <import feature="net.refractions.udig_platform"/>
    </requires>
 
    <plugin
