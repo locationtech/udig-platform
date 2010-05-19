@@ -25,7 +25,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
             "image/gif,image/tiff,image/bmp,image/jpeg,image/png8,image/png"); //$NON-NLS-1$
         }else{
 	        store.setDefault(PreferenceConstants.P_IMAGE_TYPE_ORDER,
-	                "image/png8,image/png,image/gif,image/tiff,image/bmp,image/jpeg"); //$NON-NLS-1$
+	                "image/png,image/png8,image/gif,image/tiff,image/bmp,image/jpeg"); //$NON-NLS-1$
         }
         store.setDefault(PreferenceConstants.P_USE_DEFAULT_ORDER, true);
     }
