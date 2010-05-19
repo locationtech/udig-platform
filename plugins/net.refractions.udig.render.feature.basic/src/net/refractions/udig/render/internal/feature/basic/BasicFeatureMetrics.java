@@ -76,7 +76,7 @@ public class BasicFeatureMetrics extends AbstractRenderMetrics {
             this.latencyMetric = LATENCY_MEMORY;
             this.timeToDrawMetric = DRAW_DATA_MEMORY;
         }
-        else if( memory ){
+        else if( Boolean.TRUE.equals( memory ) ){
             this.latencyMetric = LATENCY_MEMORY_CACHE;
             this.timeToDrawMetric = DRAW_DATA_MEMORY;
         }
