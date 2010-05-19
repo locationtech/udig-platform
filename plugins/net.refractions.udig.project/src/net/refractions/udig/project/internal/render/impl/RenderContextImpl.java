@@ -148,7 +148,7 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
     public BufferedImage getImage() {
         Dimension size = getImageSize();
         if( size == null || size.width < 1 || size.height <1 ){
-            return null; // dummy image
+            return dummyImage; // dummy image
         }
         return getImage(size.width, size.height); // will create if needed
     }
