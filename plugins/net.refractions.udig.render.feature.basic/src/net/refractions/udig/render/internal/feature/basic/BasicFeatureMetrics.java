@@ -21,21 +21,25 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.refractions.udig.catalog.ID;
 import net.refractions.udig.core.MinMaxScaleCalculator;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ProjectBlackboardConstants;
+import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.render.Renderer;
+import net.refractions.udig.project.preferences.PreferenceConstants;
 import net.refractions.udig.project.render.AbstractRenderMetrics;
 import net.refractions.udig.project.render.IRenderContext;
 import net.refractions.udig.project.render.IRenderMetricsFactory;
 import net.refractions.udig.style.sld.SLDContent;
 
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.geotools.styling.Style;
 import org.geotools.util.Range;
 
 /**
  * The metrics object for the BasicFeatureRenderer
- *
+ * 
  * @author Jesse Eichar
  */
 public class BasicFeatureMetrics extends AbstractRenderMetrics {
@@ -43,58 +47,65 @@ public class BasicFeatureMetrics extends AbstractRenderMetrics {
     /*
      * list of styles the basic wms renderer is expecting to find and use
      */
-    protected static List<String> listExpectedStyleIds(){
+    protected static List<String> listExpectedStyleIds() {
         ArrayList<String> styleIds = new ArrayList<String>();
         styleIds.add(SLDContent.ID);
         styleIds.add(ProjectBlackboardConstants.LAYER__DATA_QUERY);
+        styleIds.add("net.refractions.udig.style.cache");
+        
         return styleIds;
     }
-    
-    public BasicFeatureMetrics( IRenderContext context2, BasicFeatureMetricsFactory factory) {
-        super(context2, factory, listExpectedStyleIds());
-    }
 
+    public BasicFeatureMetrics( IRenderContext context, BasicFeatureMetricsFactory factory ) {
+        super(context, factory, listExpectedStyleIds());
+        
+        // RESOLUTION QUALITY VS SPEED TRADEOFFS
+        IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
+        boolean antiAliasing = store.getBoolean(PreferenceConstants.P_ANTI_ALIASING);
+        if( antiAliasing ){
+            this.resolutionMetric = RES_DENSE;
+        }
+        else {
+            this.resolutionMetric = RES_PIXEL;
+        }
+        // DATA SOURCE PERFORMANCE INDICATORS
+        ID id = context.getGeoResource().getID();
+        Boolean memory = (Boolean) context.getLayer().getStyleBlackboard().get("net.refractions.udig.style.cache");
+        
+        if( id.isMemory() ){
+            this.latencyMetric = LATENCY_MEMORY;
+            this.timeToDrawMetric = DRAW_DATA_MEMORY;
+        }
+        else if( memory ){
+            this.latencyMetric = LATENCY_MEMORY_CACHE;
+            this.timeToDrawMetric = DRAW_DATA_MEMORY;
+        }
+        else if( id.isFile() ){
+            this.latencyMetric = LATENCY_LOCAL;
+            this.timeToDrawMetric = DRAW_DATA_RAW;
+        }
+        else if( id.isJDBC() || id.isWFS() ){
+            this.latencyMetric = LATENCY_NETWORK;
+            this.timeToDrawMetric = DRAW_DATA_RAW;
+        }
+    }
 
     /**
      * @see net.refractions.udig.project.render.IRenderMetrics#createRenderer()
      */
     public Renderer createRenderer() {
-        Renderer renderer=new BasicFeatureRenderer();
+        Renderer renderer = new BasicFeatureRenderer();
         renderer.setContext(context);
         renderer.setName(context.getLayer().getName());
         return renderer;
-    }
-
-    /**
-     * @see net.refractions.udig.project.render.IRenderMetrics#getRenderContext()
-     */
-    public IRenderContext getRenderContext() {
-        return context;
-    }
-
-    /**
-     * @see net.refractions.udig.project.render.IRenderMetrics#getRenderMetricsFactory()
-     */
-    public IRenderMetricsFactory getRenderMetricsFactory() {
-        return factory;
-    }
-
-    public boolean canAddLayer( ILayer layer ) {
-        return true;
     }
 
     public boolean canStyle( String SyleID, Object value ) {
         return value != null && value instanceof Style;
     }
 
-
     public Set<Range<Double>> getValidScaleRanges() {
         Style style = (Style) context.getLayer().getStyleBlackboard().get(SLDContent.ID);
-        if( style == null ) {
-            return new HashSet<Range<Double>>();
-        }
-        MinMaxScaleCalculator minMaxScaleCalculator = new MinMaxScaleCalculator();
-        style.accept(minMaxScaleCalculator);
-        return minMaxScaleCalculator.getRanges();
+        return MinMaxScaleCalculator.getValidScaleRanges(style);
     }
 }

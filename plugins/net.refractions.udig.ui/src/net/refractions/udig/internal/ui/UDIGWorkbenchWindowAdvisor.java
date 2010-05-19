@@ -75,7 +75,6 @@ public class UDIGWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
     @Override
     public void preWindowOpen() {
-        super.preWindowOpen();
         IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
         WorkbenchConfiguration configuration = lookupConfiguration();
         configuration.configureWorkbench(configurer);

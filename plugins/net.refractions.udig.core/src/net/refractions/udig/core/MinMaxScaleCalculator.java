@@ -59,6 +59,7 @@ import org.geotools.util.Range;
  * @author jesse
  * @since 1.1.0
  */
+@SuppressWarnings("deprecation")
 public class MinMaxScaleCalculator implements StyleVisitor {
     
     private Set<Range<Double>> ranges = new HashSet<Range<Double>>();
@@ -105,7 +106,7 @@ public class MinMaxScaleCalculator implements StyleVisitor {
         double max = rule.getMaxScaleDenominator();
         this.min = Math.min(min, this.min);
         this.max = Math.max(max, this.max);
-        ranges.add(new Range(Double.class, min,max));
+        ranges.add(new Range<Double>(Double.class, min,max));
     }
 
     public void visit( FeatureTypeStyle fts ) {
@@ -197,6 +198,16 @@ public class MinMaxScaleCalculator implements StyleVisitor {
     }
 
     public void visit( ShadedRelief arg0 ) {
+    }
+    
+    // UTILITY FUNCTIONS
+    public static Set<Range<Double>> getValidScaleRanges(Style style) {
+        if( style == null ) {
+            return new HashSet<Range<Double>>();
+        }
+        MinMaxScaleCalculator minMaxScaleCalculator = new MinMaxScaleCalculator();
+        style.accept(minMaxScaleCalculator);
+        return minMaxScaleCalculator.getRanges();
     }
 
 }

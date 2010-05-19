@@ -81,19 +81,6 @@
 				label="%HelpActionSet.label"
 				visible="false"
 				id="net.refractions.udig.helpMenuItems">
-			<menu
-         id="net.refractions.udig.updateMenu"
-         label="%UpdateActionSet.menu.label"
-         path="help/helpEnd">
-			</menu>
-			<action
-         class="net.refractions.udig.InstallWizardAction"
-         disabledIcon="icons/dtool16/usearch_obj.gif"
-         icon="icons/etool16/usearch_obj.gif"
-         id="net.refractions.udig.updateMenu.newUpdates"
-         label="%UpdateActionSet.updates.label"
-         menubarPath="help/helpEnd">
-			</action>
    <action
          class="net.refractions.udig.internal.ui.ShowSendLogAction"
          id="net.refractions.udig.ui.sendLogAction"

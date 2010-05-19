@@ -35,9 +35,12 @@ public class UDIGWorkbenchConfiguration implements WorkbenchConfiguration {
         //configurer.setInitialSize(new Point(bounds.width, bounds.height));
         
         configurer.setShowCoolBar(true);
-        configurer.setShowStatusLine(true);
         configurer.setShowFastViewBars(true);
         //configurer.setShowPerspectiveBar(true);
+        
+        // these are required for the update site if nothing else
+        configurer.setShowStatusLine(true);
+        configurer.setShowProgressIndicator(true);
     }
 
 }

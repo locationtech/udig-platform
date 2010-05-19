@@ -62,5 +62,6 @@ public class UDIGWorkbenchAdvisor extends WorkbenchAdvisor {
     public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
         return new UDIGWorkbenchWindowAdvisor(configurer);
     }
+    
 
 }

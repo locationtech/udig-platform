@@ -127,12 +127,15 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
     protected void fillMenuBar( IMenuManager menuBar ) {
         menuBar.add(new GroupMarker(IWorkbenchActionConstants.WB_START));
 
+        // Support use of MenuBuilder for RCP applications based on uDig
+        // (org.eclipse.ui.menu is preferred!)
         MenuBuilder override = getMenuFactory();
         if (override != null && !(override instanceof UDIGMenuBuilder)) {
             IWorkbenchWindow window = getActionBarConfigurer().getWindowConfigurer().getWindow();
             override.fillMenuBar(menuBar, window);
             return;
         }
+        
         MenuManager fileMenu = new MenuManager(Messages.UDIGWorkbenchAdvisor_file,
                 IWorkbenchActionConstants.M_FILE);
         fillFileMenu(fileMenu);
@@ -157,18 +160,6 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         }
         
         menuBar.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-
-//        if( true ){
-//            MenuManager layerMenu = new MenuManager(Messages.UDIGWorkbenchAdvisor_layerMenu,
-//            Constants.M_LAYER);
-//            fillLayerMenu( layerMenu );
-//            menuBar.add( layerMenu );
-//            
-//            // You will need to manually add OpCategoryContributionItems to
-//            // the org.eclipse.ui.menus extension point for this release
-//            //
-//            //UiPlugin.getDefault().getOperationMenuFactory().contributeActions(menuBar);
-//        }
         
         IMenuManager windowMenu = new MenuManager(Messages.UDIGWorkbenchAdvisor_window,
                 IWorkbenchActionConstants.M_WINDOW);
