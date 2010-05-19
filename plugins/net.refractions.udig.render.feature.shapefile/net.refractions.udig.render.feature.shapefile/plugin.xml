@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="net.refractions.udig.project.renderer">
+      <renderer
+            class="net.refractions.udig.render.internal.feature.shapefile.ShapefileFeatureMetricsFactory"
+            name="%renderer.name">
+         <description>
+            %renderer.desc
+         </description>
+         %renderer.description
+         
+         
+      </renderer>
+   </extension>
+
+</plugin>
