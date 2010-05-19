@@ -12,56 +12,56 @@
 	<classpathentry exported="true" kind="lib" path="lib/geoapi-pending-2.3-M1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geodb-0.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/google-collect-snapshot-20080321.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-api-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-2.6.4.jar" sourcepath="/Users/jody/java/geotools/release/modules/library/jdbc/src"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-common-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-brewer-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-charts-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-cql-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-data-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-h2-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geotiff-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-graph-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-image-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-imageio-ext-gdal-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-db2-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-h2-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-mysql-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-oracle-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-postgis-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-spatialite-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jp2k-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-main-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-postgis-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-postgis-versioned-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-property-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-render-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-renderer-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-svg-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-swing-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-temporal-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-validation-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wfs-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wms-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wps-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xml-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-core-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-filter-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml2-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml3-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-kml-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-ows-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wfs-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wps-2.6.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-api-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-common-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-brewer-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-charts-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-cql-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-data-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-h2-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geotiff-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-graph-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-image-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-imageio-ext-gdal-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-db2-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-h2-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-mysql-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-oracle-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-postgis-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-spatialite-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jp2k-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-main-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-postgis-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-postgis-versioned-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-property-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-render-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-renderer-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-svg-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-swing-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-temporal-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-validation-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wfs-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wms-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wps-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xml-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-core-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-filter-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml2-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml3-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-kml-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-ows-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wfs-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wps-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/h2-1.1.104.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hatbox-1.0.b7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hsqldb-1.8.0.7.jar"/>
@@ -99,12 +99,12 @@
 	<classpathentry exported="true" kind="lib" path="lib/jts-1.10.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/miglayout-3.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.5.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.ows-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wfs-2.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wps-2.6.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.ows-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wfs-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wps-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/netcdf-java-4.0.41.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/opendap-2.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/org.w3.xlink-2.6.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.w3.xlink-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/picocontainer-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/postgis-driver-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/postgresql-8.4-701.jdbc3.jar"/>
