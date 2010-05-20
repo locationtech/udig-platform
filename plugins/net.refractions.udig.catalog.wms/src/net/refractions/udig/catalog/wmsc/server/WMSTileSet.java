@@ -232,7 +232,7 @@ public class WMSTileSet implements TileSet {
      */
     @SuppressWarnings("nls")
     public String createQueryString( Envelope tile ) {
-        String query = "service=WMS&request=getMap&tiled=true&format=" + getFormat() + "&srs=" + getEPSGCode()
+        String query = "service=WMS&request=getMap&tiled=true&width="+width+"&height="+height+"&format=" + getFormat() + "&srs=" + getEPSGCode()
                 + "&layers=" + getLayers() + "&bbox=" + tile.getMinX() + "," + tile.getMinY() + ","
                 + tile.getMaxX() + "," + tile.getMaxY() + "&styles=" + getStyles();
         return query;
