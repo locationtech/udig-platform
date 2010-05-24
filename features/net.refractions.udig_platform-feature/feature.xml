@@ -27,31 +27,6 @@ This library is distributed in the hope that it will be useful, but WITHOUT ANY 
       <update label="User-friendly Desktop Internet GIS Updates" url="http://udig.refractions.net/update/"/>
    </url>
 
-   <includes
-         id="net.refractions.udig_base"
-         version="0.0.0"/>
-
-   <requires>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.update.ui"/>
-      <import plugin="org.eclipse.jface"/>
-      <import plugin="org.apache.ant"/>
-      <import plugin="org.apache.lucene"/>
-      <import plugin="org.eclipse.help.appserver"/>
-      <import plugin="org.eclipse.help.base"/>
-      <import plugin="org.eclipse.help.ui"/>
-      <import plugin="org.eclipse.help.webapp"/>
-      <import plugin="org.apache.xerces"/>
-      <import plugin="org.eclipse.xsd"/>
-      <import plugin="org.apache.log4j"/>
-      <import plugin="org.eclipse.osgi"/>
-      <import plugin="org.eclipse.osgi.services"/>
-      <import plugin="org.eclipse.core.expressions"/>
-      <import plugin="net.refractions.udig.core" version="1.1.0" match="greaterOrEqual"/>
-      <import plugin="net.refractions.udig.project"/>
-   </requires>
-
    <plugin
          id="net.refractions.udig.libs"
          download-size="0"
