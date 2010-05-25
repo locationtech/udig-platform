@@ -61,6 +61,7 @@ public class OracleGeoResource extends IGeoResource {
      * @param typename
      */
     public OracleGeoResource( OracleServiceImpl parent, String typename ) {
+        this.service = parent;
         this.typename = typename;
     }
 
