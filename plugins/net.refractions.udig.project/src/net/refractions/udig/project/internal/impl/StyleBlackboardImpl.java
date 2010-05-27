@@ -248,9 +248,12 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
                     XMLMemento memento = XMLMemento.createReadRoot(new StringReader(mementoString));
                     Object style = styleContent.load(memento);
                     styleEntry.setStyle(style);
-                    styleEntry.setStyleClass( style.getClass() );
+                    if( style != null ){
+                        styleEntry.setStyleClass( style.getClass() );
+                    }
                 }
             } catch (WorkbenchException e) {
+                ProjectPlugin.getPlugin().log( styleEntry.getID()+":"+e);
                 e.printStackTrace();
             }
         }

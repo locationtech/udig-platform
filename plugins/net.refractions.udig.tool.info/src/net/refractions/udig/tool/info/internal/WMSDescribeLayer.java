@@ -239,9 +239,13 @@ public class WMSDescribeLayer {
         }
         
         StyleImpl wmsStyle = (StyleImpl) layer.getStyleBlackboard().get(WMSStyleContent.WMSSTYLE);
-		if (wmsStyle != null) {
-			getmap.setProperty(GetMapRequest.STYLES, wmsStyle.getName());
-		}
+        if (wmsStyle != null) {
+            getmap.setProperty(GetMapRequest.STYLES, wmsStyle.getName());
+        }
+        else {
+            // supply an empty String as per UDIG-1507
+            getmap.setProperty(GetMapRequest.STYLES, "");
+        }
         
         final GetFeatureInfoRequest request = wms.createGetFeatureInfoRequest( getmap );                       
         request.setInfoFormat( desiredFormat );
