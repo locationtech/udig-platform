@@ -27,6 +27,7 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.oracle.internal.Messages;
+import net.refractions.udig.core.jts.ReferencedEnvelopeCache;
 import net.refractions.udig.ui.graphics.Glyph;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -134,7 +135,11 @@ public class OracleGeoResource extends IGeoResource {
                 || super.canResolve(adaptee);
     }
 
-    protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+    @Override
+    public OracleResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
+        return (OracleResourceInfo) super.getInfo(monitor);
+    }
+    protected OracleResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
         if (getStatus() == Status.BROKEN) {
             return null; // could not connect
         }
@@ -151,17 +156,22 @@ public class OracleGeoResource extends IGeoResource {
         private SimpleFeatureType ft = null;
         OracleResourceInfo() throws IOException {
             JDBCDataStore dataStore = getService().getDS(null);
-            ft = dataStore.getSchema(typename);
-
+            ft = dataStore.getSchema(typename); // this may be broken in geotools?
+            this.title = typename;
             try {
                 FeatureSource<SimpleFeatureType, SimpleFeature> source = dataStore
                         .getFeatureSource(typename);
+                ft = source.getSchema();
                 bounds = (ReferencedEnvelope) source.getBounds();
                 if (bounds == null) {
                     CoordinateReferenceSystem crs = null;
                     // GeometryDescriptor defaultGeometry =
                     // source.getSchema().getGeometryDescriptor();
                     crs = source.getSchema().getCoordinateReferenceSystem();
+                    this.bounds = ReferencedEnvelopeCache.getReferencedEnvelope(info.getCRS());
+                    
+                    /*
+                    // no full table scan for you!
                     bounds = new ReferencedEnvelope(new Envelope(), crs);
                     FeatureIterator<SimpleFeature> iter = source.getFeatures().features();
                     try {
@@ -175,6 +185,7 @@ public class OracleGeoResource extends IGeoResource {
                     } finally {
                         iter.close();
                     }
+                    */
                 }
                 // CoordinateReferenceSystem geomcrs = source.getSchema().getCRS();
 
