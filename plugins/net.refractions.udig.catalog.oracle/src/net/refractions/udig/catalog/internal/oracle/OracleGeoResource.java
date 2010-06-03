@@ -23,6 +23,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import net.refractions.udig.catalog.CatalogPlugin;
+import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IService;
@@ -54,6 +55,7 @@ import com.vividsolutions.jts.geom.Envelope;
  */
 public class OracleGeoResource extends IGeoResource {
     String typename = null;
+    private ID id;
 
     /**
      * Construct <code>OracleGeoResource</code>.
@@ -64,19 +66,24 @@ public class OracleGeoResource extends IGeoResource {
     public OracleGeoResource( OracleServiceImpl parent, String typename ) {
         this.service = parent;
         this.typename = typename;
+        this.id = new ID(service.getID(), typename );
     }
 
     OracleServiceImpl getService() {
         return (OracleServiceImpl) service;
     }
-    public URL getIdentifier() {
-        try {
-            return new URL(service.getIdentifier().toString() + "#" + typename); //$NON-NLS-1$
-        } catch (MalformedURLException e) {
-            return service.getIdentifier();
-        }
+    
+    @Override
+    public ID getID() {
+        return id;
     }
 
+    @Override
+    public URL getIdentifier() {
+        return id.toURL();
+    }
+
+    
     /*
      * @see net.refractions.udig.catalog.IGeoResource#getStatus()
      */
@@ -97,14 +104,15 @@ public class OracleGeoResource extends IGeoResource {
      * org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
-        if (adaptee == null)
+        if (adaptee == null){
             return null;
-        // if (adaptee.isAssignableFrom(IService.class))
-        // return adaptee.cast(parent);
-        if (adaptee.isAssignableFrom(IGeoResourceInfo.class))
+        }
+        if (adaptee.isAssignableFrom(IGeoResourceInfo.class)){
             return adaptee.cast(createInfo(monitor));
-        if (adaptee.isAssignableFrom(IGeoResource.class))
+        }
+        if (adaptee.isAssignableFrom(IGeoResource.class)){
             return adaptee.cast(this);
+        }
         if (adaptee.isAssignableFrom(FeatureStore.class)) {
             JDBCDataStore dataStore = getService().getDS(monitor);
 
