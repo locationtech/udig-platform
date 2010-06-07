@@ -45,10 +45,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * Provides ...TODO summary sentence
- * <p>
- * TODO Description
- * </p>
+ * OracleGeoResource representing a table or view.
  * 
  * @author David Zwiers, Refractions Research
  * @since 0.6

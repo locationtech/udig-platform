@@ -120,7 +120,6 @@ public class OracleServiceImpl extends IService {
      * @see net.refractions.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
     public List<OracleGeoResource> resources( IProgressMonitor monitor ) throws IOException {
-
         if (members == null) {
             rLock.lock();
             try {
@@ -128,10 +127,12 @@ public class OracleServiceImpl extends IService {
                     getDS(monitor); // load ds
                     members = new LinkedList<OracleGeoResource>();
                     String[] typenames = ds.getTypeNames();
-                    if (typenames != null)
+                    if (typenames != null){
                         for( int i = 0; i < typenames.length; i++ ) {
-                            members.add(new OracleGeoResource(this, typenames[i]));
+                            String typeName = typenames[i];
+                            members.add(new OracleGeoResource(this, typeName));
                         }
+                    }
                 }
             } finally {
                 rLock.unlock();
