@@ -95,13 +95,21 @@ public class GridCoverageReaderMetrics extends AbstractRenderMetrics {
     }
 
     public Set<Range<Double>> getValidScaleRanges() {
-        Style style = (Style) context.getLayer().getStyleBlackboard().get(SLDContent.ID);
-        if( style == null ) {
+        ILayer layer = context.getLayer();
+        Object obj = layer.getStyleBlackboard().get(SLDContent.ID);
+        if( obj instanceof Style ){
+            Style style = (Style) obj;
+            if( style == null ) {
+                return new HashSet<Range<Double>>();
+            }
+            MinMaxScaleCalculator minMaxScaleCalculator = new MinMaxScaleCalculator();
+            style.accept(minMaxScaleCalculator);
+            return minMaxScaleCalculator.getRanges();
+        }
+        else {
+            // style is not what was expected
             return new HashSet<Range<Double>>();
         }
-        MinMaxScaleCalculator minMaxScaleCalculator = new MinMaxScaleCalculator();
-        style.accept(minMaxScaleCalculator);
-        return minMaxScaleCalculator.getRanges();
     }
 
 }

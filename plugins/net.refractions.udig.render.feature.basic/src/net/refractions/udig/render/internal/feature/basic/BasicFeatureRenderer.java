@@ -47,6 +47,7 @@ import org.geotools.map.DefaultMapContext;
 import org.geotools.map.DefaultMapLayer;
 import org.geotools.map.MapContext;
 import org.geotools.map.MapLayer;
+import org.geotools.referencing.operation.projection.ProjectionException;
 import org.geotools.renderer.GTRenderer;
 import org.geotools.renderer.RenderListener;
 import org.geotools.renderer.lite.StreamingRenderer;
@@ -60,6 +61,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.TopologyException;
 
 /**
@@ -416,7 +418,7 @@ public class BasicFeatureRenderer extends RendererImpl {
      * <p>
      * It returns the validated bounds.
      * 
-     * @param bounds requested bounds; if null the image bounds will be used
+     * @param viewBounds requested bounds; if null the image bounds will be used
      * @param monitor
      * @param context context allowing access to the layer and thus the data bounds
      * @return validated bounds used to request data for drawing on the screen
@@ -424,33 +426,50 @@ public class BasicFeatureRenderer extends RendererImpl {
      * @throws FactoryException
      * @throws RenderException
      */
-    public static ReferencedEnvelope validateBounds( ReferencedEnvelope bounds,
+    public static ReferencedEnvelope validateBounds( ReferencedEnvelope viewBounds,
             IProgressMonitor monitor, IRenderContext context ) throws IOException,
             FactoryException, RenderException {
 
-        if (bounds == null) {
+        if (viewBounds == null) {
             // get the bounds from the context
-            bounds = context.getImageBounds();
+            viewBounds = context.getImageBounds();
         }
-        CoordinateReferenceSystem viewportCRS = context.getCRS();
-        ReferencedEnvelope layerBounds = context.getLayer().getBounds(
-                new SubProgressMonitor(monitor, 0), viewportCRS);
+        CoordinateReferenceSystem viewCRS = context.getCRS();
+        ReferencedEnvelope layerBounds = context.getLayer().getBounds(monitor, viewCRS);
 
         if (layerBounds == null || layerBounds.isNull() || layerBounds.isEmpty()) {
             return context.getImageBounds(); // layer bounds are unknown so draw what is on screen!
         }
-        // if the bounds do not intersect the layer bounds then we probably have
-        // nothing to renderer
-        if (!layerBounds.intersects((BoundingBox) bounds)) {
-            ReferencedEnvelope crsBounds = ReferencedEnvelopeCache.getReferencedEnvelope(context
-                    .getCRS());
-            if (!crsBounds.intersects((BoundingBox) crsBounds)) {
-                // okay we are right off the map; return an empty envelope
-                return new ReferencedEnvelope(context.getCRS());
+        // if the viewBounds interesect the layer at all then let us draw what is on the screen
+        if( layerBounds.getCoordinateReferenceSystem() == viewBounds.getCoordinateReferenceSystem() && 
+                layerBounds.intersects((BoundingBox) viewBounds)) {
+            // these bounds look okay; transform them to the viewportCRS
+            ReferencedEnvelope screen = new ReferencedEnvelope(viewBounds, viewCRS);
+            return screen;
+        }
+        else {            
+            try {
+                ReferencedEnvelope crsBounds = ReferencedEnvelopeCache.getReferencedEnvelope(viewCRS);
+                if( crsBounds.isEmpty() || crsBounds.isNull() ){
+                    return context.getImageBounds(); // max crs bounds are unknown so draw what is on screen!
+                }
+                ReferencedEnvelope maxBounds = crsBounds.transform( viewCRS, true, 10 );
+                if ( maxBounds.getCoordinateReferenceSystem() == viewBounds.getCoordinateReferenceSystem() &&
+                        maxBounds.intersects((BoundingBox) viewBounds)) {
+                    // okay the viewBounds are at least somewhere in the maxBounds for the CRS
+                    // draw what is on screen
+                    ReferencedEnvelope clip = new ReferencedEnvelope( maxBounds.intersection(viewBounds), viewCRS );
+                    return clip;
+                }
+                else {
+                    // okay we are right off the map; return an empty envelope
+                    return new ReferencedEnvelope(viewCRS);
+                }
+            } catch (TransformException e) {
+                // not sure - so let us draw what is on screen
+                return new ReferencedEnvelope(viewBounds, viewCRS);
             }
         }
-        // these bounds look okay; transform them to the viewportCRS
-        return new ReferencedEnvelope(bounds, viewportCRS);
     }
 
     private class BasicRenderListener implements RenderListener {
@@ -491,24 +510,33 @@ public class BasicFeatureRenderer extends RendererImpl {
          */
         public void errorOccurred( Exception e ) {
             if (e != null) {
-                e.printStackTrace();
                 if (e.getMessage() != null && (e.getMessage().toLowerCase().contains("timeout") || //$NON-NLS-1$
                         e.getMessage().toLowerCase().contains("time-out") || //$NON-NLS-1$
                         e.getMessage().toLowerCase().contains("timed out"))) { //$NON-NLS-1$
                     exception = new Exception(Messages.BasicFeatureRenderer_request_timed_out);
-                    if (getRenderer() != null)
+                    if (getRenderer() != null){
                         getRenderer().stopRendering();
+                    }
+                }                
+                if (e instanceof IOException) {
+                    if (getRenderer() != null){
+                        getRenderer().stopRendering();
+                    }
+                    exception = e;
                 }
-            }
-            if (e instanceof IOException) {
-                if (getRenderer() != null)
-                    getRenderer().stopRendering();
-                exception = e;
+//                if (e instanceof ProjectionException){
+//                    // ignore data is getting out of range for this projection
+//                    return;
+//                }
+                ProjectPlugin.log( getContext().getLayer().getName() + " rendering error:"+e, e);
+                e.printStackTrace();
             }
 
-            if (exceptionCount > 500)
-                if (getRenderer() != null)
+            if (exceptionCount > 500){
+                if (getRenderer() != null){
                     getRenderer().stopRendering();
+                }
+            }
             exception = e;
             exceptionCount++;
         }
