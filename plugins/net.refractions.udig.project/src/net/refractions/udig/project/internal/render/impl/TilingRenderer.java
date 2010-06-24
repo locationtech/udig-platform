@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.InvocationTargetException;
 
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.ProjectPlugin;
@@ -25,6 +26,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -412,6 +414,11 @@ public class TilingRenderer implements Renderer, RendererDecorator {
         return child.eCrossReferences();
     }
 
+    public Object eInvoke( EOperation operation, EList< ? > arguments )
+            throws InvocationTargetException {
+        return child.eInvoke(operation, arguments);
+    }
+    
     public Object eGet( EStructuralFeature feature ) {
         return child.eGet(feature);
     }

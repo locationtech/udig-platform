@@ -9,9 +9,9 @@
 	<property file="${refresh_libs_basedir}${file.separator}copy.properties"/>
 
 	<!-- remote repositories as defined in copy.properties -->
-	<artifact:remoteRepository id="udig.snapshot.repository" url="${updateSnapshotURL}" />
-	<artifact:remoteRepository id="udig.stable.repository" url="${updateStableURL}" />
-	<artifact:remoteRepository id="remote.repository" url="${mirror1}" />
+	<artifact:remoteRepository id="geotools.repository" url="${geotoolsRepository}" />
+	
+	<artifact:remoteRepository id="central.repository" url="${central}" />
 	<artifact:remoteRepository id="jaitoolsmaven.repository" url="${jaitoolsmaven}" />
 	<artifact:remoteRepository id="geosolutionsmaven.repository" url="${geosolutionsmaven}" />
 
@@ -35,9 +35,10 @@
 			<localRepository refid="local.repository"/>
 
 			<!-- remote repositories as defined above -->
-			<remoteRepository refid="udig.stable.repository" />
-			<remoteRepository refid="udig.snapshot.repository" />
-			<remoteRepository refid="remote.repository" />
+			<!-- remoteRepository refid="udig.snapshot.repository" /-->
+			
+			<remoteRepository refid="geotools.repository" />
+			<remoteRepository refid="central.repository" />
 			<remoteRepository refid="jaitoolsmaven.repository" />
 			<remoteRepository refid="geosolutionsmaven.repository" />
 
@@ -156,8 +157,8 @@
 			<!-- We get this from the base RCP as such they are already provided by -->
 			<!-- our net.refractions.udig.libs dependencies in the MANIFEST.MF -->
 			<!-- and we don't need to ask for them to be downloaded now.       -->
-			<dependency groupId="org.apache" artifactId="xerces" version="2.7.1" scope="provided" />
-			<dependency groupId="xerces" artifactId="xercesImpl" version="2.7.1" scope="provided" />
+			<!-- dependency groupId="org.apache" artifactId="xerces" version="2.7.1" scope="provided" /-->
+			<!-- dependency groupId="xerces" artifactId="xercesImpl" version="2.7.1" scope="provided" /-->
 
 			<!-- the followin is provided by the eclipse modeling target platform -->
 			<dependency groupId="com.ibm.icu" artifactid="icu4j" version="3.4.4" scope="provided" />

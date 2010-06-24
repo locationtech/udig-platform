@@ -10,6 +10,7 @@ package net.refractions.udig.project.internal;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +33,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -550,9 +552,9 @@ public class LayerDecorator implements Layer, InternalEObject {
     /**
      * @see org.eclipse.emf.ecore.InternalEObject#eBaseStructuralFeatureID(int, java.lang.Class)
      */
-    public int eBaseStructuralFeatureID( int derivedFeatureID, Class baseClass ) {
-        return interalObject.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-    }
+//    public int eBaseStructuralFeatureID( int derivedFeatureID, Class baseClass ) {
+//        return interalObject.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+//    }
 
     /**
      * @see org.eclipse.emf.ecore.InternalEObject#eContainerFeatureID()
@@ -564,9 +566,9 @@ public class LayerDecorator implements Layer, InternalEObject {
     /**
      * @see org.eclipse.emf.ecore.InternalEObject#eDerivedStructuralFeatureID(int, java.lang.Class)
      */
-    public int eDerivedStructuralFeatureID( int baseFeatureID, Class baseClass ) {
-        return interalObject.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-    }
+//    public int eDerivedStructuralFeatureID( int baseFeatureID, Class baseClass ) {
+//        return interalObject.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+//    }
 
     /**
      * @see org.eclipse.emf.ecore.InternalEObject#eSetResource(org.eclipse.emf.ecore.resource.Resource.Internal,
@@ -580,19 +582,19 @@ public class LayerDecorator implements Layer, InternalEObject {
      * @see org.eclipse.emf.ecore.InternalEObject#eInverseAdd(org.eclipse.emf.ecore.InternalEObject,
      *      int, java.lang.Class, org.eclipse.emf.common.notify.NotificationChain)
      */
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID, Class baseClass,
-            NotificationChain notifications ) {
-        return interalObject.eInverseAdd(otherEnd, featureID, baseClass, notifications);
-    }
+//    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID, Class baseClass,
+//            NotificationChain notifications ) {
+//        return interalObject.eInverseAdd(otherEnd, featureID, baseClass, notifications);
+//    }
 
     /**
      * @see org.eclipse.emf.ecore.InternalEObject#eInverseRemove(org.eclipse.emf.ecore.InternalEObject,
      *      int, java.lang.Class, org.eclipse.emf.common.notify.NotificationChain)
      */
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            Class baseClass, NotificationChain notifications ) {
-        return interalObject.eInverseRemove(otherEnd, featureID, baseClass, notifications);
-    }
+//    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
+//            Class baseClass, NotificationChain notifications ) {
+//        return interalObject.eInverseRemove(otherEnd, featureID, baseClass, notifications);
+//    }
 
     /**
      * @see org.eclipse.emf.ecore.InternalEObject#eBasicSetContainer(org.eclipse.emf.ecore.InternalEObject,
@@ -847,5 +849,34 @@ public class LayerDecorator implements Layer, InternalEObject {
         return layer.getScaleRange();
     }
 
+    public Object eInvoke( EOperation operation, EList< ? > arguments )
+            throws InvocationTargetException {
+        return layer.eInvoke(operation, arguments);
+    }
 
+    public int eBaseStructuralFeatureID( int derivedFeatureID, Class< ? > baseClass ) {
+        return this.interalObject.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    public int eDerivedStructuralFeatureID( int baseFeatureID, Class< ? > baseClass ) {
+        return interalObject.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
+
+    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
+            Class< ? > baseClass, NotificationChain notifications ) {
+        return interalObject.eInverseAdd(otherEnd, featureID, baseClass, notifications);
+    }
+
+    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
+            Class< ? > baseClass, NotificationChain notifications ) {
+        return interalObject.eInverseRemove(otherEnd, featureID, baseClass, notifications);
+    }
+
+    public Object eInvoke( int operationID, EList< ? > arguments ) throws InvocationTargetException {
+        return interalObject.eInvoke(operationID, arguments);
+    }
+
+    public int eDerivedOperationID( int baseOperationID, Class< ? > baseClass ) {   
+        return interalObject.eDerivedOperationID(baseOperationID, baseClass);
+    }
 }
