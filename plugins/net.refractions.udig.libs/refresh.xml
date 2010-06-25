@@ -175,9 +175,10 @@
 			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-script" version="1.7" />
 			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-awt-util" version="1.7" />
 			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-parser" version="1.7" />-->
+			
 			<!-- These dependencies are for optional batik components and are not used -->
-			<!--dependency groupId="xml-apis" artifactId="xml-apis-xerces" version="2.7.1" scope="provided" />
-			<dependency groupId="xml-apis" artifactId="xml-apis" version="1.0.b2" scope="provided" /-->
+			<dependency groupId="xml-apis" artifactId="xml-apis-xerces" version="2.7.1" />
+			<!--dependency groupId="xml-apis" artifactId="xml-apis" version="1.0.b2" scope="provided" /-->
 			
 			<!--dependency groupId="commons-io" artifactId="commons-io" version="1.0.b2" scope="provided" /-->
 			<dependency groupId="commons-codec" artifactid="commons-codec" version="1.2" scope="provided" />
