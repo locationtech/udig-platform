@@ -18,10 +18,8 @@ package net.refractions.udig.render.internal.feature.shapefile;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetrics;
 import net.refractions.udig.project.render.IRenderMetricsFactory;
 import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.render.internal.feature.basic.BasicFeatureMetricsFactory;
 
 import org.geotools.data.FeatureSource;
 import org.geotools.data.shapefile.ShapefileDataStore;
@@ -33,30 +31,33 @@ import org.geotools.data.view.DefaultView;
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
-public class ShapefileFeatureMetricsFactory extends BasicFeatureMetricsFactory {
+public class ShapefileFeatureMetricsFactory implements IRenderMetricsFactory {
 
     /**
      * @see net.refractions.udig.project.render.IRenderMetricsFactory#createMetrics(net.refractions.udig.project.render.IRenderContext)
      */
-    public IRenderMetrics createMetrics(IRenderContext context) {
+    public ShapefileFeatureMetrics createMetrics(IRenderContext context) {
         return new ShapefileFeatureMetrics(context, this);
     }
 
     /**
      * @see net.refractions.udig.project.render.IRenderMetricsFactory#canRender(net.refractions.udig.project.render.IRenderContext)
      */
+    @SuppressWarnings("unchecked")
     public boolean canRender(IRenderContext context) {
         try {
             IGeoResource geoResource = context.getGeoResource();
-            FeatureSource fs=geoResource.resolve(FeatureSource.class, null);
-            
-            boolean notAView = !(fs instanceof DefaultView);
-            boolean isAShapefile = (fs.getDataStore() instanceof ShapefileDataStore);
-            return notAView && fs!=null && isAShapefile; 
+            if( geoResource.canResolve(ShapefileDataStore.class)){
+                FeatureSource featureSource=geoResource.resolve(FeatureSource.class, null);
+                
+                boolean notAView = !(featureSource instanceof DefaultView);
+                boolean isAShapefile = (featureSource.getDataStore() instanceof ShapefileDataStore);
+                return notAView && featureSource!=null && isAShapefile; 
+            }
         }
         catch( Throwable t ) {
-            return false;
         }
+        return false;
     }
 
     /**

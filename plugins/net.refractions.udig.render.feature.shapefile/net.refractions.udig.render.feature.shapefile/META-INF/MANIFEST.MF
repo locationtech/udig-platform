@@ -10,5 +10,6 @@ Export-Package: net.refractions.udig.render.internal.feature.shapefile
 Require-Bundle: org.eclipse.core.runtime,
  net.refractions.udig.project,
  net.refractions.udig.libs,
- net.refractions.udig.render.feature.basic
+ net.refractions.udig.render.feature.basic,
+ org.eclipse.ui
 Eclipse-LazyStart: true
