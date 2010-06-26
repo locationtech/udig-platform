@@ -36,14 +36,14 @@
             objectClass="net.refractions.udig.project.IProject"
             adaptable="true"
             id="net.refractions.udig.project.ui.ProjectContributions">
-         <action
+       <!--  <action
                class="net.refractions.udig.project.ui.internal.actions.ConsolidateAction"
                enablesFor="1"
                id="net.refractions.udig.project.ui.action1"
                label="%consolidate.action"
                menubarPath="additions"
                style="push">
-         </action>
+         </action> -->
          <action
                enablesFor="1"
                label="%rename.label"
