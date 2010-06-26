@@ -121,10 +121,8 @@ public class UiPlugin extends AbstractUIPlugin {
         try {
             loadVersion();
 
-            java.lang.System.setProperty(
-                    "http.agent", "uDig " + getVersion() + " (http://udig.refractions.net)"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            java.lang.System.setProperty(
-                    "https.agent", "uDig " + getVersion() + " (http://udig.refractions.net)");//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            java.lang.System.setProperty("http.agent", "uDig " + getVersion() + " (http://udig.refractions.net)"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            java.lang.System.setProperty("https.agent", "uDig " + getVersion() + " (http://udig.refractions.net)");//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         } catch (Throwable e) {
             log("error determining version", e); //$NON-NLS-1$
         }
@@ -139,11 +137,9 @@ public class UiPlugin extends AbstractUIPlugin {
             public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                 return null;
             }
-            public void checkClientTrusted( java.security.cert.X509Certificate[] certs,
-                    String authType ) {
+            public void checkClientTrusted( java.security.cert.X509Certificate[] certs, String authType ) {
             }
-            public void checkServerTrusted( java.security.cert.X509Certificate[] certs,
-                    String authType ) {
+            public void checkServerTrusted( java.security.cert.X509Certificate[] certs, String authType ) {
             }
         }};
 
@@ -363,8 +359,7 @@ public class UiPlugin extends AbstractUIPlugin {
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ) {
-        return getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+        return getDefault().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
     }
     /**
      * Get the MenuFactory which will create the menus for this plugin
@@ -387,8 +382,8 @@ public class UiPlugin extends AbstractUIPlugin {
         String idField = MenuBuilder.ATTR_ID;
         String classField = MenuBuilder.ATTR_CLASS;
 
-        MenuBuilder mb = (MenuBuilder) lookupConfigurationObject(interfaceClass,
-                getPreferenceStore(), ID, prefConstant, xpid, idField, classField);
+        MenuBuilder mb = (MenuBuilder) lookupConfigurationObject(interfaceClass, getPreferenceStore(), ID, prefConstant, xpid,
+                idField, classField);
         if (mb != null) {
             return mb;
         }
@@ -434,8 +429,7 @@ public class UiPlugin extends AbstractUIPlugin {
      * @param maxHeapSize new heapsize. 1024M 1G are legal options
      * @return the configFile to use for setting configuration information
      */
-    public static void setMaxHeapSize( final String maxHeapSize ) throws FileNotFoundException,
-            IOException {
+    public static void setMaxHeapSize( final String maxHeapSize ) throws FileNotFoundException, IOException {
         processAppIni(false, new Function<String, String>(){
 
             public String apply( String line ) {
@@ -458,35 +452,43 @@ public class UiPlugin extends AbstractUIPlugin {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static void setProxy( String proxyHost, String proxyPort, String proxyNonHost )
-            throws FileNotFoundException, IOException {
+    public static void setProxy( String proxyHost, String proxyPort, String proxyNonHost ) throws FileNotFoundException,
+            IOException {
         File iniFile = getIniFile();
-        BufferedReader bR = new BufferedReader(new FileReader(iniFile));
+        BufferedReader bR = null;
         StringBuilder sB = new StringBuilder();
-        String line = null;
-        while( (line = bR.readLine()) != null ) {
-            if (line.matches(".*Dhttp.proxy.*") || line.matches(".*Dhttp.nonProxy.*")) {
-                continue;
+        try {
+            bR = new BufferedReader(new FileReader(iniFile));
+            String line = null;
+            while( (line = bR.readLine()) != null ) {
+                if (line.matches(".*Dhttp.proxy.*") || line.matches(".*Dhttp.nonProxy.*")) {
+                    continue;
+                }
+                if (line.matches("")) {
+                    continue;
+                }
+                sB.append(line).append("\n");
             }
-            if (line.matches("")) {
-                continue;
-            }
-            sB.append(line).append("\n");
+        } finally {
+            bR.close();
         }
-        bR.close();
 
-        if (proxyHost != null && proxyHost.length() > 0 && proxyPort != null
-                && proxyPort.length() > 0) {
+        if (proxyHost != null && proxyHost.length() > 0 && proxyPort != null && proxyPort.length() > 0) {
             sB.append("-D" + RuntimeFieldEditor.PROXYHOST + "=").append(proxyHost).append("\n");
             sB.append("-D" + RuntimeFieldEditor.PROXYPORT + "=").append(proxyPort).append("\n");
             if (proxyNonHost != null && proxyNonHost.length() > 0) {
-                sB.append("-D" + RuntimeFieldEditor.PROXYNONHOSTS + "=").append(proxyNonHost)
-                        .append("\n");
+                // add quotes for multiple non proxy hosts
+                proxyNonHost = "\"" + proxyNonHost + "\"";
+                sB.append("-D" + RuntimeFieldEditor.PROXYNONHOSTS + "=").append(proxyNonHost).append("\n");
             }
         }
-        BufferedWriter bW = new BufferedWriter(new FileWriter(iniFile));
-        bW.write(sB.toString());
-        bW.close();
+        BufferedWriter bW = null;
+        try {
+            bW = new BufferedWriter(new FileWriter(iniFile));
+            bW.write(sB.toString());
+        } finally {
+            bW.close();
+        }
 
     }
 
@@ -497,6 +499,7 @@ public class UiPlugin extends AbstractUIPlugin {
      * @throws FileNotFoundException
      * @throws IOException
      */
+    @SuppressWarnings("nls")
     public static Properties getProxySettings() throws FileNotFoundException, IOException {
         Properties properties = new Properties();
         File iniFile = getIniFile();
@@ -504,16 +507,18 @@ public class UiPlugin extends AbstractUIPlugin {
         String line = null;
         while( (line = bR.readLine()) != null ) {
             if (line.matches(".*D" + RuntimeFieldEditor.PROXYHOST + ".*")) {
-                String set = line.split("=")[1].trim();
-                properties.put(RuntimeFieldEditor.PROXYHOST, set);
+                String proxyHost = line.split("=")[1].trim();
+                properties.put(RuntimeFieldEditor.PROXYHOST, proxyHost);
             }
             if (line.matches(".*D" + RuntimeFieldEditor.PROXYPORT + ".*")) {
-                String set = line.split("=")[1].trim();
-                properties.put(RuntimeFieldEditor.PROXYPORT, set);
+                String proxyPort = line.split("=")[1].trim();
+                properties.put(RuntimeFieldEditor.PROXYPORT, proxyPort);
             }
             if (line.matches(".*D" + RuntimeFieldEditor.PROXYNONHOSTS + ".*")) {
-                String set = line.split("=")[1].trim();
-                properties.put(RuntimeFieldEditor.PROXYNONHOSTS, set);
+                String proxyNonHosts = line.split("=")[1].trim();
+                // remove quotes if there are
+                proxyNonHosts = proxyNonHosts.replaceAll("\"", "");
+                properties.put(RuntimeFieldEditor.PROXYNONHOSTS, proxyNonHosts);
             }
         }
         bR.close();
@@ -521,8 +526,7 @@ public class UiPlugin extends AbstractUIPlugin {
         return properties;
     }
 
-    private static void processAppIni( boolean readOnly, Function<String, String> func )
-            throws IOException {
+    private static void processAppIni( boolean readOnly, Function<String, String> func ) throws IOException {
         File iniFile = getIniFile();
         if (iniFile.exists()) {
             BufferedReader bR = null;
@@ -638,9 +642,8 @@ public class UiPlugin extends AbstractUIPlugin {
      * @param idField id attribute key used in extension point
      * @param classField class attribute key used in extension point
      */
-    public static Object lookupConfigurationObject( Class< ? > interfaceClass,
-            final IPreferenceStore store, final String pluginID, final String prefConstant,
-            final String xpid, final String idField, final String classField ) {
+    public static Object lookupConfigurationObject( Class< ? > interfaceClass, final IPreferenceStore store,
+            final String pluginID, final String prefConstant, final String xpid, final String idField, final String classField ) {
 
         final String configurationID = store.getString(prefConstant);
 
@@ -650,11 +653,9 @@ public class UiPlugin extends AbstractUIPlugin {
                 final Throwable[] error = new Throwable[1];
                 ExtensionPointProcessor p = new ExtensionPointProcessor(){
 
-                    public void process( IExtension extension, IConfigurationElement element )
-                            throws Exception {
+                    public void process( IExtension extension, IConfigurationElement element ) throws Exception {
                         try {
-                            if (element.getAttribute(idField) != null
-                                    && element.getAttribute(idField).equals(configurationID)) {
+                            if (element.getAttribute(idField) != null && element.getAttribute(idField).equals(configurationID)) {
                                 Object obj = element.createExecutableExtension(classField);
                                 configObj[0] = obj;
                             }
@@ -670,8 +671,7 @@ public class UiPlugin extends AbstractUIPlugin {
                 if (configObj[0] != null) {
                     return configObj[0];
                 } else {
-                    MessageFormat format = new MessageFormat(
-                            Messages.UDIGWorkbenchWindowAdvisor_specifiedButNotFound);
+                    MessageFormat format = new MessageFormat(Messages.UDIGWorkbenchWindowAdvisor_specifiedButNotFound);
                     Object[] args = new Object[]{configurationID, interfaceClass.getName()};
                     StringBuffer message = format.format(args, new StringBuffer(), null);
                     Throwable e = null;
@@ -681,8 +681,8 @@ public class UiPlugin extends AbstractUIPlugin {
                     log(message.toString(), e);
                 }
             } catch (Exception e) {
-                log(MessageFormat.format(Messages.UDIGWorkbenchWindowAdvisor_classNotFound,
-                        new Object[]{configurationID}, interfaceClass.getName()), e);
+                log(MessageFormat.format(Messages.UDIGWorkbenchWindowAdvisor_classNotFound, new Object[]{configurationID},
+                        interfaceClass.getName()), e);
             }
         }
 

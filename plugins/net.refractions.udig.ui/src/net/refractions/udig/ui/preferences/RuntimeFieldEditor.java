@@ -296,9 +296,6 @@ public final class RuntimeFieldEditor extends FieldEditor {
             preferenceStore.setValue(PROXYHOST, proxyHostText.getText());
             preferenceStore.setValue(PROXYPORT, proxyPortText.getText());
             preferenceStore.setValue(PROXYSET, String.valueOf(proxyButton.getSelection()));
-            System.setProperty(PROXYHOST, proxyHostText.getText());
-            System.setProperty(PROXYPORT, proxyPortText.getText());
-            System.setProperty(PROXYNONHOSTS, proxyNonHostText.getText());
         }
         writeSettings();
     }
@@ -345,19 +342,23 @@ public final class RuntimeFieldEditor extends FieldEditor {
             properties.setProperty("osgi.nl", langCombo.getText()); //$NON-NLS-1$
 
             Set<Object> keySet = properties.keySet();
-            BufferedWriter bW = new BufferedWriter(new FileWriter(configFile));
+            BufferedWriter bW = null;
+            try {
+                bW = new BufferedWriter(new FileWriter(configFile));
 
-            for( Object key : keySet ) {
-                String keyStr = (String) key;
-                if (!keyStr.equals("eof")) { //$NON-NLS-1$
-                    bW.write(keyStr);
-                    bW.write("="); //$NON-NLS-1$
-                    bW.write(properties.getProperty(keyStr));
-                    bW.write("\n"); //$NON-NLS-1$
+                for( Object key : keySet ) {
+                    String keyStr = (String) key;
+                    if (!keyStr.equals("eof")) { //$NON-NLS-1$
+                        bW.write(keyStr);
+                        bW.write("="); //$NON-NLS-1$
+                        bW.write(properties.getProperty(keyStr));
+                        bW.write("\n"); //$NON-NLS-1$
+                    }
                 }
+                bW.write("eof=eof"); //$NON-NLS-1$
+            } finally {
+                bW.close();
             }
-            bW.write("eof=eof"); //$NON-NLS-1$
-            bW.close();
         } catch (IOException e) {
             e.printStackTrace();
             String message = "An error occurred while setting preferences.";
