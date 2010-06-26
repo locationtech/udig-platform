@@ -13,6 +13,7 @@ import java.util.List;
 import net.refractions.udig.style.sld.internal.Messages;
 
 //import org.apache.xerces.parsers.SAXParser;
+import org.apache.xerces.parsers.SAXParser;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -140,8 +141,7 @@ public class SLDValidator {
     }
 
     public List<SAXParseException> validateSLD(InputStream xml, String SchemaUrl) {
-        // return validateSLD(new InputSource(xml), SchemaUrl);
-        return null;
+        return validateSLD(new InputSource(xml), SchemaUrl);
     }
 
     /**
@@ -153,68 +153,68 @@ public class SLDValidator {
      *
      * @return list of SAXExceptions (0 if the file's okay)
      */
-//    public List<SAXParseException> validateSLD(InputSource xml, String SchemaUrl) {
-//        SAXParser parser = new SAXParser();
-//
-//        try {
-////     1. tell the parser to validate the XML document vs the schema
-////     2. does not validate the schema (the GML schema is *not* valid.  This is
-////        			an OGC blunder)
-////     3. tells the validator that the tags without a namespace are actually
-////        			SLD tags.
-////     4. tells the validator to 'override' the SLD schema that a user may
-////        			include with the one inside geoserver.
-//
-//            parser.setFeature("http://xml.org/sax/features/validation", true); //$NON-NLS-1$
-//            parser.setFeature("http://apache.org/xml/features/validation/schema", //$NON-NLS-1$
-//                true);
-//            parser.setFeature("http://apache.org/xml/features/validation/schema-full-checking", //$NON-NLS-1$
-//                false);
-//            parser.setProperty("http://apache.org/xml/properties/schema/external-noNamespaceSchemaLocation", //$NON-NLS-1$
-//                SchemaUrl);
-//            parser.setProperty("http://apache.org/xml/properties/schema/external-schemaLocation", //$NON-NLS-1$
-//                "http://www.opengis.net/sld " + SchemaUrl); //$NON-NLS-1$
-//
-//            //parser.setProperty("http://apache.org/xml/properties/schema/external-schemaLocation","http://www.opengis.net/ows "+SchemaUrl);
-//            Validator handler = new Validator();
-//            parser.setErrorHandler(handler);
-//            parser.parse(xml);
-//
-//            return handler.errors;
-//        } catch (java.io.IOException ioe) {
-//            ArrayList<SAXParseException> al = new ArrayList<SAXParseException>();
-//            al.add(new SAXParseException(ioe.getLocalizedMessage(), null));
-//
-//            return al;
-//        } catch (SAXException e) {
-//            ArrayList<SAXParseException> al = new ArrayList<SAXParseException>();
-//            al.add(new SAXParseException(e.getLocalizedMessage(), null));
-//
-//            return al;
-//        }
-//    }
-//
-//    // errors in the document will be put in "errors".
-//    // if errors.size() ==0  then there were no errors.
-//    private class Validator extends DefaultHandler {
-//        public ArrayList<SAXParseException> errors = new ArrayList<SAXParseException>();
-//
-//        @Override
-//        public void error(SAXParseException exception)
-//            throws SAXException {
-//            errors.add(exception);
-//        }
-//
-//        @Override
-//        public void fatalError(SAXParseException exception)
-//            throws SAXException {
-//            errors.add(exception);
-//        }
-//
-//        @Override
-//        public void warning(SAXParseException exception)
-//            throws SAXException {
-//            //do nothing
-//        }
-//    }
+    public List<SAXParseException> validateSLD(InputSource xml, String SchemaUrl) {
+        SAXParser parser = new SAXParser();
+
+        try {
+//     1. tell the parser to validate the XML document vs the schema
+//     2. does not validate the schema (the GML schema is *not* valid.  This is
+//        			an OGC blunder)
+//     3. tells the validator that the tags without a namespace are actually
+//        			SLD tags.
+//     4. tells the validator to 'override' the SLD schema that a user may
+//        			include with the one inside geoserver.
+
+            parser.setFeature("http://xml.org/sax/features/validation", true); //$NON-NLS-1$
+            parser.setFeature("http://apache.org/xml/features/validation/schema", //$NON-NLS-1$
+                true);
+            parser.setFeature("http://apache.org/xml/features/validation/schema-full-checking", //$NON-NLS-1$
+                false);
+            parser.setProperty("http://apache.org/xml/properties/schema/external-noNamespaceSchemaLocation", //$NON-NLS-1$
+                SchemaUrl);
+            parser.setProperty("http://apache.org/xml/properties/schema/external-schemaLocation", //$NON-NLS-1$
+                "http://www.opengis.net/sld " + SchemaUrl); //$NON-NLS-1$
+
+            //parser.setProperty("http://apache.org/xml/properties/schema/external-schemaLocation","http://www.opengis.net/ows "+SchemaUrl);
+            Validator handler = new Validator();
+            parser.setErrorHandler(handler);
+            parser.parse(xml);
+
+            return handler.errors;
+        } catch (java.io.IOException ioe) {
+            ArrayList<SAXParseException> al = new ArrayList<SAXParseException>();
+            al.add(new SAXParseException(ioe.getLocalizedMessage(), null));
+
+            return al;
+        } catch (SAXException e) {
+            ArrayList<SAXParseException> al = new ArrayList<SAXParseException>();
+            al.add(new SAXParseException(e.getLocalizedMessage(), null));
+
+            return al;
+        }
+    }
+
+    // errors in the document will be put in "errors".
+    // if errors.size() ==0  then there were no errors.
+    private class Validator extends DefaultHandler {
+        public ArrayList<SAXParseException> errors = new ArrayList<SAXParseException>();
+
+        @Override
+        public void error(SAXParseException exception)
+            throws SAXException {
+            errors.add(exception);
+        }
+
+        @Override
+        public void fatalError(SAXParseException exception)
+            throws SAXException {
+            errors.add(exception);
+        }
+
+        @Override
+        public void warning(SAXParseException exception)
+            throws SAXException {
+            //do nothing
+        }
+    }
 }
