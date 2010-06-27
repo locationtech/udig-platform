@@ -144,9 +144,9 @@ public class UDIGWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         userPreferences
                 .node("net.refractions.udig.ui.firstRun").putBoolean("net.refractions.udig.ui.isFirstRun", false); //$NON-NLS-1$ //$NON-NLS-2$
 
-        if (Platform.getOS().equals(Platform.OS_LINUX)) {
-            MessageDialog.openWarning(getWindowConfigurer().getWindow()
-                    .getShell(), "Warning", "Some Linux users have experienced issues with map display being slow or strange artifacts on some versions of Linux. This is now very rare but if you experience this problem go into the preferences and disable *Advanced Graphics*.");
-        }
+//        if (Platform.getOS().equals(Platform.OS_LINUX)) {
+//            MessageDialog.openWarning(getWindowConfigurer().getWindow()
+//                    .getShell(), "Warning", "Some Linux users have experienced issues with map display being slow or strange artifacts on some versions of Linux. This is now very rare but if you experience this problem go into the preferences and disable *Advanced Graphics*.");
+//        }
     }
 }
