@@ -256,7 +256,7 @@ public class Delete extends UDIGGenericAction {
     @SuppressWarnings("unchecked")
     @Override
     protected void operate( Project project, Object context ) {
-        if (project == null)
+        if (project == null || context == null)
             return;
         Pair<Boolean, Integer> pair = (Pair<Boolean, Integer>) context;
         boolean deleteFiles = pair.left();
