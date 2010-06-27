@@ -12,6 +12,7 @@ import java.util.List;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.Project;
+import net.refractions.udig.project.internal.ProjectElement;
 import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
@@ -27,13 +28,14 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
@@ -192,12 +194,12 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
             URI resourceURI = URI.createURI(uri.toString());
             final ProjectRegistry registry = getProjectRegistry();
             Resource registryResource = registry.eResource();
-            URI registryURI = registryResource.getURI();
-            resourceURI.deresolve(registryURI, true, true, true);
             if (registryResource == null) {
                 System.out.println("null"); //$NON-NLS-1$
                 throw new Error(Messages.ProjectRegistryImpl_load_error);
             }
+            URI registryURI = registryResource.getURI();
+            resourceURI.deresolve(registryURI, true, true, true);
             ResourceSet resourceSet2 = registryResource.getResourceSet();
             Resource resource = resourceSet2.createResource(resourceURI);
             try {
@@ -205,11 +207,28 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
             } catch (IOException e1) {
                 // resource doesn't exist. That is ok.
             }
-            Project tmpProject;
+            Project tmpProject = null;
             if (resource.getContents().isEmpty()) {
                 tmpProject = createProject(uri, resource);
             } else {
-                tmpProject = (Project) resource.getContents().get(0);
+                EList<EObject> contents = resource.getContents();
+                for( EObject eObject : contents ) {
+                    if (eObject instanceof Project) {
+                        tmpProject = (Project) eObject;
+                        break;
+                    }
+                }
+
+                if (tmpProject == null) {
+                    tmpProject = createProject(uri, resource);
+                    List<ProjectElement> eContents = tmpProject.getElementsInternal();
+                    for( EObject eObject : contents ) {
+                        if (eObject instanceof MapImpl) {
+                            MapImpl tmpMap = (MapImpl) eObject;
+                            eContents.add(tmpMap);
+                        }
+                    }
+                }
             }
 
             final Project newProject = tmpProject;
