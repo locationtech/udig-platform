@@ -7,6 +7,7 @@
  */
 package net.refractions.udig.project.ui.internal.wizard;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
@@ -66,8 +67,9 @@ public class NewProjectWizard extends Wizard implements INewWizard {
      * @return <code>true</code> when project successfully created
      */
     public boolean performFinish() {
-    	if(!page.validate())
+    	if(!page.validate()){
     		return false;
+    	}
     	
         String projectPath = page.getProjectPath();
         final String projectName = page.getProjectName();
@@ -76,8 +78,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
         while( projectPath.endsWith("/") ){ //$NON-NLS-1$
         	projectPath = projectPath.substring(0,projectPath.length()-2);
     	}
-        
-        Project project  = ProjectPlugin.getPlugin().getProjectRegistry().getProject(projectPath+"/"+projectName+".udig"); //$NON-NLS-1$ //$NON-NLS-2$
+        Project project  = ProjectPlugin.getPlugin().getProjectRegistry().getProject(projectPath+File.separator+projectName+".udig"); //$NON-NLS-1$ //$NON-NLS-2$
         project.setName(projectName);
         Resource projectResource = project.eResource();
         try {

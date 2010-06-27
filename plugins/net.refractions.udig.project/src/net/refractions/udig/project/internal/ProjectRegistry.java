@@ -73,7 +73,7 @@ public interface ProjectRegistry extends EObject {
     public Project getProject( URI uri );
 
     /**
-     * Returns the Project that is associated with the filename.
+     * Returns the Project that is associated with the file path.
      * <p>
      * If the Project is not part of the ProjectRegistry it is loaded.
      * </p>
@@ -83,7 +83,7 @@ public interface ProjectRegistry extends EObject {
      * </ul>
      * 
      * @model
-     * @param uri The file name of the Project
+     * @param projectPath The file path of the Project
      * @return The Project that maps to the file indicated by name
      */
     public Project getProject( String projectPath );

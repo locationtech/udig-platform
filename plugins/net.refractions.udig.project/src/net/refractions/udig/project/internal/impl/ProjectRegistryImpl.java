@@ -5,10 +5,13 @@ package net.refractions.udig.project.internal.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import net.refractions.udig.catalog.URLUtils;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.Project;
@@ -188,53 +191,72 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     public Project getProject( URI uri ) {
         // There is a sporatic bug here. Remove this try/catch when it is fixed.
         try {
-            if (findProject(uri) != null)
+            if (findProject(uri) != null){
+                // already available!
                 return findProject(uri);
+            }
 
-            URI resourceURI = URI.createURI(uri.toString());
+            URI projectURI = URI.createURI(uri.toString());
+            
             final ProjectRegistry registry = getProjectRegistry();
             Resource registryResource = registry.eResource();
             if (registryResource == null) {
-                System.out.println("null"); //$NON-NLS-1$
+                System.out.println("Registery was unable to load"); //$NON-NLS-1$
                 throw new Error(Messages.ProjectRegistryImpl_load_error);
             }
+           
             URI registryURI = registryResource.getURI();
-            resourceURI.deresolve(registryURI, true, true, true);
-            ResourceSet resourceSet2 = registryResource.getResourceSet();
-            Resource resource = resourceSet2.createResource(resourceURI);
+            projectURI.deresolve(registryURI, true, true, true);
+            
+            ResourceSet registeryResourceSet = registryResource.getResourceSet();            
+            Resource projectResource = registeryResourceSet.createResource(projectURI);
             try {
-                resource.load(null);
+                projectResource.load(null);
             } catch (IOException e1) {
                 // resource doesn't exist. That is ok.
             }
-            Project tmpProject = null;
-            if (resource.getContents().isEmpty()) {
-                tmpProject = createProject(uri, resource);
+            
+            Project incomingProject = null;
+            if (projectResource.getContents().isEmpty()) {
+                // new file being created!
+                if( projectURI.isFile() ){
+                    // check to see if it exists; we don't like empty existing files
+                    File file = new File( projectURI.toFileString() );
+                    if( file.exists() ){
+                        throw new NullPointerException("Unable to load "+uri+" file was empty");
+                    }                    
+                }
+                // creating a new project from the new project wizard
+                incomingProject = createProject(uri, projectResource);
+                
             } else {
-                EList<EObject> contents = resource.getContents();
+                // Go through list of resources
+                EList<EObject> contents = projectResource.getContents();
                 for( EObject eObject : contents ) {
                     if (eObject instanceof Project) {
-                        tmpProject = (Project) eObject;
+                        incomingProject = (Project) eObject;
                         break;
                     }
                 }
-
-                if (tmpProject == null) {
-                    tmpProject = createProject(uri, resource);
-                    List<ProjectElement> eContents = tmpProject.getElementsInternal();
-                    for( EObject eObject : contents ) {
-                        if (eObject instanceof MapImpl) {
-                            MapImpl tmpMap = (MapImpl) eObject;
-                            eContents.add(tmpMap);
-                        }
-                    }
+                if( incomingProject == null ){
+                    // this project was not saved with a project file?
+                    // (does it represent an individial map? we are not sure)
+                    throw new NullPointerException("Unable to load "+uri+" - does not contain a project");
                 }
+//                if (incomingProject == null) {
+//                    incomingProject = createProject(uri, resource);
+//                    List<ProjectElement> eContents = incomingProject.getElementsInternal();
+//                    for( EObject eObject : contents ) {
+//                        if (eObject instanceof MapImpl) {
+//                            MapImpl tmpMap = (MapImpl) eObject;
+//                            eContents.add(tmpMap);
+//                        }
+//                    }
+//                }
             }
 
-            final Project newProject = tmpProject;
-
+            final Project newProject = incomingProject;
             PlatformGIS.syncInDisplayThread(new Runnable(){
-
                 public void run() {
                     try {
                         setCurrentProject(newProject);
@@ -301,15 +323,28 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
 
         return tmpProject;
     }
-
+    /**
+     * Convert projectPath into a URI and call getProject( uri ).
+     */
     public Project getProject( String projectPath ) {
-        // HACK
-        if (!projectPath.startsWith("file:")) { //$NON-NLS-1$
-            projectPath = "file://" + projectPath; //$NON-NLS-1$
+        URL url;
+        if( projectPath.startsWith("file:")) { //$NON-NLS-1$
+            try {
+                url = new URL( projectPath ); // actually already a URL!
+            } catch (MalformedURLException e) {
+                System.err.println("Unable to turn "+projectPath+" into a URL to load");
+                return null; // not a project                
+            }
         }
-        // DONE HACK
-        final String path = projectPath + File.separatorChar + ProjectRegistry.PROJECT_FILE; //$NON-NLS-1$
-        final URI uri = URI.createURI(path);
+        else {
+            File file = new File( projectPath );
+            url = URLUtils.fileToURL( file );
+            // projectPath = "file://" + projectPath; //$NON-NLS-1$
+        }
+        
+        final String uriText = url.toExternalForm() + File.separatorChar + ProjectRegistry.PROJECT_FILE; //$NON-NLS-1$
+        final URI uri = URI.createURI(uriText);
+        
         Project project = getProject(uri);
         return project;
     }

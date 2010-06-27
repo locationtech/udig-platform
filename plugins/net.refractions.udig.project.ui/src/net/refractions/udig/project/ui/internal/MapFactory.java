@@ -31,6 +31,7 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
+import net.refractions.udig.catalog.URLUtils;
 import net.refractions.udig.catalog.internal.ui.ResourceSelectionPage;
 import net.refractions.udig.project.ProjectBlackboardConstants;
 import net.refractions.udig.project.internal.Layer;
@@ -57,6 +58,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
+import org.jfree.data.general.DatasetUtilities;
 
 /**
  * A Factory for creating maps from different types of resources.
@@ -377,8 +379,9 @@ public class MapFactory {
     private void handleProjectURL( URL url, IProgressMonitor monitor ) {
         monitor = validateMonitor(monitor);
         monitor.subTask(Messages.ProjectUIPlugin_loadingProject_task); 
-
-        ProjectPlugin.getPlugin().getProjectRegistry().getProject(url.getPath());
+        File file = URLUtils.urlToFile(url);
+        
+        ProjectPlugin.getPlugin().getProjectRegistry().getProject( file.getAbsolutePath() );
         return;
     }
 

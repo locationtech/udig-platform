@@ -40,14 +40,20 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
 /**
- * Opens a Project ..
+ * Action to Open a project called from the projects view (and file menu?)
+ * <p>
+ * This action prompts the user for a project file (or directory?) and uses the
+ * EMF Resource code to parse it in and recreate the onbjects. The resulting project
+ * will be added to the project registery (so it can show up in the projects view).
  * 
  * @author jeichar
  * @since 0.3
  */
 public class OpenProject implements IViewActionDelegate, IWorkbenchWindowActionDelegate {
-
+    /** We maintain a single job used to open the project in the background*/
     private volatile Job job;
+    
+    /** The path of the project file (or folder?) to load */
     private String path;
 
     /**
@@ -66,13 +72,16 @@ public class OpenProject implements IViewActionDelegate, IWorkbenchWindowActionD
     	Shell activeShell = Display.getDefault().getActiveShell();
 
     	while(path==null){
+    	    // prompt the user for the path
+    	    
 			DirectoryDialog dialog = new DirectoryDialog(activeShell);
 	        dialog.setFilterPath(Messages.OpenProject_newProject_filename); 
 	        dialog.setMessage(Messages.OpenProject_selectProject); 
 	        dialog.setText(Messages.OpenProject_openProject); 
 	        path = dialog.open();
-	        if (path == null)
-	        	return;
+	        if (path == null){
+	        	return; // user canceled
+	        }
 	        
 	        File projFile = new File(path+File.separator+ProjectRegistry.PROJECT_FILE);
 	        if( !projFile.exists() ){
@@ -83,7 +92,6 @@ public class OpenProject implements IViewActionDelegate, IWorkbenchWindowActionD
 	        	path = null;
 	        }
     	}
-
         
         if (job == null) {
             synchronized (this) {
