@@ -8,7 +8,9 @@ import java.util.Map;
 import net.refractions.udig.catalog.ServiceExtension;
 
 public class MapGraphicServiceExtension implements ServiceExtension {
-    
+    /**
+     * Key used to record the URL indicating a local map graphic service.
+     */
 	public static final String KEY = "graphic"; //$NON-NLS-1$
 	
     /**

@@ -54,7 +54,9 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
         CatalogPlugin.addListener(this);
     }
     /*
-     * @see net.refractions.udig.catalog.IResolveChangeListener#changed(net.refractions.udig.catalog.IResolveChangeEvent)
+     * @see
+     * net.refractions.udig.catalog.IResolveChangeListener#changed(net.refractions.udig.catalog.
+     * IResolveChangeEvent)
      */
     public void changed( final IResolveChangeEvent event ) {
         if (event.getType() != IResolveChangeEvent.Type.POST_CHANGE)
@@ -84,66 +86,70 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
      */
     public String getText( Object element ) {
         if (element instanceof IResolve) {
-        	try {
-        	if(element instanceof IGeoResource) {
-        		IGeoResource resource = (IGeoResource) element;
-        		String title = resource.getTitle();
-        		if( title == null ){
-                    IGeoResourceInfo info = resource.getInfo(new NullProgressMonitor());
-                    title = info.getTitle();
-        		}
-        		ID id = resource.getID();
-        		if( title == null ){
-        		    // we are going to fake something here
-        		    String name = id.toBaseFile();
-        			if( name == null ){
-        		        name = id.toString();
-        			}
-        			if (name.lastIndexOf('.') != -1) {
-        			    name = name.substring(0,name.lastIndexOf(".")); //$NON-NLS-1$                        
+            IResolve resolve = (IResolve) element;
+            try {
+                if (resolve instanceof IGeoResource) {
+                    IGeoResource resource = (IGeoResource) resolve;
+                    String title = resource.getTitle();
+                    if (title == null) {
+                        IGeoResourceInfo info = resource.getInfo(new NullProgressMonitor());
+                        title = info.getTitle();
                     }
-        		    title = name.replace('_',' ');
-				}
-//        		if( id.getTypeQualifier() != null ){
-//        		    return title + "("+id.getTypeQualifier()+")";
-//        		}
-        		return title;
-        		
-        	} else if(element instanceof IService) {
-        		IService service = (IService) element;
-        		ID id = service.getID();
-        		
-        		String title = service.getTitle();
-        		if( title == null ){
-        		    IServiceInfo info = service.getInfo( new NullProgressMonitor() );
-        		    title = info.getTitle();    
-        		}
-        		if( title == null ){
-        		    // we are going to fake something here
-                    String name = id.toString();
-                    name = name.replace('_', ' ');
-                    name = name.replace("%20"," "); //$NON-NLS-1$ //$NON-NLS-2$
-                    return name;
-        		}
-        		if( id.getTypeQualifier() != null ){
-                    return title + "("+id.getTypeQualifier()+")";
-                }
-                else {
+                    ID id = resource.getID();
+                    if (title == null) {
+                        // we are going to fake something here
+                        String name = id.toBaseFile();
+                        if (name == null) {
+                            name = id.toString();
+                        }
+                        if (name.lastIndexOf('.') != -1) {
+                            name = name.substring(0, name.lastIndexOf(".")); //$NON-NLS-1$                        
+                        }
+                        title = name.replace('_', ' ');
+                    }
+                    // if( id.getTypeQualifier() != null ){
+                    // return title + "("+id.getTypeQualifier()+")";
+                    // }
                     return title;
+
+                } else if (resolve instanceof IService) {
+                    IService service = (IService) resolve;
+                    ID id = service.getID();
+
+                    String title = service.getTitle();
+                    if (title == null) {
+                        IServiceInfo info = service.getInfo(new NullProgressMonitor());
+                        if (info != null) {
+                            title = info.getTitle();
+                        }
+                    }
+                    if (title == null) {
+                        // we are going to fake something here
+                        String name = id.toString();
+                        name = name.replace('_', ' ');
+                        name = name.replace("%20", " "); //$NON-NLS-1$ //$NON-NLS-2$
+                        return name;
+                    }
+                    if (id.getTypeQualifier() != null) {
+                        return title + "(" + id.getTypeQualifier() + ")";
+                    } else {
+                        return title;
+                    }
+                } else if (resolve instanceof IProcess) {
+                    IProcess proc = (IProcess) element;
+                    return proc.getInfo(new NullProgressMonitor()).getTitle();
+                } else if (resolve instanceof ISearch) {
+                    ISearch search = (ISearch) element;
+                    return search.getInfo(new NullProgressMonitor()).getTitle();
+                } else if (resolve instanceof IResolveFolder) {
+                    IResolveFolder folder = (IResolveFolder) element;
+                    return folder.getID().toString();
+                } else {
+                    return resolve.getID().toString();
                 }
-        	} else if(element instanceof IProcess) {
-        		IProcess proc = (IProcess) element;
-        		return proc.getInfo(new NullProgressMonitor()).getTitle();
-        	} else if(element instanceof ISearch) {
-        		ISearch search = (ISearch) element;
-        		return search.getInfo(new NullProgressMonitor()).getTitle();
-        	} else {
-        		IResolveFolder folder = (IResolveFolder) element;
-        		return folder.getID().toString();
-        	}
-        	} catch(IOException e) {
-        		CatalogUIPlugin.trace("Error fetching the Title for the resource", e); //$NON-NLS-1$
-        	}
+            } catch (IOException e) {
+                CatalogUIPlugin.trace("Error fetching the Title for the resource", e); //$NON-NLS-1$
+            }
         }
         return super.getText(element);
     }
@@ -155,7 +161,7 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
      * second pass that makes use of the real icon from the real resource.
      * </p>
      * 
-     * @param element is expeced to be IResolve
+     * @param element is expected to be IResolve
      * @return the image used to label the element, or <code>null</code> if there is no image for
      *         the given object
      * @see org.eclipse.jface.viewers.LabelProvider#getImage(java.lang.Object)

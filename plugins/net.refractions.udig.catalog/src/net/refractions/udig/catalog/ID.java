@@ -283,6 +283,7 @@ public class ID implements Serializable {
     public boolean isLocal(){
         return id.contains("localhost");
     }
+    
     /**
      * @return true if ID represents a File
      */

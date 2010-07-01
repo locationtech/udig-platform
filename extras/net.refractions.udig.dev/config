@@ -37,6 +37,8 @@
 ###   program accepts the '--diff-program' option.
 # diff3-has-program-arg = [true | false]
 
+
+
 ### Section for configuring tunnel agents.
 [tunnels]
 ### Configure svn protocol tunnel schemes here.  By default, only
@@ -63,13 +65,19 @@
 ### path separator.  A single backslash will be treated as an
 ### escape for the following character.
 
+
+
 ### Section for configuring miscelleneous Subversion options.
 [miscellany]
 ### Set global-ignores to a set of whitespace-delimited globs
 ### which Subversion will ignore in its 'status' output, and
 ### while importing or adding files and directories.
 
+
+
 global-ignores = *.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store *.class
+
+
 
 ### Set log-encoding to the default encoding for log messages
 # log-encoding = latin1
@@ -83,10 +91,13 @@ global-ignores = *.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store *.class
 ### for 'svn add' and 'svn import', it defaults to 'no'.
 ### Automatic properties are defined in the section 'auto-props'.
 
+
 enable-auto-props = yes
+
 
 ### Section for configuring automatic properties.
 [auto-props]
+
 
 ### The format of the entries is:
 ###   file-name-pattern = propname[=value][;propname[=value]...]
@@ -94,42 +105,84 @@ enable-auto-props = yes
 ### '?').  All entries which match will be applied to the file.
 ### Note that auto-props functionality must be enabled, which
 ### is typically done by setting the 'enable-auto-props' option.
+
 *.java       = svn:mime-type=text/plain;svn:eol-style=native;svn:keywords=Id
+
+*.jj         = svn:mime-type=text/plain;svn:eol-style=native;svn:keywords=Id
+
 *.sql        = svn:mime-type=text/plain;svn:eol-style=native;svn:keywords=Id
+
 *.c          = svn:mime-type=text/plain;svn:eol-style=native;svn:keywords=Id
+
 *.cpp        = svn:mime-type=text/plain;svn:eol-style=native;svn:keywords=Id
+
 *.h          = svn:mime-type=text/plain;svn:eol-style=native;svn:keywords=Id
+
 *.txt        = svn:mime-type=text/plain;svn:eol-style=native;svn:keywords=Id
+
 *.sgml       = svn:mime-type=text/plain;svn:eol-style=native;svn:keywords=Id
+
 *.properties = svn:mime-type=text/plain;svn:eol-style=native;svn:keywords=Id
+
 *.xml        = svn:mime-type=text/xml;svn:eol-style=native;svn:keywords=Id
+
 *.classpath  = svn:mime-type=text/xml;svn:eol-style=native;svn:keywords=Id
+
 *.project    = svn:mime-type=text/xml;svn:eol-style=native;svn:keywords=Id
+
 *.sld        = svn:mime-type=text/xml;svn:eol-style=native;svn:keywords=Id
+
 *.gml        = svn:mime-type=text/xml;svn:eol-style=native;svn:keywords=Id
+
 *.xsl        = svn:mime-type=text/xsl;svn:eol-style=native;svn:keywords=Id
+
 *.html       = svn:mime-type=text/html;svn:eol-style=native;svn:keywords=Id
+
 *.css        = svn:mime-type=text/css;svn:eol-style=native;svn:keywords=Id
+
 *.dsp        = svn:eol-style=CRLF
+
 *.bat        = svn:eol-style=CRLF
+
 *.dsw        = svn:eol-style=CRLF
+
 *.sh         = svn:eol-style=native;svn:executable;svn:keywords=Id
+
 *.png        = svn:mime-type=image/png
+
 *.jpg        = svn:mime-type=image/jpeg
+
 *.gif        = svn:mime-type=image/gif
+
 *.tif        = svn:mime-type=image/tiff
+
 *.zip        = svn:mime-type=application/zip
+
 *.sxw        = svn:mime-type=application/zip
+
 *.sxc        = svn:mime-type=application/zip
+
 *.sxi        = svn:mime-type=application/zip
+
 *.utf        = svn:mime-type=application/octet-stream
+
 *.ttf        = svn:mime-type=application/octet-stream
+
 *.shp        = svn:mime-type=application/octet-stream
+
 *.shx        = svn:mime-type=application/octet-stream
+
 *.dbf        = svn:mime-type=application/octet-stream
+
 *.mif        = svn:mime-type=application/octet-stream
+
 *.mid        = svn:mime-type=application/octet-stream
+
 Makefile     = svn:mime-type=text/plain;svn:eol-style=native 
+
 README       = svn:mime-type=text/plain;svn:eol-style=native 
+
+
+
 
 

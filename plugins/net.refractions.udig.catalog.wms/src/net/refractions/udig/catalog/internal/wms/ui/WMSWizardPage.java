@@ -329,22 +329,21 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
             history.remove(COMBO_HISTORY_LENGTH);
     }
 
-	public Map<String, Serializable> getParams() {
-		try {
-			URL location = new URL(url);
-			
-			WMSServiceExtension creator = new WMSServiceExtension();
-            String errorMessage=creator.reasonForFailure(location);
-            if( errorMessage!=null ){
+    public Map<String, Serializable> getParams() {
+        try {
+            URL location = new URL(url);
+
+            WMSServiceExtension creator = new WMSServiceExtension();
+            String errorMessage = creator.reasonForFailure(location);
+            if (errorMessage != null) {
                 setErrorMessage(errorMessage);
                 return Collections.emptyMap();
-            }else
+            } else
                 return creator.createParams(location);
-		}
-		catch(MalformedURLException e) {
-			return null;
-		}
-	}
+        } catch (MalformedURLException e) {
+            return null;
+        }
+    }
 
 	public List<URL> getURLs() {
 		try {

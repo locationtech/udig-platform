@@ -105,11 +105,18 @@ public class WMSServiceExtension implements ServiceExtension2 {
                     + Messages.WMSServiceExtension_nullValue;
         return reasonForFailure(id);
     }
-
+    /**
+     * Error message for failing to connect with the provided url
+     */
     public String reasonForFailure( URL url ) {
         return processURL(url);
     }
-
+    /**
+     * Checks the URL to see if it is a capabilities document; returns a string with any
+     * error message.
+     * @param url
+     * @return error message for provided url; or null if it is okay
+     */
     private static String processURL( URL url ) {
         if (url == null) {
             return Messages.WMSServiceExtension_nullURL;

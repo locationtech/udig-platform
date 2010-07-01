@@ -45,10 +45,10 @@ public class MapGraphicService extends IService {
     private volatile List<MapGraphicResource> members;
 
     /**
-     * Construct <code>MapGraphicService</code>.
+     * Construct <code>MapGraphicService</code>. with package visibility;
+     * should only be constructed by MapGraphicServiceExrtension.
      */
-    public MapGraphicService() {
-        // NoOp
+    MapGraphicService() {
     }
 
     /*

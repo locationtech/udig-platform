@@ -10,6 +10,11 @@
             id="net.refractions.udig.catalog.geotools.serviceDataStore"
             name="DataStore">
       </service>
+      <service
+            class="net.refractions.udig.catalog.geotools.process.LocalProcessServiceExtension"
+            id="net.refractions.udig.catalog.geotools.serviceLocalProcess"
+            name="LocalProcess">
+      </service>
    </extension>
    <extension
          id="net.refractions.udig.catalog.geotools.connection"
@@ -40,6 +45,12 @@
       <provider
             class="net.refractions.udig.catalog.geotools.data.FileDataStoreFormatProvider">
       </provider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="net.refractions.udig.catalog.internal.geotools.AddToCatalog">
+      </startup>
    </extension>
 
 </plugin>

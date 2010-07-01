@@ -12,18 +12,19 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.mapgraphic.internal;
+package net.refractions.udig.catalog.internal.geotools;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IService;
+import net.refractions.udig.catalog.geotools.process.LocalProcessService;
 import net.refractions.udig.ui.ProgressManager;
 
 import org.eclipse.ui.IStartup;
 
 /**
- * Adds the MapGraphic Service to the LocalCatalog.
+ * Adds the LocalProcessService to the local catalog if needed.
  * <p>
  * Currently implemented as a workbench startup; this may be considered 
  * as an extension point defined by the catalog.
@@ -35,14 +36,13 @@ public class AddToCatalog implements IStartup {
 
     public void earlyStartup() {
         ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
-        ID serviceUrl = new ID(MapGraphicService.SERVICE_URL);
-        IService service = localCatalog.getById(IService.class, serviceUrl, ProgressManager.instance().get());
-        if( service !=null )
-            return;
-        
-        service=new MapGraphicService();
-        localCatalog.add(service);
-        
+        IService service = localCatalog.getById(IService.class, LocalProcessService.SERVICE_ID, ProgressManager.instance().get());
+        if( service !=null ){
+            return; // already available
+        }
+        // create a "builtin" instance and register it in the catalog        
+        service = new LocalProcessService();
+        localCatalog.add(service);        
     }
 
 }
