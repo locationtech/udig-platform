@@ -469,6 +469,8 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
             int translatedWidth = (int) (transform.getScaleX() * (dx2 - dx1));
             int translatedHeight = (int) (transform.getScaleY() * (dy2 - dy1));
             if (swtImage != null) {
+                if (sx1 < 0) sx1 = 0;
+                if (sy1 < 0) sy1 = 0;
                 gc.drawImage(swtImage, sx1, sy1, sx2 - sx1, sy2 - sy1,
                         translatedX, translatedY, translatedWidth,
                         translatedHeight);
