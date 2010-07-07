@@ -160,11 +160,10 @@ public class InMemoryCoverageLoader extends GridCoverageLoader {
                     protected void buttonPressed( int buttonId ) {
                         if (buttonId == 0) {
                             try {
-                                UiPlugin.setMaxHeapSize(finalHeap + "M"); //$NON-NLS-1$
+                                UiPlugin.setMaxHeapSize(String.valueOf(finalHeap));
                                 PlatformUI.getWorkbench().restart();
 
                             } catch (IOException e) {
-                                // TODO Handle IOException
                                 throw (RuntimeException) new RuntimeException().initCause(e);
                             }
                         }
