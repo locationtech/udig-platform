@@ -163,6 +163,7 @@
 			<!-- the followin is provided by the eclipse modeling target platform -->
 			<dependency groupId="com.ibm.icu" artifactid="icu4j" version="3.4.4" scope="provided" />
 			<!-- batik jars - used by geotools renderer -->
+			<dependency groupId="org.geotools" artifactId="gt-svg" version="${geotools.version}" scope="provided" />
 			<dependency groupId="org.apache.xmlgraphics" artifactId="batik-transcoder" version="1.7" scope="provided"/>  
 			<!-- using batik from eclipse 
 		    <dependency groupId="org.apache.xmlgraphics" artifactId="batik-dom" version="1.7" />
