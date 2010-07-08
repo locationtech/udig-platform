@@ -118,14 +118,16 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                     }
 
                     FeatureSource<SimpleFeatureType, SimpleFeature> view = ds.getView(query);
-
-                    if (view != null) {
-                        if (requestedType.isAssignableFrom(FeatureSource.class)) {
-                            return view;
-                        } else {
-                            return null;
-                        }
-                    }
+// TODO codereview
+// This resolves http://jira.codehaus.org/browse/UDIG-1686
+//                    if (view != null) {
+//                        if (requestedType.isAssignableFrom(FeatureSource.class)) {
+//                            return view;
+//                        } else {
+//                            return null;
+//                        }
+//                    }
+                    return view;
                 }
             } catch (IOException e) {
                 ProjectPlugin.log("Error getting view", e); //$NON-NLS-1$

@@ -31,6 +31,7 @@ import net.refractions.udig.ui.ProgressManager;
 import net.refractions.udig.ui.operations.AbstractPropertyValue;
 import net.refractions.udig.ui.operations.PropertyValue;
 
+import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -59,8 +60,11 @@ public class FeatureStoreResourceProperty extends AbstractPropertyValue<ILayer>
     public boolean isTrue( final ILayer object, String value ) {
         isEvaluating.set(true);
         try {
-            final FeatureStore<SimpleFeatureType, SimpleFeature> store = object.getResource(FeatureStore.class, ProgressManager
-                    .instance().get());
+//            This resolves http://jira.codehaus.org/browse/UDIG-1686
+//            final FeatureStore<SimpleFeatureType, SimpleFeature> store = object.getResource(FeatureStore.class, ProgressManager
+//                    .instance().get());
+          final FeatureSource<SimpleFeatureType, SimpleFeature> store = object.getResource(FeatureStore.class, ProgressManager
+                                                                          .instance().get());
             object.getBlackboard().addListener(new IBlackboardListener(){
 
                 public void blackBoardChanged( BlackboardEvent event ) {
