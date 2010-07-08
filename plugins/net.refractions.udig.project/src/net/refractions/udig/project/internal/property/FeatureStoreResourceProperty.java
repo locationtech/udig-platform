@@ -60,6 +60,7 @@ public class FeatureStoreResourceProperty extends AbstractPropertyValue<ILayer>
     public boolean isTrue( final ILayer object, String value ) {
         isEvaluating.set(true);
         try {
+//TODO codereview            
 //            This resolves http://jira.codehaus.org/browse/UDIG-1686
 //            final FeatureStore<SimpleFeatureType, SimpleFeature> store = object.getResource(FeatureStore.class, ProgressManager
 //                    .instance().get());
