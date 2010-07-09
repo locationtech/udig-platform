@@ -451,9 +451,12 @@ public class CatalogUIPlugin extends AbstractUIPlugin {
         try{
             IServiceInfo info;
             info = service.resolve(IServiceInfo.class, monitor);            
-            
-            ImageDescriptor icon = info.getImageDescriptor();
-            if( icon != null ) return icon;            
+            if( info != null ){
+                ImageDescriptor icon = info.getImageDescriptor();
+                if( icon != null ) {
+                    return icon;            
+                }
+            }
         }catch(Throwable t){
             log("Error obtaining info", t); //$NON-NLS-1$
             return null;

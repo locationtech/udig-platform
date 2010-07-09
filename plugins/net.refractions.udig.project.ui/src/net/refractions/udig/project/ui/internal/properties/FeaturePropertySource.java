@@ -56,8 +56,10 @@ public class FeaturePropertySource implements IPropertySource2 {
     private static final String DEFAULT_GEOM = "DEFAULT_GEOM"; //$NON-NLS-1$
     private static final String BOUNDING_BOX = "BOUNDING_BOX"; //$NON-NLS-1$
     private static final String FEATURE = "FEATURE"; //$NON-NLS-1$
+    
     private SimpleFeature feature = null;
     private SimpleFeature old = null;
+    
     private Map<Geometry, Object> geomProperties = new HashMap<Geometry, Object>();
     private Map<AttributeDescriptor,Object> attrProperties = new HashMap<AttributeDescriptor,Object>();
     private List<AttributeDescriptor> attrs;
@@ -98,6 +100,7 @@ public class FeaturePropertySource implements IPropertySource2 {
     public FeaturePropertySource( SimpleFeature feature2, boolean attribute, boolean editable ){
         init(feature2, attribute, editable);
     }
+    
     private void init( SimpleFeature feature2, boolean attribute, boolean editable ) {
         this.feature = feature2;
         try {
@@ -128,6 +131,7 @@ public class FeaturePropertySource implements IPropertySource2 {
     public Object getEditableValue() {
         return ""; //$NON-NLS-1$
     }
+    
     /**
      * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
      */
@@ -268,6 +272,11 @@ public class FeaturePropertySource implements IPropertySource2 {
         }
         return null;
     }
+    
+    public SimpleFeature getFeature() {
+        return feature;
+    }
+    
     /**
      * @see org.eclipse.ui.views.properties.IPropertySource#isPropertySet(java.lang.Object)
      */

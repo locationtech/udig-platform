@@ -42,6 +42,7 @@ import net.refractions.udig.catalog.ISearch;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IResolveChangeEvent.Type;
 import net.refractions.udig.catalog.IResolveDelta.Kind;
+import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -402,8 +403,11 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
                         		service.getPersistentProperties().put(resource.getID() + "_title", data.text);
                         	} else if(element instanceof IService) {
                         		IService service = (IService) element;
-                        		data.text = service.getInfo(monitor).getTitle();
-                        		service.getPersistentProperties().put("title", data.text);
+                        		IServiceInfo info = service.getInfo(monitor);
+                        		if( info != null ){
+                        		    data.text = info.getTitle();
+                        		    service.getPersistentProperties().put("title", data.text);
+                        		}
                         	} else if(element instanceof IProcess) {
                         		IProcess proc = (IProcess) element;
                         		data.text = proc.getInfo(monitor).getTitle();

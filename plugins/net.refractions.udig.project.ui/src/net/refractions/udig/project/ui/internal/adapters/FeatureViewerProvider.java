@@ -80,8 +80,9 @@ public class FeatureViewerProvider extends LabelProvider implements ITreeContent
         if (parentElement instanceof Databag) {
             Databag data = (Databag) parentElement;
             Object value = data.source.getPropertyValue(data.descriptor.getId());
-            if (value instanceof IPropertySource)
+            if (value instanceof IPropertySource){
                 return createChildren((IPropertySource) value);
+            }
         } else if (Platform.getAdapterManager().hasAdapter(parentElement,
                 "org.eclipse.ui.views.properties.IPropertySource")) { //$NON-NLS-1$
             IPropertySource source = (IPropertySource) Platform.getAdapterManager().getAdapter(
