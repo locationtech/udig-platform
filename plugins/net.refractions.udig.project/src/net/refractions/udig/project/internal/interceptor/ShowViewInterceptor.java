@@ -27,7 +27,6 @@ import java.net.URLEncoder;
 import javax.xml.transform.TransformerException;
 
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.internal.ui.FilterTextTransfer.SimpleFilterHandler;
 import net.refractions.udig.project.ILayer;

@@ -31,10 +31,7 @@ import net.refractions.udig.ui.ProgressManager;
 import net.refractions.udig.ui.operations.AbstractPropertyValue;
 import net.refractions.udig.ui.operations.PropertyValue;
 
-import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * returns true if the layer has a FeatureStore as a resource.
