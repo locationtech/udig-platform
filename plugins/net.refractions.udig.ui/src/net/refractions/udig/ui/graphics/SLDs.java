@@ -24,6 +24,7 @@ import org.eclipse.swt.graphics.FontData;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.Filters;
 import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.Fill;
 import org.geotools.styling.Font;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.Mark;
@@ -32,14 +33,17 @@ import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.SLD;
+import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactory;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
+import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.Graphic;
+import org.opengis.style.GraphicalSymbol;
 
 /**
  * Utility class for working with Geotools SLD objects.
@@ -67,15 +71,14 @@ public class SLDs extends SLD {
     public static final double ALIGN_BOTTOM = 1.0;
     public static final double ALIGN_MIDDLE = 0.5;
     public static final double ALIGN_TOP = 0.0;
-    
-    public static int size(Graphic graphic) {
+
+    public static int size( Graphic graphic ) {
         if (graphic == null) {
             return NOTFOUND;
         }
         return Filters.asInt(graphic.getSize());
     }
-    
-    
+
     /**
      * Grabs the font from the first TextSymbolizer.
      * <p>
@@ -85,42 +88,44 @@ public class SLDs extends SLD {
      * @param symbolizer Text symbolizer information.
      * @return FontData[] of the font's fill, or null if unavailable.
      */
-    public static FontData[] textFont( TextSymbolizer symbolizer ){
+    public static FontData[] textFont( TextSymbolizer symbolizer ) {
 
         Font font = font(symbolizer);
-        if(font == null) return null;
-        //FIXME: font style isn't being set properly here...seems screwy so leaving till later
-//        String fontStyle = font[0].getFontStyle().toString();
-//        if(fontStyle == null) return null;
-//        else if(fontStyle.equalsIgnoreCase("italic"))
-        
+        if (font == null)
+            return null;
+        // FIXME: font style isn't being set properly here...seems screwy so leaving till later
+        // String fontStyle = font[0].getFontStyle().toString();
+        // if(fontStyle == null) return null;
+        // else if(fontStyle.equalsIgnoreCase("italic"))
+
         FontData[] tempFD = new FontData[1];
         Expression fontFamily = font.getFontFamily();
-        if(font.getFontSize() == null || fontFamily == null) return null;
-        
-        Number size = (Number)Filters.asType(font.getFontSize(), Number.class);
-        
+        if (font.getFontSize() == null || fontFamily == null)
+            return null;
+
+        Number size = (Number) Filters.asType(font.getFontSize(), Number.class);
+
         try {
             Object asType = Filters.asType(fontFamily, String.class);
-            tempFD[0] = new FontData((String)asType, size.intValue(), 1);
-        }
-        catch( NullPointerException ignore){
+            tempFD[0] = new FontData((String) asType, size.intValue(), 1);
+        } catch (NullPointerException ignore) {
             return null;
         }
-        if( tempFD[0] != null ) return tempFD;        
+        if (tempFD[0] != null)
+            return tempFD;
         return null;
     }
-    
+
     /**
      * Retrieves all colour names defined in a rule
      * @param rule the rule
      * @return an array of unique colour names
      */
-    public static String[] colors(Rule rule) {
+    public static String[] colors( Rule rule ) {
         Set<String> colorSet = new HashSet<String>();
 
         Color color = null;
-        for (Symbolizer sym : rule.symbolizers()) {
+        for( Symbolizer sym : rule.symbolizers() ) {
             if (sym instanceof PolygonSymbolizer) {
                 PolygonSymbolizer symb = (PolygonSymbolizer) sym;
                 color = polyFill(symb);
@@ -135,7 +140,7 @@ public class SLDs extends SLD {
             }
 
             if (color != null) {
-                colorSet.add(SLD.colorToHex(color) );
+                colorSet.add(SLD.colorToHex(color));
             }
         }
 
@@ -146,17 +151,80 @@ public class SLDs extends SLD {
         }
     }
 
-    
-    public static Font font(TextSymbolizer symbolizer) {
-        if(symbolizer == null) return null;
-        Font[] font = symbolizer.getFonts();
-        if(font == null || font[0] == null ) return null;
-        return font[0];
+    public static Color pointFillWithAlpha( PointSymbolizer symbolizer ) {
+        if (symbolizer == null) {
+            return null;
+        }
+
+        Graphic graphic = symbolizer.getGraphic();
+        if (graphic == null) {
+            return null;
+        }
+
+        for( GraphicalSymbol gs : graphic.graphicalSymbols() ) {
+            if ((gs != null) && (gs instanceof Mark)) {
+                Mark mark = (Mark) gs;
+                Fill fill = mark.getFill();
+                if (fill != null) {
+                    Color colour = color(fill.getColor());
+                    Expression opacity = fill.getOpacity();
+                    if (opacity == null)
+                        opacity = ff.literal(1.0);
+                    float alpha = (float) Filters.asDouble(opacity);
+                    colour = new Color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, alpha);
+                    if (colour != null) {
+                        return colour;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
     
-    public static Style getDefaultStyle(StyledLayerDescriptor sld) {
+    public static Color pointStrokeColorWithAlpha( PointSymbolizer symbolizer ) {
+        if (symbolizer == null) {
+            return null;
+        }
+
+        Graphic graphic = symbolizer.getGraphic();
+        if (graphic == null) {
+            return null;
+        }
+
+        for( GraphicalSymbol gs : graphic.graphicalSymbols() ) {
+            if ((gs != null) && (gs instanceof Mark)) {
+                Mark mark = (Mark) gs;
+                Stroke stroke = mark.getStroke();
+                if (stroke != null) {
+                    Color colour = color(stroke);
+                    Expression opacity = stroke.getOpacity();
+                    if (opacity == null)
+                        opacity = ff.literal(1.0);
+                    float alpha = (float) Filters.asDouble(opacity);
+                    colour = new Color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, alpha);
+                    if (colour != null) {
+                        return colour;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public static Font font( TextSymbolizer symbolizer ) {
+        if (symbolizer == null)
+            return null;
+        Font[] font = symbolizer.getFonts();
+        if (font == null || font[0] == null)
+            return null;
+        return font[0];
+    }
+
+    public static Style getDefaultStyle( StyledLayerDescriptor sld ) {
         Style[] styles = styles(sld);
-        for (int i = 0; i < styles.length; i++) {
+        for( int i = 0; i < styles.length; i++ ) {
             Style style = styles[i];
             FeatureTypeStyle[] ftStyles = style.getFeatureTypeStyles();
             genericizeftStyles(ftStyles);
@@ -164,10 +232,10 @@ public class SLDs extends SLD {
                 return style;
             }
         }
-        //no default, so just grab the first one
+        // no default, so just grab the first one
         return styles[0];
     }
-    
+
     /**
      * Converts the type name of all FeatureTypeStyles to Feature so that the all apply to any feature type.  This is admittedly dangerous
      * but is extremely useful because it means that the style can be used with any feature type.
@@ -180,78 +248,79 @@ public class SLDs extends SLD {
         }
     }
 
-    public static boolean isSemanticTypeMatch(FeatureTypeStyle fts, String regex) {
+    public static boolean isSemanticTypeMatch( FeatureTypeStyle fts, String regex ) {
         String[] identifiers = fts.getSemanticTypeIdentifiers();
-        for (int i = 0; i < identifiers.length; i++) {
-            if (identifiers[i].matches(regex)) return true;
+        for( int i = 0; i < identifiers.length; i++ ) {
+            if (identifiers[i].matches(regex))
+                return true;
         }
         return false;
     }
-    
+
     /**
      * Returns the min scale of the default rule, or 0 if none is set 
      */
-    public static double minScale(FeatureTypeStyle fts) {
-    	if(fts == null || fts.getRules().length == 0)
-    		return 0.0;
-    	
-    	Rule r = fts.getRules()[0]; 
-    	return r.getMinScaleDenominator();
+    public static double minScale( FeatureTypeStyle fts ) {
+        if (fts == null || fts.getRules().length == 0)
+            return 0.0;
+
+        Rule r = fts.getRules()[0];
+        return r.getMinScaleDenominator();
     }
-    
+
     /**
      * Returns the max scale of the default rule, or {@linkplain Double#NaN} if none is set 
      */
-    public static double maxScale(FeatureTypeStyle fts) {
-    	if(fts == null || fts.getRules().length == 0)
-    		return Double.NaN;
-    	
-    	Rule r = fts.getRules()[0]; 
-    	return r.getMaxScaleDenominator();
+    public static double maxScale( FeatureTypeStyle fts ) {
+        if (fts == null || fts.getRules().length == 0)
+            return Double.NaN;
+
+        Rule r = fts.getRules()[0];
+        return r.getMaxScaleDenominator();
     }
-    
+
     /**
      * gets the first FeatureTypeStyle
      */
-    public static FeatureTypeStyle getFeatureTypeStyle(Style s) {
+    public static FeatureTypeStyle getFeatureTypeStyle( Style s ) {
         FeatureTypeStyle[] fts = s.getFeatureTypeStyles();
         if (fts.length > 0) {
             return fts[0];
         }
         return null;
     }
-    
+
     /**
      * Find the first rule which contains a rastersymbolizer, and return it
      *
      * @param s A style to search in
      * @return a rule, or null if no raster symbolizers are found.
      */
-    public static Rule getRasterSymbolizerRule(Style s) {
+    public static Rule getRasterSymbolizerRule( Style s ) {
         FeatureTypeStyle[] fts = s.getFeatureTypeStyles();
-        for(int i = 0; i < fts.length; i++) {
+        for( int i = 0; i < fts.length; i++ ) {
             FeatureTypeStyle featureTypeStyle = fts[i];
             Rule[] rules = featureTypeStyle.getRules();
-            for (int j = 0; j < rules.length; j++) {
+            for( int j = 0; j < rules.length; j++ ) {
                 Rule rule = rules[j];
                 Symbolizer[] symbolizers = rule.getSymbolizers();
-                for (int k = 0; k < symbolizers.length; k++) {
+                for( int k = 0; k < symbolizers.length; k++ ) {
                     Symbolizer symbolizer = symbolizers[k];
-                    if (symbolizer instanceof RasterSymbolizer){
+                    if (symbolizer instanceof RasterSymbolizer) {
                         return rule;
                     }
                 }
-                
+
             }
         }
         return null;
     }
-    
+
     /**
      * The type name that can be used in an SLD in the featuretypestyle that matches all feature types.
      */
     public static final String GENERIC_FEATURE_TYPENAME = "Feature";
-    
-    //TODO: port these methods to the geotools parent class 
-    
- }
+
+    // TODO: port these methods to the geotools parent class
+
+}
