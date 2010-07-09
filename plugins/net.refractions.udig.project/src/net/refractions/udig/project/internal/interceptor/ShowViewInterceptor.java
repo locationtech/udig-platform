@@ -43,6 +43,7 @@ import org.geotools.data.DataStore;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
+import org.geotools.data.view.DefaultView;
 import org.geotools.feature.SchemaException;
 import org.geotools.filter.FilterFilter;
 import org.geotools.filter.FilterTransformer;
@@ -79,6 +80,7 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
 
     public FeatureSource<SimpleFeatureType, SimpleFeature> run(ILayer layer, FeatureSource<SimpleFeatureType, SimpleFeature> resource,
             Class<? super FeatureSource<SimpleFeatureType, SimpleFeature>> requestedType) {
+        
         Object prop = layer.getStyleBlackboard().get(KEY);
         if( prop==null ){
             prop = layer.getBlackboard().get(KEY);
@@ -88,8 +90,9 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
         }
         if (prop instanceof Filter || prop instanceof Query) {
             try {
-                IService service = layer.findGeoResource(FeatureSource.class)
-                        .service(ProgressManager.instance().get());
+                IGeoResource geoResource = layer.findGeoResource(FeatureSource.class);
+                IService service = geoResource.service(ProgressManager.instance().get());
+                
                 if (service != null) {
                     DataStore ds = service.resolve(DataStore.class,
                             ProgressManager.instance().get());
@@ -116,17 +119,24 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                                 .getNamespace(), query.getPropertyNames(),
                                 typeName);
                     }
-
+                    // check if native view is provided by datastore implementation
+                    // (this functionality has been already removed in GeoTools 2.7)
+                    //
                     FeatureSource<SimpleFeatureType, SimpleFeature> view = ds.getView(query);
-// TODO codereview
-// This resolves http://jira.codehaus.org/browse/UDIG-1686
-//                    if (view != null) {
-//                        if (requestedType.isAssignableFrom(FeatureSource.class)) {
-//                            return view;
-//                        } else {
-//                            return null;
-//                        }
-//                    }
+                    if( view == null ){
+                        // provide our own default view wrapper (will be required in GeoTools 2.7)
+                        view = new DefaultView(resource, query);
+                    }
+                    // check that view is of the requested type
+                    // This resolves http://jira.codehaus.org/browse/UDIG-1686
+                    if (view != null) {
+                        if (requestedType.isInstance(view)){
+                            return view;
+                        } else {
+                            // view was not of the requested type - return null indicating it is not available
+                            return null;
+                        }
+                    }
                     return view;
                 }
             } catch (IOException e) {

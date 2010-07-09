@@ -60,20 +60,16 @@ public class FeatureStoreResourceProperty extends AbstractPropertyValue<ILayer>
     public boolean isTrue( final ILayer object, String value ) {
         isEvaluating.set(true);
         try {
-//TODO codereview            
-//            This resolves http://jira.codehaus.org/browse/UDIG-1686
-//            final FeatureStore<SimpleFeatureType, SimpleFeature> store = object.getResource(FeatureStore.class, ProgressManager
-//                    .instance().get());
-          final FeatureSource<SimpleFeatureType, SimpleFeature> store = object.getResource(FeatureStore.class, ProgressManager
-                                                                          .instance().get());
+           // This resolves http://jira.codehaus.org/browse/UDIG-1686
+           final FeatureStore<?,?> store  = object.getResource(FeatureStore.class, ProgressManager.instance().get());
+        // final FeatureSource<SimpleFeatureType, SimpleFeature> store = object.getResource(FeatureStore.class, ProgressManager.instance().get());
+             
             object.getBlackboard().addListener(new IBlackboardListener(){
-
                 public void blackBoardChanged( BlackboardEvent event ) {
                     if (event.getKey().equals(ProjectBlackboardConstants.LAYER__DATA_QUERY)) {
                         notifyListeners(object);
                     }
                 }
-
                 public void blackBoardCleared( IBlackboard source ) {
                     notifyListeners(object);
                 }
