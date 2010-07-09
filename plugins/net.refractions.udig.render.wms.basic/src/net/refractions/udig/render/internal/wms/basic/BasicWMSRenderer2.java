@@ -346,8 +346,9 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             } else {
                 filter = mapFilter;
             }
-            if (filter != null)
+            if (filter != null && filter != Filter.INCLUDE){
                 filters.put(layer, filter);
+            }
         }
 
         if (filters.isEmpty())
