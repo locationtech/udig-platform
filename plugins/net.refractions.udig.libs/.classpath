@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-geocore-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-utilities-1.0.6-1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src/"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-beanutils-1.7.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-collections-3.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-dbcp-1.2.2.jar"/>
@@ -13,7 +14,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/geoapi-2.3-M1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geoapi-pending-2.3-M1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geodb-0.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/google-collect-snapshot-20080321.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-api-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-2.6-SNAPSHOT.jar"/>
@@ -89,8 +89,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-1.1-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-core-1.1-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-tiff-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-utilities-1.1-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jaxb-impl-1.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jcommon-1.0.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jdom-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jfreechart-1.0.13.jar"/>
@@ -121,8 +119,8 @@
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-client-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-common-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xpp3-1.1.3.4.O.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-geocore-1.0.6-1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-utilities-1.0.6-1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/google-collections-0.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
