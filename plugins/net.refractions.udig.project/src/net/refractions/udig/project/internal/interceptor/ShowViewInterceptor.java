@@ -127,16 +127,12 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                         view = new DefaultView(resource, query);
                     }
                     // check that view is of the requested type
-                    // This resolves http://jira.codehaus.org/browse/UDIG-1686
-                    if (view != null) {
-                        if (requestedType.isInstance(view)){
-                            return view;
-                        } else {
-                            // view was not of the requested type - return null indicating it is not available
-                            return null;
-                        }
+                    if (requestedType.isInstance(view)){
+                        return view;
+                    } else {
+                        // view was not of the requested type - return null indicating it is not available
+                        return null;
                     }
-                    return view;
                 }
             } catch (IOException e) {
                 ProjectPlugin.log("Error getting view", e); //$NON-NLS-1$
