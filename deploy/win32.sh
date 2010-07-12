@@ -1,0 +1,38 @@
+#!/bin/bash
+echo "Release"
+
+# ignore mac resources when using tar,zip,etc...
+#
+export COPYFILE_DISABLE=true
+source ./versions.sh
+
+# Release win32 if available
+if [ -f ${TARGET}/udig-${VERSION}.win32.win32.x86.zip ] 
+then
+    echo "Releasing win32"
+    
+    if [ ! -d ${BUILD}/win32 ] 
+    then
+       echo "Creating ${BUILD}/win32"
+       mkdir -p ${BUILD}/win32
+    fi
+    
+    if [ ! -f ${BUILD}/udig-${VERSION}.win32.win32.x86.zip ]
+    then
+        echo "Building ${BUILD}/udig-${VERSION}-win32.win32.x86.zip ..."
+        echo "Extracting ${JRE_WIN32}"
+        unzip -q -d ${BUILD}/win32 ${JRE_WIN32} 
+        mv ${BUILD}/win32/${JRE_WIN32_DIR} ${BUILD}/win32/udig
+        
+        echo "Extracting ${TARGET}/udig-${VERSION}.win32.win32.x86.zip"
+        unzip -q -d ${BUILD}/win32 ${TARGET}/udig-${VERSION}.win32.win32.x86.zip
+        
+        echo "Prepairing ${BUILD}/win32"
+        cp {udig.bat} ${BUILD}/win32/udig
+        
+        echo "Assemble ${BUILD}/udig-${VERSION}.win32.win32.x86.zip"
+        zip -9 -r -q ${BUILD}/udig-${VERSION}.win32.win32.x86.zip ${BUILD}/win32/udig 
+     else 
+       echo "Already Exists ${BUILD}/udig-${VERSION}.win32.win32.x86.zip"
+     fi
+fi
