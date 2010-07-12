@@ -1,11 +1,33 @@
-uDIG Application: Deploy
+uDIG Application
 ----------------
-This java project is used to deploy the uDig application.
 
-It contains the "latest" eclipse startup.jar at the time of writing.
+This directory contains a series of scripts used to package the uDig
+application after it has been exported from eclipse.
 
-The build.xml script that will appear in this directory will make use of
-a custom ant plugin that packages up the various Eclipse-Plugins. 
+To use:
+1. Download the latest custom JREs into a jre/ folder
+2. Export udig.product to a subdirectory 1.2.x/ folder
+3. Update versions.sh to reflect the above two settings and the version you are releasing
+4. ./clean.sh - to remove the build directory
+5. Individual scripts to package:
+   ./win32 - package jre, udig.bat
+   ./win64 - (pending the availability of an appropriate JRE)
+   ./lin32 - package jre, udig.sh
+   ./lin64 - package jre, udig.sh
+   ./mac32 - renames udig_internal back to udig
+   ./mac64 - renames udig_internal back to udig
+   ./sdk - very simple script removes configuration and application
+5. Upload to:
+   http://udig.refractions.net/files/downloads            for stable numbered releases
+   http://udig.refractions.net/files/downloads/branches   for SNAPSHOT and M releases
 
-The results are packaged with the plugins from the rich client platform
-to produce a working application.
+Installer
+=========
+
+Instructions for build the NSIS installer are located in:
+- installer/readme.txt
+
+uDigDeploy
+==========
+
+Possibly used in generating the update site? Not sure.
