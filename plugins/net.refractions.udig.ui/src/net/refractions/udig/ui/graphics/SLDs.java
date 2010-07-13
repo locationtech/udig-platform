@@ -151,6 +151,12 @@ public class SLDs extends SLD {
         }
     }
 
+    /**
+     * Extracts the fill color with a given opacity from the {@link PointSymbolizer}.
+     * 
+     * @param symbolizer the point symbolizer from which to get the color.
+     * @return the {@link Color} with transparency if available. Returns null if no color is available.
+     */
     public static Color pointFillWithAlpha( PointSymbolizer symbolizer ) {
         if (symbolizer == null) {
             return null;
@@ -167,6 +173,9 @@ public class SLDs extends SLD {
                 Fill fill = mark.getFill();
                 if (fill != null) {
                     Color colour = color(fill.getColor());
+                    if (colour == null) {
+                        return null;
+                    }
                     Expression opacity = fill.getOpacity();
                     if (opacity == null)
                         opacity = ff.literal(1.0);
@@ -181,7 +190,13 @@ public class SLDs extends SLD {
 
         return null;
     }
-    
+
+    /**
+     * Extracts the stroke color with a given opacity from the {@link PointSymbolizer}.
+     * 
+     * @param symbolizer the point symbolizer from which to get the color.
+     * @return the {@link Color} with transparency if available. Returns null if no color is available.
+     */
     public static Color pointStrokeColorWithAlpha( PointSymbolizer symbolizer ) {
         if (symbolizer == null) {
             return null;
@@ -198,6 +213,9 @@ public class SLDs extends SLD {
                 Stroke stroke = mark.getStroke();
                 if (stroke != null) {
                     Color colour = color(stroke);
+                    if (colour == null) {
+                        return null;
+                    }
                     Expression opacity = stroke.getOpacity();
                     if (opacity == null)
                         opacity = ff.literal(1.0);
