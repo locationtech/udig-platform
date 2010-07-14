@@ -21,17 +21,20 @@ then
     then
         echo "Building ${BUILD}/udig-${VERSION}-win32.win32.x86.zip ..."
         echo "Extracting ${JRE_WIN32}"
-        unzip -q -d ${BUILD}/win32 ${JRE_WIN32} 
-        mv ${BUILD}/win32/${JRE_WIN32_DIR} ${BUILD}/win32/udig
+        unzip -q -d ${BUILD}/win32 {$JRE}/${JRE_WIN32}.zip
+        mv ${BUILD}/win32/${JRE_WIN32} ${BUILD}/win32/udig
         
         echo "Extracting ${TARGET}/udig-${VERSION}.win32.win32.x86.zip"
         unzip -q -d ${BUILD}/win32 ${TARGET}/udig-${VERSION}.win32.win32.x86.zip
         
         echo "Prepairing ${BUILD}/win32"
-        cp {udig.bat} ${BUILD}/win32/udig
+        cp ${BASE}/udig.bat ${BUILD}/win32/udig
         
         echo "Assemble ${BUILD}/udig-${VERSION}.win32.win32.x86.zip"
-        zip -9 -r -q ${BUILD}/udig-${VERSION}.win32.win32.x86.zip ${BUILD}/win32/udig 
+        #zip -9 -r -q ${BUILD}/udig-${VERSION}.win32.win32.x86.zip ${BUILD}/win32/udig 
+        cd ${BUILD}/win32
+        
+        zip -9 -r -q ../udig-${VERSION}.win32.win32.x86.zip udig 
      else 
        echo "Already Exists ${BUILD}/udig-${VERSION}.win32.win32.x86.zip"
      fi
