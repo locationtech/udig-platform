@@ -63,7 +63,8 @@ public abstract class AbstractToolbarContributionItem extends CurrentContributio
 
         toolItem = createToolItem(parent, index);
         
-        setCurrentTool(getTools().get(0));
+        ModalItem firstTool = getTools().get(0);
+        setCurrentTool(firstTool);
 
         if (isActiveItem() || (isDefaultItem() 
 //        		&& ToolProxy.activeItem == null
