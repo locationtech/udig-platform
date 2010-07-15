@@ -46,11 +46,11 @@
             class="net.refractions.udig.catalog.geotools.data.FileDataStoreFormatProvider">
       </provider>
    </extension>
-   <extension
+   <!--extension
          point="org.eclipse.ui.startup">
       <startup
             class="net.refractions.udig.catalog.internal.geotools.AddToCatalog">
       </startup>
-   </extension>
+   </extension-->
 
 </plugin>
