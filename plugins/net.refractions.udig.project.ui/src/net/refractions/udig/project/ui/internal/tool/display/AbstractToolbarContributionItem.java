@@ -64,6 +64,7 @@ public abstract class AbstractToolbarContributionItem extends CurrentContributio
         toolItem = createToolItem(parent, index);
         
         ModalItem firstTool = getTools().get(0);
+        currentTool = null;
         setCurrentTool(firstTool);
 
         if (isActiveItem() || (isDefaultItem() 
@@ -143,8 +144,8 @@ public abstract class AbstractToolbarContributionItem extends CurrentContributio
      * @param tool the new current tool. It must be one of the items in the category.
      */
     protected void setCurrentTool( final ModalItem tool ) {
-//        if( currentTool==tool )
-//            return;
+        if( currentTool==tool )
+            return;
         currentTool = tool;
         if( Display.getCurrent()==null ){
             Display.getDefault().asyncExec(new Runnable(){
