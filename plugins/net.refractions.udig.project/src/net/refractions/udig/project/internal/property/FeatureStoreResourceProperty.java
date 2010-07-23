@@ -57,9 +57,6 @@ public class FeatureStoreResourceProperty extends AbstractPropertyValue<ILayer>
     public boolean isTrue( final ILayer object, String value ) {
         isEvaluating.set(true);
         try {
-           // This resolves http://jira.codehaus.org/browse/UDIG-1686
-           final FeatureStore<?,?> store  = object.getResource(FeatureStore.class, ProgressManager.instance().get());
-        // final FeatureSource<SimpleFeatureType, SimpleFeature> store = object.getResource(FeatureStore.class, ProgressManager.instance().get());
              
             object.getBlackboard().addListener(new IBlackboardListener(){
                 public void blackBoardChanged( BlackboardEvent event ) {
@@ -78,7 +75,12 @@ public class FeatureStoreResourceProperty extends AbstractPropertyValue<ILayer>
                 CatalogPlugin.getDefault().getLocalCatalog().addCatalogListener(
                         new ObjectPropertyCatalogListener(object, resource, isEvaluating, this));
             }
-            return store != null;
+            
+//TODO codereview: This resolves http://jira.codehaus.org/browse/UDIG-1686
+//            final FeatureStore<?,?> store  = object.getResource(FeatureStore.class, ProgressManager.instance().get());
+//            return store != null;
+            boolean canResolve = resource.canResolve(FeatureStore.class);
+            return canResolve;
         } catch (Exception e) {
             return false;
         } finally {
