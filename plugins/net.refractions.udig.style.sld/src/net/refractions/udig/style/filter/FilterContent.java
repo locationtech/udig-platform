@@ -73,7 +73,7 @@ public final class FilterContent extends StyleContent {
             Query query = (Query) value;
             filter = query.getFilter();
         }
-        if( filter != null ){
+        if( filter != null && filter != Filter.INCLUDE ){
             String cql = CQL.toCQL( filter );
             memento.putString("cql", cql );
         }
@@ -89,7 +89,8 @@ public final class FilterContent extends StyleContent {
     public Object load( IMemento momento ) {
         String cql = momento.getString("cql");
         if( cql == null || cql.length() == 0 ){
-            return Filter.INCLUDE;
+            return null;
+            // return Filter.INCLUDE;
         }
         try {
             Filter filter = CQL.toFilter(cql);
