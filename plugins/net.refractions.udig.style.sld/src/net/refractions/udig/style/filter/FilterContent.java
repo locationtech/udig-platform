@@ -57,7 +57,7 @@ public final class FilterContent extends StyleContent {
     public Class<?> getStyleClass() {
         return Boolean.class;
     }
-
+    
     /*
      * (non-Javadoc)
      * 
@@ -72,7 +72,7 @@ public final class FilterContent extends StyleContent {
         else if( value instanceof Query ){
             Query query = (Query) value;
             filter = query.getFilter();
-        }
+        }      
         if( filter != null && filter != Filter.INCLUDE ){
             String cql = CQL.toCQL( filter );
             memento.putString("cql", cql );

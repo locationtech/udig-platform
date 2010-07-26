@@ -77,6 +77,46 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
      */
     public static final String KEY = ProjectBlackboardConstants.LAYER__DATA_QUERY;
 
+
+    /**
+     * True if the provided value any sort of filter.
+     * <p>
+     * What is not a filter?
+     * <ul>
+     * <li>null</li>
+     * <li>Filter.INCLUDE</li>
+     * <li>Query.ALL</li>
+     * <li>etc...</li>
+     * </ul>
+     * @return true if the provided value is some kind of filter
+     */
+    public static boolean isFilter( Object value ){
+        if( value == null ){
+            return false;
+        }
+        else if( value instanceof Filter ){
+            Filter filter = (Filter) value;
+            if( filter == Filter.INCLUDE){
+                return false;
+            }
+            return true;
+        }
+        else if (value instanceof Query ){
+            Query query = (Query) value;
+            if( query == Query.ALL ){
+                return false;                
+            }
+            if( query.getFilter() == Filter.INCLUDE && query.getPropertyNames() == Query.ALL_NAMES ){
+                return false;
+            }
+            if( Query.ALL.equals(query)){
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+    
     public FeatureSource<SimpleFeatureType, SimpleFeature> run(ILayer layer, FeatureSource<SimpleFeatureType, SimpleFeature> resource,
             Class<? super FeatureSource<SimpleFeatureType, SimpleFeature>> requestedType) {
         
@@ -84,12 +124,11 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
         if( prop==null ){
             prop = layer.getBlackboard().get(KEY);
         }
-        if( prop == null || prop == Filter.INCLUDE ){
+        
+        if( !isFilter( prop )){
             return resource;
         }
-        if( prop instanceof Query && ((Query)prop).getFilter() == Filter.INCLUDE && ((Query)prop).getPropertyNames() == Query.ALL_NAMES ){
-            return resource;
-        }        
+
         if (prop instanceof Filter || prop instanceof Query) {
             try {
                 IGeoResource geoResource = layer.findGeoResource(FeatureSource.class);

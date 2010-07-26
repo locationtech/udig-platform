@@ -153,18 +153,38 @@ public class LayerResource extends IGeoResource {
         List<Wrapper<T>> pre = getPreInterceptors(resource);
         return runInterceptors(requestedType, resource, pre);
     }
-
-    private <T> T runInterceptors( Class<T> requestedType, T resource, List<Wrapper<T>> pre ) {
-        T resource2 = resource;
+    /**
+     * This is where all the interceptors actually get applied.
+     * 
+     * @param <T> type of requested result
+     * @param requestedType type of requested result
+     * @param origionalResource value of requested type to be wrapped/configured
+     * @param pre list of interceptors to "pre" process the resource before use
+     * @return resource as modified/wrapped by any applicable interceptors
+     */
+    private <T> T runInterceptors( Class<T> requestedType, T origionalResource, List<Wrapper<T>> pre ) {
+        // initially we start with the origional resource
+        T resource = origionalResource;
         for( Wrapper<T> interceptor : pre ) {
-            if (resource2 == null){
+            if (resource == null){
+                // if the resource is null then we have nothing further we can do
+                // (the resource was provided to us as null; or one of the interceptors
+                //  has determined we don't have permission/clearance to view the data)
                 return null;
             }
-            if (isAssignable(resource2, interceptor.targetType)){
-                resource2 = interceptor.run(layer, resource2, requestedType);
+            if (isAssignable(resource, interceptor.targetType)){
+                // if the interceptor is applicable; run it against the current resource
+                resource = interceptor.run(layer, resource, requestedType);
+                // The resource returned may be a wrapper (adding functionality) or
+                // it may simply configure the resource (say provided the current transaction)
+                // or it could return null if it determins that the resource should not be used
+                //
             }
+            // we need to continue through all the interceptors giving each a chance wrap/configurer
+            // Currently all interceptors are considered equal; if needed we can introduce a priority
+            // and apply them in a specific order
         }
-        return resource2;
+        return resource; // the final resource
     }
 
     private <T> List<Wrapper<T>> getPreInterceptors( T resource ) {
