@@ -1,12 +1,10 @@
 #!/bin/bash
-echo "Release Linux 32"
+echo "Release $0"
 
 # ignore mac resources when using tar,zip,etc...
-#
-export COPYFILE_DISABLE=true
+#!/bin/bash
+echo "Release Linux 32"
 source ./versions.sh
-
-JRE_LIN32
 
 # Release win32 if available
 if [ -f ${TARGET}/udig-${VERSION}.linux.gtk.x86.zip ] 
@@ -24,16 +22,15 @@ then
         echo "Building ${BUILD}/udig-${VERSION}.linux.gtk.x86.zip ..."
         echo "Extracting ${JRE_LIN32}"
         
-        #unzip -xf {$JRE_LIN32}
-        if [ -f ${JRE_LIN32} ]
+        if [ -f ${JRE}/${JRE_LIN32}.tar.gz ]
         then
-            gunzip -q -d ${BUILD}/linux32 ${JRE_LIN32}
+            gunzip -q -d ${BUILD}/linux32 ${JRE}/${JRE_LIN32}.tar.gz
         fi
         
-        if [ -f ${JRE}/${JRE_LIN32_DIR}.tar ]
+        if [ -f ${JRE}/${JRE_LIN32}.tar ]
         then
-            cd build/linux32/udig
-            tar xf ../../../${JRE}/${JRE_LIN32_DIR}.tar
+            cd ${BUILD}/linux32/udig
+            tar xf ${JRE}/${JRE_LIN32}.tar
             cd ../../..
         fi
         
@@ -44,7 +41,8 @@ then
         cp udig.sh ${BUILD}/linux32/udig
         
         echo "Assemble ${BUILD}/udig-${VERSION}.linux.gtk.x86.zip"
-        zip -9 -r -q ${BUILD}/udig-${VERSION}.linux.gtk.x86.zip ${BUILD}/linux32/udig
+        cd ${BUILD}/linux32
+        zip -9 -r -q ../udig-${VERSION}.linux.gtk.x86.zip udig
      else 
        echo "Already Exists ${BUILD}/udig-${VERSION}.linux.gtk.x86.zip"
      fi

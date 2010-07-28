@@ -21,7 +21,7 @@ then
     then
         echo "Building ${BUILD}/udig-${VERSION}-win32.win32.x86.zip ..."
         echo "Extracting ${JRE_WIN32}"
-        unzip -q -d ${BUILD}/win32 {$JRE}/${JRE_WIN32}.zip
+        unzip -q -d ${BUILD}/win32 ${JRE}/${JRE_WIN32}.zip
         mv ${BUILD}/win32/${JRE_WIN32} ${BUILD}/win32/udig
         
         echo "Extracting ${TARGET}/udig-${VERSION}.win32.win32.x86.zip"
@@ -31,9 +31,7 @@ then
         cp ${BASE}/udig.bat ${BUILD}/win32/udig
         
         echo "Assemble ${BUILD}/udig-${VERSION}.win32.win32.x86.zip"
-        #zip -9 -r -q ${BUILD}/udig-${VERSION}.win32.win32.x86.zip ${BUILD}/win32/udig 
         cd ${BUILD}/win32
-        
         zip -9 -r -q ../udig-${VERSION}.win32.win32.x86.zip udig 
      else 
        echo "Already Exists ${BUILD}/udig-${VERSION}.win32.win32.x86.zip"

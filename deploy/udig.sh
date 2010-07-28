@@ -1,7 +1,9 @@
 #!/bin/sh
+
 UDIGEXEC=udig_internal
 
 PRG="$0"
+echo PRG $PRG
 while [ -h "$PRG" ]; do
 	ls=`ls -ld "$PRG"`
 	link=`expr "$ls" : '.*-> \(.*\)$'`
@@ -11,10 +13,13 @@ while [ -h "$PRG" ]; do
 		PRG=`dirname "$PRG"`/"$link"
 	fi
 done
+export GTK_NATIVE_WINDOWS=1
 
 # Add imageio-ext variables
 PRGDIR=`dirname "$PRG"`
+PWD=`pwd`
 export GDAL_DATA="$PRGDIR/gdal_data"
+echo GDAL_DATA $GDAL_DATA
 
 # Get standard environment variables
 DATA_ARG=false
@@ -29,4 +34,3 @@ if $DATA_ARG; then
 else
 	$PRGDIR/$UDIGEXEC -data ~/uDigWorkspace $@
 fi
-

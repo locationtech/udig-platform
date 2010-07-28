@@ -1,9 +1,5 @@
 #!/bin/bash
 echo "Release Linux 64"
-
-# ignore mac resources when using tar,zip,etc...
-#
-export COPYFILE_DISABLE=true
 source ./versions.sh
 
 # Release linux 64 if available
@@ -22,15 +18,16 @@ then
         echo "Building ${BUILD}/udig-${VERSION}.linux.gtk.x86_64.zip ..."
         echo "Extracting ${JRE_LIN64}"
         
-        if [ -f ${JRE}/${JRE_LIN64_DIR}.tar.gz ]
+        if [ -f ${JRE}/${JRE_LIN64}.tar.gz ]
         then
-            gunzip -q -d ${JRE}/${JRE_LIN64_DIR}.tar.gz
+            gunzip -q -d ${BUILD}/linux64 ${JRE}/${JRE_LIN64}.tar.gz
         fi
         
-        if [ -f ${JRE}/${JRE_LIN64_DIR}.tar ]
+        if [ -f ${JRE}/${JRE_LIN64}.tar ]
         then
-            cd build/linux64/udig
-            tar xf ../../../${JRE}/${JRE_LIN64_DIR}.tar
+            cd ${BUILD}/linux64/udig
+            tar xf ${JRE}/${JRE_LIN64}.tar
+            mv ${JRE_LIN64} jre
             cd ../../..
         fi
         
@@ -41,7 +38,8 @@ then
         cp udig.sh ${BUILD}/linux64/udig
         
         echo "Assemble ${BUILD}/udig-${VERSION}.linux.gtk.x86_64.zip"
-        zip -9 -r -q ${BUILD}/udig-${VERSION}.linux.gtk.x86_64.zip ${BUILD}/linux64/udig
+        cd ${BUILD}/linux64
+        zip -9 -r -q ../udig-${VERSION}.linux.gtk.x86_64.zip udig
      else 
        echo "Already Exists ${BUILD}/udig-${VERSION}.linux.gtk.x86_64.zip"
      fi
