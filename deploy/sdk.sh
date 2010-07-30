@@ -32,8 +32,11 @@ then
         
         rm -rf ${BUILD}/sdk/udig_sdk/configuration
         
+        rm ${BUILD}/sdk/udig_sdk/plugins/*swt*
+        
         echo "Assemble ${BUILD}/udig-${VERSION}-sdk.zip "
-        zip -9 -r -q ${BUILD}/udig-${VERSION}-sdk.zip ${BUILD}/sdk/udig_sdk 
+        cd ${BUILD}/sdk
+        zip -9 -r -q ../udig-${VERSION}-sdk.zip udig_sdk 
      else 
        echo "Already Exists ${BUILD}/udig-${VERSION}-sdk.zip"
      fi
