@@ -105,7 +105,17 @@ public class BasicFeatureMetrics extends AbstractRenderMetrics {
     }
 
     public Set<Range<Double>> getValidScaleRanges() {
-        Style style = (Style) context.getLayer().getStyleBlackboard().get(SLDContent.ID);
-        return MinMaxScaleCalculator.getValidScaleRanges(style);
+        Object value = context.getLayer().getStyleBlackboard().get(SLDContent.ID);
+        if( value == null ) {
+            return new HashSet<Range<Double>>();
+        }
+        if( value instanceof Style ){
+            Style style = (Style) value;
+            return MinMaxScaleCalculator.getValidScaleRanges(style);
+        }
+        else {
+            System.out.println("Unexpected "+value.getClass()+" for "+SLDContent.ID+":"+value);            
+            return new HashSet<Range<Double>>();
+        }
     }
 }

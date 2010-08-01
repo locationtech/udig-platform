@@ -18,13 +18,13 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 
 import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.TileCache;
 
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.rasterings.GridCoverageLoader;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.StyleBlackboard;
@@ -47,13 +47,13 @@ import org.geotools.referencing.CRS;
 import org.geotools.referencing.ReferencingFactoryFinder;
 import org.geotools.renderer.lite.RendererUtilities;
 import org.geotools.renderer.lite.gridcoverage2d.GridCoverageRenderer;
+import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.SLD;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactory;
 import org.opengis.coverage.grid.GridCoverage;
-import org.opengis.coverage.grid.GridCoverageReader;
 import org.opengis.coverage.grid.GridEnvelope;
 import org.opengis.filter.expression.Expression;
 import org.opengis.parameter.ParameterNotFoundException;
@@ -68,19 +68,39 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * A special renderer optimized for grid coverages. For the moment the symbolizer parameter
- * considered is opacity
+ * Render raster information using a chain of Java Advanced Imaging operations
+ * to read the bytes off of disk onto the screen.
+ * <p>
+ * This renderer does not load the raster into memory and should by used when working with
+ * massive images that perform well (ie not jpeg).
+ * <p>
+ * Initially the rendering system looks at the style for:
+ * <ul>
+ * <li>scale ranges (handled in the rendering metrics)</li>
+ * <li>opacity</li>
+ * </ul>
+ * Now that raster symbolizer support is available in GeoTools we may be able to do better
+ * and handle things like color maps?
  * 
  * @author Jesse Eichar
  * @author Andrea Aime
- * @version $Revision: 1.9 $
+ * @since 1.0.0
+ * @version 1.2.0
  */
 public class GridCoverageReaderRenderer extends RendererImpl {
-
+    
+    /** Renderer using a simple JAI chain */
+    public GridCoverageReaderRenderer(){
+        
+    }
+    /**
+     * Internal GridCoverageRenderer used to perform the drawing
+     * (chances are we could use the normal streaming renderer here
+     *  and perform a bit better?)
+     */
     private GridCoverageRenderer renderer;
 
-    @SuppressWarnings("unchecked")
-	public synchronized void render( Graphics2D graphics, IProgressMonitor monitor )
+    public synchronized void render( Graphics2D graphics, IProgressMonitor monitor )
             throws RenderException {
         try {
         	// get the current context
@@ -102,43 +122,44 @@ public class GridCoverageReaderRenderer extends RendererImpl {
         	IMapDisplay mapDisplay = currentContext.getMapDisplay();
             
         	 final IGeoResource geoResource = currentContext.getGeoResource();
-             AbstractGridCoverage2DReader reader = (AbstractGridCoverage2DReader) geoResource.resolve( GridCoverageReader.class, monitor);
+             AbstractGridCoverage2DReader reader = (AbstractGridCoverage2DReader) geoResource.resolve( AbstractGridCoverage2DReader.class, monitor);
              CoordinateReferenceSystem destinationCRS = currentContext.getCRS();
              ReferencedEnvelope bounds = (ReferencedEnvelope) currentContext.getImageBounds();
              bounds=bounds.transform(destinationCRS, true);
              
-
-             ParameterValueGroup group =geoResource.resolve( ParameterValueGroup.class, monitor);
-             if(group==null)
+             ParameterValueGroup group = geoResource.resolve( ParameterValueGroup.class, monitor);
+             if(group==null){
                  group=reader.getFormat().getReadParameters();
+             }
              else{
-                 //temporary fix for imageio
+                 // temporary fix for image-io
+                 // JG: (what is the nature of this fix?)
                  try{
-                 ParameterValue<?> tempParam = group.parameter(AbstractGridFormat.USE_JAI_IMAGEREAD.getName().toString());
-                 if(tempParam!=null)
-                     tempParam.setValue(false);
+                     ParameterValue<?> jaiImageReaderParam = group.parameter(AbstractGridFormat.USE_JAI_IMAGEREAD.getName().toString());
+                     if(jaiImageReaderParam!=null){
+                         jaiImageReaderParam.setValue(false);
+                     }
                  }catch (ParameterNotFoundException e) {
                      // do nothing
                  }
              }
-             ParameterValue param = group.parameter(AbstractGridFormat.READ_GRIDGEOMETRY2D.getName().toString());
+             ParameterValue<?> readGridGeometry2DParam = group.parameter(AbstractGridFormat.READ_GRIDGEOMETRY2D.getName().toString());
              GridEnvelope range=new GridEnvelope2D(0,0, mapDisplay.getWidth(), mapDisplay.getHeight() );
              
              
              MathTransform displayToLayer=currentContext.worldToScreenMathTransform().inverse();
              ReferencingFactoryFinder.getMathTransformFactory(null).createConcatenatedTransform(displayToLayer, currentContext.getLayer().mapToLayerTransform()); 
              GridGeometry2D geom=new GridGeometry2D(range, displayToLayer, destinationCRS );
-             param.setValue(geom);
+             readGridGeometry2DParam.setValue(geom);
              
              currentContext.setStatus(ILayer.WORKING);
              setState( STARTING );
              
              GridCoverage2D coverage = (GridCoverage2D) reader.read(group.values().toArray(new ParameterValue[0]));
-             if(coverage!=null)
-             {
-	            
+             if(coverage!=null){	            
 	            //setting rendering hints
-	            RenderingHints hints = new RenderingHints(Collections.EMPTY_MAP);
+                 //
+	            RenderingHints hints = new RenderingHints(new HashMap<RenderingHints.Key,Object>());
 	            hints.add(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED));
 	            hints.add(new RenderingHints(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE));
 	            hints.add(new RenderingHints(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED));
@@ -149,12 +170,18 @@ public class GridCoverageReaderRenderer extends RendererImpl {
 	            hints.add(new RenderingHints(JAI.KEY_INTERPOLATION,new InterpolationNearest()));
 	            graphics.addRenderingHints(hints);
 	            
+	            // JG: Store title cache on the layer blackboard so it can last between runs.
+	            //     Performance question: may do better to have a single larger tile cache on the map blackboard?
+	            //
 	            final TileCache tempCache=currentContext.getTileCache();
 	            hints.add(new RenderingHints(JAI.KEY_TILE_CACHE,tempCache));
 	            
 	            if( CRS.getHorizontalCRS(destinationCRS) == null ){
 	                destinationCRS = coverage.getCoordinateReferenceSystem2D();
 	            }
+	            //
+	            AffineTransform worldToScreen = null; // we are leting the GridCoverageRenderer sor that out
+	            
 	            //draw
 	            try {
 	                Style style = grabStyle();
@@ -164,7 +191,7 @@ public class GridCoverageReaderRenderer extends RendererImpl {
 	                double minScale = rule.getMinScaleDenominator();
 	                double maxScale = rule.getMaxScaleDenominator();
 	                if (minScale <= currentScale && currentScale <= maxScale ) {
-	                    final GridCoverageRenderer paint = new GridCoverageRenderer( destinationCRS, envelope, screenSize,hints );
+	                    final GridCoverageRenderer paint = new GridCoverageRenderer( destinationCRS, envelope, screenSize,worldToScreen,hints );
 	                    final RasterSymbolizer rasterSymbolizer = SLD.rasterSymbolizer(style);
 	                
 	                    //setState( RENDERING );
@@ -173,7 +200,7 @@ public class GridCoverageReaderRenderer extends RendererImpl {
 	                }
 	                
 	            } catch(Exception e) {
-	                final GridCoverageRenderer paint = new GridCoverageRenderer( destinationCRS, envelope, screenSize,hints );
+	                final GridCoverageRenderer paint = new GridCoverageRenderer( destinationCRS, envelope, screenSize,worldToScreen,hints );
 	                RasterSymbolizer rasterSymbolizer = CommonFactoryFinder.getStyleFactory(null).createRasterSymbolizer();
 	                
 	                //setState( RENDERING );
@@ -206,7 +233,7 @@ public class GridCoverageReaderRenderer extends RendererImpl {
     
     public synchronized void render2( Graphics2D graphics, IProgressMonitor monitor )
             throws RenderException {
-        State state = null;
+        GridCoverageRenderState state = null;
         try {
             state = prepareRender(monitor);
         } catch (IOException e1) {
@@ -221,7 +248,7 @@ public class GridCoverageReaderRenderer extends RendererImpl {
      * @param renderer
      * @param graphics
      */
-    public void doRender( GridCoverageRenderer renderer, Graphics2D graphics, State state ) {
+    public void doRender( GridCoverageRenderer renderer, Graphics2D graphics, GridCoverageRenderState state ) {
         double scale = state.context.getViewportModel().getScaleDenominator();
         if (scale < state.minScale || scale > state.maxScale)
             return;
@@ -278,7 +305,7 @@ public class GridCoverageReaderRenderer extends RendererImpl {
     /**
      * Extract symbolizer parameters from the style blackboard
      */
-    public static State getRenderState( IRenderContext context ) {
+    public static GridCoverageRenderState getRenderState( IRenderContext context ) {
         StyleBlackboard styleBlackboard = (StyleBlackboard) context.getLayer().getStyleBlackboard();
         Style style = (Style) styleBlackboard.lookup(Style.class);
         double minScale = Double.MIN_VALUE;
@@ -286,7 +313,8 @@ public class GridCoverageReaderRenderer extends RendererImpl {
         float opacity = 1.0f;
         if (style != null) {
             try {
-                Rule rule = style.getFeatureTypeStyles()[0].getRules()[0];
+                FeatureTypeStyle featureStyle = style.featureTypeStyles().get(0);                
+                Rule rule = featureStyle.rules().get(0);
                 minScale = rule.getMinScaleDenominator();
                 maxScale = rule.getMaxScaleDenominator();
                 if (rule.getSymbolizers()[0] instanceof RasterSymbolizer) {
@@ -306,7 +334,7 @@ public class GridCoverageReaderRenderer extends RendererImpl {
         Rectangle displayArea = new Rectangle(context.getMapDisplay().getWidth(), context
                 .getMapDisplay().getHeight());
 
-        return new State(context, context.getImageBounds(), displayArea, opacity,
+        return new GridCoverageRenderState(context, context.getImageBounds(), displayArea, opacity,
                 minScale, maxScale);
     }
 
@@ -326,7 +354,7 @@ public class GridCoverageReaderRenderer extends RendererImpl {
         return num.floatValue();
     }
 
-    private State prepareRender( IProgressMonitor monitor ) throws IOException {
+    private GridCoverageRenderState prepareRender( IProgressMonitor monitor ) throws IOException {
 
         try {
             CoordinateReferenceSystem contextCRS = getContext().getCRS();
@@ -347,7 +375,8 @@ public class GridCoverageReaderRenderer extends RendererImpl {
                     bounds = all.transform(contextCRS, true, 10);
                 }
             }
-            renderer = new GridCoverageRenderer(contextCRS, bounds, rectangle);
+            AffineTransform world2screen = null;
+            renderer = new GridCoverageRenderer(contextCRS, bounds, rectangle, world2screen);
 
         } catch (TransformException e) {
             // TODO Handle TransformException
@@ -372,33 +401,6 @@ public class GridCoverageReaderRenderer extends RendererImpl {
 
     public void render( IProgressMonitor monitor ) throws RenderException {
         render(getContext().getImage().createGraphics(), monitor);
-    }
-
-    /**
-     * Encapsulates the state required to render a GridCoverage
-     * 
-     * @author Jesse
-     * @since 1.1.0
-     */
-    public static class State {
-
-        public float opacity;
-        public double minScale;
-        public double maxScale;
-        public IRenderContext context;
-        public ReferencedEnvelope bounds;
-        public Rectangle displayArea;
-
-        public State( IRenderContext context, ReferencedEnvelope bbox, Rectangle displayArea, float opacity,
-                double minScale, double maxScale ) {
-            this.opacity = opacity;
-            this.minScale = minScale;
-            this.maxScale = maxScale;
-            this.context = context;
-            this.bounds = bbox;
-            this.displayArea = displayArea;
-        }
-
     }
 
 }

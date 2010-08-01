@@ -204,7 +204,23 @@ public class ID implements Serializable {
     public File toFile() {
         return file;
     }
-
+    public String toExtension(){
+        String name;
+        try {
+            name = uri.toURL().getFile();
+        } catch (MalformedURLException e) {
+            name = url.getFile();
+        }
+        int slash = name.lastIndexOf('/');
+        int dot = name.lastIndexOf('.');
+        int beginIndex = (slash == -1 && slash < name.length() - 1 ? 0 : slash) + 1;
+        if( dot == -1 || dot < beginIndex || dot == name.length()-1 ){
+            return ""; // no extension
+        }
+        else {
+            return name.substring(dot+1);
+        }
+    }
     public String toBaseFile() {
         String name;
         try {

@@ -94,28 +94,25 @@ public final class CacheContent extends StyleContent {
      */
     public Object createDefaultStyle( IGeoResource resource, Color colour, 
             IProgressMonitor m ) throws IOException {
-        return null; // no good default yet
-        /*
+        
         if( resource.canResolve(Boolean.class)){
             Boolean isCaching = resource.resolve( Boolean.class, m);
             if( isCaching != null ){
                 return isCaching;
             }
         }
-        
         ID serviceID = resource.service(null).getID();        
-        if( serviceID.isWFS() ){
-            return true; // we want to cache for WFS
-        }
+//        if( serviceID.isWFS() ){
+//            return true; // we want to cache for WFS
+//        }
         if( serviceID.isFile() ){
-            String filename = serviceID.toBaseFile();
-            if( filename.toLowerCase().endsWith("jpg") ||
-                    filename.toLowerCase().endsWith("jpeg")){
+            String ext = serviceID.toExtension();
+            if( ext.toLowerCase().endsWith("jpg") ||
+                    ext.toLowerCase().endsWith("jpeg")){
                 return true; // we want to cache JPEG
             }
         }
         return null; // there is no good Style default for this resource type
-        */
     }    
 
     

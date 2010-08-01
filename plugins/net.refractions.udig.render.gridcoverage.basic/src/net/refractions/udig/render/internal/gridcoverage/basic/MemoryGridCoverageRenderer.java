@@ -45,6 +45,7 @@ import org.geotools.referencing.CRS;
 import org.geotools.referencing.ReferencingFactoryFinder;
 import org.geotools.renderer.lite.RendererUtilities;
 import org.geotools.renderer.lite.gridcoverage2d.GridCoverageRenderer;
+import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.SLD;
@@ -62,17 +63,38 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * A special renderer optimized for grid coverages. For the moment the symbolizer parameter
- * considered is opacity
- * 
+ * Render raster information from memory.
+ * <p>
+ * This renderer is expensive in terms of memory but is the best choice for formats
+ * such as jpeg which are not optimised for crop operation (ie you need
+ * to read in the entire image to draw even a small part of it).
+ * <p>
+ * Initially the rendering system looks at the style for:
+ * <ul>
+ * <li>scale ranges (handled in the rendering metrics)</li>
+ * <li>opacity</li>
+ * </ul>
+ * Now that raster symbolizer support is available in GeoTools we may be able to do better
+ * and handle things like color maps?
+ * @see GridCoverageLoader
  * @author Jesse Eichar
  * @author Andrea Aime
  * @version $Revision: 1.9 $
  */
 public class MemoryGridCoverageRenderer extends RendererImpl {
-
+    /**
+     * Internal GridCoverageRenderer used to perform the drawing
+     * (chances are we could use the normal streaming renderer here
+     *  and perform a bit better?)
+     */
     private GridCoverageRenderer renderer;
-
+    
+    /**
+     * Renderer using a GridCoverageLoader to render out of memory
+     * (used to load jpeg into memory; or can be used when user requests cache)
+     */
+    public MemoryGridCoverageRenderer(){        
+    }
     @SuppressWarnings("unchecked")
 	public synchronized void render( Graphics2D graphics, IProgressMonitor monitor )
             throws RenderException {
@@ -147,7 +169,7 @@ public class MemoryGridCoverageRenderer extends RendererImpl {
 	                double minScale = rule.getMinScaleDenominator();
 	                double maxScale = rule.getMaxScaleDenominator();
 	                if (minScale <= currentScale && currentScale <= maxScale ) {
-	                    final GridCoverageRenderer paint = new GridCoverageRenderer( destinationCRS, envelope, screenSize,hints );
+	                    final GridCoverageRenderer paint = new GridCoverageRenderer( destinationCRS, envelope, screenSize,null, hints );
 	                    final RasterSymbolizer rasterSymbolizer = SLD.rasterSymbolizer(style);
 	                
 	                    //setState( RENDERING );
@@ -156,7 +178,7 @@ public class MemoryGridCoverageRenderer extends RendererImpl {
 	                }
 	                
 	            } catch(Exception e) {
-	                final GridCoverageRenderer paint = new GridCoverageRenderer( destinationCRS, envelope, screenSize,hints );
+	                final GridCoverageRenderer paint = new GridCoverageRenderer( destinationCRS, envelope, screenSize,null, hints );
 	                RasterSymbolizer rasterSymbolizer = CommonFactoryFinder.getStyleFactory(null).createRasterSymbolizer();
 	                
 	                //setState( RENDERING );
@@ -204,7 +226,7 @@ public class MemoryGridCoverageRenderer extends RendererImpl {
      * @param renderer
      * @param graphics
      */
-    public void doRender( GridCoverageRenderer renderer, Graphics2D graphics, State state ) {
+    public void doRender( GridCoverageRenderer renderer, Graphics2D graphics, GridCoverageRenderState state ) {
         double scale = state.context.getViewportModel().getScaleDenominator();
         if (scale < state.minScale || scale > state.maxScale)
             return;
@@ -261,7 +283,7 @@ public class MemoryGridCoverageRenderer extends RendererImpl {
     /**
      * Extract symbolizer parameters from the style blackboard
      */
-    public static State getRenderState( IRenderContext context ) {
+    public static GridCoverageRenderState getRenderState( IRenderContext context ) {
         StyleBlackboard styleBlackboard = (StyleBlackboard) context.getLayer().getStyleBlackboard();
         Style style = (Style) styleBlackboard.lookup(Style.class);
         double minScale = Double.MIN_VALUE;
@@ -269,7 +291,8 @@ public class MemoryGridCoverageRenderer extends RendererImpl {
         float opacity = 1.0f;
         if (style != null) {
             try {
-                Rule rule = style.getFeatureTypeStyles()[0].getRules()[0];
+                FeatureTypeStyle featureStyle = style.featureTypeStyles().get(0);                
+                Rule rule = featureStyle.rules().get(0);
                 minScale = rule.getMinScaleDenominator();
                 maxScale = rule.getMaxScaleDenominator();
                 if (rule.getSymbolizers()[0] instanceof RasterSymbolizer) {
@@ -289,7 +312,7 @@ public class MemoryGridCoverageRenderer extends RendererImpl {
         Rectangle displayArea = new Rectangle(context.getMapDisplay().getWidth(), context
                 .getMapDisplay().getHeight());
 
-        return new State(context, context.getImageBounds(), displayArea, opacity,
+        return new GridCoverageRenderState(context, context.getImageBounds(), displayArea, opacity,
                 minScale, maxScale);
     }
 
@@ -309,7 +332,7 @@ public class MemoryGridCoverageRenderer extends RendererImpl {
         return num.floatValue();
     }
 
-    private State prepareRender( IProgressMonitor monitor ) throws IOException {
+    private GridCoverageRenderState prepareRender( IProgressMonitor monitor ) throws IOException {
 
         try {
             CoordinateReferenceSystem contextCRS = getContext().getCRS();
@@ -330,7 +353,8 @@ public class MemoryGridCoverageRenderer extends RendererImpl {
                     bounds = all.transform(contextCRS, true, 10);
                 }
             }
-            renderer = new GridCoverageRenderer(contextCRS, bounds, rectangle);
+            AffineTransform world2screen = null;
+            renderer = new GridCoverageRenderer(contextCRS, bounds, rectangle,world2screen);
 
         } catch (TransformException e) {
             // TODO Handle TransformException
@@ -355,33 +379,6 @@ public class MemoryGridCoverageRenderer extends RendererImpl {
 
     public void render( IProgressMonitor monitor ) throws RenderException {
         render(getContext().getImage().createGraphics(), monitor);
-    }
-
-    /**
-     * Encapsulates the state required to render a GridCoverage
-     * 
-     * @author Jesse
-     * @since 1.1.0
-     */
-    public static class State {
-
-        public float opacity;
-        public double minScale;
-        public double maxScale;
-        public IRenderContext context;
-        public ReferencedEnvelope bounds;
-        public Rectangle displayArea;
-
-        public State( IRenderContext context, ReferencedEnvelope bbox, Rectangle displayArea, float opacity,
-                double minScale, double maxScale ) {
-            this.opacity = opacity;
-            this.minScale = minScale;
-            this.maxScale = maxScale;
-            this.context = context;
-            this.bounds = bbox;
-            this.displayArea = displayArea;
-        }
-
     }
 
 }

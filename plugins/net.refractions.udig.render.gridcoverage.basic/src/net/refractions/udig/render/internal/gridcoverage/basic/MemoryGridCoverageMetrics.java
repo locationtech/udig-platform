@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.refractions.udig.catalog.ID;
 import net.refractions.udig.core.MinMaxScaleCalculator;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.render.Renderer;
@@ -46,7 +47,8 @@ public class MemoryGridCoverageMetrics extends AbstractRenderMetrics {
      */
     private static List<String> listExpectedStyleIds(){
         ArrayList<String> styleIds = new ArrayList<String>();
-        styleIds.add(SLDContent.ID);
+        styleIds.add("net.refractions.udig.style.sld");
+        styleIds.add("net.refractions.udig.style.cache");
         return styleIds;
     }
     
@@ -58,8 +60,19 @@ public class MemoryGridCoverageMetrics extends AbstractRenderMetrics {
      */
     public MemoryGridCoverageMetrics( IRenderContext context2, MemoryGridCoverageMetricsFactory factory) {
         super( context2, factory, listExpectedStyleIds());
-        this.timeToDrawMetric = DRAW_IMAGE_MEMORY;
-        this.latencyMetric = LATENCY_MEMORY_CACHE;        
+        this.resolutionMetric = RES_DENSE; // reads more then is required for the screen!
+        
+        ID id = context.getGeoResource().getID();
+        //Boolean memory = (Boolean) context.getLayer().getStyleBlackboard().get("net.refractions.udig.style.cache");        
+        if( id.isMemory() ){
+            // we would not really want to use GridCoverageLoader on an in memory image
+            this.latencyMetric = LATENCY_MEMORY;
+            this.timeToDrawMetric = DRAW_IMAGE_MEMORY;
+        }
+        else {
+            this.latencyMetric = LATENCY_MEMORY_CACHE;        
+            this.timeToDrawMetric = DRAW_IMAGE_MEMORY;
+        }
     }
 
     public MemoryGridCoverageRenderer createRenderer() {
@@ -86,10 +99,22 @@ public class MemoryGridCoverageMetrics extends AbstractRenderMetrics {
         return false;
     }
 
-    public boolean canStyle( String SyleID, Object value ) {
-        if( value == null || !(value instanceof Style)) return false;
-        Style style = (Style) value;
-        return SLDs.rasterSymbolizer( style ) != null;
+    public boolean canStyle( String styleID, Object value ) {
+        if( "net.refractions.udig.style.cache".equals(styleID)){
+            if( Boolean.TRUE.equals( value )){
+                return true; // user turned on caching
+            }
+            else {
+                return false; // do not use caching unless user asks
+            }
+        }
+        // although we expect SLDContent; we are willing to work with any Style
+        //
+        if( value != null && value instanceof Style){              
+            Style style = (Style) value;
+            return SLDs.rasterSymbolizer( style ) != null;
+        }
+        return false;
     }
 
     public boolean isOptimized() {
@@ -97,13 +122,18 @@ public class MemoryGridCoverageMetrics extends AbstractRenderMetrics {
     }
 
     public Set<Range<Double>> getValidScaleRanges() {
-        Style style = (Style) context.getLayer().getStyleBlackboard().get(SLDContent.ID);
-        if( style == null ) {
+        Object value = context.getLayer().getStyleBlackboard().get(SLDContent.ID);
+        if( value == null ) {
             return new HashSet<Range<Double>>();
         }
-        MinMaxScaleCalculator minMaxScaleCalculator = new MinMaxScaleCalculator();
-        style.accept(minMaxScaleCalculator);
-        return minMaxScaleCalculator.getRanges();
+        if( value instanceof Style ){
+            Style style = (Style) value;
+            return MinMaxScaleCalculator.getValidScaleRanges(style);
+        }
+        else {
+            System.out.println("Unexpected "+value.getClass()+" for "+SLDContent.ID+":"+value);            
+            return new HashSet<Range<Double>>();
+        }
     }
 
 }

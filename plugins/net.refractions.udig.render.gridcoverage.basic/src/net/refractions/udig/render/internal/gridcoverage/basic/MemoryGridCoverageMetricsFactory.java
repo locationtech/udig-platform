@@ -16,6 +16,7 @@
  */
 package net.refractions.udig.render.internal.gridcoverage.basic;
 
+import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.rasterings.GridCoverageLoader;
 import net.refractions.udig.project.render.AbstractRenderMetrics;
@@ -47,6 +48,13 @@ public class MemoryGridCoverageMetricsFactory implements IRenderMetricsFactory {
             return false;
         }
         IGeoResource geoResource = context.getGeoResource();
+        ID id = context.getGeoResource().getID();
+        if( id.isMemory() ){
+            // image already in memory don't double cache!
+            // (this could be handled by not allowing the temp entry
+            //  to resolve to GridCoverageLoader - so this check is a safety)
+            return false;
+        }        
 		if( geoResource.canResolve(GridCoverageLoader.class) ){
 			return true;
 		}

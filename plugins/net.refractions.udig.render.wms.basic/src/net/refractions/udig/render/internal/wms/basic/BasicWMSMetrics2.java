@@ -183,10 +183,10 @@ public class BasicWMSMetrics2 extends AbstractRenderMetrics {
                 max = Double.MAX_VALUE;
             }
             if( min < max ){
-                ranges.add(new Range(Double.class, min, max));
+                ranges.add(new Range<Double>(Double.class, min, max));
             }
             else {
-                ranges.add(new Range(Double.class, max, min));
+                ranges.add(new Range<Double>(Double.class, max, min));
             }
         } catch (IOException e) {
             throw (RuntimeException) new RuntimeException( ).initCause( e );

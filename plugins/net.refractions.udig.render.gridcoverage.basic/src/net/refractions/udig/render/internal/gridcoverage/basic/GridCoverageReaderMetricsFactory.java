@@ -42,14 +42,14 @@ public class GridCoverageReaderMetricsFactory implements IRenderMetricsFactory {
      * @return true if we can render the provided context using BasicGridCoverageRenderer
      */
     public boolean canRender( IRenderContext context ) {
-        if( context instanceof ICompositeRenderContext ){
+        if (context instanceof ICompositeRenderContext) {
             return false;
         }
         IGeoResource geoResource = context.getGeoResource();
-		if( geoResource.canResolve(AbstractGridCoverage2DReader.class) ){
-			return true;
-		}
-		return false;
+        if (geoResource.canResolve(AbstractGridCoverage2DReader.class)) {
+            return true; // a reader is available!
+        }
+        return false;
     }
 
     /**

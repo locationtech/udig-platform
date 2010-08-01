@@ -145,11 +145,13 @@ public class RendererCreatorImpl implements RendererCreator {
 
         // Part 1 of decision goes here
         Object o = layerToMetricsFactoryMap.get(context.getLayer());
-        if (o == null)
-            createConfiguration();
+        if (o == null){
+            createConfiguration(); // carefully creates the configuration entry for the layer
+        }
         List<InternalRenderMetrics> list = layerToMetricsFactoryMap.get(context.getLayerInternal());
-        if( list.isEmpty() )
-            return getPlaceHolder(context);
+        if( list.isEmpty() ){
+            return getPlaceHolder(context); // layer won't be rendered
+        }
         InternalRenderMetrics internalRenderMetrics=null;
         for( Iterator<InternalRenderMetrics> iter = list.iterator(); 
                     iter.hasNext() && internalRenderMetrics==null; ) {
@@ -174,18 +176,28 @@ public class RendererCreatorImpl implements RendererCreator {
         placeHolder.setContext(context);
         return placeHolder;
     }
-
+    /**
+     * Carefully creates the configuration in a threadsafe manner.
+     * <p>
+     * This method has the side effect of setting a Layer/RenderContext entry in the configuration
+     * map.
+     * <p>
+     * Because the rendermetrics may call any code in order to obtain their metrics it is possible
+     * that the rendermetrics could end up triggering createConfiguration to be called. Because of
+     * this the render metrics methods cannot be called within a synchronization block because a
+     * deadlock could occur
+     * <p>
+     * Consider: rendermetrics somehow resets a IGeoResource which triggers a re-render (and
+     * therefore a re-evaluation of the renderers). If anywhere there is synchronous waiting between
+     * 2 threads a dead lock can occur.
+     * <p>
+     * To overcome this issue this method has limitted synchronization. The configuration is made
+     * but before it assigns the configuration it determines whether or not the layers have changed
+     * since it started (this check is in a synchronization block so that it is thread safe) if the
+     * layers have changed then it starts over again. This way there is no chance for deadlock but
+     * the correctness semantics are maintained.
+     */
     void createConfiguration() {
-        
-        // Because the rendermetrics may call any code in order to obtain their metrics it is possible
-        // that the rendermetrics could end up triggering createConfiguration to be called.  Because of this
-        // the render metrics methods cannot be called within a synchronization block because a deadlock could occur
-        // Consider:  rendermetrics somehow resets a IGeoResource which triggers a re-render (and therefore a re-evaluation of
-        // the renderers).  If anywhere there is synchronous waiting between 2 threads a dead lock can occur.
-        // To overcome this issue this method has limitted synchronization.  The configuration is made but before it assigns the
-        // configuration it determines whether or not the layers have changed since it started (this check is in a synchronization
-        // block so that it is thread safe) if the layers have changed then it starts over again.
-        // This way there is not change for deadlock but the correctness semantics are maintained.
         boolean configurationPassed=false;
         
         while( !configurationPassed ){

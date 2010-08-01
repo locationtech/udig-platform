@@ -128,20 +128,31 @@ public abstract class AbstractRenderMetrics {
     public static final long LATENCY_NETWORK = 500;
     
     /* DRAWING TIME DEFAULTS */
+    
     /**
-     * An image in memory to draw to screen.
-     */
-    public static final long DRAW_IMAGE_MEMORY = 100;
-    /**
-     * An indexed image on disk to draw to screen.
+     * An indexed image able to draw just part of the image.
      * With an index we should be able to read just what is needed.
      */
-    public static final long DRAW_IMAGE_INDEX = 200;
+    public static final long DRAW_IMAGE_INDEX = 100;
+
+    /**
+     * Image in memory; not indexed.
+     */
+    public static final long DRAW_IMAGE_MEMORY = 200;
+
     /**
      * Image on disk; not indexed.
      * Without an index the entire image may need to be read.
      */
     public static final long DRAW_IMAGE_RAW = 300;
+    
+    /**
+     * Used to represent formats like jpeg where the file
+     * needs to be decompressed in order to ready any part
+     * of the file.
+     */
+    public static final long DRAW_IMAGE_COMPRESSED = 600;
+    
     /**
      * In memory data that needs to be converted to image before being drawn.
      */
