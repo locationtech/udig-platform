@@ -292,12 +292,11 @@ public class EndConnectionState extends State {
         if ((errors == null || errors.isEmpty()) && nextState == null) {
             return null;
         } else {
-            if (!errors.isEmpty()) {
+            if (errors != null && !errors.isEmpty()) {
                 return new ConnectionErrorState(errors);
             } else {
                 return nextState;
             }
-
         }
 
     }
