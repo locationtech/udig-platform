@@ -735,10 +735,15 @@ public interface WMSCComplexTypes {
 //                }
 
                 if (sameName(elems[2], value[i])) {
+                    String spec = (String) value[i].getValue();
+                    if( spec == null || spec.length() == 0){
+                        // Service not avaialble
+                        WmsPlugin.log("WMS Capabilies document does contain VendorSpecificCapabilities describing WMS-C tileset",null);
+                    }
                     try {
-                        service.setOnlineResource(new URL((String)value[i].getValue()));
+                        service.setOnlineResource(new URL( spec ));
                     } catch (MalformedURLException e) {
-                        WmsPlugin.log("Cannot convert string to url: " + (String)value[i].getValue(), e); //$NON-NLS-1$
+                        WmsPlugin.log("Cannot convert string to url: " +spec, e); //$NON-NLS-1$
                     }
                 }
 
