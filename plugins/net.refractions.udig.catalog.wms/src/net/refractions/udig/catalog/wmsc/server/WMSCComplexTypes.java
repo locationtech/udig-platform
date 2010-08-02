@@ -740,10 +740,12 @@ public interface WMSCComplexTypes {
                         // Service not avaialble
                         WmsPlugin.log("WMS Capabilies document does contain VendorSpecificCapabilities describing WMS-C tileset",null);
                     }
-                    try {
-                        service.setOnlineResource(new URL( spec ));
-                    } catch (MalformedURLException e) {
-                        WmsPlugin.log("Cannot convert string to url: " +spec, e); //$NON-NLS-1$
+                    else {
+                        try {
+                            service.setOnlineResource(new URL( spec ));
+                        } catch (MalformedURLException e) {
+                            WmsPlugin.log("Cannot convert string to url: " +spec, e); //$NON-NLS-1$
+                        }
                     }
                 }
 

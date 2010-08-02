@@ -44,7 +44,7 @@ public interface UDIGConnectionPage extends IWizardPage {
      * page in the sequence of pages null(or anything else) may be returned.
      * 
      * @return A map of connection parameters.
-     * @deprecated
+     * @deprecated use getServices() as there may be more then one
      */
     Map<String, Serializable> getParams();
     

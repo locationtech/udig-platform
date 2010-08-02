@@ -23,8 +23,8 @@ public class ProjectUtil {
      * Checks the list of <code>IGeoResource</code>s from the <code>resources</code> list whether there are
      * already layers in <code>map</code> from these georesources.
      * <p>
-     * This utility method is used during adding new layers to the map to avoid diplicating the layers
-     * from the same georesource.
+     * This utility method is used during adding new layers to the map to avoid duplicating the layers
+     * from the same GeoResource.
      * 
      * @param map
      * @param geoResources

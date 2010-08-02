@@ -31,6 +31,9 @@ import org.geotools.data.DataSourceException;
 /**
  * Wraps around a UDIGConnectionPage providing a list of services or resources
  * selected.
+ * <p>
+ * This is used to smoothly transition to adding layers to a map when
+ * the page is used as part of the Add Layer wizard.
  * 
  * @see UDIGConnectionPage
  * @since 1.0
@@ -115,6 +118,9 @@ public class ConnectionPageDecorator extends WorkflowWizardPage
 
       @Override
     public boolean isPageComplete() {
+          if( page == null ){
+              return false; // not ready yet
+          }
           boolean complete = page.isPageComplete();
           if (complete && getState() instanceof EndConnectionState) {
               // set some context for the connection state
