@@ -354,12 +354,14 @@ public class BasicFeatureRenderer extends RendererImpl {
 
             renderer2.paint(graphics, paintArea, validBounds);
 
-        } catch (Throwable e1) {
-            if (e1 instanceof InterruptedException)
+        } catch (Throwable renderingProblem) {
+            if (renderingProblem instanceof InterruptedException){
+                // ignore the rendering process being interrupted this is expected
+                // if the user pans while we are drawing
                 return;
-            RenderException e2 = new RenderException("Exception(s) occured during rendering: " //$NON-NLS-1$
-                    + e1.getLocalizedMessage());
-            e2.initCause(e1);
+            }
+            RenderException e2 = new RenderException( renderingProblem.getClass()+" occured during rendering: " //$NON-NLS-1$
+                    + renderingProblem.getLocalizedMessage(), renderingProblem );
             throw e2;
         } finally {
             /*
