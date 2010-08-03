@@ -11,15 +11,18 @@ if [ -f ${TARGET}/udig-${VERSION}.win32.win32.x86_64.zip ]
 then
     echo "Releasing win64"
     
-    if [ ! -d ${BUILD}/win64 ] 
+    if [ ! -d ${BUILD}/win64/udig ] 
     then
        echo "Creating ${BUILD}/win64 directory"
-       mkdir -p ${BUILD}/win64
+       mkdir -p ${BUILD}/win64/udig
     fi
     
     if [ ! -f ${BUILD}/udig-${VERSION}.win32.win32.x86_64.zip ]
     then
         echo "Building ${BUILD}/udig-${VERSION}-.win32.win32.x86_64.zip ..."
+        echo "Extracting ${JRE_WIN64}"
+        unzip -q -d ${BUILD}/win64 ${JRE}/${JRE_WIN64}.zip
+        mv ${BUILD}/win64/jre ${BUILD}/win64/udig/jre
         
         echo "Extracting ${TARGET}/udig-${VERSION}.win32.win32.x86_64.zip ..."
         unzip -q -d ${BUILD}/win64 ${TARGET}/udig-${VERSION}.win32.win32.x86_64.zip

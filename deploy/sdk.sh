@@ -32,7 +32,9 @@ then
         
         rm -rf ${BUILD}/sdk/udig_sdk/configuration
         
-        rm ${BUILD}/sdk/udig_sdk/plugins/*swt*
+        rm ${BUILD}/sdk/udig_sdk/plugins/*swt*macosx*
+        rm ${BUILD}/sdk/udig_sdk/plugins/*swt*win32*
+        rm ${BUILD}/sdk/udig_sdk/plugins/*swt*linux*
         
         echo "Assemble ${BUILD}/udig-${VERSION}-sdk.zip "
         cd ${BUILD}/sdk
