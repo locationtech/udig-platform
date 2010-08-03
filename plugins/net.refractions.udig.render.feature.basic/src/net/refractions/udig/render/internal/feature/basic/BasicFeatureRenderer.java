@@ -303,12 +303,12 @@ public class BasicFeatureRenderer extends RendererImpl {
 
             map.setAreaOfInterest(validBounds, getContext().getViewportModel().getCRS());
 
-            GTRenderer renderer2 = getRenderer();
+            GTRenderer geotToolsRenderer = getRenderer();
 
             if (bounds != null && !bounds.isNull()) {
                 graphics.setClip(paintArea);
             }
-            java.util.Map<Object, Object> rendererHints = renderer2.getRendererHints();
+            java.util.Map<Object, Object> rendererHints = geotToolsRenderer.getRendererHints();
 
             rendererHints.put(StreamingRenderer.DECLARED_SCALE_DENOM_KEY, getContext()
                     .getViewportModel().getScaleDenominator());
@@ -322,7 +322,7 @@ public class BasicFeatureRenderer extends RendererImpl {
             rendererHints.put(StreamingRenderer.LABEL_CACHE_KEY, new LabelCacheDecorator(
                     labelPainter, origin, layerId));
 
-            renderer2.setRendererHints(rendererHints);
+            geotToolsRenderer.setRendererHints(rendererHints);
 
             RenderingHints hints = new RenderingHints(Collections.EMPTY_MAP);
             hints.add(new RenderingHints(RenderingHints.KEY_RENDERING,
@@ -347,12 +347,17 @@ public class BasicFeatureRenderer extends RendererImpl {
                     : RenderingHints.VALUE_ANTIALIAS_OFF));
 
             graphics.addRenderingHints(hints);
-            renderer2.setJava2DHints(hints);
+            geotToolsRenderer.setJava2DHints(hints);
 
-            if (monitor.isCanceled())
+            if (monitor.isCanceled()){
                 return;
-
-            renderer2.paint(graphics, paintArea, validBounds);
+            }
+            if( paintArea == null || paintArea.isEmpty() || validBounds == null || validBounds.isEmpty() || validBounds.isNull() ){
+                // nothing to draw yet
+            }
+            else {
+                geotToolsRenderer.paint(graphics, paintArea, validBounds);
+            }
 
         } catch (Throwable renderingProblem) {
             if (renderingProblem instanceof InterruptedException){
