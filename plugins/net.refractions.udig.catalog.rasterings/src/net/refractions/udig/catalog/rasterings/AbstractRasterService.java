@@ -24,16 +24,12 @@ import java.util.List;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.URLUtils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.coverage.grid.io.GridFormatFactorySpi;
-import org.geotools.data.DataUtilities;
-import org.geotools.factory.Hints;
 
 /**
  * Provides a handle to a raster service allowing the service to be lazily loaded.

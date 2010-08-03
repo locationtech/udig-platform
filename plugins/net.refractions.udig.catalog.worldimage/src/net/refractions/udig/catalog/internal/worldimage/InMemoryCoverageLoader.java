@@ -91,11 +91,8 @@ public class InMemoryCoverageLoader extends GridCoverageLoader {
 
         if (coverage.get() == null) {
             try {
-                AbstractGridCoverage2DReader reader = (AbstractGridCoverage2DReader) resource
-                        .resolve(GridCoverageReader.class, monitor);
+                AbstractGridCoverage2DReader reader = resource.resolve(AbstractGridCoverage2DReader.class, monitor);
 
-                
-                
                 GridEnvelope range = reader.getOriginalGridRange();
                 GeneralEnvelope env = reader.getOriginalEnvelope();
                 GridGeometry2D all = new GridGeometry2D(range, env);
@@ -103,8 +100,7 @@ public class InMemoryCoverageLoader extends GridCoverageLoader {
                 RenderedImage image = coverage2d.view(ViewType.RENDERED).getRenderedImage();
 
 				RasteringsPlugin
-						.log(
-								"WARNING.  Loading an image fully into memory.  It is about " + size(image) + " MB in size decompressed", null); //$NON-NLS-1$//$NON-NLS-2$
+						.log("WARNING.  Loading image fully into memory.  It is about " + size(image) + " MB in size decompressed", null); //$NON-NLS-1$//$NON-NLS-2$
 
                 BufferedImage bi = new BufferedImage(image.getColorModel(), (WritableRaster) image
                         .getData(), false, new Hashtable());

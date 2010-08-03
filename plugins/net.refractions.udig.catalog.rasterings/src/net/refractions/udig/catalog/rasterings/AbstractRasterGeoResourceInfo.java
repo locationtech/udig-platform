@@ -1,7 +1,5 @@
 package net.refractions.udig.catalog.rasterings;
 
-import java.io.File;
-
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResourceInfo;

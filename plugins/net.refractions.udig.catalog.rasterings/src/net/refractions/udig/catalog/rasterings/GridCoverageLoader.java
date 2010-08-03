@@ -24,7 +24,6 @@ import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.opengis.coverage.grid.GridCoverage;
-import org.opengis.coverage.grid.GridCoverageReader;
 import org.opengis.parameter.ParameterNotFoundException;
 import org.opengis.parameter.ParameterValue;
 import org.opengis.parameter.ParameterValueGroup;
@@ -55,10 +54,10 @@ public class GridCoverageLoader {
 
         ParameterValueGroup group = resource.resolve(ParameterValueGroup.class, monitor);
 
-        AbstractGridCoverage2DReader reader = (AbstractGridCoverage2DReader) resource.resolve(
-                AbstractGridCoverage2DReader.class, monitor);
-        if (group == null)
+        AbstractGridCoverage2DReader reader = resource.resolve( AbstractGridCoverage2DReader.class, monitor);
+        if (group == null){
             group = reader.getFormat().getReadParameters();
+        }
         else {
             // temporary fix for imageio
             try {
