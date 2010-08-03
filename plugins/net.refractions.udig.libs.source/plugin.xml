@@ -3,7 +3,7 @@
 <plugin>
    <extension
          point="org.eclipse.pde.core.source">
-      <location path="src"/>
+      <location path="lib/sources"/>
    </extension>
   
 </plugin>

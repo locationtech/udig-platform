@@ -31,7 +31,7 @@
           target: clean              
          ================================= -->
 	<target name="clean" description="delete src directory">
-		<delete dir="${basedir}/src" />
+		<delete dir="${basedir}/lib" />
 		<delete file="dest.properties" />
 	</target>
 
