@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.catalog,
  net.refractions.udig.catalog.ui,
- net.refractions.udig.libs
+ net.refractions.udig.libs,
+ net.refractions.udig.catalog.rasterings;bundle-version="1.2.0"
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  lib/jsde_sdk-9.2+.jar,

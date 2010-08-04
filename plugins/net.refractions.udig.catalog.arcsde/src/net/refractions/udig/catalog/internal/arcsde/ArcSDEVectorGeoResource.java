@@ -29,13 +29,13 @@ import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.internal.CatalogImpl;
 import net.refractions.udig.catalog.internal.ResolveChangeEvent;
 import net.refractions.udig.catalog.internal.ResolveDelta;
+import net.refractions.udig.catalog.util.GeotoolsResourceInfoAdapter;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
+import org.geotools.data.ResourceInfo;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -48,7 +48,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
-public class ArcGeoResource extends IGeoResource {
+class ArcSDEVectorGeoResource extends IGeoResource {
     String typename = null;
 
     /**
@@ -57,7 +57,7 @@ public class ArcGeoResource extends IGeoResource {
      * @param parent
      * @param typename
      */
-    public ArcGeoResource( ArcServiceImpl service, String typename ) {
+    public ArcSDEVectorGeoResource( ArcServiceImpl service, String typename ) {
         this.service = service;
         this.typename = typename;
     }
@@ -89,6 +89,7 @@ public class ArcGeoResource extends IGeoResource {
      * @see net.refractions.udig.catalog.IResolve#resolve(java.lang.Class,
      * org.eclipse.core.runtime.IProgressMonitor)
      */
+    @SuppressWarnings("unchecked")
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
         if (adaptee == null)
             return null;
@@ -99,44 +100,47 @@ public class ArcGeoResource extends IGeoResource {
         if (adaptee.isAssignableFrom(IGeoResourceInfo.class))
             return adaptee.cast(createInfo(monitor));
         if (adaptee.isAssignableFrom(FeatureStore.class)) {
-            FeatureSource<SimpleFeatureType, SimpleFeature> fs = service(monitor).getDS(monitor)
-                    .getFeatureSource(typename);
-            if (fs instanceof FeatureStore)
+            DataStore dataStore = getDataStore(monitor);
+            FeatureSource<SimpleFeatureType, SimpleFeature> fs;
+            fs = dataStore.getFeatureSource(typename);
+
+            if (fs instanceof FeatureStore) {
                 return adaptee.cast(fs);
-            if (adaptee.isAssignableFrom(FeatureSource.class))
-                return adaptee.cast(service(monitor).getDS(null).getFeatureSource(typename));
+            }
+            if (adaptee.isAssignableFrom(FeatureSource.class)) {
+                return adaptee.cast(fs);
+            }
         }
         return super.resolve(adaptee, monitor);
     }
 
-    /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
-     */
-    public <T> boolean canResolve( Class<T> adaptee ) {
-        if (adaptee == null)
-            return false;
-        return (adaptee.isAssignableFrom(IGeoResourceInfo.class)
-                || adaptee.isAssignableFrom(FeatureStore.class)
-                || adaptee.isAssignableFrom(FeatureSource.class) || adaptee
-                .isAssignableFrom(IService.class));
+    public DataStore getDataStore( IProgressMonitor monitor ) throws IOException {
+        ArcServiceImpl service = service(monitor);
+        ArcSDEVectorService vectorService = service.getVectorService();
+        DataStore dataStore = vectorService.getDataStore(monitor);
+        return dataStore;
     }
 
     @Override
-    public ArcGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
-        return (ArcGeoResourceInfo) super.getInfo(monitor);
+    public <T> boolean canResolve( Class<T> adaptee ) {
+        if (adaptee == null) {
+            return false;
+        }
+        return adaptee.isAssignableFrom(IGeoResourceInfo.class)
+                || adaptee.isAssignableFrom(FeatureStore.class)
+                || adaptee.isAssignableFrom(FeatureSource.class) || super.canResolve(adaptee);
     }
-    protected ArcGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        if (getStatus() == Status.BROKEN) {
-            return null; // could not connect
-        }
-        if( monitor == null ) monitor = new NullProgressMonitor();
-        
-        ArcServiceImpl arcService = service( new SubProgressMonitor( monitor, 50 ));
-        DataStore dataStore = arcService.getDS( new SubProgressMonitor( monitor, 50 ));
-        
-        synchronized ( dataStore ) {
-            return new ArcGeoResourceInfo(this, dataStore );
-        }
+    @Override
+    protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+        DataStore dataStore = getDataStore(monitor);
+        FeatureSource<SimpleFeatureType, SimpleFeature> fs = dataStore.getFeatureSource(typename);
+        ResourceInfo gtinfo = fs.getInfo();
+        GeotoolsResourceInfoAdapter vectorInfo = new GeotoolsResourceInfoAdapter(gtinfo);
+
+        // IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
+        // ((CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog())
+        // .fire(new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, delta));
+        return vectorInfo;
     }
 
     public ArcServiceImpl service( IProgressMonitor monitor ) throws IOException {

@@ -157,24 +157,24 @@ public class ArcSDEWizardPage extends AbstractProprietaryDatastoreWizardPage {
      * @seenet.refractions.udig.catalog.ui.UDIGImportPage#getResources(org.eclipse.core.runtime.
      * IProgressMonitor)
      */
-    public List<IService> getResources(IProgressMonitor monitor) throws Exception {
-        if (!isPageComplete())
-            return null;
-
-        ArcServiceExtension creator = new ArcServiceExtension();
-
-        IService service = creator.createService(null, getParams());
-        service.getInfo(monitor); // load
-
-        List<IService> servers = new ArrayList<IService>();
-        servers.add(service);
-
-        /*
-         * Success! Store the URL in history.
-         */
-        // saveWidgetValues();
-        return servers;
-    }
+//    public List<IService> getResources(IProgressMonitor monitor) throws Exception {
+//        if (!isPageComplete())
+//            return null;
+//
+//        ArcServiceExtension creator = new ArcServiceExtension();
+//
+//        IService service = creator.createService(null, getParams());
+//        service.getInfo(monitor); // load
+//
+//        List<IService> servers = new ArrayList<IService>();
+//        servers.add(service);
+//
+//        /*
+//         * Success! Store the URL in history.
+//         */
+//        // saveWidgetValues();
+//        return servers;
+//    }
 
     @Override
     protected void doCreateWizardPage(Composite parent) {
