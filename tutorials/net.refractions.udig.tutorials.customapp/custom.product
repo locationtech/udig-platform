@@ -36,21 +36,20 @@ For more information visit http://udig.refractions.net
       </win>
    </launcher>
 
-
    <vm>
-      <macos>JVM 1.5</macos>
+      <macos include="true">JVM 1.5</macos>
    </vm>
 
    <plugins>
    </plugins>
 
    <features>
-      <feature id="net.refractions.udig_tutorials.custom_feature" version="1.2.0"/>
-      <feature id="net.refractions.udig_base" version="1.2.0"/>
-      <feature id="net.refractions.udig_platform" version="1.2.0"/>
-      <feature id="net.refractions.udig_application" version="1.2.0"/>
-      <feature id="net.refractions.udig_printing" version="1.2.0"/>
-      <feature id="org.eclipse.rcp" version="3.5.2.R35x_v20100119-9SA0FxwFnoCU5XxWItFdXXb27BA6"/>
+      <feature id="net.refractions.udig_tutorials.custom_feature"/>
+      <feature id="net.refractions.udig_base"/>
+      <feature id="net.refractions.udig_platform"/>
+      <feature id="net.refractions.udig_application"/>
+      <feature id="net.refractions.udig_printing"/>
+      <feature id="org.eclipse.rcp"/>
    </features>
 
 
