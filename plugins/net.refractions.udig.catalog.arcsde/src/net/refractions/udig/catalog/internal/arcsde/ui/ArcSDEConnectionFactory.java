@@ -11,17 +11,17 @@ import net.refractions.udig.catalog.ui.AbstractUDIGConnectionFactory;
 public class ArcSDEConnectionFactory extends AbstractUDIGConnectionFactory {
 
     @Override
-    protected Map<String, Serializable> doCreateConnectionParameters(Object context) {
+    protected Map<String, Serializable> doCreateConnectionParameters( Object context ) {
         return null;
     }
 
     @Override
-    protected URL doCreateConnectionURL(Object context) {
+    protected URL doCreateConnectionURL( Object context ) {
         return null;
     }
 
     @Override
-    protected boolean doOtherChecks(Object context) {
+    protected boolean doOtherChecks( Object context ) {
         return false;
     }
 

@@ -25,18 +25,18 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.geotools.arcsde.ArcSDEDataStoreFactory;
 
 /**
- * 
  * @author Jesse
  * @since 1.1.0
  */
-public class ArcSDEPreferences extends AbstractProprietaryJarPreferencePage implements
-        IWorkbenchPreferencePage {
+public class ArcSDEPreferences extends AbstractProprietaryJarPreferencePage
+        implements
+            IWorkbenchPreferencePage {
 
-    private static final String[] requiredJars = { "jsde_sdk-9.2+.jar", "jpe_sdk-9.2+.jar",
-            "icu4j-3.2+.jar" };
+    private static final String[] requiredJars = {"jsde_sdk-9.2+.jar", "jpe_sdk-9.2+.jar",
+            "icu4j-3.2+.jar"};
 
-    private static final String[] requiredJarDescs = { Messages.ArcSDEPreferences_jar_Drivers,
-            Messages.ArcSDEPreferences_jar_projectionEngine, Messages.ArcSDEPreferences_jar_icu4j };
+    private static final String[] requiredJarDescs = {Messages.ArcSDEPreferences_jar_Drivers,
+            Messages.ArcSDEPreferences_jar_projectionEngine, Messages.ArcSDEPreferences_jar_icu4j};
 
     /**
      * 
@@ -47,7 +47,7 @@ public class ArcSDEPreferences extends AbstractProprietaryJarPreferencePage impl
     /**
      * @param title
      */
-    public ArcSDEPreferences(String title) {
+    public ArcSDEPreferences( String title ) {
         super(title);
     }
 
@@ -55,17 +55,17 @@ public class ArcSDEPreferences extends AbstractProprietaryJarPreferencePage impl
      * @param title
      * @param desc
      */
-    public ArcSDEPreferences(String title, ImageDescriptor desc) {
+    public ArcSDEPreferences( String title, ImageDescriptor desc ) {
         super(title, desc);
     }
 
     @Override
-    protected String getDefaultJarName(int jarIndex) {
+    protected String getDefaultJarName( int jarIndex ) {
         return requiredJars[jarIndex];
     }
 
     @Override
-    protected String getDriverLabel(int jarIndex) {
+    protected String getDriverLabel( int jarIndex ) {
         return requiredJarDescs[jarIndex];
     }
 

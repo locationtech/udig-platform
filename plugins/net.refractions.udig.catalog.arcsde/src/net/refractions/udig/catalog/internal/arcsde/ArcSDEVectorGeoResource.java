@@ -20,15 +20,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveDelta;
 import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.CatalogImpl;
-import net.refractions.udig.catalog.internal.ResolveChangeEvent;
-import net.refractions.udig.catalog.internal.ResolveDelta;
 import net.refractions.udig.catalog.util.GeotoolsResourceInfoAdapter;
 
 import org.eclipse.core.runtime.IProgressMonitor;

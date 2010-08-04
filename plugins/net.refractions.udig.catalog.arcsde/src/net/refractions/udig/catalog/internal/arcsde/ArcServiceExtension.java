@@ -43,10 +43,11 @@ import org.geotools.data.DataStoreFactorySpi;
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
-public class ArcServiceExtension extends AbstractDataStoreServiceExtension implements
-        ServiceExtension {
+public class ArcServiceExtension extends AbstractDataStoreServiceExtension
+        implements
+            ServiceExtension {
 
-    public IService createService(URL id, Map<String, Serializable> params) {
+    public IService createService( URL id, Map<String, Serializable> params ) {
         final ArcSDEDataStoreFactory factory = getFactory();
 
         if (params != null && params.containsKey(PORT_PARAM.key)
@@ -76,7 +77,7 @@ public class ArcServiceExtension extends AbstractDataStoreServiceExtension imple
         return new ArcServiceImpl(id, params);
     }
 
-    public Map<String, Serializable> createParams(URL url) {
+    public Map<String, Serializable> createParams( URL url ) {
 
         if (!isArcSDE(url))
             return null;
@@ -84,7 +85,7 @@ public class ArcServiceExtension extends AbstractDataStoreServiceExtension imple
         ParamInfo info = parseParamInfo(url);
 
         Map<String, Serializable> params = new HashMap<String, Serializable>();
-        params.put(DBTYPE_PARAM.key, (Serializable)DBTYPE_PARAM.sample); // dbtype //$NON-NLS-1$
+        params.put(DBTYPE_PARAM.key, (Serializable) DBTYPE_PARAM.sample); // dbtype //$NON-NLS-1$
         params.put(SERVER_PARAM.key, info.host); // host
         params.put(PORT_PARAM.key, info.the_port); // port
         params.put(INSTANCE_PARAM.key, info.the_database); // database
@@ -98,7 +99,7 @@ public class ArcServiceExtension extends AbstractDataStoreServiceExtension imple
     }
 
     /** A couple quick checks on the url */
-    public static final boolean isArcSDE(URL url) {
+    public static final boolean isArcSDE( URL url ) {
         if (url == null)
             return false;
         return url.getProtocol().toLowerCase().equals("arcsde"); //$NON-NLS-1$
@@ -119,7 +120,7 @@ public class ArcServiceExtension extends AbstractDataStoreServiceExtension imple
     }
 
     @Override
-    protected String doOtherChecks(Map<String, Serializable> params) {
+    protected String doOtherChecks( Map<String, Serializable> params ) {
         return null;
     }
 
@@ -128,7 +129,7 @@ public class ArcServiceExtension extends AbstractDataStoreServiceExtension imple
         return getFactory();
     }
 
-    public String reasonForFailure(URL url) {
+    public String reasonForFailure( URL url ) {
         if (url == null)
             return Messages.ArcServiceExtension_urlNull;
         if (!isArcSDE(url))

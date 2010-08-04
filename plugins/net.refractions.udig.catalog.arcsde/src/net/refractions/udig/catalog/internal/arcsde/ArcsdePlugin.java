@@ -36,14 +36,14 @@ public class ArcsdePlugin extends AbstractUIPlugin {
     /**
      * This method is called upon plug-in activation
      */
-    public void start(BundleContext context) throws Exception {
+    public void start( BundleContext context ) throws Exception {
         super.start(context);
     }
 
     /**
      * This method is called when the plug-in is stopped
      */
-    public void stop(BundleContext context) throws Exception {
+    public void stop( BundleContext context ) throws Exception {
         plugin = null;
         resourceBundle = null;
         super.stop(context);
@@ -64,7 +64,7 @@ public class ArcsdePlugin extends AbstractUIPlugin {
      * @param key
      * @return x
      */
-    public static String getResourceString(String key) {
+    public static String getResourceString( String key ) {
         ResourceBundle bundle = ArcsdePlugin.getDefault().getResourceBundle();
         try {
             return (bundle != null) ? bundle.getString(key) : key;
@@ -96,7 +96,7 @@ public class ArcsdePlugin extends AbstractUIPlugin {
      * <ul>
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      */
-    public static void log(String message, Throwable t) {
+    public static void log( String message, Throwable t ) {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
         getDefault().getLog().log(new Status(status, ID, IStatus.OK, message, t));
     }
@@ -111,9 +111,8 @@ public class ArcsdePlugin extends AbstractUIPlugin {
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }
-     * 
      */
-    public static void trace(String message, Throwable e) {
+    public static void trace( String message, Throwable e ) {
         if (getDefault().isDebugging()) {
             if (message != null)
                 System.out.println(message);
@@ -131,10 +130,9 @@ public class ArcsdePlugin extends AbstractUIPlugin {
      * </ul>
      * </p>
      * 
-     * @param trace
-     *            currently only RENDER is defined
+     * @param trace currently only RENDER is defined
      */
-    public static boolean isDebugging(final String trace) {
+    public static boolean isDebugging( final String trace ) {
         return getDefault().isDebugging()
                 && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
     }

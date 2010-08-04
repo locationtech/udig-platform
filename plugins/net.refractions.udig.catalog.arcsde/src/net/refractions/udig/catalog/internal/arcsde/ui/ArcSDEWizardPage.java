@@ -18,26 +18,21 @@
 package net.refractions.udig.catalog.internal.arcsde.ui;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
-import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.arcsde.internal.Messages;
-import net.refractions.udig.catalog.internal.arcsde.ArcServiceExtension;
 import net.refractions.udig.catalog.internal.arcsde.ArcsdePlugin;
 import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
 import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
 import net.refractions.udig.catalog.ui.wizard.DataBaseConnInfo;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Composite;
 import org.geotools.arcsde.ArcSDEDataStoreFactory;
-import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.DataAccessFactory.Param;
+import org.geotools.data.DataStoreFactorySpi;
 
 /**
  * The concrete implementation of the wizard 'Page' used to import data using a database in the
@@ -51,7 +46,6 @@ import org.geotools.data.DataAccessFactory.Param;
  * @author Amr Alam, aalam, for Refractions Research, Inc.
  * @author Cory Horner, chorner, for Refractions Research, Inc.
  * @author Adrian Custer, acuster.
- * 
  * @since 0.6
  */
 public class ArcSDEWizardPage extends AbstractProprietaryDatastoreWizardPage {
@@ -89,7 +83,7 @@ public class ArcSDEWizardPage extends AbstractProprietaryDatastoreWizardPage {
         currentDBCI.setParameters(defaultDBCI);
         String[] recent = settings.getArray(ARCSDE_RECENT);
         if (null != recent) {
-            for (String s : recent) {
+            for( String s : recent ) {
                 DataBaseConnInfo dbs = new DataBaseConnInfo(s);
                 if (!storedDBCIList.contains(dbs))
                     storedDBCIList.add(dbs);
@@ -157,27 +151,27 @@ public class ArcSDEWizardPage extends AbstractProprietaryDatastoreWizardPage {
      * @seenet.refractions.udig.catalog.ui.UDIGImportPage#getResources(org.eclipse.core.runtime.
      * IProgressMonitor)
      */
-//    public List<IService> getResources(IProgressMonitor monitor) throws Exception {
-//        if (!isPageComplete())
-//            return null;
-//
-//        ArcServiceExtension creator = new ArcServiceExtension();
-//
-//        IService service = creator.createService(null, getParams());
-//        service.getInfo(monitor); // load
-//
-//        List<IService> servers = new ArrayList<IService>();
-//        servers.add(service);
-//
-//        /*
-//         * Success! Store the URL in history.
-//         */
-//        // saveWidgetValues();
-//        return servers;
-//    }
+    // public List<IService> getResources(IProgressMonitor monitor) throws Exception {
+    // if (!isPageComplete())
+    // return null;
+    //
+    // ArcServiceExtension creator = new ArcServiceExtension();
+    //
+    // IService service = creator.createService(null, getParams());
+    // service.getInfo(monitor); // load
+    //
+    // List<IService> servers = new ArrayList<IService>();
+    // servers.add(service);
+    //
+    // /*
+    // * Success! Store the URL in history.
+    // */
+    // // saveWidgetValues();
+    // return servers;
+    // }
 
     @Override
-    protected void doCreateWizardPage(Composite parent) {
+    protected void doCreateWizardPage( Composite parent ) {
         // All settings now added in parent
     }
 
