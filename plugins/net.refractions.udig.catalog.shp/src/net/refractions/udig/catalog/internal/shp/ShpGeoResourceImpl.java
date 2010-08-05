@@ -20,7 +20,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
+import java.util.List;
 
 import javax.swing.Icon;
 
@@ -32,7 +34,9 @@ import net.refractions.udig.catalog.URLUtils;
 import net.refractions.udig.catalog.util.GeotoolsResourceInfoAdapter;
 import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
 import net.refractions.udig.ui.graphics.Glyph;
+import net.refractions.udig.ui.graphics.SLDs;
 
+import org.apache.commons.io.FilenameUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -41,12 +45,20 @@ import org.geotools.data.FeatureStore;
 import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
+import org.geotools.styling.ExternalGraphic;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.Graphic;
+import org.geotools.styling.PointSymbolizer;
+import org.geotools.styling.Rule;
 import org.geotools.styling.SLD;
 import org.geotools.styling.SLDParser;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactory;
+import org.geotools.styling.Symbolizer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.metadata.citation.OnLineResource;
+import org.opengis.style.GraphicalSymbol;
 
 
 /**
@@ -186,10 +198,55 @@ public class ShpGeoResourceImpl extends IGeoResource {
                 if (style == null) {
                     style = styles[0];
                 }
+                
+                makeGraphicsAbsolute(file, style);
                 return style;
             }
         }
         return null; // well nothing worked out; make your own style
+    }
+
+    /**
+     * This transforms all external graphics references that are relative to absolute.
+     * This is a workaround to be able to visualize png and svg in relative mode, which 
+     * doesn't work right now in geotools. See: http://jira.codehaus.org/browse/GEOT-3235
+     * 
+     * This will not be necessary any more as soon as the geotools bug is fixed.
+     * 
+     * @param relatedFile the related shapefile.
+     * @param style the style to check.
+     */
+    private void makeGraphicsAbsolute( File relatedFile, Style style ) {
+        File parentFolder = relatedFile.getParentFile();
+        Rule[] rules = SLDs.rules(style);
+        for( Rule rule : rules ) {
+            Symbolizer[] onlineResource = rule.getSymbolizers();
+            
+            for( Symbolizer symbolizer : onlineResource ) {
+                if (symbolizer instanceof PointSymbolizer) {
+                    PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer;
+                    Graphic graphic = SLDs.graphic(pointSymbolizer);
+                    List<GraphicalSymbol> graphicalSymbols = graphic.graphicalSymbols();
+                    for( GraphicalSymbol graphicalSymbol : graphicalSymbols ) {
+                        if (graphicalSymbol instanceof ExternalGraphic) {
+                            ExternalGraphic externalGraphic = (ExternalGraphic) graphicalSymbol;
+                            try {
+                                URL location = externalGraphic.getLocation();
+                                File urlToFile = URLUtils.urlToFile(location);
+                                if (urlToFile != null && !urlToFile.exists()) {
+                                     File newFile = new File(parentFolder, urlToFile.getPath());
+                                     if (newFile.exists()) {
+                                         externalGraphic.setLocation(newFile.toURI().toURL());
+                                    }
+                                }
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
