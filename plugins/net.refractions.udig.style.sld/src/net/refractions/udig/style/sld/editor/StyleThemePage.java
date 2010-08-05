@@ -82,12 +82,13 @@ import org.geotools.filter.IllegalFilterException;
 import org.geotools.filter.function.ClassificationFunction;
 import org.geotools.filter.function.Classifier;
 import org.geotools.filter.function.EqualIntervalFunction;
-import org.geotools.filter.function.ExplicitClassifier;
 import org.geotools.filter.function.QuantileFunction;
 import org.geotools.filter.function.StandardDeviationFunction;
 import org.geotools.filter.function.UniqueIntervalFunction;
 import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.Graphic;
 import org.geotools.styling.LineSymbolizer;
+import org.geotools.styling.Mark;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Rule;
@@ -1351,6 +1352,7 @@ public class StyleThemePage extends StyleEditorPage {
                 try {
   //                  newFTS = sg.createFeatureTypeStyle(getSelectedLayer().getSchema().getGeometryDescriptor());
                     newFTS = StyleGenerator.createFeatureTypeStyle(classifier, (org.geotools.filter.Expression) expr, colors, semanticTypeIdentifier, getSelectedLayer().getSchema().getGeometryDescriptor(), elsemode, opac, null);
+                    applyExistingRulesProperties(newFTS);
                 } catch (IllegalFilterException e) {
                     newFTS = null;
                     SLDPlugin.log("sg.createFeatureTypeStyle() failed", e); //$NON-NLS-1$
@@ -1398,6 +1400,7 @@ public class StyleThemePage extends StyleEditorPage {
                     treeViewer.setInput(newFTS);
                 }
             }
+
         };
         try {
             BusyIndicator.showWhile(Display.getCurrent(), genDefault);
@@ -1415,6 +1418,52 @@ public class StyleThemePage extends StyleEditorPage {
         treeViewer.getControl().setVisible(true);
     }
 
+    /**
+     * This takes as much as possible from the old rules and applies them 
+     * to the new ones. In that way mark type, size and borders are properly kept.
+     * 
+     * @param newFTS the new style to tweak.
+     */
+    private void applyExistingRulesProperties( FeatureTypeStyle newFTS ) {
+        Style style = getStyle();
+        Symbolizer[] symbolizers = SLDs.symbolizers(style);
+        if (symbolizers.length > 0) {
+            Symbolizer symbolizer = symbolizers[0];
+            if (symbolizer instanceof PointSymbolizer) {
+                PointSymbolizer previousSymbolizer = (PointSymbolizer) symbolizer;
+                Graphic oldGraphic = SLDs.graphic(previousSymbolizer);
+                Mark oldMark = SLDs.mark(previousSymbolizer);
+                if (oldMark != null) {
+                    // we apply the properties to all the new rules
+                    List<Rule> rules = newFTS.rules();
+                    for( Rule rule : rules ) {
+                        String[] colors = SLDs.colors(rule);
+                        Color fill = SLDs.toColor(colors[0]);
+                        
+                        List<Symbolizer> newSymbolizers = rule.symbolizers();
+                        for( Symbolizer newSymbolizer : newSymbolizers ) {
+                            if (newSymbolizer instanceof PointSymbolizer) {
+                                PointSymbolizer newPointSymbolizer = (PointSymbolizer) newSymbolizer;
+                                
+                                Mark mark = sb.createMark(oldMark.getWellKnownName().evaluate(null, String.class));
+                                mark.setFill(sb.createFill(fill));
+                                mark.setRotation(oldMark.getRotation());
+                                mark.setSize(oldMark.getSize());
+                                mark.setStroke(oldMark.getStroke());
+
+                                Graphic newGraphic = SLDs.graphic(newPointSymbolizer);
+                                newGraphic.setSize(oldGraphic.getSize());
+                                newGraphic.graphicalSymbols().clear();
+                                newGraphic.graphicalSymbols().add(mark);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     /**
      * Iterates through the style blackboard style and returns the ColorBrewer FeatureTypeStyle.
      *
