@@ -62,7 +62,7 @@ public class ArcSDERasterGeoResource extends IGeoResource {
             // e.printStackTrace();
             msg = e;
             status = Status.BROKEN;
-            throw new IOException(e);
+            throw (IOException) (new IOException(e.getLocalizedMessage()).initCause(e));
         }
 
     }

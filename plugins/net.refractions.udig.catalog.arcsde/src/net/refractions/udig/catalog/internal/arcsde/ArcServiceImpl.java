@@ -94,7 +94,7 @@ public class ArcServiceImpl extends IService {
                 throw e;
             } catch (Exception e) {
                 msg = e;
-                throw new IOException(e);
+                throw (IOException) (new IOException(e.getLocalizedMessage()).initCause(e));
             }
         }
         // if (rasterService != null && rasterService.canResolve(adaptee)) {
