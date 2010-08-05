@@ -35,7 +35,7 @@ public class StyleEditorPageAdapter extends StyleEditorPage {
         layout.spacing = 0;
         configHolder.setLayout(layout);
         GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
-        gd.widthHint = 400;
+        gd.widthHint = 800;
         configHolder.setLayoutData(gd);
 
         configurator.createControl(configHolder);
