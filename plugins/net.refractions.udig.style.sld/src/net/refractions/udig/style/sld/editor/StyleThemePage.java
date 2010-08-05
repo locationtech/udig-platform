@@ -1418,14 +1418,14 @@ public class StyleThemePage extends StyleEditorPage {
     /**
      * Iterates through the style blackboard style and returns the ColorBrewer FeatureTypeStyle.
      *
-     * @return
+     * @return the ColorBrewer {@link FeatureTypeStyle} or null if none found.
      */
     FeatureTypeStyle getFTS() {
         Style style = getStyle();
-        FeatureTypeStyle[] fts = style.getFeatureTypeStyles();
-        for (int i = 0; i < fts.length; i++) {
-            if (SLDs.isSemanticTypeMatch(fts[i], "colorbrewer:.*")) { //$NON-NLS-1$
-                return fts[i];
+        List<FeatureTypeStyle> featureTypeStyles = style.featureTypeStyles();
+        for( FeatureTypeStyle featureTypeStyle : featureTypeStyles ) {
+            if (SLDs.isSemanticTypeMatch(featureTypeStyle, "colorbrewer:.*")) { //$NON-NLS-1$
+                return featureTypeStyle;
             }
         }
         return null;

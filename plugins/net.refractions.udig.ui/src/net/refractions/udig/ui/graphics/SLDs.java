@@ -136,7 +136,7 @@ public class SLDs extends SLD {
 
             } else if (sym instanceof PointSymbolizer) {
                 PointSymbolizer symb = (PointSymbolizer) sym;
-                color = color(symb);
+                color = pointFillWithAlpha(symb);
             }
 
             if (color != null) {
