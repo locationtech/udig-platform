@@ -262,7 +262,7 @@ final class IPaletteCellEditor implements ICellModifier {
                     }
                         //determine if the palette is already customized
                         if (this.styleThemePage.customPalette == null) {
-                            int numClasses = new Integer(this.styleThemePage.getCombo(StyleThemePage.COMBO_CLASSES).getItem(this.styleThemePage.getCombo(StyleThemePage.COMBO_CLASSES).getSelectionIndex())).intValue();
+                            int numClasses = new Integer(this.styleThemePage.getCombo(StyleThemePage.COMBO_CLASSES).getText()).intValue();
                             //create the palette from the current one
                             BrewerPalette pal = (BrewerPalette) ((StructuredSelection) this.styleThemePage.paletteTable.getSelection()).getFirstElement(); 
                             this.styleThemePage.customPalette = new BrewerPalette();
@@ -270,14 +270,23 @@ final class IPaletteCellEditor implements ICellModifier {
                             //suitability.
                             //customPalette.setColors()
                             SampleScheme newScheme = new SampleScheme();
-                            Color[] colors = new Color[pal.getMaxColors()];
+                            int maxColors = pal.getMaxColors();
                             Color[] allColorsArray = pal.getColors();
+                            if (maxColors==Integer.MAX_VALUE) {
+                                // this means the array is dynamic, so the num is exactly the colors
+                                maxColors = numClasses;
+                                newScheme = new CustomSampleScheme(maxColors);
+                            }
+                            if (allColorsArray.length == 0) {
+                                allColorsArray = pal.getColors(maxColors);
+                            }
+                            Color[] colors = new Color[maxColors];
                             List<Color> allColors = new ArrayList<Color>();
                             for (int i = 0; i < allColorsArray.length; i++) {
                                 allColors.add(allColorsArray[i]);
                             }
                             String unknown = "?"; //$NON-NLS-1$
-                            for (int i = 0; i < pal.getMaxColors(); i++) {
+                            for (int i = 0; i < maxColors; i++) {
                                 if (i > 0) { 
                                     //create a simple scheme
                                     int[] scheme = new int[i+1];
@@ -288,9 +297,9 @@ final class IPaletteCellEditor implements ICellModifier {
                                     //set the suitability to unknown
                                     try {
                                         suitability.setSuitability(i+1, new String[] {unknown, unknown, unknown, unknown, unknown, unknown});
-                                    } catch (IOException e) {
+                                    } catch (Exception e) {
                                         SLDPlugin.log("setSuitability() failed", e); //$NON-NLS-1$
-                                        return;
+//                                        return;
                                     }
                                 }
                                 //copy the color

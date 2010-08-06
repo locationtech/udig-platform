@@ -26,7 +26,8 @@ final class BrewerPaletteViewerFilter extends ViewerFilter {
 	    if (element instanceof BrewerPalette) {
 	        BrewerPalette pal = (BrewerPalette) element;
 	        int numClasses = new Integer(this.styleThemePage.getCombo(StyleThemePage.COMBO_CLASSES).getText()).intValue();
-	        if (pal.getMaxColors() < numClasses) {
+	        int maxColors = pal.getMaxColors();
+            if (maxColors!=-1 && maxColors < numClasses) {
 	            return false;
 	        }
 	        if (this.styleThemePage.getButton(StyleThemePage.BUTTON_COLORBLIND).getSelection()) {

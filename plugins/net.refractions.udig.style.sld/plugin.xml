@@ -215,5 +215,11 @@
             name="Dialog Settings">
       </style>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="net.refractions.udig.style.sld.editor.CustomPalettesLoader">
+      </startup>
+   </extension>
 
 </plugin>

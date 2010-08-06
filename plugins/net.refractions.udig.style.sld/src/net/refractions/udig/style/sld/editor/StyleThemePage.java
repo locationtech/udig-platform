@@ -328,6 +328,18 @@ public class StyleThemePage extends StyleEditorPage {
     public ColorBrewer getBrewer() {
         if (brewer == null) {
             createBrewer();
+            
+            // add custom palettes
+            List<BrewerPalette> palettesList = CustomPalettesLoader.PALETTESLIST;
+            for( BrewerPalette brewerPalette : palettesList ) {
+                brewer.registerPalette(brewerPalette);
+            }
+            // add a dynamic one that support everythings
+            CustomDynamicPalette customDynamicPalette = new CustomDynamicPalette(CustomDynamicPalette.TABLE.RAINBOW);
+            brewer.registerPalette(customDynamicPalette);
+            customDynamicPalette = new CustomDynamicPalette(CustomDynamicPalette.TABLE.GREY);
+            brewer.registerPalette(customDynamicPalette);
+            
         }
         return brewer;
     }
@@ -884,7 +896,7 @@ public class StyleThemePage extends StyleEditorPage {
         attributeCombo.setVisibleItemCount(16);
         attributeCombo.addListener(SWT.Modify, new AttributeComboListener());
         
-        Combo classesCombo = new Combo(compTop, SWT.BORDER | SWT.READ_ONLY);
+        Combo classesCombo = new Combo(compTop, SWT.BORDER);
         pageControls.put(COMBO_CLASSES, classesCombo);
         classesCombo.setLayout(new GridLayout(1, false));
         gridData = createDefaultGridData();
@@ -1233,8 +1245,13 @@ public class StyleThemePage extends StyleEditorPage {
                     pal = getBrewer().getPalette(paletteName);
                 }
                 String paletteName = pal.getName();
-                int numClasses = new Integer(getCombo(COMBO_CLASSES).getItem(getCombo(COMBO_CLASSES).getSelectionIndex())).intValue();
-                int[] suitability = pal.getPaletteSuitability().getSuitability(numClasses);
+                Combo combo = getCombo(COMBO_CLASSES);
+                int numClasses = new Integer(combo.getText()).intValue();
+                int[] suitability =null;
+                try{
+                    suitability = pal.getPaletteSuitability().getSuitability(numClasses);
+                }catch (Exception e) {
+                }
                 
                 //check for custom classifier
                 if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_custom)) { 
@@ -1397,7 +1414,9 @@ public class StyleThemePage extends StyleEditorPage {
                     }
                     
                     //update the suitability icons
-                    updateSuitabilities(suitability);
+                    if (suitability != null) {
+                        updateSuitabilities(suitability);
+                    }
                     
                     treeViewer.setInput(newFTS);
                 }
