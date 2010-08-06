@@ -77,6 +77,7 @@ import org.geotools.data.FeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.NameImpl;
 import org.geotools.feature.visitor.UniqueVisitor;
 import org.geotools.filter.IllegalFilterException;
 import org.geotools.filter.function.ClassificationFunction;
@@ -86,12 +87,14 @@ import org.geotools.filter.function.QuantileFunction;
 import org.geotools.filter.function.StandardDeviationFunction;
 import org.geotools.filter.function.UniqueIntervalFunction;
 import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.Mark;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Rule;
+import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.StyledLayerDescriptor;
@@ -617,9 +620,9 @@ public class StyleThemePage extends StyleEditorPage {
             public void widgetSelected( SelectionEvent e ) {
                 reverseColours = !reverseColours; //used by generateTheme to get things half right
                 FeatureTypeStyle fts = getFTS();
-                Rule[] rule = fts.getRules();
-                for (int i = 0; i < (rule.length / 2); i++) {
-                    swapColours(rule[i], rule[rule.length-i-1]);
+                List<Rule> ruleList = fts.rules();
+                for (int i = 0; i < (ruleList.size() / 2); i++) {
+                    swapColours(ruleList.get(i), ruleList.get(ruleList.size()-i-1));
                 }
                 treeViewer.refresh();
             }
@@ -1220,7 +1223,15 @@ public class StyleThemePage extends StyleEditorPage {
                     expr = attr;
                 }
                 
-                BrewerPalette pal = (BrewerPalette) ((StructuredSelection) paletteTable.getSelection()).getFirstElement();
+                StructuredSelection structuredSelection = (StructuredSelection) paletteTable.getSelection();
+                BrewerPalette pal = (BrewerPalette) structuredSelection.getFirstElement();
+                if (pal == null) {
+                    // get it from the last memento used
+                    StyleBlackboard bb = getSelectedLayer().getStyleBlackboard();
+                    IMemento memento = (IMemento) bb.get(DialogSettingsStyleContent.EXTENSION_ID);
+                    String paletteName = memento.getString(PALETTE_KEY);
+                    pal = getBrewer().getPalette(paletteName);
+                }
                 String paletteName = pal.getName();
                 int numClasses = new Integer(getCombo(COMBO_CLASSES).getItem(getCombo(COMBO_CLASSES).getSelectionIndex())).intValue();
                 int[] suitability = pal.getPaletteSuitability().getSuitability(numClasses);
@@ -1235,9 +1246,9 @@ public class StyleThemePage extends StyleEditorPage {
                     classifierModified = true;
                 } else {
                     //determine if the classifier needs recalculation
-                    if (function.getNumberOfClasses() != new Integer(getCombo(COMBO_CLASSES).getText()).intValue()) {
+                    if (function.getClasses() != new Integer(getCombo(COMBO_CLASSES).getText()).intValue()) {
                         if (getCombo(COMBO_ELSE).getSelectionIndex() == 0) classifierModified = true;
-                        if (function.getNumberOfClasses() != new Integer(getCombo(COMBO_CLASSES).getText()).intValue()-1)
+                        if (function.getClasses() != new Integer(getCombo(COMBO_CLASSES).getText()).intValue()-1)
                             classifierModified = true;
                     }
                     if (getCombo(COMBO_ELSE).getSelectionIndex() > 0) 
@@ -1346,13 +1357,12 @@ public class StyleThemePage extends StyleEditorPage {
                 } else {
                     opac = 1;
                 }
-                BorderColorComboListener.setBorder(getCombo(COMBO_BORDER_COLOR), sg);
+                Color borderColor = BorderColorComboListener.getBorder(getCombo(COMBO_BORDER_COLOR));
                 
                 FeatureTypeStyle newFTS = null;
                 try {
-  //                  newFTS = sg.createFeatureTypeStyle(getSelectedLayer().getSchema().getGeometryDescriptor());
-                    newFTS = StyleGenerator.createFeatureTypeStyle(classifier, (org.geotools.filter.Expression) expr, colors, semanticTypeIdentifier, getSelectedLayer().getSchema().getGeometryDescriptor(), elsemode, opac, null);
-                    applyExistingRulesProperties(newFTS);
+                    newFTS = StyleGenerator.createFeatureTypeStyle(classifier, (org.opengis.filter.expression.Expression) expr, colors, semanticTypeIdentifier, getSelectedLayer().getSchema().getGeometryDescriptor(), elsemode, opac, null);
+                    applyExistingRulesProperties(newFTS, opac, borderColor);
                 } catch (IllegalFilterException e) {
                     newFTS = null;
                     SLDPlugin.log("sg.createFeatureTypeStyle() failed", e); //$NON-NLS-1$
@@ -1362,17 +1372,11 @@ public class StyleThemePage extends StyleEditorPage {
                 }
                 if (newFTS == null) {
                     ErrorManager.get().displayError(Messages.StyleEditor_error, Messages.StyleEditor_theme_failure);
-//                    MessageDialog
-//                    .openError(
-//                            PlatformUI.getWorkbench()
-//                                    .getActiveWorkbenchWindow()
-//                                    .getShell(),
-//                                    Messages.StyleEditor_error, 
-//                                    Messages.StyleEditor_theme_failure); 
                     return;
                 } else {
                     //set the FeatureTypeName to the current layer name
-                    newFTS.setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
+                    newFTS.featureTypeNames().clear();
+                    newFTS.featureTypeNames().add( new NameImpl( SLDs.GENERIC_FEATURE_TYPENAME ));
                     //get the style
                     Style style = getStyle();
                     //ensure the style has an SLD
@@ -1381,8 +1385,6 @@ public class StyleThemePage extends StyleEditorPage {
                     StyledLayerDescriptor sld = null; //SLDs.styledLayerDescriptor(style);
                     if (sld == null) {
                         SLDContent.createDefaultStyledLayerDescriptor(style);
-                        //sld = SLDs.styledLayerDescriptor(style);
-                        //if (sld == null) throw new RuntimeException("SLD is null"); //$NON-NLS-1$
                     }
                     //insert/replace the FTS
                     try {
@@ -1423,8 +1425,10 @@ public class StyleThemePage extends StyleEditorPage {
      * to the new ones. In that way mark type, size and borders are properly kept.
      * 
      * @param newFTS the new style to tweak.
+     * @param opac an opacity value to apply to the fill.
+     * @param borderColor 
      */
-    private void applyExistingRulesProperties( FeatureTypeStyle newFTS ) {
+    private void applyExistingRulesProperties( FeatureTypeStyle newFTS, double opac, Color borderColor ) {
         Style style = getStyle();
         Symbolizer[] symbolizers = SLDs.symbolizers(style);
         if (symbolizers.length > 0) {
@@ -1446,10 +1450,15 @@ public class StyleThemePage extends StyleEditorPage {
                                 PointSymbolizer newPointSymbolizer = (PointSymbolizer) newSymbolizer;
                                 
                                 Mark mark = sb.createMark(oldMark.getWellKnownName().evaluate(null, String.class));
-                                mark.setFill(sb.createFill(fill));
+                                Fill newFill = sb.createFill(fill);
+                                newFill.setOpacity(ff.literal(opac));
+                                mark.setFill(newFill);
                                 mark.setRotation(oldMark.getRotation());
                                 mark.setSize(oldMark.getSize());
-                                mark.setStroke(oldMark.getStroke());
+                                
+                                Stroke newStroke = oldMark.getStroke();
+                                newStroke.setColor(ff.literal(borderColor));
+                                mark.setStroke(newStroke);
 
                                 Graphic newGraphic = SLDs.graphic(newPointSymbolizer);
                                 newGraphic.setSize(oldGraphic.getSize());

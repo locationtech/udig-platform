@@ -2,6 +2,7 @@ package net.refractions.udig.style.sld;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.refractions.udig.project.internal.Layer;
@@ -207,16 +208,10 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
     protected void refresh() {
         Style style = getStyle(); // grab an SLD style or bust
 
-        // obtain the fts (if an FTS tagged with the SemanticTypeIdentifier "simple" doesn't exist,
-        // null is fine)
-        FeatureTypeStyle[] ftsList = style.getFeatureTypeStyles();
+        List<FeatureTypeStyle> ftsList = style.featureTypeStyles();
         FeatureTypeStyle fts = null;
-        for( int i = 0; i < ftsList.length; i++ ) {
-            if (SLDs.isSemanticTypeMatch(ftsList[i], "simple")) { //$NON-NLS-1$
-                fts = ftsList[i];
-            }
-            // note: the last matching fts is returned (the one drawn last) -- although there should
-            // only be one tagged "simple"
+        if (ftsList.size()>0) {
+            fts  = ftsList.get(0);
         }
 
         SimpleFeatureType schema = getLayer().getSchema();
@@ -229,12 +224,15 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
         TextSymbolizer text = null;
         LabelPlacement placement = null;
 
+        List<Rule> rules = fts.rules();
+        if (rules.size() > 1) {
+            // simple mode trimms away all but the first rule
+            Rule keepRule = rules.get(0);
+            rules.clear();
+            rules.add(keepRule);
+        }
         this.mode = determineMode(schema, true);
 
-        text = SLDs.textSymbolizer(fts);
-        if (text != null && placement != null) {
-            text.setPlacement(placement);
-        }
         if (mode == Mode.NONE) {
             pointMode.setSelection(false);
             polyMode.setSelection(false);
@@ -256,6 +254,7 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
             name = sym == null ? null : sym.getGeometryPropertyName();
         } else if (mode == Mode.POINT || mode == Mode.ALL) { // default to handling as Point
             pointMode.setSelection(true);
+
             PointSymbolizer sym = SLDs.pointSymbolizer(fts);
             stroke = SLDs.stroke(sym);
             fill = SLDs.fill(sym);
@@ -263,6 +262,11 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
             placement = SLDs.getPlacement(SLDs.ALIGN_LEFT, SLDs.ALIGN_MIDDLE, 0);
 
             name = sym == null ? null : sym.getGeometryPropertyName();
+        }
+        
+        text = SLDs.textSymbolizer(fts);
+        if (text != null && placement != null) {
+            text.setLabelPlacement(placement);
         }
         
         if (name == null) {
@@ -382,28 +386,31 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
             // if repalce was hit we are going to completly redfine the style
             // based on what the user has here
             //
-            style.setFeatureTypeStyles(new FeatureTypeStyle[]{featureTypeStyle});
+            style.featureTypeStyles().clear();
+            style.featureTypeStyles().add(featureTypeStyle);
         } else {
             // if we are just responding to what is going on we will try and update the existing
             // style in place (leaving any other content alone)
             //
-            FeatureTypeStyle[] fts = style.getFeatureTypeStyles();
+            List<FeatureTypeStyle> fts = style.featureTypeStyles();
             boolean match = false;
-            for( int i = fts.length - 1; i > -1; i-- ) {
-                if (SLDs.isSemanticTypeMatch(fts[i], "simple")) { //$NON-NLS-1$
-                    fts[i] = featureTypeStyle;
+            for( int i = fts.size() - 1; i > -1; i-- ) {
+                if (SLDs.isSemanticTypeMatch(fts.get(i), "simple")) { //$NON-NLS-1$
+                    fts.set(i, featureTypeStyle);
                     match = true;
                     break;
                 }
             }
             if (match) {
-                style.setFeatureTypeStyles(fts);
+                style.featureTypeStyles().clear();
+                style.featureTypeStyles().addAll(fts);
             } else {
                 // add the new entry to the array
-                FeatureTypeStyle[] fts2 = new FeatureTypeStyle[fts.length + 1];
-                System.arraycopy(fts, 0, fts2, 0, fts.length);
-                fts2[fts.length] = featureTypeStyle;
-                style.setFeatureTypeStyles(fts2);
+                List<FeatureTypeStyle> fts2 = new ArrayList<FeatureTypeStyle>(fts);
+                Collections.copy(fts2, fts);
+                fts2.add(featureTypeStyle);
+                style.featureTypeStyles().clear();
+                style.featureTypeStyles().addAll(fts2);
             }
         }
         // put style on blackboard

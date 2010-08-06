@@ -14,8 +14,11 @@
  */
 package net.refractions.udig.style.sld.editor;
 
+import java.awt.Color;
+
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.ui.PlatformUI;
@@ -52,30 +55,23 @@ public class BorderColorComboListener implements SelectionListener {
         page.generateTheme();
     }
 
-    public static void setBorder( Combo combo, StyleGenerator sg ) {
+    public static Color getBorder( Combo combo ) {
         Outline outline = Outline.values()[combo.getSelectionIndex()];
-        StyleBuilder builder = new StyleBuilder();
         
-//        switch( outline ) {
-//        case NONE:
-//            sg.setDefaultStroke(null);
-//            // we're good.  There is no default border/outline
-//            break;
-//        case BLACK:
-//            sg.setDefaultStroke(builder.createStroke(Color.BLACK));
-//            break;
-//        case WHITE:
-//            sg.setDefaultStroke(builder.createStroke(Color.WHITE));
-//            break;
-//        case CUSTOM:
-//            RGB rgb = (RGB) combo.getData();
-//            Color color = new Color( rgb.red, rgb.green, rgb.blue);
-//            sg.setDefaultStroke(builder.createStroke(color));
-//            break;
-//
-//        default:
-//            throw new IllegalArgumentException("This method needs to be updated since outline has been modified");
-//        }
+        switch( outline ) {
+        case NONE:
+            return Color.BLACK;
+        case BLACK:
+            return Color.BLACK;
+        case WHITE:
+            return Color.WHITE;
+        case CUSTOM:
+            RGB rgb = (RGB) combo.getData();
+            Color color = new Color( rgb.red, rgb.green, rgb.blue);
+            return color;
+        default:
+            throw new IllegalArgumentException("This method needs to be updated since outline has been modified");
+        }
     }
     
     public enum Outline {
