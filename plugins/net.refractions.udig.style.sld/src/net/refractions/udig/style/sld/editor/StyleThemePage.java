@@ -1169,6 +1169,7 @@ public class StyleThemePage extends StyleEditorPage {
         if (isNumber(currentAttr)) { //show numeric break types
             breaksCombo.add(Messages.StyleEditor_theme_equalInterval); 
             breaksCombo.add(Messages.StyleEditor_theme_quantile); 
+            breaksCombo.add(Messages.StyleEditor_theme_uniques); 
             //breaksCombo.add(Messages.StyleEditor_theme_standardDeviation); 
             int index = breaksCombo.indexOf(value);
             if (index > -1) breaksCombo.select(index);
@@ -1251,6 +1252,7 @@ public class StyleThemePage extends StyleEditorPage {
                 try{
                     suitability = pal.getPaletteSuitability().getSuitability(numClasses);
                 }catch (Exception e) {
+                    suitability = CustomUnknownPaletteSuitability.getInstance().getSuitability(numClasses);
                 }
                 
                 //check for custom classifier
@@ -1277,6 +1279,8 @@ public class StyleThemePage extends StyleEditorPage {
                     else if ((getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_quantile)) && !(function instanceof QuantileFunction)) 
                         classifierModified = true;
                     else if ((getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_standardDeviation)) && !(function instanceof StandardDeviationFunction)) 
+                        classifierModified = true;
+                    else if ((getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_uniques)) && !(function instanceof UniqueIntervalFunction)) 
                         classifierModified = true;
                     else if (!function.getExpression().equals(expr))
                         classifierModified = true;
@@ -1336,7 +1340,16 @@ public class StyleThemePage extends StyleEditorPage {
                 }
 
                 //generate the style
-                Color[] colors = getBrewer().getPalette(paletteName).getColors(numClasses);
+                BrewerPalette palette = getBrewer().getPalette(paletteName);
+                
+                Color[] colors = null;
+                try{
+                    colors = palette.getColors(numClasses);
+                }catch (Exception e) {
+                    colors = palette.getColors();
+                    palette = new CustomDynamicPalette(palette.getName(), palette.getDescription(), colors);
+                    colors = palette.getColors(numClasses);
+                }
                 if (reverseColours) {
                     for (int i = 0; i < colors.length / 2; i++) {
                         Color tempColor = colors[i];
@@ -1346,16 +1359,6 @@ public class StyleThemePage extends StyleEditorPage {
                     }
                 }
                 
-                if (sg == null) {
-//                    sg = new StyleGenerator(colors, classifier, semanticTypeIdentifier);
-                } else {
-//                    sg.setColors(colors);
-//                    sg.setCollection(collection);
-//                    sg.setClassifier(classifier);
-//                    sg.setExpression(expr);
-//                    sg.setNumClasses(numClasses);//?
-//                    sg.setTypeId(semanticTypeIdentifier);
-                }
                 int elsemode = -1;
                 if (getCombo(COMBO_ELSE).getSelectionIndex() == 0) {
                     //sg.setElseMode(StyleGenerator.ELSEMODE_IGNORE);
@@ -1462,19 +1465,19 @@ public class StyleThemePage extends StyleEditorPage {
                     for( Rule rule : rules ) {
                         String[] colors = SLDs.colors(rule);
                         Color fill = SLDs.toColor(colors[0]);
-                        
+
                         List<Symbolizer> newSymbolizers = rule.symbolizers();
                         for( Symbolizer newSymbolizer : newSymbolizers ) {
                             if (newSymbolizer instanceof PointSymbolizer) {
                                 PointSymbolizer newPointSymbolizer = (PointSymbolizer) newSymbolizer;
-                                
+
                                 Mark mark = sb.createMark(oldMark.getWellKnownName().evaluate(null, String.class));
                                 Fill newFill = sb.createFill(fill);
                                 newFill.setOpacity(ff.literal(opac));
                                 mark.setFill(newFill);
                                 mark.setRotation(oldMark.getRotation());
                                 mark.setSize(oldMark.getSize());
-                                
+
                                 Stroke newStroke = oldMark.getStroke();
                                 newStroke.setColor(ff.literal(borderColor));
                                 mark.setStroke(newStroke);
@@ -1485,6 +1488,23 @@ public class StyleThemePage extends StyleEditorPage {
                                 newGraphic.graphicalSymbols().add(mark);
                                 break;
                             }
+                        }
+                    }
+                }
+            } else if (symbolizer instanceof PolygonSymbolizer) {
+                List<Rule> rules = newFTS.rules();
+                for( Rule rule : rules ) {
+                    List<Symbolizer> newSymbolizers = rule.symbolizers();
+                    for( Symbolizer newSymbolizer : newSymbolizers ) {
+                        if (newSymbolizer instanceof PolygonSymbolizer) {
+                            PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer ) newSymbolizer;
+                            
+                            Fill previousFill = SLDs.fill(polygonSymbolizer);
+                            previousFill.setOpacity(ff.literal(opac));
+                            
+                            Stroke stroke = SLDs.stroke(polygonSymbolizer);
+                            stroke.setColor(ff.literal(borderColor));
+                            
                         }
                     }
                 }
@@ -1785,13 +1805,15 @@ public class StyleThemePage extends StyleEditorPage {
                     for (int j = 0; j < i+1; j++) {
                         scheme[j] = j;
                     }
-                    newScheme.setSampleScheme(i+1, scheme);
-                    //set the suitability to unknown
                     try {
+                        newScheme.setSampleScheme(i+1, scheme);
+                        //set the suitability to unknown
                         suitability.setSuitability(i+1, new String[] {unknown, unknown, unknown, unknown, unknown, unknown});
-                    } catch (IOException e) {
-                        SLDPlugin.log("setSuitability() failed", e); //$NON-NLS-1$
-                        return;
+                    } catch (Exception e) {
+                        // SLDPlugin.log("setSuitability() failed", e); //$NON-NLS-1$
+                        // don't block here, give an unknown status
+                        suitability = CustomUnknownPaletteSuitability.getInstance();
+                        newScheme = new CustomSampleScheme(colors.size());
                     }
                 }
             }

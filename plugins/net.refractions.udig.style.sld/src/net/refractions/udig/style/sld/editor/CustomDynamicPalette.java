@@ -17,7 +17,7 @@ public class CustomDynamicPalette extends BrewerPalette {
     public enum TABLE {
         RAINBOW, GREY
     }
-
+    
     private int[][] current = null;
 
     private int[][] rainbow = new int[][]{{255, 255, 0}, /* yellow */
@@ -29,7 +29,6 @@ public class CustomDynamicPalette extends BrewerPalette {
     };
     private int[][] grey = new int[][]{{0, 0, 0}, {255, 255, 255}};
 
-    private PaletteSuitability suitability;
     private CustomSampleScheme sampler;
     private PaletteType type;
 
@@ -49,7 +48,18 @@ public class CustomDynamicPalette extends BrewerPalette {
         default:
             break;
         }
+    }
 
+    public CustomDynamicPalette( String name, String descripiton, Color[] colors ) {
+        setName(name);
+        setDescription(descripiton);
+
+        current = new int[colors.length][3];
+        for( int i = 0; i < colors.length; i++ ) {
+            current[i][0] = colors[i].getRed();
+            current[i][1] = colors[i].getGreen();
+            current[i][2] = colors[i].getBlue();
+        }
     }
 
     public PaletteType getType() {
@@ -136,11 +146,10 @@ public class CustomDynamicPalette extends BrewerPalette {
     }
 
     public PaletteSuitability getPaletteSuitability() {
-        return suitability;
+        return CustomUnknownPaletteSuitability.getInstance();
     }
 
     public void setPaletteSuitability( PaletteSuitability suitability ) {
-        this.suitability = suitability;
     }
 
     public SampleScheme getColorScheme() {

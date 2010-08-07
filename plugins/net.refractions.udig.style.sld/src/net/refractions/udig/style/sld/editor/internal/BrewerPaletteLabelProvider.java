@@ -1,5 +1,8 @@
 package net.refractions.udig.style.sld.editor.internal;
 
+import java.awt.Color;
+
+import net.refractions.udig.style.sld.editor.CustomDynamicPalette;
 import net.refractions.udig.ui.graphics.Glyph;
 
 import org.eclipse.jface.viewers.LabelProvider;
@@ -10,7 +13,16 @@ public class BrewerPaletteLabelProvider extends LabelProvider {
 	public Image getImage(Object element) {
 		if (element instanceof BrewerPalette) {
 			BrewerPalette palette = (BrewerPalette) element;
-			return Glyph.palette(palette.getColors(palette.getMaxColors())).createImage();
+			int maxColors = palette.getMaxColors();
+            Color[] colors;
+            try{
+                colors = palette.getColors(maxColors);
+            }catch (Exception e) {
+                colors = palette.getColors();
+                palette = new CustomDynamicPalette(palette.getName(), palette.getDescription(), colors);
+                colors = palette.getColors(maxColors);
+            }
+            return Glyph.palette(colors).createImage();
 		}
 		return null;
 	}

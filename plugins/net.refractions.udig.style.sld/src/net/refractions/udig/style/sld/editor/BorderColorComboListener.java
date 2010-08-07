@@ -67,6 +67,9 @@ public class BorderColorComboListener implements SelectionListener {
             return Color.WHITE;
         case CUSTOM:
             RGB rgb = (RGB) combo.getData();
+            if (rgb ==  null) {
+                return Color.BLACK;
+            }
             Color color = new Color( rgb.red, rgb.green, rgb.blue);
             return color;
         default:
