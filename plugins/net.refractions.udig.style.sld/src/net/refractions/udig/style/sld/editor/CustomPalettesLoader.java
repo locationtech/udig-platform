@@ -38,7 +38,6 @@ public class CustomPalettesLoader implements IStartup {
 
     public static final List<BrewerPalette> PALETTESLIST = new ArrayList<BrewerPalette>();
 
-    @Override
     public void earlyStartup() {
         if (PALETTESLIST.size() > 0) {
             // read only first time
@@ -51,7 +50,6 @@ public class CustomPalettesLoader implements IStartup {
 
             File palettesFolderFile = new File(palettesFolderPath);
             File[] palettesList = palettesFolderFile.listFiles(new FilenameFilter(){
-                @Override
                 public boolean accept( File dir, String name ) {
                     return name.endsWith(".xml"); //$NON-NLS-1$
                 }
