@@ -738,17 +738,18 @@ public interface WMSCComplexTypes {
 //                    service.setKeywordList((String[]) value[i].getValue());
 //                }
 
+                // OnlineResource
                 if (sameName(elems[2], value[i])) {
                     String spec = (String) value[i].getValue();
                     if( spec == null || spec.length() == 0){
                         // Service not avaialble
-                        System.out.println("WMS Capabilies document does contain VendorSpecificCapabilities describing WMS-C tileset");
+                        System.out.println("OnlineResource cannot be empty");
                     }
                     else {
                         try {
                             service.setOnlineResource(new URL( spec ));
                         } catch (MalformedURLException e) {
-                           System.out.println("Cannot convert string to url: " +spec); //$NON-NLS-1$                           
+                           System.out.println("OnlineResource cannot string to url: " +spec); //$NON-NLS-1$                           
                         }
                     }
                 }
