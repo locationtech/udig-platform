@@ -28,7 +28,10 @@ import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.internal.wms.WmsPlugin;
+import net.refractions.udig.catalog.wmsc.server.Capability;
 import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
+import net.refractions.udig.catalog.wmsc.server.VendorSpecificCapabilities;
+import net.refractions.udig.catalog.wmsc.server.WMSCCapabilities;
 import net.refractions.udig.catalog.wmsc.server.WMSTileSet;
 import net.refractions.udig.ui.UDIGDisplaySafeLock;
 
@@ -109,21 +112,30 @@ public class WMSCServiceImpl extends IService {
                 if (members == null) {
                     members = new LinkedList<IResolve>();
 
-                    List<WMSTileSet> tiles = getWMSC().getCapabilities().getCapability()
-                            .getVSCapabilities().getTiles();
-                    // List<WMSTileSet> tiles =
-                    // getWMSC().getCapabilities().getVSCapabilities().getTiles();
-
-                    /*
-                     * Retrieved no layers from the WMS - something is wrong, either the WMS doesn't
-                     * work, or it has no named layers.
-                     */
-                    if (tiles != null) {
-                        for( WMSTileSet tileset : tiles ) {
-                            // add the server to this tileset
-                            tileset.setServer(getWMSC());
-                            members.add(new WMSCGeoResourceImpl(this, tileset));
+                    WMSCCapabilities capabilities = getWMSC().getCapabilities();
+                    Capability capability = capabilities.getCapability();
+                    VendorSpecificCapabilities vendorCapabilities = capability.getVSCapabilities();
+                    if( vendorCapabilities != null ){
+                        List<WMSTileSet> tiles = vendorCapabilities.getTiles();
+                        
+                        /*
+                         * Retrieved no layers from the WMS - something is wrong, either the WMS doesn't
+                         * work, or it has no named layers.
+                         */
+                        if (tiles != null) {
+                            for( WMSTileSet tileset : tiles ) {
+                                // add the server to this tileset
+                                tileset.setServer(getWMSC());
+                                members.add(new WMSCGeoResourceImpl(this, tileset));
+                            }
+                            this.msg = null;
                         }
+                        else {
+                            this.msg = new IllegalStateException("VendorCapabilities does not contain titles");
+                        }
+                    }
+                    else {
+                        this.msg = new IllegalStateException("VendorCapabilities not available");
                     }
                 }
             } finally {

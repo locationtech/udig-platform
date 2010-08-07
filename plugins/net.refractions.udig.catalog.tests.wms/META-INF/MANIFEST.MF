@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: WMS Tests
+Bundle-SymbolicName: net.refractions.udig.catalog.tests.wms
+Bundle-Version: 1.2.0.qualifier
+Bundle-Vendor: udig.refractions.net
