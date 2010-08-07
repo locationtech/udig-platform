@@ -1479,8 +1479,14 @@ public class StyleThemePage extends StyleEditorPage {
                                 mark.setSize(oldMark.getSize());
 
                                 Stroke newStroke = oldMark.getStroke();
-                                newStroke.setColor(ff.literal(borderColor));
-                                mark.setStroke(newStroke);
+                                if (newStroke != null) {
+                                    if (borderColor!=null) {
+                                        newStroke.setColor(ff.literal(borderColor));
+                                        mark.setStroke(newStroke);
+                                    }else{
+                                        mark.setStroke(null);
+                                    }
+                                }
 
                                 Graphic newGraphic = SLDs.graphic(newPointSymbolizer);
                                 newGraphic.setSize(oldGraphic.getSize());
@@ -1503,7 +1509,13 @@ public class StyleThemePage extends StyleEditorPage {
                             previousFill.setOpacity(ff.literal(opac));
                             
                             Stroke stroke = SLDs.stroke(polygonSymbolizer);
-                            stroke.setColor(ff.literal(borderColor));
+                            if (stroke != null) {
+                                if(borderColor!=null){
+                                    stroke.setColor(ff.literal(borderColor));
+                                }else{
+                                    polygonSymbolizer.setStroke(null);
+                                }
+                            }
                             
                         }
                     }

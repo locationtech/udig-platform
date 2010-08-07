@@ -60,7 +60,7 @@ public class BorderColorComboListener implements SelectionListener {
         
         switch( outline ) {
         case NONE:
-            return Color.BLACK;
+            return null;
         case BLACK:
             return Color.BLACK;
         case WHITE:
