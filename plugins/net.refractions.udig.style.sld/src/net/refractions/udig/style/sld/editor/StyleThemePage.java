@@ -1828,7 +1828,9 @@ public class StyleThemePage extends StyleEditorPage {
             }
         }
         paletteTable.setInput(getBrewer());
-        paletteTable.setSelection(new StructuredSelection(customPalette));
+        String paletteName = memento.getString(PALETTE_KEY);
+        if(paletteName.equals(customPalette.getName()))
+            paletteTable.setSelection(new StructuredSelection(customPalette));
     }
 
     private void setPaletteSelection(IMemento memento) {
