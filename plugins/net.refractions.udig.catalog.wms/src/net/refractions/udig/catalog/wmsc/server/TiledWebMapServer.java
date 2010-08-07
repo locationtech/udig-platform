@@ -158,6 +158,9 @@ public class TiledWebMapServer {
             if( t != null ){
                 t.printStackTrace();
             }
+            else {
+                System.out.println();
+            }
         }
         else {
             WmsPlugin.log(msg, t);
@@ -245,6 +248,7 @@ public class TiledWebMapServer {
         protected void initService() {
             setProperty(REQUEST, "GetCapabilities"); //$NON-NLS-1$
             setProperty(SERVICE, "WMS"); //$NON-NLS-1$;
+            setProperty("TILED","true");
         }
 
         @Override
