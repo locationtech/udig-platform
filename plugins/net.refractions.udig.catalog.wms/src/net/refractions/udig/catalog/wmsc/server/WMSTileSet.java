@@ -127,7 +127,7 @@ public class WMSTileSet implements TileSet {
         try {
             crs = CRS.decode(bbox.getEPSGCode());
         } catch (Exception ex) {
-            WmsPlugin.trace("Cannot decode tile epsg code: " + bbox.getEPSGCode(), ex); //$NON-NLS-1$
+            System.out.println("Cannot decode tile epsg code: " + bbox.getEPSGCode()); //$NON-NLS-1$
         }
         bboxSrs = new ReferencedEnvelope(bbox.getMinX(), bbox.getMaxX(), bbox.getMinY(), bbox
                 .getMaxY(), crs);

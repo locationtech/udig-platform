@@ -4,3 +4,6 @@ Bundle-Name: WMS Tests
 Bundle-SymbolicName: net.refractions.udig.catalog.tests.wms
 Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: udig.refractions.net
+Require-Bundle: org.junit;bundle-version="4.8.1",
+ net.refractions.udig.catalog.wms,
+ net.refractions.udig.libs
