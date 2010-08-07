@@ -35,7 +35,6 @@ final class BrewerPaletteContentProvider implements
 	        int selection = this.styleThemePage.getCombo(StyleThemePage.COMBO_PALETTES).getSelectionIndex();
 	        if (selection == 0) {
                 BrewerPalette[] palettes = brewer.getPalettes(ColorBrewer.ALL);
-                System.out.println(palettes.length);
                 return palettes;
             } else if (selection == 1) //Numerical
 	            return brewer.getPalettes(ColorBrewer.SUITABLE_RANGED);

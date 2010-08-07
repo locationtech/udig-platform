@@ -317,7 +317,7 @@ public final class Drawing {
             PointSymbolizer pointSymbolizer = (PointSymbolizer) symb;
             
             Color c = SLDs.pointColor( pointSymbolizer );
-            Color fill=SLDs.pointFill( pointSymbolizer );
+            Color fill=SLDs.pointFillWithAlpha( pointSymbolizer );
             int width = SLDs.width(SLDs.stroke(pointSymbolizer));
             float[] point=new float[6];
             shape.getPathIterator(null).currentSegment(point);
