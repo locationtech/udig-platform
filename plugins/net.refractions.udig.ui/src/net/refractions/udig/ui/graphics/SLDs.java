@@ -23,6 +23,7 @@ import java.util.Set;
 import org.eclipse.swt.graphics.FontData;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.Filters;
+import org.geotools.filter.expression.AbstractExpressionVisitor;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Font;
@@ -41,7 +42,16 @@ import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
+import org.opengis.filter.expression.Add;
+import org.opengis.filter.expression.Divide;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.ExpressionVisitor;
+import org.opengis.filter.expression.Function;
+import org.opengis.filter.expression.Literal;
+import org.opengis.filter.expression.Multiply;
+import org.opengis.filter.expression.NilExpression;
+import org.opengis.filter.expression.PropertyName;
+import org.opengis.filter.expression.Subtract;
 import org.opengis.style.Graphic;
 import org.opengis.style.GraphicalSymbol;
 
@@ -79,6 +89,75 @@ public class SLDs extends SLD {
         return Filters.asInt(graphic.getSize());
     }
 
+    public static Color polyFill(PolygonSymbolizer symbolizer) {
+        if (symbolizer == null) {
+            return null;
+        }
+
+        Fill fill = symbolizer.getFill();
+
+        if (fill == null) {
+            return null;
+        }
+
+        Expression color = fill.getColor();
+        return color(color);
+    }
+    public static Color color(Expression expr) {
+        if (expr == null) {
+            return null;
+        }
+        try {
+            return expr.evaluate(null, Color.class );
+        }
+        catch( Throwable t ){
+            class ColorVisitor implements ExpressionVisitor {
+                Color found;
+                public Object visit( Literal expr, Object data ) {
+                    if( found != null ) return null;
+                    try {
+                        Color color = expr.evaluate(expr, Color.class );
+                        if( color != null ){
+                            found = color;
+                        }
+                    }
+                    catch (Throwable t){
+                        // not a color
+                    }
+                    return data;
+                }
+                public Object visit( NilExpression arg0, Object data ) {
+                    return data;
+                }
+                public Object visit( Add arg0, Object data ) {
+                    return data;
+                }
+                public Object visit( Divide arg0, Object data ) {
+                    return null;
+                }
+                public Object visit( Function function, Object data ) {
+                    for( Expression param : function.getParameters() ){
+                        param.accept(this, data ); 
+                    }
+                    return data;
+                }
+                public Object visit( Multiply arg0, Object data ) {
+                    return data;
+                }
+                public Object visit( PropertyName arg0, Object data ) {
+                    return data;
+                }
+                public Object visit( Subtract arg0, Object data ) {
+                    return data;
+                }
+            }
+            ColorVisitor search = new ColorVisitor();
+            expr.accept(search, null );
+            
+            return search.found;            
+        }
+    }
+    
     /**
      * Grabs the font from the first TextSymbolizer.
      * <p>

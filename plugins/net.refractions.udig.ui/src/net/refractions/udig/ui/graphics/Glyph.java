@@ -458,9 +458,14 @@ public class Glyph {
                 PlatformGIS.syncInDisplayThread(display, new Runnable(){
                     public void run() {
                         image[0] = new Image(display, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-                        d.drawDirect( image[0], display,
+                        try {
+                            d.drawDirect( image[0], display,
                                 d.feature(d.polygon(new int[]{1,14, 3,9, 4,6,  6,4,  9,3, 14,1, 14,14})),
                                 rule );
+                        }
+                        catch (Throwable npe ){
+                            // unavailable
+                        }
                     }
                 });
                 
