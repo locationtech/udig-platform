@@ -45,6 +45,7 @@ public class PostgisGeoResource2 extends IGeoResource {
     private volatile Throwable message;
     private final URL identifier;
     private final PostgisSchemaFolder parent;
+    private Boolean readOnly = null; // we won't know until we try
     
     public PostgisGeoResource2( PostgisService2 service, PostgisSchemaFolder postgisSchemaFolder, String typename ) {        
             this.service = service;
@@ -61,7 +62,7 @@ public class PostgisGeoResource2 extends IGeoResource {
                 info = new PostgisResourceInfo(this);
             } catch (Exception e) {
                 PostgisPlugin.log("Error creating a PostgisInfo object", e);
-            }
+            }            
     }
 
     public URL getIdentifier() {
@@ -99,20 +100,30 @@ public class PostgisGeoResource2 extends IGeoResource {
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
         if (adaptee == null)
             return null;
-        if (adaptee.isAssignableFrom(IGeoResourceInfo.class))
+        
+        if (adaptee.isAssignableFrom(IGeoResourceInfo.class)){
             return adaptee.cast(createInfo(monitor));
-        if (adaptee.isAssignableFrom(IGeoResource.class))
+        }
+        if (adaptee.isAssignableFrom(IGeoResource.class)){
             return adaptee.cast(this);
+        }
         
         JDBCDataStore dataStore = parent.getDataStore();
-        if (adaptee.isAssignableFrom(DataStore.class))
+        if (adaptee.isAssignableFrom(DataStore.class)){
             return adaptee.cast(dataStore);
+        }
         if (adaptee.isAssignableFrom(FeatureStore.class)) {
             FeatureSource<SimpleFeatureType, SimpleFeature> fs = dataStore.getFeatureSource(typename);
-            if (fs instanceof FeatureStore)
+            if (fs instanceof FeatureStore){
+                readOnly = false;
                 return adaptee.cast(fs);
-            if (adaptee.isAssignableFrom(FeatureSource.class))
+            }
+            else {
+                readOnly = true;
+            }
+            if (adaptee.isAssignableFrom(FeatureSource.class)){
                 return adaptee.cast(dataStore.getFeatureSource(typename));
+            }
         }
         if (adaptee.isAssignableFrom(Connection.class)){
         	return service.resolve(adaptee, monitor);
@@ -124,9 +135,10 @@ public class PostgisGeoResource2 extends IGeoResource {
      * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
-        if (adaptee == null)
+        if (adaptee == null){
             return false;
-        boolean isFeatureStore = adaptee.isAssignableFrom(FeatureStore.class);
+        }
+        boolean isFeatureStore = adaptee.isAssignableFrom(FeatureStore.class) && (readOnly == null || readOnly == false);
         boolean isFeatureSource = adaptee.isAssignableFrom(FeatureSource.class);
         boolean isGeoResource = adaptee.isAssignableFrom(IGeoResourceInfo.class);
         boolean isIService = adaptee.isAssignableFrom(IService.class);

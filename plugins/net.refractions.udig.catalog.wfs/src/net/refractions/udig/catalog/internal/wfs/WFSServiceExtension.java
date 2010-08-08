@@ -41,8 +41,9 @@ public class WFSServiceExtension extends AbstractDataStoreServiceExtension
 	private static WFSDataStoreFactory wfsDSFactory;
 
 	public static WFSDataStoreFactory getWFSDSFactory() {
-		if (wfsDSFactory == null)
+		if (wfsDSFactory == null){
 			wfsDSFactory = new WFSDataStoreFactory();
+		}
 		return wfsDSFactory;
 	}
 
@@ -50,10 +51,12 @@ public class WFSServiceExtension extends AbstractDataStoreServiceExtension
 		if (params == null || !params.containsKey(WFSDataStoreFactory.URL.key))
 			return null;
 
-		if (!params.containsKey(WFSDataStoreFactory.LENIENT.key))
+		if (!params.containsKey(WFSDataStoreFactory.LENIENT.key)){
 			params.put(WFSDataStoreFactory.LENIENT.key, true);
-		if (!params.containsKey(WFSDataStoreFactory.TRY_GZIP.key))
+		}
+		if (!params.containsKey(WFSDataStoreFactory.TRY_GZIP.key)){
 			params.put(WFSDataStoreFactory.TRY_GZIP.key, true);
+		}
 		if (id == null) {
 			URL base = (URL) params.get(WFSDataStoreFactory.URL.key);
 			if (base == null) {

@@ -18,14 +18,11 @@ package net.refractions.udig.catalog.internal.wfs;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.locks.Lock;
 
 import net.refractions.udig.catalog.CatalogPlugin;
@@ -44,11 +41,9 @@ import net.refractions.udig.ui.UDIGDisplaySafeLock;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.DataStore;
 import org.geotools.data.wfs.WFSDataStore;
 import org.geotools.data.wfs.WFSDataStoreFactory;
-import org.geotools.xml.wfs.WFSSchema;
 
 /**
  * Handle for a WFS service.
@@ -66,7 +61,7 @@ public class WFSServiceImpl extends IService {
         this.identifier = identifier;
         this.params = dsParams;
     }
-
+    
     /*
      * Required adaptions: <ul> <li>IServiceInfo.class <li>List.class <IGeoResource> </ul>
      * @see net.refractions.udig.catalog.IService#resolve(java.lang.Class,
@@ -151,7 +146,7 @@ public class WFSServiceImpl extends IService {
         }
         rLock.lock();
         try {
-            return new IServiceWFSInfo(ds);
+            return new WFSServiceInfo(this, ds);
         } finally {
             rLock.unlock();
         }
@@ -228,62 +223,5 @@ public class WFSServiceImpl extends IService {
      */
     public URL getIdentifier() {
         return identifier;
-    }
-
-    private class IServiceWFSInfo extends IServiceInfo {
-
-        private WFSDataStore ds;
-
-        IServiceWFSInfo( WFSDataStore resource ) {
-            super();
-            this.ds = resource;
-            icon = AbstractUIPlugin.imageDescriptorFromPlugin(WfsPlugin.ID,
-                    "icons/obj16/wfs_obj.16"); //$NON-NLS-1$
-        }
-
-        /*
-         * @see net.refractions.udig.catalog.IServiceInfo#getAbstract()
-         */
-        public String getAbstract() {
-            return ds.getInfo().getDescription();
-        }
-
-        /*
-         * @see net.refractions.udig.catalog.IServiceInfo#getKeywords()
-         */
-        public Set<String> getKeywords() {
-            return ds.getInfo().getKeywords();
-        }
-
-        /*
-         * @see net.refractions.udig.catalog.IServiceInfo#getSchema()
-         */
-        public URI getSchema() {
-            return WFSSchema.NAMESPACE;
-        }
-
-        public String getDescription() {
-            return getIdentifier().toString();
-        }
-
-        public URI getSource() {
-            try {
-                return getIdentifier().toURI();
-            } catch (URISyntaxException e) {
-                // This would be bad
-                throw (RuntimeException) new RuntimeException().initCause(e);
-            }
-        }
-
-        public String getTitle() {
-            String title = ds.getInfo().getTitle();
-            if (title == null) {
-                title = getIdentifier() == null ? Messages.WFSServiceImpl_broken : getIdentifier()
-                        .toString();
-            } else {
-                title += " (WFS " + ds.getInfo().getVersion() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
-            }
-            return title;
-        }
     }
 }
