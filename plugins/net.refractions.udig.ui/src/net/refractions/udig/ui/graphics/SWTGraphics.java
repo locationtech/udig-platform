@@ -96,11 +96,13 @@ public class SWTGraphics implements ViewportGraphics {
         gc.setAdvanced(true);
     }
 	
-	public GC getGC(){
+    public <T> T getGraphics( Class<T> adaptee ) {
         AWTSWTImageUtils.checkAccess();
-		return gc;
-	}
-	
+        if (adaptee.isAssignableFrom(GC.class)) {
+            return adaptee.cast(gc);
+        }
+        return null;
+    }
 
     public void dispose() {
         AWTSWTImageUtils.checkAccess();

@@ -9,6 +9,7 @@
 package net.refractions.udig.ui.graphics;
 
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
@@ -102,9 +103,12 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
         gc.dispose();
     }
 
-    public GC getGC() {
+    public <T> T getGraphics( Class<T> adaptee ) {
         AWTSWTImageUtils.checkAccess();
-        return gc;
+        if (adaptee.isAssignableFrom(GC.class)) {
+            return adaptee.cast(gc);
+        }
+        return null;
     }
 
     /**

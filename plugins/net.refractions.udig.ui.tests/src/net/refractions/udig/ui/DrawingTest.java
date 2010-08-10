@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 import net.refractions.udig.ui.graphics.SWTGraphics;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
@@ -36,7 +37,7 @@ public class DrawingTest extends TestCase {
         image = new Image(display, 16, 16);
 
         SWTGraphics graphics = new SWTGraphics(image, display);
-        graphics.getGC().setAntialias(SWT.OFF);
+        graphics.getGraphics(GC.class).setAntialias(SWT.OFF);
         graphics.setBackground(Color.WHITE);
         graphics.clearRect(0, 0, 16, 16);
         d.drawFeature(graphics, d.feature(d.polygon(new int[]{2, 2, 2, 14, 14, 14, 14, 2, 2, 2})),
@@ -71,7 +72,7 @@ public class DrawingTest extends TestCase {
         image = new Image(display, 16, 16);
 
         SWTGraphics graphics = new SWTGraphics(image, display);
-        graphics.getGC().setAntialias(SWT.OFF);
+        graphics.getGraphics(GC.class).setAntialias(SWT.OFF);
         graphics.setBackground(Color.WHITE);
         graphics.clearRect(0, 0, 16, 16);
         d.drawFeature(graphics, d.feature(line), style, new AffineTransform());
@@ -108,7 +109,7 @@ public class DrawingTest extends TestCase {
         image = new Image(display, 16, 16);
 
         SWTGraphics graphics = new SWTGraphics(image, display);
-        graphics.getGC().setAntialias(SWT.OFF);
+        graphics.getGraphics(GC.class).setAntialias(SWT.OFF);
         graphics.setBackground(Color.WHITE);
         graphics.clearRect(0, 0, 16, 16);
         d.drawFeature(graphics, d.feature(point), style, new AffineTransform());

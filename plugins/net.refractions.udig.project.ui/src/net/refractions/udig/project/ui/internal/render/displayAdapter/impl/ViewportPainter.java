@@ -152,7 +152,7 @@ public class ViewportPainter {
 
         if (tiles != null) {
         	// determine if we are drawing AWT or SWT
-        	GC gc = g.getGC();
+        	GC gc = g.getGraphics(GC.class);
         	if (gc != null ) {
         		// SWT, draw all the tiles
         		Set<ReferencedEnvelope> keySet = tiles.keySet();
@@ -513,10 +513,11 @@ public class ViewportPainter {
      * @param g
      */
     private void drawGlassPane(ViewportGraphics g){
-        if (g.getGC() != null ){
+        GC gc = g.getGraphics(GC.class);
+        if (gc != null ){
             GlassPane glass = this.pane.getGlass();
             if (glass != null){
-                glass.draw(g.getGC());
+                glass.draw(gc);
             }    
         }    
     }

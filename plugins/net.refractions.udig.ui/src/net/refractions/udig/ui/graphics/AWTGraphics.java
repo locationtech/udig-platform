@@ -395,10 +395,10 @@ public class AWTGraphics implements ViewportGraphics {
         g.fillRect(x, y, width, height);
     }
     
-    /**
-     * @return null 
-     */
-    public GC getGC() {
+    public <T> T getGraphics( Class<T> adaptee ) {
+        if (adaptee.isAssignableFrom(Graphics2D.class)) {
+            return adaptee.cast(g);
+        }
         return null;
     }
 

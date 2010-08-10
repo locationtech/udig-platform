@@ -18,6 +18,7 @@ package net.refractions.udig.ui.graphics;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -447,11 +448,10 @@ public interface ViewportGraphics {
            Color endColor, boolean isVertical );
 
     /**
-     * Gets the SWT graphics if applicable.  May return null
-     * if no SWT graphics.
+     * Gets the graphics object if applicable.
      *
-     * @return  SWT graphics or null
+     * @return  the requested graphics type or null.
      */
-    public GC getGC();
+    public <T> T getGraphics(Class<T> adaptee);
     
 }

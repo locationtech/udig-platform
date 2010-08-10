@@ -279,7 +279,7 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
             	swtGraphics = new NonAdvancedSWTGraphics(buffer, display);
             }
             if (renderManager.getViewportModelInternal().isBoundsChanging() ) {
-                swtGraphics.getGC().setAdvanced(false);
+                swtGraphics.getGraphics(GC.class).setAdvanced(false);
             }
             painter.paint(swtGraphics, tiles, minWidth, minHeight);
             swtGraphics.dispose();
@@ -295,7 +295,7 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
         		swtGraphics = new NonAdvancedSWTGraphics(gc, display, null);
         	}
         	if (renderManager.getViewportModelInternal().isBoundsChanging() ) {
-        	    swtGraphics.getGC().setAdvanced(false);
+        	    swtGraphics.getGraphics(GC.class).setAdvanced(false);
         	}
             painter.paint(swtGraphics, tiles, minWidth, minHeight);
             swtGraphics.dispose();
