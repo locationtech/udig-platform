@@ -36,7 +36,8 @@ To recompile the installer for a new version of uDig, you'll need to do the foll
     installer/udig/udig_internal.exe
     installer/udig/udig_internal.ini
 
-3. Next, open up uDigInstallScript.nsi, and edit the parts that state the version of uDig. This includes the following lines: 44,45,50,55,125,163,218,270,303
+3. Next, open up uDigInstallScript.nsi, and edit the parts that state the version of uDig.
+   This includes the following lines: 44,45,50,55,125,163,218,270,303
    (Replace VersionXXXX with whatever version you are working with for example 1.2-M4)
 
 4. use compiler to open the uDigInstallerScript.nsi file and it will compile the .exe in the same directory
