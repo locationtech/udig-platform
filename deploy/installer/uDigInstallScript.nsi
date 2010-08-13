@@ -88,9 +88,7 @@
   
   ;You can obviously change any of this text junk. -ch
   !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the \
-      installation of uDig \r\n \r\nNote that this is the first \
-      attempt by the uDig project to create \
-      a Windows executable installer.  \
+      installation of uDig \r\n \r\n\
       Please report any problems or suggestions for improvement to \
       udig-devel@lists.refractions.net. \r\n \r\n \
       Click Next to continue."
@@ -305,7 +303,7 @@ Section "Uninstall"
     
   RMDIR /r "$SMPROGRAMS\$MUI_TEMP"
 
-  DeleteRegKey /ifempty HKCU "Software\uDig1.2-M6"
+  DeleteRegKey /ifempty HKCU "Software\uDig1.2"
 
 SectionEnd
 
