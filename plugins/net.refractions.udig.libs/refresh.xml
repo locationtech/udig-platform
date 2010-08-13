@@ -99,24 +99,6 @@
 			<!-- geotools unsupported modules (ie legacy) -->
 			<!--dependency groupId="org.geotools" artifactId="gt-postgis" version="${geotools.version}" /-->
 
-			<!-- imageio-ext plug-ins 
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-arcgrid" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-customstreams" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdaldted" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalecw" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalecwjp2" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalehdr" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalerdasimg" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalframework" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalkakadujp2" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalmrsid" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalmrsidjp2" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-gdalnitf" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-geocore" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-imagereadmt" version="1.0.2" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-utilities" version="1.0.2" />
-			-->
-
 			<dependency groupId="joda-time" artifactId="joda-time" version="1.6" />
 
 			<!-- stuff for netcdf -->

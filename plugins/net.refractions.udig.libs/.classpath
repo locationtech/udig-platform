@@ -65,28 +65,28 @@
 	<classpathentry exported="true" kind="lib" path="lib/h2-1.1.104.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hatbox-1.0.b7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hsqldb-1.8.0.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-arcgrid-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-customstreams-1.0.6-1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-arcgrid-1.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-customstreams-1.0.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdal-bindings-1.4.5b.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalarcbinarygrid-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdaldted-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalecw-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalecwjp2-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalehdr-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalenvihdr-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalerdasimg-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalframework-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalkakadujp2-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalmrsid-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalmrsidjp2-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalnitf-1.0.6-1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalarcbinarygrid-1.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdaldted-1.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalecw-1.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalecwjp2-1.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalehdr-1.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalenvihdr-1.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalerdasimg-1.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalframework-1.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalkakadujp2-1.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalmrsid-1.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalmrsidjp2-1.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalnitf-1.0.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-geocore-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-imagereadmt-1.0.6-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-kakadu-1.0.6-1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-imagereadmt-1.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-kakadu-1.0.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-kakadujni-5.2.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-1.1-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-core-1.1-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-tiff-1.0.6-1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-tiff-1.0.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-utilities-1.0.6-1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jcommon-1.0.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jdom-1.0.jar"/>
