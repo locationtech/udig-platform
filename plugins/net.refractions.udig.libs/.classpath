@@ -46,7 +46,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-render-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-renderer-2.6-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-svg-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-svg-2.6-SNAPSHOT.jar" sourcepath="/Users/jody/java/geotools/2.6.x/modules/plugin/svg/src"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-swing-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-temporal-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-validation-2.6-SNAPSHOT.jar"/>
