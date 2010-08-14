@@ -37,7 +37,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jp2k-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-main-2.6-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-2.6-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-2.6-SNAPSHOT.jar" sourcepath="/Users/jody/java/geotools/2.6.x/modules/library/metadata/src"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-postgis-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-postgis-versioned-2.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-process-2.6-SNAPSHOT.jar"/>
