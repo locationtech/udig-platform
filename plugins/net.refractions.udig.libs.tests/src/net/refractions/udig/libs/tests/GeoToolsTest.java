@@ -4,7 +4,11 @@
 package net.refractions.udig.libs.tests;
 
 
+import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
+import org.apache.batik.util.XMLResourceDescriptor;
 import org.geotools.factory.GeoTools;
+import org.geotools.renderer.lite.BatikXMLReader;
+import org.geotools.renderer.style.SVGGraphicFactory;
 import org.geotools.util.Version;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -28,7 +32,13 @@ public class GeoToolsTest {
          assertEquals( 2, version.getMajor() );
          assertTrue( version.getMinor().toString().startsWith("6") );
     }
-
+    @Test
+    public void testSVGGraphicsFactory() {
+        SVGGraphicFactory svgFactory = new SVGGraphicFactory();
+        
+        String parser = XMLResourceDescriptor.getXMLParserClassName();
+        SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);        
+    }
     /**
      * @throws java.lang.Exception
      */
