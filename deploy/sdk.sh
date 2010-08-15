@@ -36,6 +36,8 @@ then
         rm ${BUILD}/sdk/udig_sdk/plugins/*swt*win32*
         rm ${BUILD}/sdk/udig_sdk/plugins/*swt*linux*
         
+        # TODO: figure out how to make libs and libs source have the same qualifier
+        
         cp ${BASE}/udig-1.2.x.html ${BUILD}/sdk/udig_sdk/udig-${VERSION}.html
         
         echo "Assemble ${BUILD}/udig-${VERSION}-sdk.zip "

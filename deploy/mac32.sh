@@ -26,7 +26,7 @@ then
         
         echo "Prepairing ${BUILD}/mac32 .."
         mv ${BUILD}/mac32/udig/udig_internal.app ${BUILD}/mac32/udig/udig.app
-        cp ${BASE}/udig-1.2.x.html ${BUILD}/max32/udig/udig-${VERSION}.html
+        cp ${BASE}/udig-1.2.x.html ${BUILD}/mac32/udig/udig-${VERSION}.html
         
         echo "Assemble ${BUILD}/udig-${VERSION}.macosx.cocoa.x86.zip.."
         cd ${BUILD}/mac32
