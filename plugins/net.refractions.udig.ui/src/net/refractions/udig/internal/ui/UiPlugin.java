@@ -528,7 +528,7 @@ public class UiPlugin extends AbstractUIPlugin {
 
     private static void processAppIni( boolean readOnly, Function<String, String> func ) throws IOException {
         File iniFile = getIniFile();
-        if (iniFile.exists()) {
+        if (iniFile != null && iniFile.exists()) {
             BufferedReader bR = null;
             BufferedWriter bW = null;
             try {
@@ -558,7 +558,7 @@ public class UiPlugin extends AbstractUIPlugin {
         }
 
         if (!readOnly) {
-            UiPlugin.log("udig.ini changed:" + iniFile.getAbsolutePath(), null);
+            UiPlugin.log("udig.ini changed:" + iniFile, null);
         }
     }
 
@@ -571,6 +571,9 @@ public class UiPlugin extends AbstractUIPlugin {
             if (l.endsWith(".ini")) { //$NON-NLS-1$
                 iniName = l;
             }
+        }
+        if( iniName == null ){
+            return null; // must be running from eclipse
         }
         File iniFile = new File(appFolder, iniName);
         return iniFile;
