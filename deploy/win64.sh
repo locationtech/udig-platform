@@ -30,6 +30,7 @@ then
         echo "Prepairing ${BUILD}/win64 .."
         mv ${BUILD}/win64/udig/udig_internal.exe ${BUILD}/win64/udig/udig.exe
         mv ${BUILD}/win64/udig/udig_internal.ini ${BUILD}/win64/udig/udig.ini
+        cp ${BASE}/udig-1.2.x.html ${BUILD}/win64/udig/udig-${VERSION}.html
         
         echo "Assemble ${BUILD}/udig-${VERSION}.win32.win32.x86_64.zip ..."
         cd ${BUILD}/win64

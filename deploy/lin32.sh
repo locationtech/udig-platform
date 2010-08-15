@@ -39,6 +39,7 @@ then
         
         echo "Prepairing ${BUILD}/linux32"
         cp udig.sh ${BUILD}/linux32/udig
+        cp ${BASE}/udig-1.2.x.html ${BUILD}/linux32/udig/udig-${VERSION}.html
         
         echo "Assemble ${BUILD}/udig-${VERSION}.linux.gtk.x86.zip"
         cd ${BUILD}/linux32

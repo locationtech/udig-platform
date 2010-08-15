@@ -31,6 +31,7 @@ then
         
         echo "Prepairing ${BUILD}/win32"
         cp ${BASE}/udig.bat ${BUILD}/win32/udig
+        cp ${BASE}/udig-1.2.x.html ${BUILD}/win32/udig/udig-${VERSION}.html
         
         echo "Assemble ${BUILD}/udig-${VERSION}.win32.win32.x86.zip"
         cd ${BUILD}/win32
