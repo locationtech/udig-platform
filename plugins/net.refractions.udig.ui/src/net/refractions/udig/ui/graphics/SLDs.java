@@ -18,10 +18,12 @@ package net.refractions.udig.ui.graphics;
 
 import java.awt.Color;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.swt.graphics.FontData;
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.NameImpl;
 import org.geotools.filter.Filters;
 import org.geotools.filter.expression.AbstractExpressionVisitor;
 import org.geotools.styling.FeatureTypeStyle;
@@ -178,15 +180,16 @@ public class SLDs extends SLD {
         // else if(fontStyle.equalsIgnoreCase("italic"))
 
         FontData[] tempFD = new FontData[1];
-        Expression fontFamily = font.getFontFamily();
-        if (font.getFontSize() == null || fontFamily == null)
+        Expression fontFamilyExpression = font.getFamily().get(0);
+        Expression sizeExpression = font.getSize();
+        if (sizeExpression == null || fontFamilyExpression == null)
             return null;
 
-        Number size = (Number) Filters.asType(font.getFontSize(), Number.class);
+        Double size = sizeExpression.evaluate(null, Double.class);
 
         try {
-            Object asType = Filters.asType(fontFamily, String.class);
-            tempFD[0] = new FontData((String) asType, size.intValue(), 1);
+            String fontFamily = fontFamilyExpression.evaluate(null, String.class);
+            tempFD[0] = new FontData(fontFamily, size.intValue(), 1);
         } catch (NullPointerException ignore) {
             return null;
         }
@@ -313,17 +316,15 @@ public class SLDs extends SLD {
     public static Font font( TextSymbolizer symbolizer ) {
         if (symbolizer == null)
             return null;
-        Font[] font = symbolizer.getFonts();
-        if (font == null || font[0] == null)
-            return null;
-        return font[0];
+        Font font = symbolizer.getFont();
+        return font;
     }
 
     public static Style getDefaultStyle( StyledLayerDescriptor sld ) {
         Style[] styles = styles(sld);
         for( int i = 0; i < styles.length; i++ ) {
             Style style = styles[i];
-            FeatureTypeStyle[] ftStyles = style.getFeatureTypeStyles();
+            List<FeatureTypeStyle> ftStyles = style.featureTypeStyles();
             genericizeftStyles(ftStyles);
             if (style.isDefault()) {
                 return style;
@@ -339,9 +340,10 @@ public class SLDs extends SLD {
      *
      * @param ftStyles
      */
-    private static void genericizeftStyles( FeatureTypeStyle[] ftStyles ) {
+    private static void genericizeftStyles( List<FeatureTypeStyle> ftStyles ) {
         for( FeatureTypeStyle featureTypeStyle : ftStyles ) {
-            featureTypeStyle.setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
+            featureTypeStyle.featureTypeNames().clear();
+            featureTypeStyle.featureTypeNames().add(new NameImpl(SLDs.GENERIC_FEATURE_TYPENAME));
         }
     }
 
