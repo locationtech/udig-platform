@@ -6,6 +6,7 @@ Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.style.sld.SLDPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
+Eclipse-BuddyPolicy: global
 Export-Package: net.refractions.udig.style.sld,
  net.refractions.udig.style.sld.editor,
  net.refractions.udig.style.sld.simple
