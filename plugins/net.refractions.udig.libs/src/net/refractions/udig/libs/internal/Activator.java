@@ -190,8 +190,10 @@ public class Activator implements BundleActivator {
                     URL url = dataLocation.getURL();
                     URL proposed = new URL(url, "epsg.properties"); //$NON-NLS-1$
                     monitor.subTask(Messages.CHECK + proposed);
+                    String externalForm = proposed.toExternalForm();
                     if ("file".equals(proposed.getProtocol())) { //$NON-NLS-1$
-                        File file = new File(proposed.toURI());
+                        String path = externalForm.replaceFirst("file:", "");  //$NON-NLS-1$//$NON-NLS-2$
+                        File file = new File(path);
                         if (file.exists()) {
                             epsg = file.toURI().toURL();
                         }
@@ -208,9 +210,11 @@ public class Activator implements BundleActivator {
                 try {
                     URL url = configLocaiton.getURL();
                     URL proposed = new URL(url, "epsg.properties"); //$NON-NLS-1$
+                    String externalForm = proposed.toExternalForm();
                     monitor.subTask(Messages.Activator_1 + proposed);
                     if ("file".equals(proposed.getProtocol())) { //$NON-NLS-1$
-                        File file = new File(proposed.toURI());
+                        String path = externalForm.replaceFirst("file:", "");  //$NON-NLS-1$//$NON-NLS-2$
+                        File file = new File(path);
                         if (file.exists()) {
                             epsg = file.toURI().toURL();
                         }
@@ -227,7 +231,9 @@ public class Activator implements BundleActivator {
                 try {
                     URL internal = bundle.getEntry("epsg.properties"); //$NON-NLS-1$
                     URL fileUrl = FileLocator.toFileURL(internal);
-                    epsg = fileUrl.toURI().toURL();
+                    String externalForm = fileUrl.toExternalForm();
+                    String path = externalForm.replaceFirst("file:", "");  //$NON-NLS-1$//$NON-NLS-2$
+                    epsg = new File(path).toURI().toURL();
                 } catch (Throwable t) {
                     if (Platform.inDebugMode()) {
                         System.out
