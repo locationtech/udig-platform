@@ -29,6 +29,7 @@
             label="%simpleStyle.label"
             requires="org.geotools.data.FeatureSource"
             styleId="net.refractions.udig.style.sld"/>
+     <!--
       <styleConfigurator
             class="net.refractions.udig.style.sld.SimpleGridConfigurator"
             id="simple-gridcoverage"
@@ -36,10 +37,11 @@
             requires="org.opengis.coverage.grid.GridCoverage"
             styleId="net.refractions.udig.style.sld">
       </styleConfigurator>
+      -->
       <styleConfigurator
             class="net.refractions.udig.style.sld.SimpleRasterConfigurator"
             id="simple-raster"
-            label="%simple.label"
+            label="%simpleRaster.label"
             requires="org.opengis.coverage.grid.GridCoverage"
             styleId="net.refractions.udig.style.sld">
       </styleConfigurator>
