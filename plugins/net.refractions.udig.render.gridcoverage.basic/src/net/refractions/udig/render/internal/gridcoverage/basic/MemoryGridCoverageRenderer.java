@@ -9,6 +9,7 @@
 package net.refractions.udig.render.internal.gridcoverage.basic;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -16,6 +17,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
+import java.awt.image.RenderedImage;
 import java.io.IOException;
 import java.util.Collections;
 
@@ -36,11 +38,14 @@ import net.refractions.udig.render.gridcoverage.basic.internal.Messages;
 import net.refractions.udig.ui.graphics.SLDs;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.coverage.CoverageFactoryFinder;
 import org.geotools.coverage.grid.GridCoverage2D;
+import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.coverage.grid.GridEnvelope2D;
 import org.geotools.coverage.grid.GridGeometry2D;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.image.ImageWorker;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.ReferencingFactoryFinder;
 import org.geotools.renderer.lite.RendererUtilities;
@@ -172,6 +177,20 @@ public class MemoryGridCoverageRenderer extends RendererImpl {
 	                    final GridCoverageRenderer paint = new GridCoverageRenderer( destinationCRS, envelope, screenSize,null, hints );
 	                    final RasterSymbolizer rasterSymbolizer = SLD.rasterSymbolizer(style);
 	                
+	                       // check if there is a color to mask
+	                       Object maskColor = getContext().getSelectedLayer().getStyleBlackboard().get("raster-color-mask"); //$NON-NLS-1$                     
+	                       if (maskColor instanceof Color) {
+	                            // create a color mask
+	                            Color color = (Color) maskColor;
+	                            RenderedImage image = coverage.getRenderedImage();
+	                            ImageWorker iw = new ImageWorker(image);
+	                            iw.makeColorTransparent(color);
+	                            image = iw.getRenderedImage();
+	                            GridCoverageFactory gcF = CoverageFactoryFinder.getGridCoverageFactory(null);
+	                            coverage = gcF.create(coverage.getName(), image, coverage.getCoordinateReferenceSystem(), coverage
+	                                    .getGridGeometry().getGridToCRS(), coverage.getSampleDimensions(), null, null);
+	                        }
+	                    
 	                    //setState( RENDERING );
 	                    paint.paint( graphics, coverage, rasterSymbolizer );                        
 	                    setState( DONE );
