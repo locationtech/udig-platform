@@ -198,7 +198,7 @@ public class CountryPanel implements KeyListener, ISelectionChangedListener {
             gmiCntry.setText(gmiText);
 
             String colorText = (String) oldFeature.getAttribute(COLOR_MAP);
-            if (colorText != null) {
+            if (colorText != null && !colorText.equals("")) {
                 StructuredSelection selection = new StructuredSelection(new Integer(colorText));
                 colorMap.setSelection(selection);
             } else {
