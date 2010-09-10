@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LayerSet Name="Demis Worldmap" ShowOnlyOneLayer="true" ShowAtStartup="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="LayerSet.xsd">
+
+<QuadTileSet ShowAtStartup="true">
+  <Name>Demis WorldMap</Name>
+  <DistanceAboveSurface>250</DistanceAboveSurface>
+  <BoundingBox>
+    <North>
+      <Value>90</Value>
+    </North>
+    <South>
+      <Value>-90.0</Value>
+    </South>
+    <West>
+      <Value>-180.0</Value>
+    </West>
+    <East>
+      <Value>180.0</Value>
+    </East>
+  </BoundingBox>
+  <TerrainMapped>true</TerrainMapped>
+  <ImageAccessor>
+    <LevelZeroTileSizeDegrees>44.99999</LevelZeroTileSizeDegrees>
+    <NumberLevels>9</NumberLevels>
+    <TextureSizePixels>512</TextureSizePixels>
+    <ImageFileExtension>png</ImageFileExtension>
+    <ImageTileService>
+      <ServerUrl>http://www2.demis.nl/wms/ww.ashx</ServerUrl>
+      <DataSetName>WorldMap</DataSetName>
+      <ServerLogoFilePath>Add-ons\Demis\WorldMap.png</ServerLogoFilePath>
+      <UseTransparency>false</UseTransparency>      
+    </ImageTileService>
+  </ImageAccessor>
+</QuadTileSet>
+
+<ExtendedInformation>
+  <ToolBarImage>Add-ons\Demis\WorldMap.png</ToolBarImage>
+</ExtendedInformation>
+
+</LayerSet>

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: MapQuest API Plug-in
+Bundle-SymbolicName: com.mapquest
+Bundle-Version: 5.3.0
+Bundle-ClassPath: mq.jar,
+ com.mapquest.apiwrapper.jar
+Export-Package: com.mapquest,
+ com.mapquest.apiwrapper
