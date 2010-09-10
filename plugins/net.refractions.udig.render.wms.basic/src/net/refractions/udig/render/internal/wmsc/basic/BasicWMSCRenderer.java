@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -54,6 +55,7 @@ import org.geotools.geometry.Envelope2D;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
+import org.geotools.renderer.lite.RendererUtilities;
 import org.geotools.renderer.lite.gridcoverage2d.GridCoverageRenderer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.StyleBuilder;
@@ -305,24 +307,26 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
         Envelope2D coveragebounds = coverage.getEnvelope2D();
 
         // bounds of tile
-        Envelope bnds = new Envelope(coveragebounds.getMinX(), coveragebounds.getMaxX(), coveragebounds.getMinY(),
+        Envelope tilebBounds = new Envelope(coveragebounds.getMinX(), coveragebounds.getMaxX(), coveragebounds.getMinY(),
                 coveragebounds.getMaxY());
 
         //convert bounds to necessary viewport projection
-        if (!coverage.getCoordinateReferenceSystem().equals(getContext().getCRS())){
-            MathTransform transform = CRS.findMathTransform(coverage.getCoordinateReferenceSystem(), getContext().getCRS());
-            bnds = JTS.transform(bnds, transform);
+        CoordinateReferenceSystem tileCrs = getContext().getCRS();
+		if (!coverage.getCoordinateReferenceSystem().equals(tileCrs)){
+            MathTransform transform = CRS.findMathTransform(coverage.getCoordinateReferenceSystem(), tileCrs);
+            tilebBounds = JTS.transform(tilebBounds, transform);
         }
         
         //determine screen coordinates of tiles
-        Point upperLeft = getContext().worldToPixel(new Coordinate(bnds.getMinX(), bnds.getMinY()));
-        Point bottomRight = getContext().worldToPixel(new Coordinate(bnds.getMaxX(), bnds.getMaxY()));
+        Point upperLeft = getContext().worldToPixel(new Coordinate(tilebBounds.getMinX(), tilebBounds.getMinY()));
+        Point bottomRight = getContext().worldToPixel(new Coordinate(tilebBounds.getMaxX(), tilebBounds.getMaxY()));
         Rectangle tileSize = new Rectangle(upperLeft);
         tileSize.add(bottomRight);
 
         //render
         try{
-            GridCoverageRenderer paint = new GridCoverageRenderer(getContext().getCRS(), bnds, tileSize);
+            AffineTransform worldToScreenTransform = RendererUtilities.worldToScreenTransform(tilebBounds, tileSize, tileCrs);
+			GridCoverageRenderer paint = new GridCoverageRenderer(tileCrs, tilebBounds, tileSize, worldToScreenTransform);
            
             paint.paint(graphics, coverage, style);
            

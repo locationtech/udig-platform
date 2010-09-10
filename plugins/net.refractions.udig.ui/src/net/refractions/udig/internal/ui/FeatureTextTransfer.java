@@ -25,6 +25,7 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
 import org.geotools.data.DataUtilities;
+import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
@@ -124,7 +125,7 @@ public class FeatureTextTransfer extends AbstractTextStrategizedTransfer impleme
 		public Object nativeToJava(TransferData transferData) {
             String string = (String) TextTransfer.getInstance().nativeToJava(transferData);
             InputSource input = new InputSource(new StringReader(string));
-            FeatureCollection<SimpleFeatureType, SimpleFeature> collection = FeatureCollections.newCollection();
+            SimpleFeatureCollection collection = FeatureCollections.newCollection();
             GMLReceiver receiver=new GMLReceiver(collection);
             GMLFilterFeature filterFeature = new GMLFilterFeature(receiver);
             GMLFilterGeometry filterGeometry = new GMLFilterGeometry(filterFeature);

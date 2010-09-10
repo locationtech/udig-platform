@@ -17,6 +17,7 @@ package net.refractions.udig.ui;
 import java.util.Iterator;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.collection.AdaptorFeatureCollection;
 import org.opengis.feature.simple.SimpleFeature;
@@ -29,7 +30,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * @author Jesse
  * @since 1.1.0
  */
-public class ProgressFeatureCollection extends AdaptorFeatureCollection implements FeatureCollection<SimpleFeatureType, SimpleFeature> {
+public class ProgressFeatureCollection extends AdaptorFeatureCollection {
 
     protected FeatureCollection<SimpleFeatureType, SimpleFeature> delegate;
     protected IProgressMonitor monitor;

@@ -18,6 +18,7 @@ import org.eclipse.ui.PlatformUI;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.coverage.grid.ViewType;
+import org.geotools.coverage.processing.CoverageProcessor;
 import org.geotools.coverage.processing.DefaultProcessor;
 import org.geotools.factory.Hints;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -71,7 +72,7 @@ public class RasterTutorialHandler extends AbstractHandler {
         CoordinateReferenceSystem targetCRS = CRS.decode("EPSG:24882");
 
         RenderingHints hints = new RenderingHints(Hints.LENIENT_DATUM_SHIFT, Boolean.TRUE);        
-        DefaultProcessor processor = new DefaultProcessor(hints);
+        CoverageProcessor processor = new CoverageProcessor(hints);
         
         GridCoverage2D reprojected = gridCoverage.view(ViewType.GEOPHYSICS);
                 

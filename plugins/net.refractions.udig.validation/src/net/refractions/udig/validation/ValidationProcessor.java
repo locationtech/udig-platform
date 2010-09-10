@@ -31,6 +31,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.data.FeatureSource;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -406,13 +408,10 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 			//get the dataStoreID
 			String dataStoreID = thisLayer.getSchema().getName().getNamespaceURI();
 		
-			//get the SimpleFeatureType
-			SimpleFeatureType type = thisLayer.getSchema();
-		
 			//create a FeatureReader (collection.reader)
-			FeatureSource<SimpleFeatureType, SimpleFeature> source;
-			source = thisLayer.getResource(FeatureSource.class, monitor);
-	        FeatureCollection<SimpleFeatureType, SimpleFeature> collection = source.getFeatures();
+			SimpleFeatureSource source;
+			source = thisLayer.getResource(SimpleFeatureSource.class, monitor);
+	        SimpleFeatureCollection collection = source.getFeatures();
 		
 			//run the tests on this layer
 			runFeatureTests(dataStoreID, collection, results);

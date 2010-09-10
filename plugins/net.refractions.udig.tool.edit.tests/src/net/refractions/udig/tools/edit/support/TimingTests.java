@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 import net.refractions.udig.project.internal.render.impl.ScaleUtils;
 import net.refractions.udig.tool.edit.tests.TestsPlugin;
 
-import org.geotools.feature.FeatureCollection;
+import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.gml.GMLFilterDocument;
@@ -20,7 +20,6 @@ import org.geotools.gml.GMLReceiver;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.MathTransform;
 import org.xml.sax.InputSource;
@@ -62,7 +61,7 @@ public class TimingTests extends TestCase {
         InputStreamReader filereader=new InputStreamReader(in);
         
         InputSource input = new InputSource(filereader);
-        FeatureCollection<SimpleFeatureType, SimpleFeature> collection = FeatureCollections.newCollection();
+        SimpleFeatureCollection collection = FeatureCollections.newCollection();
         GMLReceiver receiver=new GMLReceiver(collection);
         GMLFilterFeature filterFeature = new GMLFilterFeature(receiver);
         GMLFilterGeometry filterGeometry = new GMLFilterGeometry(filterFeature);

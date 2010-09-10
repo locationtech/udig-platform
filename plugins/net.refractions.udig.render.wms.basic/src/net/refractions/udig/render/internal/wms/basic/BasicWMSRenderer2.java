@@ -20,6 +20,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -84,6 +85,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.ows.ServiceException;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.geotools.renderer.lite.RendererUtilities;
 import org.geotools.renderer.lite.gridcoverage2d.GridCoverageRenderer;
 import org.geotools.resources.image.ImageUtilities;
 import org.geotools.styling.RasterSymbolizer;
@@ -403,8 +405,8 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 
         GridCoverage2D coverage = convertImageToGridCoverage(requestBBox, image);
 
-
-        GridCoverageRenderer paint = new GridCoverageRenderer( destinationCRS, envelope, screenSize );
+        AffineTransform worldToScreen = RendererUtilities.worldToScreenTransform(envelope, screenSize, destinationCRS);
+		GridCoverageRenderer paint = new GridCoverageRenderer( destinationCRS, envelope, screenSize, worldToScreen  );
                      
         RasterSymbolizer symbolizer = CommonFactoryFinder.getStyleFactory(null).createRasterSymbolizer();
                         

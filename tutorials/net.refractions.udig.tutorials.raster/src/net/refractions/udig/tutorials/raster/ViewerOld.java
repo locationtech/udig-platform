@@ -21,7 +21,9 @@ import javax.swing.JPanel;
 
 import org.geotools.coverage.GridSampleDimension;
 import org.geotools.coverage.grid.GridCoverage2D;
-import org.geotools.resources.Utilities;
+import org.geotools.resources.CharUtilities;
+import org.geotools.resources.Classes;
+import org.geotools.util.Utilities;
 
 
 /**
@@ -160,7 +162,7 @@ public class ViewerOld extends JPanel {
     public void printPalette(final PrintWriter out) {
         final Locale locale = getLocale();
         final ColorModel model = image.getColorModel();
-        out.print(Utilities.getShortClassName(model));
+        out.print(Classes.getShortClassName(model));
         out.println(':');
         if (model instanceof IndexColorModel) {
             out.println();
