@@ -27,6 +27,8 @@ import org.geotools.data.Query;
 import org.geotools.data.QueryCapabilities;
 import org.geotools.data.ResourceInfo;
 import org.geotools.data.Transaction;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
@@ -42,89 +44,105 @@ import org.opengis.filter.identity.FeatureId;
  * @author Jesse
  * @since 1.1.0
  */
-public class TestFeatureStore implements FeatureStore<SimpleFeatureType, SimpleFeature> {
+public class TestFeatureStore implements SimpleFeatureStore {
 
-	public Name getName(){
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public Name getName() {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public List<FeatureId> addFeatures(FeatureReader<SimpleFeatureType, SimpleFeature> reader) throws IOException {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public List<FeatureId> addFeatures( FeatureReader<SimpleFeatureType, SimpleFeature> reader )
+            throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public List<FeatureId> addFeatures(FeatureCollection<SimpleFeatureType, SimpleFeature> collection) throws IOException {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public List<FeatureId> addFeatures(
+            FeatureCollection<SimpleFeatureType, SimpleFeature> collection ) throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public Transaction getTransaction() {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public Transaction getTransaction() {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public void modifyFeatures(AttributeDescriptor[] type, Object[] value,
-			Filter filter) throws IOException {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public void modifyFeatures( AttributeDescriptor[] type, Object[] value, Filter filter )
+            throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public void modifyFeatures(AttributeDescriptor type, Object value, Filter filter)
-			throws IOException {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public void modifyFeatures( AttributeDescriptor type, Object value, Filter filter )
+            throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
+    public void modifyFeatures( String type, Object value, Filter filter ) throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
+    public void modifyFeatures( Name type, Object value, Filter filter ) throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public void removeFeatures(Filter filter) throws IOException {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public void modifyFeatures( String[] type, Object value[], Filter filter ) throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public void setFeatures(FeatureReader<SimpleFeatureType, SimpleFeature> reader) throws IOException {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public void modifyFeatures( Name[] type, Object value[], Filter filter ) throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
+    public void removeFeatures( Filter filter ) throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public void setTransaction(Transaction transaction) {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public void setFeatures( FeatureReader<SimpleFeatureType, SimpleFeature> reader )
+            throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public void addFeatureListener(FeatureListener listener) {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public void setTransaction( Transaction transaction ) {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public ReferencedEnvelope getBounds() throws IOException {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public void addFeatureListener( FeatureListener listener ) {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public org.geotools.geometry.jts.ReferencedEnvelope getBounds(Query query) throws IOException {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public ReferencedEnvelope getBounds() throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public int getCount(Query query) throws IOException {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public org.geotools.geometry.jts.ReferencedEnvelope getBounds( Query query ) throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public DataStore getDataStore() {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public int getCount( Query query ) throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures() throws IOException {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public DataStore getDataStore() {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures(Query query) throws IOException {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public SimpleFeatureCollection getFeatures() throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures(Filter filter) throws IOException {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public SimpleFeatureCollection getFeatures( Query query ) throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public SimpleFeatureType getSchema() {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public SimpleFeatureCollection getFeatures( Filter filter ) throws IOException {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public void removeFeatureListener(FeatureListener listener) {
-		throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-	}
+    public SimpleFeatureType getSchema() {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
 
-	public Set getSupportedHints() {
-		return Collections.EMPTY_SET;
-	}
+    public void removeFeatureListener( FeatureListener listener ) {
+        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
+    }
+
+    public Set getSupportedHints() {
+        return Collections.EMPTY_SET;
+    }
 
     public ResourceInfo getInfo() {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$

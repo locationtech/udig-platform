@@ -12,6 +12,7 @@ import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.ProjectPlugin;
 
 import org.geotools.data.DataStore;
+import org.geotools.data.DataUtilities;
 import org.geotools.data.FeatureListener;
 import org.geotools.data.FeatureReader;
 import org.geotools.data.FeatureSource;
@@ -20,6 +21,8 @@ import org.geotools.data.Query;
 import org.geotools.data.QueryCapabilities;
 import org.geotools.data.ResourceInfo;
 import org.geotools.data.Transaction;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
@@ -40,9 +43,9 @@ import com.vividsolutions.jts.io.WKTWriter;
  * @author jones
  * @since 1.0.0
  */
-public class UDIGFeatureStore implements FeatureStore<SimpleFeatureType, SimpleFeature> {
+public class UDIGFeatureStore implements SimpleFeatureStore {
 
-    FeatureStore<SimpleFeatureType, SimpleFeature> wrapped;
+    SimpleFeatureStore wrapped;
     ILayer layer;
 
     /**
@@ -53,7 +56,7 @@ public class UDIGFeatureStore implements FeatureStore<SimpleFeatureType, SimpleF
      * @param layer TODO
      */
     public UDIGFeatureStore( FeatureStore<SimpleFeatureType, SimpleFeature> store, ILayer layer ) {
-        wrapped = store;
+        wrapped = DataUtilities.simple(store);
         this.layer = layer;
 
     }
@@ -66,17 +69,33 @@ public class UDIGFeatureStore implements FeatureStore<SimpleFeatureType, SimpleF
         return wrapped.getInfo();
     }
 
-    public void removeFeatures( Filter arg0 ) throws IOException {
+    public void removeFeatures( Filter filter ) throws IOException {
         setTransactionInternal();
-        wrapped.removeFeatures(arg0);
+        wrapped.removeFeatures(filter);
     }
 
-    public void modifyFeatures( AttributeDescriptor[] arg0, Object[] arg1, Filter arg2 )
+    public void modifyFeatures( AttributeDescriptor[] descriptors, Object[] values, Filter filter )
             throws IOException {
         setTransactionInternal();
-        wrapped.modifyFeatures(arg0, arg1, arg2);
+        wrapped.modifyFeatures(descriptors, values, filter);
     }
-
+    
+    public void modifyFeatures( Name[] names, Object[] values, Filter filter ) throws IOException {
+        setTransactionInternal();
+        wrapped.modifyFeatures(names, values, filter);
+    }
+    public void modifyFeatures( Name name, Object value, Filter filter ) throws IOException {
+        setTransactionInternal();
+        wrapped.modifyFeatures(name, value, filter);
+    }
+    public void modifyFeatures( String name, Object value, Filter filter ) throws IOException {
+        setTransactionInternal();
+        wrapped.modifyFeatures(name, value, filter);
+    } 
+    public void modifyFeatures( String names[], Object values[], Filter filter ) throws IOException {
+        setTransactionInternal();
+        wrapped.modifyFeatures(names, values, filter);
+    }
     public void modifyFeatures( AttributeDescriptor arg0, Object arg1, Filter arg2 )
             throws IOException {
         setTransactionInternal();
@@ -154,17 +173,17 @@ public class UDIGFeatureStore implements FeatureStore<SimpleFeatureType, SimpleF
         wrapped.removeFeatureListener(arg0);
     }
 
-    public FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures( Query arg0 )
+    public SimpleFeatureCollection getFeatures( Query arg0 )
             throws IOException {
         return wrapped.getFeatures(arg0);
     }
 
-    public FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures( Filter arg0 )
+    public SimpleFeatureCollection getFeatures( Filter arg0 )
             throws IOException {
         return wrapped.getFeatures(arg0);
     }
 
-    public FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures() throws IOException {
+    public SimpleFeatureCollection getFeatures() throws IOException {
         return wrapped.getFeatures();
     }
 

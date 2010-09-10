@@ -42,6 +42,7 @@ import org.geotools.data.DataStore;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.data.view.DefaultView;
 import org.geotools.feature.SchemaException;
 import org.geotools.filter.FilterFilter;
@@ -160,14 +161,9 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                                 .getNamespace(), query.getPropertyNames(),
                                 typeName);
                     }
-                    // check if native view is provided by datastore implementation
-                    // (this functionality has been already removed in GeoTools 2.7)
-                    //
-                    FeatureSource<SimpleFeatureType, SimpleFeature> view = ds.getView(query);
-                    if( view == null ){
-                        // provide our own default view wrapper (will be required in GeoTools 2.7)
-                        view = new DefaultView(resource, query);
-                    }
+                    // provide our own default view wrapper (will be required in GeoTools 2.7)
+                    SimpleFeatureSource view = new DefaultView((SimpleFeatureSource) resource, query);
+                    
                     // check that view is of the requested type
                     if (requestedType.isInstance(view)){
                         return view;
