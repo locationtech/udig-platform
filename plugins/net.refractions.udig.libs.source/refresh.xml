@@ -11,13 +11,15 @@
 	<target name="download.src" depends="load_m2_deps" description="Download the source jars for the jars in the net.refractions.udig.libs plugin">
 		<mkdir dir="${basedir}/util/bin" />
 		<javac fork="true" srcdir="${basedir}/util/src" destdir="${basedir}/util/bin" debug="on" />
+		<echo>target for refresh: ${refresh_libs_src_basedir}</echo>
 		<java classpath="util/bin" failonerror="true" fork="false" classname="util.Mkdir" >
 			 <arg value="${refresh_libs_src_basedir}"/>
 		</java>
 		<loadproperties srcfile="${basedir}/dest.properties" />
-
-
-		<copy todir="${libs_src_dir}" verbose="true">
+		<echo>copy into: ${libs_src_dir}</echo>
+		<echo>should be: ${basedir}/src/net.refractions.udig.libs_1.2.0.qualifier/lib </echo>
+		<!-- formally ${libs_src_dir} -->
+		<copy todir="${basedir}/src/net.refractions.udig.libs_1.2.0.qualifier/lib" verbose="true">
 			<fileset refid="sources.dependency.fileset" />
 			<chainedmapper>
 				<mapper type="flatten" />
@@ -33,6 +35,7 @@
 	<target name="clean" description="delete src directory">
 		<delete dir="${basedir}/lib" />
 		<delete file="dest.properties" />
+		<delete dir="${basedir}/src" />
 	</target>
 
 	<target name="fix">

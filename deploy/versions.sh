@@ -7,8 +7,8 @@ export COPYFILE_DISABLE=true
 export BASE=`dirname $0`
 
 # Release Configuration
-export TARGET=~/Desktop/target/1.2.0
-export VERSION=1.2.0
+export TARGET=~/Desktop/target/1.2.1
+export VERSION=1.2.1
 export BUILD=~/Desktop/target/build
 
 # Build Resources
