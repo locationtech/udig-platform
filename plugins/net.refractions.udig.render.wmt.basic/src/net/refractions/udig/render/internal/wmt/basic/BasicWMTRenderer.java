@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
@@ -60,11 +61,13 @@ import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.geometry.Envelope2D;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.renderer.lite.RendererUtilities;
 import org.geotools.renderer.lite.gridcoverage2d.GridCoverageRenderer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.StyleBuilder;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.MathTransform2D;
 import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -504,7 +507,9 @@ public class BasicWMTRenderer extends RendererImpl {
         
         //render
         try{
-            GridCoverageRenderer paint = new GridCoverageRenderer(getContext().getCRS(), bnds, tileSize);
+            CoordinateReferenceSystem crs = getContext().getCRS();
+            AffineTransform worldToScreen = RendererUtilities.worldToScreenTransform(bnds, tileSize, crs);
+            GridCoverageRenderer paint = new GridCoverageRenderer(crs, bnds, tileSize,worldToScreen);
             
             paint.paint(graphics, coverage, style);
            
