@@ -6,7 +6,7 @@ echo "Release"
 export COPYFILE_DISABLE=true
 source ./versions.sh
 
-# Release win32 if available
+# Release sdk if available
 if [ -f ${TARGET}/udig-${VERSION}-sdk.zip ] 
 then
     echo "Releasing SDK"
@@ -37,6 +37,8 @@ then
         rm ${BUILD}/sdk/udig_sdk/plugins/*swt*linux*
         
         # TODO: figure out how to make libs and libs source have the same qualifier
+        mv ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_1.2.0.qualifier \
+           ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_${QUALIFIER}
         
         cp ${BASE}/udig-1.2.x.html ${BUILD}/sdk/udig_sdk/udig-${VERSION}.html
         

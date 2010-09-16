@@ -8,8 +8,9 @@ export BASE=`dirname $0`
 
 # Release Configuration
 export TARGET=~/Desktop/target/1.2.1
-export VERSION=1.2.1
+export VERSION=1.2-SNAPSHOT
 export BUILD=~/Desktop/target/build
+export QUALIFIER=1.2.0.201009121402
 
 # Build Resources
 export JRE=~/Desktop/target/jre
