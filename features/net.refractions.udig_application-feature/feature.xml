@@ -167,4 +167,31 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="net.refractions.udig.catalog.wmt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.refractions.udig.render.wmt.basic"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.refractions.udig.tests.catalog.wmt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.mapquest"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
 </feature>
