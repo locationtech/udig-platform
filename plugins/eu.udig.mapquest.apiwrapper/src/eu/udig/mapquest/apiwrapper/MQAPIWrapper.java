@@ -1,4 +1,4 @@
-package eu.udig.apiwrapper;
+package eu.udig.mapquest.apiwrapper;
 
 import java.text.DecimalFormat;
 

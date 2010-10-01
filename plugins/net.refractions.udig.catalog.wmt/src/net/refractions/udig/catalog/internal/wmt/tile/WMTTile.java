@@ -17,8 +17,6 @@ import net.refractions.udig.catalog.wmsc.server.TileSet;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import com.vividsolutions.jts.geom.Envelope;
 
 public abstract class WMTTile implements Tile{
@@ -208,7 +206,7 @@ public abstract class WMTTile implements Tile{
     }
     
     public void setPosition(String pos)  {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
 
