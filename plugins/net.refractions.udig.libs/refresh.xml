@@ -101,14 +101,14 @@
 
 			<dependency groupId="joda-time" artifactId="joda-time" version="1.6" />
 
-			<!-- stuff for netcdf -->
+			<!-- stuff for jgrass contributions -->
 			<dependency groupId="org.geotools" artifactId="gt-temporal" version="${geotools.version}" />
-
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf-core" version="1.1-SNAPSHOT" />
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf" version="1.1-SNAPSHOT" />
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-utilities" version="1.0.6-1" />
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-geocore" version="1.0.6-1" />
 			<dependency groupId="opendap" artifactId="opendap" version="2.1" />
+			<dependency groupId="org.geotools" artifactId="gt-grassraster" version="${geotools.version}" />
 
 			<!-- jfreechart -->
 			<dependency groupId="jfree" artifactId="jfreechart" version="1.0.13" />
