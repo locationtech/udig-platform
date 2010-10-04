@@ -34,7 +34,7 @@ import org.osgi.framework.BundleContext;
 public class JGrassPlugin extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "eu.hydrologis.udig.catalog.jgrass";
+    public static final String PLUGIN_ID = "eu.udig.catalog.jgrass";
 
     // The shared instance
     private static JGrassPlugin plugin;

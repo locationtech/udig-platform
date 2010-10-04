@@ -26,8 +26,8 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.geotools.gce.grassraster.JGrassRegion;
 
-import eu.hydrologis.jgrass.libs.region.JGrassRegion;
 import eu.udig.catalog.jgrass.JGrassPlugin;
 import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 

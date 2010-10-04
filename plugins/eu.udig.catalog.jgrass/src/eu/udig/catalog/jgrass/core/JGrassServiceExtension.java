@@ -33,9 +33,9 @@ import net.refractions.udig.catalog.URLUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.geotools.gce.grassraster.JGrassConstants;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import eu.hydrologis.jgrass.libs.utils.JGrassConstants;
 import eu.udig.catalog.jgrass.JGrassPlugin;
 
 /**
@@ -51,7 +51,7 @@ public class JGrassServiceExtension implements ServiceExtension {
     /**
      * the jgrass service key, it is used to store the url to the jgrass location
      */
-    public static final String KEY = "eu.hydrologis.udig.catalog.jgrass.urlKey"; //$NON-NLS-1$
+    public static final String KEY = "eu.udig.catalog.jgrass.urlKey"; //$NON-NLS-1$
 
     public JGrassServiceExtension() {
         super();

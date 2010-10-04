@@ -5,7 +5,7 @@
          point="net.refractions.udig.catalog.ServiceExtension">
       <service
             class="eu.udig.catalog.jgrass.core.JGrassServiceExtension"
-            id="eu.hydrologis.udig.catalog.jgrass.jgservice"/>
+            id="eu.udig.catalog.jgrass.jgservice"/>
    </extension>
    <extension
          point="net.refractions.udig.catalog.ui.connectionFactory">
@@ -41,86 +41,38 @@
          point="net.refractions.udig.ui.operation">
       <category
             description="%jgrass.catalog.operations.toltip"
-            id="eu.hydrologis.udig.catalog.jgrass.category"
+            id="eu.udig.catalog.jgrass.category"
             name="%jgrass.catalog.operations">
       </category>
       <operation
-            categoryId="eu.hydrologis.udig.catalog.jgrass.category"
+            categoryId="eu.udig.catalog.jgrass.category"
             class="eu.udig.catalog.jgrass.operations.JGrassMapsetAddOperation"
             enablesFor="1"
-            id="eu.hydrologis.udig.catalog.jgrass.mapsetaddop"
+            id="eu.udig.catalog.jgrass.mapsetaddop"
             name="%add.mapset"
             targetClass="eu.udig.catalog.jgrass.core.JGrassService">
       </operation>
       <operation
-            categoryId="eu.hydrologis.udig.catalog.jgrass.category"
+            categoryId="eu.udig.catalog.jgrass.category"
             class="eu.udig.catalog.jgrass.operations.JGrassMapsetRemoveOperation"
             enablesFor="1"
-            id="eu.hydrologis.udig.catalog.jgrass.mapsetremoveop"
+            id="eu.udig.catalog.jgrass.mapsetremoveop"
             name="%remove.mapset"
             targetClass="eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource">
       </operation>
       <operation
-            categoryId="eu.hydrologis.udig.catalog.jgrass.category"
+            categoryId="eu.udig.catalog.jgrass.category"
             class="eu.udig.catalog.jgrass.operations.JGrassMapRemoveOperation"
             enablesFor="1"
-            id="eu.hydrologis.udig.catalog.jgrass.removeop"
+            id="eu.udig.catalog.jgrass.removeop"
             name="%remove.map"
             targetClass="eu.udig.catalog.jgrass.core.JGrassMapGeoResource">
       </operation>
       <operation
-            categoryId="eu.hydrologis.udig.catalog.jgrass.category"
-            class="eu.udig.catalog.jgrass.operations.FtExportOperation"
-            enablesFor="1"
-            id="eu.hydrologis.udig.catalog.jgrass.ftexportop"
-            name="%export.ftraster"
-            targetClass="eu.udig.catalog.jgrass.core.JGrassMapGeoResource">
-      </operation>
-      <operation
-            categoryId="eu.hydrologis.udig.catalog.jgrass.category"
-            class="eu.udig.catalog.jgrass.operations.EsriasciiExportOperation"
-            enablesFor="1"
-            id="eu.hydrologis.udig.catalog.jgrass.esriasciiexportop"
-            name="%export.esriasciiraster"
-            targetClass="eu.udig.catalog.jgrass.core.JGrassMapGeoResource">
-      </operation>
-      <operation
-            categoryId="eu.hydrologis.udig.catalog.jgrass.category"
-            class="eu.udig.catalog.jgrass.operations.GrassasciiExportOperation"
-            enablesFor="1"
-            id="eu.hydrologis.udig.catalog.jgrass.grassasciiexportop"
-            name="%export.grassasciiraster"
-            targetClass="eu.udig.catalog.jgrass.core.JGrassMapGeoResource">
-      </operation>
-            <operation
-            categoryId="eu.hydrologis.udig.catalog.jgrass.category"
-            class="eu.udig.catalog.jgrass.operations.EsriasciiImportOperation"
-            enablesFor="1"
-            id="eu.hydrologis.udig.catalog.jgrass.esriasciimportop"
-            name="%import.esriasciiraster"
-            targetClass="eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource">
-      </operation>
-      <operation
-            categoryId="eu.hydrologis.udig.catalog.jgrass.category"
-            class="eu.udig.catalog.jgrass.operations.FtImportOperation"
-            enablesFor="1"
-            id="eu.hydrologis.udig.catalog.jgrass.ftimportop"
-            name="%import.ftraster"
-            targetClass="eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource">
-      </operation>
-      <operation
-            categoryId="eu.hydrologis.udig.catalog.jgrass.category"
-            class="eu.udig.catalog.jgrass.operations.GrassasciiImportOperation"
-            enablesFor="1"
-            id="eu.hydrologis.udig.catalog.jgrass.grassasciiimportop"
-            name="%import.grassasciiraster"
-            targetClass="eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource">
-      </operation>
-      <operation
-            categoryId="eu.hydrologis.udig.catalog.jgrass.category"
+            categoryId="eu.udig.catalog.jgrass.category"
             class="eu.udig.catalog.jgrass.operations.GrassReprojectOperation"
             enablesFor="+"
-            id="eu.hydrologis.udig.catalog.jgrass.grassreprojectop"
+            id="eu.udig.catalog.jgrass.grassreprojectop"
             name="%export.grassreproject"
             targetClass="eu.udig.catalog.jgrass.core.JGrassMapGeoResource">
       </operation>
@@ -128,15 +80,15 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="eu.hydrologis.udig.catalog.jgrass.category"
+            category="eu.udig.catalog.jgrass.category"
             class="eu.udig.catalog.jgrass.workspacecreation.NewJGrassLocationWizard"
             descriptionImage="icons/wizban/jgrass_wiz.png"
             icon="icons/obj16/jgrass_obj.png"
-            id="eu.hydrologis.udig.catalog.jgrass.wizard.createworkspace"
+            id="eu.udig.catalog.jgrass.wizard.createworkspace"
             name="%wizard.name">
       </wizard>
       <category
-            id="eu.hydrologis.udig.catalog.jgrass.category"
+            id="eu.udig.catalog.jgrass.category"
             name="JGrass">
       </category>
    </extension>

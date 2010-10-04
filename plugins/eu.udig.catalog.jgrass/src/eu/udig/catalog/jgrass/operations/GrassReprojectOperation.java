@@ -46,7 +46,12 @@ import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridEnvelope2D;
 import org.geotools.coverage.grid.GridGeometry2D;
 import org.geotools.coverage.processing.Operations;
-import org.geotools.geometry.Envelope2D;
+import org.geotools.gce.grassraster.GrassCoverageReadParam;
+import org.geotools.gce.grassraster.GrassCoverageReader;
+import org.geotools.gce.grassraster.GrassCoverageWriter;
+import org.geotools.gce.grassraster.JGrassConstants;
+import org.geotools.gce.grassraster.JGrassMapEnvironment;
+import org.geotools.gce.grassraster.JGrassRegion;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
@@ -58,14 +63,6 @@ import org.opengis.referencing.operation.MathTransform;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-import eu.hydrologis.jgrass.libs.iodrivers.JGrassMapEnvironment;
-import eu.hydrologis.jgrass.libs.iodrivers.geotools.GrassCoverageReadParam;
-import eu.hydrologis.jgrass.libs.iodrivers.geotools.GrassCoverageReader;
-import eu.hydrologis.jgrass.libs.iodrivers.geotools.GrassCoverageWriter;
-import eu.hydrologis.jgrass.libs.region.JGrassRegion;
-import eu.hydrologis.jgrass.libs.utils.JGrassConstants;
-import eu.hydrologis.jgrass.libs.utils.JGrassUtilities;
-import eu.hydrologis.jgrass.libs.utils.monitor.EclipseProgressMonitorAdapter;
 import eu.udig.catalog.jgrass.core.ChooseCoordinateReferenceSystemDialog;
 import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
 import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
@@ -83,8 +80,7 @@ public class GrassReprojectOperation implements IOp {
     private File mapsetFile;
     private int open;
 
-    public void op( final Display display, Object target, final IProgressMonitor monitor )
-            throws Exception {
+    public void op( final Display display, Object target, final IProgressMonitor monitor ) throws Exception {
         final JGrassMapGeoResource[] mapResourcesArray = (JGrassMapGeoResource[]) target;
 
         display.syncExec(new Runnable(){
@@ -101,70 +97,63 @@ public class GrassReprojectOperation implements IOp {
                     protected Control createDialogArea( Composite maxparent ) {
                         Composite parent = new Composite(maxparent, SWT.None);
                         parent.setLayout(new GridLayout());
-                        parent.setLayoutData(new GridData(GridData.FILL_BOTH
-                                | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
+                        parent.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
 
                         // the location name group
                         Group locNameGroup = new Group(parent, SWT.None);
                         locNameGroup.setLayout(new GridLayout(2, false));
-                        locNameGroup.setLayoutData(new GridData(GridData.FILL_BOTH
-                                | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
+                        locNameGroup.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL
+                                | GridData.GRAB_VERTICAL));
                         locNameGroup.setText("new location name");
 
                         locNameText = new Text(locNameGroup, SWT.BORDER);
-                        locNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                                | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL
-                                | GridData.VERTICAL_ALIGN_CENTER));
+                        locNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL
+                                | GridData.GRAB_VERTICAL | GridData.VERTICAL_ALIGN_CENTER));
                         locNameText.setText("newLocation");
 
                         // the mapset name group
                         Group mapsetNameGroup = new Group(parent, SWT.None);
                         mapsetNameGroup.setLayout(new GridLayout(2, false));
-                        mapsetNameGroup.setLayoutData(new GridData(GridData.FILL_BOTH
-                                | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
+                        mapsetNameGroup.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL
+                                | GridData.GRAB_VERTICAL));
                         mapsetNameGroup.setText("new mapset name");
 
                         mapsetNameText = new Text(mapsetNameGroup, SWT.BORDER);
-                        mapsetNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                                | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL
-                                | GridData.VERTICAL_ALIGN_CENTER));
+                        mapsetNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL
+                                | GridData.GRAB_VERTICAL | GridData.VERTICAL_ALIGN_CENTER));
                         mapsetNameText.setText("newMapset");
 
                         // the crs choice group
                         Group crsGroup = new Group(parent, SWT.None);
                         crsGroup.setLayout(new GridLayout(2, false));
-                        crsGroup.setLayoutData(new GridData(GridData.FILL_BOTH
-                                | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
-                        crsGroup
-                                .setText("choose the coordinate reference system for the new location");
+                        crsGroup.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL
+                                | GridData.GRAB_VERTICAL));
+                        crsGroup.setText("choose the coordinate reference system for the new location");
 
                         crsText = new Text(crsGroup, SWT.BORDER);
-                        crsText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                                | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL
-                                | GridData.VERTICAL_ALIGN_CENTER));
+                        crsText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL
+                                | GridData.GRAB_VERTICAL | GridData.VERTICAL_ALIGN_CENTER));
                         crsText.setEditable(false);
 
                         final Button crsButton = new Button(crsGroup, SWT.BORDER);
                         crsButton.setText(" Choose CRS ");
-                        crsButton
-                                .addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
-                                    public void widgetSelected(
-                                            org.eclipse.swt.events.SelectionEvent e ) {
-                                        final ChooseCoordinateReferenceSystemDialog crsChooser = new ChooseCoordinateReferenceSystemDialog();
-                                        crsChooser.open(new Shell(Display.getDefault()));
-                                        CoordinateReferenceSystem readCrs = crsChooser.getCrs();
-                                        if (readCrs == null)
-                                            return;
-                                        crsText.setText(readCrs.getName().toString());
-                                        crsText.setData(readCrs);
-                                    }
-                                });
+                        crsButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
+                            public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
+                                final ChooseCoordinateReferenceSystemDialog crsChooser = new ChooseCoordinateReferenceSystemDialog();
+                                crsChooser.open(new Shell(Display.getDefault()));
+                                CoordinateReferenceSystem readCrs = crsChooser.getCrs();
+                                if (readCrs == null)
+                                    return;
+                                crsText.setText(readCrs.getName().toString());
+                                crsText.setData(readCrs);
+                            }
+                        });
 
                         // the location name group
                         Group resolutionGroup = new Group(parent, SWT.None);
                         resolutionGroup.setLayout(new GridLayout(2, false));
-                        resolutionGroup.setLayoutData(new GridData(GridData.FILL_BOTH
-                                | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
+                        resolutionGroup.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL
+                                | GridData.GRAB_VERTICAL));
                         resolutionGroup.setText("output map resolution");
 
                         String res = "";
@@ -177,25 +166,21 @@ public class GrassReprojectOperation implements IOp {
                             }
                         }
                         Label xresLabel = new Label(resolutionGroup, SWT.NONE);
-                        xresLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false,
-                                false));
+                        xresLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
                         xresLabel.setText("X resolution");
 
                         xresText = new Text(resolutionGroup, SWT.BORDER);
-                        xresText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                                | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL
-                                | GridData.VERTICAL_ALIGN_CENTER));
+                        xresText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL
+                                | GridData.GRAB_VERTICAL | GridData.VERTICAL_ALIGN_CENTER));
                         xresText.setText(res);
 
                         Label yresLabel = new Label(resolutionGroup, SWT.NONE);
-                        yresLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false,
-                                false));
+                        yresLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
                         yresLabel.setText("Y resolution");
 
                         yresText = new Text(resolutionGroup, SWT.BORDER);
-                        yresText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                                | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL
-                                | GridData.VERTICAL_ALIGN_CENTER));
+                        yresText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL
+                                | GridData.GRAB_VERTICAL | GridData.VERTICAL_ALIGN_CENTER));
                         yresText.setText(res);
 
                         return parent;
@@ -231,13 +216,11 @@ public class GrassReprojectOperation implements IOp {
          */
         IRunnableWithProgress operation = new IRunnableWithProgress(){
 
-            public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                    InterruptedException {
+            public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
                 if (open == SWT.CANCEL) {
                     return;
                 }
-                if (locationName == null || mapsetName == null || crs == null
-                        || mapResourcesArray.length < 1) {
+                if (locationName == null || mapsetName == null || crs == null || mapResourcesArray.length < 1) {
                     MessageBox msgBox = new MessageBox(display.getActiveShell(), SWT.ICON_ERROR);
                     msgBox.setMessage("An error occurred in processing the user supplied data.");
                     msgBox.open();
@@ -251,9 +234,7 @@ public class GrassReprojectOperation implements IOp {
                 for( int i = 0; i < mapNum; i++ ) {
                     JGrassMapGeoResource tmpMap = mapResourcesArray[i];
                     JGrassMapEnvironment jgMEnv = new JGrassMapEnvironment(tmpMap.getMapFile());
-                    GrassCoverageReader tmp = new GrassCoverageReader(null, null, false, false,
-                            new EclipseProgressMonitorAdapter(monitor));
-                    tmp.setInput(jgMEnv.getCELL());
+
                     try {
                         /*
                          * TODO get envelope from original region and reproject it.
@@ -291,28 +272,23 @@ public class GrassReprojectOperation implements IOp {
                         double newEast = west + cols * xResolution;
                         double newNorth = south + rows * yResolution;
 
-                        ReferencedEnvelope referencedEnvelope = new ReferencedEnvelope(west,
-                                newEast, south, newNorth, crs);
+                        ReferencedEnvelope referencedEnvelope = new ReferencedEnvelope(west, newEast, south, newNorth, crs);
 
                         GridToEnvelopeMapper g2eMapper = new GridToEnvelopeMapper();
                         g2eMapper.setEnvelope(referencedEnvelope);
-                        GridEnvelope2D gridEnvelope2D = new GridEnvelope2D(0, 0, (int) cols,
-                                (int) rows);
+                        GridEnvelope2D gridEnvelope2D = new GridEnvelope2D(0, 0, (int) cols, (int) rows);
                         g2eMapper.setGridRange(gridEnvelope2D);
                         g2eMapper.setPixelAnchor(PixelInCell.CELL_CENTER);
                         MathTransform gridToEnvelopeTransform = g2eMapper.createTransform();
 
-                        GridGeometry outputGridGeometry = new GridGeometry2D(gridEnvelope2D,
-                                gridToEnvelopeTransform, crs);
+                        GridGeometry outputGridGeometry = new GridGeometry2D(gridEnvelope2D, gridToEnvelopeTransform, crs);
 
+                        GridCoverage2D coverage2D = JGrassCatalogUtilities.getGridcoverageFromGrassraster(jgMEnv, sourceRegion);
                         GrassCoverageReadParam gcReadParam = new GrassCoverageReadParam(sourceRegion);
-                        GridCoverage2D coverage2D = tmp.read(gcReadParam);
-                        GridCoverage2D reprojected = (GridCoverage2D) Operations.DEFAULT.resample(
-                                coverage2D, crs, outputGridGeometry, Interpolation
-                                        .getInstance(Interpolation.INTERP_BICUBIC));
+                        GridCoverage2D reprojected = (GridCoverage2D) Operations.DEFAULT.resample(coverage2D, crs,
+                                outputGridGeometry, Interpolation.getInstance(Interpolation.INTERP_BICUBIC));
 
-                        JGrassRegion jgRegion = new JGrassRegion(west, newEast, south, newNorth,
-                                xResolution, yResolution);
+                        JGrassRegion jgRegion = new JGrassRegion(west, newEast, south, newNorth, xResolution, yResolution);
 
                         // GridCoverage2D coverage2D = tmp.read(null);
                         // GridCoverage2D reprojected = (GridCoverage2D)
@@ -326,20 +302,18 @@ public class GrassReprojectOperation implements IOp {
                             File grassDbFile = jgMEnv.getLOCATION().getParentFile();
                             File newLocationFile = new File(grassDbFile, locationName);
                             try {
-                                JGrassCatalogUtilities.createLocation(newLocationFile
-                                        .getAbsolutePath(), crs, jgRegion);
-                                JGrassCatalogUtilities.createMapset(newLocationFile
-                                        .getAbsolutePath(), mapsetName, null, jgRegion);
+                                JGrassCatalogUtilities.createLocation(newLocationFile.getAbsolutePath(), crs, jgRegion);
+                                JGrassCatalogUtilities
+                                        .createMapset(newLocationFile.getAbsolutePath(), mapsetName, null, jgRegion);
                             } catch (Exception e) {
                                 // ignore this for now
                             }
                             mapsetFile = new File(newLocationFile, mapsetName);
                         }
-                        File newMapFile = new File(mapsetFile, JGrassConstants.CELL
-                                + File.separator + tmpMap.getMapFile().getName());
-                        GrassCoverageWriter grassCW = new GrassCoverageWriter(newMapFile,
-                                new EclipseProgressMonitorAdapter(monitor));
-                        grassCW.write(reprojected);
+                        File newMapFile = new File(mapsetFile, JGrassConstants.CELL + File.separator
+                                + tmpMap.getMapFile().getName());
+
+                        JGrassCatalogUtilities.writeGridCoverageFromGrassraster(newMapFile, jgRegion, reprojected);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -348,13 +322,11 @@ public class GrassReprojectOperation implements IOp {
                 monitor.done();
 
                 JGrassCatalogUtilities.addServiceToCatalog(mapsetFile.getParent() + File.separator
-                        + JGrassCatalogUtilities.JGRASS_WORKSPACE_FILENAME,
-                        new NullProgressMonitor());
+                        + JGrassCatalogUtilities.JGRASS_WORKSPACE_FILENAME, new NullProgressMonitor());
 
             }
         };
-        PlatformGIS.runInProgressDialog("Reprojecting maps to new Location...", true, operation,
-                true);
+        PlatformGIS.runInProgressDialog("Reprojecting maps to new Location...", true, operation, true);
 
     }
 }

@@ -42,25 +42,26 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.coverage.grid.GridCoverage2D;
+import org.geotools.coverage.grid.io.AbstractGridFormat;
+import org.geotools.gce.grassraster.GrassCoverageReadParam;
+import org.geotools.gce.grassraster.GrassCoverageReader;
+import org.geotools.gce.grassraster.JGrassConstants;
+import org.geotools.gce.grassraster.JGrassMapEnvironment;
+import org.geotools.gce.grassraster.JGrassRegion;
+import org.geotools.gce.grassraster.JGrassUtilities;
+import org.geotools.gce.grassraster.format.GrassCoverageFormatFactory;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.coverage.grid.GridCoverage;
+import org.opengis.coverage.grid.GridCoverageReader;
+import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.datum.PixelInCell;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 
-import eu.hydrologis.jgrass.libs.iodrivers.JGrassMapEnvironment;
-import eu.hydrologis.jgrass.libs.iodrivers.geotools.GrassCoverageReadParam;
-import eu.hydrologis.jgrass.libs.iodrivers.geotools.GrassCoverageReader;
-import eu.hydrologis.jgrass.libs.map.JGrassRasterMapReader;
-import eu.hydrologis.jgrass.libs.map.RasterData;
-import eu.hydrologis.jgrass.libs.region.JGrassRegion;
-import eu.hydrologis.jgrass.libs.utils.JGrassConstants;
-import eu.hydrologis.jgrass.libs.utils.JGrassUtilities;
-import eu.hydrologis.jgrass.libs.utils.monitor.EclipseProgressMonitorAdapter;
-import eu.hydrologis.jgrass.libs.utils.monitor.IProgressMonitorJGrass;
 import eu.udig.catalog.jgrass.JGrassPlugin;
+import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 
 public class JGrassMapGeoResource extends IGeoResource {
 
@@ -90,7 +91,8 @@ public class JGrassMapGeoResource extends IGeoResource {
 
     private JGrassMapEnvironment jGrassMapEnvironment;
 
-    public JGrassMapGeoResource( IService parentService, JGrassMapsetGeoResource parentMapset, String mapName, String mapTypeAndPath ) {
+    public JGrassMapGeoResource( IService parentService, JGrassMapsetGeoResource parentMapset, String mapName,
+            String mapTypeAndPath ) {
         this.parentService = parentService;
         this.parent = parentMapset;
         this.name = mapName;
@@ -114,8 +116,9 @@ public class JGrassMapGeoResource extends IGeoResource {
         /*
          * in this case our resource is a folder, therefore of type File
          */
-        return adaptee.isAssignableFrom(IService.class) || adaptee.isAssignableFrom(IGeoResource.class) || adaptee.isAssignableFrom(JGrassMapGeoResource.class)
-                || adaptee.isAssignableFrom(GridCoverage.class) || super.canResolve(adaptee);
+        return adaptee.isAssignableFrom(IService.class) || adaptee.isAssignableFrom(IGeoResource.class)
+                || adaptee.isAssignableFrom(JGrassMapGeoResource.class) || adaptee.isAssignableFrom(GridCoverage.class)
+                || super.canResolve(adaptee);
         // || adaptee.isAssignableFrom(File.class);
     }
 
@@ -139,17 +142,23 @@ public class JGrassMapGeoResource extends IGeoResource {
             return adaptee.cast(this);
         }
         if (adaptee.isAssignableFrom(GridCoverage2D.class)) {
-            GrassCoverageReader coverageReader = new GrassCoverageReader(PixelInCell.CELL_CENTER, null, true, false, new EclipseProgressMonitorAdapter(monitor));
-            GrassCoverageReadParam params = new GrassCoverageReadParam(jGrassMapEnvironment.getActiveRegion());
-            coverageReader.setInput(jGrassMapEnvironment.getCELL());
-            GridCoverage2D mapCoverage = coverageReader.read(params);
-
-            return adaptee.cast(mapCoverage);
+            try {
+                CoordinateReferenceSystem crs = jGrassMapEnvironment.getCoordinateReferenceSystem();
+                JGrassRegion jGrassRegion = jGrassMapEnvironment.getActiveRegion();
+                GeneralParameterValue[] readParams = JGrassCatalogUtilities.createGridGeometryGeneralParameter(
+                        jGrassRegion.getCols(), jGrassRegion.getRows(), jGrassRegion.getWest(), jGrassRegion.getEast(),
+                        jGrassRegion.getSouth(), jGrassRegion.getNorth(), crs);
+                AbstractGridFormat format = (AbstractGridFormat) new GrassCoverageFormatFactory().createFormat();
+                GridCoverageReader reader = format.getReader(jGrassMapEnvironment.getCELL());
+                GridCoverage2D mapCoverage = ((GridCoverage2D) reader.read(readParams));
+                return adaptee.cast(mapCoverage);
+            } catch (Exception e) {
+                msg = e;
+            }
         }
         // bad call to resolve
         return super.resolve(adaptee, monitor);
     }
-
     // public ID getID() {
     // return id;
     // }
@@ -164,7 +173,8 @@ public class JGrassMapGeoResource extends IGeoResource {
             relativePath = relativePath.replace("\\", "/");
             return new URL(parenturlString + relativePath);
         } catch (MalformedURLException e) {
-            JGrassPlugin.log("JGrassPlugin problem: eu.hydrologis.udig.catalog.internal.jgrass#JGrassMapGeoResource#getIdentifier", e); //$NON-NLS-1$
+            JGrassPlugin.log(
+                    "JGrassPlugin problem: eu.hydrologis.udig.catalog.internal.jgrass#JGrassMapGeoResource#getIdentifier", e); //$NON-NLS-1$
 
             e.printStackTrace();
             return null;
@@ -231,7 +241,8 @@ public class JGrassMapGeoResource extends IGeoResource {
 
                     File cellhd = jGrassMapEnvironment.getCELLHD();
                     fileWindow = new JGrassRegion(cellhd.getAbsolutePath());
-                    CoordinateReferenceSystem grassCrs = ((JGrassMapsetGeoResource) JGrassMapGeoResource.this.parent).getJGrassCrs();
+                    CoordinateReferenceSystem grassCrs = ((JGrassMapsetGeoResource) JGrassMapGeoResource.this.parent)
+                            .getJGrassCrs();
                     bounds = new ReferencedEnvelope(fileWindow.getEnvelope(), grassCrs);
 
                     super.icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.GRID_OBJ);
@@ -240,10 +251,12 @@ public class JGrassMapGeoResource extends IGeoResource {
                  * what if it is a grass ascii raster map?
                  */
                 else if (JGrassMapGeoResource.this.type.equals(JGrassConstants.GRASSASCIIRASTERMAP)) {
-                    String grassasciiFilePath = mapsetPath + File.separator + JGrassConstants.GRASSASCIIRASTER + File.separator + this.name;
+                    String grassasciiFilePath = mapsetPath + File.separator + JGrassConstants.GRASSASCIIRASTER + File.separator
+                            + this.name;
 
                     fileWindow = getGrassAsciiFileWindow(grassasciiFilePath);
-                    bounds = new ReferencedEnvelope(fileWindow.getEnvelope(), ((JGrassMapsetGeoResource) JGrassMapGeoResource.this.parent).getJGrassCrs());
+                    bounds = new ReferencedEnvelope(fileWindow.getEnvelope(),
+                            ((JGrassMapsetGeoResource) JGrassMapGeoResource.this.parent).getJGrassCrs());
 
                     super.icon = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/grassascii.gif"); //$NON-NLS-1$
                 }
@@ -251,10 +264,12 @@ public class JGrassMapGeoResource extends IGeoResource {
                  * what if it is an esri ascii grid map?
                  */
                 else if (JGrassMapGeoResource.this.type.equals(JGrassConstants.ESRIRASTERMAP)) {
-                    String esriiFilePath = mapsetPath + File.separator + JGrassConstants.ESRIASCIIRASTER + File.separator + this.name;
+                    String esriiFilePath = mapsetPath + File.separator + JGrassConstants.ESRIASCIIRASTER + File.separator
+                            + this.name;
 
                     fileWindow = getEsriGridFileWindow(esriiFilePath);
-                    bounds = new ReferencedEnvelope(fileWindow.getEnvelope(), ((JGrassMapsetGeoResource) JGrassMapGeoResource.this.parent).getJGrassCrs());
+                    bounds = new ReferencedEnvelope(fileWindow.getEnvelope(),
+                            ((JGrassMapsetGeoResource) JGrassMapGeoResource.this.parent).getJGrassCrs());
 
                     super.icon = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/esrigrid.gif"); //$NON-NLS-1$
                 }
@@ -262,9 +277,11 @@ public class JGrassMapGeoResource extends IGeoResource {
                  * what if it is a fluidturtle ascii raster map?
                  */
                 else if (JGrassMapGeoResource.this.type.equals(JGrassConstants.FTRASTERMAP)) {
-                    String fluidturtleFilePath = mapsetPath + File.separator + JGrassConstants.FLUIDTURTLEASCIIRASTER + File.separator + this.name;
+                    String fluidturtleFilePath = mapsetPath + File.separator + JGrassConstants.FLUIDTURTLEASCIIRASTER
+                            + File.separator + this.name;
                     fileWindow = getFluidturtleFileWindow(fluidturtleFilePath);
-                    bounds = new ReferencedEnvelope(fileWindow.getEnvelope(), ((JGrassMapsetGeoResource) JGrassMapGeoResource.this.parent).getJGrassCrs());
+                    bounds = new ReferencedEnvelope(fileWindow.getEnvelope(),
+                            ((JGrassMapsetGeoResource) JGrassMapGeoResource.this.parent).getJGrassCrs());
 
                     super.icon = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/ftraster.gif"); //$NON-NLS-1$
                 }
@@ -282,7 +299,8 @@ public class JGrassMapGeoResource extends IGeoResource {
                     // calculate bounds
                     Envelope tmpBounds = new Envelope();
 
-                    File sitesFile = new File(jGrassMapEnvironment.getMAPSET(), JGrassConstants.SITE_LISTS + "/" + jGrassMapEnvironment.getMapName());
+                    File sitesFile = new File(jGrassMapEnvironment.getMAPSET(), JGrassConstants.SITE_LISTS + "/"
+                            + jGrassMapEnvironment.getMapName());
                     BufferedReader sitesReader;
                     try {
                         sitesReader = new BufferedReader(new FileReader(sitesFile));
@@ -313,7 +331,8 @@ public class JGrassMapGeoResource extends IGeoResource {
                         e.printStackTrace();
                     }
 
-                    bounds = new ReferencedEnvelope(tmpBounds, ((JGrassMapsetGeoResource) JGrassMapGeoResource.this.parent).getJGrassCrs());
+                    bounds = new ReferencedEnvelope(tmpBounds,
+                            ((JGrassMapsetGeoResource) JGrassMapGeoResource.this.parent).getJGrassCrs());
                     super.icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.PIXEL_OBJ);
                 } else {
                     super.icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.GRID_MISSING);
@@ -369,77 +388,85 @@ public class JGrassMapGeoResource extends IGeoResource {
         return null;
     }
 
-    /**
-     * Quick way to read a {@link GridCoverage2D coverage} from this resource active region.
-     * 
-     * <p>The active region is read at the moment of the call.</p>
-     * 
-     * @param monitor a progress monitor.
-     * @return the read {@link GridCoverage2D}.
-     * @throws IOException
-     */
-    public GridCoverage2D getCoverageActiveRegion( IProgressMonitorJGrass monitor ) throws IOException {
-        return getCoverageInRegion(getActiveWindow(), monitor);
-    }
+    // /**
+    // * Quick way to read a {@link GridCoverage2D coverage} from this resource active region.
+    // *
+    // * <p>The active region is read at the moment of the call.</p>
+    // *
+    // * @param monitor a progress monitor.
+    // * @return the read {@link GridCoverage2D}.
+    // * @throws IOException
+    // */
+    // public GridCoverage2D getCoverageActiveRegion( IProgressMonitorJGrass monitor ) throws
+    // IOException {
+    // return getCoverageInRegion(getActiveWindow(), monitor);
+    // }
+    //
+    // /**
+    // * Quick way to read a {@link GridCoverage2D coverage} from this resource.
+    // *
+    // * @param region the requested region.
+    // * @param monitor a progress monitor.
+    // * @return the read {@link GridCoverage2D}.
+    // * @throws IOException
+    // */
+    // public GridCoverage2D getCoverageInRegion( JGrassRegion region, IProgressMonitorJGrass
+    // monitor ) throws IOException {
+    // GrassCoverageReader coverageReader = new GrassCoverageReader(PixelInCell.CELL_CENTER, null,
+    // true, false, monitor);
+    // GrassCoverageReadParam params = new GrassCoverageReadParam(region);
+    // coverageReader.setInput(jGrassMapEnvironment.getCELL());
+    // GridCoverage2D mapCoverage = coverageReader.read(params);
+    // return mapCoverage;
+    // }
 
-    /**
-     * Quick way to read  a {@link GridCoverage2D coverage} from this resource.
-     * 
-     * @param region the requested region.
-     * @param monitor a progress monitor.
-     * @return the read {@link GridCoverage2D}.
-     * @throws IOException
-     */
-    public GridCoverage2D getCoverageInRegion( JGrassRegion region, IProgressMonitorJGrass monitor ) throws IOException {
-        GrassCoverageReader coverageReader = new GrassCoverageReader(PixelInCell.CELL_CENTER, null, true, false, monitor);
-        GrassCoverageReadParam params = new GrassCoverageReadParam(region);
-        coverageReader.setInput(jGrassMapEnvironment.getCELL());
-        GridCoverage2D mapCoverage = coverageReader.read(params);
-        return mapCoverage;
-    }
+    // /**
+    // * Quick way to read data from this resource active region.
+    // *
+    // * <p>The active region is read at the moment of the call.</p>
+    // *
+    // * @param monitor a prgress monitor.
+    // * @return the read {@link RasterData}.
+    // * @throws IOException
+    // */
+    // public RasterData getDataInActiveRegion( IProgressMonitorJGrass monitor ) throws IOException
+    // {
+    // return getDataInRegion(getActiveWindow(), monitor);
+    // }
+    //
+    // /**
+    // * Quick way to read some data from this resource.
+    // *
+    // * @param region the requested region.
+    // * @param monitor a progress monitor.
+    // * @return the read {@link RasterData}.
+    // * @throws IOException
+    // */
+    // public RasterData getDataInRegion( JGrassRegion region, IProgressMonitorJGrass monitor )
+    // throws IOException {
+    //
+    // JGrassRasterMapReader jgrassMapReader = new JGrassRasterMapReader.BuilderFromMapPath(region,
+    // jGrassMapEnvironment
+    // .getMapFile().getAbsolutePath()).maptype(JGrassConstants.GRASSBINARYRASTERMAP).monitor(monitor).build();
+    // if (!jgrassMapReader.open()) {
+    // throw new IOException("An error occurred while reading the map: " +
+    // jGrassMapEnvironment.getMapName());
+    // }
+    // RasterData rasterData = null;
+    // if (jgrassMapReader.hasMoreData()) {
+    // rasterData = jgrassMapReader.getNextData();
+    // }
+    // jgrassMapReader.close();
+    //
+    // return rasterData;
+    // }
 
-    /**
-     * Quick way to read data from this resource active region.
-     * 
-     * <p>The active region is read at the moment of the call.</p>
-     * 
-     * @param monitor a prgress monitor.
-     * @return the read {@link RasterData}.
-     * @throws IOException
-     */
-    public RasterData getDataInActiveRegion( IProgressMonitorJGrass monitor ) throws IOException {
-        return getDataInRegion(getActiveWindow(), monitor);
-    }
-
-    /**
-     * Quick way to read some data from this resource.
-     * 
-     * @param region the requested region.
-     * @param monitor a progress monitor.
-     * @return the read {@link RasterData}.
-     * @throws IOException
-     */
-    public RasterData getDataInRegion( JGrassRegion region, IProgressMonitorJGrass monitor ) throws IOException {
-
-        JGrassRasterMapReader jgrassMapReader = new JGrassRasterMapReader.BuilderFromMapPath(region, jGrassMapEnvironment.getMapFile().getAbsolutePath()).maptype(JGrassConstants.GRASSBINARYRASTERMAP)
-                .monitor(monitor).build();
-        if (!jgrassMapReader.open()) {
-            throw new IOException("An error occurred while reading the map: " + jGrassMapEnvironment.getMapName());
-        }
-        RasterData rasterData = null;
-        if (jgrassMapReader.hasMoreData()) {
-            rasterData = jgrassMapReader.getNextData();
-        }
-        jgrassMapReader.close();
-
-        return rasterData;
-    }
-
-    public double getValueInCoordinate( Coordinate coordinate ) throws IOException {
-        JGrassRegion newRegion = JGrassUtilities.getRectangleAroundPoint(getActiveWindow(), coordinate.x, coordinate.y);
-        RasterData rasterData = getDataInRegion(newRegion, null);
-        return rasterData.getValueAt(0, 0);
-    }
+    // public double getValueInCoordinate( Coordinate coordinate ) throws IOException {
+    // JGrassRegion newRegion = JGrassUtilities.getRectangleAroundPoint(getActiveWindow(),
+    // coordinate.x, coordinate.y);
+    // RasterData rasterData = getDataInRegion(newRegion, null);
+    // return rasterData.getValueAt(0, 0);
+    // }
 
     private JGrassRegion getGrassAsciiFileWindow( String filepath ) {
         BufferedReader grassasciireader;
@@ -487,7 +514,8 @@ public class JGrassMapGeoResource extends IGeoResource {
             south = Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_SOUTH));
             east = Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_EAST));
             west = Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_WEST));
-            if (!fileMapHeader.containsKey(JGrassConstants.HEADER_EW_RES) && !fileMapHeader.containsKey(JGrassConstants.HEADER_NS_RES)) {
+            if (!fileMapHeader.containsKey(JGrassConstants.HEADER_EW_RES)
+                    && !fileMapHeader.containsKey(JGrassConstants.HEADER_NS_RES)) {
                 thecols = Integer.parseInt(fileMapHeader.get(JGrassConstants.HEADER_COLS));
                 therows = Integer.parseInt(fileMapHeader.get(JGrassConstants.HEADER_ROWS));
 
@@ -506,13 +534,19 @@ public class JGrassMapGeoResource extends IGeoResource {
              */
             fileWindow = null;
             if (fileMapHeader.containsKey(JGrassConstants.HEADER_NS_RES)) {
-                fileWindow = new JGrassRegion(Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_WEST)), Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_EAST)), Double
-                        .parseDouble(fileMapHeader.get(JGrassConstants.HEADER_SOUTH)), Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_NORTH)), Double.parseDouble(fileMapHeader
-                        .get(JGrassConstants.HEADER_EW_RES)), Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_NS_RES)));
+                fileWindow = new JGrassRegion(Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_WEST)),
+                        Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_EAST)), Double.parseDouble(fileMapHeader
+                                .get(JGrassConstants.HEADER_SOUTH)), Double.parseDouble(fileMapHeader
+                                .get(JGrassConstants.HEADER_NORTH)), Double.parseDouble(fileMapHeader
+                                .get(JGrassConstants.HEADER_EW_RES)), Double.parseDouble(fileMapHeader
+                                .get(JGrassConstants.HEADER_NS_RES)));
             } else if (fileMapHeader.containsKey(JGrassConstants.HEADER_COLS)) {
-                fileWindow = new JGrassRegion(Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_WEST)), Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_EAST)), Double
-                        .parseDouble(fileMapHeader.get(JGrassConstants.HEADER_SOUTH)), Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_NORTH)), Integer.parseInt(fileMapHeader
-                        .get(JGrassConstants.HEADER_ROWS)), Integer.parseInt(fileMapHeader.get(JGrassConstants.HEADER_COLS)));
+                fileWindow = new JGrassRegion(Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_WEST)),
+                        Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_EAST)), Double.parseDouble(fileMapHeader
+                                .get(JGrassConstants.HEADER_SOUTH)), Double.parseDouble(fileMapHeader
+                                .get(JGrassConstants.HEADER_NORTH)), Integer.parseInt(fileMapHeader
+                                .get(JGrassConstants.HEADER_ROWS)), Integer.parseInt(fileMapHeader
+                                .get(JGrassConstants.HEADER_COLS)));
             } else {
                 fileWindow = null;
             }
@@ -553,7 +587,8 @@ public class JGrassMapGeoResource extends IGeoResource {
                         if (key.startsWith(JGrassConstants.ESRI_HEADER_NCOLS_PIECE)) {
                             key = JGrassConstants.ESRI_HEADER_NCOLS;
                         }
-                        if (key.startsWith(JGrassConstants.ESRI_HEADER_DIMENSION) || key.startsWith(JGrassConstants.ESRI_HEADER_CELLSIZE)) {
+                        if (key.startsWith(JGrassConstants.ESRI_HEADER_DIMENSION)
+                                || key.startsWith(JGrassConstants.ESRI_HEADER_CELLSIZE)) {
                             key = JGrassConstants.ESRI_HEADER_CELLSIZE;
                         }
                         if (key.startsWith(JGrassConstants.ESRI_HEADER_NOVALUE_PIECE)) {
@@ -684,11 +719,15 @@ public class JGrassMapGeoResource extends IGeoResource {
              */
             fileWindow = null;
             if (fileMapHeader.containsKey(JGrassConstants.HEADER_NS_RES)) {
-                fileWindow = new JGrassRegion(Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_WEST)), east, Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_SOUTH)), north,
-                        Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_EW_RES)), Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_NS_RES)));
+                fileWindow = new JGrassRegion(Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_WEST)), east,
+                        Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_SOUTH)), north,
+                        Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_EW_RES)), Double.parseDouble(fileMapHeader
+                                .get(JGrassConstants.HEADER_NS_RES)));
             } else if (fileMapHeader.containsKey(JGrassConstants.HEADER_COLS)) {
-                fileWindow = new JGrassRegion(Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_WEST)), east, Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_SOUTH)), north,
-                        Integer.parseInt(fileMapHeader.get(JGrassConstants.HEADER_ROWS)), Integer.parseInt(fileMapHeader.get(JGrassConstants.HEADER_COLS)));
+                fileWindow = new JGrassRegion(Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_WEST)), east,
+                        Double.parseDouble(fileMapHeader.get(JGrassConstants.HEADER_SOUTH)), north,
+                        Integer.parseInt(fileMapHeader.get(JGrassConstants.HEADER_ROWS)), Integer.parseInt(fileMapHeader
+                                .get(JGrassConstants.HEADER_COLS)));
             } else {
                 fileWindow = null;
             }

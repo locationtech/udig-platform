@@ -38,8 +38,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
-
-import eu.hydrologis.jgrass.libs.utils.JGrassConstants;
+import org.geotools.gce.grassraster.JGrassConstants;
 
 /**
  * @author Andrea Antonello - www.hydrologis.com

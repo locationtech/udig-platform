@@ -35,12 +35,12 @@ import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveChangeEvent;
+import net.refractions.udig.catalog.IResolveChangeEvent.Type;
 import net.refractions.udig.catalog.IResolveDelta;
+import net.refractions.udig.catalog.IResolveDelta.Kind;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.IResolveChangeEvent.Type;
-import net.refractions.udig.catalog.IResolveDelta.Kind;
 import net.refractions.udig.catalog.internal.CatalogImpl;
 import net.refractions.udig.catalog.internal.ResolveChangeEvent;
 import net.refractions.udig.catalog.internal.ResolveDelta;
@@ -51,10 +51,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.geotools.gce.grassraster.JGrassConstants;
 
-import eu.hydrologis.jgrass.libs.utils.JGrassConstants;
 import eu.udig.catalog.jgrass.JGrassPlugin;
-import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 
 /**
  * <p>

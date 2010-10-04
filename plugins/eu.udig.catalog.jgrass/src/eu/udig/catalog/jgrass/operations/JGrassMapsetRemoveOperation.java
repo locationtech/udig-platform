@@ -21,10 +21,10 @@ import java.io.File;
 
 import net.refractions.udig.ui.operations.IOp;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
 
-import eu.hydrologis.jgrass.libs.utils.FileUtilities;
 import eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
 import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 
@@ -37,12 +37,9 @@ public class JGrassMapsetRemoveOperation implements IOp {
         JGrassMapsetGeoResource mapsetr = (JGrassMapsetGeoResource) target;
         String mapsetPath = mapsetr.getFile().getAbsolutePath();
 
-        if (!FileUtilities.deleteFileOrDir(new File(mapsetPath))) {
-            FileUtilities.deleteFileOrDirOnExit(new File(mapsetPath));
-        }
+        FileUtils.deleteDirectory(new File(mapsetPath));
 
-        JGrassCatalogUtilities.removeMapsetFromCatalog(mapsetr.getFile().getParent(), mapsetr.getFile()
-                .getName());
+        JGrassCatalogUtilities.removeMapsetFromCatalog(mapsetr.getFile().getParent(), mapsetr.getFile().getName());
     }
 
 }

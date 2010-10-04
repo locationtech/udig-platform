@@ -53,21 +53,27 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
+import org.geotools.coverage.grid.GridCoverage2D;
+import org.geotools.coverage.grid.GridEnvelope2D;
+import org.geotools.coverage.grid.GridGeometry2D;
+import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.data.memory.MemoryDataStore;
+import org.geotools.gce.grassraster.GrassCoverageWriter;
+import org.geotools.gce.grassraster.JGrassConstants;
+import org.geotools.gce.grassraster.JGrassMapEnvironment;
+import org.geotools.gce.grassraster.JGrassRegion;
+import org.geotools.gce.grassraster.format.GrassCoverageFormat;
+import org.geotools.gce.grassraster.format.GrassCoverageFormatFactory;
+import org.geotools.geometry.DirectPosition2D;
+import org.geotools.geometry.Envelope2D;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.parameter.Parameter;
 import org.geotools.referencing.CRS;
+import org.opengis.coverage.grid.GridCoverageReader;
+import org.opengis.geometry.Envelope;
+import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import eu.hydrologis.jgrass.libs.map.JGrassRasterMapReader;
-import eu.hydrologis.jgrass.libs.map.JGrassRasterMapWriter;
-import eu.hydrologis.jgrass.libs.map.RasterData;
-import eu.hydrologis.jgrass.libs.region.JGrassRegion;
-import eu.hydrologis.jgrass.libs.utils.JGrassConstants;
-import eu.hydrologis.jgrass.libs.utils.dialogs.ProblemDialogs;
-import eu.hydrologis.jgrass.libs.utils.monitor.IProgressMonitorJGrass;
 import eu.udig.catalog.jgrass.JGrassPlugin;
 import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
 import eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
@@ -90,8 +96,7 @@ public class JGrassCatalogUtilities {
      * @param resource
      * @return a String array with mapset path and map name
      */
-    public synchronized static String[] getMapsetpathAndMapnameFromJGrassMapGeoResource(
-            IGeoResource resource ) {
+    public synchronized static String[] getMapsetpathAndMapnameFromJGrassMapGeoResource( IGeoResource resource ) {
         String[] mapsetPathAndMapName = new String[2];
 
         // check that the underlying resource is a propertyservice
@@ -106,8 +111,7 @@ public class JGrassCatalogUtilities {
                 return null;
         } catch (IOException e) {
             JGrassPlugin
-                    .log(
-                            "JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#getMapsetpathAndMapnameFromJGrassMapGeoResource", e); //$NON-NLS-1$
+                    .log("JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#getMapsetpathAndMapnameFromJGrassMapGeoResource", e); //$NON-NLS-1$
 
             e.printStackTrace();
             return null;
@@ -120,8 +124,7 @@ public class JGrassCatalogUtilities {
             mapsetPathAndMapName[1] = jg.getInfo(null).getTitle();
         } catch (IOException e) {
             JGrassPlugin
-                    .log(
-                            "JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#getMapsetpathAndMapnameFromJGrassMapGeoResource", e); //$NON-NLS-1$
+                    .log("JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#getMapsetpathAndMapnameFromJGrassMapGeoResource", e); //$NON-NLS-1$
             e.printStackTrace();
         }
         return mapsetPathAndMapName;
@@ -142,8 +145,7 @@ public class JGrassCatalogUtilities {
             jg = resource.resolve(JGrassMapGeoResource.class, null);
         } catch (IOException e) {
             JGrassPlugin
-                    .log(
-                            "JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#getDirectPathFromJGrassMapGeoResource", e); //$NON-NLS-1$
+                    .log("JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#getDirectPathFromJGrassMapGeoResource", e); //$NON-NLS-1$
 
             e.printStackTrace();
             return null;
@@ -158,8 +160,7 @@ public class JGrassCatalogUtilities {
      * @param addToCatalog
      * @param progressMonitor
      */
-    public static synchronized void addServiceToCatalog( String serviceFile,
-            IProgressMonitor progressMonitor ) {
+    public static synchronized void addServiceToCatalog( String serviceFile, IProgressMonitor progressMonitor ) {
         try {
             URL fileUrl = new File(serviceFile).toURI().toURL();
             // add the service to the catalog and map
@@ -170,9 +171,8 @@ public class JGrassCatalogUtilities {
                 catalog.add(service);
             }
         } catch (Exception e) {
-            JGrassPlugin
-                    .log(
-                            "JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#addServiceToCatalog", e); //$NON-NLS-1$
+            JGrassPlugin.log(
+                    "JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#addServiceToCatalog", e); //$NON-NLS-1$
             e.printStackTrace();
         }
     }
@@ -209,8 +209,7 @@ public class JGrassCatalogUtilities {
              * test code to make the catalog understand that the map should be added
              */
             final ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-            final JGrassService originalJGrassService = catalog.getById(JGrassService.class, id,
-                    monitor);
+            final JGrassService originalJGrassService = catalog.getById(JGrassService.class, id, monitor);
 
             /*
              * create the same service
@@ -218,8 +217,7 @@ public class JGrassCatalogUtilities {
             if (originalJGrassService == null)
                 return;
             final URL ID = originalJGrassService.getIdentifier();
-            Map<String, Serializable> connectionParams = originalJGrassService
-                    .getConnectionParams();
+            Map<String, Serializable> connectionParams = originalJGrassService.getConnectionParams();
             IServiceFactory locator = CatalogPlugin.getDefault().getServiceFactory();
             final List<IService> rereadService = locator.acquire(ID, connectionParams);
 
@@ -248,8 +246,7 @@ public class JGrassCatalogUtilities {
      * @param addPosition the position into which to put it, 0 is most lower
      * @param map the map to which to add the resource to
      */
-    public static void addResourceFromUrlToMap( URL url, IProgressMonitor progressMonitor,
-            int addPosition, IMap map ) {
+    public static void addResourceFromUrlToMap( URL url, IProgressMonitor progressMonitor, int addPosition, IMap map ) {
 
         synchronized (url) {
             ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
@@ -266,13 +263,11 @@ public class JGrassCatalogUtilities {
                         geoResources.add(resolve.resolve(IGeoResource.class, progressMonitor));
                     } else if (members.get(0).canResolve(IGeoResource.class)) {
                         for( IResolve tmp : members ) {
-                            IGeoResource finalResolve = tmp.resolve(IGeoResource.class,
-                                    progressMonitor);
+                            IGeoResource finalResolve = tmp.resolve(IGeoResource.class, progressMonitor);
                             geoResources.add(finalResolve);
                         }
                     }
-                    List< ? extends ILayer> addedLayers = ApplicationGIS.addLayersToMap(map,
-                            geoResources, addPosition);
+                    List< ? extends ILayer> addedLayers = ApplicationGIS.addLayersToMap(map, geoResources, addPosition);
                     if (addedLayers.size() == 0) {
                         System.out.println("strange");
                     }
@@ -284,172 +279,6 @@ public class JGrassCatalogUtilities {
     }
 
     /**
-     * @param monitor
-     * @param mapsetResource
-     * @param type
-     * @return the name of the added map
-     */
-    public static synchronized String importMapForType( IProgressMonitorJGrass monitor,
-            JGrassMapsetGeoResource mapsetResource, String type, final double[] defaultNovalue,
-            final String[] selpath ) {
-        try {
-
-            File mapsetFile = mapsetResource.getFile();
-
-            final boolean[] doExit = {false};
-            final boolean[] goGo = {false};
-
-            // create a thread and inside do a syncExec
-            Display.getDefault().syncExec(new Runnable(){
-
-                public void run() {
-                    FileDialog fileDialog = new FileDialog(Display.getDefault().getActiveShell(),
-                            SWT.OPEN);
-
-                    selpath[0] = fileDialog.open();
-                    if (selpath == null || selpath[0] == null || selpath[0].length() < 1) {
-                        doExit[0] = true;
-                        return;
-                    }
-
-                    InputDialog iDialog = new InputDialog(
-                            Display.getDefault().getActiveShell(),
-                            "Novalue definition",
-                            "Please enter the number to be considered a novalue ('*' is automatically dealth with as novalue)",
-                            "-9999.0", null);
-                    iDialog.open();
-                    String ret = iDialog.getValue();
-                    if (ret != null && ret.length() > 0) {
-                        try {
-                            double tmp = Double.parseDouble(ret);
-                            defaultNovalue[0] = tmp;
-                        } catch (Exception e) {
-                        }
-                    } else {
-                        doExit[0] = true;
-                    }
-                    goGo[0] = true;
-                }
-            });
-
-            if (doExit[0]) {
-                monitor.done();
-                return null;
-            }
-
-            /*
-             * import the file
-             */
-            JGrassRasterMapReader mr = new JGrassRasterMapReader.BuilderFromMapPath(null,
-                    selpath[0]).maptype(type).monitor(monitor).build();
-            RasterData data = null;
-            if (mr.open() && mr.hasMoreData()) {
-                data = mr.getNextData();
-            }
-            mr.close();
-            
-            if (data == null) {
-                Display.getDefault().asyncExec(new Runnable(){
-                    public void run() {
-                        ProblemDialogs.errorDialog(null,
-                                "Error occurred in reading the map. Check the map type.", true);
-                    }
-                });
-                return null;
-            }
-            
-            for( int i = 0; i < data.getRows(); i++ ) {
-                for( int j = 0; j < data.getCols(); j++ ) {
-                    if (data.getValueAt(i, j) == defaultNovalue[0]) {
-                        data.setValueAt(i, j, JGrassConstants.doubleNovalue);
-                    }
-                }
-            }
-            
-            File mapFile = new File(selpath[0]);
-            String mapName = mapFile.getName();
-            String mapsetName = mapsetFile.getName();
-            String locationPath = mapsetFile.getParent();
-            JGrassRasterMapWriter mw = new JGrassRasterMapWriter(mr.getReader().getMapWindow(),
-                    mapName, mapsetName, locationPath, defaultNovalue[0], monitor);
-            if (mw.open()) {
-                mw.write(data);
-                mw.close();
-            }
-
-            return mapName;
-
-        } catch (Exception e) {
-            JGrassPlugin
-                    .log(
-                            "JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#importMapForType", e); //$NON-NLS-1$
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * @param monitor
-     * @param mapResource
-     * @param type
-     * @param selpath
-     */
-    public static synchronized void exportMapToType( IProgressMonitorJGrass monitor,
-            JGrassMapGeoResource mapResource, String type, final String[] selpath ) {
-
-        try {
-
-            // create a thread and inside do a syncExec
-            Display.getDefault().syncExec(new Runnable(){
-                public void run() {
-                    FileDialog fileDialog = new FileDialog(Display.getDefault().getActiveShell(),
-                            SWT.SAVE);
-                    selpath[0] = fileDialog.open();
-                }
-            });
-            if (selpath == null || selpath[0].length() < 1) {
-                return;
-            }
-
-            JGrassRegion wind = mapResource.getFileWindow();
-            String mapPath = mapResource.getMapFile().getAbsolutePath();
-            JGrassRasterMapReader reader = new JGrassRasterMapReader.BuilderFromMapPath(wind,
-                    mapPath).monitor(monitor).build();
-
-            RasterData data = null;
-            if (reader.open() && reader.hasMoreData()) {
-                data = reader.getNextData();
-            }
-            reader.close();
-            if (data == null) {
-                ProblemDialogs.errorDialog(null,
-                        "Error occurred in reading the map. Check the map type.", true);
-                return;
-            }
-
-            JGrassRasterMapWriter mw = new JGrassRasterMapWriter(wind, selpath[0], -9999.0, type,
-                    monitor);
-
-            if (mw.open()) {
-                mw.write(data);
-                mw.close();
-            } else {
-                ProblemDialogs.errorDialog(null,
-                        "Error occurred writing the map. Map could not be written.", true);
-                return;
-            }
-
-            File mapFile = new File(selpath[0]);
-            ProblemDialogs.infoDialog(null, "Map successfully written to "
-                    + mapFile.getAbsolutePath(), true);
-        } catch (Exception e) {
-            JGrassPlugin
-                    .log(
-                            "JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#exportMapToType", e); //$NON-NLS-1$
-            e.printStackTrace();
-        }
-    }
-    /**
      * Remove a memory datastore from the catalog, since the update is not possible (Caused by:
      * java.lang.UnsupportedOperationException: Schema modification not supported)
      * 
@@ -458,12 +287,10 @@ public class JGrassCatalogUtilities {
     public static synchronized void removeMemoryServiceByTypeName( String typeName ) {
         MemoryServiceImpl service = null;
         try {
-            List< ? extends IResolve> members = CatalogPlugin.getDefault().getLocalCatalog()
-                    .members(new NullProgressMonitor());
+            List< ? extends IResolve> members = CatalogPlugin.getDefault().getLocalCatalog().members(new NullProgressMonitor());
             for( IResolve resolve : members ) {
                 if (resolve instanceof MemoryServiceImpl) {
-                    if (URLUtils.urlEquals(resolve.getIdentifier(), MemoryServiceExtensionImpl.URL,
-                            true)) {
+                    if (URLUtils.urlEquals(resolve.getIdentifier(), MemoryServiceExtensionImpl.URL, true)) {
                         service = (MemoryServiceImpl) resolve;
                         break;
                     }
@@ -484,8 +311,7 @@ public class JGrassCatalogUtilities {
      * @param locationPath the path to the location to be created
      * @return true if no problems occurred
      */
-    public static boolean createLocation( String locationPath, CoordinateReferenceSystem crs,
-            JGrassRegion window ) {
+    public static boolean createLocation( String locationPath, CoordinateReferenceSystem crs, JGrassRegion window ) {
         /* Create root directory for GRASS location. */
         if (!(new File(locationPath).mkdirs()))
             return false;
@@ -502,8 +328,7 @@ public class JGrassCatalogUtilities {
         return createMapset(locationPath, JGrassConstants.PERMANENT_MAPSET, crs, window);
     }
 
-    public static boolean createMapset( String locationPath, String mapset,
-            CoordinateReferenceSystem crs, JGrassRegion window ) {
+    public static boolean createMapset( String locationPath, String mapset, CoordinateReferenceSystem crs, JGrassRegion window ) {
         String path = locationPath + File.separator + mapset;
 
         /* Create mapset directory */
@@ -518,13 +343,11 @@ public class JGrassCatalogUtilities {
                     JGrassRegion.writeDEFAULTWINDToLocation(locationPath, window);
                 } else {
                     // create blank windows
-                    BufferedWriter out = new BufferedWriter(new FileWriter(path + File.separator
-                            + JGrassConstants.DEFAULT_WIND));
+                    BufferedWriter out = new BufferedWriter(new FileWriter(path + File.separator + JGrassConstants.DEFAULT_WIND));
                     out.write(JGrassRegion.BLACKBOARD_KEY);
                     out.close();
 
-                    out = new BufferedWriter(new FileWriter(path + File.separator
-                            + JGrassConstants.WIND));
+                    out = new BufferedWriter(new FileWriter(path + File.separator + JGrassConstants.WIND));
                     out.write(JGrassRegion.BLANK_REGION);
                     out.close();
                 }
@@ -533,17 +356,13 @@ public class JGrassCatalogUtilities {
                 if (crs != null) {
                     // FIXME create GRASS proj files
 
-                    BufferedWriter prjOut = new BufferedWriter(new FileWriter(path + File.separator
-                            + JGrassConstants.PROJ_WKT));
+                    BufferedWriter prjOut = new BufferedWriter(new FileWriter(path + File.separator + JGrassConstants.PROJ_WKT));
                     prjOut.write(crs.toWKT());
                     prjOut.close();
 
                 }
             } catch (IOException e) {
-                JGrassPlugin
-                        .log(
-                                "JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#createMapset",
-                                e);
+                JGrassPlugin.log("JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#createMapset", e);
                 e.printStackTrace();
                 return false;
             }
@@ -552,10 +371,8 @@ public class JGrassCatalogUtilities {
             /* Copy WIND file from PERMANENT mapset of this location */
             try {
                 BufferedReader in = new BufferedReader(new FileReader(locationPath + File.separator
-                        + JGrassConstants.PERMANENT_MAPSET + File.separator
-                        + JGrassConstants.DEFAULT_WIND));
-                BufferedWriter out = new BufferedWriter(new FileWriter(path + File.separator
-                        + JGrassConstants.WIND));
+                        + JGrassConstants.PERMANENT_MAPSET + File.separator + JGrassConstants.DEFAULT_WIND));
+                BufferedWriter out = new BufferedWriter(new FileWriter(path + File.separator + JGrassConstants.WIND));
                 String line;
                 while( (line = in.readLine()) != null ) {
                     out.write(line);
@@ -564,10 +381,7 @@ public class JGrassCatalogUtilities {
                 out.close();
                 in.close();
             } catch (IOException e) {
-                JGrassPlugin
-                        .log(
-                                "JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#createMapset",
-                                e);
+                JGrassPlugin.log("JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#createMapset", e);
                 e.printStackTrace();
                 return false;
             }
@@ -616,18 +430,15 @@ public class JGrassCatalogUtilities {
         if (!(new File(mapsetpath + File.separator + JGrassConstants.GRASSASCIIRASTER).exists()))
             if (!(new File(mapsetpath + File.separator + JGrassConstants.GRASSASCIIRASTER).mkdirs()))
                 return false;
-        if (!(new File(mapsetpath + File.separator + JGrassConstants.FLUIDTURTLEASCIIRASTER)
-                .exists()))
-            if (!(new File(mapsetpath + File.separator + JGrassConstants.FLUIDTURTLEASCIIRASTER)
-                    .mkdirs()))
+        if (!(new File(mapsetpath + File.separator + JGrassConstants.FLUIDTURTLEASCIIRASTER).exists()))
+            if (!(new File(mapsetpath + File.separator + JGrassConstants.FLUIDTURTLEASCIIRASTER).mkdirs()))
                 return false;
         if (!(new File(mapsetpath + File.separator + JGrassConstants.ESRIASCIIRASTER).exists()))
             if (!(new File(mapsetpath + File.separator + JGrassConstants.ESRIASCIIRASTER).mkdirs()))
                 return false;
 
         if (!(new File(mapsetpath + File.separator + JGrassConstants.HORTON_MACHINE_PATH).exists()))
-            if (!(new File(mapsetpath + File.separator + JGrassConstants.HORTON_MACHINE_PATH)
-                    .mkdirs()))
+            if (!(new File(mapsetpath + File.separator + JGrassConstants.HORTON_MACHINE_PATH).mkdirs()))
                 return false;
 
         return true;
@@ -641,8 +452,8 @@ public class JGrassCatalogUtilities {
         CoordinateReferenceSystem readCrs = null;
         String projWtkFilePath;
         try {
-            projWtkFilePath = locationPath + File.separator + JGrassConstants.PERMANENT_MAPSET
-                    + File.separator + JGrassConstants.PROJ_WKT;
+            projWtkFilePath = locationPath + File.separator + JGrassConstants.PERMANENT_MAPSET + File.separator
+                    + JGrassConstants.PROJ_WKT;
             File projWtkFile = new File(projWtkFilePath);
             if (projWtkFile.exists()) {
 
@@ -657,9 +468,8 @@ public class JGrassCatalogUtilities {
             }
 
         } catch (Exception e1) {
-            JGrassPlugin
-                    .log(
-                            "JGrassPlugin problem: eu.hydrologis.udig.catalog.internal.jgrass#JGrassMapsetGeoResource#getJGrassCrs", e1); //$NON-NLS-1$
+            JGrassPlugin.log(
+                    "JGrassPlugin problem: eu.hydrologis.udig.catalog.internal.jgrass#JGrassMapsetGeoResource#getJGrassCrs", e1); //$NON-NLS-1$
 
             e1.printStackTrace();
         }
@@ -675,8 +485,7 @@ public class JGrassCatalogUtilities {
     public static ILayer getMapgraphicLayerByClass( Class< ? > theClass ) {
 
         try {
-            List<IResolve> mapgraphics = CatalogPlugin.getDefault().getLocalCatalog().find(
-                    MapGraphicService.SERVICE_URL, null);
+            List<IResolve> mapgraphics = CatalogPlugin.getDefault().getLocalCatalog().find(MapGraphicService.SERVICE_URL, null);
             List<IResolve> members = mapgraphics.get(0).members(null);
             for( IResolve resolve : members ) {
                 if (resolve.canResolve(theClass)) {
@@ -692,9 +501,8 @@ public class JGrassCatalogUtilities {
                 }
             }
         } catch (IOException e) {
-            JGrassPlugin
-                    .log(
-                            "JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#getMapgraphicLayerByClass", e); //$NON-NLS-1$
+            JGrassPlugin.log(
+                    "JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#getMapgraphicLayerByClass", e); //$NON-NLS-1$
             e.printStackTrace();
             return null;
         }
@@ -713,8 +521,8 @@ public class JGrassCatalogUtilities {
      * @param mapType the format of the map to add.
      * @return the resource that has been added.
      */
-    public synchronized static JGrassMapGeoResource addMapToCatalog( String locationPath,
-            String mapsetName, String mapName, String mapType ) {
+    public synchronized static JGrassMapGeoResource addMapToCatalog( String locationPath, String mapsetName, String mapName,
+            String mapType ) {
         // URL mapsetId = JGrassMapsetGeoResource.createId(locationPath, mapsetName);
 
         JGrassMapsetGeoResource mapset = null;
@@ -722,24 +530,21 @@ public class JGrassCatalogUtilities {
             File locationFile = new File(locationPath);
 
             ID locationId = new ID(locationFile.toURI().toURL());
-            URL mapsetUrl = JGrassMapsetGeoResource.createId(locationFile.getAbsolutePath(),
-                    mapsetName);
+            URL mapsetUrl = JGrassMapsetGeoResource.createId(locationFile.getAbsolutePath(), mapsetName);
             ID mapsetId = new ID(mapsetUrl);
             ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
-            mapset = localCatalog.getById(JGrassMapsetGeoResource.class, mapsetId, ProgressManager
-                    .instance().get());
+            mapset = localCatalog.getById(JGrassMapsetGeoResource.class, mapsetId, ProgressManager.instance().get());
             if (mapset == null) {
                 // try with the service
                 // URL locationId = JGrassService.createId(locationPath);
-                JGrassService locationService = localCatalog.getById(JGrassService.class,
-                        locationId, ProgressManager.instance().get());
+                JGrassService locationService = localCatalog.getById(JGrassService.class, locationId, ProgressManager.instance()
+                        .get());
                 mapset = locationService.getMapsetGeoresourceByName(mapsetName);
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
             String message = "An error occurred while adding the map to the catalog";
-            ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassPlugin.PLUGIN_ID,
-                    e);
+            ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassPlugin.PLUGIN_ID, e);
         }
         if (mapset == null)
             return null;
@@ -756,16 +561,14 @@ public class JGrassCatalogUtilities {
      * @param mapName the name of the map to remove.
      * @param mapType the format of the map to remove.
      */
-    public synchronized static void removeMapFromCatalog( String locationPath, String mapsetName,
-            String mapName, String mapType ) {
+    public synchronized static void removeMapFromCatalog( String locationPath, String mapsetName, String mapName, String mapType ) {
         // URL mapsetId = JGrassMapsetGeoResource.createId(locationPath, mapsetName);
         File locationFile = new File(locationPath);
-        URL mapsetUrl = JGrassMapsetGeoResource
-                .createId(locationFile.getAbsolutePath(), mapsetName);
+        URL mapsetUrl = JGrassMapsetGeoResource.createId(locationFile.getAbsolutePath(), mapsetName);
         ID mapsetId = new ID(mapsetUrl);
 
-        JGrassMapsetGeoResource mapset = CatalogPlugin.getDefault().getLocalCatalog().getById(
-                JGrassMapsetGeoResource.class, mapsetId, ProgressManager.instance().get());
+        JGrassMapsetGeoResource mapset = CatalogPlugin.getDefault().getLocalCatalog()
+                .getById(JGrassMapsetGeoResource.class, mapsetId, ProgressManager.instance().get());
         mapset.removeMap(mapName, mapType);
     }
 
@@ -778,20 +581,18 @@ public class JGrassCatalogUtilities {
      * @param mapsetName the name of the mapset to add
      * @return the added {@linkplain JGrassMapsetGeoResource mapset}
      */
-    public synchronized static JGrassMapsetGeoResource addMapsetToCatalog( String locationPath,
-            String mapsetName ) {
+    public synchronized static JGrassMapsetGeoResource addMapsetToCatalog( String locationPath, String mapsetName ) {
         // URL locationId = JGrassService.createId(locationPath);
         File locationFile = new File(locationPath);
         try {
             ID locationId = new ID(locationFile.toURI().toURL());
-            JGrassService location = CatalogPlugin.getDefault().getLocalCatalog().getById(
-                    JGrassService.class, locationId, ProgressManager.instance().get());
+            JGrassService location = CatalogPlugin.getDefault().getLocalCatalog()
+                    .getById(JGrassService.class, locationId, ProgressManager.instance().get());
             return location.addMapset(mapsetName);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             String message = "An error occurred while adding the mapset to the catalog";
-            ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassPlugin.PLUGIN_ID,
-                    e);
+            ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassPlugin.PLUGIN_ID, e);
             return null;
         }
     }
@@ -809,14 +610,85 @@ public class JGrassCatalogUtilities {
         try {
             File locationFile = new File(locationPath);
             ID locationId = new ID(locationFile.toURI().toURL());
-            JGrassService location = CatalogPlugin.getDefault().getLocalCatalog().getById(
-                    JGrassService.class, locationId, ProgressManager.instance().get());
+            JGrassService location = CatalogPlugin.getDefault().getLocalCatalog()
+                    .getById(JGrassService.class, locationId, ProgressManager.instance().get());
             location.removeMapset(mapsetName);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             String message = "An error occurred while removing the mapset to the catalog";
-            ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassPlugin.PLUGIN_ID,
-                    e);
+            ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassPlugin.PLUGIN_ID, e);
         }
     }
+
+    /**
+     * Utility method to create read parameters for {@link GridCoverageReader} 
+     * 
+     * @param width the needed number of columns.
+     * @param height the needed number of columns.
+     * @param north the northern boundary.
+     * @param south the southern boundary.
+     * @param east the eastern boundary.
+     * @param west the western boundary.
+     * @param crs the {@link CoordinateReferenceSystem}. Can be null, even if it should not.
+     * @return the {@link GeneralParameterValue array of parameters}.
+     */
+    public static GeneralParameterValue[] createGridGeometryGeneralParameter( int width, int height, double north, double south,
+            double east, double west, CoordinateReferenceSystem crs ) {
+        GeneralParameterValue[] readParams = new GeneralParameterValue[1];
+        Parameter<GridGeometry2D> readGG = new Parameter<GridGeometry2D>(AbstractGridFormat.READ_GRIDGEOMETRY2D);
+        GridEnvelope2D gridEnvelope = new GridEnvelope2D(0, 0, width, height);
+        Envelope env;
+        if (crs != null) {
+            env = new ReferencedEnvelope(west, east, south, north, crs);
+        } else {
+            DirectPosition2D minDp = new DirectPosition2D(west, south);
+            DirectPosition2D maxDp = new DirectPosition2D(east, north);
+            env = new Envelope2D(minDp, maxDp);
+        }
+        readGG.setValue(new GridGeometry2D(gridEnvelope, env));
+        readParams[0] = readGG;
+
+        return readParams;
+    }
+
+    /**
+     * Reads a {@link GridCoverage2D} from the grass raster. 
+     * 
+     * @param jGrassMapEnvironment the {@link JGrassMapEnvironment}.
+     * @param readRegion the region to read, or <code>null</code>.
+     * @return the read coverage.
+     * @throws Exception
+     */
+    public static GridCoverage2D getGridcoverageFromGrassraster( JGrassMapEnvironment jGrassMapEnvironment,
+            JGrassRegion readRegion ) throws Exception {
+        CoordinateReferenceSystem crs = jGrassMapEnvironment.getCoordinateReferenceSystem();
+        JGrassRegion jGrassRegion = readRegion;
+        if (jGrassRegion == null)
+            jGrassMapEnvironment.getActiveRegion();
+        GeneralParameterValue[] readParams = JGrassCatalogUtilities.createGridGeometryGeneralParameter(jGrassRegion.getCols(),
+                jGrassRegion.getRows(), jGrassRegion.getWest(), jGrassRegion.getEast(), jGrassRegion.getSouth(),
+                jGrassRegion.getNorth(), crs);
+        AbstractGridFormat format = (AbstractGridFormat) new GrassCoverageFormatFactory().createFormat();
+        GridCoverageReader reader = format.getReader(jGrassMapEnvironment.getCELL());
+        GridCoverage2D mapCoverage = ((GridCoverage2D) reader.read(readParams));
+        return mapCoverage;
+    }
+
+    public static void writeGridCoverageFromGrassraster( File mapFile, JGrassRegion writeRegion, GridCoverage2D grassCoverage )
+            throws Exception {
+        JGrassMapEnvironment mapEnvironment = new JGrassMapEnvironment(mapFile);
+        GrassCoverageFormat format = new GrassCoverageFormatFactory().createFormat();
+        GrassCoverageWriter writer = format.getWriter(mapEnvironment.getCELL());
+
+        GeneralParameterValue[] readParams = null;
+        if (writeRegion == null) {
+            writeRegion = mapEnvironment.getActiveRegion();
+        }
+        readParams = JGrassCatalogUtilities.createGridGeometryGeneralParameter(writeRegion.getCols(), writeRegion.getRows(),
+                writeRegion.getNorth(), writeRegion.getSouth(), writeRegion.getEast(), writeRegion.getWest(),
+                mapEnvironment.getCoordinateReferenceSystem());
+
+        writer.write(grassCoverage, readParams);
+    }
+
 }
