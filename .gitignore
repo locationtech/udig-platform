@@ -7,3 +7,4 @@ deploy/bin/
 plugins/net.refractions.udig.catalog.wmt/.settings
 tutorials/net.refractions.udig.tests.tutorials.tests/bin/
 plugins/eu.udig.mapquest.apiwrapper/bin/
+plugins/eu.udig.*/bin/
