@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JGrassraster Style Plug-in
+Bundle-SymbolicName: eu.udig.style.jgrass;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: eu.udig.style.jgrass.JGrassrasterStyleActivator
+Bundle-Vendor: HydroloGIS S.r.l.
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.project.ui,
+ net.refractions.udig.style,
+ net.refractions.udig.ui,
+ eu.udig.catalog.jgrass,
+ net.refractions.udig.style.sld
+Eclipse-LazyStart: true
+Export-Package: eu.udig.style.jgrass.categories,
+ eu.udig.style.jgrass.colors

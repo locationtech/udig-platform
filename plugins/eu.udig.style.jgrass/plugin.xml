@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="net.refractions.udig.style.sld.StyleEditorPage">
+      <StyleEditorPage
+            class="eu.udig.style.jgrass.colors.JGrassRasterStyleEditorPage"
+            contentType="net.refractions.udig.project.ILayer"
+            id="colors"
+            label="%jgrassrasterstyle.name"
+            requires="eu.udig.catalog.jgrass.core.JGrassMapGeoResource"/>
+      <StyleEditorPage
+            class="eu.udig.style.jgrass.categories.JGrassRasterCategoryEditorPage"
+            contentType="net.refractions.udig.project.ILayer"
+            id="cats"
+            label="%jgrassrastercategories.name"
+            requires="eu.udig.catalog.jgrass.core.JGrassMapGeoResource"/>
+   </extension>
+
+</plugin>
