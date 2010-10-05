@@ -46,6 +46,7 @@ import org.opengis.referencing.operation.MathTransform;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
+import eu.udig.catalog.jgrass.activeregion.dialogs.CatalogJGrassMapsetTreeViewerDialog;
 import eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
 
 /**

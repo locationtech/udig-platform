@@ -59,6 +59,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Envelope;
 
 import eu.udig.catalog.jgrass.activeregion.dialogs.CatalogJGrassMapsetTreeViewerDialog;
+import eu.udig.catalog.jgrass.activeregion.dialogs.FeatureChooserDialog;
+import eu.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
 import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
 import eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
 import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
