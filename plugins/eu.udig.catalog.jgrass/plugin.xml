@@ -92,5 +92,57 @@
             name="JGrass">
       </category>
    </extension>
+<extension
+         id="activemapgraphicid"
+         point="net.refractions.udig.mapgraphic.mapgraphic">
+      <mapGraphic
+            class="eu.hydrologis.jgrass.activeregion.ActiveRegionMapGraphic"
+            icon="icons/etool16/active.png"
+            id="eu.hydrologis.jgrass.activeregion.activeregionmapgraphic"
+            name="%activeregion.name"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.style">
+      <style
+            class="eu.hydrologis.jgrass.activeregion.ui.ActiveregionStyleContent"
+            id="eu.hydrologis.jgrass.activeregion.activeregionStyle"
+            name="%activeregion.style.name">
+      </style>
+   </extension>
+   <extension
+         point="net.refractions.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="eu.hydrologis.jgrass.activeregion.ui.ActiveregionGraphicStyleConfigurator"
+            id="activeregion"
+            label="%activeregion.style.conf.label"
+            requires="eu.hydrologis.jgrass.activeregion.ActiveRegionMapGraphic"
+            styleId="eu.hydrologis.jgrass.activeregion.activeregionStyle">
+      </styleConfigurator>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.ui.tool">
+      <modalTool
+            categoryId="eu.hydrologis.jgrass.tools.category"
+            class="eu.hydrologis.jgrass.activeregion.ui.ActiveRegionBBoxSelection"
+            icon="icons/etool16/active.png"
+            id="net.refractions.udig.tools.selectactiveregion"
+            name="%activeregion.bbox"
+            onToolbar="true"
+            toolCursorId="bboxactiveregion"
+            tooltip="%activeregion.bbox">
+         <cursor
+               hotspotX="10"
+               hotspotY="10"
+               id="bboxactiveregion"
+               image="icons/select_source.png">
+         </cursor>
+      </modalTool>
+      <toolCursor
+            hotspotX="10"
+            hotspotY="10"
+            id="bboxactiveregion"
+            image="icons/select_source.png">
+      </toolCursor>
+   </extension>
 
 </plugin>
