@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.style.sld.SLD;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -88,6 +89,12 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
                 pageId = value.toString();
             } else if (SLD.POLYGON.supports(selectedLayer)) {
                 Class< ? > pointClass = Class.forName("eu.hydrologis.jgrass.style.editorpages.SimplePolygonEditorPage"); //$NON-NLS-1$
+                Field idField = pointClass.getField("ID"); //$NON-NLS-1$
+                Object value = idField.get(null);
+                pageId = value.toString();
+            } else if (selectedLayer.getGeoResource().getInfo(new NullProgressMonitor()).getDescription()
+                    .equals("grassbinaryraster")) { //$NON-NLS-1$
+                Class< ? > pointClass = Class.forName("eu.udig.style.jgrass.colors.JGrassRasterStyleEditorPage"); //$NON-NLS-1$
                 Field idField = pointClass.getField("ID"); //$NON-NLS-1$
                 Object value = idField.get(null);
                 pageId = value.toString();

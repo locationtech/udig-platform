@@ -12,7 +12,7 @@ import net.refractions.udig.core.internal.CorePlugin;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 
-import com.mapquest.apiwrapper.MQAPIWrapper;
+import eu.udig.mapquest.apiwrapper.MQAPIWrapper;
 
 public class MQTile extends WMTTile {
     private MQTileName tileName;

@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JGrass Catalog Plugin
+Bundle-SymbolicName: eu.udig.catalog.jgrass;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: eu.udig.catalog.jgrass.JGrassPlugin
+Bundle-Vendor: HydroloGIS S.r.l.
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.libs,
+ net.refractions.udig.core,
+ net.refractions.udig.catalog,
+ net.refractions.udig.catalog.rasterings;bundle-version="1.2.0",
+ net.refractions.udig.catalog.ui,
+ net.refractions.udig.project.ui,
+ net.refractions.udig.mapgraphic
+Eclipse-LazyStart: true
+Export-Package: eu.udig.catalog.jgrass,
+ eu.udig.catalog.jgrass.activeregion.dialogs,
+ eu.udig.catalog.jgrass.core,
+ eu.udig.catalog.jgrass.messages,
+ eu.udig.catalog.jgrass.operations,
+ eu.udig.catalog.jgrass.utils,
+ eu.udig.catalog.jgrass.workspacecreation

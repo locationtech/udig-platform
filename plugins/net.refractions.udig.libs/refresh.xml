@@ -14,6 +14,7 @@
 	<artifact:remoteRepository id="central.repository" url="${central}" />
 	<artifact:remoteRepository id="jaitoolsmaven.repository" url="${jaitoolsmaven}" />
 	<artifact:remoteRepository id="geosolutionsmaven.repository" url="${geosolutionsmaven}" />
+	<artifact:remoteRepository id="jgrasstoolsmaven.repository" url="${jgrasstoolsmaven}" />
 
 	<!-- local repository i.e. folder to be used as storage for downloaded library files -->
 	<artifact:localRepository id="local.repository" path="${repo}" />
@@ -37,6 +38,7 @@
 			<remoteRepository refid="central.repository" />
 			<remoteRepository refid="jaitoolsmaven.repository" />
 			<remoteRepository refid="geosolutionsmaven.repository" />
+			<remoteRepository refid="jgrasstoolsmaven.repository" />
 
 			<!-- uDig Specific Extras -->
 			<!--dependency groupId="xmlrpc" artifactId="xmlrpc" version="2.0" /-->
@@ -101,14 +103,15 @@
 
 			<dependency groupId="joda-time" artifactId="joda-time" version="1.6" />
 
-			<!-- stuff for netcdf -->
+			<!-- stuff for jgrass contributions -->
 			<dependency groupId="org.geotools" artifactId="gt-temporal" version="${geotools.version}" />
-
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf-core" version="1.1-SNAPSHOT" />
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf" version="1.1-SNAPSHOT" />
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-utilities" version="1.0.6-1" />
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-geocore" version="1.0.6-1" />
 			<dependency groupId="opendap" artifactId="opendap" version="2.1" />
+			<dependency groupId="org.geotools" artifactId="gt-grassraster" version="${geotools.version}" />
+			<dependency groupId="eu.hydrologis.jgrass" artifactId="jgrassgears" version="0.1-SNAPSHOT" />
 
 			<!-- jfreechart -->
 			<dependency groupId="jfree" artifactId="jfreechart" version="1.0.13" />
