@@ -43,7 +43,7 @@ import eu.udig.style.jgrass.core.GrassColorTable;
 
 public class JGrassRasterStyleEditorPage extends StyleEditorPage {
 
-    public static String JGRASSRASTERSTYLEID = "eu.hydrologis.jgrass.rasterstyle";
+    public static String ID = "eu.udig.style.jgrass.color";
     private ColorEditor colorRulesEditor = null;
     private boolean editorSupported = false;
     private String type = "unknown";

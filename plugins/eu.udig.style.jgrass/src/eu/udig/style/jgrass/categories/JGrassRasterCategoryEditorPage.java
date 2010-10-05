@@ -38,7 +38,7 @@ import eu.udig.style.jgrass.JGrassrasterStyleActivator;
 
 public class JGrassRasterCategoryEditorPage extends StyleEditorPage {
 
-    public static String JGRASSRASTERSTYLEID = "eu.hydrologis.jgrass.style.jgrassrastercats";
+    public static String JGRASSRASTERSTYLEID = "eu.udig.style.jgrass.cats";
     private CategoryEditor categoryRulesEditor = null;
     private boolean editorSupported = false;
     private String type = "unknown";
