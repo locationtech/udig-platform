@@ -16,3 +16,9 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.project.ui,
  net.refractions.udig.mapgraphic
 Eclipse-LazyStart: true
+Export-Package: eu.udig.catalog.jgrass,
+ eu.udig.catalog.jgrass.core,
+ eu.udig.catalog.jgrass.messages,
+ eu.udig.catalog.jgrass.operations,
+ eu.udig.catalog.jgrass.utils,
+ eu.udig.catalog.jgrass.workspacecreation

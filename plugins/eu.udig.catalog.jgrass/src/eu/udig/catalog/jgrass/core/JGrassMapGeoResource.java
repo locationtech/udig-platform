@@ -387,6 +387,10 @@ public class JGrassMapGeoResource extends IGeoResource {
 
         return null;
     }
+    
+    public JGrassMapEnvironment getjGrassMapEnvironment() {
+        return jGrassMapEnvironment;
+    }
 
     // /**
     // * Quick way to read a {@link GridCoverage2D coverage} from this resource active region.
