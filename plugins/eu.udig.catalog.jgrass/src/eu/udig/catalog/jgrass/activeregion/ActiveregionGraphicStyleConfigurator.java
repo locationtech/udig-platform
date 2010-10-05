@@ -58,6 +58,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
 
+import eu.udig.catalog.jgrass.activeregion.dialogs.CatalogJGrassMapsetTreeViewerDialog;
 import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
 import eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
 import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
@@ -529,10 +530,6 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
                         westText.setText(String.valueOf(newWindow.getWest()));
                         textModified(bound_type);
                     } catch (IOException e1) {
-                        ActiveRegionPlugin
-                                .log(
-                                        "ActiveRegionPlugin problem: eu.hydrologis.jgrass.activeregion.ui#ActiveregionGraphicStyleConfigurator#update", e1); //$NON-NLS-1$
-
                         e1.printStackTrace();
                         return;
                     }

@@ -28,7 +28,7 @@ public class ActiveRegionBBoxSelection extends SimpleTool implements ModalTool {
     /**
      * Comment for <code>ID</code>
      */
-    public static final String ID = "eu.hydrologis.jgrass.activeregion.ui.activeregionbbox"; //$NON-NLS-1$
+    public static final String ID = "eu.udig.catalog.jgrass.activeregion.ui.activeregionbbox"; //$NON-NLS-1$
 
     private Point start;
 

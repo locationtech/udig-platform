@@ -31,7 +31,7 @@ import org.geotools.gce.grassraster.JGrassConstants;
 @SuppressWarnings("nls")
 public class ActiveregionStyleContent extends StyleContent {
 
-    public static final String ID = "eu.hydrologis.jgrass.activeregion.activeregionStyle"; //$NON-NLS-1$
+    public static final String ID = "eu.udig.catalog.jgrass.activeregion.activeregionStyle"; //$NON-NLS-1$
 
     public static final String WINDPATH = "WINDPATH";
     public static final String N = "N";

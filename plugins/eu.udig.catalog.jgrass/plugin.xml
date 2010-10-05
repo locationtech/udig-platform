@@ -96,34 +96,34 @@
          id="activemapgraphicid"
          point="net.refractions.udig.mapgraphic.mapgraphic">
       <mapGraphic
-            class="eu.hydrologis.jgrass.activeregion.ActiveRegionMapGraphic"
+            class="eu.udig.catalog.jgrass.activeregion.ActiveRegionMapGraphic"
             icon="icons/etool16/active.png"
-            id="eu.hydrologis.jgrass.activeregion.activeregionmapgraphic"
+            id="eu.udig.catalog.jgrass.activeregion.activeregionmapgraphic"
             name="%activeregion.name"/>
    </extension>
    <extension
          point="net.refractions.udig.project.style">
       <style
-            class="eu.hydrologis.jgrass.activeregion.ui.ActiveregionStyleContent"
-            id="eu.hydrologis.jgrass.activeregion.activeregionStyle"
+            class="eu.udig.catalog.jgrass.activeregion.ActiveregionStyleContent"
+            id="eu.udig.catalog.jgrass.activeregion.activeregionStyle"
             name="%activeregion.style.name">
       </style>
    </extension>
    <extension
          point="net.refractions.udig.style.styleConfigurator">
       <styleConfigurator
-            class="eu.hydrologis.jgrass.activeregion.ui.ActiveregionGraphicStyleConfigurator"
+            class="eu.udig.catalog.jgrass.activeregion.ActiveregionGraphicStyleConfigurator"
             id="activeregion"
             label="%activeregion.style.conf.label"
-            requires="eu.hydrologis.jgrass.activeregion.ActiveRegionMapGraphic"
-            styleId="eu.hydrologis.jgrass.activeregion.activeregionStyle">
+            requires="eu.udig.catalog.jgrass.activeregion.ActiveRegionMapGraphic"
+            styleId="eu.udig.catalog.jgrass.activeregion.activeregionStyle">
       </styleConfigurator>
    </extension>
    <extension
          point="net.refractions.udig.project.ui.tool">
       <modalTool
             categoryId="eu.hydrologis.jgrass.tools.category"
-            class="eu.hydrologis.jgrass.activeregion.ui.ActiveRegionBBoxSelection"
+            class="eu.udig.catalog.jgrass.activeregion.ActiveRegionBBoxSelection"
             icon="icons/etool16/active.png"
             id="net.refractions.udig.tools.selectactiveregion"
             name="%activeregion.bbox"
