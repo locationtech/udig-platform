@@ -6,7 +6,7 @@
          name="GrassRasterRenderer"
          point="net.refractions.udig.project.renderer">
       <renderer
-            class="eu.hydrologis.jgrass.renderer.raster.RasterRenderMetricsFactory"
+            class="eu.udig.renderer.jgrass.RasterRenderMetricsFactory"
             id="eu.hydrologis.jgrass.renderer.raster.rasterrender"
             name="Grass Raster Renderer">
          <description>

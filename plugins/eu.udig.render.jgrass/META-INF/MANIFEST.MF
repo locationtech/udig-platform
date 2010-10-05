@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Raster Plug-in
 Bundle-SymbolicName: eu.udig.render.jgrass;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: eu.hydrologis.jgrass.renderer.raster.RasterRendererPlugin
+Bundle-Activator: eu.udig.renderer.jgrass.RasterRendererPlugin
 Bundle-Vendor: HydroloGIS
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
@@ -11,4 +11,4 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.project,
  eu.udig.catalog.jgrass
 Eclipse-LazyStart: false
-Export-Package: eu.hydrologis.jgrass.renderer.raster
+Export-Package: eu.udig.renderer.jgrass

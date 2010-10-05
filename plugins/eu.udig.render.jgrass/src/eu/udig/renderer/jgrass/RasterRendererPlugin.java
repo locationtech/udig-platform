@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package eu.hydrologis.jgrass.renderer.raster;
+package eu.udig.renderer.jgrass;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

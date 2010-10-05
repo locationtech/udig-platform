@@ -122,7 +122,7 @@
    <extension
          point="net.refractions.udig.project.ui.tool">
       <modalTool
-            categoryId="eu.hydrologis.jgrass.tools.category"
+            categoryId="net.refractions.udig.tool.category.info"
             class="eu.udig.catalog.jgrass.activeregion.ActiveRegionBBoxSelection"
             icon="icons/etool16/active.png"
             id="net.refractions.udig.tools.selectactiveregion"
