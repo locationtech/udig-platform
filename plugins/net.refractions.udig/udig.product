@@ -67,8 +67,8 @@
    </plugins>
 
    <features>
-      <feature id="net.refractions.udig"/>
-      <feature id="net.refractions.udig_language"/>
+      <feature id="net.refractions.udig" version="1.2.0.qualifier"/>
+      <feature id="net.refractions.udig_language" version="1.2.0.qualifier"/>
    </features>
 
 
