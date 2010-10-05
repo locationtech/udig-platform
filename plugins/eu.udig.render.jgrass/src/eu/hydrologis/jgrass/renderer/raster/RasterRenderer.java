@@ -24,6 +24,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 import java.util.Collections;
 
 import javax.media.jai.InterpolationNearest;
@@ -102,14 +103,18 @@ public class RasterRenderer extends RendererImpl {
                     envelope.getMaxY(), fileWindow.getRows(), fileWindow.getCols());
 
             // to intersect with the data window, we transform the screen window
-            JGrassRegion reprojectedScreenDrawWindow = screenDrawWindow.reproject(destinationCRS, grassCrs, true);
+            JGrassRegion reprojectedScreenDrawWindow = screenDrawWindow;
+            if (!CRS.equalsIgnoreMetadata(destinationCRS, grassCrs)) {
+                reprojectedScreenDrawWindow = screenDrawWindow.reproject(destinationCRS, grassCrs, true);
+            }
 
             /*
              * if the map is not visible, do not render it
              */
             // JGrassRegion fileWindow = grassMapGeoResource.getFileWindow();
             Rectangle2D.Double fileRectDouble = fileWindow.getRectangle();
-            if (!reprojectedScreenDrawWindow.getRectangle().intersects(fileRectDouble)) {
+            Double reprojScreenRectangle = reprojectedScreenDrawWindow.getRectangle();
+            if (!reprojScreenRectangle.intersects(fileRectDouble)) {
                 getContext().setStatus(ILayer.DONE);
                 getContext().setStatusMessage(THE_MAP_IS_OUTSIDE_OF_THE_VISIBLE_REGION);
                 System.out.println(THE_MAP_IS_OUTSIDE_OF_THE_VISIBLE_REGION);
@@ -198,22 +203,6 @@ public class RasterRenderer extends RendererImpl {
                 final GridCoverageRenderer paint = new GridCoverageRenderer(destinationCRS, envelope, screenSize, worldToScreen,
                         hints);
                 RasterSymbolizer rasterSymbolizer = CommonFactoryFinder.getStyleFactory(null).createRasterSymbolizer();
-
-                // RenderedImage rendImage = coverage.view(ViewType.RENDERED).getRenderedImage();
-                // int width = rendImage.getWidth();
-                // int height = rendImage.getHeight();
-                // System.out.println(width + "/" + height);
-                // RectIter iterator = RectIterFactory.create(rendImage, new Rectangle(0, 0, width,
-                // height));
-                // for( int i = 0; i < height; i++ ) {
-                // for( int j = 0; j < width; j++ ) {
-                // System.out.print(iterator.getSampleDouble() + " ");
-                // iterator.nextPixel();
-                // }
-                // System.out.println();
-                // iterator.nextLineDone();
-                // iterator.startPixels();
-                // }
 
                 paint.paint(g2d, coverage, rasterSymbolizer);
 

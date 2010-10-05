@@ -666,8 +666,8 @@ public class JGrassCatalogUtilities {
         if (jGrassRegion == null)
             jGrassMapEnvironment.getActiveRegion();
         GeneralParameterValue[] readParams = JGrassCatalogUtilities.createGridGeometryGeneralParameter(jGrassRegion.getCols(),
-                jGrassRegion.getRows(), jGrassRegion.getWest(), jGrassRegion.getEast(), jGrassRegion.getSouth(),
-                jGrassRegion.getNorth(), crs);
+                jGrassRegion.getRows(), jGrassRegion.getNorth(), jGrassRegion.getSouth(), jGrassRegion.getWest(),
+                jGrassRegion.getEast(), crs);
         AbstractGridFormat format = (AbstractGridFormat) new GrassCoverageFormatFactory().createFormat();
         GridCoverageReader reader = format.getReader(jGrassMapEnvironment.getCELL());
         GridCoverage2D mapCoverage = ((GridCoverage2D) reader.read(readParams));
