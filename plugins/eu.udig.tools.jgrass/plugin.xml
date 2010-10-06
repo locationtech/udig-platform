@@ -6,7 +6,7 @@
          name="%tools.name"
          point="net.refractions.udig.project.ui.tool">
       <modalTool
-            categoryId="eu.hydrologis.jgrass.category.info"
+            categoryId="net.refractions.udig.tool.category.info"
             class="eu.udig.tools.jgrass.coverageinfo.WhatRastTool"
             icon="icons/d_what_rast.png"
             id="eu.hydrologis.jgrass.whatrast.whatrasttool"
@@ -26,7 +26,7 @@
             id="whatrastCursor"
             image="icons/measure_source.gif"/>
       <modalTool
-            categoryId="eu.hydrologis.jgrass.category.info"
+            categoryId="net.refractions.udig.tool.category.info"
             class="eu.udig.tools.jgrass.profile.ProfileTool"
             icon="icons/profileview.png"
             id="eu.udig.tools.jgrass.profiletool"
@@ -46,7 +46,7 @@
             id="profileCursor"
             image="icons/profilecursor.gif"/>
       <modalTool
-            categoryId="eu.hydrologis.jgrass.category.info"
+            categoryId="net.refractions.udig.tool.category.info"
             class="eu.udig.tools.jgrass.correct.RcorrectTool"
             icon="icons/r_correct.png"
             id="eu.udig.tools.jgrass.rcorrecttool"
@@ -65,9 +65,6 @@
             hotspotY="10"
             id="rcorrectCursor"
             image="icons/measure_source.gif"/>
-      <category
-            id="eu.hydrologis.jgrass.category.info">
-      </category>
    </extension>
    <extension
          point="org.eclipse.ui.views">

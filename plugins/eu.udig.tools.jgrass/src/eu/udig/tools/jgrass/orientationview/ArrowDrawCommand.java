@@ -76,9 +76,9 @@ public class ArrowDrawCommand extends AbstractDrawCommand {
         validArea = new Rectangle((int) start.x, (int) start.y, (int) (start.x + (end.x - start.x)),
                 (int) (start.y + (end.y - start.y)));
 
-        graphics.setLineWidth(2);
+        graphics.setLineWidth(1);
         graphics.setColor(lineColor);
-        graphics.drawLine((int) start.x, (int) start.y, (int) end.x, (int) end.y);
+        graphics.drawLine((int) start.x, (int) start.y, (int) tmp.x, (int) tmp.y);
 
         GeneralPath path = new GeneralPath();
         path.moveTo(end.x, end.y);
