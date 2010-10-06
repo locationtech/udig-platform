@@ -111,10 +111,13 @@
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-geocore" version="1.0.6-1" />
 			<dependency groupId="opendap" artifactId="opendap" version="2.1" />
 			<dependency groupId="org.geotools" artifactId="gt-grassraster" version="${geotools.version}" />
-			<dependency groupId="eu.hydrologis.jgrass" artifactId="jgrassgears" version="0.1-SNAPSHOT" />
+			<dependency groupId="org.geotools" artifactId="gt-coverage-api" version="${geotools.version}" />
+			<!--<dependency groupId="eu.hydrologis.jgrass" artifactId="jgrassgears" version="0.1-SNAPSHOT" />-->
 
 			<!-- jfreechart -->
 			<dependency groupId="jfree" artifactId="jfreechart" version="1.0.13" />
+			<dependency groupId="jfreechart" artifactId="jfreechart-swt" version="1.0.13" />
+			<dependency groupId="jfreechart" artifactId="jfreechart-experimental" version="1.0.13" />
 
 			<!-- these may already be accounted for by the above plug-ins -->
 			<!--
