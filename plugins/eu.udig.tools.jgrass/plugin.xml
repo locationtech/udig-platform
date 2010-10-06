@@ -88,5 +88,16 @@
             name="Export coverage to tiff or esri ascii">
       </wizard>
    </extension>
+   <extension
+         point="net.refractions.udig.ui.operation">
+      <operation
+            class="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientation"
+            enablesFor="1"
+            id="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientation"
+            name="View lines orientation"
+            targetClass="net.refractions.udig.project.ILayer">
+         <enablement></enablement>
+      </operation>
+   </extension>
 
 </plugin>
