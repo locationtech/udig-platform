@@ -33,10 +33,7 @@ import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineSegment;
-import com.vividsolutions.jts.geom.LineString;
 
 /**
  * Arrow drawing class. Adapted from udig's MessageBubble class.
@@ -45,7 +42,6 @@ import com.vividsolutions.jts.geom.LineString;
  */
 public class ArrowDrawCommand extends AbstractDrawCommand {
 
-    private static GeometryFactory G = new GeometryFactory();
     private Coordinate start;
     private Coordinate end;
     private Rectangle validArea;
