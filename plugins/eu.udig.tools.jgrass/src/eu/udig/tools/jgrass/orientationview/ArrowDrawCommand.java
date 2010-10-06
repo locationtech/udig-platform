@@ -19,6 +19,7 @@ package eu.udig.tools.jgrass.orientationview;
 
 import java.awt.Color;
 import java.awt.Rectangle;
+import java.awt.geom.GeneralPath;
 
 import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
@@ -48,13 +49,13 @@ public class ArrowDrawCommand extends AbstractDrawCommand {
     private Coordinate start;
     private Coordinate end;
     private Rectangle validArea;
-    private Color textColor = new Color(255, 0, 0, 167);
+    private Color lineColor = new Color(255, 0, 0, 255);
 
     /**
-     * @param row upperLeft of message
-     * @param col upperLeft of message
-     * @param message message to display
-     * @param delay the length of time to show the message
+     * Contructor.
+     * 
+     * @param start the startng point of the arrow.
+     * @param end the end point of the arrow.
      */
     public ArrowDrawCommand( final Coordinate start, final Coordinate end ) {
         this.start = start;
@@ -67,25 +68,28 @@ public class ArrowDrawCommand extends AbstractDrawCommand {
         display.addMouseWheelListener(wheelListener);
 
         LineSegment l = new LineSegment(start, end);
-        end = l.pointAlong(0.95);
-        Coordinate along = l.pointAlong(0.8);
+        start = l.pointAlong(0.1);
+        end = l.pointAlong(0.9);
+        l = new LineSegment(start, end);
 
-        LineString ls = G.createLineString(new Coordinate[]{end, along});
-        Geometry buffer = ls.buffer(l.getLength() / 10.0);
+        Coordinate tmp = l.pointAlong(0.9);
+        double distance = end.distance(tmp);
+        Coordinate left = l.pointAlongOffset(0.5, distance / 2);
+        Coordinate right = l.pointAlongOffset(0.5, -distance / 2);
 
         validArea = new Rectangle((int) start.x, (int) start.y, (int) (start.x + (end.x - start.x)),
                 (int) (start.y + (end.y - start.y)));
 
-        graphics.setColor(textColor);
+        graphics.setLineWidth(2);
+        graphics.setColor(lineColor);
         graphics.drawLine((int) start.x, (int) start.y, (int) end.x, (int) end.y);
 
-        Coordinate[] coords = buffer.getCoordinates();
-        if (coords.length == 0) {
-            return;
-        }
-        graphics.drawLine((int) end.x, (int) end.y, (int) coords[0].x, (int) coords[0].y);
-        // graphics.drawLine((int) end.x, (int) end.y, (int) coords[4].x, (int) coords[4].y);
-
+        GeneralPath path = new GeneralPath();
+        path.moveTo(end.x, end.y);
+        path.lineTo(left.x, left.y);
+        path.lineTo(right.x, right.y);
+        path.closePath();
+        graphics.fill(path);
     }
     public Rectangle getValidArea() {
         return validArea;

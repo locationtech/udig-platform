@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
+import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.feature.FeatureIterator;
@@ -52,7 +53,7 @@ public class ViewFeatureOrientation implements IOp {
 
     public void op( final Display display, Object target, IProgressMonitor monitor ) throws Exception {
         ILayer layer = (ILayer) target;
-        SimpleFeatureSource source = layer.getResource(SimpleFeatureSource.class, new SubProgressMonitor(monitor, 1));
+        SimpleFeatureSource source = (SimpleFeatureSource) layer.getResource(FeatureSource.class, new SubProgressMonitor(monitor, 1));
         if (source == null) {
             return;
         }
