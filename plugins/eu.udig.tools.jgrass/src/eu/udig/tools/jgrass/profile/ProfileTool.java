@@ -18,8 +18,6 @@
  */
 package eu.udig.tools.jgrass.profile;
 
-import static eu.hydrologis.jgrass.libs.utils.JGrassConstants.isNovalue;
-
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -52,6 +50,9 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.ViewType;
+import org.geotools.gce.grassraster.GrassCoverageReadParam;
+import org.geotools.gce.grassraster.GrassCoverageReader;
+import org.geotools.gce.grassraster.JGrassRegion;
 import org.geotools.geometry.jts.JTS;
 import org.opengis.referencing.datum.PixelInCell;
 import org.opengis.referencing.operation.TransformException;
@@ -59,15 +60,9 @@ import org.opengis.referencing.operation.TransformException;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 
-import eu.hydrologis.jgrass.libs.iodrivers.geotools.GrassCoverageReadParam;
-import eu.hydrologis.jgrass.libs.iodrivers.geotools.GrassCoverageReader;
-import eu.hydrologis.jgrass.libs.map.JGrassRasterMapReader;
-import eu.hydrologis.jgrass.libs.map.RasterData;
-import eu.hydrologis.jgrass.libs.region.JGrassRegion;
-import eu.hydrologis.jgrass.libs.utils.monitor.EclipseProgressMonitorAdapter;
-import eu.hydrologis.jgrass.libs.utils.raster.RasterUtilities;
-import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
 import eu.udig.tools.jgrass.JGrassToolsPlugin;
+import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities;
+import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.ProfilePoint;
 
 /**
  * <p>
@@ -89,7 +84,7 @@ public class ProfileTool extends SimpleTool {
     private double latestProgessiveDistance = 0;
     private boolean doubleClicked = false;
 
-    private JGrassMapGeoResource rasterMapResource;
+    private GridCoverage2D rasterMapResource;
 
     private ProfileView chartView;
 
@@ -137,33 +132,27 @@ public class ProfileTool extends SimpleTool {
         /*
          * run with backgroundable progress monitoring
          */
-        System.out.println("out out");
-
         if (command == null || !command.isValid()) {
             command = new ProfileFeedbackCommand();
             getContext().sendASyncCommand(command);
         }
-        
-        
+
         IRunnableWithProgress operation = new IRunnableWithProgress(){
 
-            public void run( IProgressMonitor pm ) throws InvocationTargetException,
-                    InterruptedException {
+            public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
                 try {
                     profile(pm);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
-                    
+
                     String message = "An error occurred while extracting the profile from the map.";
-                    ExceptionDetailsDialog.openError(null, message, IStatus.ERROR,
-                            JGrassToolsPlugin.PLUGIN_ID, e);
+                    ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, e);
                 }
             }
 
         };
 
         PlatformGIS.runInProgressDialog("Profile extraction...", true, operation, true);
-        
 
     }
 
@@ -195,8 +184,7 @@ public class ProfileTool extends SimpleTool {
      * @param
      * @throws IOException 
      */
-    private void profile( IProgressMonitor pm ) throws IOException {
-        EclipseProgressMonitorAdapter monitor = new EclipseProgressMonitorAdapter(pm);
+    private void profile( IProgressMonitor monitor ) throws Exception {
         if (points.size() == currentPointNumber && points.size() > 1) {
             // no point added, do not read
             return;
@@ -217,46 +205,23 @@ public class ProfileTool extends SimpleTool {
 
             Point lastPoint = points.get(points.size() - 1);
             Coordinate end = getContext().pixelToWorld(lastPoint.x, lastPoint.y);
-            Envelope envelope = new Envelope(begin, end);
 
-            // get the active region which is needed for the resolution
-            JGrassRegion activeRegion = rasterMapResource.getActiveWindow();
-            // we need to read only the part with the line in it
-            JGrassRegion tmpWindow = JGrassRegion.adaptActiveRegionToEnvelope(envelope,
-                    activeRegion);
-            // Window tmpWindow = new Window(envelope.getMinX(), envelope.getMaxX(), envelope
-            // .getMinY(), envelope.getMaxY(), activeRegion.getWEResolution(), activeRegion
-            // .getNSResolution());
-
-            
-            GrassCoverageReader coverageReader = new GrassCoverageReader(PixelInCell.CELL_CENTER, null, true, false, monitor);
-            coverageReader.setInput(rasterMapResource.getMapFile());
-            GrassCoverageReadParam gcReadParam = new GrassCoverageReadParam(tmpWindow);
-            GridCoverage2D coverage = coverageReader.read(gcReadParam);
-            coverage = coverage.view(ViewType.GEOPHYSICS);
-            RandomIter mapIterator = RandomIterFactory.create(coverage.getRenderedImage(), null);
-            
-            double resolution = tmpWindow.getWEResolution();
-            RasterUtilities rUtilities = new RasterUtilities();
-            final List<Double[]> currentProfile = rUtilities.doProfile(begin.x, begin.y, end.x,
-                    end.y, resolution, resolution, tmpWindow, mapIterator);
-            mapIterator.done();
-            
+            final List<ProfilePoint> profile = CoverageUtilities.doProfile(begin, end, rasterMapResource);
             begin = end;
 
             Display.getDefault().syncExec(new Runnable(){
                 public void run() {
-                    double last = 0.0;
-                    for( Double[] doubles : currentProfile ) {
-                        last = doubles[0] + latestProgessiveDistance;
-                        if (!isNovalue(doubles[1])) {
-                            chartView.addToSeries(last, doubles[1]);
+                    for( ProfilePoint profilePoint : profile ) {
+                        double elevation = profilePoint.getElevation();
+                        if (!Double.isNaN(elevation)) {
+                            chartView.addToSeries(profilePoint.getProgressive(), elevation);
                         } else {
-                            chartView.addToSeries(last, 0.0);
+                            chartView.addToSeries(profilePoint.getProgressive(), 0.0);
                         }
                     }
-                    chartView.addStopLine(last);
-                    latestProgessiveDistance = last;
+                    ProfilePoint last = profile.get(profile.size() - 1);
+                    chartView.addStopLine(last.getProgressive());
+                    latestProgessiveDistance = last.getProgressive();
                 }
             });
 
@@ -276,11 +241,10 @@ public class ProfileTool extends SimpleTool {
         } else {
             // on tool activation
             final ILayer selectedLayer = getContext().getSelectedLayer();
-            if (selectedLayer.getGeoResource().canResolve(JGrassMapGeoResource.class)) {
-
+            if (selectedLayer.getGeoResource().canResolve(GridCoverage2D.class)) {
                 try {
-                    rasterMapResource = selectedLayer.getGeoResource().resolve(
-                            JGrassMapGeoResource.class, new NullProgressMonitor());
+                    rasterMapResource = selectedLayer.getGeoResource().resolve(GridCoverage2D.class, new NullProgressMonitor());
+                    rasterMapResource = rasterMapResource.view(ViewType.GEOPHYSICS);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -290,8 +254,7 @@ public class ProfileTool extends SimpleTool {
                     public void run() {
                         Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
                         MessageBox msgBox = new MessageBox(shell, SWT.ICON_ERROR);
-                        msgBox
-                                .setMessage("The profile tool works only on JGrass layer resources. Please select a proper layer.");
+                        msgBox.setMessage("The profile tool works only on coverage layer resources. Please select a proper layer.");
                         msgBox.open();
                     }
 
@@ -300,8 +263,7 @@ public class ProfileTool extends SimpleTool {
                 return;
             }
 
-            final IStatusLineManager statusBar = getContext().getActionBars()
-                    .getStatusLineManager();
+            final IStatusLineManager statusBar = getContext().getActionBars().getStatusLineManager();
             disposeCommand();
             if (statusBar == null)
                 return; // shouldn't happen if the tool is being used.
@@ -312,10 +274,8 @@ public class ProfileTool extends SimpleTool {
                     statusBar.setMessage(null);
 
                     try {
-                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                                .showView(ProfileView.ID);
-                        chartView = ((ProfileView) PlatformUI.getWorkbench()
-                                .getActiveWorkbenchWindow().getActivePage()
+                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(ProfileView.ID);
+                        chartView = ((ProfileView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
                                 .findView(ProfileView.ID));
                     } catch (PartInitException e) {
                         e.printStackTrace();
