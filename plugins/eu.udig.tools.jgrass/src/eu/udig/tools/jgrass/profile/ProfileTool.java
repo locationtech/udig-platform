@@ -30,6 +30,7 @@ import java.util.List;
 import javax.media.jai.iterator.RandomIter;
 import javax.media.jai.iterator.RandomIterFactory;
 
+import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
@@ -54,6 +55,7 @@ import org.geotools.gce.grassraster.GrassCoverageReadParam;
 import org.geotools.gce.grassraster.GrassCoverageReader;
 import org.geotools.gce.grassraster.JGrassRegion;
 import org.geotools.geometry.jts.JTS;
+import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.referencing.datum.PixelInCell;
 import org.opengis.referencing.operation.TransformException;
 
@@ -137,22 +139,23 @@ public class ProfileTool extends SimpleTool {
             getContext().sendASyncCommand(command);
         }
 
-        IRunnableWithProgress operation = new IRunnableWithProgress(){
+        // IRunnableWithProgress operation = new IRunnableWithProgress(){
+        //
+        // public void run( IProgressMonitor pm ) throws InvocationTargetException,
+        // InterruptedException {
+        try {
+            profile(null);
+        } catch (Exception ex) {
+            ex.printStackTrace();
 
-            public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
-                try {
-                    profile(pm);
-                } catch (Exception e) {
-                    e.printStackTrace();
+            String message = "An error occurred while extracting the profile from the map.";
+            ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, ex);
+        }
+        // }
+        //
+        // };
 
-                    String message = "An error occurred while extracting the profile from the map.";
-                    ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, e);
-                }
-            }
-
-        };
-
-        PlatformGIS.runInProgressDialog("Profile extraction...", true, operation, true);
+        // PlatformGIS.runInProgressDialog("Profile extraction...", true, operation, true);
 
     }
 
@@ -201,7 +204,7 @@ public class ProfileTool extends SimpleTool {
             Point beforeLastPoint = points.get(0);
             begin = getContext().pixelToWorld(beforeLastPoint.x, beforeLastPoint.y);
         } else if (points.size() > 1) {
-            monitor.beginTask("Extracting profile...", IProgressMonitor.UNKNOWN);
+            // monitor.beginTask("Extracting profile...", IProgressMonitor.UNKNOWN);
 
             Point lastPoint = points.get(points.size() - 1);
             Coordinate end = getContext().pixelToWorld(lastPoint.x, lastPoint.y);
@@ -214,18 +217,18 @@ public class ProfileTool extends SimpleTool {
                     for( ProfilePoint profilePoint : profile ) {
                         double elevation = profilePoint.getElevation();
                         if (!Double.isNaN(elevation)) {
-                            chartView.addToSeries(profilePoint.getProgressive(), elevation);
+                            chartView.addToSeries(latestProgessiveDistance + profilePoint.getProgressive(), elevation);
                         } else {
-                            chartView.addToSeries(profilePoint.getProgressive(), 0.0);
+                            chartView.addToSeries(latestProgessiveDistance + profilePoint.getProgressive(), 0.0);
                         }
                     }
                     ProfilePoint last = profile.get(profile.size() - 1);
-                    chartView.addStopLine(last.getProgressive());
-                    latestProgessiveDistance = last.getProgressive();
+                    chartView.addStopLine(latestProgessiveDistance + last.getProgressive());
+                    latestProgessiveDistance = latestProgessiveDistance + last.getProgressive();
                 }
             });
 
-            monitor.done();
+            // monitor.done();
         }
 
     }
@@ -241,13 +244,21 @@ public class ProfileTool extends SimpleTool {
         } else {
             // on tool activation
             final ILayer selectedLayer = getContext().getSelectedLayer();
-            if (selectedLayer.getGeoResource().canResolve(GridCoverage2D.class)) {
-                try {
-                    rasterMapResource = selectedLayer.getGeoResource().resolve(GridCoverage2D.class, new NullProgressMonitor());
-                    rasterMapResource = rasterMapResource.view(ViewType.GEOPHYSICS);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            final IGeoResource geoResource = selectedLayer.getGeoResource();
+            if (geoResource.canResolve(GridCoverage.class)) {
+                IRunnableWithProgress operation = new IRunnableWithProgress(){
+                    public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
+                        try {
+                            rasterMapResource = (GridCoverage2D) geoResource.resolve(GridCoverage.class,
+                                    new NullProgressMonitor());
+                            rasterMapResource = rasterMapResource.view(ViewType.GEOPHYSICS);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                PlatformGIS.runInProgressDialog("Reading map...", true, operation, true);
+
             } else {
 
                 Display.getDefault().asyncExec(new Runnable(){

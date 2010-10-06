@@ -31,7 +31,7 @@
             icon="icons/profileview.png"
             id="eu.udig.tools.jgrass.profiletool"
             name="%profile.name"
-            onToolbar="false"
+            onToolbar="true"
             toolCursorId="profileCursor"
             tooltip="%profile.tooltip">
                <cursor
@@ -73,7 +73,8 @@
             class="eu.udig.tools.jgrass.profile.ProfileView"
             icon="icons/profileview.png"
             id="eu.udig.tools.jgrass.profileview"
-            name="Profile View">
+            name="Profile View"
+            restorable="false">
       </view>
    </extension>
    <extension

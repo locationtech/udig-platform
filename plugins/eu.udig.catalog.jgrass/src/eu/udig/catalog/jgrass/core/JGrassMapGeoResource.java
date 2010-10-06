@@ -141,16 +141,10 @@ public class JGrassMapGeoResource extends IGeoResource {
         if (adaptee.isAssignableFrom(IGeoResource.class)) {
             return adaptee.cast(this);
         }
-        if (adaptee.isAssignableFrom(GridCoverage2D.class)) {
+        if (adaptee.isAssignableFrom(GridCoverage.class)) {
             try {
-                CoordinateReferenceSystem crs = jGrassMapEnvironment.getCoordinateReferenceSystem();
-                JGrassRegion jGrassRegion = jGrassMapEnvironment.getActiveRegion();
-                GeneralParameterValue[] readParams = JGrassCatalogUtilities.createGridGeometryGeneralParameter(
-                        jGrassRegion.getCols(), jGrassRegion.getRows(), jGrassRegion.getNorth(), jGrassRegion.getSouth(),
-                        jGrassRegion.getWest(), jGrassRegion.getEast(), crs);
-                AbstractGridFormat format = (AbstractGridFormat) new GrassCoverageFormatFactory().createFormat();
-                GridCoverageReader reader = format.getReader(jGrassMapEnvironment.getCELL());
-                GridCoverage2D mapCoverage = ((GridCoverage2D) reader.read(readParams));
+                JGrassRegion jGrassRegion = jGrassMapEnvironment.getFileRegion();
+                GridCoverage2D mapCoverage = JGrassCatalogUtilities.getGridcoverageFromGrassraster(jGrassMapEnvironment, jGrassRegion);
                 return adaptee.cast(mapCoverage);
             } catch (Exception e) {
                 msg = e;

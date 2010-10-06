@@ -164,7 +164,7 @@ public class TiffAsciiExportWizard extends Wizard implements IExportWizard {
                     //
                     // } else
                     if (geoResource.canResolve(GridCoverage.class)) {
-                        GridCoverage2D coverage2D = geoResource.resolve(GridCoverage2D.class, pm);
+                        GridCoverage2D coverage2D = (GridCoverage2D) geoResource.resolve(GridCoverage.class, pm);
                         dumpMap(coverage2D, fileCrs, newCrs, newPath, isAscii, isTiff);
                     } else {
                         throw new IOException("The selected resource doesn't seem to be a coverage layer: " + geoResource.getTitle());
