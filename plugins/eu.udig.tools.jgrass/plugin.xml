@@ -96,6 +96,14 @@
             targetClass="net.refractions.udig.project.ILayer">
          <enablement></enablement>
       </operation>
+      <operation
+            class="eu.udig.tools.jgrass.profile.FeatureOnCoverageProfileOperation"
+            enablesFor="2"
+            id="eu.udig.tools.jgrass.profile.fromfeature"
+            name="%feature.profile"
+            targetClass="net.refractions.udig.project.ILayer">
+         <enablement></enablement>
+      </operation>
    </extension>
    <extension
          point="org.eclipse.ui.importWizards">
