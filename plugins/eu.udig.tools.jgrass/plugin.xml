@@ -97,5 +97,17 @@
          <enablement></enablement>
       </operation>
    </extension>
-
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <wizard
+            category="net.refractions.udig.catalog.ui.dataImportWizard"
+            class="eu.udig.tools.jgrass.csv.CsvImportWizard"
+            icon="icons/workset_wiz.png"
+            id="eu.udig.tools.jgrass.csv.CsvImportWizard"
+            name="CSV import">
+         <description>
+            Import a file in the CSV format from the local file system into the workspace.
+         </description>
+      </wizard>
+   </extension>
 </plugin>

@@ -11,6 +11,7 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.libs,
  net.refractions.udig.project.ui,
  net.refractions.udig.catalog.rasterings;bundle-version="1.2.0",
- net.refractions.udig.style.sld;bundle-version="1.2.0"
+ net.refractions.udig.style.sld;bundle-version="1.2.0",
+ eu.udig.catalog.jgrass;bundle-version="1.0.0"
 Eclipse-LazyStart: true
 Bundle-ClassPath: .
