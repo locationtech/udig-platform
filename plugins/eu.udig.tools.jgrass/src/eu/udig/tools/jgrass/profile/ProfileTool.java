@@ -27,9 +27,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.media.jai.iterator.RandomIter;
-import javax.media.jai.iterator.RandomIterFactory;
-
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
@@ -51,16 +48,11 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.ViewType;
-import org.geotools.gce.grassraster.GrassCoverageReadParam;
-import org.geotools.gce.grassraster.GrassCoverageReader;
-import org.geotools.gce.grassraster.JGrassRegion;
 import org.geotools.geometry.jts.JTS;
 import org.opengis.coverage.grid.GridCoverage;
-import org.opengis.referencing.datum.PixelInCell;
 import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
 
 import eu.udig.tools.jgrass.JGrassToolsPlugin;
 import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities;
@@ -87,14 +79,9 @@ public class ProfileTool extends SimpleTool {
     private boolean doubleClicked = false;
 
     private GridCoverage2D rasterMapResource;
-
     private ProfileView chartView;
-
     private Coordinate begin;
 
-    /**
-     * 
-     */
     public ProfileTool() {
         super(MOUSE | MOTION);
     }
@@ -139,10 +126,6 @@ public class ProfileTool extends SimpleTool {
             getContext().sendASyncCommand(command);
         }
 
-        // IRunnableWithProgress operation = new IRunnableWithProgress(){
-        //
-        // public void run( IProgressMonitor pm ) throws InvocationTargetException,
-        // InterruptedException {
         try {
             profile(null);
         } catch (Exception ex) {
@@ -151,12 +134,6 @@ public class ProfileTool extends SimpleTool {
             String message = "An error occurred while extracting the profile from the map.";
             ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, ex);
         }
-        // }
-        //
-        // };
-
-        // PlatformGIS.runInProgressDialog("Profile extraction...", true, operation, true);
-
     }
 
     protected void onMouseDoubleClicked( MapMouseEvent e ) {
@@ -181,10 +158,9 @@ public class ProfileTool extends SimpleTool {
     }
 
     /**
-     * Creates the profile of the raster map and updates the two graphical components (table and
-     * linechart)
+     * Creates the profile of the raster map.
      * 
-     * @param
+     * @param monitor the progress monitor.
      * @throws IOException 
      */
     private void profile( IProgressMonitor monitor ) throws Exception {

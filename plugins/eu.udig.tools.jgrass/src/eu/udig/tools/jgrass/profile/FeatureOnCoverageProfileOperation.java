@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -39,12 +40,14 @@ import org.opengis.feature.type.GeometryDescriptor;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 
+import eu.udig.tools.jgrass.JGrassToolsPlugin;
 import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities;
 import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.ProfilePoint;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.style.sld.SLD;
+import net.refractions.udig.ui.ExceptionDetailsDialog;
 import net.refractions.udig.ui.operations.IOp;
 
 /**
@@ -125,10 +128,10 @@ public class FeatureOnCoverageProfileOperation implements IOp {
                         latestProgessiveDistance = latestProgessiveDistance + last.getProgressive();
                     }
 
-                } catch (PartInitException e) {
-                    e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    String message = "An error occurred while extracting the profile data";
+                    ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, e);
                 }
             }
         });
