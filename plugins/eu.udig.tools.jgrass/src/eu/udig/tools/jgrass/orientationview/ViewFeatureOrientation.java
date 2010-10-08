@@ -38,8 +38,14 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.filter.text.cql2.CQL;
+import org.geotools.filter.text.cql2.CQLException;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
+import org.opengis.filter.Filter;
+import org.opengis.geometry.BoundingBox;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -53,12 +59,17 @@ public class ViewFeatureOrientation implements IOp {
 
     public void op( final Display display, Object target, IProgressMonitor monitor ) throws Exception {
         ILayer layer = (ILayer) target;
-        SimpleFeatureSource source = (SimpleFeatureSource) layer.getResource(FeatureSource.class, new SubProgressMonitor(monitor, 1));
+        SimpleFeatureSource source = (SimpleFeatureSource) layer.getResource(FeatureSource.class, new SubProgressMonitor(monitor,
+                1));
         if (source == null) {
             return;
         }
-        SimpleFeatureCollection featureCollection = source.getFeatures();
-        GeometryDescriptor geometryDescriptor = featureCollection.getSchema().getGeometryDescriptor();
+        SimpleFeatureType schema = source.getSchema();
+        GeometryDescriptor geometryDescriptor = schema.getGeometryDescriptor();
+        ReferencedEnvelope bounds = ApplicationGIS.getActiveMap().getViewportModel().getBounds();
+        String name = geometryDescriptor.getLocalName();
+        Filter bboxFilter = getBboxFilter(name, bounds);
+        SimpleFeatureCollection featureCollection = source.getFeatures(bboxFilter);
         if (!SLD.isLine(geometryDescriptor)) {
             display.asyncExec(new Runnable(){
                 public void run() {
@@ -86,5 +97,58 @@ public class ViewFeatureOrientation implements IOp {
         IDrawCommand compositeCommand = toolContext.getDrawFactory().createCompositeDrawCommand(commands);
         toolContext.sendASyncCommand(compositeCommand);
 
+    }
+    
+    /**
+     * Create a bounding box filter from a bounding box.
+     * 
+     * @param attribute the geometry attribute or null in the case of default "the_geom".
+     * @param bbox the {@link BoundingBox}.
+     * @return the filter.
+     * @throws CQLException
+     */
+    public static Filter getBboxFilter( String attribute, BoundingBox bbox ) throws CQLException {
+        double w = bbox.getMinX();
+        double e = bbox.getMaxX();
+        double s = bbox.getMinY();
+        double n = bbox.getMaxY();
+
+        return getBboxFilter(attribute, w, e, s, n);
+    }
+
+    /**
+     * Create a bounding box filter from the bounds coordinates.
+     * 
+     * @param attribute the geometry attribute or null in the case of default "the_geom".
+     * @param west western bound coordinate.
+     * @param east eastern bound coordinate.
+     * @param south southern bound coordinate.
+     * @param north northern bound coordinate.
+     * @return the filter.
+     * @throws CQLException
+     */
+    public static Filter getBboxFilter( String attribute, double west, double east, double south, double north )
+            throws CQLException {
+
+        if (attribute == null) {
+            attribute = "the_geom";
+        }
+
+        StringBuilder sB = new StringBuilder();
+        sB.append("BBOX(");
+        sB.append(attribute);
+        sB.append(",");
+        sB.append(west);
+        sB.append(",");
+        sB.append(south);
+        sB.append(",");
+        sB.append(east);
+        sB.append(",");
+        sB.append(north);
+        sB.append(")");
+
+        Filter bboxFilter = CQL.toFilter(sB.toString());
+
+        return bboxFilter;
     }
 }
