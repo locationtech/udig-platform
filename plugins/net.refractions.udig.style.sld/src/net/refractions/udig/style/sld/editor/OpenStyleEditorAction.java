@@ -78,17 +78,17 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
 
         try {
             if (SLD.POINT.supports(selectedLayer)) {
-                Class< ? > pointClass = Class.forName("eu.hydrologis.jgrass.style.editorpages.SimplePointEditorPage"); //$NON-NLS-1$
+                Class< ? > pointClass = Class.forName("eu.udig.style.advanced.editorpages.SimplePointEditorPage"); //$NON-NLS-1$
                 Field idField = pointClass.getField("ID"); //$NON-NLS-1$
                 Object value = idField.get(null);
                 pageId = value.toString();
             } else if (SLD.LINE.supports(selectedLayer)) {
-                Class< ? > pointClass = Class.forName("eu.hydrologis.jgrass.style.editorpages.SimpleLineEditorPage"); //$NON-NLS-1$
+                Class< ? > pointClass = Class.forName("eu.udig.style.advanced.editorpages.SimpleLineEditorPage"); //$NON-NLS-1$
                 Field idField = pointClass.getField("ID"); //$NON-NLS-1$
                 Object value = idField.get(null);
                 pageId = value.toString();
             } else if (SLD.POLYGON.supports(selectedLayer)) {
-                Class< ? > pointClass = Class.forName("eu.hydrologis.jgrass.style.editorpages.SimplePolygonEditorPage"); //$NON-NLS-1$
+                Class< ? > pointClass = Class.forName("eu.udig.style.advanced.editorpages.SimplePolygonEditorPage"); //$NON-NLS-1$
                 Field idField = pointClass.getField("ID"); //$NON-NLS-1$
                 Object value = idField.get(null);
                 pageId = value.toString();
