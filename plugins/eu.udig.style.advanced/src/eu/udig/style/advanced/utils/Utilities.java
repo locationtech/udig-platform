@@ -850,6 +850,8 @@ public class Utilities {
             format = "image/png";
         } else if (path.toLowerCase().endsWith(".jpg")) {
             format = "image/jpg";
+        } else if (path.toLowerCase().endsWith(".gif")) {
+            format = "image/gif";
         } else if (path.toLowerCase().endsWith(".svg")) {
             format = "image/svg+xml";
         }
@@ -868,6 +870,8 @@ public class Utilities {
             format = "image/png";
         } else if (name.toLowerCase().endsWith(".jpg")) {
             format = "image/jpg";
+        } else if (name.toLowerCase().endsWith(".gif")) {
+            format = "image/gif";
         } else if (name.toLowerCase().endsWith(".svg")) {
             format = "image/svg+xml";
         } else {

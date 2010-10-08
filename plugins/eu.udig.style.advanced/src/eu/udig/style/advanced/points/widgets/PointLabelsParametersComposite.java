@@ -369,6 +369,8 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         } else {
             spaceAroundText.setText("");
         }
+        
+        checkEnablements();
     }
 
     /**
@@ -490,6 +492,16 @@ public class PointLabelsParametersComposite extends ParameterComposite {
             spaceAroundText.setText("");
         }
 
+        checkEnablements();
+    }
+    
+    private void checkEnablements(){
+        boolean comboIsNone = comboIsNone(labelNameAttributecombo);
+        labelNameText.setEnabled(comboIsNone);
+        comboIsNone = comboIsNone(rotationAttributecombo);
+        rotationSpinner.setEnabled(comboIsNone);
+        comboIsNone = comboIsNone(labelOpacityAttributecombo);
+        labelOpacitySpinner.setEnabled(comboIsNone);
     }
 
     public void widgetSelected( SelectionEvent e ) {
@@ -562,6 +574,8 @@ public class PointLabelsParametersComposite extends ParameterComposite {
             
             notifyListeners(opacityField, true, STYLEEVENTTYPE.LABELOPACITY);
         }
+        
+        checkEnablements();
     }
 
     public void focusGained( FocusEvent e ) {

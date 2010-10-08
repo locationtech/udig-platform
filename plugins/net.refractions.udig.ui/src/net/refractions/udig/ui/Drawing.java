@@ -360,7 +360,11 @@ public final class Drawing {
                  g.setTransform(AffineTransform.getRotateInstance(rotation));
                  
                  RenderedImage image = (RenderedImage)style.getImage();
-                g.drawImage(image, (int)(point[0]-((double)image.getWidth())/(double)2), (int)(point[1]-((double)image.getHeight())/(double)2));
+                 try{
+                     g.drawImage(image, (int)(point[0]-((double)image.getWidth())/(double)2), (int)(point[1]-((double)image.getHeight())/(double)2));
+                 }catch (Exception e) {
+                     g.drawImage(image, 0,0);
+                }
              }
         }
     }

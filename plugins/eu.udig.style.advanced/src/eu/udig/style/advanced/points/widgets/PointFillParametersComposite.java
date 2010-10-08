@@ -71,7 +71,8 @@ public class PointFillParametersComposite extends ParameterComposite {
      * @param ruleWrapper the rule to take the info from.
      */
     public void init( RuleWrapper ruleWrapper ) {
-        PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(PointSymbolizerWrapper.class);
+        PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
+                PointSymbolizerWrapper.class);
 
         mainComposite = new Composite(parent, SWT.NONE);
         mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -95,7 +96,7 @@ public class PointFillParametersComposite extends ParameterComposite {
         Label fieldsLabel = new Label(mainComposite, SWT.NONE);
         fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
         fieldsLabel.setText("Field based");
-        
+
         // border alpha
         Label fillOpactityLabel = new Label(mainComposite, SWT.NONE);
         fillOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -141,6 +142,8 @@ public class PointFillParametersComposite extends ParameterComposite {
         GridData fillColorButtonGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         fillColorButtonGD.horizontalSpan = 2;
         fillColorButton.setLayoutData(fillColorButtonGD);
+
+        checkEnablements();
     }
 
     /**
@@ -149,7 +152,8 @@ public class PointFillParametersComposite extends ParameterComposite {
      * @param ruleWrapper the rule to take the info from.
      */
     public void update( RuleWrapper ruleWrapper ) {
-        PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(PointSymbolizerWrapper.class);
+        PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
+                PointSymbolizerWrapper.class);
 
         boolean widgetEnabled = pointSymbolizerWrapper.hasFill();
         fillEnableButton.setSelection(widgetEnabled);
@@ -176,6 +180,13 @@ public class PointFillParametersComposite extends ParameterComposite {
                 fillOpacityAttributecombo.select(index);
             }
         }
+
+        checkEnablements();
+    }
+
+    private void checkEnablements() {
+        boolean comboIsNone = comboIsNone(fillOpacityAttributecombo);
+        fillOpacitySpinner.setEnabled(comboIsNone);
     }
 
     public void widgetSelected( SelectionEvent e ) {
@@ -188,19 +199,23 @@ public class PointFillParametersComposite extends ParameterComposite {
             Expression colorExpr = ff.literal(color);
             String fillColor = colorExpr.evaluate(null, String.class);
             notifyListeners(fillColor, false, STYLEEVENTTYPE.FILLCOLOR);
-        } else if (source.equals(fillOpacitySpinner)) {
-            int opacity = fillOpacitySpinner.getSelection();
-            float opacityNorm = opacity / 100f;
-            String fillOpacity = String.valueOf(opacityNorm);
-            notifyListeners(fillOpacity, false, STYLEEVENTTYPE.FILLOPACITY);
-        } else if (source.equals(fillOpacityAttributecombo)) {
-            int index = fillOpacityAttributecombo.getSelectionIndex();
-            String field = fillOpacityAttributecombo.getItem(index);
-            if (field.length() == 0) {
-                return;
+        } else if (source.equals(fillOpacitySpinner) || source.equals(fillOpacityAttributecombo)) {
+            boolean comboIsNone = comboIsNone(fillOpacityAttributecombo);
+            if (comboIsNone) {
+                int opacity = fillOpacitySpinner.getSelection();
+                float opacityNorm = opacity / 100f;
+                String fillOpacity = String.valueOf(opacityNorm);
+                notifyListeners(fillOpacity, false, STYLEEVENTTYPE.FILLOPACITY);
+            } else {
+                int index = fillOpacityAttributecombo.getSelectionIndex();
+                String field = fillOpacityAttributecombo.getItem(index);
+                if (field.length() == 0) {
+                    return;
+                }
+                notifyListeners(field, true, STYLEEVENTTYPE.FILLOPACITY);
             }
-            notifyListeners(field, true, STYLEEVENTTYPE.FILLOPACITY);
         }
+        checkEnablements();
     }
 
 }

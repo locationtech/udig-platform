@@ -1,10 +1,14 @@
 package eu.udig.style.advanced.points;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import net.refractions.udig.style.sld.SLD;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.ModifyEvent;
@@ -16,6 +20,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.TabFolder;
@@ -24,6 +29,7 @@ import org.eclipse.swt.widgets.Text;
 import org.geotools.styling.Font;
 import org.geotools.styling.TextSymbolizer;
 
+import eu.udig.style.advanced.StylePlugin;
 import eu.udig.style.advanced.common.IStyleChangesListener;
 import eu.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
@@ -170,7 +176,15 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
                     pointPropertiesEditor.refreshPreviewCanvasOnStyle();
                 } else {
                     try {
-                        pointSymbolizerWrapper.setExternalGraphicPath("");
+                        URL iconUrl = Platform.getBundle(StylePlugin.PLUGIN_ID).getResource("icons/delete.png");
+                        String iconPath = "";
+                        try {
+                            iconPath = FileLocator.toFileURL(iconUrl).getPath();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        pointSymbolizerWrapper.setExternalGraphicPath(iconPath);
+                        graphicsPathText.setText(iconPath);
                     } catch (MalformedURLException e1) {
                         // can't happen
                     }

@@ -48,7 +48,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-process-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-property-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-2.7-SNAPSHOT.jar" sourcepath="C:/Users/moovida/.m2/repository/org/geotools/gt-referencing/2.7-SNAPSHOT/gt-referencing-2.7-SNAPSHOT-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-render-2.7-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-render-2.7-SNAPSHOT.jar" sourcepath="/home/moovida/.m2/repository/org/geotools/gt-render/2.7-SNAPSHOT/gt-render-2.7-SNAPSHOT-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-renderer-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-svg-2.7-SNAPSHOT.jar"/>
