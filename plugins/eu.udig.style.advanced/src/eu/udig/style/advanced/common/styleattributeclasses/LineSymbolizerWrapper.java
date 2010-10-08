@@ -60,8 +60,8 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
     
     
 
-    public LineSymbolizerWrapper( PolygonSymbolizer symbolizer, RuleWrapper parent ) {
-        super(symbolizer, parent);
+    public LineSymbolizerWrapper( PolygonSymbolizer polygonSymbolizer, RuleWrapper parent ) {
+        super(polygonSymbolizer, parent);
     }
         
     public LineSymbolizerWrapper( Symbolizer symbolizer, RuleWrapper parent ) {
@@ -83,9 +83,9 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
         if (stroke != null) {
             strokeColor = stroke.getColor().evaluate(null, String.class);
             Expression width = stroke.getWidth();
-            strokeWidth = width.evaluate(null, String.class);
+            strokeWidth = expressionToString(width);
             Expression opacity = stroke.getOpacity();
-            strokeOpacity = opacity.evaluate(null, String.class);
+            strokeOpacity = expressionToString(opacity);
 
             if (strokeColor == null) {
                 strokeColor = DEFAULT_COLOR;

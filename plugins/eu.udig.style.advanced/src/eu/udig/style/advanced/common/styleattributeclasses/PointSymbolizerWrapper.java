@@ -107,7 +107,8 @@ public class PointSymbolizerWrapper extends SymbolizerWrapper {
             fill = mark.getFill();
             if (fill != null) {
                 fillColor = fill.getColor().evaluate(null, String.class);
-                fillOpacity = fill.getOpacity().evaluate(null, String.class);
+                Expression opacityExpr = fill.getOpacity();
+                fillOpacity = expressionToString(opacityExpr);
                 hasFill = true;
             } else {
                 hasFill = false;

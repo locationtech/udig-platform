@@ -238,6 +238,15 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         GridData wkmColorButtonGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         wkmColorButton.setLayoutData(wkmColorButtonGD);
 
+        // header
+        new Label(mainComposite, SWT.NONE);
+        Label valueLabel = new Label(mainComposite, SWT.NONE);
+        valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        valueLabel.setText("Manual");
+        Label fieldsLabel = new Label(mainComposite, SWT.NONE);
+        fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        fieldsLabel.setText("Field based");
+
         // border alpha
         Label fillOpactityLabel = new Label(mainComposite, SWT.NONE);
         fillOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -260,6 +269,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         fillOpacityAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         fillOpacityAttributecombo.setItems(numericAttributesArrays);
         fillOpacityAttributecombo.addSelectionListener(this);
+        fillOpacityAttributecombo.select(0);
         if (tmpOpacity == null) {
             int index = getAttributeIndex(opacity, numericAttributesArrays);
             if (index != -1) {
@@ -267,6 +277,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
             }
         }
 
+        checkEnablements();
     }
 
     /**
@@ -342,6 +353,13 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
                 fillOpacityAttributecombo.select(index);
             }
         }
+
+        checkEnablements();
+    }
+
+    private void checkEnablements() {
+        boolean comboIsNone = comboIsNone(fillOpacityAttributecombo);
+        fillOpacitySpinner.setEnabled(comboIsNone);
     }
 
     public void widgetSelected( SelectionEvent e ) {
@@ -354,22 +372,27 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
             Expression colorExpr = ff.literal(color);
             String fillColor = colorExpr.evaluate(null, String.class);
             notifyListeners(fillColor, false, STYLEEVENTTYPE.FILLCOLOR);
-        } else if (source.equals(fillOpacitySpinner)) {
-            int opacity = fillOpacitySpinner.getSelection();
-            float opacityNorm = opacity / 100f;
-            String fillOpacity = String.valueOf(opacityNorm);
-            notifyListeners(fillOpacity, false, STYLEEVENTTYPE.FILLOPACITY);
-        } else if (source.equals(fillOpacityAttributecombo)) {
-            int index = fillOpacityAttributecombo.getSelectionIndex();
-            String field = fillOpacityAttributecombo.getItem(index);
-            if (field.length() == 0) {
-                return;
+        } else if (source.equals(fillOpacitySpinner) || source.equals(fillOpacityAttributecombo)) {
+            boolean comboIsNone = comboIsNone(fillOpacityAttributecombo);
+            if (comboIsNone) {
+                int opacity = fillOpacitySpinner.getSelection();
+                float opacityNorm = opacity / 100f;
+                String fillOpacity = String.valueOf(opacityNorm);
+                notifyListeners(fillOpacity, false, STYLEEVENTTYPE.FILLOPACITY);
+            } else {
+                int index = fillOpacityAttributecombo.getSelectionIndex();
+                String field = fillOpacityAttributecombo.getItem(index);
+                if (field.length() == 0) {
+                    return;
+                }
+                notifyListeners(field, true, STYLEEVENTTYPE.FILLOPACITY);
             }
-            notifyListeners(field, true, STYLEEVENTTYPE.FILLOPACITY);
         } else if (source.equals(wkmarkNameCombo) || source.equals(wkmColorButton) || source.equals(wkmWidthSpinner)
                 || source.equals(wkmSizeSpinner)) {
             doWkmGraphics();
         }
+
+        checkEnablements();
     }
     public void modifyText( ModifyEvent e ) {
         Object source = e.getSource();

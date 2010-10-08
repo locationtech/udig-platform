@@ -121,6 +121,15 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         labelEnableButton.setSelection(widgetEnabled);
         labelEnableButton.addSelectionListener(this);
 
+        // header
+        new Label(mainComposite, SWT.NONE);
+        Label valueLabel = new Label(mainComposite, SWT.NONE);
+        valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        valueLabel.setText("Manual");
+        Label fieldsLabel = new Label(mainComposite, SWT.NONE);
+        fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        fieldsLabel.setText("Field based");
+
         // label name
         Label labelNameLabel = new Label(mainComposite, SWT.NONE);
         labelNameLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -135,6 +144,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         labelNameAttributecombo.setLayoutData(labelNameAttributecomboGD);
         labelNameAttributecombo.setItems(allAttributesArrays);
         labelNameAttributecombo.addSelectionListener(this);
+        labelNameAttributecombo.select(0);
         String labelName = textSymbolizerWrapper.getLabelName();
         if (labelName != null) {
             int index = getAttributeIndex(labelName, allAttributesArrays);
@@ -145,6 +155,35 @@ public class LineLabelsParametersComposite extends ParameterComposite {
             }
         } else {
             labelNameText.setText("");
+        }
+
+        // label alpha
+        Label labelOpactityLabel = new Label(mainComposite, SWT.NONE);
+        labelOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        labelOpactityLabel.setText("opacity");
+        labelOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
+        labelOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        labelOpacitySpinner.setMaximum(100);
+        labelOpacitySpinner.setMinimum(0);
+        labelOpacitySpinner.setIncrement(10);
+        String opacity = textSymbolizerWrapper.getOpacity();
+        Double tmpOpacity = isDouble(opacity);
+        int tmp = 100;
+        if (tmpOpacity != null) {
+            tmp = (int) (tmpOpacity.doubleValue() * 100);
+        }
+        labelOpacitySpinner.setSelection(tmp);
+        labelOpacitySpinner.addSelectionListener(this);
+        labelOpacityAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        labelOpacityAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        labelOpacityAttributecombo.setItems(numericAttributesArrays);
+        labelOpacityAttributecombo.addSelectionListener(this);
+        labelOpacityAttributecombo.select(0);
+        if (tmpOpacity == null) {
+            int index = getAttributeIndex(opacity, numericAttributesArrays);
+            if (index != -1) {
+                labelOpacityAttributecombo.select(index);
+            }
         }
 
         // font
@@ -181,34 +220,6 @@ public class LineLabelsParametersComposite extends ParameterComposite {
             tmpColor = Color.black;
         }
         fontColorEditor.setColor(tmpColor);
-
-        // label alpha
-        Label labelOpactityLabel = new Label(mainComposite, SWT.NONE);
-        labelOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        labelOpactityLabel.setText("opacity");
-        labelOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
-        labelOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        labelOpacitySpinner.setMaximum(100);
-        labelOpacitySpinner.setMinimum(0);
-        labelOpacitySpinner.setIncrement(10);
-        String opacity = textSymbolizerWrapper.getOpacity();
-        Double tmpOpacity = isDouble(opacity);
-        int tmp = 100;
-        if (tmpOpacity != null) {
-            tmp = (int) (tmpOpacity.doubleValue() * 100);
-        }
-        labelOpacitySpinner.setSelection(tmp);
-        labelOpacitySpinner.addSelectionListener(this);
-        labelOpacityAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
-        labelOpacityAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        labelOpacityAttributecombo.setItems(numericAttributesArrays);
-        labelOpacityAttributecombo.addSelectionListener(this);
-        if (tmpOpacity == null) {
-            int index = getAttributeIndex(opacity, numericAttributesArrays);
-            if (index != -1) {
-                labelOpacityAttributecombo.select(index);
-            }
-        }
 
         // label halo
         Label haloLabel = new Label(mainComposite, SWT.NONE);
@@ -371,6 +382,8 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         } else {
             maxAngleDeltaText.setText("");
         }
+
+        checkEnablements();
     }
 
     /**
@@ -503,6 +516,14 @@ public class LineLabelsParametersComposite extends ParameterComposite {
             maxAngleDeltaText.setText("");
         }
 
+        checkEnablements();
+    }
+
+    private void checkEnablements() {
+        boolean comboIsNone = comboIsNone(labelNameAttributecombo);
+        labelNameText.setEnabled(comboIsNone);
+        comboIsNone = comboIsNone(labelOpacityAttributecombo);
+        labelOpacitySpinner.setEnabled(comboIsNone);
     }
 
     public void widgetSelected( SelectionEvent e ) {
@@ -511,9 +532,15 @@ public class LineLabelsParametersComposite extends ParameterComposite {
             boolean selected = labelEnableButton.getSelection();
             notifyListeners(String.valueOf(selected), false, STYLEEVENTTYPE.LABELENABLE);
         } else if (source.equals(labelNameAttributecombo)) {
-            int index = labelNameAttributecombo.getSelectionIndex();
-            String nameField = labelNameAttributecombo.getItem(index);
-            notifyListeners(nameField, true, STYLEEVENTTYPE.LABEL);
+            boolean comboIsNone = comboIsNone(labelNameAttributecombo);
+            if (comboIsNone) {
+                String text = labelNameText.getText();
+                notifyListeners(text, false, STYLEEVENTTYPE.LABEL);
+            } else {
+                int index = labelNameAttributecombo.getSelectionIndex();
+                String nameField = labelNameAttributecombo.getItem(index);
+                notifyListeners(nameField, true, STYLEEVENTTYPE.LABEL);
+            }
         } else if (source.equals(fontButton)) {
             FontData[] fontData = fontEditor.getFontList();
             if (fontData.length > 0) {
@@ -543,17 +570,20 @@ public class LineLabelsParametersComposite extends ParameterComposite {
             int radius = haloRadiusSpinner.getSelection();
 
             notifyListeners(String.valueOf(radius), false, STYLEEVENTTYPE.LABELHALORADIUS);
-        } else if (source.equals(labelOpacitySpinner)) {
-            int opacity = labelOpacitySpinner.getSelection();
-            String opacityStr = String.valueOf(opacity);
-
-            notifyListeners(opacityStr, false, STYLEEVENTTYPE.LABELOPACITY);
-        } else if (source.equals(labelOpacityAttributecombo)) {
-            int index = labelOpacityAttributecombo.getSelectionIndex();
-            String opacityField = labelOpacityAttributecombo.getItem(index);
-
-            notifyListeners(opacityField, true, STYLEEVENTTYPE.LABELOPACITY);
+        } else if (source.equals(labelOpacitySpinner) || source.equals(labelOpacityAttributecombo)) {
+            boolean comboIsNone = comboIsNone(labelOpacityAttributecombo);
+            if (comboIsNone) {
+                int index = labelOpacityAttributecombo.getSelectionIndex();
+                String opacityField = labelOpacityAttributecombo.getItem(index);
+                notifyListeners(opacityField, true, STYLEEVENTTYPE.LABELOPACITY);
+            } else {
+                int opacity = labelOpacitySpinner.getSelection();
+                String opacityStr = String.valueOf(opacity);
+                notifyListeners(opacityStr, false, STYLEEVENTTYPE.LABELOPACITY);
+            }
         }
+
+        checkEnablements();
     }
 
     public void focusGained( FocusEvent e ) {
@@ -589,5 +619,6 @@ public class LineLabelsParametersComposite extends ParameterComposite {
             String text = labelNameText.getText();
             notifyListeners(text, false, STYLEEVENTTYPE.LABEL);
         }
+        checkEnablements();
     }
 }

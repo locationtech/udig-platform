@@ -599,5 +599,6 @@ public class PointLabelsParametersComposite extends ParameterComposite {
             String text = labelNameText.getText();
             notifyListeners(text, false, STYLEEVENTTYPE.LABEL);
         }
+        checkEnablements();
     }
 }

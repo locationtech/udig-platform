@@ -78,9 +78,9 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         if (stroke != null) {
             strokeColor = stroke.getColor().evaluate(null, String.class);
             Expression width = stroke.getWidth();
-            strokeWidth = width.evaluate(null, String.class);
+            strokeWidth = expressionToString(width);
             Expression opacity = stroke.getOpacity();
-            strokeOpacity = opacity.evaluate(null, String.class);
+            strokeOpacity = expressionToString(opacity);
 
             if (strokeColor == null) {
                 strokeColor = DEFAULT_COLOR;
@@ -224,6 +224,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
     public void setFillColor( String fillColor ) {
         this.fillColor = fillColor;
         checkFillExists();
+        fill.setGraphicFill(null);
         if (fillColor == null) {
             hasFill = false;
         } else {

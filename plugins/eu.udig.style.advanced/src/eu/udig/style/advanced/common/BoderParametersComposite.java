@@ -86,7 +86,8 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
      * @param ruleWrapper the {@link RuleWrapper}.
      */
     public void init( RuleWrapper ruleWrapper ) {
-        LineSymbolizerWrapper lineSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(LineSymbolizerWrapper.class);
+        LineSymbolizerWrapper lineSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
+                LineSymbolizerWrapper.class);
 
         mainComposite = new Composite(parent, SWT.NONE);
         mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -101,6 +102,15 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         borderEnableButton.setText("enable/disable border");
         borderEnableButton.setSelection(widgetEnabled);
         borderEnableButton.addSelectionListener(this);
+
+        // header
+        new Label(mainComposite, SWT.NONE);
+        Label valueLabel = new Label(mainComposite, SWT.NONE);
+        valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        valueLabel.setText("Manual");
+        Label fieldsLabel = new Label(mainComposite, SWT.NONE);
+        fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        fieldsLabel.setText("Field based");
 
         // border width
         Label borderWidthLabel = new Label(mainComposite, SWT.NONE);
@@ -125,10 +135,41 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         borderWidthAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         borderWidthAttributecombo.setItems(numericAttributesArrays);
         borderWidthAttributecombo.addSelectionListener(this);
+        borderWidthAttributecombo.select(0);
         if (tmpWidth == null) {
             int index = getAttributeIndex(width, numericAttributesArrays);
             if (index != -1) {
                 borderWidthAttributecombo.select(index);
+            }
+        }
+
+        // border alpha
+        Label borderOpactityLabel = new Label(mainComposite, SWT.NONE);
+        borderOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        borderOpactityLabel.setText("opacity");
+        borderOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
+        borderOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        borderOpacitySpinner.setMaximum(100);
+        borderOpacitySpinner.setMinimum(0);
+        borderOpacitySpinner.setIncrement(10);
+
+        String opacity = lineSymbolizerWrapper.getStrokeOpacity();
+        Double tmpOpacity = isDouble(opacity);
+        tmp = 100;
+        if (tmpOpacity != null) {
+            tmp = (int) (tmpOpacity.doubleValue() * 100);
+        }
+        borderOpacitySpinner.setSelection(tmp);
+        borderOpacitySpinner.addSelectionListener(this);
+        borderOpacityAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        borderOpacityAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        borderOpacityAttributecombo.setItems(numericAttributesArrays);
+        borderOpacityAttributecombo.addSelectionListener(this);
+        borderOpacityAttributecombo.select(0);
+        if (tmpOpacity == null) {
+            int index = getAttributeIndex(opacity, numericAttributesArrays);
+            if (index != -1) {
+                borderOpacityAttributecombo.select(index);
             }
         }
 
@@ -185,35 +226,6 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
                 }
             }
         });
-
-        // border alpha
-        Label borderOpactityLabel = new Label(mainComposite, SWT.NONE);
-        borderOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        borderOpactityLabel.setText("opacity");
-        borderOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
-        borderOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        borderOpacitySpinner.setMaximum(100);
-        borderOpacitySpinner.setMinimum(0);
-        borderOpacitySpinner.setIncrement(10);
-
-        String opacity = lineSymbolizerWrapper.getStrokeOpacity();
-        Double tmpOpacity = isDouble(opacity);
-        tmp = 100;
-        if (tmpOpacity != null) {
-            tmp = (int) (tmpOpacity.doubleValue() * 100);
-        }
-        borderOpacitySpinner.setSelection(tmp);
-        borderOpacitySpinner.addSelectionListener(this);
-        borderOpacityAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
-        borderOpacityAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        borderOpacityAttributecombo.setItems(numericAttributesArrays);
-        borderOpacityAttributecombo.addSelectionListener(this);
-        if (tmpOpacity == null) {
-            int index = getAttributeIndex(opacity, numericAttributesArrays);
-            if (index != -1) {
-                borderOpacityAttributecombo.select(index);
-            }
-        }
 
         // line properties
         // dash
@@ -291,6 +303,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
             }
         }
 
+        checkEnablements();
     }
 
     /**
@@ -299,7 +312,8 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
      * @param ruleWrapper the {@link RuleWrapper}.
      */
     public void update( RuleWrapper ruleWrapper ) {
-        LineSymbolizerWrapper lineSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(LineSymbolizerWrapper.class);
+        LineSymbolizerWrapper lineSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
+                LineSymbolizerWrapper.class);
 
         boolean widgetEnabled = lineSymbolizerWrapper.hasStroke();
         // border
@@ -386,6 +400,14 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
             }
         }
 
+        checkEnablements();
+    }
+
+    private void checkEnablements() {
+        boolean comboIsNone = comboIsNone(borderOpacityAttributecombo);
+        borderOpacitySpinner.setEnabled(comboIsNone);
+        comboIsNone = comboIsNone(borderWidthAttributecombo);
+        borderWidthSpinner.setEnabled(comboIsNone);
     }
 
     public void widgetSelected( SelectionEvent e ) {
@@ -393,36 +415,42 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         if (source.equals(borderEnableButton)) {
             boolean selected = borderEnableButton.getSelection();
             notifyListeners(String.valueOf(selected), false, STYLEEVENTTYPE.BORDERENABLE);
-        } else if (source.equals(borderWidthSpinner)) {
-            int selection = borderWidthSpinner.getSelection();
-            int digits = borderWidthSpinner.getDigits();
-            double value = selection / Math.pow(10, digits);
-            String strokeWidth = String.valueOf(value);
-            notifyListeners(strokeWidth, false, STYLEEVENTTYPE.BORDERWIDTH);
-        } else if (source.equals(borderWidthAttributecombo)) {
-            int index = borderWidthAttributecombo.getSelectionIndex();
-            String field = borderWidthAttributecombo.getItem(index);
-            if (field.length() == 0) {
-                return;
+        } else if (source.equals(borderWidthSpinner) || source.equals(borderWidthAttributecombo)) {
+            boolean comboIsNone = comboIsNone(borderWidthAttributecombo);
+            if (comboIsNone) {
+                int selection = borderWidthSpinner.getSelection();
+                int digits = borderWidthSpinner.getDigits();
+                double value = selection / Math.pow(10, digits);
+                String strokeWidth = String.valueOf(value);
+                notifyListeners(strokeWidth, false, STYLEEVENTTYPE.BORDERWIDTH);
+            } else {
+                int index = borderWidthAttributecombo.getSelectionIndex();
+                String field = borderWidthAttributecombo.getItem(index);
+                if (field.length() == 0) {
+                    return;
+                }
+                notifyListeners(field, true, STYLEEVENTTYPE.BORDERWIDTH);
             }
-            notifyListeners(field, true, STYLEEVENTTYPE.BORDERWIDTH);
         } else if (source.equals(borderColorButton)) {
             Color color = borderColorEditor.getColor();
             Expression colorExpr = ff.literal(color);
             String strokeColor = colorExpr.evaluate(null, String.class);
             notifyListeners(strokeColor, false, STYLEEVENTTYPE.BORDERCOLOR);
-        } else if (source.equals(borderOpacitySpinner)) {
-            int opacity = borderOpacitySpinner.getSelection();
-            float opacityNorm = opacity / 100f;
-            String strokeOpacity = String.valueOf(opacityNorm);
-            notifyListeners(strokeOpacity, false, STYLEEVENTTYPE.BORDEROPACITY);
-        } else if (source.equals(borderOpacityAttributecombo)) {
-            int index = borderOpacityAttributecombo.getSelectionIndex();
-            String field = borderOpacityAttributecombo.getItem(index);
-            if (field.length() == 0) {
-                return;
+        } else if (source.equals(borderOpacitySpinner) || source.equals(borderOpacityAttributecombo)) {
+            boolean comboIsNone = comboIsNone(borderOpacityAttributecombo);
+            if (comboIsNone) {
+                int opacity = borderOpacitySpinner.getSelection();
+                float opacityNorm = opacity / 100f;
+                String strokeOpacity = String.valueOf(opacityNorm);
+                notifyListeners(strokeOpacity, false, STYLEEVENTTYPE.BORDEROPACITY);
+            } else {
+                int index = borderOpacityAttributecombo.getSelectionIndex();
+                String field = borderOpacityAttributecombo.getItem(index);
+                if (field.length() == 0) {
+                    return;
+                }
+                notifyListeners(field, true, STYLEEVENTTYPE.BORDEROPACITY);
             }
-            notifyListeners(field, true, STYLEEVENTTYPE.BORDEROPACITY);
         } else if (source.equals(lineCapCombo)) {
             int index = lineCapCombo.getSelectionIndex();
             String item = lineCapCombo.getItem(index);
@@ -438,6 +466,8 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
             }
             notifyListeners(item, true, STYLEEVENTTYPE.LINEJOIN);
         }
+
+        checkEnablements();
     }
 
     public void modifyText( ModifyEvent e ) {

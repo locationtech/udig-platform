@@ -94,8 +94,8 @@ public abstract class SymbolizerWrapper {
     protected Symbolizer getSymbolizer() {
         return symbolizer;
     }
-    
-    public boolean isTextSymbolizer(){
+
+    public boolean isTextSymbolizer() {
         return symbolizer instanceof TextSymbolizer;
     }
 
@@ -289,34 +289,35 @@ public abstract class SymbolizerWrapper {
      * @throws MalformedURLException
      */
     public void setFillExternalGraphicFillPath( String externalGraphicPath ) throws MalformedURLException {
+        Graphic graphic = null;
+        PolygonSymbolizerWrapper polygonSymbolizerWrapper = adapt(PolygonSymbolizerWrapper.class);
+        if (polygonSymbolizerWrapper != null) {
+            graphic = polygonSymbolizerWrapper.getFillGraphicFill();
+            if (graphic == null) {
+                graphic = sf.createDefaultGraphic();
+            }
+            polygonSymbolizerWrapper.setFillGraphicFill(graphic);
+        } else {
+            return;
+        }
+        graphic.graphicalSymbols().clear();
+        String urlStr = externalGraphicPath;
+        if (!externalGraphicPath.startsWith("http:") && !externalGraphicPath.startsWith("file:")) {
+            urlStr = "file:" + externalGraphicPath;
+        }
         if (fillExternalGraphicFill == null) {
-            Graphic graphic = null;
-            PolygonSymbolizerWrapper polygonSymbolizerWrapper = adapt(PolygonSymbolizerWrapper.class);
-            if (polygonSymbolizerWrapper != null) {
-                graphic = polygonSymbolizerWrapper.getFillGraphicFill();
-                if (graphic==null) {
-                    graphic = sf.createDefaultGraphic();
-                    polygonSymbolizerWrapper.setFillGraphicFill(graphic);
-                }
-            } else {
-                return;
-            }
-            graphic.graphicalSymbols().clear();
-            String urlStr = externalGraphicPath;
-            if (!externalGraphicPath.startsWith("http:") && !externalGraphicPath.startsWith("file:")) {
-                urlStr = "file:" + externalGraphicPath;
-            }
             fillExternalGraphicFill = sb.createExternalGraphic(new URL(urlStr), getFormat(externalGraphicPath));
-            graphic.graphicalSymbols().add(fillExternalGraphicFill);
         } else {
             setExternalGraphicPath(externalGraphicPath, fillExternalGraphicFill);
         }
+        graphic.graphicalSymbols().add(fillExternalGraphicFill);
     }
 
     @SuppressWarnings("nls")
     private void setExternalGraphicPath( String externalGraphicPath, ExternalGraphic extGraphic ) throws MalformedURLException {
         URL url = null;
         File f = new File(externalGraphicPath);
+        String format = Utilities.getFormat(externalGraphicPath);
         if (!f.exists()) {
             if (externalGraphicPath.startsWith("http://") || externalGraphicPath.startsWith("file:")) {
                 url = new URL(externalGraphicPath);
@@ -329,6 +330,7 @@ public abstract class SymbolizerWrapper {
             }
         }
         extGraphic.setLocation(url);
+        extGraphic.setFormat(format);
     }
 
     protected String expressionToString( Expression expression ) {
@@ -346,7 +348,7 @@ public abstract class SymbolizerWrapper {
         if (evaluateDouble != null) {
             return evaluateDouble.toString();
         }
-        
+
         String evaluateString = expression.evaluate(null, String.class);
         if (evaluateString != null) {
             return evaluateString;
