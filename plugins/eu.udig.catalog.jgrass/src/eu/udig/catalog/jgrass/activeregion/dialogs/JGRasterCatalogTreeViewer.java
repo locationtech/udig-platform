@@ -181,8 +181,8 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
                 }
                 Map<String, JGrassMapGeoResource> sortedMap = new TreeMap<String, JGrassMapGeoResource>(tmp);
                 filteredLayers.removeAllElements();
-                for( String key : sortedMap.keySet() ) {
-                    filteredLayers.add(sortedMap.get(key));
+                for( JGrassMapGeoResource map : sortedMap.values() ) {
+                    filteredLayers.add(map);
                 }
 
                 return filteredLayers.toArray();
@@ -294,7 +294,7 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
      * This class provides the labels for the file tree
      */
 
-    private class LabelProvider implements ILabelProvider {
+    private static class LabelProvider implements ILabelProvider {
         // The listeners
         private final List<ILabelProviderListener> listeners;
 
@@ -305,9 +305,6 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
         private final Image esriasciiRasterMaps;
         private final Image fluidturtleRasterMaps;
         private final Image problemRasterMaps;
-
-        // Label provider state: preserve case of file names/directories
-        boolean preserveCase = true;
 
         /**
          * Constructs a FileTreeLabelProvider
@@ -328,23 +325,6 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
                     .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/ftraster.gif").createImage(); //$NON-NLS-1$
             problemRasterMaps = AbstractUIPlugin
                     .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/problem.gif").createImage(); //$NON-NLS-1$
-        }
-
-        /**
-         * Sets the preserve case attribute
-         * 
-         * @param preserveCase the preserve case attribute
-         */
-        public void setPreserveCase( boolean preserveCase ) {
-            this.preserveCase = preserveCase;
-
-            // Since this attribute affects how the labels are computed,
-            // notify all the listeners of the change.
-            LabelProviderChangedEvent event = new LabelProviderChangedEvent(this);
-            for( int i = 0, n = listeners.size(); i < n; i++ ) {
-                ILabelProviderListener ilpl = listeners.get(i);
-                ilpl.labelProviderChanged(event);
-            }
         }
 
         /**

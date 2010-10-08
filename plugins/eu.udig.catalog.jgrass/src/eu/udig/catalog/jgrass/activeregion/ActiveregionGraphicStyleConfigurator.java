@@ -54,6 +54,7 @@ import org.geotools.data.FeatureSource;
 import org.geotools.gce.grassraster.JGrassRegion;
 import org.geotools.referencing.CRS;
 import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
@@ -65,14 +66,11 @@ import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
 import eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
 import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 
-public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
-        implements
-            SelectionListener,
-            ModifyListener {
+public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator implements SelectionListener, ModifyListener {
 
-    private final int bound_type = 0;
-    private final int row_type = 1;
-    private final int res_type = 2;
+    private static final int bound_type = 0;
+    private static final int row_type = 1;
+    private static final int res_type = 2;
 
     private Label northLabel = null;
     private Text northText = null;
@@ -119,19 +117,16 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
         parent.setLayout(new GridLayout());
         ScrolledComposite scrollComposite = new ScrolledComposite(parent, SWT.V_SCROLL);
         scrollComposite.setMinHeight(100);
-        scrollComposite.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL
-                | GridData.GRAB_VERTICAL));
+        scrollComposite.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
         Composite c = new Composite(scrollComposite, SWT.None);
         c.setLayout(new GridLayout());
-        c.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL
-                | GridData.GRAB_VERTICAL));
+        c.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
 
         // choose mapset
         Group chooseMapsetGroup = new Group(c, SWT.BORDER);
         GridLayout layout1 = new GridLayout(3, false);
         chooseMapsetGroup.setLayout(layout1);
-        chooseMapsetGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                | GridData.GRAB_HORIZONTAL));
+        chooseMapsetGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         chooseMapsetGroup.setText("Ruling / Affected mapset");
 
         Label mapsetLabel = new Label(chooseMapsetGroup, SWT.NONE);
@@ -173,8 +168,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
         GridLayout layout2 = new GridLayout(2, true);
         regionGroup.setLayout(layout2);
         regionGroup.setText("Region settings");
-        regionGroup
-                .setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        regionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
 
         northLabel = new Label(regionGroup, SWT.NONE);
         northLabel.setText("north");
@@ -231,33 +225,25 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
         gridButton.setLayoutData(gridData);
 
         Label backgroundColourLabel = new Label(styleGroup, SWT.NONE);
-        backgroundColourLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                | GridData.GRAB_HORIZONTAL));
+        backgroundColourLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         backgroundColourLabel.setText("background color");
         backgroundColour = new ColorEditor(styleGroup);
-        backgroundColour.getButton().setLayoutData(
-                new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        backgroundColour.getButton().setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         Label backgroundAlphaLabel = new Label(styleGroup, SWT.NONE);
-        backgroundAlphaLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                | GridData.GRAB_HORIZONTAL));
+        backgroundAlphaLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         backgroundAlphaLabel.setText("background alpha (0-1)");
         backgroundAlphaText = new Text(styleGroup, SWT.BORDER);
-        backgroundAlphaText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                | GridData.GRAB_HORIZONTAL));
+        backgroundAlphaText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         Label foregroundColourLabel = new Label(styleGroup, SWT.NONE);
-        foregroundColourLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                | GridData.GRAB_HORIZONTAL));
+        foregroundColourLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         foregroundColourLabel.setText("foreground color");
         foregroundColor = new ColorEditor(styleGroup);
-        foregroundColor.getButton().setLayoutData(
-                new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        foregroundColor.getButton().setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         Label forgroundAlphaLabel = new Label(styleGroup, SWT.NONE);
-        forgroundAlphaLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                | GridData.GRAB_HORIZONTAL));
+        forgroundAlphaLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         forgroundAlphaLabel.setText("foreground alpha (0-1)");
         forgroundAlphaText = new Text(styleGroup, SWT.BORDER);
-        forgroundAlphaText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                | GridData.GRAB_HORIZONTAL));
+        forgroundAlphaText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
 
         // the group for the set region to map
         final Group settoGroup = new Group(c, SWT.BORDER);
@@ -268,8 +254,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
 
         rasterMapSetButton = new Button(settoGroup, SWT.NONE);
         rasterMapSetButton.setText("set region to raster map");
-        rasterMapSetButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                | GridData.GRAB_HORIZONTAL));
+        rasterMapSetButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         rasterMapSetButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
             public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
                 JGRasterChooserDialog tree = new JGRasterChooserDialog(null);
@@ -280,8 +265,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
         });
         featuresMapSetButton = new Button(settoGroup, SWT.NONE);
         featuresMapSetButton.setText("set region to vector map");
-        featuresMapSetButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                | GridData.GRAB_HORIZONTAL));
+        featuresMapSetButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         featuresMapSetButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
             public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
                 FeatureChooserDialog tree = new FeatureChooserDialog();
@@ -292,8 +276,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
         });
         resetToActiveButton = new Button(settoGroup, SWT.NONE);
         resetToActiveButton.setText("reset back to actual region");
-        resetToActiveButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-                | GridData.GRAB_HORIZONTAL));
+        resetToActiveButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         resetToActiveButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
             public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
                 String windPath = windPathText.getText();
@@ -395,8 +378,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
             if (style == null) {
                 style = ActiveregionStyleContent.createDefault();
                 styleBlackboard.put(ActiveregionStyleContent.ID, style);
-                ((StyleBlackboard) styleBlackboard)
-                        .setSelected(new String[]{ActiveregionStyleContent.ID});
+                ((StyleBlackboard) styleBlackboard).setSelected(new String[]{ActiveregionStyleContent.ID});
             }
 
             // first time choose the mapset
@@ -425,8 +407,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
             }
             windPathText.setText(style.windPath);
 
-            JGrassRegion tmp = new JGrassRegion(style.west, style.east, style.south, style.north,
-                    style.rows, style.cols);
+            JGrassRegion tmp = new JGrassRegion(style.west, style.east, style.south, style.north, style.rows, style.cols);
             // set initial values
             northText.setText(Double.toString(style.north));
             southText.setText(Double.toString(style.south));
@@ -438,10 +419,10 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
             rowsText.setText(Double.toString(style.rows));
             forgroundAlphaText.setText(Float.toString(style.fAlpha));
             backgroundAlphaText.setText(Float.toString(style.bAlpha));
-            foregroundColor.setColorValue(new RGB(style.foregroundColor.getRed(),
-                    style.foregroundColor.getGreen(), style.foregroundColor.getBlue()));
-            backgroundColour.setColorValue(new RGB(style.backgroundColor.getRed(),
-                    style.backgroundColor.getGreen(), style.backgroundColor.getBlue()));
+            foregroundColor.setColorValue(new RGB(style.foregroundColor.getRed(), style.foregroundColor.getGreen(),
+                    style.foregroundColor.getBlue()));
+            backgroundColour.setColorValue(new RGB(style.backgroundColor.getRed(), style.backgroundColor.getGreen(),
+                    style.backgroundColor.getBlue()));
 
             CoordinateReferenceSystem crs = CRS.decode(style.crsString);
             commitToBlackboards(tmp, crs, style.windPath);
@@ -476,8 +457,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
     }
 
     private ActiveRegionStyle getActiveRegionStyle() {
-        ActiveRegionStyle style = (ActiveRegionStyle) styleBlackboard
-                .get(ActiveregionStyleContent.ID);
+        ActiveRegionStyle style = (ActiveRegionStyle) styleBlackboard.get(ActiveregionStyleContent.ID);
         if (style == null) {
             style = ActiveregionStyleContent.createDefault();
         }
@@ -510,22 +490,19 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
                         if (fileWindow != null) {
                             setWidgetsToWindow(fileWindow);
                         }
-
                     } catch (IOException e1) {
                         return;
                     }
                 } else if (layer instanceof DataStore || layer instanceof UDIGFeatureStore) {
                     try {
                         DataStore store = ((DataStore) layer);
-                        FeatureSource featureStore = store
-                                .getFeatureSource(store.getTypeNames()[0]);
+                        FeatureSource featureStore = store.getFeatureSource(store.getTypeNames()[0]);
                         Envelope envelope = featureStore.getBounds();
 
                         ActiveRegionStyle style = getActiveRegionStyle();
-                        JGrassRegion activeWindow = new JGrassRegion(style.west, style.east,
-                                style.south, style.north, style.rows, style.cols);
-                        JGrassRegion newWindow = JGrassRegion.adaptActiveRegionToEnvelope(envelope,
-                                activeWindow);
+                        JGrassRegion activeWindow = new JGrassRegion(style.west, style.east, style.south, style.north,
+                                style.rows, style.cols);
+                        JGrassRegion newWindow = JGrassRegion.adaptActiveRegionToEnvelope(envelope, activeWindow);
                         northText.setText(String.valueOf(newWindow.getNorth()));
                         southText.setText(String.valueOf(newWindow.getSouth()));
                         eastText.setText(String.valueOf(newWindow.getEast()));
@@ -562,8 +539,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
             File mapsetFile = new File(style.windPath).getParentFile();
             File locationFile = mapsetFile.getParentFile();
             JGrassRegion.writeWINDToMapset(mapsetFile.getAbsolutePath(), newRegion);
-            CoordinateReferenceSystem locationCrs = JGrassCatalogUtilities
-                    .getLocationCrs(locationFile.getAbsolutePath());
+            CoordinateReferenceSystem locationCrs = JGrassCatalogUtilities.getLocationCrs(locationFile.getAbsolutePath());
             style.fAlpha = Float.parseFloat(forgroundAlphaText.getText());
             style.bAlpha = Float.parseFloat(backgroundAlphaText.getText());
             RGB bg = backgroundColour.getColorValue();
@@ -582,8 +558,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
     /**
      * put all the needed things in the blackboards
      */
-    private void commitToBlackboards( JGrassRegion jgR, CoordinateReferenceSystem crs,
-            String windPath ) {
+    private void commitToBlackboards( JGrassRegion jgR, CoordinateReferenceSystem crs, String windPath ) {
         styleBlackboard = getLayer().getStyleBlackboard();
 
         style.north = (float) jgR.getNorth();
@@ -630,27 +605,20 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
 
         // System.out.println("passing through textModified with type = " + type);
         // check if there is text in every window
-        if (northstr.length() == 0 || southstr.length() == 0 || eaststr.length() == 0
-                || weststr.length() == 0 || rowsstr.length() == 0 || colsstr.length() == 0
-                || ewresstr.length() == 0 || nsresstr.length() == 0) {
+        if (northstr.length() == 0 || southstr.length() == 0 || eaststr.length() == 0 || weststr.length() == 0
+                || rowsstr.length() == 0 || colsstr.length() == 0 || ewresstr.length() == 0 || nsresstr.length() == 0) {
             isWorking = false;
             return;
         }
 
         if (type == bound_type) {
             // one of the boundaries changed
-            int rownum = (int) round((new Double(northstr).doubleValue() - new Double(southstr)
-                    .doubleValue())
+            int rownum = (int) round((new Double(northstr).doubleValue() - new Double(southstr).doubleValue())
                     / new Double(nsresstr).doubleValue());
-            int colnum = (int) round((new Double(eaststr).doubleValue() - new Double(weststr)
-                    .doubleValue())
+            int colnum = (int) round((new Double(eaststr).doubleValue() - new Double(weststr).doubleValue())
                     / new Double(ewresstr).doubleValue());
-            double newnsres = (new Double(northstr).doubleValue() - new Double(southstr)
-                    .doubleValue())
-                    / rownum;
-            double newewres = (new Double(eaststr).doubleValue() - new Double(weststr)
-                    .doubleValue())
-                    / colnum;
+            double newnsres = (new Double(northstr).doubleValue() - new Double(southstr).doubleValue()) / rownum;
+            double newewres = (new Double(eaststr).doubleValue() - new Double(weststr).doubleValue()) / colnum;
             rowsText.setText(String.valueOf(rownum));
             colsText.setText(String.valueOf(colnum));
             yresText.setText(String.valueOf(newnsres));
@@ -663,27 +631,21 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
             double newewres = 0;
             // if the rows change, the resolution has to be changed
             if (type == row_type) {
-                newnsres = (Double.parseDouble(northstr) - Double.parseDouble(southstr))
-                        / Double.parseDouble(rowsstr);
+                newnsres = (Double.parseDouble(northstr) - Double.parseDouble(southstr)) / Double.parseDouble(rowsstr);
                 // double check the thing, since the user could have put a non integer rownumber
-                rownum = (int) round((Double.parseDouble(northstr) - Double.parseDouble(southstr))
-                        / newnsres);
+                rownum = (int) round((Double.parseDouble(northstr) - Double.parseDouble(southstr)) / newnsres);
                 // so finally we gain the resolution at a integer row number
                 newnsres = (Double.parseDouble(northstr) - Double.parseDouble(southstr)) / rownum;
-                newewres = (Double.parseDouble(eaststr) - Double.parseDouble(weststr))
-                        / Double.parseDouble(colsstr);
+                newewres = (Double.parseDouble(eaststr) - Double.parseDouble(weststr)) / Double.parseDouble(colsstr);
                 // double check the thing, since the user could have put a non integer colnumber
-                colnum = (int) round((Double.parseDouble(eaststr) - Double.parseDouble(weststr))
-                        / newewres);
+                colnum = (int) round((Double.parseDouble(eaststr) - Double.parseDouble(weststr)) / newewres);
                 // so finally we gain the resolution at a integer col number
                 newewres = (Double.parseDouble(eaststr) - Double.parseDouble(weststr)) / colnum;
             } else if (type == res_type) {
-                rownum = (int) round((Double.parseDouble(northstr) - Double.parseDouble(southstr))
-                        / Double.parseDouble(nsresstr));
+                rownum = (int) round((Double.parseDouble(northstr) - Double.parseDouble(southstr)) / Double.parseDouble(nsresstr));
                 // resolution at a integer row number
                 newnsres = (Double.parseDouble(northstr) - Double.parseDouble(southstr)) / rownum;
-                colnum = (int) round((Double.parseDouble(eaststr) - Double.parseDouble(weststr))
-                        / Double.parseDouble(ewresstr));
+                colnum = (int) round((Double.parseDouble(eaststr) - Double.parseDouble(weststr)) / Double.parseDouble(ewresstr));
                 // resolution at a integer col number
                 newewres = (Double.parseDouble(eaststr) - Double.parseDouble(weststr)) / colnum;
             }

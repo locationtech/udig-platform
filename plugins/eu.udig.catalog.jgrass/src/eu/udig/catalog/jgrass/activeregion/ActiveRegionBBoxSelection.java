@@ -36,8 +36,6 @@ public class ActiveRegionBBoxSelection extends SimpleTool implements ModalTool {
 
     private net.refractions.udig.project.ui.commands.SelectionBoxCommand shapeCommand;
 
-    private Set<String> selectedFids = new HashSet<String>();
-
     /**
      * Creates a new instance of BBoxSelection
      */

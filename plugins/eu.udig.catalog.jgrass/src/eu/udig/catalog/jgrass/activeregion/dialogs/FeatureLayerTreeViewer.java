@@ -56,10 +56,7 @@ import org.geotools.data.FeatureStore;
  * @author Andrea Antonello - www.hydrologis.com
  * @since 1.1.0
  */
-public class FeatureLayerTreeViewer extends Composite
-        implements
-            ISelectionChangedListener,
-            IResourcesSelector {
+public class FeatureLayerTreeViewer extends Composite implements ISelectionChangedListener, IResourcesSelector {
 
     public final static int SHAPELAYER = 0;
 
@@ -225,7 +222,7 @@ public class FeatureLayerTreeViewer extends Composite
      * This class provides the labels for the file tree
      */
 
-    private class LabelProvider implements ILabelProvider {
+    private static class LabelProvider implements ILabelProvider {
         // The listeners
         private final List<ILabelProviderListener> listeners;
 
@@ -233,9 +230,6 @@ public class FeatureLayerTreeViewer extends Composite
         private final Image vectorMaps;
 
         private final Image mainMaps;
-
-        // Label provider state: preserve case of file names/directories
-        boolean preserveCase = true;
 
         /**
          * Constructs a FileTreeLabelProvider
@@ -245,27 +239,8 @@ public class FeatureLayerTreeViewer extends Composite
             listeners = new ArrayList<ILabelProviderListener>();
 
             // Create the images
-            vectorMaps = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(
-                    ISharedImages.FEATURE_OBJ).createImage();
-            mainMaps = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(
-                    ISharedImages.CATALOG_OBJ).createImage();
-        }
-
-        /**
-         * Sets the preserve case attribute
-         * 
-         * @param preserveCase the preserve case attribute
-         */
-        public void setPreserveCase( boolean preserveCase ) {
-            this.preserveCase = preserveCase;
-
-            // Since this attribute affects how the labels are computed,
-            // notify all the listeners of the change.
-            LabelProviderChangedEvent event = new LabelProviderChangedEvent(this);
-            for( int i = 0, n = listeners.size(); i < n; i++ ) {
-                ILabelProviderListener ilpl = listeners.get(i);
-                ilpl.labelProviderChanged(event);
-            }
+            vectorMaps = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.FEATURE_OBJ).createImage();
+            mainMaps = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.CATALOG_OBJ).createImage();
         }
 
         /**

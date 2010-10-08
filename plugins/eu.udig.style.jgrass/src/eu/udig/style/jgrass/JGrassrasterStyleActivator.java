@@ -38,7 +38,6 @@ public class JGrassrasterStyleActivator extends AbstractUIPlugin {
      * The constructor
      */
     public JGrassrasterStyleActivator() {
-        plugin = this;
     }
 
     /*
@@ -48,6 +47,7 @@ public class JGrassrasterStyleActivator extends AbstractUIPlugin {
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
+        plugin = this;
     }
 
     /*

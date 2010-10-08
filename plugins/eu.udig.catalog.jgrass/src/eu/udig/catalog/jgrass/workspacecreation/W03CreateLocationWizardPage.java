@@ -111,7 +111,7 @@ public class W03CreateLocationWizardPage extends WizardPage {
         // clear all entries
         IAction clearAction = new Action(){
             public void run() {
-                mapsetNames.removeAll(mapsetNames);
+                mapsetNames.clear();
                 mapsetNames.add(JGrassConstants.PERMANENT_MAPSET);
                 lv.setInput(mapsetNames);
                 canDoFinish(false);

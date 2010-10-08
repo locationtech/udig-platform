@@ -38,7 +38,6 @@ public class RasterRendererPlugin extends AbstractUIPlugin {
      * The constructor
      */
     public RasterRendererPlugin() {
-        plugin = this;
     }
 
     /*
@@ -48,6 +47,7 @@ public class RasterRendererPlugin extends AbstractUIPlugin {
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
+        plugin = this;
     }
 
     /*

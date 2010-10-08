@@ -153,8 +153,7 @@ public class JGrassService extends IService {
         return children;
     }
 
-    private void collectChildren( IResolve resolve, List<JGrassMapGeoResource> children )
-            throws IOException {
+    private void collectChildren( IResolve resolve, List<JGrassMapGeoResource> children ) throws IOException {
         List<IResolve> resolves = resolve.members(new NullProgressMonitor());
 
         if (resolve instanceof JGrassMapGeoResource && resolves.isEmpty()) {
@@ -187,8 +186,8 @@ public class JGrassService extends IService {
                     mapsetMembers = new ArrayList<IResolve>();
                     for( Map.Entry<String, String> item : mapsetNamesAndPaths.entrySet() ) {
 
-                        JGrassMapsetGeoResource jgrassMapsetGeoResource = new JGrassMapsetGeoResource(
-                                this, item.getKey(), item.getValue());
+                        JGrassMapsetGeoResource jgrassMapsetGeoResource = new JGrassMapsetGeoResource(this, item.getKey(),
+                                item.getValue());
                         mapsetMembers.add(jgrassMapsetGeoResource);
                     }
                     return mapsetMembers;
@@ -221,6 +220,7 @@ public class JGrassService extends IService {
             String[] mapsets = file.list();
             if (mapsets == null) {
                 msg = new Throwable("Either dir does not exist or is not a directory");
+                return null;
             }
 
             // store the mapset name and the absolute path to it
@@ -321,8 +321,8 @@ public class JGrassService extends IService {
         }
 
         public Icon getIcon() {
-            ImageDescriptor imgD = AbstractUIPlugin.imageDescriptorFromPlugin(
-                    JGrassPlugin.PLUGIN_ID, "icons/obj16/jgrassloc_obj.gif"); //$NON-NLS-1$
+            ImageDescriptor imgD = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID,
+                    "icons/obj16/jgrassloc_obj.gif"); //$NON-NLS-1$
             return AWTSWTImageUtils.imageDescriptor2awtIcon(imgD);
 
         }
@@ -335,8 +335,7 @@ public class JGrassService extends IService {
     public JGrassMapsetGeoResource addMapset( String mapsetName ) {
 
         File mapsetFile = new File(getFile(), mapsetName);
-        JGrassMapsetGeoResource resource = new JGrassMapsetGeoResource(this, mapsetName, mapsetFile
-                .getAbsolutePath());
+        JGrassMapsetGeoResource resource = new JGrassMapsetGeoResource(this, mapsetName, mapsetFile.getAbsolutePath());
         if (mapsetMembers == null) {
             try {
                 mapsetMembers = members(ProgressManager.instance().get(null));
@@ -360,8 +359,7 @@ public class JGrassService extends IService {
 
     public JGrassMapsetGeoResource removeMapset( String mapsetName ) {
         File mapsetFile = new File(getFile(), mapsetName);
-        JGrassMapsetGeoResource resource = new JGrassMapsetGeoResource(this, mapsetName, mapsetFile
-                .getAbsolutePath());
+        JGrassMapsetGeoResource resource = new JGrassMapsetGeoResource(this, mapsetName, mapsetFile.getAbsolutePath());
         URL mapsetIdentifier = resource.getIdentifier();
 
         if (mapsetMembers == null) {
@@ -375,14 +373,13 @@ public class JGrassService extends IService {
         for( int i = 0; i < mapsetMembers.size(); i++ ) {
             IResolve resolve = mapsetMembers.get(i);
             URL identifier = resolve.getIdentifier();
-            if (mapsetIdentifier.equals(identifier)) {
+            if (mapsetIdentifier.toExternalForm().equals(identifier.toExternalForm())) {
                 mapsetMembers.remove(i);
 
                 ICatalog catalog = parent(null);
                 if (catalog instanceof CatalogImpl) {
                     IResolveDelta delta = new ResolveDelta(resource, Kind.REMOVED);
-                    IResolveChangeEvent event = new ResolveChangeEvent(this, Type.POST_CHANGE,
-                            delta);
+                    IResolveChangeEvent event = new ResolveChangeEvent(this, Type.POST_CHANGE, delta);
                     ((CatalogImpl) catalog).fire(event);
                 }
                 break;
@@ -405,8 +402,7 @@ public class JGrassService extends IService {
                 members(new NullProgressMonitor());
             } catch (IOException e) {
                 JGrassPlugin
-                        .log(
-                                "JGrassPlugin problem: eu.hydrologis.udig.catalog.internal.jgrass#JGrassService#getMapsetGeoresourceByName", e); //$NON-NLS-1$
+                        .log("JGrassPlugin problem: eu.hydrologis.udig.catalog.internal.jgrass#JGrassService#getMapsetGeoresourceByName", e); //$NON-NLS-1$
 
                 e.printStackTrace();
                 return null;
@@ -429,14 +425,8 @@ public class JGrassService extends IService {
     protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
         // lazy creation
         if (info == null) {
-            // support concurrent access
-            synchronized (this) {
-                if (info == null) {
-                    info = new JGrassServiceInfo();
-                }
-            }
+            info = new JGrassServiceInfo();
         }
-
         return info;
     }
 

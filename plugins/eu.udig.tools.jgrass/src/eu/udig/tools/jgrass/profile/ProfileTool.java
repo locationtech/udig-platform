@@ -291,7 +291,6 @@ public class ProfileTool extends SimpleTool {
             Coordinate begin = getContext().pixelToWorld(start.x, start.y);
             Coordinate end = getContext().pixelToWorld(current.x, current.y);
             distance += JTS.orthodromicDistance(begin, end, getContext().getCRS());
-            start = current;
         }
         return distance;
     }

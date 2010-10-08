@@ -144,7 +144,8 @@ public class JGrassMapGeoResource extends IGeoResource {
         if (adaptee.isAssignableFrom(GridCoverage.class)) {
             try {
                 JGrassRegion jGrassRegion = jGrassMapEnvironment.getFileRegion();
-                GridCoverage2D mapCoverage = JGrassCatalogUtilities.getGridcoverageFromGrassraster(jGrassMapEnvironment, jGrassRegion);
+                GridCoverage2D mapCoverage = JGrassCatalogUtilities.getGridcoverageFromGrassraster(jGrassMapEnvironment,
+                        jGrassRegion);
                 return adaptee.cast(mapCoverage);
             } catch (Exception e) {
                 msg = e;
@@ -295,7 +296,7 @@ public class JGrassMapGeoResource extends IGeoResource {
 
                     File sitesFile = new File(jGrassMapEnvironment.getMAPSET(), JGrassConstants.SITE_LISTS + "/"
                             + jGrassMapEnvironment.getMapName());
-                    BufferedReader sitesReader;
+                    BufferedReader sitesReader = null;
                     try {
                         sitesReader = new BufferedReader(new FileReader(sitesFile));
 
@@ -317,12 +318,10 @@ public class JGrassMapGeoResource extends IGeoResource {
                                 tmpBounds.expandToInclude(new Coordinate(x, y));
                             }
                         }
-                    } catch (FileNotFoundException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
+                    } finally {
+                        sitesReader.close();
                     }
 
                     bounds = new ReferencedEnvelope(tmpBounds,
@@ -364,7 +363,6 @@ public class JGrassMapGeoResource extends IGeoResource {
             ((JGrassMapGeoResourceInfo) info).setBounds(newBounds);
         }
         createInfo(new NullProgressMonitor());
-        System.out.println("POSTRESET: " + info.getBounds());
     }
 
     /**
@@ -566,7 +564,7 @@ public class JGrassMapGeoResource extends IGeoResource {
             String line = null;
             HashMap<String, String> fileMapHeader = new HashMap<String, String>();
             for( int i = 0; i < 8; i++ ) {
-                if ((line = esriasciireader.readLine().toLowerCase().trim()) != null) {
+                if ((line = esriasciireader.readLine()) != null) {
                     String lowerline = line.toLowerCase().trim();
                     StringTokenizer tok = new StringTokenizer(lowerline);
 
@@ -637,8 +635,8 @@ public class JGrassMapGeoResource extends IGeoResource {
             // read the header
             boolean readheader = false;
             while( !readheader ) {
-                if ((line = fluidasciireader.readLine().toLowerCase().trim()) != null) {
-                    if (line.trim().startsWith("index")) {
+                if ((line = fluidasciireader.readLine()) != null) {
+                    if (line.toLowerCase().trim().startsWith("index")) {
                         String[] index = line.split("\\{");
                         index[1] = index[1].split("\\}")[0].trim();
 
@@ -646,8 +644,8 @@ public class JGrassMapGeoResource extends IGeoResource {
 
                         for( int i = 0; i < numberofBlocks; i++ ) {
                             while( !readheader ) {
-                                if ((line = fluidasciireader.readLine().toLowerCase().trim()) != null) {
-                                    if (line.trim().startsWith((i + 1) + ":")) {
+                                if ((line = fluidasciireader.readLine()) != null) {
+                                    if (line.toLowerCase().trim().startsWith((i + 1) + ":")) {
 
                                         if (line.indexOf("novalue") != -1)
                                         // defines the novalue
@@ -739,12 +737,10 @@ public class JGrassMapGeoResource extends IGeoResource {
     }
 
     protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        if (info == null) {
-            // support concurrent access
-            synchronized (this) {
-                if (info == null) {
-                    info = new JGrassMapGeoResourceInfo(monitor);
-                }
+        // support concurrent access
+        synchronized (this) {
+            if (info == null) {
+                info = new JGrassMapGeoResourceInfo(monitor);
             }
         }
 

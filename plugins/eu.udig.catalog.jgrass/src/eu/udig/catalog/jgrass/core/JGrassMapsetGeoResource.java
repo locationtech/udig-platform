@@ -113,8 +113,7 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
         /*
          * in this case our resource is a folder, therefore of type File
          */
-        if (adaptee.isAssignableFrom(IService.class)
-                || adaptee.isAssignableFrom(IGeoResourceInfo.class)
+        if (adaptee.isAssignableFrom(IService.class) || adaptee.isAssignableFrom(IGeoResourceInfo.class)
                 || adaptee.isAssignableFrom(File.class))
             return true;
 
@@ -154,44 +153,38 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
      */
 
     public List<IResolve> members( IProgressMonitor monitor ) {
-        // lazily load
-        if (jgrassMapMembers == null) {
-            // concurrent access
-            synchronized (this) {
-                if (jgrassMapMembers == null) {
-                    // load the properties
-                    Map<String, String> mapNamesAndTypes = loadMaps(monitor);
-                    if (mapNamesAndTypes == null) {
-                        // error occurred
-                        return null;
-                    }
-
-                    /*
-                     * get rasters first, then vectors, then sites (filter out
-                     * .svn)
-                     */
-                    jgrassMapMembers = new ArrayList<IResolve>();
-
-                    for( Map.Entry<String, String> item : mapNamesAndTypes.entrySet() ) {
-
-                        String name = item.getKey();
-                        String type = item.getValue();
-
-                        // TODO add support for vectors and sites, until that
-                        // moment, ignore them
-                        String typeString = type.split("\\|")[0];//$NON-NLS-1$
-                        if (typeString.equals(JGrassConstants.GRASS6VECTORMAP)
-                                || typeString.equals(JGrassConstants.SITESMAP)) {
-                            continue;
-                        }
-                        IResolve jgrassMapGeoResource = new JGrassMapGeoResource(parent, this,
-                                name, type);
-                        jgrassMapMembers.add(jgrassMapGeoResource);
-                    }
-
-                    return jgrassMapMembers;
+        // concurrent access
+        synchronized (this) {
+            if (jgrassMapMembers == null) {
+                // load the properties
+                Map<String, String> mapNamesAndTypes = loadMaps(monitor);
+                if (mapNamesAndTypes == null) {
+                    // error occurred
+                    return null;
                 }
 
+                /*
+                 * get rasters first, then vectors, then sites (filter out
+                 * .svn)
+                 */
+                jgrassMapMembers = new ArrayList<IResolve>();
+
+                for( Map.Entry<String, String> item : mapNamesAndTypes.entrySet() ) {
+
+                    String name = item.getKey();
+                    String type = item.getValue();
+
+                    // TODO add support for vectors and sites, until that
+                    // moment, ignore them
+                    String typeString = type.split("\\|")[0];//$NON-NLS-1$
+                    if (typeString.equals(JGrassConstants.GRASS6VECTORMAP) || typeString.equals(JGrassConstants.SITESMAP)) {
+                        continue;
+                    }
+                    IResolve jgrassMapGeoResource = new JGrassMapGeoResource(parent, this, name, type);
+                    jgrassMapMembers.add(jgrassMapGeoResource);
+                }
+
+                return jgrassMapMembers;
             }
 
         }
@@ -233,8 +226,8 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
                 // check raster file bundle consistency and add map if ok
                 for( String mapName : rasterMaps ) {
                     if (JGrassUtilities.checkRasterMapConsistence(file.getAbsolutePath(), mapName)) {
-                        mapNamesAndTypes.put(mapName, JGrassConstants.GRASSBINARYRASTERMAP + "|"
-                                + cellMapFolder + File.separator + mapName);
+                        mapNamesAndTypes.put(mapName, JGrassConstants.GRASSBINARYRASTERMAP + "|" + cellMapFolder + File.separator
+                                + mapName);
                     }
                 }
             }
@@ -242,48 +235,45 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
             /*
              * ascii grass raster maps
              */
-            String grassasciiMapFolder = file.getAbsolutePath() + File.separator
-                    + JGrassConstants.GRASSASCIIRASTER;
+            String grassasciiMapFolder = file.getAbsolutePath() + File.separator + JGrassConstants.GRASSASCIIRASTER;
             File grassasciirasterFile = new File(grassasciiMapFolder);
             String[] grassasciirasterMaps = grassasciirasterFile.list();
             if (grassasciirasterMaps == null) {
                 msg = new Throwable("Either dir does not exist or is not a directory");
             } else {
                 for( String mapName : grassasciirasterMaps ) {
-                    mapNamesAndTypes.put(mapName, JGrassConstants.GRASSASCIIRASTERMAP + "|"
-                            + grassasciiMapFolder + File.separator + mapName);
+                    mapNamesAndTypes.put(mapName, JGrassConstants.GRASSASCIIRASTERMAP + "|" + grassasciiMapFolder
+                            + File.separator + mapName);
                 }
             }
 
             /*
              * fluidturtle raster maps
              */
-            String fluidturtleMapFolder = file.getAbsolutePath() + File.separator
-                    + JGrassConstants.FLUIDTURTLEASCIIRASTER;
+            String fluidturtleMapFolder = file.getAbsolutePath() + File.separator + JGrassConstants.FLUIDTURTLEASCIIRASTER;
             File fluidturtlerasterFile = new File(fluidturtleMapFolder);
             String[] fluidturtlerasterMaps = fluidturtlerasterFile.list();
             if (fluidturtlerasterMaps == null) {
                 msg = new Throwable("Either dir does not exist or is not a directory");
             } else {
                 for( String mapName : fluidturtlerasterMaps ) {
-                    mapNamesAndTypes.put(mapName, JGrassConstants.FTRASTERMAP + "|"
-                            + fluidturtleMapFolder + File.separator + mapName);
+                    mapNamesAndTypes.put(mapName, JGrassConstants.FTRASTERMAP + "|" + fluidturtleMapFolder + File.separator
+                            + mapName);
                 }
             }
 
             /*
              * esri grid raster maps
              */
-            String esrigridMapFolder = file.getAbsolutePath() + File.separator
-                    + JGrassConstants.ESRIASCIIRASTER;
+            String esrigridMapFolder = file.getAbsolutePath() + File.separator + JGrassConstants.ESRIASCIIRASTER;
             File esrigridrasterFile = new File(esrigridMapFolder);
             String[] esrigridrasterMaps = esrigridrasterFile.list();
             if (esrigridrasterMaps == null) {
                 msg = new Throwable("Either dir does not exist or is not a directory");
             } else {
                 for( String mapName : esrigridrasterMaps ) {
-                    mapNamesAndTypes.put(mapName, JGrassConstants.ESRIRASTERMAP + "|"
-                            + esrigridMapFolder + File.separator + mapName);
+                    mapNamesAndTypes.put(mapName, JGrassConstants.ESRIRASTERMAP + "|" + esrigridMapFolder + File.separator
+                            + mapName);
                 }
             }
 
@@ -291,8 +281,7 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
              * sites maps
              */
             // check the sites maps folder
-            String sitesMapFolder = file.getAbsolutePath() + File.separator
-                    + JGrassConstants.SITE_LISTS;
+            String sitesMapFolder = file.getAbsolutePath() + File.separator + JGrassConstants.SITE_LISTS;
             File siteFile = new File(sitesMapFolder);
             if (siteFile.exists()) {
                 String[] sitesMaps = siteFile.list();
@@ -301,8 +290,7 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
                 } else {
                     // add sites to hashmap
                     for( String mapName : sitesMaps ) {
-                        mapNamesAndTypes.put(mapName, JGrassConstants.SITESMAP + "|"
-                                + sitesMapFolder + File.separator + mapName);
+                        mapNamesAndTypes.put(mapName, JGrassConstants.SITESMAP + "|" + sitesMapFolder + File.separator + mapName);
                     }
                 }
             }
@@ -311,8 +299,7 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
              * vector maps
              */
             // list the vector maps
-            String vectorMapFolder = file.getAbsolutePath() + File.separator
-                    + JGrassConstants.VECTORS;
+            String vectorMapFolder = file.getAbsolutePath() + File.separator + JGrassConstants.VECTORS;
             File vectorFile = new File(vectorMapFolder);
             if (vectorFile.exists()) {
                 String[] vectormaps = vectorFile.list();
@@ -321,8 +308,8 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
                 } else {
                     // add vector maps to hashmap
                     for( String mapName : vectormaps ) {
-                        mapNamesAndTypes.put(mapName, JGrassConstants.GRASS6VECTORMAP + "|"
-                                + vectorMapFolder + File.separator + mapName);
+                        mapNamesAndTypes.put(mapName, JGrassConstants.GRASS6VECTORMAP + "|" + vectorMapFolder + File.separator
+                                + mapName);
                     }
                 }
             }
@@ -380,8 +367,7 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
             // calculate bounds
             JGrassRegion activeRegionWindow = getActiveRegionWindow();
             this.bounds = new ReferencedEnvelope(activeRegionWindow.getEnvelope(), getCRS());
-            super.icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(
-                    ISharedImages.CATALOG_OBJ);
+            super.icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.CATALOG_OBJ);
         }
 
         public CoordinateReferenceSystem getCRS() {
@@ -403,8 +389,7 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
         if (!windFile.exists()) {
             windFile = new File(getFile() + File.separator + JGrassConstants.WIND.toLowerCase());
             if (!windFile.exists()) {
-                msg = new Throwable(
-                        "Couldn't find a suitable region file in the mapset. Check your Location.");
+                msg = new Throwable("Couldn't find a suitable region file in the mapset. Check your Location.");
                 return null;
             }
         }
@@ -420,8 +405,7 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
 
     public ImageDescriptor getIcon( IProgressMonitor monitor ) {
         if (icon == null) {
-            icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(
-                    ISharedImages.GRID_OBJ);
+            icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.GRID_OBJ);
         }
         return icon;
     }
@@ -477,11 +461,9 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
      * @return the {@link JGrassMapGeoResource georesource} that was added.
      */
     public JGrassMapGeoResource addMap( String mapName, String mapType ) {
-        String mapLocation = new File(getFile(), JGrassConstants.CELL + "/" + mapName)
-                .getAbsolutePath();
+        String mapLocation = new File(getFile(), JGrassConstants.CELL + "/" + mapName).getAbsolutePath();
         String mapTypeAndPath = mapType + "|" + mapLocation;
-        JGrassMapGeoResource resource = new JGrassMapGeoResource(parent, this, mapName,
-                mapTypeAndPath);
+        JGrassMapGeoResource resource = new JGrassMapGeoResource(parent, this, mapName, mapTypeAndPath);
         if (jgrassMapMembers == null) {
             jgrassMapMembers = members(ProgressManager.instance().get(null));
         }
@@ -504,19 +486,16 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
                 resource.resetBoundInfo();
             } catch (IOException e) {
                 String message = "An error occurred while reloading the file bounds info.";
-                ExceptionDetailsDialog.openError(null, message, IStatus.ERROR,
-                        JGrassPlugin.PLUGIN_ID, e);
+                ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassPlugin.PLUGIN_ID, e);
             }
         }
         return resource;
     }
 
     public JGrassMapGeoResource removeMap( String mapName, String mapType ) {
-        String mapLocation = new File(getFile(), JGrassConstants.CELL + "/" + mapName)
-                .getAbsolutePath();
+        String mapLocation = new File(getFile(), JGrassConstants.CELL + "/" + mapName).getAbsolutePath();
         String mapTypeAndPath = mapType + "|" + mapLocation;
-        JGrassMapGeoResource resource = new JGrassMapGeoResource(parent, this, mapName,
-                mapTypeAndPath);
+        JGrassMapGeoResource resource = new JGrassMapGeoResource(parent, this, mapName, mapTypeAndPath);
         if (jgrassMapMembers == null) {
             jgrassMapMembers = members(ProgressManager.instance().get(null));
         }

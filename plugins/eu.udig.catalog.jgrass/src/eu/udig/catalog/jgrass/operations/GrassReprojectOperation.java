@@ -284,7 +284,8 @@ public class GrassReprojectOperation implements IOp {
                         GridGeometry outputGridGeometry = new GridGeometry2D(gridEnvelope2D, gridToEnvelopeTransform, crs);
 
                         GridCoverage2D coverage2D = JGrassCatalogUtilities.getGridcoverageFromGrassraster(jgMEnv, sourceRegion);
-                        GrassCoverageReadParam gcReadParam = new GrassCoverageReadParam(sourceRegion);
+                        // GrassCoverageReadParam gcReadParam = new
+                        // GrassCoverageReadParam(sourceRegion);
                         GridCoverage2D reprojected = (GridCoverage2D) Operations.DEFAULT.resample(coverage2D, crs,
                                 outputGridGeometry, Interpolation.getInstance(Interpolation.INTERP_BICUBIC));
 

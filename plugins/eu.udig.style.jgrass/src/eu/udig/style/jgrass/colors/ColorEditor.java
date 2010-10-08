@@ -504,7 +504,6 @@ public class ColorEditor extends Composite implements SelectionListener {
      */
     public synchronized void makePersistent() {
         // write to disk
-        System.out.println("PERSISTENCE");
         if (colrFile != null) {
             BufferedWriter bw = null;
             try {
@@ -524,10 +523,16 @@ public class ColorEditor extends Composite implements SelectionListener {
                         bw.write(r.ruleToString() + "\n");
                 }
 
-                bw.close();
             } catch (IOException e1) {
                 JGrassrasterStyleActivator.log("JGrassrasterStyleActivator problem", e1); //$NON-NLS-1$
                 e1.printStackTrace();
+            } finally {
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JGrassrasterStyleActivator.log("JGrassrasterStyleActivator problem", e); //$NON-NLS-1$
+                }
             }
         }
 

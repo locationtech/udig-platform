@@ -218,8 +218,8 @@ public class JGRasterLayerTreeViewer extends Composite implements ISelectionChan
             }
             Map<String, ILayer> sortedMap = new TreeMap<String, ILayer>(tmp);
             filteredLayers.removeAllElements();
-            for( String key : sortedMap.keySet() ) {
-                filteredLayers.add(sortedMap.get(key));
+            for( ILayer value : sortedMap.values() ) {
+                filteredLayers.add(value);
             }
 
             return filteredLayers.toArray();
@@ -289,7 +289,7 @@ public class JGRasterLayerTreeViewer extends Composite implements ISelectionChan
      * This class provides the labels for the file tree
      */
 
-    private class LabelProvider implements ILabelProvider {
+    private static class LabelProvider implements ILabelProvider {
         // The listeners
         private final List<ILabelProviderListener> listeners;
 
@@ -300,9 +300,6 @@ public class JGRasterLayerTreeViewer extends Composite implements ISelectionChan
         private final Image esriasciiRasterMaps;
         private final Image fluidturtleRasterMaps;
         private final Image problemRasterMaps;
-
-        // Label provider state: preserve case of file names/directories
-        boolean preserveCase = true;
 
         /**
          * Constructs a FileTreeLabelProvider
@@ -323,23 +320,6 @@ public class JGRasterLayerTreeViewer extends Composite implements ISelectionChan
                     .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/ftraster.gif").createImage(); //$NON-NLS-1$
             problemRasterMaps = AbstractUIPlugin
                     .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/problem.gif").createImage(); //$NON-NLS-1$
-        }
-
-        /**
-         * Sets the preserve case attribute
-         * 
-         * @param preserveCase the preserve case attribute
-         */
-        public void setPreserveCase( boolean preserveCase ) {
-            this.preserveCase = preserveCase;
-
-            // Since this attribute affects how the labels are computed,
-            // notify all the listeners of the change.
-            LabelProviderChangedEvent event = new LabelProviderChangedEvent(this);
-            for( int i = 0, n = listeners.size(); i < n; i++ ) {
-                ILabelProviderListener ilpl = listeners.get(i);
-                ilpl.labelProviderChanged(event);
-            }
         }
 
         /**

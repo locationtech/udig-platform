@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import net.refractions.udig.catalog.IGeoResource;
@@ -240,19 +242,13 @@ public class CategoryEditor extends Composite implements SelectionListener {
     public void makeSomeCategories( String catspath ) {
 
         File catsFile = new File(catspath);
-        BufferedReader inputReader;
+        BufferedReader inputReader = null;
         try {
             inputReader = new BufferedReader(new FileReader(catsFile));
-        } catch (FileNotFoundException e) {
-            JGrassrasterStyleActivator.log("JGrassrasterStyleActivator problem", e); //$NON-NLS-1$
-            e.printStackTrace();
-            return;
-        }
 
-        String line = null;
-        LinkedHashMap<String, String> cats = new LinkedHashMap<String, String>();
-        if (catsFile.exists()) {
-            try {
+            String line = null;
+            LinkedHashMap<String, String> cats = new LinkedHashMap<String, String>();
+            if (catsFile.exists()) {
                 // jump over the first 4 lines
                 line = inputReader.readLine();
                 line = inputReader.readLine();
@@ -271,19 +267,25 @@ public class CategoryEditor extends Composite implements SelectionListener {
                         return;
                     }
                 }
-            } catch (IOException e1) {
-                JGrassrasterStyleActivator.log("JGrassrasterStyleActivator problem", e1); //$NON-NLS-1$
-                e1.printStackTrace();
-                return;
+
+                listOfRules.clear();
+                Set<Entry<String, String>> entrySet = cats.entrySet();
+                for( Entry<String, String> entry : entrySet ) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                    listOfRules.add(new CategoryRule(key, value, true));
+                }
             }
-
-            // Iterate over the keys in the map
-            Iterator it = cats.keySet().iterator();
-
-            listOfRules.clear();
-            while( it.hasNext() ) {
-                String key = (String) it.next();
-                listOfRules.add(new CategoryRule(key, cats.get(key), true));
+        } catch (IOException e1) {
+            JGrassrasterStyleActivator.log("JGrassrasterStyleActivator problem", e1); //$NON-NLS-1$
+            e1.printStackTrace();
+            return;
+        } finally {
+            try {
+                inputReader.close();
+            } catch (IOException e) {
+                JGrassrasterStyleActivator.log("JGrassrasterStyleActivator problem", e); //$NON-NLS-1$
+                e.printStackTrace();
             }
         }
         this.setLayer(layer);
@@ -300,10 +302,9 @@ public class CategoryEditor extends Composite implements SelectionListener {
     public void setLayer( Layer layer ) {
         this.layer = layer;
         IGeoResource resource = layer.getGeoResource();
-        mapsetPathAndMapName = JGrassCatalogUtilities
-                .getMapsetpathAndMapnameFromJGrassMapGeoResource(resource);
-        catsFile = new File(mapsetPathAndMapName[0] + File.separator + JGrassConstants.CATS
-                + File.separator + mapsetPathAndMapName[1]);
+        mapsetPathAndMapName = JGrassCatalogUtilities.getMapsetpathAndMapnameFromJGrassMapGeoResource(resource);
+        catsFile = new File(mapsetPathAndMapName[0] + File.separator + JGrassConstants.CATS + File.separator
+                + mapsetPathAndMapName[1]);
     }
 
     public void setRulesList( ArrayList<CategoryRule> listOfRules ) {
@@ -329,28 +330,22 @@ public class CategoryEditor extends Composite implements SelectionListener {
     /**
      * write the rules to file
      */
-    public synchronized void makePersistent() {
+    public void makePersistent() {
         // write to disk
-        System.out.println("CATS PERSISTENCE");
+        BufferedWriter bw = null;
         if (catsFile != null) {
-            BufferedWriter bw = null;
             try {
                 bw = new BufferedWriter(new FileWriter(catsFile));
-            } catch (IOException e) {
-                JGrassrasterStyleActivator.log("JGrassrasterStyleActivator problem", e); //$NON-NLS-1$
-                e.printStackTrace();
-            }
 
-            if (listOfRules.size() == 0) {
-                return;
-            }
+                if (listOfRules.size() == 0) {
+                    return;
+                }
 
-            StringBuffer header = new StringBuffer();
-            header.append("# " + listOfRules.size() + "\n");
-            header.append(mapsetPathAndMapName[1] + "\n");
-            header.append("\n");
-            header.append("0.00 0.00 0.00 0.00\n");
-            try {
+                StringBuffer header = new StringBuffer();
+                header.append("# " + listOfRules.size() + "\n");
+                header.append(mapsetPathAndMapName[1] + "\n");
+                header.append("\n");
+                header.append("0.00 0.00 0.00 0.00\n");
                 bw.write(header.toString());
 
                 for( CategoryRule r : listOfRules ) {
@@ -358,10 +353,16 @@ public class CategoryEditor extends Composite implements SelectionListener {
                         bw.write(r.ruleToString() + "\n");
                 }
 
-                bw.close();
             } catch (IOException e1) {
                 JGrassrasterStyleActivator.log("JGrassrasterStyleActivator problem", e1); //$NON-NLS-1$
                 e1.printStackTrace();
+            } finally {
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JGrassrasterStyleActivator.log("JGrassrasterStyleActivator problem", e); //$NON-NLS-1$
+                }
             }
 
         }
@@ -378,11 +379,9 @@ public class CategoryEditor extends Composite implements SelectionListener {
                     JGrassMapGeoResource rasterMapResource = (JGrassMapGeoResource) layer;
                     try {
                         mapName = rasterMapResource.getInfo(null).getTitle();
-                        mapsetPath = ((JGrassMapsetGeoResource) rasterMapResource.parent(null))
-                                .getFile().getAbsolutePath();
+                        mapsetPath = ((JGrassMapsetGeoResource) rasterMapResource.parent(null)).getFile().getAbsolutePath();
                         if (mapName != null && mapsetPath != null) {
-                            String catsPath = mapsetPath + File.separator + JGrassConstants.CATS
-                                    + File.separator + mapName;
+                            String catsPath = mapsetPath + File.separator + JGrassConstants.CATS + File.separator + mapName;
                             makeSomeCategories(catsPath);
                         }
                     } catch (IOException e) {

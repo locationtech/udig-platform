@@ -43,7 +43,6 @@ public class JGrassPlugin extends AbstractUIPlugin {
      * The constructor
      */
     public JGrassPlugin() {
-        plugin = this;
     }
 
     /*
@@ -53,6 +52,7 @@ public class JGrassPlugin extends AbstractUIPlugin {
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
+        plugin = this;
     }
 
     /*

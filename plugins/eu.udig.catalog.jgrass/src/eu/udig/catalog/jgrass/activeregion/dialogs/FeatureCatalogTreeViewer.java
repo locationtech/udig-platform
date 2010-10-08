@@ -219,15 +219,12 @@ public class FeatureCatalogTreeViewer extends Composite
      * This class provides the labels for the file tree
      */
 
-    private class LabelProvider implements ILabelProvider {
+    private static class LabelProvider implements ILabelProvider {
         // The listeners
         private final List<ILabelProviderListener> listeners;
 
         // Images for tree nodes
         private final Image vectorMaps;
-
-        // Label provider state: preserve case of file names/directories
-        boolean preserveCase = true;
 
         /**
          * Constructs a FileTreeLabelProvider
@@ -239,23 +236,6 @@ public class FeatureCatalogTreeViewer extends Composite
             // Create the images
             vectorMaps = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(
                     ISharedImages.FEATURE_OBJ).createImage();
-        }
-
-        /**
-         * Sets the preserve case attribute
-         * 
-         * @param preserveCase the preserve case attribute
-         */
-        public void setPreserveCase( boolean preserveCase ) {
-            this.preserveCase = preserveCase;
-
-            // Since this attribute affects how the labels are computed,
-            // notify all the listeners of the change.
-            LabelProviderChangedEvent event = new LabelProviderChangedEvent(this);
-            for( int i = 0, n = listeners.size(); i < n; i++ ) {
-                ILabelProviderListener ilpl = listeners.get(i);
-                ilpl.labelProviderChanged(event);
-            }
         }
 
         /**

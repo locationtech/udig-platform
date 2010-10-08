@@ -451,13 +451,13 @@ public class JGrassCatalogUtilities {
     public static synchronized CoordinateReferenceSystem getLocationCrs( String locationPath ) {
         CoordinateReferenceSystem readCrs = null;
         String projWtkFilePath;
+        BufferedReader crsReader = null;
         try {
             projWtkFilePath = locationPath + File.separator + JGrassConstants.PERMANENT_MAPSET + File.separator
                     + JGrassConstants.PROJ_WKT;
             File projWtkFile = new File(projWtkFilePath);
             if (projWtkFile.exists()) {
-
-                BufferedReader crsReader = new BufferedReader(new FileReader(projWtkFile));
+                crsReader = new BufferedReader(new FileReader(projWtkFile));
                 StringBuffer wtkString = new StringBuffer();
                 String line = null;
                 while( (line = crsReader.readLine()) != null ) {
@@ -472,6 +472,15 @@ public class JGrassCatalogUtilities {
                     "JGrassPlugin problem: eu.hydrologis.udig.catalog.internal.jgrass#JGrassMapsetGeoResource#getJGrassCrs", e1); //$NON-NLS-1$
 
             e1.printStackTrace();
+        } finally {
+            try {
+                if (crsReader != null)
+                    crsReader.close();
+            } catch (IOException e) {
+                JGrassPlugin
+                        .log("JGrassPlugin problem: eu.hydrologis.udig.catalog.internal.jgrass#JGrassMapsetGeoResource#getJGrassCrs", e); //$NON-NLS-1$
+                e.printStackTrace();
+            }
         }
         return readCrs;
     }
@@ -664,7 +673,7 @@ public class JGrassCatalogUtilities {
         CoordinateReferenceSystem crs = jGrassMapEnvironment.getCoordinateReferenceSystem();
         JGrassRegion jGrassRegion = readRegion;
         if (jGrassRegion == null)
-            jGrassMapEnvironment.getActiveRegion();
+            jGrassRegion = jGrassMapEnvironment.getActiveRegion();
         GeneralParameterValue[] readParams = JGrassCatalogUtilities.createGridGeometryGeneralParameter(jGrassRegion.getCols(),
                 jGrassRegion.getRows(), jGrassRegion.getNorth(), jGrassRegion.getSouth(), jGrassRegion.getWest(),
                 jGrassRegion.getEast(), crs);

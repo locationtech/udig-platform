@@ -49,66 +49,67 @@ public class GrassColorTable extends ColorTable {
 
     private int alpha = 255;
 
-    public GrassColorTable( String mapsetPath, String mapName, double[] dataRange )
-            throws IOException {
-        this(mapsetPath + File.separator + JGrassConstants.COLR + File.separator + mapName,
-                dataRange);
+    public GrassColorTable( String mapsetPath, String mapName, double[] dataRange ) throws IOException {
+        this(mapsetPath + File.separator + JGrassConstants.COLR + File.separator + mapName, dataRange);
     }
 
     /** Creates a new instance of ColorTable */
     public GrassColorTable( String colorFilePath, double[] dataRange ) throws IOException {
         colrFile = new File(colorFilePath);
         if (colrFile.exists()) {
-            BufferedReader rdr = new BufferedReader(new InputStreamReader(new FileInputStream(
-                    colrFile)));
-            String line = rdr.readLine();
-            if (line == null) {
-                colorTableEmpty = true;
-                rdr.close();
-                if (colrFile.delete()) {
-                    System.out.println("removed empty color file"); //$NON-NLS-1$
+            BufferedReader rdr = null;
+            try {
+                rdr = new BufferedReader(new InputStreamReader(new FileInputStream(colrFile)));
+                String line = rdr.readLine();
+                if (line == null) {
+                    colorTableEmpty = true;
+                    rdr.close();
+                    if (colrFile.delete()) {
+                        System.out.println("removed empty color file"); //$NON-NLS-1$
+                    }
+                    return;
                 }
-                return;
-            }
-            line = line.trim();
-            /*
-             * Read first line and if it starts with # then it is a 3.x color map. If it starts with %
-             * then it it a 4.x/5.x color map
-             */
-            if (line == null)
-                return;
-            if (line.charAt(0) == '%') {
-                String[] stringValues = line.split("\\s+"); //$NON-NLS-1$
-                if (stringValues.length == 4) {
-                    try {
-                        alpha = Integer.parseInt(stringValues[3]);
-                    } catch (NumberFormatException e) {
+                line = line.trim();
+                /*
+                 * Read first line and if it starts with # then it is a 3.x color map. If it starts with %
+                 * then it it a 4.x/5.x color map
+                 */
+                if (line == null)
+                    return;
+                if (line.charAt(0) == '%') {
+                    String[] stringValues = line.split("\\s+"); //$NON-NLS-1$
+                    if (stringValues.length == 4) {
+                        try {
+                            alpha = Integer.parseInt(stringValues[3]);
+                        } catch (NumberFormatException e) {
+                            alpha = 255;
+                        }
+                    } else {
                         alpha = 255;
                     }
+                    /* Read all the color rules */
+                    while( (line = rdr.readLine()) != null ) {
+                        if (line.charAt(0) != '%')
+                            processGrass4ColorRule(line.trim());
+                    }
+                } else if (line.charAt(0) == '#') {
+                    int catNumber = Integer.parseInt(line.substring(1, 2));
+                    /* Read second line which is the background colour */
+                    processGrass3ColorRule(-1, rdr.readLine());
+                    /* Now read the rest of the lines */
+                    while( (line = rdr.readLine()) != null ) {
+                        processGrass3ColorRule(catNumber++, line.trim());
+                    }
                 } else {
-                    alpha = 255;
+                    int catNumber = 0;
+                    /* Now read the rest of the lines */
+                    while( (line = rdr.readLine()) != null ) {
+                        processGrass3ColorRule(catNumber++, line.trim());
+                    }
                 }
-                /* Read all the color rules */
-                while( (line = rdr.readLine()) != null ) {
-                    if (line.charAt(0) != '%')
-                        processGrass4ColorRule(line.trim());
-                }
-            } else if (line.charAt(0) == '#') {
-                int catNumber = Integer.parseInt(line.substring(1, 2));
-                /* Read second line which is the background colour */
-                processGrass3ColorRule(-1, rdr.readLine());
-                /* Now read the rest of the lines */
-                while( (line = rdr.readLine()) != null ) {
-                    processGrass3ColorRule(catNumber++, line.trim());
-                }
-            } else {
-                int catNumber = 0;
-                /* Now read the rest of the lines */
-                while( (line = rdr.readLine()) != null ) {
-                    processGrass3ColorRule(catNumber++, line.trim());
-                }
+            } finally {
+                rdr.close();
             }
-            rdr.close();
             colorTableEmpty = false;
             // System.out.println("================================COLORTABLE================================");
             // for (int i=0; i<rules.size(); i++)
@@ -138,11 +139,9 @@ public class GrassColorTable extends ColorTable {
                     if (tk.hasMoreTokens())
                         b = tk.nextToken();
                     if (r.indexOf('.') == -1)
-                        setBackgroundColor(new Color(Integer.parseInt(r), Integer.parseInt(g),
-                                Integer.parseInt(b)));
+                        setBackgroundColor(new Color(Integer.parseInt(r), Integer.parseInt(g), Integer.parseInt(b)));
                     else
-                        setBackgroundColor(new Color(Float.parseFloat(r), Float.parseFloat(g),
-                                Float.parseFloat(b)));
+                        setBackgroundColor(new Color(Float.parseFloat(r), Float.parseFloat(g), Float.parseFloat(b)));
                 }
             } else {
                 r = g = b = tk.nextToken();
@@ -151,11 +150,10 @@ public class GrassColorTable extends ColorTable {
                 if (tk.hasMoreTokens())
                     b = tk.nextToken();
                 if (r.indexOf('.') == -1)
-                    addColorRule(lineNumber, Integer.parseInt(r), Integer.parseInt(g), Integer
-                            .parseInt(b));
+                    addColorRule(lineNumber, Integer.parseInt(r), Integer.parseInt(g), Integer.parseInt(b));
                 else
-                    addColorRule(lineNumber, (int) (Float.parseFloat(r) * 255f), (int) (Float
-                            .parseFloat(g) * 255f), (int) (Float.parseFloat(b) * 255));
+                    addColorRule(lineNumber, (int) (Float.parseFloat(r) * 255f), (int) (Float.parseFloat(g) * 255f),
+                            (int) (Float.parseFloat(b) * 255));
             }
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
@@ -225,24 +223,20 @@ public class GrassColorTable extends ColorTable {
         // calculate the color increment
         float rinc = (float) (dataRange[1] - dataRange[0]) / 5;
         for( int i = 0; i < 4; i++ ) {
-            addColorRule((float) (dataRange[0] + (i * rinc)), parseInt(rainbow[i][0]),
-                    parseInt(rainbow[i][1]), parseInt(rainbow[i][2]),
-                    (float) (dataRange[0] + ((i + 1) * rinc)), parseInt(rainbow[i + 1][0]),
+            addColorRule((float) (dataRange[0] + (i * rinc)), parseInt(rainbow[i][0]), parseInt(rainbow[i][1]),
+                    parseInt(rainbow[i][2]), (float) (dataRange[0] + ((i + 1) * rinc)), parseInt(rainbow[i + 1][0]),
                     parseInt(rainbow[i + 1][1]), parseInt(rainbow[i + 1][2]));
 
             StringBuffer rule = new StringBuffer();
             rule.append((dataRange[0] + (i * rinc)) + ":");
             rule.append(rainbow[i][0] + ":" + rainbow[i][1] + ":" + rainbow[i][2] + " ");
             rule.append((dataRange[0] + ((i + 1) * rinc)) + ":");
-            rule
-                    .append(rainbow[i + 1][0] + ":" + rainbow[i + 1][1] + ":" + rainbow[i + 1][2]
-                            + " ");
+            rule.append(rainbow[i + 1][0] + ":" + rainbow[i + 1][1] + ":" + rainbow[i + 1][2] + " ");
             rules.add(rule.toString());
         }
 
-        addColorRule((float) (dataRange[1] - rinc), parseInt(rainbow[4][0]),
-                parseInt(rainbow[4][1]), parseInt(rainbow[4][2]), (float) (dataRange[1]),
-                parseInt(rainbow[5][0]), parseInt(rainbow[5][1]), parseInt(rainbow[5][2]));
+        addColorRule((float) (dataRange[1] - rinc), parseInt(rainbow[4][0]), parseInt(rainbow[4][1]), parseInt(rainbow[4][2]),
+                (float) (dataRange[1]), parseInt(rainbow[5][0]), parseInt(rainbow[5][1]), parseInt(rainbow[5][2]));
         StringBuffer rule = new StringBuffer();
         rule.append((dataRange[1] - rinc) + ":");
         rule.append(rainbow[4][0] + ":" + rainbow[4][1] + ":" + rainbow[4][2] + " ");
@@ -255,7 +249,9 @@ public class GrassColorTable extends ColorTable {
             // check also existence of colr folder, it could be missing
             File colFolder = colrFile.getParentFile();
             if (!colFolder.exists()) {
-                colFolder.mkdirs();
+                if (!colFolder.mkdirs()) {
+                    throw new IOException("Could nto create folder: " + colFolder.getAbsolutePath());
+                }
             }
             bw = new BufferedWriter(new FileWriter(colrFile));
 
@@ -282,8 +278,7 @@ public class GrassColorTable extends ColorTable {
      * @throws IOException
      */
     @SuppressWarnings("nls")
-    public static String setColorTableFromRules( File colrFile, double[] dataRange,
-            String[][] colorRules ) throws IOException {
+    public static String setColorTableFromRules( File colrFile, double[] dataRange, String[][] colorRules ) throws IOException {
         String name = colrFile.getName();
         File mapsetFile = colrFile.getParentFile().getParentFile();
         JGrassMapEnvironment jGrassMapEnvironment = new JGrassMapEnvironment(mapsetFile, name);
@@ -316,20 +311,16 @@ public class GrassColorTable extends ColorTable {
 
             for( int i = 0; i < colorRules.length - 2; i++ ) {
                 rule.append((dataRange[0] + (i * rinc)) + ":");
-                rule.append(colorRules[i][0] + ":" + colorRules[i][1] + ":" + colorRules[i][2]
-                        + " ");
+                rule.append(colorRules[i][0] + ":" + colorRules[i][1] + ":" + colorRules[i][2] + " ");
                 rule.append((dataRange[0] + ((i + 1) * rinc)) + ":");
-                rule.append(colorRules[i + 1][0] + ":" + colorRules[i + 1][1] + ":"
-                        + colorRules[i + 1][2] + "\n");
+                rule.append(colorRules[i + 1][0] + ":" + colorRules[i + 1][1] + ":" + colorRules[i + 1][2] + "\n");
             }
 
             rule.append((dataRange[1] - rinc) + ":");
-            rule.append(colorRules[colorRules.length - 2][0] + ":"
-                    + colorRules[colorRules.length - 2][1] + ":"
+            rule.append(colorRules[colorRules.length - 2][0] + ":" + colorRules[colorRules.length - 2][1] + ":"
                     + colorRules[colorRules.length - 2][2] + " ");
             rule.append((dataRange[1]) + ":");
-            rule.append(colorRules[colorRules.length - 1][0] + ":"
-                    + colorRules[colorRules.length - 1][1] + ":"
+            rule.append(colorRules[colorRules.length - 1][0] + ":" + colorRules[colorRules.length - 1][1] + ":"
                     + colorRules[colorRules.length - 1][2] + "\n");
 
             BufferedWriter bw = new BufferedWriter(new FileWriter(colrFile));
@@ -343,22 +334,18 @@ public class GrassColorTable extends ColorTable {
              * and the color rule has to be "v1 r1 g1 b1 v2 r2 g2 b2". 
              */
             if (colorRules[0].length != 8) {
-                throw new IOException(
-                        "The colortable can have records of 3 or 8 columns. Check your colortables.");
+                throw new IOException("The colortable can have records of 3 or 8 columns. Check your colortables.");
             }
 
             StringBuffer rule = new StringBuffer();
-            rule.append("% " + colorRules[0][0] + "   " + colorRules[colorRules.length - 1][0]
-                    + "   255\n");
+            rule.append("% " + colorRules[0][0] + "   " + colorRules[colorRules.length - 1][0] + "   255\n");
 
             for( int i = 0; i < colorRules.length; i++ ) {
                 System.out.println(i);
                 rule.append(colorRules[i][0] + ":");
-                rule.append(colorRules[i][1] + ":" + colorRules[i][2] + ":" + colorRules[i][3]
-                        + " ");
+                rule.append(colorRules[i][1] + ":" + colorRules[i][2] + ":" + colorRules[i][3] + " ");
                 rule.append(colorRules[i][4] + ":");
-                rule.append(colorRules[i][5] + ":" + colorRules[i][6] + ":"
-                        + colorRules[i][7] + "\n");
+                rule.append(colorRules[i][5] + ":" + colorRules[i][6] + ":" + colorRules[i][7] + "\n");
             }
 
             BufferedWriter bw = new BufferedWriter(new FileWriter(colrFile));
@@ -377,8 +364,7 @@ public class GrassColorTable extends ColorTable {
      * @throws Exception 
      */
     @SuppressWarnings("nls")
-    public String createDefaultColorRulesString( double[] dataRange, boolean writeToDisk )
-            throws IOException {
+    public String createDefaultColorRulesString( double[] dataRange, boolean writeToDisk ) throws IOException {
         String[][] rainbow = PredefinedColorRules.rainbow;
         if (dataRange == null) {
             dataRange = new double[2];
@@ -435,8 +421,7 @@ public class GrassColorTable extends ColorTable {
             rule.append((dataRange[0] + (i * rinc)) + ":");
             rule.append(rainbow[i][0] + ":" + rainbow[i][1] + ":" + rainbow[i][2] + " ");
             rule.append((dataRange[0] + ((i + 1) * rinc)) + ":");
-            rule.append(rainbow[i + 1][0] + ":" + rainbow[i + 1][1] + ":" + rainbow[i + 1][2]
-                    + "\n");
+            rule.append(rainbow[i + 1][0] + ":" + rainbow[i + 1][1] + ":" + rainbow[i + 1][2] + "\n");
         }
 
         rule.append((dataRange[1] - rinc) + ":");

@@ -54,11 +54,9 @@ public class RuleComposite implements MouseListener, SelectionListener, KeyListe
     private boolean isActive = true;
     private Rule rule = null;
     private Composite parent = null;
-    private ColorEditor colorEditor = null;
 
     public RuleComposite( ColorEditor colorEditor, Composite parent, int style, Rule rule ) {
         this.parent = parent;
-        this.colorEditor = colorEditor;
 
         GridData gridData10 = new GridData();
         gridData10.horizontalAlignment = GridData.FILL;

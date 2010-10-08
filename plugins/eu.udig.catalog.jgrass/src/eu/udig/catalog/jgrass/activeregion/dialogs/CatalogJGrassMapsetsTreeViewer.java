@@ -61,10 +61,7 @@ import eu.udig.catalog.jgrass.core.JGrassService;
  * @author Andrea Antonello - www.hydrologis.com
  * @since 1.1.0
  */
-public class CatalogJGrassMapsetsTreeViewer extends Composite
-        implements
-            ISelectionChangedListener,
-            IResourcesSelector {
+public class CatalogJGrassMapsetsTreeViewer extends Composite implements ISelectionChangedListener, IResourcesSelector {
 
     private final HashMap<String, JGrassMapsetGeoResource> itemsMap = new HashMap<String, JGrassMapsetGeoResource>();
     private LabelProvider labelProvider = null;
@@ -160,8 +157,7 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite
                 if (layer instanceof JGrassMapsetGeoResource) {
 
                     filteredLayers.add((JGrassMapsetGeoResource) layer);
-                    itemsMap.put(((JGrassMapsetGeoResource) layer).getTitle(),
-                            (JGrassMapsetGeoResource) layer);
+                    itemsMap.put(((JGrassMapsetGeoResource) layer).getTitle(), (JGrassMapsetGeoResource) layer);
                 }
 
             }
@@ -173,11 +169,10 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite
             for( JGrassMapsetGeoResource resource : filteredLayers ) {
                 tmp.put(resource.getTitle(), resource);
             }
-            Map<String, JGrassMapsetGeoResource> sortedMap = new TreeMap<String, JGrassMapsetGeoResource>(
-                    tmp);
+            Map<String, JGrassMapsetGeoResource> sortedMap = new TreeMap<String, JGrassMapsetGeoResource>(tmp);
             filteredLayers.removeAllElements();
-            for( String key : sortedMap.keySet() ) {
-                filteredLayers.add(sortedMap.get(key));
+            for( JGrassMapsetGeoResource map : sortedMap.values() ) {
+                filteredLayers.add(map);
             }
 
             return filteredLayers.toArray();
@@ -268,7 +263,7 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite
      * This class provides the labels for the file tree
      */
 
-    private class LabelProvider implements ILabelProvider {
+    private static class LabelProvider implements ILabelProvider {
         // The listeners
         private final List<ILabelProviderListener> listeners;
 
@@ -277,7 +272,6 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite
         private final Image mainRasterMaps;
 
         // Label provider state: preserve case of file names/directories
-        boolean preserveCase = true;
 
         /**
          * Constructs a FileTreeLabelProvider
@@ -287,28 +281,27 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite
             listeners = new ArrayList<ILabelProviderListener>();
 
             // Create the images
-            mainRasterMaps = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID,
-                    "icons/obj16/jgrassloc_obj.gif").createImage(); //$NON-NLS-1$
-            rasterMaps = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID,
-                    "icons/obj16/jgrass_obj.gif").createImage(); //$NON-NLS-1$
+            mainRasterMaps = AbstractUIPlugin
+                    .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/jgrassloc_obj.gif").createImage(); //$NON-NLS-1$
+            rasterMaps = AbstractUIPlugin
+                    .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/jgrass_obj.gif").createImage(); //$NON-NLS-1$
         }
 
-        /**
-         * Sets the preserve case attribute
-         * 
-         * @param preserveCase the preserve case attribute
-         */
-        public void setPreserveCase( boolean preserveCase ) {
-            this.preserveCase = preserveCase;
-
-            // Since this attribute affects how the labels are computed,
-            // notify all the listeners of the change.
-            LabelProviderChangedEvent event = new LabelProviderChangedEvent(this);
-            for( int i = 0, n = listeners.size(); i < n; i++ ) {
-                ILabelProviderListener ilpl = listeners.get(i);
-                ilpl.labelProviderChanged(event);
-            }
-        }
+        // /**
+        // * Sets the preserve case attribute
+        // *
+        // * @param preserveCase the preserve case attribute
+        // */
+        // public void setPreserveCase( boolean preserveCase ) {
+        //
+        // // Since this attribute affects how the labels are computed,
+        // // notify all the listeners of the change.
+        // LabelProviderChangedEvent event = new LabelProviderChangedEvent(this);
+        // for( int i = 0, n = listeners.size(); i < n; i++ ) {
+        // ILabelProviderListener ilpl = listeners.get(i);
+        // ilpl.labelProviderChanged(event);
+        // }
+        // }
 
         /**
          * Gets the image to display for a node in the tree
