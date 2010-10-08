@@ -241,7 +241,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         // border alpha
         Label fillOpactityLabel = new Label(mainComposite, SWT.NONE);
         fillOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        fillOpactityLabel.setText("transparency");
+        fillOpactityLabel.setText("opacity");
         fillOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
         fillOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         fillOpacitySpinner.setMaximum(100);

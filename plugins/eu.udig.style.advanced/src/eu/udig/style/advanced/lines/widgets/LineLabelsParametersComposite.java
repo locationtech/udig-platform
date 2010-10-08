@@ -185,7 +185,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         // label alpha
         Label labelOpactityLabel = new Label(mainComposite, SWT.NONE);
         labelOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        labelOpactityLabel.setText("transparency");
+        labelOpactityLabel.setText("opacity");
         labelOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
         labelOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         labelOpacitySpinner.setMaximum(100);

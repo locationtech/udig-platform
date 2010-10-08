@@ -189,7 +189,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         // border alpha
         Label borderOpactityLabel = new Label(mainComposite, SWT.NONE);
         borderOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        borderOpactityLabel.setText("transparency");
+        borderOpactityLabel.setText("opacity");
         borderOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
         borderOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         borderOpacitySpinner.setMaximum(100);

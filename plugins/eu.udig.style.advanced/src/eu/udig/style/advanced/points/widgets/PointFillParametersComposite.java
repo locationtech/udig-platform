@@ -87,27 +87,19 @@ public class PointFillParametersComposite extends ParameterComposite {
         fillEnableButton.setSelection(widgetEnabled);
         fillEnableButton.addSelectionListener(this);
 
-        // fill color
-        Label fillColorLabel = new Label(mainComposite, SWT.NONE);
-        fillColorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        fillColorLabel.setText("color");
-        Color tmpColor = null;;
-        try {
-            tmpColor = Color.decode(pointSymbolizerWrapper.getFillColor());
-        } catch (Exception e) {
-            tmpColor = Color.gray;
-        }
-        fillColorEditor = new StolenColorEditor(mainComposite, this);
-        fillColorEditor.setColor(tmpColor);
-        fillColorButton = fillColorEditor.getButton();
-        GridData fillColorButtonGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
-        fillColorButtonGD.horizontalSpan = 2;
-        fillColorButton.setLayoutData(fillColorButtonGD);
-
+        // header
+        new Label(mainComposite, SWT.NONE);
+        Label valueLabel = new Label(mainComposite, SWT.NONE);
+        valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        valueLabel.setText("Manual");
+        Label fieldsLabel = new Label(mainComposite, SWT.NONE);
+        fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        fieldsLabel.setText("Field based");
+        
         // border alpha
         Label fillOpactityLabel = new Label(mainComposite, SWT.NONE);
         fillOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        fillOpactityLabel.setText("transparency");
+        fillOpactityLabel.setText("opacity");
         fillOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
         fillOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         fillOpacitySpinner.setMaximum(100);
@@ -125,6 +117,7 @@ public class PointFillParametersComposite extends ParameterComposite {
         fillOpacityAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         fillOpacityAttributecombo.setItems(numericAttributesArrays);
         fillOpacityAttributecombo.addSelectionListener(this);
+        fillOpacityAttributecombo.select(0);
         if (tmpOpacity == null) {
             int index = getAttributeIndex(opacity, numericAttributesArrays);
             if (index != -1) {
@@ -132,6 +125,22 @@ public class PointFillParametersComposite extends ParameterComposite {
             }
         }
 
+        // fill color
+        Label fillColorLabel = new Label(mainComposite, SWT.NONE);
+        fillColorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        fillColorLabel.setText("color");
+        Color tmpColor = null;;
+        try {
+            tmpColor = Color.decode(pointSymbolizerWrapper.getFillColor());
+        } catch (Exception e) {
+            tmpColor = Color.gray;
+        }
+        fillColorEditor = new StolenColorEditor(mainComposite, this);
+        fillColorEditor.setColor(tmpColor);
+        fillColorButton = fillColorEditor.getButton();
+        GridData fillColorButtonGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        fillColorButtonGD.horizontalSpan = 2;
+        fillColorButton.setLayoutData(fillColorButtonGD);
     }
 
     /**

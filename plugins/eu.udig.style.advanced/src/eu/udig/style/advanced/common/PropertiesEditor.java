@@ -295,6 +295,9 @@ public abstract class PropertiesEditor {
                     geometryPropertyName = attributeType.getName();
                 }
             }
+            // add none option
+            numericAttributeNames.add(0, Utilities.NONE);
+            allAttributeNames.add(0, Utilities.NONE);
         }
     }
 

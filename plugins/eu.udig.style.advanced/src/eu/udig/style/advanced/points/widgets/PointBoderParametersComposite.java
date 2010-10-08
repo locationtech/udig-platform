@@ -89,6 +89,15 @@ public class PointBoderParametersComposite extends ParameterComposite {
         borderEnableButton.setText("enable/disable border");
         borderEnableButton.setSelection(widgetEnabled);
         borderEnableButton.addSelectionListener(this);
+        
+        // header
+        new Label(mainComposite, SWT.NONE);
+        Label valueLabel = new Label(mainComposite, SWT.NONE);
+        valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        valueLabel.setText("Manual");
+        Label fieldsLabel = new Label(mainComposite, SWT.NONE);
+        fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        fieldsLabel.setText("Field based");
 
         // border width
         Label borderWidthLabel = new Label(mainComposite, SWT.NONE);
@@ -113,6 +122,7 @@ public class PointBoderParametersComposite extends ParameterComposite {
         borderWidthAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         borderWidthAttributecombo.setItems(numericAttributesArrays);
         borderWidthAttributecombo.addSelectionListener(this);
+        borderWidthAttributecombo.select(0);
         if (tmpWidth == null) {
             int index = getAttributeIndex(width, numericAttributesArrays);
             if (index != -1) {
@@ -120,27 +130,10 @@ public class PointBoderParametersComposite extends ParameterComposite {
             }
         }
 
-        // border color
-        Label borderColorLabel = new Label(mainComposite, SWT.NONE);
-        borderColorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        borderColorLabel.setText("color");
-        Color tmpColor;
-        try {
-            tmpColor = Color.decode(symbolizersWrapper.getStrokeColor());
-        } catch (Exception e) {
-            tmpColor = Color.gray;
-        }
-        borderColorEditor = new StolenColorEditor(mainComposite, this);
-        borderColorEditor.setColor(tmpColor);
-        borderColorButton = borderColorEditor.getButton();
-        GridData borderColorButtonSIMPLEGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
-        borderColorButtonSIMPLEGD.horizontalSpan = 2;
-        borderColorButton.setLayoutData(borderColorButtonSIMPLEGD);
-
         // border alpha
         Label borderOpactityLabel = new Label(mainComposite, SWT.NONE);
         borderOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        borderOpactityLabel.setText("transparency");
+        borderOpactityLabel.setText("opacity");
         borderOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
         borderOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         borderOpacitySpinner.setMaximum(100);
@@ -158,12 +151,31 @@ public class PointBoderParametersComposite extends ParameterComposite {
         borderOpacityAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         borderOpacityAttributecombo.setItems(numericAttributesArrays);
         borderOpacityAttributecombo.addSelectionListener(this);
+        borderOpacityAttributecombo.select(0);
         if (tmpOpacity == null) {
             int index = getAttributeIndex(opacity, numericAttributesArrays);
             if (index != -1) {
                 borderOpacityAttributecombo.select(index);
             }
         }
+        
+
+        // border color
+        Label borderColorLabel = new Label(mainComposite, SWT.NONE);
+        borderColorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        borderColorLabel.setText("color");
+        Color tmpColor;
+        try {
+            tmpColor = Color.decode(symbolizersWrapper.getStrokeColor());
+        } catch (Exception e) {
+            tmpColor = Color.gray;
+        }
+        borderColorEditor = new StolenColorEditor(mainComposite, this);
+        borderColorEditor.setColor(tmpColor);
+        borderColorButton = borderColorEditor.getButton();
+        GridData borderColorButtonSIMPLEGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        borderColorButtonSIMPLEGD.horizontalSpan = 2;
+        borderColorButton.setLayoutData(borderColorButtonSIMPLEGD);
 
     }
 

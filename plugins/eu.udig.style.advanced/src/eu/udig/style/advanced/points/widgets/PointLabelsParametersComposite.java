@@ -121,7 +121,16 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         labelEnableButton.setText("enable/disable labelling");
         labelEnableButton.setSelection(widgetEnabled);
         labelEnableButton.addSelectionListener(this);
-
+        
+        // header
+        new Label(mainComposite, SWT.NONE);
+        Label valueLabel = new Label(mainComposite, SWT.NONE);
+        valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        valueLabel.setText("Manual");
+        Label fieldsLabel = new Label(mainComposite, SWT.NONE);
+        fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        fieldsLabel.setText("Field based");
+        
         // label name
         Label labelNameLabel = new Label(mainComposite, SWT.NONE);
         labelNameLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -136,6 +145,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         labelNameAttributecombo.setLayoutData(labelNameAttributecomboGD);
         labelNameAttributecombo.setItems(allAttributesArrays);
         labelNameAttributecombo.addSelectionListener(this);
+        labelNameAttributecombo.select(0);
         String labelName = textSymbolizerWrapper.getLabelName();
         if (labelName != null) {
             int index = getAttributeIndex(labelName, allAttributesArrays);
@@ -146,6 +156,64 @@ public class PointLabelsParametersComposite extends ParameterComposite {
             }
         } else {
             labelNameText.setText("");
+        }
+        
+        // label alpha
+        Label labelOpactityLabel = new Label(mainComposite, SWT.NONE);
+        labelOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        labelOpactityLabel.setText("opacity");
+        labelOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
+        labelOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        labelOpacitySpinner.setMaximum(100);
+        labelOpacitySpinner.setMinimum(0);
+        labelOpacitySpinner.setIncrement(10);
+        String opacity = textSymbolizerWrapper.getOpacity();
+        Double tmpOpacity = isDouble(opacity);
+        int tmp = 100;
+        if (tmpOpacity != null) {
+            tmp = (int) (tmpOpacity.doubleValue() * 100);
+        }
+        labelOpacitySpinner.setSelection(tmp);
+        labelOpacitySpinner.addSelectionListener(this);
+        labelOpacityAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        labelOpacityAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        labelOpacityAttributecombo.setItems(numericAttributesArrays);
+        labelOpacityAttributecombo.addSelectionListener(this);
+        labelOpacityAttributecombo.select(0);
+        if (tmpOpacity == null) {
+            int index = getAttributeIndex(opacity, numericAttributesArrays);
+            if (index != -1) {
+                labelOpacityAttributecombo.select(index);
+            }
+        }
+        
+        // rotation
+        Label rotationLabel = new Label(mainComposite, SWT.NONE);
+        rotationLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        rotationLabel.setText("rotation");
+        rotationSpinner = new Spinner(mainComposite, SWT.BORDER);
+        rotationSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        rotationSpinner.setMaximum(360);
+        rotationSpinner.setMinimum(-360);
+        rotationSpinner.setIncrement(45);
+        String rotationStr = textSymbolizerWrapper.getRotation();
+        Double tmpRotation = isDouble(rotationStr);
+        tmp = 0;
+        if (tmpRotation != null) {
+            tmp = tmpRotation.intValue();
+        }
+        rotationSpinner.setSelection(tmp);
+        rotationSpinner.addSelectionListener(this);
+        rotationAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        rotationAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        rotationAttributecombo.setItems(numericAttributesArrays);
+        rotationAttributecombo.addSelectionListener(this);
+        rotationAttributecombo.select(0);
+        if (tmpRotation == null) {
+            int index = getAttributeIndex(rotationStr, numericAttributesArrays);
+            if (index != -1) {
+                rotationAttributecombo.select(index);
+            }
         }
 
         // font
@@ -182,34 +250,6 @@ public class PointLabelsParametersComposite extends ParameterComposite {
             tmpColor = Color.black;
         }
         fontColorEditor.setColor(tmpColor);
-
-        // label alpha
-        Label labelOpactityLabel = new Label(mainComposite, SWT.NONE);
-        labelOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        labelOpactityLabel.setText("transparency");
-        labelOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
-        labelOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        labelOpacitySpinner.setMaximum(100);
-        labelOpacitySpinner.setMinimum(0);
-        labelOpacitySpinner.setIncrement(10);
-        String opacity = textSymbolizerWrapper.getOpacity();
-        Double tmpOpacity = isDouble(opacity);
-        int tmp = 100;
-        if (tmpOpacity != null) {
-            tmp = (int) (tmpOpacity.doubleValue() * 100);
-        }
-        labelOpacitySpinner.setSelection(tmp);
-        labelOpacitySpinner.addSelectionListener(this);
-        labelOpacityAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
-        labelOpacityAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        labelOpacityAttributecombo.setItems(numericAttributesArrays);
-        labelOpacityAttributecombo.addSelectionListener(this);
-        if (tmpOpacity == null) {
-            int index = getAttributeIndex(opacity, numericAttributesArrays);
-            if (index != -1) {
-                labelOpacityAttributecombo.select(index);
-            }
-        }
 
         // label halo
         Label haloLabel = new Label(mainComposite, SWT.NONE);
@@ -277,34 +317,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         String displacementY = textSymbolizerWrapper.getDisplacementY();
         displacementText.setText(displacementX + ", " + displacementY);
 
-        // rotation
-        Label rotationLabel = new Label(mainComposite, SWT.NONE);
-        rotationLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        rotationLabel.setText("rotation");
-        rotationSpinner = new Spinner(mainComposite, SWT.BORDER);
-        rotationSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        rotationSpinner.setMaximum(360);
-        rotationSpinner.setMinimum(-360);
-        rotationSpinner.setIncrement(45);
-        String rotationStr = textSymbolizerWrapper.getRotation();
-        Double tmpRotation = isDouble(rotationStr);
-        tmp = 0;
-        if (tmpRotation != null) {
-            tmp = tmpRotation.intValue();
-        }
-        rotationSpinner.setSelection(tmp);
-        rotationSpinner.addSelectionListener(this);
-        rotationAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
-        rotationAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        rotationAttributecombo.setItems(numericAttributesArrays);
-        rotationAttributecombo.addSelectionListener(this);
-        if (tmpRotation == null) {
-            int index = getAttributeIndex(rotationStr, numericAttributesArrays);
-            if (index != -1) {
-                rotationAttributecombo.select(index);
-            }
-        }
-
+        // vendor options
         Group vendorOptionsGroup = new Group(mainComposite, SWT.SHADOW_ETCHED_IN);
         GridData vendorOptionsGD = new GridData(SWT.FILL, SWT.FILL, true, true);
         vendorOptionsGD.horizontalSpan = 3;

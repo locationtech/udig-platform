@@ -83,6 +83,8 @@ import eu.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
  */
 @SuppressWarnings("nls")
 public class Utilities {
+    public static final String NONE = "- none -";
+    
     public static final String DEFAULT_SIZE = "5";
     public static final String DEFAULT_WIDTH = "1";
     public static final String DEFAULT_ROTATION = "0";
