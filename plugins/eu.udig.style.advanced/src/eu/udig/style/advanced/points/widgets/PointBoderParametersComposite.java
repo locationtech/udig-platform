@@ -74,7 +74,8 @@ public class PointBoderParametersComposite extends ParameterComposite {
      * @param ruleWrapper the rule to take the info from.
      */
     public void init( RuleWrapper ruleWrapper ) {
-        PointSymbolizerWrapper symbolizersWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(PointSymbolizerWrapper.class);
+        PointSymbolizerWrapper symbolizersWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
+                PointSymbolizerWrapper.class);
 
         mainComposite = new Composite(parent, SWT.NONE);
         mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -89,7 +90,7 @@ public class PointBoderParametersComposite extends ParameterComposite {
         borderEnableButton.setText("enable/disable border");
         borderEnableButton.setSelection(widgetEnabled);
         borderEnableButton.addSelectionListener(this);
-        
+
         // header
         new Label(mainComposite, SWT.NONE);
         Label valueLabel = new Label(mainComposite, SWT.NONE);
@@ -158,7 +159,6 @@ public class PointBoderParametersComposite extends ParameterComposite {
                 borderOpacityAttributecombo.select(index);
             }
         }
-        
 
         // border color
         Label borderColorLabel = new Label(mainComposite, SWT.NONE);
@@ -177,6 +177,7 @@ public class PointBoderParametersComposite extends ParameterComposite {
         borderColorButtonSIMPLEGD.horizontalSpan = 2;
         borderColorButton.setLayoutData(borderColorButtonSIMPLEGD);
 
+        checkEnablements();
     }
 
     /**
@@ -185,7 +186,8 @@ public class PointBoderParametersComposite extends ParameterComposite {
      * @param ruleWrapper the rule to take the info from.
      */
     public void update( RuleWrapper ruleWrapper ) {
-        PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(PointSymbolizerWrapper.class);
+        PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
+                PointSymbolizerWrapper.class);
         boolean widgetEnabled = pointSymbolizerWrapper.hasStroke();
         // border
         borderEnableButton.setSelection(widgetEnabled);
@@ -228,6 +230,7 @@ public class PointBoderParametersComposite extends ParameterComposite {
             }
         }
 
+        checkEnablements();
     }
 
     public void widgetSelected( SelectionEvent e ) {
@@ -235,37 +238,52 @@ public class PointBoderParametersComposite extends ParameterComposite {
         if (source.equals(borderEnableButton)) {
             boolean selected = borderEnableButton.getSelection();
             notifyListeners(String.valueOf(selected), false, STYLEEVENTTYPE.BORDERENABLE);
-        } else if (source.equals(borderWidthSpinner)) {
-            int selection = borderWidthSpinner.getSelection();
-            int digits = borderWidthSpinner.getDigits();
-            double value = selection / Math.pow(10, digits);
-            String strokeWidth = String.valueOf(value);
-            notifyListeners(strokeWidth, false, STYLEEVENTTYPE.BORDERWIDTH);
-        } else if (source.equals(borderWidthAttributecombo)) {
-            int index = borderWidthAttributecombo.getSelectionIndex();
-            String field = borderWidthAttributecombo.getItem(index);
-            if (field.length() == 0) {
-                return;
+        } else if (source.equals(borderWidthSpinner) || source.equals(borderWidthAttributecombo)) {
+            boolean comboIsNone = comboIsNone(borderWidthAttributecombo);
+            if (comboIsNone) {
+                int selection = borderWidthSpinner.getSelection();
+                int digits = borderWidthSpinner.getDigits();
+                double value = selection / Math.pow(10, digits);
+                String strokeWidth = String.valueOf(value);
+                notifyListeners(strokeWidth, false, STYLEEVENTTYPE.BORDERWIDTH);
+            } else {
+                int index = borderWidthAttributecombo.getSelectionIndex();
+                String field = borderWidthAttributecombo.getItem(index);
+                if (field.length() == 0) {
+                    return;
+                }
+                notifyListeners(field, true, STYLEEVENTTYPE.BORDERWIDTH);
             }
-            notifyListeners(field, true, STYLEEVENTTYPE.BORDERWIDTH);
         } else if (source.equals(borderColorButton)) {
             Color color = borderColorEditor.getColor();
             Expression colorExpr = ff.literal(color);
             String strokeColor = colorExpr.evaluate(null, String.class);
             notifyListeners(strokeColor, false, STYLEEVENTTYPE.BORDERCOLOR);
-        } else if (source.equals(borderOpacitySpinner)) {
-            int opacity = borderOpacitySpinner.getSelection();
-            float opacityNorm = opacity / 100f;
-            String strokeOpacity = String.valueOf(opacityNorm);
-            notifyListeners(strokeOpacity, false, STYLEEVENTTYPE.BORDEROPACITY);
-        } else if (source.equals(borderOpacityAttributecombo)) {
-            int index = borderOpacityAttributecombo.getSelectionIndex();
-            String field = borderOpacityAttributecombo.getItem(index);
-            if (field.length() == 0) {
-                return;
+        } else if (source.equals(borderOpacitySpinner) || source.equals(borderOpacityAttributecombo)) {
+            boolean comboIsNone = comboIsNone(borderOpacityAttributecombo);
+            if (comboIsNone) {
+                int opacity = borderOpacitySpinner.getSelection();
+                float opacityNorm = opacity / 100f;
+                String strokeOpacity = String.valueOf(opacityNorm);
+                notifyListeners(strokeOpacity, false, STYLEEVENTTYPE.BORDEROPACITY);
+            } else {
+                int index = borderOpacityAttributecombo.getSelectionIndex();
+                String field = borderOpacityAttributecombo.getItem(index);
+                if (field.length() == 0) {
+                    return;
+                }
+                notifyListeners(field, true, STYLEEVENTTYPE.BORDEROPACITY);
             }
-            notifyListeners(field, true, STYLEEVENTTYPE.BORDEROPACITY);
         }
+
+        checkEnablements();
+    }
+
+    private void checkEnablements() {
+        boolean comboIsNone = comboIsNone(borderWidthAttributecombo);
+        borderWidthSpinner.setEnabled(comboIsNone);
+        comboIsNone = comboIsNone(borderOpacityAttributecombo);
+        borderOpacitySpinner.setEnabled(comboIsNone);
     }
 
 }

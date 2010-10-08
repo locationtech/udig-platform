@@ -62,6 +62,7 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.UserLayer;
+import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicalSymbol;
@@ -341,14 +342,18 @@ public class Utilities {
      * @return the generated image.
      */
     public static BufferedImage pointRuleToImage( final Rule rule, int width, int height ) {
-        Symbolizer symbolizer = rule.getSymbolizers()[0];
+        DuplicatingStyleVisitor copyStyle = new DuplicatingStyleVisitor();
+        rule.accept( copyStyle );
+        Rule newRule = (Rule) copyStyle.getCopy();
+
+        Symbolizer symbolizer = newRule.getSymbolizers()[0];
         int pointSize = SLDs.pointSize((PointSymbolizer) symbolizer);
         Stroke stroke = SLDs.stroke((PointSymbolizer) symbolizer);
         int strokeSize = 0;
         if (stroke != null) {
             strokeSize = SLDs.width(stroke);
             if (strokeSize < 0) {
-                strokeSize = 0;
+                strokeSize = 1;
                 stroke.setWidth(ff.literal(strokeSize));
             }
         }
@@ -361,7 +366,7 @@ public class Utilities {
         BufferedImage finalImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         BufferedImage pointImage = new BufferedImage(pointSize, pointSize, BufferedImage.TYPE_INT_ARGB);
         Point point = d.point(pointSize / 2, pointSize / 2);
-        d.drawDirect(pointImage, d.feature(point), rule);
+        d.drawDirect(pointImage, d.feature(point), newRule);
         Graphics2D g2d = finalImage.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -418,7 +423,11 @@ public class Utilities {
      * @return the generated image.
      */
     public static BufferedImage polygonRuleToImage( final Rule rule, int width, int height ) {
-        Symbolizer symbolizer = rule.getSymbolizers()[0];
+        DuplicatingStyleVisitor copyStyle = new DuplicatingStyleVisitor();
+        rule.accept( copyStyle );
+        Rule newRule = (Rule) copyStyle.getCopy();
+        
+        Symbolizer symbolizer = newRule.getSymbolizers()[0];
         PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) symbolizer;
         Stroke stroke = SLDs.stroke(polygonSymbolizer);
         int strokeSize = 0;
@@ -438,7 +447,7 @@ public class Utilities {
                 (int) (height * 0.85), (int) (width * 0.15), (int) (height * 0.85), (int) (width * 0.85), (int) (height * 0.15),
                 (int) (width * 0.85)};
         Polygon polygon = d.polygon(xy);
-        d.drawDirect(finalImage, d.feature(polygon), rule);
+        d.drawDirect(finalImage, d.feature(polygon), newRule);
         Graphics2D g2d = finalImage.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.drawImage(finalImage, 0, 0, null);
@@ -488,7 +497,11 @@ public class Utilities {
      * @return the generated image.
      */
     public static BufferedImage lineRuleToImage( final Rule rule, int width, int height ) {
-        Symbolizer symbolizer = rule.getSymbolizers()[0];
+        DuplicatingStyleVisitor copyStyle = new DuplicatingStyleVisitor();
+        rule.accept( copyStyle );
+        Rule newRule = (Rule) copyStyle.getCopy();
+        
+        Symbolizer symbolizer = newRule.getSymbolizers()[0];
         LineSymbolizer lineSymbolizer = (LineSymbolizer) symbolizer;
         Stroke stroke = SLDs.stroke(lineSymbolizer);
         int strokeSize = 0;
@@ -507,7 +520,7 @@ public class Utilities {
         int[] xy = new int[]{(int) (height * 0.15), (int) (width * 0.85), (int) (height * 0.35), (int) (width * 0.15),
                 (int) (height * 0.75), (int) (width * 0.85), (int) (height * 0.85), (int) (width * 0.15)};
         LineString line = d.line(xy);
-        d.drawDirect(finalImage, d.feature(line), rule);
+        d.drawDirect(finalImage, d.feature(line), newRule);
         Graphics2D g2d = finalImage.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.drawImage(finalImage, 0, 0, null);

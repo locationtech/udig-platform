@@ -25,6 +25,7 @@ import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
@@ -62,6 +63,26 @@ public class ParameterComposite extends SelectionAdapter implements KeyListener,
 
     protected Double isDouble( String value ) {
         return Utilities.isNumber(value, Double.class);
+    }
+
+    /**
+     * Check if the supplied combo is placed on the NONE value.
+     * 
+     * @param combo the comnbo to check.
+     * @return true if the combo is placed on NONE.
+     */
+    protected boolean comboIsNone( Combo combo ) {
+        int index = combo.getSelectionIndex();
+        try {
+            String value = combo.getItem(index);
+            if (value.equals(Utilities.NONE)) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            combo.select(0);
+            return false;
+        }
     }
 
     @SuppressWarnings("nls")

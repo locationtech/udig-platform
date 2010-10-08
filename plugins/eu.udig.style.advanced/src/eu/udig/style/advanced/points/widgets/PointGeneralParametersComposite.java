@@ -65,8 +65,9 @@ public class PointGeneralParametersComposite extends ParameterComposite {
     }
 
     public void init( RuleWrapper ruleWrapper ) {
-        PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(PointSymbolizerWrapper.class);
-        
+        PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
+                PointSymbolizerWrapper.class);
+
         mainComposite = new Composite(parent, SWT.NONE);
         mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         mainComposite.setLayout(new GridLayout(3, true));
@@ -154,7 +155,7 @@ public class PointGeneralParametersComposite extends ParameterComposite {
         GridData offsetSIMPLEGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         offsetSIMPLEGD.horizontalSpan = 2;
         offsetText.setLayoutData(offsetSIMPLEGD);
-        
+
         String xOffset = pointSymbolizerWrapper.getxOffset();
         String yOffset = pointSymbolizerWrapper.getyOffset();
         Double tmpXOffsetD = isDouble(xOffset);
@@ -185,11 +186,14 @@ public class PointGeneralParametersComposite extends ParameterComposite {
         mainScaleTextSIMPLEGD.horizontalSpan = 2;
         minScaleText.setLayoutData(mainScaleTextSIMPLEGD);
         minScaleText.setText(ruleWrapper.getMinScale());
+        
+        checkEnablements();
     }
 
     public void update( RuleWrapper ruleWrapper ) {
-        PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(PointSymbolizerWrapper.class);
-        
+        PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
+                PointSymbolizerWrapper.class);
+
         nameText.setText(ruleWrapper.getName());
         // size
         String size = pointSymbolizerWrapper.getSize();
@@ -243,36 +247,52 @@ public class PointGeneralParametersComposite extends ParameterComposite {
             minScaleDouble = 0.0;
         }
         minScaleText.setText(String.valueOf(minScaleDouble));
+        
+        checkEnablements();
     }
 
     public void widgetSelected( SelectionEvent e ) {
         Object source = e.getSource();
-        if (source.equals(sizeSpinner)) {
-            int sizeInt = sizeSpinner.getSelection();
-            String size = String.valueOf(sizeInt);
-            notifyListeners(size, false, STYLEEVENTTYPE.SIZE);
-        } else if (source.equals(sizeAttributecombo)) {
-            int index = sizeAttributecombo.getSelectionIndex();
-            String field = sizeAttributecombo.getItem(index);
-            if (field.length() == 0) {
-                return;
+        if (source.equals(sizeAttributecombo) || source.equals(sizeSpinner)) {
+            boolean comboIsNone = comboIsNone(sizeAttributecombo);
+            if (comboIsNone) {
+                int sizeInt = sizeSpinner.getSelection();
+                String size = String.valueOf(sizeInt);
+                notifyListeners(size, false, STYLEEVENTTYPE.SIZE);
+            } else {
+                int index = sizeAttributecombo.getSelectionIndex();
+                String field = sizeAttributecombo.getItem(index);
+                if (field.length() == 0) {
+                    return;
+                }
+                notifyListeners(field, true, STYLEEVENTTYPE.SIZE);
             }
-            notifyListeners(field, true, STYLEEVENTTYPE.SIZE);
-        } else if (source.equals(rotationSpinner)) {
-            int rotationInt = rotationSpinner.getSelection();
-            String rotation = String.valueOf(rotationInt);
-            notifyListeners(rotation, false, STYLEEVENTTYPE.ROTATION);
-        } else if (source.equals(rotationAttributecombo)) {
-            int index = rotationAttributecombo.getSelectionIndex();
-            String field = rotationAttributecombo.getItem(index);
-            if (field.length() == 0) {
-                return;
+        } else if (source.equals(rotationSpinner) || source.equals(rotationAttributecombo)) {
+            boolean comboIsNone = comboIsNone(rotationAttributecombo);
+            if (comboIsNone) {
+                int rotationInt = rotationSpinner.getSelection();
+                String rotation = String.valueOf(rotationInt);
+                notifyListeners(rotation, false, STYLEEVENTTYPE.ROTATION);
+            } else {
+                int index = rotationAttributecombo.getSelectionIndex();
+                String field = rotationAttributecombo.getItem(index);
+                if (field.length() == 0) {
+                    return;
+                }
+                notifyListeners(field, true, STYLEEVENTTYPE.ROTATION);
             }
-            notifyListeners(field, true, STYLEEVENTTYPE.ROTATION);
         } else if (source.equals(offsetText)) {
             String offsetStr = offsetText.getText();
             notifyListeners(offsetStr, false, STYLEEVENTTYPE.OFFSET);
         }
+        checkEnablements();
+    }
+    
+    private void checkEnablements(){
+        boolean comboIsNone = comboIsNone(rotationAttributecombo);
+        rotationSpinner.setEnabled(comboIsNone);
+        comboIsNone = comboIsNone(sizeAttributecombo);
+        sizeSpinner.setEnabled(comboIsNone);
     }
 
     public void keyPressed( KeyEvent e ) {
