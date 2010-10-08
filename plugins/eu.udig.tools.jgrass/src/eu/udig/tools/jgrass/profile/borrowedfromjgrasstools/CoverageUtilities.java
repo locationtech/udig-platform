@@ -19,6 +19,7 @@
 package eu.udig.tools.jgrass.profile.borrowedfromjgrasstools;
 
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.image.RenderedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,9 +109,6 @@ public class CoverageUtilities {
     public static List<ProfilePoint> doProfile( Coordinate start, Coordinate end, GridCoverage2D coverage ) throws Exception {
         HashMap<String, Double> regionMap = CoverageUtilities.getRegionParamsFromGridCoverage(coverage);
         double xres = regionMap.get(CoverageUtilities.XRES);
-        GridGeometry2D gridGeometry = coverage.getGridGeometry();
-        RenderedImage renderedImage = coverage.getRenderedImage();
-        RandomIter iter = RandomIterFactory.create(renderedImage, null);
 
         LineSegment pline = new LineSegment(start, end);
         double lenght = pline.getLength();
@@ -119,8 +117,8 @@ public class CoverageUtilities {
         double progressive = 0.0;
 
         // ad the first point
-        GridCoordinates2D gridCoords = gridGeometry.worldToGrid(new DirectPosition2D(start.x, start.y));
-        double value = iter.getSampleDouble(gridCoords.x, gridCoords.y, 0);
+        double[] evaluated = coverage.evaluate(new Point2D.Double(start.x, start.y), (double[])null);
+        double value = evaluated[0];
 
         ProfilePoint profilePoint = new ProfilePoint(0.0, value, start.x, start.y);
         profilePointsList.add(profilePoint);
@@ -128,20 +126,18 @@ public class CoverageUtilities {
 
         while( progressive < lenght ) {
             Coordinate c = pline.pointAlong(progressive / lenght);
-            gridCoords = gridGeometry.worldToGrid(new DirectPosition2D(c.x, c.y));
-            value = iter.getSampleDouble(gridCoords.x, gridCoords.y, 0);
+            evaluated = coverage.evaluate(new Point2D.Double(c.x, c.y), (double[])null);
+            value = evaluated[0];
             profilePoint = new ProfilePoint(progressive, value, c.x, c.y);
             profilePointsList.add(profilePoint);
             progressive = progressive + xres;
         }
 
         // add the last point
-        gridCoords = gridGeometry.worldToGrid(new DirectPosition2D(end.x, end.y));
-        value = iter.getSampleDouble(gridCoords.x, gridCoords.y, 0);
+        evaluated = coverage.evaluate(new Point2D.Double(end.x, end.y), (double[])null);
+        value = evaluated[0];
         profilePoint = new ProfilePoint(lenght, value, end.x, end.y);
         profilePointsList.add(profilePoint);
-
-        iter.done();
 
         return profilePointsList;
     }

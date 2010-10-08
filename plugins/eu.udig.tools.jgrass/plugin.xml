@@ -110,7 +110,7 @@
       <wizard
             category="net.refractions.udig.catalog.ui.dataImportWizard"
             class="eu.udig.tools.jgrass.csv.CsvImportWizard"
-            icon="icons/workset_wiz.png"
+            icon="icons/goto_input.gif"
             id="eu.udig.tools.jgrass.csv.CsvImportWizard"
             name="CSV import">
          <description>
