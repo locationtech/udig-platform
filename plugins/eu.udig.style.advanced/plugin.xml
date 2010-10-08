@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="net.refractions.udig.style.sld.StyleEditorPage">
+      <StyleEditorPage
+            class="eu.udig.style.advanced.editorpages.SimplePointEditorPage"
+            contentType="net.refractions.udig.project.ILayer"
+            id="eu.hydrologis.jgrass.style.editorpages.SimplePointEditorPage"
+            label="Simple Points"
+            requires="org.geotools.data.FeatureSource">
+      </StyleEditorPage>
+      <StyleEditorPage
+            class="eu.udig.style.advanced.editorpages.SimpleLineEditorPage"
+            contentType="net.refractions.udig.project.ILayer"
+            id="eu.hydrologis.jgrass.style.editorpages.SimpleLineEditorPage"
+            label="Simple Lines"
+            requires="org.geotools.data.FeatureSource">
+      </StyleEditorPage>
+      <StyleEditorPage
+            class="eu.udig.style.advanced.editorpages.SimplePolygonEditorPage"
+            contentType="net.refractions.udig.project.ILayer"
+            id="eu.hydrologis.jgrass.style.editorpages.SimplePolygonEditorPage"
+            label="Simple Polygons"
+            requires="org.geotools.data.FeatureSource">
+      </StyleEditorPage>
+      <StyleEditorPage
+            class="eu.udig.style.advanced.editorpages.CoverageStyleEditorPage"
+            contentType="net.refractions.udig.project.ILayer"
+            id="eu.hydrologis.jgrass.style.raster.CoverageStyleEditorPage"
+            label="Single Band Rasters"
+            requires="org.opengis.coverage.grid.GridCoverage">
+      </StyleEditorPage>
+      <StyleEditorPage
+            class="eu.udig.style.advanced.editorpages.CoverageColorMaskStyleEditorPage"
+            contentType="net.refractions.udig.project.ILayer"
+            id="eu.hydrologis.jgrass.style.editorpages.CoverageColorMaskStyleEditorPage"
+            label="Raster Color Mask"
+            requires="org.opengis.coverage.grid.GridCoverage">
+      </StyleEditorPage>
+   </extension>
+
+</plugin>
