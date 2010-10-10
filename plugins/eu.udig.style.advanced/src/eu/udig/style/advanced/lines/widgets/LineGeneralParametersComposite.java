@@ -124,6 +124,7 @@ public class LineGeneralParametersComposite extends ParameterComposite {
         maxScaleTextSIMPLEGD.horizontalSpan = 2;
         maxScaleText.setLayoutData(maxScaleTextSIMPLEGD);
         maxScaleText.setText(ruleWrapper.getMaxScale());
+        maxScaleText.addKeyListener(this);
 
         Label minScaleLabel = new Label(mainComposite, SWT.NONE);
         GridData minScaleLabelGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -134,6 +135,7 @@ public class LineGeneralParametersComposite extends ParameterComposite {
         mainScaleTextSIMPLEGD.horizontalSpan = 2;
         minScaleText.setLayoutData(mainScaleTextSIMPLEGD);
         minScaleText.setText(ruleWrapper.getMinScale());
+        minScaleText.addKeyListener(this);
     }
 
     /**
@@ -160,15 +162,17 @@ public class LineGeneralParametersComposite extends ParameterComposite {
 
         // scale
         Double maxScaleDouble = isDouble(ruleWrapper.getMaxScale());
-        if (maxScaleDouble == null) {
-            maxScaleDouble = 0.0;
+        if (maxScaleDouble == null || Double.isInfinite(maxScaleDouble)) {
+            maxScaleText.setText("");
+        } else {
+            maxScaleText.setText(String.valueOf(maxScaleDouble));
         }
-        maxScaleText.setText(String.valueOf(maxScaleDouble));
         Double minScaleDouble = isDouble(ruleWrapper.getMinScale());
-        if (minScaleDouble == null) {
-            minScaleDouble = 0.0;
+        if (minScaleDouble == null || minScaleDouble == 0) {
+            minScaleText.setText("");
+        } else {
+            minScaleText.setText(String.valueOf(minScaleDouble));
         }
-        minScaleText.setText(String.valueOf(minScaleDouble));
     }
 
     public void widgetSelected( SelectionEvent e ) {
@@ -191,8 +195,8 @@ public class LineGeneralParametersComposite extends ParameterComposite {
             String maxScale = maxScaleText.getText();
             notifyListeners(maxScale, false, STYLEEVENTTYPE.MAXSCALE);
         } else if (source.equals(minScaleText)) {
-            String maxScale = minScaleText.getText();
-            notifyListeners(maxScale, false, STYLEEVENTTYPE.MINSCALE);
+            String minScale = minScaleText.getText();
+            notifyListeners(minScale, false, STYLEEVENTTYPE.MINSCALE);
         }
     }
 

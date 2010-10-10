@@ -243,7 +243,7 @@ public class RuleWrapper {
         try {
             rule.setMaxScaleDenominator(Double.parseDouble(maxScale));
         } catch (Exception e) {
-            rule.setMaxScaleDenominator(Double.parseDouble(DEFAULT_MAXSCALE));
+            rule.setMaxScaleDenominator(Double.POSITIVE_INFINITY);
         }
     }
 
