@@ -29,10 +29,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
-import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
+import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import eu.udig.style.advanced.utils.Utilities;
 
 /**
  * A composite that holds widgets for general parameter setting.
@@ -49,7 +50,8 @@ public class PointGeneralParametersComposite extends ParameterComposite {
     private Combo sizeAttributecombo;
     private Spinner rotationSpinner;
     private Combo rotationAttributecombo;
-    private Text offsetText;
+    private Spinner xOffsetSpinner;
+    private Spinner yOffsetSpinner;
     private Text maxScaleText;
     private Text minScaleText;
 
@@ -147,26 +149,39 @@ public class PointGeneralParametersComposite extends ParameterComposite {
             }
         }
 
+        // offset
         Label offsetLabel = new Label(mainComposite, SWT.NONE);
         GridData offsetLabelGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         offsetLabel.setLayoutData(offsetLabelGD);
         offsetLabel.setText("offset (x, y)");
-        offsetText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
-        GridData offsetSIMPLEGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
-        offsetSIMPLEGD.horizontalSpan = 2;
-        offsetText.setLayoutData(offsetSIMPLEGD);
 
         String xOffset = pointSymbolizerWrapper.getxOffset();
         String yOffset = pointSymbolizerWrapper.getyOffset();
-        Double tmpXOffsetD = isDouble(xOffset);
-        Double tmpYOffsetD = isDouble(yOffset);
-        if (tmpXOffsetD == null || tmpYOffsetD == null) {
-            tmpXOffsetD = 0.0;
-            tmpYOffsetD = 0.0;
+        Double tmpXOffset = Utilities.isNumber(xOffset, Double.class);
+        Double tmpYOffset = Utilities.isNumber(yOffset, Double.class);
+        if (tmpXOffset == null || tmpYOffset == null) {
+            tmpXOffset = 0.0;
+            tmpYOffset = 0.0;
         }
-        offsetText.setText(tmpXOffsetD + ", " + tmpYOffsetD);
-        offsetText.addKeyListener(this);
+        xOffsetSpinner = new Spinner(mainComposite, SWT.BORDER);
+        xOffsetSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        xOffsetSpinner.setMaximum(Utilities.OFFSET_MAX);
+        xOffsetSpinner.setMinimum(Utilities.OFFSET_MIN);
+        xOffsetSpinner.setIncrement(Utilities.OFFSET_STEP);
+        xOffsetSpinner.setSelection((int) (10 * tmpXOffset));
+        xOffsetSpinner.setDigits(1);
+        xOffsetSpinner.addSelectionListener(this);
 
+        yOffsetSpinner = new Spinner(mainComposite, SWT.BORDER);
+        yOffsetSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        yOffsetSpinner.setMaximum(Utilities.OFFSET_MAX);
+        yOffsetSpinner.setMinimum(Utilities.OFFSET_MIN);
+        yOffsetSpinner.setIncrement(Utilities.OFFSET_STEP);
+        yOffsetSpinner.setSelection((int) (10 * tmpYOffset));
+        yOffsetSpinner.setDigits(1);
+        yOffsetSpinner.addSelectionListener(this);
+
+        // scale
         Label maxScaleLabel = new Label(mainComposite, SWT.NONE);
         GridData maxScaleLabelGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         maxScaleLabel.setLayoutData(maxScaleLabelGD);
@@ -186,7 +201,7 @@ public class PointGeneralParametersComposite extends ParameterComposite {
         mainScaleTextSIMPLEGD.horizontalSpan = 2;
         minScaleText.setLayoutData(mainScaleTextSIMPLEGD);
         minScaleText.setText(ruleWrapper.getMinScale());
-        
+
         checkEnablements();
     }
 
@@ -228,13 +243,14 @@ public class PointGeneralParametersComposite extends ParameterComposite {
         // offset
         String xOffset = pointSymbolizerWrapper.getxOffset();
         String yOffset = pointSymbolizerWrapper.getyOffset();
-        Double tmpXOffsetD = isDouble(xOffset);
-        Double tmpYOffsetD = isDouble(yOffset);
-        if (tmpXOffsetD == null || tmpYOffsetD == null) {
-            tmpXOffsetD = 0.0;
-            tmpYOffsetD = 0.0;
+        Double tmpXOffset = Utilities.isNumber(xOffset, Double.class);
+        Double tmpYOffset = Utilities.isNumber(yOffset, Double.class);
+        if (tmpXOffset == null || tmpYOffset == null) {
+            tmpXOffset = 0.0;
+            tmpYOffset = 0.0;
         }
-        offsetText.setText(tmpXOffsetD + ", " + tmpYOffsetD);
+        xOffsetSpinner.setSelection((int) (10 * tmpXOffset));
+        yOffsetSpinner.setSelection((int) (10 * tmpYOffset));
 
         // scale
         Double maxScaleDouble = isDouble(ruleWrapper.getMaxScale());
@@ -247,7 +263,7 @@ public class PointGeneralParametersComposite extends ParameterComposite {
             minScaleDouble = 0.0;
         }
         minScaleText.setText(String.valueOf(minScaleDouble));
-        
+
         checkEnablements();
     }
 
@@ -281,14 +297,17 @@ public class PointGeneralParametersComposite extends ParameterComposite {
                 }
                 notifyListeners(field, true, STYLEEVENTTYPE.ROTATION);
             }
-        } else if (source.equals(offsetText)) {
-            String offsetStr = offsetText.getText();
+        } else if (source.equals(xOffsetSpinner) || source.equals(yOffsetSpinner)) {
+            double x = Utilities.getDoubleSpinnerSelection(xOffsetSpinner);
+            double y = Utilities.getDoubleSpinnerSelection(yOffsetSpinner);
+            
+            String offsetStr = x + "," + y;
             notifyListeners(offsetStr, false, STYLEEVENTTYPE.OFFSET);
         }
         checkEnablements();
     }
-    
-    private void checkEnablements(){
+
+    private void checkEnablements() {
         boolean comboIsNone = comboIsNone(rotationAttributecombo);
         rotationSpinner.setEnabled(comboIsNone);
         comboIsNone = comboIsNone(sizeAttributecombo);
@@ -300,10 +319,7 @@ public class PointGeneralParametersComposite extends ParameterComposite {
 
     public void keyReleased( KeyEvent e ) {
         Object source = e.getSource();
-        if (source.equals(offsetText)) {
-            String offsetStr = offsetText.getText();
-            notifyListeners(offsetStr, false, STYLEEVENTTYPE.OFFSET);
-        } else if (source.equals(maxScaleText)) {
+        if (source.equals(maxScaleText)) {
             String maxScale = maxScaleText.getText();
             notifyListeners(maxScale, false, STYLEEVENTTYPE.MAXSCALE);
         } else if (source.equals(minScaleText)) {

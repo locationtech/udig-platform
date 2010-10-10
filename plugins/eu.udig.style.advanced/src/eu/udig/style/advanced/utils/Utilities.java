@@ -37,6 +37,7 @@ import net.refractions.udig.ui.graphics.SLDs;
 
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Spinner;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.filter.function.FilterFunction_offset;
@@ -65,6 +66,7 @@ import org.geotools.styling.UserLayer;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Function;
 import org.opengis.style.GraphicalSymbol;
 
 import com.google.common.collect.BiMap;
@@ -94,7 +96,12 @@ public class Utilities {
     public static final String DEFAULT_COLOR = "#000000";
     public static final String DEFAULT_MINSCALE = "0";
     public static final String DEFAULT_MAXSCALE = "infinity";
-
+    
+    // offset values
+    public static final int OFFSET_MAX = 100;
+    public static final int OFFSET_MIN = 0;
+    public static final int OFFSET_STEP = 0;
+    
     public static final String DEFAULT_GROUPNAME = "group ";
     public static final String DEFAULT_STYLENAME = "default style";
 
@@ -951,17 +958,20 @@ public class Utilities {
         if (split.length != 2) {
             return;
         }
+        double xOffset = Double.parseDouble(split[0]);
+        double yOffset = Double.parseDouble(split[1]);
 
         Expression geometry = symbolizer.getGeometry();
         if (geometry != null) {
             if (geometry instanceof FilterFunction_offset) {
                 FilterFunction_offset offsetFunction = (FilterFunction_offset) geometry;
                 List parameters = offsetFunction.getParameters();
-                double xOffset = Double.parseDouble(split[0]);
-                double yOffset = Double.parseDouble(split[1]);
                 parameters.set(1, ff.literal(xOffset));
                 parameters.set(2, ff.literal(yOffset));
             }
+        }else{
+            Function function = ff.function("offset", ff.property("the_geom"), ff.literal(xOffset), ff.literal(yOffset));
+            symbolizer.setGeometry(function);
         }
     }
 
@@ -1249,11 +1259,29 @@ public class Utilities {
                 Integer parsed = Integer.parseInt(value);
                 return adaptee.cast(parsed);
             } catch (Exception e) {
+                // still try the double
+                Double number = isNumber(value, Double.class);
+                if (number!=null) {
+                    return  adaptee.cast(number.intValue());
+                }
                 return null;
             }
         } else {
             throw new IllegalArgumentException();
         }
+    }
+    
+    /**
+     * Get the double value from a spinner that has digits.
+     * 
+     * @param spinner the spinner to get the value from.
+     * @return the selected value.
+     */
+    public static double getDoubleSpinnerSelection(Spinner spinner){
+        int selection = spinner.getSelection();
+        int digits = spinner.getDigits();
+        double value = selection / Math.pow(10, digits);
+        return value;
     }
 
     /**
