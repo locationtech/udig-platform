@@ -369,8 +369,8 @@ public class TextSymbolizerWrapper extends SymbolizerWrapper {
         }
         String[] split = displacement.split(","); //$NON-NLS-1$
         try {
-            Integer.parseInt(split[0]);
-            Integer.parseInt(split[1]);
+            Double.parseDouble(split[0]);
+            Double.parseDouble(split[1]);
             setDisplacementX(split[0]);
             setDisplacementY(split[1]);
         } catch (Exception e) {

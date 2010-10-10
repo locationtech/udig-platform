@@ -98,9 +98,13 @@ public class Utilities {
     public static final String DEFAULT_MAXSCALE = "infinity";
     
     // offset values
-    public static final int OFFSET_MAX = 100;
-    public static final int OFFSET_MIN = 0;
-    public static final int OFFSET_STEP = 0;
+    public static final int OFFSET_MAX = 1000;
+    public static final int OFFSET_MIN = -1000;
+    public static final int OFFSET_STEP = 10;
+    // displacement values
+    public static final int DISPLACEMENT_MAX = 1000;
+    public static final int DISPLACEMENT_MIN = -1000;
+    public static final int DISPLACEMENT_STEP = 10;
     
     public static final String DEFAULT_GROUPNAME = "group ";
     public static final String DEFAULT_STYLENAME = "default style";

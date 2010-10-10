@@ -70,7 +70,8 @@ public class PointLabelsParametersComposite extends ParameterComposite {
     private Spinner haloRadiusSpinner;
     private Combo anchorVerticalCombo;
     private Combo anchorHorizontalCombo;
-    private Text displacementText;
+    private Spinner xDisplacementSpinner;
+    private Spinner yDisplacementSpinner;
     private Spinner rotationSpinner;
     private Combo rotationAttributecombo;
     private Text maxDisplacementText;
@@ -308,15 +309,32 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         displacementLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         displacementLabel.setText("displacement");
 
-        displacementText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
-        GridData displacementTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
-        displacementTextGD.horizontalSpan = 2;
-        displacementText.setLayoutData(displacementTextGD);
-        displacementText.addFocusListener(this);
         String displacementX = textSymbolizerWrapper.getDisplacementX();
         String displacementY = textSymbolizerWrapper.getDisplacementY();
-        displacementText.setText(displacementX + ", " + displacementY);
+        Double tmpXdisplacement = Utilities.isNumber(displacementX, Double.class);
+        Double tmpYdisplacement = Utilities.isNumber(displacementY, Double.class);
+        if (tmpXdisplacement == null || tmpYdisplacement == null) {
+            tmpXdisplacement = 0.0;
+            tmpYdisplacement = 0.0;
+        }
+        xDisplacementSpinner = new Spinner(mainComposite, SWT.BORDER);
+        xDisplacementSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        xDisplacementSpinner.setMaximum(Utilities.DISPLACEMENT_MAX);
+        xDisplacementSpinner.setMinimum(Utilities.DISPLACEMENT_MIN);
+        xDisplacementSpinner.setIncrement(Utilities.DISPLACEMENT_STEP);
+        xDisplacementSpinner.setSelection((int) (10 * tmpXdisplacement));
+        xDisplacementSpinner.setDigits(1);
+        xDisplacementSpinner.addSelectionListener(this);
 
+        yDisplacementSpinner = new Spinner(mainComposite, SWT.BORDER);
+        yDisplacementSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        yDisplacementSpinner.setMaximum(Utilities.DISPLACEMENT_MAX);
+        yDisplacementSpinner.setMinimum(Utilities.DISPLACEMENT_MIN);
+        yDisplacementSpinner.setIncrement(Utilities.DISPLACEMENT_STEP);
+        yDisplacementSpinner.setSelection((int) (10 * tmpYdisplacement));
+        yDisplacementSpinner.setDigits(1);
+        yDisplacementSpinner.addSelectionListener(this);
+        
         // vendor options
         Group vendorOptionsGroup = new Group(mainComposite, SWT.SHADOW_ETCHED_IN);
         GridData vendorOptionsGD = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -451,7 +469,14 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         // displacement
         String displacementX = textSymbolizerWrapper.getDisplacementX();
         String displacementY = textSymbolizerWrapper.getDisplacementY();
-        displacementText.setText(displacementX + ", " + displacementY);
+        Double tmpXdisplacement = Utilities.isNumber(displacementX, Double.class);
+        Double tmpYdisplacement = Utilities.isNumber(displacementY, Double.class);
+        if (tmpXdisplacement == null || tmpYdisplacement == null) {
+            tmpXdisplacement = 0.0;
+            tmpYdisplacement = 0.0;
+        }
+        xDisplacementSpinner.setSelection((int) (10 * tmpXdisplacement));
+        yDisplacementSpinner.setSelection((int) (10 * tmpYdisplacement));
 
         // rotation
         String rotationStr = textSymbolizerWrapper.getRotation();
@@ -573,6 +598,12 @@ public class PointLabelsParametersComposite extends ParameterComposite {
             String opacityField = labelOpacityAttributecombo.getItem(index);
             
             notifyListeners(opacityField, true, STYLEEVENTTYPE.LABELOPACITY);
+        }else if (source.equals(xDisplacementSpinner) || source.equals(yDisplacementSpinner)) {
+            double x = Utilities.getDoubleSpinnerSelection(xDisplacementSpinner);
+            double y = Utilities.getDoubleSpinnerSelection(yDisplacementSpinner);
+
+            String displacementStr = x + "," + y; //$NON-NLS-1$
+            notifyListeners(displacementStr, false, STYLEEVENTTYPE.LABELDISPLACEMENT);
         }
         
         checkEnablements();
@@ -583,10 +614,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
 
     public void focusLost( FocusEvent e ) {
         Object source = e.getSource();
-        if (source.equals(displacementText)) {
-            String text = displacementText.getText();
-            notifyListeners(text, false, STYLEEVENTTYPE.LABELDISPLACEMENT);
-        } else if (source.equals(maxDisplacementText)) {
+        if (source.equals(maxDisplacementText)) {
             String text = maxDisplacementText.getText();
             notifyListeners(text, false, STYLEEVENTTYPE.LABELMAXDISPLACEMENT_VO);
         } else if (source.equals(spaceAroundText)) {
