@@ -34,6 +34,8 @@ import org.geotools.styling.Rule;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 
+import eu.udig.style.advanced.utils.Utilities;
+
 /**
  * A wrapper for the {@link Rule} object to ease gui use.
  * 
@@ -104,6 +106,9 @@ public class RuleWrapper {
      */
     public SLD getType() {
         SymbolizerWrapper geometrySymbolizersWrapper = getGeometrySymbolizersWrapper();
+        if (geometrySymbolizersWrapper == null) {
+            return null;
+        }
         Symbolizer symbolizer = geometrySymbolizersWrapper.getSymbolizer();
         if (symbolizer instanceof PointSymbolizer) {
             return SLD.POINT;
@@ -130,7 +135,9 @@ public class RuleWrapper {
                 return symbolizerWrapper;
             }
         }
-        return null;
+        
+        DummySymbolizerWrapper geometrySymbolizersWrapper = new DummySymbolizerWrapper(Utilities.createDefaultGeometrySymbolizer(SLD.POINT), null);
+        return geometrySymbolizersWrapper;
     }
 
     /**
@@ -155,7 +162,7 @@ public class RuleWrapper {
     public void removeTextSymbolizersWrapper() {
         List<SymbolizerWrapper> removeSW = new ArrayList<SymbolizerWrapper>();
         List<Symbolizer> removeS = new ArrayList<Symbolizer>();
-        
+
         List<Symbolizer> symbolizers = rule.symbolizers();
         for( SymbolizerWrapper symbolizerWrapper : symbolizersWrapperList ) {
             if (symbolizerWrapper.isTextSymbolizer()) {

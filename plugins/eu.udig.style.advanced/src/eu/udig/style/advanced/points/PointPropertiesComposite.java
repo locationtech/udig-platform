@@ -29,10 +29,13 @@ import org.eclipse.swt.widgets.Text;
 import org.geotools.styling.Font;
 import org.geotools.styling.TextSymbolizer;
 
+import com.sun.xml.internal.ws.util.UtilException;
+
 import eu.udig.style.advanced.StylePlugin;
 import eu.udig.style.advanced.common.IStyleChangesListener;
 import eu.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import eu.udig.style.advanced.common.styleattributeclasses.SymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
 import eu.udig.style.advanced.points.widgets.PointBoderParametersComposite;
 import eu.udig.style.advanced.points.widgets.PointFillParametersComposite;
@@ -102,8 +105,8 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
     }
 
     private void update() {
-        PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
-                PointSymbolizerWrapper.class);
+        SymbolizerWrapper geometrySymbolizersWrapper = ruleWrapper.getGeometrySymbolizersWrapper();
+        PointSymbolizerWrapper pointSymbolizerWrapper = geometrySymbolizersWrapper.adapt(PointSymbolizerWrapper.class);
 
         if (!pointSymbolizerWrapper.hasExternalGraphic()) {
             generalParametersCompositeSIMPLE.update(ruleWrapper);

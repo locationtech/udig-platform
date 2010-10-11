@@ -113,7 +113,6 @@ public abstract class PropertiesEditor {
             default:
                 throw new IllegalArgumentException();
             }
-
         }
         styleWrapper = new StyleWrapper(style);
 

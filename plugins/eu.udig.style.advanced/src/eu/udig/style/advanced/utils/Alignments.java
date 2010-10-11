@@ -38,6 +38,8 @@ public enum Alignments {
     }
 
     public static Alignments verticalAlignmentfromDouble( String alignment ) {
+        if (alignment == null)
+            return TOP;
         double align = Double.parseDouble(alignment);
         if (align == 0.0) {
             return TOP;
@@ -46,10 +48,12 @@ public enum Alignments {
         } else if (align == 1.0) {
             return BOTTOM;
         }
-        return MIDDLE;
+        return TOP;
     }
 
     public static Alignments horizontalAlignmentfromDouble( String alignment ) {
+        if (alignment == null)
+            return RIGHT;
         double align = Double.parseDouble(alignment);
         if (align == 0.0) {
             return RIGHT;
@@ -58,7 +62,7 @@ public enum Alignments {
         } else if (align == 1.0) {
             return LEFT;
         }
-        return CENTER;
+        return RIGHT;
     }
 
     public double toDouble() {

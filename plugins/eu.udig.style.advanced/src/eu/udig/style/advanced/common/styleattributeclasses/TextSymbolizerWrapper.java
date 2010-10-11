@@ -133,52 +133,54 @@ public class TextSymbolizerWrapper extends SymbolizerWrapper {
         }
 
         LabelPlacement labelPlacement = textSymbolizer.getLabelPlacement();
-        switch( geomType ) {
-        case POINT:
-        case POLYGON:
-            if (labelPlacement instanceof PointPlacement) {
-                pointPlacement = (PointPlacement) labelPlacement;
-                if (pointPlacement != null) {
-                    anchorPoint = pointPlacement.getAnchorPoint();
-                    if (anchorPoint != null) {
-                        Expression anchorPointXExpression = anchorPoint.getAnchorPointX();
-                        anchorX = anchorPointXExpression.evaluate(null, String.class);
-                        Expression anchorPointYExpression = anchorPoint.getAnchorPointY();
-                        anchorY = anchorPointYExpression.evaluate(null, String.class);
+        if (geomType != null) {
+            switch( geomType ) {
+            case POINT:
+            case POLYGON:
+                if (labelPlacement instanceof PointPlacement) {
+                    pointPlacement = (PointPlacement) labelPlacement;
+                    if (pointPlacement != null) {
+                        anchorPoint = pointPlacement.getAnchorPoint();
+                        if (anchorPoint != null) {
+                            Expression anchorPointXExpression = anchorPoint.getAnchorPointX();
+                            anchorX = anchorPointXExpression.evaluate(null, String.class);
+                            Expression anchorPointYExpression = anchorPoint.getAnchorPointY();
+                            anchorY = anchorPointYExpression.evaluate(null, String.class);
+                        }
+
+                        displacement = pointPlacement.getDisplacement();
+                        if (displacement != null) {
+                            Expression displacementXExpression = displacement.getDisplacementX();
+                            displacementX = displacementXExpression.evaluate(null, String.class);
+                            Expression displacementYExpression = displacement.getDisplacementY();
+                            displacementY = displacementYExpression.evaluate(null, String.class);
+                        } else {
+                            displacementX = "0.0"; //$NON-NLS-1$
+                            displacementY = "0.0"; //$NON-NLS-1$
+                        }
+
+                        Expression rotationExpression = pointPlacement.getRotation();
+                        rotation = expressionToString(rotationExpression);
                     }
+                }
+                break;
+            case LINE:
+                if (labelPlacement instanceof LinePlacement) {
+                    linePlacement = (LinePlacement) labelPlacement;
+                    if (linePlacement != null) {
+                        Expression initialGapExpression = linePlacement.getInitialGap();
+                        if (initialGapExpression != null)
+                            initialGap = initialGapExpression.evaluate(null, String.class);
 
-                    displacement = pointPlacement.getDisplacement();
-                    if (displacement != null) {
-                        Expression displacementXExpression = displacement.getDisplacementX();
-                        displacementX = displacementXExpression.evaluate(null, String.class);
-                        Expression displacementYExpression = displacement.getDisplacementY();
-                        displacementY = displacementYExpression.evaluate(null, String.class);
-                    } else {
-                        displacementX = "0.0"; //$NON-NLS-1$
-                        displacementY = "0.0"; //$NON-NLS-1$
+                        Expression perpendicularOffsetExpression = linePlacement.getPerpendicularOffset();
+                        if (perpendicularOffset != null)
+                            perpendicularOffset = perpendicularOffsetExpression.evaluate(null, String.class);
                     }
-
-                    Expression rotationExpression = pointPlacement.getRotation();
-                    rotation = expressionToString(rotationExpression);
                 }
+                break;
+            default:
+                break;
             }
-            break;
-        case LINE:
-            if (labelPlacement instanceof LinePlacement) {
-                linePlacement = (LinePlacement) labelPlacement;
-                if (linePlacement != null) {
-                    Expression initialGapExpression = linePlacement.getInitialGap();
-                    if (initialGapExpression != null)
-                        initialGap = initialGapExpression.evaluate(null, String.class);
-
-                    Expression perpendicularOffsetExpression = linePlacement.getPerpendicularOffset();
-                    if (perpendicularOffset != null)
-                        perpendicularOffset = perpendicularOffsetExpression.evaluate(null, String.class);
-                }
-            }
-            break;
-        default:
-            break;
         }
 
         /*

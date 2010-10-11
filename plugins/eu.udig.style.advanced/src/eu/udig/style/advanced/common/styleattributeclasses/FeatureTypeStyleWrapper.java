@@ -24,6 +24,7 @@ import static eu.udig.style.advanced.utils.Utilities.createDefaultPolygonRule;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Rule;

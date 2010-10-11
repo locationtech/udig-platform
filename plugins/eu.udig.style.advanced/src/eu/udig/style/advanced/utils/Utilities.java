@@ -87,7 +87,7 @@ import eu.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
 @SuppressWarnings("nls")
 public class Utilities {
     public static final String NONE = "- none -";
-    
+
     public static final String DEFAULT_SIZE = "5";
     public static final String DEFAULT_WIDTH = "1";
     public static final String DEFAULT_ROTATION = "0";
@@ -96,7 +96,7 @@ public class Utilities {
     public static final String DEFAULT_COLOR = "#000000";
     public static final String DEFAULT_MINSCALE = "0";
     public static final String DEFAULT_MAXSCALE = "infinity";
-    
+
     // offset values
     public static final int OFFSET_MAX = 1000;
     public static final int OFFSET_MIN = -1000;
@@ -105,7 +105,7 @@ public class Utilities {
     public static final int DISPLACEMENT_MAX = 1000;
     public static final int DISPLACEMENT_MIN = -1000;
     public static final int DISPLACEMENT_STEP = 10;
-    
+
     public static final String DEFAULT_GROUPNAME = "group ";
     public static final String DEFAULT_STYLENAME = "default style";
 
@@ -354,12 +354,20 @@ public class Utilities {
      */
     public static BufferedImage pointRuleToImage( final Rule rule, int width, int height ) {
         DuplicatingStyleVisitor copyStyle = new DuplicatingStyleVisitor();
-        rule.accept( copyStyle );
+        rule.accept(copyStyle);
         Rule newRule = (Rule) copyStyle.getCopy();
 
-        Symbolizer symbolizer = newRule.getSymbolizers()[0];
-        int pointSize = SLDs.pointSize((PointSymbolizer) symbolizer);
-        Stroke stroke = SLDs.stroke((PointSymbolizer) symbolizer);
+        int pointSize = 0;
+        Stroke stroke = null;
+        Symbolizer[] symbolizers = newRule.getSymbolizers();
+        if (symbolizers.length > 0) {
+            Symbolizer symbolizer = newRule.getSymbolizers()[0];
+            if (symbolizer instanceof PointSymbolizer) {
+                PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer;
+                pointSize = SLDs.pointSize(pointSymbolizer);
+                stroke = SLDs.stroke(pointSymbolizer);
+            }
+        }
         int strokeSize = 0;
         if (stroke != null) {
             strokeSize = SLDs.width(stroke);
@@ -435,12 +443,18 @@ public class Utilities {
      */
     public static BufferedImage polygonRuleToImage( final Rule rule, int width, int height ) {
         DuplicatingStyleVisitor copyStyle = new DuplicatingStyleVisitor();
-        rule.accept( copyStyle );
+        rule.accept(copyStyle);
         Rule newRule = (Rule) copyStyle.getCopy();
-        
-        Symbolizer symbolizer = newRule.getSymbolizers()[0];
-        PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) symbolizer;
-        Stroke stroke = SLDs.stroke(polygonSymbolizer);
+
+        Stroke stroke = null;
+        Symbolizer[] symbolizers = newRule.getSymbolizers();
+        if (symbolizers.length > 0) {
+            Symbolizer symbolizer = symbolizers[0];
+            if (symbolizer instanceof PolygonSymbolizer) {
+                PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) symbolizer;
+                stroke = SLDs.stroke(polygonSymbolizer);
+            }
+        }
         int strokeSize = 0;
         if (stroke != null) {
             strokeSize = SLDs.width(stroke);
@@ -509,12 +523,19 @@ public class Utilities {
      */
     public static BufferedImage lineRuleToImage( final Rule rule, int width, int height ) {
         DuplicatingStyleVisitor copyStyle = new DuplicatingStyleVisitor();
-        rule.accept( copyStyle );
+        rule.accept(copyStyle);
         Rule newRule = (Rule) copyStyle.getCopy();
-        
-        Symbolizer symbolizer = newRule.getSymbolizers()[0];
-        LineSymbolizer lineSymbolizer = (LineSymbolizer) symbolizer;
-        Stroke stroke = SLDs.stroke(lineSymbolizer);
+
+        Stroke stroke = null;
+        Symbolizer[] symbolizers = newRule.getSymbolizers();
+        if (symbolizers.length > 0) {
+            Symbolizer symbolizer = newRule.getSymbolizers()[0];
+            if (symbolizer instanceof LineSymbolizer) {
+                LineSymbolizer lineSymbolizer = (LineSymbolizer) symbolizer;
+                stroke = SLDs.stroke(lineSymbolizer);
+            }
+        }
+
         int strokeSize = 0;
         if (stroke != null) {
             strokeSize = SLDs.width(stroke);
@@ -705,7 +726,7 @@ public class Utilities {
     }
 
     /**
-     * Creates a default {@link TextSymbolizer} for a point.
+     * Creates a default {@link TextSymbolizer} for a given type.
      * 
      * @return the default symbolizer.
      */
@@ -731,6 +752,34 @@ public class Utilities {
                 ff.literal("dummy"), labelPlacement, null);
 
         return textSymbolizer;
+    }
+
+    /**
+     * Creates a default {@link TextSymbolizer} for a point.
+     * 
+     * @return the default symbolizer.
+     */
+    public static Symbolizer createDefaultGeometrySymbolizer( SLD type ) {
+        Symbolizer symbolizer = null;
+        switch( type ) {
+        case POINT:
+            Rule defaultPointRule = createDefaultPointRule();
+            symbolizer = defaultPointRule.getSymbolizers()[0];
+            break;
+        case POLYGON:
+            Rule defaultPolygonRule = createDefaultPolygonRule();
+            symbolizer = defaultPolygonRule.getSymbolizers()[0];
+            break;
+        case LINE:
+            Rule defaultLineRule = createDefaultLineRule();
+            symbolizer = defaultLineRule.getSymbolizers()[0];
+            break;
+
+        default:
+            throw new IllegalArgumentException();
+        }
+
+        return symbolizer;
     }
 
     /**
@@ -973,7 +1022,7 @@ public class Utilities {
                 parameters.set(1, ff.literal(xOffset));
                 parameters.set(2, ff.literal(yOffset));
             }
-        }else{
+        } else {
             Function function = ff.function("offset", ff.property("the_geom"), ff.literal(xOffset), ff.literal(yOffset));
             symbolizer.setGeometry(function);
         }
@@ -1265,8 +1314,8 @@ public class Utilities {
             } catch (Exception e) {
                 // still try the double
                 Double number = isNumber(value, Double.class);
-                if (number!=null) {
-                    return  adaptee.cast(number.intValue());
+                if (number != null) {
+                    return adaptee.cast(number.intValue());
                 }
                 return null;
             }
@@ -1274,14 +1323,14 @@ public class Utilities {
             throw new IllegalArgumentException();
         }
     }
-    
+
     /**
      * Get the double value from a spinner that has digits.
      * 
      * @param spinner the spinner to get the value from.
      * @return the selected value.
      */
-    public static double getDoubleSpinnerSelection(Spinner spinner){
+    public static double getDoubleSpinnerSelection( Spinner spinner ) {
         int selection = spinner.getSelection();
         int digits = spinner.getDigits();
         double value = selection / Math.pow(10, digits);
@@ -1323,5 +1372,5 @@ public class Utilities {
             throw new IllegalArgumentException("unsupported line cap");
         }
     }
-    
+
 }
