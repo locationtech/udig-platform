@@ -556,6 +556,9 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             }
             Point location = statusLineManager.getControl().toDisplay(button.getLocation());
             location.y = location.y - ScaleRatioLabel.STATUS_LINE_HEIGHT;
+            if (popup.isDisposed()) {
+                return;
+            }
             popup.setLocation(location);
             textLabel.setText(full);
             popup.setVisible(true);
