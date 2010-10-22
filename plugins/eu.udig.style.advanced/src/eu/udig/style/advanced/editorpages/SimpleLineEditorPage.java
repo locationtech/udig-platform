@@ -17,14 +17,18 @@
  */
 package eu.udig.style.advanced.editorpages;
 
+import java.util.List;
+
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.style.internal.StyleLayer;
 import net.refractions.udig.style.sld.SLDContent;
+import net.refractions.udig.style.sld.editor.StyleEditorDialog;
 import net.refractions.udig.style.sld.editor.StyleEditorPage;
 import net.refractions.udig.ui.graphics.SLDs;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.graphics.Point;
@@ -32,9 +36,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.geotools.data.FeatureSource;
+import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.Style;
 import org.geotools.styling.Symbolizer;
+import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 
 import eu.udig.style.advanced.lines.LinePropertiesEditor;
 import eu.udig.style.advanced.utils.Utilities;
@@ -52,6 +58,8 @@ public class SimpleLineEditorPage extends StyleEditorPage {
     private StackLayout stackLayout;
     private Label noFeatureLabel;
     private Composite mainComposite;
+    
+    private Style oldStyle;
 
     public SimpleLineEditorPage() {
         super();
@@ -74,10 +82,14 @@ public class SimpleLineEditorPage extends StyleEditorPage {
         IGeoResource resource = layer.getGeoResource();
         if (resource.canResolve(FeatureSource.class)) {
             StyleBlackboard styleBlackboard = layer.getStyleBlackboard();
-            style = (Style) styleBlackboard.get(SLDContent.ID);
-            if (style == null) {
-                style = Utilities.createDefaultLineStyle();
+            oldStyle = (Style) styleBlackboard.get(SLDContent.ID);
+            if (oldStyle == null) {
+                oldStyle = Utilities.createDefaultLineStyle();
             }
+            
+            DuplicatingStyleVisitor dsv = new DuplicatingStyleVisitor();
+            dsv.visit(oldStyle);
+            style = (Style) dsv.getCopy();
 
             if (isLineStyle(style)) {
                 linesEditor = new LinePropertiesEditor(layer);
@@ -138,9 +150,24 @@ public class SimpleLineEditorPage extends StyleEditorPage {
     }
 
     private void applyStyle() {
-        Layer layer = getSelectedLayer();
+        StyleLayer layer = getSelectedLayer();
         
         Style newStyle = linesEditor.getStyle();
+        
+        List<FeatureTypeStyle> featureTypeStyles = newStyle.featureTypeStyles();
+        int ftsNum = featureTypeStyles.size();
+        if (ftsNum < 1) {
+            MessageDialog.openWarning(getShell(), "Warning", "You can't apply an empty style! Resetting.");
+            style = oldStyle;
+            setStyle(oldStyle);
+            layer.revertAll();
+            layer.apply();
+            
+            StyleEditorDialog dialog = (StyleEditorDialog) getContainer();
+            dialog.getCurrentPage().refresh();
+            return;
+        }
+        
         newStyle.setName(layer.getName());
 
         setStyle(newStyle);
@@ -179,10 +206,14 @@ public class SimpleLineEditorPage extends StyleEditorPage {
         }
 
         StyleBlackboard styleBlackboard = layer.getStyleBlackboard();
-        style = (Style) styleBlackboard.get(SLDContent.ID);
-        if (style == null) {
-            style = Utilities.createDefaultLineStyle();
+        oldStyle = (Style) styleBlackboard.get(SLDContent.ID);
+        if (oldStyle == null) {
+            oldStyle = Utilities.createDefaultLineStyle();
         }
+        
+        DuplicatingStyleVisitor dsv = new DuplicatingStyleVisitor();
+        dsv.visit(oldStyle);
+        style = (Style) dsv.getCopy();
 
         if (!isLineStyle(style)) {
             stackLayout.topControl = noFeatureLabel;
