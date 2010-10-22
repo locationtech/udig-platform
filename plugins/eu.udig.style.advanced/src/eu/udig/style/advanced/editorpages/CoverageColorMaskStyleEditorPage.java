@@ -23,6 +23,7 @@ import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.style.sld.editor.StyleEditorPage;
 
+import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -56,7 +57,8 @@ public class CoverageColorMaskStyleEditorPage extends StyleEditorPage implements
 
     public void createPageContent( Composite parent ) {
         IBlackboard styleBlackboard = getSelectedLayer().getStyleBlackboard();
-        Object maskColorObj = styleBlackboard.get(COVERAGE_COLORMASK_ID);
+        String maskColorString = styleBlackboard.getString(COVERAGE_COLORMASK_ID);
+
 
         Group colorMaskGroup = new Group(parent, SWT.SHADOW_ETCHED_IN);
         colorMaskGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -69,8 +71,10 @@ public class CoverageColorMaskStyleEditorPage extends StyleEditorPage implements
         colorMaskButton.addSelectionListener(this);
 
         maskColorEditor = new StolenColorEditor(colorMaskGroup);
-        if (maskColorObj instanceof Color) {
-            Color color = (Color) maskColorObj;
+        if (maskColorString instanceof String) {
+            String[] colorSplit = maskColorString.split(":"); //$NON-NLS-1$
+            Color color = new Color(Integer.parseInt(colorSplit[0]), Integer.parseInt(colorSplit[1]),
+                    Integer.parseInt(colorSplit[2]));
             maskColorEditor.setColor(color);
             colorMaskButton.setSelection(true);
         }
@@ -117,9 +121,10 @@ public class CoverageColorMaskStyleEditorPage extends StyleEditorPage implements
 
         StyleBlackboard styleBlackboard = getSelectedLayer().getStyleBlackboard();
 
-        if (doColorMask) {
+        if (colorMaskButton.getSelection()) {
             Color maskColor = maskColorEditor.getColor();
-            styleBlackboard.put(COVERAGE_COLORMASK_ID, maskColor);
+            String colorStr = maskColor.getRed() + ":" + maskColor.getGreen() + ":" + maskColor.getBlue(); //$NON-NLS-1$ //$NON-NLS-2$
+            styleBlackboard.putString(COVERAGE_COLORMASK_ID, colorStr);
         } else {
             styleBlackboard.remove(COVERAGE_COLORMASK_ID);
         }
