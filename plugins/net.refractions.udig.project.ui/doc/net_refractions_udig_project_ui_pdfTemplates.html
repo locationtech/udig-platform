@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>PDF Templates</title>
+<style type="text/css">@import url("file:/Users/jody/java/360/eclipse/configuration/org.eclipse.osgi/bundles/352/1/.cp/book.css");</style>
+<style type="text/css">@import url("file:/Users/jody/java/360/eclipse/configuration/org.eclipse.osgi/bundles/364/1/.cp/schema.css");</style>
+</HEAD>
+<BODY>
+<H1 style="text-align:center">PDF Templates</H1>
+<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Identifier: </h6>net.refractions.udig.project.ui.pdfTemplates<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Since: </h6>uDig 1.2
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Description: </h6>This extention point allows contributions of additional PDF Templates for the Export to PDF Wizard.<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Configuration Markup:</h6>
+<p></p>
+<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.template">template</a>)*&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST extension</p>
+<p class="code SchemaDtdAttlist">point&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p><p class="code SchemaDtdAttlist">name&nbsp;&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.template">template</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST template</p>
+<p class="code SchemaDtdAttlist">name&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">class&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">page&nbsp;&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>name</b> - </li>
+<li><b>class</b> - </li>
+<li><b>page</b> - </li>
+</ul>
+<br><h6 class="CaptionFigColumn SchemaHeader">Examples: </h6>TBA
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">API Information: </h6>Contributions should be made in the form of a PDFTemplate subclass.
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Supplied Implementation: </h6>The extention also requires a name for the template and optional Wizard Page (if your Templates wants to interact with the user prior to generating a PDF).
+<p></p>
+
+<br>
+<p class="note SchemaCopyright">
+(c) 2007 Refractions Research
+
+</p>
+</BODY>
+</HTML>

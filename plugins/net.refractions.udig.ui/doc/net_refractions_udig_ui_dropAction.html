@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Drop Actions</title>
+<style type="text/css">@import url("file:/Users/jody/java/360/eclipse/configuration/org.eclipse.osgi/bundles/352/1/.cp/book.css");</style>
+<style type="text/css">@import url("file:/Users/jody/java/360/eclipse/configuration/org.eclipse.osgi/bundles/364/1/.cp/schema.css");</style>
+</HEAD>
+<BODY>
+<H1 style="text-align:center">Drop Actions</H1>
+<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Identifier: </h6>net.refractions.udig.ui.dropActions2<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Since: </h6>1.0
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Description: </h6>This extension point is used to attach an action to the drop event in a drag n drop transaction.<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Configuration Markup:</h6>
+<p></p>
+<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.action">action</a>+)&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST extension</p>
+<p class="code SchemaDtdAttlist">point&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p><p class="code SchemaDtdAttlist">name&nbsp;&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.action">action</a> (<a href="#e.destination">destination</a>+ , <a href="#e.acceptedType">acceptedType</a>+ , <a href="#e.description">description</a>?)*&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST action</p>
+<p class="code SchemaDtdAttlist">class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">enablesFor&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<p class="ConfigMarkupElementDesc">
+The action to be performed.</p>
+<br>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>class</b> - Class of the action, must be a sublcass of IDropAction.</li>
+<li><b>name</b> - Name of the action. Should be a short description of the action purpose. Should be human readable and usable in ui.</li>
+<li><b>enablesFor</b> - <p>a value indicating the selection count which must be met to enable the action. If specified and the condition is not met, the action is disabled. If omitted, the value is assumed to be 1. The following attribute formats are supported:</p>
+<ul>
+<li>+  - 1 or more items selected</li>
+<li>multiple, 2+  - 2 or more items selected</li>
+<li>n  - A precise number of items selected.  For example: enablesFor=" 4" enables the action only when 4 items are selected</li>
+</ul></li>
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.destination">destination</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST destination</p>
+<p class="code SchemaDtdAttlist">class&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">adapt&nbsp;(true | false) </p>&gt;</p>
+<p></p>
+<p class="ConfigMarkupElementDesc">
+The target of a drop. Destinations are advertised by the the entitiy enabling drop support. It is usually a user interface construct such as a specific editor or view, however it can be any type of object.</p>
+<br>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>class</b> - The destination class.</li>
+<li><b>adapt</b> - indicates whether the framework should try to adapt the target object to the type declared in this attribute.  If not specified then it is assumed to be false.</li>
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.acceptedType">acceptedType</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST acceptedType</p>
+<p class="code SchemaDtdAttlist">class&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">adapt&nbsp;(true | false) </p>&gt;</p>
+<p></p>
+<p class="ConfigMarkupElementDesc">
+The object being dropped. The type of object is based upon the assiociated transfer object in</p>
+<br>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>class</b> - A class that this dropAction knows how to handle</li>
+<li><b>adapt</b> - indicates whether the framework should try to adapt the dropped object to the type declared in this attribute.  If not specified then it is assumed to be false.</li>
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.description">description</a> (#PCDATA)&gt;</p>
+<p></p>
+<p class="ConfigMarkupElementDesc">
+Describes the action</p>
+<br><br>
+<h6 class="CaptionFigColumn SchemaHeader">Examples: </h6>[Enter extension point usage example here.]
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">API Information: </h6>[Enter API information here.]
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Supplied Implementation: </h6>[Enter information about supplied implementation of this extension point.]
+<p></p>
+
+<br>
+<p class="note SchemaCopyright">
+</p>
+</BODY>
+</HTML>

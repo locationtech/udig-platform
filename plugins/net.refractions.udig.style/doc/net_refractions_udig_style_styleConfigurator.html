@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>net.refractions.udig.style</title>
+<style type="text/css">@import url("file:/Users/jody/java/360/eclipse/configuration/org.eclipse.osgi/bundles/352/1/.cp/book.css");</style>
+<style type="text/css">@import url("file:/Users/jody/java/360/eclipse/configuration/org.eclipse.osgi/bundles/364/1/.cp/schema.css");</style>
+</HEAD>
+<BODY>
+<H1 style="text-align:center">net.refractions.udig.style</H1>
+<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Identifier: </h6>net.refractions.udig.style.net.refractions.udig.style<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Since: </h6>1.0
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Description: </h6>The extension point for a UI element for editing a style on a layer's style blackboard.<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Configuration Markup:</h6>
+<p></p>
+<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.styleConfigurator">styleConfigurator</a>+)*&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST extension</p>
+<p class="code SchemaDtdAttlist">point&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<p class="ConfigMarkupElementDesc">
+Allows the definition of a StyleConfigurator - presenting a user interface to items on the StyleBlackboard.</p>
+<br>
+<ul class="ConfigMarkupAttlistDesc">
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.styleConfigurator">styleConfigurator</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST styleConfigurator</p>
+<p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p><p class="code SchemaDtdAttlist">label&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">requires&nbsp;CDATA #IMPLIED</p><p class="code SchemaDtdAttlist">class&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">styleId&nbsp;&nbsp;CDATA #REQUIRED</p>&gt;</p>
+<p></p>
+<p class="ConfigMarkupElementDesc">
+Configures a IStyleConfigurator with responsibilities for:<ul>
+<li>Creating a ui to allow user configuration of a style object.</li>
+<li>Placing style object information onto the style blackboard of a layer.</li>
+<li>Determining if a style configurator can be used to configure the style of a particular layer.</li>
+</ul>
+The user interface provided here will be shown in both the Style View and in the Style Dialog Editor.</p>
+<br>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>id</b> - Optional identifier used to indicate the ui in error and log messages.</li>
+<li><b>label</b> - This should be a human readable label which can be used to identify the style configurator in the ui.</li>
+<li><b>requires</b> - This is the data access API you are expecting to control; for example FeatureSource.
+
+If defined, the selected layer must resolve this class in order for this configurator to be displayed</li>
+<li><b>class</b> - Aninstance of IStyleConfigurator providing a user interface for editing the indicated styleId.</li>
+<li><b>styleId</b> - The id of the style extension that the configurator is intended to work with. This extension point works in conjunction with the net.refractions.udig.project.style extension point. The "id" attribute of an extension of that type should match the "styleId" attribute of an extension of this type.</li>
+</ul>
+<br><h6 class="CaptionFigColumn SchemaHeader">Examples: </h6>Here is an example use from the uDig application:
+
+<extension
+         point="net.refractions.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="net.refractions.udig.style.sld.SimpleStyleConfigurator"
+            id="simple"
+            label="Feature"
+            requires="org.geotools.data.FeatureSource"
+            styleId="net.refractions.udig.style.sld"/>
+      ...
+</extension>
+
+There is a complete examples in net.refractions.udig.tutorials.style
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">API Information: </h6>Implemententors must provide an implementation of IStyleConfigurator; this class is used to construct a user interface for display in the StyleEditor or in the StyleView. The class is expected to work directly with the contents of a layer style blackboard.
+
+If possible try and perform spot changes on the StyleBlackboard (in case other style configurators are working on the same blackboard entry as you).
+
+In the case of StyleView any changes you make to the StyleBlackboard will cause an immediate redraw; for the StyleEditor the user will need to hit Apply or OK to cause a redraw.
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Supplied Implementation: </h6>This extension is focused on the user interface only; the definition of style content and the definition of new renderers is handled elsewhere.
+<p></p>
+
+<br>
+<p class="note SchemaCopyright">
+(c) 2004 Refractions Research
+
+</p>
+</BODY>
+</HTML>
