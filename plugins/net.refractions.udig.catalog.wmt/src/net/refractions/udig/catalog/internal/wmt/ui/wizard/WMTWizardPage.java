@@ -229,8 +229,28 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
         composite.setLayout(new RowLayout());
         setControl(composite); 
         
-        //region Create tree component
-        tree = new Tree(composite, SWT.BORDER | SWT.CHECK);
+        createTreeControl(composite);
+        
+        TreeItem osm = addOsmOptions();
+//        addMapQuestOptions();
+        addWorldWindOptions();
+        addNasaOptions();
+        
+        // Enable first service for usability reasons 
+        osm.getItems()[0].setChecked(true);
+        tree.setSelection(osm.getItems()[0]);
+        displayInfoControl(osm.getItems()[0]);
+        osm.setChecked(true);
+        osm.setGrayed(true);
+        //endregion
+
+
+        composite.pack();
+
+      }
+
+	private void createTreeControl(final Composite composite) {
+		tree = new Tree(composite, SWT.BORDER | SWT.CHECK);
         tree.setLayoutData(new RowData(200, 442));
         tree.addListener(SWT.Selection, new org.eclipse.swt.widgets.Listener(){
             public void handleEvent(Event event) {
@@ -259,10 +279,10 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
         stackLayoutInfoBox = new StackLayout();
         infoBox.setLayout(stackLayoutInfoBox);
         infoBox.setLayoutData(new RowData(430, 470));
-        //endregion
-        
-        //region Add OpenStreeMap services
-        TreeItem osm = new TreeItem(tree, SWT.NONE);
+	}
+
+	private TreeItem addOsmOptions() {
+		TreeItem osm = new TreeItem(tree, SWT.NONE);
         osm.setText(OSMSource.NAME);
         
         OSMControl osmControlFactory = new OSMControl();
@@ -283,20 +303,22 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
         csTreeItem.setData(dataCS);
 
         osm.setExpanded(true);
-        //endregion
-        
-        //region Add MapQuest services
-        MQControl mqControlFactory = new MQControl();
-        TreeItem mq = new TreeItem(tree, SWT.NONE);
-        mq.setText(MQSource.NAME);
+		return osm;
+	}
 
-        addWMTSourceToTree(mq, MQSource.class, mqControlFactory);
-
-        mq.setExpanded(true);
-        //endregion
+	private void addNasaOptions() {
+		TreeItem nasa = new TreeItem(tree, SWT.NONE);
+        nasa.setText(NASASource.NAME);
         
-        //region Add NASA WorldWind example
-        TreeItem ww = new TreeItem(tree, SWT.NONE);
+        NASASourceManager nasaManager = NASASourceManager.getInstance();
+        
+        nasaManager.buildWizardTree(nasa);
+
+        nasa.setExpanded(true);
+	}
+
+	private void addWorldWindOptions() {
+		TreeItem ww = new TreeItem(tree, SWT.NONE);
         ww.setText(Messages.Wizard_Ww_Example_Title);
 
         WWControl wwControlFactory = new WWControl();
@@ -306,31 +328,17 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
         wwTreeItem.setData(dataWW);
         
         ww.setExpanded(true);
-        //endregion
-        
-        //region Add NASA services
-        TreeItem nasa = new TreeItem(tree, SWT.NONE);
-        nasa.setText(NASASource.NAME);
-        
-        NASASourceManager nasaManager = NASASourceManager.getInstance();
-        
-        nasaManager.buildWizardTree(nasa);
+	}
 
-        nasa.setExpanded(true);
-        //endregion
-        
-        // Enable first service for usability reasons 
-        osm.getItems()[0].setChecked(true);
-        tree.setSelection(osm.getItems()[0]);
-        displayInfoControl(osm.getItems()[0]);
-        osm.setChecked(true);
-        osm.setGrayed(true);
-        //endregion
+	private void addMapQuestOptions() {
+		MQControl mqControlFactory = new MQControl();
+        TreeItem mq = new TreeItem(tree, SWT.NONE);
+        mq.setText(MQSource.NAME);
 
+        addWMTSourceToTree(mq, MQSource.class, mqControlFactory);
 
-        composite.pack();
-
-      }
+        mq.setExpanded(true);
+	}
     
     //region GUI helper methods    
     private void displayInfoControl(TreeItem item) {

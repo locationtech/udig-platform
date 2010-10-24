@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Style Plugin
+Bundle-SymbolicName: eu.udig.style.advanced;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: eu.udig.style.advanced.StylePlugin
+Bundle-Vendor: HydroloGIS S.r.l.
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.libs;bundle-version="1.2.0",
+ net.refractions.udig.project;bundle-version="1.2.0",
+ net.refractions.udig.project.ui,
+ net.refractions.udig.ui;bundle-version="1.2.0",
+ net.refractions.udig.catalog.rasterings;bundle-version="1.2.0",
+ net.refractions.udig.style,
+ net.refractions.udig.style.sld;bundle-version="1.2.0"
+Bundle-ActivationPolicy: lazy
+Export-Package: eu.udig.style.advanced,
+ eu.udig.style.advanced.common,
+ eu.udig.style.advanced.common.styleattributeclasses,
+ eu.udig.style.advanced.editorpages,
+ eu.udig.style.advanced.lines,
+ eu.udig.style.advanced.lines.widgets,
+ eu.udig.style.advanced.points,
+ eu.udig.style.advanced.points.widgets,
+ eu.udig.style.advanced.polygons,
+ eu.udig.style.advanced.polygons.widgets,
+ eu.udig.style.advanced.raster,
+ eu.udig.style.advanced.utils

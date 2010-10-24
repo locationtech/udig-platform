@@ -139,6 +139,10 @@ public class LayerResource extends IGeoResource {
             return adaptee.cast(this);
         if (this.geoResource.getClass().isAssignableFrom(adaptee))
             return adaptee.cast(geoResource);
+        T resolve = geoResource.resolve(adaptee, monitor);
+        if (resolve != null) {
+            return resolve;
+        }
         T resource = processResourceCachingStrategy(monitor, adaptee);
         if (resource == null)
             return null;

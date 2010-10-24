@@ -217,10 +217,12 @@ public class GridCoverageReaderRenderer extends RendererImpl {
 	                    final RasterSymbolizer rasterSymbolizer = SLD.rasterSymbolizer(style);
 
 	                    // check if there is a color to mask
-	                    Object maskColor = getContext().getLayer().getStyleBlackboard().get("raster-color-mask"); //$NON-NLS-1$	                    
-	                    if (maskColor instanceof Color) {
+	                    Object maskColor = getContext().getLayer().getStyleBlackboard().getString("raster-color-mask"); //$NON-NLS-1$	                    
+                        if (maskColor instanceof String) {
                             // create a color mask
-                            Color color = (Color) maskColor;
+                            String[] colorSplit = ((String) maskColor).split(":"); //$NON-NLS-1$
+                            Color color = new Color(Integer.parseInt(colorSplit[0]), Integer.parseInt(colorSplit[1]),
+                                    Integer.parseInt(colorSplit[2]));
                             RenderedImage image = coverage.getRenderedImage();
                             ImageWorker iw = new ImageWorker(image);
                             iw.makeColorTransparent(color);

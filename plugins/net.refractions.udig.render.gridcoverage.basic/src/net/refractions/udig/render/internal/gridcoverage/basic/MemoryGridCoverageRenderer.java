@@ -177,19 +177,21 @@ public class MemoryGridCoverageRenderer extends RendererImpl {
 	                    final GridCoverageRenderer paint = new GridCoverageRenderer( destinationCRS, envelope, screenSize,null, hints );
 	                    final RasterSymbolizer rasterSymbolizer = SLD.rasterSymbolizer(style);
 	                
-	                       // check if there is a color to mask
-	                       Object maskColor = getContext().getSelectedLayer().getStyleBlackboard().get("raster-color-mask"); //$NON-NLS-1$                     
-	                       if (maskColor instanceof Color) {
-	                            // create a color mask
-	                            Color color = (Color) maskColor;
-	                            RenderedImage image = coverage.getRenderedImage();
-	                            ImageWorker iw = new ImageWorker(image);
-	                            iw.makeColorTransparent(color);
-	                            image = iw.getRenderedImage();
-	                            GridCoverageFactory gcF = CoverageFactoryFinder.getGridCoverageFactory(null);
-	                            coverage = gcF.create(coverage.getName(), image, coverage.getCoordinateReferenceSystem(), coverage
-	                                    .getGridGeometry().getGridToCRS(), coverage.getSampleDimensions(), null, null);
-	                        }
+                        // check if there is a color to mask
+                        Object maskColor = getContext().getLayer().getStyleBlackboard().getString("raster-color-mask"); //$NON-NLS-1$                       
+                        if (maskColor instanceof String) {
+                            // create a color mask
+                            String[] colorSplit = ((String) maskColor).split(":"); //$NON-NLS-1$
+                            Color color = new Color(Integer.parseInt(colorSplit[0]), Integer.parseInt(colorSplit[1]),
+                                    Integer.parseInt(colorSplit[2]));
+                            RenderedImage image = coverage.getRenderedImage();
+                            ImageWorker iw = new ImageWorker(image);
+                            iw.makeColorTransparent(color);
+                            image = iw.getRenderedImage();
+                            GridCoverageFactory gcF = CoverageFactoryFinder.getGridCoverageFactory(null);
+                            coverage = gcF.create(coverage.getName(), image, coverage.getCoordinateReferenceSystem(), coverage
+                                    .getGridGeometry().getGridToCRS(), coverage.getSampleDimensions(), null, null);
+                        }
 	                    
 	                    //setState( RENDERING );
 	                    paint.paint( graphics, coverage, rasterSymbolizer );                        

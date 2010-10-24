@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="lib/jfreechart-experimental-1.0.13.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jfreechart-swt-1.0.13.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-grassraster-2.7-SNAPSHOT.jar" sourcepath="D:/development/geotools-svn-trunk/trunk/modules/unsupported/grassraster"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
@@ -14,7 +17,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/geoapi-pending-2.3-M1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geodb-0.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/google-collections-0.8.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-api-2.7-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-api-2.7-SNAPSHOT.jar" sourcepath="/home/moovida/.m2/repository/org/geotools/gt-api/2.7-SNAPSHOT/gt-api-2.7-SNAPSHOT-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-common-2.7-SNAPSHOT.jar"/>
@@ -24,7 +27,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-cql-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-data-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-h2-2.7-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geotiff-2.7-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geotiff-2.7-SNAPSHOT.jar" sourcepath="C:/Users/moovida/.m2/repository/org/geotools/gt-geotiff/2.7-SNAPSHOT/gt-geotiff-2.7-SNAPSHOT-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-graph-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-image-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-imageio-ext-gdal-2.7-SNAPSHOT.jar"/>
@@ -38,14 +41,14 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-spatialite-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jp2k-2.7-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-main-2.7-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-main-2.7-SNAPSHOT.jar" sourcepath="/home/moovida/.m2/repository/org/geotools/gt-main/2.7-SNAPSHOT/gt-main-2.7-SNAPSHOT-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-postgis-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-postgis-versioned-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-process-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-property-2.7-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-2.7-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-render-2.7-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-2.7-SNAPSHOT.jar" sourcepath="C:/Users/moovida/.m2/repository/org/geotools/gt-referencing/2.7-SNAPSHOT/gt-referencing-2.7-SNAPSHOT-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-render-2.7-SNAPSHOT.jar" sourcepath="/home/moovida/.m2/repository/org/geotools/gt-render/2.7-SNAPSHOT/gt-render-2.7-SNAPSHOT-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-renderer-2.7-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-svg-2.7-SNAPSHOT.jar"/>

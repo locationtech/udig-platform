@@ -32,6 +32,7 @@ import net.refractions.udig.project.LayerEvent.EventType;
 import net.refractions.udig.project.internal.impl.LayerImpl;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.properties.FeaturePropertySource;
+import net.refractions.udig.tool.info.CoveragePointInfo;
 import net.refractions.udig.tool.info.InfoPlugin;
 import net.refractions.udig.tool.info.InfoTool;
 import net.refractions.udig.tool.info.LayerPointInfo;
@@ -78,6 +79,7 @@ import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -110,6 +112,10 @@ public class InfoView2 extends SearchPart {
             }
             else if (element instanceof LayerPointInfo) {
                 LayerPointInfo info = (LayerPointInfo) element;                    
+                return info.getLayer().getName();
+            }
+            else if (element instanceof CoveragePointInfo) {
+                CoveragePointInfo info = (CoveragePointInfo) element;                    
                 return info.getLayer().getName();
             }
             return super.getText(element);
@@ -153,6 +159,10 @@ public class InfoView2 extends SearchPart {
             }
             if( element instanceof LayerPointInfo){
                 LayerPointInfo info = (LayerPointInfo) element;
+                layer = info.getLayer();
+            }
+            if( element instanceof CoveragePointInfo){
+                CoveragePointInfo info = (CoveragePointInfo) element;
                 layer = info.getLayer();
             }
             String key = layer.getID().toExternalForm();                
@@ -308,6 +318,11 @@ public class InfoView2 extends SearchPart {
                     getDetails().showPage(information);
             }
         }        
+        if (selection instanceof CoveragePointInfo) {
+            CoveragePointInfo info = (CoveragePointInfo) selection;
+            information.setText(info.getInfo());
+            getDetails().showPage(information);
+        }        
     
     }
     
@@ -358,6 +373,16 @@ public class InfoView2 extends SearchPart {
                 }
                 continue;
             }            
+            if( layer.hasResource( GridCoverage.class ) ) {
+                try {
+                    CoveragePointInfo hit = CoverageDescribeLayer.info2( layer, request.bbox, monitor );
+                    if( hit != null ) set.add( hit );
+                }
+                catch( Throwable t ) {
+                    InfoPlugin.log( "Information request "+layer.getName()+" failed "+t, t ); //$NON-NLS-1$ //$NON-NLS-2$
+                }
+                continue;
+            }            
             if( layer.hasResource( Layer.class ) ) {
                 try {
                     LayerPointInfo hit = WMSDescribeLayer.info2( layer, request.bbox );
@@ -389,6 +414,10 @@ public class InfoView2 extends SearchPart {
             ILayer layer=null ;
             if( object instanceof LayerPointInfo ){
                 LayerPointInfo info=(LayerPointInfo) object;
+                layer = info.getLayer();
+            }
+            if (object instanceof CoveragePointInfo) {
+                CoveragePointInfo info = (CoveragePointInfo) object;
                 layer = info.getLayer();
             }
             if( object instanceof AdaptableFeature ){

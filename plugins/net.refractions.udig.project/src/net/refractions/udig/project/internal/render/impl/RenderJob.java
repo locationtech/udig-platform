@@ -202,7 +202,7 @@ public class RenderJob extends Job {
         setThread(Thread.currentThread());
 
         this.monitor = monitor;
-        while( !requests.isEmpty() ) {
+        while( !requests.isEmpty() && !monitor.isCanceled() ) {
             try {
                 bounds = combineRequests();
                 if( bounds.isNull() || bounds.isEmpty()){

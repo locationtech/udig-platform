@@ -7,7 +7,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.mapquest.apiwrapper.MQAPIWrapper;
+import eu.udig.mapquest.apiwrapper.MQAPIWrapper;
 
 public class MQSource extends WMTSource {
     public static String NAME = "MapQuest Maps"; //$NON-NLS-1$
