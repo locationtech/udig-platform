@@ -9,6 +9,7 @@ Bundle-Localization: plugin
 Eclipse-BuddyPolicy: global
 Export-Package: net.refractions.udig.style.sld,
  net.refractions.udig.style.sld.editor,
+ net.refractions.udig.style.sld.editor.internal,
  net.refractions.udig.style.sld.simple
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
