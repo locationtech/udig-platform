@@ -1017,13 +1017,20 @@
               </enablement>
            </action>
            <action
+                 allowLabelUpdate="true"
                  class="net.refractions.udig.project.ui.internal.actions.SaveAsProject"
+                 enablesFor="1"
                  icon="icons/obj16/project_save.gif"
                  id="net.refractions.udig.project.ui.saveAsProject"
                  label="%project.action.save.name"
                  menubarPath="file/project.ext"
                  style="push"
                  tooltip="%project.action.save.tooltip">
+              <enablement>
+                 <objectClass
+                       name="net.refractions.udig.project.IProject">
+                 </objectClass>
+              </enablement>
            </action>
            <action
                  class="net.refractions.udig.project.ui.internal.actions.OpenProject"
