@@ -27,7 +27,9 @@ import net.refractions.udig.catalog.memory.MemoryServiceExtensionImpl;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.memory.MemoryDataStore;
+import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.AttributeDescriptor;
 
 /**
  * Creates a MemoryGeoResource
@@ -45,23 +47,72 @@ public class TemporaryResourceFactory
         IService service = getMemoryService();
 
         MemoryDataStore ds = service.resolve(MemoryDataStore.class, new NullProgressMonitor());
-        if( Arrays.asList(ds.getTypeNames()).contains(featureType.getName().getLocalPart()) )
-            ds.updateSchema(featureType.getName().getLocalPart(), featureType);
-        else
+        List<String> typeNamesList = Arrays.asList(ds.getTypeNames());
+        String localPart = featureType.getName().getLocalPart();
+        if (typeNamesList.contains(localPart)) {
+            try {
+                ds.updateSchema(localPart, featureType);
+            } catch (Exception e) {
+                // some datastores do not support schema update, try a name change
+                // create the feature type
+                String name = checkSameName(typeNamesList, localPart);
+                SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
+                b.setName(name);
+                b.setCRS(featureType.getCoordinateReferenceSystem());
+                List<AttributeDescriptor> attributeDescriptors = featureType.getAttributeDescriptors();
+                b.addAll(attributeDescriptors);
+                featureType = b.buildFeatureType();
+                ds.createSchema(featureType);
+            }
+        } else {
             ds.createSchema(featureType);
+        }
 
         IGeoResource resource = null;
         for( IResolve resolve : service.resources(new NullProgressMonitor()) ) {
             if (resolve instanceof IGeoResource) {
                 IGeoResource r = (IGeoResource) resolve;
-                if (r.resolve(SimpleFeatureType.class, new NullProgressMonitor()).getName().getLocalPart().equals(
-                        featureType.getName().getLocalPart())) {
+                if (r.resolve(SimpleFeatureType.class, new NullProgressMonitor()).getName().getLocalPart()
+                        .equals(featureType.getName().getLocalPart())) {
                     resource = r;
                     break;
                 }
             }
         }
         return resource;
+    }
+    
+    /**
+     * Checks if the list of typeNames supplied contains the supplied typeName.
+     * 
+     * <p>If the rule is contained it adds an index to the name.
+     * 
+     * @param typeNamesList the list of existing typenames.
+     * @param typeName the proposed typename, to be changed if colliding.
+     * @return the new non-colliding name for the type.
+     */
+    @SuppressWarnings("nls")
+    private String checkSameName( List<String> typeNamesList, String typeName ) {
+        int index = 1;
+        for( int i = 0; i < typeNamesList.size(); i++ ) {
+            String existingTypeName = typeNamesList.get(i);
+            existingTypeName = existingTypeName.trim();
+            if (existingTypeName.equals(typeName)) {
+                // name exists, change the name of the entering
+                if (typeName.endsWith(")")) {
+                    typeName = typeName.trim().replaceFirst("\\([0-9]+\\)$", "(" + (index++) + ")");
+                } else {
+                    typeName = typeName + " (" + (index++) + ")";
+                }
+                // start again
+                i = -1;
+            }
+            if (index == 1000) {
+                // something odd is going on
+                throw new RuntimeException();
+            }
+        }
+        return typeName;
     }
 
     private MemoryServiceImpl getMemoryService() {
