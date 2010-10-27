@@ -1035,10 +1035,11 @@
                  style="push"
                  tooltip="%project.action.save.tooltip">
               <enablement>
-                 <objectClass
-                       name="net.refractions.udig.project.IProject">
-                 </objectClass>
-              </enablement>
+               <or>
+                  <objectClass name="net.refractions.udig.project.IMap"/>
+                  <objectClass name="net.refractions.udig.project.IProject"/>
+               </or>
+            </enablement>
            </action>
            <action
                  class="net.refractions.udig.project.ui.internal.actions.OpenProject"
