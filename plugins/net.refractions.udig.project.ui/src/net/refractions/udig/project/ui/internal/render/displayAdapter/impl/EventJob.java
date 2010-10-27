@@ -27,6 +27,7 @@ public class EventJob {
     private CopyOnWriteArraySet<MapMouseWheelListener> wheel = new CopyOnWriteArraySet<MapMouseWheelListener>();
     private CopyOnWriteArraySet<MapMouseMotionListener> motion = new CopyOnWriteArraySet<MapMouseMotionListener>();
     private CopyOnWriteArraySet<MapMouseListener> mouse = new CopyOnWriteArraySet<MapMouseListener>();
+    private long pressedStartedTime;
 
     public static final int DOUBLE_CLICK = 1;
     public static final int PRESSED = 2;
@@ -38,6 +39,7 @@ public class EventJob {
     public static final int WHEEL = 8;
     public static final int RESIZED = 9;
     public static final int HOVERED = 10;
+    private int doubleClickSpeed;
     
     /**
      * fires an event to all listeners. If an event is being processed then the new one is ignored
@@ -47,6 +49,7 @@ public class EventJob {
      * @param event the event data object
      */
     public void fire( int type, Object event ) {
+        doubleClickSpeed = ProjectUIPlugin.getDefault().getDoubleClickSpeed();
         Event event1 = new Event(type, event);
         if (event1.type == PRESSED || next!=null) {
             tryForDoubleClick(event1);
@@ -80,11 +83,20 @@ public class EventJob {
                     break;
                 }
                 case PRESSED: {
+                    pressedStartedTime=System.currentTimeMillis();
+                    System.out.println(pressedStartedTime);
                     sendMousePressedEvent(event);
                     break;
                 }
                 case RELEASED: {
-                    sendMouseReleased(event);
+                    long releasedTime = System.currentTimeMillis();
+                    long delta =releasedTime - pressedStartedTime;
+                    System.out.println(delta);
+                    if (delta > 1000l) {
+                        sendDoubleClickEvent(event);
+                    }else{
+                        sendMouseReleased(event);
+                    }
                     break;
                 }
                 case MOVED: {
@@ -148,7 +160,7 @@ public class EventJob {
         if (next == null) {
             next=new DoubleClickAttempt();
             next.first=event;
-            Display.getCurrent().timerExec(ProjectUIPlugin.getDefault().getDoubleClickSpeed(), checkDoubleClick);
+            Display.getCurrent().timerExec(doubleClickSpeed, checkDoubleClick);
         }else{
             if( next.release==null ){
                 if( event.type==RELEASED ){
