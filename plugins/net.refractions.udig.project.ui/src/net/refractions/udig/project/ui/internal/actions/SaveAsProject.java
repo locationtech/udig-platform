@@ -73,10 +73,15 @@ public class SaveAsProject implements IWorkbenchWindowActionDelegate {
         if (firstElement instanceof Project) {
             project = (Project) firstElement;
         }
-
         Display.getDefault().syncExec(new Runnable(){
             public void run() {
-                DirectoryDialog fileDialog = new DirectoryDialog(window.getShell(), SWT.OPEN);
+                Shell shell = null;
+                if (window == null || window.getShell() == null) {
+                    shell = Display.getDefault().getActiveShell();
+                }else{
+                    shell = window.getShell();
+                }
+                DirectoryDialog fileDialog = new DirectoryDialog(shell, SWT.OPEN);
                 fileDialog.setMessage(Messages.SaveProject_Destination);
                 String path = fileDialog.open();
 
@@ -88,7 +93,7 @@ public class SaveAsProject implements IWorkbenchWindowActionDelegate {
 
                 File dest = new File(destinationUdigFolder);
                 if (dest.exists()) {
-                    boolean isOk = MessageDialog.openConfirm(window.getShell(), Messages.SaveProject_Export, //$NON-NLS-1$
+                    boolean isOk = MessageDialog.openConfirm(shell, Messages.SaveProject_Export, //$NON-NLS-1$
                             Messages.SaveProject_Overwrite);
                     if (isOk) {
                         try {
@@ -105,10 +110,10 @@ public class SaveAsProject implements IWorkbenchWindowActionDelegate {
                     ExportProjectUtils.exportProject(project, path, ProgressManager.instance().get(null));
                     File destPrj = new File(destinationProject);
                     if (destPrj.exists()) {
-                        MessageDialog.openInformation(window.getShell(), Messages.SaveProject_Export, //$NON-NLS-1$
+                        MessageDialog.openInformation(shell, Messages.SaveProject_Export, //$NON-NLS-1$
                                 Messages.SaveProject_Success);
                     } else {
-                        MessageDialog.openError(window.getShell(), Messages.SaveProject_Export, //$NON-NLS-1$
+                        MessageDialog.openError(shell, Messages.SaveProject_Export, //$NON-NLS-1$
                                 Messages.SaveProject_Fail);
                     }
 

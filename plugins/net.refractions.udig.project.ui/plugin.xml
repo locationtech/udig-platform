@@ -57,6 +57,14 @@
                id="net.refractions.udig.project.ui.newMap"
                label="%map.new.label"/>
          <action
+                 class="net.refractions.udig.project.ui.internal.actions.SaveAsProject"
+                 enablesFor="1"
+                 icon="icons/obj16/project_save.gif"
+                 id="net.refractions.udig.project.ui.saveAsProject"
+                 label="%project.action.save.name"
+                 tooltip="%project.action.save.tooltip">
+         </action>
+         <action
                class="net.refractions.udig.project.ui.internal.actions.OpenMapAction"
                enablesFor="+"
                icon="icons/obj16/project_obj.gif"
