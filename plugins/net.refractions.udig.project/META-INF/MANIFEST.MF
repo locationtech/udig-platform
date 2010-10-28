@@ -16,7 +16,6 @@ Require-Bundle: org.eclipse.core.runtime,
  net.refractions.udig.catalog;visibility:=reexport,
  org.eclipse.emf.ecore.xmi,
  net.refractions.udig.ui,
- net.refractions.udig.ui.tests;resolution:=optional,
  org.junit4;resolution:=optional
 Bundle-ActivationPolicy: lazy
 Export-Package: net.refractions.udig.project,
