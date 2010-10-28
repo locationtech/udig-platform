@@ -39,8 +39,7 @@ public class EventJob {
     public static final int WHEEL = 8;
     public static final int RESIZED = 9;
     public static final int HOVERED = 10;
-    private int doubleClickSpeed = 2000;
-    private int longClickSpeed = 1000;
+    private int doubleClickSpeed;
     
     /**
      * fires an event to all listeners. If an event is being processed then the new one is ignored
@@ -51,7 +50,6 @@ public class EventJob {
      */
     public void fire( int type, Object event ) {
         doubleClickSpeed = ProjectUIPlugin.getDefault().getDoubleClickSpeed();
-        longClickSpeed = ProjectUIPlugin.getDefault().getLongClickSpeed();
         Event event1 = new Event(type, event);
         if (event1.type == PRESSED || next!=null) {
             tryForDoubleClick(event1);
@@ -86,15 +84,17 @@ public class EventJob {
                 }
                 case PRESSED: {
                     pressedStartedTime=System.currentTimeMillis();
+                    System.out.println(pressedStartedTime);
                     sendMousePressedEvent(event);
                     break;
                 }
                 case RELEASED: {
                     long releasedTime = System.currentTimeMillis();
-                    long delta = releasedTime - pressedStartedTime;
-                    if (delta > longClickSpeed) {
+                    long delta =releasedTime - pressedStartedTime;
+                    System.out.println(delta);
+                    if (delta > 1000l) {
                         sendDoubleClickEvent(event);
-                    } else {
+                    }else{
                         sendMouseReleased(event);
                     }
                     break;
