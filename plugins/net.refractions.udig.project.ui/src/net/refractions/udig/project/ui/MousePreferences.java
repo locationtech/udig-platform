@@ -32,34 +32,50 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 public class MousePreferences extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
     private IntegerFieldEditor clickSpeedEditor;
+    private IntegerFieldEditor longClickSpeedEditor;
 
     public MousePreferences() {
         super(GRID);
         IPreferenceStore store = ProjectUIPlugin.getDefault().getPreferenceStore();
         setPreferenceStore(store);
 
+        int longClickMillis = store.getInt(PreferenceConstants.MOUSE_LONGCLICK_SPEED);
+        if (longClickMillis == 0) {
+            store.setValue(PreferenceConstants.MOUSE_LONGCLICK_SPEED, PreferenceConstants.DEFAULT_LONGCLICK_SPEED_MILLIS);
+        }
+
         setDescription(Messages.mousePreferences_title);
     }
 
     protected void createFieldEditors() {
-        clickSpeedEditor = new IntegerFieldEditor(PreferenceConstants.MOUSE_SPEED,
-                Messages.mousePreferences_setvalue, getFieldEditorParent());
+        clickSpeedEditor = new IntegerFieldEditor(PreferenceConstants.MOUSE_SPEED, Messages.mousePreferences_setvalue,
+                getFieldEditorParent());
         addField(clickSpeedEditor);
+        longClickSpeedEditor = new IntegerFieldEditor(PreferenceConstants.MOUSE_LONGCLICK_SPEED,
+                Messages.mousePreferences_setlongclickvalue, getFieldEditorParent());
+        addField(longClickSpeedEditor);
+    }
+    
+    @Override
+    protected void performApply() {
+        savePrefs();
+        super.performApply();
     }
 
     @Override
     public boolean performOk() {
         boolean performOk = super.performOk();
         if (performOk) {
-            String stringValue = clickSpeedEditor.getStringValue();
-            try {
-                int milliseconds = Integer.parseInt(stringValue);
-                getPreferenceStore().setValue(ProjectUIPlugin.MOUSE_SPEED_KEY, milliseconds);
-            } catch (NumberFormatException e) {
-                return false;
-            }
+            savePrefs();
         }
         return performOk;
+    }
+
+    private void savePrefs() {
+        int milliseconds = clickSpeedEditor.getIntValue();
+        getPreferenceStore().setValue(PreferenceConstants.MOUSE_SPEED, milliseconds);
+        milliseconds = longClickSpeedEditor.getIntValue();
+        getPreferenceStore().setValue(PreferenceConstants.MOUSE_LONGCLICK_SPEED, milliseconds);
     }
 
     public void init( IWorkbench workbench ) {

@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.refractions.udig.project.ui.feature.FeaturePanelProcessor;
+import net.refractions.udig.project.ui.preferences.PreferenceConstants;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.CoreException;
@@ -55,11 +56,6 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
      */
     public static final ProjectUIPlugin INSTANCE = new ProjectUIPlugin();
 
-    /**
-     * The default speed for mouse double click in milliseconds.
-     */
-    public static final int DEFAULT_DOUBLECLICK_SPEED_MILLIS = 1000;
-
     private static final String ICONS_PATH = "icons/"; //$NON-NLS-1$
 
     /** The plugin ID */
@@ -81,8 +77,6 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
     List<AdapterFactory> adapterFactories;
 
     private static final String ADAPTER_FACTORIES_ID = "net.refractions.udig.project.ui.itemProviderAdapterFactories"; //$NON-NLS-1$
-
-    public static final String MOUSE_SPEED_KEY = "MOUSE_SPEED_KEY";
 
     private PropertySheetPage propertySheetPage;
 
@@ -202,6 +196,8 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
     }
 
     private AdapterFactory adapterFactory;
+
+    private IPreferenceStore store;
 
     /**
      * Returns the adapterfactory instance.
@@ -324,19 +320,31 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
     /**
      * The delay used to determine double click speed.
      * 
-     * <p>
-     * The delay defaults to 100 milliseconds.
-     * </p>
-     * 
      * @return the milliseconds used for the double-click speed.
      */
     public int getDoubleClickSpeed() {
-        IPreferenceStore store = ProjectUIPlugin.getDefault().getPreferenceStore();
-        int mouseSpeed = store.getInt(MOUSE_SPEED_KEY);
+        if (store == null)
+            store = ProjectUIPlugin.getDefault().getPreferenceStore();
+        int mouseSpeed = store.getInt(PreferenceConstants.MOUSE_SPEED);
         if (mouseSpeed == 0) {
-            mouseSpeed = DEFAULT_DOUBLECLICK_SPEED_MILLIS;
+            mouseSpeed = PreferenceConstants.DEFAULT_DOUBLECLICK_SPEED_MILLIS;
         }
-        return mouseSpeed; 
+        return mouseSpeed;
+    }
+
+    /**
+     * The delay used to determine long click speed.
+     * 
+     * @return the milliseconds used for the long-click speed.
+     */
+    public int getLongClickSpeed() {
+        if (store == null)
+            store = ProjectUIPlugin.getDefault().getPreferenceStore();
+        int mouseSpeed = store.getInt(PreferenceConstants.MOUSE_LONGCLICK_SPEED);
+        if (mouseSpeed == 0) {
+            mouseSpeed = PreferenceConstants.DEFAULT_LONGCLICK_SPEED_MILLIS;
+        }
+        return mouseSpeed;
     }
 
 }
