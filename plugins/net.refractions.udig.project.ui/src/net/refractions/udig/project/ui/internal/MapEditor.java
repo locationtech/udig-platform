@@ -7,7 +7,10 @@
  */
 package net.refractions.udig.project.ui.internal;
 
+import java.awt.AWTException;
 import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +56,6 @@ import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.project.ui.viewers.MapViewer;
-import net.refractions.udig.ui.CRSChooser;
 import net.refractions.udig.ui.CRSChooserDialog;
 import net.refractions.udig.ui.IBlockingSelection;
 import net.refractions.udig.ui.PlatformGIS;
@@ -61,7 +63,6 @@ import net.refractions.udig.ui.PreShutdownTask;
 import net.refractions.udig.ui.ProgressManager;
 import net.refractions.udig.ui.ShutdownTaskList;
 import net.refractions.udig.ui.UDIGDragDropUtilities;
-import net.refractions.udig.ui.ZoomingDialog;
 import net.refractions.udig.ui.UDIGDragDropUtilities.DragSourceDescriptor;
 import net.refractions.udig.ui.UDIGDragDropUtilities.DropTargetDescriptor;
 
@@ -69,7 +70,6 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -88,11 +88,7 @@ import org.eclipse.jface.action.StatusLineLayoutData;
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IconAndMessageDialog;
-import org.eclipse.jface.preference.IPreferenceNode;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.PreferenceDialog;
-import org.eclipse.jface.preference.PreferenceManager;
-import org.eclipse.jface.preference.PreferenceNode;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -1076,6 +1072,12 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             contextMenu.addMenuListener(new IMenuListener(){
                 public void menuAboutToShow( IMenuManager mgr ) {
                     IToolManager tm = ApplicationGIS.getToolManager();
+                    
+                    contextMenu.add(tm.getENTERAction());
+                    contextMenu.add(new Separator());
+                    
+                    contextMenu.add(tm.getFORWARD_HISTORYAction());
+                    contextMenu.add(new Separator());
                     contextMenu.add(tm.getBACKWARD_HISTORYAction());
                     contextMenu.add(tm.getFORWARD_HISTORYAction());
                     contextMenu.add(new Separator());

@@ -262,6 +262,8 @@ public class Messages extends NLS {
 	public static String ToolManager_forward;
 	public static String ToolManager_undoAction;
 	public static String ToolManager_redoAction;
+	public static String ToolManager_enterAction;
+	public static String ToolManager_enterActionTooltip;
 	public static String ToolCategory_other_menu;
 	public static String ToolProxy_unnamed;
     public static String ProjectPreferencePage_deleteFiles;
