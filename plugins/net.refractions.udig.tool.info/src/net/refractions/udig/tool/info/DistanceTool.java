@@ -13,15 +13,22 @@ import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.project.ui.tool.SimpleTool;
 import net.refractions.udig.tool.info.internal.Messages;
+import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.geotools.geometry.jts.JTS;
 import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-public class DistanceTool extends SimpleTool {
+public class DistanceTool extends SimpleTool implements KeyListener {
     public DistanceTool() {
         super(MOUSE | MOTION);
     }
@@ -101,6 +108,15 @@ public class DistanceTool extends SimpleTool {
                 statusBar.setMessage(null);
             }
         });
+        
+        if (active) {
+            Control control = getContext().getViewportPane().getControl();
+            control.addKeyListener(this);
+        }else{
+            Control control = getContext().getViewportPane().getControl();
+            control.removeKeyListener(this);
+        }
+        
     }
     
     private double distance() throws TransformException {
@@ -266,6 +282,20 @@ public class DistanceTool extends SimpleTool {
                 getContext().getViewportPane().repaint();
             }
             command = null;
+        }
+    }
+
+    @Override
+    public void keyPressed( KeyEvent e ) {
+    }
+
+    @Override
+    public void keyReleased( KeyEvent e ) {
+        if (e.character == SWT.CR){
+            // finish on enter key
+            disposeCommand();
+            displayResult();
+            points.clear();
         }
     }
 }

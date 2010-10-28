@@ -1220,7 +1220,6 @@ public class ToolManager implements IToolManager {
                         } catch (AWTException e) {
                             e.printStackTrace();
                         }
-                            
                     }
                 };
                 enterAction.setText(Messages.ToolManager_enterAction);
