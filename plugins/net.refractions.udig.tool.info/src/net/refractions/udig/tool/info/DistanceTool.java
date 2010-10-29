@@ -285,11 +285,9 @@ public class DistanceTool extends SimpleTool implements KeyListener {
         }
     }
 
-    @Override
     public void keyPressed( KeyEvent e ) {
     }
 
-    @Override
     public void keyReleased( KeyEvent e ) {
         if (e.character == SWT.CR){
             // finish on enter key
