@@ -189,13 +189,15 @@ public abstract class StyleManager {
             for( RuleWrapper ruleWrapper : rulesWrapperList ) {
                 SymbolizerWrapper symbolizersWrapper = ruleWrapper.getGeometrySymbolizersWrapper();
                 String externalGraphicPath = symbolizersWrapper.getExternalGraphicPath();
-                File graphicsFile = new File(externalGraphicPath);
-                String extension = FilenameUtils.getExtension(graphicsFile.getName());
-                String newImageName = baseName + "_" + index + "." + extension; //$NON-NLS-1$ //$NON-NLS-2$
-                index++;
-                File newFile = new File(parentFolder, newImageName);
-                FileUtils.copyFile(graphicsFile, newFile);
-                symbolizersWrapper.setExternalGraphicPath(newFile.getAbsolutePath());
+                if (externalGraphicPath != null && externalGraphicPath.length() > 0) {
+                    File graphicsFile = new File(externalGraphicPath);
+                    String extension = FilenameUtils.getExtension(graphicsFile.getName());
+                    String newImageName = baseName + "_" + index + "." + extension; //$NON-NLS-1$ //$NON-NLS-2$
+                    index++;
+                    File newFile = new File(parentFolder, newImageName);
+                    FileUtils.copyFile(graphicsFile, newFile);
+                    symbolizersWrapper.setExternalGraphicPath(newFile.getAbsolutePath());
+                }
             }
         }
 
