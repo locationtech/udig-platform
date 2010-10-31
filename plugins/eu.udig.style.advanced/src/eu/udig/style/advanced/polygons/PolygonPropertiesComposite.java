@@ -39,6 +39,7 @@ import org.geotools.styling.Graphic;
 import org.geotools.styling.TextSymbolizer;
 
 import eu.udig.style.advanced.common.BoderParametersComposite;
+import eu.udig.style.advanced.common.FiltersComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener;
 import eu.udig.style.advanced.common.styleattributeclasses.PolygonSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
@@ -78,6 +79,8 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
     private PolygonLabelsParametersComposite labelsParametersComposite;
 
     private String[] allAttributesArrays;
+    
+    private FiltersComposite filtersComposite;
 
     public PolygonPropertiesComposite( final PolygonPropertiesEditor polygonPropertiesEditor, Composite parent ) {
         this.polygonPropertiesEditor = polygonPropertiesEditor;
@@ -103,6 +106,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         borderParametersComposite.update(ruleWrapper);
         fillParametersComposite.update(ruleWrapper);
         labelsParametersComposite.update(ruleWrapper);
+        filtersComposite.update(ruleWrapper);
 
         polygonPropertiesEditor.refreshTreeViewer(ruleWrapper);
         polygonPropertiesEditor.refreshPreviewCanvasOnStyle();
@@ -195,6 +199,17 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         TabItem tabItem4 = new TabItem(tabFolder, SWT.NULL);
         tabItem4.setText("Labels  ");
         tabItem4.setControl(labelParametersInternalComposite);
+        
+        // Filter GROUP
+        filtersComposite = new FiltersComposite(tabFolder);
+        filtersComposite.init(ruleWrapper);
+        filtersComposite.addListener(this);
+        Composite filtersInternalComposite = filtersComposite.getComposite();
+
+        TabItem tabItem5 = new TabItem(tabFolder, SWT.NULL);
+        tabItem5.setText("Filter  ");
+        tabItem5.setControl(filtersInternalComposite);
+
     }
 
     public void modifyText( ModifyEvent e ) {
@@ -399,7 +414,16 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
             textSymbolizerWrapper.setSpaceAroundVO(value);
             break;
         }
-
+        case FILTER: {
+            if (value.length() > 0) {
+                try {
+                    ruleWrapper.setFilter(value);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            break;
+        }
         default:
             break;
         }

@@ -21,8 +21,15 @@ import static eu.udig.style.advanced.utils.Utilities.DEFAULT_MAXSCALE;
 import static eu.udig.style.advanced.utils.Utilities.DEFAULT_MINSCALE;
 import static eu.udig.style.advanced.utils.Utilities.sf;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import net.refractions.udig.style.sld.SLD;
 
@@ -33,6 +40,11 @@ import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
+import org.geotools.xml.Configuration;
+import org.geotools.xml.Encoder;
+import org.geotools.xml.Parser;
+import org.opengis.filter.Filter;
+import org.xml.sax.SAXException;
 
 import eu.udig.style.advanced.utils.Utilities;
 
@@ -135,8 +147,9 @@ public class RuleWrapper {
                 return symbolizerWrapper;
             }
         }
-        
-        DummySymbolizerWrapper geometrySymbolizersWrapper = new DummySymbolizerWrapper(Utilities.createDefaultGeometrySymbolizer(SLD.POINT), null);
+
+        DummySymbolizerWrapper geometrySymbolizersWrapper = new DummySymbolizerWrapper(
+                Utilities.createDefaultGeometrySymbolizer(SLD.POINT), null);
         return geometrySymbolizersWrapper;
     }
 
@@ -265,6 +278,33 @@ public class RuleWrapper {
         } catch (Exception e) {
             rule.setMinScaleDenominator(Double.parseDouble(DEFAULT_MINSCALE));
         }
+    }
+
+    public String getFilter() throws IOException {
+        Filter filter = rule.getFilter();
+        if (filter == null) {
+            return "";
+        }
+        // create the encoder with the filter 1.1 configuration
+        Configuration configuration = new org.geotools.filter.v1_1.OGCConfiguration();
+        Encoder encoder = new Encoder(configuration);
+        // create an output stream
+        ByteArrayOutputStream xml = new ByteArrayOutputStream();
+        // encode
+        encoder.setIndenting(true);
+        encoder.encode(filter, org.geotools.filter.v1_1.OGC.Filter, xml);
+        String filterXmlString = xml.toString();
+        return filterXmlString;
+    }
+
+    public void setFilter( String filterXmlString ) throws Exception {
+        // create the parser with the filter 1.0 configuration
+        Configuration configuration = new org.geotools.filter.v1_1.OGCConfiguration();
+        Parser parser = new Parser(configuration);
+        InputStream xml = new ByteArrayInputStream(filterXmlString.getBytes());
+        // parse
+        Filter filter = (Filter) parser.parse(xml);
+        rule.setFilter(filter);
     }
 
 }

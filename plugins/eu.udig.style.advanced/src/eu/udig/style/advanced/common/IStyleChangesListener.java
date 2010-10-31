@@ -76,6 +76,8 @@ public interface IStyleChangesListener {
         LABELSPACEAROUND_VO,
         LABELFOLLOWLINE_VO,
         LABELMAXANGLEDELTA_VO,
+        //Filters
+        FILTER,
     }
     
     /**

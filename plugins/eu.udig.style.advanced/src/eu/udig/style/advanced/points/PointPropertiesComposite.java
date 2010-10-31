@@ -32,6 +32,7 @@ import org.geotools.styling.TextSymbolizer;
 import com.sun.xml.internal.ws.util.UtilException;
 
 import eu.udig.style.advanced.StylePlugin;
+import eu.udig.style.advanced.common.FiltersComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener;
 import eu.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
@@ -79,6 +80,8 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
     private PointFillParametersComposite fillParametersComposite;
 
     private PointLabelsParametersComposite labelsParametersComposite;
+    
+    private FiltersComposite filtersComposite;
 
     public PointPropertiesComposite( final PointPropertiesEditor pointPropertiesEditor, Composite parent ) {
         this.pointPropertiesEditor = pointPropertiesEditor;
@@ -107,7 +110,9 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
     private void update() {
         SymbolizerWrapper geometrySymbolizersWrapper = ruleWrapper.getGeometrySymbolizersWrapper();
         PointSymbolizerWrapper pointSymbolizerWrapper = geometrySymbolizersWrapper.adapt(PointSymbolizerWrapper.class);
-
+        
+        filtersComposite.update(ruleWrapper);
+        
         if (!pointSymbolizerWrapper.hasExternalGraphic()) {
             generalParametersCompositeSIMPLE.update(ruleWrapper);
             borderParametersComposite.update(ruleWrapper);
@@ -306,6 +311,17 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         TabItem tabItem4 = new TabItem(tabFolder, SWT.NULL);
         tabItem4.setText("Labels  ");
         tabItem4.setControl(labelParametersInternalComposite);
+        
+        // Filter GROUP
+        filtersComposite = new FiltersComposite(tabFolder);
+        filtersComposite.init(ruleWrapper);
+        filtersComposite.addListener(this);
+        Composite filtersInternalComposite = filtersComposite.getComposite();
+
+        TabItem tabItem5 = new TabItem(tabFolder, SWT.NULL);
+        tabItem5.setText("Filter  ");
+        tabItem5.setControl(filtersInternalComposite);
+
 
     }
 
@@ -557,7 +573,16 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
             textSymbolizerWrapper.setSpaceAroundVO(value);
             break;
         }
-
+        case FILTER: {
+            if (value.length() > 0) {
+                try {
+                    ruleWrapper.setFilter(value);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            break;
+        }
         default:
             break;
         }

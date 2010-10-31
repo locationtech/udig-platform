@@ -34,12 +34,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Text;
 import org.geotools.styling.Font;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.TextSymbolizer;
 
 import eu.udig.style.advanced.common.BoderParametersComposite;
+import eu.udig.style.advanced.common.FiltersComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener;
 import eu.udig.style.advanced.common.styleattributeclasses.LineSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
@@ -77,6 +77,8 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
 
     private String[] allAttributesArrays;
 
+    private FiltersComposite filtersComposite;
+
     public LinePropertiesComposite( final LinePropertiesEditor polygonPropertiesEditor, Composite parent ) {
         this.linePropertiesEditor = polygonPropertiesEditor;
         this.parent = parent;
@@ -100,6 +102,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         generalParametersComposite.update(ruleWrapper);
         borderParametersComposite.update(ruleWrapper);
         labelsParametersComposite.update(ruleWrapper);
+        filtersComposite.update(ruleWrapper);
 
         linePropertiesEditor.refreshTreeViewer(ruleWrapper);
         linePropertiesEditor.refreshPreviewCanvasOnStyle();
@@ -179,9 +182,19 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         labelsParametersComposite.addListener(this);
         Composite labelParametersInternalComposite = labelsParametersComposite.getComposite();
 
+        TabItem tabItem3 = new TabItem(tabFolder, SWT.NULL);
+        tabItem3.setText("Labels  ");
+        tabItem3.setControl(labelParametersInternalComposite);
+
+        // Filter GROUP
+        filtersComposite = new FiltersComposite(tabFolder);
+        filtersComposite.init(ruleWrapper);
+        filtersComposite.addListener(this);
+        Composite filtersInternalComposite = filtersComposite.getComposite();
+
         TabItem tabItem4 = new TabItem(tabFolder, SWT.NULL);
-        tabItem4.setText("Labels  ");
-        tabItem4.setControl(labelParametersInternalComposite);
+        tabItem4.setText("Filter  ");
+        tabItem4.setControl(filtersInternalComposite);
 
     }
 
@@ -386,6 +399,16 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
                 break;
             }
             textSymbolizerWrapper.setMaxAngleDeltaVO(value);
+            break;
+        }
+        case FILTER: {
+            if (value.length() > 0) {
+                try {
+                    ruleWrapper.setFilter(value);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             break;
         }
 
