@@ -69,6 +69,8 @@ public class FiltersComposite extends ParameterComposite {
         nameLabel.setText("Filter xml string");
         filterText = new Text(mainComposite, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.LEAD | SWT.BORDER);
         GridData nameTextGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        nameTextGD.widthHint = 100;
+        nameTextGD.heightHint = 100;
         filterText.setLayoutData(nameTextGD);
         try {
             filterText.setText(ruleWrapper.getFilter());
