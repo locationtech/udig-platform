@@ -31,7 +31,6 @@ import java.util.List;
 import org.geotools.styling.ExternalGraphic;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
-import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.Mark;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Stroke;
@@ -84,12 +83,15 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
 
             if (strokeColor == null) {
                 strokeColor = DEFAULT_COLOR;
+                stroke.setColor(ff.literal(DEFAULT_COLOR));
             }
             if (strokeOpacity == null) {
                 strokeOpacity = DEFAULT_OPACITY;
+                stroke.setOpacity(ff.literal(DEFAULT_OPACITY));
             }
             if (strokeWidth == null) {
                 strokeWidth = DEFAULT_WIDTH;
+                stroke.setWidth(ff.literal(DEFAULT_WIDTH));
             }
 
             strokeGraphicStroke = stroke.getGraphicStroke();
@@ -158,7 +160,10 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
 
     private void checkFillExists() {
         if (fill == null) {
-            fill = sf.createFill(ff.literal(strokeColor));
+            if (fillColor == null) {
+                fillColor = DEFAULT_COLOR;
+            }
+            fill = sf.createFill(ff.literal(fillColor));
             PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) getSymbolizer();
             polygonSymbolizer.setFill(fill);
             fillGraphicFill = fill.getGraphicFill();
@@ -214,6 +219,12 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
 
     protected void checkStrokeExists() {
         if (stroke == null) {
+            if (strokeColor == null) {
+                strokeColor = DEFAULT_COLOR;
+            }
+            if (strokeWidth == null) {
+                strokeWidth = DEFAULT_WIDTH;
+            }
             stroke = sf.createStroke(ff.literal(strokeColor), ff.literal(strokeWidth));
             PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) getSymbolizer();
             polygonSymbolizer.setStroke(stroke);

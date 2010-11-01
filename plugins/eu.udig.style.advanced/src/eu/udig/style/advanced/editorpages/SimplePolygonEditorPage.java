@@ -23,7 +23,6 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.style.internal.StyleLayer;
-import net.refractions.udig.style.sld.IStyleEditorPageContainer;
 import net.refractions.udig.style.sld.SLDContent;
 import net.refractions.udig.style.sld.editor.StyleEditorDialog;
 import net.refractions.udig.style.sld.editor.StyleEditorPage;
@@ -40,7 +39,6 @@ import org.geotools.data.FeatureSource;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Style;
-import org.geotools.styling.StyleVisitor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 
@@ -61,7 +59,7 @@ public class SimplePolygonEditorPage extends StyleEditorPage {
     private Label noFeatureLabel;
     private Composite mainComposite;
 
-    private Style oldStyle;
+    private Style oldStyleCopy;
 
     public SimplePolygonEditorPage() {
         super();
@@ -84,14 +82,14 @@ public class SimplePolygonEditorPage extends StyleEditorPage {
         IGeoResource resource = layer.getGeoResource();
         if (resource.canResolve(FeatureSource.class)) {
             StyleBlackboard styleBlackboard = layer.getStyleBlackboard();
-            oldStyle = (Style) styleBlackboard.get(SLDContent.ID);
-            if (oldStyle == null) {
-                oldStyle = Utilities.createDefaultPolygonStyle();
+            style = (Style) styleBlackboard.get(SLDContent.ID);
+            if (style == null) {
+                style = Utilities.createDefaultPolygonStyle();
             }
             
             DuplicatingStyleVisitor dsv = new DuplicatingStyleVisitor();
-            dsv.visit(oldStyle);
-            style = (Style) dsv.getCopy();
+            dsv.visit(style);
+            oldStyleCopy = (Style) dsv.getCopy();
 
             if (isPolygonStyle(style)) {
                 propertiesEditor = new PolygonPropertiesEditor(layer);
@@ -159,8 +157,8 @@ public class SimplePolygonEditorPage extends StyleEditorPage {
         int ftsNum = featureTypeStyles.size();
         if (ftsNum < 1) {
             MessageDialog.openWarning(getShell(), "Warning", "You can't apply an empty style! Resetting.");
-            style = oldStyle;
-            setStyle(oldStyle);
+            style = oldStyleCopy;
+            setStyle(oldStyleCopy);
             layer.revertAll();
             layer.apply();
             
@@ -207,13 +205,13 @@ public class SimplePolygonEditorPage extends StyleEditorPage {
         }
 
         StyleBlackboard styleBlackboard = layer.getStyleBlackboard();
-        oldStyle = (Style) styleBlackboard.get(SLDContent.ID);
-        if (oldStyle == null) {
-            oldStyle = Utilities.createDefaultPolygonStyle();
+        style = (Style) styleBlackboard.get(SLDContent.ID);
+        if (style == null) {
+            style = Utilities.createDefaultPolygonStyle();
         }
         DuplicatingStyleVisitor dsv = new DuplicatingStyleVisitor();
-        dsv.visit(oldStyle);
-        style = (Style) dsv.getCopy();
+        dsv.visit(style);
+        oldStyleCopy = (Style) dsv.getCopy();
 
         if (!isPolygonStyle(style)) {
             stackLayout.topControl = noFeatureLabel;

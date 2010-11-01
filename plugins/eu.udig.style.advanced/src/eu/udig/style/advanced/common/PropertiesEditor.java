@@ -24,7 +24,6 @@ import java.util.List;
 import net.refractions.udig.style.internal.StyleLayer;
 import net.refractions.udig.style.sld.SLD;
 import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
-import net.refractions.udig.ui.graphics.SLDs;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -32,7 +31,6 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -50,8 +48,6 @@ import eu.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapp
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
 import eu.udig.style.advanced.utils.Utilities;
-
-import static eu.udig.style.advanced.utils.Utilities.*;
 
 /**
  * Common class for properties editors.

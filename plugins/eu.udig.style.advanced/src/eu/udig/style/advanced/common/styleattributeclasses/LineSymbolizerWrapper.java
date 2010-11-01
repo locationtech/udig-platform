@@ -155,6 +155,12 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
 
     protected void checkStrokeExists() {
         if (stroke == null) {
+            if (strokeColor == null) {
+                strokeColor = DEFAULT_COLOR;
+            }
+            if (strokeWidth == null) {
+                strokeWidth = DEFAULT_WIDTH;
+            }
             stroke = sf.createStroke(ff.literal(strokeColor), ff.literal(strokeWidth));
             LineSymbolizer lineSymbolizer = (LineSymbolizer) getSymbolizer();
             lineSymbolizer.setStroke(stroke);
@@ -175,12 +181,9 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
     public void setStrokeColor( String strokeColor ) {
         this.strokeColor = strokeColor;
         checkStrokeExists();
-        if (strokeColor == null) {
-            hasStroke = false;
-        } else {
-            hasStroke = true;
+        if (strokeColor != null) {
+            stroke.setColor(ff.literal(strokeColor));
         }
-        stroke.setColor(ff.literal(strokeColor));
     }
 
     public void setStrokeOpacity( String strokeOpacity, boolean isProperty ) {
@@ -203,7 +206,9 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
     public void setDashOffset( String dashOffset ) {
         this.dashOffset = dashOffset;
         checkStrokeExists();
-        stroke.setDashOffset(ff.literal(dashOffset));
+        if (dashOffset!= null && dashOffset.length()>0) {
+            stroke.setDashOffset(ff.literal(dashOffset));
+        }
     }
 
     public void setLineCap( String lineCap ) {

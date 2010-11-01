@@ -38,7 +38,6 @@ import org.geotools.styling.Halo;
 import org.geotools.styling.LabelPlacement;
 import org.geotools.styling.LinePlacement;
 import org.geotools.styling.PointPlacement;
-import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.expression.Expression;

@@ -17,7 +17,14 @@
  */
 package eu.udig.style.advanced.common.styleattributeclasses;
 
-import static eu.udig.style.advanced.utils.Utilities.*;
+import static eu.udig.style.advanced.utils.Utilities.DEFAULT_COLOR;
+import static eu.udig.style.advanced.utils.Utilities.DEFAULT_OFFSET;
+import static eu.udig.style.advanced.utils.Utilities.DEFAULT_OPACITY;
+import static eu.udig.style.advanced.utils.Utilities.DEFAULT_ROTATION;
+import static eu.udig.style.advanced.utils.Utilities.DEFAULT_WIDTH;
+import static eu.udig.style.advanced.utils.Utilities.externalGraphicsFromGraphic;
+import static eu.udig.style.advanced.utils.Utilities.ff;
+import static eu.udig.style.advanced.utils.Utilities.sf;
 
 import java.awt.geom.Point2D;
 import java.util.List;

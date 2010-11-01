@@ -17,6 +17,8 @@
  */
 package eu.udig.style.advanced.common.styleattributeclasses;
 
+import static eu.udig.style.advanced.utils.Utilities.sf;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,9 +26,6 @@ import java.util.List;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.SLDTransformer;
-
-import static eu.udig.style.advanced.utils.Utilities.*;
-
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;

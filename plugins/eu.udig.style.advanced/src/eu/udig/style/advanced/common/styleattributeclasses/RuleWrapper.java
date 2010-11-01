@@ -25,11 +25,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import net.refractions.udig.style.sld.SLD;
 
@@ -44,7 +41,6 @@ import org.geotools.xml.Configuration;
 import org.geotools.xml.Encoder;
 import org.geotools.xml.Parser;
 import org.opengis.filter.Filter;
-import org.xml.sax.SAXException;
 
 import eu.udig.style.advanced.utils.Utilities;
 

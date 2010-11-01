@@ -17,16 +17,18 @@
  */
 package eu.udig.style.advanced.common.styleattributeclasses;
 
+import static eu.udig.style.advanced.utils.Utilities.getFormat;
+import static eu.udig.style.advanced.utils.Utilities.sb;
+import static eu.udig.style.advanced.utils.Utilities.sf;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static eu.udig.style.advanced.utils.Utilities.*;
 import net.refractions.udig.catalog.URLUtils;
 
 import org.geotools.styling.ExternalGraphic;
 import org.geotools.styling.Graphic;
-import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.expression.Expression;
