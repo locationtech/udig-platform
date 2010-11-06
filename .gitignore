@@ -4,7 +4,8 @@ tutorials/net.refractions.udig.tutorials.*/bin
 plugins/net.refractions.udig.libs*/lib
 plugins/org.tcat.citd.sim.udig.bookmarks/bin
 deploy/bin/
-plugins/net.refractions.udig.catalog.wmt/.settings
+plugins/net.refractions.udig.*/.settings
 tutorials/net.refractions.udig.tests.tutorials.tests/bin/
 plugins/eu.udig.mapquest.apiwrapper/bin/
 plugins/eu.udig.*/bin/
+
