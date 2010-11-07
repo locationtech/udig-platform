@@ -13,7 +13,8 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.ui,
  eu.udig.catalog.jgrass,
  net.refractions.udig.style.sld,
- net.refractions.udig.mapgraphic
+ net.refractions.udig.mapgraphic,
+ net.refractions.udig.legend;bundle-version="1.2.0"
 Eclipse-LazyStart: true
 Export-Package: eu.udig.style.jgrass.categories,
  eu.udig.style.jgrass.colors
