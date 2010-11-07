@@ -46,30 +46,6 @@
       </category>
       <operation
             categoryId="eu.udig.catalog.jgrass.category"
-            class="eu.udig.catalog.jgrass.operations.JGrassMapsetAddOperation"
-            enablesFor="1"
-            id="eu.udig.catalog.jgrass.mapsetaddop"
-            name="%add.mapset"
-            targetClass="eu.udig.catalog.jgrass.core.JGrassService">
-      </operation>
-      <operation
-            categoryId="eu.udig.catalog.jgrass.category"
-            class="eu.udig.catalog.jgrass.operations.JGrassMapsetRemoveOperation"
-            enablesFor="1"
-            id="eu.udig.catalog.jgrass.mapsetremoveop"
-            name="%remove.mapset"
-            targetClass="eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource">
-      </operation>
-      <operation
-            categoryId="eu.udig.catalog.jgrass.category"
-            class="eu.udig.catalog.jgrass.operations.JGrassMapRemoveOperation"
-            enablesFor="1"
-            id="eu.udig.catalog.jgrass.removeop"
-            name="%remove.map"
-            targetClass="eu.udig.catalog.jgrass.core.JGrassMapGeoResource">
-      </operation>
-      <operation
-            categoryId="eu.udig.catalog.jgrass.category"
             class="eu.udig.catalog.jgrass.operations.GrassReprojectOperation"
             enablesFor="+"
             id="eu.udig.catalog.jgrass.grassreprojectop"
@@ -143,6 +119,54 @@
             id="bboxactiveregion"
             image="icons/select_source.png">
       </toolCursor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource.contribution"
+            objectClass="eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource">
+         <action
+               class="eu.udig.catalog.jgrass.operations.RemoveMapsetAction"
+               id="eu.udig.catalog.jgrass.operations.RemoveMapsetAction"
+               label="Delete Mapsets"
+               tooltip="Delete mapset from location on disk">
+         </action>
+         <action
+               class="eu.udig.catalog.jgrass.operations.OpenFolderAction"
+               id="eu.udig.catalog.jgrass.operations.OpenFolderAction"
+               label="Open folder"
+               tooltip="Open this folder in a file browser">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="eu.udig.catalog.jgrass.core.JGrassService.contribution"
+            objectClass="eu.udig.catalog.jgrass.core.JGrassService">
+                     <action
+               class="eu.udig.catalog.jgrass.operations.OpenFolderAction"
+               id="eu.udig.catalog.jgrass.operations.OpenFolderAction"
+               label="Open folder"
+               tooltip="Open this folder in a file browser">
+         </action>
+                     <action
+                           class="eu.udig.catalog.jgrass.operations.AddMapsetAction"
+                           id="eu.udig.catalog.jgrass.operations.AddMapsetAction"
+                           label="Add new Mapset"
+                           tooltip="Create a new mapset in the location">
+                     </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="eu.udig.catalog.jgrass.core.JGrassMapGeoResource.contribution"
+            objectClass="eu.udig.catalog.jgrass.core.JGrassMapGeoResource">
+                     <action
+               class="eu.udig.catalog.jgrass.operations.RemoveMapAction"
+               id="eu.udig.catalog.jgrass.operations.RemoveMapAction"
+               label="Delete Grass Maps"
+               tooltip="Delete the selected maps from the mapset on disk">
+         </action>
+      </objectContribution>
    </extension>
 
 </plugin>
