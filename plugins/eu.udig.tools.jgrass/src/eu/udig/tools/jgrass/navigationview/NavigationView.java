@@ -339,7 +339,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
 
         Group geonamesGroup = new Group(parent, SWT.NONE);
         geonamesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        geonamesGroup.setLayout(new GridLayout(3, false));
+        geonamesGroup.setLayout(new GridLayout(4, false));
         geonamesGroup.setText("Geonames");
 
         Label availableLabel = new Label(geonamesGroup, SWT.NONE);
@@ -351,7 +351,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
         try {
             folderPath = FileLocator.toFileURL(folderUrl).getPath();
             folderFile = new File(folderPath);
-            
+
             String[] namesArray = loadGeonamesFiles();
 
             countriesCombo = new Combo(geonamesGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
@@ -397,8 +397,12 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                             }
                         }
                         String[] geonamesFiles = loadGeonamesFiles();
-                        countriesCombo.setItems(geonamesFiles);
-                        countriesCombo.select(0);
+                        if (geonamesFiles.length > 0) {
+                            countriesCombo.setItems(geonamesFiles);
+                            countriesCombo.select(0);
+                        } else {
+                            countriesCombo.setItems(new String[]{"   --   "});
+                        }
                     } catch (IOException e1) {
                         String message = "An error occurred while copying the new geonames file into the application.";
                         ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, e1);
@@ -407,9 +411,38 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                 }
             });
 
+            Button removeButton = new Button(geonamesGroup, SWT.PUSH);
+            removeButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+            removeButton.setText("i");
+            removeButton.setToolTipText("Remove a geonames file");
+            removeButton.addSelectionListener(new SelectionAdapter(){
+                public void widgetSelected( SelectionEvent e ) {
+                    int selectionIndex = countriesCombo.getSelectionIndex();
+                    String item = countriesCombo.getItem(selectionIndex);
+
+                    try {
+                        File namesFile = new File(folderFile, item + ".txt");
+                        if (namesFile.exists()) {
+                            FileUtils.forceDelete(namesFile);
+                        }
+                        String[] geonamesFiles = loadGeonamesFiles();
+                        if (geonamesFiles.length > 0) {
+                            countriesCombo.setItems(geonamesFiles);
+                            countriesCombo.select(0);
+                        } else {
+                            countriesCombo.setItems(new String[]{"   --   "});
+                        }
+                    } catch (IOException e1) {
+                        String message = "An error occurred while removing the old geonames file into the application.";
+                        ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, e1);
+                        e1.printStackTrace();
+                    }
+                }
+            });
+
             Group placesGroup = new Group(geonamesGroup, SWT.NONE);
             GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false);
-            layoutData.horizontalSpan = 3;
+            layoutData.horizontalSpan = 4;
             placesGroup.setLayoutData(layoutData);
             placesGroup.setLayout(new GridLayout(2, false));
             placesGroup.setText("places");

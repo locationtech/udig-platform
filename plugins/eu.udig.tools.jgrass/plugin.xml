@@ -83,7 +83,7 @@
             icon="icons/globe16.png"
             id="eu.udig.tools.jgrass.navigationview.NavigationView"
             name="Navigation"
-            restorable="false">
+            restorable="true">
       </view>
    </extension>
    <extension
