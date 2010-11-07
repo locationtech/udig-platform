@@ -59,7 +59,6 @@ public class CoverageColorMaskStyleEditorPage extends StyleEditorPage implements
         IBlackboard styleBlackboard = getSelectedLayer().getStyleBlackboard();
         String maskColorString = styleBlackboard.getString(COVERAGE_COLORMASK_ID);
 
-
         Group colorMaskGroup = new Group(parent, SWT.SHADOW_ETCHED_IN);
         colorMaskGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         colorMaskGroup.setLayout(new GridLayout(2, false));
@@ -71,7 +70,7 @@ public class CoverageColorMaskStyleEditorPage extends StyleEditorPage implements
         colorMaskButton.addSelectionListener(this);
 
         maskColorEditor = new StolenColorEditor(colorMaskGroup);
-        if (maskColorString instanceof String) {
+        if (maskColorString != null) {
             String[] colorSplit = maskColorString.split(":"); //$NON-NLS-1$
             Color color = new Color(Integer.parseInt(colorSplit[0]), Integer.parseInt(colorSplit[1]),
                     Integer.parseInt(colorSplit[2]));
