@@ -76,6 +76,15 @@
             name="Profile View"
             restorable="false">
       </view>
+      <view
+            allowMultiple="false"
+            class="eu.udig.tools.jgrass.navigationview.NavigationView"
+            fastViewWidthRatio="0.20"
+            icon="icons/globe16.png"
+            id="eu.udig.tools.jgrass.navigationview.NavigationView"
+            name="Navigation"
+            restorable="false">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.exportWizards">
