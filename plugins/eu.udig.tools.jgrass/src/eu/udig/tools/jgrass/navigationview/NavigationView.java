@@ -413,7 +413,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
 
             Button removeButton = new Button(geonamesGroup, SWT.PUSH);
             removeButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-            removeButton.setText("i");
+            removeButton.setText("-");
             removeButton.setToolTipText("Remove a geonames file");
             removeButton.addSelectionListener(new SelectionAdapter(){
                 public void widgetSelected( SelectionEvent e ) {
