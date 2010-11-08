@@ -133,6 +133,12 @@
                tooltip="Delete mapset from location on disk">
          </action>
          <action
+               class="eu.udig.catalog.jgrass.operations.ImportEsriAsciiAction"
+               id="eu.udig.catalog.jgrass.operations.ImportEsriAsciiAction"
+               label="Import Esri Ascii"
+               tooltip="Import an Esri Ascii grid into teh mapset">
+         </action>
+         <action
                class="eu.udig.catalog.jgrass.operations.OpenFolderAction"
                id="eu.udig.catalog.jgrass.operations.OpenFolderAction"
                label="Open folder"
@@ -165,6 +171,12 @@
                id="eu.udig.catalog.jgrass.operations.RemoveMapAction"
                label="Delete Grass Maps"
                tooltip="Delete the selected maps from the mapset on disk">
+         </action>
+                     <action
+               class="eu.udig.catalog.jgrass.operations.ExportEsriAsciiAction"
+               id="eu.udig.catalog.jgrass.operations.ExportEsriAsciiAction"
+               label="Export maps"
+               tooltip="Export the selected maps as Ersi Ascii to disk">
          </action>
       </objectContribution>
    </extension>

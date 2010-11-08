@@ -62,18 +62,18 @@ public class RemoveMapAction implements IObjectActionDelegate, IWorkbenchWindowA
 
     public void run( IAction action ) {
 
-        Display.getDefault().syncExec(new Runnable(){
-            public void run() {
+        IRunnableWithProgress operation = new IRunnableWithProgress(){
 
-                final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-                boolean answer = MessageDialog.openQuestion(shell, "WARNING",
-                        "Are you sure you want to remove the selected maps from disk? This can't be undone!");
-                if (answer) {
-                    final List toList = selection.toList();
+            public void run( final IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
+                Display.getDefault().syncExec(new Runnable(){
+                    public void run() {
 
-                    IRunnableWithProgress operation = new IRunnableWithProgress(){
+                        final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+                        boolean answer = MessageDialog.openQuestion(shell, "WARNING",
+                                "Are you sure you want to remove the selected maps from disk? This can't be undone!");
+                        if (answer) {
+                            final List toList = selection.toList();
 
-                        public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
                             try {
                                 pm.beginTask("Removing maps...", toList.size());
 
@@ -102,14 +102,13 @@ public class RemoveMapAction implements IObjectActionDelegate, IWorkbenchWindowA
                             }
                         }
 
-                    };
+                    }
+                });
 
-                    PlatformGIS.runInProgressDialog("Remove maps...", true, operation, true);
-
-                }
             }
-        });
+        };
 
+        PlatformGIS.runInProgressDialog("Remove maps...", true, operation, true);
     }
 
     /**
