@@ -68,8 +68,13 @@ import com.vividsolutions.jts.geom.Polygon;
  */
 public class GeometryProperty extends AbstractPropertyValue<ILayer> implements PropertyValue<ILayer> {
 
-    
-    Set<URL> ids=new CopyOnWriteArraySet<URL>();
+	/*
+	 * if working with Layer based on e.g. Temporary datastores the id's of the
+	 * layers can't be resolved -> blocking operation {@link URL#equals(Object)}
+	 * javadoc : 'Since hosts comparison requires name resolution, this
+	 * operation is a blocking operation.' 
+	 */
+    Set<String> ids=new CopyOnWriteArraySet<String>();
     private volatile AtomicBoolean isEvaluating=new AtomicBoolean(false);
 
     @SuppressWarnings("unchecked")
@@ -81,7 +86,7 @@ public class GeometryProperty extends AbstractPropertyValue<ILayer> implements P
         }
         
         try{
-            if( ids.add( object.getID() ) ){
+            if( ids.add( object.getID().toString() ) ){
                 IGeoResource resource = object.findGeoResource(FeatureStore.class);
                 if( resource!=null )
                     CatalogPlugin.getDefault().getLocalCatalog().addCatalogListener(new ObjectPropertyCatalogListener(object, resource, isEvaluating, this));

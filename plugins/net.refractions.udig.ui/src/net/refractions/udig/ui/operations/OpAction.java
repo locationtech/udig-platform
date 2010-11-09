@@ -88,12 +88,6 @@ public class OpAction extends Action implements ISelectionListener {
         filter=EnablementUtil.parseEnablement(element.getNamespaceIdentifier()+"."+element.getName(), element.getChildren("enablement")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    /**
-     *
-     * @param icon
-     * @param element TODO
-     * @return
-     */
     private ImageDescriptor createImageDescriptor( String icon, IConfigurationElement element ) {
         URL url = Platform.getBundle(element.getNamespaceIdentifier()).getEntry(icon);
         return new URLImageDescriptor(url);
@@ -165,8 +159,8 @@ public class OpAction extends Action implements ISelectionListener {
                     }
                 }else{
                     List<Object> targets=new LinkedList<Object>();
-                    for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
-                        @SuppressWarnings("unchecked") Object entry = iter.next();
+                    for( Iterator<?> iter = selection.iterator(); iter.hasNext(); ) {
+                        Object entry = iter.next();
                         try {
                             Object operationTarget = AdapterUtil.instance.adapt(targetClass, entry, monitor);
                             if( operationTarget==null ){
@@ -182,7 +176,7 @@ public class OpAction extends Action implements ISelectionListener {
                             return Status.OK_STATUS;
                         }
                     }
-                    Class targetClass=targets.get(0).getClass();
+                    Class<?> targetClass=targets.get(0).getClass();
                     Object[] tmp=(Object[]) Array.newInstance(targetClass, targets.size());
                     if( enablesForData.minHits==1 && enablesForData.exactMatch){
                     	target=targets.size() > 0 ? targets.get(0):null;
@@ -230,7 +224,7 @@ public class OpAction extends Action implements ISelectionListener {
      * @param executeSynchronous
      */
     public void updateEnablement( IStructuredSelection structured, boolean executeSynchronous ) {
-        if( structured.equals(this.selection) || PlatformUI.getWorkbench().isClosing() )
+        if( PlatformUI.getWorkbench().isClosing() )
             return;
 
         
@@ -277,10 +271,10 @@ public class OpAction extends Action implements ISelectionListener {
             boolean enabled=false;
             int hits=0;
             
-            for (Iterator iter = structured.iterator(); iter.hasNext();) {
+            for (Iterator<?> iter = structured.iterator(); iter.hasNext();) {
                 if( monitor.isCanceled() )
                     return;
-                @SuppressWarnings("unchecked") Object obj = iter.next(); 
+                Object obj = iter.next(); 
                 if ( isValid(obj) ){
                     hits++;
                 }else{
@@ -303,8 +297,6 @@ public class OpAction extends Action implements ISelectionListener {
             final boolean oldEnabledState=isEnabled();
             Runnable runnable = new Runnable(){
                 public void run() {
-                    if( structured.equals(OpAction.this.selection) )
-                        return;
                     OpAction.this.selection=structured;
                     
                     setEnabled(finalEnabled);
