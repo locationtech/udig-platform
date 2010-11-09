@@ -73,9 +73,13 @@ public class AdaptableFeature extends DecoratingFeature implements IAdaptable, S
     }
 
     @Override
-    public boolean equals(Object obj) {
-    	return delegate.equals( obj );
+    public boolean equals( Object obj ) {
+        if (obj instanceof AdaptableFeature) {
+            return delegate.equals(((AdaptableFeature) obj).delegate);
+        }
+        return delegate.equals(obj);
     }
+    
     @Override
     public int hashCode() {
     	return delegate.hashCode();
