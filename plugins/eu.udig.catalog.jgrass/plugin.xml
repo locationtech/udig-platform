@@ -128,18 +128,21 @@
             objectClass="eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource">
          <action
                class="eu.udig.catalog.jgrass.operations.RemoveMapsetAction"
+               icon="icons/raster_delete.png"
                id="eu.udig.catalog.jgrass.operations.RemoveMapsetAction"
                label="Delete Mapsets"
                tooltip="Delete mapset from location on disk">
          </action>
          <action
                class="eu.udig.catalog.jgrass.operations.ImportEsriAsciiAction"
+               icon="icons/map_add.png"
                id="eu.udig.catalog.jgrass.operations.ImportEsriAsciiAction"
                label="Import Esri Ascii"
                tooltip="Import an Esri Ascii grid into teh mapset">
          </action>
          <action
                class="eu.udig.catalog.jgrass.operations.OpenFolderAction"
+               icon="icons/database_raster.png"
                id="eu.udig.catalog.jgrass.operations.OpenFolderAction"
                label="Open folder"
                tooltip="Open this folder in a file browser">
@@ -150,13 +153,15 @@
             id="eu.udig.catalog.jgrass.core.JGrassService.contribution"
             objectClass="eu.udig.catalog.jgrass.core.JGrassService">
                      <action
-               class="eu.udig.catalog.jgrass.operations.OpenFolderAction"
-               id="eu.udig.catalog.jgrass.operations.OpenFolderAction"
-               label="Open folder"
-               tooltip="Open this folder in a file browser">
+                           class="eu.udig.catalog.jgrass.operations.OpenFolderAction"
+                           icon="icons/database_raster.png"
+                           id="eu.udig.catalog.jgrass.operations.OpenFolderAction"
+                           label="Open folder"
+                           tooltip="Open this folder in a file browser">
          </action>
                      <action
                            class="eu.udig.catalog.jgrass.operations.AddMapsetAction"
+                           icon="icons/raster_add.png"
                            id="eu.udig.catalog.jgrass.operations.AddMapsetAction"
                            label="Add new Mapset"
                            tooltip="Create a new mapset in the location">
@@ -167,16 +172,18 @@
             id="eu.udig.catalog.jgrass.core.JGrassMapGeoResource.contribution"
             objectClass="eu.udig.catalog.jgrass.core.JGrassMapGeoResource">
                      <action
-               class="eu.udig.catalog.jgrass.operations.RemoveMapAction"
-               id="eu.udig.catalog.jgrass.operations.RemoveMapAction"
-               label="Delete Grass Maps"
-               tooltip="Delete the selected maps from the mapset on disk">
+                           class="eu.udig.catalog.jgrass.operations.RemoveMapAction"
+                           icon="icons/raster_delete.png"
+                           id="eu.udig.catalog.jgrass.operations.RemoveMapAction"
+                           label="Delete Grass Maps"
+                           tooltip="Delete the selected maps from the mapset on disk">
          </action>
                      <action
-               class="eu.udig.catalog.jgrass.operations.ExportEsriAsciiAction"
-               id="eu.udig.catalog.jgrass.operations.ExportEsriAsciiAction"
-               label="Export maps"
-               tooltip="Export the selected maps as Ersi Ascii to disk">
+                           class="eu.udig.catalog.jgrass.operations.ExportEsriAsciiAction"
+                           icon="icons/map_go.png"
+                           id="eu.udig.catalog.jgrass.operations.ExportEsriAsciiAction"
+                           label="Export maps"
+                           tooltip="Export the selected maps as Ersi Ascii to disk">
          </action>
       </objectContribution>
    </extension>
