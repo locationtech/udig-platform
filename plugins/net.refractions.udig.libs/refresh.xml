@@ -10,6 +10,7 @@
 
 	<!-- remote repositories as defined in copy.properties -->
 	<artifact:remoteRepository id="geotools.repository" url="${geotoolsRepository}" />
+	<artifact:remoteRepository id="geotools.repository.snapshot" url="${geotoolsRepositorySnap}" />
 
 	<artifact:remoteRepository id="central.repository" url="${central}" />
 	<artifact:remoteRepository id="jaitoolsmaven.repository" url="${jaitoolsmaven}" />
@@ -35,6 +36,7 @@
 			<!-- remoteRepository refid="udig.snapshot.repository" /-->
 
 			<remoteRepository refid="geotools.repository" />
+			<remoteRepository refid="geotools.repository.snapshot" />
 			<remoteRepository refid="central.repository" />
 			<remoteRepository refid="jaitoolsmaven.repository" />
 			<remoteRepository refid="geosolutionsmaven.repository" />
