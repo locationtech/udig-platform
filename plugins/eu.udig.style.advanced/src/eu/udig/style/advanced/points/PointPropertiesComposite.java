@@ -26,8 +26,10 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
+import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.styling.Font;
 import org.geotools.styling.TextSymbolizer;
+import org.opengis.filter.Filter;
 
 import com.sun.xml.internal.ws.util.UtilException;
 
@@ -576,7 +578,8 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         case FILTER: {
             if (value.length() > 0) {
                 try {
-                    ruleWrapper.setFilter(value);
+                    Filter filter = ECQL.toFilter(value);
+                    ruleWrapper.getRule().setFilter(filter);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

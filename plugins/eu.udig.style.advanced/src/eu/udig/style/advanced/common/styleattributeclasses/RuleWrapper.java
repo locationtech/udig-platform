@@ -276,31 +276,31 @@ public class RuleWrapper {
         }
     }
 
-    public String getFilter() throws IOException {
-        Filter filter = rule.getFilter();
-        if (filter == null) {
-            return "";
-        }
-        // create the encoder with the filter 1.1 configuration
-        Configuration configuration = new org.geotools.filter.v1_1.OGCConfiguration();
-        Encoder encoder = new Encoder(configuration);
-        // create an output stream
-        ByteArrayOutputStream xml = new ByteArrayOutputStream();
-        // encode
-        encoder.setIndenting(true);
-        encoder.encode(filter, org.geotools.filter.v1_1.OGC.Filter, xml);
-        String filterXmlString = xml.toString();
-        return filterXmlString;
-    }
-
-    public void setFilter( String filterXmlString ) throws Exception {
-        // create the parser with the filter 1.0 configuration
-        Configuration configuration = new org.geotools.filter.v1_1.OGCConfiguration();
-        Parser parser = new Parser(configuration);
-        InputStream xml = new ByteArrayInputStream(filterXmlString.getBytes());
-        // parse
-        Filter filter = (Filter) parser.parse(xml);
-        rule.setFilter(filter);
-    }
+    // public String getFilter() throws IOException {
+    // Filter filter = rule.getFilter();
+    // if (filter == null) {
+    // return "";
+    // }
+    // // create the encoder with the filter 1.1 configuration
+    // Configuration configuration = new org.geotools.filter.v1_1.OGCConfiguration();
+    // Encoder encoder = new Encoder(configuration);
+    // // create an output stream
+    // ByteArrayOutputStream xml = new ByteArrayOutputStream();
+    // // encode
+    // encoder.setIndenting(true);
+    // encoder.encode(filter, org.geotools.filter.v1_1.OGC.Filter, xml);
+    // String filterXmlString = xml.toString();
+    // return filterXmlString;
+    // }
+    //
+    // public void setFilter( String filterXmlString ) throws Exception {
+    // // create the parser with the filter 1.0 configuration
+    // Configuration configuration = new org.geotools.filter.v1_1.OGCConfiguration();
+    // Parser parser = new Parser(configuration);
+    // InputStream xml = new ByteArrayInputStream(filterXmlString.getBytes());
+    // // parse
+    // Filter filter = (Filter) parser.parse(xml);
+    // rule.setFilter(filter);
+    // }
 
 }

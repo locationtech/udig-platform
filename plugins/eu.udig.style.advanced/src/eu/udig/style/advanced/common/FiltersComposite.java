@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.opengis.filter.Filter;
 
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
@@ -66,15 +67,20 @@ public class FiltersComposite extends ParameterComposite {
         // rule name
         Label nameLabel = new Label(mainComposite, SWT.NONE);
         nameLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        nameLabel.setText("Filter xml string");
+        nameLabel.setText("Filter string");
         filterText = new Text(mainComposite, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.LEAD | SWT.BORDER);
         GridData nameTextGD = new GridData(SWT.FILL, SWT.FILL, true, true);
         nameTextGD.widthHint = 100;
         nameTextGD.heightHint = 100;
         filterText.setLayoutData(nameTextGD);
         try {
-            filterText.setText(ruleWrapper.getFilter());
-        } catch (IOException e) {
+            Filter filter = ruleWrapper.getRule().getFilter();
+            if (filter != null) {
+                filterText.setText(filter.toString());
+            } else {
+                filterText.setText("");
+            }
+        } catch (Exception e) {
             filterText.setText("");
             e.printStackTrace();
         }
@@ -94,8 +100,13 @@ public class FiltersComposite extends ParameterComposite {
      */
     public void update( RuleWrapper ruleWrapper ) {
         try {
-            filterText.setText(ruleWrapper.getFilter());
-        } catch (IOException e) {
+            Filter filter = ruleWrapper.getRule().getFilter();
+            if (filter != null) {
+                filterText.setText(filter.toString());
+            } else {
+                filterText.setText("");
+            }
+        } catch (Exception e) {
             filterText.setText("");
             e.printStackTrace();
         }
