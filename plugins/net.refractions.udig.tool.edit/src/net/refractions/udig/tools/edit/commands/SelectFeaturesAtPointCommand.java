@@ -184,16 +184,17 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
         UndoableComposite compositeCommand = new UndoableComposite();
         compositeCommand.setName(Messages.SelectGeometryCommand_name);
         
+        SimpleFeature firstFeature = reader.next();
         for( SelectionStrategy selectionStrategy : strategies ) {
-        	selectionStrategy.run(monitor, compositeCommand, parameters, reader.next(),
-        			true);
+          selectionStrategy.run(monitor, compositeCommand, parameters, firstFeature,
+              true);
         }
         
         while (reader.hasNext()){
-        	SimpleFeature feature = reader.next();
+          SimpleFeature nextFeature = reader.next();
             for( SelectionStrategy selectionStrategy : strategies ) {
-            	selectionStrategy.run(monitor, compositeCommand, parameters, feature,
-            			false);
+              selectionStrategy.run(monitor, compositeCommand, parameters, nextFeature,
+                  false);
             }
         }
 

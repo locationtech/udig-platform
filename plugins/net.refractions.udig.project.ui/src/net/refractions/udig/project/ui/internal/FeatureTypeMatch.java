@@ -18,7 +18,9 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.Name;
@@ -178,12 +180,19 @@ public class FeatureTypeMatch {
      * @return 0 for a perfect match,
      */
     public int matches( Object element ) {
-        SimpleFeatureType schema = null;
-        if (element instanceof SimpleFeatureType) {
-            schema = (SimpleFeatureType) element;
-        } else if (element instanceof SimpleFeatureType) {
-            schema = (SimpleFeatureType) element;
+      SimpleFeatureType schema = null;
+      if (element instanceof SimpleFeature) {
+          schema = ((SimpleFeature) element).getFeatureType();
+      } else if (element instanceof SimpleFeatureType) {
+          schema = (SimpleFeatureType) element;
+      } else if(element instanceof IAdaptable) {
+        IAdaptable adaptable = (IAdaptable) element;
+        if(adaptable.getAdapter(SimpleFeatureType.class) != null) {
+          schema = (SimpleFeatureType) adaptable.getAdapter(SimpleFeatureType.class);
+        } else if(adaptable.getAdapter(SimpleFeature.class) != null) {
+          schema = ((SimpleFeature) adaptable.getAdapter(SimpleFeatureType.class)).getFeatureType();
         }
+      }
 
         if (schema != null) {
             Name featureName = schema.getName();
