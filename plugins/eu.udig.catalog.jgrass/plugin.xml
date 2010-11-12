@@ -138,7 +138,7 @@
                icon="icons/map_add.png"
                id="eu.udig.catalog.jgrass.operations.ImportEsriAsciiAction"
                label="Import Esri Ascii"
-               tooltip="Import an Esri Ascii grid into teh mapset">
+               tooltip="Import an Esri Ascii grid into the mapset">
          </action>
          <action
                class="eu.udig.catalog.jgrass.operations.OpenFolderAction"
@@ -171,6 +171,13 @@
             adaptable="false"
             id="eu.udig.catalog.jgrass.core.JGrassMapGeoResource.contribution"
             objectClass="eu.udig.catalog.jgrass.core.JGrassMapGeoResource">
+                     <action
+                           class="eu.udig.catalog.jgrass.operations.SetActiveRegionToMapsAction"
+                           icon="icons/etool16/active.png"
+                           id="eu.udig.catalog.jgrass.operations.SetActiveRegionToMapsAction"
+                           label="Set active region to maps"
+                           tooltip="Set the active region to wrap all the selected maps">
+         </action>
                      <action
                            class="eu.udig.catalog.jgrass.operations.RemoveMapAction"
                            icon="icons/raster_delete.png"
