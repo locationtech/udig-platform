@@ -128,7 +128,7 @@
             objectClass="eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource">
          <action
                class="eu.udig.catalog.jgrass.operations.RemoveMapsetAction"
-               icon="icons/raster_delete.png"
+               icon="icons/delete_mapset.png"
                id="eu.udig.catalog.jgrass.operations.RemoveMapsetAction"
                label="Delete Mapsets"
                tooltip="Delete mapset from location on disk">
@@ -142,7 +142,7 @@
          </action>
          <action
                class="eu.udig.catalog.jgrass.operations.OpenFolderAction"
-               icon="icons/database_raster.png"
+               icon="icons/folder_layer.png"
                id="eu.udig.catalog.jgrass.operations.OpenFolderAction"
                label="Open folder"
                tooltip="Open this folder in a file browser">
@@ -154,14 +154,14 @@
             objectClass="eu.udig.catalog.jgrass.core.JGrassService">
                      <action
                            class="eu.udig.catalog.jgrass.operations.OpenFolderAction"
-                           icon="icons/database_raster.png"
+                           icon="icons/folder_layer.png"
                            id="eu.udig.catalog.jgrass.operations.OpenFolderAction"
                            label="Open folder"
                            tooltip="Open this folder in a file browser">
          </action>
                      <action
                            class="eu.udig.catalog.jgrass.operations.AddMapsetAction"
-                           icon="icons/raster_add.png"
+                           icon="icons/add_mapset.png"
                            id="eu.udig.catalog.jgrass.operations.AddMapsetAction"
                            label="Add new Mapset"
                            tooltip="Create a new mapset in the location">
