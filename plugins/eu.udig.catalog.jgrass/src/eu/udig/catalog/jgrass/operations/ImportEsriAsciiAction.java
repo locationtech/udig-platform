@@ -151,7 +151,7 @@ public class ImportEsriAsciiAction
                                     mapName = FilenameUtils.getBaseName(mapName);
                                     JGrassMapEnvironment mapEnvironment = new JGrassMapEnvironment(mapsetFile, mapName);
                                     GrassCoverageFormat format = new GrassCoverageFormatFactory().createFormat();
-                                    GrassCoverageWriter writer = format.getWriter(mapEnvironment.getCELL());
+                                    GrassCoverageWriter writer = format.getWriter(mapEnvironment.getCELL(), null);
 
                                     GeneralParameterValue[] readParams = null;
                                     writer.write(geodata, readParams);

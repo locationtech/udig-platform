@@ -694,7 +694,7 @@ public class JGrassCatalogUtilities {
             throws Exception {
         JGrassMapEnvironment mapEnvironment = new JGrassMapEnvironment(mapFile);
         GrassCoverageFormat format = new GrassCoverageFormatFactory().createFormat();
-        GrassCoverageWriter writer = format.getWriter(mapEnvironment.getCELL());
+        GrassCoverageWriter writer = format.getWriter(mapEnvironment.getCELL(), null);
 
         GeneralParameterValue[] readParams = null;
         if (writeRegion == null) {
