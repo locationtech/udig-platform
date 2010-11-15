@@ -15,7 +15,6 @@
 	<artifact:remoteRepository id="central.repository" url="${central}" />
 	<artifact:remoteRepository id="jaitoolsmaven.repository" url="${jaitoolsmaven}" />
 	<artifact:remoteRepository id="geosolutionsmaven.repository" url="${geosolutionsmaven}" />
-	<artifact:remoteRepository id="jgrasstoolsmaven.repository" url="${jgrasstoolsmaven}" />
 
 	<!-- local repository i.e. folder to be used as storage for downloaded library files -->
 	<artifact:localRepository id="local.repository" path="${repo}" />
@@ -40,7 +39,6 @@
 			<remoteRepository refid="central.repository" />
 			<remoteRepository refid="jaitoolsmaven.repository" />
 			<remoteRepository refid="geosolutionsmaven.repository" />
-			<remoteRepository refid="jgrasstoolsmaven.repository" />
 
 			<!-- uDig Specific Extras -->
 			<!--dependency groupId="xmlrpc" artifactId="xmlrpc" version="2.0" /-->
@@ -120,8 +118,8 @@
 
 			<!-- jfreechart -->
 			<dependency groupId="jfree" artifactId="jfreechart" version="1.0.13" />
-			<dependency groupId="jfreechart" artifactId="jfreechart-swt" version="1.0.13" />
-			<dependency groupId="jfreechart" artifactId="jfreechart-experimental" version="1.0.13" />
+			<dependency groupId="jfree" artifactId="jfreechart-swt" version="1.0.13" />
+			<dependency groupId="jfree" artifactId="jfreechart-experimental" version="1.0.13" />
 
 			<!-- these may already be accounted for by the above plug-ins -->
 			<!--
