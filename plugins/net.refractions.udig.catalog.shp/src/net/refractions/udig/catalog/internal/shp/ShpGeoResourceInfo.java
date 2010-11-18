@@ -88,6 +88,7 @@ class ShpGeoResourceInfo extends IGeoResourceInfo {
 
         title = featureType.getName().getLocalPart();
         title = title.replace('_', ' ');
+		title = title.replace("%20", " ");
         title = title.trim();
     }
         
