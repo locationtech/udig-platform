@@ -63,8 +63,8 @@ public class URLUtils {
         if (sameProtocol && sameHost && samePath && sameQuery && sameAuthority && sameRef)
             return true;
 
-        String string1 = URLUtils.urlToString(url1, stripRef);
-        String string2 = URLUtils.urlToString(url2, stripRef);
+        String string1 = URLUtils.urlToString(url1, stripRef).replace("%20", " ").toLowerCase();
+        String string2 = URLUtils.urlToString(url2, stripRef).replace("%20", " ").toLowerCase();
         if (stripRef)
             return string1.startsWith(string2) || string2.startsWith(string1);
         return string1.equalsIgnoreCase(string2);
