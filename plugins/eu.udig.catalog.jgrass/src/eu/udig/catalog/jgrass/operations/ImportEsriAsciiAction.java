@@ -72,6 +72,7 @@ import org.geotools.gce.grassraster.format.GrassCoverageFormatFactory;
 import org.geotools.geometry.Envelope2D;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.operation.matrix.XAffineTransform;
+import org.opengis.coverage.grid.GridCoverageWriter;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.geometry.Envelope;
 import org.opengis.parameter.GeneralParameterValue;
@@ -151,7 +152,7 @@ public class ImportEsriAsciiAction
                                     mapName = FilenameUtils.getBaseName(mapName);
                                     JGrassMapEnvironment mapEnvironment = new JGrassMapEnvironment(mapsetFile, mapName);
                                     GrassCoverageFormat format = new GrassCoverageFormatFactory().createFormat();
-                                    GrassCoverageWriter writer = format.getWriter(mapEnvironment.getCELL(), null);
+                                    GridCoverageWriter writer = format.getWriter(mapEnvironment.getCELL(), null);
 
                                     GeneralParameterValue[] readParams = null;
                                     writer.write(geodata, readParams);

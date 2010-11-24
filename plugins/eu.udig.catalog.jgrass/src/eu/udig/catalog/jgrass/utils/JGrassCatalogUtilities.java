@@ -77,6 +77,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.parameter.Parameter;
 import org.geotools.referencing.CRS;
 import org.opengis.coverage.grid.GridCoverageReader;
+import org.opengis.coverage.grid.GridCoverageWriter;
 import org.opengis.geometry.Envelope;
 import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -694,7 +695,7 @@ public class JGrassCatalogUtilities {
             throws Exception {
         JGrassMapEnvironment mapEnvironment = new JGrassMapEnvironment(mapFile);
         GrassCoverageFormat format = new GrassCoverageFormatFactory().createFormat();
-        GrassCoverageWriter writer = format.getWriter(mapEnvironment.getCELL(), null);
+        GridCoverageWriter writer = format.getWriter(mapEnvironment.getCELL(), null);
 
         GeneralParameterValue[] readParams = null;
         if (writeRegion == null) {
