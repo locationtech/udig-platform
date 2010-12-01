@@ -192,6 +192,13 @@
                            label="Export maps"
                            tooltip="Export the selected maps as Ersi Ascii to disk">
          </action>
+                     <action
+                           class="eu.udig.catalog.jgrass.operations.MapSummaryAction"
+                           icon="icons/report.png"
+                           id="eu.udig.catalog.jgrass.operations.MapSummaryAction"
+                           label="Map summary"
+                           tooltip="View a simple map summary on the active region">
+         </action>
       </objectContribution>
    </extension>
 

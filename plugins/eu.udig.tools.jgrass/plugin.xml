@@ -28,7 +28,6 @@
       <modalTool
             categoryId="net.refractions.udig.tool.category.info"
             class="eu.udig.tools.jgrass.profile.ProfileTool"
-            icon="icons/profileview.png"
             id="eu.udig.tools.jgrass.profiletool"
             name="%profile.name"
             onToolbar="true"
@@ -37,6 +36,7 @@
                <cursor
                      hotspotX="10"
                      hotspotY="10"
+                     id="profileCursor"
                      image="icons/profilecursor.gif">
                </cursor>
       </modalTool>
@@ -57,6 +57,7 @@
                <cursor
                      hotspotX="10"
                      hotspotY="10"
+                     id="rcorrectCursor"
                      image="icons/measure_source.gif">
                </cursor>
       </modalTool>
