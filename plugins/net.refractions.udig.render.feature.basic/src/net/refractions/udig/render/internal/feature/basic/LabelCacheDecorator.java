@@ -26,6 +26,7 @@ import org.geotools.geometry.jts.LiteShape2;
 import org.geotools.renderer.lite.LabelCache;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.util.NumberRange;
+import org.opengis.feature.Feature;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
@@ -110,6 +111,12 @@ public class LabelCacheDecorator implements LabelCache{
          */ 
 //        wrapped.stop();
     }
+
+	@Override
+	public void put(String arg0, TextSymbolizer arg1, Feature arg2,
+			LiteShape2 arg3, NumberRange<Double> arg4) {
+		wrapped.put(arg0, arg1, arg2, arg3, arg4);
+	}
 
 
 }
