@@ -85,7 +85,7 @@ public class MapSummaryAction implements IObjectActionDelegate, IWorkbenchWindow
 
                         final Object object = selection.getFirstElement();
                         try {
-                            pm.beginTask("Exporting maps...", IProgressMonitor.UNKNOWN);
+                            pm.beginTask("Collecting stats...", IProgressMonitor.UNKNOWN);
 
                             if (object instanceof JGrassMapGeoResource) {
                                 JGrassMapGeoResource mr = (JGrassMapGeoResource) object;

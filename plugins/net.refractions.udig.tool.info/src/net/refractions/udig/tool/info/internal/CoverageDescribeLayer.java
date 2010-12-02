@@ -63,8 +63,14 @@ public class CoverageDescribeLayer {
             GridCoverage2D coverage = (GridCoverage2D) geoResource.resolve(GridCoverage.class, monitor);
 
             Point2D p = new Point2D.Double(envelopeCenter.x, envelopeCenter.y);
-            final double[] evaluated = coverage.evaluate(p, (double[]) null);
-
+            int bands = coverage.getSampleDimensions().length;
+            final double[] evaluated = new double[bands];
+            try {
+                coverage.evaluate(p, evaluated);
+            } catch (Exception e) {
+                // TODO make this more nice
+                return null;
+            }
             final GridCoordinates2D gridCoord = coverage.getGridGeometry().worldToGrid(new DirectPosition2D(p));
 
             CoveragePointInfo info = new CoveragePointInfo(layer){
