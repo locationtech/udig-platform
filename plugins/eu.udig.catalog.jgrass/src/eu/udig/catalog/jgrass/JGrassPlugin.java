@@ -18,10 +18,24 @@
  */
 package eu.udig.catalog.jgrass;
 
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
+import net.refractions.udig.catalog.CatalogPlugin;
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.IResolve;
+import net.refractions.udig.mapgraphic.internal.MapGraphicService;
+import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.ui.ApplicationGIS;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import eu.udig.catalog.jgrass.activeregion.ActiveRegionMapGraphic;
 
 /**
  * <p>
@@ -91,6 +105,48 @@ public class JGrassPlugin extends AbstractUIPlugin {
             message = ""; //$NON-NLS-1$
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
         getDefault().getLog().log(new Status(status, PLUGIN_ID, IStatus.OK, message, t));
+    }
+    
+    private ILayer activeRegionLayer;
+    public ILayer getActiveRegionMapGraphic() {
+
+        /*
+         * load the right mapgraphic layer
+         */
+        try {
+            List<IResolve> mapgraphics = CatalogPlugin.getDefault().getLocalCatalog().find(MapGraphicService.SERVICE_URL, null);
+            List<IResolve> members = mapgraphics.get(0).members(null);
+            for( IResolve resolve : members ) {
+                if (resolve.canResolve(ActiveRegionMapGraphic.class)) {
+                    IMap activeMap = ApplicationGIS.getActiveMap();
+                    List<ILayer> layers = activeMap.getMapLayers();
+                    boolean isAlreadyLoaded = false;
+                    for( ILayer layer : layers ) {
+                        if (layer.hasResource(ActiveRegionMapGraphic.class)) {
+                            isAlreadyLoaded = true;
+                            activeRegionLayer = layer;
+                        }
+                    }
+
+                    if (!isAlreadyLoaded) {
+                        List< ? extends ILayer> addedLayersToMap = ApplicationGIS.addLayersToMap(activeMap,
+                                Collections.singletonList(resolve.resolve(IGeoResource.class, null)), layers.size());
+                        for( ILayer l : addedLayersToMap ) {
+                            IGeoResource geoResource = l.getGeoResource();
+                            if (geoResource.canResolve(ActiveRegionMapGraphic.class)) {
+                                activeRegionLayer = l;
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+            return activeRegionLayer;
+        } catch (IOException e1) {
+            e1.printStackTrace();
+            return null;
+        }
+
     }
 
 }

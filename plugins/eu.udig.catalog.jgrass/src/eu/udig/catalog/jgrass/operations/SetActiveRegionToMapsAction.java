@@ -22,8 +22,9 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IStyleBlackboard;
+import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.ui.ExceptionDetailsDialog;
 import net.refractions.udig.ui.PlatformGIS;
@@ -32,23 +33,23 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.IWorkbenchWindowPulldownDelegate;
-import org.eclipse.ui.PlatformUI;
 import org.geotools.gce.grassraster.JGrassConstants;
 import org.geotools.gce.grassraster.JGrassMapEnvironment;
 import org.geotools.gce.grassraster.JGrassRegion;
+import org.geotools.referencing.CRS;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -81,11 +82,10 @@ public class SetActiveRegionToMapsAction
                 Display.getDefault().syncExec(new Runnable(){
                     public void run() {
 
-                        final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-                        final List toList = selection.toList();
+                        final List< ? > toList = selection.toList();
                         Envelope bounds = null;
                         try {
-                            pm.beginTask("Removing maps...", toList.size());
+                            pm.beginTask("Set active region to maps bounds...", toList.size());
 
                             try {
                                 JGrassRegion currentRegion = null;
@@ -111,28 +111,43 @@ public class SetActiveRegionToMapsAction
                                     pm.worked(1);
                                 }
 
-                                JGrassRegion newActiveRegion = JGrassRegion.adaptActiveRegionToEnvelope(bounds, currentRegion);
-                                JGrassRegion.writeWINDToMapset(grassMapEnvironment.getWIND().getParent(), newActiveRegion);
-
-                                List<ILayer> mapLayers = ApplicationGIS.getActiveMap().getMapLayers();
-                                for( ILayer layer : mapLayers ) {
-                                    IStyleBlackboard styleBlackboard = layer.getStyleBlackboard();
-                                    ActiveRegionStyle style = (ActiveRegionStyle) styleBlackboard
-                                            .get(ActiveregionStyleContent.ID);
-                                    if (style != null) {
-                                        style.north = (float) newActiveRegion.getNorth();
-                                        style.south = (float) newActiveRegion.getSouth();
-                                        style.east = (float) newActiveRegion.getEast();
-                                        style.west = (float) newActiveRegion.getWest();
-                                        style.rows = newActiveRegion.getRows();
-                                        style.cols = newActiveRegion.getCols();
-
-                                        styleBlackboard.put(ActiveregionStyleContent.ID, style);
-
-                                        layer.refresh(null);
-                                        break;
+                                String code = null;
+                                try {
+                                    CoordinateReferenceSystem jGrassCrs = grassMapEnvironment.getCoordinateReferenceSystem();
+                                    try {
+                                        Integer epsg = CRS.lookupEpsgCode(jGrassCrs, true);
+                                        code = "EPSG:" + epsg;
+                                    } catch (Exception e) {
+                                        // try non epsg
+                                        code = CRS.lookupIdentifier(jGrassCrs, true);
                                     }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
+
+                                JGrassRegion newActiveRegion = JGrassRegion.adaptActiveRegionToEnvelope(bounds, currentRegion);
+                                File windFile = grassMapEnvironment.getWIND();
+                                JGrassRegion.writeWINDToMapset(windFile.getParent(), newActiveRegion);
+
+                                IMap activeMap = ApplicationGIS.getActiveMap();
+                                IBlackboard blackboard = activeMap.getBlackboard();
+                                ActiveRegionStyle style = (ActiveRegionStyle) blackboard.get(ActiveregionStyleContent.ID);
+                                if (style == null) {
+                                    style = ActiveregionStyleContent.createDefault();
+                                }
+                                style.north = (float) newActiveRegion.getNorth();
+                                style.south = (float) newActiveRegion.getSouth();
+                                style.east = (float) newActiveRegion.getEast();
+                                style.west = (float) newActiveRegion.getWest();
+                                style.rows = newActiveRegion.getRows();
+                                style.cols = newActiveRegion.getCols();
+                                style.windPath = windFile.getAbsolutePath();
+                                style.crsString = code;
+
+                                blackboard.put(ActiveregionStyleContent.ID, style);
+
+                                ILayer activeRegionMapGraphic = JGrassPlugin.getDefault().getActiveRegionMapGraphic();
+                                activeRegionMapGraphic.refresh(null);
 
                             } catch (IOException e) {
                                 e.printStackTrace();

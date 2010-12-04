@@ -4,12 +4,10 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
+import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IStyleBlackboard;
+import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.MapCommand;
 import net.refractions.udig.project.internal.commands.selection.BBoxSelectionCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
@@ -22,6 +20,8 @@ import org.geotools.gce.grassraster.JGrassRegion;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
+
+import eu.udig.catalog.jgrass.JGrassPlugin;
 
 public class ActiveRegionBBoxSelection extends SimpleTool implements ModalTool {
 
@@ -41,6 +41,8 @@ public class ActiveRegionBBoxSelection extends SimpleTool implements ModalTool {
      */
     public ActiveRegionBBoxSelection() {
         super(MOUSE | MOTION);
+
+        JGrassPlugin.getDefault().getActiveRegionMapGraphic();
     }
 
     /**
@@ -48,8 +50,8 @@ public class ActiveRegionBBoxSelection extends SimpleTool implements ModalTool {
      */
     protected void onMouseDragged( MapMouseEvent e ) {
         Point end = e.getPoint();
-        shapeCommand.setShape(new Rectangle(Math.min(start.x, end.x), Math.min(start.y, end.y),
-                Math.abs(start.x - end.x), Math.abs(start.y - end.y)));
+        shapeCommand.setShape(new Rectangle(Math.min(start.x, end.x), Math.min(start.y, end.y), Math.abs(start.x - end.x), Math
+                .abs(start.y - end.y)));
         context.getViewportPane().repaint();
     }
 
@@ -85,32 +87,27 @@ public class ActiveRegionBBoxSelection extends SimpleTool implements ModalTool {
 
                 Envelope bounds = new Envelope(c1, c2);
 
-                List<ILayer> mapLayers = ApplicationGIS.getActiveMap().getMapLayers();
-                for( ILayer layer : mapLayers ) {
-                    IStyleBlackboard styleBlackboard = layer.getStyleBlackboard();
-                    ActiveRegionStyle style = (ActiveRegionStyle) styleBlackboard.get(
-                            ActiveregionStyleContent.ID);
-                    if (style != null) {
-                        try {
-                            JGrassRegion activeRegion = new JGrassRegion(style.windPath);
-                            JGrassRegion newActiveRegion = JGrassRegion
-                                    .adaptActiveRegionToEnvelope(bounds, activeRegion);
-                            JGrassRegion.writeWINDToMapset(new File(style.windPath).getParent(),
-                                    newActiveRegion);
-                            style.north = (float) newActiveRegion.getNorth();
-                            style.south = (float) newActiveRegion.getSouth();
-                            style.east = (float) newActiveRegion.getEast();
-                            style.west = (float) newActiveRegion.getWest();
-                            style.rows = newActiveRegion.getRows();
-                            style.cols = newActiveRegion.getCols();
-                            
-                            styleBlackboard.put(ActiveregionStyleContent.ID, style);
-                            
-                            layer.refresh(null);
-                            break;
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
+                ILayer activeRegionLayer = JGrassPlugin.getDefault().getActiveRegionMapGraphic();
+                IMap activeMap = ApplicationGIS.getActiveMap();
+                IBlackboard blackboard = activeMap.getBlackboard();
+                ActiveRegionStyle style = (ActiveRegionStyle) blackboard.get(ActiveregionStyleContent.ID);
+                if (style != null) {
+                    try {
+                        JGrassRegion activeRegion = new JGrassRegion(style.windPath);
+                        JGrassRegion newActiveRegion = JGrassRegion.adaptActiveRegionToEnvelope(bounds, activeRegion);
+                        JGrassRegion.writeWINDToMapset(new File(style.windPath).getParent(), newActiveRegion);
+                        style.north = (float) newActiveRegion.getNorth();
+                        style.south = (float) newActiveRegion.getSouth();
+                        style.east = (float) newActiveRegion.getEast();
+                        style.west = (float) newActiveRegion.getWest();
+                        style.rows = newActiveRegion.getRows();
+                        style.cols = newActiveRegion.getCols();
+
+                        blackboard.put(ActiveregionStyleContent.ID, style);
+
+                        activeRegionLayer.refresh(null);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
                     }
                 }
 
@@ -125,14 +122,11 @@ public class ActiveRegionBBoxSelection extends SimpleTool implements ModalTool {
     protected void sendSelectionCommand( MapMouseEvent e, Envelope bounds ) {
         MapCommand command;
         if (e.isModifierDown(MapMouseEvent.MOD2_DOWN_MASK)) {
-            command = getContext().getSelectionFactory().createBBoxSelectionCommand(bounds,
-                    BBoxSelectionCommand.ADD);
+            command = getContext().getSelectionFactory().createBBoxSelectionCommand(bounds, BBoxSelectionCommand.ADD);
         } else if (e.isModifierDown(MapMouseEvent.MOD1_DOWN_MASK)) {
-            command = getContext().getSelectionFactory().createBBoxSelectionCommand(bounds,
-                    BBoxSelectionCommand.SUBTRACT);
+            command = getContext().getSelectionFactory().createBBoxSelectionCommand(bounds, BBoxSelectionCommand.SUBTRACT);
         } else {
-            command = getContext().getSelectionFactory().createBBoxSelectionCommand(bounds,
-                    BBoxSelectionCommand.NONE);
+            command = getContext().getSelectionFactory().createBBoxSelectionCommand(bounds, BBoxSelectionCommand.NONE);
         }
 
         getContext().sendASyncCommand(command);

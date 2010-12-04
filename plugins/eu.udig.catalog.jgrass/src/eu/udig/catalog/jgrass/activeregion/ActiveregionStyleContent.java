@@ -26,7 +26,6 @@ import net.refractions.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
-import org.geotools.gce.grassraster.JGrassConstants;
 
 @SuppressWarnings("nls")
 public class ActiveregionStyleContent extends StyleContent {

@@ -29,9 +29,8 @@ import java.util.List;
 
 import net.refractions.udig.mapgraphic.MapGraphic;
 import net.refractions.udig.mapgraphic.MapGraphicContext;
+import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IStyleBlackboard;
-import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.ui.graphics.AWTGraphics;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
 
@@ -73,26 +72,24 @@ public class ActiveRegionMapGraphic implements MapGraphic {
             Graphics2D g2D = awtG.g;
             // setting rendering hints
             RenderingHints hints = new RenderingHints(Collections.EMPTY_MAP);
-            hints.add(new RenderingHints(RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON));
+            hints.add(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
             g2D.addRenderingHints(hints);
         }
 
         Dimension screen = context.getMapDisplay().getDisplaySize();
 
         // get the active region
-        IStyleBlackboard styleBlackboard = context.getLayer().getStyleBlackboard();
-        ActiveRegionStyle style = (ActiveRegionStyle) styleBlackboard
-                .get(ActiveregionStyleContent.ID);
+        IBlackboard blackboard = context.getMap().getBlackboard();
+        ActiveRegionStyle style = (ActiveRegionStyle) blackboard.get(ActiveregionStyleContent.ID);
         if (style == null) {
             style = ActiveregionStyleContent.createDefault();
-            styleBlackboard.put(ActiveregionStyleContent.ID, style);
-            ((StyleBlackboard) styleBlackboard)
-                    .setSelected(new String[]{ActiveregionStyleContent.ID});
+            blackboard.put(ActiveregionStyleContent.ID, style);
+            // ((IBlackboard) styleBlackboard)
+            // .setSelected(new String[]{ActiveregionStyleContent.ID});
         }
 
         if (style.windPath == null) {
-            getMapset(styleBlackboard);
+            getMapset(blackboard);
         }
 
         CoordinateReferenceSystem destinationCRS = context.getCRS();
@@ -119,8 +116,7 @@ public class ActiveRegionMapGraphic implements MapGraphic {
             Point llPoint = context.worldToPixel(newLL);
             Point lrPoint = context.worldToPixel(newLR);
 
-            Point xyRes = new Point((urPoint.x - ulPoint.x) / style.cols, (llPoint.y - ulPoint.y)
-                    / style.rows);
+            Point xyRes = new Point((urPoint.x - ulPoint.x) / style.cols, (llPoint.y - ulPoint.y) / style.rows);
 
             int screenWidth = screen.width;
             int screenHeight = screen.height;
@@ -166,7 +162,7 @@ public class ActiveRegionMapGraphic implements MapGraphic {
      * @param styleBlackboard 
      * @param style
      */
-    private void getMapset( final IStyleBlackboard styleBlackboard ) {
+    private void getMapset( final IBlackboard styleBlackboard ) {
 
         Display.getDefault().syncExec(new Runnable(){
 
@@ -180,10 +176,8 @@ public class ActiveRegionMapGraphic implements MapGraphic {
                         return;
                     }
                     JGrassMapsetGeoResource jGrassMapsetGeoResource = selectedLayers.get(0);
-                    JGrassRegion activeRegionWindow = jGrassMapsetGeoResource
-                            .getActiveRegionWindow();
-                    ActiveRegionStyle style = (ActiveRegionStyle) styleBlackboard
-                            .get(ActiveregionStyleContent.ID);
+                    JGrassRegion activeRegionWindow = jGrassMapsetGeoResource.getActiveRegionWindow();
+                    ActiveRegionStyle style = (ActiveRegionStyle) styleBlackboard.get(ActiveregionStyleContent.ID);
                     style.windPath = jGrassMapsetGeoResource.getActiveRegionWindowPath();
                     style.north = (float) activeRegionWindow.getNorth();
                     style.south = (float) activeRegionWindow.getSouth();
@@ -194,18 +188,18 @@ public class ActiveRegionMapGraphic implements MapGraphic {
 
                     CoordinateReferenceSystem jGrassCrs = jGrassMapsetGeoResource.getJGrassCrs();
                     String code = null;
-                    try{
+                    try {
                         Integer epsg = CRS.lookupEpsgCode(jGrassCrs, true);
                         code = "EPSG:" + epsg;
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         // try non epsg
                         code = CRS.lookupIdentifier(jGrassCrs, true);
                     }
                     style.crsString = code;
 
                     styleBlackboard.put(ActiveregionStyleContent.ID, style);
-                    ((StyleBlackboard) styleBlackboard)
-                            .setSelected(new String[]{ActiveregionStyleContent.ID});
+                    // ((StyleBlackboard) styleBlackboard).setSelected(new
+                    // String[]{ActiveregionStyleContent.ID});
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

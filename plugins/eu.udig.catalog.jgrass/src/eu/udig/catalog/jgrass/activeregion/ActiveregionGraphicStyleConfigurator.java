@@ -25,10 +25,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IStyleBlackboard;
 import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.project.internal.impl.UDIGFeatureStore;
 import net.refractions.udig.project.ui.internal.dialogs.ColorEditor;
 import net.refractions.udig.style.IStyleConfigurator;
@@ -98,7 +97,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator imp
     private Text forgroundAlphaText;
     private ActiveRegionStyle style = null;
     private boolean isWorking = false;
-    private IStyleBlackboard styleBlackboard;
+    private IBlackboard blackboard;
     private Button gridButton;
     private Composite parent;
     private Text windPathText;
@@ -366,19 +365,15 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator imp
     @Override
     protected void refresh() {
         try {
-            IStyleBlackboard styleBlackboard = getLayer().getStyleBlackboard();
+            IBlackboard blackboard = getLayer().getMap().getBlackboard();
 
-            Set<String> keySet = styleBlackboard.keySet();
-            for( String string : keySet ) {
-                System.out.println(string);
-            }
-
-            style = (ActiveRegionStyle) styleBlackboard.get(ActiveregionStyleContent.ID);
+            style = (ActiveRegionStyle) blackboard.get(ActiveregionStyleContent.ID);
 
             if (style == null) {
                 style = ActiveregionStyleContent.createDefault();
-                styleBlackboard.put(ActiveregionStyleContent.ID, style);
-                ((StyleBlackboard) styleBlackboard).setSelected(new String[]{ActiveregionStyleContent.ID});
+                blackboard.put(ActiveregionStyleContent.ID, style);
+                // ((StyleBlackboard) styleBlackboard).setSelected(new
+                // String[]{ActiveregionStyleContent.ID});
             }
 
             // first time choose the mapset
@@ -452,12 +447,12 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator imp
     }
 
     private void dumpActiveRegionStyle( ActiveRegionStyle style ) {
-        styleBlackboard.put(ActiveregionStyleContent.ID, style);
-        ((StyleBlackboard) styleBlackboard).setSelected(new String[]{ActiveregionStyleContent.ID});
+        blackboard.put(ActiveregionStyleContent.ID, style);
+        // ((StyleBlackboard) blackboard).setSelected(new String[]{ActiveregionStyleContent.ID});
     }
 
     private ActiveRegionStyle getActiveRegionStyle() {
-        ActiveRegionStyle style = (ActiveRegionStyle) styleBlackboard.get(ActiveregionStyleContent.ID);
+        ActiveRegionStyle style = (ActiveRegionStyle) blackboard.get(ActiveregionStyleContent.ID);
         if (style == null) {
             style = ActiveregionStyleContent.createDefault();
         }
@@ -559,7 +554,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator imp
      * put all the needed things in the blackboards
      */
     private void commitToBlackboards( JGrassRegion jgR, CoordinateReferenceSystem crs, String windPath ) {
-        styleBlackboard = getLayer().getStyleBlackboard();
+        blackboard = getLayer().getMap().getBlackboard();
 
         style.north = (float) jgR.getNorth();
         style.south = (float) jgR.getSouth();
@@ -583,7 +578,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator imp
             e.printStackTrace();
         }
 
-        styleBlackboard.put(ActiveregionStyleContent.ID, style);
+        blackboard.put(ActiveregionStyleContent.ID, style);
         getLayer().setStatus(ILayer.DONE);
     }
     /**
