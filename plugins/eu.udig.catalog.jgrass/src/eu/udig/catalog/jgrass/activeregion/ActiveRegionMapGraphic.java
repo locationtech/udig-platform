@@ -24,6 +24,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
@@ -147,6 +148,14 @@ public class ActiveRegionMapGraphic implements MapGraphic {
             g.setColor(new Color(rgba[0], rgba[1], rgba[2], style.fAlpha));
             g.setStroke(ViewportGraphics.LINE_SOLID, 2);
             g.draw(path);
+
+            if (style.windPath != null) {
+                File windFile = new File(style.windPath);
+                if (windFile.exists()) {
+                    g.drawString(windFile.getParentFile().getName(), 10, 10, ViewportGraphics.ALIGN_LEFT,
+                            ViewportGraphics.ALIGN_MIDDLE);
+                }
+            }
 
         } catch (Exception e) {
             context.getLayer().setStatus(ILayer.ERROR);
