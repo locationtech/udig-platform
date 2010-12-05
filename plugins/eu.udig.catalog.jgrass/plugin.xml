@@ -187,6 +187,13 @@
                            tooltip="Set the active region to wrap all the selected maps">
          </action>
                      <action
+                           class="eu.udig.catalog.jgrass.operations.CopyOnActiveRegionAction"
+                           icon="icons/raster_copy.png"
+                           id="eu.udig.catalog.jgrass.operations.CopyOnActiveRegionAction"
+                           label="Copy Map"
+                           tooltip="Duplicate map on active region">
+         </action>
+                     <action
                            class="eu.udig.catalog.jgrass.operations.RemoveMapAction"
                            icon="icons/raster_delete.png"
                            id="eu.udig.catalog.jgrass.operations.RemoveMapAction"
