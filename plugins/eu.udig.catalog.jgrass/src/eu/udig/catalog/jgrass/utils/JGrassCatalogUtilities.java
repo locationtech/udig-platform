@@ -18,6 +18,12 @@
  */
 package eu.udig.catalog.jgrass.utils;
 
+import java.awt.geom.AffineTransform;
+import java.awt.image.ComponentSampleModel;
+import java.awt.image.DataBuffer;
+import java.awt.image.RenderedImage;
+import java.awt.image.SampleModel;
+import java.awt.image.WritableRaster;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -29,8 +35,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.media.jai.RasterFactory;
+import javax.media.jai.iterator.RandomIter;
+import javax.media.jai.iterator.RandomIterFactory;
+import javax.media.jai.iterator.WritableRandomIter;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
@@ -57,7 +69,9 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.geotools.coverage.CoverageFactoryFinder;
 import org.geotools.coverage.grid.GridCoverage2D;
+import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.coverage.grid.GridEnvelope2D;
 import org.geotools.coverage.grid.GridGeometry2D;
 import org.geotools.coverage.grid.ViewType;
@@ -76,8 +90,10 @@ import org.geotools.geometry.Envelope2D;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.parameter.Parameter;
 import org.geotools.referencing.CRS;
+import org.geotools.referencing.operation.matrix.XAffineTransform;
 import org.opengis.coverage.grid.GridCoverageReader;
 import org.opengis.coverage.grid.GridCoverageWriter;
+import org.opengis.geometry.DirectPosition;
 import org.opengis.geometry.Envelope;
 import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -97,6 +113,15 @@ public class JGrassCatalogUtilities {
     public static final String GRASSMAPSET = "grassmapset";
     public static final String GRASSLOCATION = "grasslocation";
     public static final String JGRASS_WORKSPACE_FILENAME = "wks.jgrass";
+
+    public static final String NORTH = "NORTH"; //$NON-NLS-1$
+    public static final String SOUTH = "SOUTH"; //$NON-NLS-1$
+    public static final String WEST = "WEST"; //$NON-NLS-1$
+    public static final String EAST = "EAST"; //$NON-NLS-1$
+    public static final String XRES = "XRES"; //$NON-NLS-1$
+    public static final String YRES = "YRES"; //$NON-NLS-1$
+    public static final String ROWS = "ROWS"; //$NON-NLS-1$
+    public static final String COLS = "COLS"; //$NON-NLS-1$
 
     /**
      * Extract mapset path and mapname from a georesource containing a JGrassMapGeoResource
@@ -736,5 +761,125 @@ public class JGrassCatalogUtilities {
                 mapsetPath + File.separator + JGrassConstants.CELL_MISC + File.separator + mapname + File.separator
                         + JGrassConstants.CELLMISC_NULL};
         return filesOfRaster;
+    }
+
+    public static GridCoverage2D removeNovalues( GridCoverage2D geodata ) {
+        // need to adapt it, for now do it dirty
+        HashMap<String, Double> params = getRegionParamsFromGridCoverage(geodata);
+        int height = params.get(ROWS).intValue();
+        int width = params.get(COLS).intValue();
+        WritableRaster tmpWR = createDoubleWritableRaster(width, height, null, null, null);
+        WritableRandomIter tmpIter = RandomIterFactory.createWritable(tmpWR, null);
+        RenderedImage readRI = geodata.getRenderedImage();
+        RandomIter readIter = RandomIterFactory.create(readRI, null);
+        for( int r = 0; r < height; r++ ) {
+            for( int c = 0; c < width; c++ ) {
+                double value = readIter.getSampleDouble(c, r, 0);
+
+                if (Double.isNaN(value) || Float.isNaN((float) value) || Math.abs(value - -9999.0) < .0000001) {
+                    tmpIter.setSample(c, r, 0, Double.NaN);
+                } else {
+                    tmpIter.setSample(c, r, 0, value);
+                }
+            }
+        }
+        geodata = buildCoverage("newcoverage", tmpWR, params, geodata.getCoordinateReferenceSystem());
+        return geodata;
+    }
+
+    /**
+     * Creates a {@link GridCoverage2D coverage} from the {@link WritableRaster writable raster} and the necessary geographic Information.
+     * 
+     * @param name the name of the coverage.
+     * @param writableRaster the raster containing the data.
+     * @param envelopeParams the map of boundary parameters.
+     * @param crs the {@link CoordinateReferenceSystem}.
+     * @return the {@link GridCoverage2D coverage}.
+     */
+    public static GridCoverage2D buildCoverage( String name, WritableRaster writableRaster,
+            HashMap<String, Double> envelopeParams, CoordinateReferenceSystem crs ) {
+
+        double west = envelopeParams.get(WEST);
+        double south = envelopeParams.get(SOUTH);
+        double east = envelopeParams.get(EAST);
+        double north = envelopeParams.get(NORTH);
+        Envelope2D writeEnvelope = new Envelope2D(crs, west, south, east - west, north - south);
+        GridCoverageFactory factory = CoverageFactoryFinder.getGridCoverageFactory(null);
+
+        GridCoverage2D coverage2D = factory.create(name, writableRaster, writeEnvelope);
+        return coverage2D;
+    }
+
+    /**
+     * Creates a {@link WritableRaster writable raster}.
+     * 
+     * @param width width of the raster to create.
+     * @param height height of the raster to create.
+     * @param dataClass data type for the raster. If <code>null</code>, defaults to double.
+     * @param sampleModel the samplemodel to use. If <code>null</code>, defaults to 
+     *                  <code>new ComponentSampleModel(dataType, width, height, 1, width, new int[]{0});</code>.
+     * @param value value to which to set the raster to. If null, the default of the raster creation is 
+     *                  used, which is 0.
+     * @return a {@link WritableRaster writable raster}.
+     */
+    public static WritableRaster createDoubleWritableRaster( int width, int height, Class< ? > dataClass,
+            SampleModel sampleModel, Double value ) {
+        int dataType = DataBuffer.TYPE_DOUBLE;
+        if (dataClass != null) {
+            if (dataClass.isAssignableFrom(Integer.class)) {
+                dataType = DataBuffer.TYPE_INT;
+            } else if (dataClass.isAssignableFrom(Float.class)) {
+                dataType = DataBuffer.TYPE_FLOAT;
+            } else if (dataClass.isAssignableFrom(Byte.class)) {
+                dataType = DataBuffer.TYPE_BYTE;
+            }
+        }
+        if (sampleModel == null) {
+            sampleModel = new ComponentSampleModel(dataType, width, height, 1, width, new int[]{0});
+        }
+
+        WritableRaster raster = RasterFactory.createWritableRaster(sampleModel, null);
+        if (value != null) {
+            // autobox only once
+            double v = value;
+
+            for( int y = 0; y < height; y++ ) {
+                for( int x = 0; x < width; x++ ) {
+                    raster.setSample(x, y, 0, v);
+                }
+            }
+        }
+        return raster;
+    }
+
+    public static HashMap<String, Double> getRegionParamsFromGridCoverage( GridCoverage2D gridCoverage ) {
+        HashMap<String, Double> envelopeParams = new HashMap<String, Double>();
+
+        Envelope envelope = gridCoverage.getEnvelope();
+
+        DirectPosition lowerCorner = envelope.getLowerCorner();
+        double[] westSouth = lowerCorner.getCoordinate();
+        DirectPosition upperCorner = envelope.getUpperCorner();
+        double[] eastNorth = upperCorner.getCoordinate();
+
+        GridGeometry2D gridGeometry = gridCoverage.getGridGeometry();
+        GridEnvelope2D gridRange = gridGeometry.getGridRange2D();
+        int height = gridRange.height;
+        int width = gridRange.width;
+
+        AffineTransform gridToCRS = (AffineTransform) gridGeometry.getGridToCRS();
+        double xRes = XAffineTransform.getScaleX0(gridToCRS);
+        double yRes = XAffineTransform.getScaleY0(gridToCRS);
+
+        envelopeParams.put(NORTH, eastNorth[1]);
+        envelopeParams.put(SOUTH, westSouth[1]);
+        envelopeParams.put(WEST, westSouth[0]);
+        envelopeParams.put(EAST, eastNorth[0]);
+        envelopeParams.put(XRES, xRes);
+        envelopeParams.put(YRES, yRes);
+        envelopeParams.put(ROWS, (double) height);
+        envelopeParams.put(COLS, (double) width);
+
+        return envelopeParams;
     }
 }

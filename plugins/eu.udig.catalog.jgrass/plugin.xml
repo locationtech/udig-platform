@@ -63,6 +63,14 @@
             id="eu.udig.catalog.jgrass.wizard.createworkspace"
             name="%wizard.name">
       </wizard>
+      <wizard
+            category="eu.udig.catalog.jgrass.category"
+            class="eu.udig.catalog.jgrass.workspacecreation.NewJGrassLocationFromFileWizard"
+            descriptionImage="icons/wizban/jgrass_wiz.png"
+            icon="icons/obj16/jgrass_obj.png"
+            id="eu.udig.catalog.jgrass.wizard.createworkspacefromfile"
+            name="%wizardfromfile.name">
+      </wizard>
       <category
             id="eu.udig.catalog.jgrass.category"
             name="JGrass">

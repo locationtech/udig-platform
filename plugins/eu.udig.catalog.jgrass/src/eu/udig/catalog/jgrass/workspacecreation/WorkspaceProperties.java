@@ -27,6 +27,10 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  */
 public class WorkspaceProperties {
     public String locationPath = null;
+    public String basePath = null;
+    public String locationName = null;
+    public String mapsetName = null;
+    public String importFilePath = null;
     public CoordinateReferenceSystem crs = null;
     public double north = 100;
     public double south = 0;

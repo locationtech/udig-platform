@@ -77,7 +77,7 @@ public class W01CreateLocationWizardPage extends WizardPage {
             }
         });
         final Button locationPathChooseButton = new Button(locPathGroup, SWT.BORDER);
-        locationPathChooseButton.setText(" Browse ");
+        locationPathChooseButton.setText("...");
         locationPathChooseButton
                 .addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
                     public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
