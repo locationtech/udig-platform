@@ -134,10 +134,10 @@
                tooltip="Delete mapset from location on disk">
          </action>
          <action
-               class="eu.udig.catalog.jgrass.operations.ImportEsriAsciiAction"
+               class="eu.udig.catalog.jgrass.operations.ImportEsriAsciiOrGeotiffAction"
                icon="icons/map_add.png"
                id="eu.udig.catalog.jgrass.operations.ImportEsriAsciiAction"
-               label="Import Esri Ascii"
+               label="Import Esri Ascii or Geotiff"
                tooltip="Import an Esri Ascii grid into the mapset">
          </action>
          <action

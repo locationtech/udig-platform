@@ -65,7 +65,7 @@ public class W01CreateLocationWizardPage extends WizardPage {
         locPathGroup.setLayout(new GridLayout(2, false));
         locPathGroup.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL
                 | GridData.GRAB_VERTICAL));
-        locPathGroup.setText("chose the path for the new location");
+        locPathGroup.setText("choose the path for the new location");
 
         final Text locPathText = new Text(locPathGroup, SWT.BORDER);
         locPathText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL

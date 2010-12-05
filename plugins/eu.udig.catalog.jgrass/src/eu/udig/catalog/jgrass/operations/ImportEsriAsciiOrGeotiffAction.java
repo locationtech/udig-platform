@@ -64,6 +64,7 @@ import org.geotools.coverage.grid.GridGeometry2D;
 import org.geotools.coverage.grid.ViewType;
 import org.geotools.coverage.processing.Operations;
 import org.geotools.gce.arcgrid.ArcGridReader;
+import org.geotools.gce.geotiff.GeoTiffReader;
 import org.geotools.gce.grassraster.GrassCoverageWriter;
 import org.geotools.gce.grassraster.JGrassConstants;
 import org.geotools.gce.grassraster.JGrassMapEnvironment;
@@ -87,7 +88,7 @@ import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
  * 
  * @author Andrea Antonello (www.hydrologis.com)
  */
-public class ImportEsriAsciiAction
+public class ImportEsriAsciiOrGeotiffAction
         implements
             IObjectActionDelegate,
             IWorkbenchWindowActionDelegate,
@@ -116,7 +117,7 @@ public class ImportEsriAsciiAction
                                 // create a thread and inside do a syncExec
                                 FileDialog fileDialog = new FileDialog(Display.getDefault().getActiveShell(), SWT.OPEN
                                         | SWT.MULTI);
-                                fileDialog.setFilterExtensions(new String[]{"*.asc"});
+                                fileDialog.setFilterExtensions(new String[]{"*.asc", "*.tif", "*.tiff"});
                                 String selpath = fileDialog.open();
                                 if (selpath == null) {
                                     return;
@@ -134,14 +135,22 @@ public class ImportEsriAsciiAction
                                     /*
                                      * import the file
                                      */
-                                    ArcGridReader arcGridReader = new ArcGridReader(mapFile);
-                                    GridCoverage2D geodata = arcGridReader.read(null);
-                                    geodata = geodata.view(ViewType.GEOPHYSICS);
-
-                                    geodata = removeNovalues(geodata);
-
                                     CoordinateReferenceSystem jGrassCrs = mapsetResource.getJGrassCrs();
-                                    CoordinateReferenceSystem fileCrs = arcGridReader.getCrs();
+                                    GridCoverage2D geodata = null;
+                                    CoordinateReferenceSystem fileCrs = null;
+                                    if (mapFile.getName().endsWith(".asc")) {
+                                        ArcGridReader arcGridReader = new ArcGridReader(mapFile);
+                                        geodata = arcGridReader.read(null);
+                                        geodata = geodata.view(ViewType.GEOPHYSICS);
+                                        geodata = removeNovalues(geodata);
+                                        fileCrs = arcGridReader.getCrs();
+                                    } else if (mapFile.getName().endsWith(".tif") || mapFile.getName().endsWith(".tiff")) {
+                                        GeoTiffReader geotiffGridReader = new GeoTiffReader(mapFile);
+                                        geodata = geotiffGridReader.read(null);
+                                        geodata = geodata.view(ViewType.GEOPHYSICS);
+                                        geodata = removeNovalues(geodata);
+                                        fileCrs = geotiffGridReader.getCrs();
+                                    }
 
                                     // if required, reproject
                                     if (!CRS.equalsIgnoreMetadata(jGrassCrs, fileCrs)) {
