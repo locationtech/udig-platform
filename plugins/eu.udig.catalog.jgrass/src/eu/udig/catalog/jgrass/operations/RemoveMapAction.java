@@ -20,8 +20,14 @@ package eu.udig.catalog.jgrass.operations;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
+import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.internal.commands.DeleteLayerCommand;
+import net.refractions.udig.project.internal.commands.DeleteLayersCommand;
+import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.apache.commons.io.FileUtils;
@@ -88,6 +94,23 @@ public class RemoveMapAction implements IObjectActionDelegate, IWorkbenchWindowA
                                                 removeGrassRasterMap(mapsetpathAndMapname[0], mapsetpathAndMapname[1]);
                                                 ((JGrassMapsetGeoResource) mr.parent(new NullProgressMonitor())).removeMap(
                                                         mapsetpathAndMapname[1], JGrassConstants.GRASSBINARYRASTERMAP);
+
+                                                IMap activeMap = ApplicationGIS.getActiveMap();
+                                                List<ILayer> mapLayers = activeMap.getMapLayers();
+                                                String mapName = mr.getTitle();
+                                                List<ILayer> toRemove = new ArrayList<ILayer>();
+                                                for( int i = 0; i < mapLayers.size(); i++ ) {
+                                                    String layerName = mapLayers.get(i).getName();
+                                                    if (layerName.equals(mapName)) {
+                                                        // remove it from layer list
+                                                        toRemove.add(mapLayers.get(i));
+                                                    }
+
+                                                }
+                                                if (toRemove.size() > 0)
+                                                    activeMap.sendCommandASync(new DeleteLayersCommand((ILayer[]) toRemove
+                                                            .toArray(new ILayer[toRemove.size()])));
+
                                             } catch (Exception e) {
                                                 MessageDialog.openInformation(shell, "Information",
                                                         "Problems occurred while removing the map.");
