@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.styling.AnchorPoint;
@@ -150,6 +151,9 @@ public class ShpGeoResourceImpl extends IGeoResource {
             }
         }
         if (adaptee.isAssignableFrom(FeatureSource.class)) {
+            return adaptee.cast(featureSource(monitor));
+        }
+        if (adaptee.isAssignableFrom(SimpleFeatureSource.class)) {
             return adaptee.cast(featureSource(monitor));
         }
         if (adaptee.isAssignableFrom(IndexedShapefileDataStore.class)) {
@@ -409,7 +413,9 @@ public class ShpGeoResourceImpl extends IGeoResource {
             return false;
         }
         return (adaptee.isAssignableFrom(IGeoResourceInfo.class) || adaptee.isAssignableFrom(FeatureStore.class)
-                || adaptee.isAssignableFrom(FeatureSource.class) || adaptee.isAssignableFrom(IService.class) || adaptee
+                || adaptee.isAssignableFrom(FeatureSource.class) 
+                || adaptee.isAssignableFrom(SimpleFeatureSource.class) 
+                || adaptee.isAssignableFrom(IService.class) || adaptee
                 .isAssignableFrom(Style.class)) || super.canResolve(adaptee);
     }
     @Override
