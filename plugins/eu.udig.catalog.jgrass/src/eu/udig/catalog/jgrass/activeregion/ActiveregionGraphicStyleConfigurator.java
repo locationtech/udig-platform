@@ -636,18 +636,30 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator imp
                 colnum = (int) round((Double.parseDouble(eaststr) - Double.parseDouble(weststr)) / newewres);
                 // so finally we gain the resolution at a integer col number
                 newewres = (Double.parseDouble(eaststr) - Double.parseDouble(weststr)) / colnum;
+                rowsText.setText(String.valueOf(rownum));
+                yresText.setText(String.valueOf(newnsres));
+                colsText.setText(String.valueOf(colnum));
+                xresText.setText(String.valueOf(newewres));
             } else if (type == res_type) {
-                rownum = (int) round((Double.parseDouble(northstr) - Double.parseDouble(southstr)) / Double.parseDouble(nsresstr));
-                // resolution at a integer row number
-                newnsres = (Double.parseDouble(northstr) - Double.parseDouble(southstr)) / rownum;
-                colnum = (int) round((Double.parseDouble(eaststr) - Double.parseDouble(weststr)) / Double.parseDouble(ewresstr));
-                // resolution at a integer col number
-                newewres = (Double.parseDouble(eaststr) - Double.parseDouble(weststr)) / colnum;
+                double n = Double.parseDouble(northstr);
+                double s = Double.parseDouble(southstr);
+                double nsRes = Double.parseDouble(nsresstr);
+                double e = Double.parseDouble(eaststr);
+                double w = Double.parseDouble(weststr);
+                double ewRes = Double.parseDouble(ewresstr);
+
+                double deltaNS = (n - s) % nsRes;
+                s = s + deltaNS - nsRes;
+                double deltaWE = (e - w) % ewRes;
+                e = e - deltaWE + ewRes;
+                southText.setText(String.valueOf(s));
+                eastText.setText(String.valueOf(e));
+
+                rownum = (int) round((n - s) / nsRes);
+                colnum = (int) round((e - w) / ewRes);
+                rowsText.setText(String.valueOf(rownum));
+                colsText.setText(String.valueOf(colnum));
             }
-            rowsText.setText(String.valueOf(rownum));
-            yresText.setText(String.valueOf(newnsres));
-            colsText.setText(String.valueOf(colnum));
-            xresText.setText(String.valueOf(newewres));
 
         }
         isWorking = false;
