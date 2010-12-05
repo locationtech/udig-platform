@@ -152,8 +152,13 @@ public class ActiveRegionMapGraphic implements MapGraphic {
             if (style.windPath != null) {
                 File windFile = new File(style.windPath);
                 if (windFile.exists()) {
-                    g.drawString(windFile.getParentFile().getName(), 10, 10, ViewportGraphics.ALIGN_LEFT,
-                            ViewportGraphics.ALIGN_MIDDLE);
+                    File mapsetFile = windFile.getParentFile();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(mapsetFile.getParentFile().getName());
+                    sb.append("/");
+                    sb.append(mapsetFile.getName());
+                    g.drawString(sb.toString(), 10, 10,
+                            ViewportGraphics.ALIGN_LEFT, ViewportGraphics.ALIGN_MIDDLE);
                 }
             }
 
