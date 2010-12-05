@@ -182,8 +182,15 @@
                            class="eu.udig.catalog.jgrass.operations.RemoveMapAction"
                            icon="icons/raster_delete.png"
                            id="eu.udig.catalog.jgrass.operations.RemoveMapAction"
-                           label="Delete Grass Maps"
+                           label="Delete Maps"
                            tooltip="Delete the selected maps from the mapset on disk">
+         </action>
+                     <action
+                           class="eu.udig.catalog.jgrass.operations.RenameMapAction"
+                           icon="icons/raster_rename.png"
+                           id="eu.udig.catalog.jgrass.operations.RenameMapAction"
+                           label="Rename Maps"
+                           tooltip="Rename the selected map on disk">
          </action>
                      <action
                            class="eu.udig.catalog.jgrass.operations.ExportEsriAsciiAction"

@@ -708,4 +708,33 @@ public class JGrassCatalogUtilities {
         writer.write(grassCoverage, readParams);
     }
 
+    /**
+     * Returns the list of files involved in the raster map issues. If for example a map has to be
+     * deleted, then all these files have to.
+     * 
+     * @param mapsetPath - the path of the mapset
+     * @param mapname -the name of the map
+     * @return the array of strings containing the full path to the involved files
+     */
+    public static String[] filesOfRasterMap( String mapsetPath, String mapname ) {
+        String filesOfRaster[] = new String[]{
+                mapsetPath + File.separator + JGrassConstants.FCELL + File.separator + mapname,
+                mapsetPath + File.separator + JGrassConstants.CELL + File.separator + mapname,
+                mapsetPath + File.separator + JGrassConstants.CATS + File.separator + mapname,
+                mapsetPath + File.separator + JGrassConstants.HIST + File.separator + mapname,
+                mapsetPath + File.separator + JGrassConstants.CELLHD + File.separator + mapname,
+                mapsetPath + File.separator + JGrassConstants.COLR + File.separator + mapname,
+                // it is very important that the folder cell_misc/mapname comes
+                // before the files in it
+                mapsetPath + File.separator + JGrassConstants.CELL_MISC + File.separator + mapname,
+                mapsetPath + File.separator + JGrassConstants.CELL_MISC + File.separator + mapname + File.separator
+                        + JGrassConstants.CELLMISC_FORMAT,
+                mapsetPath + File.separator + JGrassConstants.CELL_MISC + File.separator + mapname + File.separator
+                        + JGrassConstants.CELLMISC_QUANT,
+                mapsetPath + File.separator + JGrassConstants.CELL_MISC + File.separator + mapname + File.separator
+                        + JGrassConstants.CELLMISC_RANGE,
+                mapsetPath + File.separator + JGrassConstants.CELL_MISC + File.separator + mapname + File.separator
+                        + JGrassConstants.CELLMISC_NULL};
+        return filesOfRaster;
+    }
 }

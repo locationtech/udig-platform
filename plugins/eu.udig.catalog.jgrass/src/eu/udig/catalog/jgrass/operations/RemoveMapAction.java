@@ -25,7 +25,6 @@ import java.util.List;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.commands.DeleteLayerCommand;
 import net.refractions.udig.project.internal.commands.DeleteLayersCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.ui.PlatformGIS;
@@ -78,7 +77,7 @@ public class RemoveMapAction implements IObjectActionDelegate, IWorkbenchWindowA
                         boolean answer = MessageDialog.openQuestion(shell, "WARNING",
                                 "Are you sure you want to remove the selected maps from disk? This can't be undone!");
                         if (answer) {
-                            final List toList = selection.toList();
+                            final List< ? > toList = selection.toList();
 
                             try {
                                 pm.beginTask("Removing maps...", toList.size());
@@ -108,7 +107,7 @@ public class RemoveMapAction implements IObjectActionDelegate, IWorkbenchWindowA
 
                                                 }
                                                 if (toRemove.size() > 0)
-                                                    activeMap.sendCommandASync(new DeleteLayersCommand((ILayer[]) toRemove
+                                                    activeMap.sendCommandSync(new DeleteLayersCommand((ILayer[]) toRemove
                                                             .toArray(new ILayer[toRemove.size()])));
 
                                             } catch (Exception e) {
@@ -173,7 +172,7 @@ public class RemoveMapAction implements IObjectActionDelegate, IWorkbenchWindowA
      */
     public void removeGrassRasterMap( String mapsetPath, String mapName ) throws IOException {
         // list of files to remove
-        String mappaths[] = filesOfRasterMap(mapsetPath, mapName);
+        String mappaths[] = JGrassCatalogUtilities.filesOfRasterMap(mapsetPath, mapName);
 
         // first delete the list above, which are just files
         for( int j = 0; j < mappaths.length; j++ ) {
@@ -184,34 +183,6 @@ public class RemoveMapAction implements IObjectActionDelegate, IWorkbenchWindowA
         }
     }
 
-    /**
-     * Returns the list of files involved in the raster map issues. If for example a map has to be
-     * deleted, then all these files have to.
-     * 
-     * @param mapsetPath - the path of the mapset
-     * @param mapname -the name of the map
-     * @return the array of strings containing the full path to the involved files
-     */
-    public String[] filesOfRasterMap( String mapsetPath, String mapname ) {
-        String filesOfRaster[] = new String[]{
-                mapsetPath + File.separator + JGrassConstants.FCELL + File.separator + mapname,
-                mapsetPath + File.separator + JGrassConstants.CELL + File.separator + mapname,
-                mapsetPath + File.separator + JGrassConstants.CATS + File.separator + mapname,
-                mapsetPath + File.separator + JGrassConstants.HIST + File.separator + mapname,
-                mapsetPath + File.separator + JGrassConstants.CELLHD + File.separator + mapname,
-                mapsetPath + File.separator + JGrassConstants.COLR + File.separator + mapname,
-                // it is very important that the folder cell_misc/mapname comes
-                // before the files in it
-                mapsetPath + File.separator + JGrassConstants.CELL_MISC + File.separator + mapname,
-                mapsetPath + File.separator + JGrassConstants.CELL_MISC + File.separator + mapname + File.separator
-                        + JGrassConstants.CELLMISC_FORMAT,
-                mapsetPath + File.separator + JGrassConstants.CELL_MISC + File.separator + mapname + File.separator
-                        + JGrassConstants.CELLMISC_QUANT,
-                mapsetPath + File.separator + JGrassConstants.CELL_MISC + File.separator + mapname + File.separator
-                        + JGrassConstants.CELLMISC_RANGE,
-                mapsetPath + File.separator + JGrassConstants.CELL_MISC + File.separator + mapname + File.separator
-                        + JGrassConstants.CELLMISC_NULL};
-        return filesOfRaster;
-    }
+
 
 }
