@@ -44,14 +44,6 @@
             id="eu.udig.catalog.jgrass.category"
             name="%jgrass.catalog.operations">
       </category>
-      <operation
-            categoryId="eu.udig.catalog.jgrass.category"
-            class="eu.udig.catalog.jgrass.operations.GrassReprojectOperation"
-            enablesFor="+"
-            id="eu.udig.catalog.jgrass.grassreprojectop"
-            name="%export.grassreproject"
-            targetClass="eu.udig.catalog.jgrass.core.JGrassMapGeoResource">
-      </operation>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
@@ -179,6 +171,13 @@
             adaptable="false"
             id="eu.udig.catalog.jgrass.core.JGrassMapGeoResource.contribution"
             objectClass="eu.udig.catalog.jgrass.core.JGrassMapGeoResource">
+                     <action
+                           class="eu.udig.catalog.jgrass.operations.GrassReprojectAction"
+                           icon="icons/reproject_map.png"
+                           id="eu.udig.catalog.jgrass.operations.GrassReprojectAction"
+                           label="%export.grassreproject"
+                           tooltip="%export.grassreproject">
+         </action>
                      <action
                            class="eu.udig.catalog.jgrass.operations.SetActiveRegionToMapsAction"
                            icon="icons/etool16/active.png"

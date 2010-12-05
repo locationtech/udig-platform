@@ -92,6 +92,7 @@ public class MapSummaryAction implements IObjectActionDelegate, IWorkbenchWindow
                                 File mapFile = mr.getMapFile();
                                 JGrassMapEnvironment mapEnvironment = new JGrassMapEnvironment(mapFile);
                                 JGrassRegion jGrassRegion = mapEnvironment.getActiveRegion();
+                                
                                 GeneralParameterValue[] readParams = createGridGeometryGeneralParameter(jGrassRegion.getCols(),
                                         jGrassRegion.getRows(), jGrassRegion.getNorth(), jGrassRegion.getSouth(),
                                         jGrassRegion.getEast(), jGrassRegion.getWest(),
