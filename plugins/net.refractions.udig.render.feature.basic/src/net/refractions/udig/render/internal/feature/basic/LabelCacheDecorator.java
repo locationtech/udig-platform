@@ -112,8 +112,7 @@ public class LabelCacheDecorator implements LabelCache{
 //        wrapped.stop();
     }
 
-	@Override
-	public void put(String arg0, TextSymbolizer arg1, Feature arg2,
+   public void put(String arg0, TextSymbolizer arg1, Feature arg2,
 			LiteShape2 arg3, NumberRange<Double> arg4) {
 		wrapped.put(arg0, arg1, arg2, arg3, arg4);
 	}
