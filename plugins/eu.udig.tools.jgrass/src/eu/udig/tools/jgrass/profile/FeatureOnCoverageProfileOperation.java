@@ -60,7 +60,6 @@ public class FeatureOnCoverageProfileOperation implements IOp {
     private GridCoverage2D coverage = null;
     private SimpleFeature lineFeature = null;
 
-    @Override
     public void op( final Display display, Object target, IProgressMonitor monitor ) throws Exception {
         ILayer[] layers = (ILayer[]) target;
 
