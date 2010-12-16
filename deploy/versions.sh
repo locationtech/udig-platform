@@ -1,6 +1,4 @@
 #!/bin/bash
-echo "Release Versions"
-
 # ignore mac resources when using tar,zip,etc...
 #
 export COPYFILE_DISABLE=true
@@ -8,8 +6,8 @@ export BASE=`dirname $0`
 
 # Release Configuration
 export TARGET=~/Desktop/target/1.2.1
-export VERSION=1.2-SNAPSHOT
-export BUILD=~/Desktop/target/build
+export VERSION=1.2.1
+export BUILD=${BASE}/build
 export QUALIFIER=1.2.1.201012152133
 
 # Build Resources
@@ -20,7 +18,6 @@ export JRE_WIN64=jre1.6.0.win64
 export JRE_LIN32=jre1.6.0_18.linux32_gdal_ecw_mrsid
 export JRE_LIN64=jre1.6.0_20.linux.x86_64_gdal_ecw_mrsid
 
-echo "Release Version:"
-echo "${VERSION}"
+echo "Release Version:  ${VERSION}"
 echo "Available for release:"
 ls ${TARGET}

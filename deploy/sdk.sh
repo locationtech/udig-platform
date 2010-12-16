@@ -37,7 +37,7 @@ then
         rm ${BUILD}/sdk/udig_sdk/plugins/*swt*linux*
         
         # TODO: figure out how to make libs and libs source have the same qualifier
-        mv ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_1.2.0.qualifier \
+        mv ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_1.2.1.qualifier \
            ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_${QUALIFIER}
         
         cp ${BASE}/udig-1.2.x.html ${BUILD}/sdk/udig_sdk/udig-${VERSION}.html

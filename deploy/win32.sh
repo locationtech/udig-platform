@@ -39,4 +39,6 @@ then
      else 
        echo "Already Exists ${BUILD}/udig-${VERSION}.win32.win32.x86.zip"
      fi
+else
+  echo "Unable to find ${TARGET}/udig-${VERSION}.win32.win32.x86.zip"
 fi
