@@ -22,35 +22,33 @@ import net.refractions.udig.project.internal.impl.UDIGStore;
 
 import org.geotools.data.FeatureStore;
 import org.geotools.data.simple.SimpleFeatureStore;
-import org.opengis.feature.Feature;
-import org.opengis.feature.type.FeatureType;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
- * Wraps a FeatureStore in a UDIGFeatureStore (ensuring that the transaction is only set once!).
+ * Wraps a SimpleFeatureStore in a UDIGSimpleFeatureStore.
+ * <p>
+ * This is done to ensure that (ensuring that the transaction is only set once!).
  * 
  * @author Jesse
- * @since 1.1.0
+ * @since 1.2.1
  */
-public class WrapFeatureStore implements IResourceInterceptor<FeatureStore< ? , ? >> {
+public class WrapSimpleFeatureStore
+        implements
+            IResourceInterceptor<SimpleFeatureStore> {
 
-    public FeatureStore< ? , ? > run( ILayer layer, FeatureStore< ? , ? > resource,
-            Class< ? super FeatureStore< ? , ? >> requestedType ) {
+    public SimpleFeatureStore run( ILayer layer,
+            SimpleFeatureStore resource,
+            Class< ? super SimpleFeatureStore> requestedType ) {
         
         if( resource instanceof UDIGStore ){
             return resource;
         }
         
-        if (requestedType.isAssignableFrom(SimpleFeatureStore.class) ||
-                requestedType.isAssignableFrom(FeatureStore.class) ){
-            if( resource instanceof SimpleFeatureStore){
-                return new UDIGSimpleFeatureStore(resource, layer);
-            }
-            else {
-                @SuppressWarnings("unchecked")
-                FeatureStore<FeatureType,Feature> prep = (FeatureStore<FeatureType,Feature>) resource;
-                return new UDIGFeatureStore( prep, layer);
-            }
+        if (requestedType.isAssignableFrom(SimpleFeatureStore.class)){
+            return new UDIGSimpleFeatureStore(resource, layer);
         }
         return resource;
     }
+    
 }

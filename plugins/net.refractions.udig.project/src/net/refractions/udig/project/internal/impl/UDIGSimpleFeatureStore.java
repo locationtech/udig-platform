@@ -11,7 +11,8 @@ import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.ProjectPlugin;
 
-import org.geotools.data.DataAccess;
+import org.geotools.data.DataStore;
+import org.geotools.data.DataUtilities;
 import org.geotools.data.FeatureListener;
 import org.geotools.data.FeatureReader;
 import org.geotools.data.FeatureSource;
@@ -20,12 +21,13 @@ import org.geotools.data.Query;
 import org.geotools.data.QueryCapabilities;
 import org.geotools.data.ResourceInfo;
 import org.geotools.data.Transaction;
+import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.Feature;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.FeatureType;
 import org.opengis.feature.type.Name;
 import org.opengis.filter.Filter;
 import org.opengis.filter.Id;
@@ -35,16 +37,16 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.WKTWriter;
 
 /**
- * A FeatureStore decorator that does not allow the transaction to be set more than once. (Only if
- * the current transaction is "AUTO_COMMIT" can the transaction be set)
+ * A SimpleFeatureStore decorator that does not allow the transaction to be set more than once.
+ * <p>
+ * Only if the current transaction is "AUTO_COMMIT" can the transaction be set.
  * 
- * @author jones
- * @since 1.0.0
- * @version 1.2.1
+ * @author jive
+ * @since 1.2.1
+ * @see UDIGFeatureStore
  */
-public class UDIGFeatureStore implements FeatureStore<FeatureType,Feature>, UDIGStore {
-
-    FeatureStore<FeatureType,Feature> wrapped;
+public class UDIGSimpleFeatureStore implements SimpleFeatureStore, UDIGStore {
+    SimpleFeatureStore wrapped;
     ILayer layer;
 
     /**
@@ -54,8 +56,13 @@ public class UDIGFeatureStore implements FeatureStore<FeatureType,Feature>, UDIG
      * @param store the feature store that will be decorated
      * @param layer layer providing context
      */
-    public UDIGFeatureStore( FeatureStore<FeatureType, Feature> featureStore, ILayer layer ) {
+    public UDIGSimpleFeatureStore( SimpleFeatureStore featureStore, ILayer layer ) {
         wrapped = featureStore;
+        this.layer = layer;
+    }
+    
+    public UDIGSimpleFeatureStore( FeatureStore<?,?> featureStore, ILayer layer ) {
+        wrapped = DataUtilities.simple( featureStore );
         this.layer = layer;
     }
 
@@ -88,7 +95,15 @@ public class UDIGFeatureStore implements FeatureStore<FeatureType,Feature>, UDIG
         setTransactionInternal();
         wrapped.modifyFeatures(name, value, filter);
     }
-
+    public void modifyFeatures( String name, Object value, Filter filter ) throws IOException {
+        setTransactionInternal();
+        wrapped.modifyFeatures(name, value, filter);
+    } 
+    public void modifyFeatures( String names[], Object values[], Filter filter ) throws IOException {
+        setTransactionInternal();
+        wrapped.modifyFeatures(names, values, filter);
+    }
+    
     @Deprecated
     public void modifyFeatures( AttributeDescriptor attribute, Object value, Filter selectFilter )
             throws IOException {
@@ -112,7 +127,7 @@ public class UDIGFeatureStore implements FeatureStore<FeatureType,Feature>, UDIG
         wrapped.modifyFeatures(attribute, value, selectFilter);
     }
 
-    public void setFeatures( FeatureReader<FeatureType, Feature> features )
+    public void setFeatures( FeatureReader<SimpleFeatureType, SimpleFeature> features )
             throws IOException {
         setTransactionInternal();
         wrapped.setFeatures(features);
@@ -178,8 +193,8 @@ public class UDIGFeatureStore implements FeatureStore<FeatureType,Feature>, UDIG
         return wrapped.getTransaction();
     }
 
-    public DataAccess<FeatureType,Feature> getDataStore() {
-        return wrapped.getDataStore();
+    public DataStore getDataStore() {
+        return (DataStore) wrapped.getDataStore();
     }
 
     public void addFeatureListener( FeatureListener listener ) {
@@ -190,21 +205,21 @@ public class UDIGFeatureStore implements FeatureStore<FeatureType,Feature>, UDIG
         wrapped.removeFeatureListener(listener);
     }
 
-    public FeatureCollection<FeatureType,Feature> getFeatures( Query query )
+    public SimpleFeatureCollection getFeatures( Query query )
             throws IOException {
         return wrapped.getFeatures(query);
     }
 
-    public FeatureCollection<FeatureType,Feature> getFeatures( Filter filter )
+    public SimpleFeatureCollection getFeatures( Filter filter )
             throws IOException {
         return wrapped.getFeatures(filter);
     }
 
-    public FeatureCollection<FeatureType,Feature> getFeatures() throws IOException {
+    public SimpleFeatureCollection getFeatures() throws IOException {
         return wrapped.getFeatures();
     }
 
-    public FeatureType getSchema() {
+    public SimpleFeatureType getSchema() {
         return wrapped.getSchema();
     }
 
@@ -220,18 +235,17 @@ public class UDIGFeatureStore implements FeatureStore<FeatureType,Feature>, UDIG
         return wrapped.getCount(query);
     }
 
-    public List<FeatureId> addFeatures( FeatureCollection<FeatureType, Feature> features )
+    public List<FeatureId> addFeatures( FeatureCollection<SimpleFeatureType, SimpleFeature> features )
             throws IOException {
         setTransactionInternal();
         return wrapped.addFeatures(features);
     }
 
-    // Jody -This was unused
     public boolean sameSource( Object source ) {
         return source == wrapped || source == this;
     }
     
-    public FeatureStore<?,?> wrapped() {
+    public SimpleFeatureStore wrapped() {
         return wrapped;
     }
 

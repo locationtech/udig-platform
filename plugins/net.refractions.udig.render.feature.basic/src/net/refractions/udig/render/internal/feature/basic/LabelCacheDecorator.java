@@ -30,30 +30,36 @@ import org.opengis.feature.Feature;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
- * Wraps the context's {@link ILabelPainter} to allow labelling produced by the Streaming/Shapefile renderers to be combined 
- * with the labels from other labels.  Streaming and Shapefile renderer both assume they are the start and end points of rendering
- * so they start and finish the label cache, as well as assign their own layerIds and clear the cache.  None of these are acceptable
- * for uDig so this class intercepts the calls and handles these cases as well as translating the geometries so they are relative to 
- * the full display area. 
+ * Wraps the context's {@link ILabelPainter} to allow labeling produced by the Streaming/Shapefile
+ * renderers to be combined with the labels from other labels.
+ * <p>
+ * Streaming and Shapefile renderer both assume they are the start and end points of rendering so
+ * they start and finish the label cache, as well as assign their own layerIds and clear the cache.
+ * <p>
+ * None of these are acceptable for uDig so this class intercepts the calls and handles these cases
+ * as well as translating the geometries so they are relative to the full display area.
  * 
  * @author Jesse
  * @since 1.1.0
+ * @version 1.2.1
  */
 public class LabelCacheDecorator implements LabelCache{
     private final LabelCache wrapped;
-    private final Point origin;
+    //private final Point origin;
     private final String layerId;
     
     /**
+     * Create a new LabelCacheDecorator to protect a wrapped label cache
+     * from being cleared.
      * 
-     * @param wrapped 
-     * @param origin huh
+     * @param wrapped LabelCache being protected from being cleared
+     * @param origin The origin of the paint area
      * @param layerId Target layer id
      */
     public LabelCacheDecorator( final LabelCache wrapped, Point origin, String layerId ) {
         super();
         this.wrapped = wrapped;
-        this.origin = origin;
+        //this.origin = origin;
         this.layerId=layerId;
     }
 
@@ -91,7 +97,7 @@ public class LabelCacheDecorator implements LabelCache{
     
     public void put( String layerId, TextSymbolizer symbolizer, SimpleFeature feature, LiteShape2 shape,
             NumberRange<Double> scaleRange ) {
-
+        // this may change to Feature in the future
         wrapped.put(this.layerId, symbolizer, feature, shape, scaleRange);
     }
 
@@ -103,19 +109,13 @@ public class LabelCacheDecorator implements LabelCache{
         // this is called by the frame work earlier.  Geotools doesn't need to call this
     }
 
+    /**
+     * We should not stop label cache from one renderer while it is still shared
+     * between many renderers.
+     * <p>
+     * This prevents labels being rendered when a layer is removed.
+     */
     public void stop() {
-        /*
-         * Vitalus:
-         * We should not stop label cache from one renderer while it is shared between many renderers.
-         * Fix for labels rendering when the layer is removed.
-         */ 
-//        wrapped.stop();
     }
-
-   public void put(String arg0, TextSymbolizer arg1, Feature arg2,
-			LiteShape2 arg3, NumberRange<Double> arg4) {
-		wrapped.put(arg0, arg1, arg2, arg3, arg4);
-	}
-
 
 }

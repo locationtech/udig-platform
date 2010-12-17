@@ -257,15 +257,14 @@ public class LayerImpl extends EObjectImpl implements Layer {
         @SuppressWarnings("unchecked")
         public void changed( FeatureEvent featureEvent ) {
             try {
-                FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = (FeatureSource<SimpleFeatureType, SimpleFeature>) featureEvent
-                        .getFeatureSource();
-                FeatureSource<SimpleFeatureType, SimpleFeature> resource = getResource(
-                        FeatureSource.class, new NullProgressMonitor());
-                if (resource instanceof UDIGFeatureStore) {
-                    UDIGFeatureStore layerResource = (UDIGFeatureStore) resource;
-                    if (featureSource != layerResource.wrapped)
+                FeatureSource<?,?> featureSource = (FeatureSource<?,?>) featureEvent.getFeatureSource();
+                FeatureSource<?,?> resource = getResource(FeatureSource.class, new NullProgressMonitor());
+                
+                if (resource instanceof UDIGStore) {
+                    UDIGStore layerResource = (UDIGStore) resource;
+                    if (featureSource != layerResource.wrapped()){
                         featureSource.removeFeatureListener(this);
-
+                    }
                 }
             } catch (IOException e) {
                 ProjectPlugin.log("", e); //$NON-NLS-1$
@@ -668,7 +667,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 geoResources = NULL;
             } else {
                 eSetDeliver(false);
-                geoResources = new EDataTypeUniqueEList(IGeoResource.class, this,
+                geoResources = new EDataTypeUniqueEList<IGeoResource>(IGeoResource.class, this,
                         ProjectPackage.LAYER__GEO_RESOURCES);
                 geoResources.addAll(resourceList);
                 eSetDeliver(true);
@@ -1447,7 +1446,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated NOT
      * @ordered
      */
-    protected volatile EList geoResources = null;
+    protected volatile EList<IGeoResource> geoResources = null;
 
     /**
      * The default value of the '{@link #getGlyph() <em>Glyph</em>}' attribute. <!-- begin-user-doc

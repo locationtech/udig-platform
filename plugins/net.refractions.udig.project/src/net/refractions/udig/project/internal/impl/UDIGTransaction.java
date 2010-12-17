@@ -15,6 +15,7 @@
 package net.refractions.udig.project.internal.impl;
 
 import java.io.IOException;
+import java.util.Set;
 
 import net.refractions.udig.project.internal.Messages;
 
@@ -31,7 +32,7 @@ import org.geotools.data.Transaction;
 public class UDIGTransaction extends DefaultTransaction implements Transaction {
     @Override
     public void commit() throws IOException {
-        throw new RuntimeException(Messages.UDIGTransaction_commitException); 
+        throw new IllegalStateException(Messages.UDIGTransaction_commitException); 
     }
 
     @Override
@@ -41,7 +42,7 @@ public class UDIGTransaction extends DefaultTransaction implements Transaction {
 
     @Override
     public synchronized void close() {
-        throw new RuntimeException(Messages.UDIGTransaction_closeException); 
+        throw new IllegalStateException(Messages.UDIGTransaction_closeException); 
     }
 
     public void commitInternal() throws IOException {

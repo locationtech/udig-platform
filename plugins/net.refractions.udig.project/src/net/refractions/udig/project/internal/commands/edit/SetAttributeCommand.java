@@ -22,6 +22,7 @@ import net.refractions.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureStore;
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.opengis.feature.simple.SimpleFeature;
@@ -99,6 +100,7 @@ public class SetAttributeCommand extends AbstractEditCommand implements Undoable
             return;
         }
         FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer.getResource(FeatureStore.class, null);
+        //SimpleFeatureStore resource = layer.getResource(SimpleFeatureStore.class, null );
         SimpleFeature feature2 = editFeature.get(monitor);
 
         FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());

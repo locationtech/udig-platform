@@ -34,6 +34,7 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.styling.AnchorPoint;
@@ -144,14 +145,17 @@ public class ShpGeoResourceImpl extends IGeoResource {
         if (adaptee.isAssignableFrom(IGeoResourceInfo.class)) {
             return adaptee.cast(createInfo(monitor));
         }
-        if (adaptee.isAssignableFrom(FeatureStore.class)) {
+        if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
             FeatureSource<SimpleFeatureType, SimpleFeature> fs = featureSource(monitor);
-            if (fs instanceof FeatureStore) {
+            if (fs instanceof SimpleFeatureStore) {
                 return adaptee.cast(fs);
             }
         }
-        if (adaptee.isAssignableFrom(FeatureSource.class)) {
-            return adaptee.cast(featureSource(monitor));
+        if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
+            FeatureSource<SimpleFeatureType, SimpleFeature> fs = featureSource(monitor);
+            if (fs instanceof SimpleFeatureStore) {
+                return adaptee.cast(fs);
+            }
         }
         if (adaptee.isAssignableFrom(SimpleFeatureSource.class)) {
             return adaptee.cast(featureSource(monitor));
@@ -171,7 +175,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
         return super.resolve(adaptee, monitor);
     }
 
-    private FeatureSource<SimpleFeatureType, SimpleFeature> featureSource( IProgressMonitor monitor ) throws IOException {
+    private SimpleFeatureSource featureSource( IProgressMonitor monitor ) throws IOException {
         return parent.getDS(monitor).getFeatureSource();
     }
 

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.refractions.udig.project.internal.impl.UDIGFeatureStore;
+import net.refractions.udig.project.internal.impl.UDIGSimpleFeatureStore;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
@@ -82,11 +83,12 @@ public class FeatureChooserDialog extends AbstractChooserDialog {
                     }
                     if (tmp instanceof DataStore) {
                         selectedLayers = (List<DataStore>) active.getSelectedLayers();
-                    } else if (tmp instanceof UDIGFeatureStore) {
+                    } else if (tmp instanceof UDIGSimpleFeatureStore) {
                         List l = (List) active.getSelectedLayers();
                         List<DataStore> ll = new ArrayList<DataStore>();
                         for( Object object : l ) {
-                            ll.add(((UDIGFeatureStore) object).getDataStore());
+                            UDIGSimpleFeatureStore internal = (UDIGSimpleFeatureStore) object;
+                            ll.add(internal.getDataStore());
                         }
                         selectedLayers = ll;
                     }

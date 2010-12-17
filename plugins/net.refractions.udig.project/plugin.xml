@@ -94,6 +94,11 @@
             order="PRE"
             target="org.geotools.data.FeatureStore"/>
       <interceptor
+            class="net.refractions.udig.project.internal.interceptor.WrapSimpleFeatureStore"
+            id="net.refractions.udig.project.wrap.simplefeaturestore"
+            order="PRE"
+            target="org.geotools.data.SimpleFeatureStore"/>
+      <interceptor
             class="net.refractions.udig.project.internal.impl.ListenerAddingInterceptor"
             id="net.refractions.udig.project.AddEditingListener"
             order="PRE"
