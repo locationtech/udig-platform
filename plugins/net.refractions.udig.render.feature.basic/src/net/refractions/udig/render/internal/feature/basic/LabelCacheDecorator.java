@@ -27,7 +27,6 @@ import org.geotools.renderer.lite.LabelCache;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.util.NumberRange;
 import org.opengis.feature.Feature;
-import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * Wraps the context's {@link ILabelPainter} to allow labeling produced by the Streaming/Shapefile
@@ -95,7 +94,7 @@ public class LabelCacheDecorator implements LabelCache{
         wrapped.put(area);
     }
     
-    public void put( String layerId, TextSymbolizer symbolizer, SimpleFeature feature, LiteShape2 shape,
+    public void put( String layerId, TextSymbolizer symbolizer, Feature feature, LiteShape2 shape,
             NumberRange<Double> scaleRange ) {
         // this may change to Feature in the future
         wrapped.put(this.layerId, symbolizer, feature, shape, scaleRange);
