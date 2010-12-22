@@ -30,12 +30,13 @@ def files = [];
 destination.eachFileRecurse() { translatedFile ->
     def path = translatedFile.name;
     def newName = path.replaceFirst("", "");
-    newName = newName.replaceAll("/", "__");
+    newName = newName.replaceAll("[\\\\/]", "__");
     files << newName;
 }
 
 // copy them over to the properties folder
 files.each{ file ->
+	println file
     def newName = file.replaceAll("__", "/");
     def src = new File(destination, file);
 
