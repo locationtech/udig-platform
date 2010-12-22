@@ -16,6 +16,11 @@
 def base = new File("../../plugins/");
 def destination = new File("./properties");
 
+println """
+	Copy from base folder: ${base.absolutePath}
+	to folder: ${destination.absolutePath}
+"""
+
 if(!base.exists()){
     println """
         Some of the folders of the original file structure are missing. 
@@ -30,7 +35,7 @@ if(!base.exists()){
 def files = [];
 base.eachFileRecurse() {
     if (it.name.matches(".*(messages|messages[\\D]{3}|plugin|plugin[\\D]{3}).properties")) {
-        if(!it.absolutePath.matches(".*/bin/.*")){
+        if(!it.absolutePath.matches(".*[\\\\/]bin[\\\\/].*")){
             files << it;
         }
     }
@@ -39,9 +44,9 @@ base.eachFileRecurse() {
 // copy them over to the properties folder
 files.each{ file ->
     def src = file.absolutePath
-    def newName = src.replaceFirst(".*/../../plugins/", "");
-    newName = newName.replaceAll("/", "__");
-
+    def newName = src.replaceFirst(".*[\\\\/]..[\\\\/]..[\\\\/]plugins[\\\\/]", "");
+    newName = newName.replaceAll("[\\\\/]", "__");
+	
     def destFile = new File(destination, newName);
     if(destFile.exists()){
         destFile.delete();
