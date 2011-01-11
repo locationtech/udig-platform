@@ -43,7 +43,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-process-2.7-M5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-property-2.7-M5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-2.7-M5.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-render-2.7-M5.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-render-2.7-M5.jar" sourcepath="/mnt/hgfs/java/geotools/head/modules/library/render/src/main/java"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-2.7-M5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-renderer-2.7-M5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-svg-2.7-M5.jar"/>

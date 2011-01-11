@@ -8,7 +8,9 @@ export BASE=`dirname $0`
 export TARGET=~/Desktop/target/1.2.1
 export VERSION=1.2.1
 export BUILD=${BASE}/build
-export QUALIFIER=1.2.1.201012152133
+
+# net.refractions.udig.libs "qualifier" for SDK
+export QUALIFIER=1.2.1.201012251744
 
 # Build Resources
 export JRE=~/Desktop/target/jre
