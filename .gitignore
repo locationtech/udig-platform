@@ -1,3 +1,4 @@
+.DS_Store
 plugins/net.refractions.udig.libs.source/util/bin/
 plugins/net.refractions.udig.*/bin
 tutorials/net.refractions.udig.tutorials.*/bin
