@@ -28,10 +28,8 @@ import java.nio.channels.ReadableByteChannel;
 import java.util.HashMap;
 
 import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.URLUtils;
 import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource;
-import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResourceInfo;
 import net.refractions.udig.catalog.rasterings.GridCoverageLoader;
 import net.refractions.udig.catalog.worldimage.internal.Messages;
 

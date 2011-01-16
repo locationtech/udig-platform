@@ -117,7 +117,6 @@ public class WorldImageServiceExtension implements ServiceExtension2 {
         return reasonForFailure(getID(params));
     }
 
-    @SuppressWarnings("unchecked")
     public String reasonForFailure( URL id ) {
         if(id == null) {
             return Messages.WorldImageServiceExtension_noID;
@@ -128,7 +127,8 @@ public class WorldImageServiceExtension implements ServiceExtension2 {
         }
         String path = file.getAbsolutePath();
         String fileExt = path.substring(path.lastIndexOf('.') + 1).toLowerCase();
-        if(fileExt.compareToIgnoreCase("PNG") != 0 &&  //$NON-NLS-1$
+        if(     fileExt.compareToIgnoreCase("BMP") != 0 && //$NON-NLS-1$
+                fileExt.compareToIgnoreCase("PNG") != 0 &&  //$NON-NLS-1$
                 fileExt.compareToIgnoreCase("GIF") != 0 && //$NON-NLS-1$
                 fileExt.compareToIgnoreCase("JPG") != 0 && //$NON-NLS-1$
                 fileExt.compareToIgnoreCase("JPEG") != 0 && //&& //$NON-NLS-1$
@@ -136,6 +136,7 @@ public class WorldImageServiceExtension implements ServiceExtension2 {
                 fileExt.compareToIgnoreCase("TIFF") != 0) { //$NON-NLS-1$
            return Messages.WorldImageServiceExtension_badFileExtension+fileExt;
         }       
+
         Collection<String> endings = new HashSet<String>(WorldImageFormat.getWorldExtension(fileExt));
         endings.add(".wld"); //$NON-NLS-1$
         endings.add(fileExt+"w"); //$NON-NLS-1$

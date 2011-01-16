@@ -41,18 +41,18 @@
 
   ;Name and file
   ;:TODO: Change this with each release of uDIG!
-  Name "uDig VersionXXXX"
-  OutFile "udig-VersionXXXX.exe"
+  Name "uDig 1.2.1"
+  OutFile "udig-1.2.1.exe"
   ;:TODO: End of changes required when upgrading installer to new version of uDIG.
 
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\uDig\VersionXXXX"
+  InstallDir "$PROGRAMFILES\uDig\1.2.1"
   
   ;Get installation folder from registry if available - This will check the registry to see if an install directory
   ;is present, and if so, replace the value in InstallDir with it.  If there is no value, the installer will fall
   ;back on InstallDir as the default install directory.
-  InstallDirRegKey HKCU "Software\VersionXXXX" ""
+  InstallDirRegKey HKCU "Software\1.2.1" ""
 
 ;--------------------------------
 ;Variables
@@ -162,7 +162,7 @@ Section "uDig Section" SecuDig
   File /r udig
     
   ;Store installation folderh
-  WriteRegStr HKCU "Software\uDigVersionXXXX" "" $INSTDIR
+  WriteRegStr HKCU "Software\uDig1.2.1" "" $INSTDIR
   
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -218,7 +218,7 @@ Section "uDig Section" SecuDig
      DONE:
     SetOutPath "$INSTDIR\udig\"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\uDig.lnk" \
-                   "$INSTDIR\udig\udig.bat" "-data $\"%HOMEDRIVE%%HOMEPATH%\uDig\$\" -configuration $\"%APPDATA%\udig\VersionXXXX\$\" -vm $\"$INSTDIR\udig\jre\bin\javaw.exe$\"" \
+                   "$INSTDIR\udig\udig.bat" "-data $\"%HOMEDRIVE%%HOMEPATH%\uDig\$\" -configuration $\"%APPDATA%\udig\1.2.1\$\" -vm $\"$INSTDIR\udig\jre\bin\javaw.exe$\"" \
                    "$INSTDIR\udig\icons\32-uDigIcon.ico" 0 SW_SHOWNORMAL
 
     ;Set path back to normal
@@ -270,7 +270,7 @@ Section "Uninstall"
   RMDIR "$INSTDIR\.."
 
   ;REMOVE THE CONFIGURATION DATA 
-  RMDIR /r "$APPDATA\uDig\uDigVersionXXXX"
+  RMDIR /r "$APPDATA\uDig\uDig1.2.1"
   ;WILL REMOVE IF THERE ARE NO MORE UDIG INSTALLS
   RMDIR "$APPDATA\uDig"
   

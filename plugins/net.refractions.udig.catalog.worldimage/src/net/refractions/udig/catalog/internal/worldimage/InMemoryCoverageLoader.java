@@ -50,7 +50,6 @@ import org.geotools.geometry.GeneralEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.coverage.grid.GridCoverage;
-import org.opengis.coverage.grid.GridCoverageReader;
 import org.opengis.coverage.grid.GridEnvelope;
 import org.opengis.geometry.Envelope;
 
@@ -60,7 +59,6 @@ import org.opengis.geometry.Envelope;
  * @author jeichar
  * @since 1.1.0
  */
-@SuppressWarnings("deprecation")
 public class InMemoryCoverageLoader extends GridCoverageLoader {
 
     private static final GridCoverage EMPTY_COVERAGE;
@@ -84,7 +82,6 @@ public class InMemoryCoverageLoader extends GridCoverageLoader {
         this.fileName = fileName;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public synchronized GridCoverage load( GeneralGridGeometry geom, IProgressMonitor monitor )
             throws IOException {
@@ -102,6 +99,7 @@ public class InMemoryCoverageLoader extends GridCoverageLoader {
 				RasteringsPlugin
 						.log("WARNING.  Loading image fully into memory.  It is about " + size(image) + " MB in size decompressed", null); //$NON-NLS-1$//$NON-NLS-2$
 
+                @SuppressWarnings("rawtypes")
                 BufferedImage bi = new BufferedImage(image.getColorModel(), (WritableRaster) image
                         .getData(), false, new Hashtable());
                 GridCoverageFactory fac = new GridCoverageFactory();
