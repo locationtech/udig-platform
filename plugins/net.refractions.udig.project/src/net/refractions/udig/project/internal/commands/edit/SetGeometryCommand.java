@@ -68,7 +68,7 @@ public class SetGeometryCommand extends SetAttributeCommand implements UndoableC
     }
 
     /**
-     * Prep the geometry (srsName and default geometry name) prior setAttributeCommand.
+     * Prepairs the geometry (srsName and default geometry name) prior setAttributeCommand.
      * 
      * @see net.refractions.udig.project.internal.command.MapCommand#run()
      */
