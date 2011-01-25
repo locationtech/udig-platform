@@ -13,7 +13,11 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.UndoableCommand;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.referencing.CRS;
 import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.GeometryDescriptor;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Geometry;
 
@@ -64,11 +68,24 @@ public class SetGeometryCommand extends SetAttributeCommand implements UndoableC
     }
 
     /**
+     * Prep the geometry (srsName and default geometry name) prior setAttributeCommand.
+     * 
      * @see net.refractions.udig.project.internal.command.MapCommand#run()
      */
     public void run( IProgressMonitor monitor ) throws Exception {
-        if (xpath.equals(DEFAULT))
-            xpath = editLayer.get(monitor).getSchema().getGeometryDescriptor().getName().getLocalPart();
+        SimpleFeatureType schema = editLayer.get(monitor).getSchema();
+        GeometryDescriptor geometryDescriptor = schema.getGeometryDescriptor();
+        if (xpath.equals(DEFAULT)){
+            xpath = geometryDescriptor.getName().getLocalPart();
+        }
+        Geometry geometry = (Geometry) value;
+        if( geometry.getUserData() == null ){
+            CoordinateReferenceSystem crs = geometryDescriptor.getCoordinateReferenceSystem();
+            if( crs != null ){
+                String srsName = CRS.toSRS(crs);
+                geometry.setUserData(srsName);
+            }
+        }
         super.run(monitor);
     }
 
