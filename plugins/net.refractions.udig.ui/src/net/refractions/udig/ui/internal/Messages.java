@@ -89,6 +89,8 @@ public class Messages extends NLS {
     public static String SendLogDialog_reading;
     public static String SendLogDialog_submit;
     public static String SendLogDialog_title;
+    public static String SubmitIssueDialog_instructions;
+    public static String SubmitIssueDialog_copy;
     public static String ShutdownTaskList_shutDown;
     public static String TransferPreference_transfer_preference_description;
 	public static String FeatureTextTransfer_transfer_name;
