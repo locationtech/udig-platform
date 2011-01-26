@@ -95,8 +95,8 @@
          menubarPath="help/helpEnd">
 			</action>
    <action
-         class="net.refractions.udig.internal.ui.ShowSendLogAction"
-         id="net.refractions.udig.ui.sendLogAction"
+         class="net.refractions.udig.internal.ui.ShowSubmitIssueAction"
+         id="net.refractions.udig.ui.submitIssueAction"
          label="%log.action.name"
          menubarPath="help/helpEnd"
          style="push"
