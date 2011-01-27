@@ -56,8 +56,7 @@ public class SubmitIssueDialog extends TitleAreaDialog {
 
     public SubmitIssueDialog( Shell parentShell ) {
         super(parentShell);
-        setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL
-                | getDefaultOrientation());
+        setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL | getDefaultOrientation());
     }
 
     @Override
@@ -87,10 +86,14 @@ public class SubmitIssueDialog extends TitleAreaDialog {
         applyDialogFont(composite);
 
         // add issue tracker instructions with relevant links
-        submitIssueLink = new Link(composite, SWT.WRAP | SWT.READ_ONLY | SWT.BORDER | SWT.MULTI);
+        Composite linkComposite = new Composite(composite, SWT.BORDER);
+        GridData linkCompositeGD = new GridData(SWT.FILL, SWT.FILL, true, false);
+        linkCompositeGD.horizontalSpan = 2;
+        linkComposite.setLayoutData(linkCompositeGD);
+        linkComposite.setLayout(new GridLayout(1, false));
+        submitIssueLink = new Link(linkComposite, SWT.WRAP | SWT.READ_ONLY | SWT.BORDER | SWT.MULTI);
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
         gridData.horizontalSpan = 2;
-        submitIssueLink.setBackground(getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE));
         submitIssueLink.setLayoutData(gridData);
         submitIssueLink.setText(Messages.SubmitIssueDialog_instructions);
         submitIssueLink.addListener(SWT.Selection, new Listener(){
@@ -192,8 +195,7 @@ public class SubmitIssueDialog extends TitleAreaDialog {
      * Runnable for opening log file and adding log file contents to GUI
      */
     private class PopulateLogRunnable implements IRunnableWithProgress {
-        public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                InterruptedException {
+        public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
             String text;
             if (logExists()) {
                 text = getLogText(monitor);
