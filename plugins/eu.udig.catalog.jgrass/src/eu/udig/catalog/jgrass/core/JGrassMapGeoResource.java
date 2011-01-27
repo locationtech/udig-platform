@@ -364,6 +364,16 @@ public class JGrassMapGeoResource extends IGeoResource {
         }
         createInfo(new NullProgressMonitor());
     }
+    
+    @Override
+    public String getTitle() {
+        try {
+            createInfo(new NullProgressMonitor());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return info.getTitle();
+    }
 
     /**
      * the region how it is seen when doing elaborations. This is the active working region of the
