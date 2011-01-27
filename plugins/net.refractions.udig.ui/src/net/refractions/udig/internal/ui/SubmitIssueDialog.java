@@ -87,10 +87,10 @@ public class SubmitIssueDialog extends TitleAreaDialog {
         applyDialogFont(composite);
 
         // add issue tracker instructions with relevant links
-        submitIssueLink = new Link(composite, SWT.WRAP | SWT.READ_ONLY | SWT.BORDER | SWT.MULTI);
+        submitIssueLink = new Link(composite, SWT.WRAP | SWT.READ_ONLY | SWT.MULTI);
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
         gridData.horizontalSpan = 2;
-        submitIssueLink.setBackground(getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE));
+        submitIssueLink.setBackground(getShell().getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
         submitIssueLink.setLayoutData(gridData);
         submitIssueLink.setText(Messages.SubmitIssueDialog_instructions);
         submitIssueLink.addListener(SWT.Selection, new Listener(){
