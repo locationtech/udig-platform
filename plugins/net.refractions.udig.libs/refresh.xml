@@ -184,6 +184,10 @@
 			<dependency groupId="junit" artifactId="junit" version="3.8.1" scope="provided" />
 			<dependency groupId="velocity" artifactId="velocity" version="1.4" scope="provided" />
 			<dependency groupId="com.miglayout" artifactId="miglayout" version="3.7" classifier="swing" scope="provided" />
+			
+			<!-- Jaitools deps -->
+			<dependency groupId="com.googlecode.jaitools" artifactId="jiffle" version="1.0.1" />
+			<dependency groupId="com.googlecode.jaitools" artifactId="zonalstats" version="1.0.1" />
 
 		</artifact:dependencies>
 	</target>
