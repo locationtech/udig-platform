@@ -233,9 +233,6 @@
 			</chainedmapper>
 		</copy>
 		-->
-		<!-- not needed right now -->
-		<!--<antcall target="fix" /> -->
-
 		<!-- <eclipse.refreshLocal resource="net.refractions.udig.libs/lib" depth="infinite"/>	-->
 	</target>
 
@@ -243,28 +240,6 @@
 		<description>creates the lib directory if needed</description>
 		<mkdir dir="${lib}" />
 		<mkdir dir="${libs_src_dir}" />
-	</target>
-
-	<!-- target to use to "fix" geoapi SNAPSHOT to a consistent format -->
-	<!-- otherwise it appears witha  different name depending on if    -->
-	<!-- it got it locally or from the repmote repository              -->
-	<!-- This is not needed right now as geotools is depending on a    -->
-	<!-- specific GeoAPI tag                                           -->
-	<target name="fix">
-		<move file="${lib}/geoapi-${geoapi.version}.jar" tofile="${lib}/geoapi-2.3-PREVIOUS.jar" verbose="true" failonerror="no" />
-		<move file="${lib}/geoapi-pending-${geoapi.version}.jar" tofile="${lib}/geoapi-pending-2.3-PREVIOUS.jar" verbose="true" failonerror="no" />
-		<move todir="${lib}" verbose="true" failonerror="no">
-			<fileset dir="${lib}">
-				<include name="geoapi-2.3-*.jar" />
-			</fileset>
-			<mapper type="regexp" from="^.*$" to="geoapi-2\.3-SNAPSHOT\.jar" />
-		</move>
-		<move todir="${lib}" verbose="true" failonerror="no">
-			<fileset dir="${lib}">
-				<include name="geoapi-pending-2.3-*.jar" />
-			</fileset>
-			<mapper type="regexp" from="^.*$" to="geoapi-pending-2\.3-SNAPSHOT\.jar" />
-		</move>
 	</target>
 
 	<!-- Used by headless build please make sure this does everthing from clean to download and fix etc.. -->

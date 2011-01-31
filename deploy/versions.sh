@@ -10,8 +10,7 @@ export VERSION=1.2.1
 export BUILD=${BASE}/build
 
 # net.refractions.udig.libs "qualifier" for SDK
-export QUALIFIER=1.2.1.201012251744
-
+export QUALIFIER=1.2.1.201101312252
 # Build Resources
 export JRE=~/Desktop/target/jre
 
