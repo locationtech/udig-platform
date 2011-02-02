@@ -187,8 +187,8 @@
 			
 			<!-- Jaitools deps -->
 			<dependency groupId="com.googlecode.jaitools" artifactId="jiffle" version="1.0.1" />
+			<dependency groupId="antlr" artifactId="antlr" version="2.7.7" scope="provided" />
 			<dependency groupId="com.googlecode.jaitools" artifactId="zonalstats" version="1.0.1" />
-
 		</artifact:dependencies>
 	</target>
 
