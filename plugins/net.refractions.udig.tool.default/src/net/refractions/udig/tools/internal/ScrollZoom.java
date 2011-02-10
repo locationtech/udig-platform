@@ -51,7 +51,8 @@ public class ScrollZoom extends AbstractTool {
     public void mouseWheelMoved(MapMouseWheelEvent e) {
         if( e.modifiersDown() )
             return;
-        UpdateThread.getUpdater().zoom(e.clickCount*3, getContext(), 500);
+        UpdateThread.getUpdater().zoomWithFixedPoint(e.clickCount * 3, getContext(), 500,
+                e.getPoint());
     }
 
     /**

@@ -6,6 +6,7 @@ package net.refractions.udig.project.internal.render.impl;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Collections;
@@ -720,10 +721,31 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     public ViewportModel zoom( double zoom ) {
         Coordinate center = getCenter();
-        double height = getHeight() / zoom, width = getWidth() / zoom;
-        double dh = height / 2, dw = width / 2;
-        setBounds(center.x - dw, center.x + dw, center.y - dh, center.y + dh);
+        zoom(zoom, center);
         return this;
+    }
+
+    public ViewportModel zoom( double zoom, Coordinate fixedPoint ) {
+        if (fixedPoint == null) {
+            fixedPoint = getCenter();
+        }
+        AffineTransform transformer = ScaleUtils.createScaleTransformWithFixedPoint(zoom,
+                fixedPoint);
+        ReferencedEnvelope srcEnvelope = getBounds();
+        Envelope transformedEnvelope = transformEnvelope(srcEnvelope, transformer);
+        setBounds(transformedEnvelope);
+        return this;
+    }
+
+    private Envelope transformEnvelope( ReferencedEnvelope srcEnvelope, AffineTransform transformer ) {
+        Point2D lowLeft = new Point2D.Double(srcEnvelope.getMinX(), srcEnvelope.getMinY());
+        Point2D transformedLowLeft = new Point2D.Double();
+        transformedLowLeft = transformer.transform(lowLeft, transformedLowLeft);
+        Point2D upRight = new Point2D.Double(srcEnvelope.getMaxX(), srcEnvelope.getMaxY());
+        Point2D transformedUpRight = new Point2D.Double();
+        transformedUpRight = transformer.transform(upRight, transformedUpRight);
+        return new Envelope(transformedLowLeft.getX(), transformedUpRight.getX(),
+                transformedLowLeft.getY(), transformedUpRight.getY());
     }
 
     /**

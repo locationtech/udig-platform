@@ -14,12 +14,16 @@
  */
 package net.refractions.udig.tools.internal;
 
+import java.awt.Point;
 import java.util.ArrayList;
+
+import com.vividsolutions.jts.geom.Coordinate;
 
 import net.refractions.udig.project.command.NavCommand;
 import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.internal.command.navigation.NavComposite;
 import net.refractions.udig.project.internal.command.navigation.PanCommand;
+import net.refractions.udig.project.internal.command.navigation.ZoomCommand;
 import net.refractions.udig.project.ui.commands.TransformDrawCommand;
 import net.refractions.udig.project.ui.tool.IToolContext;
 
@@ -44,6 +48,7 @@ public class UpdateThread implements Runnable {
     private int horizontal=0;
     private IToolContext context;
 	private volatile long updateDelay = 1000;
+    private Coordinate fixedPoint;
     
     private UpdateThread(){}
     
@@ -133,7 +138,15 @@ public class UpdateThread implements Runnable {
         }
         requestStart();
     }
+
     public void zoom( int change, IToolContext context, int updateDelay ) {
+        zoomWithFixedPoint(change, context, updateDelay, null);
+    }
+    /**
+     * Makes zoom and keeps fixedPoint at the same place.
+     */
+    public void zoomWithFixedPoint( int change, IToolContext context, int updateDelay,
+            Point fixedPoint ) {
         amount += change;
         this.updateDelay = updateDelay;
 
@@ -142,16 +155,22 @@ public class UpdateThread implements Runnable {
         synchronized (UpdateThread.class) {
             if (command == null) {
                 TransformDrawCommand transformDrawCommand = new TransformDrawCommand();
-                command=transformDrawCommand;
+                command = transformDrawCommand;
+                if (fixedPoint == null) {
+                    fixedPoint = new Point(context.getViewportPane().getWidth() / 2, context
+                            .getViewportPane().getHeight() / 2);
+                }
+                transformDrawCommand.fixPoint(fixedPoint);
+                this.fixedPoint = context.pixelToWorld(fixedPoint.x, fixedPoint.y);
                 transformDrawCommand.zoom(zoom, zoom);
-                context.sendASyncCommand(transformDrawCommand );
+                context.sendASyncCommand(transformDrawCommand);
             } else {
                 command.zoom(zoom, zoom);
                 context.getViewportPane().repaint();
             }
         }
 
-        this.context=context;
+        this.context = context;
 
         requestStart();
     }
@@ -165,7 +184,9 @@ public class UpdateThread implements Runnable {
                     (NavCommand) new PanCommand((horizontal*-PAN_AMOUNT), (vertical*-PAN_AMOUNT)));
         }
         if( zoom>0.00000001 ){
-            commands.add(factory.createZoomCommand(zoom));
+            ZoomCommand zoomCommand = new ZoomCommand(zoom);
+            zoomCommand.setFixedPoint(fixedPoint);
+            commands.add(zoomCommand);
         }
         if( commands.size()>0 ){
             NavComposite composite = new NavComposite(commands);

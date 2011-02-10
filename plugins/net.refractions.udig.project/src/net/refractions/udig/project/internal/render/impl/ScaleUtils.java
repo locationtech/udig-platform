@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.refractions.udig.project.internal.render.impl;
 
 import java.awt.Dimension;
@@ -469,4 +466,20 @@ public final class ScaleUtils {
                 .getDisplaySize(), mapDisplay.getDPI(), requestedBounds);
     }
 
+    /**
+     * Creates affine transform for zooming that keeps <i>fixedPoint</i> stationary.
+     *
+     * @param zoom zoom ration
+     * @param fixedPoint point to keep stationary
+     * @return an <i>AffineTransform</i> object containing scale transform that keeps
+     *         <i>fixedPoint</i> stationary
+     */
+    public static AffineTransform createScaleTransformWithFixedPoint( double zoom,
+            Coordinate fixedPoint ) {
+        AffineTransform t = new AffineTransform();
+        t.translate(fixedPoint.x, fixedPoint.y);
+        t.scale(1 / zoom, 1 / zoom);
+        t.translate(-fixedPoint.x, -fixedPoint.y);
+        return t;
+    }
 }

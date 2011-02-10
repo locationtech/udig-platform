@@ -13,6 +13,8 @@ import net.refractions.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
+import com.vividsolutions.jts.geom.Coordinate;
+
 /**
  * Increases or decreases the size of the viewport(in world space) by a constant factor, zoom. The
  * zoom is equal in both directions. The function used is: bbox.height=bbox.height/divisor
@@ -24,6 +26,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class ZoomCommand extends AbstractNavCommand {
 
     private double zoomfactor;
+    private Coordinate fixedPoint;
 
     /**
      * Creates a new instance of ZoomCommand
@@ -39,6 +42,10 @@ public class ZoomCommand extends AbstractNavCommand {
         this.zoomfactor = zoomfactor;
     }
 
+    public void setFixedPoint( Coordinate fixedPoint ) {
+        this.fixedPoint = fixedPoint;
+    }
+
     /**
      * @see net.refractions.udig.project.internal.command.MapCommand#copy()
      */
@@ -50,7 +57,7 @@ public class ZoomCommand extends AbstractNavCommand {
      * @see net.refractions.udig.project.internal.command.navigation.AbstractNavCommand#runImpl()
      */
     protected void runImpl( IProgressMonitor monitor ) {
-        model.zoom(zoomfactor);
+        model.zoom(zoomfactor, fixedPoint);
     }
 
     /**

@@ -359,6 +359,25 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     public ViewportModel zoom( double zoom );
 
     /**
+     * Increases or decreases the size of the viewport(in world space) by a constant factor, zoom.
+     * The zoom is equal in both directions. The function used is: bbox.height=bbox.height/divisor
+     * bbox.width=bbox.width/divisor
+     * <ul>
+     * <li>A zoom must be greater than 1.</li>
+     * <li>A zoom greater than 1 is a zoom towards the map(SimpleFeature appear larger.)</li>
+     * <li>A zoom less than 1 is a zoom away from the map</li>
+     * </ul>
+     * When get not null parameter fixedPoint then keep it fixed after zoom transform. In case of
+     * null parameter center point of map will be fixed
+     *
+     * @param zoom the zoom factor
+     * @param fixedPoint the point that will remain fixed after zoom, can be null
+     * @return This ViewportModel, allows for command chaining.
+     * @model
+     */
+    public ViewportModel zoom( double zoom, Coordinate fixedPoint );
+
+    /**
      * sets the Viewport bounding box so that it fully contains the visible map extent
      * 
      * @model
