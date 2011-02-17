@@ -103,9 +103,10 @@ public class JGrassMapGeoResource extends IGeoResource {
         URL parentIdentifier = parent.getIdentifier();
         ID parentID = new ID(parentIdentifier);
 
+        jGrassMapEnvironment = new JGrassMapEnvironment(parentMapset.getFile(), name);
+
         id = new ID(parentID, name);
 
-        jGrassMapEnvironment = new JGrassMapEnvironment(parentMapset.getFile(), name);
     }
 
     public <T> boolean canResolve( Class<T> adaptee ) {
@@ -364,7 +365,7 @@ public class JGrassMapGeoResource extends IGeoResource {
         }
         createInfo(new NullProgressMonitor());
     }
-    
+
     @Override
     public String getTitle() {
         try {

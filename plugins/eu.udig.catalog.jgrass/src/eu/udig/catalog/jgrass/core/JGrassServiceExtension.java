@@ -30,10 +30,12 @@ import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ServiceExtension;
 import net.refractions.udig.catalog.URLUtils;
 
+import org.codehaus.janino.tools.JGrep;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.gce.grassraster.JGrassConstants;
+import org.geotools.gce.grassraster.JGrassMapEnvironment;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import eu.udig.catalog.jgrass.JGrassPlugin;
@@ -86,6 +88,17 @@ public class JGrassServiceExtension implements ServiceExtension {
             }
 
             File file = new File(path);
+            // is it a map resource
+            if (file.exists() && file.isFile()) {
+                File cellFolderFile = file.getParentFile();
+                if (cellFolderFile.getName().equalsIgnoreCase(JGrassConstants.CELL)) {
+                    // try to get its location
+                    JGrassMapEnvironment env = new JGrassMapEnvironment(file);
+                    file = env.getLOCATION();
+                    url = file.toURI().toURL();
+                }
+            }
+
             /*
              * check one: is it a folder?
              */
@@ -94,18 +107,15 @@ public class JGrassServiceExtension implements ServiceExtension {
                  * check two: is it a jgrass folder
                  */
                 // does it have a PERMANENT folder?
-                File permanentFolder = new File(file.getAbsolutePath() + File.separator
-                        + JGrassConstants.PERMANENT_MAPSET);
+                File permanentFolder = new File(file.getAbsolutePath() + File.separator + JGrassConstants.PERMANENT_MAPSET);
                 if (permanentFolder.exists() && permanentFolder.isDirectory()) {
 
                     boolean windexists = true;
-                    File windFile = new File(permanentFolder + File.separator
-                            + JGrassConstants.WIND);
+                    File windFile = new File(permanentFolder + File.separator + JGrassConstants.WIND);
                     if (!windFile.exists()) {
                         windexists = false;
                         // try to see if it is a casesensitivity problem
-                        File tmpWindFile = new File(permanentFolder + File.separator
-                                + JGrassConstants.WIND.toLowerCase());
+                        File tmpWindFile = new File(permanentFolder + File.separator + JGrassConstants.WIND.toLowerCase());
                         if (tmpWindFile.exists()) {
                             // if that exists, try to change its case
                             tmpWindFile.renameTo(windFile);
@@ -123,9 +133,8 @@ public class JGrassServiceExtension implements ServiceExtension {
                         /*
                          * now check the crs
                          */
-                        File projWtkFile = new File(file.getAbsolutePath() + File.separator
-                                + JGrassConstants.PERMANENT_MAPSET + File.separator
-                                + JGrassConstants.PROJ_WKT);
+                        File projWtkFile = new File(file.getAbsolutePath() + File.separator + JGrassConstants.PERMANENT_MAPSET
+                                + File.separator + JGrassConstants.PROJ_WKT);
                         if (!setJGrassCrs(projWtkFile)) {
                             return null;
                         }
@@ -134,10 +143,10 @@ public class JGrassServiceExtension implements ServiceExtension {
                     }
                 }
             }
+
         } catch (Throwable e) {
-            JGrassPlugin
-                    .log(
-                            "JGrassPlugin problem: eu.hydrologis.udig.catalog.internal.jgrass#JGrassServiceExtension#createParams", e); //$NON-NLS-1$
+            JGrassPlugin.log(
+                    "JGrassPlugin problem: eu.hydrologis.udig.catalog.internal.jgrass#JGrassServiceExtension#createParams", e); //$NON-NLS-1$
 
             e.printStackTrace();
         }
@@ -194,9 +203,8 @@ public class JGrassServiceExtension implements ServiceExtension {
             }
 
         } catch (Exception e1) {
-            JGrassPlugin
-                    .log(
-                            "JGrassPlugin problem: eu.hydrologis.udig.catalog.internal.jgrass#JGrassServiceExtension#setJGrassCrs", e1); //$NON-NLS-1$
+            JGrassPlugin.log(
+                    "JGrassPlugin problem: eu.hydrologis.udig.catalog.internal.jgrass#JGrassServiceExtension#setJGrassCrs", e1); //$NON-NLS-1$
 
             e1.printStackTrace();
         }
