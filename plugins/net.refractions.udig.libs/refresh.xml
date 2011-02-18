@@ -186,9 +186,7 @@
 			<dependency groupId="com.miglayout" artifactId="miglayout" version="3.7" classifier="swing" scope="provided" />
 			
 			<!-- Jaitools deps -->
-			<dependency groupId="com.googlecode.jaitools" artifactId="jiffle" version="1.0.1" />
-			<dependency groupId="antlr" artifactId="antlr" version="2.7.7" scope="provided" />
-			<dependency groupId="com.googlecode.jaitools" artifactId="zonalstats" version="1.0.1" />
+			<dependency groupId="com.googlecode.jaitools" artifactId="jt-all" version="1.1-M3" />
 		</artifact:dependencies>
 	</target>
 

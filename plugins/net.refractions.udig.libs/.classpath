@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="lib/antlr-3.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/antlr-runtime-3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/antlr-3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/antlr-runtime-3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/janino-2.5.16.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-all-1.1-M3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-beanutils-1.7.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-collections-3.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-dbcp-1.3.jar"/>
@@ -95,7 +97,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/jfreechart-1.0.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jfreechart-experimental-1.0.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jfreechart-swt-1.0.13.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jiffle-1.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/joda-time-1.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jsqlparser-0.3.14.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jsr-275-1.0-beta-2.jar"/>
@@ -115,8 +116,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.5.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-log4j12-1.5.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-spatialite-3.7.2-1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/stringtemplate-3.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/utils-1.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/vecmath-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ws-commons-util-1.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xercesImpl-2.4.0.jar"/>
@@ -125,7 +124,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-client-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-common-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xpp3-1.1.3.4.O.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/zonalstats-1.0.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
