@@ -20,7 +20,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.TabFolder;
@@ -31,8 +30,6 @@ import org.geotools.styling.Font;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.Filter;
 
-import com.sun.xml.internal.ws.util.UtilException;
-
 import eu.udig.style.advanced.StylePlugin;
 import eu.udig.style.advanced.common.FiltersComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener;
@@ -42,6 +39,7 @@ import eu.udig.style.advanced.common.styleattributeclasses.SymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
 import eu.udig.style.advanced.points.widgets.PointBoderParametersComposite;
 import eu.udig.style.advanced.points.widgets.PointFillParametersComposite;
+import eu.udig.style.advanced.points.widgets.PointCharacterChooserComposite;
 import eu.udig.style.advanced.points.widgets.PointGeneralParametersComposite;
 import eu.udig.style.advanced.points.widgets.PointLabelsParametersComposite;
 import eu.udig.style.advanced.utils.Utilities;
@@ -50,13 +48,15 @@ import static eu.udig.style.advanced.utils.Utilities.*;
 @SuppressWarnings("nls")
 public class PointPropertiesComposite extends SelectionAdapter implements ModifyListener, IStyleChangesListener {
 
-    private static final String[] POINT_STYLE_TYPES = {"Simple Style", "Graphics Based Style"};
-
+    private static final String[] POINT_STYLE_TYPES = {"Simple Style", "Graphics Based Style", "Font Based Style"};
     private static final String[] WK_MARK_NAMES = wkMarkNames;
+    private static final String TTF_PREFIX = "ttf://";
+    
     private RuleWrapper ruleWrapper;
 
     private Composite simplePointComposite = null;
     private Composite graphicsPointComposite = null;
+    private Composite fontPointComposite = null;
     private PointPropertiesEditor pointPropertiesEditor;
     private Composite mainComposite;
     private StackLayout mainStackLayout;
@@ -76,14 +76,26 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
     private PointGeneralParametersComposite generalParametersCompositeSIMPLE;
 
     private PointGeneralParametersComposite generalParametersCompositeGRAPHICS;
-
+    
+    private PointGeneralParametersComposite generalParametersCompositeFONT;
+    
+    private PointCharacterChooserComposite fontParametersComposite;
+    
     private PointBoderParametersComposite borderParametersComposite;
-
+    
+    private PointBoderParametersComposite fontBorderParametersComposite;
+    
     private PointFillParametersComposite fillParametersComposite;
-
+    
+    private PointFillParametersComposite fontFillParametersComposite;
+    
     private PointLabelsParametersComposite labelsParametersComposite;
     
+    private PointLabelsParametersComposite fontLabelsParametersComposite;
+    
     private FiltersComposite filtersComposite;
+    
+    private FiltersComposite fontFiltersComposite;
 
     public PointPropertiesComposite( final PointPropertiesEditor pointPropertiesEditor, Composite parent ) {
         this.pointPropertiesEditor = pointPropertiesEditor;
@@ -103,6 +115,9 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
             if (graphicsPointComposite == null) {
                 createGraphicsComposite();
             }
+            if (fontPointComposite == null) {
+                createFontComposite();
+            }
         } else {
             update();
         }
@@ -115,14 +130,32 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         
         filtersComposite.update(ruleWrapper);
         
-        if (!pointSymbolizerWrapper.hasExternalGraphic()) {
+        String markName = pointSymbolizerWrapper.getMarkName();
+        
+        if (pointSymbolizerWrapper.hasExternalGraphic()) {
+            generalParametersCompositeGRAPHICS.update(ruleWrapper);
+
+            // external graphics path
+            graphicsPathText.removeModifyListener(this);
+            try {
+                graphicsPathText.setText(pointSymbolizerWrapper.getExternalGraphicPath());
+            } catch (MalformedURLException e) {
+                graphicsPathText.setText("");
+            }
+            graphicsPathText.addModifyListener(this);
+        } else if (markName != null && markName.toLowerCase().startsWith(TTF_PREFIX)) {
+            generalParametersCompositeFONT.update(ruleWrapper);
+            fontBorderParametersComposite.update(ruleWrapper);
+            fontFillParametersComposite.update(ruleWrapper);
+            fontLabelsParametersComposite.update(ruleWrapper);
+        }
+        else {
             generalParametersCompositeSIMPLE.update(ruleWrapper);
             borderParametersComposite.update(ruleWrapper);
             fillParametersComposite.update(ruleWrapper);
             labelsParametersComposite.update(ruleWrapper);
 
             // mark
-            String markName = pointSymbolizerWrapper.getMarkName();
             if (markName == null) {
                 markName = WK_MARK_NAMES[0];
             }
@@ -134,17 +167,6 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
                     break;
                 }
             }
-        } else {
-            generalParametersCompositeGRAPHICS.update(ruleWrapper);
-
-            // external graphics path
-            graphicsPathText.removeModifyListener(this);
-            try {
-                graphicsPathText.setText(pointSymbolizerWrapper.getExternalGraphicPath());
-            } catch (MalformedURLException e) {
-                graphicsPathText.setText("");
-            }
-            graphicsPathText.addModifyListener(this);
         }
 
         pointPropertiesEditor.refreshTreeViewer(ruleWrapper);
@@ -153,8 +175,6 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
 
     private void init() {
         // System.out.println("open: " + rule.getName());
-        final PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
-                PointSymbolizerWrapper.class);
 
         List<String> numericAttributeNames = pointPropertiesEditor.getNumericAttributeNames();
         numericAttributesArrays = (String[]) numericAttributeNames.toArray(new String[numericAttributeNames.size()]);
@@ -171,20 +191,23 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         styleTypecombo.setItems(POINT_STYLE_TYPES);
         styleTypecombo.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
+                PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
+                        PointSymbolizerWrapper.class);
                 int selectionIndex = styleTypecombo.getSelectionIndex();
                 if (selectionIndex == 0) {
                     int index = wknMarksCombo.getSelectionIndex();
-
-                    String markName = wknMarksCombo.getItem(index);
-                    pointSymbolizerWrapper.setMarkName(markName);
-
+                    if (index != -1)
+                    {
+                        String markName = wknMarksCombo.getItem(index);
+                        pointSymbolizerWrapper.setMarkName(markName);
+                    }
                     mainStackLayout.topControl = simplePointComposite;
 
                     generalParametersCompositeSIMPLE.update(ruleWrapper);
 
                     pointPropertiesEditor.refreshTreeViewer(ruleWrapper);
                     pointPropertiesEditor.refreshPreviewCanvasOnStyle();
-                } else {
+                } else if (selectionIndex == 1) {
                     try {
                         URL iconUrl = Platform.getBundle(StylePlugin.PLUGIN_ID).getResource("icons/delete.png");
                         String iconPath = "";
@@ -204,6 +227,13 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
 
                     pointPropertiesEditor.refreshTreeViewer(ruleWrapper);
                     pointPropertiesEditor.refreshPreviewCanvasOnStyle();
+                } else {
+                    String markName = fontParametersComposite.getCharacterPath();
+                    pointSymbolizerWrapper.setMarkName(markName);
+                    mainStackLayout.topControl = fontPointComposite;
+                    generalParametersCompositeFONT.update(ruleWrapper);
+                    pointPropertiesEditor.refreshTreeViewer(ruleWrapper);
+                    pointPropertiesEditor.refreshPreviewCanvasOnStyle();
                 }
                 mainComposite.layout();
             }
@@ -220,13 +250,17 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
     private void setRightPanel() {
         final PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
                 PointSymbolizerWrapper.class);
+        String markName = pointSymbolizerWrapper.getMarkName();
         boolean hasExt = pointSymbolizerWrapper.hasExternalGraphic();
-        if (!hasExt) {
-            styleTypecombo.select(0);
-            mainStackLayout.topControl = simplePointComposite;
-        } else {
+        if (hasExt) {
             styleTypecombo.select(1);
             mainStackLayout.topControl = graphicsPointComposite;
+        } else if (markName != null && markName.toLowerCase().startsWith(TTF_PREFIX)) {
+            styleTypecombo.select(2);
+            mainStackLayout.topControl = fontPointComposite;
+        } else {
+            styleTypecombo.select(0);
+            mainStackLayout.topControl = simplePointComposite;
         }
         mainComposite.layout();
     }
@@ -323,8 +357,6 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         TabItem tabItem5 = new TabItem(tabFolder, SWT.NULL);
         tabItem5.setText("Filter  ");
         tabItem5.setControl(filtersInternalComposite);
-
-
     }
 
     private void createGraphicsComposite() {
@@ -379,6 +411,84 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         generalParametersCompositeGRAPHICS.addListener(this);
     }
 
+    private void createFontComposite() {
+        fontPointComposite = new Composite(mainComposite, SWT.None);
+        fontPointComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        fontPointComposite.setLayout(new GridLayout(1, false));
+        
+        // rule name
+        Composite nameComposite = new Composite(fontPointComposite, SWT.NONE);
+        nameComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        nameComposite.setLayout(new GridLayout(2, true));
+
+        // use an expandbar for the properties
+        Group propertiesGroup = new Group(fontPointComposite, SWT.SHADOW_ETCHED_IN);
+        propertiesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        propertiesGroup.setLayout(new GridLayout(1, false));
+        propertiesGroup.setText("Style Properties");
+
+        TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.BORDER);
+        tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+
+        fontParametersComposite = new PointCharacterChooserComposite(tabFolder);
+        fontParametersComposite.init(ruleWrapper);
+        fontParametersComposite.addListener(this);
+        Composite fontParametersInternalComposite = fontParametersComposite.getComposite();
+
+        TabItem tabItem1 = new TabItem(tabFolder, SWT.NULL);
+        tabItem1.setText("Symbol");
+        tabItem1.setControl(fontParametersInternalComposite);
+        
+        generalParametersCompositeFONT = new PointGeneralParametersComposite(tabFolder, numericAttributesArrays);
+        generalParametersCompositeFONT.init(ruleWrapper);
+        generalParametersCompositeFONT.addListener(this);
+        Composite generalParametersInternalComposite = generalParametersCompositeFONT.getComposite();
+
+        TabItem tabItem2 = new TabItem(tabFolder, SWT.NULL);
+        tabItem2.setText("General");
+        tabItem2.setControl(generalParametersInternalComposite);
+
+        // BORDER GROUP
+        fontBorderParametersComposite = new PointBoderParametersComposite(tabFolder, numericAttributesArrays);
+        fontBorderParametersComposite.init(ruleWrapper);
+        fontBorderParametersComposite.addListener(this);
+        Composite borderParametersInternalComposite = fontBorderParametersComposite.getComposite();
+
+        TabItem tabItem3 = new TabItem(tabFolder, SWT.NULL);
+        tabItem3.setText("Border  ");
+        tabItem3.setControl(borderParametersInternalComposite);
+
+        // Fill GROUP
+        fontFillParametersComposite = new PointFillParametersComposite(tabFolder, numericAttributesArrays);
+        fontFillParametersComposite.init(ruleWrapper);
+        fontFillParametersComposite.addListener(this);
+        Composite fillParametersInternalComposite = fontFillParametersComposite.getComposite();
+
+        TabItem tabItem4 = new TabItem(tabFolder, SWT.NULL);
+        tabItem4.setText("Fill   ");
+        tabItem4.setControl(fillParametersInternalComposite);
+
+        // Label GROUP
+        fontLabelsParametersComposite = new PointLabelsParametersComposite(tabFolder, numericAttributesArrays, allAttributesArrays);
+        fontLabelsParametersComposite.init(ruleWrapper);
+        fontLabelsParametersComposite.addListener(this);
+        Composite labelParametersInternalComposite = fontLabelsParametersComposite.getComposite();
+
+        TabItem tabItem5 = new TabItem(tabFolder, SWT.NULL);
+        tabItem5.setText("Labels  ");
+        tabItem5.setControl(labelParametersInternalComposite);
+        
+        // Filter GROUP
+        fontFiltersComposite = new FiltersComposite(tabFolder);
+        fontFiltersComposite.init(ruleWrapper);
+        fontFiltersComposite.addListener(this);
+        Composite filtersInternalComposite = fontFiltersComposite.getComposite();
+
+        TabItem tabItem6 = new TabItem(tabFolder, SWT.NULL);
+        tabItem6.setText("Filter  ");
+        tabItem6.setControl(filtersInternalComposite);
+    }
+    
     @Override
     public void widgetSelected( SelectionEvent e ) {
         Object source = e.getSource();
@@ -389,13 +499,16 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
 
         if (source.equals(wknMarksCombo)) {
             int selectionIndex = wknMarksCombo.getSelectionIndex();
-            String item = wknMarksCombo.getItem(selectionIndex);
-            pointSymbolizerWrapper.setMarkName(item);
-            pointPropertiesEditor.refreshTreeViewer(ruleWrapper);
-            pointPropertiesEditor.refreshPreviewCanvasOnStyle();
-            return;
+            
+            if (selectionIndex != -1)
+            {
+                String item = wknMarksCombo.getItem(selectionIndex);
+                pointSymbolizerWrapper.setMarkName(item);
+                pointPropertiesEditor.refreshTreeViewer(ruleWrapper);
+                pointPropertiesEditor.refreshPreviewCanvasOnStyle();
+            }
         }
-
+        return;
     }
 
     public void modifyText( ModifyEvent e ) {
@@ -414,9 +527,12 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
 
     private void setNewGraphicPath() throws MalformedURLException {
         String path = graphicsPathText.getText();
-        PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
-                PointSymbolizerWrapper.class);
-        pointSymbolizerWrapper.setExternalGraphicPath(path);
+        if (! path.equals(""))
+        {
+            PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
+                    PointSymbolizerWrapper.class);
+            pointSymbolizerWrapper.setExternalGraphicPath(path);
+        }
     }
 
     public void onStyleChanged( Object source, String[] values, boolean fromField, STYLEEVENTTYPE styleEventType ) {
@@ -586,6 +702,9 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
             }
             break;
         }
+        case MARKNAME:
+            pointSymbolizerWrapper.setMarkName(value);
+            break;
         default:
             break;
         }
