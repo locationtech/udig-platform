@@ -24,10 +24,10 @@ import net.refractions.udig.core.IBlockingAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * An IAdaptable object that adapts IResolves to other objects. This is used by the framework. The
+ * An IAdaptable object that adaptes IResolves to other objects. This is used by the framework. The
  * IResolveAdapterFactory will adapt IResolves to objects of this class so that the frame work can
  * try to
- * 
+ *
  * @author jeichar
  */
 public class IResolveAdaptable implements IBlockingAdaptable {
@@ -35,7 +35,7 @@ public class IResolveAdaptable implements IBlockingAdaptable {
     private IResolve resolve;
 
     /**
-     * 
+     *
      */
     public IResolveAdaptable( IResolve resolve ) {
         this.resolve = resolve;

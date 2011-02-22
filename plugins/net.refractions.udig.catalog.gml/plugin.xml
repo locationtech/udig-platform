@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+    	<extension
+         point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.refractions.udig.catalog.internal.gml.GMLServiceExtension"
+            id="GML2"
+            name="GML2"/>
+   	</extension>
+    <extension
+          point="net.refractions.udig.catalog.ui.fileFormat">
+       <fileService fileExtension="*.gml"/>
+       <fileService fileExtension="*.xml"/>
+    </extension>
+    <extension
+          point="net.refractions.udig.catalog.resolvers">
+       <factory
+             class="net.refractions.udig.catalog.internal.gml.GMLServiceMover"
+             resolveableType="net.refractions.udig.catalog.internal.gml.GMLServiceImpl">
+          <resolve
+                type="net.refractions.udig.catalog.ServiceMover">
+          </resolve>
+       </factory>
+    </extension>
+
+</plugin>

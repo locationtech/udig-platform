@@ -28,7 +28,6 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
@@ -52,16 +51,7 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
  * override methods to configure a window's action bars to suit the needs of the particular
  * application.
  * </p>
- * <p>
- * The following advisor methods are called at strategic points in the
- * workbench's lifecycle (all occur within the dynamic scope of the call
- * to {@link PlatformUI#createAndRunWorkbench PlatformUI.createAndRunWorkbench}):
- * <ul>
- * <li><code>fillActionBars</code> - called after <code>WorkbenchWindowAdvisor.preWindowOpen</code>
- * to configure a window's action bars</li>
- * </ul>
- * </p>
- * 
+ *
  * @see WorkbenchWindowAdvisor#createActionBarAdvisor(IActionBarConfigurer)
  * @author cole.markham
  * @since 1.0.0
@@ -72,9 +62,10 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
      * also the job of an ActionBarAdvisor we have some duplication going on here.
      */
     private MenuBuilder menuBuilder;
-	/**
+
+    /**
      * Default constructor
-     * 
+     *
      * @param configurer
      */
     public UDIGActionBarAdvisor( IActionBarConfigurer configurer ) {
@@ -99,7 +90,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
 
     /**
      * Get the MenuFactory which will create the menus for this plugin
-     * 
+     *
      * @return The MenuFactory singleton
      */
     protected MenuBuilder getMenuFactory() {
@@ -127,15 +118,12 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
     protected void fillMenuBar( IMenuManager menuBar ) {
         menuBar.add(new GroupMarker(IWorkbenchActionConstants.WB_START));
 
-        // Support use of MenuBuilder for RCP applications based on uDig
-        // (org.eclipse.ui.menu is preferred!)
         MenuBuilder override = getMenuFactory();
         if (override != null && !(override instanceof UDIGMenuBuilder)) {
             IWorkbenchWindow window = getActionBarConfigurer().getWindowConfigurer().getWindow();
             override.fillMenuBar(menuBar, window);
             return;
         }
-        
         MenuManager fileMenu = new MenuManager(Messages.UDIGWorkbenchAdvisor_file,
                 IWorkbenchActionConstants.M_FILE);
         fillFileMenu(fileMenu);
@@ -147,20 +135,32 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         menuBar.add(editMenu);
 
         if( true ){
-            // TODO: phase these out with org.eclipse.ui.menus        
+            // TODO: phase these out with org.eclipse.ui.menus
             IMenuManager navMenu = new MenuManager(Messages.UDIGWorkbenchAdvisor_navigationMenu,
                     Constants.M_NAVIGATE);
             fillNavigateMenu(navMenu);
             menuBar.add(navMenu);
-    
+
             IMenuManager toolMenu = new MenuManager(Messages.UDIGWorkbenchAdvisor_tools,
                     Constants.M_TOOL);
             fillToolMenu(toolMenu);
             menuBar.add(toolMenu);
         }
-        
+
         menuBar.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-        
+
+//        if( true ){
+//            MenuManager layerMenu = new MenuManager(Messages.UDIGWorkbenchAdvisor_layerMenu,
+//            Constants.M_LAYER);
+//            fillLayerMenu( layerMenu );
+//            menuBar.add( layerMenu );
+//
+//            // You will need to manually add OpCategoryContributionItems to
+//            // the org.eclipse.ui.menus extension point for this release
+//            //
+//            //UiPlugin.getDefault().getOperationMenuFactory().contributeActions(menuBar);
+//        }
+
         IMenuManager windowMenu = new MenuManager(Messages.UDIGWorkbenchAdvisor_window,
                 IWorkbenchActionConstants.M_WINDOW);
         fillWindowMenu(windowMenu);
@@ -170,9 +170,9 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
                 IWorkbenchActionConstants.M_HELP);
         fillHelpMenu(helpMenu);
         menuBar.add(helpMenu);
-        
+
         menuBar.add(new GroupMarker(IWorkbenchActionConstants.WB_END));
-        
+
         if( true ){
             // clue in operations about the window
             IWorkbenchWindow window = getActionBarConfigurer().getWindowConfigurer().getWindow();
@@ -195,7 +195,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
      * navigate/bottom
      * navigate/navEnd
      * </pre>
-     * 
+     *
      * @param menu
      */
     protected void fillNavigateMenu( IMenuManager menu ) {
@@ -232,15 +232,15 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         menu.add(new GroupMarker(Constants.TOOL_MODAL));
         menu.add(new Separator());
         menu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-        menu.add(new GroupMarker(IWorkbenchActionConstants.WB_END));        
+        menu.add(new GroupMarker(IWorkbenchActionConstants.WB_END));
     }
-    
+
     /**
      * Set up customary File menu structure as defined by IWorkBenchActionConstants.
      * <p>
      * We are focused on providing the usual "group markers" so that menu paths for action sets,
      * tools, operations or menus will work out okay (for this or *any* RCP application).
-     * 
+     *
      * <pre>
      * file/fileStart
      * file/new.ext
@@ -259,7 +259,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
      * file/fileEnd
      * file/quit
      * </pre>
-     * 
+     *
      * @param window
      * @param fileMenu
      */
@@ -315,7 +315,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         fileMenu.add(ActionFactory.EXPORT.create(window));
         fileMenu.add(new Separator());
         fileMenu.add(ActionFactory.PROPERTIES.create(window));
-        
+
         fileMenu.add(new GroupMarker(Constants.CONFIG_EXT));
         fileMenu.add(new Separator());
 
@@ -326,7 +326,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         IWorkbenchAction quit = ActionFactory.QUIT.create(window);
         IContributionItem item = new ActionContributionItem(quit);
         item.setVisible(!Platform.OS_MACOSX.equals(Platform.getOS()));
-        
+
         fileMenu.add(item);
     }
 
@@ -337,7 +337,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
      * bare minimum here; only positioning the "group markers" in the correct spot so the relative
      * menu path goodness will work for later plugin contributions (using org.eclipse.ui.menu
      * extensions).
-     * 
+     *
      * <pre>
      * edit/editStart
      * edit/undo.ext
@@ -348,7 +348,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
      * edit/commit.ext
      * edit/editEnd
      * </pre>
-     * 
+     *
      * @param window
      * @param editMenu
      */
@@ -367,16 +367,16 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         editMenu.add(ActionFactory.COPY.create(window));
         editMenu.add(ActionFactory.PASTE.create(window));
         editMenu.add(new Separator());
-        
+
         editMenu.add(ActionFactory.DELETE.create(window));
         editMenu.add(ActionFactory.SELECT_ALL.create(window));
         editMenu.add(new GroupMarker(Constants.ADD_EXT));
         editMenu.add(new Separator());
-        
+
         editMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         editMenu.add(new GroupMarker(Constants.OTHER));
         editMenu.add(new Separator());
-        
+
         editMenu.add(new GroupMarker(Constants.COMMIT_EXT));
         editMenu.add(new GroupMarker(Constants.EDIT_END));
     }
@@ -390,9 +390,9 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         menu.add(new Separator());
         menu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         menu.add(new GroupMarker(Constants.LAYER_EDIT_EXT));
-        menu.add(new GroupMarker(IWorkbenchActionConstants.WB_END));        
+        menu.add(new GroupMarker(IWorkbenchActionConstants.WB_END));
     }
-    
+
     /**
      * Define the Window Menu according to RCP "custom".
      * <p>
@@ -401,7 +401,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
      * switching perspectives.
      * <p>
      * window/wbStart window/... window/additions window/wbEnd
-     * 
+     *
      * @param windowMenu
      */
     protected void fillWindowMenu( IMenuManager windowMenu ) {
@@ -409,11 +409,11 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
 
         windowMenu.add(new GroupMarker(IWorkbenchActionConstants.WB_START));
 
-        //IAction openNewWindow = ActionFactory.OPEN_NEW_WINDOW.create(window);
-        //openNewWindow.setText(Messages.UDIGWorkbenchAdvisor_newWindow_text);
-        //windowMenu.add(openNewWindow);
-        
-        //windowMenu.add( new Separator());
+        IAction openNewWindow = ActionFactory.OPEN_NEW_WINDOW.create(window);
+        openNewWindow.setText(Messages.UDIGWorkbenchAdvisor_newWindow_text);
+        windowMenu.add(openNewWindow);
+
+        windowMenu.add( new Separator());
 
         IMenuManager perspectiveMenu = new MenuManager(
                 Messages.UDIGWorkbenchAdvisor_open_perspective,
@@ -426,35 +426,35 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         viewMenu.add(ContributionItemFactory.VIEWS_SHORTLIST.create(window));
         windowMenu.add(viewMenu);
         windowMenu.add( new Separator());
-        
+
         IAction resetPerspective = ActionFactory.RESET_PERSPECTIVE.create(window);
         resetPerspective.setText(Messages.UDIGWorkbenchAdvisor_resetPerspective_text);
         windowMenu.add(resetPerspective);
-        
+
         IAction closePerspective = ActionFactory.CLOSE_PERSPECTIVE.create(window);
         closePerspective.setText(Messages.UDIGWorkbenchAdvisor_closePerspective_text);
         windowMenu.add(closePerspective);
-        
+
         IAction closeAllPerspectives = ActionFactory.CLOSE_ALL_PERSPECTIVES.create(window);
         closeAllPerspectives.setText(Messages.UDIGWorkbenchAdvisor_closeAllPerspectives_text);
-        windowMenu.add(closeAllPerspectives);        
-        
+        windowMenu.add(closeAllPerspectives);
+
         windowMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-                
+
         windowMenu.add( new Separator());
-        
+
         IAction preferences = ActionFactory.PREFERENCES.create(window);
         preferences.setText(Messages.UDIGWorkbenchAdvisor_preferences_text);
         IContributionItem item = new ActionContributionItem(preferences);
         item.setVisible(!Platform.OS_MACOSX.equals(Platform.getOS()));
-        
+
         windowMenu.add(item);
-        
+
         windowMenu.add(ContributionItemFactory.OPEN_WINDOWS.create(window));
-        
-        windowMenu.add(new GroupMarker(IWorkbenchActionConstants.WB_END));        
+
+        windowMenu.add(new GroupMarker(IWorkbenchActionConstants.WB_END));
     }
-    
+
     protected void fillHelpMenu( IMenuManager helpMenu ) {
         IWorkbenchWindow window = getActionBarConfigurer().getWindowConfigurer().getWindow();
 
@@ -478,7 +478,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
                 helpMenu.add(welcome);
             }
         }
-        
+
         if (helpMenu.findUsingPath(Constants.HELP_START) == null) {
             helpMenu
                     .insertAfter(ActionFactory.INTRO.getId(), new GroupMarker(Constants.HELP_START));
@@ -526,7 +526,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
             // About should always be at the bottom, so just append it to the menu
 	        IContributionItem item = new ActionContributionItem(about);
 	        item.setVisible(!Platform.OS_MACOSX.equals(Platform.getOS()));
-	        
+
 	        helpMenu.add(item);
         }
     }

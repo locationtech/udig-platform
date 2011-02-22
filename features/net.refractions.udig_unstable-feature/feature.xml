@@ -2,8 +2,8 @@
 <feature
       id="net.refractions.udig_unstable"
       label="%feature.name"
-      version="1.2.0.qualifier"
-      provider-name="udig.refractions.net"
+      version="1.0.1"
+      provider-name="Refractions Research"
       plugin="net.refractions.udig_unstable">
 
    <description>
@@ -27,38 +27,45 @@
    </requires>
 
    <plugin
-         id="net.refractions.udig.context"
+         id="net.refractions.udig.catalog.arcsde"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.1"
          unpack="false"/>
 
    <plugin
-         id="net.refractions.udig.issues"
+         id="net.refractions.udig.catalog.arcsde.nl1"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.1"
+         fragment="true"/>
+
+   <plugin
+         id="net.refractions.udig.catalog.gml"
+         download-size="0"
+         install-size="0"
+         version="1.0.1"
          unpack="false"/>
 
    <plugin
-         id="net.refractions.udig.location"
+         id="net.refractions.udig.catalog.gml.nl1"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.1.0"
+         fragment="true"/>
+
+   <plugin
+         id="net.refractions.udig.catalog.oracle"
+         download-size="0"
+         install-size="0"
+         version="1.0.1"
          unpack="false"/>
 
    <plugin
-         id="net.refractions.udig.validation"
+         id="net.refractions.udig.catalog.oracle.nl1"
          download-size="0"
          install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="net.refractions.udig.feature.editor"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="1.0.1"
+         fragment="true"/>
 
 </feature>

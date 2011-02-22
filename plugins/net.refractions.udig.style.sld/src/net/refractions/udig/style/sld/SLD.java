@@ -7,13 +7,13 @@ import net.refractions.udig.project.ILayer;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.GeometryAttributeType;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
 
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiLineString;
@@ -22,9 +22,6 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
-/**
- * The different kinds of content that can be rendered with Style Layer Descriptor.
- */
 public enum SLD {
     POINT(PointSymbolizer.class) {
 
@@ -40,10 +37,10 @@ public enum SLD {
             return SLDContent.createPointSymbolizer(null);
         }
         public boolean supports( ILayer layer ) {
-            SimpleFeatureType featureType = layer.getSchema();
+            FeatureType featureType = layer.getSchema();
             if (featureType == null) return false;
-            
-            return isPoint( featureType.getGeometryDescriptor() );
+
+            return isPoint( featureType.getDefaultGeometry() );
         }
     },
     LINE(LineSymbolizer.class) {
@@ -93,9 +90,9 @@ public enum SLD {
         }
 
         public boolean supports( ILayer layer ) {
-            SimpleFeatureType featureType = layer.getSchema();
+            FeatureType featureType = layer.getSchema();
             if (featureType == null) return false;
-            
+
             //TODO: Can a text symbolizer be applied to a raster?
             return true;
         }
@@ -112,14 +109,14 @@ public enum SLD {
         public Object createDefault() {
             return SLDContent.createRasterSymbolizer();
         }
-        
+
         public boolean supports( ILayer layer ) {
             return layer.hasResource(org.geotools.data.ows.Layer.class);
         }
     };
 
     //private static SLD[] all = new SLD[]{POINT, LINE, POLYGON, RASTER, TEXT};
-    
+
     Class type;
 
     SLD( Class object ) {
@@ -140,8 +137,8 @@ public enum SLD {
 
     /**
      * Determines if the style component supports the specified feature type.
-     * 
-     * @param layer SimpleFeature type, must not be null and must have a valid geometry type attribute.
+     *
+     * @param layer Feature type, must not be null and must have a valid geometry type attribute.
      * @return true if the feature type is supported, otherwise false.
      */
     public boolean supports( ILayer layer ) {
@@ -173,8 +170,8 @@ public enum SLD {
     /**
      * Returns the types of SLD style components that support the specified feature type. This
      * method returns an empty list if no style types support the specified feature type.
-     * 
-     * @param layer the layer. 
+     *
+     * @param layer the layer.
      * @return A list (possibly empty) of types that support the feature type.
      */
     public static List<Class> getSupportedTypes( ILayer layer ) {
@@ -207,37 +204,37 @@ public enum SLD {
             */
         return null;
     }
-    
-	public static final boolean isPolygon( SimpleFeatureType featureType ){
+
+	public static final boolean isPolygon( FeatureType featureType ){
 		if( featureType == null ) return false;
-		return isPolygon( featureType.getGeometryDescriptor() );
+		return isPolygon( featureType.getDefaultGeometry() );
 	}
     /* This needed to be a function as it was being writen poorly everywhere */
-	public static final boolean isPolygon( GeometryDescriptor geometryType ){
+	public static final boolean isPolygon( GeometryAttributeType geometryType ){
 		if( geometryType == null ) return false;
-		Class type = geometryType.getType().getBinding();
+		Class type = geometryType.getType();
 		return Polygon.class.isAssignableFrom( type ) ||
 		       MultiPolygon.class.isAssignableFrom( type );
 	}
-	public static final boolean isLine( SimpleFeatureType featureType ){
+	public static final boolean isLine( FeatureType featureType ){
 		if( featureType == null ) return false;
-		return isLine( featureType.getGeometryDescriptor() );
+		return isLine( featureType.getDefaultGeometry() );
 	}
     /* This needed to be a function as it was being writen poorly everywhere */
-	public static final boolean isLine( GeometryDescriptor geometryType ){
+	public static final boolean isLine( GeometryAttributeType geometryType ){
 		if( geometryType == null ) return false;
-		Class<?> type = geometryType.getType().getBinding();
+		Class type = geometryType.getType();
 		return LineString.class.isAssignableFrom( type ) ||
 		       MultiLineString.class.isAssignableFrom( type );
 	}
-	public static final boolean isPoint( SimpleFeatureType featureType ){
+	public static final boolean isPoint( FeatureType featureType ){
 		if( featureType == null ) return false;
-		return isPoint( featureType.getGeometryDescriptor() );
+		return isPoint( featureType.getDefaultGeometry() );
 	}
     /* This needed to be a function as it was being writen poorly everywhere */
-	public static final boolean isPoint( GeometryDescriptor geometryType ){
+	public static final boolean isPoint( GeometryAttributeType geometryType ){
 		if( geometryType == null ) return false;
-		Class type = geometryType.getType().getBinding();
+		Class type = geometryType.getType();
 		return Point.class.isAssignableFrom( type ) ||
 		       MultiPoint.class.isAssignableFrom( type );
 	}

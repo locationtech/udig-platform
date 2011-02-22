@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DB2 Plug-in
 Bundle-SymbolicName: net.refractions.udig.catalog.db2; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.catalog.db2.DB2Plugin
 Eclipse-BuddyPolicy: registered
 Bundle-Localization: plugin
@@ -11,5 +11,4 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.catalog,
  net.refractions.udig.libs,
  net.refractions.udig.catalog.ui
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-LazyStart: true

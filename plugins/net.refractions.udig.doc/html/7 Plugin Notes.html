@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 7 Plugin Notes</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 7 Plugin Notes -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+
+<h4><a name="7PluginNotes-ClassloaderUse">Classloader Use</a></h4>
+
+<p>Eclipse's Classloader maintains seperate classpaths for each plugin.</p>
+
+<p>A plugin's classpath is derived from its parents classpath and the plugin dependencies.  It must be realized that the classpath a plugin has access to is not the same classpath as the environment provides.  For example a java application has a different class path than a plugin.  </p>
+
+<h4><a name="7PluginNotes-UseofBootclasspath">Use of Bootclasspath</a></h4>
+
+<p>An additional difficulty with eclipse's classloader is that it does not recognize java extensions such as JAI because the jai jar files are in the jre/lib/ext directory.</p>
+
+<p>To overcome this limitation the -Xbootclasspath/a:(jai jar files)  must be added to the eclipse laucher.</p>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=132">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=132">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Shell;
  * <p>
  * A "button" with an icon/text that pops up the font window.
  * </p>
- * 
+ *
  * @author aalam
  * @since 0.6.0
  */
@@ -46,14 +46,14 @@ public class FontEditor {
     public FontEditor(Composite parent) {
         this(parent, null);
     }
-    
+
     public FontEditor( Composite parent, SelectionListener parentListener ) {
         this.parentListener = parentListener;
         fButton = new Button(parent, SWT.PUSH);
         // fExtent= computeImageSize(parent);
         // fImage= new Image(parent.getDisplay(), fExtent.x, fExtent.y);
         // fImage = new Image(parent.getDisplay(), "elcl16/up_co.gif"); //$NON-NLS-1$
-        //        
+        //
         // GC gc= new GC(fImage);
         // gc.setBackground(fButton.getBackground());
         // gc.fillRectangle(0, 0, fExtent.x, fExtent.y);
@@ -62,7 +62,7 @@ public class FontEditor {
         fFont = new Font[1];
         fColor = new Color[1];
 
-        fButton.setText(Messages.FontEditor_SetFont);
+        fButton.setText("Set Font"); //$NON-NLS-1$
         labelFontDialog = new FontDialog(new Shell());
         labelFontDialog.setText("Choose a Font"); //$NON-NLS-1$
 
@@ -114,34 +114,34 @@ public class FontEditor {
             }
         });
     }
-    
+
     public void setListener(SelectionListener parentListener) {
         this.parentListener = parentListener;
     }
-    
+
     public void clearListener() {
         this.parentListener = null;
     }
 
     private void notifyParent( SelectionEvent event ) {
-        if(parentListener != null) 
+        if(parentListener != null)
             parentListener.widgetSelected(event);
     }
 
     public Color getColor() {
         return fColor[0];
     }
-    
+
     public java.awt.Color getAWTColor() {
         Color tmpColor = getColor();
         if(tmpColor == null) return null;
-        return new java.awt.Color(tmpColor.getRed(), 
+        return new java.awt.Color(tmpColor.getRed(),
                 tmpColor.getGreen(), tmpColor.getBlue());
     }
 
     /**
      * Returns the currently selected font object
-     * 
+     *
      * @return Font
      */
     public Font getFont() {
@@ -170,7 +170,7 @@ public class FontEditor {
         labelFontDialog.setRGB(rgb);
         updateColorImage();
     }
-    
+
     public void setColorValue(java.awt.Color colour) {
         if(colour != null) {
             setColorValue(new RGB(

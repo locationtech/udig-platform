@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2008, Refractions Research Inc.
+ * (C) 2004, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,7 +21,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
 /**
  * Toggles the scalebar on and off
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

@@ -7,7 +7,7 @@ package net.refractions.udig.project.render.displayAdapter;
  * {@linkplain org.eclipse.swt.widgets.Display#asyncExec(java.lang.Runnable)}method or the
  * {@linkplain org.eclipse.swt.widgets.Display#syncExec(java.lang.Runnable)}method
  * </p>
- * 
+ *
  * @author jeichar
  * @since 0.2
  */
@@ -20,7 +20,7 @@ public interface IMapDisplayListener {
      * {@linkplain org.eclipse.swt.widgets.Display#asyncExec(java.lang.Runnable)}method or the
      * {@linkplain org.eclipse.swt.widgets.Display#syncExec(java.lang.Runnable)}method
      * </p>
-     * 
+     *
      * @param event An event with a reference to the MapEditor and the new size.
      */
     public void sizeChanged( MapDisplayEvent event );

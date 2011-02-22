@@ -12,7 +12,7 @@ public class ContextPlugin extends AbstractUIPlugin {
 
 	//The shared instance.
 	private static ContextPlugin plugin;
-	
+
 	/**
 	 * The constructor.
 	 */

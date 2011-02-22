@@ -17,7 +17,7 @@ enum ParserState {
         @Override
         void parse( UdigMemento memento, BufferedReader reader, String context ) throws IOException {
             String line = removeWhite(reader.readLine());
-            
+
             if( line.equals(_memento_+"{") ){
                 MEMENTO.parse(memento, reader, null);
             }
@@ -41,7 +41,7 @@ enum ParserState {
 
     },
     DATA(_data_) {
-        final Pattern PATTERN = Pattern.compile("\\s*\\|(.*)\\|.*\\{"); 
+        final Pattern PATTERN = Pattern.compile("\\s*\\|(.*)\\|.*\\{");
         @Override
         void parse( UdigMemento memento, BufferedReader reader, String context ) throws IOException {
             String line = reader.readLine();
@@ -87,7 +87,7 @@ enum ParserState {
             }
         }
     };
-    
+
     private Tokens token;
 
     private ParserState(Tokens token){
@@ -112,7 +112,7 @@ enum ParserState {
     }
 
     abstract void parse( UdigMemento memento, BufferedReader reader, String context ) throws IOException;
-    
+
     private static String removeWhite( String line ) {
         if( line==null ){
             return "";

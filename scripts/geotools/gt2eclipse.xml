@@ -1,4 +1,4 @@
-<project name="maven2eclipse.xml" default="maven2eclipse" basedir="."> 
+<project name="maven2eclipse.xml" default="maven2eclipse" basedir=".">
 
 	<target name="check" unless="module.dir">
 		<fail message="module.dir not set"/>
@@ -11,7 +11,7 @@
 		<touch file="${module.dir}/.gt2eclipse"/>
 	</target>
 
-	<target name="backup" unless="alreadyBackedUp"> 
+	<target name="backup" unless="alreadyBackedUp">
 		<move todir="${module.dir}">
 			<fileset dir="${module.dir}">
 				<include name="build.properties"/>
@@ -32,7 +32,7 @@
 		<delete file="${module.dir}/build.xml"/>
 		<delete file="${module.dir}/plugin.xml"/>
 		<move todir="${module.dir}">
-			<fileset dir="${module.dir}">	
+			<fileset dir="${module.dir}">
 				<include name="build.properties.gt2eclipse"/>
 				<include name="build.xml.gt2eclipse"/>
 				<include name="plugin.xml.gt2eclipse"/>
@@ -44,16 +44,16 @@
 	<target name="maven2eclipse" depends="init">
 
 		<!-- build a properties file from the project descriptor -->
-		<xslt style="module.properties.xsl" in="${module.dir}/project.xml" 
+		<xslt style="module.properties.xsl" in="${module.dir}/project.xml"
 			out="${module.dir}/module.properties"/>
 		<property file="${module.dir}/module.properties"/>
-	
+
 		<!-- execute maven to generate a .classpath file -->
 		<exec executable="maven" dir="${module.dir}" failonerror="true">
 			<arg line="eclipse"/>
 		</exec>
 
-		<!-- execute the transform on the .classapath file -->	
+		<!-- execute the transform on the .classapath file -->
 		<xslt style="plugin.xsl" in="${module.dir}/.classpath" out="${module.dir}/plugin.xml">
 			<param name="pid" expression="${module.id}"/>
 			<param name="name" expression="${module.name}"/>
@@ -79,5 +79,5 @@
 	<target name="build.properties">
 		<xslt style="build.properties.xsl" in="${module.dir}/project.xml" out="${module.dir}/build.properties"/>
 	</target>
-	
+
 </project>

@@ -31,7 +31,7 @@ import net.refractions.udig.tools.edit.support.EditBlackboardEvent.EventType;
 /**
  * A set of points that are on the EditBlackboard. Only the edit black board can edit this set. All
  * public add methods will throw and exception.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -60,7 +60,7 @@ public class Selection extends AbstractSet<Point> implements Set<Point> {
 
     /**
      * The list of lazy coordinates. The list is unmodifiable.
-     * 
+     *
      * @param point
      * @return
      */
@@ -71,7 +71,7 @@ public class Selection extends AbstractSet<Point> implements Set<Point> {
     /**
      * Adds a point to the selection and all the Coordinates that are in the editblackboard at that
      * point.
-     * 
+     *
      * @see #getCoordinates(Point);
      * @param o
      * @return
@@ -341,7 +341,7 @@ public class Selection extends AbstractSet<Point> implements Set<Point> {
         // if( list!=null && list.isEmpty() ){
         // throw new AssertionError(entry.getKey()+" is not in blackboard"); //$NON-NLS-1$
         // }
-        //			
+        //
         // for (LazyCoord coord : entry.getValue()) {
         // if( !list.contains(coord) )
         // throw new AssertionError(coord+" is not in blackboard at correct location");

@@ -19,6 +19,7 @@ package net.refractions.udig.project.ui.internal.properties;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.ui.internal.Messages;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.ui.AttributeValidator;
@@ -32,45 +33,45 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.FeatureType;
 import org.opengis.util.CodeList;
 
 /**
- * A PropertyDescriptor for attributes of a SimpleFeature.
- * 
+ * A PropertyDescriptor for attributes of a Feature.
+ *
  * @author jeichar
  * @since 0.3
  */
 public class AttributePropertyDescriptor extends PropertyDescriptor {
-    protected AttributeDescriptor type;
+    protected AttributeType type;
     AttributeValidator validator;
     private String[] comboBoxList;
-    
+
     /** Is the property editable and should return a cell editor. */
     private boolean editable = false;
 
     /**
      * Creates a new instance of AttributePropertyDescriptor
-     * 
+     *
      * @param id The object used to identify the value
      * @param displayName The Property display name
      * @param type The Attribute type that describes the attribute
      * @param featureType the featureType that contains the attributeType.
      */
-    public AttributePropertyDescriptor( Object id, String displayName, AttributeDescriptor type, SimpleFeatureType schema ) {
+    public AttributePropertyDescriptor( Object id, String displayName, AttributeType type, FeatureType schema ) {
         this(id, displayName, type, schema, false);
     }
-    
+
     /**
-     * 
+     *
      * @param id The object used to identify the value
      * @param displayName The Property display name
      * @param type  The Attribute type that describes the attribute
      * @param featureType the featureType that contains the attributeType.
      * @param editable
      */
-    public AttributePropertyDescriptor( Object id, String displayName, AttributeDescriptor type , SimpleFeatureType schema, boolean editable) {
+    public AttributePropertyDescriptor( Object id, String displayName, AttributeType type , FeatureType schema, boolean editable) {
         super(id, displayName);
         this.type = type;
         validator = new AttributeValidator(type, schema );
@@ -84,31 +85,31 @@ public class AttributePropertyDescriptor extends PropertyDescriptor {
     public CellEditor createPropertyEditor( Composite parent ) {
     	if(!editable)
     		return null;
-    	
+
         try{
-            if (Boolean.class.isAssignableFrom(type.getType().getBinding())
-                    || boolean.class.isAssignableFrom(type.getType().getBinding()))
+            if (Boolean.class.isAssignableFrom(type.getType())
+                    || boolean.class.isAssignableFrom(type.getType()))
                 return new ComboBoxCellEditor(
                         parent,
                         new String[]{
-                                Messages.AttributePropertyDescriptor_true, Messages.AttributePropertyDescriptor_false});  
-            if (String.class.isAssignableFrom(type.getType().getBinding()))
+                                Messages.AttributePropertyDescriptor_true, Messages.AttributePropertyDescriptor_false});
+            if (String.class.isAssignableFrom(type.getType()))
                 return new TextCellEditor(parent);
-            if (Integer.class.isAssignableFrom(type.getType().getBinding()))
+            if (Integer.class.isAssignableFrom(type.getType()))
                 return new BasicTypeCellEditor(parent, Integer.class);
-            if (Double.class.isAssignableFrom(type.getType().getBinding()))
+            if (Double.class.isAssignableFrom(type.getType()))
                 return new BasicTypeCellEditor(parent, Double.class);
-            if (Float.class.isAssignableFrom(type.getType().getBinding()))
+            if (Float.class.isAssignableFrom(type.getType()))
                 return new BasicTypeCellEditor(parent, Float.class);
-            if (Long.class.isAssignableFrom(type.getType().getBinding()))
+            if (Long.class.isAssignableFrom(type.getType()))
                 return new BasicTypeCellEditor(parent, Long.class);
-            if (BigInteger.class.isAssignableFrom(type.getType().getBinding()))
+            if (BigInteger.class.isAssignableFrom(type.getType()))
                 return new BasicTypeCellEditor(parent, BigInteger.class);
-            if (BigDecimal.class.isAssignableFrom(type.getType().getBinding()))
+            if (BigDecimal.class.isAssignableFrom(type.getType()))
                 return new BasicTypeCellEditor(parent, BigDecimal.class);
-            if (Long.class.isAssignableFrom(type.getType().getBinding()))
+            if (Long.class.isAssignableFrom(type.getType()))
                 return new BasicTypeCellEditor(parent, Long.class);
-            if (CodeList.class.isAssignableFrom(type.getType().getBinding())) {
+            if (CodeList.class.isAssignableFrom(type.getType())) {
                 return new ComboBoxCellEditor(parent, comboBoxList);
             }
             return super.createPropertyEditor(parent);
@@ -119,9 +120,9 @@ public class AttributePropertyDescriptor extends PropertyDescriptor {
     }
 
     String[] createComboList() {
-        if (!(CodeList.class.isAssignableFrom(type.getType().getBinding())))
+        if (!(CodeList.class.isAssignableFrom(type.getType())))
             return null;
-        CodeList list = (CodeList) type.getDefaultValue();
+        CodeList list = (CodeList) type.createDefaultValue();
         CodeList[] family = list.family();
         String[] names = new String[family.length];
         for( int i = 0; i < names.length; i++ ) {
@@ -149,7 +150,7 @@ public class AttributePropertyDescriptor extends PropertyDescriptor {
             public String getText( Object element ) {
                 if( element == null )
                     return "null"; //$NON-NLS-1$
-                if (Boolean.class.isAssignableFrom(type.getType().getBinding()) && element instanceof Integer) {
+                if (Boolean.class.isAssignableFrom(type.getType()) && element instanceof Integer) {
                     int intValue = ((Integer) element).intValue();
                     return intValue == 1 ? "true" : "false"; //$NON-NLS-1$ //$NON-NLS-2$
                 }

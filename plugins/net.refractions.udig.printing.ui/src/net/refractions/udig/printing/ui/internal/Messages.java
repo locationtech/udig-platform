@@ -20,33 +20,8 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "net.refractions.udig.printing.ui.internal.messages"; //$NON-NLS-1$
-	public static String ExportPDFWizard_Title;
-
-    public static String ExportPDFWizardPage1_0;
-    public static String ExportPDFWizardPage1_1;
-    public static String ExportPDFWizardPage1_2;
-    public static String ExportPDFWizardPage1_3;
-    public static String ExportPDFWizardPage1_4;
-    public static String ExportPDFWizardPage1_6;
-    public static String ExportPDFWizardPage1_7;
-    public static String ExportPDFWizardPage1_8;
-    public static String ExportPDFWizardPage1_BROWSE;
-    public static String ExportPDFWizardPage1_CURRENT_SCALE;
-    public static String ExportPDFWizardPage1_CUSTOM_SCALE;
-    public static String ExportPDFWizardPage1_DEFAULT_FILENAME;
-    public static String ExportPDFWizardPage1_DEST_DIR;
-    public static String ExportPDFWizardPage1_DEST_FILE;
-    public static String ExportPDFWizardPage1_DPI;
-    public static String ExportPDFWizardPage1_EXPORT_RASTERS;
-    public static String ExportPDFWizardPage1_INVALID_SCALE;
-    public static String ExportPDFWizardPage1_OPTIONS;
-    public static String ExportPDFWizardPage1_PAGE_DESC;
-    public static String ExportPDFWizardPage1_PAGE_SIZE;
-    public static String ExportPDFWizardPage1_PAGE_TITLE;
-    public static String ExportPDFWizardPage1_SELECT_TEMPLATE;
-    public static String ExportPDFWizardPage1_ZOOM_TO_SELECTION;
-    public static String MapPart_defaultMapTitle;
 	public static String Landscape_Template_Name;
+    public static String MapPart_defaultMapTitle;
 	public static String MapEditPolicy_label;
 	public static String MapTreePart_mapLabel;
 	public static String ConnectionCreateCommand_error_targetNull;
@@ -56,24 +31,6 @@ public class Messages extends NLS {
 	public static String ConnectionReconnectCommand_error_unreacheable;
 	public static String ConnectionReconnectCommand_error_nullConnection;
 	public static String ConnectionDeleteCommand_label;
-    public static String PrintWizard_Title;
-    public static String PrintWizardPage1_0;
-    public static String PrintWizardPage1_1;
-    public static String PrintWizardPage1_CURRENT_SCALE;
-    public static String PrintWizardPage1_CUSTOM_SCALE;
-    public static String PrintWizardPage1_DPI;
-    public static String PrintWizardPage1_EXPORT_RASTERS;
-    public static String PrintWizardPage1_INVALID_SCALE;
-    public static String PrintWizardPage1_LETTER_PAGE_SIZE;
-    public static String PrintWizardPage1_MSG_ENTER_DIR;
-    public static String PrintWizardPage1_MSG_INVALID_DIR;
-    public static String PrintWizardPage1_MSG_INVALID_FILE;
-    public static String PrintWizardPage1_MSG_PDF_EXTENSION;
-    public static String PrintWizardPage1_OPTIONS;
-    public static String PrintWizardPage1_PAGE_DESC;
-    public static String PrintWizardPage1_PAGE_SIZE;
-    public static String PrintWizardPage1_PAGE_TITLE;
-    public static String PrintWizardPage1_SELECT_TEMPLATE;
 	public static String RenameLabelCommand_label;
 	public static String DeleteCommand_delete;
 	public static String SetConstraintCommand_label;
@@ -94,7 +51,7 @@ public class Messages extends NLS {
 	public static String EditMapAction_action_text;
 	public static String BasicTemplate_name;
 	public static String BasicTemplate_label_defaultTitle;
-    static {
+	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}

@@ -47,7 +47,7 @@ import org.eclipse.ui.XMLMemento;
 
 /**
  * Configures {@link StrategizedIssuesList}.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -73,13 +73,13 @@ public class PostgisIssuesListConfigurator implements IssuesListConfigurator {
         this.page=page;
         Composite comp=new Composite(parent, SWT.NONE);
         comp.setLayout(new GridLayout(2,false));
-        createLabel(parent, comp, Messages.PostgisIssuesListConfigurator_urlLabel); 
+        createLabel(parent, comp, Messages.PostgisIssuesListConfigurator_urlLabel);
         createURLInput(comp);
-        createLabel(parent, comp, Messages.PostgisIssuesListConfigurator_layerLabel); 
+        createLabel(parent, comp, Messages.PostgisIssuesListConfigurator_layerLabel);
         createLayerInput(comp);
         createTestButton(comp);
         createCreateButton(comp);
-        
+
         this.update();
         return comp;
     }
@@ -99,7 +99,7 @@ public class PostgisIssuesListConfigurator implements IssuesListConfigurator {
 
 					    public void run( IProgressMonitor monitor ) throws InvocationTargetException,
 					            InterruptedException {
-					        monitor.beginTask("Attempting to create a new issues layer", IProgressMonitor.UNKNOWN); 
+					        monitor.beginTask("Attempting to create a new issues layer", IProgressMonitor.UNKNOWN);
 					        error=list.createConnection();
 					        page.setErrorMessage(error);
 					        createButton.setEnabled(false);
@@ -114,13 +114,13 @@ public class PostgisIssuesListConfigurator implements IssuesListConfigurator {
 				}
 
             }
-            
+
         });
     }
 
     private void createTestButton( Composite comp ) {
         Button button=new Button(comp, SWT.DEFAULT);
-        button.setText(Messages.PostgisIssuesListConfigurator_testButton); 
+        button.setText(Messages.PostgisIssuesListConfigurator_testButton);
         button.addSelectionListener(new SelectionListener(){
 
             public void widgetDefaultSelected( SelectionEvent e ) {
@@ -131,11 +131,11 @@ public class PostgisIssuesListConfigurator implements IssuesListConfigurator {
                 runTest();
                 update();
             }
-            
+
         });
     }
     private void createLayerInput( Composite comp ) {
-        layerInput=new Text(comp, SWT.BORDER);        
+        layerInput=new Text(comp, SWT.BORDER);
         GridData data=new GridData(SWT.FILL, SWT.NONE, true,false);
         data.verticalAlignment=SWT.CENTER;
         layerInput.setLayoutData(data);
@@ -148,10 +148,10 @@ public class PostgisIssuesListConfigurator implements IssuesListConfigurator {
                 error=null;
                 update();
             }
-            
-        });        
 
-        
+        });
+
+
     }
 
     private void createURLInput( Composite comp ) {
@@ -167,9 +167,9 @@ public class PostgisIssuesListConfigurator implements IssuesListConfigurator {
                 error=null;
                 update();
             }
-            
+
         });
-        
+
     }
 
     protected void update() {
@@ -194,7 +194,7 @@ public class PostgisIssuesListConfigurator implements IssuesListConfigurator {
 
     private boolean hasTableName() {
         String path=list.url.substring(list.url.indexOf("://")+3); //$NON-NLS-1$
-        
+
         return path.split("/").length==3; //$NON-NLS-1$
     }
 
@@ -223,7 +223,7 @@ public class PostgisIssuesListConfigurator implements IssuesListConfigurator {
         if( !list.tested ){
             runTest();
         }
-        
+
         if( list.tested )
             try {
                 issuesList.init(list);
@@ -243,7 +243,7 @@ public class PostgisIssuesListConfigurator implements IssuesListConfigurator {
 
                     public void run( IProgressMonitor monitor ) throws InvocationTargetException,
                             InterruptedException {
-                        monitor.beginTask(Messages.PostgisIssuesListConfigurator_testTaskName, IProgressMonitor.UNKNOWN); 
+                        monitor.beginTask(Messages.PostgisIssuesListConfigurator_testTaskName, IProgressMonitor.UNKNOWN);
                         doTest();
                         monitor.done();
                     }
@@ -252,19 +252,19 @@ public class PostgisIssuesListConfigurator implements IssuesListConfigurator {
             }
         } catch (Exception e) {
             ProjectUIPlugin.log("", e); //$NON-NLS-1$
-        } 
+        }
     }
-    
+
     void doTest() {
         error=null;
         try {
             list.tested=list.testConnection();
             if( !list.tested ){
-                error=Messages.PostgisIssuesListConfigurator_connectionError; 
+                error=Messages.PostgisIssuesListConfigurator_connectionError;
             }
         } catch (IOException e) {
             list.tested=false;
-            error=Messages.PostgisIssuesListConfigurator_connectionError2+e.getLocalizedMessage(); 
+            error=Messages.PostgisIssuesListConfigurator_connectionError2+e.getLocalizedMessage();
         }
     }
     public String getError() {
@@ -272,11 +272,11 @@ public class PostgisIssuesListConfigurator implements IssuesListConfigurator {
             return error;
         String message;
         if( !urlValid() ){
-            message=Messages.PostgisIssuesListConfigurator_urlValidation; 
+            message=Messages.PostgisIssuesListConfigurator_urlValidation;
         }else if( list.layer.length()==0 ){
-            message=Messages.PostgisIssuesListConfigurator_layerValidationMessage; 
+            message=Messages.PostgisIssuesListConfigurator_layerValidationMessage;
         }else if(!list.tested){
-            message=Messages.PostgisIssuesListConfigurator_testConfiguration; 
+            message=Messages.PostgisIssuesListConfigurator_testConfiguration;
         }else{
             message=null;
         }

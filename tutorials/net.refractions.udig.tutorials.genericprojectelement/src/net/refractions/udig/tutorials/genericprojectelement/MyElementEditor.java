@@ -2,6 +2,9 @@ package net.refractions.udig.tutorials.genericprojectelement;
 
 import java.io.IOException;
 
+import net.refractions.udig.project.element.ProjectElementAdapter;
+import net.refractions.udig.project.internal.Project;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
@@ -21,12 +24,12 @@ public class MyElementEditor extends EditorPart {
 	private boolean dirty = false;
 	private String newLabel = "";
 	private Text text;
-	
+
 	@Override
 	public MyElementEditorInput getEditorInput() {
 		return (MyElementEditorInput) super.getEditorInput();
 	}
-	
+
 	public MyProjectElement getMyProjectElement() {
 		return getEditorInput().getBackingObject();
 	}
@@ -88,7 +91,7 @@ public class MyElementEditor extends EditorPart {
 				newLabel = text.getText();
 				firePropertyChange(PROP_DIRTY);
 			}
-			
+
 		});
 	}
 

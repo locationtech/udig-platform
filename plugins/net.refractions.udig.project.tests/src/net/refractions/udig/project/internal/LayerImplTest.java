@@ -35,17 +35,19 @@ import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
+import org.geotools.data.FeatureWriter;
 import org.geotools.data.Transaction;
+import org.geotools.data.memory.MemoryDataStore;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.feature.FeatureType;
+import org.geotools.filter.Filter;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -84,50 +86,50 @@ public class LayerImplTest extends TestCase {
      */
     public void testGetGeoResourcesInterceptors() throws IOException {
         NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
-        FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer.getResource(FeatureStore.class, nullProgressMonitor);
+        FeatureStore resource = layer.getResource(FeatureStore.class, nullProgressMonitor);
         Transaction transaction = resource.getTransaction();
         assertNotNull(transaction);
         assertTrue(transaction==Transaction.AUTO_COMMIT);
         assertSame(transaction, resource.getTransaction());
         assertSame(resource, layer.getResource(FeatureStore.class, nullProgressMonitor));
         assertSame(resource, layer.getResource(FeatureSource.class, nullProgressMonitor));
-        
+
         assertTrue(TestInterceptorPre.runs>0);
         assertFalse(TestInterceptorCaching.cached);
         assertFalse(TestInterceptorCaching.obtained);
         assertTrue(TestInterceptorPost.runs>0);
-        
+
         ProjectPlugin.getPlugin().getPreferenceStore().setValue(PreferenceConstants.P_LAYER_RESOURCE_CACHING_STRATEGY, "net.refractions.udig.project.tests.net.refractions.udig.project.tests.interceptor2"); //$NON-NLS-1$
         try{
             TestInterceptorPre.runs=0;
             TestInterceptorPost.runs=0;
-            
+
             assertNotSame(resource, layer.getResource(FeatureStore.class, nullProgressMonitor));
-    
+
             assertEquals(1, TestInterceptorPre.runs);
             assertTrue(TestInterceptorCaching.cached);
             assertFalse(TestInterceptorCaching.obtained);
             assertEquals(1,TestInterceptorPost.runs);
-            
+
             layer.getResource(FeatureStore.class, nullProgressMonitor);
-            
+
             assertEquals(1, TestInterceptorPre.runs);
             assertTrue(TestInterceptorCaching.cached);
             assertTrue(TestInterceptorCaching.obtained);
             assertEquals(2, TestInterceptorPost.runs);
-            
+
             TestInterceptorPre.runs=0;
             TestInterceptorPost.runs=0;
-    
+
             layer.getResource(ITransientResolve.class, nullProgressMonitor);
-            
+
             assertEquals(0, TestInterceptorPre.runs);
             assertEquals(1, TestInterceptorPost.runs);
         }finally{
             ProjectPlugin.getPlugin().getPreferenceStore().setValue(PreferenceConstants.P_LAYER_RESOURCE_CACHING_STRATEGY, ResourceCacheInterceptor.ID);
         }
     }
-    
+
     /**
      * Tests the case where a interceptor interfers with a later interceptor that is run.
      *
@@ -135,28 +137,28 @@ public class LayerImplTest extends TestCase {
      */
     public void testRunCoDependentInterceptors() throws Exception {
         LayerResource resource=(LayerResource) layer.getGeoResources().get(0);
-        
-        
+
+
         try{
             resource.testingOnly_sort(new Comparator<IResourceInterceptor<? extends Object>>(){
-                
+
                 public int compare( IResourceInterceptor< ? extends Object> o1, IResourceInterceptor< ? extends Object> o2 ) {
                     if( o1 instanceof TestInterceptorPost){
                         return -1;
                     }
                     if( o2 instanceof TestInterceptorPost){
                         return 1;
-                    } 
+                    }
                     return 0;
                 }
-                
+
             }, false);
             TestInterceptorPost.changeType=true;
             NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
-            FeatureSource<SimpleFeatureType, SimpleFeature> resolve = resource.resolve(FeatureSource.class, nullProgressMonitor);
+            FeatureSource resolve = resource.resolve(FeatureSource.class, nullProgressMonitor);
             assertNotNull(resolve);
         }finally{
-            TestInterceptorPost.changeType=false;     
+            TestInterceptorPost.changeType=false;
             resource.testingOnly_sort(null, false);
 
         }
@@ -170,7 +172,7 @@ public class LayerImplTest extends TestCase {
 
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#findGeoResource(java.lang.Class)}.
-     * @throws Exception 
+     * @throws Exception
      */
     @SuppressWarnings("unchecked")
     public void testFindGeoResource() throws Exception{
@@ -181,7 +183,7 @@ public class LayerImplTest extends TestCase {
         resolveTos.add(integer);
         Float floatValue = Float.valueOf(2.0f);
         resolveTos.add(floatValue);
-        
+
         assertNotNull(layer.findGeoResource(String.class));
         assertNotNull(layer.findGeoResource(Float.class));
         assertNotNull(layer.findGeoResource(Integer.class));
@@ -208,58 +210,58 @@ public class LayerImplTest extends TestCase {
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getDefaultColor()}.
      */
     public void testGetDefaultColor() {
-        //TODO implement test 
+        //TODO implement test
     }
 
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getMinScaleDenominator()}.
      */
     public void testGetMinScaleDenominator() {
-        //TODO implement test 
+        //TODO implement test
     }
 
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getMaxScaleDenominator()}.
      */
     public void testGetMaxScaleDenominator() {
-        //TODO implement test 
+        //TODO implement test
     }
 
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#refresh(com.vividsolutions.jts.geom.Envelope)}.
      */
     public void testRefresh() {
-        //TODO implement test 
+        //TODO implement test
     }
 
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#layerToMapTransform()}.
      */
     public void testLayerToMapTransform() {
-        //TODO implement test 
+        //TODO implement test
     }
 
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#mapToLayerTransform()}.
      */
     public void testMapToLayerTransform() {
-        //TODO implement test 
+        //TODO implement test
     }
 
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#createBBoxFilter(com.vividsolutions.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor)}.
      */
     public void testCreateBBoxFilter() {
-        //TODO implement test 
+        //TODO implement test
     }
 
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#changed(net.refractions.udig.catalog.IResolveChangeEvent)}.
      */
     public void testChanged() {
-        //TODO implement test 
+        //TODO implement test
     }
-    
+
     public void testSetZOrder() throws Exception {
         IGeoResource resource = CatalogTests.createGeoResource("resource", 3, false); //$NON-NLS-1$
         Layer createLayer = map.getLayerFactory().createLayer(resource);
@@ -277,7 +279,7 @@ public class LayerImplTest extends TestCase {
         createLayer = map.getLayerFactory().createLayer(resource);
         createLayer.setName("layer4"); //$NON-NLS-1$
         map.getLayersInternal().add(createLayer);
-        
+
         layer.setZorder(2);
         assertEquals(2, layer.getZorder());
         assertEquals(2, map.getLayersInternal().indexOf(layer));
@@ -287,12 +289,12 @@ public class LayerImplTest extends TestCase {
         assertEquals(0, map.getLayersInternal().indexOf(layer));
 
     }
-    
+
     @SuppressWarnings("unchecked")
     public void testGetBounds() throws Exception {
         IGeoResource resource = CatalogTests.createGeoResource("resource", 0, false); //$NON-NLS-1$
-        FeatureStore<SimpleFeatureType, SimpleFeature> fs = resource.resolve(FeatureStore.class, null);
-        FeatureCollection<SimpleFeatureType, SimpleFeature> collection = FeatureCollections.newCollection();
+        FeatureStore fs = resource.resolve(FeatureStore.class, null);
+        FeatureCollection collection = FeatureCollections.newCollection();
         collection.clear();
         GeometryFactory fac=new GeometryFactory();
 
@@ -300,34 +302,34 @@ public class LayerImplTest extends TestCase {
                 fac.createPoint(new Coordinate(0,0)),
                 "name1" //$NON-NLS-1$
         };
-        SimpleFeatureType schema = fs.getSchema();
-        collection.add(SimpleFeatureBuilder.build(schema, atts, "id"));
+        FeatureType schema = fs.getSchema();
+        collection.add(schema.create(atts));
 
         atts = new Object[]{
                 fac.createPoint(new Coordinate(45,45)),
                 "name2" //$NON-NLS-1$
         };
-        collection.add(SimpleFeatureBuilder.build(schema, atts, "id"));
+        collection.add(schema.create(atts));
 
-        fs.removeFeatures(Filter.INCLUDE);
-        
+        fs.removeFeatures(Filter.NONE);
+
         fs.addFeatures(collection);
         Layer layer = map.getLayerFactory().createLayer(resource);
         layer.setName("layer1"); //$NON-NLS-1$
         map.getLayersInternal().add(layer);
 
         assertEquals( new Envelope(0,45,0,45), layer.getBounds(null, layer.getCRS()) );
-        
+
         CoordinateReferenceSystem decode = CRS.decode("EPSG:2065");
-        SimpleFeature[] feature = UDIGTestUtil.createTestFeatures("test", new Point[]{null}, new String[]{"name"}, decode); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        Feature[] feature = UDIGTestUtil.createTestFeatures("test", new Point[]{null}, new String[]{"name"}, decode); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         layer = map.getLayerFactory().createLayer(CatalogTests.createGeoResource(feature, true));
         map.getLayersInternal().add( layer );
-        
+
         ReferencedEnvelope bounds = layer.getBounds(null, decode);
         assertEquals(decode, bounds.getCoordinateReferenceSystem());
-        
+
         // TODO
-        
+
     }
 
 }

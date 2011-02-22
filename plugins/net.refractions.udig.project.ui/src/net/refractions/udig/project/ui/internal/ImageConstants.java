@@ -20,7 +20,7 @@ import net.refractions.udig.core.internal.Icons;
 
 /**
  * Image constants for use with Images class.
- * 
+ *
  * @author jgarnett
  */
 public interface ImageConstants {
@@ -96,7 +96,7 @@ public interface ImageConstants {
     /** New Map banner */
     public final static String NEWMAP_WIZBAN = Icons.WIZBAN + "newmap_wiz.gif"; //$NON-NLS-1$
     /** New Page banner */
-    public final static String NEWPAGE_WIZBAN = Icons.WIZBAN + "newpage_wiz.gif"; //$NON-NLS-1$    
+    public final static String NEWPAGE_WIZBAN = Icons.WIZBAN + "newpage_wiz.gif"; //$NON-NLS-1$
     /** New Project banner */
     public final static String NEWPROJECT_WIZBAN = Icons.WIZBAN + "newprj_wiz.gif"; //$NON-NLS-1$
     /** New Template banner */

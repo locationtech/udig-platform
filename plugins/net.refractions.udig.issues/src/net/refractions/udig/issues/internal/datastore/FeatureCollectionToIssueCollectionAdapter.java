@@ -28,23 +28,26 @@ import net.refractions.udig.issues.internal.PlaceholderIssue;
 
 import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.XMLMemento;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+
+import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Converts a features collection(issues that have been saved as features) to a collection of issues.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class FeatureCollectionToIssueCollectionAdapter extends AbstractCollection<IIssue> implements Collection<IIssue> {
 
-    private FeatureCollection<SimpleFeatureType, SimpleFeature>  features;
+    private FeatureCollection features;
     private FeatureTypeAttributeMapper mapper;
 
-    public FeatureCollectionToIssueCollectionAdapter( FeatureCollection<SimpleFeatureType, SimpleFeature> features, FeatureTypeAttributeMapper mapper ) {
+    public FeatureCollectionToIssueCollectionAdapter( FeatureCollection features, FeatureTypeAttributeMapper mapper ) {
         this.features=features;
         this.mapper=mapper;
     }
@@ -53,41 +56,41 @@ public class FeatureCollectionToIssueCollectionAdapter extends AbstractCollectio
     @Override
     public Iterator<IIssue> iterator() {
         return new Iterator<IIssue>(){
-            Iterator<SimpleFeature> iter=features.iterator();
+            Iterator<Feature> iter=features.iterator();
             public boolean hasNext() {
                 return iter.hasNext();
             }
 
             public IIssue next() {
-                SimpleFeature feature = iter.next();
+                Feature feature = iter.next();
                 String extensionPointID=(String) feature.getAttribute(mapper.getExtensionId());
                 try{
                 	IIssue issue = IssuesListUtil.createIssue(extensionPointID);
-                
+
                 	if( issue==null ){
                 		return createPlaceHolder(feature, extensionPointID);
                 	}
-                	
+
                     initIssue(feature,issue);
-                    
+
                     return issue;
                 } catch (Throwable e) {
                     IssuesActivator.log("", e); //$NON-NLS-1$
                     return createPlaceHolder(feature, extensionPointID);
                 }
-                
+
             }
 
             public void remove() {
                 iter.remove();
             }
 
-            protected void initIssue( SimpleFeature feature, IIssue issue ) {
+            protected void initIssue( Feature feature, IIssue issue ) {
                 String mementoData=(String) feature.getAttribute(mapper.getMemento());
                 String viewData=(String) feature.getAttribute(mapper.getViewMemento());
                 String groupId=(String) feature.getAttribute(mapper.getGroupId());
                 String id=(String) feature.getAttribute(mapper.getId());
-                
+
                 String resolutionInt=(String) feature.getAttribute(mapper.getResolution());
                 String priorityInt=(String) feature.getAttribute(mapper.getPriority());
                 String description=(String) feature.getAttribute(mapper.getDescription());
@@ -98,12 +101,12 @@ public class FeatureCollectionToIssueCollectionAdapter extends AbstractCollectio
                 Priority priority=Priority.valueOf(priorityInt);
                 if( priority==null )
                     priority=Priority.WARNING;
-                
+
 
                 issue.setDescription(description);
                 issue.setResolution(resolution);
                 issue.setPriority(priority);
-                
+
                 XMLMemento issueMemento=null;
                 if (mementoData != null) {
                     try {
@@ -120,13 +123,22 @@ public class FeatureCollectionToIssueCollectionAdapter extends AbstractCollectio
                         viewMemento = null;
                     }
                 }
-                
-                ReferencedEnvelope env = new ReferencedEnvelope(feature.getBounds());
 
-                issue.init(issueMemento, viewMemento, id, groupId, env);
+                Envelope env = feature.getBounds();
+                ReferencedEnvelope bounds;
+                if( env instanceof ReferencedEnvelope ){
+                    bounds=(ReferencedEnvelope) env;
+                }else{
+                    CoordinateReferenceSystem crs=feature.getFeatureType().getDefaultGeometry().getCoordinateSystem();
+                    if( crs==null )
+                        crs=DefaultGeographicCRS.WGS84;
+                    bounds=new ReferencedEnvelope(env,crs);
+                }
+
+                issue.init(issueMemento, viewMemento, id, groupId, bounds);
             }
-            
-            protected IIssue createPlaceHolder( SimpleFeature feature, String extensionId ) {
+
+            protected IIssue createPlaceHolder( Feature feature, String extensionId ) {
                 PlaceholderIssue issue=new PlaceholderIssue();
                 issue.setExtensionID(extensionId);
                 initIssue(feature, issue);

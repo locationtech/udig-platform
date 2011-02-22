@@ -34,7 +34,7 @@ public class ShowTipsAction extends ActionDelegate implements
 		dialog.setBlockOnOpen(true);
 		dialog.open();
 	}
-	
+
 	public void init(IWorkbenchWindow window) {
 		this.window=window;
 	}

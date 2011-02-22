@@ -75,13 +75,13 @@ public class TipDialog extends Dialog {
 
 	@Override
 	protected void configureShell(Shell newShell) {
-		newShell.setText(Messages.TipDialog_shellText); 
+		newShell.setText(Messages.TipDialog_shellText);
 		super.configureShell(newShell);
 	}
 
 	@Override
 	protected Point getInitialSize() {
-		return new Point(400, 300);
+		return new Point(400, 250);
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class TipDialog extends Dialog {
 		gridData.verticalAlignment = SWT.END;
 		title.setLayoutData(gridData);
 
-		tip = new Text(composite, SWT.WRAP|SWT.READ_ONLY| SWT.V_SCROLL);
+		tip = new Text(composite, SWT.WRAP|SWT.READ_ONLY);
 		tip.setBackground(getShell().getDisplay().getSystemColor(
 				SWT.COLOR_WIDGET_BACKGROUND));
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -112,7 +112,7 @@ public class TipDialog extends Dialog {
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 2;
 		check.setLayoutData(gridData);
-		check.setText(Messages.TipDialog_question); 
+		check.setText(Messages.TipDialog_question);
 		boolean selected;
 		try {
             IPreferenceStore store = UiPlugin.getDefault().getPreferenceStore();
@@ -198,10 +198,10 @@ public class TipDialog extends Dialog {
 						break;
 					}
 				}
-				if( currentConfiguration.extensionIDs.size()==0 && 
+				if( currentConfiguration.extensionIDs.size()==0 &&
 						currentConfiguration.tipIDs.size()==0 )
 					currentConfiguration = Configuration.DEFAULT;
-					
+
 			}
 		}
 		if (currentConfiguration == Configuration.DEFAULT) {
@@ -269,10 +269,10 @@ public class TipDialog extends Dialog {
 
 	private static class Configuration {
 		public static final Configuration DEFAULT=new Configuration();
-		
+
 		Collection<String> tipIDs;
 		Collection<String> extensionIDs;
-		
+
 		Configuration(IConfigurationElement confElem) {
 			this.tipIDs=new HashSet<String>();
 			this.extensionIDs=new HashSet<String>();

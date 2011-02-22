@@ -15,26 +15,29 @@
 package net.refractions.udig.project.internal.impl;
 
 import java.net.URI;
-import java.util.Set;
 
-import javax.swing.Icon;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.geotools.geometry.jts.JTS;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
+import org.geotools.referencing.crs.DefaultEngineeringCRS;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.TransformException;
+
+import com.vividsolutions.jts.geom.Envelope;
 
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IResourceInterceptor;
-
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import net.refractions.udig.project.internal.ProjectPlugin;
 
 /**
- * Intercepts the IGeoResource Info and wraps it with a decorator
- * that modifies getCRS and getBounds if the CRS has been set on the layer.
+ * Intercepts the IGeoResource Info and wraps it with a decorator that modifies getCRS and getBounds if the CRS has been set on the layer.
  * <p>
- * This is for the use case where the CRS on the IGeoResource is wrong 
- * 
+ * This is for the use case where the CRS on the IGeoResource is wrong
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -52,7 +55,7 @@ public class GeoResourceInfoInterceptor implements IResourceInterceptor<IGeoReso
         }
         return resource;
     }
-    
+
     private static class Wrapper extends IGeoResourceInfo{
         private final IGeoResourceInfo info;
         private LayerImpl layer;
@@ -64,14 +67,14 @@ public class GeoResourceInfoInterceptor implements IResourceInterceptor<IGeoReso
         }
 
         public ReferencedEnvelope getBounds() {
-            
+
             ReferencedEnvelope tmp = info.getBounds();
             if (tmp == null ){
-                
-                ReferencedEnvelope referencedEnvelope = MapImpl.toReferencedEnvelope(getCRS().getDomainOfValidity(), getCRS());
+
+                ReferencedEnvelope referencedEnvelope = MapImpl.toReferencedEnvelope(getCRS().getValidArea(), getCRS());
                 if( referencedEnvelope!=null )
                     return referencedEnvelope;
-                
+
                 tmp = UNKNOWN_BOUNDS;
             }
 
@@ -95,16 +98,11 @@ public class GeoResourceInfoInterceptor implements IResourceInterceptor<IGeoReso
             return info.getDescription();
         }
 
-        @Override
-        public ImageDescriptor getImageDescriptor() {
-            return info.getImageDescriptor();
-        }
-        
-        public Icon getIcon() {
+        public ImageDescriptor getIcon() {
             return info.getIcon();
         }
 
-        public Set<String> getKeywords() {
+        public String[] getKeywords() {
             return info.getKeywords();
         }
 
@@ -122,7 +120,7 @@ public class GeoResourceInfoInterceptor implements IResourceInterceptor<IGeoReso
 
         public String toString() {
             return info.toString();
-        }        
+        }
 
         @Override
         public int hashCode() {
@@ -148,9 +146,9 @@ public class GeoResourceInfoInterceptor implements IResourceInterceptor<IGeoReso
                 return false;
             return true;
         }
-        
-        
-        
+
+
+
     }
 
 }

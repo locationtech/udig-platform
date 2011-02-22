@@ -8,11 +8,13 @@ package net.refractions.udig.project.element.util;
 import java.util.List;
 
 import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.element.ElementPackage;
-import net.refractions.udig.project.element.ProjectElementAdapter;
+
+import net.refractions.udig.project.element.*;
+
 import net.refractions.udig.project.internal.ProjectElement;
 
 import org.eclipse.core.runtime.IAdaptable;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 

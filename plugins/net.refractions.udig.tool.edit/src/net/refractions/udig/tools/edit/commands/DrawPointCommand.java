@@ -40,27 +40,27 @@ import org.eclipse.jface.preference.IPreferenceStore;
 /**
  * Draws each vertex point as a rectangle.  Listens to mouse events as long as valid and fills vertext when
  * cursor is over a vertex.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class DrawPointCommand extends AbstractDrawCommand implements MapMouseMotionListener {
-    
+
     private PrimitiveShape shape;
-    private int radius = 2;
+    private int radius = 3;
     private IProvider<Color> outline = new IProvider<Color>(){
 
         public Color get(Object... params) {
             return PreferenceUtil.instance().getDrawVertexLineColor();
         }
-        
+
     };
     private IProvider<Color> fill = new IProvider<Color>(){
 
         public Color get(Object... params) {
             return PreferenceUtil.instance().getDrawVertexFillColor();
         }
-        
+
     };
     private ViewportPane pane;
     private Point location;
@@ -70,11 +70,11 @@ public class DrawPointCommand extends AbstractDrawCommand implements MapMouseMot
         public Color get(Object... params) {
             return PreferenceUtil.instance().getDrawSelectionFillColor();
         }
-        
+
     };
     private boolean overPoint;
     private EditToolHandler handler;
-    private boolean drawCurrentShape; 
+    private boolean drawCurrentShape;
     IPreferenceStore store = EditPlugin.getDefault().getPreferenceStore();
 
 
@@ -102,17 +102,17 @@ public class DrawPointCommand extends AbstractDrawCommand implements MapMouseMot
             graphics.setStroke(ViewportGraphics.LINE_SOLID, 1);
 
             Point p=iter.next();
-            if( (p.getX()<0||p.getX()>display.getWidth()) 
+            if( (p.getX()<0||p.getX()>display.getWidth())
                     && (p.getY()<0 || p.getY()>display.getHeight()) )
                 continue;
-            
+
             rect.x=p.getX()-radius;
             rect.y=p.getY()-radius;
-            
+
             if( overPoint && p==shape.getPoint(0) ){
                 drawOverPoint(rect, isSelected(p));
             }else{
-                setZoomedRect(rect, p, 0);                    
+                setZoomedRect(rect, p, 0);
                 selected = isSelected(p);
                 fillVertex(rect, selected);
                 if( selected ){
@@ -121,12 +121,12 @@ public class DrawPointCommand extends AbstractDrawCommand implements MapMouseMot
                 	drawOutline(rect,1, selected);
                 }
             }
-        }            
+        }
     }
 
     /**
      * Draws the point the mouse is over a bit bigger and bolder than the others.
-     * 
+     *
      * @param rect
      */
     private void drawOverPoint( Rectangle rect, boolean selected ) {
@@ -134,7 +134,7 @@ public class DrawPointCommand extends AbstractDrawCommand implements MapMouseMot
             Point point = shape.getPoint(0);
             rect.x=point.getX()-radius;
             rect.y=point.getY()-radius;
-            
+
             setZoomedRect(rect, point, radiusDelta);
             if( selected )
                 graphics.setColor(selectionFill.get());
@@ -142,7 +142,7 @@ public class DrawPointCommand extends AbstractDrawCommand implements MapMouseMot
                 graphics.setColor(fill.get());
             graphics.fillRect(rect.x+1, rect.y+1, rect.width-2, rect.height-2);
 //            graphics.fillRect(rect.x, rect.y, rect.width, rect.height);
-            
+
             drawOutline(rect,2, selected);
         }
     }
@@ -163,8 +163,8 @@ public class DrawPointCommand extends AbstractDrawCommand implements MapMouseMot
         } else {
             graphics.setColor(this.fill.get());
         }
-        
-        if( selected || store.getBoolean(PreferenceConstants.P_FILL_VERTICES) 
+
+        if( selected || store.getBoolean(PreferenceConstants.P_FILL_VERTICES)
                 || shape.getEditGeom().getShapeType()==ShapeType.POINT )
             graphics.fillRect(rect.x, rect.y, rect.width, rect.height);
     }
@@ -180,16 +180,16 @@ public class DrawPointCommand extends AbstractDrawCommand implements MapMouseMot
     public void setDrawCurrentShape(boolean b) {
         drawCurrentShape=b;
     }
-    
-    
+
+
     /**
-     * Sets the size of the point box.  
+     * Sets the size of the point box.
      *
      * @param rect rectangle to set
      * @param p center point
-     * @param widthDelta the number of pixels larger the box should be than the radius.  
+     * @param widthDelta the number of pixels larger the box should be than the radius.
      * (radius of box is size of box from center to edge) delta is number of pixel from edge of normal
-     * rect to new edge.  So 1 pixel delta would make rectangle 2 pixels larger. 
+     * rect to new edge.  So 1 pixel delta would make rectangle 2 pixels larger.
      */
     private void setZoomedRect( Rectangle rect, Point p, int widthRad ) {
         rect.width=(widthRad*2)+radius*2;
@@ -204,11 +204,11 @@ public class DrawPointCommand extends AbstractDrawCommand implements MapMouseMot
             for( int y=-radiusDelta-radius; y<max; y++){
                 if ( Point.valueOf(p.getX()+x,p.getY()+y).equals(location))
                     return true;
-            }            
+            }
         }
         return false;
     }
-    
+
     @Override
     public void setValid( boolean valid ) {
         if( !valid ){
@@ -223,7 +223,7 @@ public class DrawPointCommand extends AbstractDrawCommand implements MapMouseMot
 
         if( shape==null || shape.getNumPoints()==0 )
             return;
-        
+
         Point firstPoint = shape.getPoint(0);
         overPoint=isOverPoint(firstPoint);
         if( overPoint!=oldIsOver )
@@ -241,7 +241,7 @@ public class DrawPointCommand extends AbstractDrawCommand implements MapMouseMot
         handler.repaint();
     }
     /**
-     * 
+     *
      * @return Returns the radiusDelta.
      */
     public int getRadiusDelta() {

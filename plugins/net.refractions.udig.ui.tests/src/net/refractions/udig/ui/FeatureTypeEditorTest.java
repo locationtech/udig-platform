@@ -23,34 +23,34 @@ import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.Feature;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.FeatureTypeBuilder;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 
 public class FeatureTypeEditorTest extends TestCase {
 
-    private SimpleFeature[] features;
-    private SimpleFeatureType featureType;
+    private Feature[] features;
+    private FeatureType featureType;
     private FeatureTypeEditor editor;
     private Dialog dialog;
     private String featureTypeName = "FeatureTypeEditorFeatures"; //$NON-NLS-1$
-    
+
     @Override
     protected void setUp() throws Exception {
-        features = UDIGTestUtil.createDefaultTestFeatures(featureTypeName, 1); 
+        features = UDIGTestUtil.createDefaultTestFeatures(featureTypeName, 1);
         featureType = features[0].getFeatureType();
 
         dialog = new Dialog(Display.getCurrent().getActiveShell()){
-            SimpleFeatureTypeBuilder builder=null;
+            FeatureTypeBuilder builder=null;
             @Override
             protected Point getInitialSize() {
                 return new Point(500, 500);
             }
-            
+
             @Override
             protected Layout getLayout() {
                 return new GridLayout(1, true);
@@ -60,7 +60,7 @@ public class FeatureTypeEditorTest extends TestCase {
             protected Control createDialogArea( Composite parent ) {
                 editor = new FeatureTypeEditor();
                 editor.createFeatureTypeNameText(parent, null);
-                editor.createTable(parent, null,builder.buildFeatureType(),true);
+                editor.createTable(parent, null,builder,true);
                 return editor.getControl();
             }
             @Override
@@ -110,9 +110,9 @@ public class FeatureTypeEditorTest extends TestCase {
 
     public void testCellModifierGetValue() throws Exception {
         TreeViewer testingGetViewer = editor.testingGetViewer();
-        testingGetViewer.editElement(featureType.getDescriptor(0), 0);
+        testingGetViewer.editElement(featureType.getAttributeType(0), 0);
         testingGetViewer.cancelEditing();
-        testingGetViewer.editElement(featureType.getDescriptor(0), 1);
+        testingGetViewer.editElement(featureType.getAttributeType(0), 1);
         testingGetViewer.cancelEditing();
 
         List<LegalAttributeTypes> types = FeatureTypeEditor.testingGetTYPES();
@@ -129,37 +129,32 @@ public class FeatureTypeEditorTest extends TestCase {
         }
 
         ICellModifier cellModifier = testingGetViewer.getCellModifier();
-        assertEquals("geom", cellModifier.getValue(featureType.getDescriptor(0), "0")); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(geomindex, cellModifier.getValue(featureType.getDescriptor(0), "1")); //$NON-NLS-1$ 
-        assertEquals("name", cellModifier.getValue(featureType.getDescriptor(1), "0")); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals(stringindex, cellModifier.getValue(featureType.getDescriptor(1), "1")); //$NON-NLS-1$ 
+        assertEquals("geom", cellModifier.getValue(featureType.getAttributeType(0), "0")); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals(geomindex, cellModifier.getValue(featureType.getAttributeType(0), "1")); //$NON-NLS-1$
+        assertEquals("name", cellModifier.getValue(featureType.getAttributeType(1), "0")); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals(stringindex, cellModifier.getValue(featureType.getAttributeType(1), "1")); //$NON-NLS-1$
     }
 
     public void testCellModifierModify() throws Exception {
+
         TreeViewer testingGetViewer = editor.testingGetViewer();
 
         ICellModifier cellModifier = testingGetViewer.getCellModifier();
 
         cellModifier.modify(testingGetViewer.getTree().getItem(0), "0", "the_new_name"); //$NON-NLS-1$//$NON-NLS-2$
 
-        AttributeDescriptor attributeType = getAttributeDescriptor(0);
+        FeatureTypeBuilder newFeatureType = (FeatureTypeBuilder) testingGetViewer.getInput();
+        AttributeType attributeType = newFeatureType.get(0);
         assertEquals("the_new_name", attributeType.getName()); //$NON-NLS-1$
 
         for( int i = 0; i < FeatureTypeEditor.testingGetTYPES().size(); i++ ) {
             cellModifier.modify(testingGetViewer.getTree().getItem(0), "1", i); //$NON-NLS-1$.
-            attributeType = getAttributeDescriptor(0);
+            newFeatureType = (FeatureTypeBuilder) testingGetViewer.getInput();
+            attributeType = newFeatureType.get(0);
             assertEquals(FeatureTypeEditor.testingGetTYPES().get(i).getType(), attributeType
                     .getType());
         }
     }
-
-	private AttributeDescriptor getAttributeDescriptor(int index) {
-        TreeViewer testingGetViewer = editor.testingGetViewer();
-		SimpleFeatureTypeBuilder newFeatureTypeBuilder = (SimpleFeatureTypeBuilder) testingGetViewer.getInput();
-        SimpleFeatureType type = newFeatureTypeBuilder.buildFeatureType();
-        AttributeDescriptor attributeType = type.getDescriptor(index);
-		return attributeType;
-	}
 
     public void testGetCreateAttributeAction() throws Exception {
         IAction action = editor.getCreateAttributeAction();
@@ -167,10 +162,10 @@ public class FeatureTypeEditorTest extends TestCase {
         assertNotNull( action.getId() );
         action.runWithEvent(new Event());
 
-        SimpleFeatureTypeBuilder builder = (SimpleFeatureTypeBuilder) editor.testingGetViewer().getInput();
+        FeatureTypeBuilder builder = (FeatureTypeBuilder) editor.testingGetViewer().getInput();
         assertEquals(
-                Messages.FeatureTypeEditor_newAttributeTypeDefaultName + 0, getAttributeDescriptor(2).getName()); 
-        assertEquals(String.class, getAttributeDescriptor(2).getType());
+                Messages.FeatureTypeEditor_newAttributeTypeDefaultName + 0, builder.get(2).getName());
+        assertEquals(String.class, builder.get(2).getType());
 
         assertEquals(3, editor.testingGetViewer().getTree().getItemCount());
 
@@ -178,24 +173,24 @@ public class FeatureTypeEditorTest extends TestCase {
 
         assertEquals(4, editor.testingGetViewer().getTree().getItemCount());
         assertEquals(
-                Messages.FeatureTypeEditor_newAttributeTypeDefaultName + 1, getAttributeDescriptor(3).getName()); 
+                Messages.FeatureTypeEditor_newAttributeTypeDefaultName + 1, builder.get(3).getName());
 
     }
 
     public void testSetFeatureType() throws Exception {
         editor.setFeatureType(null);
 
-        SimpleFeatureTypeBuilder builder = (SimpleFeatureTypeBuilder) editor.testingGetViewer().getInput();
-        assertEquals(2, builder.buildFeatureType().getAttributeCount());
-        assertEquals(Messages.FeatureTypeEditor_newFeatureTypeName, builder.getName()); 
-        assertEquals(String.class, getAttributeDescriptor(0).getType().getBinding());
-        assertEquals(Messages.FeatureTypeEditor_defaultNameAttributeName, getAttributeDescriptor(0).getName()); 
-        assertEquals(LineString.class, getAttributeDescriptor(1).getType().getBinding());
-        assertEquals(Messages.FeatureTypeEditor_defaultGeometryName, getAttributeDescriptor(1).getName()); 
-        assertEquals(Messages.FeatureTypeEditor_newFeatureTypeName, editor.testingGetNameText().getText() ); 
-        
+        FeatureTypeBuilder builder = (FeatureTypeBuilder) editor.testingGetViewer().getInput();
+        assertEquals(2, builder.getAttributeCount());
+        assertEquals(Messages.FeatureTypeEditor_newFeatureTypeName, builder.getName());
+        assertEquals(String.class, builder.get(0).getType());
+        assertEquals(Messages.FeatureTypeEditor_defaultNameAttributeName, builder.get(0).getName());
+        assertEquals(LineString.class, builder.get(1).getType());
+        assertEquals(Messages.FeatureTypeEditor_defaultGeometryName, builder.get(1).getName());
+        assertEquals(Messages.FeatureTypeEditor_newFeatureTypeName, editor.testingGetNameText().getText() );
+
         editor.setFeatureType(this.featureType);
-        assertEquals(featureTypeName, editor.testingGetNameText().getText() ); 
+        assertEquals(featureTypeName, editor.testingGetNameText().getText() );
 
         testLabels();
     }
@@ -204,38 +199,38 @@ public class FeatureTypeEditorTest extends TestCase {
         IAction action = editor.getDeleteAction();
 
         assertNotNull( action.getId() );
-        
+
         TreeViewer viewer = editor.testingGetViewer();
-        viewer.setSelection(new StructuredSelection(featureType.getDescriptor(0)));
+        viewer.setSelection(new StructuredSelection(featureType.getAttributeType(0)));
         action.runWithEvent(new Event());
 
-        SimpleFeatureTypeBuilder builder = (SimpleFeatureTypeBuilder) editor.testingGetViewer().getInput();
-        assertEquals(1, builder.buildFeatureType().getAttributeCount());
-        assertEquals(String.class, builder.buildFeatureType().getDescriptor(0).getType().getBinding());
-        assertEquals("name", builder.buildFeatureType().getDescriptor(0).getName()); //$NON-NLS-1$
+        FeatureTypeBuilder builder = (FeatureTypeBuilder) editor.testingGetViewer().getInput();
+        assertEquals(1, builder.getAttributeCount());
+        assertEquals(String.class, builder.get(0).getType());
+        assertEquals("name", builder.get(0).getName()); //$NON-NLS-1$
 
         IAction create = editor.getCreateAttributeAction();
         create.runWithEvent(new Event());
         create.runWithEvent(new Event());
 
-        assertEquals(3, builder.buildFeatureType().getAttributeCount());
+        assertEquals(3, builder.getAttributeCount());
 
-        List<AttributeDescriptor> attrs = new ArrayList<AttributeDescriptor>(2);
-        attrs.add(builder.buildFeatureType().getDescriptor(1));
-        attrs.add(builder.buildFeatureType().getDescriptor(2));
+        List<AttributeType> attrs = new ArrayList<AttributeType>(2);
+        attrs.add(builder.get(1));
+        attrs.add(builder.get(2));
         viewer.setSelection(new StructuredSelection(attrs));
 
         action.runWithEvent(new Event());
 
-        assertEquals(1, builder.buildFeatureType().getAttributeCount());
-        assertEquals(String.class, builder.buildFeatureType().getDescriptor(0).getType().getBinding());
-        assertEquals("name", builder.buildFeatureType().getDescriptor(0).getName()); //$NON-NLS-1$
+        assertEquals(1, builder.getAttributeCount());
+        assertEquals(String.class, builder.get(0).getType());
+        assertEquals("name", builder.get(0).getName()); //$NON-NLS-1$
 
     }
-    
+
     public void testCreateLabel() throws Exception {
-        SimpleFeatureTypeBuilder builder = (SimpleFeatureTypeBuilder) editor.testingGetViewer().getInput();
-        
+        FeatureTypeBuilder builder = (FeatureTypeBuilder) editor.testingGetViewer().getInput();
+
         Text text=editor.testingGetNameText();
         text.setText("newName"); //$NON-NLS-1$
         Event event = new Event();
@@ -243,20 +238,20 @@ public class FeatureTypeEditorTest extends TestCase {
         text.notifyListeners(SWT.KeyDown, event);
 
         assertEquals("newName", builder.getName()); //$NON-NLS-1$
-        
+
         text.setText("newName"); //$NON-NLS-1$
         event = new Event();
         event.character=SWT.ESC;
         text.notifyListeners(SWT.KeyDown, event);
-        
+
         assertEquals("newName", builder.getName()); //$NON-NLS-1$
-        
+
         text.setSelection(0,0);
         event = new Event();
         text.notifyListeners(SWT.FocusIn, event);
         assertEquals(new Point(0,text.getText().length()), text.getSelection());
     }
-    
+
     public void testCloseOpenDialog() throws Exception {
         dialog.close();
         dialog.open();

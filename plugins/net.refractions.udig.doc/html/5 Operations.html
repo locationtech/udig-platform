@@ -1,0 +1,98 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 5 Operations</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 5 Operations -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h2><a name="5Operations-CatalogUserInterfaceExtensions">Catalog User Interface Extensions</a></h2>
+
+<p>Many of the extension points support the use of the IOp interface to define user interface needs. This represents a suitable compromise that can be maintained both by uDig and Toolkit providers.</p>
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>IOp</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">interface</span> IOp {
+  InternationalString getName();
+  InternationalString getDescription ();
+  Map params( <span class="code-object">Object</span> resource );
+}</pre>
+</div></div>
+
+<p>The Map params is initially a set of ?defaults? that may be used by the user to configure the activity. The Map keys are of type InternationalString that are suitable for display.<br/>
+When this contribution is used to populate the context menu of a FeatureType in the Catalog UI, a small wizard will be activated with the following workflow:<br/>
+1.Based on resource selected, the appropriate IOps will be presented to the user.  The user selects the desired operation.<br/>
+2.If the Map params is not null, a Dialog will be created and the user can choose to modify the values.  The resource is provided allowing the IOp to supply custom defaults.<br/>
+3.The appropriate op method will be called.<br/>
+4.If an Exception is thrown it will be sent to the Log.</p>
+<ul class="alternate" type="square">
+	<li>You may wish to provide your own feedback via the issues list<br/>
+  (ie. when performing data validation)</li>
+</ul>
+
+
+<h3><a name="5Operations-Extensionnet.refractions.udig.catalog.ui.serviceNotimplemented">Extension net.refractions.udig.catalog.ui.service  <b>Not implemented</b></a></h3>
+<p>Supports access of services, including the creation of new spatial information. </p>
+
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>Service Ops</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">interface</span> IDataStoreOp <span class="code-keyword">extends</span> Iop {
+  void op( DataStore service ) <span class="code-keyword">throws</span> Exception;
+}
+<span class="code-keyword">interface</span> IWMSOp <span class="code-keyword">extends</span> IOp {
+  void op( WebMapServer wms ) <span class="code-keyword">throws</span> Exception;
+}
+<span class="code-keyword">interface</span> IGCE <span class="code-keyword">extends</span> IOp {
+  void op( GridCoverageExchange gce ) <span class="code-keyword">throws</span> Exception;
+}</pre>
+</div></div>
+
+<h3><a name="5Operations-Extensionnet.refractions.udig.catalog.ui.featureType">Extension net.refractions.udig.catalog.ui.featureType</a></h3>
+<p>A slightly easier to use version of service, it operates at the level of a FeatureSource. Client code is responsible for doing any Transaction stuff they want.<br/>
+The extension point requires an implementation of net.refractions.udig.catalog.ui.IFeatureTypeOp.<br/>
+IFeatureTypeOp receives several objects during execution of its op method:</p>
+
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>Feature Ops</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">interface</span> IFeatureTypeOp <span class="code-keyword">extends</span> IOp{
+  FeatureType op( FeatureType schema ) <span class="code-keyword">throws</span> Exception;
+}
+<span class="code-keyword">interface</span> IfeatureSourceOp <span class="code-keyword">extends</span> IFeatureTypeOp {
+  void op( FeatureSource source ) <span class="code-keyword">throws</span> Exception;
+}
+<span class="code-keyword">interface</span> IFeatureStoreOp <span class="code-keyword">extends</span> IFeatureTypeOp {
+  void op( FeatureStore source ) <span class="code-keyword">throws</span> Exception;
+}
+<span class="code-keyword">interface</span> ILayerOp <span class="code-keyword">extends</span> IOp {
+  void op( WMSLayer layer ) <span class="code-keyword">throws</span> Exception;
+}
+<span class="code-keyword">interface</span> IGridCoverageOp <span class="code-keyword">extends</span> IOp {
+  void op( GridCoverage grid ) <span class="code-keyword">throws</span> Exception;
+}</pre>
+</div></div>
+<p>The Map params is initially contains set ?defaults? that may be used by the user to configure the activity. The Map keys are of type InternationalString and are suitable for display.<br/>
+Note: When working with a FeatureStore actual data modification is expected; the FeatureStore you receive will be using a Framework supplied and managed Transaction. If your op completes without exception, the Transaction will be committed.</p>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=4">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=4">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

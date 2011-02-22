@@ -21,14 +21,15 @@ import net.refractions.udig.project.ui.tool.IToolContext;
 
 /**
  * Tool for panning using the middle mouse.
- * 
+ *
  * @author Jesse
  */
 public class PanMiddleMouse extends Pan {
 
 	public PanMiddleMouse() {
+		System.out.println("created");
 	}
-	
+
 	@Override
 	public void setContext(IToolContext context) {
 		super.setContext(context);
@@ -42,8 +43,9 @@ public class PanMiddleMouse extends Pan {
 		if( active && !isActive())
 			super.setActive(active);
 
+
 	}
-	
+
 	@Override
 	protected boolean validModifierButtonCombo(MapMouseEvent e) {
 		return e.buttons==MapMouseEvent.BUTTON2;

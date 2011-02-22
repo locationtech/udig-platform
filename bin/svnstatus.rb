@@ -13,11 +13,11 @@ if line =~ re
 file=$'.strip
 yield file
 end
-end 
+end
 end
 
 def addAll
-parse (/^\?/) do |file| 
+parse (/^\?/) do |file|
     puts "Add #{file}? (y)es/(n)o/(i)gnore: "
     input=gets
     puts `svn add #{file}` if input =~ /^[yY]/
@@ -31,9 +31,9 @@ end
 
 def rmAll
     rm=false
-	parse (/^!/) do 
+	parse (/^!/) do
 	|file| puts "Delete #{file}? (y)es/(n)o: "
-	if gets =~ /^[yY]/	
+	if gets =~ /^[yY]/
 	    puts `svn rm #{file}`
 	    rm=true
 	end
@@ -41,7 +41,7 @@ def rmAll
 end
 
 def conflict
-parse (/^C/) do |file| 
+parse (/^C/) do |file|
 	puts "Conflicted file: #{file} is resolved? (y)es/(n)o: "
 	if gets =~ /^[yY]/
 		puts `svn resolved #{file}`
@@ -61,7 +61,7 @@ def commit
 end
 
 def status
-  puts `svn status` 
+  puts `svn status`
 end
 
 def update
@@ -76,7 +76,7 @@ puts "(C)ommit changes/(R)eview Changes/(E)xit:"
 ans=gets
 ans.strip!
 
-exit=commit if ans =~ /^[cC]/ 
+exit=commit if ans =~ /^[cC]/
 
 status if ans =~ /^[rR]/
 
@@ -91,4 +91,4 @@ svn.conflict
 svn.rmAll
 svn.update
 svn.addAll
-svn.commit? 
+svn.commit?

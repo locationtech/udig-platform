@@ -37,14 +37,14 @@ import org.eclipse.swt.widgets.Display;
  * </p>
  * <p>
  * Example Use:
- * 
+ *
  * <pre><code>
  *  FeatureTableContentProvider x = new FeatureTableContentProvider( ... );
  *  TODO code example
  * </code></pre>
- * 
+ *
  * </p>
- * 
+ *
  * @author jones
  * @since 0.3
  */

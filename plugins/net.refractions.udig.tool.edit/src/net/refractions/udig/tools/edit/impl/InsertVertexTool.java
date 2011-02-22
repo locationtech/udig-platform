@@ -33,13 +33,13 @@ import net.refractions.udig.tools.edit.behaviour.InsertVertexOnEdgeBehaviour;
 import net.refractions.udig.tools.edit.behaviour.SelectFeatureBehaviour;
 
 import org.eclipse.swt.SWT;
-import org.opengis.filter.spatial.Intersects;
+import org.geotools.filter.FilterType;
 
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * A Tool that adds vertices to EditGeoms and selects features.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -48,7 +48,7 @@ public class InsertVertexTool extends AbstractEditTool {
     @Override
     protected void initActivators( Set<Activator> activators ) {
         DrawType type = DrawGeomsActivator.DrawType.POLYGON;
-        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultEditActivators(type);
+        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultActivators(type);
         activators.addAll(defaults);
     }
 
@@ -69,15 +69,15 @@ public class InsertVertexTool extends AbstractEditTool {
     protected void initEventBehaviours( EditToolConfigurationHelper helper ) {
         //helper.add( new DrawCreateVertexSnapAreaBehaviour());
         helper.add( new CursorControlBehaviour(handler, new StaticProvider<String>(Messages.AddVertexTool_select_feature),
-                null,null, 
+                null,null,
                 new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_CROSS), new StaticProvider<String>(Messages.AddVertexTool_add_vertex)));
 
 //      vertex selection OR geometry selection should not both happen so make them a mutual exclusion behaviour
         helper.startMutualExclusiveList();
-        helper.add(new SelectFeatureBehaviour(new Class[]{Geometry.class}, Intersects.class));
+        helper.add(new SelectFeatureBehaviour(new Class[]{Geometry.class}, FilterType.GEOMETRY_INTERSECTS));
         helper.add(new InsertVertexOnEdgeBehaviour());
         helper.stopMutualExclusiveList();
-        
+
         helper.add( new AcceptOnDoubleClickBehaviour() );
         helper.done();
     }

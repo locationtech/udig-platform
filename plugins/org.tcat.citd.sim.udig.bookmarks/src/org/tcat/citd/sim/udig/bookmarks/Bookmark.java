@@ -9,7 +9,7 @@ import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
  * A <code>Bookmark</code> consists of the <code>IMap</code> object it is associated with, the
  * <code>Envelope</code> that decscribes the bounds, and a user-defined name.
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
@@ -20,7 +20,7 @@ public class Bookmark {
 
     /**
      * Construct a new bookmark with the given center and envelope.
-     * 
+     *
      * @param envelope
      * @param map
      * @param name

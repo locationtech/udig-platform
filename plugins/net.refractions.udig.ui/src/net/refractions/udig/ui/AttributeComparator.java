@@ -18,9 +18,9 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 import org.eclipse.swt.SWT;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
-public class AttributeComparator implements Comparator<SimpleFeature>, Serializable {
+public class AttributeComparator implements Comparator<Feature>, Serializable {
     /** long serialVersionUID field */
     private static final long serialVersionUID = -3521669094688139495L;
     private int sortDir;
@@ -37,8 +37,8 @@ public class AttributeComparator implements Comparator<SimpleFeature>, Serializa
     }
 
     @SuppressWarnings("unchecked")
-    public int compare(SimpleFeature f0, SimpleFeature f1) {
-        
+    public int compare(Feature f0, Feature f1) {
+
         Object data0 = f0.getAttribute(xpath);
         Object data1 = f1.getAttribute(xpath);
         int result;
@@ -49,7 +49,7 @@ public class AttributeComparator implements Comparator<SimpleFeature>, Serializa
             else
                 return 1;
         }
-        
+
         if( data0.equals(data1) ){
             result=1;
         }else if( data0 instanceof Comparable && data1 instanceof Comparable ){
@@ -59,7 +59,7 @@ public class AttributeComparator implements Comparator<SimpleFeature>, Serializa
         }else{
             result = 1;
         }
-        
+
         return sortDir*result;
     }
 
@@ -90,6 +90,6 @@ public class AttributeComparator implements Comparator<SimpleFeature>, Serializa
             return false;
         return true;
     }
-    
-    
+
+
 }

@@ -1,12 +1,6 @@
 package net.refractions.udig.project.internal.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
@@ -32,6 +26,7 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.project.internal.StyleEntry;
 import net.refractions.udig.ui.UDIGDisplaySafeLock;
+import net.refractions.udig.ui.graphics.SLDs;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -46,12 +41,15 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.XMLMemento;
-
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+import org.geotools.styling.Style;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.StyledLayerDescriptorImpl;
+import org.geotools.styling.UserLayer;
+import org.geotools.styling.UserLayerImpl;
 
 /**
  * The default implementation.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -59,7 +57,6 @@ import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
@@ -67,18 +64,17 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     /**
      * The cached value of the '{@link #getContent() <em>Content</em>}' containment reference list.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see #getContent()
      * @generated
      * @ordered
      */
-    protected EList<StyleEntry> content = null;
+    protected EList content = null;
 
-    Lock contentLock = new UDIGDisplaySafeLock();
+    Lock contentLock=new UDIGDisplaySafeLock();
 
     /**
      * Map of style id to StyleContent
-     * 
+     *
      * @uml.property name="id2content"
      * @uml.associationEnd qualifier="key:java.lang.Object
      *                     net.refractions.udig.project.StyleContent"
@@ -88,7 +84,6 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected StyleBlackboardImpl() {
@@ -97,7 +92,6 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected EClass eStaticClass() {
@@ -106,7 +100,6 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -116,14 +109,14 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
                     ProjectPackage.STYLE_BLACKBOARD__CONTENT){
 
                 /** long serialVersionUID field */
-                private static final long serialVersionUID = 1L;
+                        private static final long serialVersionUID = 1L;
 
                 @Override
                 protected Object assign( int index, Object object ) {
                     contentLock.lock();
-                    try {
+                    try{
                         return super.assign(index, object);
-                    } finally {
+                    }finally{
                         contentLock.unlock();
                     }
                 }
@@ -131,9 +124,9 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
                 @Override
                 protected void doClear() {
                     contentLock.lock();
-                    try {
+                    try{
                         super.doClear();
-                    } finally {
+                    }finally{
                         contentLock.unlock();
                     }
                 }
@@ -141,9 +134,9 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
                 @Override
                 protected Object doRemove( int index ) {
                     contentLock.lock();
-                    try {
+                    try{
                         return super.doRemove(index);
-                    } finally {
+                    }finally{
                         contentLock.unlock();
                     }
                 }
@@ -155,7 +148,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Object get( String styleId ) {
@@ -168,15 +161,15 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     private StyleEntry getEntry( String styleId ) {
         StyleEntry entry = null;
         contentLock.lock();
-        try {
-            for( Iterator seItr = getContent().iterator(); seItr.hasNext(); ) {
-                StyleEntry se = (StyleEntry) seItr.next();
-                if (se.getID().equals(styleId)) {
-                    entry = se;
-                    break;
-                }
+        try{
+        for( Iterator seItr = getContent().iterator(); seItr.hasNext(); ) {
+            StyleEntry se = (StyleEntry) seItr.next();
+            if (se.getID().equals(styleId)) {
+                entry = se;
+                break;
             }
-        } finally {
+        }
+        }finally{
             contentLock.unlock();
         }
         return entry;
@@ -184,46 +177,29 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
-    public Object lookup( Class< ? > theClass ) {
+    public Object lookup( Class<?> theClass ) {
         StyleEntry entry = null;
         contentLock.lock();
-        try {
+        try{
             for( Iterator seItr = getContent().iterator(); seItr.hasNext(); ) {
                 StyleEntry se = (StyleEntry) seItr.next();
-                try {
-                    if (se.getStyleClass() == null) {
-                        StyleContent styleContent = getStyleContent(se.getID());
-                        if (styleContent != null){
-                            Class<?> type = styleContent.getStyleClass();
-                            if( type == null ){
-                                se.getStyle(); // force the load
-                                type = styleContent.getStyleClass();
-                                if( type == null ){
-                                    continue;
-                                }
-                            }
-                            se.setStyleClass( type );
-                        }
-                        else {
-                            // this shoudl no longer happen as we have a DEFAULT
-                            continue;
-                        }
-                    }
-                    if (theClass.isAssignableFrom(se.getStyleClass())) {
-                        entry = se;
-                        break;
+                if (se.getStyleClass() == null) {
+                    StyleContent styleContent = getStyleContent(se.getID());
+                    if( styleContent!=null )
+                    	se.setStyleClass(styleContent.getStyleClass());
+                    else{
+                    	continue;
                     }
                 }
-                catch( Throwable t ){
-                    // protect against a StyleEntry/StyleContent taking us down
-                    ProjectPlugin.log("Style "+se.getID()+" not restored:"+ t.getLocalizedMessage(), t );
+                if (theClass.isAssignableFrom(se.getStyleClass())) {
+                    entry = se;
+                    break;
                 }
-
             }
-        } finally {
+        }finally{
             contentLock.unlock();
         }
 
@@ -235,7 +211,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     /**
      * Gets the style object from a StyleEntry. Either from the StyleEntry cache or from the
      * StyleContent associated with the entry.
-     * 
+     *
      * @generated NOT
      */
     protected Object getObject( StyleEntry styleEntry ) {
@@ -243,17 +219,14 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
         if (styleEntry.getStyle() == null) {
             try {
                 StyleContent styleContent = getStyleContent(styleEntry.getID());
-                String mementoString = styleEntry.getMemento();
-                if (mementoString != null) {
+                String mementoString = styleEntry
+                        .getMemento();
+                if( mementoString!=null ){
                     XMLMemento memento = XMLMemento.createReadRoot(new StringReader(mementoString));
                     Object style = styleContent.load(memento);
                     styleEntry.setStyle(style);
-                    if( style != null ){
-                        styleEntry.setStyleClass( style.getClass() );
-                    }
                 }
             } catch (WorkbenchException e) {
-                ProjectPlugin.getPlugin().log( styleEntry.getID()+":"+e);
                 e.printStackTrace();
             }
         }
@@ -263,7 +236,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public boolean contains( String styleId ) {
@@ -272,12 +245,26 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @SuppressWarnings("unchecked")
     public void put( String styleId, Object style ) {
         Object oldValue = remove(styleId);
+
+        //Validate (add an SLD to the style if one does not exist)
+        //TODO: move to extension point
+        if (style instanceof Style) {
+            Style theStyle = (Style) style;
+            Object SLD = SLDs.styledLayerDescriptor(theStyle);
+            if (SLD == null) {
+                StyledLayerDescriptor sld = new StyledLayerDescriptorImpl();
+                UserLayer layer = new UserLayerImpl();
+                layer.getNote().setParent(sld);
+                theStyle.getNote().setParent(layer);
+            }
+        }
+
         StyleEntry se = ProjectFactory.eINSTANCE.createStyleEntry();
 
         se.setID(styleId);
@@ -287,10 +274,8 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
         StyleContent styleContent = getStyleContent(styleId);
 
-        if (styleContent == null) {
-
+        if( styleContent==null )
             return;
-        }
         try {
             // save the state of the style
             XMLMemento memento = XMLMemento.createWriteRoot("styleEntry"); //$NON-NLS-1$
@@ -305,9 +290,9 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
             e.printStackTrace();
         }
 
-        BlackboardEvent event = new BlackboardEvent(this, styleId, oldValue, style);
+        BlackboardEvent event=new BlackboardEvent(this, styleId, oldValue, style);
         for( IBlackboardListener l : listeners ) {
-            try {
+            try{
                 l.blackBoardChanged(event);
             } catch (Exception e) {
                 ProjectPlugin.log("", e); //$NON-NLS-1$
@@ -318,7 +303,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void put( URL url, IProgressMonitor monitor ) {
@@ -329,6 +314,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * @generated NOT
      */
     private StyleContent getStyleContent( String styleId ) {
+
         // look in local cache first
         StyleContent styleContent = id2content.get(styleId);
         if (styleContent == null) {
@@ -342,20 +328,22 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * @generated NOT
      */
     private void loadStyleContent( final String styleId ) {
-        id2content.put( styleId, StyleContent.DEFAULT ); // default to use of we cannot find a specific one
+
         ExtensionPointProcessor p = new ExtensionPointProcessor(){
             boolean found = false;
+
             public void process( IExtension extension, IConfigurationElement element )
                     throws Exception {
                 if (!found && element.getAttribute("id").equals(styleId)) { //$NON-NLS-1$
                     found = true;
-                    StyleContent styleContent = (StyleContent) element
-                            .createExecutableExtension("class");
-                    id2content.put(styleId, styleContent);
+                    id2content.put(styleId, (StyleContent) element
+                            .createExecutableExtension("class") //$NON-NLS-1$
+                            );
                 }
             }
         };
         ExtensionPointUtil.process(ProjectPlugin.getPlugin(), StyleContent.XPID, p);
+
     }
 
     class URLProcessor implements ExtensionPointProcessor {
@@ -375,9 +363,8 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
         }
 
         /*
-         * @see
-         * net.refractions.udig.core.internal.ExtensionPointProcessor#process(org.eclipse.core.runtime
-         * .IExtension, org.eclipse.core.runtime.IConfigurationElement)
+         * @see net.refractions.udig.core.internal.ExtensionPointProcessor#process(org.eclipse.core.runtime.IExtension,
+         *      org.eclipse.core.runtime.IConfigurationElement)
          */
         public void process( IExtension extension, IConfigurationElement element ) throws Exception {
             if (found)
@@ -409,21 +396,21 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Object remove( String styleId ) {
         Object style = null;
         contentLock.lock();
-        try {
-            for( Iterator seItr = getContent().iterator(); seItr.hasNext(); ) {
-                StyleEntry se = (StyleEntry) seItr.next();
-                if (se.getID().equals(styleId)) {
-                    style = se.getStyle();
-                    seItr.remove();
-                }
+        try{
+        for( Iterator seItr = getContent().iterator(); seItr.hasNext(); ) {
+            StyleEntry se = (StyleEntry) seItr.next();
+            if (se.getID().equals(styleId)) {
+                style = se.getStyle();
+                seItr.remove();
             }
-        } finally {
+        }
+        }finally{
             contentLock.unlock();
         }
 
@@ -433,66 +420,34 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     /**
      * <!-- begin-user-doc --> TODO: This method does not actually clone the underlying style
      * objects, which it should. <!-- end-user-doc -->
-     * 
      * @throws CloneNotSupportedException
+     *
      * @generated NOT
      */
-    public Object clone() {
+    public  Object clone() {
         // clone the entire blackboard
         StyleBlackboardImpl clone;
         try {
             clone = (StyleBlackboardImpl) super.clone();
         } catch (CloneNotSupportedException e) {
-            clone = (StyleBlackboardImpl) ProjectFactory.eINSTANCE.createStyleBlackboard();
+            clone=(StyleBlackboardImpl) ProjectFactory.eINSTANCE.createStyleBlackboard();
         }
 
-        clone.content = null;
+        clone.content=null;
 
         contentLock.lock();
-        try {
+        try{
             for( Iterator seItr = getContent().iterator(); seItr.hasNext(); ) {
                 StyleEntry styleEntry = (StyleEntry) seItr.next();
 
                 StyleEntry styleEntryClone = ProjectFactory.eINSTANCE.createStyleEntry();
 
                 // clone the entry by copying the id + memento over
-                final String ID = styleEntry.getID();
-                styleEntryClone.setID(ID);
+                styleEntryClone.setID(styleEntry.getID());
                 styleEntryClone.setMemento(styleEntry.getMemento());
-
-                Object style = styleEntry.getStyle();
-                if (style instanceof String) {
-                    styleEntryClone.setStyle(style); // immutable
-                } else if (style instanceof Serializable) {
-                    try {
-                        Serializable serializable = (Serializable) style;
-                        ByteArrayOutputStream save = new ByteArrayOutputStream();
-                        ObjectOutputStream out = new ObjectOutputStream(save);
-                        out.writeObject(style);
-                        out.close();
-
-                        byte data[] = save.toByteArray();
-
-                        ByteArrayInputStream restore = new ByteArrayInputStream(data);
-                        ObjectInputStream in = new ObjectInputStream(restore);
-
-                        Object copy = in.readObject();
-                        in.close();
-
-                        styleEntryClone.setStyle(copy);
-                    } catch (Throwable t) {
-                        ProjectPlugin.trace(StyleBlackboardImpl.class, "Unable to copy style " + ID
-                                + ":" + style, t);
-                    }
-                } else {
-                    // unable to preserve independence of this style object
-                    styleEntryClone.setStyle(style); // warning!
-                    ProjectPlugin.trace(StyleBlackboardImpl.class, "Unable to copy style " + ID
-                            + ":" + style, null);
-                }
                 clone.getContent().add(styleEntryClone);
             }
-        } finally {
+        }finally{
             contentLock.unlock();
         }
         return clone;
@@ -500,7 +455,6 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -519,7 +473,6 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
@@ -532,7 +485,6 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -548,7 +500,6 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void eUnset( EStructuralFeature eFeature ) {
@@ -562,7 +513,6 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public boolean eIsSet( EStructuralFeature eFeature ) {
@@ -619,13 +569,12 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     }
 
     public void clear() {
-        if (content == null) {
+        if( content==null )
             return;
-        }
         content.clear();
 
         for( IBlackboardListener l : listeners ) {
-            try {
+            try{
                 l.blackBoardCleared(this);
             } catch (Exception e) {
                 ProjectPlugin.log("", e); //$NON-NLS-1$
@@ -637,27 +586,28 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     }
 
-    CopyOnWriteArraySet<IBlackboardListener> listeners = new CopyOnWriteArraySet<IBlackboardListener>();
+    CopyOnWriteArraySet<IBlackboardListener> listeners=new CopyOnWriteArraySet<IBlackboardListener>();
     public boolean addListener( IBlackboardListener listener ) {
         return listeners.add(listener);
     }
+
 
     public boolean removeListener( IBlackboardListener listener ) {
         return listeners.remove(listener);
     }
 
     public void setSelected( String[] ids ) {
-        List<String> idList = Arrays.asList(ids);
+        List<String> idList=Arrays.asList(ids);
         contentLock.lock();
-        try {
+        try{
             List<StyleEntry> entries = getContent();
             for( StyleEntry entry : entries ) {
-                if (idList.contains(entry.getID()))
+                if( idList.contains(entry.getID()))
                     entry.setSelected(true);
                 else
                     entry.setSelected(false);
             }
-        } finally {
+        }finally{
             contentLock.unlock();
         }
 
@@ -666,7 +616,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     public boolean isSelected( String styleId ) {
         StyleEntry entry = getEntry(styleId);
 
-        if (entry != null && entry.isSelected())
+        if (entry!=null && entry.isSelected())
             return true;
         return false;
     }
@@ -681,28 +631,12 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     public Set<String> keySet() {
         Set<String> keys = new HashSet<String>();
-        for( StyleEntry entry : content ) {
-            if (entry == null) {
-                continue; // huh?
-            }
-            keys.add(entry.getID());
+        Iterator iterator = content.iterator();
+        while(iterator.hasNext()){
+            StyleEntry se = (StyleEntry) iterator.next();
+            keys.add(se.getID());
         }
         return keys;
-    }
-    @SuppressWarnings("nls")
-    @Override
-    public String toString() {
-        StringBuffer buf = new StringBuffer();
-        buf.append("StyleBlackBoardImpl: ");
-        buf.append(content.size());
-        buf.append(" entries");
-        for( StyleEntry entry : content ) {
-            buf.append("\n\t");
-            buf.append(entry.getID());
-            buf.append("=");
-            buf.append(entry.getStyle());
-        }
-        return buf.toString();
     }
 
 } // StyleBlackboardImpl

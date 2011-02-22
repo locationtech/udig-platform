@@ -1,0 +1,148 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 1 Getting Started</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 1 Getting Started -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <ul><li><a href="0 SDK Quickstart.html" title="0 SDK Quickstart">0 SDK Quickstart</a> &mdash; <span class="smalltext">quickly set up a developmenet environment for working on your own plug-ins</span></li><li><a href="1 Switching to uDig SDK.html" title="1 Switching to uDig SDK">1 Switching to uDig SDK</a> &mdash; <span class="smalltext">setting up an existing Eclipse installation</span></li><li><a href="3 Plugin Tutorial.html" title="3 Plugin Tutorial">3 Plugin Tutorial</a> &mdash; <span class="smalltext">Create your first uDig plug-in! (Featured at OSG'05 conference)</span></li><li><a href="4 Edit Tool Tutorial.html" title="4 Edit Tool Tutorial">4 Edit Tool Tutorial</a></li><li><a href="5 Custom Application Tutorial.html" title="5 Custom Application Tutorial">5 Custom Application Tutorial</a></li></ul>
+<h3><a name="1GettingStarted-Introduction">Introduction</a></h3>
+<p>This is a guide to setting up a uDig development environment for the Debian linux testing (etch) distribution.  Where possible tools have been installed from scratch as I'm hoping that one day this can form the basis of a Debian GIS HOW-TO for uDig development.</p>
+
+<h3><a name="1GettingStarted-Subversion">Subversion</a></h3>
+<ol>
+	<li>Install Subversion:<br/>
+<tt>apt-get install subversion</tt></li>
+	<li><a href="/confluence/display/UDIG/Subversion" title="Subversion">Configure</a> Subversion.</li>
+	<li>Create a directory and checkout trunk:
+<div class="preformatted"><div class="preformattedContent">
+<pre>/usr/src/sis$ mkdir udig
+/usr/src/sis$ cd udig
+/usr/src/sis/udig$ svn co http://svn.geotools.org/udig/trunk
+</pre>
+</div></div></li>
+</ol>
+
+
+<h3><a name="1GettingStarted-InstallingJava">Installing Java</a></h3>
+<ol>
+	<li>Debian provides the java-package utility to create a Debian installation package from supported Java(TM) 2 RE or SDK self-extracting archives (see the make-jpkg man page for details):
+<div class="preformatted"><div class="preformattedContent">
+<pre>/pkgs/java$ apt-get install java-package
+</pre>
+</div></div></li>
+	<li>Download the appropriate <a href="/confluence/display/UDIG/Environment" title="Environment">Java</a> self -extracting archive (.bin, not the .rpm)</li>
+	<li>Create the Debian package
+<div class="preformatted"><div class="preformattedContent">
+<pre>/pkgs/java$ fakeroot make-jpkg jdk-1_5_0_06-linux-i586.bin
+</pre>
+</div></div></li>
+	<li>Install the package
+<div class="preformatted"><div class="preformattedContent">
+<pre>/pkgs/java# dpkg -i sun-j2sdk1.5_1.5.0+update06_i386.deb
+</pre>
+</div></div></li>
+</ol>
+
+
+<p>Unfortunately no method exists yet for packaging Java Advanced Imaging (JAI) or Java Image IO (ImageIO) so we have to install these <a href="/confluence/display/UDIG/Environment" title="Environment">manually</a></p>
+
+<h3><a name="1GettingStarted-InstallingEclipse">Installing Eclipse</a></h3>
+<ol>
+	<li>Download <a href="/confluence/display/UDIG/Eclipse+SDK+Installation" title="Eclipse SDK Installation">Eclipse</a> and unzip into a directory, in my case /opt</li>
+	<li>Change the ownership of eclipse files to user (it looks like eclipse needs write access to configuration/log files stored in its directory - TODO: can this be changed in preferences?):
+<div class="preformatted"><div class="preformattedContent">
+<pre>/opt# chown -R username eclipse
+/opt# chgrp -R users eclipse
+</pre>
+</div></div></li>
+	<li>Create a shell script to launch eclipse:
+<div class="preformatted"><div class="preformattedContent">
+<pre>/opt/eclipse# echo '#!/bin/sh' &gt;/usr/local/bin/eclipse
+/opt/eclipse# echo '/opt/eclipse/eclipse -startup /opt/eclipse/startup.jar' &gt;&gt;/usr/local/bin/eclipse
+/opt/eclipse# chmod a+x /usr/local/bin/eclipse
+</pre>
+</div></div></li>
+	<li>Configure the Eclipse Update Manager:
+	<ul>
+		<li>Choose <b>Help &gt; Software Updates &gt; Find and Install...</b></li>
+		<li>Select <b>Search for new features to install</b></li>
+		<li>Click on <b>Import sites</b></li>
+		<li>Import the attached bookmarks <a href="" title="EclipseUpdateSitesBookmarks.xml attached to 1 Getting Started">file</a></li>
+	</ul>
+	</li>
+	<li>Install the following minimal set of extras (of course you can just select whole packages - however you might run into problems with dependencies):
+	<ul>
+		<li>EMF/SDO/XSD Secondary Update Site
+		<ul>
+			<li>EMF SDK</li>
+		</ul>
+		</li>
+		<li>GEF Update Site
+		<ul>
+			<li>Graphical Editing Framework</li>
+		</ul>
+		</li>
+		<li>Subclipse Update Site
+		<ul>
+			<li>Subclipse</li>
+		</ul>
+		</li>
+		<li>TPTP Update Site
+		<ul>
+			<li>TPTP Features
+			<ul>
+				<li>TPTP ProbeKit</li>
+				<li>TPTP Test Tools</li>
+				<li>TPTP Core</li>
+				<li>TPTP Charting Service</li>
+				<li>TPTP Platform Trace</li>
+				<li>TPTP Test</li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+	<li>Configure Eclipse</li>
+</ol>
+
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="1 Getting Started_attachments/EclipseUpdateSitesBookmarks.xml">EclipseUpdateSitesBookmarks.xml</a> (text/xml)
+                                <br/>
+                                                    </div>
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=6321">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=6321">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

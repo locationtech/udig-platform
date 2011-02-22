@@ -12,7 +12,7 @@ import net.refractions.udig.project.IMap;
  * This gives the advantage of more easily displaying custom menus and icons.
  * <p>
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
@@ -21,7 +21,7 @@ public class MapWrapper {
 
     /**
      * Default constructor
-     * 
+     *
      * @param map The map that this object will wrap.
      */
     public MapWrapper( IMap map ) {
@@ -44,7 +44,7 @@ public class MapWrapper {
 
     /**
      * Get the name for the map
-     * 
+     *
      * @return the name
      */
     public String getName() {
@@ -58,7 +58,7 @@ public class MapWrapper {
 
     /**
      * Get a wrapper for the project that contains this map
-     * 
+     *
      * @return the new ProjectWrapper
      */
     public ProjectWrapper getProjectWrapper() {
@@ -68,7 +68,7 @@ public class MapWrapper {
 
     /**
      * Unwrap all of the maps in the given list
-     * 
+     *
      * @param wrappedMaps
      * @return a Collection of IMap objects
      */
@@ -85,7 +85,7 @@ public class MapWrapper {
 
     /**
      * Wrap the maps in the given list
-     * 
+     *
      * @param maps
      * @return a Collection of MapWrapper objects
      */

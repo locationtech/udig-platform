@@ -4,9 +4,9 @@
    <extension
          point="net.refractions.udig.project.ui.tool">
       <modalTool
-            class="net.refractions.udig.tutorial.tool.coordinate.CoordinateTool"
+            class="net.refractions.udig.tutorials.tool.coordinate.CoordinateTool"
             icon="icons/etool16/xy.png"
-            id="net.refractions.udig.tutorial.tool.coordinate"
+            id="net.refractions.udig.tutorials.tool.coordinate"
             name="XY Coordinate Tool"
             onToolbar="true"/>
    </extension>

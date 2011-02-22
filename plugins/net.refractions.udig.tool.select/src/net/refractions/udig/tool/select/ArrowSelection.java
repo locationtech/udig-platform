@@ -30,14 +30,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.geotools.data.FeatureSource;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Selects and drags single features.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -55,7 +54,7 @@ public class ArrowSelection extends AbstractModalTool implements ModalTool {
         x=e.x;
         y=e.y;
     }
-    
+
     @Override
     public void mouseReleased( final MapMouseEvent e ) {
         if( e.x==x && e.y==y ){
@@ -65,11 +64,11 @@ public class ArrowSelection extends AbstractModalTool implements ModalTool {
                 public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
                     monitor.beginTask(Messages.ArrowSelection_0, 5);
                     ReferencedEnvelope bbox = getContext().getBoundingBox(new Point(x,y),5);
-                    FeatureCollection<SimpleFeatureType, SimpleFeature> collection=null;
-                    Iterator<SimpleFeature> iter=null;
+                    FeatureCollection collection=null;
+                    Iterator<Feature> iter=null;
                     try {
                         ILayer selectedLayer = getContext().getSelectedLayer();
-                        FeatureSource<SimpleFeatureType, SimpleFeature> source =selectedLayer.getResource(FeatureSource.class, new SubProgressMonitor(monitor, 1));
+                        FeatureSource source=selectedLayer.getResource(FeatureSource.class, new SubProgressMonitor(monitor, 1));
                         if( source==null )
                             return;
                         collection=source.getFeatures(selectedLayer.createBBoxFilter(bbox, new SubProgressMonitor(monitor, 1)));
@@ -78,14 +77,14 @@ public class ArrowSelection extends AbstractModalTool implements ModalTool {
                             if( !e.buttonsDown() ){
                                 getContext().sendASyncCommand(getContext().getEditFactory().createNullEditFeatureCommand());
                             }
-                            getContext().sendASyncCommand(getContext().getSelectionFactory().createNoSelectCommand());                            
+                            getContext().sendASyncCommand(getContext().getSelectionFactory().createNoSelectCommand());
                             return;
                         }
-                        SimpleFeature feature=iter.next();
+                        Feature feature=iter.next();
                         getContext().sendASyncCommand(getContext().getEditFactory().createSetEditFeatureCommand(feature, selectedLayer));
                         getContext().sendASyncCommand(getContext().getSelectionFactory().createFIDSelectCommand(selectedLayer, feature));
                     } catch (IOException e) {
-                        
+
                      // return;
                     }finally{
                         monitor.done();
@@ -93,7 +92,7 @@ public class ArrowSelection extends AbstractModalTool implements ModalTool {
                             collection.close(iter);
                     }
                 }
-                
+
             });
         }
     }

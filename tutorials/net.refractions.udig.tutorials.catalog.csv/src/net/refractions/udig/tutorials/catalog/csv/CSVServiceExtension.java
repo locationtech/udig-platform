@@ -12,12 +12,12 @@ import net.refractions.udig.catalog.URLUtils;
 
 public class CSVServiceExtension implements ServiceExtension {
     /* CSV service key, url to the CSV file */
-    public static final String KEY 
+    public static final String KEY
         = "net.refractions.udig.tutorials.catalog.csv.url";
-    
+
 public Map<String, Serializable> createParams( URL url ) {
     try {
-        //does the URL represent a file        
+        //does the URL represent a file
         File file = URLUtils.urlToFile( url );
         if (file.exists()) {
             //check the filename, is it a CSV file?
@@ -31,7 +31,7 @@ public Map<String, Serializable> createParams( URL url ) {
     catch(Throwable t) {
         //something went wrong, url must be for another service
     }
-    
+
     //unable to create the parameters, url must be for another service
     return null;
 }
@@ -40,13 +40,13 @@ public Map<String, Serializable> createParams( URL url ) {
         //good defensive programming
         if (params == null)
             return null;
-            
+
         //check for the property service key
         if (params.containsKey(KEY)) {
             //found it, create the service handle
             return new CSVService(params);
         }
-            
+
         //key not found
         return null;
     }

@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IAdapterFactory;
 
 /**
  * AdapterFactory that adapts IResolves to IAdaptables
- * 
+ *
  * @author jeichar
  * @since 0.9
  */

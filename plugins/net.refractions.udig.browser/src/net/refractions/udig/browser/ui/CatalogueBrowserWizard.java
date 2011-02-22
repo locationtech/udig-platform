@@ -30,7 +30,7 @@ public class CatalogueBrowserWizard extends IDataWizard {
     public CatalogueBrowserWizard() {
         super();
     }
-    
+
     @Override
     public boolean canFinish() {
         IWizardPage page = getContainer().getCurrentPage();
@@ -42,15 +42,15 @@ public class CatalogueBrowserWizard extends IDataWizard {
         }
         return false;
     }
-    
+
     @Override
     protected WizardPage[] getPrimaryPages() {
 		return new WizardPage[]{new BrowserSelectionPage()};
     }
-    
+
     public void init( IWorkbench workbench, IStructuredSelection selection ) {
         super.init(workbench, selection);
-        
+
         setWindowTitle(Messages.CatalogueBrowserWizard_windowTitle);
 //        setDefaultPageImageDescriptor( Images.getDescriptor( ImageConstants.DATA_WIZBAN ));
     }
@@ -72,11 +72,11 @@ public class CatalogueBrowserWizard extends IDataWizard {
             //viewName = page.getViewName();
         } else {
             ExternalCatalogueImportPage page = (ExternalCatalogueImportPage)ipage;
-                
+
             //if import page returns a new page, then an error occured
-            IWizardPage next = page.getNextPage(); 
+            IWizardPage next = page.getNextPage();
             if (next != null) {
-                //error, 
+                //error,
                 getContainer().showPage(next);
                 return false;
             }

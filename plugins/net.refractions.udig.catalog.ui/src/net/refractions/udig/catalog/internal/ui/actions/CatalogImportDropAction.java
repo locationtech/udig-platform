@@ -1,13 +1,11 @@
 package net.refractions.udig.catalog.internal.ui.actions;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +15,7 @@ import net.refractions.udig.catalog.URLUtils;
 import net.refractions.udig.catalog.internal.ui.CatalogImport;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.UDIGConnectionFactory;
+import net.refractions.udig.catalog.ui.internal.Messages;
 import net.refractions.udig.core.internal.CorePlugin;
 import net.refractions.udig.core.internal.ExtensionPointProcessor;
 import net.refractions.udig.core.internal.ExtensionPointUtil;
@@ -29,7 +28,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * Handles data being dropped on the catalog. Pretty generic
- * 
+ *
  * @author jdeolive
  * @author Jesse
  */
@@ -48,10 +47,10 @@ public class CatalogImportDropAction extends IDropAction {
             Object[] objects = ((Object[]) data);
             for( Object object : objects ) {
                 if (canAccept(object)) {
-                    return true;
+                    return false;
                 }
             }
-            return false;
+            return true;
         } else if (canAccept(data)) {
             return true;
         }
@@ -73,12 +72,9 @@ public class CatalogImportDropAction extends IDropAction {
     }
 
     /**
-     * True if the data can be imported into the catalog (irregardless if it is already in
-     * catalog).
-     * <p>
-     * This is where we check if the data is some form of URL, or file that is worth sending
-     * in the direction of the catalog code.
-     * </p>
+     * returns true if the data can be imported into the catalog irregardless if it is already in
+     * catalog
+     *
      * @param data data to import
      * @return true if the data can be imported into the catalog irregardless if it is already in
      *         catalog
@@ -102,21 +98,7 @@ public class CatalogImportDropAction extends IDropAction {
     @Override
     public void perform( IProgressMonitor monitor ) {
         Object data = getData();
-
-        if (data.getClass().isArray()) {
-        	Object[] array = (Object[]) data;
-        	for (Object object : array) {
-        		if( canAccept(object)){
-        			doImportSingleItem(monitor, object);
-        		}
-			}
-        }else{
-        	doImportSingleItem(monitor, data);
-        }
-    }
-
-	private void doImportSingleItem(IProgressMonitor monitor, Object data) {
-		if (data instanceof String) {
+        if (data instanceof String) {
             URL url = extractURL((String) data);
             if (url != null) {
                 data = url;
@@ -125,21 +107,21 @@ public class CatalogImportDropAction extends IDropAction {
 
         CatalogImport catalogImport = new CatalogImport();
         catalogImport.run(monitor, data);
-	}
+    }
     /**
      * Searches a String looking for URLs and returns the first one it can find.
-     * 
+     *
      * @param data
      * @return
      */
     protected URL extractURL( String data ) {
         String decoded = data;
         try {
-            decoded = URLDecoder.decode(decoded, "UTF-8");
+            decoded = URLDecoder.decode(decoded, "UTF-8"); //$NON-NLS-1$
         } catch (UnsupportedEncodingException e2) {
             // so ignore...
         }
-        decoded = decoded.replaceAll("amp;", "&");
+        decoded = decoded.replaceAll("&amp;", "&"); //$NON-NLS-1$ //$NON-NLS-2$
 
         URL result = null;
 
@@ -167,14 +149,13 @@ public class CatalogImportDropAction extends IDropAction {
             result = new URL(line);
         } catch (MalformedURLException e) {
         }
-        if (result == null && !line.contains(":/")) {
+        if (result == null && !line.contains(":/")) { //$NON-NLS-1$
             // maybe its a file?
-//            try {
-                result = URLUtils.fileToURL(new File(line));
-//                String string = "file:" + line;
-//                result = new URL(string);
-//            } catch (MalformedURLException e2) {
-//            }
+            try {
+                String string = "file:" + line; //$NON-NLS-1$
+                result = new URL(string);
+            } catch (MalformedURLException e2) {
+            }
         }
         if (result == null) {
             try {
@@ -190,13 +171,13 @@ public class CatalogImportDropAction extends IDropAction {
     /**
      * Make sure that if the url is a file URL getFile will get the full path including the drive on
      * windows/
-     * 
+     *
      * @param result
      * @return
      */
     private URL formatFileURL( URL result ) {
         if (result.getProtocol().equalsIgnoreCase("file")) { //$NON-NLS-1$
-            try { 
+            try {
                 return new URL(result.toExternalForm());
             } catch (MalformedURLException e) {
                 return result;
@@ -269,7 +250,7 @@ public class CatalogImportDropAction extends IDropAction {
     static class PageProcessor implements ExtensionPointProcessor {
 
         Object data;
-        Set<String> ids = new LinkedHashSet<String>();
+        List<String> ids = new ArrayList<String>();
 
         PageProcessor( Object data ) {
             this.data = data;
@@ -287,9 +268,10 @@ public class CatalogImportDropAction extends IDropAction {
                     // get the id
                     IConfigurationElement[] elements = extension.getConfigurationElements();
                     for( int i = 0; i < elements.length; i++ ) {
-                    	if( elements[i].getAttribute("id") != null){
-                    		ids.add(elements[i].getAttribute("id")); //$NON-NLS-1$
-                    	}
+                        // if ("wizardPage".equals(elements[i].getName())) { //$NON-NLS-1$
+                        ids.add(elements[i].getAttribute("id")); //$NON-NLS-1$
+                        // break;
+                        // }
                     }
                 }
             } catch (Throwable t) {
@@ -301,47 +283,47 @@ public class CatalogImportDropAction extends IDropAction {
     }
 
     // class CatalogWizard extends CatalogImportWizard {
-    //        
+    //
     // List<String> ids;
-    //      
+    //
     // CatalogWizard(List<String> ids) {
     // this.ids = ids;
-    //          
+    //
     // }
-    //      
+    //
     // @Override
     // protected WizardPage[] getPrimaryPages() {
-    //            
+    //
     // DataSourceSelectionPage page = new DataSourceSelectionPage();
     // page.select(ids);
-    //            
+    //
     // return new WizardPage[] { page };
     //
     // }
-    //        
+    //
     // }
-    //  
+    //
     // class MapWizard extends AddLayersWizard {
-    //        
+    //
     // List<String> ids;
-    //      
+    //
     // MapWizard(List<String> ids) {
     // this.ids = ids;
     // }
-    //      
+    //
     // @Override
     // protected WizardPage[] getPrimaryPages() {
-    //           
+    //
     // DataSourceSelectionPage page = new DataSourceSelectionPage();
     // page.select(ids);
-    //            
+    //
     // ResourceSelectionPage rpage = new ResourceSelectionPage(
     // Messages.AddLayersWizard_layerSelection
     // );
-    //          
+    //
     // return new WizardPage[] { page, rpage };
     //
     // }
-    //        
+    //
     // }
 }

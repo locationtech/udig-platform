@@ -47,7 +47,7 @@ import org.eclipse.ui.PlatformUI;
  * @since 1.0.0
  */
 public class ExportTo implements IOp {
-    
+
     /**
      * Let the extention point perform any additional checks
      * before bothering the users with a prompt.
@@ -55,7 +55,7 @@ public class ExportTo implements IOp {
      * The extention point lets you specify the exact interface (or class)
      * required. This method returns <code>true</code>, but could be used
      * to perform a more indepth check of say a Layer's Schema to prevent
-     * the export of a SimpleFeatureType with multiple Geometry attributes
+     * the export of a FeatureType with multiple Geometry attributes
      * being exported as a Shapefile.
      * </p>
      * @param target Target to be considered for export
@@ -64,29 +64,29 @@ public class ExportTo implements IOp {
     public boolean canExport( Object target ){
         return target != null;
     }
-    
+
     /**
      * Subclass should override to actually do something.
-     * 
-     * @param target 
+     *
+     * @param target
      * @param file
      * @param monitor
-     * @throws Exception 
+     * @throws Exception
      */
     public void exportTo( Object target, File file, IProgressMonitor monitor ) throws Exception {
-        return; 
+        return;
     }
 
     /**
      * Prompt to use for title (example: "Export to")
      *
-     * @param target 
+     * @param target
      * @return Prompt (may be based on target), should be internationalized
      */
     public String prompt( Object target ){
-        return Messages.ExportTo_title; 
+        return Messages.ExportTo_title;
     }
-    
+
     /**
      * Default name for provided target.
      * <p>
@@ -98,12 +98,12 @@ public class ExportTo implements IOp {
      * @return Default filename based on target, default is "new"
      */
     public String defaultName( Object target ){
-        return Messages.ImportExport_new; 
+        return Messages.ImportExport_new;
     }
-    
+
     /**
      * Override as required (example "*.sld").
-     * 
+     *
      * @return filter, default "*.*"
      */
     public String[] getFilterExtentions(){
@@ -115,7 +115,7 @@ public class ExportTo implements IOp {
     }
     /**
      * Called by getFilterExtentions (example "sld").
-     * 
+     *
      * @return filter, default "*"
      */
     public String[] getExtentions(){
@@ -129,9 +129,9 @@ public class ExportTo implements IOp {
      * @return Filter names, default "All Files"
      */
     public String[] getFilterNames(){
-        return new String[]{Messages.ImportExport_all_files}; 
+        return new String[]{Messages.ImportExport_all_files};
     }
-    
+
     /**
      * Responsible for asking the user for a filename and calleding exporTo.
      * <p>
@@ -144,10 +144,10 @@ public class ExportTo implements IOp {
     protected class PromptAndExport implements Runnable {
         Display display;
         Object target;
-        
+
         // results of prompt
         File file;
-        
+
         /**
          * @param display
          * @param target
@@ -157,7 +157,7 @@ public class ExportTo implements IOp {
             this.display = display;
             this.target = target;
         }
-        
+
         /** Run with Display.asyncExec */
         public void run() {
             file = promptFile( display, target );
@@ -167,7 +167,7 @@ public class ExportTo implements IOp {
             return file;
         }
     }
-    
+
     /**
      * Asks the users for a filename to export to ...
      * <p>
@@ -183,12 +183,12 @@ public class ExportTo implements IOp {
         String name = defaultName( target );
         String prompt = prompt( target );
         FileDialog fileDialog=new FileDialog( display.getActiveShell(),SWT.SAVE );
-        
+
         fileDialog.setFilterExtensions( getFilterExtentions() );
-        fileDialog.setFilterNames( getFilterNames() );            
+        fileDialog.setFilterNames( getFilterNames() );
         fileDialog.setFileName(name + "." + getExtentions()[0]); //$NON-NLS-1$
         fileDialog.setText( prompt );
-                    
+
         String path=fileDialog.open();
         if( path==null){
             return null; // user canceled
@@ -197,7 +197,7 @@ public class ExportTo implements IOp {
         if( file.exists() ){
             boolean replace =
                 MessageDialog.openConfirm(display.getActiveShell(), prompt,
-                    MessageFormat.format(Messages.ExportTo_file_exists, file.getAbsolutePath())); 
+                    MessageFormat.format(Messages.ExportTo_file_exists, file.getAbsolutePath()));
             if( !replace ){
                 return null; // user canceled (we could reprompt?)
             }
@@ -208,19 +208,19 @@ public class ExportTo implements IOp {
 
     /**
      * This method is called in a non ui thread...
-     * 
+     *
      */
     public void op( Display display, Object target, IProgressMonitor monitor ) throws Exception {
-        if( !canExport( target )){            
+        if( !canExport( target )){
             return; // should we log this? Or disable the op...
         }
-        PromptAndExport prompt = new PromptAndExport( display, target, monitor ); 
+        PromptAndExport prompt = new PromptAndExport( display, target, monitor );
         display.syncExec( prompt );
         File file = prompt.getFile();
-        
+
         status(MessageFormat.format(Messages.ExportTo_writing, file));
         exportTo( target, file, monitor );
-        status(MessageFormat.format(Messages.ExportTo_finished, file)); 
+        status(MessageFormat.format(Messages.ExportTo_finished, file));
     }
 
     /**
@@ -230,23 +230,23 @@ public class ExportTo implements IOp {
     public void status(final String msg ) {
         final IStatusLineManager statusBar = getStatusBar();
         final Display display = Display.getCurrent();
-        
+
         if( statusBar == null || display == null ) return;
-        
+
         display.syncExec(new Runnable(){
             public void run(){
                 statusBar.setMessage( msg);
             }
         });
     }
-    
+
     private IStatusLineManager getStatusBar(){
         IEditorSite site=getEditorSite();
         if( site==null )
             return null;
         return site.getActionBars().getStatusLineManager();
     }
-    
+
     private IEditorSite getEditorSite() {
         IWorkbenchWindow window = getWindow();
         if( window == null )

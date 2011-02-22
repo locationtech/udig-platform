@@ -6,7 +6,7 @@ import java.awt.Dimension;
  * TODO Purpose of net.refractions.udig.project.render.displayAdapter
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -19,7 +19,7 @@ public class MapDisplayEvent {
 
     /**
      * Creates a new instance of MapDisplayEvent
-     * 
+     *
      * @param source The IMapDisplay that raised the event.
      * @param size The new size of the IMapDisplay
      * @param old The old size of the IMapDisplay
@@ -32,7 +32,7 @@ public class MapDisplayEvent {
 
     /**
      * The IMapDisplay that raised the event.
-     * 
+     *
      * @return The IMapDisplay that raised the event.
      * @uml.property name="source"
      */
@@ -42,7 +42,7 @@ public class MapDisplayEvent {
 
     /**
      * Returns The new size of the IMapDisplay
-     * 
+     *
      * @return The new size of the IMapDisplay
      * @see Dimension
      * @uml.property name="size"
@@ -53,7 +53,7 @@ public class MapDisplayEvent {
 
     /**
      * Returns The old size of the IMapDisplay
-     * 
+     *
      * @return The old size of the IMapDisplay
      * @see Dimension
      */

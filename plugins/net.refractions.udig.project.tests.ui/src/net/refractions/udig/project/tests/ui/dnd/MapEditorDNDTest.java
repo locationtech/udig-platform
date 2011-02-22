@@ -32,32 +32,32 @@ import org.geotools.data.memory.MemoryDataStore;
 import org.geotools.data.shapefile.ShapefileDataStore;
 
 public class MapEditorDNDTest extends AbstractProjectUITestCase {
-	
+
 	UDIGDropHandler handler;
 	boolean done;
-	
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		
+
         ConnectionFactoryManager.instance().getConnectionFactoryDescriptors();
-		
+
 		UDIGControlDropListener dropper = UDIGDragDropUtilities.getEditorDropListener();
 		handler = dropper.getHandler();
 		handler.setTarget(new MapEditor());
 		done = false;
 	}
-    
+
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
     }
-	
+
 	public void testSingle() throws Exception {
 		Object data = getDataSingleResource();
-		
+
 		handler.performDrop(data, null);
-		
+
         final int[] expectedLayers=new int[1];
         expectedLayers[0]=1;
 
@@ -74,19 +74,19 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
 		};
 
 		UDIGTestUtil.inDisplayThreadWait(15000,c, true);
-		
+
 		IMap map = ApplicationGIS.getActiveMap();
 		assertNotNull(map);
-		
+
 		List<ILayer> layers = map.getMapLayers();
 		assertFalse(layers.isEmpty());
-		
+
 		List<String> typeNames=Arrays.asList(new String[]{"streams"});  //$NON-NLS-1$
-		
+
 		for (ILayer layer : layers) {
 			assertLayerType(layer,typeNames, ShapefileDataStore.class);
 		}
-        
+
 
         MapEditor activeEditor = ApplicationGISInternal.getActiveEditor();
         UDIGDropHandler dropHandler = activeEditor.getDropHandler();
@@ -95,20 +95,20 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         dropHandler.performDrop(data, null);
 
         expectedLayers[0]=2;
-        
+
         UDIGTestUtil.inDisplayThreadWait(4000,c, true);
-		
+
         map = ApplicationGIS.getActiveMap();
         assertNotNull(map);
-        
+
         layers = map.getMapLayers();
         assertEquals(2,layers.size());
-        
+
         for (ILayer layer : layers) {
             assertLayerType(layer, typeNames, ShapefileDataStore.class);
         }
 	}
-    
+
     public void testHTMLTableDrop() throws Exception {
     	URL url=FileLocator.toFileURL(CatalogTestsUIPlugin.getDefault().getBundle().getEntry("data/lakes.shp")); //$NON-NLS-1$
     	String data="<td class='confluenceTd'> <span class=\"nobr\"><a href=\""+url.toString()+"\" title=\"Visit page outside Confluence\" rel=\"nofollow\">DM Solutions WMS<sup><img class=\"rendericon\" src=\"/confluence/images/icons/linkext7.gif\" height=\"7\" width=\"7\" align=\"absmiddle\" alt=\"\" border=\"0\"/></sup></a></span> </td>";  //$NON-NLS-1$//$NON-NLS-2$
@@ -118,7 +118,7 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         if( ApplicationGIS.getActiveMap()!=null ){
             baseLayers[0]=ApplicationGIS.getActiveMap().getMapLayers().size();
         }
-        
+
 		handler.performDrop(data, null);
         WaitCondition c=new WaitCondition(){
 			public boolean isTrue() {
@@ -140,16 +140,16 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
 		List<ILayer> layers = map.getMapLayers();
 		assertEquals(map.getName()+" should have "+(baseLayers[0]+1)+" number of layers but instead layers="+layers,  //$NON-NLS-1$ //$NON-NLS-2$
                 baseLayers[0]+1, layers.size());
-        
+
 
         List<String> typeNames=Arrays.asList(new String[]{"lakes"});  //$NON-NLS-1$
-        
+
 		for (ILayer layer : layers) {
 			assertLayerType(layer, typeNames, ShapefileDataStore.class);
 		}
-		
+
 		assertEquals("Should only be one map open", 1,ApplicationGIS.getOpenMaps().size()); //$NON-NLS-1$
-        
+
     }
 
     public void testMulti() throws Exception {
@@ -158,10 +158,10 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         	FileLocator.toFileURL(CatalogTestsUIPlugin.getDefault().getBundle().getEntry("data/lakes.shp")) //$NON-NLS-1$
         };
         Object data = urls;
-                
+
         int base = 0;
         final IMap currentMap = ApplicationGIS.getActiveMap();
-        
+
         ApplicationGIS.createAndOpenMap(Collections.<IGeoResource>emptyList());
 
         UDIGTestUtil.inDisplayThreadWait(4000, new WaitCondition(){
@@ -170,10 +170,10 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
                 IMap map = ApplicationGIS.getActiveMap();
                 if( map==null || currentMap==map )
                     return false;
-                
+
                 return true;
             }
-            
+
         }, true);
         Map activeMap = ApplicationGISInternal.getActiveMap();
 
@@ -185,7 +185,7 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
             public void changed( MapCompositionEvent event ) {
                 numberLayerAdds[0]++;
             }
-            
+
         });
 
         IMap map = ApplicationGIS.getActiveMap();
@@ -193,10 +193,10 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
             List<ILayer> layers = map.getMapLayers();
             base = layers.size();
         }
-        
+
         final int[] numberActionsRan=new int[1];
         numberActionsRan[0]=0;
-        
+
         handler.setTarget(map);
         handler.addListener(new IDropHandlerListener(){
 
@@ -209,11 +209,11 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
 
             public void starting( IDropAction action ) {
             }
-            
+
         });
-        
+
         handler.performDrop(data, null);
-        
+
         final int base2=base;
         WaitCondition c=new WaitCondition(){
             public boolean isTrue() {
@@ -229,13 +229,13 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
 
         UDIGTestUtil.inDisplayThreadWait(8000,c, false);
 //        UDIGTestUtil.inDisplayThreadWait(800000,c, false);
-        
+
         map = ApplicationGIS.getActiveMap();
         assertNotNull(map);
-        
+
         List<ILayer> layers = map.getMapLayers();
         assertEquals(layers.size(),base+2);
-        
+
         assertEquals(1, numberLayerAdds[0]);
         assertEquals(1, numberActionsRan[0]);
 
@@ -243,20 +243,20 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         for (ILayer layer : layers) {
             assertLayerType(layer, typeNames, ShapefileDataStore.class);
         }
-        
+
         assertEquals("Should only be one map open", 1,ApplicationGIS.getOpenMaps().size()); //$NON-NLS-1$
     }
 
     public void testMultiGeoResources() throws Exception {
-        Object data = new Object[]{ 
+        Object data = new Object[]{
                 MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures("test1", 2), true), //$NON-NLS-1$
                 MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures("test2", 2), true) //$NON-NLS-1$
         };
-                
+
         int base = 0;
 
         final Map currentMap = ApplicationGISInternal.getActiveMap();
-        
+
         ApplicationGIS.createAndOpenMap(Collections.<IGeoResource>emptyList());
 
         UDIGTestUtil.inDisplayThreadWait(4000, new WaitCondition(){
@@ -265,10 +265,10 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
                 IMap map = ApplicationGIS.getActiveMap();
                 if( map==null || currentMap==map )
                     return false;
-                
+
                 return true;
             }
-            
+
         }, true);
         Map activeMap = ApplicationGISInternal.getActiveMap();
 
@@ -280,7 +280,7 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
             public void changed( MapCompositionEvent event ) {
                 numberLayerAdds[0]++;
             }
-            
+
         });
 
         IMap map = ApplicationGIS.getActiveMap();
@@ -288,10 +288,10 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
             List<ILayer> layers = map.getMapLayers();
             base = layers.size();
         }
-        
+
         final int[] numberActionsRan=new int[1];
         numberActionsRan[0]=0;
-        
+
         handler.setTarget(map);
         handler.addListener(new IDropHandlerListener(){
 
@@ -304,11 +304,11 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
 
             public void starting( IDropAction action ) {
             }
-            
+
         });
-        
+
         handler.performDrop(data, null);
-        
+
         final int base2=base;
         WaitCondition c=new WaitCondition(){
             public boolean isTrue() {
@@ -323,34 +323,34 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         };
 
         UDIGTestUtil.inDisplayThreadWait(8000,c, true);
-        
+
         map = ApplicationGIS.getActiveMap();
         assertNotNull(map);
-        
+
         List<ILayer> layers = map.getMapLayers();
         assertEquals(layers.size(),base+2);
-        
+
         assertEquals(1, numberLayerAdds[0]);
         assertEquals(1, numberActionsRan[0]);
-        
+
         List<String> typeNames=Arrays.asList(new String[]{"test1","test2"});  //$NON-NLS-1$//$NON-NLS-2$
-        
+
         for (ILayer layer : layers) {
             assertLayerType(layer, typeNames, MemoryDataStore.class);
         }
-        
+
         assertEquals("Should only be one map open", 1,ApplicationGIS.getOpenMaps().size()); //$NON-NLS-1$
     }
-    
+
 	public Object getDataSingleResource() throws Exception {
 		URL url = CatalogTestsUIPlugin.getDefault().getBundle()
 			.getEntry("data/streams.shp");	 //$NON-NLS-1$
 		return FileLocator.toFileURL(url);
 	}
-	
+
 	void assertLayerType(ILayer layer, List<String> featureTypes, Class type) throws Exception {
 		assertTrue(layer.getGeoResources().get(0).parent(null).canResolve(type));
-        String typeName = layer.getSchema().getName().getLocalPart();
+        String typeName = layer.getSchema().getTypeName();
         assertTrue( typeName+" is not the expected typeName for the layer", featureTypes.contains(typeName));
 	}
 }

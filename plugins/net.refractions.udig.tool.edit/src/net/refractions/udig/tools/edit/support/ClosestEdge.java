@@ -4,7 +4,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * Describes the relationship between an arbitrary point to an edge in a {@link EditGeom}
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -15,8 +15,8 @@ public class ClosestEdge{
     final EditGeom shape;
     final PrimitiveShape part;
     Coordinate addedCoord;
-    
-    public ClosestEdge(double distanceToEdge, int indexOfPrevious, Point pointOnLine, 
+
+    public ClosestEdge(double distanceToEdge, int indexOfPrevious, Point pointOnLine,
             PrimitiveShape part) {
         this.distanceToEdge=distanceToEdge;
         this.indexOfPrevious=indexOfPrevious;
@@ -25,7 +25,7 @@ public class ClosestEdge{
         this.part=part;
         this.addedCoord=part.getEditBlackboard().toCoord(pointOnLine);
     }
-    
+
     /**
      * @return Returns the distanceToEdge.
      */
@@ -67,7 +67,7 @@ public class ClosestEdge{
     }
 
 
-    
+
     @Override
     public String toString() {
         StringBuffer buffer=new StringBuffer();
@@ -77,7 +77,7 @@ public class ClosestEdge{
         buffer.append(pointOnLine);
         buffer.append(", previous:"); //$NON-NLS-1$
         buffer.append(indexOfPrevious);
-        
+
         return buffer.toString();
     }
 }

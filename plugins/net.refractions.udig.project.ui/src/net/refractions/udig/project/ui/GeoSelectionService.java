@@ -18,24 +18,24 @@ import org.eclipse.core.runtime.InvalidRegistryObjectException;
  * Default UDIG implementation of IGeoSelectionService with a platform selection manager
  * working for the currently active MapEditor.
  * <p>
- * 
+ *
  * @author Vitalus
  *
  */
 final public class GeoSelectionService implements IGeoSelectionService {
-    
+
     /**
      * Logger.
      */
     public static Logger LOGGER = Logger.getLogger("net.refractions.udig.project.geoselection"); //$NON-NLS-1$
 
-    
+
     /**
      * An ID of extension point to add static listeners declaratively.
      */
     public static final String EXTENSION_POINT_ID = "net.refractions.udig.project.geoselection"; //$NON-NLS-1$
-    
-    
+
+
     private static GeoSelectionService instance;
 
     private IGeoSelectionManager platformSelectionManager = null;
@@ -77,7 +77,7 @@ final public class GeoSelectionService implements IGeoSelectionService {
     public void registerSelectionManager(String id,  IGeoSelectionManager selectionManager ) {
         if(registeredManagers.containsKey(id))
             throw new IllegalArgumentException("The IGeoSelectionManager instance with id= "+id+" is already registered");
-        
+
          registeredManagers.put(id, selectionManager);
     }
 
@@ -87,20 +87,20 @@ final public class GeoSelectionService implements IGeoSelectionService {
     public void unregisterSelectionManager(String id ) {
         registeredManagers.remove(id);
     }
-    
+
     public IGeoSelectionManager getSelectionManager(String id){
         return registeredManagers.get(id);
     }
-    
+
     private void processExtensionPoint(){
         List<IConfigurationElement> extensionList = ExtensionPointList
         .getExtensionPointList(EXTENSION_POINT_ID);
-        
+
         for( IConfigurationElement element : extensionList ) {
 //          IExtension extension = element.getDeclaringExtension();
             String type = element.getName();
-            
-            
+
+
             if(type.equals("geoSelectionListener")){
 
                 try {

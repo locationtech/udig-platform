@@ -15,9 +15,9 @@
 package net.refractions.udig.project;
 
 /**
- * Modifies an IGeoResource based before returned to caller of 
+ * Modifies an IGeoResource based before returned to caller of
  * {@link ILayer#getResource(Class, org.eclipse.core.runtime.IProgressMonitor)}.
- * 
+ *
  * @param <T> the type of resources that this interceptor can work on.
  * @author Jesse
  * @since 1.1.0

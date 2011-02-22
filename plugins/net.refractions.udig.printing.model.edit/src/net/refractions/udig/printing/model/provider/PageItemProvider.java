@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: PageItemProvider.java 29060 2008-02-04 05:21:17Z jeichar $
  */
 package net.refractions.udig.printing.model.provider;
 
@@ -23,12 +23,10 @@ import net.refractions.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -49,16 +47,16 @@ public class PageItemProvider
         ITreeItemContentProvider,
         IItemLabelProvider,
         IItemPropertySource {
-    
+
     protected List children = null;;
-    
+
     /*
      * @see org.eclipse.emf.edit.provider.ItemProviderAdapter#getChildren(java.lang.Object)
      */
     public Collection getChildren( Object object ) {
         if (children == null) {
             children = new ArrayList();
-            
+
             Page page = (Page) object;
             Iterator iter = page.getBoxes().iterator();
             while (iter.hasNext()) {
@@ -69,7 +67,7 @@ public class PageItemProvider
                     children.add(map);
                 }
             }
-            
+
         }
         return children;
     }
@@ -89,8 +87,7 @@ public class PageItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+    public List getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -103,9 +100,20 @@ public class PageItemProvider
      * This adds a property descriptor for the Name feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @generated
      */
     protected void addNamePropertyDescriptor(Object object) {
-        // don-t care
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ProjectElement_name_feature"), //$NON-NLS-1$
+                 getString("_UI_PropertyDescriptor_description", "_UI_ProjectElement_name_feature", "_UI_ProjectElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                 ProjectPackage.eINSTANCE.getProjectElement_Name(),
+                 true,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
     }
 
     /**
@@ -125,26 +133,13 @@ public class PageItemProvider
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    protected EStructuralFeature getChildFeature(Object object, Object child) {
-        // Check the type of the specified child object and return the proper feature to use for
-        // adding (see {@link AddCommand}) it as a child.
-
-        return super.getChildFeature(object, child);
-    }
-    /**
      * This returns Page.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/Page"));
+        return getResourceLocator().getImage("full/obj16/Page"); //$NON-NLS-1$
     }
 
     /**
@@ -167,7 +162,6 @@ public class PageItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
@@ -183,20 +177,30 @@ public class PageItemProvider
     }
 
     /**
-     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-     * that can be created under this object.
+     * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
+     * describing all of the children that can be created under this object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+    protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
         super.collectNewChildDescriptors(newChildDescriptors, object);
 
         newChildDescriptors.add
             (createChildParameter
-                (ModelPackage.Literals.PAGE__BOXES,
+                (ModelPackage.eINSTANCE.getPage_Boxes(),
                  ModelFactory.eINSTANCE.createBox()));
+
+    }
+
+    /**
+     * Return the resource locator for this item provider's resources.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ResourceLocator getResourceLocator() {
+        return PageEditPlugin.INSTANCE;
     }
 
 }

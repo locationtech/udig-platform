@@ -29,11 +29,11 @@ public class WizardDropActionTest extends AbstractProjectUITestCase{
     public void testFileStringAccept() throws Exception {
         MapDropAction action=new MapDropAction();
         Object layersView=PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView(LayersView.ID);
-        action.init(null, null, ViewerDropLocation.NONE, layersView, getData().getFile()); 
+        action.init(null, null, ViewerDropLocation.NONE, layersView, getData().getFile());
         boolean acceptable = action.accept( );
         assertTrue(acceptable);
     }
-    
+
     public URL getData() throws Exception {
         URL url = CatalogTestsUIPlugin.getDefault().getBundle()
             .getEntry("data/streams.shp");   //$NON-NLS-1$
@@ -47,5 +47,5 @@ public class WizardDropActionTest extends AbstractProjectUITestCase{
         assertTrue(acceptable);
     }
 
-    
+
 }

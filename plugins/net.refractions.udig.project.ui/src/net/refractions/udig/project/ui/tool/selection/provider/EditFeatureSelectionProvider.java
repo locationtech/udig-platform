@@ -40,7 +40,7 @@ public class EditFeatureSelectionProvider extends AbstractMapEditorSelectionProv
         else{
             selection=new StructuredSelection(selectedFeature);
         }
-        
+
         map.getEditManager().addListener(new IEditManagerListener(){
 
             public void changed( EditManagerEvent event ) {
@@ -54,7 +54,7 @@ public class EditFeatureSelectionProvider extends AbstractMapEditorSelectionProv
                     notifyListeners();
                 }
             }
-            
+
         });
     }
 

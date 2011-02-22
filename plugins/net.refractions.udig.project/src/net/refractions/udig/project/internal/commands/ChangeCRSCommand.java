@@ -27,7 +27,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * Change the CRS of a map.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -49,7 +49,7 @@ public class ChangeCRSCommand extends AbstractNavCommand implements
 
 	/**
 	 * Each command has a name that is displayed with the undo/redo buttons.
-	 * 
+	 *
 	 * @see net.refractions.udig.project.command.MapCommand#getName()
 	 */
 	public String getName() {

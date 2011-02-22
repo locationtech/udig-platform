@@ -1,982 +1,938 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 <toc label="Users Guide">
-            
-        <topic label="Community" href="EN/Community.html">
-        
-                            
-        <topic label="Axios uDig Extensions" href="EN/Axios uDig Extensions.html">
-        
-                            
-        <topic label="Editing Tools" href="EN/Editing Tools.html">
-        
-                            
-        <topic label="Arc Tool" href="EN/Arc Tool.html">
-        
-                </topic>
-                    
-        <topic label="Merge Tool" href="EN/Merge Tool.html">
-        
-                </topic>
-                    
-        <topic label="Parallel Tool" href="EN/Parallel Tool.html">
-        
-                </topic>
-                    
-        <topic label="Split Tool (Axios Tools)" href="EN/Split Tool (Axios Tools).html">
-        
-                </topic>
-                    
-        <topic label="Trim Line Tool" href="EN/Trim Line Tool.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Spatial Operations" href="EN/Spatial Operations.html">
-        
-                            
-        <topic label="Buffer Operation" href="EN/Buffer Operation.html">
-        
-                </topic>
-                    
-        <topic label="Clip Operation" href="EN/Clip Operation.html">
-        
-                </topic>
-                    
-        <topic label="Dissolve Operation" href="EN/Dissolve Operation.html">
-        
-                </topic>
-                    
-        <topic label="Fill Operation" href="EN/Fill Operation.html">
-        
-                </topic>
-                    
-        <topic label="Hole Cut Operation" href="EN/Hole Cut Operation.html">
-        
-                </topic>
-                    
-        <topic label="Intersect Operation" href="EN/Intersect Operation.html">
-        
-                </topic>
-                    
-        <topic label="Polygon to Line Operation" href="EN/Polygon to Line Operation.html">
-        
-                </topic>
-                    
-        <topic label="Spatial Join Operation" href="EN/Spatial Join Operation.html">
-        
-                </topic>
-                    
-        <topic label="Split Operation" href="EN/Split Operation.html">
-        
-                </topic>
-        </topic>
-        </topic>
-                    
-        <topic label="Using the WPS plugin" href="EN/Using the WPS plugin.html">
-        
-                </topic>
-        </topic>
-            
-        <topic label="Concepts" href="EN/Concepts.html">
-        
-                            
-        <topic label="Common Query Language" href="EN/Common Query Language.html">
-        
-                </topic>
-                    
-        <topic label="File Formats" href="EN/File Formats.html">
-        
-                            
-        <topic label="GeoTIFF" href="EN/GeoTIFF.html">
-        
-                </topic>
-                    
-        <topic label="GML" href="EN/GML.html">
-        
-                </topic>
-                    
-        <topic label="Shapefile" href="EN/Shapefile.html">
-        
-                </topic>
-                    
-        <topic label="World Plus Image" href="EN/World Plus Image.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Geospatial" href="EN/Geospatial.html">
-        
-                            
-        <topic label="Coordinate Reference System" href="EN/Coordinate Reference System.html">
-        
-                </topic>
-                    
-        <topic label="Feature" href="EN/Feature.html">
-        
-                </topic>
-                    
-        <topic label="Feature Collection" href="EN/Feature Collection.html">
-        
-                </topic>
-                    
-        <topic label="Feature Type" href="EN/Feature Type.html">
-        
-                </topic>
-                    
-        <topic label="Projection" href="EN/Projection.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Layer" href="EN/Layer.html">
-        
-                </topic>
-                    
-        <topic label="Map" href="EN/Map.html">
-        
-                            
-        <topic label="Map Graphic" href="EN/Map Graphic.html">
-        
-                </topic>
-                    
-        <topic label="Viewport" href="EN/Viewport.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Page" href="EN/Page.html">
-        
-                            
-        <topic label="Template" href="EN/Template.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Project" href="EN/Project.html">
-        
-                </topic>
-                    
-        <topic label="Selection" href="EN/Selection.html">
-        
-                </topic>
-                    
-        <topic label="Service" href="EN/Service.html">
-        
-                            
-        <topic label="Data Store" href="EN/Data Store.html">
-        
-                </topic>
-                    
-        <topic label="Files" href="EN/Files.html">
-        
-                </topic>
-                    
-        <topic label="PostGIS" href="EN/PostGIS.html">
-        
-                </topic>
-                    
-        <topic label="Web Feature Server" href="EN/Web Feature Server.html">
-        
-                </topic>
-                    
-        <topic label="Web Map Server" href="EN/Web Map Server.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Style Layer Descriptor" href="EN/Style Layer Descriptor.html">
-        
-                </topic>
-                    
-        <topic label="Workbench" href="EN/Workbench.html">
-        
-                            
-        <topic label="Active Part" href="EN/Active Part.html">
-        
-                </topic>
-                    
-        <topic label="Editor" href="EN/Editor.html">
-        
-                </topic>
-                    
-        <topic label="Fast views" href="EN/Fast views.html">
-        
-                            
-        <topic label="Creating fast views" href="EN/Creating fast views.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Help system" href="EN/Help system.html">
-        
-                </topic>
-                    
-        <topic label="Perspective" href="EN/Perspective.html">
-        
-                </topic>
-                    
-        <topic label="Toolbar" href="EN/Toolbar.html">
-        
-                </topic>
-                    
-        <topic label="Toolbars" href="EN/Toolbars.html">
-        
-                </topic>
-                    
-        <topic label="Use of Views" href="EN/Use of Views.html">
-        
-                </topic>
-                    
-        <topic label="Using an Editor" href="EN/Using an Editor.html">
-        
-                </topic>
-                    
-        <topic label="View" href="EN/View.html">
-        
-                            
-        <topic label="Fast views concept" href="EN/Fast views concept.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Welcome" href="EN/Welcome.html">
-        
-                </topic>
-        </topic>
-        </topic>
-            
-        <topic label="Tasks" href="EN/Tasks.html">
-        
-                            
-        <topic label="Change a Layers Style" href="EN/Change a Layers Style.html">
-        
-                </topic>
-                    
-        <topic label="Closing an editor" href="EN/Closing an editor.html">
-        
-                </topic>
-                    
-        <topic label="Creating a Project" href="EN/Creating a Project.html">
-        
-                            
-        <topic label="Using the Context menu" href="EN/Using the Context menu.html">
-        
-                </topic>
-                    
-        <topic label="Using the File menu" href="EN/Using the File menu.html">
-        
-                </topic>
-                    
-        <topic label="Using the New button" href="EN/Using the New button.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Exiting the workbench" href="EN/Exiting the workbench.html">
-        
-                </topic>
-                    
-        <topic label="Handling Shapefiles with different Character Sets" href="EN/Handling Shapefiles with different Character Sets.html">
-        
-                </topic>
-                    
-        <topic label="Importing" href="EN/Importing.html">
-        
-                            
-        <topic label="Importing data" href="EN/Importing data.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Pan" href="EN/Pan.html">
-        
-                </topic>
-                    
-        <topic label="Performing simple analysis" href="EN/Performing simple analysis.html">
-        
-                            
-        <topic label="Feature count" href="EN/Feature count.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Printing the current Map" href="EN/Printing the current Map.html">
-        
-                </topic>
-                    
-        <topic label="Rearranging the main toolbar" href="EN/Rearranging the main toolbar.html">
-        
-                </topic>
-                    
-        <topic label="Rearranging views and editors" href="EN/Rearranging views and editors.html">
-        
-                            
-        <topic label="Drop cursors" href="EN/Drop cursors.html">
-        
-                </topic>
-                    
-        <topic label="Maximizing" href="EN/Maximizing.html">
-        
-                </topic>
-                    
-        <topic label="Rearranging tabbed views" href="EN/Rearranging tabbed views.html">
-        
-                </topic>
-                    
-        <topic label="Rearranging views" href="EN/Rearranging views.html">
-        
-                </topic>
-                    
-        <topic label="Tiling editors" href="EN/Tiling editors.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Running uDig" href="EN/Running uDig.html">
-        
-                </topic>
-                    
-        <topic label="Support" href="EN/Support.html">
-        
-                            
-        <topic label="Submit Error Log" href="EN/Submit Error Log.html">
-        
-                </topic>
-                    
-        <topic label="Subscribe to the user list" href="EN/Subscribe to the user list.html">
-        
-                </topic>
-                    
-        <topic label="Tracing WMS Calls" href="EN/Tracing WMS Calls.html">
-        
-                </topic>
-                    
-        <topic label="Using the Issue Tracker" href="EN/Using the Issue Tracker.html">
-        
-                </topic>
-                    
-        <topic label="View Error Log and Configuration Details" href="EN/View Error Log and Configuration Details.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Using Layer Operations" href="EN/Using Layer Operations.html">
-        
-                            
-        <topic label="Layer Summary" href="EN/Layer Summary.html">
-        
-                </topic>
-                    
-        <topic label="Validation" href="EN/Validation.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Using Resource Operations" href="EN/Using Resource Operations.html">
-        
-                            
-        <topic label="Adding a column to a shapefile" href="EN/Adding a column to a shapefile.html">
-        
-                </topic>
-                    
-        <topic label="Changing the projection of a shapefile" href="EN/Changing the projection of a shapefile.html">
-        
-                </topic>
-                    
-        <topic label="Processing the Geometry in a Shapefile" href="EN/Processing the Geometry in a Shapefile.html">
-        
-                </topic>
-                    
-        <topic label="Summary of resource" href="EN/Summary of resource.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Using the Catalog view" href="EN/Using the Catalog view.html">
-        
-                </topic>
-                    
-        <topic label="Using the help system" href="EN/Using the help system.html">
-        
-                            
-        <topic label="Accessing context sensitive help" href="EN/Accessing context sensitive help.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Using the Layers view" href="EN/Using the Layers view.html">
-        
-                            
-        <topic label="Deleting a layer" href="EN/Deleting a layer.html">
-        
-                </topic>
-                    
-        <topic label="Zooming to a layer" href="EN/Zooming to a layer.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Using the Projects view" href="EN/Using the Projects view.html">
-        
-                </topic>
-                    
-        <topic label="Using the Search view" href="EN/Using the Search view.html">
-        
-                </topic>
-                    
-        <topic label="Using the Table View" href="EN/Using the Table View.html">
-        
-                </topic>
-                    
-        <topic label="Using Tools" href="EN/Using Tools.html">
-        
-                            
-        <topic label="Advanced Tool Mode" href="EN/Advanced Tool Mode.html">
-        
-                </topic>
-                    
-        <topic label="Feature Edit Tools" href="EN/Feature Edit Tools.html">
-        
-                            
-        <topic label="Delete Tool" href="EN/Delete Tool.html">
-        
-                </topic>
-                    
-        <topic label="Fill Tool" href="EN/Fill Tool.html">
-        
-                </topic>
-                    
-        <topic label="Split Tool" href="EN/Split Tool.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Geometry Creation Tools" href="EN/Geometry Creation Tools.html">
-        
-                            
-        <topic label="Draw Geometry Tool" href="EN/Draw Geometry Tool.html">
-        
-                </topic>
-                    
-        <topic label="Ellipse Tool" href="EN/Ellipse Tool.html">
-        
-                </topic>
-                    
-        <topic label="Line Creation Tool" href="EN/Line Creation Tool.html">
-        
-                </topic>
-                    
-        <topic label="Point Creation Tool" href="EN/Point Creation Tool.html">
-        
-                </topic>
-                    
-        <topic label="Polygon Creation Tool" href="EN/Polygon Creation Tool.html">
-        
-                </topic>
-                    
-        <topic label="Rectangle Tool" href="EN/Rectangle Tool.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Vertex Tools" href="EN/Vertex Tools.html">
-        
-                            
-        <topic label="Add Vertex Tool" href="EN/Add Vertex Tool.html">
-        
-                </topic>
-                    
-        <topic label="Edit Geometry Tool" href="EN/Edit Geometry Tool.html">
-        
-                            
-        <topic label="EditBlackboard" href="EN/EditBlackboard.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Hole Cutter" href="EN/Hole Cutter.html">
-        
-                </topic>
-                    
-        <topic label="Remove Vertex Tool" href="EN/Remove Vertex Tool.html">
-        
-                </topic>
-        </topic>
-        </topic>
-                    
-        <topic label="Working with data" href="EN/Working with data.html">
-        
-                            
-        <topic label="Adding a layer" href="EN/Adding a layer.html">
-        
-                </topic>
-                    
-        <topic label="Adding Features from a DB2" href="EN/Adding Features from a DB2.html">
-        
-                            
-        <topic label="DB2 Preferences" href="EN/DB2 Preferences.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Adding features from a Shapefile" href="EN/Adding features from a Shapefile.html">
-        
-                </topic>
-                    
-        <topic label="Adding features from ArcSDE" href="EN/Adding features from ArcSDE.html">
-        
-                </topic>
-                    
-        <topic label="Adding features from Oracle" href="EN/Adding features from Oracle.html">
-        
-                </topic>
-                    
-        <topic label="Adding features from PostGIS" href="EN/Adding features from PostGIS.html">
-        
-                </topic>
-                    
-        <topic label="Adding features from WFS" href="EN/Adding features from WFS.html">
-        
-                </topic>
-                    
-        <topic label="Adding layers from WMS" href="EN/Adding layers from WMS.html">
-        
-                </topic>
-                    
-        <topic label="Set raster transparent color" href="EN/Set raster transparent color.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Working with fast views" href="EN/Working with fast views.html">
-        
-                </topic>
-                    
-        <topic label="Working with Projects" href="EN/Working with Projects.html">
-        
-                            
-        <topic label="Creating a new Map" href="EN/Creating a new Map.html">
-        
-                </topic>
-                    
-        <topic label="Creating a new Project" href="EN/Creating a new Project.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Working with Selection" href="EN/Working with Selection.html">
-        
-                            
-        <topic label="Selection using Attributes" href="EN/Selection using Attributes.html">
-        
-                </topic>
-                    
-        <topic label="Selection using CQL" href="EN/Selection using CQL.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Working with the Update Manager" href="EN/Working with the Update Manager.html">
-        
-                            
-        <topic label="Keeping up to date" href="EN/Keeping up to date.html">
-        
-                            
-        <topic label="Finding new plugins" href="EN/Finding new plugins.html">
-        
-                </topic>
-        </topic>
-        </topic>
-                    
-        <topic label="Zoom" href="EN/Zoom.html">
-        
-                </topic>
-        </topic>
-            
-        <topic label="Reference" href="EN/Reference.html">
-        
-                            
-        <topic label="Drag and Drop" href="EN/Drag and Drop.html">
-        
-                </topic>
-                    
-        <topic label="Help contents" href="EN/Help contents.html">
-        
-                            
-        <topic label="uDig User Guide" href="EN/uDig User Guide.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Menus" href="EN/Menus.html">
-        
-                            
-        <topic label="Data Menu" href="EN/Data Menu.html">
-        
-                            
-        <topic label="WRIS" href="EN/WRIS.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Edit Menu" href="EN/Edit Menu.html">
-        
-                </topic>
-                    
-        <topic label="File Menu" href="EN/File Menu.html">
-        
-                </topic>
-                    
-        <topic label="Help Menu" href="EN/Help Menu.html">
-        
-                </topic>
-                    
-        <topic label="Layer Menu" href="EN/Layer Menu.html">
-        
-                </topic>
-                    
-        <topic label="Map Menu" href="EN/Map Menu.html">
-        
-                </topic>
-                    
-        <topic label="Navigation Menu" href="EN/Navigation Menu.html">
-        
-                </topic>
-                    
-        <topic label="Window Menu" href="EN/Window Menu.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Preferences" href="EN/Preferences.html">
-        
-                            
-        <topic label="Catalog Preferences" href="EN/Catalog Preferences.html">
-        
-                            
-        <topic label="ArcSDE Preference Page" href="EN/ArcSDE Preference Page.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Help Preferences" href="EN/Help Preferences.html">
-        
-                </topic>
-                    
-        <topic label="Layer Preferences" href="EN/Layer Preferences.html">
-        
-                </topic>
-                    
-        <topic label="Map Preferences" href="EN/Map Preferences.html">
-        
-                </topic>
-                    
-        <topic label="Printing Preferences" href="EN/Printing Preferences.html">
-        
-                </topic>
-                    
-        <topic label="Project Preferences" href="EN/Project Preferences.html">
-        
-                </topic>
-                    
-        <topic label="Rendering Preferences" href="EN/Rendering Preferences.html">
-        
-                </topic>
-                    
-        <topic label="Tool Preferences" href="EN/Tool Preferences.html">
-        
-                            
-        <topic label="Edit Tool Preferences" href="EN/Edit Tool Preferences.html">
-        
-                            
-        <topic label="Edit Tool Performance Preferences" href="EN/Edit Tool Performance Preferences.html">
-        
-                </topic>
-                    
-        <topic label="Snapping" href="EN/Snapping.html">
-        
-                </topic>
-        </topic>
-        </topic>
-                    
-        <topic label="WMS Preferences" href="EN/WMS Preferences.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Views and editors" href="EN/Views and editors.html">
-        
-                            
-        <topic label="Bookmarks View" href="EN/Bookmarks View.html">
-        
-                </topic>
-                    
-        <topic label="Catalog view" href="EN/Catalog view.html">
-        
-                </topic>
-                    
-        <topic label="Help view" href="EN/Help view.html">
-        
-                </topic>
-                    
-        <topic label="Information view" href="EN/Information view.html">
-        
-                </topic>
-                    
-        <topic label="Layers view" href="EN/Layers view.html">
-        
-                </topic>
-                    
-        <topic label="Location View" href="EN/Location View.html">
-        
-                </topic>
-                    
-        <topic label="Map editor" href="EN/Map editor.html">
-        
-                            
-        <topic label="Edit Tools" href="EN/Edit Tools.html">
-        
-                </topic>
-                    
-        <topic label="Information Tools" href="EN/Information Tools.html">
-        
-                </topic>
-                    
-        <topic label="Navigation Tools" href="EN/Navigation Tools.html">
-        
-                </topic>
-                    
-        <topic label="Selection Tools" href="EN/Selection Tools.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Outline view" href="EN/Outline view.html">
-        
-                </topic>
-                    
-        <topic label="Page editor" href="EN/Page editor.html">
-        
-                </topic>
-                    
-        <topic label="Palette View" href="EN/Palette View.html">
-        
-                            
-        <topic label="Label Box" href="EN/Label Box.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Projects view" href="EN/Projects view.html">
-        
-                </topic>
-                    
-        <topic label="Search view" href="EN/Search view.html">
-        
-                </topic>
-                    
-        <topic label="Style View" href="EN/Style View.html">
-        
-                </topic>
-                    
-        <topic label="Table view" href="EN/Table view.html">
-        
-                </topic>
-                    
-        <topic label="Tasks View" href="EN/Tasks View.html">
-        
-                </topic>
-                    
-        <topic label="Web view" href="EN/Web view.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Wizards and Dialogs" href="EN/Wizards and Dialogs.html">
-        
-                            
-        <topic label="Add Data wizard" href="EN/Add Data wizard.html">
-        
-                            
-        <topic label="ArcSDE page" href="EN/ArcSDE page.html">
-        
-                </topic>
-                    
-        <topic label="DataStore page" href="EN/DataStore page.html">
-        
-                </topic>
-                    
-        <topic label="DB2 page" href="EN/DB2 page.html">
-        
-                </topic>
-                    
-        <topic label="Files page" href="EN/Files page.html">
-        
-                </topic>
-                    
-        <topic label="JGrass page" href="EN/JGrass page.html">
-        
-                </topic>
-                    
-        <topic label="Map Decoration page" href="EN/Map Decoration page.html">
-        
-                            
-        <topic label="Active Region Decoration" href="EN/Active Region Decoration.html">
-        
-                </topic>
-                    
-        <topic label="Grid Decoration" href="EN/Grid Decoration.html">
-        
-                </topic>
-                    
-        <topic label="JGrass Raster Legend" href="EN/JGrass Raster Legend.html">
-        
-                </topic>
-                    
-        <topic label="JGrass Vector Legend" href="EN/JGrass Vector Legend.html">
-        
-                </topic>
-                    
-        <topic label="Legend Decoration" href="EN/Legend Decoration.html">
-        
-                </topic>
-                    
-        <topic label="North Arrow Decoration" href="EN/North Arrow Decoration.html">
-        
-                </topic>
-                    
-        <topic label="Scalebar Decoration" href="EN/Scalebar Decoration.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="MySQL page" href="EN/MySQL page.html">
-        
-                </topic>
-                    
-        <topic label="NASA WorldWind page" href="EN/NASA WorldWind page.html">
-        
-                </topic>
-                    
-        <topic label="Oracle Spatial page" href="EN/Oracle Spatial page.html">
-        
-                </topic>
-                    
-        <topic label="PostGIS page" href="EN/PostGIS page.html">
-        
-                </topic>
-                    
-        <topic label="Resource Selection page" href="EN/Resource Selection page.html">
-        
-                </topic>
-                    
-        <topic label="Web Feature Server page" href="EN/Web Feature Server page.html">
-        
-                </topic>
-                    
-        <topic label="Web Map Server page" href="EN/Web Map Server page.html">
-        
-                </topic>
-                    
-        <topic label="Web Map Server Tile Cache page" href="EN/Web Map Server Tile Cache page.html">
-        
-                </topic>
-                    
-        <topic label="Web Map Tiles page" href="EN/Web Map Tiles page.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Export Wizard" href="EN/Export Wizard.html">
-        
-                            
-        <topic label="Layer to Shapefile Wizard" href="EN/Layer to Shapefile Wizard.html">
-        
-                </topic>
-                    
-        <topic label="Map to Image Wizard" href="EN/Map to Image Wizard.html">
-        
-                </topic>
-                    
-        <topic label="Resource to Shapefile Wizard" href="EN/Resource to Shapefile Wizard.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Import Wizard" href="EN/Import Wizard.html">
-        
-                            
-        <topic label="Import from Data Sources" href="EN/Import from Data Sources.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="New Project wizard" href="EN/New Project wizard.html">
-        
-                </topic>
-                    
-        <topic label="Properties dialog" href="EN/Properties dialog.html">
-        
-                </topic>
-                    
-        <topic label="Send Log dialog" href="EN/Send Log dialog.html">
-        
-                </topic>
-                    
-        <topic label="Style Editor Dialog" href="EN/Style Editor Dialog.html">
-        
-                            
-        <topic label="Feature Style Pages" href="EN/Feature Style Pages.html">
-        
-                </topic>
-                    
-        <topic label="Raster Style Pages" href="EN/Raster Style Pages.html">
-        
-                </topic>
-                    
-        <topic label="Web Map Server Style Pages" href="EN/Web Map Server Style Pages.html">
-        
-                </topic>
-        </topic>
-        </topic>
-        </topic>
-            
-        <topic label="Tips and Tricks" href="EN/Tips and Tricks.html">
-        
-                </topic>
-            
+
         <topic label="Home" href="EN/Home.html">
-        
-        <!-- HOME -->                     
+
+        <!-- HOME -->
         <topic label="Contents" href="EN/Contents.html">
-        
+
                 </topic>
-                    
+        </topic>
+
+        <topic label="Community" href="EN/Community.html">
+
+
+        <topic label="Axios uDig Extensions" href="EN/Axios uDig Extensions.html">
+
+
+        <topic label="Editing Tools" href="EN/Editing Tools.html">
+
+
+        <topic label="Arc Tool" href="EN/Arc Tool.html">
+
+                </topic>
+
+        <topic label="Merge Tool" href="EN/Merge Tool.html">
+
+                </topic>
+
+        <topic label="Modes for Create Geometry Tools" href="EN/Modes for Create Geometry Tools.html">
+
+
+        <topic label="Ortho Mode" href="EN/Ortho Mode.html">
+
+                </topic>
+
+        <topic label="Parallel Mode" href="EN/Parallel Mode.html">
+
+                </topic>
+
+        <topic label="Snap to Line Mode" href="EN/Snap to Line Mode.html">
+
+                </topic>
+
+        <topic label="Snap to Vertex Mode" href="EN/Snap to Vertex Mode.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Split Tool (Axios Tools)" href="EN/Split Tool (Axios Tools).html">
+
+                </topic>
+
+        <topic label="Trim Line Tool" href="EN/Trim Line Tool.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Spatial Operations" href="EN/Spatial Operations.html">
+
+
+        <topic label="Buffer Operation" href="EN/Buffer Operation.html">
+
+                </topic>
+
+        <topic label="Clip Operation" href="EN/Clip Operation.html">
+
+                </topic>
+
+        <topic label="Dissolve Operation" href="EN/Dissolve Operation.html">
+
+                </topic>
+
+        <topic label="Intersect Operation" href="EN/Intersect Operation.html">
+
+                </topic>
+
+        <topic label="Spatial Join Operation" href="EN/Spatial Join Operation.html">
+
+                </topic>
+        </topic>
+        </topic>
+
+        <topic label="Jody" href="EN/Jody.html">
+
+
+        <topic label="North Arrow" href="EN/North Arrow.html">
+
+                </topic>
+        </topic>
+
+        <topic label="WPS" href="EN/WPS.html">
+
+
+        <topic label="Using the WPS plugin" href="EN/Using the WPS plugin.html">
+
+                </topic>
+        </topic>
+        </topic>
+
         <topic label="What is new" href="EN/What is new.html">
-        
+
+                </topic>
+
+        <topic label="Concepts" href="EN/Concepts.html">
+
+
+        <topic label="Common Query Language" href="EN/Common Query Language.html">
+
+                </topic>
+
+        <topic label="File Formats" href="EN/File Formats.html">
+
+
+        <topic label="GeoTIFF" href="EN/GeoTIFF.html">
+
+                </topic>
+
+        <topic label="GML" href="EN/GML.html">
+
+                </topic>
+
+        <topic label="Shapefile" href="EN/Shapefile.html">
+
+                </topic>
+
+        <topic label="World Plus Image" href="EN/World Plus Image.html">
+
                 </topic>
         </topic>
-            
+
+        <topic label="Geospatial" href="EN/Geospatial.html">
+
+
+        <topic label="Coordinate Reference System" href="EN/Coordinate Reference System.html">
+
+                </topic>
+
+        <topic label="Feature" href="EN/Feature.html">
+
+                </topic>
+
+        <topic label="Feature Collection" href="EN/Feature Collection.html">
+
+                </topic>
+
+        <topic label="Feature Type" href="EN/Feature Type.html">
+
+                </topic>
+
+        <topic label="Projection" href="EN/Projection.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Layer" href="EN/Layer.html">
+
+                </topic>
+
+        <topic label="Map" href="EN/Map.html">
+
+
+        <topic label="Map Graphic" href="EN/Map Graphic.html">
+
+                </topic>
+
+        <topic label="Viewport" href="EN/Viewport.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Page" href="EN/Page.html">
+
+
+        <topic label="Template" href="EN/Template.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Project" href="EN/Project.html">
+
+                </topic>
+
+        <topic label="Selection" href="EN/Selection.html">
+
+                </topic>
+
+        <topic label="Service" href="EN/Service.html">
+
+
+        <topic label="Data Store" href="EN/Data Store.html">
+
+                </topic>
+
+        <topic label="Files" href="EN/Files.html">
+
+                </topic>
+
+        <topic label="PostGIS" href="EN/PostGIS.html">
+
+                </topic>
+
+        <topic label="Web Feature Server" href="EN/Web Feature Server.html">
+
+                </topic>
+
+        <topic label="Web Map Server" href="EN/Web Map Server.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Style Layer Descriptor" href="EN/Style Layer Descriptor.html">
+
+                </topic>
+
+        <topic label="Workbench" href="EN/Workbench.html">
+
+
+        <topic label="Active Part" href="EN/Active Part.html">
+
+                </topic>
+
+        <topic label="Editor" href="EN/Editor.html">
+
+                </topic>
+
+        <topic label="Fast views" href="EN/Fast views.html">
+
+
+        <topic label="Creating fast views" href="EN/Creating fast views.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Help system" href="EN/Help system.html">
+
+                </topic>
+
+        <topic label="Perspective" href="EN/Perspective.html">
+
+                </topic>
+
+        <topic label="Toolbar" href="EN/Toolbar.html">
+
+                </topic>
+
+        <topic label="Toolbars" href="EN/Toolbars.html">
+
+                </topic>
+
+        <topic label="Use of Views" href="EN/Use of Views.html">
+
+                </topic>
+
+        <topic label="Using an Editor" href="EN/Using an Editor.html">
+
+                </topic>
+
+        <topic label="View" href="EN/View.html">
+
+
+        <topic label="Fast views concept" href="EN/Fast views concept.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Welcome" href="EN/Welcome.html">
+
+                </topic>
+        </topic>
+        </topic>
+
+        <topic label="Tasks" href="EN/Tasks.html">
+
+
+        <topic label="Change a Layers Style" href="EN/Change a Layers Style.html">
+
+                </topic>
+
+        <topic label="Closing an editor" href="EN/Closing an editor.html">
+
+                </topic>
+
+        <topic label="Creating a Project" href="EN/Creating a Project.html">
+
+
+        <topic label="Using the Context menu" href="EN/Using the Context menu.html">
+
+                </topic>
+
+        <topic label="Using the File menu" href="EN/Using the File menu.html">
+
+                </topic>
+
+        <topic label="Using the New button" href="EN/Using the New button.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Exiting the workbench" href="EN/Exiting the workbench.html">
+
+                </topic>
+
+        <topic label="Handling Shapefiles with different Character Sets" href="EN/Handling Shapefiles with different Character Sets.html">
+
+                </topic>
+
+        <topic label="Importing" href="EN/Importing.html">
+
+
+        <topic label="Importing data" href="EN/Importing data.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Pan" href="EN/Pan.html">
+
+                </topic>
+
+        <topic label="Performing simple analysis" href="EN/Performing simple analysis.html">
+
+
+        <topic label="Feature count" href="EN/Feature count.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Printing the current Map" href="EN/Printing the current Map.html">
+
+                </topic>
+
+        <topic label="Rearranging the main toolbar" href="EN/Rearranging the main toolbar.html">
+
+                </topic>
+
+        <topic label="Rearranging views and editors" href="EN/Rearranging views and editors.html">
+
+
+        <topic label="Drop cursors" href="EN/Drop cursors.html">
+
+                </topic>
+
+        <topic label="Maximizing" href="EN/Maximizing.html">
+
+                </topic>
+
+        <topic label="Rearranging tabbed views" href="EN/Rearranging tabbed views.html">
+
+                </topic>
+
+        <topic label="Rearranging views" href="EN/Rearranging views.html">
+
+                </topic>
+
+        <topic label="Tiling editors" href="EN/Tiling editors.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Running uDig" href="EN/Running uDig.html">
+
+                </topic>
+
+        <topic label="Support" href="EN/Support.html">
+
+
+        <topic label="Submit Error Log" href="EN/Submit Error Log.html">
+
+                </topic>
+
+        <topic label="Subscribe to the user list" href="EN/Subscribe to the user list.html">
+
+                </topic>
+
+        <topic label="Tracing WMS Calls" href="EN/Tracing WMS Calls.html">
+
+                </topic>
+
+        <topic label="Using the Issue Tracker" href="EN/Using the Issue Tracker.html">
+
+                </topic>
+
+        <topic label="View Error Log and Configuration Details" href="EN/View Error Log and Configuration Details.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Using Layer Operations" href="EN/Using Layer Operations.html">
+
+
+        <topic label="Layer Summary" href="EN/Layer Summary.html">
+
+                </topic>
+
+        <topic label="Validation" href="EN/Validation.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Using Resource Operations" href="EN/Using Resource Operations.html">
+
+
+        <topic label="Adding a column to a shapefile" href="EN/Adding a column to a shapefile.html">
+
+                </topic>
+
+        <topic label="Changing the projection of a shapefile" href="EN/Changing the projection of a shapefile.html">
+
+                </topic>
+
+        <topic label="Processing the Geometry in a Shapefile" href="EN/Processing the Geometry in a Shapefile.html">
+
+                </topic>
+
+        <topic label="Summary of resource" href="EN/Summary of resource.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Using the Catalog view" href="EN/Using the Catalog view.html">
+
+                </topic>
+
+        <topic label="Using the help system" href="EN/Using the help system.html">
+
+
+        <topic label="Accessing context sensitive help" href="EN/Accessing context sensitive help.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Using the Layers view" href="EN/Using the Layers view.html">
+
+
+        <topic label="Deleting a layer" href="EN/Deleting a layer.html">
+
+                </topic>
+
+        <topic label="Zooming to a layer" href="EN/Zooming to a layer.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Using the Projects view" href="EN/Using the Projects view.html">
+
+                </topic>
+
+        <topic label="Using the Search view" href="EN/Using the Search view.html">
+
+                </topic>
+
+        <topic label="Using the Table View" href="EN/Using the Table View.html">
+
+                </topic>
+
+        <topic label="Using Tools" href="EN/Using Tools.html">
+
+
+        <topic label="Advanced Tool Mode" href="EN/Advanced Tool Mode.html">
+
+                </topic>
+
+        <topic label="Feature Edit Tools" href="EN/Feature Edit Tools.html">
+
+
+        <topic label="Delete Tool" href="EN/Delete Tool.html">
+
+                </topic>
+
+        <topic label="Fill Tool" href="EN/Fill Tool.html">
+
+                </topic>
+
+        <topic label="Split Tool" href="EN/Split Tool.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Geometry Creation Tools" href="EN/Geometry Creation Tools.html">
+
+
+        <topic label="Draw Geometry Tool" href="EN/Draw Geometry Tool.html">
+
+                </topic>
+
+        <topic label="Ellipse Tool" href="EN/Ellipse Tool.html">
+
+                </topic>
+
+        <topic label="Line Creation Tool" href="EN/Line Creation Tool.html">
+
+                </topic>
+
+        <topic label="Point Creation Tool" href="EN/Point Creation Tool.html">
+
+                </topic>
+
+        <topic label="Polygon Creation Tool" href="EN/Polygon Creation Tool.html">
+
+                </topic>
+
+        <topic label="Rectangle Tool" href="EN/Rectangle Tool.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Vertex Tools" href="EN/Vertex Tools.html">
+
+
+        <topic label="Add Vertex Tool" href="EN/Add Vertex Tool.html">
+
+                </topic>
+
+        <topic label="Edit Geometry Tool" href="EN/Edit Geometry Tool.html">
+
+
+        <topic label="EditBlackboard" href="EN/EditBlackboard.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Hole Cutter" href="EN/Hole Cutter.html">
+
+                </topic>
+
+        <topic label="Remove Vertex Tool" href="EN/Remove Vertex Tool.html">
+
+                </topic>
+        </topic>
+        </topic>
+
+        <topic label="Working with data" href="EN/Working with data.html">
+
+
+        <topic label="Adding a layer" href="EN/Adding a layer.html">
+
+                </topic>
+
+        <topic label="Adding Features from a DB2" href="EN/Adding Features from a DB2.html">
+
+
+        <topic label="DB2 Preferences" href="EN/DB2 Preferences.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Adding features from a Shapefile" href="EN/Adding features from a Shapefile.html">
+
+                </topic>
+
+        <topic label="Adding features from ArcSDE" href="EN/Adding features from ArcSDE.html">
+
+                </topic>
+
+        <topic label="Adding features from Oracle" href="EN/Adding features from Oracle.html">
+
+                </topic>
+
+        <topic label="Adding features from PostGIS" href="EN/Adding features from PostGIS.html">
+
+                </topic>
+
+        <topic label="Adding features from WFS" href="EN/Adding features from WFS.html">
+
+                </topic>
+
+        <topic label="Adding layers from WMS" href="EN/Adding layers from WMS.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Working with fast views" href="EN/Working with fast views.html">
+
+                </topic>
+
+        <topic label="Working with Projects" href="EN/Working with Projects.html">
+
+
+        <topic label="Creating a new Map" href="EN/Creating a new Map.html">
+
+                </topic>
+
+        <topic label="Creating a new Project" href="EN/Creating a new Project.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Working with Selection" href="EN/Working with Selection.html">
+
+
+        <topic label="Selection using Attributes" href="EN/Selection using Attributes.html">
+
+                </topic>
+
+        <topic label="Selection using CQL" href="EN/Selection using CQL.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Working with the Update Manager" href="EN/Working with the Update Manager.html">
+
+
+        <topic label="Keeping up to date" href="EN/Keeping up to date.html">
+
+
+        <topic label="Finding new plugins" href="EN/Finding new plugins.html">
+
+                </topic>
+        </topic>
+        </topic>
+
+        <topic label="Zoom" href="EN/Zoom.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Reference" href="EN/Reference.html">
+
+
+        <topic label="Drag and Drop" href="EN/Drag and Drop.html">
+
+                </topic>
+
+        <topic label="Help contents" href="EN/Help contents.html">
+
+
+        <topic label="uDig User Guide" href="EN/uDig User Guide.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Menus" href="EN/Menus.html">
+
+
+        <topic label="Data Menu" href="EN/Data Menu.html">
+
+                </topic>
+
+        <topic label="Edit Menu" href="EN/Edit Menu.html">
+
+                </topic>
+
+        <topic label="File Menu" href="EN/File Menu.html">
+
+                </topic>
+
+        <topic label="Help Menu" href="EN/Help Menu.html">
+
+                </topic>
+
+        <topic label="Layer Menu" href="EN/Layer Menu.html">
+
+                </topic>
+
+        <topic label="Map Menu" href="EN/Map Menu.html">
+
+                </topic>
+
+        <topic label="Navigation Menu" href="EN/Navigation Menu.html">
+
+                </topic>
+
+        <topic label="Window Menu" href="EN/Window Menu.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Preferences" href="EN/Preferences.html">
+
+
+        <topic label="Catalog Preferences" href="EN/Catalog Preferences.html">
+
+
+        <topic label="ArcSDE Preference Page" href="EN/ArcSDE Preference Page.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Help Preferences" href="EN/Help Preferences.html">
+
+                </topic>
+
+        <topic label="Layer Preferences" href="EN/Layer Preferences.html">
+
+                </topic>
+
+        <topic label="Map Preferences" href="EN/Map Preferences.html">
+
+                </topic>
+
+        <topic label="Printing Preferences" href="EN/Printing Preferences.html">
+
+                </topic>
+
+        <topic label="Project Preferences" href="EN/Project Preferences.html">
+
+                </topic>
+
+        <topic label="Rendering Preferences" href="EN/Rendering Preferences.html">
+
+                </topic>
+
+        <topic label="Tool Preferences" href="EN/Tool Preferences.html">
+
+
+        <topic label="Edit Tool Preferences" href="EN/Edit Tool Preferences.html">
+
+
+        <topic label="Edit Tool Performance Preferences" href="EN/Edit Tool Performance Preferences.html">
+
+                </topic>
+
+        <topic label="Snapping" href="EN/Snapping.html">
+
+                </topic>
+        </topic>
+        </topic>
+
+        <topic label="WMS Preferences" href="EN/WMS Preferences.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Views and editors" href="EN/Views and editors.html">
+
+
+        <topic label="Bookmarks View" href="EN/Bookmarks View.html">
+
+                </topic>
+
+        <topic label="Catalog view" href="EN/Catalog view.html">
+
+                </topic>
+
+        <topic label="Help view" href="EN/Help view.html">
+
+                </topic>
+
+        <topic label="Information view" href="EN/Information view.html">
+
+                </topic>
+
+        <topic label="Layers view" href="EN/Layers view.html">
+
+                </topic>
+
+        <topic label="Location View" href="EN/Location View.html">
+
+                </topic>
+
+        <topic label="Map editor" href="EN/Map editor.html">
+
+
+        <topic label="Edit Tools" href="EN/Edit Tools.html">
+
+                </topic>
+
+        <topic label="Information Tools" href="EN/Information Tools.html">
+
+                </topic>
+
+        <topic label="Navigation Tools" href="EN/Navigation Tools.html">
+
+                </topic>
+
+        <topic label="Selection Tools" href="EN/Selection Tools.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Outline view" href="EN/Outline view.html">
+
+                </topic>
+
+        <topic label="Page editor" href="EN/Page editor.html">
+
+                </topic>
+
+        <topic label="Palette View" href="EN/Palette View.html">
+
+
+        <topic label="Label Box" href="EN/Label Box.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Projects view" href="EN/Projects view.html">
+
+                </topic>
+
+        <topic label="Search view" href="EN/Search view.html">
+
+                </topic>
+
+        <topic label="Style View" href="EN/Style View.html">
+
+                </topic>
+
+        <topic label="Table view" href="EN/Table view.html">
+
+                </topic>
+
+        <topic label="Tasks View" href="EN/Tasks View.html">
+
+                </topic>
+
+        <topic label="Web view" href="EN/Web view.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Wizards and Dialogs" href="EN/Wizards and Dialogs.html">
+
+
+        <topic label="Add Data wizard" href="EN/Add Data wizard.html">
+
+
+        <topic label="ArcSDE page" href="EN/ArcSDE page.html">
+
+                </topic>
+
+        <topic label="DB2 page" href="EN/DB2 page.html">
+
+                </topic>
+
+        <topic label="Files page" href="EN/Files page.html">
+
+                </topic>
+
+        <topic label="Map Graphic page" href="EN/Map Graphic page.html">
+
+
+        <topic label="Grid Graphic" href="EN/Grid Graphic.html">
+
+                </topic>
+
+        <topic label="Legend Graphic" href="EN/Legend Graphic.html">
+
+                </topic>
+
+        <topic label="Scalebar Graphic" href="EN/Scalebar Graphic.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Oracle Spatial page" href="EN/Oracle Spatial page.html">
+
+                </topic>
+
+        <topic label="PostGIS page" href="EN/PostGIS page.html">
+
+                </topic>
+
+        <topic label="Resource Selection page" href="EN/Resource Selection page.html">
+
+                </topic>
+
+        <topic label="Web Feature Server page" href="EN/Web Feature Server page.html">
+
+                </topic>
+
+        <topic label="Web Map Server page" href="EN/Web Map Server page.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Export Wizard" href="EN/Export Wizard.html">
+
+
+        <topic label="Layer to Shapefile Wizard" href="EN/Layer to Shapefile Wizard.html">
+
+                </topic>
+
+        <topic label="Map to Image Wizard" href="EN/Map to Image Wizard.html">
+
+                </topic>
+
+        <topic label="Resource to Shapefile Wizard" href="EN/Resource to Shapefile Wizard.html">
+
+                </topic>
+        </topic>
+
+        <topic label="Import Wizard" href="EN/Import Wizard.html">
+
+
+        <topic label="Import fram Data Sources" href="EN/Import fram Data Sources.html">
+
+                </topic>
+        </topic>
+
+        <topic label="New Project wizard" href="EN/New Project wizard.html">
+
+                </topic>
+
+        <topic label="Properties dialog" href="EN/Properties dialog.html">
+
+                </topic>
+
+        <topic label="Send Log dialog" href="EN/Send Log dialog.html">
+
+                </topic>
+
+        <topic label="Style Editor Dialog" href="EN/Style Editor Dialog.html">
+
+
+        <topic label="Feature Style Pages" href="EN/Feature Style Pages.html">
+
+                </topic>
+
+        <topic label="Web Map Server Style Pages" href="EN/Web Map Server Style Pages.html">
+
+                </topic>
+        </topic>
+        </topic>
+        </topic>
+
+        <topic label="Tips and Tricks" href="EN/Tips and Tricks.html">
+
+                </topic>
+
         <topic label="Getting Started" href="EN/Getting Started.html">
-        
-                            
+
+
         <topic label="Quickstart" href="EN/Quickstart.html">
-        
+
                 </topic>
-                    
+
         <topic label="Walkthrough 1" href="EN/Walkthrough 1.html">
-        
+
                 </topic>
-                    
+
         <topic label="Walkthrough 2" href="EN/Walkthrough 2.html">
-        
+
                 </topic>
         </topic>
-            
-        <topic label="What is new 1.1.0" href="EN/What is new 1.1.0.html">
-        
-                </topic>
     </toc>
-<!-- Document generated by Confluence on Dec 21, 2010 13:07 -->
+<!-- Document generated by Confluence on Sep 10, 2008 02:27 -->
 <!-- spacedesc: Users Guide v.5 (3411) -->

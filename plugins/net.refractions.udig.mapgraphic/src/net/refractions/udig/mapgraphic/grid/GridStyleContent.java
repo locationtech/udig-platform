@@ -20,6 +20,7 @@ import java.net.URL;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.mapgraphic.grid.GridStyle.Type;
+import net.refractions.udig.mapgraphic.internal.Messages;
 import net.refractions.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -45,12 +46,12 @@ public class GridStyleContent extends StyleContent {
             IProgressMonitor monitor ) throws IOException {
         if( resource.canResolve(GridMapGraphic.class))
             return GridStyle.DEFAULT_STYLE;
-        
+
         return null;
     }
 
     @Override
-    public Class<?> getStyleClass() {
+    public Class getStyleClass() {
         return GridStyle.class;
     }
 

@@ -18,7 +18,7 @@ package net.refractions.udig.project;
 
 /**
  * A listener that will be notified when changes to the IEditManager occur.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
@@ -26,7 +26,7 @@ public interface IEditManagerListener {
 
     /**
      * Called when an event occurs.
-     * 
+     *
      * @param event The event.
      */
     public void changed( EditManagerEvent event );

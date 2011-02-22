@@ -21,7 +21,7 @@ import net.refractions.udig.project.internal.ProjectElement;
 
 /**
  * Provides a way to arbitrarily create a Page
- * 
+ *
  * @author Richard Gould
  * @since 0.3
  */

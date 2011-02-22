@@ -28,7 +28,6 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableComposite;
 import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.ui.AnimationUpdater;
 import net.refractions.udig.tool.edit.internal.Messages;
 import net.refractions.udig.tools.edit.EditState;
@@ -46,24 +45,22 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.feature.FeatureType;
 import org.geotools.feature.IllegalAttributeException;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.filter.BBoxExpression;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.filter.FilterType;
+import org.geotools.filter.GeometryFilter;
 import org.geotools.filter.IllegalFilterException;
 import org.geotools.geometry.jts.JTS;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.FilterFactory2;
-import org.opengis.filter.spatial.BBOX;
-import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.MathTransform;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -71,11 +68,9 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
 /**
- * Splits a feature based on the current shape in the handler.
- * <p>
- * After the command the current shape will be set to null and
- * the edit blackboard will be cleared.
- * 
+ * Splits a feature based on the current shape in the handler. After the command the current shape
+ * will be set to null and the edit blackboard will be cleared.
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -128,19 +123,17 @@ public class DifferenceFeatureCommand extends AbstractCommand implements Undoabl
 
                 editBlackboard.clear();
 
-                FeatureCollection<SimpleFeatureType, SimpleFeature>  features = getFeatures(monitor);
-                if( features == null ){                    
-                    return; // did not hit anything
-                }
+                FeatureCollection features = getFeatures(monitor);
+
                 try {
                     List<Geometry> geoms = new ArrayList<Geometry>();
                     geoms.add(createReferenceGeom());
-                    
-                    SimpleFeature first = runDifferenceOp(features.features(), geoms);
-                    
+
+                    Feature first = runDifferenceOp(features.features(), geoms);
+
                     if (first == null)
                         return;
-                    
+
                     createAddFeatureCommands(commands, geoms, first);
                 } finally {
                     monitor.worked(2);
@@ -158,20 +151,20 @@ public class DifferenceFeatureCommand extends AbstractCommand implements Undoabl
     }
 
     @SuppressWarnings("unchecked")
-    private void createAddFeatureCommands( List<UndoableMapCommand> commands, List<Geometry> geoms, SimpleFeature first ) throws IllegalAttributeException {
-        SimpleFeatureType featureType = first.getFeatureType();
-        if ((geoms.size() > 1 && !featureType.getGeometryDescriptor().getType().getBinding()
+    private void createAddFeatureCommands( List<UndoableMapCommand> commands, List<Geometry> geoms, Feature first ) throws IllegalAttributeException {
+        FeatureType featureType = first.getFeatureType();
+        if ((geoms.size() > 1 && !featureType.getDefaultGeometry().getType()
                 .isAssignableFrom(MultiPolygon.class))
-                || !featureType.getGeometryDescriptor().getType().getBinding().isAssignableFrom(
+                || !featureType.getDefaultGeometry().getType().isAssignableFrom(
                         MultiPolygon.class)) {
             for( Geometry geom : geoms ) {
-                SimpleFeature newFeature = SimpleFeatureBuilder.copy(first);
+                Feature newFeature = featureType.duplicate(first);
                 newFeature.setDefaultGeometry(geom);
                 commands.add(handler.getContext().getEditFactory()
                         .createAddFeatureCommand(newFeature, layer));
             }
         } else {
-            SimpleFeature newFeature = SimpleFeatureBuilder.copy(first);
+            Feature newFeature = featureType.duplicate(first);
             GeometryFactory factory = new GeometryFactory();
 
             newFeature.setDefaultGeometry(factory.createMultiPolygon(geoms
@@ -183,34 +176,36 @@ public class DifferenceFeatureCommand extends AbstractCommand implements Undoabl
 
     /**
      * Collect the provided geometries into a single geometry.
-     * 
+     *
      * @param geometryCollection
      * @return A single geometry which is the union of the provided geometryCollection
      */
     static Geometry combineIntoOneGeometry( Collection<Geometry> geometryCollection ){
         //GeometryFactory factory = FactoryFinder.getGeometryFactory( null );
         GeometryFactory factory = new GeometryFactory();
-        
+
     	Geometry combined = factory.buildGeometry( geometryCollection );
         return combined.union();
     }
-    
+
     /**
+     * This is public only for testing it is NOT API
      * @param iter
      * @param geoms the geometry to remove the features in iter from.  IE the geometries that will be diffed.  Is
      * also the list of resulting geometries.
      * @return
      */
-    public static SimpleFeature runDifferenceOp( FeatureIterator<SimpleFeature> iter, List<Geometry> geoms ) {
-    	Geometry createdGeometry = combineIntoOneGeometry( geoms );    	
+    public static Feature runDifferenceOp( FeatureIterator iter, List<Geometry> geoms ) {
+
+    	Geometry createdGeometry = combineIntoOneGeometry( geoms );
     	Geometry differenceGeometry = createdGeometry;
-    	SimpleFeature first=null;
+    	Feature first=null;
     	try {
 
         	Set<Geometry> featureGeoms = new HashSet<Geometry>();
-	        while( iter.hasNext() ) {
-	            SimpleFeature f = iter.next();
-	            
+        	while( iter.hasNext() ) {
+	            Feature f = iter.next();
+
 	            if (first == null){
 	                first = f;
 	            }
@@ -218,9 +213,7 @@ public class DifferenceFeatureCommand extends AbstractCommand implements Undoabl
 	            featureGeoms.add( featureGeometry );
 	        }
 	        Geometry existingGeometry = combineIntoOneGeometry( featureGeoms );
-	        if( existingGeometry!=null ){
-	            differenceGeometry = createdGeometry.difference( existingGeometry );
-	        }
+	        differenceGeometry = createdGeometry.difference( existingGeometry );
         } finally{
             if( iter!=null )
                 iter.close();
@@ -232,50 +225,34 @@ public class DifferenceFeatureCommand extends AbstractCommand implements Undoabl
         return first;
     }
 
-    /**
-     * Grab some features from the layer using shape bounds.
-     *
-     * @param monitor
-     * @return
-     * @throws IOException
-     * @throws NoninvertibleTransformException
-     * @throws IllegalFilterException
-     */
-    private FeatureCollection<SimpleFeatureType, SimpleFeature>  getFeatures(IProgressMonitor monitor) throws IOException, NoninvertibleTransformException, IllegalFilterException {
-        FeatureSource<SimpleFeatureType, SimpleFeature> source =layer.getResource(FeatureSource.class, new SubProgressMonitor(monitor,2));
-        SimpleFeatureType schema = layer.getSchema();
+    private FeatureCollection getFeatures(IProgressMonitor monitor) throws IOException, NoninvertibleTransformException, IllegalFilterException {
+        FeatureSource source=layer.getResource(FeatureSource.class, new SubProgressMonitor(monitor,2));
+        FeatureType schema = layer.getSchema();
         Rectangle bounds = shape.getBounds();
         double[] toTransform = new double[]{bounds.getMinX(), bounds.getMinY(),
                 bounds.getMaxX(), bounds.getMaxY()};
         handler.getContext().worldToScreenTransform().inverseTransform(toTransform, 0,
                 toTransform, 0, 2);
-        ReferencedEnvelope transformedBounds = new ReferencedEnvelope(toTransform[0], toTransform[2],
-                toTransform[1], toTransform[3], handler.getContext().getCRS());
+        Envelope transformedBounds = new Envelope(toTransform[0], toTransform[2],
+                toTransform[1], toTransform[3]);
 
-        FilterFactory2 filterFactory = CommonFactoryFinder.getFilterFactory2(GeoTools.getDefaultHints());
-        ReferencedEnvelope layerBounds;
+        FilterFactory filterFactory = FilterFactoryFinder.createFilterFactory();
+        Envelope layerBounds;
         try {
             MathTransform transform = layer.mapToLayerTransform();
-            layerBounds = new ReferencedEnvelope(JTS.transform(transformedBounds, transform), layer.getCRS());
+            layerBounds = JTS.transform(transformedBounds, transform);
         } catch (Exception e) {
             layerBounds = transformedBounds;
         }
-        String geomAttributeName = layer.getSchema().getGeometryDescriptor().getLocalName();
-//        Geometry boundsAsGeom = new GeometryFactory().toGeometry(layerBounds);
-//        
-//        Intersects filter = filterFactory.intersects(filterFactory.literal(boundsAsGeom),  filterFactory.property(geomAttributeName));
-        String srs;
-        try {
-            srs = CRS.lookupIdentifier(layerBounds.getCoordinateReferenceSystem(), false);
-        } catch (FactoryException e) {
-            // we cannot convert our request to the data CRS
-            // so we cannot return any features
-            ProjectPlugin.getPlugin().log(e);
-            return null;
-        }
-        BBOX filter = filterFactory.bbox(geomAttributeName, layerBounds.getMinX(), 
-        		layerBounds.getMinY(), layerBounds.getMaxX(), layerBounds.getMaxY(), srs);
-        Query query=new DefaultQuery(schema.getName().getLocalPart(), filter);
+        BBoxExpression bb = filterFactory.createBBoxExpression(layerBounds);
+        GeometryFilter filter = filterFactory
+                .createGeometryFilter(FilterType.GEOMETRY_BBOX);
+        filter.addRightGeometry(bb);
+
+        String geomAttributeName = layer.getSchema().getDefaultGeometry().getName();
+
+        filter.addLeftGeometry(filterFactory.createAttributeExpression(geomAttributeName));
+        Query query=new DefaultQuery(schema.getTypeName(), filter);
 
         return source.getFeatures(query);
     }

@@ -52,7 +52,7 @@ import net.refractions.udig.catalog.IResolveDelta;
  * <p>
  * However when the weak reference is cleaned up, we will notice and call dispose for you.
  * </p>
- * 
+ *
  * @author jgarnett
  * @since 0.9.0
  */
@@ -81,7 +81,7 @@ public abstract class HandleListener implements IResolveChangeListener {
     }
     /**
      * Can be called during a repalce, or reset to switch this listener over to the new handle.
-     * 
+     *
      * @param handle
      * @return
      */
@@ -136,7 +136,7 @@ public abstract class HandleListener implements IResolveChangeListener {
      * your "new" handle in a more timely fashion.
      * </ul>
      * </p>
-     * 
+     *
      * @param handle
      */
     public abstract void reset( IResolve handle, IResolveChangeEvent event );

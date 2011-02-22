@@ -27,7 +27,7 @@ import net.refractions.udig.ui.operations.AbstractPropertyValue;
 import net.refractions.udig.ui.operations.PropertyValue;
 
 import org.geotools.data.FeatureStore;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.feature.FeatureType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
@@ -57,48 +57,43 @@ import com.vividsolutions.jts.geom.Polygon;
  * <li>GeometryCollection = com.vividsolutions.jts.geom.GeometryCollection</li>
  * </ul>
  * </p>
- * 
+ *
  * Note: If the object passed into isTrue is not the editLayer, and the editLayer
  * is locked, the editLayer will be used in place of the passed in layer.
- * 
+ *
  * TODO change this class name to EditGeometryProperty or something similar
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class GeometryProperty extends AbstractPropertyValue<ILayer> implements PropertyValue<ILayer> {
 
-	/*
-	 * if working with Layer based on e.g. Temporary datastores the id's of the
-	 * layers can't be resolved -> blocking operation {@link URL#equals(Object)}
-	 * javadoc : 'Since hosts comparison requires name resolution, this
-	 * operation is a blocking operation.' 
-	 */
-    Set<String> ids=new CopyOnWriteArraySet<String>();
+
+    Set<URL> ids=new CopyOnWriteArraySet<URL>();
     private volatile AtomicBoolean isEvaluating=new AtomicBoolean(false);
 
     @SuppressWarnings("unchecked")
     public synchronized boolean isTrue( ILayer object, String value ) {
         isEvaluating.set(true);
-        
+
         if (object.getMap() != null && object.getMap().getEditManager().isEditLayerLocked()) {
             object = object.getMap().getEditManager().getEditLayer();
         }
-        
+
         try{
-            if( ids.add( object.getID().toString() ) ){
+            if( ids.add( object.getID() ) ){
                 IGeoResource resource = object.findGeoResource(FeatureStore.class);
                 if( resource!=null )
                     CatalogPlugin.getDefault().getLocalCatalog().addCatalogListener(new ObjectPropertyCatalogListener(object, resource, isEvaluating, this));
             }
-        SimpleFeatureType schema = object.getSchema();
-        if (schema == null || schema.getGeometryDescriptor() == null)
+        FeatureType schema = object.getSchema();
+        if (schema == null || schema.getDefaultGeometry() == null)
             return false;
 
         try {
 
             Class< ? extends Object> declared = parseValue(value);
-            Class< ? extends Object> type = schema.getGeometryDescriptor().getType().getBinding();
+            Class< ? extends Object> type = schema.getDefaultGeometry().getType();
             return type.isAssignableFrom(declared);
         } catch (ClassNotFoundException e) {
             return false;

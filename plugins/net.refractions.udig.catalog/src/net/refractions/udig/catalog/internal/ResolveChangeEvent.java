@@ -22,7 +22,7 @@ import net.refractions.udig.catalog.IResolveDelta;
 
 /**
  * Everything change change change ...
- * 
+ *
  * @author jgarnett
  * @since 0.6.0
  */
@@ -34,7 +34,7 @@ public class ResolveChangeEvent implements IResolveChangeEvent {
 
     /**
      * Construct <code>CatalogChangeEvent</code>.
-     * 
+     *
      * @param source Source of event, in case you care
      * @param type Type constant from ICatalogChangeEvent
      * @param delta Describes the change

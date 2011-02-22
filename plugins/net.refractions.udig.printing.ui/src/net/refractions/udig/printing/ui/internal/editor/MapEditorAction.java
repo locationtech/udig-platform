@@ -25,7 +25,7 @@ import org.eclipse.gef.commands.Command;
 
 /**
  * Edits the map.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

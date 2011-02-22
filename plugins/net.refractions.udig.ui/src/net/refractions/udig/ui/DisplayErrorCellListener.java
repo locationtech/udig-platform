@@ -30,7 +30,7 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * Writes a message to the Status Line if available and changes the BackgroundColor of the editor if possible.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -63,12 +63,12 @@ public class DisplayErrorCellListener implements ICellEditorListener {
         if( oldValidState==newValidState )
             return;
         Control control = editor.getControl();
-        
+
         if( control==null )
             return;
-        
+
         if( oldValidState ){
-            
+
             if( validBackgroundColor==null ){
                 this.validBackgroundColor=control.getBackground();
             }
@@ -76,7 +76,7 @@ public class DisplayErrorCellListener implements ICellEditorListener {
                 this.validForegroundColor=control.getForeground();
             }
         }
-        
+
         if( newValidState ){
             if( validBackgroundColor==null ){
                 control.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
@@ -100,15 +100,15 @@ public class DisplayErrorCellListener implements ICellEditorListener {
                 .getActiveWorkbenchWindow();
         if( activeWorkbenchWindow==null )
             return;
-        
+
         IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
         if( activePage==null )
             return;
-        
+
         IWorkbenchPart activePart = activePage.getActivePart();
         if( activePart==null )
             return;
-        
+
         IActionBars actionBars;
         if( activePart instanceof IViewPart ){
             actionBars=((IViewPart)activePart).getViewSite().getActionBars();

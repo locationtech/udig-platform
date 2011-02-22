@@ -2,17 +2,21 @@ package net.refractions.udig.tutorials.style.color;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.io.IOException;
-
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IStyleBlackboard;
-import net.refractions.udig.project.internal.render.impl.RendererImpl;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.tutorials.catalog.csv.CSV;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
@@ -23,7 +27,17 @@ import org.opengis.referencing.operation.TransformException;
 
 import com.csvreader.CsvReader;
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Point;
+
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.IStyleBlackboard;
+import net.refractions.udig.project.internal.render.Renderer;
+import net.refractions.udig.project.internal.render.impl.RendererImpl;
+import net.refractions.udig.project.render.IRenderContext;
+import net.refractions.udig.project.render.RenderException;
+import net.refractions.udig.tutorials.catalog.csv.CSV;
 
 public class ColorCSVRenderer extends RendererImpl {
 
@@ -35,7 +49,7 @@ public class ColorCSVRenderer extends RendererImpl {
 
     /**
      * This example shows how to obtain a color.
-     * 
+     *
      * @param g
      * @param monitor
      * @throws RenderException
@@ -49,7 +63,7 @@ public void render( Graphics2D g, IProgressMonitor monitor ) throws RenderExcept
         ILayer layer = getContext().getLayer();
         IGeoResource resource = layer.findGeoResource(CSV.class);
         if (resource == null)
-            return;        
+            return;
         ReferencedEnvelope bounds = getRenderBounds();
         monitor.subTask("connecting");
         CSV csv = resource.resolve(CSV.class, null);
@@ -83,7 +97,7 @@ public void render( Graphics2D g, IProgressMonitor monitor ) throws RenderExcept
 
             g.setColor( color );
             g.fillRect(p.x-2, p.y-2, 6, 6);
-            
+
             g.setColor(Color.BLACK);
             String name = reader.get(nameIndex);
             g.drawString(name, p.x + 15, p.y + 15);

@@ -14,24 +14,20 @@ import java.util.SortedSet;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
+import net.refractions.udig.project.render.IRenderMetrics;
 
 import org.eclipse.emf.common.notify.Notification;
 
 /**
  * Creates Renderers and RenderContexts.
- * 
- * <p>  The default implementation uses a renderer creator to create renderers. 
- * The default implementation chooses a renderer based on the available GeoResource and style.
- * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
 public interface RendererCreator{
-    
+
     /**
-     * Provides a way to influence the choice of renderers.  The value of a blackboard entry must a string which is the 
+     * Provides a way to influence the choice of renderers.  The value of a blackboard entry must a string which is the
      * id of the Renderer as declared in the Extension definition.  For example "BasicFeatureRenderer".
      * <ul>
      * <li>If an entry is on a Layer's blackboard with this key then that renderer will be preferred for that layer over other renderers.</li>
@@ -41,9 +37,9 @@ public interface RendererCreator{
      * <p><b>IMPORTANT:</b> don't forget to append the plugin ID to the id entered into the id field.</p>
      */
     public static final String PREFERRED_RENDERER_ID = "PREFERRED_RENDERER_ID"; //$NON-NLS-1$
-    
+
     /**
-     * Provides a way to influence the choice of renderers.  The value of a blackboard entry must a string which is the 
+     * Provides a way to influence the choice of renderers.  The value of a blackboard entry must a string which is the
      * id of the Renderer as declared in the Extension definition.  For example "BasicFeatureRenderer".
      * <ul>
      * <li>If an entry is on a Layer's blackboard with this key then that renderer will be negatively weighted for that layer compared other renderers.</li>
@@ -59,15 +55,15 @@ public interface RendererCreator{
      * If the meaning of the '<em>Toolkit</em>' attribute isn't clear, there really should be
      * more of a description here...
      * </p>
-     * 
+     *
      * @return the value of the '<em>Toolkit</em>' attribute.
      */
     RenderContext getContext();
 
     /**
      * Sets the value of the '{@link net.refractions.udig.project.internal.render.RendererCreator#getContext <em>Context</em>}'
-     * reference. 
-     * 
+     * reference.
+     *
      * @param value the new value of the '<em>Context</em>' reference.
      * @see #getContext()
      */
@@ -75,7 +71,7 @@ public interface RendererCreator{
 
     /**
      * Creates a Renderer which can render the provided layer
-     * 
+     *
      * @param context A context object with a layer to be rendered. The layer will be used to
      *        determine which renderer will be created
      * @return a Renderer which can render the provided layer null if the layer type is not known
@@ -99,7 +95,7 @@ public interface RendererCreator{
     public void reset();
     /**
      * Locates the selection layer for layer or returns null;
-     * 
+     *
      * @return the selection layer for layer or returns null;
      */
     public SelectionLayer findSelectionLayer( ILayer targetLayer );
@@ -111,11 +107,11 @@ public interface RendererCreator{
 
     /**
      * Returns the current configuration of Contexts objects.
-     * 
+     *
      * @return the current configuration of Contexts objects
      */
     Collection<RenderContext> getConfiguration();
-    
+
     /**
      * Returns The name and description of all the renderers that are capable of rendering the provided layer.
      *
@@ -128,5 +124,5 @@ public interface RendererCreator{
      *
      * @return the set of {@link IRenderMetrics} that can render the provided layer.
      */
-    public Collection<AbstractRenderMetrics> getAvailableRendererMetrics(Layer layer);
+    public Collection<IRenderMetrics> getAvailableRendererMetrics(Layer layer);
 }

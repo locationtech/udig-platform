@@ -2,24 +2,22 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.mapgraphic; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.mapgraphic.MapGraphicPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
+ org.junit4;resolution:=optional,
  net.refractions.udig.catalog,
  net.refractions.udig.project,
  net.refractions.udig.ui,
  net.refractions.udig.catalog.ui,
- net.refractions.udig.project.ui;visibility:=reexport,
- net.refractions.udig.style;visibility:=reexport,
- net.refractions.udig.style.sld
-Bundle-ActivationPolicy: lazy
+ net.refractions.udig.project.ui,
+ net.refractions.udig.style
+Eclipse-LazyStart: true
 Export-Package: net.refractions.udig.mapgraphic,
  net.refractions.udig.mapgraphic.grid,
  net.refractions.udig.mapgraphic.internal,
- net.refractions.udig.mapgraphic.northarrow,
  net.refractions.udig.mapgraphic.scalebar,
  net.refractions.udig.mapgraphic.style
-Bundle-RequiredExecutionEnvironment: J2SE-1.5

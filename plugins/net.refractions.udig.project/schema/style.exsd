@@ -6,17 +6,7 @@
          <meta.schema plugin="net.refractions.udig.core" id="StyleDefinition" name="StyleDefinition"/>
       </appInfo>
       <documentation>
-         Define style information to be stored on the style blackboard at specific ID. The extention point defines ID used to store information; and a StyleContent class that is used to persist information between runs.
-
-The concrete class used to represent a style is only known by; renderers that render a layer; style configurators that change the style.
-
-Internally StyleContent uses a Memento object (which contains style information as a tree of mementos each of which contains strings). As far as the style blackboard persistence is concerned a style is just a memento (one per each ID); turning the memento into an Object is delegated to the StyleConent for that ID.
-
-If you would like to let the user control the style; you can make a user interface that modifies the contents of the style blackboard. We ask that you only modify the contents of the style blackboard under user control (rather than over the course of rendering) to prevent a cycle.
-
-Udig provides the style configurator and style editor page extention points for working with the style blackboard. In each case the user interface is responsible for looking up an ID on the style blackboard and making modifications directly.
-  
-
+         Styles are represented as a Memento object which contains style information as a tree of mementos each of which contains strings.  Only the renderers that render a layer know the concrete style class.  This means that only certain renderers are capable of rendering certain styles.  However as far as UDig is concerned a style is a memento.  This causes problems with the user interface because udig does not know anything about the style.  To overcome this limitation a style must be associated with an editor dialog.  The editor must extend the StyleEditor class.
       </documentation>
    </annotation>
 
@@ -33,7 +23,7 @@ Udig provides the style configurator and style editor page extention points for 
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
@@ -42,9 +32,6 @@ Udig provides the style configurator and style editor page extention points for 
 
    <element name="style">
       <annotation>
-         <appInfo>
-            <meta.element labelAttribute="name"/>
-         </appInfo>
          <documentation>
             A Style provided by a plugin author.  Styles are only useful if they can be rendered so a style that extends this extension point should also have an associated renderer that know how to use the style.
          </documentation>
@@ -53,9 +40,7 @@ Udig provides the style configurator and style editor page extention points for 
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  An id that will be used to identify the style.
-
-This is the key which the style is placed under when a style is placed onto a StyleBlackboard. It is used Renderer and StyleConfigurator to identify the style.
+                  An id that will be used to identify the style. This is the key which the style is placed under when a style is placed onto a StyleBlackboard. It is used by Renderer and StyleConfigurator to identify the style.
                </documentation>
             </annotation>
          </attribute>
@@ -64,9 +49,6 @@ This is the key which the style is placed under when a style is placed onto a St
                <documentation>
                   A human readable name that can be used as a short description of the style.
                </documentation>
-               <appInfo>
-                  <meta.attribute translatable="true"/>
-               </appInfo>
             </annotation>
          </attribute>
          <attribute name="class" type="string" use="required">
@@ -96,9 +78,8 @@ This is the key which the style is placed under when a style is placed onto a St
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         The net.refractions.udig.style.sld.SLDContent class is used to save and load an org.geotools.styling.Style object from the style blackboard. This value is saved with the id &quot;&quot;net.refractions.udig.style.sld&quot;&quot; (by convention this constant SLDContent.ID)
-
-This example is specific to syling features; you can store anything you want on the style blackboard; it is only a contract between you and a renderer (and the user if you make a style configurator).
+         net.refractions.udig.project.impl.render.SLDEditor
+net.refractions.udig.project.impl.render.SLDStyle
       </documentation>
    </annotation>
 
@@ -107,19 +88,7 @@ This example is specific to syling features; you can store anything you want on 
          <meta.section type="apiInfo"/>
       </appInfo>
       <documentation>
-         Implementations of this extention point are required to provide a StyleContent class. A StyleContent implementation is responsible for teaching the system how to load and save an instane of getStyleClass().
-
-StyleContent methods:
-&lt;ul&gt;
-&lt;li&gt;getId() - this is the ID used store the content on the blackboard
-&lt;li&gt;getStyleClass()
-&lt;li&gt;save(IMemento, Object)
-&lt;li&gt;load(IMemento)
-&lt;li&gt;load(URL, IProgressMonitor)
-&lt;li&gt;createDefaultStyle(IGeoResource, Color, IProgressMonitor)
-&lt;/ul&gt;
-
-The createDefaultStyle implementation is uesd to generate a default style for the provided resource; if the provided resource cannot be handled by this style their is no obligation 
+         A plugin that defines a style (Note: a single plugin could define a style and a renderer) must implement a net.refractions.udig.project.impl.render.StyleEditor and a class that implements the Style interface.  The StyleEditor interface extends eclipse&apos;s IDialogPage interface and contains an additional init() method that accepts a StyleMemento object as a parameter.    The StyleMemento contains the style information that the editor can edit.  The other method is getMemento which returns a StyleMemento object.
       </documentation>
    </annotation>
 
@@ -128,9 +97,7 @@ The createDefaultStyle implementation is uesd to generate a default style for th
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         &lt;p&gt;SLDContent is a style content implementation included with uDig.
-
-The IMemento created by SLDStyle contains two properties: a &lt;b&gt;type&lt;/b&gt; property which is set to &lt;b&gt;SLDStyle&lt;/b&gt; and a &lt;b&gt;version&lt;/b&gt; property which at the time of the UDIG version 1.0 release is set to &lt;b&gt;1.0&lt;/b&gt;.  The StyleMemento contains an SLD document formatted string in its text field.  The SLD document can be retrieved using the getTextData() method call.
+         &lt;p&gt;SLDStyle is the Style included with uDig.  It is essentially a adapter for Geotool&apos;s Style objects.  The StyleMemento created by SLDStyle contains two properties: a &lt;b&gt;type&lt;/b&gt; property which is set to &lt;b&gt;SLDStyle&lt;/b&gt; and a &lt;b&gt;version&lt;/b&gt; property which at the time of the UDIG version 1.0 release is set to &lt;b&gt;1.0&lt;/b&gt;.  The StyleMemento contains an SLD document formatted string in its text field.  The SLD document can be retrieved using the getTextData() method call.
 SLDEditor is the default Style Editor class has been included since the 0.5 release.
 &lt;p&gt;
 The following the code SLDStyle uses to create its StyleMemento:
@@ -160,7 +127,7 @@ return memo;&lt;br&gt;
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         Refractions Research Inc. 2008
+         Refractions Research Inc. 2004
       </documentation>
    </annotation>
 

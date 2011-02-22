@@ -10,7 +10,7 @@ import org.eclipse.ui.intro.IIntroPart;
 
 /**
  * Turns off annoying features for developer sanity.
- * 
+ *
  * @author chorner
  * @since 1.1.0
  */
@@ -21,7 +21,7 @@ public class DeveloperStartup implements IStartup {
             closeIntro();
         }
     }
-    
+
     private void closeIntro() {
         PlatformGIS.syncInDisplayThread(new Runnable(){
 

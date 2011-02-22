@@ -26,35 +26,22 @@ import net.refractions.udig.tools.edit.support.EditBlackboard;
 import net.refractions.udig.tools.edit.support.Point;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * A strategy for adding the features to the edit blackboard if no modifiers are down.  The first feature
- * is selected for editing each of the others are not.
+ * TODO Purpose of
  * <p>
- * Recognises the following SelectionParameter settings:
- * <ul>
- * <li>onlyAdd - true to add the feature to the existing selection
- *    (same effect can be had by using MOD1, ie control key on windows)
- * <li>acceptableClasses
- * <li>event   
- * </ul>
- * 
+ * </p>
+ *
  * @author jesse
  * @since 1.1.0
  */
 public class SelectFeatureStrategy implements SelectionStrategy {
-    /**
-     * @param monitor report progress
-     * @param commands UndoableComposte; any commands will be added to this composite
-     * @param parameters information controlling the selection process see class description for details
-     * @param feature Feature being selected
-     * @param firstFeature true if this is the first feature returned for selection
-     */
+
     public void run( IProgressMonitor monitor, UndoableComposite commands,
-            SelectionParameter parameters, SimpleFeature feature, boolean firstFeature ) {
+            SelectionParameter parameters, Feature feature, boolean firstFeature ) {
         EditToolHandler handler = parameters.handler;
         Class< ? extends Geometry>[] acceptableClasses = parameters.acceptableClasses;
         boolean onlyAdd = parameters.onlyAdd;

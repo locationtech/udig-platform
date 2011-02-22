@@ -24,16 +24,16 @@ import net.refractions.udig.project.internal.EditManager;
  * </p>
  * <p>
  * Example Use:
- * 
+ *
  * <pre><code>
- *    
+ *
  *     LayerManagerControlCommand x = new LayerManagerControlCommand( ... );
  *     TODO code example
- *     
+ *
  * </code></pre>
- * 
+ *
  * </p>
- * 
+ *
  * @author jeichar
  * @deprecated
  * @since 0.3
@@ -42,7 +42,7 @@ public interface EditManagerControlCommand extends MapCommand {
 
     /**
      * This is old and shouldn't be used anymore
-     * 
+     *
      * @param layerManager
      * @deprecated
      */

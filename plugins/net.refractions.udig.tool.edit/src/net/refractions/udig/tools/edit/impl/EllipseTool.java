@@ -22,7 +22,7 @@ import net.refractions.udig.tools.edit.behaviour.CreateShapeBehaviour.ShapeFacto
 
 /**
  * Draws and adds ellipses to a layer.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -37,7 +37,7 @@ public class EllipseTool extends RectangleTool {
                 path.append(new Ellipse2D.Float(-width, -height,2*width, 2*height), false);
                 return path;
             }
-            
+
         };
         ret.setMiddleAsOrigin(true);
         return ret;

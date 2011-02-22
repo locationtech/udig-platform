@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 5 Composite Commands</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 5 Composite Commands -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="5CompositeCommands-CompositeCommnads">Composite Commnads</a></h1>
+
+<p>Composite Commands provide a way to combine commands into one unit.  A composite command is executed and undone as if it is a single command.  </p>
+
+<h3><a name="5CompositeCommands-ExampleUsage">Example Usage</a></h3>
+
+<p>Example taken from Zoom.java which is a tool see <a href="5 Tools.html" title="5 Tools">Tools</a>:</p>
+
+
+<div class="code"><div class="codeContent">
+<pre class="code-java">NavigationCommandFactory factory = NavigationCommandFactory.getInstance();
+
+NavCommand[] commands = <span class="code-keyword">new</span> NavCommand[] {
+   factory.createSetViewportCenterCommand(m.pixelToWorld( r.x + r.width / 2, r.y + r.height / 2)),
+   factory.createZoomCommand(r.width / getContext().getMapDisplay().getDisplaySize().getWidth()) };
+
+   map.sendCommand(factory.createCompositeCommand(commands));</pre>
+</div></div>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=4090">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=4090">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

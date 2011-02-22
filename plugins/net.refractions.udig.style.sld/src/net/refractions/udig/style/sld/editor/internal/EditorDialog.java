@@ -1,24 +1,15 @@
-/* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2010, Refractions Research Inc.
- * (C) 2000, 2005 IBM Corporation and others
- * ------
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation;
- * version 2.1 of the License.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * --------
+package net.refractions.udig.style.sld.editor.internal;
+
+/*******************************************************************************
+ * Copyright (c) 2000, 2005 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- */
-package net.refractions.udig.style.sld.editor.internal;
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
 
 import java.util.Iterator;
 import java.util.List;
@@ -93,7 +84,7 @@ import org.eclipse.swt.widgets.Tree;
 public class EditorDialog extends Dialog implements IEditorPageContainer, IPageChangeProvider {
 	/**
 	 * Layout for the page container.
-	 *  
+	 *
 	 */
 	private class PageLayout extends Layout {
 		@Override
@@ -108,7 +99,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 				x = Math.max(x, size.x);
 				y = Math.max(y, size.y);
 			}
-			
+
 			//As pages can implement thier own computeSize
 			//take it into account
 			if(currentPage != null){
@@ -116,7 +107,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 				x = Math.max(x, size.x);
 				y = Math.max(y, size.y);
 			}
-			
+
 			if (wHint != SWT.DEFAULT)
 				x = wHint;
 			if (hHint != SWT.DEFAULT)
@@ -164,7 +155,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Indicates whether help is available; <code>false</code> by default.'
-	 * 
+	 *
 	 * @see #setHelpAvailable
 	 */
 	private boolean isHelpAvailable = false;
@@ -175,7 +166,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * The minimum page size; 400 by 400 by default.
-	 * 
+	 *
 	 * @see #setMinimumPageSize(Point)
 	 */
 	private Point minimumPageSize = new Point(400, 400);
@@ -206,13 +197,13 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	 * The tree viewer.
 	 */
 	private TreeViewer treeViewer;
-	
+
     private ListenerList pageChangedListeners = new ListenerList(3);
 
 	/**
 	 * Creates a new preference dialog under the control of the given preference
 	 * manager.
-	 * 
+	 *
 	 * @param parentShell
 	 *            the parent shell
 	 * @param manager
@@ -226,7 +217,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
 	 */
 	@Override
@@ -249,7 +240,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.jface.dialogs.Dialog#cancelPressed()
 	 */
 	@Override
@@ -281,7 +272,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.jface.window.Window#close()
 	 */
 	@Override
@@ -296,7 +287,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
 	 */
 	@Override
@@ -316,7 +307,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.jface.window.Window#constrainShellSize()
 	 */
 	@Override
@@ -329,7 +320,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -345,7 +336,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.jface.window.Window#createContents(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -364,7 +355,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -376,27 +367,27 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 		parentLayout.marginWidth = 0;
 		parentLayout.verticalSpacing = 0;
 		parentLayout.horizontalSpacing = 0;
-		
+
 		composite.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
-		
+
 		Control treeControl = createTreeAreaContents(composite);
 		createSash(composite,treeControl);
-		
+
 		Label versep = new Label(composite, SWT.SEPARATOR | SWT.VERTICAL);
 		GridData verGd = new GridData(GridData.FILL_VERTICAL | GridData.GRAB_VERTICAL);
-	
+
 		versep.setLayoutData(verGd);
 		versep.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true));
-		
+
 		Composite pageAreaComposite = new Composite(composite, SWT.NONE);
 		pageAreaComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
 		GridLayout layout = new GridLayout(1, true);
 		layout.marginHeight = 0;
 		layout.marginWidth = 0;
 		pageAreaComposite.setLayout(layout);
-		
-	
-		
+
+
+
 		// Build the title area and separator line
 		Composite titleComposite = new Composite(pageAreaComposite, SWT.NONE);
 		layout = new GridLayout();
@@ -409,12 +400,12 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 		titleLayoutData.horizontalIndent = IDialogConstants.HORIZONTAL_MARGIN;
 		titleComposite.setLayoutData(titleLayoutData);
 		createTitleArea(titleComposite);
-		
+
 		Label separator = new Label(pageAreaComposite, SWT.HORIZONTAL | SWT.SEPARATOR);
 
 		separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
-		
-		
+
+
 		// Build the Page container
 		pageContainer = createPageContainer(pageAreaComposite);
 		GridData pageContainerData = (GridData) pageContainer.getLayoutData(); //new GridData(GridData.FILL_BOTH);
@@ -427,13 +418,13 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	}
 
 	/**
-	 * Create the sash with right control on the right. Note 
+	 * Create the sash with right control on the right. Note
 	 * that this method assumes GridData for the layout data
 	 * of the rightControl.
 	 * @param composite
 	 * @param rightControl
 	 * @return Sash
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected Sash createSash(final Composite composite, final Control rightControl) {
@@ -445,7 +436,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 		sash.addListener(SWT.Selection, new Listener() {
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
 			 */
 			public void handleEvent(Event event) {
@@ -482,29 +473,29 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Creates the inner page container.
-	 * 
+	 *
 	 * @param parent
 	 * @return Composite
 	 */
 	protected Composite createPageContainer(Composite parent) {
-		
+
 		//Create an outer composite for spacing
 		Composite outer = new Composite(parent, SWT.NONE);
-		
+
 		GridData outerData = new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL
 				| GridData.GRAB_VERTICAL);
-				
+
 		outer.setLayout(new GridLayout());
 		outer.setLayoutData(outerData);
 
 		Composite result = new Composite(outer, SWT.NONE);
-		
+
 		GridData resultData = new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL
 				| GridData.GRAB_VERTICAL);
-				
+
 		result.setLayout(getPageLayout());
 		result.setLayoutData(resultData);
-		
+
 		return result;
 	}
 
@@ -512,7 +503,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	 * Return the layout for the composite that contains
 	 * the pages.
 	 * @return PageLayout
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected Layout getPageLayout() {
@@ -521,7 +512,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Creates the wizard's title area.
-	 * 
+	 *
 	 * @param parent
 	 *            the SWT parent for the title area composite.
 	 * @return the created title area composite.
@@ -536,7 +527,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 		layout.marginWidth = margins;
 		titleArea.setLayout(layout);
 
-		
+
 		GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
 		layoutData.verticalAlignment = SWT.TOP;
 		titleArea.setLayoutData(layoutData);
@@ -583,7 +574,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Create the layout data for the message area.
-	 * 
+	 *
 	 * @return FormData for the message area.
 	 */
 	private FormData createMessageAreaData() {
@@ -612,7 +603,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Create a new <code>TreeViewer</code>.
-	 * 
+	 *
 	 * @param parent
 	 *            the parent <code>Composite</code>.
 	 * @return the <code>TreeViewer</code>.
@@ -622,14 +613,14 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 		final TreeViewer viewer = new TreeViewer(parent, SWT.NONE);
 		addListeners(viewer);
 		viewer.setLabelProvider(new EditorPageLabelProvider());
-		viewer.setContentProvider(new EditorPageContentProvider()); 
+		viewer.setContentProvider(new EditorPageContentProvider());
 		return viewer;
 	}
 
 	/**
 	 * Add the listeners to the tree viewer.
 	 * @param viewer
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected void addListeners(final TreeViewer viewer) {
@@ -688,7 +679,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	/**
 	 * Find the <code>IEditorNode</code> that has data the same id as the
 	 * supplied value.
-	 * 
+	 *
 	 * @param nodeId
 	 *            the id to search for.
 	 * @return <code>IEditorNode</code> or <code>null</code> if not
@@ -706,7 +697,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Get the last known right side width.
-	 * 
+	 *
 	 * @return the width.
 	 */
 	protected int getLastRightWidth() {
@@ -715,7 +706,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Returns the preference mananger used by this preference dialog.
-	 * 
+	 *
 	 * @return the preference mananger
 	 */
 	public EditorPageManager getEditorPageManager() {
@@ -724,7 +715,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Get the name of the selected item preference
-	 * 
+	 *
 	 * @return String
 	 */
 	protected String getSelectedNode() {
@@ -783,7 +774,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Returns whether the current page is valid.
-	 * 
+	 *
 	 * @return <code>false</code> if the current page is not valid, or or
 	 *         <code>true</code> if the current page is valid or there is no
 	 *         current page
@@ -818,7 +809,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see org.eclipse.core.runtime.ISafeRunnable#run()
 			 */
 			public void run() {
@@ -844,14 +835,14 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 					//Don't bother closing if the OK failed
 					if(hasFailedOK)
 						return;
-					
+
 					close();
 				}
 			}
 
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see org.eclipse.core.runtime.ISafeRunnable#handleException(java.lang.Throwable)
 			 */
 			@Override
@@ -901,7 +892,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	 * Display the given error message. The currently displayed message is saved
 	 * and will be redisplayed when the error message is set to
 	 * <code>null</code>.
-	 * 
+	 *
 	 * @param newErrorMessage
 	 *            the errorMessage to display or <code>null</code>
 	 */
@@ -914,7 +905,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Save the last known tree width.
-	 * 
+	 *
 	 * @param width
 	 *            the width.
 	 */
@@ -928,7 +919,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	 * Clients must call this framework method before the dialog's control has
 	 * been created.
 	 * <p>
-	 * 
+	 *
 	 * @param b
 	 *            <code>true</code> to include a Help button, and
 	 *            <code>false</code> to not include one (the default)
@@ -943,7 +934,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	 * <p>
 	 * Shortcut for <code>setMessage(newMessage, NONE)</code>
 	 * </p>
-	 * 
+	 *
 	 * @param newMessage
 	 *            the message, or <code>null</code> to clear the message
 	 */
@@ -966,7 +957,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	 * message until the error message is cleared. This method replaces the
 	 * current message and does not affect the error message.
 	 * </p>
-	 * 
+	 *
 	 * @param newMessage
 	 *            the message, or <code>null</code> to clear the message
 	 * @param newType
@@ -979,7 +970,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Sets the minimum page size.
-	 * 
+	 *
 	 * @param minWidth
 	 *            the minimum page width
 	 * @param minHeight
@@ -993,7 +984,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Sets the minimum page size.
-	 * 
+	 *
 	 * @param size
 	 *            the page size encoded as <code>new Point(width,height)</code>
 	 * @see #setMinimumPageSize(int,int)
@@ -1018,7 +1009,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Sets the name of the selected item preference.
-	 * 
+	 *
 	 * @param pageId
 	 *            The identifier for the page
 	 */
@@ -1029,7 +1020,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	/**
 	 * Changes the shell size to the given size, ensuring that it is no larger
 	 * than the display bounds.
-	 * 
+	 *
 	 * @param width
 	 *            the shell width
 	 * @param height
@@ -1045,7 +1036,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	/**
 	 * Shows the preference page corresponding to the given preference node.
 	 * Does nothing if that page is already current.
-	 * 
+	 *
 	 * @param node
 	 *            the preference node, or <code>null</code> if none
 	 * @return <code>true</code> if the page flip was successful, and
@@ -1124,7 +1115,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 					lastShellSize = shell.getSize();
 					if (currentPage.getControl().getSize().x == 0)
 						currentPage.getControl().setSize(containerSize);
-				
+
 			} else //Set the size to be sure we use the result of computeSize
 				currentPage.setSize(containerSize);
 		}
@@ -1149,7 +1140,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	/**
 	 * Create the page for the node.
 	 * @param node
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected void createPage(IEditorNode node) {
@@ -1160,7 +1151,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	 * Get the page for the node.
 	 * @param node
 	 * @return IEditorPage
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected IEditorPage getPage(IEditorNode node) {
@@ -1193,7 +1184,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.jface.preference.IEditorPageContainer#updateButtons()
 	 */
 	public void updateButtons() {
@@ -1202,7 +1193,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.jface.preference.IEditorPageContainer#updateMessage()
 	 */
 	public void updateMessage() {
@@ -1229,13 +1220,13 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 				// we were not previously showing an error
 				showingError = true;
 			}
-		}  
+		}
 		messageArea.updateText(message,messageType);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.jface.preference.IEditorPageContainer#updateTitle()
 	 */
 	public void updateTitle() {
@@ -1246,7 +1237,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 
 	/**
 	 * Update the tree to use the specified <code>Font</code>.
-	 * 
+	 *
 	 * @param dialogFont
 	 *            the <code>Font</code> to use.
 	 * @since 3.0
@@ -1267,7 +1258,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	/**
 	 * Sets the current page.
 	 * @param currentPage
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected void setCurrentPage(IEditorPage currentPage) {
@@ -1277,7 +1268,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	/**
 	 * Set the treeViewer.
 	 * @param treeViewer
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected void setTreeViewer(TreeViewer treeViewer) {
@@ -1288,7 +1279,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	 * Get the composite that is showing the page.
 	 *
 	 * @return Composite.
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected Composite getPageContainer() {
@@ -1298,7 +1289,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	/**
 	 * Set the composite that is showing the page.
 	 * @param pageContainer Composite
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected void setPageContainer(Composite pageContainer) {
@@ -1306,25 +1297,25 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	}
 	/**
 	 * Create the page control for the supplied page.
-	 * 
+	 *
 	 * @param page - the preference page to be shown
 	 * @param parent - the composite to parent the page
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected void createPageControl(IEditorPage page, Composite parent) {
 		page.createControl(parent);
 	}
-	
+
 	/**
 	 * @see org.eclipse.jface.dialogs.IPageChangeProvider#getSelectedPage()
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	public Object getSelectedPage() {
 			return getCurrentPage();
 		}
-	
+
 	/**
 	 * @see org.eclipse.jface.dialogs.IPageChangeProvider#addPageChangedListener(org.eclipse.jface.dialogs.IPageChangedListener)
 	 * @since 3.1
@@ -1332,14 +1323,14 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	public void addPageChangedListener(IPageChangedListener listener) {
 		pageChangedListeners.add(listener);
 	}
-	
+
 	/**
 	 * @see org.eclipse.jface.dialogs.IPageChangeProvider#removePageChangedListener(org.eclipse.jface.dialogs.IPageChangedListener)
 	 * @since 3.1
 	 */
 	public void removePageChangedListener(IPageChangedListener listener) {
 		pageChangedListeners.remove(listener);
-		
+
 	}
 
 	/**
@@ -1350,7 +1341,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
      * @param event a selection changed event
      *
      * @see IPageChangedListener#pageChanged
-     * 
+     *
      * @since 3.1
      */
     protected void firePageChanged(final PageChangedEvent event) {
@@ -1363,5 +1354,5 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
                 }
             });
         }
-    }	
+    }
 }

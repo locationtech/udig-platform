@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: net.refractions.udig.catalog.geotiff; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Eclipse-BuddyPolicy: ext
@@ -12,6 +12,5 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.catalog,
  net.refractions.udig.libs,
  net.refractions.udig.catalog.rasterings
-Bundle-ActivationPolicy: lazy
+Eclipse-LazyStart: true
 Export-Package: net.refractions.udig.catalog.internal.geotiff;x-friends:="net.refractions.udig.catalog.test.geotiff"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5

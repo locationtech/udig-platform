@@ -21,8 +21,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * A Cell editor that tells the user a message.  For example:  I'm sorry this cell cannot be edited ( or some such ).  
- * 
+ * A Cell editor that tells the user a message.  For example:  I'm sorry this cell cannot be edited ( or some such ).
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -49,7 +49,7 @@ public class WarningCellEditor extends CellEditor {
     public Control getControl() {
         return label;
     }
-    
+
     @Override
     protected Object doGetValue() {
         return value;
@@ -63,7 +63,7 @@ public class WarningCellEditor extends CellEditor {
     protected void doSetValue( Object value ) {
         this.value=value;
     }
-    
+
     @Override
     public void dispose() {
         if( !label.isDisposed() )
@@ -74,7 +74,7 @@ public class WarningCellEditor extends CellEditor {
     public void deactivate() {
         label.setVisible(false);
     }
-    
+
     @Override
     public void activate() {
         label.setVisible(true);

@@ -25,8 +25,8 @@ import net.refractions.udig.catalog.ui.internal.Messages;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 /**
- * A "normal" content provider for a tree viewer.   
- * 
+ * A "normal" content provider for a tree viewer.
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -41,7 +41,7 @@ public class ResolveContentProvider extends AbstractResolveContentProvider imple
      * </p>
      * The result is not modified by the viewer.
      * </p>
-     * 
+     *
      * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(java.lang.Object)
      * @param parent the parent element
      * @return an array of child elements
@@ -62,7 +62,7 @@ public class ResolveContentProvider extends AbstractResolveContentProvider imple
             return members != null ? members.toArray() : null;
         } else {
             update(resolve); // calculate
-            return new Object[]{Messages.ResolveContentProvider_searching }; 
+            return new Object[]{Messages.ResolveContentProvider_searching };
         }
     }
 
@@ -118,5 +118,4 @@ public class ResolveContentProvider extends AbstractResolveContentProvider imple
     public Object[] getElements( Object inputElement ) {
         return getChildren(inputElement);
     }
-
 }

@@ -49,18 +49,18 @@ public class WMSBasicTest extends TestCase {
 	TestRenderManager renderManager;
 
 	ReferencedEnvelope bufferedClickBbox;
-	
+
 	@Override
 	protected void setUp() throws Exception {
 		// TODO Auto-generated method stub
 		super.setUp();
 
 		crs = CRS.decode("EPSG:4326");
-		
+
 		Envelope env = new Envelope(-10.0, 10.0, -10.0, 10.0);
 		bbox = new ReferencedEnvelope(env, crs);
 		bufferedClickBbox = new ReferencedEnvelope(new Envelope(-1.0, 1.0, -1.0, 1.0), crs);
-		
+
 		displaySize = new Dimension(400, 400);
 		viewportPane = new TestViewportPane(displaySize);
 		viewportModel = new TestViewportModel(displaySize, bbox, crs);
@@ -70,13 +70,13 @@ public class WMSBasicTest extends TestCase {
 		wmslayer.setName("test");
 		wmslayer.setQueryable(true);
 		wmslayer.setSrs(Collections.singleton("EPSG:4326"));
-		
+
 		stableWMS = new URL("http://www2.dmsolutions.ca/cgi-bin/mswms_gmap?VERSION=1.1.0&REQUEST=GetCapabilities");
 		wms = new FudgeServer();
-		
+
 		layers = new ArrayList<ILayer>();
 		layers.add(new WMSLayer(this.map, this.wmslayer, this.wms));
-		
+
 		map = new TestMap(renderManager, viewportModel, layers);
 	}
 
@@ -87,18 +87,18 @@ public class WMSBasicTest extends TestCase {
 	}
 
 	public void testWMSBasic() throws Exception {
-		
+
 		InfoTool infoTool = new InfoTool();
-		
-		IToolContext context = new TestToolContext(this.bufferedClickBbox, 
+
+		IToolContext context = new TestToolContext(this.bufferedClickBbox,
 				this.crs, this.viewportPane, this.layers, this.viewportModel
 				);
-		
+
 		infoTool.setContext(context);
-		
-		MapMouseEvent e = new MapMouseEvent(null, 5, 5, 
+
+		MapMouseEvent e = new MapMouseEvent(null, 5, 5,
 				MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.NONE);
-		
+
 		/*
 		 * Taken straight from InfoTool.mouseReleased()
 		 */
@@ -110,52 +110,52 @@ public class WMSBasicTest extends TestCase {
         else {
             CoordinateReferenceSystem crs = context.getViewportModel().getCRS();
             bbox = new ReferencedEnvelope(box, crs);
-            
-        } 
+
+        }
         /*
          * End InfoTool.mouseReleased() code
          */
-		
+
 		LayerPointInfo hit = WMSDescribeLayer.info2(this.layers.get(0), bbox);
-		
+
 		assertNotNull(hit);
-		
+
 		Object value = hit.acquireValue();
-		
+
 		assertNotNull(value);
-		
+
 		assertTrue(value.equals("SUCCESS"));
-		
+
 	}
-	
+
 	public class FudgeServer extends WebMapServer {
 
-		
-		
+
+
 		public FudgeServer() throws IOException, ServiceException {
 			super(stableWMS);
 		}
 
 		@Override
 		public GetFeatureInfoResponse issueRequest(GetFeatureInfoRequest request) throws IOException, ServiceException {
-						
+
 			if ((request.getProperties().get(GetFeatureInfoRequest.QUERY_X).equals("200"))
 				&& (request.getProperties().get(GetFeatureInfoRequest.QUERY_Y).equals("200"))) {
 				String success = "SUCCESS";
-				
+
 				ByteArrayInputStream input = new ByteArrayInputStream(success.getBytes());
-				
+
 				return new GetFeatureInfoResponse("text/html", input);
 			}
-			
+
 			String failure = "FAILURE";
-			
+
 			ByteArrayInputStream input = new ByteArrayInputStream(failure.getBytes());
-			
+
 			return new GetFeatureInfoResponse("text/html", input);
 		}
-		
-		
-		
+
+
+
 	}
 }

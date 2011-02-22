@@ -18,9 +18,9 @@ package net.refractions.udig.project.ui.internal.actions;
 
 import java.util.Iterator;
 
+import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
 import net.refractions.udig.project.internal.render.impl.ScaleUtils;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
@@ -38,10 +38,11 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * An action that sets the zoom to include all the data in the layer.
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
@@ -82,10 +83,9 @@ public class ZoomToLayer extends ActionDelegate implements IViewActionDelegate {
     private final class ZoomRunnable implements IRunnableWithProgress {
         @SuppressWarnings("unchecked")
         public void run( IProgressMonitor monitor ) {
-            Map map = ((Layer) selection.getFirstElement()).getMapInternal();
-            
-            ReferencedEnvelope bounds = new ReferencedEnvelope( map.getViewportModel().getCRS() );
+            Envelope bounds = new Envelope();
 
+            Map map = ((Layer) selection.getFirstElement()).getMapInternal();
             Coordinate mapCenter = map.getViewportModel().getCenter();
             CoordinateReferenceSystem mapCRS = map.getViewportModel().getCRS();
 
@@ -111,7 +111,8 @@ public class ZoomToLayer extends ActionDelegate implements IViewActionDelegate {
             }
 
             if (!bounds.isNull()) {
-                map.sendCommandASync(new SetViewportBBoxCommand(bounds));
+                map.sendCommandASync(NavigationCommandFactory.getInstance()
+                        .createSetViewportBBoxCommand(bounds));
             }
         }
 
@@ -122,7 +123,7 @@ public class ZoomToLayer extends ActionDelegate implements IViewActionDelegate {
          * This only makes sense if the fitToScale is fully contained within the layerBounds and the
          * layerBounds contains the center.
          * <p>
-         * 
+         *
          * @param fitToScale the scaled down envelope (or maybe not)
          * @param layerBounds the unrestricted bounds of the layer
          * @param mapCenter the current center of the displayed map.
@@ -130,15 +131,15 @@ public class ZoomToLayer extends ActionDelegate implements IViewActionDelegate {
         private ReferencedEnvelope translateToCenter( ReferencedEnvelope fitToScale,
                 ReferencedEnvelope layerBounds, Coordinate mapCenter ) {
             if( fitToScale.equals(layerBounds) ||
-                    !layerBounds.covers(mapCenter)){
+                    !layerBounds.contains(mapCenter)){
                 return layerBounds;
             }
 
             Coordinate layerCenter = fitToScale.centre();
-            
+
             double deltaX = mapCenter.x-layerCenter.x;
             double deltaY = mapCenter.y-layerCenter.y;
-            
+
             // the maximum that can be translated in the negative X direction
             double maxNegX = layerBounds.getMinX()-fitToScale.getMinX();
             // the maximum that can be translated in the negative Y direction
@@ -147,7 +148,7 @@ public class ZoomToLayer extends ActionDelegate implements IViewActionDelegate {
             double maxPosX = layerBounds.getMaxX()-fitToScale.getMaxX();
             // the maximum that can be translated in the postive Y direction
             double maxPosY = layerBounds.getMaxY()-fitToScale.getMaxY();
-            
+
             if( deltaX<maxNegX ){
                 deltaX = maxNegX;
             } else if( deltaX>maxPosX ){
@@ -158,7 +159,7 @@ public class ZoomToLayer extends ActionDelegate implements IViewActionDelegate {
             } else if( deltaY>maxPosY ){
                 deltaY = maxPosY;
             }
-            
+
             fitToScale.translate(deltaX, deltaY);
             return fitToScale;
         }

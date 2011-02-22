@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.core.enums;
 

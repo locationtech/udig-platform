@@ -22,8 +22,8 @@ import net.refractions.udig.tools.edit.EditState;
 import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.commands.ClearEditBlackboardCommand;
 import net.refractions.udig.tools.edit.commands.DeselectEditGeomCommand;
-import net.refractions.udig.tools.edit.commands.DeselectionStrategy;
 import net.refractions.udig.tools.edit.commands.SelectionParameter;
+import net.refractions.udig.tools.edit.commands.DeselectionStrategy;
 import net.refractions.udig.tools.edit.commands.SetEditStateCommand;
 import net.refractions.udig.tools.edit.commands.StartEditingCommand;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
@@ -31,11 +31,12 @@ import net.refractions.udig.tools.edit.support.EditGeom;
 import net.refractions.udig.tools.edit.support.ShapeType;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.feature.FeatureIterator;
 
 /**
  * This is a Deselection strategy that will write out all the changes that occurred and then set the
  * EditState to {@link EditState#CREATING}
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -47,6 +48,14 @@ public class WriteModificationsStartEditingStrategy implements DeselectionStrate
         this.typeToCreate = typeToCreate;
     }
 
+    /**
+     * @deprecated Use {@link #run(IProgressMonitor,SelectionParameter,UndoableComposite)} instead
+     */
+    public void run( IProgressMonitor monitor, SelectionParameter parameters,
+            FeatureIterator reader, UndoableComposite commands ) {
+                run(monitor, parameters, commands);
+            }
+
     public void run( IProgressMonitor monitor, SelectionParameter parameters,
             UndoableComposite commands ) {
         EditToolHandler handler = parameters.handler;
@@ -55,7 +64,7 @@ public class WriteModificationsStartEditingStrategy implements DeselectionStrate
         if (!parameters.event.isModifierDown(MapMouseEvent.MOD1_DOWN_MASK)
                 && !parameters.event.isShiftDown() && parameters.permitClear) {
             writeModifiedFeaturesAndStartEditing(monitor, parameters, commands);
-            
+
             commands.addCommand(handler.getContext().getEditFactory()
                     .createNullEditFeatureCommand());
             commands.addCommand(new ClearEditBlackboardCommand(handler, editBlackboard));
@@ -85,7 +94,7 @@ public class WriteModificationsStartEditingStrategy implements DeselectionStrate
             commands.addCommand(new DeselectEditGeomCommand(handler, editBlackboard.getGeoms()));
         }
     }
-    
+
     private boolean hasDirtyGeom(EditToolHandler handler) {
         if (handler.getCurrentGeom() != null && handler.getCurrentGeom().isChanged())
             return true;

@@ -19,23 +19,24 @@ package net.refractions.udig.project.ui;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import net.refractions.udig.core.filter.AdaptingFilter;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IProjectElement;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Project;
 import net.refractions.udig.project.internal.ProjectElement;
+import net.refractions.udig.project.internal.commands.edit.DeleteManyFeaturesCommand;
+import net.refractions.udig.project.ui.internal.AdaptingFilter;
 import net.refractions.udig.project.ui.internal.actions.Rename;
 
 import org.eclipse.emf.common.ui.action.WorkbenchWindowActionDelegate;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 /**
  * Calls implemented operate method on the each element of selection
- * 
+ *
  * @see Rename
  * @author jeichar
  * @since 0.6.0
@@ -49,132 +50,55 @@ public abstract class UDIGGenericAction extends WorkbenchWindowActionDelegate {
      */
     public void run( IAction action ) {
 
-        if( selection.isEmpty() ){
-            return;
-        }
-        
         /*
          * TODO: Optimization for a set of objects in selection of the same nature. The goal: run an
          * operation once over all selected objects.
          */
         ArrayList<Layer> layers = new ArrayList<Layer>(selection.size());
-        
-        Object firstElem = selection.iterator().next();
-        Object stateData; 
-        if (firstElem instanceof Project) {
-            stateData = showErrorMessage(selection.size(), (Project) firstElem);
-        } else if (firstElem instanceof IProjectElement) {
-            stateData = showErrorMessage(selection.size(), (ProjectElement) firstElem);
-        } else if (firstElem instanceof Layer) {
-            stateData = showErrorMessage(selection.size(), (Layer) firstElem);
-        } else if (firstElem instanceof SimpleFeature) {
-            stateData = showErrorMessage(selection.size(), (SimpleFeature) firstElem);
-        }else if (firstElem instanceof AdaptingFilter) {
-            AdaptingFilter f = (AdaptingFilter) firstElem;
-            ILayer layer = (ILayer) f.getAdapter(ILayer.class);
-            stateData = showErrorMessage(selection.size(), layer,f);
-        }else{
-            stateData = null;
-        }
-        
+
         for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
             Object element = iter.next();
 
             if (element instanceof Project) {
-                operate((Project) element, stateData);
+                operate((Project) element);
             } else if (element instanceof IProjectElement) {
-                operate((ProjectElement) element, stateData);
+                operate((ProjectElement) element);
             } else if (element instanceof Layer) {
                 layers.add((Layer) element);
-            } else if (element instanceof SimpleFeature) {
-                operate((SimpleFeature) element, stateData);
-            }else if (element instanceof AdaptingFilter) {
+            } else if (element instanceof Feature) {
+                operate((Feature) element);
+            }
+            if (element instanceof AdaptingFilter) {
                 AdaptingFilter f = (AdaptingFilter) element;
                 ILayer layer = (ILayer) f.getAdapter(ILayer.class);
-                operate(layer,f, stateData);
+                layer.getMap().sendCommandASync(new DeleteManyFeaturesCommand(layer, f));
             }
 
         }
 
         if (!layers.isEmpty()) {
-            operate(layers.toArray(new Layer[layers.size()]), stateData);
+            operate(layers.toArray(new Layer[layers.size()]));
         }
 
         // layers = null;
     }
 
     /**
-     * Called before operation.  Default implementation does nothing
+     * Operates on a Feature. Default Implementation does nothing.
      *
-     * @param size number of items to operate on
-     * @param firstElement one sample object
-     * @return an object to pass to the corresponding operate method
+     * @param feature
      */
-    protected Object showErrorMessage( int size, Project firstElement ) {
-        //do nothing
-        return null;
-    }
-
-    /**
-     * Called before operation.  Default implementation does nothing
-     *
-     * @param size number of items to operate on
-     * @param firstElement one sample object
-     * @return an object to pass to the corresponding operate method
-     */
-    protected Object showErrorMessage( int size, Layer firstElement ) {
-        //do nothing
-        return null;
-    }
-
-    /**
-     * Called before operation.  Default implementation does nothing
-     *
-     * @param size number of items to operate on
-     * @param firstElement one sample object
-     * @return an object to pass to the corresponding operate method
-     */
-    protected Object showErrorMessage( int size, SimpleFeature firstElement ) {
-        //do nothing
-        return null;
-    }
-
-    /**
-     * Called before operation.  Default implementation does nothing
-     *
-     * @param size number of items to operate on
-     * @param firstElement one sample object
-     * @return an object to pass to the corresponding operate method
-     */
-    protected Object showErrorMessage( int size, ProjectElement firstElement ) {
-        //do nothing
-        return null;
-    }
-
-    /**
-     * Called before operation.  Default implementation does nothing
-     *
-     * @param size number of items to operate on
-     * @param firstElement one sample object
-     */
-    protected Object showErrorMessage( int size, ILayer layer, AdaptingFilter firstElement ) {
-        //do nothing
-        return null;
-    }
-
-    /**
-     * Operates on a filter and associated layer. Default Implementation does nothing.
-     */
-    protected void operate( ILayer layer, AdaptingFilter filter, Object context) {
+    protected void operate( Feature feature ) {
         // do nothing
     }
 
     /**
-     * Operates on a SimpleFeature. Default Implementation does nothing.
-     * 
-     * @param feature
+     * Operates on a layer. Default Implementation does nothing.
+     *
+     * @param layer
+     * @deprecated
      */
-    protected void operate( SimpleFeature feature, Object context ) {
+    protected void operate( Layer layer ) {
         // do nothing
     }
 
@@ -182,28 +106,28 @@ public abstract class UDIGGenericAction extends WorkbenchWindowActionDelegate {
      * Operates on an array of layers.
      * <p>
      * Default Implementation does nothing.
-     * 
+     *
      * @param layers
      */
-    protected void operate( Layer[] layers, Object context ) {
+    protected void operate( Layer[] layers ) {
         // do nothing
     }
 
     /**
      * Operates on a IProjectElement. Default Implementation does nothing.
-     * 
+     *
      * @param element
      */
-    protected void operate( ProjectElement element, Object context ) {
+    protected void operate( ProjectElement element ) {
         // do nothing
     }
 
     /**
      * Operates on a Project. Default Implementation does nothing.
-     * 
+     *
      * @param project
      */
-    protected void operate( Project project, Object context ) {
+    protected void operate( Project project ) {
         // do nothing
     }
 

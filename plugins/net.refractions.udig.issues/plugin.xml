@@ -68,7 +68,7 @@
             <and>
                <adaptsTo target="net.refractions.udig.project.ILayer"/>
                <or>
-                  <adaptsTo target="org.opengis.feature.Feature"/>
+                  <adaptsTo target="org.geotools.feature.Feature"/>
                   <adaptsTo target="org.geotools.filter.Filter"/>
                </or>
             </and>

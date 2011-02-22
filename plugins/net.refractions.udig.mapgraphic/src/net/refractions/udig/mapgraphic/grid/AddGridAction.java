@@ -33,7 +33,7 @@ public class AddGridAction extends AbstractToggleMapGraphicAction implements IWo
     protected String getExtensionID() {
         return "grid"; //$NON-NLS-1$
     }
-    
+
     public void init( IWorkbenchWindow window ) {
     }
 

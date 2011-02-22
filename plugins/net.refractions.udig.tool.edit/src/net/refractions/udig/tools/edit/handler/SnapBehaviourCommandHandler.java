@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.Display;
 /**
  * Cycles through the different types of snap behaviour.  The preference is set and the new state is displayed
  * in a little pop-up.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -80,22 +80,22 @@ public class SnapBehaviourCommandHandler extends AbstractHandler implements IHan
 
     private void displayNewStatus( SnapBehaviour snapBehaviour ) {
         Display display = Display.getCurrent();
-        
+
         String message = null;
         switch( snapBehaviour ) {
-        case OFF:            
+        case OFF:
             message=Messages.SnapBehaviourCommandHandler_off;
             break;
-        case SELECTED:            
+        case SELECTED:
             message=Messages.SnapBehaviourCommandHandler_selected;
             break;
-        case CURRENT_LAYER:            
+        case CURRENT_LAYER:
             message=Messages.SnapBehaviourCommandHandler_current;
             break;
-        case ALL_LAYERS:            
+        case ALL_LAYERS:
             message=Messages.SnapBehaviourCommandHandler_all;
             break;
-        case GRID:            
+        case GRID:
             message=Messages.SnapBehaviourCommandHandler_grid;
             break;
 

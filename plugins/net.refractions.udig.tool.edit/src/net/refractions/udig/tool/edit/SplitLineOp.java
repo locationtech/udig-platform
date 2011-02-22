@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * Splits a line at the selected points.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -44,19 +44,19 @@ public class SplitLineOp implements IOp {
 
     public void op( Display display, Object target, IProgressMonitor monitor ) throws Exception {
         Point[] points=(Point[]) target;
-        
+
         IMap map = ApplicationGIS.getActiveMap();
-        
-        EditBlackboard editBlackboard = EditBlackboardUtil.getEditBlackboard(ApplicationGIS.createContext(map), 
+
+        EditBlackboard editBlackboard = EditBlackboardUtil.getEditBlackboard(ApplicationGIS.createContext(map),
                 map.getEditManager().getSelectedLayer());
-        
+
         ShapeProvider shapeProvider=new ShapeProvider(map);
-        
-         map.sendCommandASync(new SplitLineCommand(editBlackboard, shapeProvider, 
-                 new EditFeatureProvider(map), new EditLayerProvider(map), 
+
+         map.sendCommandASync(new SplitLineCommand(editBlackboard, shapeProvider,
+                 new EditFeatureProvider(map), new EditLayerProvider(map),
                  new HashSet<Point>(Arrays.asList(points))));
     }
-    
+
     static class ShapeProvider implements IBlockingProvider<PrimitiveShape>{
 
         private IMap map;
@@ -64,7 +64,7 @@ public class SplitLineOp implements IOp {
         ShapeProvider(IMap map2){
             this.map=map2;
         }
-        
+
         public PrimitiveShape get( IProgressMonitor monitor, Object... params ) throws IOException {
             monitor.beginTask("", 1); //$NON-NLS-1$
             try{
@@ -73,7 +73,7 @@ public class SplitLineOp implements IOp {
                 monitor.done();
             }
         }
-        
+
     }
 
 }

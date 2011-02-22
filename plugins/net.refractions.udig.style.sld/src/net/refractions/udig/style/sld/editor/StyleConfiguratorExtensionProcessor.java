@@ -10,9 +10,9 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 
 /**
- * Processes the net.refractions.udig.style.sld.SimpleStyleConfigurator extension points and adds the 
+ * Processes the net.refractions.udig.style.sld.SimpleStyleConfigurator extension points and adds the
  * ones that work for the layer to the manager.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -25,7 +25,7 @@ final class StyleConfiguratorExtensionProcessor implements ExtensionPointProcess
     }
     public void process( IExtension extension, IConfigurationElement element ) throws Exception {
         EditorNode node = null;
-            
+
         String id = element.getAttribute(OpenStyleEditorAction.ATT_ID);
         String label = element.getAttribute(OpenStyleEditorAction.ATT_LABEL);
         String requires = element.getAttribute(OpenStyleEditorAction.ATT_REQUIRES);
@@ -47,7 +47,7 @@ final class StyleConfiguratorExtensionProcessor implements ExtensionPointProcess
             SLDPlugin.trace("Duplicate id found -- skipping '" + id + "' with label '" + label + "'", null); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             return;
         }
-        
+
         node = new EditorNode(id, element);
 
         if (node == null) {
@@ -58,7 +58,7 @@ final class StyleConfiguratorExtensionProcessor implements ExtensionPointProcess
         if (requires != null && !EditorPageManager.meetsRequirement(selectedLayer, id, element, node) ) {
             return;
         }
-        
+
         manager[0].registerNode(node);
         String category = node.getCategory();
         if (category == null) {

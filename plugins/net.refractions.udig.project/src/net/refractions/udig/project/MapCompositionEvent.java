@@ -18,7 +18,7 @@ import net.refractions.udig.project.MapEvent.MapEventType;
 
 /**
  * Event encapsulating information about the changes of the composition of a map.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -30,7 +30,7 @@ public class MapCompositionEvent extends UDIGEvent{
          */
         REMOVED,
         /**
-         * Indicates that more than one layer was removed.  The oldValue will be the layers removed, 
+         * Indicates that more than one layer was removed.  The oldValue will be the layers removed,
          * newValue will be an array of indices of the layers removed and layer will be null.
          */
         MANY_REMOVED,
@@ -40,24 +40,24 @@ public class MapCompositionEvent extends UDIGEvent{
          */
         ADDED,
         /**
-         * Indicates that more than one layer was added.  The oldValue will be null, newValue will be 
+         * Indicates that more than one layer was added.  The oldValue will be null, newValue will be
          * a list of new layers and layer will be null.
          */
         MANY_ADDED,
         /**
-         * Indicates that a layer was moved in the list of layers.  OldValue will be the old position, 
+         * Indicates that a layer was moved in the list of layers.  OldValue will be the old position,
          * newValue will be the new position and layer will be the layer moved.
          * Layer will be null.
          */
         REORDERED
     }
-    
+
     private final EventType type;
     private final ILayer layer;
 
     /**
      * Construct <code>EditManagerEvent</code>.
-     * 
+     *
      * @param source the object that raised the event.
      * @param type the type of event this object represents.
      * @param newValue the new value, if this applies.
@@ -71,7 +71,7 @@ public class MapCompositionEvent extends UDIGEvent{
 
     /**
      * Gets the type of the event.
-     * 
+     *
      * @return the type of the event.
      * @see MapEventType
      */
@@ -85,8 +85,8 @@ public class MapCompositionEvent extends UDIGEvent{
      */
     public ILayer getLayer() {
         return layer;
-    }    
-    
+    }
+
     @Override
     public String toString() {
         return getSource().getName()+" eventType="+type+" old="+oldValue+" new="+newValue;   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$

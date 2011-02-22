@@ -18,7 +18,7 @@ import net.refractions.udig.project.interceptor.MapInterceptor;
 
 /**
  * Prints out the maps name and that the map was created.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

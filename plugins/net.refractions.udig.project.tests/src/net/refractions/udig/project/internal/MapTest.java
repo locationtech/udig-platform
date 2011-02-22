@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * Test Map.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -37,7 +37,7 @@ public class MapTest extends TestCase {
         map=MapTests.createDefaultMap("FTName", 4, true, new Dimension(500,500)); //$NON-NLS-1$
     }
 
-    
+
     public void testEcoreCopy() throws Exception {
         EcoreUtil.copy(map);
         // just making sure no exceptions occur

@@ -39,8 +39,8 @@ import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.filter.spatial.Intersects;
+import org.geotools.feature.Feature;
+import org.geotools.filter.FilterType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
@@ -59,7 +59,7 @@ public class RemoveVertexTool extends AbstractEditTool {
 
     @Override
     protected void initActivators( Set<Activator> activators ) {
-        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultEditActivators(DrawGeomsActivator.DrawType.POLYGON);
+        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultActivators(DrawGeomsActivator.DrawType.POLYGON);
         activators.addAll(defaults);
    }
 
@@ -70,33 +70,33 @@ public class RemoveVertexTool extends AbstractEditTool {
         mutualExclusive.getBehaviours().add( new AcceptChangesBehaviour(Polygon.class, false){
             @Override
             public boolean isValid( EditToolHandler handler ) {
-                SimpleFeature feature = handler.getContext().getEditManager().getEditFeature();
+                Feature feature = handler.getContext().getEditManager().getEditFeature();
                 if( feature==null )
                     return false;
-                Class< ? extends Geometry> class1 = ((Geometry)feature.getDefaultGeometry()).getClass();
-                return super.isValid(handler) && feature!=null && 
+                Class< ? extends Geometry> class1 = feature.getDefaultGeometry().getClass();
+                return super.isValid(handler) && feature!=null &&
                     (class1==Polygon.class || class1==MultiPolygon.class);
             }
         });
         mutualExclusive.getBehaviours().add( new AcceptChangesBehaviour(LineString.class, false){
             @Override
             public boolean isValid( EditToolHandler handler ) {
-                SimpleFeature feature = handler.getContext().getEditManager().getEditFeature();
+                Feature feature = handler.getContext().getEditManager().getEditFeature();
                 if( feature==null )
                     return false;
-                Class< ? extends Geometry> class1 = ((Geometry)feature.getDefaultGeometry()).getClass();
-                return super.isValid(handler) && feature!=null && 
+                Class< ? extends Geometry> class1 = feature.getDefaultGeometry().getClass();
+                return super.isValid(handler) && feature!=null &&
                     (class1==LineString.class || class1==MultiLineString.class);
             }
         });
         mutualExclusive.getBehaviours().add( new AcceptChangesBehaviour(Point.class, false){
             @Override
             public boolean isValid( EditToolHandler handler ) {
-                SimpleFeature feature = handler.getContext().getEditManager().getEditFeature();
+                Feature feature = handler.getContext().getEditManager().getEditFeature();
                 if( feature==null )
                     return false;
-                Class< ? extends Geometry> class1 = ((Geometry)feature.getDefaultGeometry()).getClass();
-                return super.isValid(handler) && feature!=null && 
+                Class< ? extends Geometry> class1 = feature.getDefaultGeometry().getClass();
+                return super.isValid(handler) && feature!=null &&
                     (class1==Point.class || class1==MultiPoint.class);
             }
         });
@@ -120,10 +120,10 @@ public class RemoveVertexTool extends AbstractEditTool {
                 }, null));
 //      vertex selection OR geometry selection should not both happen so make them a mutual exclusion behaviour
         helper.startMutualExclusiveList();
-        helper.add(new SelectFeatureBehaviour(new Class[]{Geometry.class}, Intersects.class));
+        helper.add(new SelectFeatureBehaviour(new Class[]{Geometry.class}, FilterType.GEOMETRY_INTERSECTS));
         helper.add(new RemoveVertexBehaviour());
         helper.stopMutualExclusiveList();
-        
+
         helper.add( new AcceptOnDoubleClickBehaviour() );
         helper.done();
     }

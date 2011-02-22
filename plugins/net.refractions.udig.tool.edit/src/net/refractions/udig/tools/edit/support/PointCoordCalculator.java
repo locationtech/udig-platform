@@ -24,7 +24,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * Transforms between points and coordinates
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -63,7 +63,7 @@ public class PointCoordCalculator {
         double y;
         x = point.getX() + .5;
         y = point.getY() + .5;
-        
+
         double[] src = new double[]{x, y};
         double[] dest = new double[2];
 
@@ -83,7 +83,7 @@ public class PointCoordCalculator {
 
     /**
      * Transforms a Coordinate into the point location it would occupy on the screen.
-     * 
+     *
      * @param coord coordinate object
      * @return point coordinate would occupy on the screen.
      */

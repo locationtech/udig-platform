@@ -29,21 +29,21 @@ import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.geotiff.internal.Messages;
 import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource;
 import net.refractions.udig.catalog.rasterings.AbstractRasterService;
-import net.refractions.udig.catalog.rasterings.AbstractRasterServiceInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
-import org.geotools.coverage.grid.io.GridFormatFactorySpi;
+import org.geotools.data.coverage.grid.GridFormatFactorySpi;
 import org.geotools.gce.geotiff.GeoTiffFormat;
+import org.opengis.coverage.grid.GridCoverageReader;
 
 /**
- * Provides a handle to a geotiff service allowing the service to be lazily 
+ * Provides a handle to a geotiff service allowing the service to be lazily
  * loaded.
  * @author mleslie
  * @since 0.6.0
  */
 public class GeoTiffServiceImpl extends AbstractRasterService {
+    private GeoTiffServiceInfo info;
+
     /**
      * Construct <code>GeoTiffServiceImpl</code>.
      *
@@ -51,31 +51,31 @@ public class GeoTiffServiceImpl extends AbstractRasterService {
      * @param factory
      */
     public GeoTiffServiceImpl(URL id, GridFormatFactorySpi factory) {
-        super(id, GeoTiffServiceExtension.TYPE, factory);
+        super(id, factory);
     }
 
     @Override
-    public synchronized  List<AbstractRasterGeoResource> resources( IProgressMonitor monitor ) 
+    public List<AbstractRasterGeoResource> resources( IProgressMonitor monitor )
             throws IOException {
-         if(monitor != null) {
+        if(monitor != null) {
             String msg = MessageFormat.format(
-                    Messages.GeoTiffServiceImpl_connecting_to, 
+                    Messages.GeoTiffServiceImpl_connecting_to,
                     new Object[] {});
             monitor.beginTask(msg, 5);
         }
         if(reader != null && monitor != null)
             monitor.worked(3);
-        
+
         GeoTiffGeoResourceImpl res = new GeoTiffGeoResourceImpl(
-                this, getHandle());
-        List<AbstractRasterGeoResource> list = 
+                this, getTitle());
+        List<AbstractRasterGeoResource> list =
             new ArrayList<AbstractRasterGeoResource>();
         list.add(res);
         if(monitor != null)
             monitor.done();
         return list;
-    } 
-    
+    }
+
     @Override
     public Map<String, Serializable> getConnectionParams() {
         return new GeoTiffServiceExtension().createParams(getIdentifier());
@@ -84,12 +84,11 @@ public class GeoTiffServiceImpl extends AbstractRasterService {
     public void dispose( IProgressMonitor monitor ) {
         // do nothing
     }
-    public synchronized AbstractGridCoverage2DReader getReader() {
+    public GridCoverageReader getReader() {
         if(this.reader == null) {
             try {
                 File file = new File(getIdentifier().toURI());
-                GeoTiffFormat geoTiffFormat = (GeoTiffFormat)getFormat();
-				this.reader = (AbstractGridCoverage2DReader) geoTiffFormat.getReader(file);
+                this.reader = ((GeoTiffFormat)getFormat()).getReader(file);
             } catch(Exception ex) {
                 this.message = ex;
             }
@@ -97,15 +96,37 @@ public class GeoTiffServiceImpl extends AbstractRasterService {
         return this.reader;
     }
 
-    protected synchronized AbstractRasterServiceInfo createInfo(IProgressMonitor monitor) {
-         if(monitor == null) monitor = new NullProgressMonitor();
-         try {
-             monitor.beginTask(Messages.GeoTiffServiceImpl_loading_task_title, 2); 
-             monitor.worked(1);
-             return new AbstractRasterServiceInfo(this, "geotiff", "tiff", "tif");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
-         }
-         finally {
-             monitor.done();
-         }
+    public IServiceInfo getInfo(IProgressMonitor monitor) {
+         if(monitor != null)
+            monitor.beginTask(Messages.GeoTiffServiceImpl_loading_task_title, 2);
+        if(this.info == null) {
+            if(monitor != null)
+                monitor.worked(1);
+            this.info = new GeoTiffServiceInfo();
+        }
+        if(monitor != null)
+            monitor.done();
+        return this.info;
+    }
+    /**
+     * Provides descriptive information about this service.
+     * @author mleslie
+     * @since 0.6.0
+     */
+    public class GeoTiffServiceInfo extends IServiceInfo {
+        GeoTiffServiceInfo() {
+            super();
+            this.keywords = new String[] {
+                    "WorldImage", "world image", ".gif", ".jpg", ".jpeg",   //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$//$NON-NLS-4$ //$NON-NLS-5$
+                    ".tif", ".tiff", ".png"};   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+        }
+
+        public String getTitle() {
+            return getIdentifier().getFile();
+        }
+
+        public String getDescription() {
+            return getIdentifier().toString();
+        }
     }
 }

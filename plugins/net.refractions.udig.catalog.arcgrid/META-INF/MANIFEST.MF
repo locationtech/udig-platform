@@ -1,12 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ArcGrid Plug-in
+Bundle-Name: Arcgrid Plug-in
 Bundle-SymbolicName: net.refractions.udig.catalog.arcgrid;singleton:=true
-Bundle-Version: 1.2.0.qualifier
-Bundle-Vendor: udig.refractions.net
-Require-Bundle: net.refractions.udig.catalog,
- net.refractions.udig.catalog.rasterings,
+Bundle-Version: 1.1.2
+Bundle-Activator: net.refractions.udig.catalog.arcgrid.ArcGridActivator
+Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.ui,
-  net.refractions.udig.libs
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+ net.refractions.udig.catalog.ui,
+ net.refractions.udig.catalog.rasterings
+Eclipse-LazyStart: true

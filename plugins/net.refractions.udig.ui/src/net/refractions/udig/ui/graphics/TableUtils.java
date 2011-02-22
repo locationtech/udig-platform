@@ -22,9 +22,9 @@ import org.eclipse.swt.widgets.TreeColumn;
 /**
  * Utility class for dealing with the resizing of table columns.
  * <p>
- * 
+ *
  * </p>
- * 
+ *
  * @author chorner
  * @since 1.0.1
  */
@@ -58,11 +58,11 @@ public class TableUtils {
 	 * automatic column sizing works well under Linux , it
 	 * does not work well under Windows and Mac OSX and hence this method is needed (in
 	 * particular, an empty column on the right appears under Win).
-	 * 
+	 *
 	 * @param table
 	 * @param settings
 	 *            the configured settings for the table (column min, max, etc)
-	 * @param mode one of {@link #MODE_AUTO}, {@link #MODE_LAZY} , {@link #MODE_JUMP} 
+	 * @param mode one of {@link #MODE_AUTO}, {@link #MODE_LAZY} , {@link #MODE_JUMP}
 	 */
 	public static void resizeColumns(Table table, TableSettings settings,
 			int mode) {
@@ -207,7 +207,7 @@ public class TableUtils {
         treeTable.setRedraw(true);
     }
 
-    
+
 	// FIXME: Implement the listener, if we need it
 	// public static void createListener(Table table) {
 	// table.addControlListener(new ColumnResizeListener());

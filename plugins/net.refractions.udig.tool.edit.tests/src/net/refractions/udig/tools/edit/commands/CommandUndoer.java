@@ -29,7 +29,7 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 public class CommandUndoer implements IRunnableWithProgress {
 
     UndoableCommand command;
-    
+
     public CommandUndoer( UndoableCommand command ) {
         super();
         this.command = command;

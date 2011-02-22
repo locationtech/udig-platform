@@ -30,12 +30,10 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.filter.FilterFactoryFinder;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.SLD;
 import org.geotools.styling.StyleBuilder;
-import org.opengis.filter.expression.Expression;
 
 /**
  * Allows editing/viewing of a Style Layer Descriptor "Raster".
@@ -61,25 +59,25 @@ import org.opengis.filter.expression.Expression;
  * <li>fire( SelectionSevent ) - notify SimpleStyleConfigurator of change
  * <li>get( StyleBuilder ) - construct based on fields
  * </ul>
- * </p>  
+ * </p>
  * @author mleslie
  * @since 1.0.0
  */
 public class RasterViewer {
     boolean enabled = false;
     double opacity = Double.NaN;
-    
+
     Button on;
     Combo percent;
-    private SelectionListener listener; 
+    private SelectionListener listener;
 
-    
+
     private class Listener implements SelectionListener,ModifyListener {
-        public void widgetSelected( SelectionEvent e ) { sync( e ); };            
+        public void widgetSelected( SelectionEvent e ) { sync( e ); };
         public void widgetDefaultSelected( SelectionEvent e ) { sync( e ); };
         public void modifyText( ModifyEvent e ) {
             sync(AbstractSimpleConfigurator.selectionEvent(e));
-        };           
+        };
         private void sync(SelectionEvent e){
             try {
                 RasterViewer.this.enabled = RasterViewer.this.on.getSelection();
@@ -94,7 +92,7 @@ public class RasterViewer {
                         if(RasterViewer.this.opacity > 1) {
                             RasterViewer.this.opacity /= 100.0;
                         }
-                    }                        
+                    }
                 } catch (NumberFormatException nan ){
                     // well lets just leave opacity alone
                 }
@@ -103,34 +101,34 @@ public class RasterViewer {
             catch( Throwable t ){
                 // meh
             }
-            finally {                    
+            finally {
                 RasterViewer.this.percent.setEnabled(RasterViewer.this.enabled);
             }
         }
-        
+
     };
     Listener sync = new Listener();
-    
+
     /**
      * TODO summary sentence for createControl ...
-     * 
+     *
      * @param parent
-     * @param listener1 
+     * @param listener1
      * @return Generated composite
      */
     public Composite createControl( Composite parent, KeyListener listener1 ){
         Composite part = AbstractSimpleConfigurator.subpart( parent, Messages.SimpleStyleConfigurator_raster_label );
-        
+
         this.on = new Button( part, SWT.CHECK );
-        
+
         this.percent = new Combo( part, SWT.DROP_DOWN );
         this.percent.setItems( new String[]{ "0%","25%","50%","75%","100%"} );    //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$//$NON-NLS-5$
         this.percent.setTextLimit( 4 );
         this.percent.addKeyListener(listener1);
-        this.percent.setToolTipText(Messages.RasterViewer_percent_tooltip); 
+        this.percent.setToolTipText(Messages.RasterViewer_percent_tooltip);
         return part;
     }
-    
+
     void listen( boolean listen ){
         if( listen ){
             this.on.addSelectionListener(this.sync);
@@ -143,10 +141,10 @@ public class RasterViewer {
             this.percent.removeModifyListener( this.sync );
         }
     }
-    
+
     /**
      * Accepts a listener that will be notified when content changes.
-     * @param listener1 
+     * @param listener1
      */
     public void addListener( SelectionListener listener1 ) {
         this.listener = listener1;
@@ -154,16 +152,16 @@ public class RasterViewer {
 
     /**
      * Remove listener.
-     * @param listener1 
+     * @param listener1
      */
     public void removeListener( SelectionListener listener1 ) {
         if (this.listener == listener1)
             this.listener = null;
     }
-    
+
     /**
      * TODO summary sentence for fire ...
-     * 
+     *
      * @param event
      */
     protected void fire( SelectionEvent event ) {
@@ -171,21 +169,21 @@ public class RasterViewer {
             return;
         this.listener.widgetSelected(event);
     }
-    
-    /** 
-     * Called to set up this "viewer" based on the provided symbolizer 
-     * @param sym 
+
+    /**
+     * Called to set up this "viewer" based on the provided symbolizer
+     * @param sym
      */
     public void set( RasterSymbolizer sym2 ){
         listen( false ); // don't sync when setting up
         try {
             RasterSymbolizer sym=sym2;
             this.enabled = (sym != null);
-            
+
             if( sym==null ){
                 StyleBuilder builder=new StyleBuilder();
                 sym=builder.createRasterSymbolizer();
-                sym.setOpacity((Expression) CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints()).literal(1.0));
+                sym.setOpacity(FilterFactoryFinder.createFilterFactory().createLiteralExpression(1.0));
             }
             this.opacity = SLD.rasterOpacity(sym);
             String text = MessageFormat.format( "{0,number,#0%}", this.opacity); //$NON-NLS-1$
@@ -198,15 +196,15 @@ public class RasterViewer {
             listen( true ); // listen to user now
         }
     }
-    
+
     /**
      * TODO summary sentence for getStroke ...
-     * @param build 
-     * 
+     * @param build
+     *
      * @return Stroke defined by this model
      */
     public RasterSymbolizer get(StyleBuilder build) {
-        return (opacity == Double.NaN || !enabled) ? null : 
+        return (opacity == Double.NaN || !enabled) ? null :
                 build.createRasterSymbolizer(null, this.opacity);
     }
 }

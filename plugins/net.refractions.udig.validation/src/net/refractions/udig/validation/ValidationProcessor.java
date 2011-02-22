@@ -18,6 +18,7 @@ import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,12 +31,11 @@ import net.refractions.udig.project.ILayer;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.PlatformUI;
+import org.geotools.data.FeatureReader;
 import org.geotools.data.FeatureSource;
-import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
-import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.feature.FeatureType;
 import org.geotools.validation.FeatureValidation;
 import org.geotools.validation.IntegrityValidation;
 import org.geotools.validation.PlugIn;
@@ -47,40 +47,39 @@ import org.geotools.validation.dto.TestDTO;
 import org.geotools.validation.dto.TestSuiteDTO;
 import org.geotools.validation.xml.ValidationException;
 import org.geotools.validation.xml.XMLReader;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.Name;
+
+import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Subclass for the geotools ValidationProcessor, with added methods which allow
  * for tree navigation, etc. For the most part, this adds more baggage to the
  * class so the Validation Dialog can get information out of it.
  * <p>
- * 
+ *
  * </p>
- * 
+ *
  * @author chorner
  * @since 1.0.1
  * @see org.geotools.validation.ValidationProcessor
  */
 public class ValidationProcessor extends org.geotools.validation.ValidationProcessor {
 	final Object ANYTYPENAME = new Object(); //copy of the ANYTYPENAME object
-	
+
 	private Map<String, PlugInDTO> pluginDTOs;
 	private Map<String, TestSuiteDTO> testSuiteDTOs;
-	
+
 	private Map<String, ArgumentDTO> allArgs;
-	
+
 	/**
 	 * Constructor for the udig ValidationProcessor subclass. The plugins
 	 * parameter is required, but the testSuites var may be a null File object
 	 * (a blank testSuite will be created).
-	 * 
+	 *
 	 * @param pluginsDir
 	 *            (directory containing pluginSchema xml files)
 	 * @param testSuites
 	 *            (testSuite file or a directory)
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public ValidationProcessor(File pluginsDir, File testSuiteFile) throws Exception {
 		super();
@@ -111,11 +110,11 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
         //load the ValidationProcessor
         load(pluginDTOs, testSuiteDTOs);
 	}
-	
+
 	/**
 	 * Adds a testDTO validation to the testSuiteDTO, and calls addValidation
 	 * from the superclass.
-	 * 
+	 *
 	 * @param validation
 	 *            FeatureValidation object
 	 * @param testSuiteDTOKey
@@ -172,7 +171,7 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
         tests.put(newKey, test);
         return true;
     }
-    
+
 	/**
 	 * Removes a validation from its testSuiteDTO and from the FV/IV Lookups
 	 *
@@ -214,7 +213,7 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 			}
 		}
 		//remove from all testSuites
-		Map oldTests; 
+		Map oldTests;
 		Map newTests; // = new HashMap();
 		//for each testSuite
 		for (Iterator i = testSuiteDTOs.keySet().iterator(); i.hasNext();) {
@@ -232,8 +231,8 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 			testSuite.setTests(newTests); //save the modified map of tests in the testSuite
 		}
 	}
-	
-	
+
+
     /**
      * Runs a single feature validation test
      *
@@ -282,19 +281,19 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 					for (int j = 0; j < layers.length; j++) {
 						ILayer thisLayer = layers[j];
 						relevantLayers.add(thisLayer);
-					}						
+					}
 					break;
 				}
 				//find the layer that matches the typeRef
 				for (int j = 0; j < layers.length; j++) {
 					ILayer thisLayer = layers[j];
 					//make the typeRef
-					SimpleFeatureType schema = thisLayer.getSchema();
+					FeatureType schema = thisLayer.getSchema();
 					if(schema == null)
 						continue;
-					
-					String dataStoreID = schema.getName().getNamespaceURI();
-					String thisTypeRef = dataStoreID+":"+schema.getName().getLocalPart(); //$NON-NLS-1$
+
+					String dataStoreID = schema.getNamespace().toString();
+					String thisTypeRef = dataStoreID+":"+schema.getTypeName(); //$NON-NLS-1$
 					//if the typeRefs match, add the layer to our set
 					if (thisTypeRef.equals(typeRef)) {
 						relevantLayers.add(thisLayer);
@@ -302,23 +301,23 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 					}
 				}
 			}
-			
+
 			//for each relevant layer
 			for (Iterator k = relevantLayers.iterator(); k.hasNext();) {
-                ILayer thisLayer = (ILayer) k.next(); 
-				//get the SimpleFeatureType
-				SimpleFeatureType type = thisLayer.getSchema();
+                ILayer thisLayer = (ILayer) k.next();
+				//get the FeatureType
+				FeatureType type = thisLayer.getSchema();
 				//create a FeatureReader (collection.reader)
-				FeatureSource<SimpleFeatureType, SimpleFeature> source;
+				FeatureSource source;
 				source = thisLayer.getResource(FeatureSource.class, monitor);
-                FeatureCollection<SimpleFeatureType, SimpleFeature> collection = source.getFeatures();
+                FeatureCollection collection = source.getFeatures();
                 //hmm... pretty pictures or efficiency?
-                int count = collection.size();
+                int count = collection.getCount();
                 monitor.beginTask("", count); //$NON-NLS-1$
-                FeatureIterator<SimpleFeature> reader = collection.features();
+                FeatureReader reader = collection.reader();
                 // iterate through each feature and run	the test on it
 		        int position = 0;
-                while (reader.hasNext()) 
+                while (reader.hasNext())
 	        	{
                     //check for the cancel button
                     if (monitor.isCanceled()) {
@@ -327,7 +326,7 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
                     }
                     //validate this feature
                     monitor.subTask(++position + "/" + count); //$NON-NLS-1$
-                    SimpleFeature feature = (SimpleFeature) reader.next();
+                    Feature feature = (Feature) reader.next();
 					try {
 						validator.validate(feature, type, results);
 					} catch (Throwable e) {
@@ -369,30 +368,30 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 		if (validator != null) // if we found the test
 		{
 			results.setValidation(validator);
-	        ReferencedEnvelope envelope = layers[0].getMap().getViewportModel().getBounds();
-	         FeatureSource<SimpleFeatureType, SimpleFeature> source;
-	        String nameSpace;
+	        Envelope envelope = layers[0].getMap().getViewportModel().getBounds();
+	        FeatureSource source;
+	        URI nameSpace;
 	        String typeName;
-	        Map<String,FeatureSource<SimpleFeatureType, SimpleFeature>> stores = new HashMap<String,FeatureSource<SimpleFeatureType, SimpleFeature>>();
+	        Map<String,FeatureSource> stores = new HashMap<String,FeatureSource>();
 	        for (int i = 0; i < layers.length; i++) {
-	            nameSpace = layers[i].getSchema().getName().getNamespaceURI();
-	            typeName = layers[i].getSchema().getName().getLocalPart();
+	            nameSpace = layers[i].getSchema().getNamespace();
+	            typeName = layers[i].getSchema().getTypeName();
 	            source = layers[i].getResource(FeatureSource.class, monitor);
 	            String typeRef = nameSpace.toString()+":"+typeName; //$NON-NLS-1$
-	            stores.put(typeRef, source); 
+	            stores.put(typeRef, source);
 	        }
 			// run the test
 			validator.validate(stores, envelope, results);
 		}
 	}
 
-	
+
 	/**
 	 * Runs all feature tests by iterating through the list of layers, and
 	 * calling runFeatureTests() on each layer.
-	 * 
+	 *
 	 * @see org.geotools.validation.ValidationProcessor runFeatureTests()
-	 * 
+	 *
 	 * @param layers
 	 * @param results
 	 * @param monitor
@@ -404,25 +403,28 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 		//for each layer
 		for (int i = 0; i < layers.length; i++) {
 			ILayer thisLayer = layers[i];
-		
+
 			//get the dataStoreID
-			String dataStoreID = thisLayer.getSchema().getName().getNamespaceURI();
-		
+			String dataStoreID = thisLayer.getSchema().getNamespace().toString();
+
+			//get the FeatureType
+			FeatureType type = thisLayer.getSchema();
+
 			//create a FeatureReader (collection.reader)
-			SimpleFeatureSource source;
-			source = thisLayer.getResource(SimpleFeatureSource.class, monitor);
-	        SimpleFeatureCollection collection = source.getFeatures();
-		
+			FeatureSource source;
+			source = thisLayer.getResource(FeatureSource.class, monitor);
+	        FeatureCollection collection = source.getFeatures();
+
 			//run the tests on this layer
-			runFeatureTests(dataStoreID, collection, results);
+			runFeatureTests(dataStoreID, type, collection.reader(), results);
 		}
     }
 
     /**
 	 * Runs all integrity tests (prepares and calls runIntegrityTests)
-	 * 
+	 *
 	 * @see org.geotools.validation.ValidationProcessor runIntegrityTests()
-	 * 
+	 *
 	 * @param layers
 	 * @param results
 	 * @param monitor
@@ -430,33 +432,32 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 	 */
 	public void runAllIntegrityTests(ILayer[] layers, ValidationResults results, IProgressMonitor monitor)
             throws Exception {
-		
+
 		//FIXME: take Map as input rather than layer(s)?
-        ReferencedEnvelope envelope = layers[0].getMap().getViewportModel().getBounds();
-         FeatureSource<SimpleFeatureType, SimpleFeature> source;
-        String nameSpace;
+        Envelope envelope = layers[0].getMap().getViewportModel().getBounds();
+        FeatureSource source;
+        URI nameSpace;
         String typeName;
-        Map<Name, FeatureSource<SimpleFeatureType, SimpleFeature>> stores = new HashMap<Name, FeatureSource<SimpleFeatureType, SimpleFeature>>();
-        Set<Name> typeRefs = new HashSet<Name>();
+        Map<String, FeatureSource> stores = new HashMap<String, FeatureSource>();
+        Set<String> typeRefs = new HashSet<String>();
         for (int i = 0; i < layers.length; i++) {
-            Name name = layers[i].getSchema().getName();
-            nameSpace = name.getNamespaceURI();
-            typeName = name.getLocalPart();
+            nameSpace = layers[i].getSchema().getNamespace();
+            typeName = layers[i].getSchema().getTypeName();
             source = layers[i].getResource(FeatureSource.class, monitor);
             //map = dataStoreID:typeName
             String typeRef = nameSpace.toString()+":"+typeName; //$NON-NLS-1$
-            stores.put(name, source); 
-            typeRefs.add(name);
+            stores.put(typeRef, source);
+            typeRefs.add(typeRef);
         }
-        
+
 		//run the tests
 		runIntegrityTests(typeRefs, stores, envelope, results);
     }
 
-	
+
 	/**
 	 * Creates a new validation test of the correct type when passed the plugInDTO.
-	 * 
+	 *
 	 * @param plugin
 	 * @return
 	 * @throws ValidationException
@@ -483,8 +484,8 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 		Map allArgs = plugIn.getPropertyMap();
 		for (Iterator i = allArgs.keySet().iterator(); i.hasNext();) {
 			Object thisArg = allArgs.get(i.next());
-			
-			if (thisArg instanceof PropertyDescriptor) { 
+
+			if (thisArg instanceof PropertyDescriptor) {
 				PropertyDescriptor thisElement = ((PropertyDescriptor) thisArg);
 				String argName = thisElement.getName();
 				Object argValue = thisElement.getValue(argName);
@@ -496,14 +497,14 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 					newArgs.put(newArg.getName(), newArg);
 				}
 			}
-		}		
+		}
 		//store the complete list of Args for future use (will be overwritten by the latest test creation)
 		this.allArgs = newArgs;
 		//create a new validation
 		Validation validation = plugIn.createValidation(getUniqueName(getTests(), "Test"),dto.getDescription(), newArgs); //$NON-NLS-1$
 		return validation;
 	}
-	
+
 	/**
 	 * Regenerates the FV Lookup Map based on the contents of the testSuite
 	 *
@@ -518,21 +519,21 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 				validations.add(test);
 			}
 		}
-		
+
 		//clear the FV Lookup
 		featureLookup.clear();
-		
+
 		//add each test to the Lookup (again)
 		for (Iterator i = validations.iterator(); i.hasNext();) {
-			Validation validation = (Validation) i.next(); 
+			Validation validation = (Validation) i.next();
 			if (validation instanceof FeatureValidation) {
 				//FeatureValidation FV = (FeatureValidation) validation;
 				//addToFVLookup(FV); // <-- this is the proper way to do this
-				
+
 				//NOTE: code below is a verbatim copy of addToFVLookup(), which is private
 				//TODO: change org.geotools.validation.ValidationProcessor.addToFVLookup() to public or protected?
 		        String[] featureTypeList = validation.getTypeRefs();
-	
+
 		        if (featureTypeList == Validation.ALL) // if null (ALL)
 				{
 					ArrayList<Validation> tests = (ArrayList) featureLookup.get(ANYTYPENAME);
@@ -558,7 +559,7 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 			}
 		}
 	}
-	
+
 	public void updateIVLookup() {
 		// get all validation tests from the integrityLookup
 		Set<Validation> validations = new HashSet<Validation>();
@@ -609,7 +610,7 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 	/**
 	 * Returns a unique name for an automatically generated Test (Test1, Test2,
 	 * etc), or where labelPrefix is typically "Test"
-	 * 
+	 *
 	 * @param allItems
 	 * @param labelPrefix
 	 * @return
@@ -625,14 +626,14 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Places a Map of tests one-by-one into a TestSuiteDTO. If an equal test
 	 * already exists in the testSuite, it is ignored.
-	 * 
+	 *
 	 * @param suite
 	 * @param tests
-	 * @param allDupes 
+	 * @param allDupes
 	 * @return
 	 */
 	public TestSuiteDTO moveTests(TestSuiteDTO suite, Map<String, TestDTO> tests, boolean allowDupes) {
@@ -655,9 +656,9 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
     	suite.setTests(allTests);
     	return suite;
 	}
-	
+
 	/**
-	 * Returns a Set (HashSet) of plugins (validation tests) available. 
+	 * Returns a Set (HashSet) of plugins (validation tests) available.
 	 */
 	public Set getPlugins() {
 		HashMap hashMap = (HashMap) pluginDTOs;
@@ -668,7 +669,7 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 		}
 		return plugins;
 	}
-	
+
 	/**
 	 * Returns a complete list of available tests (all testSuites are merged)
 	 *
@@ -711,7 +712,7 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 		}
 		return testSet.toArray();
 	}
-	
+
 	/**
 	 * Determines if a given testSuite contains any tests or not.
 	 *
@@ -723,7 +724,7 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 		if (testSuite.getTests().size() > 0) return true;
 		else return false;
 	}
-	
+
 	public void setArg(TestDTO test, ArgumentDTO arg) throws ValidationException, IntrospectionException {
 		Map FVLookup = featureLookup;
 		Map<String, Object> args = new HashMap<String, Object>();
@@ -763,7 +764,7 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 			}
 		}
 	}
-	
+
 	public Map getPluginDTOs() {
 		return pluginDTOs;
 	}

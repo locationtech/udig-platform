@@ -49,7 +49,7 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * Dialog for sending the error log to the development team.
- * 
+ *
  * @author chorner
  */
 public class SendLogDialog extends TitleAreaDialog {
@@ -62,13 +62,13 @@ public class SendLogDialog extends TitleAreaDialog {
     private Text log;
 
     boolean hasLog = false;
-    
+
     protected SendLogDialog( Shell parentShell ) {
         super(parentShell);
         setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL
                 | getDefaultOrientation());
     }
-    
+
     @Override
     protected void configureShell( Shell newShell ) {
         super.configureShell(newShell);
@@ -82,10 +82,10 @@ public class SendLogDialog extends TitleAreaDialog {
 
     @Override
     protected Control createDialogArea( Composite parent ) {
-        setTitle(Messages.SendLogDialog_description); 
+        setTitle(Messages.SendLogDialog_description);
         ImageDescriptor image = Images.getDescriptor(ImageConstants.LOG_WIZ);
         if (image != null) setTitleImage(image.createImage());
-        
+
         // create a composite with standard margins and spacing
         Composite composite = new Composite(parent, SWT.RESIZE);
         GridLayout layout = new GridLayout(2, false);
@@ -111,9 +111,9 @@ public class SendLogDialog extends TitleAreaDialog {
             public void modifyText( ModifyEvent e ) {
                 refreshButtons();
             }
-            
+
         });
-        
+
         noteLabel = new Label(composite, SWT.NONE);
         noteLabel.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false));
         noteLabel.setText(Messages.SendLogDialog_notes);
@@ -129,7 +129,7 @@ public class SendLogDialog extends TitleAreaDialog {
             public void modifyText( ModifyEvent e ) {
                 refreshButtons();
             }
-            
+
         });
 
         logLabel = new Label(composite, SWT.NONE);
@@ -145,12 +145,12 @@ public class SendLogDialog extends TitleAreaDialog {
         log.setLayoutData(gridData);
         log.setText(Messages.SendLogDialog_reading);
         log.setEnabled(false);
-        
+
         //start a thread to acquire the log file
         PopulateLogRunnable populateLog = new PopulateLogRunnable();
         PlatformGIS.run(populateLog);
         contact.setFocus();
-        
+
         return composite;
     }
 
@@ -181,9 +181,9 @@ public class SendLogDialog extends TitleAreaDialog {
             setMessage(Messages.SendLogDialog_notes_message, IMessageProvider.WARNING);
             proceed.setEnabled(false);
         }
-        
+
     }
-    
+
     @Override
     protected void buttonPressed( int buttonId ) {
         if (IDialogConstants.PROCEED_ID == buttonId) {
@@ -211,7 +211,7 @@ public class SendLogDialog extends TitleAreaDialog {
 
             StringBuilder text = new StringBuilder();
             text.append("Contact:\r\n"); //$NON-NLS-1$
-            text.append(contact.getText()); 
+            text.append(contact.getText());
             text.append("\r\n\r\nUser comments:\r\n"); //$NON-NLS-1$
             text.append(notes.getText());
             text.append("\r\n\r\nSystem Info:\r\n"); //$NON-NLS-1$
@@ -220,7 +220,7 @@ public class SendLogDialog extends TitleAreaDialog {
             text.append(log.getText());
             text.append("\r\n"); //$NON-NLS-1$
             String body = "body=" + URLEncoder.encode(text.toString(), "UTF-8"); //$NON-NLS-1$//$NON-NLS-2$
-            
+
             OutputStream outStream;
             outStream = connection.getOutputStream();
             outStream.write(body.getBytes());
@@ -246,9 +246,9 @@ public class SendLogDialog extends TitleAreaDialog {
         //udig version number
         content.append("uDig "); //$NON-NLS-1$
         content.append(UiPlugin.getDefault().getVersion());
-        return content.toString(); 
+        return content.toString();
     }
-    
+
     private String getLogText( IProgressMonitor monitor ) {
         String filename = Platform.getLogFileLocation().toOSString();
         File file = new File(filename);
@@ -276,7 +276,7 @@ public class SendLogDialog extends TitleAreaDialog {
             }
         }
     }
-    
+
     private class PopulateLogRunnable implements IRunnableWithProgress {
 
         public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
@@ -301,7 +301,7 @@ public class SendLogDialog extends TitleAreaDialog {
                         hasLog = true;
                         refreshButtons();
                     }
-                    
+
                 });
             }
         }

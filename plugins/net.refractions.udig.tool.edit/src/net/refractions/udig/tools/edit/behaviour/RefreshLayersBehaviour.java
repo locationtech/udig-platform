@@ -32,8 +32,8 @@ import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Refreshes the current edit layer so that the features on the Editblackboard are not rendered
- * by the renderer only by the edit tool feedback. 
- * 
+ * by the renderer only by the edit tool feedback.
+ *
  * @author Jesse
  * @since 1.1.0
  */

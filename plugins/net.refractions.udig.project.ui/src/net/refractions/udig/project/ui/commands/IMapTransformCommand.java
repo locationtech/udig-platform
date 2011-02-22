@@ -20,7 +20,7 @@ package net.refractions.udig.project.ui.commands;
  * DrawCommand that is valid until the map is rerendered. Translation is an example. A Translation
  * is valid because the raster needs to be offset until a new rendered map is available to avoid
  * display artifacts such as image stuttering.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */

@@ -24,12 +24,12 @@ import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
  * An abstract class for all tools that wish to be "selection" tools. A selection tool is
  * distinquished from other tools as it opens a context menu with the normal context menu mouse
  * button.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
 public class SimpleTool extends AbstractModalTool {
-	
+
 	/**
 	 * By default SimpleTool will simply respond to MOUSE.
 	 * <p>
@@ -56,7 +56,7 @@ public class SimpleTool extends AbstractModalTool {
 
     /**
      * Called when a double clicked event occurs. It will never be a context-menu request
-     * 
+     *
      * @param e the mouse event
      */
     protected void onMouseDoubleClicked( MapMouseEvent e ) {
@@ -64,7 +64,7 @@ public class SimpleTool extends AbstractModalTool {
     }
     /**
      * Called when a mouse pressed event occurs. It will never be a context-menu request
-     * 
+     *
      * @param e the mouse event
      */
     protected void onMousePressed( MapMouseEvent e ) {
@@ -72,7 +72,7 @@ public class SimpleTool extends AbstractModalTool {
     }
     /**
      * Called when a mouse released event occurs. It will never be a context-menu request
-     * 
+     *
      * @param e the mouse event
      */
     protected void onMouseReleased( MapMouseEvent e ) {
@@ -81,7 +81,7 @@ public class SimpleTool extends AbstractModalTool {
 
     /**
      * Called when a entered event occurs. It will never be a context-menu request
-     * 
+     *
      * @param e the mouse event
      */
     protected void onMouseEntered( MapMouseEvent e ) {
@@ -89,15 +89,15 @@ public class SimpleTool extends AbstractModalTool {
     }
     /**
      * Called when a moved event occurs. It will never be a context-menu request
-     * 
+     *
      * @param e the mouse event
      */
     protected void onMouseMoved( MapMouseEvent e ) {
         // do nothing
-    }    
+    }
     /**
      * Called when a hovered event occurs. It will never be a context-menu request
-     * 
+     *
      * @param e the mouse event
      */
     protected void onMouseHovered( MapMouseEvent e ) {
@@ -105,7 +105,7 @@ public class SimpleTool extends AbstractModalTool {
     }
     /**
      * Called when a exited event occurs. It will never be a context-menu request
-     * 
+     *
      * @param e the mouse event
      */
     protected void onMouseExited( MapMouseEvent e ) {
@@ -113,7 +113,7 @@ public class SimpleTool extends AbstractModalTool {
     }
     /**
      * Called when a mouse wheel moved event occurs. It will never be a context-menu request
-     * 
+     *
      * @param e the mouse event
      */
     protected void onMouseWheelMoved( MapMouseWheelEvent e ) {
@@ -121,7 +121,7 @@ public class SimpleTool extends AbstractModalTool {
     }
     /**
      * Called when a mouse dragged event occurs. It will never be a context-menu request
-     * 
+     *
      * @param e the mouse event
      */
     protected void onMouseDragged( MapMouseEvent e ) {
@@ -130,7 +130,7 @@ public class SimpleTool extends AbstractModalTool {
     /**
      * Opens the context menu if the second mouse button is pressed and calls
      * noContextMouseReleased().
-     * 
+     *
      * @see AbstractTool#mousePressed(MapMouseEvent)
      * @param e the mouse event
      * @see MapMouseEvent
@@ -144,7 +144,7 @@ public class SimpleTool extends AbstractModalTool {
 
     /**
      * Consumes the event if the second mouse button is released and calls noContextMousePressed().
-     * 
+     *
      * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseReleased(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
@@ -155,8 +155,8 @@ public class SimpleTool extends AbstractModalTool {
 
     /**
      * Consumes the event if the second mouse button is doubleclicked and calls
-     * onContextMouseDoubleClicked().
-     * 
+     * noContextMouseDoubleClicked().
+     *
      * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseDoubleClicked(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */

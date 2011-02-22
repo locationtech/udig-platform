@@ -2,6 +2,7 @@ package net.refractions.udig.internal.ui;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -45,7 +46,7 @@ import org.eclipse.swt.dnd.TransferData;
  * A UDIGDropHandler is delegated to by another DropTargetAdapter. Depending on the type of drop
  * adapter, location, and target may not be set.
  * </p>
- * 
+ *
  * @author Justin Deoliveira,Refractions Research Inc.,jdeolive@refractions.net
  * @since 0.6.0
  */
@@ -89,7 +90,7 @@ public class UDIGDropHandler extends DropTargetAdapter {
      * <p>
      * This is set by the framework
      * </p>
-     * 
+     *
      * @param location one of the <code>LOCATION_* </code> constants defined in this type
      * @see org.eclipse.jface.viewers.ViewerDropAdapter#getCurrentLocation()
      */
@@ -100,7 +101,7 @@ public class UDIGDropHandler extends DropTargetAdapter {
     /**
      * Returns a constant describing the position of the mouse relative to the target (before, on,
      * or after the target.
-     * 
+     *
      * @return one of the <code>LOCATION_* </code> constants defined in this type
      * @see org.eclipse.jface.viewers.ViewerDropAdapter#getCurrentLocation()
      */
@@ -139,7 +140,7 @@ public class UDIGDropHandler extends DropTargetAdapter {
             Method m=transfer.getClass().getMethod("nativeToJava", new Class[]{TransferData.class}); //$NON-NLS-1$
             return m.invoke(transfer, new Object[]{data});
         }catch(Throwable t){
-            return null;            
+            return null;
         }
     }
 
@@ -159,26 +160,47 @@ public class UDIGDropHandler extends DropTargetAdapter {
         }
         event.detail = DND.DROP_COPY;
     }
+    private static List<Object> toList( Object data ){
+        Class<?> type = data.getClass();
+        Object[] objects = null;
+        if (type.isArray()) {
+            return Arrays.asList( data );
+        } else if (data instanceof List) {
+            return (List) data;
+        } else if (data instanceof Collection) {
+            return new ArrayList( (Collection<?>) data );
+        } else if (data instanceof IStructuredSelection) {
+            return Arrays.asList( ((IStructuredSelection) data).toArray() );
+        } else {
+            return Collections.singletonList( data );
+        }
+    }
 
     public void drop( DropTargetEvent event ) {
-        Set<Transfer> t = UDIGDragDropUtilities.getTransfers();
-        List<IDropAction> actions = null;
-        for( Transfer transfer : t ) {
-            if (event.data != null){
-                actions = findDropActions(event.data, event);
-                if( !actions.isEmpty() ) break;
-            }
-            TransferData[] types = transfer.getSupportedTypes();
-            for( TransferData data : types ) {
-                if (transfer.isSupportedType(data)) {
-                    Object object = getJavaObject(transfer, data);
-                    if( object == null ) {
-                        continue;
-                    }
-                    actions = findDropActions(object, event);                                      if( !actions.isEmpty() ) break;
+        Set<Transfer> allTransfers = UDIGDragDropUtilities.getTransfers();
+
+        List<Object> dataList = new ArrayList<Object>();
+        List<IDropAction> actions = new ArrayList<IDropAction>();
+        if (event.data != null){
+            UiPlugin.trace(Trace.DND, getClass(), event.data+" actions for raw event data",null);
+            dataList.add( event.data );
+            actions.addAll( findDropActions(event.data, event) );
+        }
+        for( TransferData data : event.dataTypes ){
+            for( Transfer transfer : allTransfers ) {
+                Object object = getJavaObject(transfer, data);
+                if( object == null ){
+                    continue; // that did not work then
+                }
+                UiPlugin.trace(Trace.DND, getClass(), data.type+" data "+object,null);
+                if( !dataList.contains( object )){
+                    dataList.add( object );
+                    actions.addAll( findDropActions( object, event) );
                 }
             }
         }
+        // List<IDropAction> actions = findDropActions(dataList, event);
+
         CompositeDropActionJob actionJob = getActionJob();
         if (actions != null && !actions.isEmpty()){
             UiPlugin.trace(Trace.DND, getClass(), event.data+" dropped on "+getTarget()+" "+actions.size()+" found to process drop",null); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -193,9 +215,7 @@ public class UDIGDropHandler extends DropTargetAdapter {
         if (UiPlugin.isDebugging(Trace.DND)) {
             System.out.println("Find drop called on " + data + "(" + data.getClass() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
-        // do a check for a multi object and separate the children out
         Class<?> type = data.getClass();
-
         Object[] objects = null;
         if (type.isArray()) {
             objects = (Object[]) data;
@@ -253,7 +273,7 @@ public class UDIGDropHandler extends DropTargetAdapter {
         private final Queue<Collection<DropActionRunnable>> queue;
 
         public CompositeDropActionJob() {
-            super(Messages.UDIGDropHandler_jobName);  
+            super(Messages.UDIGDropHandler_jobName);
 
             queue = new ConcurrentLinkedQueue<Collection<DropActionRunnable>>();
             setUser(true);
@@ -267,8 +287,8 @@ public class UDIGDropHandler extends DropTargetAdapter {
         public synchronized List<Collection<DropActionRunnable>> getJobQueue() {
             return Collections.unmodifiableList(new ArrayList<Collection<DropActionRunnable>>(queue));
         }
-        
-        
+
+
         /**
          * Adds an action to be executed by drop handler.
          *
@@ -280,9 +300,9 @@ public class UDIGDropHandler extends DropTargetAdapter {
             for( IDropAction action : actions ) {
                 runnables.add(new DropActionRunnable(handler, action));
             }
-            
+
             queue.offer(runnables);
-            
+
             if( !actions.isEmpty() )
                 actionJob.schedule();
         }
@@ -301,29 +321,29 @@ public class UDIGDropHandler extends DropTargetAdapter {
 
                 synchronized (this) {
                     next = queue.poll();
-                    
+
                     if( next==null || Thread.currentThread().isInterrupted() ){
                         return Status.OK_STATUS;
                     }
                 }
 
-                
+
                 boolean foundGoodAction=false;
                 for( Iterator<DropActionRunnable> iterator = next.iterator(); iterator.hasNext() && !foundGoodAction; ) {
                     DropActionRunnable action =  iterator.next();
                     IProgressMonitor monitor=new ProgressMonitorTaskNamer(monitor2, 10);
-                    
+
                     monitor2.setTaskName(Messages.UDIGDropHandler_performing_task + ": "+ action.action.getName()); //$NON-NLS-1$
-                    
+
                     // run the next job
                     if( action.run(monitor).getCode()==Status.OK ){
                         foundGoodAction=true;
                     }
-                    
+
                 }
-                
+
             }
-            
+
             return Status.OK_STATUS;
         }
     }
@@ -334,7 +354,7 @@ public class UDIGDropHandler extends DropTargetAdapter {
         UDIGDropHandler handler;
 
         public DropActionRunnable( UDIGDropHandler handler, IDropAction action ) {
-            super(); 
+            super();
 
             this.handler = handler;
             this.action = action;
@@ -346,7 +366,7 @@ public class UDIGDropHandler extends DropTargetAdapter {
                 notifyDone(action, null);
                 return Status.OK_STATUS;
             } catch (Throwable t) {
-                String msg = Messages.UDIGDropHandler_error; 
+                String msg = Messages.UDIGDropHandler_error;
                 String ns = action.getElement().getNamespaceIdentifier();
 
                 Status s = new Status(IStatus.WARNING, ns, 0, msg, t);
@@ -355,7 +375,7 @@ public class UDIGDropHandler extends DropTargetAdapter {
                 return Status.CANCEL_STATUS;
             }
         }
-        
+
         private void notifyDone(IDropAction action, Throwable t){
             Set<IDropHandlerListener> set = handler.listeners;
             for( IDropHandlerListener listener : set ) {
@@ -370,7 +390,7 @@ public class UDIGDropHandler extends DropTargetAdapter {
             }
         }
     }
-    
+
 
     /**
      * Remove listener from set of listeners.

@@ -22,14 +22,14 @@ public class RenderManagerDynamicTest extends AbstractProjectUITestCase {
         map=MapTests.createDefaultMap("RMDTestType", 3, true, null, false); //$NON-NLS-1$
         Map m2 = MapTests.createDefaultMap("RMDTestType2", 3, true, null, false); //$NON-NLS-1$
         map.getLayersInternal().add(m2.getLayersInternal().get(0));
-        
+
         ApplicationGIS.openMap(map, true);
         UDIGTestUtil.inDisplayThreadWait(2000, new WaitCondition(){
 
             public boolean isTrue() {
                 return !map.getRenderManagerInternal().getRenderers().isEmpty();
             }
-            
+
         }, true);
     }
 
@@ -45,7 +45,7 @@ public class RenderManagerDynamicTest extends AbstractProjectUITestCase {
             renderer.setState(IRenderer.NEVER);
             assertEquals(IRenderer.NEVER, renderer.getState());
         }
-        
+
         final ILayer refreshLayer = map.getMapLayers().get(0);
         map.getRenderManagerInternal().refresh(refreshLayer, null);
         UDIGTestUtil.inDisplayThreadWait(3000000, new WaitCondition(){
@@ -56,7 +56,7 @@ public class RenderManagerDynamicTest extends AbstractProjectUITestCase {
                     if( currentLayer==refreshLayer ){
                         if( IRenderer.DONE!=renderer.getState() )
                         return false;
-                    } else if( currentLayer instanceof SelectionLayer 
+                    } else if( currentLayer instanceof SelectionLayer
                             && ((SelectionLayer)currentLayer).getWrappedLayer()==refreshLayer ){
                         if( IRenderer.DONE!=renderer.getState() )
                             return false;
@@ -66,9 +66,9 @@ public class RenderManagerDynamicTest extends AbstractProjectUITestCase {
                 }
                 return true;
             }
-            
+
         }, false);
-        
+
         for( Renderer renderer: impl.children() ) {
             ILayer currentLayer = renderer.getContext().getLayer();
             if( currentLayer==refreshLayer)

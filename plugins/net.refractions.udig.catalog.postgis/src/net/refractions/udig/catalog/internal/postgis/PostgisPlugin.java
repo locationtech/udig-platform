@@ -1,12 +1,17 @@
 package net.refractions.udig.catalog.internal.postgis;
 
+import java.util.Iterator;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
+
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.geotools.data.postgis.PostgisDataStore;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -18,7 +23,8 @@ public class PostgisPlugin extends AbstractUIPlugin {
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
 	public static final String ID = "net.refractions.udig.catalog.internal.postgis"; //$NON-NLS-1$
-    
+	private static final Set<PostgisDataStore> dsList = new CopyOnWriteArraySet<PostgisDataStore>();
+
 	/**
 	 * The constructor.
 	 */
@@ -40,6 +46,16 @@ public class PostgisPlugin extends AbstractUIPlugin {
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		resourceBundle = null;
+        //close datastore connections
+        try {
+            Iterator<PostgisDataStore> it = dsList.iterator();
+            while (it.hasNext()) {
+                PostgisDataStore ds = it.next();
+                ds.getConnectionPool().close();
+            }
+        } catch (Exception e) {
+            log("failed to close PostGIS ConnectionPool", e); //$NON-NLS-1$
+        }
 		super.stop(context);
 	}
 
@@ -54,7 +70,7 @@ public class PostgisPlugin extends AbstractUIPlugin {
 	/**
 	 * Returns the string from the plugin's resource bundle,
 	 * or 'key' if not found.
-	 * @param key 
+	 * @param key
 	 * @return x
 	 */
 	public static String getResourceString(String key) {
@@ -79,17 +95,17 @@ public class PostgisPlugin extends AbstractUIPlugin {
 		}
 		return resourceBundle;
 	}
-    
+
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
-     * This will be a user visable ERROR iff:
+     * This will be a user visible ERROR iff:
      * <ul>
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      * </ul>
      * </p>
-     * @param message 
-     * @param t 
+     * @param message
+     * @param t
      */
     public static void log( String message, Throwable t ) {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
@@ -98,15 +114,15 @@ public class PostgisPlugin extends AbstractUIPlugin {
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
-     * It is much prefered to do this:<pre><code>
+     * It is much preferred to do this:<pre><code>
      * private static final String RENDERING = "net.refractions.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * }
      * </code></pre>
      * </p>
-     * @param message 
-     * @param e 
+     * @param message
+     * @param e
      */
     public static void trace( String message, Throwable e) {
         if( getDefault().isDebugging() ) {
@@ -121,13 +137,16 @@ public class PostgisPlugin extends AbstractUIPlugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
-     * @return true if -debug is on for this plugin 
+     * @return true if -debug is on for this plugin
      */
     public static boolean isDebugging( final String trace ){
         return getDefault().isDebugging() &&
-            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
-    
+
+    static void addDataStore(PostgisDataStore ds) {
+        dsList.add(ds);
+    }
 }

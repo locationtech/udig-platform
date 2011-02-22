@@ -20,9 +20,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "net.refractions.udig.catalog.wms.internal.messages"; //$NON-NLS-1$
-	public static String WMSCServiceExtension_nottiled;
-    public static String WMSCWizardPage_WMSCTitle;
-    public static String WMSGeoResourceImpl_bounds_unavailable;
+	public static String WMSGeoResourceImpl_bounds_unavailable;
 	public static String WMSGeoResourceImpl_downloading_icon;
 	public static String WMSGeoResourceImpl_acquiring_task;
     public static String WMSServiceExtension_badService;
@@ -38,10 +36,6 @@ public class Messages extends NLS {
 	public static String WMSServiceImpl_could_not_connect;
 	public static String WMSWizardPage_label_url_text;
 	public static String WMSServiceImpl_connecting_to;
-	public static String WMSCTileUtils_preloadtitle;
-	public static String WMSCTileUtils_preloadtask;
-	public static String WMSCTileUtils_preloadtasksub;
-	
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

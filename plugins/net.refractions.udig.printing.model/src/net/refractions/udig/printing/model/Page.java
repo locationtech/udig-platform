@@ -21,21 +21,21 @@ import java.util.List;
 import net.refractions.udig.project.internal.ProjectElement;
 
 /**
- * Represents a set of positioned Boxes to be drawn. 
+ * Represents a set of positioned Boxes to be drawn.
  * This class is generally used to draw the boxes on the screen and position
  * them according to a user's wish. They can be repositioned by accessing
  * the location and size properties on each individual Box.
- * 
+ *
  * @author Richard Gould
  * @since 0.3
  * @model
  */
 public interface Page extends Element, ProjectElement{
-    
+
     /**
      * Each Box represents an item to be drawn and printed, and can be
      * resized and repositioned.
-     * 
+     *
      * @return the List of Boxes on this Page
      * @model containment="true" resolveProxy="false" type="net.refractions.udig.printing.model.Box"
      */

@@ -18,11 +18,12 @@ import net.refractions.udig.project.internal.Layer;
 
 /**
  * An interceptor that is ran on a layer.  See the net.refractions.udig.mapInterceptor extension point for more details.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public interface LayerInterceptor {
+
     /**
      * Extension Point ID of Layer interceptors
      */
@@ -43,7 +44,7 @@ public interface LayerInterceptor {
     /**
      * Performs an action on the layer.
      *
-     * @param layer 
+     * @param layer
      */
     public void run(Layer layer);
 }

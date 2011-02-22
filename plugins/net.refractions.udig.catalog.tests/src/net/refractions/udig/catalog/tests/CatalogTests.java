@@ -35,11 +35,10 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.SchemaNotFoundException;
 import org.geotools.data.memory.MemoryDataStore;
+import org.geotools.feature.Feature;
 import org.geotools.feature.IllegalAttributeException;
 import org.geotools.feature.SchemaException;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
+import org.geotools.filter.Filter;
 
 /**
  * Provides useful methods for creating catalog tests
@@ -51,18 +50,18 @@ public class CatalogTests {
     /**
      * Calls createService and finds the georesource containing the features.
      */
-    public static IGeoResource createGeoResource(SimpleFeature [] features, boolean deleteService) throws IOException{
+    public static IGeoResource createGeoResource(Feature [] features, boolean deleteService) throws IOException{
     	IService service = getService(features, deleteService);
-    	
+
     	List<? extends IGeoResource> resources = service.resources(null);
     	for (IGeoResource resource : resources) {
-    		if( resource.resolve(FeatureSource.class, null).getSchema().getName().getLocalPart().
+    		if( resource.resolve(FeatureSource.class, null).getSchema().getTypeName().
     				equals(features[0].getFeatureType().getTypeName()))
     			return resource;
     	}
     	// hopefully will never happen.
     	return null;
-    	
+
     }
 
     /**
@@ -74,7 +73,7 @@ public class CatalogTests {
     public static IService createService(ICatalog catalog) {
     	IService service;
     	MemoryServiceExtensionImpl ext=new MemoryServiceExtensionImpl();
-    	
+
     	java.util.Map<String, Serializable> params = ext.createParams(MemoryServiceExtensionImpl.URL);
     	service=(MemoryServiceImpl) ext.createService(MemoryServiceExtensionImpl.URL, params);
     	catalog.add(service);
@@ -82,10 +81,10 @@ public class CatalogTests {
     }
 
     /**
-    	 * Creates a MemoryDatastore service from an array of features.  Does not add to catalog. 
-    	 * @param deleteService 
+    	 * Creates a MemoryDatastore service from an array of features.  Does not add to catalog.
+    	 * @param deleteService
     	 */
-    	public static IService getService(SimpleFeature[] features, boolean deleteService) throws IOException {
+    	public static IService getService(Feature[] features, boolean deleteService) throws IOException {
     		ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
     		List<IResolve> services = catalog.find(MemoryServiceExtensionImpl.URL, new NullProgressMonitor());
     		IService service=null;
@@ -97,7 +96,7 @@ public class CatalogTests {
     				IGeoResource resource = (IGeoResource) resolve;
     				service=resource.service(null);
     			}else if (resolve instanceof IService) {
-    				service=(IService) services.get(0);				
+    				service=(IService) services.get(0);
     			}
     		}
     		if( deleteService ){
@@ -107,20 +106,20 @@ public class CatalogTests {
                 } else {
                     List< ? extends IGeoResource> members = service.resources(new NullProgressMonitor());
                     for( IGeoResource resource : members ) {
-                        FeatureStore<SimpleFeatureType, SimpleFeature> s = resource
+                        FeatureStore s = resource
                                 .resolve(FeatureStore.class, new NullProgressMonitor());
                         if (s.getSchema().getTypeName().equals(
-                                features[0].getName().getLocalPart()))
-                            s.removeFeatures(Filter.INCLUDE);
+                                features[0].getFeatureType().getTypeName()))
+                            s.removeFeatures(Filter.NONE);
                     }
                 }
     		}
-    		
+
     		MemoryDataStore ds=service.resolve(MemoryDataStore.class, null);
     		try{
     			ds.getSchema(features[0].getFeatureType().getTypeName());
     //			if( deleteService)
-    //				throw new IOException("SimpleFeatureType already exists in Service"); //$NON-NLS-1$
+    //				throw new IOException("FeatureType already exists in Service"); //$NON-NLS-1$
     		}catch( SchemaNotFoundException exception){
     			// verified that schema does not yet exist.
     		}
@@ -142,7 +141,7 @@ public class CatalogTests {
      */
     public static IGeoResource createResource( URL id, Object resolveTo ) throws IOException {
         IService service=DummyService.createService(id, null, Collections.singletonList(Collections.singletonList(resolveTo)));
-        
+
         IGeoResource resource = service.resources(null).get(0);
         return resource;
     }

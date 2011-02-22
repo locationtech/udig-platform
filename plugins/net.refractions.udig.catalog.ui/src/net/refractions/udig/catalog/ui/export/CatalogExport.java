@@ -1,5 +1,7 @@
 package net.refractions.udig.catalog.ui.export;
 
+
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,12 +10,12 @@ import net.refractions.udig.catalog.internal.ui.Images;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.internal.Messages;
 import net.refractions.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
-import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardAdapter;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardDialog;
+import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -27,20 +29,11 @@ import org.eclipse.ui.PlatformUI;
 
 
 public class CatalogExport {
-    
-    public static class CatalogExportAdapter extends WorkflowWizardAdapter{
 
-        public CatalogExportAdapter() {
-            super(new CatalogExport().wizard);
-        }
-
-    }
-
-    
     Shell shell;
     private WorkflowWizardDialog dialog;
     protected WorkflowWizard wizard;
-    
+
     static String SHAPEFILE_EXT = ".shp"; //$NON-NLS-1$
     static String POLY_SUFFIX = "_poly"; //$NON-NLS-1$
     static String POINT_SUFFIX = "_point"; //$NON-NLS-1$
@@ -50,7 +43,7 @@ public class CatalogExport {
      * Creates a new instance and calls {@link #init()}
      */
     public CatalogExport() {
-        initWorkflow();
+        init();
     }
 
     /**
@@ -58,13 +51,13 @@ public class CatalogExport {
 	 * is here so that initialization can be deferred until later so the
 	 * subclass can do other initialization first.  If initialize is false make sure to call
 	 * {@link #init()} before using the object.
-	 * 
+	 *
 	 * @param initialize
 	 *            if true initialize is called
 	 */
     public CatalogExport(boolean initialize) {
     	if( initialize ){
-    		initWorkflow();
+    		init();
     	}
     }
 
@@ -72,32 +65,28 @@ public class CatalogExport {
     /**
 	 * This is a "template method" (see GOF patterns book). It first calls
 	 * createWorkFlow() then createPageMapping() then createWorkflowWizard().
-	 * It also creates a dialog for the workflow wizard to be opened up in by calling createShell().  
+	 * It also creates a dialog for the workflow wizard to be opened up in by calling createShell().
 	 * The dialog is blocking.
 	 */
-	protected final void initDialog() {
-        initWorkflow();
+	protected final void init() {
+        Workflow workflow = createWorkflow();
+        Map<Class<? extends State>, WorkflowWizardPageProvider> map = createPageMapping();
+        wizard = createWorkflowWizard(workflow,map);
 
         PlatformGIS.syncInDisplayThread(
             new Runnable() {
                 public void run() {
                     shell=createShell();
-                }   
+                }
             }
         );
 
         dialog = new WorkflowWizardDialog(
-            shell, wizard   
+            shell, wizard
         );
 
         dialog.setBlockOnOpen(true);
     }
-
-    protected void initWorkflow() {
-        Workflow workflow = createWorkflow();
-        Map<Class<? extends State>, WorkflowWizardPageProvider> map = createPageMapping();
-        wizard = createWorkflowWizard(workflow,map);
-    }   
 
     /**
      * Must be called in the Display thread.
@@ -122,10 +111,6 @@ public class CatalogExport {
     }
 
     public WorkflowWizardDialog getDialog() {
-        if( dialog==null ){
-            initDialog();
-        }
-        
         return dialog;
     }
 
@@ -134,19 +119,16 @@ public class CatalogExport {
         Display.getDefault().asyncExec(
             new Runnable() {
                 public void run() {
-                    getDialog().open();  
+                    dialog.open();
                 };
             }
         );
     }
 
     public void run(IProgressMonitor monitor, Object context) {
-        if( dialog==null ){
-            initDialog();
-        }
 
         dialog.getWorkflowWizard().getWorkflow().setContext(context);
-        String name=Messages.CatalogExport_taskname; 
+        String name=Messages.CatalogExport_taskname;
         monitor.beginTask(name, 100);
         monitor.setTaskName(name);
         try {
@@ -159,7 +141,7 @@ public class CatalogExport {
     protected Workflow createWorkflow() {
         // can we look up the work bench selection here?
         ExportResourceSelectionState layerState = new ExportResourceSelectionState();
-        Workflow workflow = new Workflow(new State[]{layerState});
+        Workflow workflow = new Workflow(new Workflow.State[]{layerState});
         return workflow;
     }
 
@@ -167,8 +149,8 @@ public class CatalogExport {
         HashMap<Class<? extends State>, WorkflowWizardPageProvider> map = new HashMap<Class<? extends State>, WorkflowWizardPageProvider>();
         String title = Messages.LayerSelectionPage_title;
         ImageDescriptor banner = Images.getDescriptor(ImageConstants.PATH_WIZBAN+"exportshapefile_wiz.gif"); //$NON-NLS-1$
-        ExportResourceSelectionPage page = new ExportResourceSelectionPage("Select Layers", title, banner ); 
-        map.put(ExportResourceSelectionState.class, new BasicWorkflowWizardPageFactory(page));
+        ExportResourceSelectionPage page = new ExportResourceSelectionPage("Select Layers", title, banner ); //$NON-NLS-1$
+        map.put(ExportResourceSelectionState.class, new BasicWorkflowWizardPageFactory(page)); //$NON-NLS-1$
 
         //TODO: add export support for formats other than shapefile
 
@@ -182,7 +164,7 @@ public class CatalogExport {
     public static void setError(final WizardDialog wizardDialog, final String msg, Throwable e) {
 
         CatalogUIPlugin.log(msg, e);
-        
+
 		if( Display.getCurrent()==null ){
 			wizardDialog.getShell().getDisplay().asyncExec(new Runnable() {
 				public void run() {

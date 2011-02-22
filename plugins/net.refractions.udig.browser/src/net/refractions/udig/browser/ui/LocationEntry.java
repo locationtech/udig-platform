@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * Text field that allows a user to entry a URL
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -43,7 +43,7 @@ public class LocationEntry {
     protected Control createControl( Composite parent ) {
         entry = new Text(parent, SWT.SINGLE | SWT.BORDER | SWT.SEARCH | SWT.CANCEL);
         addKeyboardListener();
-        
+
         return entry;
 
     }
@@ -86,7 +86,7 @@ public class LocationEntry {
             }
 
         };
-        
+
         action.setImageDescriptor(BrowserPlugin.getImageDescriptor(BrowserPlugin.ICON_GO));
         return action;
     }

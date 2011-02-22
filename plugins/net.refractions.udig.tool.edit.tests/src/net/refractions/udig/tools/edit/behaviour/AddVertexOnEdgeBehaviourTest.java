@@ -148,8 +148,8 @@ public class AddVertexOnEdgeBehaviourTest extends TestCase {
         handler.getBehaviours().add(new InsertVertexOnEdgeBehaviour());
 
         handler.setCurrentState(EditState.MODIFYING);
-        handler.setCurrentShape(shell);     
-        handler.handleEvent(event, EventType.RELEASED);  
+        handler.setCurrentShape(shell);
+        handler.handleEvent(event, EventType.RELEASED);
         assertTrue("Shape should have a new point", shell.hasVertex(Point.valueOf(10, 10))); //$NON-NLS-1$
         assertEquals(
                 "Blackboard should also reflect the change", 1, handler.getEditBlackboard().getCoords(10, 10).size()); //$NON-NLS-1$

@@ -16,7 +16,7 @@ package net.refractions.udig.core.enums;
 
 /**
  * Enumeration of common priorities
- * 
+ *
  * @author jones
  * @since 1.0.0
  */

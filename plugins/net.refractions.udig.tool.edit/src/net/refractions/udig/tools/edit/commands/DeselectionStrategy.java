@@ -20,15 +20,15 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * The interface for the strategy objects that are ran when the {@link SelectFeaturesAtPointCommand} encounters
- * a mouse click that does not intersect with any features. 
- * 
+ * a mouse click that does not intersect with any features.
+ *
  * @author jesse
  * @since 1.1.0
  */
 public interface DeselectionStrategy {
 
     /**
-     * Creates the commands that will perform the action and adds them to the compositeCommand. 
+     * Creates the commands that will perform the action and adds them to the compositeCommand.
      *
      * @param monitor the progress monitor.
      * @param parameters the parameters that the {@link SelectFeaturesAtPointCommand} was configured with

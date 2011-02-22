@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Simple class that acepts all data.  On perform run it assigns the data to a static variable for tests to access.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -40,7 +40,7 @@ public class AlwaysAcceptDropAction extends IDropAction {
      * All items that were dropped since reset was called.
      */
     public static List<Object> allDrops=Collections.synchronizedList(new ArrayList<Object>());
-    
+
 
     @Override
     public boolean accept() {

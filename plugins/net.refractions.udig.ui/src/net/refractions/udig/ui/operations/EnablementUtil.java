@@ -26,13 +26,13 @@ import org.eclipse.core.runtime.IConfigurationElement;
 public class EnablementUtil {
 
     public static OpFilter parseEnablement( String extensionID, IConfigurationElement[] enablement ) {
-        
+
         if( !validateChildren(extensionID, enablement) || enablement[0]==null ){
             if( enablement.length>0 && enablement[0]==null )
                 UiPlugin.log("EnablementUtil: null enablement", null); //$NON-NLS-1$
             return OpFilter.TRUE;
         }
-        
+
         IConfigurationElement[] children = enablement[0].getChildren();
         if ( !validateChildren( extensionID, children) ){
             UiPlugin.log("EnablementUtil: Expected child of "+extensionID+" but didn't find one...", null); //$NON-NLS-1$ //$NON-NLS-2$
@@ -46,7 +46,7 @@ public class EnablementUtil {
     }
 
     private static boolean  validateChildren( String extensionID, IConfigurationElement[] children ) {
-        
+
         if( children.length<1){
             return false;
         }
@@ -57,13 +57,13 @@ public class EnablementUtil {
         return true;
     }
 
-    
+
 
     public static EnablesForData parseEnablesFor( String enablesFor, IConfigurationElement configElem ) {
         if( enablesFor==null ) {
             enablesFor="1"; //$NON-NLS-1$
         }
-        
+
         enablesFor=enablesFor.trim();
         EnablesForData data=new EnablesForData();
         if( enablesFor.equals("+") ){ //$NON-NLS-1$
@@ -87,7 +87,7 @@ public class EnablementUtil {
         }
         return data;
     }
-    
+
     public static class EnablesForData{
         int minHits=0;
         boolean exactMatch=false;

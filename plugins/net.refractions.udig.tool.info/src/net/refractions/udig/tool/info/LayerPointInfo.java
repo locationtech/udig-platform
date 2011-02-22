@@ -47,8 +47,8 @@ public abstract class LayerPointInfo {
 		public Object acquireValue() {
 			return null;
 		}
-	};	
-	/** The mime type for gml - aka SimpleFeature */
+	};
+	/** The mime type for gml - aka Feature */
 	public static final String GML = "application/vnd.ogc.gml"; //$NON-NLS-1$
 
 	/** The mime type for text/plain */
@@ -73,7 +73,7 @@ public abstract class LayerPointInfo {
 	 * <p>
 	 * The default implementation will make the request specified by getRequestURL().getContent();
 	 * </p>
-	 * 
+	 *
 	 * @return Object to be used as the Value of this LayerPointInfo
 	 * @throws IOException if an IO error occurs during the request process
 	 */
@@ -96,7 +96,7 @@ public abstract class LayerPointInfo {
 	 * The system may be extended at a later time to allow the use of additional MIME types. The
 	 * goal should be to allow the complete set used in WMS getFeatureInfo opperations.
 	 * </p>
-	 * 
+	 *
 	 * @see http://www.w3.org/Protocols/HTTP/1.1/spec.html#MIME
 	 */
 	abstract public String getMimeType();
@@ -107,7 +107,7 @@ public abstract class LayerPointInfo {
 	 * For *real objects* please just return the default value, aka null. acquireValue will be
 	 * called.
 	 * </p>
-	 * 
+	 *
 	 * @return requested URL or null if working with a real objects.
 	 */
 	public URL getRequestURL() {
@@ -119,7 +119,7 @@ public abstract class LayerPointInfo {
 	 * <p>
 	 * Can be used as a back point to focus the map on the indicated hit.
 	 * </p>
-	 * 
+	 *
 	 * @return Returns the layer.
 	 */
 	public ILayer getLayer() {
@@ -130,6 +130,6 @@ public abstract class LayerPointInfo {
 	public String toString() {
 		return MessageFormat
 				.format(
-						Messages.LayerPointInfo_toString, new Object[] { getMimeType(), getRequestURL() }); 
+						Messages.LayerPointInfo_toString, new Object[] { getMimeType(), getRequestURL() });
 	}
 }

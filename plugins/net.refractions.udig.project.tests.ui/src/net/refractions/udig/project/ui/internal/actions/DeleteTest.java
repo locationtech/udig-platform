@@ -20,7 +20,7 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.window.Window;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 public class DeleteTest extends AbstractProjectUITestCase {
 
@@ -29,12 +29,12 @@ public class DeleteTest extends AbstractProjectUITestCase {
 	@Override
 	protected void setUp() throws Exception {
         super.setUp();
-		SimpleFeature [] features=UDIGTestUtil.createDefaultTestFeatures("Tests",4); //$NON-NLS-1$
+		Feature [] features=UDIGTestUtil.createDefaultTestFeatures("Tests",4); //$NON-NLS-1$
 		IGeoResource resource = MapTests.createGeoResource(features, true);
 		Map map=MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(512,512));
 		project=map.getProjectInternal();
 	}
-	
+
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
@@ -42,7 +42,7 @@ public class DeleteTest extends AbstractProjectUITestCase {
 		Resource registryResource=registry.eResource();
 		List<Project> project=new ArrayList<Project>();
 		project.addAll(registry.getProjects());
-		
+
 		for (Project project2 : project) {
 			registry.getProjects().remove(project2);
 		}
@@ -60,9 +60,9 @@ public class DeleteTest extends AbstractProjectUITestCase {
 		}
         super.tearDown();
 	}
-	
+
 	/*
-	 * Test method for 'net.refractions.udig.project.ui.internal.actions.Delete.operate(SimpleFeature)'
+	 * Test method for 'net.refractions.udig.project.ui.internal.actions.Delete.operate(Feature)'
 	 */
 	public void testOperateFeature() {
 
@@ -83,10 +83,10 @@ public class DeleteTest extends AbstractProjectUITestCase {
 		Resource resource=element.eResource();
 		DeleteAccessor deleteAction=new DeleteAccessor();
 		deleteAction.runDoDelete(element, false, Window.OK);
-		
+
 		assertNull(element.getProject());
 		assertNull(element.eResource());
-		
+
 		assertEquals(0, resource.getContents().size());
 		assertFalse(resource.isLoaded());
 	}
@@ -95,8 +95,9 @@ public class DeleteTest extends AbstractProjectUITestCase {
 	 * Test method for 'net.refractions.udig.project.ui.internal.actions.Delete.operate(Project)'
 	 */
 	public void testOperateProject() throws Exception {
-		
+
 		DeleteAccessor deleteAction=new DeleteAccessor();
+        deleteAction.setRunHeadless(true, false);
 		URI projecturi=project.eResource().getURI();
 		Iterator iter=project.eResource().getResourceSet().getResources().iterator();
 		while ( iter.hasNext() ){
@@ -112,18 +113,18 @@ public class DeleteTest extends AbstractProjectUITestCase {
 
         Resource resource = project.eResource();
         IProjectElement elem = project.getElements().get(0);
-        
+
         // Test remove project but leave files
 		deleteAction.runDoDelete(project,false, Window.OK);
 		assertEquals(0, registry.getProjects().size());
 		assertTrue( new File(projecturi.toFileString()).exists() );
         assertFalse(resource.isLoaded());
-        
+
 		Project project=registry.getProject(projecturi);
 		assertEquals(1, project.getElementsInternal().size());
         assertNotSame(elem, project.getElements().get(0));
 		assertEquals(project, project.getElementsInternal().get(0).getProject());
-        
+
         // Test delete from file System
         deleteAction.runDoDelete(project,true, Window.OK);
         assertEquals(0, registry.getProjects().size());
@@ -138,5 +139,5 @@ public class DeleteTest extends AbstractProjectUITestCase {
 			doDelete(element, deleteProjectFiles, returncode);
 		}
 	}
-	
+
 }

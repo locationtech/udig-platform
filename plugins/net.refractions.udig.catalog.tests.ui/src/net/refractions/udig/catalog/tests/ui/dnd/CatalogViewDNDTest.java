@@ -1,6 +1,5 @@
 package net.refractions.udig.catalog.tests.ui.dnd;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
@@ -37,12 +36,8 @@ public class CatalogViewDNDTest extends TestCase {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		try {
-		    catalog = CatalogPlugin.getDefault().getLocalCatalog();
-		}
-		catch( NullPointerException npe ){
-		    fail("Please run as a Plug-in Test");
-		}
+
+		catalog = CatalogPlugin.getDefault().getLocalCatalog();
 		for (Iterator itr = catalog.members(new DummyMonitor()).iterator(); itr
 				.hasNext();) {
 			catalog.remove((IService) itr.next());
@@ -76,7 +71,7 @@ public class CatalogViewDNDTest extends TestCase {
 
             public void starting( IDropAction action ) {
             }
-            
+
         });
 		handler.performDrop(data, null);
 
@@ -116,7 +111,7 @@ public class CatalogViewDNDTest extends TestCase {
 
             public void starting( IDropAction action ) {
             }
-            
+
         });
 
 
@@ -135,7 +130,7 @@ public class CatalogViewDNDTest extends TestCase {
 
 		UDIGTestUtil.inDisplayThreadWait(4000, condition, false);
 //		UDIGTestUtil.inDisplayThreadWait(400000, condition);
-        
+
         if( failure[0]!=null )
             throw failure[0];
 
@@ -158,8 +153,7 @@ public class CatalogViewDNDTest extends TestCase {
 	Object getDataMulti() throws Exception {
 		return new URL[] {
 				new URL(DummyService.url.toExternalForm() + "/dummy1"), //$NON-NLS-1$
-				new URL(DummyService.url.toExternalForm() + "/dummy2"), //$NON-NLS-1$
-				new File("Does Not Exist").toURL() //$NON-NLS-1$
+				new URL(DummyService.url.toExternalForm() + "/dummy2") //$NON-NLS-1$
 		};
 	}
 

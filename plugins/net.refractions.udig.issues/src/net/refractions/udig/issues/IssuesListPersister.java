@@ -35,7 +35,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * Persists an issues list to a file
- * 
+ *
  * @author Jesse
  */
 public class IssuesListPersister {
@@ -74,7 +74,7 @@ public class IssuesListPersister {
 
 	/**
 	 * Saves the issues list to the workspace
-	 * 
+	 *
 	 * @throws IOException
 	 *             Thrown if there is a failure writing the output file.
 	 */
@@ -116,7 +116,7 @@ public class IssuesListPersister {
 
 	/**
 	 * Reads the local issues from disk
-	 * 
+	 *
 	 * @throws IOException
 	 *             thrown if there was a problem reading the issues file
 	 * @throws WorkbenchException

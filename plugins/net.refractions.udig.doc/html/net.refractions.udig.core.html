@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : net.refractions.udig.core</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : net.refractions.udig.core -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>Defines the requirements needed for plug-in developers or scripting services.</p>
+
+<h3><a name="net.refractions.udig.core-FunctionalRequirements">Functional Requirements</a></h3>
+<ul>
+	<li>access to data (in the catalog sense, list of defined datastore/servers)</li>
+	<li>access to viewport (bbox, crsm transaction <em>-What is this?</em>, selection, map layers)</li>
+	<li>access to issues list (is this per viewport? <em>-We should make a definition for view port</em>)</li>
+	<li>ability to define user interface (define view, add menu items/toolbars, key short-cuts)</li>
+	<li>ability to cancel a running operation (framework should provide threads by default)</li>
+	<li>generate progress events</li>
+	<li>versioned (installation metadata) <em>-Elaborate!</em></li>
+	<li>Access to temporary data dump (local filesystem or slave database) for operation results (acts as a staging area from which user can right click and export to real database table - or sync with real database table)</li>
+	<li>should be Transaction Aware (possibly hooked into threading?) <em>-Provide link to transaction</em></li>
+</ul>
+
+
+<h3><a name="net.refractions.udig.core-NonFunctionalRequirements">Non Functional Requirements</a></h3>
+<ul>
+	<li>strong ui guidelines</li>
+</ul>
+
+
+<h3><a name="net.refractions.udig.core-DesignNotes%3A">Design Notes:</a></h3>
+<ul>
+	<li>this plug-in is vastly limited in scope relative to JUMP (focus on hacking data under user control)</li>
+	<li>black board is recomended by JUMP for inter plug-in communication, similar to servlet context</li>
+	<li>Apparently a popular request of JUMP is the wish for a visitor that can be scrubbed over one dataset to produce a second.  Right now jump uses iterator pattern</li>
+	<li>plug-in can just register for the same notifications as the main framework</li>
+</ul>
+
+
+<p>Thanks to Martin for passing on JUMP experience.</p>
+
+<p>Wild Ideas:</p>
+<ul>
+	<li>provide enough glue to hook plug-in up with Source/Destination FeatureStores (Framework or Superclass?)</li>
+	<li>hook threaded by default / destination FeatureStores / progress and Transaction aware together so that<br/>
+ "cancel" or transaction rollback stops everything and cleans up the mess with out explict plug-in developer pain <em>-I can't make sense of this</em></li>
+</ul>
+
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=246">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=246">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

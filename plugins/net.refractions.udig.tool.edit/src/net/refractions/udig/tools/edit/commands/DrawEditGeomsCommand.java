@@ -33,9 +33,9 @@ import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.widgets.Display;
 
 /**
- * Draws all the {@link net.refractions.udig.tools.edit.support.EditGeom}s on the provided 
+ * Draws all the {@link net.refractions.udig.tools.edit.support.EditGeom}s on the provided
  * {@link net.refractions.udig.tools.edit.support.EditBlackboard}
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -50,14 +50,14 @@ public class DrawEditGeomsCommand extends AbstractDrawCommand {
     public DrawEditGeomsCommand( EditToolHandler handler){
         this.handler=handler;
     }
-    
+
     public void run( IProgressMonitor monitor ) throws Exception {
         List<EditGeom> geoms = handler.getEditBlackboard(handler.getEditLayer()).getGeoms();
         for( EditGeom geom : geoms ) {
             if( geom.getShell().getNumPoints()==0 ){
                 continue;
             }
-            
+
             if( geom.getShell().getNumPoints()>0){
                 CurrentEditGeomPathIterator pathIterator = CurrentEditGeomPathIterator.getPathIterator(geom);
                 if( currentShape!=null && currentShape.getEditGeom()==geom )
@@ -84,7 +84,7 @@ public class DrawEditGeomsCommand extends AbstractDrawCommand {
 
             colorStrategy.setLineColor(graphics, geom, handler);
             graphics.drawPath(shape);
-            
+
         }finally{
             shape.dispose();
         }
@@ -94,7 +94,7 @@ public class DrawEditGeomsCommand extends AbstractDrawCommand {
     public void setValid( boolean valid ) {
         super.setValid(valid);
     }
-    
+
     /**
      * @return Returns the currentShape.
      */
@@ -119,7 +119,7 @@ public class DrawEditGeomsCommand extends AbstractDrawCommand {
     public Rectangle getValidArea() {
         return null;
     }
-    
+
     /**
      * Returns the strategy object responsible for choosing the line and fill colors.
      */

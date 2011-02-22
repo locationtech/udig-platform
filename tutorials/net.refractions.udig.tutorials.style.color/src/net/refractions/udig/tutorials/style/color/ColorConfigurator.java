@@ -23,7 +23,7 @@ public class ColorConfigurator extends IStyleConfigurator {
     private Color color;
     private Button button;
     private Label label;
-        
+
     @Override
     public boolean canStyle( Layer layer ) {
         return layer.getStyleBlackboard().get(ColorStyle.ID) != null;
@@ -33,7 +33,7 @@ public class ColorConfigurator extends IStyleConfigurator {
     public void createControl( Composite parent ) {
         parent.setLayout(new FillLayout(SWT.VIRTUAL));
         button = new Button(parent, SWT.DEFAULT );
-        button.setText("Change Color");        
+        button.setText("Change Color");
         label = new Label(parent, SWT.NONE);
         label.setText( "Color" );
     }
@@ -47,7 +47,7 @@ public class ColorConfigurator extends IStyleConfigurator {
             RGB currentRGB = new RGB(color.getRed(), color.getGreen(), color.getBlue());
             dialog.setRGB(currentRGB);
             dialog.open();
-            
+
             RGB rgb = dialog.getRGB();
             color = new Color(rgb.red, rgb.green, rgb.blue);
             getStyleBlackboard().put(ColorStyle.ID, color);
@@ -63,16 +63,16 @@ public class ColorConfigurator extends IStyleConfigurator {
             button.removeSelectionListener( pressed );
         }
     }
-    
+
     @Override
     protected void refresh() {
         getApplyAction().setEnabled(false);
         listen( false );
         try {
             color = (Color) getStyleBlackboard().get( ColorStyle.ID );
-            if( color == null ) {                
+            if( color == null ) {
                 color = Color.BLACK;
-            }            
+            }
             updateLabel();
         }
         finally {

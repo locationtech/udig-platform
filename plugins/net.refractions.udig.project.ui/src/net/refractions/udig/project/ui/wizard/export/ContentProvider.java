@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.ui.wizard.export;
 

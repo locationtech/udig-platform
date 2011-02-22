@@ -27,8 +27,8 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * Creates a hole in a EditGeom and sets it as the currentShape in the handler (if a handler is provided).
- * 
+ * Creates a hole in a EditGeom and sets it as the currentShape in the handler if a handler is provided.
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -39,12 +39,12 @@ public class CreateAndSelectHoleCommand extends AbstractCommand implements Undoa
     private PrimitiveShape oldShape;
     private IBlockingProvider<PrimitiveShape> newShape;
 
-    
+
     public CreateAndSelectHoleCommand( EditToolHandler handler ) {
         this.handler=handler;
         newShape=new EditUtils.EditToolHandlerShapeProvider(handler);
     }
-    
+
     public CreateAndSelectHoleCommand( IBlockingProvider<PrimitiveShape> shape ) {
         this.newShape=shape;
     }
@@ -89,6 +89,6 @@ public class CreateAndSelectHoleCommand extends AbstractCommand implements Undoa
         public PrimitiveShape get(IProgressMonitor monitor, Object... params) {
             return hole;
         }
-        
+
     }
 }

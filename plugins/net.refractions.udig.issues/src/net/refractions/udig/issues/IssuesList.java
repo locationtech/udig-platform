@@ -26,31 +26,31 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.eclipse.ui.WorkbenchException;
+
 import net.refractions.udig.issues.internal.IssuesActivator;
 import net.refractions.udig.issues.listeners.IIssuesListListener;
 import net.refractions.udig.issues.listeners.IssuesListEvent;
 import net.refractions.udig.issues.listeners.IssuesListEventType;
-
-import org.eclipse.ui.WorkbenchException;
 
 
 
 /**
  * An in-memory issues list. All issues will be lost at shut down unless {@link #save()} is
  * called. This is a useful utility class for implementing other issues list
- * implementations. The Datastore issues list (internal implementation) for
+ * implementationss. The Datastore issues list (internal implementation) for
  * example wraps this list and uses it to cache all of its issues.
  * <p>
  * Notifies listeners when issues are added or removed from list.
  * </p>
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
 public class IssuesList extends AbstractSequentialList<IIssue> implements IIssuesList{
 
     LinkedList<IIssue> list=new LinkedList<IIssue>();
-    
+
 	/** long serialVersionUID field */
 	private static final long serialVersionUID = -7157333022429945548L;
 
@@ -77,14 +77,14 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
 		return true;
 	}
 
-	 
+
 	public void add(int index, IIssue element) {
         checkID(element, index);
 		list.add(index, element);
 		notify(element, IssuesListEventType.ADD);
 	}
 
-	 
+
 	public boolean addAll(Collection<? extends IIssue> c) {
 		try {
 			notify = false;
@@ -99,7 +99,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         return true;
 	}
 
-	 
+
 	public boolean addAll(int index, Collection<? extends IIssue> c) {
         boolean doNotify=notify;
 		try {
@@ -115,23 +115,23 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
 		return true;
 	}
 
-	 
+
 	public void addFirst(IIssue o) {
         add(0,o);
 	}
 
-	 
+
 	public void addLast(IIssue o) {
         add(o);
 	}
 
-	 
+
 	public IIssue remove() {
 		IIssue issue = remove(0);
 		return issue;
 	}
 
-	 
+
 	public IIssue remove(int index) {
 		IIssue issue = list.remove(index);
         ids.remove(issue);
@@ -140,7 +140,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
 		return issue;
 	}
 
-	 
+
 	public boolean remove(Object o) {
 		if (o instanceof IIssue) {
 			IIssue issue = (IIssue) o;
@@ -154,7 +154,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
 		return false;
 	}
 
-	 
+
 	public boolean removeAll(Collection<?> c) {
 		Collection<IIssue> i = new HashSet<IIssue>();
 		for (Object object : c) {
@@ -177,17 +177,17 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
 		return v;
 	}
 
-	 
+
 	public IIssue removeFirst() {
 		return remove(0);
 	}
 
-	 
+
 	public IIssue removeLast() {
         return remove(list.size()-1);
 	}
 
-	 
+
 	public IIssue set(int index, IIssue element) {
 		IIssue old = list.set(index, element);
         element.setId(old.getId());
@@ -196,7 +196,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
 		return old;
 	}
 
-	 
+
 	public boolean retainAll(Collection<?> c) {
 		List<IIssue> changed = new LinkedList<IIssue>();
 		boolean modified = false;
@@ -220,7 +220,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
 	}
 
 	@SuppressWarnings("unchecked")
-	 
+
 	public void clear() {
 		List<IIssue> changed;
 		try {
@@ -264,7 +264,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
 			IssuesListEventType type) {
 		if (!notify)
 			return;
-		
+
 		IssuesListEvent issuesListEvent = new IssuesListEvent(changed, type);
 		for (IIssuesListListener listener : listeners) {
             listener.notifyChange(issuesListEvent);
@@ -274,7 +274,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
     /**
      * Notify listeners of a change to the list.
      *
-     * @param changed issue that has changed.  
+     * @param changed issue that has changed.
      * @param type Type of change.
      */
 	public void notify(IIssue changed, IssuesListEventType type) {
@@ -361,5 +361,5 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
 			IssuesActivator.log("Failed to save issues because the file could not be written", e); //$NON-NLS-1$
 		}
 	}
-    
+
 }

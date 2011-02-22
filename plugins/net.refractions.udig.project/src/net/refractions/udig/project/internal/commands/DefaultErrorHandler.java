@@ -15,7 +15,7 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 
 /**
  * A basic ErrorHandler. It simple logs the exception API is this public?
- * 
+ *
  * @author jeichar
  * @since 0.2
  * @see ErrorHandler
@@ -27,7 +27,7 @@ public class DefaultErrorHandler implements ErrorHandler {
      *      Throwable)
      */
     public void handleError( Command command, Throwable e ) {
-        ProjectPlugin.log(command.getName()+" failed to run", e); //$NON-NLS-1$
+        ProjectPlugin.log("", e); //$NON-NLS-1$
     }
 
     /**

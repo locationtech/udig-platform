@@ -16,7 +16,7 @@ package net.refractions.udig.tools.edit;
 
 /**
  * Enumerates the type of Events that a {@link net.refractions.udig.tools.edit.EventBehaviour} can react to.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */

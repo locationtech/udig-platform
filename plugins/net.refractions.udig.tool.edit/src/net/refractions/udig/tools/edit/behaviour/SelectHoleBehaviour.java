@@ -24,14 +24,21 @@ import net.refractions.udig.tools.edit.commands.SelectHoleCommand;
 import net.refractions.udig.tools.edit.support.ShapeType;
 
 /**
- * <p>Requirements: * <ul> * <li>event type == RELEASE</li>
+ * <p>Requirements:
+ * <ul>
+ * <li>event type == RELEASE</li>
  * <li>edit state == MODIFYING </li>
  * <li>no modifiers down</li>
  * <li>button 1 released</li>
  * <li>no buttons down</li>
  * <li>current shape and geom are set and shape is the shell of the geom</li>
- * </ul> * </p> * <p>Action: * <ul> * <li>Selects the clicked hole or nothing</li>
- * </ul> * </p>
+ * </ul>
+ * </p>
+ * <p>Action:
+ * <ul>
+ * <li>Selects the clicked hole or nothing</li>
+ * </ul>
+ * </p>
  * @author jones
  * @since 1.1.0
  */

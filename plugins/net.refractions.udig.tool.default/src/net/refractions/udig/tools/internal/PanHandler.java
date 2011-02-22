@@ -25,12 +25,12 @@ import org.eclipse.core.commands.ExecutionException;
 
 /**
  * Handles the pan right,left,up and down commands
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
 public class PanHandler extends AbstractHandler implements IToolHandler {
-    
+
     private static Pan TOOL;
     private String id;
     private static final String LEFT = "net.refractions.udig.tools.panLeftCommand"; //$NON-NLS-1$
@@ -38,7 +38,7 @@ public class PanHandler extends AbstractHandler implements IToolHandler {
     private static final String UP = "net.refractions.udig.tools.panUpCommand"; //$NON-NLS-1$
     private static final String DOWN = "net.refractions.udig.tools.panDownCommand"; //$NON-NLS-1$
     private static UpdateThread PANNER=UpdateThread.getUpdater();
-    
+
     public void setTool( Tool tool ) {
         TOOL=(Pan) tool;
     }
@@ -61,6 +61,6 @@ public class PanHandler extends AbstractHandler implements IToolHandler {
             PANNER.down(TOOL.getContext(), 1000);
         return null;
     }
-    
+
 
 }

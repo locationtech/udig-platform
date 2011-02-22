@@ -1,17 +1,17 @@
 package net.refractions.udig.issues.test;
 
-import net.refractions.udig.issues.Column;
-import net.refractions.udig.issues.IIssuesLabelProvider;
-
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
+
+import net.refractions.udig.issues.Column;
+import net.refractions.udig.issues.IIssuesLabelProvider;
 
 public class TestLabelProvider {
 
     public static class Provider1 implements IIssuesLabelProvider {
         public static final String HEADERTEXT="header1"; //$NON-NLS-1$
         public static final String ROWTEXT="row1"; //$NON-NLS-1$
-        
+
         public String getExtensionID() {
             return null;
         }
@@ -47,7 +47,7 @@ public class TestLabelProvider {
     public static class Provider2 implements IIssuesLabelProvider {
         public static final String HEADERTEXT="header2"; //$NON-NLS-1$
         public static final String ROWTEXT="row2"; //$NON-NLS-1$
-        
+
         public String getExtensionID() {
             return null;
         }

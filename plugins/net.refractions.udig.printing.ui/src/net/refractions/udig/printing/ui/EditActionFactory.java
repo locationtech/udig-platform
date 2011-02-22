@@ -19,7 +19,7 @@ import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * Creates an action that will be added to the PageEditor's {@link org.eclipse.gef.ui.actions.ActionRegistry}.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

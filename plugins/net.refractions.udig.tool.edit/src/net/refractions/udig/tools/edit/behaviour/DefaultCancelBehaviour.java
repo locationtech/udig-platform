@@ -24,9 +24,9 @@ import net.refractions.udig.tools.edit.commands.DefaultCancelEditingCommand;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
- * This behaviour sets the current state to NONE, the Current Edit SimpleFeature to null, the Current Shape to null and 
+ * This behaviour sets the current state to NONE, the Current Edit Feature to null, the Current Shape to null and
  * clears the current map's blackboards.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

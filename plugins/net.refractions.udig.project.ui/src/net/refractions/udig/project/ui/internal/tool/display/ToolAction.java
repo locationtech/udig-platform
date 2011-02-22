@@ -17,10 +17,11 @@
 package net.refractions.udig.project.ui.internal.tool.display;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * Wraps a ToolProxy.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
@@ -34,7 +35,7 @@ public class ToolAction extends Action {
         setId(tool.getId());
         setText(tool.getName());
         setToolTipText(tool.getToolTipText());
-        if( tool.getImageDescriptor()!=null) 
+        if( tool.getImageDescriptor()!=null)
             setImageDescriptor(tool.getImageDescriptor());
     }
 

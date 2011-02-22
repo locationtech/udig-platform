@@ -22,15 +22,13 @@ import net.refractions.udig.project.command.MapCommand;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureStore;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Obtains the feature store from the current edit layer.
  * @author Jesse
  * @since 1.1.0
  */
-public class EditLayerFeatureStoreProvider implements IBlockingProvider<FeatureStore<SimpleFeatureType, SimpleFeature>> {
+public class EditLayerFeatureStoreProvider implements IBlockingProvider<FeatureStore> {
 
     private IMap map;
     private MapCommand command;
@@ -41,8 +39,8 @@ public class EditLayerFeatureStoreProvider implements IBlockingProvider<FeatureS
     public EditLayerFeatureStoreProvider(MapCommand command) {
         this.command=command;
     }
-    
-    public FeatureStore<SimpleFeatureType, SimpleFeature> get( IProgressMonitor monitor, Object... params ) throws IOException {
+
+    public FeatureStore get( IProgressMonitor monitor, Object... params ) throws IOException {
         if( map==null )
             map=command.getMap();
         return map.getEditManager().getEditLayer().getResource(FeatureStore.class, monitor);

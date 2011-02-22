@@ -42,7 +42,7 @@ import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 /**
  * An Operation for changing the charset of a shapefile datastore. Operations on
  * {@link ShpGeoResourceImpl} or {@link IService}
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -51,7 +51,7 @@ public class CharsetChange implements IOp {
 
     public void op( final Display display, Object target, IProgressMonitor monitor )
             throws Exception {
-        
+
         final IService[] services = toService((Object[]) target);
 
         display.asyncExec(new Runnable(){
@@ -80,23 +80,19 @@ public class CharsetChange implements IOp {
                         for( IService service : services ) {
                             Map<String, Serializable> params = new HashMap<String, Serializable>(service
                                     .getConnectionParams());
-                            params.put(ShapefileDataStoreFactory.DBFCHARSET.key, newCharset.name());
-                            
+                            params.put(ShapefileDataStoreFactory.CHARSET.key, newCharset.name());
+
                             IService newService = extension.createService(service.getIdentifier(), params);
-                            CatalogPlugin.getDefault().getLocalCatalog().replace(service.getID(), newService);
+                            CatalogPlugin.getDefault().getLocalCatalog().replace(service.getIdentifier(), newService);
                         }
                     }
-                    
+
                 });
             }
 
             private Charset getCharset( IService serviceImpl ) throws IOException {
-                Object lookUp = ShapefileDataStoreFactory.DBFCHARSET.lookUp(serviceImpl
+                String name = (String) ShapefileDataStoreFactory.CHARSET.lookUp(serviceImpl
                         .getConnectionParams());
-                String name = null;
-                if (lookUp instanceof String) {
-                    name = (String) lookUp;
-                }
                 if( name==null ){
                     return Charset.defaultCharset();
                 }

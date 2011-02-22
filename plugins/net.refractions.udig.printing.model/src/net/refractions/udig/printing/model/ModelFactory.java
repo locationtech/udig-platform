@@ -18,59 +18,59 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface ModelFactory extends EFactory{
 	/**
-     * The singleton instance of the factory.
-     * <!-- begin-user-doc -->
+	 * The singleton instance of the factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    ModelFactory eINSTANCE = net.refractions.udig.printing.model.impl.ModelFactoryImpl.init();
+	 * @generated
+	 */
+    ModelFactory eINSTANCE = new net.refractions.udig.printing.model.impl.ModelFactoryImpl();
 
 	/**
-     * Returns a new object of class '<em>Box</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Box</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Box</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Box</em>'.
+	 * @generated
+	 */
     Box createBox();
 
 	/**
-     * Returns a new object of class '<em>Connection</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Connection</em>'.
+	 * <!-- begin-user-doc -->
 	 * @see Connection
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Connection</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Connection</em>'.
+	 * @generated
+	 */
     Connection createConnection();
 
 	/**
-     * Returns a new object of class '<em>Element</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Element</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Element</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Element</em>'.
+	 * @generated
+	 */
     Element createElement();
 
 	/**
-     * Returns a new object of class '<em>Page</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Page</em>'.
+	 * <!-- begin-user-doc -->
 	 * @see Page
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Page</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Page</em>'.
+	 * @generated
+	 */
     Page createPage();
 
 	/**
-     * Returns the package supported by this factory.
-     * <!-- begin-user-doc -->
+	 * Returns the package supported by this factory.
+	 * <!-- begin-user-doc -->
 	 * @see ModelPackage
      * <!-- end-user-doc -->
-     * @return the package supported by this factory.
-     * @generated
-     */
+	 * @return the package supported by this factory.
+	 * @generated
+	 */
     ModelPackage getModelPackage();
 
 } //ModelFactory

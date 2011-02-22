@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 
 /**
- * Context used by a tool to access the model and issue commands.
+ * A set of tools that is provided to Tool extensions.
  * <p>
  * In addition to the references available in the Toolkit class, ToolContext provides access to
  * command factories and and to sendCommand methods.
@@ -43,42 +43,41 @@ import org.eclipse.ui.IWorkbench;
  * versions</li>
  * </ul>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 0.5
  */
 public interface ToolContext extends IToolContext, AbstractContext {
     /**
      * Casts getDisplay to ViewportPane;
-     * 
+     *
      * @return getDisplay cast to ViewportPane
      */
     ViewportPane getViewportPane();
     /**
      * Returns a DrawCommandFactory
-     * 
+     *
      * @return a DrawCommandFactory
      */
     DrawCommandFactory getDrawFactory();
     /**
      * Returns a EditCommandFactory
-     * 
+     *
      * @return a EditCommandFactory
      */
     EditCommandFactory getEditFactory();
 
     /**
      * Returns a NavigationCommandFactory
-     * 
+     *
      * @return a NavigationCommandFactory
-     * @deprecated Please use navigation commands directly
      */
     NavigationCommandFactory getNavigationFactory();
     /**
      * Returns the current workbench.
      * <p>
      * Convenience for PlatformUI.getWorkbench()
-     * 
+     *
      * @return the current workbench.
      */
     IWorkbench getWorkbench();
@@ -87,13 +86,13 @@ public interface ToolContext extends IToolContext, AbstractContext {
      * <p>
      * Convenience for Display.getDefault()
      * </p>
-     * 
+     *
      * @return the default display.
      */
     Display getDisplay();
     /**
      * Logs an exception to the current plugin.
-     * 
+     *
      * @param currentPlugin the plugin that the exception will be logged in.
      * @param message the message to log
      * @param severity the severity of the exception. IF null ERROR will be assumed.
@@ -105,7 +104,7 @@ public interface ToolContext extends IToolContext, AbstractContext {
     void log( Plugin currentPlugin, String message, int severity, Throwable exception );
     /**
      * Returns a SelectionCommandFactory
-     * 
+     *
      * @return a SelectionCommandFactory�
      */
     SelectionCommandFactory getSelectionFactory();

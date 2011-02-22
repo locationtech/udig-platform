@@ -25,15 +25,14 @@ import net.refractions.udig.project.internal.Messages;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureStore;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
+import org.geotools.feature.Feature;
+import org.geotools.filter.Filter;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Deletes a set of features based on a filter.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -48,7 +47,7 @@ public class DeleteManyFeaturesCommand extends AbstractCommand {
     }
 
     public void run( IProgressMonitor monitor ) throws Exception {
-    	FeatureStore<SimpleFeatureType, SimpleFeature> fs = ilayer.getResource(FeatureStore.class, monitor);
+        FeatureStore fs = ilayer.getResource(FeatureStore.class, monitor);
         Layer layer=null;
         if( ilayer instanceof Layer ){
             layer=(Layer)ilayer;
@@ -60,10 +59,9 @@ public class DeleteManyFeaturesCommand extends AbstractCommand {
                 events=layer.getFeatureChanges().size();
             }
         fs.removeFeatures(filter);
-        
         IEditManager editManager = getMap().getEditManager();
-        SimpleFeature editFeature = editManager.getEditFeature();
-        if (editFeature!=null && editManager.getEditLayer()==ilayer && filter.evaluate(editFeature))
+        Feature editFeature = editManager.getEditFeature();
+        if (editFeature!=null && editManager.getEditLayer()==ilayer && filter.contains(editFeature))
             getMap().getEditManagerInternal().setEditFeature(null, null);
         }finally{
             fireFeatureChangeEvent(layer, events);
@@ -90,7 +88,7 @@ public class DeleteManyFeaturesCommand extends AbstractCommand {
     }
 
     public String getName() {
-        return Messages.DeleteManyFeaturesCommand_name; 
+        return Messages.DeleteManyFeaturesCommand_name;
     }
 
 }

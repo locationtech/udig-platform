@@ -28,7 +28,7 @@ public class CSVGeoResourceInfo extends IGeoResourceInfo {
             while( reader.readRecord() ){
                 Point point = CSV.getPoint( reader );
                 if( point == null ) continue;
-                this.bounds.expandToInclude(point.getCoordinate());                
+                this.bounds.expandToInclude(point.getCoordinate());
             }
         }
         finally {

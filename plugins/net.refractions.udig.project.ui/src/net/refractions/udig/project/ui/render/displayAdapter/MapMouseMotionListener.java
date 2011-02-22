@@ -10,14 +10,14 @@ package net.refractions.udig.project.ui.render.displayAdapter;
 
 /**
  * A Listener that is interested in mouse motion events. API use?
- * 
+ *
  * @author Jones
  * @since 0.3
  */
 public interface MapMouseMotionListener {
     /**
      * called when a mouse is moved <b>without </b> buttons down.
-     * 
+     *
      * @param event The event data.
      * @see MapMouseEvent
      */
@@ -25,7 +25,7 @@ public interface MapMouseMotionListener {
 
     /**
      * Called when a mouse is moved <b>with </b> buttons down.
-     * 
+     *
      * @param event The event data.
      * @see MapMouseEvent
      */

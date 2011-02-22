@@ -23,7 +23,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * TODO Purpose of net.refractions.udig.project.internal.command.navigation
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -40,7 +40,7 @@ public abstract class AbstractNavCommand implements NavCommand {
 	/**
 	 * @see net.refractions.udig.project.internal.command.UndoableCommand#rollback()
 	 */
-	public void rollback(IProgressMonitor monitor) throws Exception {      
+	public void rollback(IProgressMonitor monitor) throws Exception {
 	    if ( model == null ){
         // what happens if this gets into the wrong stack.  For example if it is part of a composite command.
         return;
@@ -74,7 +74,7 @@ public abstract class AbstractNavCommand implements NavCommand {
 
 	/**
 	 * This where the actual implementation of subclasses should go.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	protected abstract void runImpl(IProgressMonitor monitor) throws Exception;

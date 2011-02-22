@@ -31,7 +31,7 @@ import org.eclipse.ui.XMLMemento;
 
 /**
  * Manages fixing issues.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -72,13 +72,13 @@ public class IssueHandler {
                 }
             }
             IPerspectiveDescriptor p = PlatformUI.getWorkbench().getPerspectiveRegistry()
-                    .findPerspectiveWithId(targetP); 
+                    .findPerspectiveWithId(targetP);
             activeWorkbenchWindow.getActivePage().setPerspective(p);
             activeWorkbenchWindow.getActivePage().showView(IssueConstants.VIEW_ID);
 
         } catch (WorkbenchException e) {
             ProjectUIPlugin.log(
-                    Messages.IssueHandler_error_perspective + issue.getProblemObject(), 
+                    Messages.IssueHandler_error_perspective + issue.getProblemObject(),
                     e);
         }
 
@@ -90,19 +90,19 @@ public class IssueHandler {
             return;
         IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         try {
-            
+
             view = page.showView(issue.getViewPartId());
             XMLMemento memento=XMLMemento.createWriteRoot("root"); //$NON-NLS-1$
             issue.getViewMemento(memento);
             view.init(view.getViewSite(), memento);
         } catch (PartInitException e) {
             ProjectUIPlugin.log(
-                    Messages.IssueHandler_error_view + issue.getProblemObject(), e); 
+                    Messages.IssueHandler_error_view + issue.getProblemObject(), e);
         }
     }
 
 
-    
+
     public void restoreEditor() {
     	hasRestoredEditor=true;
         if (issue.getEditorInput() == null || issue.getEditorID() == null)
@@ -113,7 +113,7 @@ public class IssueHandler {
                     .openEditor(issue.getEditorInput(), issue.getEditorID());
         } catch (PartInitException e) {
             ProjectUIPlugin.log(
-                    Messages.IssueHandler_error_editor + issue.getProblemObject(), e); 
+                    Messages.IssueHandler_error_editor + issue.getProblemObject(), e);
         }
 
     }

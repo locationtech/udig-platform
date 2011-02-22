@@ -27,30 +27,29 @@ import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.geotools.data.FeatureSource;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.GeometryDescriptor;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.GeometryAttributeType;
 
 /**
- * A Descriptor for a SimpleFeatureType aka Schema for the properties view.
- * 
+ * A Descriptor for a FeatureType aka Schema for the properties view.
+ *
  * @author jeichar
  * @since 1.0.0
  */
 public class SchemaDescriptor extends PropertyDescriptor implements IPropertySource {
 
     private IPropertyDescriptor[] descriptors;
-    private SimpleFeatureType type;
+    private FeatureType type;
 
     /**
      * Creates a new instance of FeatureSourceDescriptor
-     * 
+     *
      * @param id
      * @param name
      * @param source
      */
-    public SchemaDescriptor( Object id, String name,  FeatureSource<SimpleFeatureType, SimpleFeature> source ) {
+    public SchemaDescriptor( Object id, String name, FeatureSource source ) {
         super(id, name);
         type = source.getSchema();
     }
@@ -76,16 +75,16 @@ public class SchemaDescriptor extends PropertyDescriptor implements IPropertySou
     public IPropertyDescriptor[] getPropertyDescriptors() {
         if (descriptors == null) {
             List<IPropertyDescriptor> desc = new ArrayList<IPropertyDescriptor>();
-            AttributeDescriptor[] attrs = type.getAttributeDescriptors().toArray(new AttributeDescriptor[0]);
+            AttributeType[] attrs = type.getAttributeTypes();
             PropertyDescriptor d;
             for( int i = 0; i < attrs.length; i++ ) {
-                String name = attrs[i].getLocalName().toLowerCase();
+                String name = attrs[i].getName().toLowerCase();
                 name = name.substring(0, 1).toUpperCase() + name.substring(1);
                 d = new PropertyDescriptor(Integer.valueOf(i), name);
-                if ( attrs[i] instanceof GeometryDescriptor ) 
-                    d.setCategory(Messages.ScemaDescriptor_geometry); 
+                if ( attrs[i] instanceof GeometryAttributeType )
+                    d.setCategory(Messages.ScemaDescriptor_geometry);
                 else
-                    d.setCategory(Messages.ScemaDescriptor_attributeTypes); 
+                    d.setCategory(Messages.ScemaDescriptor_attributeTypes);
                 desc.add(d);
             }
             descriptors = new IPropertyDescriptor[desc.size()];
@@ -101,7 +100,7 @@ public class SchemaDescriptor extends PropertyDescriptor implements IPropertySou
      */
     public Object getPropertyValue( Object id ) {
         int i = ((Integer) id).intValue();
-        String name = type.getDescriptor(i).getType().getBinding().getName();
+        String name = type.getAttributeType(i).getType().getName();
         return name.substring(name.lastIndexOf('.') + 1);
     }
 

@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Issues Test Plug-in
 Bundle-SymbolicName: net.refractions.udig.issues.test;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.0.0
 Bundle-Activator: net.refractions.udig.issues.test.IssuesTestActivator
-Bundle-Vendor: udig.refractions.net
+Bundle-Vendor: Refractions Research
+Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.issues,
  net.refractions.udig.project.tests.ui
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-LazyStart: true

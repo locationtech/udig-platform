@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Requirements for this script to run
-# The directory where this script is 
+# The directory where this script is
 
 printHelp()
 {
@@ -20,7 +20,7 @@ prepareMac()
 
   unzip -q $MACOSX
   rm $MACOSX
-  
+
   echo "Restructuring zip file"
   cd udig
   mv -f configuration/Info.plist udig.app/Contents/Info.plist
@@ -63,8 +63,8 @@ prepareWindows()
   cp -R $BIN/win-installer $FILES/
   cd $FILES
 
-  
-  if [ -d "$FILES/eclipse" ]; then 
+
+  if [ -d "$FILES/eclipse" ]; then
     rm -rf $FILES/eclipse
   fi
 
@@ -84,7 +84,7 @@ prepareWindows()
     echo "Cannot create rename the root directory of uDig to $FILES/eclipse"
     exit 0;
   fi
-  
+
   cp -R $FILES/win-installer/win-jre eclipse/jre
   cp -R $FILES/win-installer/icons eclipse/
   cp $FILES/win-installer/LGPL.txt ./

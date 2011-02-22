@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -26,7 +27,7 @@ public class SLDPlugin extends AbstractUIPlugin {
     private ResourceBundle resourceBundle;
 
     private Images images = new Images();
-    
+
     /**
      * The constructor.
      */
@@ -41,7 +42,7 @@ public class SLDPlugin extends AbstractUIPlugin {
     public void start( BundleContext context ) throws Exception {
         super.start(context);
         final URL iconsUrl = context.getBundle().getEntry( ICONS_PATH );
-        images.initializeImages( iconsUrl, getImageRegistry() );        
+        images.initializeImages( iconsUrl, getImageRegistry() );
     }
 
     /**
@@ -85,7 +86,7 @@ public class SLDPlugin extends AbstractUIPlugin {
         }
         return resourceBundle;
     }
-    
+
     /**
      * Writes an info log in the plugin's log.
      * <p>
@@ -107,7 +108,7 @@ public class SLDPlugin extends AbstractUIPlugin {
      * }
      */
     public static void trace( String message, Throwable e) {
-        if( getDefault().isDebugging() ) {            
+        if( getDefault().isDebugging() ) {
             if( message != null ) System.out.println( message );
             if( e != null ) e.printStackTrace();
         }
@@ -119,17 +120,17 @@ public class SLDPlugin extends AbstractUIPlugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ){
         return getDefault().isDebugging() &&
-            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
-    
+
     /**
      * Images instance for use with ImageConstants.
-     * 
+     *
      * @return Images for use with ImageConstants.
      */
     public Images getImages() {

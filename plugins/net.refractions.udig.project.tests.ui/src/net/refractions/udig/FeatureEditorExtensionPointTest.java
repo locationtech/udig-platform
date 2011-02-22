@@ -11,30 +11,27 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.feature.DefaultAttributeTypeFactory;
+import org.geotools.feature.DefaultFeatureTypeFactory;
+import org.geotools.feature.FeatureTypeBuilder;
+import org.geotools.feature.GeometryAttributeType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiLineString;
 
 public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
-    
-    
+
+
     @SuppressWarnings("deprecation")
     public void testGetEditWithMenu() throws Exception{
         FeatureEditorExtensionProcessor processor=new FeatureEditorExtensionProcessor();
         IContributionItem item=processor.getEditWithFeatureMenu(new StructuredSelection());
         assertTrue(item instanceof GroupMarker);
-        SimpleFeatureTypeBuilder builder=new SimpleFeatureTypeBuilder();
+        FeatureTypeBuilder builder=new DefaultFeatureTypeFactory();
         builder.setName("testType"); //$NON-NLS-1$
-        builder.setNamespaceURI(new URI("http://test.uri")); //$NON-NLS-1$
-        builder.add("geo",Geometry.class); //$NON-NLS-1$
-        builder.setDefaultGeometry("geo");
-        SimpleFeatureType featureType = builder.buildFeatureType();
-		Object[] defaultAtts = new Object[]{null};
-		String id = "id";
-		item = processor.getEditWithFeatureMenu(new StructuredSelection(SimpleFeatureBuilder.build(featureType, defaultAtts, id)));
+        builder.setNamespace(new URI("http://test.uri")); //$NON-NLS-1$
+        builder.setDefaultGeometry((GeometryAttributeType) DefaultAttributeTypeFactory.newAttributeType("geo",Geometry.class)); //$NON-NLS-1$
+        item = processor.getEditWithFeatureMenu(new StructuredSelection(builder.getFeatureType().create(new Object[]{null})));
         MenuManager manager=(MenuManager) item;
         assertTrue(0<((MenuManager) item).getItems().length );
         assertNotNull(manager.find("net.refractions.udig.feature.editor.MatchAnyGeom")); //$NON-NLS-1$
@@ -42,12 +39,11 @@ public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
         assertNotNull(manager.find("net.refractions.udig.feature.editor.MatchOnTypeName")); //$NON-NLS-1$
         assertNull(manager.find("net.refractions.udig.feature.editor.NeverShown")); //$NON-NLS-1$
 
-        builder=new SimpleFeatureTypeBuilder();
+        builder=new DefaultFeatureTypeFactory();
         builder.setName("testType2"); //$NON-NLS-1$
-        builder.setNamespaceURI(new URI("http://test.uri")); //$NON-NLS-1$
-        builder.add("the_geom",MultiLineString.class);
-        StructuredSelection selection = new StructuredSelection(SimpleFeatureBuilder.build(builder.buildFeatureType(), defaultAtts, id));
-		item = processor.getEditWithFeatureMenu(selection);
+        builder.setNamespace(new URI("http://test.uri")); //$NON-NLS-1$
+        builder.setDefaultGeometry((GeometryAttributeType) DefaultAttributeTypeFactory.newAttributeType("the_geom",MultiLineString.class)); //$NON-NLS-1$
+        item = processor.getEditWithFeatureMenu(new StructuredSelection(builder.getFeatureType().create(new Object[]{null})));
         manager=(MenuManager) item;
         assertTrue(0<((MenuManager) item).getItems().length );
         assertNull(manager.find("net.refractions.udig.feature.editor.MatchAnyGeom")); //$NON-NLS-1$
@@ -55,11 +51,11 @@ public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
         assertNull(manager.find("net.refractions.udig.feature.editor.MatchOnTypeName")); //$NON-NLS-1$
         assertNull(manager.find("net.refractions.udig.feature.editor.NeverShown")); //$NON-NLS-1$
 
-        builder=new SimpleFeatureTypeBuilder();
+        builder=new DefaultFeatureTypeFactory();
         builder.setName("testType"); //$NON-NLS-1$
-        builder.setNamespaceURI(new URI("http://test.uri1")); //$NON-NLS-1$
-        builder.add("the_geom",Geometry.class); //$NON-NLS-1$
-        item = processor.getEditWithFeatureMenu(new StructuredSelection(SimpleFeatureBuilder.build(builder.buildFeatureType(), defaultAtts, id)));
+        builder.setNamespace(new URI("http://test.uri1")); //$NON-NLS-1$
+        builder.setDefaultGeometry((GeometryAttributeType) DefaultAttributeTypeFactory.newAttributeType("the_geom",Geometry.class)); //$NON-NLS-1$
+        item = processor.getEditWithFeatureMenu(new StructuredSelection(builder.getFeatureType().create(new Object[]{null})));
         manager=(MenuManager) item;
         assertTrue(0<((MenuManager) item).getItems().length );
         assertNotNull(manager.find("net.refractions.udig.feature.editor.MatchAnyGeom")); //$NON-NLS-1$
@@ -67,10 +63,10 @@ public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
         assertNull(manager.find("net.refractions.udig.feature.editor.MatchOnTypeName")); //$NON-NLS-1$
         assertNull(manager.find("net.refractions.udig.feature.editor.NeverShown")); //$NON-NLS-1$
 
-        builder=new SimpleFeatureTypeBuilder();
+        builder=new DefaultFeatureTypeFactory();
         builder.setName("testType"); //$NON-NLS-1$
-        builder.setNamespaceURI(new URI("http://test.uri1")); //$NON-NLS-1$
-        item = processor.getEditWithFeatureMenu(new StructuredSelection(SimpleFeatureBuilder.build(builder.buildFeatureType(), new Object[0], id)));
+        builder.setNamespace(new URI("http://test.uri1")); //$NON-NLS-1$
+        item = processor.getEditWithFeatureMenu(new StructuredSelection(builder.getFeatureType().create(new Object[]{})));
         manager=(MenuManager) item;
         assertTrue(0<((MenuManager) item).getItems().length );
         assertNull(manager.find("net.refractions.udig.feature.editor.MatchAnyGeom")); //$NON-NLS-1$
@@ -78,18 +74,16 @@ public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
         assertNull(manager.find("net.refractions.udig.feature.editor.MatchOnTypeName")); //$NON-NLS-1$
         assertNull(manager.find("net.refractions.udig.feature.editor.NeverShown")); //$NON-NLS-1$
     }
-    
+
     @SuppressWarnings("deprecation")
     public void testOpenMemory()throws Exception{
         FeatureEditorExtensionProcessor processor=new FeatureEditorExtensionProcessor();
-        SimpleFeatureTypeBuilder builder=new SimpleFeatureTypeBuilder();
-        
+        FeatureTypeBuilder builder=new DefaultFeatureTypeFactory();
+
         builder.setName("testType"); //$NON-NLS-1$
-        builder.setNamespaceURI(new URI("http://test.uri")); //$NON-NLS-1$
-        builder.add("the_geo",Geometry.class); //$NON-NLS-1$
-        Object[] defaultAtts = new Object[]{null};
-		String id = "id";
-		StructuredSelection selection1 = new StructuredSelection(SimpleFeatureBuilder.build(builder.buildFeatureType(), defaultAtts, id));
+        builder.setNamespace(new URI("http://test.uri")); //$NON-NLS-1$
+        builder.setDefaultGeometry((GeometryAttributeType) DefaultAttributeTypeFactory.newAttributeType("the_geo",Geometry.class)); //$NON-NLS-1$
+        StructuredSelection selection1 = new StructuredSelection(builder.getFeatureType().create(new Object[]{null}));
         IContributionItem item = processor.getEditFeatureAction(selection1);
         assertEquals( "net.refractions.udig.feature.editor.MatchOnTypeName", item.getId() ); //$NON-NLS-1$
 
@@ -102,7 +96,7 @@ public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
                 item=item2;
                 //simulate the ui menubutton being pressed.
                 ((ActionContributionItem)item2).getAction().setChecked(true);
-                
+
                 ((ActionContributionItem)item2).getAction().runWithEvent(event);
                 break;
             }
@@ -111,12 +105,12 @@ public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
         editWith=(MenuManager) processor.getEditWithFeatureMenu(selection1);
         item= editWith.findUsingPath(item.getId());
         assertTrue( ((ActionContributionItem)item).getAction().isChecked() );
-        
-        SimpleFeatureTypeBuilder builder2 = new SimpleFeatureTypeBuilder();
+
+        DefaultFeatureTypeFactory builder2 = new DefaultFeatureTypeFactory();
         builder2.setName("testType"); //$NON-NLS-1$
-        builder2.setNamespaceURI(new URI("http://test.uri1")); //$NON-NLS-1$
-        builder2.add("geo",Geometry.class); //$NON-NLS-1$
-        StructuredSelection selection2 = new StructuredSelection(SimpleFeatureBuilder.build(builder.buildFeatureType(), defaultAtts, id));
+        builder2.setNamespace(new URI("http://test.uri1")); //$NON-NLS-1$
+        builder2.setDefaultGeometry((GeometryAttributeType) DefaultAttributeTypeFactory.newAttributeType("geo",Geometry.class)); //$NON-NLS-1$
+        StructuredSelection selection2 = new StructuredSelection(builder2.getFeatureType().create(new Object[]{null}));
         IContributionItem item6 = processor.getEditFeatureAction(selection2);
         assertEquals( "net.refractions.udig.feature.editor.MatchGeomNamedGeo", item6.getId() ); //$NON-NLS-1$
 
@@ -131,7 +125,7 @@ public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
                 break;
             }
         }
-        
+
         assertSame(item6.getId(), processor.getEditFeatureAction(selection2).getId());
         editWith=(MenuManager) processor.getEditWithFeatureMenu(selection1);
         item6= editWith.findUsingPath(item6.getId());

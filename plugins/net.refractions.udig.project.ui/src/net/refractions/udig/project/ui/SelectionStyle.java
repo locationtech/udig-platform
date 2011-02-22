@@ -3,39 +3,39 @@ package net.refractions.udig.project.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.ProjectBlackboardConstants;
+import net.refractions.udig.project.interceptor.ShowViewInterceptor;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.render.SelectionLayer;
 
-import org.opengis.filter.Filter;
+import org.geotools.filter.Filter;
 
 /**
  * Describes how to handle a layer's selection.
- * 
+ *
  * @author Jesse
  */
-public class SelectionStyle {
-    
+public class SelectionStyle{
+
     /**
      * Don't draw the selections
      */
-    public static final SelectionStyle IGNORE = new SelectionStyle(Style.IGNORE); 
+    public static final SelectionStyle IGNORE = new SelectionStyle(Style.IGNORE);
     /**
-     * Overlay the selection on top of the normal rendering 
+     * Overlay the selection on top of the normal rendering
      */
-    public static final SelectionStyle OVERLAY = new SelectionStyle(Style.OVERLAY);  
+    public static final SelectionStyle OVERLAY = new SelectionStyle(Style.OVERLAY);
     /**
      * Only draw the selection but as normal features
      */
-    public static final SelectionStyle EXCLUSIVE = new SelectionStyle(Style.EXCLUSIVE);  
+    public static final SelectionStyle EXCLUSIVE = new SelectionStyle(Style.EXCLUSIVE);
     /**
      * Only draw the selection but using the selection style
      */
-    public static final SelectionStyle EXCLUSIVE_SELECTION = new SelectionStyle(Style.EXCLUSIVE_SELECTION); 
+    public static final SelectionStyle EXCLUSIVE_SELECTION = new SelectionStyle(Style.EXCLUSIVE_SELECTION);
     /**
      * Draw the selection when there is a selection, draw the rest as normal
      */
-    public static final SelectionStyle EXCLUSIVE_ALL = new SelectionStyle(Style.EXCLUSIVE_ALL); 
+    public static final SelectionStyle EXCLUSIVE_ALL = new SelectionStyle(Style.EXCLUSIVE_ALL);
     /**
      * Draw the selection when there is a selection, draw the rest as normal
      * <p>
@@ -43,56 +43,53 @@ public class SelectionStyle {
      * </p>
      */
     public static final SelectionStyle EXCLUSIVE_ALL_SELECTION = new SelectionStyle(Style.EXCLUSIVE_ALL_SELECTION);
-    
+
     private Style style;
-    private boolean showLabels;
 
    protected SelectionStyle() {
        // for extenders
    }
-    
+
     public SelectionStyle( Style style ) {
         this.style = style;
-        this.showLabels = false;
     }
-    
-    
+
     protected List<Layer> handleSelection(List<Layer> layersInternal) {
-        
+
         ArrayList<Layer> toRender = new ArrayList<Layer>(layersInternal);
         for (Layer layer : layersInternal) {
             Filter selectionFilter = layer.getFilter();
             switch (style) {
             case EXCLUSIVE:
-                if( selectionFilter!=Filter.EXCLUDE){
-                    layer.getStyleBlackboard().put(ProjectBlackboardConstants.LAYER__DATA_QUERY, selectionFilter);
+                if( selectionFilter!=Filter.ALL){
+                    layer.getStyleBlackboard().put(ShowViewInterceptor.KEY, selectionFilter);
                 } else {
                     toRender.remove(layer);
                 }
                 break;
             case EXCLUSIVE_ALL:
-                if( selectionFilter!=Filter.EXCLUDE){
-                    layer.getStyleBlackboard().put(ProjectBlackboardConstants.LAYER__DATA_QUERY, selectionFilter);
+                if( selectionFilter!=Filter.ALL){
+                    layer.getStyleBlackboard().put(ShowViewInterceptor.KEY, selectionFilter);
                 }
                 break;
             case EXCLUSIVE_SELECTION:
-                if( selectionFilter!=Filter.EXCLUDE){
+                if( selectionFilter!=Filter.ALL){
                     SelectionLayer selectionLayer = new SelectionLayer(layer);
-                    selectionLayer.getStyleBlackboard().put(ProjectBlackboardConstants.LAYER__DATA_QUERY, selectionFilter);
+                    selectionLayer.getStyleBlackboard().put(ShowViewInterceptor.KEY, selectionFilter);
                     toRender.set(toRender.indexOf(layer), selectionLayer);
-                }else{  
+                }else{
                     toRender.remove(layer);
                 }
                 break;
             case EXCLUSIVE_ALL_SELECTION:
-                if( selectionFilter!=Filter.EXCLUDE){
+                if( selectionFilter!=Filter.ALL){
                     SelectionLayer selectionLayer = new SelectionLayer(layer);
-                    selectionLayer.getStyleBlackboard().put(ProjectBlackboardConstants.LAYER__DATA_QUERY, selectionFilter);
+                    selectionLayer.getStyleBlackboard().put(ShowViewInterceptor.KEY, selectionFilter);
                     toRender.set(toRender.indexOf(layer), selectionLayer);
                 }
                 break;
             case OVERLAY:
-                if( selectionFilter!=Filter.EXCLUDE){
+                if( selectionFilter!=Filter.ALL){
                     toRender.add(0, new SelectionLayer(layer));
                 }
                 break;
@@ -100,17 +97,17 @@ public class SelectionStyle {
             default:
                 break;
             }
-    
+
         }
         return toRender;
     }
 
-    
+
 
     private static enum Style{
-        IGNORE, 
-        OVERLAY, 
-        EXCLUSIVE, 
+        IGNORE,
+        OVERLAY,
+        EXCLUSIVE,
         EXCLUSIVE_SELECTION,
         EXCLUSIVE_ALL,
         EXCLUSIVE_ALL_SELECTION;
@@ -125,14 +122,6 @@ public class SelectionStyle {
         return style.name();
     }
 
-    public void setShowLabels(boolean b){
-        showLabels = b;
-    }
-    
-    public boolean getShowLabels() {
-        return showLabels;
-    }
-    
     /**
      * Given a name returned by {@link #name()} this class returns one of the defaults
      *

@@ -24,13 +24,6 @@
                type="java.net.URL">
          </adapter>
       </factory>
-	  <factory
-            adaptableType="net.refractions.udig.catalog.IService"
-            class="net.refractions.udig.tutorials.urladapter.URLAdapterFactory">
-         <adapter
-               type="java.net.URL">
-         </adapter>
-      </factory>
    </extension>
 
 </plugin>

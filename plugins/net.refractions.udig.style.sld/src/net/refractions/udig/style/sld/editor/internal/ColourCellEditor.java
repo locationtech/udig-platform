@@ -1,24 +1,15 @@
-/* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2010, Refractions Research Inc.
- * (C) 2000, 2004 IBM Corporation and others
- * ------
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation;
- * version 2.1 of the License.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * --------
+package net.refractions.udig.style.sld.editor.internal;
+
+/*******************************************************************************
+ * Copyright (c) 2000, 2004 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- */
-package net.refractions.udig.style.sld.editor.internal;
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
 
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.SWT;
@@ -39,7 +30,7 @@ import org.eclipse.swt.widgets.Shell;
 public class ColourCellEditor extends CellEditor {
 
         Object value;
-        
+
         /**
          * Internal class for laying out this cell editor.
          */
@@ -73,7 +64,7 @@ public class ColourCellEditor extends CellEditor {
 //
         /**
          * Creates a new color cell editor parented under the given control.
-         * The cell editor value is black (<code>RGB(0,0,0)</code>) initially, and has no 
+         * The cell editor value is black (<code>RGB(0,0,0)</code>) initially, and has no
          * validator.
          *
          * @param parent the parent control
@@ -84,7 +75,7 @@ public class ColourCellEditor extends CellEditor {
 
         /**
          * Creates a new color cell editor parented under the given control.
-         * The cell editor value is black (<code>RGB(0,0,0)</code>) initially, and has no 
+         * The cell editor value is black (<code>RGB(0,0,0)</code>) initially, and has no
          * validator.
          *
          * @param parent the parent control
@@ -98,7 +89,7 @@ public class ColourCellEditor extends CellEditor {
 //
 //        /**
 //         * Creates and returns the color image data for the given control
-//         * and RGB value. The image's size is either the control's item extent 
+//         * and RGB value. The image's size is either the control's item extent
 //         * or the cell editor's default extent, which is 16 pixels square.
 //         *
 //         * @param w the control
@@ -192,7 +183,7 @@ public class ColourCellEditor extends CellEditor {
         @Override
         protected Control createControl( Composite cell ) {
             //we won't actually create a control, but we'll spawn a dialog
-            
+
 //            Color bg = cell.getBackground();
 //            composite = new Composite(cell, getStyle());
 //            composite.setBackground(bg);

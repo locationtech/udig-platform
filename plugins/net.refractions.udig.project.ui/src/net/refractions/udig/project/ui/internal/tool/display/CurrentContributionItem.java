@@ -19,14 +19,14 @@ package net.refractions.udig.project.ui.internal.tool.display;
 import org.eclipse.jface.action.ContributionItem;
 
 /**
- * 
- * 
+ *
+ *
  * @version UDIG 1.1
  *
  */
 public abstract class CurrentContributionItem extends ContributionItem {
-	
-	
+
+
 	/**
 	 * Enablement of the contribution item.
 	 */
@@ -41,20 +41,20 @@ public abstract class CurrentContributionItem extends ContributionItem {
 
     /**
      * indicates whether the widget should appear pressed.
-     * 
+     *
      * @param checked indicates whether the widget should appear pressed.
      */
     public abstract void setSelection( boolean checked, ModalItem proxy );
-    
+
     protected abstract boolean isChecked();
 
     /**
      * Indicates if the item is disposed.
      */
     public abstract boolean isDisposed();
-    
-    
-    
+
+
+
     /**
      *  (non-Javadoc)
      * @see org.eclipse.jface.action.ContributionItem#isEnabled()

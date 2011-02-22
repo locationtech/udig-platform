@@ -27,9 +27,9 @@ import net.refractions.udig.tools.edit.support.PrimitiveShapeIterator;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * Selects the hole (sets the handler's current shape) that the mouse is over or 
+ * Selects the hole (sets the handler's current shape) that the mouse is over or
  * nothing if mouse is not over a hole.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -47,7 +47,7 @@ public class SelectHoleCommand extends AbstractCommand implements UndoableMapCom
     public String getName() {
         return "Select Hole"; //$NON-NLS-1$
     }
-    
+
     public void run( IProgressMonitor monitor ) throws Exception {
         execute(monitor);
     }
@@ -61,14 +61,14 @@ public class SelectHoleCommand extends AbstractCommand implements UndoableMapCom
 
         if( currentShape==null )
             return false;
-        
+
         for( PrimitiveShape shape : currentShape.getEditGeom() ) {
             if( shape==currentShape || currentShape.getEditGeom().getShell()==shape )
                 continue;
-            
+
             GeneralPath path=new GeneralPath();
             path.append(PrimitiveShapeIterator.getPathIterator(shape), false);
-            
+
             if( path.contains( event.x, event.y) ){
                 handler.setCurrentShape(shape);
                 break;

@@ -39,7 +39,7 @@ import org.eclipse.ui.internal.WorkbenchPlugin;
 
 /**
  * History for navigating preference pages.
- * 
+ *
  * @since 3.1
  */
 class PageHistoryHolder {
@@ -73,7 +73,7 @@ class PageHistoryHolder {
 
     /**
      * Creates a new history for the given dialog.
-     * 
+     *
      * @param dialog
      *            the preference dialog to create a history for
      */
@@ -84,7 +84,7 @@ class PageHistoryHolder {
     /**
      * Returns the preference page path (for now: its id) for the history at
      * <code>index</code>.
-     * 
+     *
      * @param index
      *            the index into the history
      * @return the preference page path at <code>index</code> or
@@ -99,7 +99,7 @@ class PageHistoryHolder {
 
     /**
      * Adds the preference page path and its label to the page history.
-     * 
+     *
      * @param entry
      *            the preference page history entry
      */
@@ -115,7 +115,7 @@ class PageHistoryHolder {
     /**
      * Sets the current page to be the one corresponding to the given index in
      * the page history.
-     * 
+     *
      * @param index
      *            the index into the page history
      */
@@ -129,7 +129,7 @@ class PageHistoryHolder {
 
     /**
      * Updates the history controls.
-     * 
+     *
      */
     private void updateHistoryControls() {
         historyToolbar.update(false);
@@ -142,7 +142,7 @@ class PageHistoryHolder {
 
         /**
          * Creates the history toolbar and initializes <code>historyToolbar</code>.
-         * 
+         *
          * @param historyBar
          * @param manager
          * @return the control of the history toolbar
@@ -227,7 +227,7 @@ class PageHistoryHolder {
                 public boolean isEnabled() {
                     boolean enabled = historyIndex > 0;
                     if (enabled)
-                        setToolTipText(NLS.bind(WorkbenchMessages.NavigationHistoryAction_backward_toolTipName,getHistoryEntry(historyIndex - 1).getLabel() )); 
+                        setToolTipText(NLS.bind(WorkbenchMessages.NavigationHistoryAction_backward_toolTipName,getHistoryEntry(historyIndex - 1).getLabel() ));
                     return enabled;
                 }
 
@@ -241,7 +241,7 @@ class PageHistoryHolder {
                     }
                 }
             };
-            backward.setText(WorkbenchMessages.NavigationHistoryAction_backward_text); 
+            backward.setText(WorkbenchMessages.NavigationHistoryAction_backward_text);
             backward
                     .setActionDefinitionId("org.eclipse.ui.navigate.backwardHistory"); //$NON-NLS-1$
             backward.setImageDescriptor(WorkbenchPlugin.getDefault()
@@ -260,7 +260,7 @@ class PageHistoryHolder {
                 public boolean isEnabled() {
                     boolean enabled = historyIndex < history.size() - 1;
                     if (enabled)
-                        setToolTipText(NLS.bind(WorkbenchMessages.NavigationHistoryAction_forward_toolTipName, getHistoryEntry(historyIndex + 1).getLabel() )); 
+                        setToolTipText(NLS.bind(WorkbenchMessages.NavigationHistoryAction_forward_toolTipName, getHistoryEntry(historyIndex + 1).getLabel() ));
                     return enabled;
                 }
 
@@ -275,7 +275,7 @@ class PageHistoryHolder {
                     }
                 }
             };
-            forward.setText(WorkbenchMessages.NavigationHistoryAction_forward_text); 
+            forward.setText(WorkbenchMessages.NavigationHistoryAction_forward_text);
             forward.setActionDefinitionId("org.eclipse.ui.navigate.forwardHistory"); //$NON-NLS-1$
             forward.setImageDescriptor(WorkbenchPlugin.getDefault()
                     .getSharedImages().getImageDescriptor(
@@ -288,7 +288,7 @@ class PageHistoryHolder {
 
         /**
          * Registers the given action with the workbench command support.
-         * 
+         *
          * @param action
          *            the action to register.
          */
@@ -316,12 +316,12 @@ class PageHistoryHolder {
                         .next());
             }
             activations.clear();
-            
+
         }
 
         /**
          * Create the history control in the parent
-         * 
+         *
          * @param parent
          * @return Control
          */

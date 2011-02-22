@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.tutorials.examples;
 
@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * keeps the state information on the layer blackboard and the animation is
  * aware of the state. The MapGraphic's primary responsibility is to start the
  * Animation if it is not running.
- * 
+ *
  * @author Jesse
  */
 public class AnimationMapGraphic implements MapGraphic {
@@ -74,7 +74,7 @@ public class AnimationMapGraphic implements MapGraphic {
                 IBlackboard blackboard = layer.getBlackboard();
                 int x = blackboard.getInteger("x");
                 int y = blackboard.getInteger("y");
-    
+
                 graphics.drawOval(x, y, 30, 30);
             }
 

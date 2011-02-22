@@ -20,7 +20,7 @@ import net.refractions.udig.project.render.IRenderContext;
 
 /**
  * Default Implementation
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -28,8 +28,8 @@ import net.refractions.udig.project.render.IRenderContext;
 public class CompositeRenderContextImpl extends RenderContextImpl implements CompositeRenderContext {
     /**
      * The cached value of the '{@link #getContextsInternal() <em>Contexts Internal</em>}'
-     * reference list. 
-     * 
+     * reference list.
+     *
      * @see #getContextsInternal()
      */
     protected final Collection<RenderContext> contextsInternal = Collections.synchronizedSortedSet(new TreeSet<RenderContext>());
@@ -91,10 +91,10 @@ public class CompositeRenderContextImpl extends RenderContextImpl implements Com
         if( contextsInternal.isEmpty() ){
             return super.toString();
         }
-        
+
 		StringBuffer buffer = new StringBuffer("{CompositeContext: "); //$NON-NLS-1$
         synchronized (contextsInternal) {
-                
+
     		for (RenderContext context : contextsInternal) {
     			if (context==this )
     				buffer.append( "\n -" + super.toString() ); //$NON-NLS-1$
@@ -111,10 +111,10 @@ public class CompositeRenderContextImpl extends RenderContextImpl implements Com
 		if (getContexts().size() == 0) {
 			super.setStatus(status);
 			return;
-		} 
+		}
 
         synchronized (contextsInternal) {
-            
+
             for (RenderContext context : contextsInternal) {
                 if( context!=this)
                     context.setStatus(status);
@@ -165,7 +165,7 @@ public class CompositeRenderContextImpl extends RenderContextImpl implements Com
             l.notifyChanged(this, contexts, added);
         }
     }
-    
+
     public void clear() {
         List<RenderContext> contexts;
         synchronized (contextsInternal) {
@@ -186,7 +186,7 @@ public class CompositeRenderContextImpl extends RenderContextImpl implements Com
 
     /**
      * For testing and assertions that the context is in good state.
-     * 
+     *
      * @return
      */
     public static boolean assertNoSelfReference( IRenderContext parent, IRenderContext reference, Collection<? extends IRenderContext> contexts ) {
@@ -194,10 +194,10 @@ public class CompositeRenderContextImpl extends RenderContextImpl implements Com
 
             if( context==parent )
                 continue;
-            
+
             if( context==reference )
                 return false;
-            
+
             if( context instanceof ICompositeRenderContext){
                 ICompositeRenderContext comp = (ICompositeRenderContext)context;
                 List<IRenderContext> children = comp.getContexts();
@@ -221,7 +221,7 @@ public class CompositeRenderContextImpl extends RenderContextImpl implements Com
         contextsInternal.removeAll(contexts);
         notifyListeners(new ArrayList<RenderContext>(contexts), false);
     }
-    
+
     @Override
     public CompositeRenderContextImpl copy() {
         return new CompositeRenderContextImpl(this);
@@ -231,12 +231,12 @@ public class CompositeRenderContextImpl extends RenderContextImpl implements Com
     public int hashCode() {
         final int PRIME = 31;
         int result = super.hashCode();
-        
+
         for( RenderContext context : contextsInternal ) {
             if( context==this )
                 result = PRIME * result + super.hashCode();
             else
-                result = PRIME * result + context.hashCode();   
+                result = PRIME * result + context.hashCode();
         }
         return result;
     }
@@ -259,7 +259,7 @@ public class CompositeRenderContextImpl extends RenderContextImpl implements Com
             return false;
         return true;
     }
-    
+
     @Override
     public int compareTo( RenderContext o ) {
         if( o==this )
@@ -274,7 +274,7 @@ public class CompositeRenderContextImpl extends RenderContextImpl implements Com
                 if( contextsEqual(comp) )
                     return 0;
                 else
-                    return -1; 
+                    return -1;
             }else{
                 return -1;
             }
@@ -286,13 +286,13 @@ public class CompositeRenderContextImpl extends RenderContextImpl implements Com
     private boolean contextsEqual( ICompositeRenderContext o ) {
         if( o.getContexts().size()!=contextsInternal.size() )
             return false;
-        
+
         Iterator<IRenderContext> iter1=getContexts().iterator();
         Iterator<IRenderContext> iter2=o.getContexts().iterator();
         while ( iter1.hasNext() ){
             IRenderContext o1 = iter1.next();
             IRenderContext o2 = iter2.next();
-            
+
             if( o1==this ){
                 if ( o2==o )
                     continue;
@@ -304,5 +304,5 @@ public class CompositeRenderContextImpl extends RenderContextImpl implements Com
         }
         return true;
     }
-	
+
 } // CompositeRenderContextImpl

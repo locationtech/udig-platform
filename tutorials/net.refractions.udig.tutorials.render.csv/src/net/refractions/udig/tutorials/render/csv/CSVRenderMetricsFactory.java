@@ -1,11 +1,10 @@
 package net.refractions.udig.tutorials.render.csv;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
 import net.refractions.udig.project.render.IRenderContext;
+import net.refractions.udig.project.render.IRenderMetrics;
 import net.refractions.udig.project.render.IRenderMetricsFactory;
 import net.refractions.udig.project.render.IRenderer;
 import net.refractions.udig.tutorials.catalog.csv.CSV;
@@ -32,14 +31,8 @@ public class CSVRenderMetricsFactory implements IRenderMetricsFactory {
         }
         return false;
     }
-    /** 
-     * Used to create an object of class net.refractions.udig.project.render.IRenderMetrics.
-     * <p>
-     * This class will evaulate how well our renderer can handle the provided context.
-     * @param context Content of a Layer and GeoResource to be drawn
-     * @return AbstractRenderMetrics indicating how well we can draw the provided context
-     */
-    public AbstractRenderMetrics createMetrics( IRenderContext context ) {
+
+    public IRenderMetrics createMetrics( IRenderContext context ) {
         return new CSVRenderMetrics(context, this);
     }
 

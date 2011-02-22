@@ -19,7 +19,7 @@ import net.refractions.udig.project.internal.Layer;
 
 /**
  * Prints a message when a layer is added to a map.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

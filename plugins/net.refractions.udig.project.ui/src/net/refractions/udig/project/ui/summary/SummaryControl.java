@@ -50,13 +50,13 @@ public class SummaryControl {
     public SummaryControl(Collection<SummaryData> data){
         this.data=data;
     }
-    
+
     public Control createControl( Composite parent ) {
     	viewer=new TreeViewer(parent, SWT.SINGLE|SWT.FULL_SELECTION);
     	Tree tree = viewer.getTree();
         tree.setLinesVisible(true);
         tree.setHeaderVisible(true);
-        
+
         tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true));
         TableLayout tableLayout=new TableLayout();
         tableLayout.addColumnData(new ColumnWeightData(1,200));
@@ -68,10 +68,10 @@ public class SummaryControl {
         viewer.setLabelProvider(new SummaryLabelProvider());
         viewer.setInput(data);
         viewer.setColumnProperties(new String[]{"TITLE",VALUE});  //$NON-NLS-1$
-        
+
         infoColumn.pack();
         setCellEditor(viewer);
-        
+
         return tree;
     }
 
@@ -145,9 +145,9 @@ public class SummaryControl {
 
         public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
         }
-        
+
     }
-    
+
     private static class SummaryLabelProvider extends LabelProvider implements ITableLabelProvider, ITableColorProvider{
 
         public Image getColumnImage( Object element, int columnIndex ) {
@@ -168,7 +168,7 @@ public class SummaryControl {
         }
 
         public Color getForeground( Object element, int columnIndex ) {
-            
+
             if ( columnIndex==0 )
                 return null;
             SummaryData data = (SummaryData) element;
@@ -176,6 +176,6 @@ public class SummaryControl {
                 return null;
             return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GRAY);
         }
-        
+
     }
 }

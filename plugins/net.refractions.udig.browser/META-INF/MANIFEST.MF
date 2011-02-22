@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Manifest.name
 Bundle-SymbolicName: net.refractions.udig.browser; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.browser.BrowserPlugin
-Bundle-Vendor: udig.refractions.net
+Bundle-Vendor: %Manifest.provider
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -13,7 +13,6 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.core,
  net.refractions.udig.project.ui,
  net.refractions.udig.mapgraphic
-Bundle-ActivationPolicy: lazy
+Eclipse-LazyStart: true
 Export-Package: net.refractions.udig.browser,
  net.refractions.udig.browser.ui
-Bundle-RequiredExecutionEnvironment: J2SE-1.5

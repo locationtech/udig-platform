@@ -18,7 +18,7 @@ public class BoxCreationFactory implements CreationFactory {
 	}
 
 	public Object getNewObject() {
-        
+
 		BoxPrinter object;
         try {
             object = factory.createBox();
@@ -29,11 +29,11 @@ public class BoxCreationFactory implements CreationFactory {
         if( object instanceof Box ){
             return object;
         }
-        
+
         Box box=new BoxImpl();
         box.setBoxPrinter(object);
         object.setBox(box);
-        
+
         return box;
 	}
 

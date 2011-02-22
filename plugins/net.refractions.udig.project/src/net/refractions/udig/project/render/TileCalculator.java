@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.render;
 
@@ -18,7 +18,7 @@ import com.vividsolutions.jts.geom.Envelope;
 /**
  * A helper class which divides an area into tiles or a minimum size. Provides a
  * number of convenience methods.
- * 
+ *
  * @author jones
  */
 public class TileCalculator {
@@ -38,7 +38,7 @@ public class TileCalculator {
 
 	/**
 	 * Creates a new instance, the bounds must be set before it is ready to be used.
-	 * 
+	 *
 	 * @param worldToScreen the transform from world coordinates to screen coordinates
 	 * @param tileSize the size of the tiles to create.
 	 */
@@ -49,7 +49,7 @@ public class TileCalculator {
 
 	/**
 	 * Creates a new instance.  It is ready to be queried immediately.
-	 * 
+	 *
 	 * @param worldToScreen the transform from world coordinates to screen coordinates
 	 * @param tileSize the size of the tiles to create.
 	 */
@@ -88,20 +88,20 @@ public class TileCalculator {
 	}
 
 	/**
-	 * Return the Envelope (world coordinates) of the tile indexed by x and y. 
+	 * Return the Envelope (world coordinates) of the tile indexed by x and y.
 	 * @return the Envelope (world coordinates) of the tile indexed by x and y.
 	 */
 	public Envelope getWorldTile(int x, int y) {
 		validateState();
 		double xmin = bounds.getMinX()+worldTileSize.x*x;
 		double ymin = bounds.getMinY()+worldTileSize.y*y;
-		
+
 		return new Envelope( xmin, Math.min(xmin+worldTileSize.x, bounds.getMaxX()),
 				ymin, Math.min(ymin+worldTileSize.y, bounds.getMaxY()) );
 	}
-	
+
 	/**
-	 * Return the Rectangle (screen coordinates) of the tile indexed by x and y. 
+	 * Return the Rectangle (screen coordinates) of the tile indexed by x and y.
 	 * @return the Rectangle (screen coordinates) of the tile indexed by x and y.
 	 */
 	public Rectangle getScreenTile(int x, int y){
@@ -112,7 +112,7 @@ public class TileCalculator {
 		int height = Math.min(tileSize.height, (int)rect.getMaxY()-ymin);
 		return new Rectangle(xmin,ymin,width,height);
 	}
-	
+
 	/**
 	 * Calculates where and how many tiles there are.
 	 */
@@ -120,13 +120,13 @@ public class TileCalculator {
 		double[] points=new double[]{bounds.getMinX(), bounds.getMinY(), bounds.getMaxX(), bounds.getMaxY()};
 		worldToScreen.transform(points,0,points,0,2);
 		rect=new Rectangle((int)points[0], (int)points[1], Math.abs((int)(points[2]-points[0])), Math.abs((int)(points[3]-points[1])) );
-		
+
 		numXTiles=(int) Math.ceil(rect.getWidth()/tileSize.getWidth());
 		numYTiles=(int) Math.ceil(rect.getHeight()/tileSize.getHeight());
-		
+
 		worldTileSize=new Coordinate(bounds.getWidth()/numXTiles, bounds.getHeight()/numYTiles);
 	}
-	
+
 	Set<Point> randomMap;
 	Random random=new Random();
 	/**
@@ -139,20 +139,20 @@ public class TileCalculator {
 			for( int y=0; y<numYTiles; y++){
 				randomMap.add(new Point(x,y));
 			}
-			
+
 		}
 	}
-	
-	
+
+
 	/**
 	 * Gets a random tile in world coordinates.  Each tile is visited only once and after all the tiles
-	 * have been visited null will be returned.  
+	 * have been visited null will be returned.
 	 * <p><b>WARNING:</b>
-	 * If each tile is visited one and only once regardless of whether {@link #getWorldRandom()} or 
+	 * If each tile is visited one and only once regardless of whether {@link #getWorldRandom()} or
 	 * {@link #getScreenRandom()}
 	 * is used
 	 * </p>
-	 * 
+	 *
 	 * @return a random tile in world coordinates.
 	 */
 	public Envelope getWorldRandom(){
@@ -174,16 +174,16 @@ public class TileCalculator {
 		randomMap.remove(point);
 		return getWorldTile(x,y);
 	}
-	
+
 	/**
 	 * Gets a random tile in screen coordinates.  Each tile is visited only once and after all the tiles
-	 * have been visited null will be returned.  
+	 * have been visited null will be returned.
 	 * <p><b>WARNING:</b>
-	 * If each tile is visited one and only once regardless of whether {@link #getWorldRandom()} or 
+	 * If each tile is visited one and only once regardless of whether {@link #getWorldRandom()} or
 	 * {@link #getScreenRandom()}
 	 * is used
 	 * </p>
-	 * 
+	 *
 	 * @return a random tile in screen coordinates
 	 */
 	public Rectangle getScreenRandom(){
@@ -205,10 +205,10 @@ public class TileCalculator {
 		randomMap.remove(point);
 		return getScreenTile(x,y);
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * @return Returns the bounds.
 	 */
@@ -253,6 +253,6 @@ public class TileCalculator {
 		this.worldToScreen = worldToScreen;
 		reset();
 	}
-	
-	
+
+
 }

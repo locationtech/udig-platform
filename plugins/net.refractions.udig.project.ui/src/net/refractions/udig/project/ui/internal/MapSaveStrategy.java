@@ -25,10 +25,10 @@ import net.refractions.udig.catalog.ui.export.CatalogExport;
 import net.refractions.udig.catalog.ui.export.CatalogExportWizard;
 import net.refractions.udig.catalog.ui.export.Data;
 import net.refractions.udig.catalog.ui.export.ExportResourceSelectionState;
-import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
 import net.refractions.udig.project.internal.StyleBlackboard;
@@ -45,12 +45,12 @@ public final class MapSaveStrategy extends CatalogExport {
 		this.state = state;
 		this.editor = editor;
 
-		initWorkflow();
+		init();
 	}
 
 	@Override
 	protected Workflow createWorkflow() {
-		final Workflow workflow = new Workflow(new State[] { state });
+		final Workflow workflow = new Workflow(new Workflow.State[] { state });
 
 		// create the workflow for the export wizard
 		return workflow;
@@ -137,5 +137,4 @@ public final class MapSaveStrategy extends CatalogExport {
 		catalogExportWizard.setSelectExportedInCatalog(false);
 		return catalogExportWizard;
 	}
-	
 }

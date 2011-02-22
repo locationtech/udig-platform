@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: LayerItemProvider.java 28451 2007-12-21 00:24:15Z jeichar $
  */
 package net.refractions.udig.project.internal.provider;
 
@@ -12,13 +12,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.media.jai.util.Range;
+
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.impl.LayerImpl;
+import net.refractions.udig.project.internal.render.CompositeRenderContext;
 import net.refractions.udig.project.preferences.PreferenceConstants;
+import net.refractions.udig.project.render.IRenderManager;
+import net.refractions.udig.project.render.IRenderer;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -40,7 +45,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
-import org.geotools.util.Range;
 
 /**
  * This is the item provider adapter for a {@link net.refractions.udig.project.internal.Layer}
@@ -51,7 +55,7 @@ import org.geotools.util.Range;
  * <li>Responsible for providing an ImageDescriptor (not an Image)
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class LayerItemProvider extends ItemProviderAdapter
@@ -71,7 +75,7 @@ public class LayerItemProvider extends ItemProviderAdapter
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
@@ -79,7 +83,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public LayerItemProvider( AdapterFactory adapterFactory ) {
@@ -89,7 +93,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @SuppressWarnings("unchecked")
@@ -113,7 +117,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Zorder feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      */
     @SuppressWarnings("unchecked")
     protected void addZorderPropertyDescriptor( Object object ) {
@@ -131,7 +135,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Name feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addNamePropertyDescriptor( Object object ) {
@@ -149,7 +153,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the ID feature. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated
      */
     protected void addIDPropertyDescriptor( Object object ) {
@@ -167,7 +171,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Visible feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addVisiblePropertyDescriptor( Object object ) {
@@ -185,7 +189,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Geo Resource feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addGeoResourcePropertyDescriptor( Object object ) {
@@ -203,7 +207,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Glyph feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addGlyphPropertyDescriptor( Object object ) {
@@ -221,7 +225,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Selectable feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     protected void addSelectablePropertyDescriptor( Object object ) {
@@ -239,7 +243,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Geo Resources feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addGeoResourcesPropertyDescriptor( Object object ) {
@@ -257,7 +261,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Catalog Ref feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addCatalogRefPropertyDescriptor( Object object ) {
@@ -275,7 +279,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Filter feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addFilterPropertyDescriptor( Object object ) {
@@ -293,7 +297,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Status feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addStatusPropertyDescriptor( Object object ) {
@@ -311,7 +315,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the CRS feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addCRSPropertyDescriptor( Object object ) {
@@ -329,7 +333,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Properties feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addPropertiesPropertyDescriptor( Object object ) {
@@ -346,7 +350,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Colour Scheme feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addColourSchemePropertyDescriptor( Object object ) {
@@ -364,7 +368,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Default Color feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addDefaultColorPropertyDescriptor( Object object ) {
@@ -380,9 +384,9 @@ public class LayerItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * This adds a property descriptor for the SimpleFeature Changes feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Feature Changes feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addFeatureChangesPropertyDescriptor( Object object ) {
@@ -403,7 +407,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Collection getChildrenFeatures( Object object ) {
@@ -445,12 +449,12 @@ public class LayerItemProvider extends ItemProviderAdapter
                 return false;
             return true;
         }
-        
+
     }
     /**
      * This returns Layer.gif. <!-- begin-user-doc --> Returns layers glyph property, requesting WMS
      * Legend Graphic will be handled by a decorator. <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Object getImage( Object object ) {
@@ -463,13 +467,13 @@ public class LayerItemProvider extends ItemProviderAdapter
         // (We don't want the ImageDescriptor to block on an external WMS)
         //
         ImageDescriptor image = layer.getGlyph();
-        
+
         if( image==null ){
             image=(ImageDescriptor) layer.getProperties().get(GENERATED_ICON);
         }
 
         int outOfScaleModifier = SWT.IMAGE_DISABLE;
-        
+
         if (image == null ){
             Object object2 = ProjectEditPlugin.INSTANCE.getImage("full/obj16/Layer");
             if( object2 instanceof ImageDescriptor ){
@@ -482,14 +486,14 @@ public class LayerItemProvider extends ItemProviderAdapter
                 }
             }
         }
-        
+
         if( outOfScale(layer)){
             image = ImageDescriptor.createWithFlags(image, outOfScaleModifier);
         }
-        
+
         return image; //$NON-NLS-1$
     }
-    
+
     @Override
     public void dispose() {
         Collection<Data> values = cache.values();
@@ -502,7 +506,7 @@ public class LayerItemProvider extends ItemProviderAdapter
             }
         }
         cache.clear();
-        
+
         super.dispose();
     }
 
@@ -510,7 +514,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * This returns the label text for the adapted class. <!-- begin-user-doc --> Makes use of layer
      * label, will use name of GeoResource URL by default. A decorator can request the GeoResoruce's
      * title in thread. <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public String getText( Object object ) {
@@ -527,14 +531,14 @@ public class LayerItemProvider extends ItemProviderAdapter
         // Okay have a default
         //
         // return "Untitled";
-        return "Layer"; 
+        return "Layer";
     }
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
      * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void notifyChanged( Notification notification ) {
@@ -565,7 +569,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public ResourceLocator getResourceLocator() {
@@ -575,7 +579,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     public Color getBackground( Object element ) {
         if( element instanceof LayerImpl ){
             ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-            String highlightPref = store.getString(PreferenceConstants.P_HIGHLIGHT); 
+            String highlightPref = store.getString(PreferenceConstants.P_HIGHLIGHT);
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_NONE)) {
                 return null;
             }
@@ -593,9 +597,9 @@ public class LayerItemProvider extends ItemProviderAdapter
 
     public Color getForeground( Object element ) {
         if (element instanceof LayerImpl) {
-            
+
             LayerImpl layer = (LayerImpl) element;
-            
+
             Color systemColor = Display.getCurrent().getSystemColor(SWT.COLOR_GRAY);
             if( outOfScale(layer) ){
                 return systemColor;
@@ -604,24 +608,24 @@ public class LayerItemProvider extends ItemProviderAdapter
             if( map==null )
                 return null;
             boolean mylarOnAndAffectingLayer = mylarOnAndAffectingLayer(layer, map);
-            
+
             ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
             String highlightPref = store.getString(PreferenceConstants.P_HIGHLIGHT);
-            
+
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_NONE)) {
                 if( mylarOnAndAffectingLayer )
                     return systemColor;
                 return null;
             }
-            
+
             float mylarEffect=1.0f;
             java.awt.Color awtColor = layer.getDefaultColor();
             if (awtColor == null) return null;
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_FOREGROUND)) {
-                    return new Color(PlatformUI.getWorkbench().getDisplay(), 
-                            (int) mylarEffect*awtColor.getRed(), 
-                            (int) mylarEffect*awtColor.getGreen(), 
-                            (int) mylarEffect*awtColor.getBlue());    
+                    return new Color(PlatformUI.getWorkbench().getDisplay(),
+                            (int) mylarEffect*awtColor.getRed(),
+                            (int) mylarEffect*awtColor.getGreen(),
+                            (int) mylarEffect*awtColor.getBlue());
             } else if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_BACKGROUND)) {
                     if (awtColor.getRed() + awtColor.getGreen() + awtColor.getBlue() > 512) {
                         if( mylarOnAndAffectingLayer ){
@@ -630,10 +634,10 @@ public class LayerItemProvider extends ItemProviderAdapter
                             return Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
                         }
                     } else {
-                        return new Color(PlatformUI.getWorkbench().getDisplay(), 
-                                (int) mylarEffect*255, 
-                                (int) mylarEffect*255, 
-                                (int) mylarEffect*255);    
+                        return new Color(PlatformUI.getWorkbench().getDisplay(),
+                                (int) mylarEffect*255,
+                                (int) mylarEffect*255,
+                                (int) mylarEffect*255);
                     }
             }
         }
@@ -659,33 +663,31 @@ public class LayerItemProvider extends ItemProviderAdapter
         }
     }
 
-    /**
-     * Returns true if mylar is "on" for the given layer.  "on" means that
-     * the layer should be greyed out.
-     * 
-     * <p>
-     * In the case of composite layers (wms for example); all layers associated
-     * with the context should be "on"; which is why function thing needs to know about 
-     * the renderers.
-     * </p>
-     *
-     * @param layer
-     * @param map
-     * 
-     * @return if mylar is turned on and it is affecting (greying out) the current layer
-     */
     private boolean mylarOnAndAffectingLayer( LayerImpl layer, IMap map ) {
-        
-        //look at blackboard for mylar flag
         Object mylar = map.getBlackboard().get("MYLAR"); //$NON-NLS-1$
         boolean mylarIsOn = mylar!=null && ((Boolean)mylar).booleanValue();
-        
+
         if( mylarIsOn ){
-            ILayer selectedLayer = map.getEditManager().getSelectedLayer();
-            if( map.getRenderManager()==null){
-                return false;
+            IRenderManager rm = map.getRenderManager();
+            if( rm!=null ){
+                List<IRenderer> renderers = rm.getRenderers();
+                for( IRenderer renderer : renderers ) {
+                    if (renderer.getContext() instanceof CompositeRenderContext) {
+                        CompositeRenderContext context = (CompositeRenderContext) renderer.getContext();
+                        if( context.getLayers().contains(layer) ){
+                            // if the renderer contains this layer and the selected layer then turn off greying of layer
+                            mylarIsOn=!context.getLayers().contains(map.getEditManager().getSelectedLayer());
+                            break;
+                        }
+                    }else{
+                        if( renderer.getContext().getLayer()==layer ){
+                            // if this is the selected layer then turn off greying of layer
+                            mylarIsOn=map.getEditManager().getSelectedLayer()!=layer;
+                            break;
+                        }
+                    }
+                }
             }
-            return !map.getRenderManager().areLayersRelatedByContext(layer, selectedLayer);
         }
         return mylarIsOn;
     }

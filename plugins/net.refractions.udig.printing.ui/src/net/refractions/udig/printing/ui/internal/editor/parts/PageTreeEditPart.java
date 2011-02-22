@@ -48,7 +48,7 @@ public class PageTreeEditPart extends AbstractTreeEditPart {
     public PageTreeEditPart( Page page) {
         super(page);
     }
-    
+
     public void activate() {
         if (isActive()) {
             return;
@@ -63,18 +63,18 @@ public class PageTreeEditPart extends AbstractTreeEditPart {
         super.deactivate();
         ((Page) getModel()).eAdapters().remove(this.listener);
     }
-    
+
     protected List getModelChildren() {
         return ((Page) getModel()).getBoxes();
     }
-    
+
     protected class InternalPropertyListener extends PropertyListener {
-        
+
             /**
          * TODO summary sentence for boxesChanged ...
-         * 
+         *
          * @see net.refractions.udig.printing.model.PropertyListener#boxesChanged()
-         * 
+         *
          */
         protected void boxesChanged() {
             refreshChildren();

@@ -25,16 +25,16 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * Factory providing default implementations of common navigation commands.
- * 
+ * API comment me TODO provide type description
+ *
  * @author jeichar
- * @deprecated Moved to net.refractions.udig.project.command.factory.NavigationCommandFactory
+ * @deprecated
  * @since TODO provide version
  */
 public class NavigationCommandFactory {
     /**
      * Creates a new NavigationCommandFactory object
-     * 
+     *
      * @return a new NavigationCommandFactory object
      */
     public static NavigationCommandFactory getInstance() {
@@ -47,7 +47,7 @@ public class NavigationCommandFactory {
 
     /**
      * Creates a new {@linkplain NavComposite}
-     * 
+     *
      * @param commands an array of commands to execute as a simgle command. The array will be
      *        executed from position 0 to position length-1 in order.
      * @return a new NavComposite object
@@ -59,7 +59,7 @@ public class NavigationCommandFactory {
 
     /**
      * Creates a new {@linkplain SetViewportBBoxCommand}
-     * 
+     *
      * @param newbbox the new bounding box to set in the viewport
      * @return a new SetViewportBBoxCommand object
      * @see NavCommand
@@ -71,7 +71,7 @@ public class NavigationCommandFactory {
 
     /**
      * Creates a new {@linkplain ZoomCommand}
-     * 
+     *
      * @param zoomfactor the amount to zoom
      * @return a new ZoomCommand object
      * @see NavCommand
@@ -82,7 +82,7 @@ public class NavigationCommandFactory {
 
     /**
      * Creates a new {@linkplain ZoomExtentCommand}
-     * 
+     *
      * @return a new ZoomExtentCommand object
      * @see NavCommand
      */
@@ -92,7 +92,7 @@ public class NavigationCommandFactory {
 
     /**
      * Creates a new {@linkplain SetViewportCenterCommand}
-     * 
+     *
      * @param center Sets the center of the viewport. The Coordinate must be in world coordinates.
      * @return a new SetViewportCenterCommand object
      * @see NavCommand
@@ -104,7 +104,7 @@ public class NavigationCommandFactory {
 
     /**
      * Creates a new {@linkplain SetViewportHeight}
-     * 
+     *
      * @param height The new viewport height
      * @return a new SetViewportHeight object
      * @see NavCommand
@@ -115,7 +115,7 @@ public class NavigationCommandFactory {
 
     /**
      * Creates a new {@linkplain SetViewportWidth}
-     * 
+     *
      * @param width the new viewport width
      * @return a new SetViewportWidth object
      * @see NavCommand
@@ -128,7 +128,7 @@ public class NavigationCommandFactory {
      * Creates a new {@linkplain PanCommand}Pans the viewport in terms of pixels on the screen.
      * Each pixel represents a distance in world coordinates, the x and y distances differ, so a pan
      * of 8 pixels in the x direction will be translated to a pan of 8*xdistance in the world.
-     * 
+     *
      * @param xpixels The amount, in pixels, to pan in the x direction
      * @param ypixels The amount, in pixels, to pan in the y direction
      * @return a new PanCommand object
@@ -140,7 +140,7 @@ public class NavigationCommandFactory {
 
     /**
      * Creates a new {@linkplain PanCommand}
-     * 
+     *
      * @param x The amount, in world coordinates, to pan in the x direction
      * @param y The amount, in world coordinates, to pan in the y direction
      * @return a new PanCommand object

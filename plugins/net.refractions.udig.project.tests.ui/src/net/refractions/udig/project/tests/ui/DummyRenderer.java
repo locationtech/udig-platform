@@ -11,7 +11,7 @@ public class DummyRenderer extends RendererImpl {
 
     @Override
     public void render( Graphics2D destination, IProgressMonitor monitor ) throws RenderException {
-        
+
     }
 
     @Override

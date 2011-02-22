@@ -12,7 +12,6 @@ import java.util.List;
 
 import net.refractions.udig.style.sld.internal.Messages;
 
-//import org.apache.xerces.parsers.SAXParser;
 import org.apache.xerces.parsers.SAXParser;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -31,7 +30,7 @@ public class SLDValidator {
     public SLDValidator() {
     }
 
-    public static String getErrorMessage(InputStream xml, List<SAXParseException> errors) {
+    public static String getErrorMessage(InputStream xml, List errors) {
         return getErrorMessage(new InputStreamReader(xml), errors);
     }
 
@@ -45,10 +44,10 @@ public class SLDValidator {
      *
      * @return DOCUMENT ME!
      */
-    public static String getErrorMessage(Reader xml, List<SAXParseException> errors) {
+    public static String getErrorMessage(Reader xml, List errors) {
         BufferedReader reader = null;
         StringBuffer result = new StringBuffer();
-        result.append(Messages.StyleEditor_xml_validator_common); 
+        result.append(Messages.StyleEditor_xml_validator_common);
 
         try {
             reader = new BufferedReader(xml);
@@ -140,7 +139,7 @@ public class SLDValidator {
         return result.toString();
     }
 
-    public List<SAXParseException> validateSLD(InputStream xml, String SchemaUrl) {
+    public List validateSLD(InputStream xml, String SchemaUrl) {
         return validateSLD(new InputSource(xml), SchemaUrl);
     }
 
@@ -153,7 +152,7 @@ public class SLDValidator {
      *
      * @return list of SAXExceptions (0 if the file's okay)
      */
-    public List<SAXParseException> validateSLD(InputSource xml, String SchemaUrl) {
+    public List validateSLD(InputSource xml, String SchemaUrl) {
         SAXParser parser = new SAXParser();
 
         try {

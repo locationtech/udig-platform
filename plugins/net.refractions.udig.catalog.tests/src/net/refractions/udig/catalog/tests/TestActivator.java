@@ -35,13 +35,13 @@ public class TestActivator extends Plugin {
     }
     /**
      * Cleanup after shared images.
-     * 
+     *
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
      * @param context
      * @throws Exception
      */
     public void stop( BundleContext context ) throws Exception {
-        
+
         super.stop(context);
 
         plugin = null;
@@ -51,7 +51,7 @@ public class TestActivator extends Plugin {
      * Returns the shared instance.
      */
     public static TestActivator getDefault() {
-        
+
         return plugin;
     }
 
@@ -80,7 +80,7 @@ public class TestActivator extends Plugin {
         }
         return resourceBundle;
     }
-    
+
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
@@ -95,5 +95,5 @@ public class TestActivator extends Plugin {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
         getDefault().getLog().log(new Status(status, ID, IStatus.OK, message, t));
     }
- 
+
 }

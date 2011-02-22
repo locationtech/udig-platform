@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * aspect ratio. To change the display size the PlatformUI class should be used to obtain the
  * eclipse shell or site that should be resized. The viewport model does not modify the size of the
  * display.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -32,7 +32,7 @@ public class SetViewportHeight extends AbstractNavCommand implements NavCommand 
 
     /**
      * Creates a new instance of SetViewportHeight
-     * 
+     *
      * @param height The new viewport height
      */
     public SetViewportHeight( double height ) {
@@ -58,7 +58,7 @@ public class SetViewportHeight extends AbstractNavCommand implements NavCommand 
      */
     public String getName() {
         return MessageFormat.format(
-                Messages.SetViewportHeight_setViewHeight, new Object[]{height}); 
+                Messages.SetViewportHeight_setViewHeight, new Object[]{height});
     }
 
 }

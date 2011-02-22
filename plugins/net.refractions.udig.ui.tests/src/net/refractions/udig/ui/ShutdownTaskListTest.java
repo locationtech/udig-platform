@@ -1,10 +1,10 @@
 package net.refractions.udig.ui;
 
-import junit.framework.TestCase;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+
+import junit.framework.TestCase;
 
 public class ShutdownTaskListTest extends TestCase {
 
@@ -28,7 +28,7 @@ public class ShutdownTaskListTest extends TestCase {
             public void postShutdown( IProgressMonitor monitor, IWorkbench workbench ) {
                 ran[0] = true;
             }
-            
+
             @Override
             public void handlePostShutdownException( Throwable t) {
                 throw (RuntimeException)t;
@@ -83,7 +83,7 @@ public class ShutdownTaskListTest extends TestCase {
         forcedVal[0]=false;
         final boolean[] retVal = new boolean[1];
         retVal[0]=false;
-        
+
         list.addPreShutdownTask(new TestShutdownTask(){
             @Override
             public int getProgressMonitorSteps() {
@@ -98,12 +98,12 @@ public class ShutdownTaskListTest extends TestCase {
                 ran[0] = true;
                 return retVal[0];
             }
-            
+
             @Override
             public boolean handlePreShutdownException( Throwable t, boolean forced ) {
                 if( t instanceof RuntimeException)
                     throw (RuntimeException)t;
-                else 
+                else
                     throw (Error)t;
             }
         });
@@ -116,13 +116,13 @@ public class ShutdownTaskListTest extends TestCase {
         forcedVal[0]=false;
         assertTrue(list.preShutdown(PlatformUI.getWorkbench(),forcedVal[0]));
         assertTrue(ran[0]);
-        
+
         ran[0]=false;
         retVal[0]=false;
         forcedVal[0]=true;
         assertTrue(list.preShutdown(PlatformUI.getWorkbench(),forcedVal[0]));
         assertTrue(ran[0]);
-        
+
         // now handle case where exception is thrown.
         ran[0] = false;
 
@@ -131,7 +131,7 @@ public class ShutdownTaskListTest extends TestCase {
         final RuntimeException exception = new RuntimeException();
 
         list=new ShutdownTaskList();
-        
+
         list.addPreShutdownTask(new TestShutdownTask(){
             @Override
             public int getProgressMonitorSteps() {
@@ -179,7 +179,7 @@ public class ShutdownTaskListTest extends TestCase {
         assertTrue(ran[0]);
         assertTrue(exceptionHandled[0]);
 
-        
+
     }
 
     class TestShutdownTask implements PreShutdownTask, PostShutdownTask {

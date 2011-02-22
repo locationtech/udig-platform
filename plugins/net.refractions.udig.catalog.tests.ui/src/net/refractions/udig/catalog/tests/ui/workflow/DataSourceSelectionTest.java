@@ -10,11 +10,11 @@ import net.refractions.udig.catalog.ui.DataSourceSelectionPage;
 import net.refractions.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
 import net.refractions.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
 import net.refractions.udig.catalog.ui.workflow.DataSourceSelectionState;
-import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardDialog;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -29,7 +29,7 @@ public class DataSourceSelectionTest extends TestCase {
 	Shell shell;
 
 	Workflow workflow;
-	
+
 	WorkflowWizard wizard;
 
 	WorkflowWizardDialog dialog;
@@ -49,8 +49,8 @@ public class DataSourceSelectionTest extends TestCase {
 		map.put(state.getClass(), new BasicWorkflowWizardPageFactory(page));
 
 		workflow = new Workflow();
-		workflow.setStates(new State[] { state });
-		
+		workflow.setStates(new Workflow.State[] { state });
+
 		wizard = new WorkflowWizard(workflow, map);
 
 		shell = new Shell(Display.getDefault());
@@ -68,20 +68,20 @@ public class DataSourceSelectionTest extends TestCase {
 		try {
 			URL url = new URL("http://wms.jpl.nasa.gov/wms.cgi?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
 			workflow.setContext(url);
-		} 
+		}
 		catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
-		
+
 		Assertion a1 = new Assertion() {
 			@Override
 			public void run() {
-				IStructuredSelection sselection = 
-					(IStructuredSelection) page.getViewer().getSelection(); 
-				UDIGConnectionFactoryDescriptor d = 
-					(UDIGConnectionFactoryDescriptor) sselection.getFirstElement(); 
-					
+				IStructuredSelection sselection =
+					(IStructuredSelection) page.getViewer().getSelection();
+				UDIGConnectionFactoryDescriptor d =
+					(UDIGConnectionFactoryDescriptor) sselection.getFirstElement();
+
 				fail = !d.getId().equals("net.refractions.udig.catalog.ui.WMS"); //$NON-NLS-1$
 				if (!fail) {
 					Button button = DialogDriver.findButton(dialog,IDialogConstants.NEXT_ID);
@@ -92,16 +92,16 @@ public class DataSourceSelectionTest extends TestCase {
 		Object[] actions = new Object[] {
 			a1, IDialogConstants.CANCEL_ID
 		};
-		
+
 		DialogDriver driver = new DialogDriver(dialog,actions);
 		driver.schedule();
-		
+
 		dialog.open();
 		driver.cancel();
-		
+
 		assertFalse(a1.fail);
-		
-	}	
+
+	}
 
 	public void testSelection() {
 		// turn on and off a viewer selection

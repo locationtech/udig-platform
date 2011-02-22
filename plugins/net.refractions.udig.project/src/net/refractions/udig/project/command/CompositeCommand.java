@@ -21,16 +21,13 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 
 /**
  * A collection of Commands that are done as one command.
- * See Gang of Four composite pattern.  
+ * See Gang of Four composite pattern.
  * @author   Jesse
  * @since   1.0.0
  */
 public class CompositeCommand implements MapCommand {
 
-    /** Treated as a List<Command> by subclasses */
     protected List<MapCommand> commands = new CopyOnWriteArrayList<MapCommand>();
-    
-    /** Treated as a List<Command> by subclasses */
     protected List<MapCommand> finalizerCommands = new CopyOnWriteArrayList<MapCommand>();
 
 	private Map map;
@@ -39,7 +36,7 @@ public class CompositeCommand implements MapCommand {
 
 	/**
 	 * Creates a new instance of CompositeCommand
-	 * 
+	 *
 	 * @param commands A list of commands to execute.
 	 */
 	@SuppressWarnings("unchecked")
@@ -56,7 +53,7 @@ public class CompositeCommand implements MapCommand {
         monitor.worked(2);
         try{
 		for (MapCommand command : commands) {
-            
+
 			SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, 10);
             command.setMap(getMap());
             command.run(subProgressMonitor);
@@ -78,7 +75,7 @@ public class CompositeCommand implements MapCommand {
 
 	}
 
-    
+
 	/**
 	 * @see net.refractions.udig.project.internal.command.MapCommand#copy()
 	 */
@@ -99,7 +96,7 @@ public class CompositeCommand implements MapCommand {
         name=newName;
     }
 
-    
+
 	/**
      * @see net.refractions.udig.project.command.MapCommand#setMap(IMap)
      * @uml.property   name="map"
@@ -118,7 +115,7 @@ public class CompositeCommand implements MapCommand {
 	public Map getMap() {
 		return map;
 	}
-    
+
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer("["); //$NON-NLS-1$
@@ -135,7 +132,7 @@ public class CompositeCommand implements MapCommand {
     public List<MapCommand> getCommands() {
         return this.commands;
     }
-    
+
     /**
      * @return Returns the commands that will always be run at the end of the command.
      */
@@ -160,5 +157,5 @@ public class CompositeCommand implements MapCommand {
     public void addFinalizerCommand( MapCommand command ){
         finalizerCommands.add(command);
     }
-    
+
 }

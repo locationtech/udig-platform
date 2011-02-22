@@ -73,9 +73,9 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
     private WizardViewer viewer;
     private ExternalCatalogueImportDescriptor selectedDescriptor;
     private Map<ExternalCatalogueImportDescriptor, ExternalCatalogueImportPage> pageCache;
-    
+
     /**
-     * 
+     *
      */
     public BrowserSelectionPage() {
         this("Select a Catalog"); //$NON-NLS-1$
@@ -91,35 +91,35 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
             settings = BrowserPlugin.getDefault().getDialogSettings().addNewSection(BROWSER_SELECTION);
         }
     }
-    
+
     public boolean canFlipToNextPage() {
         return isPageComplete();
     }
-    
+
     public boolean isPageComplete() {
-        return this.selectedDescriptor != null && 
+        return this.selectedDescriptor != null &&
                 this.selectedDescriptor instanceof ExternalCatalogueImportPageDescriptor;
     }
-    
+
     private Map<ExternalCatalogueImportDescriptor, ExternalCatalogueImportPage> getPageCache() {
         if(this.pageCache == null) {
             this.pageCache = new HashMap<ExternalCatalogueImportDescriptor, ExternalCatalogueImportPage>();
         }
         return this.pageCache;
     }
-    
+
     /**
      *
      * @return URL of the selected URL descriptor, or null
      */
     public URL getUrl() {
-        if(this.selectedDescriptor != null && 
+        if(this.selectedDescriptor != null &&
                 this.selectedDescriptor instanceof ExternalCatalogueImportURLDescriptor) {
             return ((ExternalCatalogueImportURLDescriptor)this.selectedDescriptor).getUrl();
         }
         return null;
     }
-    
+
     @Override
     public IWizardPage getNextPage() {
         ExternalCatalogueImportDescriptor id = this.selectedDescriptor;
@@ -133,12 +133,12 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
 //            if (descriptors != null && descriptors.size() == 1)
 //                d = descriptors.get(0);
 //        }
-        
+
         if (d != null) {
             try {
                 IDataWizard wizard = (IDataWizard) getWizard();
 
-                ExternalCatalogueImportPage page = getPageCache().get(d); 
+                ExternalCatalogueImportPage page = getPageCache().get(d);
                 if (page == null) {
                     page = d.createImportPage();
                     getPageCache().put(d, page);
@@ -146,7 +146,7 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
                 wizard.init((WizardPage) page);
 
                 return page;
-            } 
+            }
             catch (CoreException e) {
                 String msg = "Could not instantiate import wizard page"; //$NON-NLS-1$
                 System.out.println(msg);
@@ -160,8 +160,8 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
         IStructuredSelection selected = (IStructuredSelection) event.getSelection();
         if (selected == null || selected.isEmpty())
             return;
-        
-        this.selectedDescriptor 
+
+        this.selectedDescriptor
             = (ExternalCatalogueImportDescriptor) selected.getFirstElement();
         settings.put(SELECTED_BROWSER, this.selectedDescriptor.getLabel());
         setDescription(this.selectedDescriptor.getDescription());
@@ -176,9 +176,9 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
         viewer.setInput(list.toArray());
         String browser = settings.get(SELECTED_BROWSER);
         if(browser != null && browser.length() != 0) {
-            final List<ExternalCatalogueImportDescriptor> selection = 
+            final List<ExternalCatalogueImportDescriptor> selection =
                 new LinkedList<ExternalCatalogueImportDescriptor>();
-            
+
             for(ExternalCatalogueImportDescriptor desc : list) {
                 if(desc.getLabel().equals(browser)) {
                     selection.add(desc);
@@ -212,11 +212,11 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
                 getWizard().getContainer().showPage(next);
             }
         });
-        
+
         viewer.addSelectionChangedListener(this);
         setControl(viewer.getControl());
     }
-    
+
     /**
      *
      * @return List of descriptors
@@ -225,14 +225,14 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
     protected List<ExternalCatalogueImportDescriptor> getDescriptors() {
 
         if (this.descriptors == null) {
-            ExternalCatalogueImportPageProcessor p = 
+            ExternalCatalogueImportPageProcessor p =
                     new ExternalCatalogueImportPageProcessor();
             String xpid = ExternalCatalogueImportPage.XPID;
 
             ExtensionPointUtil.process(BrowserPlugin.getDefault(), xpid, p);
             this.descriptors = p.descriptors;
-            
-            ExternalCatalogueImportURLProcessor up = 
+
+            ExternalCatalogueImportURLProcessor up =
                     new ExternalCatalogueImportURLProcessor();
             ExtensionPointUtil.process(BrowserPlugin.getDefault(), xpid, up);
             this.descriptors.addAll(up.descriptors);
@@ -251,36 +251,36 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
             }
         }
         return this.descriptors;
-        
+
     }
-    
+
     private static class ExternalCatalogueImportPageProcessor implements ExtensionPointProcessor {
-        @SuppressWarnings("hiding")  
-        List<ExternalCatalogueImportDescriptor> descriptors = 
+        @SuppressWarnings("hiding")
+        List<ExternalCatalogueImportDescriptor> descriptors =
                         new LinkedList<ExternalCatalogueImportDescriptor>();
-        
-        public void process(IExtension extension, IConfigurationElement element) 
+
+        public void process(IExtension extension, IConfigurationElement element)
                 throws Exception {
-            IConfigurationElement[] childs = 
+            IConfigurationElement[] childs =
                     element.getChildren("externalCataloguePage"); //$NON-NLS-1$
             if(childs.length > 0) {
-                ExternalCatalogueImportPageDescriptor d = 
+                ExternalCatalogueImportPageDescriptor d =
                         new ExternalCatalogueImportPageDescriptor(element);
                 this.descriptors.add(d);
             }
         }
     }
-    
+
     private static class ExternalCatalogueImportURLProcessor implements ExtensionPointProcessor {
         @SuppressWarnings("hiding")
-        List<ExternalCatalogueImportDescriptor> descriptors = 
+        List<ExternalCatalogueImportDescriptor> descriptors =
                         new LinkedList<ExternalCatalogueImportDescriptor>();
-        
-        public void process(IExtension extension, IConfigurationElement element) 
+
+        public void process(IExtension extension, IConfigurationElement element)
                 throws Exception {
-            IConfigurationElement[] childs = 
+            IConfigurationElement[] childs =
                     element.getChildren("externalCatalogueURL"); //$NON-NLS-1$
-            if(childs.length == 0) 
+            if(childs.length == 0)
                 return;
             URL url = null;
             try {
@@ -288,7 +288,7 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
             } catch(MalformedURLException ex) {
                 return;
             }
-            ExternalCatalogueImportURLDescriptor d = 
+            ExternalCatalogueImportURLDescriptor d =
                     new ExternalCatalogueImportURLDescriptor(url);
             d.setLabel(element.getAttribute("name")); //$NON-NLS-1$
             d.setID(element.getAttribute("id")); //$NON-NLS-1$
@@ -297,27 +297,27 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
             d.setViewName(element.getAttribute("viewName")); //$NON-NLS-1$
             String ns = element.getNamespace();
             String banner = element.getAttribute("image"); //$NON-NLS-1$
-            
+
             if (banner != null)
                 d.setDescriptionImage(
                         AbstractUIPlugin.imageDescriptorFromPlugin(ns,banner));
-            
+
             banner = element.getAttribute("icon"); //$NON-NLS-1$
-            
+
             if (banner != null)
                 d.setIcon(
                         AbstractUIPlugin.imageDescriptorFromPlugin(ns,banner));
             this.descriptors.add(d);
         }
     }
-    
+
     public String getTitle() {
         if(this.selectedDescriptor != null) {
             return this.selectedDescriptor.getLabel();
         }
         return super.getTitle();
     }
-    
+
     private static class WizardViewer extends TableViewer {
 
         /**
@@ -327,17 +327,17 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
         public WizardViewer(Composite parent, int style) {
             super(parent, style);
 
-            setContentProvider( ArrayContentProvider.getInstance());
+            setContentProvider(new ArrayContentProvider());
             setLabelProvider(new LabelProvider() {
                 public String getText(Object object) {
-                    ExternalCatalogueImportDescriptor descriptor = 
+                    ExternalCatalogueImportDescriptor descriptor =
                             (ExternalCatalogueImportDescriptor) object;
 
                     return descriptor.getLabel();
                 }
 
                 public Image getImage(Object object) {
-                    ExternalCatalogueImportDescriptor descriptor = 
+                    ExternalCatalogueImportDescriptor descriptor =
                             (ExternalCatalogueImportDescriptor) object;
 
                     String id = descriptor.getID();
@@ -348,7 +348,7 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
                         if (registry.get(id) == null && image != null) {
                             registry.put(id, image);
                         }
-                        
+
                         return registry.get(id);
                     }
                 }

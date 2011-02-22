@@ -27,15 +27,14 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
+import org.geotools.filter.Filter;
 
 /**
  * Add all the features to the EditBlackboard that are contained in the filter.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -63,19 +62,17 @@ public class SelectFeaturesInFilterCommand extends AbstractCommand implements Un
     public void run( IProgressMonitor monitor ) throws Exception {
         monitor.beginTask(Messages.AddFeaturesCommand_taskMessage, 10);
         monitor.worked(1);
-        
-        FeatureStore<SimpleFeatureType, SimpleFeature> store=layer.getResource(FeatureStore.class, new SubProgressMonitor(monitor, 2));
-        String geomAttributeName = layer.getSchema().getGeometryDescriptor().getLocalName();
-        String[] desiredProperties = new String[]{geomAttributeName};
-        Query query=new DefaultQuery(layer.getSchema().getTypeName(), filter, 
-                desiredProperties);
-        FeatureCollection<SimpleFeatureType, SimpleFeature>  features = store.getFeatures(query);
 
-        FeatureIterator<SimpleFeature> iter=features.features();
+        FeatureStore store=layer.getResource(FeatureStore.class, new SubProgressMonitor(monitor, 2));
+        Query query=new DefaultQuery(layer.getSchema().getTypeName(), filter,
+                new String[]{layer.getSchema().getDefaultGeometry().getName()});
+        FeatureCollection features = store.getFeatures(query);
+
+        FeatureIterator iter=features.features();
         try{
             commands=new ArrayList<UndoableMapCommand>();
             while( iter.hasNext() ){
-                SimpleFeature feature=iter.next();
+                Feature feature=iter.next();
                 commands.add(new SelectFeatureCommand(bb, feature));
             }
 
@@ -94,9 +91,9 @@ public class SelectFeaturesInFilterCommand extends AbstractCommand implements Un
         }finally{
             features.close(iter);
         }
-        
+
         monitor.done();
-        
+
     }
 
     public String getName() {
@@ -105,7 +102,7 @@ public class SelectFeaturesInFilterCommand extends AbstractCommand implements Un
 
     public void rollback( IProgressMonitor monitor ) throws Exception {
         monitor.beginTask(Messages.AddFeaturesCommand_undoTaskMessage, commands.size()*2);
-        
+
         for( int i=commands.size()-1; i>-1; i--){
             SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, 2);
             commands.get(i).rollback(subProgressMonitor);

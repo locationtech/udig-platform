@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 8 Adding new Format</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 8 Adding new Format -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="8AddingnewFormat-AddinganewFormat">Adding a new Format</a></h1>
+
+<p>UDig makes use of a Catalog API that provides handles to all running services. You basically follow the handle to get access to the real data (be it DataStore, GridCoverage, or something new that you just made up).</p>
+
+<p>These handles are called IService (which contains IGeoResource handles). Each has an associated "Info" object that captures the exact same information everyone always wants (name,title,icon,etc...)</p>
+
+<p>Sometimes for a given "data" more then one handle is available (the data may be available through PostGIS and through a WMS).  There is a voting system where the "best" renderer is chosen to render a layer.  Some renderers can draw more then one layer (like WMS), some renderers like Shapefile renderer are stupidly fast.</p>
+
+<p>Adding a new format to uDig involves introducing a catalog service and a renderer for your content type.</p>
+
+<h3><a name="8AddingnewFormat-Catalogservice">Catalog service</a></h3>
+
+<p>The catalog service is contributed via the <b>net.refractions.udig.catalog.ServiceExtension</b> extension point. This boils down to writing implementations of the following interfaces.</p>
+<ul>
+	<li>IService</li>
+	<li>IGeoResource</li>
+	<li>ServiceExtension</li>
+</ul>
+
+
+<h3><a name="8AddingnewFormat-Renderer">Renderer</a></h3>
+<p>The renderer is contributed via the <b>net.refractions.udig.project.renderer</b> extension point. This involves writing implementations of the following interfaces</p>
+<ul>
+	<li>IRenderer</li>
+	<li>IRenderMetrics</li>
+	<li>IRenderMetricsFactory</li>
+</ul>
+
+
+<h3><a name="8AddingnewFormat-Plugin.xml">Plugin.xml</a></h3>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;extension
+      point=<span class="code-quote">"net.refractions.udig.catalog.ui.fileFormat"</span>&gt;
+      <span class="code-tag">&lt;fileService fileExtension=<span class="code-quote">"*.mif"</span>/&gt;</span>
+      <span class="code-tag">&lt;fileService fileExtension=<span class="code-quote">"*.dxf"</span>/&gt;</span>
+   <span class="code-tag">&lt;/extension&gt;</span></pre>
+</div></div>
+
+<p><a href="http://www.directionsmag.com/mapinfo-l/mif/AppJ.pdf" title="Visit page outside Confluence">MapInfo Data Interchange Format MIF</a><br/>
+<a href="http://www.autodesk.com/techpubs/autocad/acad2000/dxf/dxf_format.htm" title="Visit page outside Confluence">Autocad DXF Format</a></p>
+
+
+
+
+
+
+
+
+
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=5047">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=5047">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

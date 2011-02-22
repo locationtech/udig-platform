@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 2 Creating a Custom Application</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 2 Creating a Custom Application -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>There are several aspects to making a custom application:</p>
+<ul>
+	<li>Custom Branding - splash screen, about dialog, icon</li>
+	<li>Custom Application</li>
+	<li>Custom Workbench Advisor - toolbar, menus</li>
+	<li>Custom Perspective - view locations</li>
+	<li>Packaging up into 'Features' for a Product</li>
+</ul>
+
+
+<p>It should be noted that you can:</p>
+<ul>
+	<li>define your own custom branding while still running the UDIGApplication and Workbench Advisor</li>
+	<li>add custom menus without writing a new Workbench Advisor</li>
+	<li>add new Perspectives at any time</li>
+</ul>
+
+
+<p>The best source of documentation on these activities is the Eclipse online help.</p>
+<ul>
+	<li><a href="http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/guide/rcp.htm" title="Visit page outside Confluence">Building a Rich Client Platform application</a></li>
+	<li><a href="http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/guide/rcp_advisor.htm" title="Visit page outside Confluence">Customizing the workbench</a></li>
+	<li><a href="http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/misc/buddy_loading.html" title="Visit page outside Confluence">Third party libraries and classloading</a></li>
+</ul>
+
+
+<h2><a name="2CreatingaCustomApplication-SortingoutyourClassloadersforJAI">Sorting out your Classloaders for JAI</a></h2>
+
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='warningMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/forbidden.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">Java Advanced Imaging Bootclasspath</b><br />
+<p>The uDig application makes use of the JAI JRE extention.<br/>
+You need to add the following to your manifest:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">Eclipse-BuddyPolicy: ext</pre>
+</div></div>
+<p>This will allow your application to pick up the JRE extentions including the JAI jars and libraries.</p></td></tr></table></div></div>
+
+<p>The trouble is the Eclipse RCP framework is very conservative about what classes it trusts.</p>
+
+<p>It has defined the following classloaders:</p>
+<ul class="alternate" type="square">
+	<li>(none): Just the classes from your JRE (and anything you depend on)</li>
+	<li>ext: The classes from you JRE <b>ext</b> folder (ie your JRE Extentinos aka the BOOTCLASSPATH)</li>
+	<li>(???): The system CLASSPATH environment variable</li>
+</ul>
+
+
+<p>As you can see each represents more risk then the previous, a user may put anything on the CLASSPATH environmental variable and break your application.  Although less likely they could also install a JRE extention that would break your will to live.</p>
+
+<p>However we do need to take a little risk to make use of Java Advanced Imaging, so you will need to do the following.</p>
+
+<div class="panel"><div class="panelContent">
+<p>Manifest-Version: 1.0<br/>
+Bundle-ManifestVersion: 2<br/>
+Bundle-Name: Ui Plug-in<br/>
+Bundle-SymbolicName: za.co.bluesphere.sens.ui; singleton:=true<br/>
+Bundle-Version: 1.0.0<br/>
+Bundle-Activator: za.co.bluesphere.sens.ui.UiPlugin<br/>
+Bundle-Localization: plugin<br/>
+<b>Eclipse-BuddyPolicy: ext</b><br/>
+Require-Bundle: org.eclipse.ui,<br/>
+ org.eclipse.core.runtime,<br/>
+ org.eclipse.ui.intro,<br/>
+ net.refractions.udig.ui<br/>
+Eclipse-AutoStart: true<br/>
+Bundle-Vendor: Bluesphere Technologies<br/>
+Export-Package: za.co.bluesphere.sens.ui</p>
+</div></div>
+
+<p>You may also find documentation that talks about this problem with respect to:</p>
+<ul class="alternate" type="square">
+	<li>bootclass loader command line arguments</li>
+	<li>changes to the application config.ini file</li>
+	<li>changes to the product</li>
+</ul>
+
+
+<p>Rest assured that after wasting weeks on this problem the above solution is the least amount of hassle.</p>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=5837">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=5837">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

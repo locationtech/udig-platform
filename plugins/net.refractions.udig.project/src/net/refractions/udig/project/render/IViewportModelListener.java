@@ -17,7 +17,7 @@ package net.refractions.udig.project.render;
 
 /**
  * A listener interested in Bounds and CRS changes.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

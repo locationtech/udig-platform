@@ -13,14 +13,14 @@ package net.refractions.udig.project.command;
  * exception. Error handlers know what to do with the exception.
  * <p>
  * An example is a Transaction Error handler which
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
 public interface ErrorHandler {
     /**
      * Handles an error that occurs during the execution of a command.
-     * 
+     *
      * @param command The command which raised the excpetion.
      * @param e the exception raised.
      * @see MapCommand
@@ -30,7 +30,7 @@ public interface ErrorHandler {
 
     /**
      * Handles an error that occurs during the rollback of a undoable command.
-     * 
+     *
      * @param command The command which raised the excpetion.
      * @param e the exception raised.
      * @see UndoableCommand

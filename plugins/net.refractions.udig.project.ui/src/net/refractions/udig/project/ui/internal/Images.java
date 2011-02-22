@@ -52,7 +52,7 @@ public class Images {
      * <p>
      * Images are from CatalogUIPlugin.getDefault().getImages()
      * </p>
-     * 
+     *
      * @param id
      * @return ImageDescriptor, or null if there is no such image.
      */
@@ -67,7 +67,7 @@ public class Images {
 
     /**
      * Returns the image associated with the given key, or <code>null</code> if none.
-     * 
+     *
      * @param id the key
      * @return the image, or <code>null</code> if none
      */
@@ -75,13 +75,13 @@ public class Images {
         Images images = ProjectUIPlugin.getDefault().getImages();
         return images.imageCache.get(id);
     }
-    
+
     /**
      * Initializes the table of images used in this plugin.
      * <p>
      * The Images from ISharedImages will be registered with
      * CatalogUIPlugin.getDefault().getImageRegistry().
-     * 
+     *
      * @param url
      * @param shared
      */
@@ -133,7 +133,7 @@ public class Images {
         create(ImageConstants.LINKED_DISABLED_CO);
         create(ImageConstants.LINKED_ENABLED_CO);
     }
-    
+
     /**
      * Clean up Images during plugin shutdown.
      */

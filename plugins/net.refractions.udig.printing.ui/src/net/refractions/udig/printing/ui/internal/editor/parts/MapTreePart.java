@@ -51,7 +51,7 @@ import org.eclipse.gef.tools.DirectEditManager;
 public class MapTreePart extends AbstractTreeEditPart {
     protected DirectEditManager manager;
     private InternalPropertyListener listener = new InternalPropertyListener();
-    
+
     /**
      * Construct <code>MapTreePart</code>.
      *
@@ -66,11 +66,11 @@ public class MapTreePart extends AbstractTreeEditPart {
         if (isActive()) {
             return;
         }
-        
+
         super.activate();
         ((Box)getModel()).eAdapters().add(listener);
     }
-    
+
     public void deactivate() {
         if (!isActive()) {
             return;
@@ -78,33 +78,33 @@ public class MapTreePart extends AbstractTreeEditPart {
         super.deactivate();
         ((Box) getModel()).eAdapters().remove(listener);
     }
-    
+
     protected void refreshVisuals() {
-        setWidgetText(Messages.MapTreePart_mapLabel +((MapBoxPrinter)((Box) getModel()).getBoxPrinter()).getMap().getName()); 
+        setWidgetText(Messages.MapTreePart_mapLabel +((MapBoxPrinter)((Box) getModel()).getBoxPrinter()).getMap().getName());
     }
-    
+
     public void performRequest(Request request) {
         super.performRequest(request);
     }
-    
+
     protected IFigure createFigure() {
         return new BoxFigure();
     }
-    
+
     protected void createEditPolicies() {
         super.createEditPolicies();
-        installEditPolicy(EditPolicy.COMPONENT_ROLE, new MapEditPolicy());    
+        installEditPolicy(EditPolicy.COMPONENT_ROLE, new MapEditPolicy());
     }
-        
+
     protected class InternalPropertyListener extends PropertyListener {
-        
+
         protected void locationChanged() {
             refreshVisuals();
         }
         protected void sizeChanged() {
             refreshVisuals();
         }
-        
+
         @Override
         protected void boxesChanged() {
             super.boxesChanged();

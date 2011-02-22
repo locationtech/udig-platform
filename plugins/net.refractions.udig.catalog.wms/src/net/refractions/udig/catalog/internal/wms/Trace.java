@@ -6,7 +6,7 @@ package net.refractions.udig.catalog.internal.wms;
  * <p>
  * Sample use:<pre><code>
  * static import net.refractions.udig.project.ui.internal.RENDERING;
- * 
+ *
  * if( WmsPlugin.isDebugging( RENDERING ) ){
  *      System.out.println( "your message here" );
  * }
@@ -16,5 +16,5 @@ package net.refractions.udig.catalog.internal.wms;
 public interface Trace {
     /** You may set this to "true" in your .options file */
     public static final String REQUEST =
-        "net.refractions.udig.catalog.wms/debug/request"; //$NON-NLS-1$    
+        "net.refractions.udig.catalog.wms/debug/request"; //$NON-NLS-1$
 }

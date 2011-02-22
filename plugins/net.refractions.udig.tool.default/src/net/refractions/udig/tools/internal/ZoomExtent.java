@@ -16,18 +16,20 @@
  */
 package net.refractions.udig.tools.internal;
 
-import net.refractions.udig.project.internal.command.navigation.ZoomExtentCommand;
+import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.ui.tool.AbstractActionTool;
 import net.refractions.udig.project.ui.tool.AbstractTool;
 
 /**
  * This class Provides zoom box and click functionality.
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
 public class ZoomExtent extends AbstractActionTool{
-    
+
+    NavigationCommandFactory factory=NavigationCommandFactory.getInstance();
+
     /**
      * @see AbstractTool#AbstractTool(int)
      */
@@ -39,7 +41,7 @@ public class ZoomExtent extends AbstractActionTool{
      * @see net.refractions.udig.project.ui.tool.ActionTool#run()
      */
     public void run() {
-    	getContext().sendASyncCommand(new ZoomExtentCommand());
+    	getContext().sendASyncCommand(factory.createZoomExtentCommand());
     }
 
     public void dispose() {

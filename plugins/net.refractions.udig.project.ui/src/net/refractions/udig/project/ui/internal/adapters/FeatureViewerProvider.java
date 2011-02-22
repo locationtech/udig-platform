@@ -29,11 +29,27 @@ import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
- * Present a feature as a tree for JFace use.
+ * Provides ...TODO summary sentence
  * <p>
- * Seems to actuall work around the FeatureViewerProvider.Databag class
- * which provides a IPropertySource and IPropertyDescriptor.
+ * TODO Description
  * </p>
+ * <p>
+ * Responsibilities:
+ * <ul>
+ * <li>
+ * <li>
+ * </ul>
+ * </p>
+ * <p>
+ * Example Use:
+ *
+ * <pre><code>
+ *  FeatureViewerProvider x = new FeatureViewerProvider( ... );
+ *  TODO code example
+ * </code></pre>
+ *
+ * </p>
+ *
  * @author jones
  * @since 0.3
  */
@@ -80,9 +96,8 @@ public class FeatureViewerProvider extends LabelProvider implements ITreeContent
         if (parentElement instanceof Databag) {
             Databag data = (Databag) parentElement;
             Object value = data.source.getPropertyValue(data.descriptor.getId());
-            if (value instanceof IPropertySource){
+            if (value instanceof IPropertySource)
                 return createChildren((IPropertySource) value);
-            }
         } else if (Platform.getAdapterManager().hasAdapter(parentElement,
                 "org.eclipse.ui.views.properties.IPropertySource")) { //$NON-NLS-1$
             IPropertySource source = (IPropertySource) Platform.getAdapterManager().getAdapter(
@@ -135,7 +150,7 @@ public class FeatureViewerProvider extends LabelProvider implements ITreeContent
             Databag data = (Databag) element;
             return data.descriptor.getDisplayName();
         }
-        return Messages.FeatureViewerProvider_unknown; 
+        return Messages.FeatureViewerProvider_unknown;
     }
 
 }

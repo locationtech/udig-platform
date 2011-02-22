@@ -1,0 +1,239 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 1 Writing JUnit Test Plugins</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 1 Writing JUnit Test Plugins -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h2><a name="1WritingJUnitTestPlugins-WritingJUnitTestPlugins">Writing JUnit Test Plugins</a></h2>
+
+<p>Writing a test plugin is no different from writing a regular plugin. After creating your test plugin, simply creating test cases the usual junit way by extended org.junit.TestCase. </p>
+
+<p><b>Note</b>: The junit library is bundled as the <b>org.junit</b> plugin. Your test plugin must depend on it.</p>
+
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='tipMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/check.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">Optional</b><br />
+<p>Unless it is necessary, we recommend placing junit tests for a particular plugin, in a separate plugin all together. The only downside to doing so is the loss of the ability to use <b>package</b> visiblity. </p></td></tr></table></div></div>
+
+<h3><a name="1WritingJUnitTestPlugins-NamingConventions">Naming Conventions</a></h3>
+
+<p>The naming convention for plugins is [namespace].[major subsystem].[minor subsystem]. Examples include:</p>
+
+<p><div class="preformatted"><div class="preformattedContent">
+<pre> the feature.xml file
+net.refractions.udig.catalog
+net.refractions.udig.catalog.wfs
+
+net.refractions.udig.project
+net.refractoins.udig.project.ui
+</pre>
+</div></div> the feature.xml file</p>
+
+<p>The naming convention for test plugins is [namespace].[major subsystem].<b>tests</b>.[minor subsystem]. Examples include:</p>
+
+<div class="preformatted"><div class="preformattedContent">
+<pre>net.refractions.udig.catalog.tests
+net.refractions.udig.catalog.tests.wfs
+
+net.refractions.udig.project.tests
+net.refractoins.udig.project.tests.ui
+</pre>
+</div></div>
+
+<h3><a name="1WritingJUnitTestPlugins-RunningTestsintheIDE">Running Tests in the IDE</a></h3>
+
+<p>After creating a test case in your new test plugin, right click on the class while in the <b>Java</b> perspective, and the context menu should contain a menu item entitled <em>Run As</em> -&gt; <em>JUnit Plug-in Test</em>. This will start an eclipse runtime environment and run your test class. <br/>
+<img src="1 Writing JUnit Test Plugins_attachments/runide.png" align="absmiddle" vspace="5" border="1" /></p>
+
+<h3><a name="1WritingJUnitTestPlugins-RunningAutomatedTests">Running Automated Tests</a></h3>
+
+<p>In order to have your test plugin run with the rest of the automated test plugins, the following steps must be taken:</p>
+<ol>
+	<li>Create a test suite</li>
+	<li>Create a <b>test.xml</b> from the template</li>
+	<li>Add your test plugin to the net.refractions.udig.test feature</li>
+	<li>Add your test plugin to the automated test set</li>
+</ol>
+
+
+<h4><a name="1WritingJUnitTestPlugins-CreatingaTestSuite">Creating a Test Suite</a></h4>
+
+<p>A test suite is a java class which extends <b>junit.framework.TestSuite</b>. Each test class you write must be added to the test suite. The following is an example of a test suite which contains three test classes.</p>
+
+<div class="preformatted"><div class="preformattedContent">
+<pre>public class CatalogUITestSuite extends TestSuite {
+
+    /** Returns the suite. This is required to use the JUnit Launcher. */
+    public static Test suite() {
+        return new CatalogUITestSuite();
+    }
+
+    public CatalogUITestSuite() {
+        addTest(new TestSuite(HeadlessWizardDialogTest.class));
+        addTest(new TestSuite(BasicDataPipelineTest.class));
+        addTest(new TestSuite(BasicDataPipelineDialogTest.class));
+    }
+
+}
+</pre>
+</div></div>
+
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='warningMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/forbidden.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">The test suite must provide an implementation of a method with the following signature, which returns an instnace of the suite</b><br />
+
+<div class="preformatted"><div class="preformattedContent">
+<pre>    public static Test suite();
+</pre>
+</div></div></td></tr></table></div></div>
+
+<h4><a name="1WritingJUnitTestPlugins-Creatingthetest.xmlScript.">Creating the test.xml Script.</a></h4>
+
+<p>The test.xml file is an ant build script which runs your unit tests. The following is a template <a href="" title="test.xml attached to 1 Writing JUnit Test Plugins">test.xml</a> of such a script. Located near the top of the file are three properties which must be modified to reflect your particular test plugin. The properties include:</p>
+
+<ol>
+	<li><b>plugin-name</b> - This is name of your <b>test</b> plugin. For simplicity, keep it the same as the id of your plugin.</li>
+	<li><b>testClass</b> - This is the fully qualified class name of your test suite.</li>
+	<li><b>testTarget</b> - This is the name of ant target which will be used to run your tests. <img class="emoticon" src="./icons/emoticons/warning.gif" height="16" width="16" align="absmiddle" alt="" border="0"/> It must be unique among all other test plugins.</li>
+</ol>
+
+
+<h4><a name="1WritingJUnitTestPlugins-AddingthePlugintothenet.refractions.udig.testFeature">Adding the Plugin to the net.refractions.udig.test Feature</a></h4>
+
+<p>The easiest way to add a plugin to a particular feature is using the eclipse feature editor. </p>
+
+<ol>
+	<li>Navigate to the net.refractions.udig.test feature while in the Java Perspective<br/>
+<img src="1 Writing JUnit Test Plugins_attachments/nav.png" align="absmiddle" vspace="5" border="1" /></li>
+	<li>Open the feature.xml file with the eclipse editor and select the <b>Plug-ins</b> tab<br/>
+<img src="1 Writing JUnit Test Plugins_attachments/edit.png" align="absmiddle" vspace="5" border="1" /></li>
+	<li>Click the <b>Add</b> button and select the test plugin from the pop-up dialog.<br/>
+<img src="1 Writing JUnit Test Plugins_attachments/select.png" align="absmiddle" vspace="5" border="1" /></li>
+	<li>Click <b>OK</b> and save the feature.xml file</li>
+</ol>
+
+
+<h4><a name="1WritingJUnitTestPlugins-AddingthePlugintotheAutomatedTestSet">Adding the Plugin to the Automated Test Set</a></h4>
+
+<p>To add the plugin to the automated test set, you must check out <a href="http://svn.geotools.org/udig/trunk/scripts/test/" title="Visit page outside Confluence">&#104;ttp://svn.geotools.org/udig/trunk/scripts</a>. This directory contains two files that must be modified. </p>
+
+<ol>
+	<li><b>test.properties</b></li>
+	<li><b>test.xml</b> (<em>different from the one above</em>)</li>
+</ol>
+
+
+<h5><a name="1WritingJUnitTestPlugins-test.properties">test.properties</a></h5>
+
+<p>This file contains a list of properties which map a test plugin <b>name</b> to an id,version tuple and looks as follows:</p>
+
+<div class="preformatted"><div class="preformattedContent">
+<pre>org.eclipse.test=org.eclipse.test_3.1.0
+net.refractions.udig.catalog.tests=net.refractions.udig.catalog.tests_1.0.0
+net.refractions.udig.catalog.tests.wfs=net.refractions.udig.catalog.tests.wfs_1.0.0
+net.refractions.udig.project.tests=net.refractions.udig.project.tests_1.0.0
+net.refractions.udig.project.tests.ui=net.refractions.udig.project.tests.ui_1.0.0
+</pre>
+</div></div>
+
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='warningMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/forbidden.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">The name of the property MUST match the plugin-name declared in the test.xml file.</b><br /></td></tr></table></div></div>
+
+<p>To add the <b>catalog.tests.ui</b> plugin, we would add the following property:</p>
+
+<div class="preformatted"><div class="preformattedContent">
+<pre>net.refractions.udig.catalog.tests.ui=net.refractions.udig.catalog.tests.ui_1.0.0
+</pre>
+</div></div>
+
+<h5><a name="1WritingJUnitTestPlugins-test.xml">test.xml</a></h5>
+
+<p>This file is the root ant test script. It runs tests by delegating to the test.xml script created above. In order to have to the root script call your test.xml script, you must modify the target named <b>all</b> and add a call to your target. The <b>all</b> target is located near the bottom of the script and looks like the following:</p>
+
+<div class="preformatted"><div class="preformattedContent">
+<pre>  &lt;target name="all"&gt;
+    &lt;antcall target="catalog" /&gt;
+    &lt;antcall target="catalog.wfs" /&gt;
+    &lt;antcall target="project" /&gt;
+    &lt;antcall target="project.ui" /&gt;
+  &lt;/target&gt;
+</pre>
+</div></div>
+
+<p>To add the catalog.tests.ui plugin, we add the following line:</p>
+
+<div class="preformatted"><div class="preformattedContent">
+<pre>    &lt;antcall target="catalog.ui" /&gt;
+</pre>
+</div></div>
+
+<p>The final step is to add a target which matches the name above. </p>
+
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='warningMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/forbidden.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">This name MUST match the plugin-name property declared in the test.xml file created above</b><br /></td></tr></table></div></div>
+
+<p>The following is an example of a target:</p>
+
+<div class="preformatted"><div class="preformattedContent">
+<pre> &lt;target name="catalog.ui"&gt;
+    &lt;antcall target="runtests"&gt;
+      &lt;param name="testPlugin" value="${net.refractions.udig.catalog.tests.ui}"/&gt;
+      &lt;param name="report" value="net.refractions.udig.catalog.tests.ui"/&gt;
+    &lt;/antcall&gt;
+ &lt;/target&gt;
+</pre>
+</div></div>
+
+<p>The target can be added anywhere in the file. </p>
+
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='warningMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/forbidden.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">The testPlugin attribute must match the name of the property added to teh test.properties file.</b><br /></td></tr></table></div></div>
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='tipMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/check.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">The report attribute is the name that the test report will be published as</b><br /></td></tr></table></div></div>
+
+<p>Note that the plugin required to run automated tests is "eclipse-test-framework-3.1.zip", available here:<br/>
+<a href="http://download.eclipse.org/eclipse/downloads/drops/R-3.1-200506271435/index.php" title="Visit page outside Confluence">&#104;ttp://download.eclipse.org/eclipse/downloads/drops/R-3.1-200506271435/index.php</a></p>
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="1 Writing JUnit Test Plugins_attachments/runide.png">runide.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="1 Writing JUnit Test Plugins_attachments/test.xml">test.xml</a> (text/xml)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="1 Writing JUnit Test Plugins_attachments/edit.png">edit.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="1 Writing JUnit Test Plugins_attachments/nav.png">nav.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="1 Writing JUnit Test Plugins_attachments/select.png">select.png</a> (image/png)
+                                <br/>
+                                                    </div>
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=5719">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=5719">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

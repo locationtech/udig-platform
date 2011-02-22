@@ -17,10 +17,8 @@
 package net.refractions.udig.project.ui.tool;
 
 /**
- * A ModalTool is a tool which "takes control" of how the Map Editor operates.of operation.
- * <p>
- * An example consider the *Zoom* tool - If the zoom tool is "on" then other tools modal
- * tools must be off.
+ * A ModalTool is a tool which "takes control" of operation. An example is the zoom tool. If the
+ * zoom tool is "on" then other tools modal tools must be off.
  * <p>
  * Must have a public default constructor so that the plugin frame work can instantiate the class.
  * </p>
@@ -28,10 +26,10 @@ package net.refractions.udig.project.ui.tool;
  * <ul>
  * <li><b>ToolConstants.DEFAULT_CURSOR_ID_KEY</b> - the cursor ID value from "toolCursorId"
  * attribute of "modalTool" extension</li>
- * 
+ *
  * </ul>
  * <p>
- * 
+ *
  * @see net.refractions.udig.project.ui.tool.AbstractModalTool
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
@@ -107,62 +105,62 @@ public interface ModalTool extends Tool {
      * The move cursor type.
      */
     public static final String MOVE_CURSOR = "move"; //$NON-NLS-1$
-    
+
     public static final String NO_CURSOR = "no"; //$NON-NLS-1$
 
     /**
      * Called when tool button is pressed. If active is set to true the tool is Registered with the
      * source Component so that it receives events and will begin operating If active is set to
      * false the tool is set as inactive and deregistered with the component.
-     * 
+     *
      * @param active if true the tool is Registered with the source Component so that it receives
      *        events and will begin operating. if false the tool is set as inactive and deregistered
      *        with the component.
      */
     public void setActive( boolean active );
-    
+
     /**
      * Returns true if the current tool is active.
      *
      * @return
      */
     public boolean isActive( );
-    
+
     /**
      * Returns current cursor ID of the modal tool.
-     * 
+     *
      * @return
      */
     public String getCursorID();
-    
+
     /**
      * Sets the current cursor ID for the modal tool. If it is needed
      * the actual updating of the mouse cursor is performed automatically.
-     * 
-     * 
+     *
+     *
      * @param id the cursor ID from <code>net.refractions.udig.project.ui.tool.toolCursor</code>
      * extension or the constant from <code>ModalTool</code> interface.
-     * 
+     *
      */
     public void setCursorID(String id);
-    
-    
-    
+
+
+
     /**
      * Sets tool's selection provider.
      * <p>
      * Usually it is configured through extension point.
-     * 
+     *
      * @param selectionProvider
      */
     public void setSelectionProvider(IMapEditorSelectionProvider selectionProvider);
-    
+
     /**
      * Returns tool's selection provider.
      * <p>
-     * Now the modal tool may have 0..1 of selection providers. 
-     * 
-     * 
+     * Now the modal tool may have 0..1 of selection providers.
+     *
+     *
      * @return the modal tool's selection provider.
      */
     public IMapEditorSelectionProvider getSelectionProvider();

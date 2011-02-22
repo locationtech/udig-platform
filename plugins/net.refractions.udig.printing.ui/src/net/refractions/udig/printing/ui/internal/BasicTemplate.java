@@ -28,27 +28,23 @@ import net.refractions.udig.printing.model.impl.LabelBoxPrinter;
 import net.refractions.udig.printing.model.impl.MapBoxPrinter;
 import net.refractions.udig.printing.model.impl.MapGraphicBoxPrinter;
 import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import net.refractions.udig.ui.graphics.SWTGraphics;
 
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
 
 /**
  * Implementation of a Template at its most basic. Contains a title bar and a map.
- * 
+ *
  * @author Richard Gould
  */
 public class BasicTemplate extends AbstractTemplate {
 
     private static final int MARGIN = 10;
     private static final int SPACING = 10;
-    
-    private Rectangle mapBounds;
-    
     /**
      * Constructs the BasicTemplate and populates its two boxes with a title and a map.
      */
@@ -58,7 +54,7 @@ public class BasicTemplate extends AbstractTemplate {
 
     /**
      * Populates the templates two boxes with a title and map
-     * 
+     *
      * @param page the parent(owner) page
      * @param map the Map to be drawn
      */
@@ -74,16 +70,16 @@ public class BasicTemplate extends AbstractTemplate {
 
         labelHeight = addLabelBox(map, width, labelWidth);
 
-        mapBounds = addMapBox(map, width, height, labelHeight, scaleHeight, legendWidth);
+        Dimension mapSize = addMapBox(map, width, height, labelHeight, scaleHeight, legendWidth);
 
-        addLegendBox(height, legendWidth, legendHeight, labelHeight, mapBounds);
+        addLegendBox(height, legendWidth, legendHeight, labelHeight, mapSize);
 
         addScale(height, scaleHeight, scaleWidth);
     }
 
     private void addScale( int height, int scaleHeight, int scaleWidth ) {
         Box scaleBox = ModelFactory.eINSTANCE.createBox();
-        MapGraphicBoxPrinter scale = new MapGraphicBoxPrinter(null);
+        MapGraphicBoxPrinter scale = new MapGraphicBoxPrinter();
         scale.setMapGraphic(MapGraphicChooserDialog.findResource(ScalebarMapGraphic.class));
         scaleBox.setBoxPrinter(scale);
         scaleBox.setID("Scalebar Box"); //$NON-NLS-1$
@@ -102,7 +98,7 @@ public class BasicTemplate extends AbstractTemplate {
 
             data.setHeight( 18 );
             data.setStyle( SWT.BOLD );
-            Font font = AWTSWTImageUtils.swtFontToAwt(data);
+            Font font = SWTGraphics.swtFontToAwt(data);
             labelBoxPrinter.setFont(font);
 
         } catch (Exception e) {
@@ -135,7 +131,7 @@ public class BasicTemplate extends AbstractTemplate {
         return builder.toString();
     }
 
-    private Rectangle addMapBox( Map map, int width, int height, final int labelHeight, int scaleHeight,
+    private Dimension addMapBox( Map map, int width, int height, final int labelHeight, int scaleHeight,
             int legendWidth ) {
         Box mapBox = ModelFactory.eINSTANCE.createBox();
         MapBoxPrinter mapBoxPrinter = new MapBoxPrinter();
@@ -150,44 +146,28 @@ public class BasicTemplate extends AbstractTemplate {
         int scaleAndSpacing = scaleHeight + SPACING;
         int mapHeight = height - bothMargins - labelAndSpacing - scaleAndSpacing;
 
+        Dimension mapSize = new Dimension(mapWidth, mapHeight);
+        mapBox.setSize(mapSize);
         int mapX = MARGIN;
         int mapY = MARGIN + labelAndSpacing;
-        
-        Rectangle mapBounds = new Rectangle(
-                mapX,
-                mapY,
-                mapWidth, 
-                mapHeight);
-        mapBox.setSize(new Dimension(mapBounds.width, mapBounds.height));
-
-        mapBox.setLocation(new Point(mapBounds.x, mapBounds.y));
+        mapBox.setLocation(new Point(mapX, mapY));
         boxes.add(mapBox);
-        return mapBounds;
+        return mapSize;
     }
 
     private void addLegendBox( int height, final int legendWidth, int legendHeight, int labelHeight,
-            Rectangle mapBounds ) {
+            Dimension mapSize ) {
         Box legendBox = ModelFactory.eINSTANCE.createBox();
-        MapGraphicBoxPrinter legend = new MapGraphicBoxPrinter(null);
+        MapGraphicBoxPrinter legend = new MapGraphicBoxPrinter();
         legend.setMapGraphic(MapGraphicChooserDialog.findResource(LegendGraphic.class));
         legendBox.setBoxPrinter(legend);
         legendBox.setID("Legend Box"); //$NON-NLS-1$
-        legendBox.setLocation(new Point(MARGIN + mapBounds.width + SPACING, MARGIN+labelHeight+MARGIN));
+        legendBox.setLocation(new Point(MARGIN + mapSize.width + SPACING, MARGIN+labelHeight+MARGIN));
         legendBox.setSize(new Dimension(legendWidth, legendHeight));
         boxes.add(legendBox);
     }
 
     public String getName() {
         return Messages.BasicTemplate_name;
-    }
-
-    public Rectangle getMapBounds() throws IllegalStateException {
-        if (mapBounds == null)
-            throw new IllegalStateException("Please initialize the template before calling this method.");
-        return mapBounds;
-    }
-
-    public String getAbbreviation() {
-        return getName();
     }
 }

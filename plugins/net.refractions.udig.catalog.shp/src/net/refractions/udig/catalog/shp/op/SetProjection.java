@@ -25,14 +25,14 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * Writes the projection file for a shapefile
- * 
+ *
  * @author jesse
  */
 public class SetProjection implements IOp {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see net.refractions.udig.ui.operations.IOp#op(org.eclipse.swt.widgets.Display,
 	 *      java.lang.Object, org.eclipse.core.runtime.IProgressMonitor)
 	 */
@@ -61,7 +61,7 @@ public class SetProjection implements IOp {
 
 					if (initVal == null) {
 						initVal = allDatastores[0].getSchema()
-								.getCoordinateReferenceSystem();
+								.getDefaultGeometry().getCoordinateSystem();
 					}
 					CRSChooserDialog dialog = new CRSChooserDialog(display
 							.getActiveShell(), initVal);
@@ -72,7 +72,8 @@ public class SetProjection implements IOp {
 					CoordinateReferenceSystem result = dialog.getResult();
 					if (result != null) {
 						for (ShapefileDataStore ds : allDatastores) {
-							CoordinateReferenceSystem crs = ds.getSchema().getCoordinateReferenceSystem();
+							CoordinateReferenceSystem crs = ds.getSchema()
+									.getDefaultGeometry().getCoordinateSystem();
 							if (!CRS.equalsIgnoreMetadata(result, crs))
 								ds.forceSchemaCRS(result);
 							ICatalog catalog = CatalogPlugin.getDefault()
@@ -95,7 +96,7 @@ public class SetProjection implements IOp {
 														.getIdentifier(),
 														params);
 										catalog.replace(
-												resolve.getID(),
+												resolve.getIdentifier(),
 												replacement);
 									}
 								}

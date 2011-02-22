@@ -49,7 +49,7 @@ import org.osgi.service.prefs.BackingStoreException;
 /**
  * Baseclass for Editor dialogs that will show two tabs of Editors -
  * filtered and unfiltered.
- * 
+ *
  * @since 3.0
  */
 public abstract class FilteredEditorDialog extends EditorDialog implements IWorkbenchEditorContainer {
@@ -57,17 +57,17 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
 	protected FilteredComboTree filteredTree;
 
 	private Object pageData;
-	
+
 	IWorkingCopyManager workingCopyManager;
-	
+
 	private Collection<Job> updateJobs = new ArrayList<Job>();
-	
+
 	PageHistoryHolder history;
-	
+
 	/**
 	 * Creates a new Editor dialog under the control of the given Editor
 	 * manager.
-	 * 
+	 *
 	 * @param parentShell
 	 *            the parent shell
 	 * @param manager
@@ -83,7 +83,7 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
 	 * be filtered based on a call to
 	 * <code>WorkbenchActivityHelper.filterItem()</code> then
 	 * <code>null</code> is returned.
-	 * 
+	 *
 	 * @see org.eclipse.jface.Editor.EditorDialog#findNodeMatching(java.lang.String)
 	 */
 	@Override
@@ -100,7 +100,7 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
 	 */
 	@Override
     protected TreeViewer createTreeViewer(Composite parent) {
-		PatternItemFilter filter = new PatternItemFilter(true); 
+		PatternItemFilter filter = new PatternItemFilter(true);
 		int styleBits = SWT.SINGLE | SWT.H_SCROLL;
 		filteredTree = new FilteredComboTree(parent, styleBits, filter);
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -115,20 +115,20 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
         tree.setSorter(new ViewerSorter());
 
 		tree.setInput(getEditorPageManager());
-		
+
 		//if the tree has only one or zero pages, make the combo area disable
 		if(hasAtMostOnePage(tree)){
 			filteredTree.getFilterCombo().setEnabled(false);
 			filteredTree.getFilterCombo().setSelection(new Point(0,0));
 		}
-		
-		
+
+
 		tree.addFilter(new CapabilityFilter());
 
 		tree.addSelectionChangedListener(new ISelectionChangedListener() {
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent)
 			 */
 			public void selectionChanged(SelectionChangedEvent event) {
@@ -150,17 +150,17 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
 	private boolean hasAtMostOnePage(TreeViewer tree){
 		ITreeContentProvider contentProvider = (ITreeContentProvider ) tree.getContentProvider();
 		Object[] children= contentProvider.getElements(tree.getInput());
-		
+
 		if(children.length <= 1){
 			if(children.length == 0)
 				return true;
-			return !contentProvider.hasChildren(children[0]);				
+			return !contentProvider.hasChildren(children[0]);
 		}
 		return false;
 	}
 	/**
 	 * Set the content and label providers for the treeViewer
-	 * 
+	 *
 	 * @param treeViewer
 	 */
 	protected void setContentAndLabelProviders(TreeViewer treeViewer) {
@@ -211,7 +211,7 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
 
 	/**
 	 * Show only the supplied ids.
-	 * 
+	 *
 	 * @param filteredIds
 	 */
 	public void showOnly(String[] filteredIds) {
@@ -241,7 +241,7 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
 			((IEditorPage) page).applyData(this.pageData);
 
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.Editor.EditorDialog#getCurrentPage()
 	 */
@@ -265,7 +265,7 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
 	/**
 	 * Selects the current page based on the given Editor page identifier.
 	 * If no node can be found, then nothing will change.
-	 * 
+	 *
 	 * @param EditorPageId
 	 *            The Editor page identifier to select; should not be
 	 *            <code>null</code>.
@@ -277,7 +277,7 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
 			showPage(node);
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.Editors.IWorkbenchEditorContainer#getWorkingCopyManager()
 	 */
@@ -316,7 +316,7 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
 			((Job) updateIterator.next()).schedule();
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.Editors.IWorkbenchEditorContainer#registerUpdateJob(org.eclipse.core.runtime.jobs.Job)
 	 */
@@ -326,17 +326,17 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
 
 	/**
 	 * Get the toolbar for the container
-	 * 
+	 *
 	 * @return Control
 	 */
 	Control getContainerToolBar(Composite composite) {
         ToolBar historyBar = new ToolBar(composite, SWT.HORIZONTAL | SWT.FLAT);
         ToolBarManager historyManager = new ToolBarManager(historyBar);
-    
+
         history.createHistoryControls(historyBar, historyManager);
-        
+
         historyManager.update(false);
-    
+
         return historyBar;
 	}
 
@@ -360,25 +360,23 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
 	 */
 	@Override
     public boolean close() {
-	    if (history!= null )
-	        history.dispose();
 		return super.close();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.Editor.EditorDialog#createTitleArea(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
     protected Composite createTitleArea(Composite parent) {
-				
+
 		GridLayout parentLayout = (GridLayout) parent.getLayout();
 		parentLayout.numColumns = 2;
 		parentLayout.marginHeight = 0;
-		parentLayout.marginTop = IDialogConstants.VERTICAL_MARGIN;		
+		parentLayout.marginTop = IDialogConstants.VERTICAL_MARGIN;
 		parent.setLayout(parentLayout);
-		
+
 		Composite titleComposite = super.createTitleArea(parent);
-		
+
 		Composite toolbarArea=new Composite(parent, SWT.NONE);
 		GridLayout toolbarLayout = new GridLayout();
 		toolbarLayout.marginHeight = 0;
@@ -387,7 +385,7 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
 		toolbarArea.setLayoutData(new GridData(SWT.END, SWT.FILL, false, true));
 		Control topBar = getContainerToolBar(toolbarArea);
 		topBar.setLayoutData(new GridData(SWT.END, SWT.FILL, false, true));
-		
+
 		return titleComposite;
 	}
 
@@ -400,7 +398,7 @@ public abstract class FilteredEditorDialog extends EditorDialog implements IWork
 			filteredTree.getFilterControl().setFocus();
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.Editor.EditorDialog#updateTreeFont(org.eclipse.swt.graphics.Font)
 	 */

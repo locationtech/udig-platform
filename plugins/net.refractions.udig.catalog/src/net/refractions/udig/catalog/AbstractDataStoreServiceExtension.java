@@ -22,75 +22,78 @@ import java.util.Map;
 import net.refractions.udig.catalog.internal.Messages;
 
 import org.geotools.data.DataStoreFactorySpi;
-import org.geotools.data.DataAccessFactory.Param;
+import org.geotools.data.DataStoreFactorySpi.Param;
 
 /**
- * A support class for creating Service Extensions based on Geotools Datastores.
- * Provides feedback information for when the datastore cannot use the offered
- * parameters
- * 
+ * A support class for creating Service Extensions based on Geotools Datastores.  Provides feedback information for when the
+ * datastore cannot use the offered parameters
+ *
  * @author Jesse
  * @since 1.1.0
  */
-public abstract class AbstractDataStoreServiceExtension implements
-		ServiceExtension2 {
+public abstract class AbstractDataStoreServiceExtension implements ServiceExtension2 {
 
-	protected class ParamInfo {
+    protected class ParamInfo {
 
-		public String the_schema;
-		public Integer the_port;
-		public String host;
-		public String the_database;
-		public String password;
-		public String username;
-		public String protocol;
+        public String the_schema;
+        public Integer the_port;
+        public String host;
+        public String the_database;
+        public String password;
+        public String username;
+        public String protocol;
 
-		public ParamInfo(String protocol, String username, String password,
-				String host, String the_database, Integer the_port,
-				String the_schema) {
-			this.protocol = protocol;
-			this.username = username;
-			this.password = password;
-			this.the_database = the_database;
-			this.host = host;
-			this.the_port = the_port;
-			this.the_schema = the_schema;
+        public ParamInfo( String protocol, String username, String password, String host, String the_database, Integer the_port, String the_schema ) {
+            this.protocol=protocol;
+            this.username=username;
+            this.password=password;
+            this.the_database=the_database;
+            this.host=host;
+            this.the_port=the_port;
+            this.the_schema=the_schema;
 
-		}
+        }
 
-	}
+    }
 
-	public final String reasonForFailure( Map<String, Serializable> params ) {
+    public final String reasonForFailure( Map<String, Serializable> params ) {
         String parameterProcessingResult=processParameters(params, getDataStoreFactory().getParametersInfo());
         if( parameterProcessingResult!=null )
             return parameterProcessingResult;
-        
+
         String result=doOtherChecks(params);
         if( result!=null )
             return result;
         return null;
     }
-    
+
     /**
      * Do any other checks besides a basic parsing of the parameters.
      *
      * @param params parameters to be used for creating the datastore
-     * 
+     *
      * @return null if everything checks out
      */
     protected String doOtherChecks( Map<String, Serializable> params ) {
         return null;
     }
-    
+
     /**
-     * Returns an instance of the datastore factory that can create the datastore.  
+     * Returns an instance of the datastore factory that can create the datastore.
      *
      * @return an instance of the datastore factory that can create the datastore.
      */
-    protected abstract DataStoreFactorySpi getDataStoreFactory();
-        
+    protected DataStoreFactorySpi getDataStoreFactory() {
+        return getFactory();
+    }
+
     public abstract String reasonForFailure( URL url );
-    
+
+    public static  DataStoreFactorySpi getFactory()
+    {
+    	return null;
+    }
+
     private String processParameters(Map<String, Serializable> params, Param[] arrayParameters){
         if (params == null) {
             return Messages.DataStoreServiceExtension_nullparams;
@@ -127,11 +130,11 @@ public abstract class AbstractDataStoreServiceExtension implements
         return null;
     }
     /**
-     * For special urls like DB urls.  parses out the required information from the url.  
+     * For special urls like DB urls.  parses out the required information from the url.
      * Consider:
-     * jdbc.postgis://username:password@host:port/database/schema.  
-     * it will parse out these parts from the url.  In cases like oracle the equivalents have to be 
-     * understood.  
+     * jdbc.postgis://username:password@host:port/database/schema.
+     * it will parse out these parts from the url.  In cases like oracle the equivalents have to be
+     * understood.
      *
      * @param url
      * @return
@@ -139,7 +142,7 @@ public abstract class AbstractDataStoreServiceExtension implements
     protected ParamInfo parseParamInfo( URL url ) {
         String host = url.getHost();
         if (host != null && !"".equals(host)) { //$NON-NLS-1$
-            if (host.endsWith("postgis.jdbc")||host.endsWith("jdbc.postgis")) { //$NON-NLS-1$ //$NON-NLS-2$
+            if (host.endsWith("postgis.jdbc")||host.endsWith("jdbc.postgis")) { //$NON-NLS-1$
                 host = host.substring(0, host.length() - 12);
             }
         }
@@ -149,7 +152,7 @@ public abstract class AbstractDataStoreServiceExtension implements
         String the_schema;
         if( path!=null ){
             int endDB = path.indexOf('/',1);
-            the_database = path.substring(1, endDB); 
+            the_database = path.substring(1, endDB);
             the_schema=path.substring(endDB+1);
         }else{
             the_database=""; //$NON-NLS-1$
@@ -158,19 +161,19 @@ public abstract class AbstractDataStoreServiceExtension implements
         if( the_schema==null )
             the_schema="public"; //$NON-NLS-1$
 
-		String userInfo = url.getUserInfo() == null ? "" : url.getUserInfo(); //$NON-NLS-1$
-		String username;
-		String password;
-		if (userInfo.contains(":")) { //$NON-NLS-1$
-			int indexOf = userInfo.indexOf(':', 1);
-			username = userInfo.substring(0, indexOf);
-			password = userInfo.substring(indexOf + 1, userInfo.length());
-		} else {
-			username = userInfo;
-			password = ""; //$NON-NLS-1$
-		}
-		return new ParamInfo(url.getProtocol(), username, password, host,
-				the_database, the_port, the_schema);
-	}
+        String userInfo = url.getUserInfo() == null ? "" : url.getUserInfo(); //$NON-NLS-1$
+        String username;
+        String password;
+        if (userInfo.contains(":")) { //$NON-NLS-1$
+            int indexOf = userInfo.indexOf(':', 1);
+            username = userInfo.substring(0, indexOf);
+            password = userInfo.substring(indexOf + 1, userInfo.length());
+        } else {
+            username = userInfo;
+            password = ""; //$NON-NLS-1$
+        }
+        return new ParamInfo(url.getProtocol(), username, password, host, the_database, the_port, the_schema);
+    }
+
 
 }

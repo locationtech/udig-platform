@@ -22,17 +22,18 @@ import net.refractions.udig.tool.edit.internal.Messages;
 import net.refractions.udig.tools.edit.AbstractEditTool;
 import net.refractions.udig.tools.edit.Activator;
 import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.DefaultEditToolBehaviour;
 import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
 import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.EnablementBehaviour;
 import net.refractions.udig.tools.edit.MutualExclusiveBehavior;
 import net.refractions.udig.tools.edit.activator.AdvancedBehaviourCommandHandlerActivator;
 import net.refractions.udig.tools.edit.activator.DeleteGlobalActionSetterActivator;
+import net.refractions.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
 import net.refractions.udig.tools.edit.activator.DrawGeomsActivator;
+import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
 import net.refractions.udig.tools.edit.activator.GridActivator;
+import net.refractions.udig.tools.edit.activator.SetRenderingFilter;
 import net.refractions.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
 import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
 import net.refractions.udig.tools.edit.behaviour.CursorControlBehaviour;
 import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
@@ -50,8 +51,8 @@ import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
 import net.refractions.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviour;
 
 import org.eclipse.swt.SWT;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.filter.spatial.Intersects;
+import org.geotools.feature.Feature;
+import org.geotools.filter.FilterType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
@@ -63,7 +64,7 @@ import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Selects and modifies features.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -71,61 +72,57 @@ public class SelectionTool extends AbstractEditTool {
     @Override
     protected void initEnablementBehaviours( List<EnablementBehaviour> helper ) {
         helper.add(new WithinLegalLayerBoundsBehaviour());
-        helper.add(new ValidToolDetectionActivator(new Class[]{Geometry.class, LineString.class,
-                MultiLineString.class, Polygon.class, MultiPolygon.class, Point.class,
-                MultiPoint.class}));
+        helper.add(new ValidToolDetectionActivator(new Class[]{Geometry.class, LineString.class, MultiLineString.class,
+                Polygon.class, MultiPolygon.class, Point.class, MultiPoint.class}));
     }
 
     @Override
     protected void initActivators( Set<Activator> activators ) {
-        DrawType type = DrawGeomsActivator.DrawType.POLYGON;
-        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultEditActivators(type);
-        activators.addAll(defaults);
+        activators.add(new EditStateListenerActivator());
         activators.add(new DeleteGlobalActionSetterActivator());
+        activators.add(new DrawGeomsActivator(DrawGeomsActivator.DrawType.POLYGON));
+        activators.add(new DrawCurrentGeomVerticesActivator());
         activators.add(new SetSnapBehaviourCommandHandlerActivator());
         activators.add(new AdvancedBehaviourCommandHandlerActivator());
+        activators.add(new SetRenderingFilter());
         activators.add(new GridActivator());
     }
 
     @Override
     protected void initAcceptBehaviours( List<Behaviour> acceptBehaviours ) {
-        MutualExclusiveBehavior mutualExclusive = new MutualExclusiveBehavior();
+        MutualExclusiveBehavior mutualExclusive=new MutualExclusiveBehavior();
         acceptBehaviours.add(mutualExclusive);
-        mutualExclusive.getBehaviours().add(new AcceptChangesBehaviour(Polygon.class, false){
+        mutualExclusive.getBehaviours().add( new AcceptChangesBehaviour(Polygon.class, false){
             @Override
             public boolean isValid( EditToolHandler handler ) {
-                SimpleFeature feature = handler.getContext().getEditManager().getEditFeature();
-                if (feature == null)
+                Feature feature = handler.getContext().getEditManager().getEditFeature();
+                if( feature==null )
                     return false;
-                Geometry geometry = (Geometry) feature.getDefaultGeometry();
-                Class< ? extends Geometry> class1 = geometry == null? null : geometry.getClass();
-                
-                return super.isValid(handler) && feature != null
-                        && (class1 == Polygon.class || class1 == MultiPolygon.class);
+                Class< ? extends Geometry> class1 = feature.getDefaultGeometry().getClass();
+                return super.isValid(handler) && feature!=null &&
+                    (class1==Polygon.class || class1==MultiPolygon.class);
             }
         });
-        mutualExclusive.getBehaviours().add(new AcceptChangesBehaviour(LineString.class, false){
+        mutualExclusive.getBehaviours().add( new AcceptChangesBehaviour(LineString.class, false){
             @Override
             public boolean isValid( EditToolHandler handler ) {
-                SimpleFeature feature = handler.getContext().getEditManager().getEditFeature();
-                if (feature == null)
+                Feature feature = handler.getContext().getEditManager().getEditFeature();
+                if( feature==null )
                     return false;
-                Class< ? extends Geometry> class1 = ((Geometry) feature.getDefaultGeometry())
-                        .getClass();
-                return super.isValid(handler) && feature != null
-                        && (class1 == LineString.class || class1 == MultiLineString.class);
+                Class< ? extends Geometry> class1 = feature.getDefaultGeometry().getClass();
+                return super.isValid(handler) && feature!=null &&
+                    (class1==LineString.class || class1==MultiLineString.class);
             }
         });
-        mutualExclusive.getBehaviours().add(new AcceptChangesBehaviour(Point.class, false){
+        mutualExclusive.getBehaviours().add( new AcceptChangesBehaviour(Point.class, false){
             @Override
             public boolean isValid( EditToolHandler handler ) {
-                SimpleFeature feature = handler.getContext().getEditManager().getEditFeature();
-                if (feature == null)
+                Feature feature = handler.getContext().getEditManager().getEditFeature();
+                if( feature==null )
                     return false;
-                Class< ? extends Geometry> class1 = ((Geometry) feature.getDefaultGeometry())
-                        .getClass();
-                return super.isValid(handler) && feature != null
-                        && (class1 == Point.class || class1 == MultiPoint.class);
+                Class< ? extends Geometry> class1 = feature.getDefaultGeometry().getClass();
+                return super.isValid(handler) && feature!=null &&
+                    (class1==Point.class || class1==MultiPoint.class);
             }
         });
     }
@@ -138,21 +135,16 @@ public class SelectionTool extends AbstractEditTool {
     @SuppressWarnings("unchecked")
     @Override
     protected void initEventBehaviours( EditToolConfigurationHelper helper ) {
-        helper.add(new DrawCreateVertexSnapAreaBehaviour());
-        helper.add(new CursorControlBehaviour(handler, new StaticProvider<String>(
-                Messages.SelectionTool_select), new CursorControlBehaviour.SystemCursorProvider(
-                SWT.CURSOR_SIZEALL),
-                new StaticProvider<String>(Messages.SelectionTool_move_vertex),
-                new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_CROSS),
-                new StaticProvider<String>(Messages.SelectionTool_add_vertex)));
+        helper.add( new DrawCreateVertexSnapAreaBehaviour());
+        helper.add( new CursorControlBehaviour(handler, new StaticProvider<String>(Messages.SelectionTool_select),
+                new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_SIZEALL),new StaticProvider<String>(Messages.SelectionTool_move_vertex),
+                new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_CROSS), new StaticProvider<String>(Messages.SelectionTool_add_vertex)));
 
-        // vertex selection OR geometry selection should not both happen so make them a mutual
-        // exclusion behaviour
+//      vertex selection OR geometry selection should not both happen so make them a mutual exclusion behaviour
         helper.startMutualExclusiveList();
-
         helper.add(new SelectVertexOnMouseDownBehaviour());
-        helper.add(new SelectVertexBehaviour());
-        helper.add(new SelectFeatureBehaviour(new Class[]{Geometry.class}, Intersects.class));
+        helper.add( new SelectVertexBehaviour());
+        helper.add(new SelectFeatureBehaviour(new Class[]{Geometry.class}, FilterType.GEOMETRY_INTERSECTS));
 
         helper.startAdvancedFeatures();
         helper.add(new InsertVertexOnEdgeBehaviour());
@@ -167,7 +159,7 @@ public class SelectionTool extends AbstractEditTool {
 
         helper.add( new SelectVerticesWithBoxBehaviour() );
         helper.add( new AcceptOnDoubleClickBehaviour() );
-        helper.add( new SetSnapSizeBehaviour());     
+        helper.add( new SetSnapSizeBehaviour());
         helper.done();
     }
 

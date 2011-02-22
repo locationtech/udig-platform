@@ -21,7 +21,7 @@ import com.vividsolutions.jts.io.WKTWriter;
 
 /**
  * TODO provide type description
- * 
+ *
  * @author jeichar
  */
 public class GeomPropertySource implements IPropertySource2 {
@@ -32,19 +32,19 @@ public class GeomPropertySource implements IPropertySource2 {
     private Geometry geom;
     private final Geometry original;
     private final IPropertyDescriptor[] propertyDescriptors;
-    
+
     /**
      * Creates a new instance of GeomPropertySource
-     * 
+     *
      * @param geometry the geometry that is the source for this PropertySource
      */
     public GeomPropertySource( Geometry geometry ) {
         this.geom = geometry;
         this.original = geometry;
         propertyDescriptors = new IPropertyDescriptor[2];
-        propertyDescriptors[0] = new PropertyDescriptor(new ID(AREA), 
-                Messages.GeomPropertySource_area); 
-        propertyDescriptors[1] = new TextPropertyDescriptor(new ID(GEOM), 
+        propertyDescriptors[0] = new PropertyDescriptor(new ID(AREA),
+                Messages.GeomPropertySource_area);
+        propertyDescriptors[1] = new TextPropertyDescriptor(new ID(GEOM),
                 Messages.GeomPropertySource_WKT);
     }
 
@@ -112,7 +112,7 @@ public class GeomPropertySource implements IPropertySource2 {
                 throw (RuntimeException) new RuntimeException( ).initCause( e );
             }
         }
-        
+
     }
 
     static class ID {

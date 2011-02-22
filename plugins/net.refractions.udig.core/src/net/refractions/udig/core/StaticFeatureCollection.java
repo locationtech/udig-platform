@@ -17,21 +17,21 @@ package net.refractions.udig.core;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.geotools.feature.collection.AdaptorFeatureCollection;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.feature.Feature;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.collection.AbstractFeatureCollection;
 
 /**
  * Converts a java.util.Collection to a FeatureCollection
  * @author Jesse
  * @since 1.1.0
  */
-public class StaticFeatureCollection extends AdaptorFeatureCollection {
+public class StaticFeatureCollection extends AbstractFeatureCollection {
 
-    private Collection<SimpleFeature> features;
+    private Collection<Feature> features;
 
-    public StaticFeatureCollection( Collection<SimpleFeature> features, SimpleFeatureType memberType) {
-        super("static",memberType);
+    public StaticFeatureCollection( Collection<Feature> features, FeatureType featureType) {
+        super(featureType);
         this.features=features;
     }
 

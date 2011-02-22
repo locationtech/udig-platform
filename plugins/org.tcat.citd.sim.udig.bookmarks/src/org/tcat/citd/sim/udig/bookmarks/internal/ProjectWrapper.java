@@ -12,7 +12,7 @@ import net.refractions.udig.project.IProject;
  * This gives the advantage of more easily displaying custom menus and icons.
  * <p>
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
@@ -21,7 +21,7 @@ public class ProjectWrapper {
 
     /**
      * Default constructor
-     * 
+     *
      * @param project The project that this object will wrap.
      */
     public ProjectWrapper( IProject project ) {
@@ -44,7 +44,7 @@ public class ProjectWrapper {
 
     /**
      * Get the name for the project
-     * 
+     *
      * @return the name
      */
     public String getName() {
@@ -58,7 +58,7 @@ public class ProjectWrapper {
 
     /**
      * Unwrap all of the projects in the given list
-     * 
+     *
      * @param wrappedProjects
      * @return a List of IProject objects
      */
@@ -75,7 +75,7 @@ public class ProjectWrapper {
 
     /**
      * Wrap the projects in the given list
-     * 
+     *
      * @param projects
      * @return a List of ProjectWrapper objects
      */

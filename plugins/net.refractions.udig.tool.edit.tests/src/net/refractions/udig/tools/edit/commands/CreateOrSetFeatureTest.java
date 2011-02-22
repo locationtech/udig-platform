@@ -17,24 +17,18 @@ package net.refractions.udig.tools.edit.commands;
 import java.awt.Dimension;
 
 import junit.framework.TestCase;
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.MapTests;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
 /**
@@ -46,8 +40,8 @@ public class CreateOrSetFeatureTest extends TestCase {
 
     private Map map;
     private ILayer layer;
-    private SimpleFeature original;
-    private FeatureSource<SimpleFeatureType, SimpleFeature> resource;
+    private Feature original;
+    private FeatureSource resource;
 
     @Override
     protected void setUp() throws Exception {
@@ -57,7 +51,7 @@ public class CreateOrSetFeatureTest extends TestCase {
         resource = layer.getResource(FeatureSource.class, new NullProgressMonitor());
         original=resource.getFeatures().features().next();
     }
-    
+
     /*
      * Test method for 'net.refractions.udig.tools.edit.commands.CreateOrSetFeature.run(IProgressMonitor)'
      */
@@ -68,24 +62,20 @@ public class CreateOrSetFeatureTest extends TestCase {
         command.setMap(map);
         NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
         command.run(nullProgressMonitor);
-        
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-        Filter filter = filterFactory.id(FeatureUtils.stringToId(filterFactory, original.getID()));
-        filter = filterFactory.not(filter);
-		SimpleFeature feature=resource.getFeatures(
-				filter).features().next();
+
+        Feature feature=resource.getFeatures(FilterFactoryFinder.createFilterFactory().createFidFilter(original.getID()).not()).features().next();
         assertEquals(2, getCount());
-        assertEquals(new Coordinate(10,10), ((Geometry) feature.getDefaultGeometry()).getCoordinates()[0]);
+        assertEquals(new Coordinate(10,10), feature.getDefaultGeometry().getCoordinates()[0]);
         assertFalse( feature.getID().equals(original));
         command.rollback(nullProgressMonitor);
-        
+
         assertEquals(1, getCount());
-        feature=resource.getFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory,original.getID()))).features().next();
+        feature=resource.getFeatures(FilterFactoryFinder.createFilterFactory().createFidFilter(original.getID())).features().next();
         assertEquals(original.getID(), feature.getID());
-        assertFalse( new Coordinate(10,10).equals(((Geometry) feature.getDefaultGeometry()).getCoordinates()[0] ));
-        
+        assertFalse( new Coordinate(10,10).equals(feature.getDefaultGeometry().getCoordinates()[0] ));
+
     }
-    
+
     /*
      * Test method for 'net.refractions.udig.tools.edit.commands.CreateOrSetFeature.run(IProgressMonitor)'
      */
@@ -96,25 +86,23 @@ public class CreateOrSetFeatureTest extends TestCase {
         command.setMap(map);
         NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
         command.run(nullProgressMonitor);
-        
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-		SimpleFeature feature=resource.getFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory, original.getID()))).
-					features().next();
+
+        Feature feature=resource.getFeatures(FilterFactoryFinder.createFilterFactory().createFidFilter(original.getID())).features().next();
         assertEquals(1, getCount());
         assertEquals(original.getID(), feature.getID());
-        assertEquals(new Coordinate(10,10), ((Geometry) feature.getDefaultGeometry()).getCoordinates()[0]);
-        
+        assertEquals(new Coordinate(10,10), feature.getDefaultGeometry().getCoordinates()[0]);
+
         command.rollback(nullProgressMonitor);
-        
-        feature=resource.getFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory, original.getID()))).features().next();
+
+        feature=resource.getFeatures(FilterFactoryFinder.createFilterFactory().createFidFilter(original.getID())).features().next();
         assertEquals(original.getID(), feature.getID());
-        assertFalse( new Coordinate(10,10).equals(((Geometry) feature.getDefaultGeometry()).getCoordinates()[0] ));
-        
+        assertFalse( new Coordinate(10,10).equals(feature.getDefaultGeometry().getCoordinates()[0] ));
+
     }
 
     private int getCount() throws Exception {
-        FeatureCollection<SimpleFeatureType, SimpleFeature>  features = resource.getFeatures();
-        FeatureIterator<SimpleFeature> iter=features.features();
+        FeatureCollection features = resource.getFeatures();
+        FeatureIterator iter=features.features();
         int i=0;
         while(iter.hasNext()){
             iter.next();

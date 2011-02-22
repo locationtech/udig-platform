@@ -12,7 +12,7 @@ import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 
 /**
  * Event Mouse wheel events. API use?example?
- * 
+ *
  * @author Jones
  * @since 0.3
  * @see MapMouseEvent
@@ -24,7 +24,7 @@ public class MapMouseWheelEvent extends MapMouseEvent {
 
     /**
      * Construct <code>MapMouseWheelEvent</code>.
-     * 
+     *
      * @param source The object that raised the event
      * @param state the state of the event ORed together
      * @param x the x position of the event
@@ -39,7 +39,7 @@ public class MapMouseWheelEvent extends MapMouseEvent {
     /**
      * Returns the number of wheel clicks. Positive indicates forward/up scroll direction. API is
      * this method required?
-     * 
+     *
      * @return the number of wheel clicks.
      */
     public int getClickCount() {

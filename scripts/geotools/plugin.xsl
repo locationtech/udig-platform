@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"> 
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 	<xsl:output method="xml"/>
-	
+
 	<!-- parameters set by the caller of the script -->
 	<xsl:param name="pid"/>
 	<xsl:param name="name"/>
 	<xsl:param name="ver"/>
 
 	<xsl:template match="classpath">
-		<xsl:processing-instruction name="eclipse">version=3.0</xsl:processing-instruction>	
+		<xsl:processing-instruction name="eclipse">version=3.0</xsl:processing-instruction>
 
 		<xsl:text>
 		</xsl:text>
@@ -23,7 +23,7 @@
 				<xsl:text>
 				</xsl:text>
 				<xsl:element name="library">
-					<xsl:attribute name="name"><xsl:value-of select="$name"/>.jar</xsl:attribute>	
+					<xsl:attribute name="name"><xsl:value-of select="$name"/>.jar</xsl:attribute>
 					<xsl:text>
 					</xsl:text>
 					<xsl:element name="export">
@@ -40,7 +40,7 @@
 					<xsl:variable name="t"><xsl:value-of select="@kind"/></xsl:variable>
 					<xsl:variable name="p"><xsl:value-of select="@path"/></xsl:variable>
 
-					<xsl:if test="$t = 'var'">					
+					<xsl:if test="$t = 'var'">
 						<xsl:choose>
 							<xsl:when test="contains($p,'gt2')">
 							</xsl:when>
@@ -51,7 +51,7 @@
 									<xsl:text>
 									</xsl:text>
 									<xsl:element name="export">
-										<xsl:attribute name="name">*</xsl:attribute>	
+										<xsl:attribute name="name">*</xsl:attribute>
 									</xsl:element>
 									<xsl:text>
 									</xsl:text>
@@ -68,7 +68,7 @@
 			</xsl:text>
 
 			<!-- figure out all the other gt plugins this plugin needs -->
-			<xsl:element name="requires">	
+			<xsl:element name="requires">
 				<xsl:for-each select="classpathentry">
 					<xsl:variable name="t"><xsl:value-of select="@kind"/></xsl:variable>
 					<xsl:variable name="p"><xsl:value-of select="@path"/></xsl:variable>
@@ -92,7 +92,7 @@
 						</xsl:if>
 					</xsl:if>
 				</xsl:for-each>
-			
+
 			</xsl:element>
 
 			<xsl:text>

@@ -12,13 +12,13 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 import org.eclipse.emf.common.notify.Notification;
 
 /**
-     * Listens for EMF events that indicate map composition changes and creates and fires the associated MapCompositionEvents 
+     * Listens for EMF events that indicate map composition changes and creates and fires the associated MapCompositionEvents
      * @author jesse
      */
     final class EMFCompositionEventToMapCompositionEventListener extends
 			ContextModelListenerAdapter {
 		/**
-		 * 
+		 *
 		 */
 		private final MapImpl map;
 
@@ -37,7 +37,7 @@ import org.eclipse.emf.common.notify.Notification;
             if (! (msg.getNotifier() instanceof ContextModel)) {
                 throw new IllegalArgumentException( "This listener should only be added to Context Models" ); //$NON-NLS-1$
             }
-            
+
             fireEventToCompositionListeners(msg);
             if( map.eResource()!=null )
                 map.eResource().setModified(true);
@@ -58,24 +58,24 @@ import org.eclipse.emf.common.notify.Notification;
             if( msg.getFeatureID(ContextModel.class)==ProjectPackage.CONTEXT_MODEL__LAYERS ){
                 switch( msg.getEventType() ) {
                 case Notification.ADD:
-                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.ADDED, 
+                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.ADDED,
                             msg.getNewValue(), msg.getOldValue(), (ILayer) msg.getNewValue()));
                     break;
                 case Notification.ADD_MANY:
-                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.MANY_ADDED, 
+                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.MANY_ADDED,
                             msg.getNewValue(), msg.getOldValue(), null));
                     break;
                 case Notification.REMOVE:
-                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.REMOVED, 
+                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.REMOVED,
                             msg.getNewValue(), msg.getOldValue(), (ILayer)msg.getOldValue()));
                     break;
                 case Notification.REMOVE_MANY:
-                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.MANY_REMOVED, 
+                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.MANY_REMOVED,
                             msg.getNewValue(), msg.getOldValue(), null));
                     break;
                 case Notification.MOVE:
-                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.REORDERED, 
-                            msg.getPosition(), msg.getOldValue(), (ILayer)msg.getNewValue()));                    
+                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.REORDERED,
+                            msg.getPosition(), msg.getOldValue(), (ILayer)msg.getNewValue()));
                     break;
 
                 default:

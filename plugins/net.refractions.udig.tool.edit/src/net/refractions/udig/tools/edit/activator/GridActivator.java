@@ -35,9 +35,9 @@ import net.refractions.udig.tools.edit.support.SnapBehaviour;
 import net.refractions.udig.ui.ProgressManager;
 
 /**
- * If the snap behaviour is GRID then enables the grid map graphic on activation and 
- * disables the layer if this activator originally added the layer (or sets it to visible). 
- * 
+ * If the snap behaviour is GRID then enables the grid map graphic on activation and
+ * disables the layer if this activator originally added the layer (or sets it to visible).
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -57,12 +57,12 @@ public class GridActivator implements Activator {
 
     /**
      * Shows the grid.
-     * 
+     *
      * @param map map to add the grid to.
      */
     public void showGrid( IMap map ) {
         ILayer gridLayer = findGridLayer(map);
-        
+
         if( gridLayer!=null ){
             setGridLayerVisibility(gridLayer, true);
         }else{
@@ -93,7 +93,7 @@ public class GridActivator implements Activator {
     }
 
     private void addLayer( IMap map ) {
-        MapGraphicService service=CatalogPlugin.getDefault().getLocalCatalog().getById(MapGraphicService.class, MapGraphicService.SERVICE_ID, ProgressManager.instance().get());
+        MapGraphicService service=CatalogPlugin.getDefault().getLocalCatalog().getById(MapGraphicService.class, MapGraphicService.SERVICE_URL, ProgressManager.instance().get());
         try {
             List< ? extends IGeoResource> members = service.resources(ProgressManager.instance().get());
             for( IGeoResource resource : members ) {
@@ -101,12 +101,12 @@ public class GridActivator implements Activator {
                     LayerFactory factory = map.getLayerFactory();
                     Layer newLayer = factory.createLayer(resource);
                     newLayer.getBlackboard().put(KEY, KEY);
-                    
+
                     AddLayerCommand command = new AddLayerCommand(newLayer);
                     map.sendCommandASync(command);
                 }
             }
-            
+
         } catch (IOException e) {
             throw (RuntimeException) new RuntimeException( ).initCause( e );
         }

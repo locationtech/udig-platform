@@ -13,13 +13,10 @@ import net.refractions.udig.project.render.RenderException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * Each renderer has an executor that runs the renderer in a separate thread. 
- * There are currently 3 implementations. 
- * One for each type of renderer. (Composite/MultiLayer/Renderer). 
- * 
- * The CompositeRendererExecutor provides the incremental update functionality.
- * 
- * 
+ * TODO Purpose of net.refractions.udig.project.internal.render
+ * <p>
+ * </p>
+ *
  * @author Jesse
  * @since 1.0.0
  * @model
@@ -36,7 +33,7 @@ public interface RenderExecutor extends Renderer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
@@ -48,7 +45,7 @@ public interface RenderExecutor extends Renderer {
      * more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * 
+     *
      * @return the value of the '<em>Renderer</em>' reference.
      * @see #setRenderer(Renderer)
      * @see net.refractions.udig.project.internal.render.RenderPackage#getRenderExecutor_Renderer()
@@ -60,7 +57,7 @@ public interface RenderExecutor extends Renderer {
     /**
      * Sets the value of the '{@link net.refractions.udig.project.internal.render.RenderExecutor#getRenderer <em>Renderer</em>}'
      * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @param value the new value of the '<em>Renderer</em>' reference.
      * @see #getRenderer()
      * @generated
@@ -69,14 +66,14 @@ public interface RenderExecutor extends Renderer {
 
     /**
      * Method calls visitor.visit().
-     * 
+     *
      * @param visitor the visitor object
      */
     void visit( ExecutorVisitor visitor );
 
     /**
      * This method does not use the monitor parameter. It is the same as calling render(bounds);
-     * 
+     *
      * @see net.refractions.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */

@@ -7,9 +7,9 @@ public class FixableIssue extends AbstractFixableIssue {
 
     public static final String ID = "net.refractions.udig.issues.FixableIssue"; //$NON-NLS-1$
     public static final String KEY_PROBLEMOBJECT = "problemObject"; //$NON-NLS-1$
-    
+
     String problemObject = null;
-    
+
     public String getExtensionID() {
         return ID;
     }
@@ -17,7 +17,7 @@ public class FixableIssue extends AbstractFixableIssue {
     public String getProblemObject() {
         return problemObject;
     }
-    
+
     public void setProblemObject(String problemObject) {
         this.problemObject = problemObject;
     }
@@ -33,7 +33,7 @@ public class FixableIssue extends AbstractFixableIssue {
             problemObject = memento.getString(KEY_PROBLEMOBJECT);
         }
     }
-    
+
     @Override
     public void save( IMemento memento ) {
         //save the other stuff

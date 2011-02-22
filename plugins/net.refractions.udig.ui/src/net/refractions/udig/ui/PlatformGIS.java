@@ -17,10 +17,12 @@
 package net.refractions.udig.ui;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.refractions.udig.internal.ui.UiPlugin;
@@ -28,10 +30,7 @@ import net.refractions.udig.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -43,7 +42,7 @@ import org.geotools.brewer.color.ColorBrewer;
 
 /**
  * A facade into udig to simplify operations relating to performing platform operations.
- * 
+ *
  * @author jeichar
  * @since 1.1
  */
@@ -56,20 +55,7 @@ public class PlatformGIS {
      * thrown by the runnable are logged, and not rethrown.
      */
     public static void run( IRunnableWithProgress request ) {
-        Runner runner = new Runner();
-        runner.setRequest(request);
-        runner.schedule();
-    }
-    /**
-     * Runs the given runnable in a separate thread, providing it a progress monitor. Exceptions
-     * thrown by the runnable are logged, and not rethrown.
-     */
-    public static void run( IRunnableWithProgress request, IProgressMonitor monitorToUse) {
-        Runner runner = new Runner();
-        RunnableAndProgress runnable = new RunnableAndProgress(request, monitorToUse);
-        runner.setRequest(runnable);
-        runner.schedule();
-        
+        getRunner().addRequest(request);
     }
 
     /**
@@ -77,7 +63,7 @@ public class PlatformGIS {
      * wait for a long running and potentially blocking operation (for example an IO operation). If
      * the IO is done in the UI thread then the user interface will lock up. This allows synchronous
      * execution of a long running thread in the UI thread without locking the UI.
-     * 
+     *
      * @param runnable The runnable(operation) to run
      * @param monitor the progress monitor to update.
      * @throws InvocationTargetException
@@ -98,8 +84,7 @@ public class PlatformGIS {
         done.set(false);
 
         Future<Object> future = executor.submit(new Callable<Object>(){
-            @SuppressWarnings("unused")
-            Exception e = new Exception("For debugging"); //$NON-NLS-1$
+
             public Object call() throws Exception {
                 try {
                     runnable.run(new OffThreadProgressMonitor(monitor != null
@@ -160,26 +145,58 @@ public class PlatformGIS {
      * passed to the runnable's exception handler. Such exceptions are not rethrown by this method.
      */
     public static void run( ISafeRunnable request ) {
-        Runner runner = new Runner();
-        runner.setRequest(request);
-        runner.schedule();
+        getRunner().addRequest(request);
     }
 
-    private static class Runner extends Job {
+    private static Runner getRunner() {
+        if (runner == null) {
+            synchronized (Runner.class) {
+                if (runner == null) {
+                    runner = new Runner();
+                    runner.start();
+                }
+            }
+        }
+        return runner;
+    }
 
-        public Runner( ) {
-            super("Platform GIS runner"); //$NON-NLS-1$
+    private volatile static Runner runner;
+    private static class Runner extends Thread {
+        /**
+         * @param name
+         */
+        public Runner() {
+            super(""); //$NON-NLS-1$
+            setDaemon(true);
         }
 
-        Object runnable;
+        BlockingQueue<Object> requests = new LinkedBlockingQueue<Object>();
+
+        public void run( ) {
+            while( true && !PlatformUI.getWorkbench().isClosing() ){
+                try {
+                    Object runnable = requests.take();
+                    if( runnable == null )
+                        continue;
+
+                    if (runnable instanceof ISafeRunnable)
+                        run((ISafeRunnable) runnable);
+                    else if (runnable instanceof IRunnableWithProgress)
+                        run((IRunnableWithProgress) runnable, ProgressManager.instance().get() );
+                } catch (InterruptedException e) {
+                    UiPlugin.log("Interrupted thread", e); //$NON-NLS-1$
+                }
+            }
+
+        }
 
         /**
          * Add a runnable object to be run.
-         * 
+         *
          * @param runnable
          */
-        public void setRequest( Object runnable ) {
-            this.runnable = runnable;
+        public void addRequest( Object runnable ) {
+            requests.add(runnable);
         }
 
         private void run( ISafeRunnable runnable ) {
@@ -203,38 +220,8 @@ public class PlatformGIS {
             }
         }
 
-        @Override
-        protected IStatus run( IProgressMonitor monitor ) {   
-            if (!PlatformUI.getWorkbench().isClosing()) {
-                if (runnable != null) {
-    
-                    if (runnable instanceof ISafeRunnable) {
-                        run((ISafeRunnable) runnable);
-                    } else if (runnable instanceof IRunnableWithProgress) {
-                        run((IRunnableWithProgress) runnable, monitor);
-                    }else if (runnable instanceof RunnableAndProgress) {
-                        RunnableAndProgress request = (RunnableAndProgress)runnable;
-                        run(request.runnable, request.monitor);
-                    }
-                }
-            }
-            return Status.OK_STATUS;
-        }
     }
 
-    private static class RunnableAndProgress{
-        public RunnableAndProgress( IRunnableWithProgress request, IProgressMonitor monitorToUse ) {
-            this.runnable=request;
-            Display display = Display.getCurrent();
-            if( display == null ){
-                Display.getDefault();
-            }
-            this.monitor = new OffThreadProgressMonitor(monitorToUse, display);
-        }
-        IRunnableWithProgress runnable;
-        IProgressMonitor monitor;
-    }
-    
     public static ColorBrewer getColorBrewer() {
         synchronized (ColorBrewer.class) {
             if (colorBrewer == null) {
@@ -250,15 +237,11 @@ public class PlatformGIS {
      * executed. So this method uses Display.asyncExec and patiently waits for the result to be
      * returned. Can be called from display thread or non-display thread. Runnable should not be
      * blocking or it will block the display thread.
-     * 
+     *
      * @param runnable runnable to execute
      */
     public static void syncInDisplayThread( final Runnable runnable ) {
-        Display display = Display.getCurrent();
-        if( display==null ){
-            display = Display.getDefault();
-        }
-        syncInDisplayThread(display, runnable);
+        syncInDisplayThread(Display.getDefault(), runnable);
     }
     public static void syncInDisplayThread( Display display, final Runnable runnable ) {
         if (Display.getCurrent() != display) {
@@ -289,7 +272,7 @@ public class PlatformGIS {
     /**
      * Waits for the condition to become true. Will call Display#readAndDispatch() if currently in
      * the display thread.
-     * 
+     *
      * @param interval the time to wait between testing of condition, in milliseconds. Must be a
      *        positive number and is recommended to be larger than 50
      * @param timeout maximum time to wait. Will throw an {@link InterruptedException} if reached.
@@ -330,7 +313,7 @@ public class PlatformGIS {
      * Runs a blocking task in a ProgressDialog. It is ran in such a way that even if the task
      * blocks it can be cancelled. This is unlike the normal ProgressDialog.run(...) method which
      * requires that the {@link IProgressMonitor} be checked and the task to "nicely" cancel.
-     * 
+     *
      * @param dialogTitle The title of the Progress dialog
      * @param showRunInBackground if true a button added to the dialog that will make the job be ran
      *        in the background.
@@ -403,7 +386,7 @@ public class PlatformGIS {
 
     /**
      * Runs the runnable in the display thread but asynchronously.
-     * 
+     *
      * @param runnable the runnable to execute
      * @param executeIfInDisplay if true and the current thread is the display thread then the
      *        runnable will just be executed.
@@ -418,7 +401,7 @@ public class PlatformGIS {
 
     /**
      * Runs the runnable in the display thread but asynchronously.
-     * 
+     *
      * @param display the display in which to run the runnable
      * @param runnable the runnable to execute
      * @param executeIfInDisplay if true and the current thread is the display thread then the

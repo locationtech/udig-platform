@@ -26,8 +26,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
+import org.geotools.feature.Feature;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
 
 public class IssueHandlerTest extends AbstractProjectUITestCase {
 
@@ -79,9 +79,9 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
         };
         IssueHandler handler = IssueHandler.createHandler(issue);
         handler.restoreViewPart();
-        
+
         assertTrue( getActivePart() instanceof IssuesView );
-        
+
         issue = new TestIssue(){
             @Override
             public String getViewPartId() {
@@ -90,9 +90,9 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
         };
         handler = IssueHandler.createHandler(issue);
         handler.restoreViewPart();
-        
+
         assertTrue( getActivePart() instanceof ViewPart1 );
-        
+
         issue = new TestIssue(){
             @Override
             public String getViewPartId() {
@@ -108,7 +108,7 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
 
         assertTrue( getActivePart() instanceof ViewPart1 );
         assertEquals("value", ((ViewPart1)getActivePart()).memento.getString("testKey")); //$NON-NLS-1$ //$NON-NLS-2$
-        
+
     }
 
     /**
@@ -123,20 +123,20 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
      * Test method for 'net.refractions.udig.project.ui.internal.view.issues.IssueHandler.restoreEditor()'
      */
     public void testRestoreEditor() throws Exception {
-        
+
         assertNull(getActiveWindow().getActivePage().getActiveEditor());
-        
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("test", 4); //$NON-NLS-1$
+
+        Feature[] features = UDIGTestUtil.createDefaultTestFeatures("test", 4); //$NON-NLS-1$
         IGeoResource resource = MapTests.createGeoResource(features, false);
         final Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(512,512));
-        
+
         TestIssue issue = new TestIssue(){
             @Override
             public String getEditorID() {
                 return MapEditor.ID;
-          
+
             }
-            
+
             @Override
             public IEditorInput getEditorInput() {
                 return ApplicationGIS.getInput(map);
@@ -148,7 +148,7 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
         assertEquals( MapEditor.class, getActiveWindow().getActivePage().getActiveEditor().getClass());
         assertEquals( map, ((MapPart)getActiveWindow().getActivePage().getActiveEditor()).getMap());
     }
-    
+
     class TestIssue extends AbstractIssue{
 
         public String getProblemObject() {
@@ -171,7 +171,7 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
 
         public void save( IMemento memento ) {
         }
-        
+
     }
 
 }

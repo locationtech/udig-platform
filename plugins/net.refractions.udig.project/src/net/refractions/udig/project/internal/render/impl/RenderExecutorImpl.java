@@ -1,5 +1,5 @@
 /**
- * <copyright></copyright> $Id$
+ * <copyright></copyright> $Id: RenderExecutorImpl.java 27130 2007-09-24 02:55:16Z jeichar $
  */
 package net.refractions.udig.project.internal.render.impl;
 
@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -48,7 +47,7 @@ import com.vividsolutions.jts.geom.Envelope;
 /**
  * Runs a renderer in its own thread. Is responsible for stopping the thread. Does not do composite
  * renderer or multilayer renderers.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -56,7 +55,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     /**
      * Listens to a layer for visibility events and styling events. <b>Public ONLY for testing
      * purposes</b>
-     * 
+     *
      * @author Jesse
      * @since 1.0.0
      */
@@ -74,12 +73,10 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
             Layer layer = (Layer) msg.getNotifier();
             switch( msg.getFeatureID(Layer.class) ) {
             case ProjectPackage.LAYER__STYLE_BLACKBOARD:
-                //dealt with by the layer listener created in the RenderManagerAdapters (added to the render manager)
-                //therefore we don't need to deal with this here.
-//                if (executor.getContext().getLayer() instanceof SelectionLayer)
-//                    return;
-//
-//                styleBlackboardChanged(msg);
+                if (executor.getContext().getLayer() instanceof SelectionLayer)
+                    return;
+
+                styleBlackboardChanged(msg);
                 break;
             case ProjectPackage.LAYER__VISIBLE:
                 if (executor.getContext().getLayer() instanceof SelectionLayer)
@@ -102,11 +99,18 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
                 executor.stopRendering();
                 context2.setStatus(ILayer.DONE);
                 context2.setStatusMessage(""); //$NON-NLS-1$
+
                 executor.setState(NEVER);
             } else {
             	RenderManager renderManager = (RenderManager) layer.getMapInternal().getRenderManager();
-            	if (renderManager != null) {
-                    renderManager.refreshImage();
+            	if(renderManager != null){
+                    try {
+                        RenderExecutorImpl renderExecutorImpl = ((RenderExecutorImpl)renderManager.getRenderExecutor());
+                        ((CompositeRendererImpl) renderExecutorImpl.getRenderer()).refreshImage();
+                        renderExecutorImpl.setState(IRenderer.DONE);
+                    } catch (RenderException e) {
+                        ProjectPlugin.log("", e); //$NON-NLS-1$
+                    }
                 }
             }
         }
@@ -117,33 +121,28 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
             if (executor.getState() == IRenderer.RENDERING)
                 return;
             if (executor.getState() != IRenderer.DONE || executor.dirty) {
-                RenderManager renderManager = (RenderManager) layer.getMapInternal().getRenderManager();
-                renderManager.refresh(layer, null); //ensures the entire layer and all tiles/selection layers are refreshed
-                //executor.getRenderer().setState(RENDER_REQUEST);
+                executor.getRenderer().setState(RENDER_REQUEST);
             } else{
                 RenderManager renderManager = (RenderManager) layer.getMapInternal().getRenderManager();
                 if(renderManager != null){
-                    renderManager.refreshImage();
+                    try {
+                        RenderExecutorImpl renderExecutorImpl = ((RenderExecutorImpl)renderManager.getRenderExecutor());
+                        ((CompositeRendererImpl) renderExecutorImpl.getRenderer()).refreshImage();
+                        renderExecutorImpl.setState(IRenderer.DONE);
+                    } catch (RenderException e) {
+                        ProjectPlugin.log("", e); //$NON-NLS-1$
+                    }
                 }
+
             }
+
         }
 
-//        protected void styleBlackboardChanged( Notification msg ) {
-//            executor.getContext().getRenderManager().refresh((ILayer) msg.getNotifier(), null);
-//        }
+        protected void styleBlackboardChanged( Notification msg ) {
+            executor.getContext().getRenderManager().refresh((ILayer) msg.getNotifier(), null);
+        }
     }
-    /**
-     * Calls the render() function when a RENDER_REQUEST goes by...
-     * <p>
-     * This listener will call the following for a RENDER_REQUEST in the following order:
-     * <ul>
-     * <li>executor.setRenderBounds
-     * <li>executor.render()
-     * <li>executor.setState
-     * </ul>
-     * Right now we assume it is listening to EVERTHING (or at least everything
-     * in this Map).
-     */
+
     protected static class RendererListener extends AdapterImpl {
 
         protected RenderExecutor executor;
@@ -168,7 +167,6 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         }
 
         protected void stateChanged( Notification msg ) {
-            executor.setState(msg.getNewIntValue());
             if( msg.getNewIntValue()==IRenderer.RENDER_REQUEST){
                 try {
                     executor.render();
@@ -177,14 +175,14 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
                     throw (RuntimeException) new RuntimeException( ).initCause( e );
                 }
             }
-            
+            executor.setState(msg.getNewIntValue());
 
         }
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
@@ -210,7 +208,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     /**
      * The cached value of the '{@link #getRenderer() <em>Renderer</em>}' reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getRenderer()
      * @generated
      * @ordered
@@ -228,10 +226,10 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     protected RenderJob renderJob;
 
     protected volatile boolean dirty;
-    
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public RenderExecutorImpl() {
@@ -240,7 +238,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected EClass eStaticClass() {
@@ -249,7 +247,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void dispose() {
@@ -258,7 +256,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         removeLayerListener(getContext());
         stopRendering();
         getRenderer().dispose();
-        
+
         try{
             //Clear label cache for this layer.
             ILayer renderingLayer = getContext().getLayer();
@@ -288,7 +286,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void stopRendering() {
@@ -308,7 +306,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         renderJob.addJobChangeListener(listener);
         try{
             long start= System.currentTimeMillis();
-        while( !done.get() && !renderJob.cancel() 
+        while( !done.get() && !renderJob.cancel()
                 && start+2000<System.currentTimeMillis() )
             synchronized (done) {
                 try {
@@ -323,12 +321,12 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         }finally{
             renderJob.removeJobChangeListener(listener);
         }
-    
+
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @throws RenderException
      * @generated NOT
      */
@@ -357,7 +355,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Renderer getRenderer() {
@@ -367,7 +365,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     protected String getRenderJobName() {
         return MessageFormat.format(
-                Messages.RenderExecutorImpl_message, new Object[]{getName()}); 
+                Messages.RenderExecutorImpl_message, new Object[]{getName()});
     }
 
     /**
@@ -391,25 +389,18 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     @SuppressWarnings("unchecked")
     protected void removeLayerListener( IRenderContext context ) {
         if (context.getLayer() != null) {
-            Layer layer = ((Layer)context.getLayer());
-            List<Adapter> adapters = layer.eAdapters();
+            List<Adapter> adapters = ((Layer)context.getLayer()).eAdapters();
             if( adapters instanceof SynchronizedEList ){
-                ((SynchronizedEList)adapters).lock(); 
+                ((SynchronizedEList)adapters).lock();
             }
             try{
-                ArrayList<Adapter> toRemove = new ArrayList<Adapter>();
                 for( Iterator<Adapter> iter=adapters.iterator(); iter.hasNext(); ) {
-                    Adapter t = iter.next();
-                    if (t instanceof RenderExecutorImpl.LayerListener){
-//                        iter.remove();
-                        //iter.remove() doesn't seem to work here; nothing gets removed.
-                        toRemove.add(t);
-                    }
+                    if (iter.next() instanceof RenderExecutorImpl.LayerListener)
+                        iter.remove();
                 }
-                adapters.removeAll(toRemove);
             }finally{
                 if( adapters instanceof SynchronizedEList ){
-                    ((SynchronizedEList)adapters).unlock(); 
+                    ((SynchronizedEList)adapters).unlock();
                 }
             }
         }
@@ -425,7 +416,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void setRendererGen( Renderer newRenderer ) {
@@ -437,7 +428,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
@@ -456,7 +447,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void eSet( EStructuralFeature eFeature, Object newValue ) {
@@ -479,7 +470,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
 
@@ -503,7 +494,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public boolean eIsSet( EStructuralFeature eFeature ) {
@@ -551,21 +542,32 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @see net.refractions.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope)
      */
     public synchronized void render( ) {
-        if (getState() == DISPOSED || !getRenderer().getContext().isVisible()){
+        // Check the visibility of all other layers...if none are visible then
+        // the
+        // last visible one was just turned off...fire off a render
+        List<IRenderer> renderers = getContext().getRenderManager().getRenderers();
+        boolean visible = false;
+        for( IRenderer renderer : renderers ) {
+            if (renderer.getContext().isVisible()) {
+                visible = true;
+                break;
+            }
+        }
+        if (getState() == DISPOSED || (!getRenderer().getContext().isVisible() && visible)) {
             dirty = true;
             getContext().getLayer().setStatus(ILayer.DONE);
             if( getRenderer().getState()!=IRenderer.DONE)
                 getRenderer().setState(IRenderer.DONE);
             return;
         }
-        
+
         dirty = false;
         if( getRenderer().getState()!=STARTING){
             getRenderer().setState(IRenderer.STARTING);
         }
         renderJob.addRequest(getRenderBounds());
     }
-    
+
     /**
      * @see net.refractions.udig.project.internal.render.impl.RendererImpl#render(com.vividsolutions.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)

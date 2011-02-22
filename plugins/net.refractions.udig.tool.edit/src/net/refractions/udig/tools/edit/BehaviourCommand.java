@@ -26,10 +26,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
 /**
- * Command used by (@link net.refractions.udig.tools.edit.EditToolHandler} and 
- * {@link net.refractions.udig.tools.edit.OrderedCompositeEventBehavior} for executing the 
+ * Command used by (@link net.refractions.udig.tools.edit.EditToolHandler} and
+ * {@link net.refractions.udig.tools.edit.OrderedCompositeEventBehavior} for executing the
  * behaviours in a tool.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -43,8 +43,8 @@ public class BehaviourCommand extends AbstractCommand implements PostDeterminedE
         this.behaviours=behaviours;
         this.handler=handler;
     }
-    
-    
+
+
     public boolean execute( IProgressMonitor monitor ) throws Exception {
         if( commandsRan.isEmpty() ){
             monitor.beginTask(getName(), commandsRan.size()*12);
@@ -70,7 +70,6 @@ public class BehaviourCommand extends AbstractCommand implements PostDeterminedE
                         }
                         submonitor.done();
                     }catch(Exception e){
-                    	EditPlugin.trace( e.getClass().getName()+" executing "+c+":"+e.getMessage(), e);
                         behaviour.handleError(handler, e, c);
                     }
                 }
@@ -97,7 +96,7 @@ public class BehaviourCommand extends AbstractCommand implements PostDeterminedE
     public String getName() {
         return name;
     }
-    
+
     public void setName( String name ) {
         this.name = name;
     }
@@ -112,7 +111,7 @@ public class BehaviourCommand extends AbstractCommand implements PostDeterminedE
             submonitor.done();
         }
     }
-    
+
 
     public void run( IProgressMonitor monitor ) throws Exception {
         throw new UnsupportedOperationException("PostDeterminedEffectCommands do not use the run method"); //$NON-NLS-1$

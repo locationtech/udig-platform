@@ -5,22 +5,22 @@ import java.util.Iterator;
 
 import net.refractions.udig.project.ILayer;
 
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 /**
  * Example what is a real IGeoSelection.
- * 
+ *
  * @author Vitalus
  */
 public class ExampleFeatureGeoSelection extends AbstractGeoSelection {
 
-    final private SimpleFeature feature;
+    final private Feature feature;
 
     final private ILayer layer;
 
     private ArrayList list;
 
-    public ExampleFeatureGeoSelection( SimpleFeature feature, ILayer layer ) {
+    public ExampleFeatureGeoSelection( Feature feature, ILayer layer ) {
         super();
         this.feature = feature;
         this.layer = layer;
@@ -37,7 +37,7 @@ public class ExampleFeatureGeoSelection extends AbstractGeoSelection {
     }
 
     public Object getAdapter( Class adapter ) {
-        if (SimpleFeature.class.isAssignableFrom(adapter))
+        if (Feature.class.isAssignableFrom(adapter))
             return feature;
         if (ILayer.class.isAssignableFrom(adapter))
             return layer;

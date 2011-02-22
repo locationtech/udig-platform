@@ -33,7 +33,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * Process an extention point.
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
@@ -53,40 +53,42 @@ public class ExtensionPointList extends ArrayList<IConfigurationElement> {
         // For each extension ...
         for( IExtension extension : extensionPoint.getExtensions() ) {
             try {
-                addAll(Arrays.asList(extension.getConfigurationElements()));
+                IConfigurationElement[] configurationElements = extension.getConfigurationElements();
+                addAll(Arrays.asList(configurationElements));
             } catch (Exception e) {
-                Bundle bundle = Platform.getBundle(extensionPoint.getNamespaceIdentifier());
+                Bundle bundle = Platform.getBundle(extensionPoint.getNamespace());
                 if (bundle == null) {
                     if (CorePlugin.getDefault().isDebugging()) {
                         System.out
-                                .println("Could not locate bundle for " + extensionPoint.getUniqueIdentifier()); //$NON-NLS-1$
+                                .println("Could not locate bundle for " + extensionPoint.getNamespace()); //$NON-NLS-1$
                     }
                     bundle = CorePlugin.getDefault().getBundle();
                 }
                 ILog log = Platform.getLog(bundle);
-                log.log(new Status(Status.ERROR, extension.getNamespaceIdentifier(), 0,
-                        extensionPoint.getUniqueIdentifier() + Messages.ExtensionPointList_problem
-                                + e, e));
+                log.log(new Status(Status.ERROR, extension.getNamespace(), 0, extensionPoint
+                        .getNamespace()
+                        + Messages.ExtensionPointList_problem + e, e)
+                        );
             }
         }
     }
 
-    private static Map<String, List<IConfigurationElement>> cache = new WeakHashMap<String, List<IConfigurationElement>>();
+    private static Map<String, List<IConfigurationElement>> cache=new WeakHashMap<String, List<IConfigurationElement>>();
 
     /**
      * Gets a ExtensionPointList for the provided extensionPoint
-     * 
+     *
      * @param extensionPointId id of the extension point to get the list of extensions for.
      * @return
      */
     public static List<IConfigurationElement> getExtensionPointList( String extensionPointId ) {
-        List<IConfigurationElement> list = cache.get(extensionPointId);
-        if (list == null) {
-            list = new ExtensionPointList(extensionPointId);
-            cache.put(extensionPointId, list);
-        }
+       List<IConfigurationElement> list= cache.get(extensionPointId);
+       if( list==null ){
+           list=new ExtensionPointList(extensionPointId);
+           cache.put(extensionPointId, list);
+       }
 
-        list = new ArrayList<IConfigurationElement>(list);
-        return list;
+       list=new ArrayList<IConfigurationElement>(list);
+       return list;
     }
 }

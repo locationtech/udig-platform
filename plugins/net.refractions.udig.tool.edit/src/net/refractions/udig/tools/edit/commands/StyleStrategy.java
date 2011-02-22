@@ -26,7 +26,7 @@ import net.refractions.udig.ui.graphics.ViewportGraphics;
  * This class manages the colors and line patterns the uses for drawing. There are different colors
  * for the fill and outline of the shapes that change depending on whether the current edit state is
  * create or modify (and the shape in question is the current shape"
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -41,7 +41,7 @@ public class StyleStrategy {
 
     /**
      * Sets the line color of the graphics
-     * 
+     *
      */
     public void setLineColor( ViewportGraphics graphics, EditGeom geom, EditToolHandler handler ) {
         graphics.setColor(line.get());
@@ -63,7 +63,7 @@ public class StyleStrategy {
         graphics.setStroke(ViewportGraphics.LINE_SOLID, lineWidth.get());
     }
 
-    
+
     /**
      * @param fill The fill to set.
      */

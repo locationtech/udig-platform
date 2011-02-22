@@ -27,11 +27,11 @@ import org.eclipse.swt.graphics.Image;
  * The image descriptors for the plugin
  */
 public class Images implements ImageConstants {
-    
+
     /** Hashtable of ImageDescriptors */
     private ImageRegistry imageCache;
-    private URL baseURL; 
-    
+    private URL baseURL;
+
     /**
      * Creates an image descriptor for later use.
      */
@@ -42,11 +42,11 @@ public class Images implements ImageConstants {
         } catch (MalformedURLException e) {
             return null;
         }
-        ImageDescriptor image = ImageDescriptor.createFromURL(url);        
+        ImageDescriptor image = ImageDescriptor.createFromURL(url);
         imageCache.put(id, image );
         return image;
     }
-    
+
     /**
      * Returns the image descriptor for ID, or null if not found.
      * <p>
@@ -62,7 +62,7 @@ public class Images implements ImageConstants {
             return found;
         }
         return images.create( id );
-    }    
+    }
     /**
      * Initializes the table of images used in this plugin.
      * <p>
@@ -74,21 +74,21 @@ public class Images implements ImageConstants {
     public synchronized void initializeImages(URL url, ImageRegistry shared ) {
         imageCache = shared;
         baseURL = url;
-        
-        // objects        
+
+        // objects
         create( COLORBLIND_ICON );
         create( CRT_ICON );
         create( PHOTOCOPY_ICON );
         create( PRINTER_ICON );
         create( PROJECTOR_ICON );
         create( LAPTOP_ICON );
-    }    
-    
+    }
+
     /**
      * Cleanup image cache.
      */
     public void cleanUp(){
-        imageCache = null; // Display shutdown will clear imageCache        
+        imageCache = null; // Display shutdown will clear imageCache
     }
 
     public ImageDescriptor getImageDescriptor( String id ) {
@@ -97,15 +97,15 @@ public class Images implements ImageConstants {
 
     /**
      * Returns the image associated with the given key, or <code>null</code> if none.
-     * 
+     *
      * @param id the key
      * @return the image, or <code>null</code> if none
      */
     public Image get( String id ) {
         Image image = imageCache.get(id);
         if( image != null ) return image;
-        
-        create( id );        
+
+        create( id );
         return imageCache.get(id);
     }
 

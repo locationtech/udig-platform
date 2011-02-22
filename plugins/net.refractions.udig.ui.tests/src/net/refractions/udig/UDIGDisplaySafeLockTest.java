@@ -234,7 +234,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
 
     public void testTryLock() throws Exception {
         assertTrue(lock.tryLock());
-        
+
         assertTrue(lock.isHeldByCurrentThread());
         final boolean[] result=new boolean[1];
         result[0]=true;
@@ -244,23 +244,23 @@ public class UDIGDisplaySafeLockTest extends TestCase {
                 result[0]=lock.tryLock();
             }
         }.start();
-        
+
         UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
 
             public boolean isTrue() {
                 return !result[0];
             }
-            
+
         }, true);
     }
 
     public void testTryLockTimout() throws Throwable {
         assertTrue(lock.tryLock(100, TimeUnit.MICROSECONDS));
-        
+
         assertTrue(lock.isHeldByCurrentThread());
         final boolean[] ready=new boolean[1];
         ready[0]=false;
-        
+
         final boolean[] obtained=new boolean[1];
         obtained[0]=false;
         final Throwable[] exception=new Throwable[1];
@@ -275,30 +275,30 @@ public class UDIGDisplaySafeLockTest extends TestCase {
                 }
             }
         }.start();
-        
+
         UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
 
             public boolean isTrue() {
                 return ready[0];
             }
-            
+
         }, false);
         if( exception[0]!=null )
             throw exception[0];
 
         lock.unlock();
-        
+
         UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
 
             public boolean isTrue() {
                 return obtained[0];
             }
-            
+
         }, false);
         if( exception[0]!=null )
             throw exception[0];
-        
-        
+
+
     }
 
     public void testReentrance() throws Exception {
@@ -352,7 +352,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
         assertFalse(lock.hasWaiters(condition));
 
         final Exception[] ex=new Exception[1];
-        
+
         Thread t = new Thread(){
             @Override
             public void run() {
@@ -498,7 +498,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
                 public boolean isTrue() {
                     return lock.getWaitQueueLength(condition)==2;
                 }
-                
+
             }, false);
             if( exception[0]!=null )
                 throw exception[0];
@@ -510,15 +510,15 @@ public class UDIGDisplaySafeLockTest extends TestCase {
                 public boolean isTrue() {
                     return lock.getWaitQueueLength(condition)==0;
                 }
-                
+
             }, false);
             if( exception[0]!=null )
                 throw exception[0];
             assertTrue(awake[0]);
             assertTrue(awake[1]);
-            
+
     }
-    
+
     /**
      * This is a special case that we found causes a bug.  See <a href="http://jira.codehaus.org/browse/UDIG-1007"/>
      *
@@ -529,7 +529,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
         final Set<State> state=new CopyOnWriteArraySet<State>();
         final boolean[] done=new boolean[1];
         done[0]=false;
-        
+
         Thread t=new Thread(){
 
             public void run() {
@@ -554,10 +554,10 @@ public class UDIGDisplaySafeLockTest extends TestCase {
                         lock.unlock();
                     }
                 });
-                
+
                 long timeout=200000;
                 long start=System.currentTimeMillis();
-                
+
                 while( !state.contains(UDIGDisplaySafeLockTest.State.DISPLAY_WAITING_FOR_LOCK) && timeout>(System.currentTimeMillis()-start) ){
                     synchronized (this) {
                         try {
@@ -567,10 +567,10 @@ public class UDIGDisplaySafeLockTest extends TestCase {
                         }
                     }
                 }
-                
+
                 lock.unlock();
                 state.remove(UDIGDisplaySafeLockTest.State.THREAD_HAS_LOCK);
-                
+
                 start=System.currentTimeMillis();
                 while( (!locked[0]) && timeout>(System.currentTimeMillis()-start) ){
                     synchronized (this) {
@@ -599,7 +599,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
             public boolean isTrue() {
                 return state.contains(State.THREAD_HAS_LOCK);
             }
-            
+
         }, false);
 
         lock.lock();
@@ -609,7 +609,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
             public boolean isTrue() {
                 return done[0];
             }
-            
+
         }, true);
         lock.unlock();
     }

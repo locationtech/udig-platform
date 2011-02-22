@@ -10,16 +10,6 @@
             class="net.refractions.udig.style.sld.SLDContent"
             name="%sld.name"
             id="net.refractions.udig.style.sld"/>
-      <style
-            class="net.refractions.udig.style.cache.CacheContent"
-            id="net.refractions.udig.style.cache"
-            name="%cache.name">
-      </style>
-      <style
-            class="net.refractions.udig.style.filter.FilterContent"
-            id="net.refractions.udig.style.filter"
-            name="%filter.name">
-      </style>
    </extension>
    <extension
          point="net.refractions.udig.style.styleConfigurator">
@@ -29,56 +19,18 @@
             label="%simpleStyle.label"
             requires="org.geotools.data.FeatureSource"
             styleId="net.refractions.udig.style.sld"/>
-     <!--
-      <styleConfigurator
-            class="net.refractions.udig.style.sld.SimpleGridConfigurator"
-            id="simple-gridcoverage"
-            label="%simpleRaster.label"
-            requires="org.opengis.coverage.grid.GridCoverage"
-            styleId="net.refractions.udig.style.sld">
-      </styleConfigurator>
-      -->
       <styleConfigurator
             class="net.refractions.udig.style.sld.SimpleRasterConfigurator"
             id="simple-raster"
             label="%simpleRaster.label"
             requires="org.opengis.coverage.grid.GridCoverage"
-            styleId="net.refractions.udig.style.sld">
-      </styleConfigurator>
-      <styleConfigurator
-            class="net.refractions.udig.style.sld.SimpleRasterConfigurator"
-            id="simple-raster-wms"
-            label="%simple.label"
-            requires="org.geotools.data.ows.Layer"
             styleId="net.refractions.udig.style.sld"/>
       <styleConfigurator
             class="net.refractions.udig.style.sld.SimpleRasterConfigurator"
-            id="simple-raster"
-            label="%simple.label"
-            requires="org.geotools.coverage.grid.io.AbstractGridCoverage2DReader"
-            styleId="net.refractions.udig.style.sld">
-      </styleConfigurator>
-      <styleConfigurator
-            class="net.refractions.udig.style.cache.CacheConfigurator"
-            id="cache"
-            label="%cache.label"
-            requires="org.geotools.data.FeatureSource"
-            styleId="net.refractions.udig.style.cache">
-      </styleConfigurator>
-      <styleConfigurator
-            class="net.refractions.udig.style.cache.CacheConfigurator"
-            id="cache-gridcoverage"
-            label="%cache.label"
-            requires="org.opengis.coverage.grid.GridCoverage"
-            styleId="net.refractions.udig.style.cache">
-      </styleConfigurator>           
-      <styleConfigurator
-            class="net.refractions.udig.style.filter.FilterConfigurator"
-            id="filter"
-            label="%filter.label"
-            requires="org.geotools.data.FeatureSource"
-            styleId="net.refractions.udig.project.view">
-            </styleConfigurator>
+            id="simple-raster-wms"
+            label="%simpleRaster.label"
+            requires="org.geotools.data.ows.Layer"
+            styleId="net.refractions.udig.style.sld"/>
    </extension>
    <extension
          point="net.refractions.udig.style.sld.sldEditorPart">
@@ -157,28 +109,6 @@
             id="xml"
             label="%xmlPage.label"
             requires="org.geotools.data.FeatureSource"/>
-      <StyleEditorPage
-            class="net.refractions.udig.style.sld.editor.StyleXMLPage"
-            contentType="net.refractions.udig.project.ILayer"
-            id="xml"
-            label="%xmlPage.label"
-            requires="org.opengis.coverage.grid.GridCoverage"/>
-<!--
-      <StyleEditorPage
-            class="net.refractions.udig.style.sld.editor.PointEditorPage"
-            contentType="net.refractions.udig.project.ILayer"
-            id="net.refractions.udig.style.sld.PointStyleEditorPage"
-            label="Default Point"
-            requires="org.geotools.data.FeatureSource">
-      </StyleEditorPage>
-      <StyleEditorPage
-            class="net.refractions.udig.style.sld.editor.LineEditorPage"
-            contentType="net.refractions.udig.project.ILayer"
-            id="net.refractions.udig.style.sld.LineStyleEditorPage"
-            label="Default Line"
-            requires="org.geotools.data.FeatureSource">
-      </StyleEditorPage>
--->      
    </extension>
    <extension
          point="org.eclipse.ui.viewActions">
@@ -205,7 +135,7 @@
       <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
          <actionSet id="net.refractions.udig.style.sld.editor.layerAction"/>
       </perspectiveExtension>
-      <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
+      <perspectiveExtension targetID="net.refractions.udig.ui.alternateMapPerspective">
          <actionSet id="net.refractions.udig.style.sld.editor.layerAction"/>
       </perspectiveExtension>
    </extension>
@@ -216,12 +146,6 @@
             id="net.refractions.udig.style.dialogSettings"
             name="Dialog Settings">
       </style>
-   </extension>
-   <extension
-         point="org.eclipse.ui.startup">
-      <startup
-            class="net.refractions.udig.style.sld.editor.CustomPalettesLoader">
-      </startup>
    </extension>
 
 </plugin>

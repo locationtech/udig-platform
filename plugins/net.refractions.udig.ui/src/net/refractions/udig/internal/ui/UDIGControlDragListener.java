@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.internal.ui;
 
@@ -20,7 +20,7 @@ public class UDIGControlDragListener extends DragSourceAdapter implements
 
 	  /**
 	   * This creates an instance for the given viewer.
-	 * @param destination 
+	 * @param destination
 	   */
 	  public UDIGControlDragListener(ISelectionProvider provider)
 	  {
@@ -42,9 +42,9 @@ public class UDIGControlDragListener extends DragSourceAdapter implements
 	  public void dragFinished(DragSourceEvent event)
 	  {
         UDigByteAndLocalTransfer.getInstance().object = null;
-        
+
 	  }
-	  
+
 	  /**
 	   * This is called to transfer the data.
 	   */
@@ -53,7 +53,7 @@ public class UDIGControlDragListener extends DragSourceAdapter implements
 	    if (!UDigByteAndLocalTransfer.getInstance().isSupportedType(event.dataType)){
             if (UDigByteAndLocalTransfer.getInstance().object instanceof IStructuredSelection) {
                 IStructuredSelection selection = (IStructuredSelection) UDigByteAndLocalTransfer.getInstance().object;
-                event.data=selection.getFirstElement();   
+                event.data=selection.getFirstElement();
             }
         }else{
             event.data=UDigByteAndLocalTransfer.getInstance().object;

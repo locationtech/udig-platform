@@ -21,7 +21,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 
 /**
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -32,9 +32,9 @@ public class BusyIndicator {
             display=Display.getDefault();
         showWhile(pane, display, runnable);
     }
-    
+
     public static void showWhile(final ViewportPane pane, final Display display, final Runnable runnable) {
-        
+
         PlatformGIS.syncInDisplayThread(new Runnable(){
             public void run() {
                 pane.setCursor( display.getSystemCursor(SWT.CURSOR_WAIT) );
@@ -42,7 +42,7 @@ public class BusyIndicator {
                 pane.setCursor(null);
             }
         });
-        
-        
+
+
     }
 }

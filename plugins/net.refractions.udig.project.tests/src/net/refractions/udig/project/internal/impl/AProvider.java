@@ -13,5 +13,5 @@ public class AProvider extends IProvider<A> {
 	public A provide() {
 		return new A("a"); //$NON-NLS-1$
 	}
-	
+
 }

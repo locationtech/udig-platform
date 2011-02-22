@@ -32,32 +32,32 @@ public class ToolManagerTest extends TestCase {
                     tool = proxy;
                     break;
                 }
-                    
+
             }
         }
         assertTrue( tool.isEnabled() );
         assertEquals(1, TestProperty.listeners.size());
-        
+
         TestProperty.returnVal=false;
         TestProperty.listeners.get(0).notifyChange(TestProperty.lastObj);
-        
+
         assertFalse( tool.isEnabled() );
-        
+
         manager.setCurrentEditor(null);
-        
+
         TestProperty.returnVal=true;
         assertEquals(0, TestProperty.listeners.size());
-        
+
         assertFalse( tool.isEnabled() );
-        
+
         manager.setCurrentEditor(editor);
-        
+
         TestProperty.returnVal=true;
         TestProperty.listeners.get(0).notifyChange(TestProperty.lastObj);
-        
+
         assertTrue( tool.isEnabled() );
-        
-        
+
+
     }
 
 }

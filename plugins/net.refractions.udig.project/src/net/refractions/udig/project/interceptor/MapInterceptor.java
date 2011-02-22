@@ -20,15 +20,12 @@ import net.refractions.udig.project.internal.Map;
 
 /**
  * An interceptor that is ran on a map.  The net.refractions.udig.mapInterceptor extension point has more information.
- * 
+ *
  * @author Jesse
  */
 public interface MapInterceptor {
     static final String MAP_INTERCEPTOR_EXTENSIONPOINT = "net.refractions.udig.project.mapInterceptor"; //$NON-NLS-1$
 
-    public static final String CLOSING_ID = "mapClosing";
-    
-    public static final String OPENING_ID = "mapOpening";
     /**
      * Performs an action on or with the intercepted map.
      *

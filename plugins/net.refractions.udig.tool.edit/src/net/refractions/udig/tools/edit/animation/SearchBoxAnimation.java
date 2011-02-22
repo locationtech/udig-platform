@@ -52,7 +52,7 @@ public class SearchBoxAnimation extends AbstractLongRunningAnimation implements 
     public boolean isValid() {
         return super.isValid() && System.currentTimeMillis()-start<10000;
     }
-    
+
     public Rectangle getValidArea() {
         int radius = PreferenceUtil.instance().getSnappingRadius()+1;
         return new Rectangle(center.getX()-radius, center.getY()-radius, radius+radius, radius+radius) ;

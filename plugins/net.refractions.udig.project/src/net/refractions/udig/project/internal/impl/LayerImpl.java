@@ -1,13 +1,12 @@
 /**
- * <copyright></copyright> $Id$
+ * <copyright></copyright> $Id: LayerImpl.java 30936 2008-10-29 12:21:56Z jeichar $
  */
 package net.refractions.udig.project.internal.impl;
 
 import java.awt.Color;
-import java.io.File;
+import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,9 +19,10 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 
+import javax.media.jai.util.Range;
+
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolve;
@@ -33,7 +33,6 @@ import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.IResolveDelta.Kind;
 import net.refractions.udig.catalog.util.SearchIDDeltaVisitor;
 import net.refractions.udig.core.Pair;
-import net.refractions.udig.core.internal.CorePlugin;
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ILayerListener;
@@ -51,8 +50,7 @@ import net.refractions.udig.project.internal.SimpleBlackboard;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.project.internal.Trace;
 import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.RendererCreator;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
+import net.refractions.udig.project.render.IRenderMetrics;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.ProgressManager;
 import net.refractions.udig.ui.UDIGDisplaySafeLock;
@@ -61,7 +59,6 @@ import net.refractions.udig.ui.palette.ColourScheme;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -74,7 +71,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -88,29 +84,28 @@ import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureListener;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.FeatureType;
+import org.geotools.filter.BBoxExpression;
+import org.geotools.filter.Filter;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.filter.FilterType;
+import org.geotools.filter.GeometryFilter;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
-import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.geotools.referencing.operation.transform.IdentityTransform;
-import org.geotools.util.Range;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory2;
+import org.geotools.referencing.FactoryFinder;
+import org.geotools.referencing.operation.matrix.GeneralMatrix;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
+import org.opengis.referencing.operation.MathTransform2D;
 import org.opengis.referencing.operation.TransformException;
 
-import com.sun.jndi.toolkit.url.UrlUtil;
 import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.GeometryFactory;
 
 /**
  * Standard implementation of a Layer.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -118,24 +113,37 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
 
+    /** <code>IDENTITY</code> transform */
+    public static final MathTransform2D IDENTITY;
+    static {
+        MathTransform2D t = null;
+        try {
+            t = (MathTransform2D) FactoryFinder.getMathTransformFactory(null)
+                    .createAffineTransform(new GeneralMatrix(new AffineTransform()));
+        } catch (Exception e1) {
+            // should not occur
+        }
+        IDENTITY = t;
+    }
+
     /**
      * The default value of the '{@link #getFilter() <em>Filter</em>}' attribute.
-     * 
+     *
      * @see #getFilter()
      * @generated NOT
      * @ordered
      */
-    protected static final Filter FILTER_EDEFAULT = Filter.EXCLUDE;
+    protected static final Filter FILTER_EDEFAULT = Filter.ALL;
 
     /**
      * The cached value of the '{@link #getFilter() <em>Filter</em>}' attribute. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getFilter()
      * @generated NOT
      * @ordered
@@ -145,7 +153,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getStyleBlackboard() <em>Style Blackboard</em>}' containment
      * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getStyleBlackboard()
      * @generated NOT
      * @ordered
@@ -156,7 +164,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getZorder() <em>Zorder</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getZorder()
      * @generated
      * @ordered
@@ -166,7 +174,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getStatus() <em>Status</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getStatus()
      * @generated
      * @ordered
@@ -254,17 +262,15 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     FeatureListener featureListener = new FeatureListener(){
 
-        @SuppressWarnings("unchecked")
         public void changed( FeatureEvent featureEvent ) {
             try {
-                FeatureSource<?,?> featureSource = (FeatureSource<?,?>) featureEvent.getFeatureSource();
-                FeatureSource<?,?> resource = getResource(FeatureSource.class, new NullProgressMonitor());
-                
-                if (resource instanceof UDIGStore) {
-                    UDIGStore layerResource = (UDIGStore) resource;
-                    if (featureSource != layerResource.wrapped()){
+                FeatureSource featureSource = featureEvent.getFeatureSource();
+                FeatureSource resource = getResource(FeatureSource.class, new NullProgressMonitor());
+                if (resource instanceof UDIGFeatureStore) {
+                    UDIGFeatureStore layerResource = (UDIGFeatureStore) resource;
+                    if (featureSource != layerResource.wrapped)
                         featureSource.removeFeatureListener(this);
-                    }
+
                 }
             } catch (IOException e) {
                 ProjectPlugin.log("", e); //$NON-NLS-1$
@@ -281,7 +287,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                             bounds2 = new ReferencedEnvelope(getCRS());
                         }
                         if (bounds2 == null || bounds2.isNull()
-                                || !bounds2.contains((Envelope) featureEvent.getBounds())) {
+                                || !bounds2.contains(featureEvent.getBounds())) {
                             if (bounds2 == null)
                                 bounds2 = new ReferencedEnvelope(getCRS());
                             bounds = bounds2;
@@ -339,9 +345,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
     private volatile ISafeRunnable crsLoader;
 
     private Lock unknownCRSLock = new UDIGDisplaySafeLock();
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @SuppressWarnings("unchecked")
@@ -393,7 +400,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected EClass eStaticClass() {
@@ -402,7 +409,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public ContextModel getContextModel() {
@@ -413,7 +420,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void setContextModel( ContextModel newContextModel ) {
@@ -449,7 +456,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @SuppressWarnings("unchecked")
@@ -469,7 +476,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public String getName() {
@@ -478,7 +485,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void setName( String newName ) {
@@ -489,18 +496,13 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     oldName, name));
     }
 
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
     public URL getID() {
         return iD;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void setID( URL newID ) {
@@ -511,48 +513,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
             eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__ID, oldID,
                     iD));
     }
-    private static final String DIVIDER = "@type@"; //$NON-NLS-1$
-    public void setResourceID( ID id ) {
-        String qualifier = id.getTypeQualifier();
-        String url = id.toURL().toString();
-        URL newid;
-
-        String spec = url;
-        if (qualifier != null) {
-            spec += DIVIDER + qualifier;
-        }
-
-        newid = CorePlugin.createSafeURL(spec);
-        setID(newid);
-    }
-
-    public ID getResourceID(){
-        if( getID()==null){
-            return null;
-        }
-        String rid = getID().toString();
-        String[] parts = rid.split(DIVIDER);
-        String qualifier = null;
-        if( parts.length==2){
-            qualifier = parts[1];
-        }
-        ID id;
-        if( parts[0].startsWith("file") ){ //$NON-NLS-1$
-            String[] fileParts = parts[0].split("#",2); //$NON-NLS-1$
-            File file = URLUtils.urlToFile(CorePlugin.createSafeURL(fileParts[0]));
-            URL url = CorePlugin.createSafeURL( parts[0]);
-            URI uri = CorePlugin.createSafeURI( parts[0]);
-            id=new ID(file.getPath()+"#"+fileParts[1], url, file, uri, qualifier); //$NON-NLS-1$
-        } else {
-            id = new ID(CorePlugin.createSafeURL(parts[0]));
-        }       
-        
-        return id;
-    }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public boolean isVisible() {
@@ -561,7 +525,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void setVisible( boolean newVisible ) {
@@ -587,7 +551,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * getGeoResource() is a blocking method but it must not block UI thread. With this purpose the
      * new imlementation is done to avoid UI thread blocking because of synchronization. </b> <!--
      * end-user-doc -->
-     * 
+     *
      * @uml.property name="geoResources"
      * @generated NOT
      */
@@ -606,7 +570,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         gettingResources.set(true);
         try {
 
-            final ID id = getResourceID();
+            final URL id = getID();
             if (id == null) {
                 return NULL;
             }
@@ -627,20 +591,14 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 IRunnableWithProgress object = new IRunnableWithProgress(){
                     public void run( IProgressMonitor monitor ) throws InvocationTargetException {
                         try {
-                            List<IResolve> resources = connections.find(id.toURL(), monitor);
+                            List<IResolve> resources = connections.find(getID(), monitor);
                             for( IResolve resolve : resources ) {
                                 if (resolve.getStatus() == Status.BROKEN
                                         || resolve.getStatus() == Status.BROKEN)
                                     continue;
-                                if (resolve instanceof IGeoResource) {
-                                    LayerResource resource = new LayerResource(LayerImpl.this,
-                                            (IGeoResource) resolve);
-                                    if (resolve.getID().equals(id)) {
-                                        resourceList.add(0, resource);
-                                    } else {
-                                        resourceList.add(resource);
-                                    }
-                                }
+                                if (resolve instanceof IGeoResource)
+                                    resourceList.add(new LayerResource(LayerImpl.this,
+                                            (IGeoResource) resolve));
                             }
                         } catch (Exception e) {
                             throw new InvocationTargetException(e);
@@ -667,7 +625,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 geoResources = NULL;
             } else {
                 eSetDeliver(false);
-                geoResources = new EDataTypeUniqueEList<IGeoResource>(IGeoResource.class, this,
+                geoResources = new EDataTypeUniqueEList(IGeoResource.class, this,
                         ProjectPackage.LAYER__GEO_RESOURCES);
                 geoResources.addAll(resourceList);
                 eSetDeliver(true);
@@ -687,7 +645,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     private boolean assertNotInDisplayAccess() {
         if (Display.getCurrent() != null) {
-            //            ProjectPlugin.log("getGeoResources was called in display Thread", new Exception("JUST A WARNING NOT CRITICAL")); //$NON-NLS-1$ //$NON-NLS-2$
+            // ProjectPlugin.log("getGeoResources was called in display Thread",
+            // new Exception("JUST A WARNING NOT CRITICAL")); //$NON-NLS-1$
+            // //$NON-NLS-2$
         }
         return true;
     }
@@ -695,9 +655,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * will be returned by getGeoResources and getGeoResource in the real connection is broken.
      */
-    static public final EList<IGeoResource> NULL;
+    static public final EList NULL;
     static {
-        NULL = new BasicEList<IGeoResource>(Collections.singletonList(new NullGeoResource()));
+        NULL = new BasicEList(Collections.singletonList(new NullGeoResource()));
     }
 
     /**
@@ -734,7 +694,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="geoResource"
      * @generated NOT
      */
@@ -765,7 +725,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="catalogRef"
      * @generated NOT
      */
@@ -782,7 +742,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void setCatalogRefGen( CatalogRef newCatalogRef ) {
@@ -795,7 +755,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public StyleBlackboard getStyleBlackboard() {
@@ -804,7 +764,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public NotificationChain basicSetStyleBlackboard( StyleBlackboard newStyleBlackboard,
@@ -824,7 +784,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="styleBlackboard"
      * @generated NOT
      */
@@ -849,7 +809,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Filter getFilter() {
@@ -858,7 +818,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void setFilter( Filter newFilter ) {
@@ -871,7 +831,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public int getStatus() {
@@ -921,7 +881,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void setStatus( int newStatus ) {
@@ -958,7 +918,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public ImageDescriptor getGlyph() {
@@ -967,7 +927,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void setGlyph( ImageDescriptor newGlyph ) {
@@ -980,7 +940,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public boolean isSelectable() {
@@ -989,7 +949,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void setSelectable( boolean newSelectable ) {
@@ -1002,7 +962,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID, Class baseClass,
@@ -1024,7 +984,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
@@ -1044,7 +1004,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public NotificationChain eBasicRemoveFromContainer( NotificationChain msgs ) {
@@ -1063,7 +1023,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
@@ -1110,7 +1070,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -1171,7 +1131,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void eUnset( EStructuralFeature eFeature ) {
@@ -1230,7 +1190,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public boolean eIsSet( EStructuralFeature eFeature ) {
@@ -1281,7 +1241,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public String toString() {
@@ -1303,13 +1263,13 @@ public class LayerImpl extends EObjectImpl implements Layer {
     public Query getQuery( boolean selection ) {
         try {
             if (selection)
-                return new DefaultQuery(getSchema().getName().getLocalPart(), getFilter());
+                return new DefaultQuery(getSchema().getTypeName(), getFilter());
             else
                 return Query.ALL;
         } catch (Exception e) {
             if (selection) {
                 DefaultQuery q = new DefaultQuery();
-                q.setFilter(Filter.EXCLUDE);
+                q.setFilter(Filter.ALL);
                 return q;
             } else
                 return Query.ALL;
@@ -1321,7 +1281,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #isSelectable() <em>Selectable</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #isSelectable()
      * @generated
      * @ordered
@@ -1331,7 +1291,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #isSelectable() <em>Selectable</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #isSelectable()
      * @generated not
      * @ordered
@@ -1341,7 +1301,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getName()
      * @generated
      * @ordered
@@ -1351,7 +1311,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @see #getName()
      * @generated not
      * @ordered
@@ -1361,7 +1321,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getCatalogRef() <em>Catalog Ref</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getCatalogRef()
      * @generated
      * @ordered
@@ -1371,7 +1331,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getCatalogRef() <em>Catalog Ref</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getCatalogRef()
      * @generated NOT
      * @ordered
@@ -1381,7 +1341,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getID() <em>ID</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @see #getID()
      * @generated
      * @ordered
@@ -1391,7 +1351,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getID() <em>ID</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @see #getID()
      * @generated NOT
      * @ordered
@@ -1401,7 +1361,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #isVisible() <em>Visible</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #isVisible()
      * @generated NOT
      * @ordered
@@ -1411,7 +1371,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #isVisible() <em>Visible</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #isVisible()
      * @generated not
      * @ordered
@@ -1421,7 +1381,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getGeoResource() <em>Geo Resource</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getGeoResource()
      * @generated
      * @ordered
@@ -1431,7 +1391,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getGeoResource() <em>Geo Resource</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getGeoResource()
      * @generated NOT
      * @ordered
@@ -1441,17 +1401,17 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getGeoResources() <em>Geo Resources</em>}' attribute list.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getGeoResources()
      * @generated NOT
      * @ordered
      */
-    protected volatile EList<IGeoResource> geoResources = null;
+    protected volatile EList geoResources = null;
 
     /**
      * The default value of the '{@link #getGlyph() <em>Glyph</em>}' attribute. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getGlyph()
      * @generated
      * @ordered
@@ -1461,7 +1421,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getGlyph() <em>Glyph</em>}' attribute. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getGlyph()
      * @generated NOT
      * @ordered
@@ -1471,7 +1431,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getCRS() <em>CRS</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @see #getCRS()
      * @generated
      * @ordered
@@ -1481,7 +1441,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getCRS() <em>CRS</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @see #getCRS()
      * @generated NOT
      * @ordered
@@ -1491,7 +1451,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getProperties() <em>Properties</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getProperties()
      * @generated NOT
      * @ordered
@@ -1501,7 +1461,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getColourScheme() <em>Colour Scheme</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getColourScheme()
      * @generated
      * @ordered
@@ -1511,7 +1471,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getColourScheme() <em>Colour Scheme</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getColourScheme()
      * @generated not
      * @ordered
@@ -1521,7 +1481,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getDefaultColor() <em>Default Color</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getDefaultColor()
      * @generated
      * @ordered
@@ -1531,7 +1491,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getDefaultColor() <em>Default Color</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getDefaultColor()
      * @generated NOT
      * @ordered
@@ -1539,9 +1499,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected volatile Color defaultColor = DEFAULT_COLOR_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getFeatureChanges() <em>SimpleFeature Changes</em>}'
-     * attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The cached value of the '{@link #getFeatureChanges() <em>Feature Changes</em>}' attribute
+     * list. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getFeatureChanges()
      * @generated NOT
      * @ordered
@@ -1551,7 +1511,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getMinScaleDenominator() <em>Min Scale Denominator</em>}'
      * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMinScaleDenominator()
      * @generated not
      * @ordered
@@ -1561,7 +1521,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getMinScaleDenominator() <em>Min Scale Denominator</em>}'
      * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMinScaleDenominator()
      * @generated not
      * @ordered
@@ -1571,7 +1531,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getMaxScaleDenominator() <em>Max Scale Denominator</em>}'
      * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMaxScaleDenominator()
      * @generated not
      * @ordered
@@ -1581,7 +1541,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getMaxScaleDenominator() <em>Max Scale Denominator</em>}'
      * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMaxScaleDenominator()
      * @generated not
      * @ordered
@@ -1593,8 +1553,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see net.refractions.udig.project.internal.Layer#getSchema()
      */
-    public SimpleFeatureType getSchema() {
-        FeatureSource<SimpleFeatureType, SimpleFeature> data;
+    public FeatureType getSchema() {
+        FeatureSource data;
         try {
             data = getResource(FeatureSource.class, null);
             if (data != null) {
@@ -1606,7 +1566,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         // XXX: rgould how do I process a getWMS().createDescribeLayerRequest()?
 
         // URL wfsURL = null;
-        //        
+        //
         // try {
         // DescribeLayerRequest request = null;
         // request = getWMS().createDescribeLayerRequest();
@@ -1654,7 +1614,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public CoordinateReferenceSystem getCRS() {
@@ -1682,7 +1642,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void setCRSGen( CoordinateReferenceSystem newCRS ) {
@@ -1706,7 +1666,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public ColourScheme getColourScheme() {
@@ -1715,7 +1675,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void setColourScheme( ColourScheme newColourScheme ) {
@@ -1728,7 +1688,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Color getDefaultColor() {
@@ -1737,7 +1697,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void setDefaultColor( Color newDefaultColor ) {
@@ -1750,9 +1710,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated not
      */
+    @SuppressWarnings({"unchecked", "serial"})//$NON-NLS-1$ //$NON-NLS-2$
     public List<FeatureEvent> getFeatureChanges() {
         if (featureChanges == null) {
             featureChanges = new EDataTypeUniqueEList(FeatureEvent.class, this,
@@ -1764,6 +1725,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     }
                     super.add(index, object);
                 }
+
                 @Override
                 public boolean add( Object arg0 ) {
                     return super.add(arg0);
@@ -1812,6 +1774,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
         return new Pair<Double, Double>(min, max);
     }
+
     /**
      * @generated
      */
@@ -1837,7 +1800,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void setMaxScaleDenominator( double newMaxScaleDenominator ) {
@@ -1886,7 +1849,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
             };
         }
 
-        return Platform.getAdapterManager().getAdapter(this, adapter);
+        return null;
     }
 
     public CoordinateReferenceSystem getCRS( IProgressMonitor monitor ) {
@@ -1898,7 +1861,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * queries the georesources for a CRS
-     * 
+     *
      * @param monitor
      * @return
      */
@@ -1954,7 +1917,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
             layerToMapTransform = CRS.findMathTransform(getCRS(), getMap().getViewportModel()
                     .getCRS(), true);
         } catch (Exception e) {
-            layerToMapTransform = IdentityTransform.create(2);
+            layerToMapTransform = IDENTITY;
         }
         return layerToMapTransform;
     }
@@ -1965,7 +1928,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
             mapToLayerTransform = CRS.findMathTransform(getMap().getViewportModel().getCRS(),
                     getCRS(), true);
         } catch (Exception e) {
-            mapToLayerTransform = IdentityTransform.create(2);
+            mapToLayerTransform = IDENTITY;
         }
         return mapToLayerTransform;
     }
@@ -1987,12 +1950,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
         }
 
         if (result != null && !result.isNull()) {
-            DefaultEngineeringCRS generic2d = DefaultEngineeringCRS.GENERIC_2D;
-            if (crs != null && result.getCoordinateReferenceSystem() != generic2d) {
+            if (crs != null) {
                 try {
                     result = result.transform(crs, true);
                 } catch (Exception fe) {
-                    ProjectPlugin.log("failure to transform layer bounds", fe); //$NON-NLS-1$
+                    ProjectPlugin.log("failure to transform layer bounds", fe);
                 }
             }
         } else {
@@ -2000,7 +1962,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
         }
 
 		return result;
-
     }
 
     private ReferencedEnvelope obtainBoundsFromResources( IProgressMonitor monitor ) {
@@ -2033,16 +1994,15 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * Creates A geometry filter for the given layer.
-     * 
+     *
      * @param boundingBox in the same crs as the viewport model.
      * @return a Geometry filter in the correct CRS or null if an exception occurs.
      */
     public Filter createBBoxFilter( Envelope boundingBox, IProgressMonitor monitor ) {
-        FilterFactory2 factory = (FilterFactory2) CommonFactoryFinder.getFilterFactory(GeoTools
-                .getDefaultHints());
-        Filter bboxFilter = null;
-        if (!hasResource(FeatureSource.class))
-            return Filter.EXCLUDE;
+        FilterFactory factory = FilterFactoryFinder.createFilterFactory();
+        GeometryFilter bboxFilter = null;
+        if (!isType(FeatureSource.class))
+            return Filter.ALL;
         try {
 
             Envelope bbox;
@@ -2052,9 +2012,13 @@ public class LayerImpl extends EObjectImpl implements Layer {
             } catch (Exception e) {
                 bbox = boundingBox;
             }
-            String geom = getSchema().getGeometryDescriptor().getName().getLocalPart();
-            Object bboxGeom = new GeometryFactory().toGeometry(bbox);
-            bboxFilter = factory.intersects(factory.property(geom), factory.literal(bboxGeom));
+            BBoxExpression bb = factory.createBBoxExpression(bbox);
+            bboxFilter = factory.createGeometryFilter(FilterType.GEOMETRY_INTERSECTS);
+            bboxFilter.addRightGeometry(bb);
+
+            String geom = getSchema().getDefaultGeometry().getName();
+
+            bboxFilter.addLeftGeometry(factory.createAttributeExpression(geom));
 
         } catch (Exception e) {
             ProjectPlugin.getPlugin().log(e);
@@ -2129,6 +2093,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     private volatile EList eAdapters;
 
     private AtomicBoolean gettingResources = new AtomicBoolean(false);
+
     @Override
     public EList eAdapters() {
         if (eAdapters == null) {
@@ -2147,16 +2112,12 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
         warned = false;
         if (delta.getKind() == Kind.CHANGED) {
-        	
+
             // the resource has changed so this means it could have moved or
             // parameters may have changed
             // so set modified on the map so the new params will be saved on
             // shutdown.
-            Map map = getMapInternal();
-            Resource eResource = map.eResource();
-            if( eResource != null ){
-                eResource.setModified(true);
-            }
+            getMapInternal().eResource().setModified(true);
             if (delta.getNewValue() == null) {
                 // no change
                 if (delta.getOldValue() == null)
@@ -2189,8 +2150,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     *
-     */
+	 *
+	 */
     private void resetGeoResources() {
         synchronized (this) {
             this.geoResources = null;
@@ -2231,21 +2192,21 @@ public class LayerImpl extends EObjectImpl implements Layer {
         if( event.getType()!=IResolveChangeEvent.Type.POST_CHANGE){
         	return;
         }
-        
+
         IResolveDelta delta = event.getDelta();
         IResolve hit = event.getResolve();
 
         // Temporary solution while migrating to URI identifiers
         if (delta.getKind() == IResolveDelta.Kind.CHANGED && hit != null) {
 
-            ID affected = hit.getID();
-            ID id = getResourceID();
+            URL affected = hit.getIdentifier();
+            URL id = getID();
             if (id == null)
                 return;
 
             List<IGeoResource> resources = geoResources;
             for( IGeoResource resource : resources ) {
-                if (affected.equals(resource.getID())) {
+                if (URLUtils.urlEquals(resource.getIdentifier(), affected, false)) {
                     resetConnection(delta);
                     return;
                 }
@@ -2285,14 +2246,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
         if (manager == null) {
             return Collections.emptySet();
         }
-        RendererCreator rendererCreator = manager.getRendererCreator();
-        if (rendererCreator == null) {
-            return Collections.emptySet();
-        }
-        Collection<AbstractRenderMetrics> metrics = rendererCreator
+        Collection<IRenderMetrics> metrics = manager.getRendererCreator()
                 .getAvailableRendererMetrics(this);
         Set<Range> allRanges = new HashSet<Range>();
-        for( AbstractRenderMetrics metrics2 : metrics ) {
+        for( IRenderMetrics metrics2 : metrics ) {
             try {
                 if (metrics2.getRenderMetricsFactory().canRender(metrics2.getRenderContext())) {
                     allRanges.addAll(metrics2.getValidScaleRanges());

@@ -23,12 +23,12 @@ import net.refractions.udig.ui.AbstractTextStrategizedTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
+import org.geotools.filter.Filter;
 import org.geotools.filter.FilterFilter;
 import org.geotools.filter.FilterHandler;
 import org.geotools.filter.FilterTransformer;
 import org.geotools.gml.GMLFilterDocument;
 import org.geotools.gml.GMLFilterGeometry;
-import org.opengis.filter.Filter;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
@@ -36,7 +36,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * To Transfer Filters in text form.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -47,7 +47,7 @@ public class FilterTextTransfer extends AbstractTextStrategizedTransfer implemen
 
     /**
      * Returns the singleton instance of the TextTransfer class.
-     * 
+     *
      * @return the singleton instance of the TextTransfer class
      */
     public static FilterTextTransfer getInstance() {
@@ -67,17 +67,17 @@ public class FilterTextTransfer extends AbstractTextStrategizedTransfer implemen
         System.arraycopy(transferStrategies, 0, copy, 0, transferStrategies.length);
 		return copy;
 	}
-    
+
     @Override
     public String[] getStrategyNames() {
         return new String[]{"GML"}; //$NON-NLS-1$
     }
-	
+
     @Override
     public String getTransferName() {
         return "Filter"; //$NON-NLS-1$
     }
-    
+
 	@Override
     public TransferStrategy getDefaultStrategy() {
 		return getAllStrategies()[0];
@@ -88,25 +88,25 @@ public class FilterTextTransfer extends AbstractTextStrategizedTransfer implemen
     public TransferData[] getSupportedTypes() {
     	return TextTransfer.getInstance().getSupportedTypes();
     }
-    
+
     @Override
     public boolean isSupportedType(TransferData transferData) {
     	return TextTransfer.getInstance().isSupportedType(transferData);
     }
-    
+
     public boolean validate( Object object ) {
         return object instanceof Filter;
     }
 
     public static class SimpleFilterHandler extends DefaultHandler implements FilterHandler {
 
-        private org.opengis.filter.Filter filter;
+        private Filter filter;
 
-        public void filter( org.opengis.filter.Filter filter ) {
+        public void filter( Filter filter ) {
             this.filter = filter;
         }
 
-        public org.opengis.filter.Filter getFilter() {
+        public Filter getFilter() {
             return filter;
         }
 
@@ -149,6 +149,6 @@ public class FilterTextTransfer extends AbstractTextStrategizedTransfer implemen
             }
 
             return simpleFilterHandler.getFilter();
-        }	
+        }
     }
 }

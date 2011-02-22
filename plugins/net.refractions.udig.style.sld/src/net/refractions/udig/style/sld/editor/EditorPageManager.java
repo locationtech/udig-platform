@@ -34,7 +34,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
     public static final String ATT_NAME = "name"; //$NON-NLS-1$
     public static final String ATT_LABEL = "label"; //$NON-NLS-1$
     public static final String PL_KEYWORDS = "keywords"; //$NON-NLS-1$
-    
+
     /**
      * Pre-order traversal means visit the root first,
      * then the children.
@@ -65,15 +65,15 @@ public class EditorPageManager implements IExtensionChangeHandler {
     public EditorPageManager() {
         this('.');
     }
-    
+
     /**
      * Create a new instance of the receiver with the specified seperatorChar
-     * 
+     *
      * @param separatorChar
      */
     public EditorPageManager(char separatorChar) {
         separator = new String(new char[] { separatorChar });
-        
+
         IExtensionTracker tracker = PlatformUI.getWorkbench().getExtensionTracker();
         tracker.registerHandler(this, ExtensionTracker.createExtensionPointFilter(getExtensionPointFilter()));
 
@@ -96,7 +96,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
 
     /**
      * Add the pages and the groups to the receiver.
-     * 
+     *
      * @param pageContributions
      */
     public void addPages(Collection<?> pageContributions) {
@@ -116,7 +116,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
 
     /**
      * Register a node with the extension tracker.
-     * 
+     *
      * @param node
      *            register the given node and its subnodes with the extension
      *            tracker
@@ -136,20 +136,20 @@ public class EditorPageManager implements IExtensionChangeHandler {
      * @see org.eclipse.core.runtime.dynamicHelpers.IExtensionChangeHandler#addExtension(org.eclipse.core.runtime.dynamicHelpers.IExtensionTracker, org.eclipse.core.runtime.IExtension)
      */
     public void addExtension(IExtensionTracker tracker, IExtension extension) {
-        
+
         IConfigurationElement[] elements = extension.getConfigurationElements();
         for (int i = 0; i < elements.length; i++) {
             EditorNode node = null;
-            
+
             boolean nameMissing = elements[i].getAttribute(ATT_NAME) == null;
-            String id = elements[i].getAttribute(ATT_ID);       
+            String id = elements[i].getAttribute(ATT_ID);
             boolean classMissing = getClassValue(elements[i], ATT_CLASS) == null;
 
             //System.out.println(elements[i].id+","+nameMissing+","+classMissing);
             if (!(nameMissing || id == null || classMissing)) {
                 node = new EditorNode(id, elements[i]);
             }
-            
+
             if (node == null)
                 continue;
             registerNode(node);
@@ -178,22 +178,22 @@ public class EditorPageManager implements IExtensionChangeHandler {
             }
         }
     }
-    
+
     public String getClassValue(IConfigurationElement configElement, String classAttributeName) {
         String className = configElement.getAttribute(classAttributeName);
-        if (className != null) 
+        if (className != null)
             return className;
         IConfigurationElement [] candidateChildren = configElement.getChildren(classAttributeName);
-        if (candidateChildren.length == 0) 
+        if (candidateChildren.length == 0)
             return null;
-    
+
         return candidateChildren[0].getAttribute(ATT_CLASS);
     }
 
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.core.runtime.dynamicHelpers.IExtensionAdditionHandler#getExtensionPointFilter()
      */
     private IExtensionPoint getExtensionPointFilter() {
@@ -215,7 +215,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
 
     /**
      * Removes the node from the manager, searching through all subnodes.
-     * 
+     *
      * @param parent
      *            the node to search
      * @param nodeToRemove
@@ -240,7 +240,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
         }
         return false;
     }
-    
+
 
     /**
      * Adds the given preference node as a subnode of the
@@ -264,7 +264,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
      * Adds the given preference node as a subnode of the
      * root.
      *
-     * @param node the node to add, which must implement 
+     * @param node the node to add, which must implement
      *   <code>SLDEditorPageNode</code>
      */
     public void addToRoot(EditorNode node) {
@@ -275,12 +275,12 @@ public class EditorPageManager implements IExtensionChangeHandler {
     /**
      * Recursively enumerates all nodes at or below the given node
      * and adds them to the given list in the given order.
-     * 
+     *
      * @param node the starting node
      * @param sequence a read-write list of preference nodes
      *  (element type: <code>SLDEditorPageNode</code>)
      *  in the given order
-     * @param order the traversal order, one of 
+     * @param order the traversal order, one of
      *	<code>PRE_ORDER</code> and <code>POST_ORDER</code>
      */
     protected void buildSequence(EditorNode node, List<EditorNode> sequence, int order) {
@@ -303,14 +303,14 @@ public class EditorPageManager implements IExtensionChangeHandler {
     public EditorNode find(String path) {
        return find(path,root);
     }
-    
+
     /**
      * Finds and returns the preference node directly
      * below the top at the given path.
      *
      * @param path the path
      * @return the node, or <code>null</code> if none
-     * 
+     *
      * @since 3.1
      */
     protected EditorNode find(String path, EditorNode top){
@@ -332,7 +332,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
      * Returns all preference nodes managed by this
      * manager.
      *
-     * @param order the traversal order, one of 
+     * @param order the traversal order, one of
      *	<code>PRE_ORDER</code> and <code>POST_ORDER</code>
      * @return a list of preference nodes
      *  (element type: <code>SLDEditorPageNode</code>)
@@ -402,11 +402,11 @@ public class EditorPageManager implements IExtensionChangeHandler {
     public void removeAll() {
         root = new EditorNode("");//$NON-NLS-1$
     }
-    
+
     public EditorNode[] getRootSubNodes() {
     	return getRoot().getSubNodes();
     }
-    
+
     /**
      * Returns true if the specified node exists in the manager.
      *
@@ -426,9 +426,9 @@ public class EditorPageManager implements IExtensionChangeHandler {
         String requires = element.getAttribute(OpenStyleEditorAction.ATT_REQUIRES);
         try {
             Object classInstance = EditorNode.createExtension(element, EditorNode.ATT_CLASS);
-            // first try creating required class using extension classloading 
+            // first try creating required class using extension classloading
             // if this fails use the same classloader as the configurator
-         
+
             // Failed trying to recover by using the configurators class's class loader
             if (AdapterUtil.instance.canAdaptTo(requires, selectedLayer, classInstance.getClass().getClassLoader())) {
                 SLDPlugin.trace("skipped "+id, null); //$NON-NLS-1$
@@ -439,10 +439,10 @@ public class EditorPageManager implements IExtensionChangeHandler {
                 if ( AdapterUtil.instance.canAdaptTo(requires, selectedLayer, requiredClass.getClass().getClassLoader())) {
                     return true;
                 }
-                
+
             }catch( Exception ce ){
                 SLDPlugin.trace("skipped "+id, null); //$NON-NLS-1$
-                
+
             }
         } catch (Exception e) {
             SLDPlugin.log("extProcConfigurator skipped " //$NON-NLS-1$
@@ -455,18 +455,18 @@ public class EditorPageManager implements IExtensionChangeHandler {
     /**
      * Creates the default {@link EditorPageManager} implementation and loads the style pages for the layer into
      * the manager.
-     * 
+     *
      * @param plugin the plug-in to send error messages to.
-     * @param selectedLayer the layer to use to filter the style pages 
+     * @param selectedLayer the layer to use to filter the style pages
      * @return the default {@link EditorPageManager} implementation and loads the style pages for the layer into
      * the manager.
      */
     public static EditorPageManager loadManager(Plugin plugin, ILayer selectedLayer) {
         final EditorPageManager[] manager = new EditorPageManager[] {new EditorPageManager('.')};
-        
+
         ExtensionPointProcessor extProcPage = new StyleEditorPageExtensionProcessor(manager, selectedLayer);
         ExtensionPointUtil.process(plugin, StyleEditorPage.XPID, extProcPage);
-    
+
         ExtensionPointProcessor extProcConfigurator = new StyleConfiguratorExtensionProcessor(manager, selectedLayer);
         ExtensionPointUtil.process(plugin, IStyleConfigurator.XPID, extProcConfigurator);
         return manager[0];

@@ -19,8 +19,8 @@ public class InternationalizedDialog {
 	/**
 	 * When this method is called a MessageDialog asking the
 	 * users name will be displayed.
-	 * @param parent 
-	 * 
+	 * @param parent
+	 *
 	 * @return Users name, or null if caneled
 	 */
 	public static String getUserName(Shell parent){
@@ -35,11 +35,11 @@ public class InternationalizedDialog {
 			new IInputValidator(){
 				public String isValid(String name) {
 					return name.length() > 2 ? name : null;
-				}			
-		});		
+				}
+		});
 		if( prompt.open() == Window.OK ){
 			return prompt.getValue();
 		}
-		return null; // user pressed cancel		
+		return null; // user pressed cancel
 	}
 }

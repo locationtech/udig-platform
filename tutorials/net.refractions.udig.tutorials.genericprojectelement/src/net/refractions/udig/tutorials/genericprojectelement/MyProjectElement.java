@@ -1,15 +1,12 @@
 package net.refractions.udig.tutorials.genericprojectelement;
 
-import java.util.Collections;
-import java.util.List;
+import org.eclipse.ui.IMemento;
 
 import net.refractions.udig.project.element.AbstractGenericProjectElement;
 import net.refractions.udig.project.element.IGenericProjectElement;
 
-import org.eclipse.ui.IMemento;
-
 /**
- * A silly implementation.  
+ * A silly implementation.
  * @author jesse
  * @since 1.1.0
  */
@@ -44,12 +41,4 @@ public class MyProjectElement extends AbstractGenericProjectElement implements I
         setDirty(true);
     }
 
-    public List getElements( Class type ) {
-        return Collections.emptyList();
-    }
-
-    public List getElements() {
-        return Collections.emptyList();
-    }
-    
 }

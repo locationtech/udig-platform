@@ -21,7 +21,7 @@ import net.refractions.udig.project.internal.StyleBlackboard;
 /**
  * A style that essentially is a font.  This is primarily intended for use with MapGraphics so that the font
  * of the mapgraphics text can be specified.
- * 
+ *
  * @see StyleBlackboard
  * @see FontStyleContent
  * @author jesse
@@ -34,10 +34,8 @@ public class FontStyle {
      * Create a new "empty"/"default" style
      */
     public FontStyle() {
-        this.font = Font.decode(null);
-        this.font = font.deriveFont(8.0f);
     }
-    
+
     /**
      * Create new Style with the provided font
      * @param font2

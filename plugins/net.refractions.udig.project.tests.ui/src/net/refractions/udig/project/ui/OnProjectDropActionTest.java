@@ -31,7 +31,7 @@ import net.refractions.udig.ui.ViewerDropLocation;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
- * TODO Purpose of 
+ * TODO Purpose of
  * <p>
  *
  * </p>
@@ -62,31 +62,31 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
         assertTrue(action.accept());
         action.init(null, null, ViewerDropLocation.ON, map.getProject(), map);
         assertFalse(action.accept());
-        
+
         action.init(null, null, ViewerDropLocation.ON, map.getProject(), resource.service(new NullProgressMonitor()));
         assertTrue(action.accept());
-        
+
         // now test dropping collections
         List<Object> list=new ArrayList<Object>();
-        
+
         list.add("hi"); //$NON-NLS-1$
         action.init(null, null, ViewerDropLocation.ON, map.getProject(), list);
         assertFalse(action.accept());
-        
+
         list.add(resource);
         action.init(null, null, ViewerDropLocation.ON, map.getProject(), list);
         assertTrue(action.accept());
-        
+
         list.clear();
         list.add(resource);
         action.init(null, null, ViewerDropLocation.ON, map.getProject(), list);
         assertTrue(action.accept());
-        
+
         list.clear();
         list.add(resource.service(new NullProgressMonitor()));
         action.init(null, null, ViewerDropLocation.ON, map.getProject(), list);
         assertTrue(action.accept());
-        
+
     }
 
     /**
@@ -98,10 +98,10 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
 
         action.init(null, null, ViewerDropLocation.ON, map.getProject(), resource);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals(2, map.getProject().getElements().size());
         IMap newMap = (IMap) map.getProject().getElements().get(1);
-        
+
         assertEquals( 1, newMap.getMapLayers().size());
         assertNotSame( layer, newMap.getMapLayers().get(0));
     }
@@ -131,16 +131,16 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
         List<Object> list=new ArrayList<Object>();
         list.add(resource);
         list.add(resource);
-        
+
         action.init(null, null, ViewerDropLocation.ON, map.getProject(), list);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals(2, map.getProject().getElements().size());
         IMap newMap = (IMap) map.getProject().getElements().get(1);
-        
+
         assertEquals( 2, newMap.getMapLayers().size());
         assertNotSame( layer, newMap.getMapLayers().get(0));
         assertNotSame( layer, newMap.getMapLayers().get(1));
     }
-    
+
 }

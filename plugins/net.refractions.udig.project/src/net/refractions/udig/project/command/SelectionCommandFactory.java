@@ -16,16 +16,16 @@ import net.refractions.udig.project.internal.commands.selection.FIDSelectCommand
 import net.refractions.udig.project.internal.commands.selection.NoSelectCommand;
 import net.refractions.udig.project.internal.commands.selection.SelectCommand;
 
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.filter.Filter;
+import org.geotools.feature.Feature;
+import org.geotools.filter.Filter;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * A factory which can be used to create all the standard selection commands.
- * 
+ *
  * API use
- * 
+ *
  * @author jeichar
  * @deprecated
  * @since 0.3
@@ -33,7 +33,7 @@ import com.vividsolutions.jts.geom.Envelope;
 public class SelectionCommandFactory {
 	/**
 	 * Creates a new SelectionCommandFactory object
-	 * 
+	 *
 	 * @return a new SelectionCommandFactory object
 	 */
 	public static SelectionCommandFactory getInstance() {
@@ -46,7 +46,7 @@ public class SelectionCommandFactory {
 
 	/**
 	 * Creates a new {@linkplain BBoxSelectionCommand}
-	 * 
+	 *
 	 * @param bbox A bounding used as the filter, all features intersecting the bbox will be
 	 *        considered selected
 	 * @param modifiers Options include: BBoxSelectionCommand.ADD, BBoxSelectionCommand.NONE,
@@ -61,9 +61,9 @@ public class SelectionCommandFactory {
 	}
 
     /**
-     * Creates a new {@linkplain BBoxSelectionCommand}.  
+     * Creates a new {@linkplain BBoxSelectionCommand}.
      * Same as createBBoxSelectionCommand(bbox, BBoxSelectionCommand.NONE)
-     * 
+     *
      * @param bbox A bounding used as the filter, all features intersecting the bbox will be
      *        considered selected
      * @return A new BBoxSelectionCommand. The command should be sent to the
@@ -74,11 +74,11 @@ public class SelectionCommandFactory {
     public MapCommand createBBoxSelectionCommand( Envelope boundingBox ) {
         return new BBoxSelectionCommand(boundingBox, BBoxSelectionCommand.NONE);
     }
-    
+
 
 	/**
 	 * Creates a {@linkplain NoSelectCommand}
-	 * 
+	 *
 	 * @return a {@linkplain NoSelectCommand}object. The command should be sent to the
 	 *         {@linkplain SelectionManager}to be executed.
 	 * @see MapCommand
@@ -89,7 +89,7 @@ public class SelectionCommandFactory {
 
     /**
      * Create a MapCommand that sets the layer selection to be a fidfilter.
-     * 
+     *
      * @return a {@linkplain FIDSelectCommand}
      * @see MapCommand
      */
@@ -99,17 +99,17 @@ public class SelectionCommandFactory {
 
     /**
      * Create a MapCommand that sets the layer selection to be a fidfilter.
-     * 
+     *
      * @return a {@linkplain FIDSelectCommand}
      * @see MapCommand
      */
-    public MapCommand createFIDSelectCommand(ILayer layer, SimpleFeature feature) {
+    public MapCommand createFIDSelectCommand(ILayer layer, Feature feature) {
         return new FIDSelectCommand(layer, feature.getID());
     }
 
     /**
      * Create a MapCommand that sets the layer selection to be the filter.
-     * 
+     *
      * @return a {@linkplain SelectCommand}
      * @see MapCommand
      */
@@ -119,7 +119,7 @@ public class SelectionCommandFactory {
 
 	/**
 	 * Create a CompositeCommand
-	 * 
+	 *
 	 * @param commands the commands to be executed as a single command
 	 * @return a {@linkplain CompositeCommand}
 	 * @see MapCommand
@@ -130,7 +130,7 @@ public class SelectionCommandFactory {
 
 	/**
 	 * Create a CompositeCommand
-	 * 
+	 *
 	 * @param commands the commands to be executed as a single command
 	 * @return a {@linkplain CompositeCommand}
 	 * @see MapCommand

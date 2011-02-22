@@ -51,7 +51,7 @@ import net.refractions.udig.tools.edit.support.Point;
  * <li>Locks the EditTool handler until mouse is released so other behaviours won't interfere</li>
  * </ul>
  * </p>
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -66,7 +66,7 @@ public class SelectVerticesWithBoxBehaviour implements LockingBehaviour {
         boolean shapeAndGeomNotNull = handler.getCurrentShape() != null;
         boolean legalModifiers = e.isShiftDown() || !e.modifiersDown();
 
-        return legalState && legalEventType && shapeAndGeomNotNull 
+        return legalState && legalEventType && shapeAndGeomNotNull
                 && legalModifiers && e.buttons==MapMouseEvent.BUTTON1;
     }
 
@@ -78,16 +78,16 @@ public class SelectVerticesWithBoxBehaviour implements LockingBehaviour {
             selectBehaviour=new SelectBehaviour();
             handler.getBehaviours().add(selectBehaviour);
             drawShapeCommand = new SelectionBoxCommand();
-            
+
             handler.getContext().getViewportPane().addDrawCommand(drawShapeCommand);
         }
         Point start = handler.getMouseTracker().getDragStarted();
         drawShapeCommand.setShape(new Rectangle(Math.min(start.getX(), e.x), Math.min(
                 start.getY(), e.y), Math.abs(start.getX() - e.x), Math.abs(start.getY()
                 - e.y)));
-        
+
         handler.repaint();
-        
+
         return null;
     }
 
@@ -98,9 +98,9 @@ public class SelectVerticesWithBoxBehaviour implements LockingBehaviour {
     class SelectBehaviour implements LockingBehaviour {
 
         public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
-           
+
             boolean legalEventType = eventType == EventType.RELEASED;
-            
+
             return legalEventType;
         }
 
@@ -110,7 +110,7 @@ public class SelectVerticesWithBoxBehaviour implements LockingBehaviour {
                 behaviours.remove(selectBehaviour);
 
                 drawShapeCommand.setValid(false);
-                
+
                 Set<Point> points = new HashSet<Point>();
                 Rectangle rect=(Rectangle) drawShapeCommand.getShape();
                 EditGeom geom = handler.getCurrentGeom();
@@ -121,7 +121,7 @@ public class SelectVerticesWithBoxBehaviour implements LockingBehaviour {
                             points.add(valueOf);
                     }
                 }
-                
+
                 handler.unlock(this);
                 selectBehaviour=null;
                 drawShapeCommand=null;

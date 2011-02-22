@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -26,14 +27,11 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wmsc.WMSCServiceImpl;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.ISharedImages;
 import net.refractions.udig.catalog.wms.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -49,6 +47,7 @@ import org.geotools.data.wms.request.GetLegendGraphicRequest;
 import org.geotools.data.wms.response.GetLegendGraphicResponse;
 import org.geotools.data.wms.xml.WMSSchema;
 import org.geotools.geometry.GeneralEnvelope;
+import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.ows.ServiceException;
 import org.geotools.referencing.CRS;
@@ -56,18 +55,22 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * SimpleFeatureType provided by WFS. </p>
- * 
+ * FeatureType provided by WFS.
+ * </p>
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
 public class WMSGeoResourceImpl extends IGeoResource {
 
+    WMSServiceImpl service;
     org.geotools.data.ows.Layer layer;
+    private IGeoResourceInfo info;
     private ImageDescriptor icon;
     private URL identifier;
     private ArrayList<IResolve> members;
@@ -76,7 +79,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
 
     /**
      * Construct <code>WMSGeoResourceImpl</code>.
-     * 
+     *
      * @param service
      * @param parent the parent Georesource may be null if parent is the service.
      * @param layer
@@ -127,22 +130,18 @@ public class WMSGeoResourceImpl extends IGeoResource {
         return service.getStatus();
     }
 
-    @Override
-    public WMSResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
-        return (WMSResourceInfo) super.getInfo(monitor);
-    }
-    protected WMSResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        if (monitor == null)
-            monitor = new NullProgressMonitor();
-
-        WMSServiceImpl wmsServer = service(new SubProgressMonitor(monitor, 50));
-
-        wmsServer.rLock.lock();
-        try {
-            return new WMSResourceInfo(new SubProgressMonitor(monitor, 50));
-        } finally {
-            wmsServer.rLock.unlock();
+    public IGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
+        if (info == null) {
+            service.rLock.lock();
+            try {
+                if (info == null) {
+                    info = new WMSResourceInfo(monitor);
+                }
+            } finally {
+                service.rLock.unlock();
+            }
         }
+        return info;
     }
 
     public URL getIdentifier() {
@@ -156,7 +155,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
 
     /*
      * @see net.refractions.udig.catalog.IGeoResource#resolve(java.lang.Class,
-     * org.eclipse.core.runtime.IProgressMonitor)
+     *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
         if (adaptee == null) {
@@ -172,11 +171,11 @@ public class WMSGeoResourceImpl extends IGeoResource {
         }
 
         if (adaptee.isAssignableFrom(IGeoResourceInfo.class)) {
-            return adaptee.cast(createInfo(monitor));
+            return adaptee.cast(getInfo(monitor));
         }
 
         if (adaptee.isAssignableFrom(WebMapServer.class)) {
-            return adaptee.cast(service(monitor).getWMS(monitor));
+            return adaptee.cast(service.getWMS(monitor));
         }
 
         if (adaptee.isAssignableFrom(org.geotools.data.ows.Layer.class)) {
@@ -187,12 +186,16 @@ public class WMSGeoResourceImpl extends IGeoResource {
         }
         return super.resolve(adaptee, monitor);
     }
+    public WMSServiceImpl service( IProgressMonitor monitor ) throws IOException {
+        return service;
+    }
+
     /** Must be the same as resolve( ImageDescriptor.class ) */
-    public ImageDescriptor getIcon( IProgressMonitor monitor ) throws IOException {
+    public ImageDescriptor getIcon( IProgressMonitor monitor ) {
         iconLock.lock();
         try {
             if (icon == null) {
-                icon = fetchIcon(monitor, layer, service(monitor));
+                icon = fetchIcon(monitor, layer, service);
                 if (icon == null) {
                     icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(
                             ISharedImages.GRID_OBJ);
@@ -205,7 +208,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
     }
     /**
      * This method will fetch the Icon associated with this url (if such is available).
-     * 
+     *
      * @see WMSFolder
      * @param monitor
      * @return Requested Icon or ISharedImages.GRID_OBJ
@@ -236,8 +239,6 @@ public class WMSGeoResourceImpl extends IGeoResource {
                 image = imageDescriptor.createImage();
                 Rectangle bound = image.getBounds();
                 if (bound.width == 16 && bound.height == 16) {
-                    // perfect! it did what was expected!
-                    //
                     final ImageData data = (ImageData) image.getImageData().clone();
                     return new ImageDescriptor(){
                         public ImageData getImageData() {
@@ -246,12 +247,8 @@ public class WMSGeoResourceImpl extends IGeoResource {
                     };
                 }
                 if (bound.height < 16 || bound.width < 16) {
-                    // the image is smaller than what we asked for
-                    // perhaps we should display nothing?
-                    // in stead we will try scaling it up
-                    if (WmsPlugin.getDefault().isDebugging()) {
-                        System.out.println("Icon scaled up to requested size"); //$NON-NLS-1$                                        
-                    }
+                    if (WmsPlugin.getDefault().isDebugging())
+                        System.out.println("Icon scaled up to requested size"); //$NON-NLS-1$
                     final ImageData data = image.getImageData().scaledTo(16, 16);
                     return new ImageDescriptor(){
                         public ImageData getImageData() {
@@ -259,11 +256,6 @@ public class WMSGeoResourceImpl extends IGeoResource {
                         }
                     };
                 }
-                // the image is larger than the size we asked for
-                // (so this WMS is not being nice!)
-                // we will try and decide what to do here ...
-                // let us select the image we want ...
-
                 swatch = new Image(null, 16, 16);
                 GC gc = new GC(swatch);
                 int sy = 0; // (bound.height / 2 ) - 8;
@@ -299,7 +291,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
                     sh = Math.min(contents.height - sy, 16);
                     sw = Math.min(contents.width - sx, 16);
                     if (WmsPlugin.getDefault().isDebugging())
-                        System.out.println("Mask offset to " + sx + "x" + sy); //$NON-NLS-1$ //$NON-NLS-2$                        
+                        System.out.println("Mask offset to " + sx + "x" + sy); //$NON-NLS-1$ //$NON-NLS-2$
                 } else if (contents.alphaData != null) {
                     SKIPY: for( int y = 0; y < contents.height / 2; y++ ) {
                         sy = y;
@@ -320,7 +312,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
                     sh = Math.min(contents.height - sy, 16);
                     sw = Math.min(contents.width - sx, 16);
                     if (WmsPlugin.getDefault().isDebugging())
-                        System.out.println("Alpha offset to " + sx + "x" + sy); //$NON-NLS-1$ //$NON-NLS-2$                        
+                        System.out.println("Alpha offset to " + sx + "x" + sy); //$NON-NLS-1$ //$NON-NLS-2$
                 } else {
                     // try ignoring "white"
                     int depth = contents.depth;
@@ -344,7 +336,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
                     sh = Math.min(contents.height - sy, 16);
                     sw = Math.min(contents.width - sx, 16);
                     if (WmsPlugin.getDefault().isDebugging())
-                        System.out.println("Alpha offset to " + sx + "x" + sy); //$NON-NLS-1$ //$NON-NLS-2$                        
+                        System.out.println("Alpha offset to " + sx + "x" + sy); //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 // else {
                 // sh = Math.min( bound.height, bound.width );
@@ -353,14 +345,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
                 if (WmsPlugin.getDefault().isDebugging())
                     System.out.println("Image resized to " + sh + "x" + sw); //$NON-NLS-1$ //$NON-NLS-2$
 
-                // gc.drawImage(image, sx, sy, sw, sh, 0, 0, 16, 16);
-
-                // chances are this has a label or category view or something
-                // grab the gply from the bottom left corner and we are good to
-                // (based on mapserver example)
-                //
-                gc.drawImage(image, 0, bound.height - 16, 16, 16, 0, 0, 16, 16);
-
+                gc.drawImage(image, sx, sy, sw, sh, 0, 0, 16, 16);
                 final ImageData data = (ImageData) swatch.getImageData().clone();
                 return new ImageDescriptor(){
                     public ImageData getImageData() {
@@ -401,22 +386,22 @@ public class WMSGeoResourceImpl extends IGeoResource {
             request.setWidth("16"); //$NON-NLS-1$
             request.setHeight("16"); //$NON-NLS-1$
 
-            List<String> formats = wms.getCapabilities().getRequest().getGetLegendGraphic()
-                    .getFormats();
+            List<String> formats = wms.getCapabilities().getRequest()
+                    .getGetLegendGraphic().getFormats();
 
             Collections.sort(formats, new Comparator<String>(){
 
                 public int compare( String format1, String format2 ) {
-                    if (format1.trim().equalsIgnoreCase("image/png")) { //$NON-NLS-1$
+                    if( format1.trim().equalsIgnoreCase("image/png") ){ //$NON-NLS-1$
                         return -1;
                     }
-                    if (format2.trim().equalsIgnoreCase("image/png")) { //$NON-NLS-1$
+                    if( format2.trim().equalsIgnoreCase("image/png") ){ //$NON-NLS-1$
                         return 1;
                     }
-                    if (format1.trim().equalsIgnoreCase("image/gif")) { //$NON-NLS-1$
+                    if( format1.trim().equalsIgnoreCase("image/gif") ){ //$NON-NLS-1$
                         return -1;
                     }
-                    if (format2.trim().equalsIgnoreCase("image/gif")) { //$NON-NLS-1$
+                    if( format2.trim().equalsIgnoreCase("image/gif") ){ //$NON-NLS-1$
                         return 1;
                     }
                     return 0;
@@ -424,11 +409,10 @@ public class WMSGeoResourceImpl extends IGeoResource {
 
             });
 
-            for( Iterator<String> iterator = formats.iterator(); iterator.hasNext()
-                    && imageDescriptor == null; ) {
+            for( Iterator<String> iterator = formats.iterator(); iterator.hasNext() && imageDescriptor==null; ) {
                 String format = iterator.next();
 
-                imageDescriptor = loadImageDescriptor(wms, request, format);
+                imageDescriptor = loadImageDescriptor(wms, request, format );
             }
 
             if (imageDescriptor == null) {
@@ -437,11 +421,11 @@ public class WMSGeoResourceImpl extends IGeoResource {
                         ISharedImages.GRID_OBJ);
             }
         } catch (UnsupportedOperationException notAvailable) {
-            WmsPlugin.trace("Icon is not available", notAvailable); //$NON-NLS-1$                
+            WmsPlugin.trace("Icon is not available", notAvailable); //$NON-NLS-1$
             return CatalogUIPlugin.getDefault().getImages().getImageDescriptor(
                     ISharedImages.GRID_OBJ);
         } catch (ServiceException e) {
-            WmsPlugin.trace("Icon is not available", e); //$NON-NLS-1$                
+            WmsPlugin.trace("Icon is not available", e); //$NON-NLS-1$
             return CatalogUIPlugin.getDefault().getImages().getImageDescriptor(
                     ISharedImages.GRID_OBJ);
         }
@@ -468,7 +452,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
                     .getInputStream()));
             return imageDescriptor;
         } catch (SWTException exc) {
-            WmsPlugin.trace("Icon is not available or has unsupported format", exc); //$NON-NLS-1$                
+            WmsPlugin.trace("Icon is not available or has unsupported format", exc); //$NON-NLS-1$
             return null;
         }
     }
@@ -523,11 +507,13 @@ public class WMSGeoResourceImpl extends IGeoResource {
     private class WMSResourceInfo extends IGeoResourceInfo {
         @SuppressWarnings("unchecked")
         WMSResourceInfo( IProgressMonitor monitor ) throws IOException {
-            WebMapServer wms = service(monitor).getWMS(monitor);
+            WebMapServer wms = service.getWMS(monitor);
             WMSCapabilities caps = wms.getCapabilities();
 
             if (layer.getTitle() != null && layer.getTitle().length() != 0) {
                 title = layer.getTitle();
+            } else {
+                title = caps.getService().getTitle();
             }
 
             calculateBounds();
@@ -546,12 +532,12 @@ public class WMSGeoResourceImpl extends IGeoResource {
 
             super.icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(
                     ISharedImages.GRID_OBJ);
-
             // icon = fetchIcon( monitor );
         }
 
         private void getKeywords( WMSCapabilities caps, String parentid ) {
             List<String> keywordsFromWMS = new ArrayList<String>();
+
             if (caps.getService().getKeywordList() != null) {
                 keywordsFromWMS.addAll(Arrays.asList(caps.getService().getKeywordList()));
             }
@@ -568,23 +554,24 @@ public class WMSGeoResourceImpl extends IGeoResource {
 
         @SuppressWarnings("unchecked")
         private void calculateBounds() {
-            org.opengis.geometry.Envelope env = null;
+            org.opengis.spatialschema.geometry.Envelope env = null;
             CoordinateReferenceSystem crs = null;
 
-            Map<String, CRSEnvelope> boundingBoxes = layer.getBoundingBoxes();
+            Map<String, CRSEnvelope> boundingBoxes = new HashMap<String, CRSEnvelope>(layer.getBoundingBoxes());
+
 
             if (boundingBoxes.isEmpty()) {
                 crs = DefaultGeographicCRS.WGS84;
-                // env = layer.getLatLonBoundingBox();
                 env = layer.getEnvelope(crs);
             } else {
                 GeneralEnvelope layerDefinedEnv = layer.getEnvelope(DefaultGeographicCRS.WGS84);
+
 
                 CRSEnvelope bbox;
                 String epsg4326 = "EPSG:4326"; //$NON-NLS-1$
                 String epsg4269 = "EPSG:4269"; //$NON-NLS-1$
 
-                if (boundingBoxes.size() < 4) {
+                if( boundingBoxes.size()<4){
                     // This is a silly heuristic but the idea is that if there are only a few bboxes
                     // then one of them is likely the *natural* crs and that crs should be used.
 
@@ -597,19 +584,16 @@ public class WMSGeoResourceImpl extends IGeoResource {
                     bbox = boundingBoxes.values().iterator().next();
                 }
                 try {
-                    if (bbox.getEPSGCode().equals(epsg4269) || bbox.getEPSGCode().equals(epsg4326)) {
+                    if( bbox.getEPSGCode().equals(epsg4269) || bbox.getEPSGCode().equals(epsg4326) ){
                         // It is lat long so lets use the layer definition
                         env = layerDefinedEnv;
                         crs = DefaultGeographicCRS.WGS84;
                     } else {
                         crs = CRS.decode(bbox.getEPSGCode());
-                        env = new ReferencedEnvelope(bbox.getMinX(), bbox.getMaxX(),
-                                bbox.getMinY(), bbox.getMaxY(), crs);
+                        env = new ReferencedEnvelope(bbox.getMinX(), bbox.getMaxX(), bbox
+                                .getMinY(), bbox.getMaxY(), crs);
                     }
                 } catch (NoSuchAuthorityCodeException e) {
-                    crs = DefaultGeographicCRS.WGS84;
-                    env = layer.getEnvelope(crs);
-                } catch (FactoryException e) {
                     crs = DefaultGeographicCRS.WGS84;
                     env = layer.getEnvelope(crs);
                 }
@@ -627,9 +611,5 @@ public class WMSGeoResourceImpl extends IGeoResource {
         public String getTitle() {
             return title;
         }
-    }
-    @Override
-    public WMSServiceImpl service( IProgressMonitor monitor ) throws IOException {
-        return (WMSServiceImpl) super.service(monitor);
     }
 }

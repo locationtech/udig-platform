@@ -22,7 +22,6 @@ import java.util.Set;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveFolder;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
@@ -56,7 +55,7 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * A page that allows the user to select the resources he/she wish to include in the map.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
@@ -73,16 +72,13 @@ public class ResourceSelectionPage extends WorkflowWizardPage implements IPageCh
     private boolean collapseCheckedInput=false;
     private List<Object> grayedElements=new ArrayList<Object>();
     private Label label;
-    private Composite blank;
-    private String schemaSelected;
 
     public ResourceSelectionPage( String pageName ) {
         super(pageName);
-        setTitle(Messages.ResourceSelectionPage_title); 
+        setTitle(Messages.ResourceSelectionPage_title);
         setMessage(Messages.ResourceSelectionPage_message);
         setDescription(Messages.ResourceSelectionPage_description);
         setImageDescriptor(Images.getDescriptor(ImageConstants.CHOOSE_LAYER_WIZARD));
-        schemaSelected = null;
     }
 
     /**
@@ -94,15 +90,10 @@ public class ResourceSelectionPage extends WorkflowWizardPage implements IPageCh
     @Override
     public void dispose() {
         super.dispose();
-        if( viewer==null ){
-        	return;
-        }
-        if( viewer.getContentProvider()!=null )
-        	viewer.getContentProvider().dispose();
-        if( viewer.getLabelProvider()!=null )
-        	viewer.getLabelProvider().dispose();
+        viewer.getContentProvider().dispose();
+        viewer.getLabelProvider().dispose();
     }
-    
+
     private List<IResolve> getGeoResources( final IResolve resolve, boolean fork ) {
         if (resolveMap.get(resolve) == null || resolveMap.isEmpty()) {
             final List<IResolve> list = new ArrayList<IResolve>();
@@ -117,14 +108,6 @@ public class ResourceSelectionPage extends WorkflowWizardPage implements IPageCh
                         try {
                             List<IResolve> members = resolve.members(monitor);
                             list.addAll(members);
-                            if (schemaSelected != null){
-                                for( IResolve resolve2 : members ) {
-                                    IResolveFolder folder = (IResolveFolder) resolve2;
-                                    if (folder.getTitle() != schemaSelected){
-                                        list.remove(resolve2);
-                                    }
-                                }
-                            }
                         } catch (Exception e) {
                             // do nothing
                             CatalogUIPlugin.log("Error finding resources", e); //$NON-NLS-1$
@@ -166,10 +149,11 @@ public class ResourceSelectionPage extends WorkflowWizardPage implements IPageCh
     public void createControl( Composite parent ) {
         Composite composite = new Composite(parent, SWT.NULL);
         composite.setLayout(new GridLayout());
-        
+
         viewer = new CheckboxTreeViewer(composite);
-        
-        viewer.setSorter( null );
+
+        // dont bother sorting its silly.
+        viewer.setSorter(null);
         viewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         viewer.addPostSelectionChangedListener(new ISelectionChangedListener(){
 
@@ -193,8 +177,8 @@ public class ResourceSelectionPage extends WorkflowWizardPage implements IPageCh
 
         label = new Label(composite, SWT.NONE);
         label.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        label.setText(MessageFormat.format(Messages.ResourceSelectionPage_NumLayersSelected,0));        
-        
+        label.setText(MessageFormat.format(Messages.ResourceSelectionPage_NumLayersSelected,0));
+
         setInput(state);
 
         setControl(composite);
@@ -236,7 +220,7 @@ public class ResourceSelectionPage extends WorkflowWizardPage implements IPageCh
             // it is expanded so the selected children will be checked
             return Collections.emptyList();
         }
-        
+
         // not expanded so all children are considered selected.
         if( resolve instanceof IGeoResource){
             return Collections.singletonList((IGeoResource)resolve);
@@ -257,41 +241,29 @@ public class ResourceSelectionPage extends WorkflowWizardPage implements IPageCh
 
     private void setInput( ResourceSelectionState state ) {
         grayedElements.clear();
-        int checked=0;
-        if (state.getWorkflow().getContext() instanceof IResolveFolder){
-            IResolveFolder resolveFolder = (IResolveFolder) state.getWorkflow().getContext();
-            IService service = resolveFolder.getService(new NullProgressMonitor());
-            schemaSelected = resolveFolder.getTitle();
-            viewer.setInput(service);
-        }else {
-            viewer.setInput(state.getServices()); // initialize viewer input to nothing
-            Map<IGeoResource, IService> resources = state.getResources();
-            
-            if (resources != null) {
-                Set<IService> expanded=new HashSet<IService>();
-                for( Map.Entry<IGeoResource, IService> entry:resources.entrySet() ) {
-                    checked++;
-                    IGeoResource resource = entry.getKey();
-                    IService service = entry.getValue();
-                    
-                    viewer.setChecked(resource, true);
-                    viewer.setChecked(service, true);
-                    expanded.add(service);
-                }
-                if( collapseCheckedInput ){
-                    for( IService service : expanded ) {
-                        viewer.setExpandedState(service, false);
-                    }
+        viewer.setInput(state.getServices()); // initialize viewer input to nothing
+        Map<IGeoResource, IService> resources = state.getResources();
+        if (resources != null) {
+            Set<IService> expanded=new HashSet<IService>();
+            for( Map.Entry<IGeoResource, IService> entry:resources.entrySet() ) {
+                IGeoResource resource = entry.getKey();
+                IService service = entry.getValue();
+
+                viewer.setChecked(resource, true);
+                viewer.setChecked(service, true);
+                expanded.add(service);
+            }
+            if( collapseCheckedInput ){
+                for( IService service : expanded ) {
+                    viewer.setExpandedState(service, false);
                 }
             }
         }
         viewer.setGrayedElements(grayedElements.toArray());
-    
-        label.setText(MessageFormat.format(Messages.ResourceSelectionPage_NumLayersSelected,checked));
     }
 
     Button findButton( Control[] children, int id ) {
-        if (((Integer) getShell().getDefaultButton().getData()).intValue() == id) 
+        if (((Integer) getShell().getDefaultButton().getData()).intValue() == id)
             return getShell().getDefaultButton();
 
         for( Control child : children ) {
@@ -333,16 +305,16 @@ public class ResourceSelectionPage extends WorkflowWizardPage implements IPageCh
         private ServiceTreeProvider updateChildren(Object o, boolean checked) {
             ServiceTreeProvider p = (ServiceTreeProvider) viewer.getContentProvider();
             if( o instanceof IGeoResource ){
-                return p;  
+                return p;
             }
             Object[] children = p.getChildren(o);
-            if (children != null && children.length > 0) {
+        	if (children != null && children.length > 0) {
                 for( int i = 0; i < children.length; i++ ){
                     viewer.setChecked(children[i], checked);
-                    updateChildren(children[i], checked);
+                	updateChildren(children[i], checked);
                 }
             }
-            return p;
+        	return p;
         }
     }
 
@@ -375,54 +347,41 @@ public class ResourceSelectionPage extends WorkflowWizardPage implements IPageCh
                 if( list.isEmpty() ){
                     return reasons();
                 }
+
                 return list.toArray();
             }
             if (parentElement instanceof IResolve) {
-                if (parentElement instanceof IResolveFolder) {
-                    IResolveFolder folder = (IResolveFolder) parentElement;
-                    if (schemaSelected != null){
-                        try {
-                            if(schemaSelected == folder.getTitle()) {
-                                List<IResolve> children2 = folder.members(new NullProgressMonitor());
-                                return children2.toArray();
-                            }else{
-                                return null;
-                            }
-                        } catch (IOException e) {
-                            CatalogUIPlugin.log(null, e);
-                        }
-                    }
-                }
-                IResolve service = (IResolve) parentElement;
+            	IResolve service = (IResolve) parentElement;
                 List<IResolve> children = getGeoResources(service, true);
                 if( children.isEmpty() ){
-                    if( parentElement instanceof IService ){
-                        grayedElements.add(service);
-                        if( service.getStatus()==Status.BROKEN ){
-                            if( service.getMessage()!=null ) {
-                                String string = Messages.ResourceSelectionPage_brokenReportError+service.getMessage().getLocalizedMessage();
-                                grayedElements.add(string);
-                                return new String[]{string};
-                            } else{
-                                String string = Messages.ResourceSelectionPage_brokenUnknown;
-                                grayedElements.add(string);
-                                return new String[]{string};
-                            }
-                        }
-                        if( service.getStatus()==Status.RESTRICTED_ACCESS ){
-                            String string = Messages.ResourceSelectionPage_noPermission;
-                            grayedElements.add(string);
-                            return new String[]{string};
-                        }
-                        if( service.getStatus()==Status.CONNECTED ){
-                            String string = Messages.ResourceSelectionPage_connectedButNoResources;
-                            grayedElements.add(string);
-                            return new String[]{string};
-                        }
-                    }else{
-                        return null;
-                    }
+                	if( parentElement instanceof IService ){
+	                    grayedElements.add(service);
+	                    if( service.getStatus()==Status.BROKEN ){
+	                        if( service.getMessage()!=null ) {
+	                            String string = Messages.ResourceSelectionPage_brokenReportError+service.getMessage().getLocalizedMessage();
+	                            grayedElements.add(string);
+	                            return new String[]{string};
+	                        } else{
+	                            String string = Messages.ResourceSelectionPage_brokenUnknown;
+	                            grayedElements.add(string);
+	                            return new String[]{string};
+	                        }
+	                    }
+	                    if( service.getStatus()==Status.RESTRICTED_ACCESS ){
+	                        String string = Messages.ResourceSelectionPage_noPermission;
+	                        grayedElements.add(string);
+	                        return new String[]{string};
+	                    }
+	                    if( service.getStatus()==Status.CONNECTED ){
+	                        String string = Messages.ResourceSelectionPage_connectedButNoResources;
+	                        grayedElements.add(string);
+	                        return new String[]{string};
+	                    }
+                	}else{
+                		return null;
+                	}
                 }
+
                 return children.toArray();
             }
             return null;

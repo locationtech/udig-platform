@@ -34,7 +34,7 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
 
 /**
- * This is here to save me some typing and ensure that the simple raster and 
+ * This is here to save me some typing and ensure that the simple raster and
  * feature configurators look similar.
  * @author mleslie
  * @since 0.6.0
@@ -42,7 +42,7 @@ import org.geotools.styling.StyleBuilder;
 public abstract class AbstractSimpleConfigurator extends IStyleConfigurator {
     /** <code>build</code> field */
     protected StyleBuilder build = new StyleBuilder();
-    
+
     /**
      * Construct <code>AbstractSimpleConfigurator</code>.
      *
@@ -59,15 +59,15 @@ public abstract class AbstractSimpleConfigurator extends IStyleConfigurator {
 
     @Override
     public abstract void createControl( Composite parent );
-    
+
     /**
      * TODO summary sentence for synchronize ...
-     * 
+     *
      */
     public abstract void synchronize();
 
     protected void setLayout(Composite parent) {
-        RowLayout layout = new RowLayout();        
+        RowLayout layout = new RowLayout();
         layout.pack = false;
         layout.wrap = true;
         layout.type = SWT.HORIZONTAL;
@@ -77,12 +77,12 @@ public abstract class AbstractSimpleConfigurator extends IStyleConfigurator {
         layout.marginTop = 0;
         layout.marginBottom = 0;
         layout.spacing = 0;
-        parent.setLayout(layout); 
+        parent.setLayout(layout);
     }
 
     /**
      * Retrieves the style object from the style blackboard.
-     * 
+     *
      * @return Style
      */
     protected Style getStyle(){
@@ -90,10 +90,10 @@ public abstract class AbstractSimpleConfigurator extends IStyleConfigurator {
         assert( canStyle( layer ));
         // TODO: Ensure framework does not show me when I can't handle this
         // layer
-        // TODO: Stop commenting in the first person, as though I am the 
+        // TODO: Stop commenting in the first person, as though I am the
         // class.  It's creepy.
         Style style = (Style) getStyleBlackboard().get(SLDContent.ID);
-        
+
         // if no style information, create default
         if (style == null) {
             // TODO: Why do "I" have to do this, can't the framework deal?
@@ -104,7 +104,7 @@ public abstract class AbstractSimpleConfigurator extends IStyleConfigurator {
         }
         return style;
     }
-    
+
     /**
      * Construct a subpart labeled with the provided tag.
      * <p>
@@ -113,10 +113,10 @@ public abstract class AbstractSimpleConfigurator extends IStyleConfigurator {
      * </p>
      * @param parent
      * @param label
-     * @return Composite with one label 
+     * @return Composite with one label
      */
     public static Composite subpart( Composite parent, String label ){
-        Composite subpart = new Composite( parent, SWT.NONE );        
+        Composite subpart = new Composite( parent, SWT.NONE );
         RowLayout across = new RowLayout();
         across.type = SWT.HORIZONTAL;
         across.wrap = true;
@@ -124,12 +124,12 @@ public abstract class AbstractSimpleConfigurator extends IStyleConfigurator {
         across.fill = true;
         across.marginBottom = 1;
         across.marginRight = 2;
-        
+
         subpart.setLayout( across );
-        
+
         Label labell = new Label( subpart, SWT.LEFT );
-        labell.setText( label );  
-        
+        labell.setText( label );
+
         RowData data = new RowData();
         data.width = 40;
         //check to see if width is not enough space
@@ -139,15 +139,15 @@ public abstract class AbstractSimpleConfigurator extends IStyleConfigurator {
         gc.dispose();
         int labelWidth = Dialog.convertWidthInCharsToPixels(fontMetrics, labell.getText().length()+1);
         if (labelWidth > data.width) {
-        	data.width = labelWidth; 
+        	data.width = labelWidth;
         }
         // TODO: adjust the methods that call this one to keep a consistent
 		// width (otherwise they're misaligned)
         data.height = 10;
         labell.setLayoutData( data );
-      
+
         return subpart;
-    }    
+    }
     /**
      * Morph a text ModifyEvent into a SelectionEvent as best we can.
      * <p>

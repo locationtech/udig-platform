@@ -60,7 +60,6 @@ import net.refractions.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -80,20 +79,16 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.model.WorkbenchAdapter;
 import org.geotools.brewer.color.BrewerPalette;
 import org.geotools.data.FeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.filter.visitor.DuplicatingFilterVisitor;
+import org.geotools.feature.FeatureType;
+import org.geotools.filter.Filter;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.filter.FilterType;
+import org.geotools.filter.GeometryFilter;
+import org.geotools.filter.IllegalFilterException;
+import org.geotools.filter.LogicFilter;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.And;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Not;
-import org.opengis.filter.spatial.SpatialOperator;
-import org.opengis.geometry.Geometry;
-import org.opengis.geometry.coordinate.Polygon;
 import org.opengis.metadata.extent.BoundingPolygon;
 import org.opengis.metadata.extent.Extent;
 import org.opengis.metadata.extent.GeographicBoundingBox;
@@ -101,6 +96,8 @@ import org.opengis.metadata.extent.GeographicExtent;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
+import org.opengis.spatialschema.geometry.Geometry;
+import org.opengis.spatialschema.geometry.geometry.Polygon;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -232,15 +229,13 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated not
      * @ordered
      */
-    protected volatile BrewerPalette colorPalette = PlatformGIS.getColorBrewer().getPalette(
-            ProjectPlugin.getPlugin().getPreferenceStore().getString(
-                    PreferenceConstants.P_DEFAULT_PALETTE));
+    protected volatile BrewerPalette colorPalette = PlatformGIS.getColorBrewer().getPalette(ProjectPlugin.getPlugin().getPreferenceStore().getString(PreferenceConstants.P_DEFAULT_PALETTE));
 
     /**
      * The cached value of the '{@link #getEditManagerInternal() <em>Edit Manager Internal</em>}' containment reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getEditManagerInternal()
-     * @generated not 
+     * @generated not
      * @ordered
      */
     protected volatile EditManager editManagerInternal = null;
@@ -249,7 +244,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * The cached value of the '{@link #getRenderManagerInternal() <em>Render Manager Internal</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getRenderManagerInternal()
-     * @generated not 
+     * @generated not
      * @ordered
      */
     protected volatile RenderManager renderManagerInternal = null;
@@ -264,14 +259,14 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     protected static final ColourScheme COLOUR_SCHEME_EDEFAULT = null;
 
-    private static final List<Layer> EMPTY_LIST = Collections.<Layer> emptyList();
+    private static final List<Layer> EMPTY_LIST = Collections.<Layer>emptyList();
 
     /**
      * The cached value of the '{@link #getColourScheme() <em>Colour Scheme</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      *
      * @see #getColourScheme()
-     * @generated not 
+     * @generated not
      * @ordered
      */
     protected volatile ColourScheme colourScheme = ColourScheme.getDefault(getColorPalette());
@@ -322,7 +317,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     private volatile CommandManager navCommandManager;
 
-    private final Lock lock = new UDIGDisplaySafeLock();
+    private final Lock lock=new UDIGDisplaySafeLock();
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -416,28 +411,33 @@ public class MapImpl extends EObjectImpl implements Map {
         return msgs;
     }
 
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated NOT
-     */
-    public void setProjectInternal( Project newProjectInternal ) {
-        if (newProjectInternal != projectInternal) {
-            NotificationChain msgs = null;
 
-            if (projectInternal != null) {
-                msgs = ((InternalEObject) projectInternal).eInverseRemove(this,
-                        ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public void setProjectInternal(Project newProjectInternal) {
+		if (newProjectInternal != projectInternal) {
+			NotificationChain msgs = null;
+
+
+			if (projectInternal != null){
+    				msgs = ((InternalEObject) projectInternal).eInverseRemove(this,
+    						ProjectPackage.PROJECT__ELEMENTS_INTERNAL,
+    						Project.class, msgs);
             }
-            if (newProjectInternal != null)
-                msgs = ((InternalEObject) newProjectInternal).eInverseAdd(this,
-                        ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
-            msgs = basicSetProjectInternal(newProjectInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
-        } else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.MAP__PROJECT_INTERNAL, newProjectInternal, newProjectInternal));
-    }
+			if ( newProjectInternal != null )
+				msgs = ((InternalEObject) newProjectInternal).eInverseAdd(this,
+						ProjectPackage.PROJECT__ELEMENTS_INTERNAL,
+						Project.class, msgs);
+			msgs = basicSetProjectInternal(newProjectInternal, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					ProjectPackage.MAP__PROJECT_INTERNAL, newProjectInternal,
+					newProjectInternal));
+	}
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -447,12 +447,12 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     @SuppressWarnings("deprecation")
     public ContextModel getContextModel() {
-        if (contextModel == null) {
+        if (contextModel == null){
             lock.lock();
-            try {
+            try{
                 if (contextModel == null)
                     setContextModel(ProjectFactory.eINSTANCE.createContextModel());
-            } finally {
+            }finally{
                 lock.unlock();
             }
         }
@@ -479,8 +479,7 @@ public class MapImpl extends EObjectImpl implements Map {
         return msgs;
     }
 
-    final ContextModelListenerAdapter contextModelListener = new EMFCompositionEventToMapCompositionEventListener(
-            this);
+    final ContextModelListenerAdapter contextModelListener = new EMFCompositionEventToMapCompositionEventListener(this);
 
     /**
      * @see net.refractions.udig.project.internal.Map#setContextModel(net.refractions.udig.project.ContextModel)
@@ -489,7 +488,7 @@ public class MapImpl extends EObjectImpl implements Map {
     public void setContextModel( ContextModel newContextModel ) {
         if (contextModel != null)
             contextModel.eAdapters().remove(contextModelListener);
-        if (newContextModel != null) {
+        if (newContextModel != null){
             newContextModel.eAdapters().add(contextModelListener);
         }
         setContextModelGen(newContextModel);
@@ -590,8 +589,8 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     public BrewerPalette getColorPalette() {
         if (colorPalette == null) {
-            String defaultPalette = ProjectPlugin.getPlugin().getPreferenceStore().getString(
-                    PreferenceConstants.P_DEFAULT_PALETTE);
+            String defaultPalette = ProjectPlugin.getPlugin().getPreferenceStore()
+                .getString(PreferenceConstants.P_DEFAULT_PALETTE);
             if (defaultPalette == null || !PlatformGIS.getColorBrewer().hasPalette(defaultPalette))
                 defaultPalette = "Dark2"; //failsafe default //$NON-NLS-1$
             colorPalette = PlatformGIS.getColorBrewer().getPalette(defaultPalette);
@@ -662,7 +661,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @throws IOException
      * @generated NOT
      */
@@ -673,11 +672,11 @@ public class MapImpl extends EObjectImpl implements Map {
             List<Layer> layers = new ArrayList<Layer>(getLayersInternal());
             for( Layer layer : layers ) {
                 ReferencedEnvelope bbox;
-                bbox = layer.getBounds(ProgressManager.instance().get(), getViewportModel()
-                        .getCRS());
+                bbox = layer.getBounds(null, getViewportModel().getCRS());
+
                 if (!bbox.isNull()) {
                     if (bounds.isNull())
-                        bounds.init(((Envelope) bbox));
+                        bounds.init(bbox);
                     else
                         bounds.expandToInclude(bbox);
                 }
@@ -688,25 +687,26 @@ public class MapImpl extends EObjectImpl implements Map {
 
             }
             return bounds;
-        } else {
+        }else{
             return getDefaultBounds();
         }
 
     }
 
     private ReferencedEnvelope getDefaultBounds() {
-        if (getViewportModel().getCRS().getDomainOfValidity() != null) {
-            Extent extent = getViewportModel().getCRS().getDomainOfValidity();
+        if (getViewportModel().getCRS().getValidArea()!=null){
+            Extent extent = getViewportModel().getCRS().getValidArea();
             ReferencedEnvelope env = toReferencedEnvelope(extent, getViewportModel().getCRS());
-            if (env != null) {
-                ProjectPlugin
-                        .log("MapImpl#getDefaultBounds(): Returning valid area of " + env.getCoordinateReferenceSystem().getName().toString()); //$NON-NLS-1$
+            if( env!=null ){
+                ProjectPlugin.log("MapImpl#getDefaultBounds(): Returning valid area of "+env.getCoordinateReferenceSystem().getName().toString()); //$NON-NLS-1$
                 return env;
             }
         }
         ProjectPlugin.log("MapImpl#getDefaultBounds(): Returning Default bounds (entire world)"); //$NON-NLS-1$
-        return new ReferencedEnvelope(new Envelope(-180, 180, -90, 90), DefaultGeographicCRS.WGS84);
+        return new ReferencedEnvelope(new Envelope(-180, 180, -90, 90),
+                DefaultGeographicCRS.WGS84);
     }
+
 
     /**
      * Takes an Extent, usually from a {@link CoordinateReferenceSystem}, and converts it to a ReferencedEnvelope
@@ -715,40 +715,35 @@ public class MapImpl extends EObjectImpl implements Map {
      * @param crs the desired CRS of the ReferencedEnvelope.
      * @return
      */
-    public static ReferencedEnvelope toReferencedEnvelope( Extent extent,
-            CoordinateReferenceSystem crs ) {
-        if (extent == null)
+    public static ReferencedEnvelope toReferencedEnvelope( Extent extent, CoordinateReferenceSystem crs ) {
+        if( extent==null )
             return null;
-        Collection< ? extends GeographicExtent> elems = extent.getGeographicElements();
+        Collection<GeographicExtent> elems = extent.getGeographicElements();
         for( GeographicExtent extent2 : elems ) {
-            ReferencedEnvelope env = null;
+            ReferencedEnvelope env=null;
             if (extent2 instanceof GeographicBoundingBox) {
                 GeographicBoundingBox box = (GeographicBoundingBox) extent2;
-                env = new ReferencedEnvelope(box.getWestBoundLongitude(), box
-                        .getEastBoundLongitude(), box.getSouthBoundLatitude(), box
-                        .getNorthBoundLatitude(), DefaultGeographicCRS.WGS84);
-            } else if (extent2 instanceof BoundingPolygon) {
+                env=new ReferencedEnvelope( box.getWestBoundLongitude(), box.getEastBoundLongitude(),
+                        box.getSouthBoundLatitude(), box.getNorthBoundLatitude(), DefaultGeographicCRS.WGS84);
+            }else if (extent2 instanceof BoundingPolygon) {
                 BoundingPolygon boundingpoly = (BoundingPolygon) extent2;
-                Collection< ? extends Geometry> polygons = boundingpoly.getPolygons();
+                Collection<Geometry> polygons = boundingpoly.getPolygons();
                 for( Geometry geometry : polygons ) {
-                    Polygon poly = (Polygon) geometry;
-                    org.opengis.geometry.Envelope envelope = poly.getBoundary().getEnvelope();
-                    env = new ReferencedEnvelope(envelope.getMinimum(0), envelope.getMaximum(0),
-                            envelope.getMinimum(1), envelope.getMaximum(1), envelope
-                                    .getLowerCorner().getCoordinateReferenceSystem());
+                    Polygon poly=(Polygon) geometry;
+                    org.opengis.spatialschema.geometry.Envelope envelope = poly.getBoundary().getEnvelope();
+                    env=new ReferencedEnvelope(envelope.getMinimum(0), envelope.getMaximum(0),
+                            envelope.getMinimum(1), envelope.getMaximum(1), envelope.getLowerCorner().getCoordinateReferenceSystem());
                     break;
                 }
             }
 
-            if (env != null) {
+            if( env!=null ){
                 try {
-                    env = env.transform(crs, true);
+                    env=env.transform(crs, true);
                 } catch (TransformException e) {
-                    ProjectPlugin.log(
-                            "error transforming " + env + " to " + crs.getName().toString(), e); //$NON-NLS-1$ //$NON-NLS-2$
+                    ProjectPlugin.log("error transforming "+env+" to "+crs.getName().toString(), e); //$NON-NLS-1$ //$NON-NLS-2$
                 } catch (FactoryException e) {
-                    ProjectPlugin.log(
-                            "error transforming " + env + " to " + crs.getName().toString(), e); //$NON-NLS-1$ //$NON-NLS-2$
+                    ProjectPlugin.log("error transforming "+env+" to "+crs.getName().toString(), e); //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 return env;
             }
@@ -756,9 +751,10 @@ public class MapImpl extends EObjectImpl implements Map {
         return null;
     }
 
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public double getAspectRatio( IProgressMonitor monitor ) {
@@ -774,8 +770,7 @@ public class MapImpl extends EObjectImpl implements Map {
     public NavCommandStack getNavCommandStack() {
         synchronized (CommandManager.class) {
             if (this.navCommandManager == null) {
-                this.navCommandManager = new CommandManager(
-                        Messages.MapImpl_NavigationCommandStack, new DefaultErrorHandler(),
+                this.navCommandManager = new CommandManager(Messages.MapImpl_NavigationCommandStack, new DefaultErrorHandler(),
                         new MapCommandListener());
 
             }
@@ -791,8 +786,8 @@ public class MapImpl extends EObjectImpl implements Map {
     public CommandStack getCommandStack() {
         synchronized (CommandManager.class) {
             if (this.commandManager == null) {
-                this.commandManager = new CommandManager(Messages.MapImpl_CommandStack,
-                        new DefaultErrorHandler(), new MapCommandListener());
+                this.commandManager = new CommandManager(Messages.MapImpl_CommandStack, new DefaultErrorHandler(),
+                        new MapCommandListener());
 
             }
         }
@@ -945,9 +940,7 @@ public class MapImpl extends EObjectImpl implements Map {
         }
     }
 
-    private static class BatchNotification extends ENotificationImpl
-            implements
-                Iterable<Notification> {
+    private static class BatchNotification extends ENotificationImpl implements Iterable<Notification> {
 
         /**
          * Construct <code>BatchNotification</code>.
@@ -993,7 +986,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public void redo() {
-        if (commandManager == null || !commandManager.hasForwardHistory())
+        if( commandManager==null || !commandManager.hasForwardHistory() )
             return;
         commandManager.redo(true);
         notifyCommandStackChange();
@@ -1005,7 +998,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public void undo() {
-        if (commandManager == null || !commandManager.hasBackHistory())
+        if( commandManager==null || !commandManager.hasBackHistory() )
             return;
         commandManager.undo(true);
         notifyCommandStackChange();
@@ -1017,7 +1010,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public void backwardHistory() {
-        if (navCommandManager == null || !navCommandManager.hasBackHistory())
+        if( navCommandManager==null || !navCommandManager.hasBackHistory() )
             return;
         navCommandManager.undo(true);
     }
@@ -1028,7 +1021,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public void forwardHistory() {
-        if (navCommandManager == null || !navCommandManager.hasForwardHistory())
+        if( navCommandManager==null || !navCommandManager.hasForwardHistory() )
             return;
         navCommandManager.redo(true);
     }
@@ -1549,29 +1542,28 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     @SuppressWarnings("unchecked")
     public Object getAdapter( Class adapter ) {
-        for( Iterator i = eAdapters().iterator(); i.hasNext(); ) {
+    	for( Iterator i = eAdapters().iterator(); i.hasNext(); ) {
             Object o = i.next();
             if (adapter.isAssignableFrom(o.getClass()))
                 return o;
         }
 
-        /*
+    	/*
          * Adapt to an IWorkbenchAdapter. Other aspects of Eclipse can read the
          * properties we provide access to. (example: Property page dialogs
          * can read the label and display that in their title.)
          */
-        if (adapter.isAssignableFrom(IWorkbenchAdapter.class)) {
-            return new WorkbenchAdapter(){
+    	if (adapter.isAssignableFrom(IWorkbenchAdapter.class)) {
+    		return new WorkbenchAdapter() {
 
-                @Override
-                public String getLabel( Object object ) {
-                    return getName();
-                }
+				@Override
+				public String getLabel(Object object) {
+					return getName();
+				}
 
-            };
-        }
-
-        return Platform.getAdapterManager().getAdapter(this, adapter);
+			};
+    	}
+        return null;
     }
 
     /**
@@ -1612,7 +1604,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     @SuppressWarnings("unchecked")
     public List<Layer> getLayersInternal() {
-        if (getContextModel() == null)
+        if( getContextModel()==null )
             return EMPTY_LIST;
         return getContextModel().getLayers();
     }
@@ -1683,12 +1675,14 @@ public class MapImpl extends EObjectImpl implements Map {
         });
     }
 
+
+
     public String getFileExtension() {
         return "umap"; //$NON-NLS-1$
     }
 
-    CopyOnWriteArraySet<IMapListener> mapListeners = new CopyOnWriteArraySet<IMapListener>();
-    CopyOnWriteArraySet<IMapCompositionListener> compositionListeners = new CopyOnWriteArraySet<IMapCompositionListener>();
+    CopyOnWriteArraySet<IMapListener> mapListeners=new CopyOnWriteArraySet<IMapListener>();
+    CopyOnWriteArraySet<IMapCompositionListener> compositionListeners=new CopyOnWriteArraySet<IMapCompositionListener>();
 
     public void addMapListener( IMapListener listener ) {
         mapListeners.add(listener);
@@ -1708,8 +1702,8 @@ public class MapImpl extends EObjectImpl implements Map {
 
     public List<Color> getMapDefaultColours() {
         List<Layer> layers = getLayersInternal();
-        List<Color> colours = new ArrayList<Color>();
-        for( Layer layer : layers ) {
+        List<Color> colours = new ArrayList<Color> ();
+        for (Layer layer: layers) {
             Color thisColour = layer.getDefaultColor();
             if (thisColour != null) {
                 colours.add(thisColour);
@@ -1718,10 +1712,11 @@ public class MapImpl extends EObjectImpl implements Map {
         return colours;
     }
 
-    public void addDeepAdapter( Adapter adapter ) {
+
+    public void addDeepAdapter(Adapter adapter){
         ((LayersList2) getLayersInternal()).addDeepAdapter(adapter);
     }
-    public void removeDeepAdapter( Adapter adapter ) {
+    public void removeDeepAdapter(Adapter adapter){
         ((LayersList2) getLayersInternal()).removeDeepAdapter(adapter);
     }
     public void lowerLayer( Layer layer ) {
@@ -1738,9 +1733,22 @@ public class MapImpl extends EObjectImpl implements Map {
         ((LayersList2) getLayersInternal()).move(index++, index);
     }
 
-    private SpatialOperator localize( SimpleFeatureType schema, SpatialOperator filter ) {
-        DuplicatingFilterVisitor copier = new DuplicatingFilterVisitor();
-        return (SpatialOperator) filter.accept(copier, null);
+    private GeometryFilter localize( FeatureType schema, GeometryFilter filter ) {
+        FilterFactory factory = FilterFactoryFinder.createFilterFactory();
+
+        GeometryFilter copy;
+        try {
+            copy = factory.createGeometryFilter(filter.getFilterType());
+
+            String geom = schema.getDefaultGeometry().getName();
+
+            copy.addLeftGeometry(factory.createAttributeExpression(geom));
+            copy.addRightGeometry(filter.getRightGeometry());
+
+            return copy;
+        } catch (IllegalFilterException e) {
+            return null;
+        }
     }
 
     /*
@@ -1748,30 +1756,29 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     private Filter target( Layer layer, Filter filter ) {
         if (!layer.isSelectable()) {
-            return Filter.INCLUDE;
+            return Filter.NONE;
         }
         try {
-            FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = layer.getResource(
-                    FeatureSource.class, null);
+            FeatureSource featureSource = layer.getResource(FeatureSource.class, null);
             if (featureSource == null) {
-                return Filter.INCLUDE;
+                return Filter.NONE;
             }
 
-            SimpleFeatureType schema = layer.getSchema();
+            FeatureType schema = layer.getSchema();
 
             Filter copy;
-            if (filter instanceof SpatialOperator)
-                copy = localize(schema, (SpatialOperator) filter);
+            if (filter instanceof GeometryFilter)
+                copy = localize(schema, (GeometryFilter) filter);
             else
                 copy = filter;
 
             if (copy == null) {
-                return Filter.INCLUDE;
+                return Filter.NONE;
             }
             return copy;
         } catch (IOException e) {
             ProjectPlugin.log(null, e);
-            return Filter.INCLUDE;
+            return Filter.NONE;
         }
     }
 
@@ -1784,7 +1791,7 @@ public class MapImpl extends EObjectImpl implements Map {
                     continue LAYERS;
                 layer.setFilter(newFilter);
             } else {
-                layer.setFilter(Filter.EXCLUDE);
+                layer.setFilter(Filter.ALL);
             }
         }
         notifyBatchNotification(ProjectPackage.LAYER__FILTER, Notification.SET);
@@ -1796,31 +1803,40 @@ public class MapImpl extends EObjectImpl implements Map {
             if (layer == selected) {
                 Filter oldFilter = layer.getFilter();
                 Filter newFilter = null;
-                Filter newFilterCopy = null;
                 newFilter = layer.createBBoxFilter(boundingBox, null);
-                newFilterCopy = layer.createBBoxFilter(boundingBox, null);
-
                 if (newFilter == null)
                     continue LAYERS;
-                if (oldFilter == null || oldFilter == Filter.EXCLUDE
-                        || oldFilter.equals(Filter.EXCLUDE)) {
+                if (oldFilter == null || oldFilter == Filter.ALL || oldFilter.equals(Filter.ALL)) {
                     layer.setFilter(newFilter);
                 } else {
-                    org.opengis.filter.FilterFactory fac = CommonFactoryFinder
-                            .getFilterFactory(GeoTools.getDefaultHints());
+                    FilterFactory createFilterFactory = FilterFactoryFinder.createFilterFactory();
                     if (!add) {
-                        Not notFilter = fac.not(newFilter);
-                        And logicFilter = fac.and(notFilter, oldFilter);
-
-                        layer.setFilter(logicFilter);
+                        // WARNING: and() is destructive for the target object, ie the object left of '.'
+                        // and so which object gets and()'ed to what matters here.  Don't swap unless necessary.
+                        try {
+                            LogicFilter logicFilter;
+                            LogicFilter notFilter=createFilterFactory.createLogicFilter(newFilter, FilterType.LOGIC_NOT);
+                            logicFilter = createFilterFactory.createLogicFilter(notFilter, oldFilter, FilterType.LOGIC_AND);
+                            layer.setFilter(logicFilter);
+                        } catch (IllegalFilterException e) {
+                            ProjectPlugin.log("error creating logic filter", e); //$NON-NLS-1$
+                        }
                     } else {
-                        Filter orFilter = fac.or(newFilter, oldFilter);
+                        // WARNING: or() is also destructive on its target, see comment above.
+                        // TODO: this is inefficient.  We should switch from using bboxes to a geometry
+                        // representing the selected area, then we can just use symmetric difference to handle
+                        // deselection instead of continuously appending more LogicFilters.
+                        try {
+                            LogicFilter orFilter = createFilterFactory.createLogicFilter(newFilter, oldFilter, FilterType.LOGIC_OR);
 
-                        layer.setFilter(orFilter);
+                            layer.setFilter(orFilter);
+                        } catch (IllegalFilterException e) {
+                            ProjectPlugin.log("error creating logic filter", e); //$NON-NLS-1$
+                        }
                     }
                 }
             } else {
-                layer.setFilter(Filter.EXCLUDE);
+                layer.setFilter(Filter.ALL);
             }
 
         }
@@ -1836,7 +1852,7 @@ public class MapImpl extends EObjectImpl implements Map {
             if (layer == selected) {
                 layer.setFilter(target(layer, filter)); // replace
             } else {
-                layer.setFilter(Filter.EXCLUDE);
+                layer.setFilter(Filter.ALL);
             }
         }
     }
@@ -1851,58 +1867,52 @@ public class MapImpl extends EObjectImpl implements Map {
             if (layer == selected) {
                 Filter oldFilter = layer.getFilter();
 
-                if (oldFilter == null || oldFilter == Filter.EXCLUDE
-                        || oldFilter.equals(Filter.EXCLUDE)) {
+                if (oldFilter == null || oldFilter == Filter.ALL || oldFilter.equals(Filter.ALL)) {
                     layer.setFilter(target(layer, filter));
                 } else {
 
-                    FilterFactory createFilterFactory = CommonFactoryFinder
-                            .getFilterFactory(GeoTools.getDefaultHints());
+                    FilterFactory createFilterFactory = FilterFactoryFinder.createFilterFactory();
 
                     if (!and) {
-                        Filter logicFilter;
-                        logicFilter = createFilterFactory.and(oldFilter, target(layer, filter));
-                        layer.setFilter(logicFilter);
+                        try {
+                            LogicFilter logicFilter;
+                            logicFilter = createFilterFactory.createLogicFilter(oldFilter, target(
+                                    layer, filter), FilterType.LOGIC_AND);
+                            layer.setFilter(logicFilter);
+                        } catch (IllegalFilterException e) {
+                            ProjectPlugin.log("error creating logic filter", e); //$NON-NLS-1$
+                        }
                     } else {
-                        Filter logicFilter;
-                        logicFilter = createFilterFactory.or(oldFilter, target(layer, filter));
-                        layer.setFilter(logicFilter);
+                        try {
+                            LogicFilter logicFilter;
+                            logicFilter = createFilterFactory.createLogicFilter(oldFilter, target(
+                                    layer, filter), FilterType.LOGIC_OR);
+                            layer.setFilter(logicFilter);
+                        } catch (IllegalFilterException e) {
+                            ProjectPlugin.log("error creating logic filter", e); //$NON-NLS-1$
+                        }
                     }
                 }
             } else {
-                layer.setFilter(Filter.EXCLUDE);
+                layer.setFilter(Filter.ALL);
             }
         }
     }
 
     public void select( Filter filter, ILayer layerObj ) {
 
-        Layer layer = (Layer) layerObj;
-        if (getLayersInternal().contains(layer)) {
+        Layer layer = (Layer)layerObj;
+        if(getLayersInternal().contains(layer)){
             for( Layer layer2 : getLayersInternal() ) {
                 if (layer == layer2) {
-                    layer2.setFilter(target(layer, filter)); // replace
+                    layer2.setFilter( target(layer, filter)); // replace
                 } else {
-                    layer2.setFilter(Filter.EXCLUDE);
+                    layer2.setFilter(Filter.ALL);
                 }
             }
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public List getElements( Class type ) {
-        List lists = new ArrayList();
-        for( Iterator iter = getLayersInternal().iterator(); iter.hasNext(); ) {
-            Object obj = iter.next();
-            if (type.isAssignableFrom(obj.getClass()))
-                lists.add(obj);
-        }
-        return lists;
-    }
 
-    @SuppressWarnings("unchecked")
-    public List getElements() {
-        return getLayersInternal();
-    }
 
 } // MapImpl

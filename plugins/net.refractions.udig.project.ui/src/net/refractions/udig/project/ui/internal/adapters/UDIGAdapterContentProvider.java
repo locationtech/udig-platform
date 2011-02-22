@@ -27,7 +27,7 @@ import org.eclipse.swt.graphics.Image;
 
 /**
  * Adapts UDIG objects to tree content and label providers.
- * 
+ *
  * @author jones
  * @since 0.3
  */

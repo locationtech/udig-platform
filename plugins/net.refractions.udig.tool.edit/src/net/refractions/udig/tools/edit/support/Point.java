@@ -17,9 +17,9 @@ package net.refractions.udig.tools.edit.support;
 
 
 /**
- * A point implementation.  Each point for a given location is a singleton and immutable so points can be 
+ * A point implementation.  Each point for a given location is a singleton and immutable so points can be
  * compared with ==.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -34,13 +34,13 @@ public class Point{
     private final int x;
     private final int y;
     private final int hashCode;
-    
+
     public int getX(){ return x; }
     public int getY(){ return y; }
 
     private static final Point[][] cache=new Point[256][256];
     /**
-     * Get a point for location x,y 
+     * Get a point for location x,y
      *
      * @return a point for location x,y
      */
@@ -52,22 +52,22 @@ public class Point{
             }
             return cache[x][y];
         }
-        
+
         return new Point(x,y);
-        
+
     }
-    
+
     @Override
     public boolean equals( Object obj ) {
         if( obj==this)
             return true;
-        
+
         if( !(obj instanceof Point) )
             return false;
         Point p = (Point) obj;
         return x==p.x&&y==p.y;
     }
-    
+
     @Override
     public int hashCode() {
         return hashCode;

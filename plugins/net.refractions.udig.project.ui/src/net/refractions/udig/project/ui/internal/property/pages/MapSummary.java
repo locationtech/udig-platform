@@ -14,6 +14,7 @@
  */
 package net.refractions.udig.project.ui.internal.property.pages;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Shows a summary of the layer
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -58,13 +59,13 @@ public class MapSummary extends PropertyPage implements IWorkbenchPropertyPage {
         nameData.setModifier(new NameModifier());
         data.add(nameData);
         newName=oldName=nameData.getInfo();
-        
+
         String abstract1 = map.getAbstract();
         abstractData = new SummaryData(Messages.MapSummary_abstract, abstract1==null?"":abstract1); //$NON-NLS-1$
         abstractData.setModifier(new AbstractModifier());
         data.add(abstractData);
         newAbstract=oldAbstract=abstractData.getInfo();
-        
+
         data.add(new SummaryData(Messages.LayerSummary_id, map.getID()));
         data.add(new SummaryData(Messages.MapSummary_mapBounds, bounds == null
                 ? Messages.LayerSummary_unknownBounds
@@ -94,13 +95,13 @@ public class MapSummary extends PropertyPage implements IWorkbenchPropertyPage {
         performDefaults();
         return super.performCancel();
     }
-    
+
     @Override
     public boolean performOk() {
         performApply();
         return super.performOk();
     }
-    
+
     @Override
     protected void performDefaults() {
         summaryControl.cancelEdit();
@@ -152,7 +153,7 @@ public class MapSummary extends PropertyPage implements IWorkbenchPropertyPage {
 
         public Object getValue( Object element, String property ) {
             if( !newAbstract.equals(oldAbstract) ) return newAbstract;
-            
+
             return ((SummaryData) element).getInfo();
         }
 

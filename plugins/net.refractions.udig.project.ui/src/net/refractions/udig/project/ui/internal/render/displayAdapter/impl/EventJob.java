@@ -38,11 +38,11 @@ public class EventJob {
     public static final int WHEEL = 8;
     public static final int RESIZED = 9;
     public static final int HOVERED = 10;
-    
+
     /**
      * fires an event to all listeners. If an event is being processed then the new one is ignored
      * because some event take a while to process.
-     * 
+     *
      * @param type the type of the event
      * @param event the event data object
      */
@@ -63,7 +63,7 @@ public class EventJob {
             this.data = event;
         }
     }
-    
+
     /**
      * Dispatch events.  Usually 1 but sometimes (in the case of an aborted double click) it can be more.
      *
@@ -110,7 +110,7 @@ public class EventJob {
                 case RESIZED: {
                     sendResized(event);
                     break;
-                }       
+                }
                 case HOVERED: {
                     sendHovered(event);
                     break;
@@ -134,11 +134,11 @@ public class EventJob {
             next=null;
             runEvent(e.first, e.release, e.third);
         }
-        
+
     };
     /**
      * Waits to see if the next series of events is a double-click event.
-     * 
+     *
      * @param event
      * @return
      * @return
@@ -244,7 +244,7 @@ public class EventJob {
                 l.mouseHovered((MapMouseEvent) event.data);
             } catch (Throwable t) {
                 ProjectUIPlugin.log("Error processing a mouse dragged event", t);//$NON-NLS-1$
-            }            
+            }
         }
     }
 
@@ -270,7 +270,7 @@ public class EventJob {
                 l.mouseDragged((MapMouseEvent) event.data);
             } catch (Throwable t) {
                 ProjectUIPlugin.log("Error processing a mouse dragged event", t);//$NON-NLS-1$
-            }            
+            }
         }
     }
 
@@ -283,7 +283,7 @@ public class EventJob {
                 l.mouseMoved((MapMouseEvent) event.data);
             } catch (Throwable t) {
                 ProjectUIPlugin.log("Error processing a mouse dragged event", t);//$NON-NLS-1$
-            }            
+            }
         }
     }
 
@@ -328,7 +328,7 @@ public class EventJob {
 
     /**
      * Adds a MapEditorListener
-     * 
+     *
      * @param l the listener
      */
     public void addMapEditorListener( IMapDisplayListener l ) {
@@ -336,7 +336,7 @@ public class EventJob {
     }
     /**
      * Removes a MapEditorListener Listener
-     * 
+     *
      * @param l the listener
      */
     public void removeMapEditorListener( IMapDisplayListener l ) {
@@ -344,7 +344,7 @@ public class EventJob {
     }
     /**
      * Adds a MapMouseListener Listener
-     * 
+     *
      * @param l the listener to add.
      */
     public void addMouseListener( MapMouseListener l ) {
@@ -352,7 +352,7 @@ public class EventJob {
     }
     /**
      * Adds a MapMouseMotionListener Listener
-     * 
+     *
      * @param l the listener to add.
      */
     public void addMouseMotionListener( MapMouseMotionListener l ) {
@@ -361,7 +361,7 @@ public class EventJob {
     }
     /**
      * Adds a MapMouseWheelListener Listener
-     * 
+     *
      * @param l the listener to add.
      */
     public void addMouseWheelListener( MapMouseWheelListener l ) {
@@ -369,7 +369,7 @@ public class EventJob {
     }
     /**
      * Removes a MapMouseListener Listener
-     * 
+     *
      * @param l the listener to remove.
      */
     public void removeMouseListener( MapMouseListener l ) {
@@ -377,7 +377,7 @@ public class EventJob {
     }
     /**
      * Removes a MapMouseMotionListener Listener
-     * 
+     *
      * @param l the listener to remove.
      */
     public void removeMouseMotionListener( MapMouseMotionListener l ) {
@@ -385,13 +385,13 @@ public class EventJob {
     }
     /**
      * Removes a MapMouseWheelListener Listener
-     * 
+     *
      * @param l the listener to remove.
      */
     public void removeMouseWheelListener( MapMouseWheelListener l ) {
         wheel.remove(l);
     }
-    
+
     static class DoubleClickAttempt{
         Event first;
         Event release;

@@ -41,7 +41,7 @@ import org.eclipse.swt.widgets.Spinner;
 
 /**
  * Edit GridStyle objects
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -173,11 +173,11 @@ public class GridStyleConfigurator extends IStyleConfigurator implements Listene
 
         colorDisplay = new Label(comp, SWT.NONE);
         colorDisplay.addListener(SWT.Resize, new Listener(){
-            
+
             public void handleEvent( Event event ) {
                 updateColorButton();
             }
-            
+
         });
         color = new Button(comp, SWT.PUSH);
         color.setText(Messages.GridStyleConfigurator_ChangeColor);
@@ -314,7 +314,7 @@ public class GridStyleConfigurator extends IStyleConfigurator implements Listene
         }
     }
 
-    /** 
+    /**
      * Stupid hack so that when apply is pressed the value in the spinners is set.
      * Spinners don't have the displayed value until enter or the focus changes
      * from the spinner.  So I'm going to kick the spinner to get it to synchronize with

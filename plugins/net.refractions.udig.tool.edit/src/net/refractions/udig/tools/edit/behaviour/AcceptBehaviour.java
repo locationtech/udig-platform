@@ -32,13 +32,22 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * A behaviour that will run the accept behaviours registered with the EditToolHandler
- * 
- * <p>Requirements: * <ul> * <li>EventType==RELEASED</li> * <li>Current State == Creating</li>
+ *
+ * <p>Requirements:
+ * <ul>
+ * <li>EventType==RELEASED</li>
+ * <li>Current State == Creating</li>
  * <li>Current Shape != null</li>
  * <li>Button1 is released</li>
  * <li>no buttons are down</li>
  * <li>no modifiers are down</li>
- * </ul> * </p> * <p>Action: * <ul> * <li>Will run accept behaviours</li> *</ul> * </p>
+ * </ul>
+ * </p>
+ * <p>Action:
+ * <ul>
+ * <li>Will run accept behaviours</li>
+ *</ul>
+ * </p>
  * @author jones
  * @since 1.1.0
  */
@@ -49,8 +58,8 @@ public class AcceptBehaviour implements EventBehaviour {
         boolean legalEventType=eventType==EventType.RELEASED;
         boolean shapeAndGeomNotNull=handler.getCurrentShape()!=null;
         boolean button1Released=e.button==MapMouseEvent.BUTTON1;
-        
-        return legalState && legalEventType && shapeAndGeomNotNull && button1Released 
+
+        return legalState && legalEventType && shapeAndGeomNotNull && button1Released
         && !e.buttonsDown() && !e.modifiersDown();
     }
 
@@ -59,7 +68,7 @@ public class AcceptBehaviour implements EventBehaviour {
         if( !isValid(handler, e, eventType) )
             throw new IllegalArgumentException("Current state is not legal"); //$NON-NLS-1$
         List<UndoableMapCommand> commands=new ArrayList<UndoableMapCommand>();
-                
+
         commands.add(handler.getCommand(handler.getAcceptBehaviours()));
         if( handler.getCurrentState()==EditState.CREATING)
             commands.add(new SetEditStateCommand(handler, EditState.MODIFYING));

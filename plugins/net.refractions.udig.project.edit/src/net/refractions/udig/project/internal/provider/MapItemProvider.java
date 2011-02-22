@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: MapItemProvider.java 27331 2007-10-02 21:06:03Z jeichar $
  */
 package net.refractions.udig.project.internal.provider;
 
@@ -50,7 +50,7 @@ import org.osgi.framework.Bundle;
 /**
  * This is the item provider adapter for a {@link net.refractions.udig.project.internal.Map} object.
  * <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated NOT
  */
 public class MapItemProvider extends AbstractLazyLoadingItemProvider
@@ -63,7 +63,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
 
     /**
      * Placeholder that will be placed in viewers while layers are being loaded.
-     * 
+     *
      * @author Jesse
      * @since 1.1.0
      */
@@ -90,7 +90,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * Allows the property descriptor of the viewport model to appear as part of the map (User does
      * not need to know that there is a viewport model)
-     * 
+     *
      * @author jones
      * @since 0.6.0
      */
@@ -100,7 +100,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
 
         /**
          * Construct <code>ViewportModelDescriptor</code>.
-         * 
+         *
          * @param element
          */
         public ViewportModelDescriptor( ItemPropertyDescriptor element ) {
@@ -234,7 +234,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     }
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
@@ -242,7 +242,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public MapItemProvider( AdapterFactory adapterFactory ) {
@@ -253,7 +253,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public List getPropertyDescriptors( Object object ) {
@@ -277,7 +277,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Abstract feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -296,7 +296,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Name feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -315,7 +315,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Nav Command Stack feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -334,7 +334,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Command Stack feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -353,7 +353,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Color Palette feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -372,7 +372,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Render Manager Internal feature. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addRenderManagerInternalPropertyDescriptor( Object object ) {
@@ -390,7 +390,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Colour Scheme feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addColourSchemePropertyDescriptor( Object object ) {
@@ -408,7 +408,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Black Board Internal feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     protected void addBlackBoardInternalPropertyDescriptor( Object object ) {
@@ -416,7 +416,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
                         getResourceLocator(),
-                        "blackboard", 
+                        "blackboard",
                         "blackboard ",
                         ProjectPackage.eINSTANCE.getMap_BlackBoardInternal(), true, null, null,
                         null));
@@ -428,7 +428,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
      * {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}. <!--
      * begin-user-doc --> Changed so only layers and viewport model appears. <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Collection getChildrenFeatures( Object object ) {
@@ -441,7 +441,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected EStructuralFeature getChildFeature( Object object, Object child ) {
@@ -453,7 +453,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
 
     /**
      * This returns Map.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Object getImage( Object object ) {
@@ -463,20 +463,20 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     public static final LayerLoadingPlaceHolder LOADING_LAYER;
     static {
         LOADING_LAYER=new LayerLoadingPlaceHolder(ProjectFactory.eINSTANCE.createLayer());
-        LOADING_LAYER.setName(Messages.ProjectItemProvider_loading); 
+        LOADING_LAYER.setName(Messages.ProjectItemProvider_loading);
         Bundle bundle=ProjectEditPlugin.getPlugin().getBundle();
-        
+
         IPath path=new Path("icons/full/obj16/Layer.gif"); //$NON-NLS-1$
         ImageDescriptor image = ImageDescriptor.createFromURL(FileLocator.find(bundle, path, null));
         LOADING_LAYER.setGlyph(image);
         LOADING_LAYER.setVisible(true);
     }
-    
+
     @SuppressWarnings("unchecked")
     protected net.refractions.udig.project.internal.provider.LoadingPlaceHolder getLoadingItem() {
         return LOADING_LAYER;
     };
-    
+
     protected ChildFetcher createChildFetcher() {
         return new ChildFetcher(this){
             protected void notifyChanged() {
@@ -495,7 +495,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
                     try{
                         for( Iterator<Adapter> iter=adapters.iterator(); iter.hasNext(); ) {
                             Adapter next = iter.next();
-                            if( next instanceof ContextModelItemProvider && 
+                            if( next instanceof ContextModelItemProvider &&
                                     ((ContextModelItemProvider)next).getAdapterFactory()==getAdapterFactory())
                                 found=true;
                         }
@@ -511,14 +511,14 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
                 IStatus result = super.run(monitor);
                 return result;
             }
-        };    
+        };
     }
-    
-    
+
+
     @Override
     protected Collection<? extends Object> getConcreteChildren( Object object ) {
         if( object instanceof Map)
-            return ((Map)object).getMapLayers(); 
+            return ((Map)object).getMapLayers();
         throw new IllegalArgumentException("Object must be a Map.  Was: "+object); //$NON-NLS-1$
     }
 
@@ -529,7 +529,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
             return null;
         return map.getMapLayers().get(childIndex);
     }
-    
+
     @Override
     public boolean hasChildren( Object object ) {
         return true;
@@ -538,7 +538,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated NOT
      */
     public String getText( Object object ) {
@@ -554,14 +554,14 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
 				label = toString.substring(lastSlash);
         	}
         }
-        return label == null || label.length() == 0 ? "Unable to load map" : label; 
+        return label == null || label.length() == 0 ? "Unable to load map" : label;
     }
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
      * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void notifyChanged( Notification notification ) {
@@ -595,7 +595,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public ResourceLocator getResourceLocator() {

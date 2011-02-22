@@ -21,7 +21,6 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import net.refractions.udig.TestViewportPane;
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.render.impl.ViewportModelImpl;
 import net.refractions.udig.project.tests.support.MapTests;
@@ -37,12 +36,9 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
@@ -54,14 +50,14 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
 /**
- * Test the split SimpleFeature command
- * 
+ * Test the split Feature command
+ *
  * @author jones
  * @since 1.1.0
  */
 public class DifferenceFeatureCommandTest extends TestCase {
 
-    private SimpleFeature[] features;
+    private Feature[] features;
     private Map map;
     private TestHandler handler;
 
@@ -70,26 +66,26 @@ public class DifferenceFeatureCommandTest extends TestCase {
         super.setUp();
         GeometryFactory fac=new GeometryFactory();
         LineString line = fac.createLineString(new Coordinate[]{
-           new Coordinate(0,10),new Coordinate(10,10), new Coordinate(20,10) 
+           new Coordinate(0,10),new Coordinate(10,10), new Coordinate(20,10)
         });
         Polygon poly = fac.createPolygon(fac.createLinearRing(new Coordinate[]{
-                new Coordinate(20,20),new Coordinate(40,20), new Coordinate(40,40), 
-                new Coordinate(20,40), new Coordinate(20,20) 
+                new Coordinate(20,20),new Coordinate(40,20), new Coordinate(40,40),
+                new Coordinate(20,40), new Coordinate(20,20)
              }), new LinearRing[0]);
-    
+
         handler=new TestHandler();
         features=UDIGTestUtil.createTestFeatures("DifferenceFeatureTests", new Geometry[]{line, poly}, new String[]{"line", "poly"});   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
         map = MapTests.createNonDynamicMapAndRenderer(MapTests.createGeoResource(features, true), new Dimension(500,500));
-        
+
         Envelope env=map.getBounds(null);
         map.getRenderManagerInternal().setMapDisplay(new TestViewportPane(new Dimension((int)env.getWidth(),(int)env.getHeight())));
         map.setViewportModelInternal(new ViewportModelImpl(){
            @Override
         public AffineTransform worldToScreenTransform() {
             return new AffineTransform();
-        } 
+        }
         });
-        
+
         handler.setContext(ApplicationGIS.createContext(map));
     }
 
@@ -105,21 +101,21 @@ public class DifferenceFeatureCommandTest extends TestCase {
         bb.addPoint(35,0, shell);
         bb.addPoint(35,60, shell);
         bb.addPoint(25,60, shell);
-        
+
         DifferenceFeatureCommand command=new DifferenceFeatureCommand(handler, EditState.NONE);
-        
+
         command.setMap(map);
         NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
         command.run(nullProgressMonitor);
-        
-        FeatureSource<SimpleFeatureType, SimpleFeature> resource = map.getEditManager().getSelectedLayer().getResource(FeatureSource.class, nullProgressMonitor);
+
+        FeatureSource resource = map.getEditManager().getSelectedLayer().getResource(FeatureSource.class, nullProgressMonitor);
         assertEquals(3, resource.getCount(Query.ALL));
-        FeatureIterator<SimpleFeature> iter = resource.getFeatures().features();
+        FeatureIterator iter = resource.getFeatures().features();
         int found=0;
         while( iter.hasNext() ){
-            SimpleFeature feature=iter.next();
+            Feature feature=iter.next();
             if( feature.getID().equals("new0") ){ //$NON-NLS-1$
-                List<Coordinate> coords = Arrays.asList(((Geometry) feature.getDefaultGeometry()).getCoordinates());
+                List<Coordinate> coords = Arrays.asList(feature.getDefaultGeometry().getCoordinates());
                 assertEquals(10, coords.size());
                 assertTrue(coords.contains( bb.toCoord(Point.valueOf(25,0)) ) );
                 assertTrue(coords.contains(new Coordinate(35.5,0.5)) );
@@ -133,7 +129,7 @@ public class DifferenceFeatureCommandTest extends TestCase {
                 break;
             }
         }
-        
+
         assertEquals( 1, found );
         assertNull(handler.getCurrentGeom());
     }
@@ -154,21 +150,21 @@ public class DifferenceFeatureCommandTest extends TestCase {
         bb.addPoint(35,0, shell);
         bb.addPoint(35,60, shell);
         bb.addPoint(25,60, shell);
-        
+
         DifferenceFeatureCommand command=new DifferenceFeatureCommand(handler, EditState.NONE);
-        
+
         command.setMap(map);
         NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
         command.run(nullProgressMonitor);
-        
-        FeatureSource<SimpleFeatureType, SimpleFeature> resource = map.getEditManager().getSelectedLayer().getResource(FeatureSource.class, nullProgressMonitor);
+
+        FeatureSource resource = map.getEditManager().getSelectedLayer().getResource(FeatureSource.class, nullProgressMonitor);
         assertEquals(3, resource.getCount(Query.ALL));
-        FeatureIterator<SimpleFeature> iter = resource.getFeatures().features();
+        FeatureIterator iter = resource.getFeatures().features();
         int found=0;
         while( iter.hasNext() ){
-            SimpleFeature feature=iter.next();
+            Feature feature=iter.next();
             if( feature.getID().equals("new0") ){ //$NON-NLS-1$
-                List<Coordinate> coords = Arrays.asList(((Geometry) feature.getDefaultGeometry()).getCoordinates());
+                List<Coordinate> coords = Arrays.asList(feature.getDefaultGeometry().getCoordinates());
                 assertEquals(10, coords.size());
                 assertTrue(coords.contains(new Coordinate(25.5,0.5) ) );
                 assertTrue(coords.contains(new Coordinate(35.5,0.5)) );
@@ -184,7 +180,7 @@ public class DifferenceFeatureCommandTest extends TestCase {
                 break;
             }
         }
-        
+
         assertEquals( 1, found );
     }
 
@@ -199,47 +195,46 @@ public class DifferenceFeatureCommandTest extends TestCase {
                 new Coordinate(0,50),
         });
         Polygon polygon = fac.createPolygon(ring, new LinearRing[0]);
-        FeatureStore<SimpleFeatureType, SimpleFeature> store = map.getMapLayers().get(0).getResource(FeatureStore.class, new NullProgressMonitor());        
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-		store.modifyFeatures(features[0].getFeatureType().getGeometryDescriptor(), polygon, 
-                filterFactory.id(FeatureUtils.stringToId(filterFactory, features[0].getID())));
-		
+        FeatureStore store = map.getMapLayers().get(0).getResource(FeatureStore.class, new NullProgressMonitor());
+        store.modifyFeatures(features[0].getFeatureType().getDefaultGeometry(), polygon,
+                FilterFactoryFinder.createFilterFactory().createFidFilter(features[0].getID()));
+
         EditBlackboard bb = handler.getEditBlackboard();
-        
+
         PrimitiveShape shell = bb.newGeom(null, null).getShell();
         handler.setCurrentShape(shell);
         bb.addPoint(25,0, shell);
         bb.addPoint(35,0, shell);
         bb.addPoint(35,60, shell);
         bb.addPoint(25,60, shell);
-        
+
         DifferenceFeatureCommand command=new DifferenceFeatureCommand(handler, EditState.NONE);
-        
+
         command.setMap(map);
         NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
         command.run(nullProgressMonitor);
-        
-        FeatureSource<SimpleFeatureType, SimpleFeature> resource = map.getEditManager().getSelectedLayer().getResource(FeatureSource.class, nullProgressMonitor);
+
+        FeatureSource resource = map.getEditManager().getSelectedLayer().getResource(FeatureSource.class, nullProgressMonitor);
         assertEquals(3, resource.getCount(Query.ALL));
-        FeatureIterator<SimpleFeature> iter = resource.getFeatures().features();
+        FeatureIterator iter = resource.getFeatures().features();
         int found=0;
         while( iter.hasNext() ){
-            SimpleFeature feature=iter.next();
+            Feature feature=iter.next();
             if( feature.getID().equals("new0") ){ //$NON-NLS-1$
-                List<Coordinate> coords = Arrays.asList(((Geometry) feature.getDefaultGeometry()).getCoordinates());
+                List<Coordinate> coords = Arrays.asList(feature.getDefaultGeometry().getCoordinates());
                 assertEquals(15, coords.size());
                 assertTrue(coords.contains(new Coordinate(25.5,0.5) ) );
                 assertTrue(coords.contains(new Coordinate(35.5,0.5)) );
                 assertTrue(coords.contains(new Coordinate(35.5,20)) );
                 assertTrue(coords.contains(new Coordinate(25.5,20)) );
                 assertTrue(coords.contains(new Coordinate(25.5,0.5)) );
-                
+
                 assertTrue(coords.contains(new Coordinate(25.5,40) ) );
                 assertTrue(coords.contains(new Coordinate(35.5,40)) );
                 assertTrue(coords.contains(new Coordinate(35.5,50)) );
                 assertTrue(coords.contains(new Coordinate(25.5,50)) );
                 assertTrue(coords.contains(new Coordinate(25.5,40)) );
-                
+
                 assertTrue(coords.contains(new Coordinate(25.5,55) ) );
                 assertTrue(coords.contains(new Coordinate(35.5,55)) );
                 assertTrue(coords.contains(new Coordinate(35.5,60.5)) );
@@ -249,10 +244,10 @@ public class DifferenceFeatureCommandTest extends TestCase {
                 break;
             }
         }
-        
+
         assertEquals( 1, found );
     }
-    
+
     public void testMultiGeometry() throws Exception {
         handler.resetEditBlackboard();
         GeometryFactory fac=new GeometryFactory();
@@ -275,55 +270,53 @@ public class DifferenceFeatureCommandTest extends TestCase {
         Polygon polygon2 = fac.createPolygon(ring2, new LinearRing[0]);
 
         Geometry geom=fac.createMultiPolygon(new Polygon[]{polygon1, polygon2});
-        
-        FeatureStore<SimpleFeatureType, SimpleFeature> store = map.getMapLayers().get(0).getResource(FeatureStore.class, new NullProgressMonitor());
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-		store.removeFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory, features[1].getID())));
-        store.modifyFeatures(features[0].getFeatureType().getGeometryDescriptor(), geom, 
-                filterFactory.id(FeatureUtils.stringToId(filterFactory, features[0].getID())));
+
+        FeatureStore store = map.getMapLayers().get(0).getResource(FeatureStore.class, new NullProgressMonitor());
+        store.removeFeatures(FilterFactoryFinder.createFilterFactory().createFidFilter(features[1].getID()));
+        store.modifyFeatures(features[0].getFeatureType().getDefaultGeometry(), geom,
+                FilterFactoryFinder.createFilterFactory().createFidFilter(features[0].getID()));
         EditBlackboard bb = handler.getEditBlackboard();
-        
+
         PrimitiveShape shell = bb.newGeom(null, null).getShell();
         handler.setCurrentShape(shell);
         bb.addPoint(25,0, shell);
         bb.addPoint(35,0, shell);
         bb.addPoint(35,65, shell);
         bb.addPoint(25,65, shell);
-        
+
         DifferenceFeatureCommand command=new DifferenceFeatureCommand(handler, EditState.NONE);
-        
+
         command.setMap(map);
         NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
         command.run(nullProgressMonitor);
-        
-        FeatureSource<SimpleFeatureType, SimpleFeature> resource = map.getEditManager().getSelectedLayer().getResource(FeatureSource.class, nullProgressMonitor);
+
+        FeatureSource resource = map.getEditManager().getSelectedLayer().getResource(FeatureSource.class, nullProgressMonitor);
         assertEquals(2, resource.getCount(Query.ALL));
-        FeatureIterator<SimpleFeature> iter = resource.getFeatures().features();
+        FeatureIterator iter = resource.getFeatures().features();
         int found=0;
         while( iter.hasNext() ){
-            SimpleFeature feature=iter.next();
+            Feature feature=iter.next();
             if( feature.getID().equals("new0") ){ //$NON-NLS-1$
-                List<Coordinate> coords = Arrays.asList(((Geometry) feature.getDefaultGeometry()).getCoordinates());
+                List<Coordinate> coords = Arrays.asList(feature.getDefaultGeometry().getCoordinates());
                 assertEquals(10, coords.size());
                 assertTrue(coords.contains(new Coordinate(25.5,10) ) );
                 assertTrue(coords.contains(new Coordinate(35.5,10)) );
                 assertTrue(coords.contains(new Coordinate(35.5,50)) );
                 assertTrue(coords.contains(new Coordinate(25.5,50)) );
                 assertTrue(coords.contains(new Coordinate(25.5,10)) );
-                
+
                 assertTrue(coords.contains(new Coordinate(25.5,60) ) );
                 assertTrue(coords.contains(new Coordinate(35.5,60)) );
                 assertTrue(coords.contains(new Coordinate(35.5,65.5)) );
                 assertTrue(coords.contains(new Coordinate(25.5,65.5)) );
                 assertTrue(coords.contains(new Coordinate(25.5,65.5)) );
-                
+
                 found++;
                 break;
             }
         }
-        
+
         assertEquals( 1, found );
     }
-    
-        
+
 }

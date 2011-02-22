@@ -19,46 +19,42 @@ import java.awt.Rectangle;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.refractions.udig.project.internal.ProjectPlugin;
+import net.refractions.udig.project.preferences.PreferenceConstants;
 import net.refractions.udig.project.render.ILabelPainter;
 
-import org.geotools.geometry.GeometryFactoryFinder;
-import org.geotools.geometry.jts.JTS;
-import org.geotools.geometry.jts.JTSFactoryFinder;
-import org.geotools.renderer.label.LabelCacheImpl;
-import org.geotools.renderer.lite.LabelCache;
+import org.geotools.renderer.lite.LabelCacheDefault;
 import org.geotools.renderer.lite.SynchronizedLabelCache;
 
-import com.vividsolutions.jts.geom.GeometryFactory;
-
-
 /**
- * Extends the Geotools default labeller so that the geotools renderer doesn't clear the cache when it runs.  
+ * Extends the Geotools default labeller so that the geotools renderer doesn't clear the cache when it runs.
  * The comments in the geotools default label cache states this is ok.
  * <p>
  * Also over-rides end so that geotools renderers don't cause the rendering and we can do it once at the end.
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class UDIGLabelCache extends SynchronizedLabelCache implements ILabelPainter {
+
     Set<String> activeLayers = new HashSet<String>();
 
-    private LabelCache wrappedLabelCache;
+    private LabelCacheDefault wrappedLabelCache;
 
     /**
-     * 
+     *
      */
     public UDIGLabelCache() {
-        this(new LabelCacheImpl()); // switch to new one here!
+        this(new LabelCacheDefault());
     }
 
     /**
      * @param defaultLabelCache
      */
-    public UDIGLabelCache( LabelCache labelCache ) {
-        super(labelCache);
-        this.wrappedLabelCache = labelCache;
+    public UDIGLabelCache( LabelCacheDefault defaultLabelCache ) {
+        super(defaultLabelCache);
+        this.wrappedLabelCache = defaultLabelCache;
     }
 
     public Object getAdapter( Class adapter ) {
@@ -80,6 +76,14 @@ public class UDIGLabelCache extends SynchronizedLabelCache implements ILabelPain
     @Override
     public synchronized void end( Graphics2D graphics, Rectangle displayArea ) {
         if (activeLayers.isEmpty()) {
+
+            /*
+             * We set customized hints from preferences each time when labels are rendered
+             */
+            boolean ignore_overlappings = ProjectPlugin.getPlugin().getPluginPreferences()
+                    .getBoolean(PreferenceConstants.P_IGNORE_LABELS_OVERLAPPING);
+            wrappedLabelCache.IGNORE_LABELS_OVERLAPPING = ignore_overlappings;
+
             super.end(graphics, displayArea);
             //            System.out.println("Labels are rendered");
         } else {
@@ -107,10 +111,10 @@ public class UDIGLabelCache extends SynchronizedLabelCache implements ILabelPain
 
     /**
      * Returns wrapped label cache for giving rendering hints e.g.
-     * 
+     *
      * @return
      */
-    protected LabelCache getWrapperLabelCache() {
+    protected LabelCacheDefault getWrapperLabelCache() {
         return wrappedLabelCache;
     }
 

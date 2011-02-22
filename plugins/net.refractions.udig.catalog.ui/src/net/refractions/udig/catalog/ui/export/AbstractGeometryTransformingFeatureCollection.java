@@ -19,29 +19,30 @@ import java.util.Iterator;
 import net.refractions.udig.catalog.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.collection.AdaptorFeatureCollection;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.GeometryAttributeType;
+import org.geotools.feature.collection.AbstractFeatureCollection;
 import org.geotools.geometry.jts.JTS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
+import org.opengis.spatialschema.geometry.MismatchedDimensionException;
 
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * Takes a FeatureCollection with features with MultiPolygons and Polygons and converts them all to 
- * MultiPolygons and returns the features.  
- * 
+ * Takes a FeatureCollection with features with MultiPolygons and Polygons and converts them all to
+ * MultiPolygons and returns the features.
+ *
  * @author Jesse
  * @since 1.1.0
  */
-abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeatureCollection {
+abstract class AbstractGeometryTransformingFeatureCollection extends AbstractFeatureCollection {
 
-    private final FeatureCollection<SimpleFeatureType, SimpleFeature> source;
-    private final SimpleFeatureType schema;
-    private final GeometryDescriptor typeToUseAsGeometry;
+    private final FeatureCollection source;
+    private final FeatureType schema;
+    private final GeometryAttributeType typeToUseAsGeometry;
     private final IProgressMonitor monitor;
     private final MathTransform mt;
 
@@ -53,10 +54,10 @@ abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeat
      * @param mt the math transform to use to transform the geometries from the source projection to the destination projection
      * @param monitor2 progress monitor
      */
-    public AbstractGeometryTransformingFeatureCollection( FeatureCollection<SimpleFeatureType, SimpleFeature> source, SimpleFeatureType schema,
-            GeometryDescriptor typeToUseAsGeometry, MathTransform mt, IProgressMonitor monitor2) {
-        super("transform", schema);
-        
+    public AbstractGeometryTransformingFeatureCollection( FeatureCollection source, FeatureType schema,
+            GeometryAttributeType typeToUseAsGeometry, MathTransform mt, IProgressMonitor monitor2) {
+        super(schema);
+
         this.source=source;
         this.schema=schema;
         this.typeToUseAsGeometry=typeToUseAsGeometry;
@@ -71,17 +72,17 @@ abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeat
 
     @SuppressWarnings("unchecked")
     @Override
-    protected Iterator<SimpleFeature> openIterator() {
-        final Iterator<SimpleFeature> iter=source.iterator();
-        return new Iterator<SimpleFeature>(){
+    protected Iterator<Feature> openIterator() {
+        final Iterator<Feature> iter=source.iterator();
+        return new Iterator<Feature>(){
 
-            private SimpleFeature feature;
+            private Feature feature;
 
             public boolean hasNext() {
                 while( feature==null ){
                     if ( !iter.hasNext() )
                         return false;
-                    SimpleFeature next = iter.next();
+                    Feature next = iter.next();
                     if( next==null )
                         continue;
                     Geometry geometry=(Geometry) next.getAttribute(typeToUseAsGeometry.getName());
@@ -89,19 +90,21 @@ abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeat
                     if( geometry!=null ){
 	                    try {
 	                        geometry = JTS.transform(geometry, mt);
+	                    } catch (MismatchedDimensionException e) {
+	                        throw (RuntimeException) new RuntimeException( ).initCause( e );
 	                    } catch (TransformException e) {
 	                        throw (RuntimeException) new RuntimeException( Messages.ReprojectingFeatureCollection_transformationError+next.getID()).initCause( e );
 	                    }
                     }
-                    feature = new FeatureWrapper(next, schema, new Geometry[]{geometry}, 
-                    		new String[]{ schema.getGeometryDescriptor().getName().getLocalPart()});
+                    feature = new FeatureWrapper(next, schema, new Geometry[]{geometry},
+                    		new String[]{ schema.getDefaultGeometry().getName()});
                 }
-                
+
                 return feature!=null;
             }
 
-            public SimpleFeature next() {
-                SimpleFeature tmp = feature;
+            public Feature next() {
+                Feature tmp = feature;
                 feature=null;
                 monitor.worked(1);
                 return tmp;
@@ -110,10 +113,10 @@ abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeat
             public void remove() {
                 iter.remove();
             }
-            
+
         };
     }
-    
+
     /**
      * Method should ensure that the geometry is a GeometryCollection of the correct type.  For example a polygon should be
      * converted into a Multi Polygon.

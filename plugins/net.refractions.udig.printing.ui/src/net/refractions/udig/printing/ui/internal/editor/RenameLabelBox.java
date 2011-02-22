@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * Changes the label in a LabelBox
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -77,7 +77,7 @@ public class RenameLabelBox implements IBoxEditAction {
 
         manager.show();
     }
-    
+
 
     private String getText( ) {
         return getLabelBoxPrinter().getText();
@@ -113,7 +113,7 @@ public class RenameLabelBox implements IBoxEditAction {
             }
         };
     }
-    
+
     private LabelBoxPrinter getLabelBoxPrinter(){
         return (LabelBoxPrinter) owner.getBoxPrinter();
     }

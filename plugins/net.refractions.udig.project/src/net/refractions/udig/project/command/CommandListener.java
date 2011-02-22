@@ -16,14 +16,14 @@ package net.refractions.udig.project.command;
 
 /**
  * CommandListeners are notified when commands have been executed.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
 public interface CommandListener {
     /**
      * CommandManager will call this function once a command is completed.
-     * 
+     *
      * @param commandType
      */
     public void commandExecuted( int commandType );

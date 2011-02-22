@@ -32,7 +32,7 @@ package net.refractions.udig.project.render;
  * layers again.</li>
  * <li>The events the render stack must listen for are setState(DONE) events. The following code
  * illustrates how this can be done:
- * 
+ *
  * <pre><code>
  * executor.eAdapters().add(new RenderListenerAdapter(){
  *     //renderDone is called when setState(DONE) is called
@@ -43,13 +43,13 @@ package net.refractions.udig.project.render;
  *     }
  * });
  * </code></pre>
- * 
+ *
  * <li>Call setState(RENDERING) when a redraw is required.</li>
  * </p>
  * The Default implementation simply draws the layers overtop one another to merge the Layers.
  * CompositeRenderer
  * </p>
- * 
+ *
  * @author jeichar
  */
 public interface IMultiLayerRenderer extends IRenderer {
@@ -60,7 +60,7 @@ public interface IMultiLayerRenderer extends IRenderer {
      * Note: The declaration of getContext is declared in IRender so the return type cannot be
      * declared in this interface
      * </p>
-     * 
+     *
      * @return a CompositeRendererContext.
      */
     IRenderContext getContext();
@@ -77,7 +77,7 @@ public interface IMultiLayerRenderer extends IRenderer {
      * <p>
      * Note: This command differs from render. render() forces a full rerendering of the data
      * whereas refreshImage does not require that the renderer access the data again.
-     * 
+     *
      * @throws RenderException
      */
     void refreshImage() throws RenderException;

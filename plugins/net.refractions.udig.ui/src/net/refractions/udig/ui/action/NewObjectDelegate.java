@@ -17,7 +17,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * <p>
  * You can consider this a really early version of "Action" back before Eclipse 3.3 made
  * this sort of thing easy.
- * 
+ *
  * @author jones
  * @since 0.6.0
  */
@@ -35,7 +35,7 @@ public class NewObjectDelegate {
 
     /**
      * Construct <code>UDIGActionBarAdvisor.NewContribution.NewItem</code>.
-     * 
+     *
      * @param element The configuration element that holds the properties (from plugin.xml)
      * @param window The window this action will operate in.
      */
@@ -51,7 +51,7 @@ public class NewObjectDelegate {
             this.icon = null;
         this.window = window;
     }
-    
+
     /**
      * Create the IWorkbenchWindowActionDelegate (if required) and call run.
      */

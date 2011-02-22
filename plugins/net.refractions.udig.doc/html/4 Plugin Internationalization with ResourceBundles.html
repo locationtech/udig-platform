@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 4 Plugin Internationalization with ResourceBundles</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 4 Plugin Internationalization with ResourceBundles -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>Quick Steps for Internationalization:</p>
+
+<ol>
+	<li>Setup Policy class
+	<ol>
+		<li>Copy a Policy class from another plug-in. (Note that some Policy's have an initAction method that depends on Images. If you don't want to bring Images along, you can remove this method.)</li>
+		<li>In your Plugin class's start() method, call Policy.localize, passing the path to the properties file. For example:
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-comment">//Provides access to an/example/plugin/messages.properties
+</span>Policy.localize(<span class="code-quote">"an.example.plugin.messages"</span>); <span class="code-comment">//$NON-NLS-1$</span></pre>
+</div></div></li>
+		<li>In your Plugin class's stop() method, call Policy.cleanup().</li>
+	</ol>
+	</li>
+	<li>Hunt down Strings that need to be externalized. Two ways to do this:
+	<ol>
+		<li>Under compilation preferences, turn on Externalize Strings as a warning or error, and then look for them in the Problems view.
+		<ol>
+			<li>To externalize the string, replace the string with a call to Policy.bind("example.key"), and then place //$NON-NLS-1$ at the end.</li>
+		</ol>
+		</li>
+		<li>Alternatively, you can use the Externalize Strings tool. Right click on your package and select source code -&gt; find strings to externalize.
+		<ol>
+			<li>You need to configure wizard setup first though:
+			<ol>
+				<li>Select Configure</li>
+				<li>Change class name to point to your plugin's Policy class</li>
+				<li>Change substitution pattern to be: <div class="preformatted"><div class="preformattedContent">
+<pre>bind(${key})</pre>
+</div></div></li>
+				<li>and under Propert file location and name, change Package to be where you specified the location of messages.properties in your Plugin's start method.</li>
+				<li>Note: You need to reconfigure the wizard <b>every</b> time you run it.</li>
+				<li>Follow the wizard's instructions from there.</li>
+			</ol>
+			</li>
+		</ol>
+		</li>
+	</ol>
+	</li>
+</ol>
+
+
+<p>To internationalize your plugin.properties files, see <a href="Plugin Internationalization.html" title="Plugin Internationalization">Plugin Internationalization</a></p>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=130">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=130">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

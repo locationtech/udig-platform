@@ -5,5 +5,5 @@ public class C extends B {
 	public C(String message) {
 		super(message);
 	}
-	
+
 }

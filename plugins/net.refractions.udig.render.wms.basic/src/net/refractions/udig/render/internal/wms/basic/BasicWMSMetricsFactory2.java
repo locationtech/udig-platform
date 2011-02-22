@@ -23,8 +23,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.project.render.AbstractRenderMetrics;
 import net.refractions.udig.project.render.IRenderContext;
+import net.refractions.udig.project.render.IRenderMetrics;
 import net.refractions.udig.project.render.IRenderMetricsFactory;
 
 import org.geotools.data.ows.Layer;
@@ -37,7 +37,7 @@ import org.opengis.referencing.operation.MathTransform;
 
 /**
  * Creates Metrics for the BasicWMSRenderer
- * 
+ *
  * @author Richard Gould
  */
 public class BasicWMSMetricsFactory2 implements IRenderMetricsFactory {
@@ -45,15 +45,15 @@ public class BasicWMSMetricsFactory2 implements IRenderMetricsFactory {
     Map<String, CoordinateReferenceSystem> crsCache=new HashMap<String, CoordinateReferenceSystem>();
     Map<Pair,MathTransform> transformCache=new HashMap<Pair, MathTransform>();
     Map<Layer, Set<CoordinateReferenceSystem>> legalCRSCache=new HashMap<Layer, Set<CoordinateReferenceSystem>>();
-    
+
     public boolean canRender( IRenderContext toolkit ) {
         if( !toolkit.getLayer().hasResource(WebMapServer.class) ) {
             return false; // not a wms
         }
         CoordinateReferenceSystem crs = toolkit.getViewportModel().getCRS();
         if( crs == null ) {
-            return true; // we will assume our default            
-        }        
+            return true; // we will assume our default
+        }
         org.geotools.data.ows.Layer layer;
         try {
             layer = toolkit.getLayer().getResource(org.geotools.data.ows.Layer.class, null);
@@ -70,7 +70,7 @@ public class BasicWMSMetricsFactory2 implements IRenderMetricsFactory {
                 legalCRSCache.put(layer, crss);
             }
             crss.add(crs);
-            
+
             return true;
         }
         return false;
@@ -82,19 +82,19 @@ public class BasicWMSMetricsFactory2 implements IRenderMetricsFactory {
             try {
                 String epsgCode = (String) i.next();
                 CoordinateReferenceSystem rs = getCRS(epsgCode);
-                
+
                 if (rs.equals(crs)) {
                     return true;
                 }
-                
+
                 MathTransform transform = getMathTransform(crs, rs);
-                
+
                 if (transform != null) {
                     return true;
                 }
             }
             catch( Throwable t ) {
-                // could not create a object representation of this code 
+                // could not create a object representation of this code
             }
         }
 		return false; // we cannot handle crs
@@ -113,11 +113,7 @@ public class BasicWMSMetricsFactory2 implements IRenderMetricsFactory {
     private synchronized CoordinateReferenceSystem getCRS( String epsgCode ) throws NoSuchAuthorityCodeException {
         CoordinateReferenceSystem result = crsCache.get(epsgCode);
         if( result==null  ){
-            try {
-                result=CRS.decode( epsgCode );
-            } catch (FactoryException e) {
-                throw (RuntimeException) new RuntimeException( ).initCause( e );
-            }
+            result=CRS.decode( epsgCode );
             crsCache.put(epsgCode, result);
         }
         return result;
@@ -126,7 +122,7 @@ public class BasicWMSMetricsFactory2 implements IRenderMetricsFactory {
     /**
      * @see net.refractions.udig.project.render.RenderMetricsFactory#createMetrics(net.refractions.udig.project.render.RenderContext)
      */
-    public AbstractRenderMetrics createMetrics( IRenderContext context ) {
+    public IRenderMetrics createMetrics( IRenderContext context ) {
         return new BasicWMSMetrics2(context, this);
     }
     /**

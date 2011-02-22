@@ -7,36 +7,27 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.catalog.util.CRSUtil;
-import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.project.ui.tool.SimpleTool;
 import net.refractions.udig.tool.info.internal.Messages;
-import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 import org.geotools.geometry.jts.JTS;
 import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-public class DistanceTool extends SimpleTool implements KeyListener {
+public class DistanceTool extends SimpleTool {
     public DistanceTool() {
         super(MOUSE | MOTION);
     }
-    
+
     List<Point> points = new ArrayList<Point>();
     DistanceFeedbackCommand command;
     private Point now;
-    
+
     @Override
     protected void onMouseMoved( MapMouseEvent e ) {
         now = e.getPoint();
@@ -97,9 +88,9 @@ public class DistanceTool extends SimpleTool implements KeyListener {
     public void setActive( boolean active ) {
         super.setActive(active);
         final IStatusLineManager statusBar = getContext().getActionBars().getStatusLineManager();
-        
+
         disposeCommand();
-        
+
         if (statusBar == null)
             return; // shouldn't happen if the tool is being used.
         getContext().updateUI(new Runnable(){
@@ -108,17 +99,8 @@ public class DistanceTool extends SimpleTool implements KeyListener {
                 statusBar.setMessage(null);
             }
         });
-        
-        if (active) {
-            Control control = getContext().getViewportPane().getControl();
-            control.addKeyListener(this);
-        }else{
-            Control control = getContext().getViewportPane().getControl();
-            control.removeKeyListener(this);
-        }
-        
     }
-    
+
     private double distance() throws TransformException {
         if (points.isEmpty())
             return 0;
@@ -140,11 +122,9 @@ public class DistanceTool extends SimpleTool implements KeyListener {
             distance += JTS.orthodromicDistance(begin, end, getContext().getCRS());
             start = current;
         }
-        
         return distance;
     }
 
-    
     private void displayError() {
         final IStatusLineManager statusBar = getContext().getActionBars().getStatusLineManager();
 
@@ -153,27 +133,16 @@ public class DistanceTool extends SimpleTool implements KeyListener {
 
         getContext().updateUI(new Runnable(){
             public void run() {
-                statusBar.setErrorMessage(Messages.DistanceTool_error); 
+                statusBar.setErrorMessage(Messages.DistanceTool_error);
             }
         });
     }
-    
     private void displayOnStatusBar( double distance ) {
         final IStatusLineManager statusBar = getContext().getActionBars().getStatusLineManager();
 
         if (statusBar == null)
             return; // shouldn't happen if the tool is being used.
-        String units = UiPlugin.getDefault().getPreferenceStore().getString(net.refractions.udig.ui.preferences.PreferenceConstants.P_DEFAULT_UNITS);
-        if (units.equals( net.refractions.udig.ui.preferences.PreferenceConstants.AUTO_UNITS) && CRSUtil.isCoordinateReferenceSystemImperial(context.getCRS())){
-            units = net.refractions.udig.ui.preferences.PreferenceConstants.IMPERIAL_UNITS;
-        }
-        final String message;
-        if (units.equals( net.refractions.udig.ui.preferences.PreferenceConstants.IMPERIAL_UNITS)){
-            message = createMessageImperial(distance);
-        }else{
-            message = createMessageMetric(distance);
-        }
-
+        final String message = createMessage(distance);
         getContext().updateUI(new Runnable(){
             public void run() {
                 statusBar.setErrorMessage(null);
@@ -185,9 +154,9 @@ public class DistanceTool extends SimpleTool implements KeyListener {
      * @param distance
      * @return
      */
-    private String createMessageMetric( double distance ) {
-        String message = Messages.DistanceTool_distance; 
-        
+    private String createMessage( double distance ) {
+        String message = Messages.DistanceTool_distance;
+
         if (distance > 100000.0) {
             message = message.concat((int) (distance / 1000.0) + "km");    //$NON-NLS-1$
         } else if (distance > 10000.0) { //km + m
@@ -204,34 +173,12 @@ public class DistanceTool extends SimpleTool implements KeyListener {
 
         return message;
     }
-    
-    private String createMessageImperial( double distance ) {
-        String message = Messages.DistanceTool_distance; 
-        //distance is in meter
-        distance = (distance/1000) * 0.621371192;  //convert to miles
-        
-        if (distance > 1000.0) {
-            message = message.concat((int) (distance) + "mi");    //$NON-NLS-1$
-        } else if (distance > 100.0) { //mile
-            message = message.concat(round(distance, 1) + "mi"); //$NON-NLS-1$
-        } else if (distance > 1.0) { //mile
-            message = message.concat(round(distance, 2) + "mi"); //$NON-NLS-1$
-        } else if (distance > 0.1) { //mile
-            message = message.concat((int)(distance*5280) + "ft"); //$NON-NLS-1$
-        } else if (distance > 0.0189) { //mile approx.100ft
-            message = message.concat(round(distance*5280, 1) + "ft"); //$NON-NLS-1$
-        } else { //mile
-            message = message.concat(round(distance*5280*12, 1) + "in"); //$NON-NLS-1$
-        }
 
-        return message;
-    }
-    
     /**
      * Truncates a double to the given number of decimal places. Note:
      * truncation at zero decimal places will still show up as x.0, since we're
      * using the double type.
-     * 
+     *
      * @param value
      *            number to round-off
      * @param decimalPlaces
@@ -241,10 +188,10 @@ public class DistanceTool extends SimpleTool implements KeyListener {
     private double round(double value, int decimalPlaces) {
         double divisor = Math.pow(10, decimalPlaces);
         double newVal = value * divisor;
-        newVal =  (Long.valueOf(Math.round(newVal)).intValue())/divisor; 
+        newVal =  (Long.valueOf(Math.round(newVal)).intValue())/divisor;
         return newVal;
     }
-    
+
     class DistanceFeedbackCommand extends AbstractDrawCommand {
 
         public Rectangle getValidArea() {
@@ -262,7 +209,7 @@ public class DistanceTool extends SimpleTool implements KeyListener {
                 graphics.drawLine(start.x, start.y, current.x, current.y);
                 start = current;
             }
-            if (start == null || now == null) 
+            if (start == null || now == null)
                 return;
             graphics.drawLine(start.x, start.y, now.x, now.y);
 
@@ -270,7 +217,7 @@ public class DistanceTool extends SimpleTool implements KeyListener {
         }
 
     }
-    
+
     public void reset() {
         points.clear();
         if (command != null) {
@@ -282,18 +229,6 @@ public class DistanceTool extends SimpleTool implements KeyListener {
                 getContext().getViewportPane().repaint();
             }
             command = null;
-        }
-    }
-
-    public void keyPressed( KeyEvent e ) {
-    }
-
-    public void keyReleased( KeyEvent e ) {
-        if (e.character == SWT.CR){
-            // finish on enter key
-            disposeCommand();
-            displayResult();
-            points.clear();
         }
     }
 }

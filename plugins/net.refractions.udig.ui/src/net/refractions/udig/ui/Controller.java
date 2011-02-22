@@ -15,7 +15,7 @@
 package net.refractions.udig.ui;
 
 /**
- * Strategy object for 
+ * Strategy object for
  * @author Jesse
  * @since 1.1.0
  */
@@ -28,7 +28,7 @@ public interface Controller {
     void handleOk();
 
     /**
-     * Called when Chooser is no longer necessary.  
+     * Called when Chooser is no longer necessary.
      */
     void handleClose();
 

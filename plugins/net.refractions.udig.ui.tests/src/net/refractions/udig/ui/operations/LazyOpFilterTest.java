@@ -14,12 +14,12 @@
  */
 package net.refractions.udig.ui.operations;
 
-import junit.framework.TestCase;
 import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import junit.framework.TestCase;
 
 /**
- * TODO Purpose of 
+ * TODO Purpose of
  * <p>
  *
  * </p>
@@ -41,24 +41,24 @@ public class LazyOpFilterTest extends TestCase {
             public void notifyResultObtained( boolean result ) {
                 value[0]=true;
             }
-            
+
         };
-        
+
         LazyOpFilter lazy=new LazyOpFilter(l, OpFilter.TRUE);
-        
+
         assertTrue(lazy.accept("SOMETHING")); //$NON-NLS-1$
         assertTrue(lazy.accept("SOMETHING")); //$NON-NLS-1$
         assertTrue(lazy.accept("SOMETHING")); //$NON-NLS-1$
         assertFalse(value[0]);
-        
+
         lazy=new LazyOpFilter(l, OpFilter.FALSE);
-        
+
         assertFalse(lazy.accept("")); //$NON-NLS-1$
         assertFalse(lazy.accept("")); //$NON-NLS-1$
         assertFalse(lazy.accept("")); //$NON-NLS-1$
         assertFalse(value[0]);
     }
-    
+
     /**
      * Test method for {@link net.refractions.udig.ui.operations.LazyOpFilter#accept(java.lang.Object)}.
      */
@@ -71,21 +71,21 @@ public class LazyOpFilterTest extends TestCase {
             public void notifyResultObtained( boolean result ) {
                 value[0]=result;
             }
-            
+
         }, filter);
-        
+
         String string = "SomeObject"; //$NON-NLS-1$
         assertFalse(lazy.accept(string));
-        
+
         filter.result=true;
-        
+
         assertFalse(lazy.accept(string));
-        
+
         filter.notifyListeners("otherObject"); //$NON-NLS-1$
         assertFalse(value[0]);
-        
+
         assertFalse(lazy.accept(string));
-        
+
         // test equality
         filter.notifyListeners("SomeObject"); //$NON-NLS-1$
         assertTrue(value[0]);
@@ -101,33 +101,33 @@ public class LazyOpFilterTest extends TestCase {
             public void notifyResultObtained( boolean result ) {
                 value[0]=result;
             }
-            
+
         }, filter);
-        
+
         String string = "SomeObject"; //$NON-NLS-1$
         assertFalse(lazy.accept(string));
-        
+
         filter.result=true;
-        
+
         assertTrue(lazy.accept(string));
-        
+
         filter.notifyListeners("otherObject"); //$NON-NLS-1$
         assertFalse(value[0]);
-        
-        
+
+
         filter.notifyListeners(string);
         assertFalse(value[0]);
-        
+
         // load cache with false
         filter.result=false;
         lazy.accept(string);
-        
+
 
         filter.result=true;
 
         filter.notifyListeners(string);
         assertTrue(value[0]);
-        
+
     }
 
     public void testAcceptWithNoCachingBlocking() throws Exception {
@@ -143,44 +143,44 @@ public class LazyOpFilterTest extends TestCase {
                 value[0]=result;
                 value[1]=true;
             }
-            
+
         }, filter);
-        
+
         String string = "SomeObject"; //$NON-NLS-1$
         assertEquals(LazyOpFilter.DEFAULT_RETURN_VALUE, lazy.accept(string));
-        
+
         UDIGTestUtil.inDisplayThreadWait(2000, new WaitCondition(){
 
             public boolean isTrue() {
                 return value[1];
             }
-            
+
         }, false);
-        
+
         assertFalse(value[0]);
-        
+
         filter.result=true;
-        
+
         value[0]=true;
         value[1]=false;
 
         assertEquals(false, lazy.accept(string));
-        
+
         UDIGTestUtil.inDisplayThreadWait(2000, new WaitCondition(){
 
             public boolean isTrue() {
                 return value[1];
             }
-            
+
         }, false);
-        
+
         assertTrue(value[0]);
 
         value[0]=false;
         value[1]=false;
-        
+
         filter.result=true;
-        
+
         filter.notifyListeners(string);
 
         UDIGTestUtil.inDisplayThreadWait(2000, new WaitCondition(){
@@ -188,9 +188,9 @@ public class LazyOpFilterTest extends TestCase {
             public boolean isTrue() {
                 return value[1];
             }
-            
+
         }, false);
-        
+
         assertTrue(value[0]);
     }
 
@@ -208,34 +208,34 @@ public class LazyOpFilterTest extends TestCase {
                 value[0]=result;
                 value[1]=true;
             }
-            
+
         }, filter);
-        
-        String string = "SomeObject"; //$NON-NLS-1$        
+
+        String string = "SomeObject"; //$NON-NLS-1$
         assertEquals(LazyOpFilter.DEFAULT_RETURN_VALUE, lazy.accept(string));
 
-        
+
         UDIGTestUtil.inDisplayThreadWait(2000, new WaitCondition(){
 
             public boolean isTrue() {
                 return value[1];
             }
-            
+
         }, false);
-        
+
         assertFalse(value[0]);
         assertFalse(lazy.accept(string));
-        
+
         filter.result=true;
-        
+
         assertFalse(lazy.accept(string));
-        
+
 
         value[0]=false;
         value[1]=false;
-        
+
         filter.result=true;
-        
+
         filter.notifyListeners(string);
 
         UDIGTestUtil.inDisplayThreadWait(2000, new WaitCondition(){
@@ -243,14 +243,14 @@ public class LazyOpFilterTest extends TestCase {
             public boolean isTrue() {
                 return value[1];
             }
-            
+
         }, false);
-        
+
         assertTrue(value[0]);
 
 
         assertTrue(lazy.accept(string));
-        
+
     }
 
     /**
@@ -263,7 +263,7 @@ public class LazyOpFilterTest extends TestCase {
 
                 public void notifyChange( Object changed ) {
                 }
-                
+
             });
             fail();
         }catch (Exception e) {
@@ -286,7 +286,7 @@ public class LazyOpFilterTest extends TestCase {
 
                 public void notifyChange( Object changed ) {
                 }
-                
+
             });
             fail();
         }catch (Exception e) {
@@ -303,29 +303,29 @@ public class LazyOpFilterTest extends TestCase {
             public void notifyResultObtained( boolean result ) {
                 value[0]=true;
             }
-            
+
         }, filter);
-        
+
         String string = "SomeObject"; //$NON-NLS-1$
         assertFalse(lazy.accept(string));
-        
+
         filter.result=true;
-        
+
         assertFalse(lazy.accept(string));
-        
+
         assertEquals( 1, filter.getListeners().size());
-        
+
         filter.notifyListeners(string);
-        
+
         assertTrue( value[0]);
-        
+
         lazy.disable();
-        
+
         value[0]=false;
-        
+
         filter.notifyListeners(string);
         assertFalse(value[0]);
-        
+
     }
-    
+
 }

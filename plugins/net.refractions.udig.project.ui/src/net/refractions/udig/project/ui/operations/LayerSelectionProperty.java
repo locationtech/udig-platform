@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.ui.operations;
 
@@ -11,7 +11,7 @@ import org.geotools.filter.Filter;
 
 /**
  * Checks if a layer has a selection
- * 
+ *
  * @author Jesse
  */
 public class LayerSelectionProperty extends AbstractPropertyValue<ILayer>

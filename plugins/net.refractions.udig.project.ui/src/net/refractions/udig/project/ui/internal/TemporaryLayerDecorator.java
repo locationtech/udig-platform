@@ -23,7 +23,7 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 
 /**
  * Indicates that the layer is a temporary layer by putting a start on the icon.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

@@ -1,8 +1,8 @@
 package net.refractions.udig.issues.test;
 
-import net.refractions.udig.issues.IIssuesContentProvider;
-
 import org.eclipse.jface.viewers.Viewer;
+
+import net.refractions.udig.issues.IIssuesContentProvider;
 
 public class TestContentProvider {
 
@@ -26,7 +26,7 @@ public class TestContentProvider {
             return !(element instanceof String);
         }
 
-        public Object[] getElements( Object inputElement ) {            
+        public Object[] getElements( Object inputElement ) {
             return getChildren(inputElement);
 
         }
@@ -37,7 +37,7 @@ public class TestContentProvider {
         public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
         }
     }
-    
+
 
     public static class Provider2 implements IIssuesContentProvider {
 

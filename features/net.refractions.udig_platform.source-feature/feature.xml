@@ -2,7 +2,7 @@
 <feature
       id="net.refractions.udig_platform.source"
       label="net.refractions.udig_platform.source-feature"
-      version="1.2.0.qualifier"
+      version="1.1.2"
       provider-name="Udig.Refractions.net">
 
    <description url="http://www.example.com/description">

@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 3 Style</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 3 Style -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>uDig can provide maps symbolized by implementing styles.<br/>
+Basically, a style describes how to paint points, lines, polygons and raster data sets by providing a set of painting rules.</p>
+
+<p>The style api has two major players.</p>
+<ul>
+	<li><b>StyleContent</b>: this is the style object, in the case of SLD it is a <b>org.geotools.styling.Style</b> object. However it can be any object.</li>
+	<li><b>StyleConfigurator</b>: This the the ui part of the style. It is responsible for creating the ui used to edit the style.</li>
+</ul>
+
+
+<p>The udig will use this information as metadata when choosing which <br/>
+Renderer to use for the layer. The Renderer itself will use this information when drawing to the screen.</p>
+
+<h2><a name="3Style-StyleObjectandStyleBlackboard">Style Object and StyleBlackboard</a></h2>
+<p>Style objects are stored a StyleBlackboard. Configurators use the blackboard to collaborate. Objects are stored on the blackboard by id. When a configurator queries the blackboard for an object and it does not exist, a default object should be created and placed on the blackboard. The following is an example:</p>
+
+<p>Since different renders can use completely different style objects, the coupling between the render and the style needs to kept low. In order to achieve this, we decided to create the notion of a style blackboard which is associated with a layer. This way the render and configurator can collaborate without talking to each other.</p>
+
+<p>The Renderer and the StyleConfigurator look for particular style objects on the blackboard in order to do their part. The style content is responsible for creating, and persiting the style object.</p>
+
+<p>Each Layer has a StyleBlackboard. Configurators should not write to this blackboard directly. Each configurator is supplied with a copy of the actual layer blackboard.<br/>
+Each time a style object is changed, it must be replaced onto the blackboard for persistance reasons.</p>
+
+<p>The StyleConfigurator should store no state. All state should be stored in the style objects on the style blackboard. When a ui widget changes state, the style object should be written to immediately to reflect the change.<br/>
+When the configurator becomes active, the ui widgets should be initialized from the values of style objects on the blackboard. This should be performed every time refresh() is called. </p>
+
+<p>Whenever style objects are read from the blackboard, </p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">void apply() {
+      StyleBlackboard styleBlackboard = getStyleBlackboard();
+      Point style = styleBlackboard.lookup(<span class="code-quote">"point.style"</span>);
+      <span class="code-keyword">if</span> (style == <span class="code-keyword">null</span>) {
+          style = <span class="code-keyword">new</span> Point();
+          styleBlackboard.put(<span class="code-quote">"point.style"</span>, style);
+      }
+
+      style.setX(...) <span class="code-comment">//set to some value from ui
+</span>      style.setY(...) <span class="code-comment">//set to some value from ui
+</span>  }
+
+  void init() {
+      StyleBlackboard styleBlackboard = getStyleBlackboard();
+      Point style = styleBlackboard.lookup(<span class="code-quote">"point.style"</span>);
+      <span class="code-keyword">if</span> (style != <span class="code-keyword">null</span>) {
+          <span class="code-comment">//set some ui widget to value of style.getX();
+</span>          <span class="code-comment">//set some ui widget to value of style.getY();
+</span>      }
+  }</pre>
+</div></div>
+<h2><a name="3Style-StyleBuilder">StyleBuilder</a></h2>
+<p>Since a Style is composed of a complex set of objects, a StyleBuilder object is provided for you to conveniently build simple styles without the need to build all of the style elements by hand. For example, you can create a PolygonSymbolizer and then create a Style out of it with a single method call: the builder will generate a default FeatureTypeStyle and the Rule for you. </p>
+
+<h2><a name="3Style-FeatureTypeStyle">FeatureTypeStyle</a></h2>
+<p>A FeatureTypeStyle declares a part of a style that is specifically geared toward a FeatureType, that is, features will be rendered according to this FeatureTypeStyle only if their FeatureType is the same as the FeatureType declared in the FeatureTypeStyle or a descendent. A FeatureTypeStyle contains one or more rules; </p>
+
+<h3><a name="3Style-Rule">Rule</a></h3>
+<p>A Rule contains filters that will decide whether features will be displayed or not, specifically:<br/>
+a minimum and maximum map scale, if set and the current scale is outside the specified range, the rule won't apply and thus its symbolizers won't be used; <br/>
+a Filter that is applied to the features, only the features matching the filter will be painted according to the Rule symbolizers; <br/>
+as an alternative, the rule can have an "else filter". This special kind of filter catches all of the features that still haven't been symbolized by previous rules with a regular filter. </p>
+
+<h2><a name="3Style-Symbolizers">Symbolizers</a></h2>
+<p>A Symbolizer describes how to represent a feature on the screen based on the feature contents (geometry and attributes). Each rule can have one or more Symbolizer attached to it. </p>
+<ul>
+	<li>Text Symbolizer</li>
+	<li>Line Symbolizer</li>
+	<li>Polygon Symbolizer</li>
+	<li>Point Symbolizer</li>
+	<li>Raster Symbolizer</li>
+</ul>
+
+
+<div class="panel"><div class="panelHeader"><b>Links</b></div><div class="panelContent">
+<ul>
+	<li><a href="http://www.opengis.org/docs/02-070.pdf" title="Visit page outside Confluence">Styled Layer Descriptor Reference Document </a></li>
+</ul>
+</div></div>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=5029">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=5029">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

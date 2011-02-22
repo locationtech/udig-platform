@@ -39,11 +39,11 @@ public class AuthenticationDialog extends IconAndMessageDialog {
     private Text passwordText;
     private boolean shouldRemember;
     private Button rememberCheckbox;
-    
+
     public AuthenticationDialog( Shell parentShell ) {
         super(parentShell);
         setShellStyle(getShellStyle() | SWT.RESIZE);
-        
+
     }
 
 //    protected Point getInitialSize() {
@@ -56,33 +56,33 @@ public class AuthenticationDialog extends IconAndMessageDialog {
     }
 
     protected Control createDialogArea( Composite parent ) {
-        message = Messages.AuthenticationDialog_label_prompt; 
-        
+        message = Messages.AuthenticationDialog_label_prompt;
+
         Composite composite = (Composite) super.createDialogArea(parent);
         ((GridLayout)composite.getLayout()).numColumns = 2;
         ((GridLayout)composite.getLayout()).makeColumnsEqualWidth = false;
-        
+
         createMessageArea(composite);
-        
+
         Label usernameLabel = new Label(composite, SWT.NONE);
-        usernameLabel.setText(Messages.AuthenticationDialog_label_username); 
+        usernameLabel.setText(Messages.AuthenticationDialog_label_username);
         usernameText = new Text(composite, SWT.BORDER);
         usernameText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         Label passwordLabel = new Label(composite, SWT.NONE);
-        passwordLabel.setText(Messages.AuthenticationDialog_label_password); 
+        passwordLabel.setText(Messages.AuthenticationDialog_label_password);
         passwordText = new Text(composite, SWT.BORDER | SWT.PASSWORD);
         passwordText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        
+
         rememberCheckbox = new Button(composite, SWT.CHECK);
-        rememberCheckbox.setText(Messages.AuthenticationDialog_label_rememberPassword); 
+        rememberCheckbox.setText(Messages.AuthenticationDialog_label_rememberPassword);
         GridData gridData = new GridData(SWT.LEFT, SWT.FILL, true, false);
         gridData.horizontalSpan = 2;
         rememberCheckbox.setLayoutData(gridData);
         rememberCheckbox.setSelection(true);
-        
+
         return composite;
     }
-    
+
     protected void okPressed() {
         username = usernameText.getText();
         password = passwordText.getText();
@@ -97,13 +97,13 @@ public class AuthenticationDialog extends IconAndMessageDialog {
     public String getUsername() {
         return username;
     }
-    
+
     public boolean shouldRemember() {
         return shouldRemember;
     }
 
     protected void configureShell( Shell newShell ) {
-        newShell.setText(Messages.AuthenticationDialog_dialog_title); 
+        newShell.setText(Messages.AuthenticationDialog_dialog_title);
         newShell.setImage(UiPlugin.getDefault().create("icon32.gif").createImage()); //$NON-NLS-1$
     }
 }

@@ -32,5 +32,13 @@
                relative="net.refractions.udig.catalog.ui.CatalogView"
                visible="true"/>
       </perspectiveExtension>
+      <perspectiveExtension targetID="net.refractions.udig.ui.alternateMapPerspective">
+         <viewShortcut id="net.refractions.udig.browser.ui.browserContainerView"/>
+         <view
+               id="net.refractions.udig.browser.ui.browserContainerView"
+               relationship="stack"
+               relative="net.refractions.udig.catalog.ui.CatalogView"
+               visible="true"/>
+        </perspectiveExtension>
    </extension>
 </plugin>

@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : API rules of engagement</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : API rules of engagement -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+
+<p>We follow the same API rules of engagement as the Eclipse project; a summary of which follows.</p>
+
+<p>What is API:</p>
+<table class='confluenceTable'>
+<tr>
+<th class='confluenceTh'> API </th>
+<td class='confluenceTd'> permission </td>
+<td class='confluenceTd'> details </td>
+</tr>
+<tr>
+<td class='confluenceTd'> package </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> Any package that does not have <em>internal</em>, <em>examples</em>, or <em>tests</em> in the name </td>
+</tr>
+<tr>
+<td class='confluenceTd'> class <br clear="all" /> or interface </td>
+<td class='confluenceTd'> public </td>
+<td class='confluenceTd'> Any <em>public</em> class or interface in an API pacakge. </td>
+</tr>
+<tr>
+<td class='confluenceTd'> method <br clear="all" /> or constructor </td>
+<td class='confluenceTd'> public <br clear="all" /> protected </td>
+<td class='confluenceTd'> Of course this is limited to API class or interface </td>
+</tr>
+<tr>
+<td class='confluenceTd'> field </td>
+<td class='confluenceTd'> public <br clear="all" /> protected </td>
+<td class='confluenceTd'> Of course this is limited to API class or interface </td>
+</tr>
+</table>
+
+<p>Everything else is considered an internal implementation detail and should not be used by client code.</p>
+
+<p>If you really need something please ask on the email list, chances are we would be happy to make it available,<br/>
+and are just waiting for someone to ask.  One of the ways we have kept the udig application small is by not<br/>
+inventing (or advertising) API until a developers asks.</p>
+
+<p>The eclipse rules go into more details on subclassing and overriding. Please assume we are following eclipse<br/>
+conventions - and feel free to report a bug when we dont. <img class="emoticon" src="./icons/emoticons/smile.gif" height="20" width="20" align="absmiddle" alt="" border="0"/></p>
+
+<p>For more information:</p>
+<ul>
+	<li><a href="http://help.eclipse.org/help30/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/misc/api-usage-rules.html" title="Visit page outside Confluence">Eclipse platform API rules of engagement</a></li>
+</ul>
+
+
+<div class="panel"><div class="panelContent">
+<p>Q: net.refractions.udig.xyz is optional?</p>
+
+<p>Yes - if you don't have any plublic API (because you are a pure extention) don't declare any public api</p>
+
+<p>Q: Implementation is not required?</p>
+
+<p>Correct - if you are simply republishing some jars so that other may depend on them. The net.refractions.udig.libs plug-in is an example of this.</p>
+
+<p>Q: Can I have subpackages?</p>
+
+<p>Sort of - just not public ones. Please limit your subpackages to your internals (where others cannot depend on them).</p>
+
+<p>Eclipse does keep everything in different class loaders - so one can have two plug-ins with the same Class and different implementations. While this is possible it is not sane.</p>
+
+<p>The RCP forces us to make sharing explicit - hense the reason for plug-ins like net.refractions.udig.libs.</p>
+</div></div>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=5">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=5">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

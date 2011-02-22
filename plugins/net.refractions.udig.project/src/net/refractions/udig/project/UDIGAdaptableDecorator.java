@@ -19,14 +19,14 @@ package net.refractions.udig.project;
 /**
  * The interface for all classes that decorate non-eclipse classes. This allows access to the "Real"
  * object if necessary.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
 public interface UDIGAdaptableDecorator {
     /**
      * Get the "real" object.
-     * 
+     *
      * @return the "real object
      */
     Object getObject();

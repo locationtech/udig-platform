@@ -33,20 +33,16 @@ import net.refractions.udig.project.MapCompositionEvent;
 import net.refractions.udig.project.MapEvent;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
 import net.refractions.udig.project.internal.render.ViewportModel;
 import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.render.IViewportModelListener;
 import net.refractions.udig.project.render.RenderException;
 import net.refractions.udig.project.render.ViewportModelEvent;
 import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.BoundsStrategy;
-import net.refractions.udig.project.ui.SelectionStyle;
 import net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.ui.IMemento;
@@ -56,51 +52,19 @@ import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Box Printer for MapBox objects.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class MapBoxPrinter extends AbstractBoxPrinter implements IAdaptable {
     Map map;
-    
-    private double scaleDenom;
-    private SelectionStyle selectionStyle; 
-    
-    /**
-     * draw a map at the current scale
-     */
-    public MapBoxPrinter() {
-        super();
-        this.scaleDenom = -1;  
-        this.selectionStyle = SelectionStyle.EXCLUSIVE_ALL_SELECTION;
-    }
-    
-    /**
-     * draw a map at the current scale
-     */
-    public MapBoxPrinter(SelectionStyle ss) {
-        super();
-        this.scaleDenom = -1;  
-        this.selectionStyle = ss;
-    }
-    
-    /**
-     * force the map to the given scale.  (-1 means not set.)
-     * @param scaleDenom the scale denominator
-     */
-    public MapBoxPrinter(double scaleDenom, SelectionStyle selectionStyle) {
-        super();
-        this.selectionStyle = selectionStyle;
-        this.scaleDenom = scaleDenom;        
-    }
-    
-    
+
     ILayerListener layerListener = new ILayerListener(){
 
         public void refresh( LayerEvent event ) {
             setDirty(true);
         }
-        
+
     };
 
     IMapCompositionListener mapCompositionListener = new IMapCompositionListener(){
@@ -111,8 +75,8 @@ public class MapBoxPrinter extends AbstractBoxPrinter implements IAdaptable {
             removeLayerListenersFromRemovedLayers(event);
 
             addLayerListenerToNewLayers(event);
-            
-            
+
+
         }
 
         @SuppressWarnings("unchecked")
@@ -207,38 +171,11 @@ public class MapBoxPrinter extends AbstractBoxPrinter implements IAdaptable {
     }
 
     public void draw( Graphics2D graphics, IProgressMonitor monitor ) {
-        super.draw(graphics, monitor);
-        
         try {
             Dimension size = this.getBox().getSize();
-            
-            //reduce set a 1 pixel clip bound around outside to prevent 
-            //some Graphics2D implementations (itext!) from bleeding into space
-            //outside the graphics canvas
-            graphics.setClip(1, 1, size.width-2, size.height-2);
-            
             java.awt.Dimension awtSize = new java.awt.Dimension(
                     size.width, size.height);
-            IMap modifiedMap = null;
-            if (scaleDenom == -1) {
-                //ApplicationGIS.drawMap(new DrawMapParameter(graphics, awtSize, getMap(), monitor, true));
-                modifiedMap = ApplicationGIS.drawMap(new DrawMapParameter(graphics, awtSize, getMap(), null /*use current scale*/, 90, selectionStyle, monitor, true, true));
-            }
-            else {
-                BoundsStrategy boundsStrategy = new BoundsStrategy(scaleDenom);
-                modifiedMap = ApplicationGIS.drawMap(new DrawMapParameter(graphics, awtSize, getMap(), boundsStrategy, 90, selectionStyle, monitor, true, true));
-            }
-
-            //ApplicationGIS.drawMap makes a copy of the map, and may change its bounds.  If it does change
-            //the bounds then update the original map to match (this will force the mapgraphics to update too)
-            if (!getMap().getViewportModel().getBounds().equals(modifiedMap.getViewportModel().getBounds())) {
-                SetViewportBBoxCommand cmdBBox = new SetViewportBBoxCommand(modifiedMap.getViewportModel().getBounds());
-                getMap().sendCommandSync(cmdBBox);
-            }
-            
-            //restore regular clip rectangle
-            graphics.setClip(0, 0, size.width, size.height);
-            
+            ApplicationGIS.drawMap(new DrawMapParameter(graphics, awtSize, getMap(),  monitor));
         } catch (RenderException e) {
             PrintingModelPlugin.log(null, e);
         }
@@ -247,7 +184,7 @@ public class MapBoxPrinter extends AbstractBoxPrinter implements IAdaptable {
     BufferedImage preview;
     State current;
     public void createPreview( Graphics2D graphics, final IProgressMonitor monitor ) {
-		Dimension size = getBox().getSize();
+        Dimension size = getBox().getSize();
 
         try {
             if (map != null) {
@@ -337,7 +274,7 @@ public class MapBoxPrinter extends AbstractBoxPrinter implements IAdaptable {
         if (adapter.isAssignableFrom(Map.class)) {
             return this.map;
         }
-        return Platform.getAdapterManager().getAdapter(this, adapter);
+        return null;
     }
 
 }

@@ -20,13 +20,13 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.opengis.filter.Filter;
+import org.geotools.filter.Filter;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * A MapCommand that selects all features in the bounding box encapsulated by the class.
- * 
+ *
  * @author jeichar
  * @since TODO provide version
  */
@@ -51,7 +51,7 @@ public class BBoxSelectionCommand extends AbstractCommand implements UndoableMap
 
     /**
      * Creates a new instance of BBoxSelectionCommand
-     * 
+     *
      * @param bbox
      */
     public BBoxSelectionCommand( Envelope bbox, int modifiers ) {
@@ -93,7 +93,7 @@ public class BBoxSelectionCommand extends AbstractCommand implements UndoableMap
      * @see net.refractions.udig.project.command.MapCommand#getName()
      */
     public String getName() {
-        return Messages.BBoxSelectionCommand_boxSelection; 
+        return Messages.BBoxSelectionCommand_boxSelection;
     }
 
 }

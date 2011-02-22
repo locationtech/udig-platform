@@ -2,11 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mapgraphic Plug-in
 Bundle-SymbolicName: net.refractions.udig.tutorials.mapgraphic;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.tutorials.mapgraphic.Activator
-Bundle-Vendor: udig.refractions.net
+Bundle-Vendor: Student
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.project.ui,
- net.refractions.udig.mapgraphic
-Bundle-ActivationPolicy: lazy
+ net.refractions.udig.mapgraphic,
+ net.refractions.udig.tutorials.tool.coordinate
+Eclipse-LazyStart: true

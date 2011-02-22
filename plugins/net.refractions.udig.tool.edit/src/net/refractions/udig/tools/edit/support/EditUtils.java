@@ -21,13 +21,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.mapgraphic.grid.GridMapGraphic;
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
@@ -50,17 +48,16 @@ import net.refractions.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.filter.FidFilter;
+import org.geotools.filter.Filter;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.filter.FilterType;
+import org.geotools.filter.IllegalFilterException;
 import org.geotools.geometry.jts.JTS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Id;
-import org.opengis.filter.identity.Identifier;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
@@ -71,8 +68,8 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LinearRing;
 
 /**
- * Methods for determining spatial relationships between points. 
- * 
+ * Methods for determining spatial relationships between points.
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -85,10 +82,10 @@ public class EditUtils {
     public static final int NO_INTERSECTION = -2;
 
     private static final String EDIT_FEATURE_BOUNDS = "BOUNDS OF RENDERING FILTER"; //$NON-NLS-1$
-    
+
 
     public static EditUtils instance=new EditUtils();
-    
+
     public int overVertext( Coordinate[] coords, Envelope env ) {
         if (coords == null)
             return NO_INTERSECTION;
@@ -102,9 +99,9 @@ public class EditUtils {
 
     /**
      * Return true if the envelope overlaps at least one edge of the shape.  This checks all the
-     * Coordinates in the shape so the envelope must be in the "world" space (same projection as coordinates). 
-     * 
-     * @param shape to search 
+     * Coordinates in the shape so the envelope must be in the "world" space (same projection as coordinates).
+     *
+     * @param shape to search
      * @param env envelope used to see if it overlaps an edge
      * @return true if the envelope overlaps at least one edge of the shape.
      */
@@ -123,10 +120,10 @@ public class EditUtils {
 
     /**
      * Return true if the envelope overlaps at least one edge of the shape.  This only checks the
-     * Points in the shape so the envelope must be in pixel space.  This also means that it is not 
+     * Points in the shape so the envelope must be in pixel space.  This also means that it is not
      * completely accurate but it is sufficient for interactive purposes.
-     * 
-     * @param shape to search 
+     *
+     * @param shape to search
      * @param env envelope used to see if it overlaps an edge
      * @return true if the envelope overlaps at least one edge of the shape.
      */
@@ -136,7 +133,7 @@ public class EditUtils {
         Point point1=shape.getPoint(shape.getNumPoints()-1);
         for( int i = 0; i < shape.getNumPoints(); i++ ) {
             Point point2 = shape.getPoint(i);
-            
+
             Coordinate endPoint1=new Coordinate(point1.getX(), point1.getY());
             Coordinate endPoint2=new Coordinate(point2.getX(), point2.getY());
             if (overEdge(endPoint1, endPoint2, env) )
@@ -160,12 +157,12 @@ public class EditUtils {
         double y0 = endPoint1.y;
         double x1 = endPoint2.x;
         double y1 = endPoint2.y;
-        
+
         double xmin=env.getMinX();
         double ymin=env.getMinY();
         double xmax=env.getMaxX();
         double ymax=env.getMaxY();
-        
+
         int outcode0 = compOutCode(x0, y0, xmin, xmax, ymin, ymax);
         int outcode1 = compOutCode(x1, y1, xmin, xmax, ymin, ymax);
         do {
@@ -222,7 +219,7 @@ public class EditUtils {
      * @param click the closest coordinate in <i>coordinates</i> will be found with respect to
      *        <i>click</i>
      * @param result the first position will be fill with the closest coordinate in geometry.
-     * 
+     *
      * @return the index of the coordinate closest to the click.
      */
     public int getClosest( Geometry geometry, Coordinate click, Coordinate[] result ) {
@@ -235,7 +232,7 @@ public class EditUtils {
         mindist = Math.sqrt(x * x + y * y);
         for( int i = 0; i < coordinates.length; i++ ) {
             Coordinate point = coordinates[i];
-            
+
             x = click.x - point.x;
             y = click.y - point.y;
             double dist = Math.sqrt(x * x + y * y);
@@ -258,7 +255,7 @@ public class EditUtils {
      * <p>
      * All Coordinates must be in the same CRS
      * </p>
-     * 
+     *
      * @param endPoint1 first vertex of a line.
      * @param endPoint2 second vertex of a line.
      * @param src the closes coordinate is found with respect to src.
@@ -288,7 +285,7 @@ public class EditUtils {
      * <p>
      * All Coordinates must be in the same CRS
      * </p>
-     * 
+     *
      * @param endPoint1 first vertex of a line.
      * @param endPoint2 second vertex of a line.
      * @param src the closes coordinate is found with respect to src.
@@ -300,8 +297,8 @@ public class EditUtils {
             return src;
         if( endPoint2.equals(src) )
             return src;
-        
-        Point v = Point.valueOf(endPoint2.getX() - endPoint1.getX(), 
+
+        Point v = Point.valueOf(endPoint2.getX() - endPoint1.getX(),
                 endPoint2.getY() - endPoint1.getY());
         int i = v.getX() * v.getX() + v.getY() * v.getY();
         if( i==0 )
@@ -314,22 +311,22 @@ public class EditUtils {
             return endPoint2;
         if( t<=0 )
             return endPoint1;
-        
+
         if (Double.isInfinite(t) || Double.isNaN(t))
             return null;
 
-        return Point.valueOf((int)(endPoint1.getX() + t * v.getX()), 
+        return Point.valueOf((int)(endPoint1.getX() + t * v.getX()),
                 (int)(endPoint1.getY() + t * v.getY()));
     }
 
     /**
      * Convenience method; transforms the click from the viewportModel CRS to the layer's CRS.
-     * 
+     *
      * @param click
      * @return
      */
     public Coordinate getTransformedClick( Coordinate click, ILayer layer ) {
-    
+
         try {
             MathTransform transform = layer.mapToLayerTransform();
             if (transform == null || transform.isIdentity())
@@ -368,7 +365,7 @@ public class EditUtils {
      */
     public Coordinate snapToGrid( Point centerPoint, IMap map )  {
         List<ILayer> layers = map.getMapLayers();
-        
+
         // by default choose something that will work
         ILayer found=layers.get(0);
         GridMapGraphic graphic=new GridMapGraphic();
@@ -383,15 +380,15 @@ public class EditUtils {
                 break;
             }
         }
-        
-        
+
+
         double[] closest;
         try {
             closest = graphic.closest(centerPoint.getX(), centerPoint.getY(), found);
         } catch (FactoryException e) {
             EditPlugin.log(null, e);
             throw (RuntimeException) new RuntimeException( ).initCause( e );
-        } 
+        }
         return new Coordinate(closest[0], closest[1], 0);
     }
 
@@ -399,12 +396,12 @@ public class EditUtils {
     /**
      * Searches all the layers in the map and the EditBlackboard for the closest vertex to center point
      * @param includeVerticesInCurrent indicates whether the vertices of the current feature should be considered.
-     * @param stateAfterSearch 
+     * @param stateAfterSearch
      * @return the Point that is the closest vertex.
      */
-    public Coordinate getClosestSnapPoint( EditToolHandler handler, EditBlackboard editBlackboard, Point centerPoint, boolean includeVerticesInCurrent, 
+    public Coordinate getClosestSnapPoint( EditToolHandler handler, EditBlackboard editBlackboard, Point centerPoint, boolean includeVerticesInCurrent,
             SnapBehaviour snapBehaviour, EditState stateAfterSearch ) {
-        
+
         IToolContext context = handler.getContext();
         MinFinder minFinder = new MinFinder(editBlackboard.toCoord(centerPoint));
         SearchBoxAnimation anim = new SearchBoxAnimation(centerPoint, new IsBusyStateProvider(
@@ -471,7 +468,7 @@ public class EditUtils {
     private void searchSelection( EditToolHandler handler, EditBlackboard editBlackboard, Point centerPoint, boolean includeVerticesInCurrent, MinFinder minFinder ) {
         Point point = editBlackboard.overVertex(centerPoint, PreferenceUtil.instance()
                 .getSnappingRadius(), true);
-        
+
         // the vertices in the current geometry should only be considered if inlcudeVerticesInCurrent is true
         boolean containsNonCurrentShape = containsNonCurrentShape(point, editBlackboard, handler.getCurrentShape());
         if( point!=null && (includeVerticesInCurrent || containsNonCurrentShape) )
@@ -486,8 +483,8 @@ public class EditUtils {
             return false;
         if( geoms.size()>1 || geoms.get(0)!=currentShape.getEditGeom() )
             return true;
-        
-        
+
+
         return false;
     }
 
@@ -500,17 +497,17 @@ public class EditUtils {
      * @return the closest vertex in the layer within the snapping radius or null.
      */
     private Coordinate searchLayer( ILayer layer, IToolContext context, Point centerPoint  ) {
-        if (!layer.hasResource(FeatureSource.class) || 
-                !layer.isApplicable(EditPlugin.ID) 
+        if (!layer.hasResource(FeatureSource.class) ||
+                !layer.isApplicable(EditPlugin.ID)
                 || !layer.isVisible() )
             return null;
-        
+
         ILayer editLayer = context.getEditManager().getEditLayer();
-        SimpleFeature editFeature=context.getEditManager().getEditFeature();
+        Feature editFeature=context.getEditManager().getEditFeature();
         String editFeatureID=null;
         if( editFeature!=null )
             editFeatureID=editFeature.getID();
-        
+
         Envelope bbox = context.getBoundingBox(
                 new java.awt.Point(centerPoint.getX(), centerPoint.getY()),
                 PreferenceUtil.instance().getSnappingRadius() * 2);
@@ -518,17 +515,17 @@ public class EditUtils {
             Coordinate tmp = context.pixelToWorld(centerPoint.getX(), centerPoint.getY());
             Coordinate layerCenter = JTS.transform(tmp, new Coordinate(), layer
                     .mapToLayerTransform());
-            FeatureCollection<SimpleFeatureType, SimpleFeature>  features = context.getFeaturesInBbox(layer, bbox);
-            FeatureIterator<SimpleFeature> iter = null;
+            FeatureCollection features = context.getFeaturesInBbox(layer, bbox);
+            FeatureIterator iter = null;
             try {
                 Coordinate closest = null;
                 double minDist = Integer.MAX_VALUE;
                 for( iter = features.features(); iter.hasNext(); ) {
-                    SimpleFeature feature = iter.next();
+                    Feature feature = iter.next();
                     if( feature.getID().equals(editFeatureID) && layer==editLayer )
                         continue;
                     Coordinate[] result = new Coordinate[1];
-                    EditUtils.instance.getClosest((Geometry) feature.getDefaultGeometry(), layerCenter, result);
+                    EditUtils.instance.getClosest(feature.getDefaultGeometry(), layerCenter, result);
                     double x = layerCenter.x - result[0].x;
                     double y = layerCenter.y - result[0].y;
                     double distNew = Math.sqrt(x * x + y * y);
@@ -578,7 +575,7 @@ public class EditUtils {
                 throw new NullPointerException("centerPoint cannot be null"); //$NON-NLS-1$
             this.centerPoint=centerPoint;
         }
-        
+
         public MinFinder( Coordinate coord ) {
             this.centerCoord=coord;
         }
@@ -586,11 +583,11 @@ public class EditUtils {
         public Point getMin(){
             return currentMin;
         }
-        
+
         public Coordinate getMinCoord(){
             return minCoord;
         }
-        
+
         public void add(Point p) {
             if (p==null || p.equals(centerPoint))
                 return;
@@ -599,15 +596,15 @@ public class EditUtils {
                 distance=dist(p);
                 return;
             }
-            
+
             double dist = dist(p);
             if( dist<distance ){
                 currentMin=p;
                 distance=dist;
             }
-            
+
         }
-        
+
         public double dist(Point p){
             double x = centerPoint.getX() - p.getX();
             double y = centerPoint.getY() - p.getY();
@@ -621,35 +618,35 @@ public class EditUtils {
                 distance=dist(p);
                 return;
             }
-            
+
             double dist = dist(p);
             if( dist<distance ){
                 minCoord=p;
                 distance=dist;
             }
-            
+
         }
-        
+
         public double dist(Coordinate p){
             double x = centerCoord.x - p.x;
             double y = centerCoord.y - p.y;
             return Math.sqrt(x * x + y * y);
         }
     }
-    
+
 
     /**
      * Returns the intersection where the two lines meet
      */
     public Coordinate intersectingLines( Coordinate line1P1, Coordinate line1P2, Coordinate line2P1, Coordinate line2P2) {
-        
+
         double B1 = line1P1.x-line1P2.x;
         double B2 = line2P1.x-line2P2.x;
         double A1 = line1P2.y-line1P1.y;
         double A2 = line2P2.y-line2P1.y;
         double C1 = A1*line1P1.x+B1*line1P1.y;
         double C2 = A2*line2P1.x+B2*line2P1.y;
-        
+
         double det = A1*B2 - A2*B1;
         if(det == 0){
             //Lines are parallel
@@ -660,28 +657,28 @@ public class EditUtils {
 
         boolean onLine1=Math.min(line1P1.x, line1P2.x)<=x&& x<=Math.max(line1P1.x, line1P2.x)
             && Math.min(line1P1.y, line1P2.y)<=y && y<=Math.max(line1P1.y, line1P2.y);
-        
+
         boolean onLine2=Math.min(line2P1.x, line2P2.x)<=x&& x<=Math.max(line2P1.x, line2P2.x)
         && Math.min(line2P1.y, line2P2.y)<=y && y<=Math.max(line2P1.y, line2P2.y);
-        
+
         if( onLine1 && onLine2 )
             return new Coordinate(x, y);
-        
+
         return null;
     }
-    
+
     /**
      * Returns the intersection where the two lines meet
      */
     public Point intersectingLines(Point line1P1, Point line1P2, Point line2P1, Point line2P2){
-        
+
         int B1 = line1P1.getX()-line1P2.getX();
         int B2 = line2P1.getX()-line2P2.getX();
         int A1 = line1P2.getY()-line1P1.getY();
         int A2 = line2P2.getY()-line2P1.getY();
         int C1 = A1*line1P1.getX()+B1*line1P1.getY();
         int C2 = A2*line2P1.getX()+B2*line2P1.getY();
-        
+
         double det = A1*B2 - A2*B1;
         if(det == 0){
             //Lines are parallel
@@ -692,20 +689,20 @@ public class EditUtils {
 
         boolean onLine1=Math.min(line1P1.getX(), line1P2.getX())<=x&& x<=Math.max(line1P1.getX(), line1P2.getX())
             && Math.min(line1P1.getY(), line1P2.getY())<=y && y<=Math.max(line1P1.getY(), line1P2.getY());
-        
+
         boolean onLine2=Math.min(line2P1.getX(), line2P2.getX())<=x&& x<=Math.max(line2P1.getX(), line2P2.getX())
         && Math.min(line2P1.getY(), line2P2.getY())<=y && y<=Math.max(line2P1.getY(), line2P2.getY());
-        
+
         if( onLine1 && onLine2 )
             return Point.valueOf((int)x, (int)y);
-        
+
         return null;
     }
 
     /**
-     * Reverse the order of the vertices in a Shape.  Used because the holes and shells in polygons have to 
-     * be in a particular order. 
-     * 
+     * Reverse the order of the vertices in a Shape.  Used because the holes and shells in polygons have to
+     * be in a particular order.
+     *
      * @param shape
      */
     public void reverseOrder( PrimitiveShape shape ) {
@@ -713,17 +710,17 @@ public class EditUtils {
     		shape.getMutator().reverse();
 		}
     }
-    
+
 
     /**
      * Appends the points defined in the PathIterator to the shape.  Currently curve segments are not supported
      * and if there is a moveto in the middle of the iterator a hole will be created in the shape.
      * If the GeomType is line or point then an exception will be thrown but otherwise the client code
      * must ensure that the request makes sense.
-     * 
+     *
      * @param iter The iterator to append
      * @param shape the shape to append to.
-     * @return Commands that will append the points to the shape.  Nothing is done until commands are run. 
+     * @return Commands that will append the points to the shape.  Nothing is done until commands are run.
      */
     public UndoableComposite appendPathToShape( EditToolHandler handler, PathIterator iter, PrimitiveShape shape) {
         EditBlackboard bb=shape.getEditBlackboard();
@@ -736,17 +733,17 @@ public class EditUtils {
      * and if there is a move to in the middle of the iterator a hole will be created in the shape.
      * If the GeomType is line or point then an exception will be thrown but otherwise the client code
      * must ensure that the request makes sense.
-     * 
+     *
      * @param iter The iterator to append
      * @param bb the editblackboard used to add coordinates
      * @param currentProvider2 the shape provider that provides the shape to append the coordinates to
      * @param shapeType the type of geometry that is expected from currentProvider.
-     * @return Commands that will append the points to the shape.  Nothing is done until commands are run. 
+     * @return Commands that will append the points to the shape.  Nothing is done until commands are run.
      */
-    public UndoableComposite appendPathToShape( PathIterator iter, ShapeType shapeType, EditToolHandler handler, 
+    public UndoableComposite appendPathToShape( PathIterator iter, ShapeType shapeType, EditToolHandler handler,
             EditBlackboard bb, IBlockingProvider<PrimitiveShape> currentProvider2 ) {
         IBlockingProvider<PrimitiveShape> currentProvider=currentProvider2;
-        
+
         List<UndoableMapCommand> commands=new ArrayList<UndoableMapCommand>();
         commands.add(new StartBatchingCommand(bb));
         float[] coords=new float[6];
@@ -769,7 +766,7 @@ public class EditUtils {
                 start[0]=coords[0];
                 start[1]=coords[1];
                 // no break is intentional.  It has to fall through and add a vertext to the shape
-            case PathIterator.SEG_LINETO:            
+            case PathIterator.SEG_LINETO:
                 addVertexCommand = new AddVertexCommand(handler, bb, currentProvider, Point.valueOf((int)coords[0], (int)coords[1]), false);
                 addVertexCommand.setShowAnimation(false);
                 commands.add( addVertexCommand);
@@ -785,21 +782,21 @@ public class EditUtils {
                 break;
             default:
                 throw new UnsupportedOperationException("not supported"); //$NON-NLS-1$
-            
+
             }
             iter.next();
         }
-        
+
         if (shapeType==ShapeType.POLYGON && addVertexCommand!=null && !addVertexCommand.getPointToAdd().equals(Point.valueOf((int)start[0], (int)start[1]))){
-            commands.add( new AddVertexCommand(handler, bb, currentProvider, Point.valueOf((int)start[0], (int)start[1]), false));            
+            commands.add( new AddVertexCommand(handler, bb, currentProvider, Point.valueOf((int)start[0], (int)start[1]), false));
         }
-        
+
 
         UndoableComposite undoableComposite = new UndoableComposite(commands);
         undoableComposite.getFinalizerCommands().add(new FireEventsCommand(bb));
         return undoableComposite;
     }
-    
+
     private static class StartBatchingCommand extends AbstractCommand implements UndoableMapCommand{
         private EditBlackboard bb;
 
@@ -816,10 +813,10 @@ public class EditUtils {
 
         public void rollback( IProgressMonitor monitor ) throws Exception {
         }
-        
+
     }
-    
-    
+
+
     private static class FireEventsCommand extends AbstractCommand implements UndoableMapCommand{
         private EditBlackboard bb;
 
@@ -836,7 +833,7 @@ public class EditUtils {
 
         public void rollback( IProgressMonitor monitor ) throws Exception {
         }
-        
+
     }
     public static class StaticShapeProvider implements IBlockingProvider<PrimitiveShape>{
         private PrimitiveShape shape;
@@ -844,11 +841,11 @@ public class EditUtils {
         public StaticShapeProvider( PrimitiveShape shape ){
             this.shape=shape;
         }
-        
+
         public PrimitiveShape get(IProgressMonitor monitor, Object... params) {
             return shape;
         }
-        
+
     }
     /**
      * Will retrive the current shape from the EditToolHandler.
@@ -857,26 +854,26 @@ public class EditUtils {
      * <p>
      */
     public static class EditToolHandlerShapeProvider implements IBlockingProvider<PrimitiveShape> {
-    
+
         private EditToolHandler handler;
 
         /**
-         * Lazily grab the current shape from the provided handler. 
+         * Lazily grab the current shape from the provided handler.
          * @param handler
          */
         public EditToolHandlerShapeProvider( EditToolHandler handler ) {
             this.handler = handler;
         }
-    
+
         public PrimitiveShape get(IProgressMonitor monitor, Object... params) {
             return handler.getCurrentShape();
-        }    
+        }
     }
-    
+
 
     /**
      * Provider for EditGeoms
-     * 
+     *
      * @author jones
      * @since 1.1.0
      */
@@ -914,12 +911,12 @@ public class EditUtils {
             layer.getBlackboard().put(EditToolHandler.STORED_CURRENT_STATE, null);
         }
     }
-    
+
     /**
-     * When an edit is canceled the selected layer must be re-rendered because they were hidden by {@link #refreshLayer(ILayer, SimpleFeature, Envelope, boolean, boolean)}
+     * When an edit is canceled the selected layer must be re-rendered because they were hidden by {@link #refreshLayer(ILayer, Feature, Envelope, boolean, boolean)}
      * This method must be called in order to efficiently do that.
-     * 
-     * @see #refreshLayer(ILayer, SimpleFeature, Envelope, boolean, boolean)
+     *
+     * @see #refreshLayer(ILayer, Feature, Envelope, boolean, boolean)
      *
      * @param selectedLayer
      */
@@ -939,12 +936,12 @@ public class EditUtils {
         if( filter==null )
             return;
         properties.put(ProjectBlackboardConstants.MAP__RENDERING_FILTER, null);
-        
+
         Envelope env=(Envelope) properties.get(EDIT_FEATURE_BOUNDS);
         properties.put(EDIT_FEATURE_BOUNDS, null);
         selectedLayer.refresh(env);
     }
-    
+
     /**
      * Triggers a re-render that hides the features on the {@link EditBlackboard}.
      */
@@ -970,9 +967,9 @@ public class EditUtils {
     /**
      * Sets the rendering hint on the layer so that the feature is hidden if hidefeature is true.  If hidefeature is false then
      * the hint is reset all features are shown
-     * 
+     *
      * <p>
-     *  {@link #cancelHideSelection(ILayer)} should be called if the edit is canceled. 
+     *  {@link #cancelHideSelection(ILayer)} should be called if the edit is canceled.
      * </p>
      * @see #cancelHideSelection(ILayer)
      *
@@ -982,7 +979,7 @@ public class EditUtils {
      * Layer coordinates.
      * @param hidefeature
      */
-    public void refreshLayer(ILayer selectedLayer, SimpleFeature feature, Envelope refreshBounds, boolean forceRefresh, boolean hidefeature)  {
+    public void refreshLayer(ILayer selectedLayer, Feature feature, Envelope refreshBounds, boolean forceRefresh, boolean hidefeature)  {
         Set<String> fids = Collections.singleton(feature.getID());
         refreshLayer(selectedLayer, fids, refreshBounds, forceRefresh, hidefeature);
     }
@@ -990,14 +987,14 @@ public class EditUtils {
     /**
      * Sets the rendering hint on the layer so that the feature is hidden if hidefeature is true.  If hidefeature is false then
      * the hint is reset all features are shown
-     * 
+     *
      * <p>
-     *  {@link #cancelHideSelection(ILayer)} should be called if the edit is cancelled. 
+     *  {@link #cancelHideSelection(ILayer)} should be called if the edit is cancelled.
      * </p>
      * @see #cancelHideSelection(ILayer)
      *
      * @param selectedLayer the currently selected layer
-     * @param fids the SimpleFeature Ids of the features that have been selected
+     * @param fids the Feature Ids of the features that have been selected
      * @param refreshBounds the area to refresh (should be the the area of the features).  May be null to refresh entire area.  Envelope should be in
      * Layer coordinates.
      * @param hidefeature if true then the features are hidden otherwise they will be shown again.
@@ -1014,22 +1011,22 @@ public class EditUtils {
             ((ViewportPane) selectedLayer.getMap().getRenderManager().getMapDisplay()).repaint();
             return;
         }
-        
+
         if( !forceRefresh && fids.isEmpty() )
             return;
-        
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
+
+        FilterFactory filterFactory = FilterFactoryFinder.createFilterFactory();
         boolean modified=false;
         for( String fid : fids ) {
             if ( fid == null )
                 continue;
             if( hidefeature ){
                 setAffectedArea(refreshBounds, properties);
-                
+
                 modified = addFidToExcludeFilter(properties, fid, filterFactory) || modified;
             }else{
                 //get area to refresh and refresh it
-                modified = removeFidFromExcludeFilter(properties, fid, filterFactory) || modified;            
+                modified = removeFidFromExcludeFilter(properties, fid, filterFactory) || modified;
             }
         }
 
@@ -1039,35 +1036,29 @@ public class EditUtils {
 
     private boolean removeFidFromExcludeFilter( IBlackboard properties, String fid, FilterFactory filterFactory ) {
         Filter filter = (Filter) properties.get(ProjectBlackboardConstants.MAP__RENDERING_FILTER);
-        Filter f=(Filter) Filter.EXCLUDE;
+        Filter f=Filter.ALL;
         boolean modified=false;
-        if( filter instanceof Id ){
-            Id fidFilter=(Id) filter;
-            Set<Identifier> ids = new HashSet<Identifier>(fidFilter.getIdentifiers());
-            for (Iterator<Identifier> iter = ids.iterator(); iter.hasNext();) {
-				Identifier element = (Identifier) iter.next();
-				Object id = element.getID();
-				if ( id.equals(fid) ){
-					iter.remove();
-					break;
-				}
-					
-			}
-            f=filterFactory.id(ids);
-            if( fidFilter.getIDs().toArray(new String[0]).length==0 )
-                f=(Filter) Filter.EXCLUDE;
-            
+        if( filter instanceof FidFilter ){
+            FidFilter fidFilter=(FidFilter) filter;
+            fidFilter.removeFid(fid);
+            f=fidFilter;
+            if( fidFilter.getFids().length==0 )
+                f=Filter.ALL;
+
             modified=true;
         }else{
             if( filter!=null ){
-                f=filterFactory.id(FeatureUtils.stringToId(filterFactory, fid));
-                f = filterFactory.not(f);
-                f = filterFactory.or(f, filter);
+                f=filterFactory.createFidFilter(fid).not();
+                try {
+                    f=filterFactory.createLogicFilter(f, filter, FilterType.LOGIC_OR);
+                } catch (IllegalFilterException e) {
+                    throw (RuntimeException) new RuntimeException( ).initCause( e );
+                }
                 modified=true;
             }
 
         }
-        if( f==Filter.EXCLUDE )
+        if( f==Filter.ALL )
             f=null;
         properties.put(ProjectBlackboardConstants.MAP__RENDERING_FILTER, f);
 
@@ -1080,22 +1071,25 @@ public class EditUtils {
 
         Filter f;
         boolean modified=false;
-        if( filter instanceof Id ){
-        	Id fidFilter=(Id) filter;
-            Set<Identifier> ids = new HashSet<Identifier>(fidFilter.getIdentifiers());
-            ids.add(filterFactory.featureId(fid));
-            f=filterFactory.id(ids);
+        if( filter instanceof FidFilter ){
+            FidFilter fidFilter=(FidFilter) filter;
+            fidFilter.addFid(fid);
+            f=fidFilter;
             modified=true;
         }else{
-            f = filterFactory.id(FeatureUtils.stringToId(filterFactory,fid));
-            
+            f = filterFactory.createFidFilter(fid);
+
             if( filter!=null ){
-            	f = filterFactory.or(f, filter);
+                try {
+                    f=filterFactory.createLogicFilter(f, filter, FilterType.LOGIC_OR);
+                } catch (IllegalFilterException e) {
+                    throw (RuntimeException) new RuntimeException( ).initCause( e );
+                }
             }
             modified=true;
         }
         properties.put(ProjectBlackboardConstants.MAP__RENDERING_FILTER, f);
-        
+
         return modified;
     }
 
@@ -1116,7 +1110,7 @@ public class EditUtils {
                 bounds.expandToInclude(refreshBounds);
             }
         }
-        
+
         properties.put(EDIT_FEATURE_BOUNDS, bounds);
     }
 
@@ -1124,7 +1118,7 @@ public class EditUtils {
      * Returns the Geometry from the collection that the mouse is over/intersects
      *
      * @param geoms Geoms to search through
-     * @param location the location 
+     * @param location the location
      * @return the first geom that the location is over/intersects
      */
     public EditGeom getGeomWithMouseOver( Collection<EditGeom> geoms, Point location, boolean treatUnknownAsPolygon) {
@@ -1136,7 +1130,7 @@ public class EditUtils {
                 break;
             }
             ClosestEdge edge = geom.getShell().getClosestEdge(location, treatUnknownAsPolygon);
-            if (edge != null && 
+            if (edge != null &&
                     edge.getDistanceToEdge() <= PreferenceUtil.instance().getVertexRadius()){
                 over=geom;
                 break;
@@ -1144,9 +1138,9 @@ public class EditUtils {
         }
         return over;
     }
-    
+
     /**
-     * Returns true if the shape has a self intersection.   
+     * Returns true if the shape has a self intersection.
      * Only checks the points not the coordinates there for it is quicker but less accurate.
      *
      * @param shape shape to test.
@@ -1162,16 +1156,16 @@ public class EditUtils {
             if( intersection(last, current, shape, i, shape.getNumPoints()-1, false))
                 return true;
         }
-        
+
         return false;
     }
 
     /**
-     * Checks whether the edge from point1 to point2 intersects any edge in the shape from startIndex to the endIndex 
+     * Checks whether the edge from point1 to point2 intersects any edge in the shape from startIndex to the endIndex
      *
      * @param point1 the first point in the reference edge
      * @param point2 the second point in the reference edge
-     * @param shape the shape that is searched for intersections 
+     * @param shape the shape that is searched for intersections
      * @param startIndex the index in the shape of the point at which to start searching.  The point indicated will be the
      * first point in the edge.
      * @param endIndex the index to stop the search.  It is the index of the end point of the last edge to compare
@@ -1180,13 +1174,13 @@ public class EditUtils {
     public boolean intersection( Point point1, Point point2, PrimitiveShape shape, int startIndex, int endIndex ){
         return intersection(point1, point2, shape, startIndex, endIndex, true);
     }
-    
+
     /**
-     * Checks whether the edge from point1 to point2 intersects any edge in the shape from startIndex to the endIndex 
+     * Checks whether the edge from point1 to point2 intersects any edge in the shape from startIndex to the endIndex
      *
      * @param point1 the first point in the reference edge
      * @param point2 the second point in the reference edge
-     * @param shape the shape that is searched for intersections 
+     * @param shape the shape that is searched for intersections
      * @param startIndex the index in the shape of the point at which to start searching.  The point indicated will be the
      * first point in the edge.
      * @param endIndex the index to stop the search.  It is the index of the end point of the last edge to compare
@@ -1196,14 +1190,14 @@ public class EditUtils {
      */
     private boolean intersection( Point point1, Point point2, PrimitiveShape shape, int startIndex, int endIndex,
             boolean referenceLineIntersections) {
-        
-        
+
+
         for( int j=startIndex+1; j<endIndex+1; j++ ){
             Point last2 = shape.getPoint(j-1);
             Point current2 = shape.getPoint(j);
             if( last2.equals(point1) )
                 continue; // same edge so continue.
-            
+
             if( linesParallel(point1,point2,last2,current2) ){
                 if( sameDirection(point1,point2, last2,current2) && last2.equals(point2) ){
                     return true;
@@ -1212,7 +1206,7 @@ public class EditUtils {
                     continue;
                 }
             }
-            
+
             Point intersectingLines = intersectingLines(point1, point2, last2, current2);
             if( intersectingLines!=null  ){
                 Point endPoint2;
@@ -1228,7 +1222,7 @@ public class EditUtils {
                     return true;
             }
         }
-        
+
         return false;
     }
     private boolean sameDirection( Point last, Point current, Point last2, Point current2 ) {
@@ -1238,7 +1232,7 @@ public class EditUtils {
         int dx2 = last2.getX()-current2.getX();
         double length1 = Math.sqrt(dx1*dx1+dy1*dy1);
         double length2 = Math.sqrt(dx2*dx2+dy2*dy2);
-        
+
         if( dx1/length1==dx2/length2 && dy1/length1==dy2/length2){
             return false;
         }
@@ -1250,7 +1244,7 @@ public class EditUtils {
         int B2 = line2P1.getX()-line2P2.getX();
         int A1 = line1P2.getY()-line1P1.getY();
         int A2 = line2P2.getY()-line2P1.getY();
-        
+
         double det = A1*B2 - A2*B1;
         if(det == 0){
             //Lines are parallel

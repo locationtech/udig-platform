@@ -36,7 +36,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 /**
  * The PrintingEngine takes a page and processes it, taking each Box and realizing its contents and
  * sending the result to the printer.
- * 
+ *
  * @author Richard Gould
  */
 public class PrintingEngine implements Pageable, Printable {
@@ -47,7 +47,7 @@ public class PrintingEngine implements Pageable, Printable {
 
     /**
      * Constructs a PrintingEngine using the given Page
-     * 
+     *
      * @param page the Page to be printed
      */
     public PrintingEngine( Page diagram ) {
@@ -56,7 +56,7 @@ public class PrintingEngine implements Pageable, Printable {
 
     /**
      * Iterates through the Page's Boxes, drawing to the provided Graphics object
-     * 
+     *
      * @see java.awt.print.Printable#print(java.awt.Graphics, java.awt.print.PageFormat, int)
      */
     public int print( Graphics graphics, PageFormat pageFormat, int pageIndex )

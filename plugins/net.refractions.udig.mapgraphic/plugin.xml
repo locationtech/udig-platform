@@ -20,15 +20,13 @@
             name="Map Graphic"/>
    </extension>
    <extension
-         id="net.refractions.udig.mapgraphic.decoratorConnection"
          point="net.refractions.udig.catalog.ui.connectionFactory">
          <factory class="net.refractions.udig.mapgraphic.internal.ui.MapGraphicConnectionFactory"
-            id="net.refractions.udig.mapgraphic.decoratorFactory"/>
+            id="net.refractions.udig.mapgraphic.wizardPageId"/>
       <wizardPage
             class="net.refractions.udig.mapgraphic.internal.ui.MapGraphicWizardPage"
             description="%mapGraphic.wizardPageDescription"
             icon="icons/obj16/graphic_obj.gif"
-            id="net.refractions.udig.mapgraphic.decoratorPage"
             name="%mapGraphic.wizardPageName"/>
    </extension>
    <extension
@@ -38,8 +36,8 @@
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
-            id="net.refractions.udig.mapgraphic.commonDecorators"
-            label="Common Decorators"
+            id="net.refractions.udig.mapgraphic.actionSet1"
+            label="net.refractions.udig.mapgraphic.actionSet1"
             visible="false">
          <action
                class="net.refractions.udig.mapgraphic.scalebar.ScalebarAction"
@@ -66,10 +64,10 @@
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
-         <actionSet id="net.refractions.udig.mapgraphic.commonDecorators"/>
+         <actionSet id="net.refractions.udig.mapgraphic.actionSet1"/>
       </perspectiveExtension>
-      <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
-         <actionSet id="net.refractions.udig.mapgraphic.commonDecorators"/>
+      <perspectiveExtension targetID="net.refractions.udig.ui.alternateMapPerspective">
+         <actionSet id="net.refractions.udig.mapgraphic.actionSet1"/>
       </perspectiveExtension>
    </extension>
    <extension
@@ -87,14 +85,15 @@
           id="net.refractions.udig.mapgraphic.style.font"
           name="Font Style">
     </style>
-    <style
-          class="net.refractions.udig.mapgraphic.scalebar.BarStyleContent"
-          id="net.refractions.udig.mapgraphic.style.bartype"
-          name="BarType Style">
-    </style>
    </extension>
    <extension
          point="net.refractions.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="net.refractions.udig.mapgraphic.scalebar.ScalebarStyleConfigurator"
+            id="scalebar"
+            label="%printing.ui.scalebar.config.label"
+            requires="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
+            styleId="net.refractions.udig.printing.ui.locationStyle"/>
       <styleConfigurator
             class="net.refractions.udig.mapgraphic.style.LocationStyleConfigurator"
             id="location"
@@ -114,13 +113,6 @@
           requires="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
           styleId="net.refractions.udig.mapgraphic.style.font">
     </styleConfigurator>
-    <styleConfigurator
-          class="net.refractions.udig.mapgraphic.scalebar.BarStyleConfigurator"
-          id="bartype"
-          label="BarType"
-          requires="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
-          styleId="net.refractions.udig.mapgraphic.style.bartype">
-    </styleConfigurator>
    </extension>
    <extension
          point="net.refractions.udig.mapgraphic.mapgraphic">
@@ -134,28 +126,6 @@
             icon="icons/obj16/grid_obj.gif"
             id="grid"
             name="%mapgraphic.grid.name"/>
-      <mapGraphic
-            class="net.refractions.udig.mapgraphic.northarrow.NorthArrowMapGraphic"
-            icon="icons/obj16/graphic_obj.gif"
-            id="net.refractions.udig.mapgraphic.NorthArrowMapGraphic"
-            name="%mapgraphic.northarrow.name">
-      </mapGraphic>
-    <!--  <mapGraphic
-            class="net.refractions.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"
-            id="net.refractions.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"
-            name="%mapgraphic.scale.name">
-      </mapGraphic> -->
    </extension>
-   <!--
-   <extension
-         point="net.refractions.udig.project.ui.tool">
-      <modalTool
-            class="net.refractions.udig.mapgraphic.northarrow.NorthArrowTool"
-            icon="icons/etool16/xy.png"
-            id="net.refractions.udig.mapgraphic.tool.locationTool"
-            name="%location.tool.name"
-            onToolbar="true">
-      </modalTool>
-   </extension>
-   -->
+
 </plugin>

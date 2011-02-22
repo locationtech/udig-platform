@@ -22,7 +22,7 @@ package net.refractions.udig.ui.operations;
 public interface ILazyOpListener {
 
     /**
-     * Called when a result has been found.  Please ensure that this does not block as it is called within a lock.  A dangerous 
+     * Called when a result has been found.  Please ensure that this does not block as it is called within a lock.  A dangerous
      * practice admittedly but has to be done in this case so the tools are correctly set.  If a lot of work must be done
      * make sure it is done in a new thread
      *

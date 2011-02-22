@@ -20,7 +20,7 @@ public class DummyMultiResourceServiceExtension implements ServiceExtension {
         if (params.containsKey(ID)) {
             return new DummyMultiResourceService(params);
         }
-        
+
         return null;
     }
 
@@ -30,8 +30,8 @@ public class DummyMultiResourceServiceExtension implements ServiceExtension {
             map.put(ID, url);
             return map;
         }
-        
+
         return null;
     }
-    
+
 }

@@ -14,6 +14,7 @@
  */
 package net.refractions.udig.validation;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,10 +27,10 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.geotools.data.FeatureSource;
-import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.feature.FeatureType;
 import org.geotools.validation.IntegrityValidation;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
+
+import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * An abstract class for integrity validation which uses org.geotools.validation
@@ -41,17 +42,17 @@ import org.opengis.feature.simple.SimpleFeatureType;
  */
 public abstract class IntegrityValidationOp implements IOp  {
     public GenericValidationResults genericResults; //for testing
-    
+
     /**
-     *  
      *
-     * @param layer 
+     *
+     * @param layer
      * @return the appropriate integrity validator
      */
     abstract IntegrityValidation getValidator(ILayer[] layer);
-    
-    /** 
-     * 
+
+    /**
+     *
      * @see net.refractions.udig.ui.operations.IOp#op(org.eclipse.swt.widgets.Display, java.lang.Object, org.eclipse.core.runtime.IProgressMonitor)
      */
     public void op(final Display display, Object target, IProgressMonitor monitor) throws Exception {
@@ -64,22 +65,22 @@ public abstract class IntegrityValidationOp implements IOp  {
             layer[0] = (ILayer) target;
         }
         //construct the hashmap and run the validation
-        ReferencedEnvelope envelope = layer[0].getMap().getViewportModel().getBounds();
-        FeatureSource<SimpleFeatureType, SimpleFeature> source;
-        String nameSpace;
+        Envelope envelope = layer[0].getMap().getViewportModel().getBounds();
+        FeatureSource source;
+        URI nameSpace;
         String typeName;
-        Map<String,FeatureSource<SimpleFeatureType, SimpleFeature>> map = new HashMap<String,FeatureSource<SimpleFeatureType, SimpleFeature>>();
+        Map<String,FeatureSource> map = new HashMap<String,FeatureSource>();
         for (int i = 0; i < layer.length; i++) {
-            nameSpace = layer[i].getSchema().getName().getNamespaceURI();
-            typeName = layer[i].getSchema().getName().getLocalPart();
+            nameSpace = layer[i].getSchema().getNamespace();
+            typeName = layer[i].getSchema().getTypeName();
             source = layer[i].getResource(FeatureSource.class, monitor);
             //map = dataStoreID:typeName
             map.put(nameSpace.toString()+":"+typeName, source); //$NON-NLS-1$
         }
-        
+
         GenericValidationResults results = new GenericValidationResults();
         genericResults = results;
-        
+
         PlatformGIS.syncInDisplayThread(new Runnable(){
 
             public void run() {
@@ -88,22 +89,22 @@ public abstract class IntegrityValidationOp implements IOp  {
                     dialog.open();
                 }
             }
-            
+
         });
-        
+
         final IntegrityValidation integrityValidation = getValidator(layer);
         if (integrityValidation == null) return;
 
         integrityValidation.validate(map, envelope, results);
-        
+
         OpUtils.setSelection(layer[0], results);
         OpUtils.notifyUser(display, results);
-        
+
         monitor.internalWorked(1);
         monitor.done();
     }
 
-    protected Dialog getDialog(Shell shell, SimpleFeatureType featureType) {
+    protected Dialog getDialog(Shell shell, FeatureType featureType) {
         return null;
     }
 

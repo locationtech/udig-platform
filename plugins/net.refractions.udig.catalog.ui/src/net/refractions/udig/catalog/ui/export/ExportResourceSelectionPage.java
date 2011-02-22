@@ -60,7 +60,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * A page that allows the user to select the layer(s) to save.
- * 
+ *
  * @author chorner
  * @since 1.1.0
  */
@@ -86,18 +86,18 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
     public void createControl( Composite parent ) {
         Composite composite = new Composite(parent, SWT.NULL);
         composite.setLayout(new GridLayout());
-        
+
         createExportDirComponent(composite);
 
         Label label = new Label(composite, SWT.NONE);
-        label.setText(Messages.ExportPage_ResourceList);
+        label.setText(Messages.ExportResourceSelectionPage_resourceLabel);
         GridData layoutData = new GridData(SWT.FILL, SWT.NONE, true, false);
         //layoutData.horizontalSpan = 3;
         label.setLayoutData(layoutData);
-        
-        viewer = new CheckboxTreeViewer(composite, SWT.CHECK|SWT.BORDER|SWT.SINGLE|SWT.FULL_SELECTION);        
+
+        viewer = new CheckboxTreeViewer(composite, SWT.CHECK|SWT.BORDER|SWT.SINGLE|SWT.FULL_SELECTION);
         Tree tree = createTree(viewer.getTree());
-        
+
         viewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         viewer.addPostSelectionChangedListener(new ISelectionChangedListener(){
 
@@ -111,7 +111,7 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
 
         viewer.setLabelProvider(new ExportResourceLabelProvider());
         viewer.setAutoExpandLevel(3);
-        
+
         final String crs="CRS"; //$NON-NLS-1$
         viewer.setColumnProperties(new String[]{"name",crs}); //$NON-NLS-1$
         viewer.setCellEditors(new CellEditor[]{new TextCellEditor(tree), new CRSDialogCellEditor(tree)});
@@ -131,7 +131,7 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
                     }else {
                         return data.getName();
                     }
-                        
+
                 }
             }
 
@@ -145,7 +145,7 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
                 }
                 viewer.update(data, null);
             }
-            
+
         });
         // use the state to initialize ui
         ExportResourceSelectionState state = (ExportResourceSelectionState) getState();
@@ -153,27 +153,27 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
 
         setControl(composite);
     }
-    
+
 
     private void createExportDirComponent(Composite top) {
     	Composite comp = new Composite(top, SWT.NONE);
     	comp.setLayout(new GridLayout(3,false));
     	comp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-    	
+
         createExportLabel(comp);
 
-        String tooltip = Messages.ExportPage_ExportDir;
+        String tooltip = Messages.ExportResourceSelectionPage_tooltip;
 
         createExportText(comp, tooltip);
 
         createExportBrowseButton(comp, tooltip);
-		
+
 	}
-    
+
 
     private void createExportBrowseButton(Composite comp, String tooltip) {
         Button select = new Button(comp, SWT.PUSH);
-        select.setText(Messages.ExportPage_Browse);
+        select.setText(Messages.ExportResourceSelectionPage_browse);
         select.setToolTipText(tooltip);
         GridData gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false);
         gridData.horizontalAlignment = SWT.FILL;
@@ -200,10 +200,10 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
 			public void handleEvent(Event event) {
 				getState().setExportDir(destText.getText());
 			}
-        	
+
         });
     }
-    
+
     @Override
     public ExportResourceSelectionState getState() {
     	return (ExportResourceSelectionState) super.getState();
@@ -211,7 +211,7 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
 
     private void createExportLabel(Composite comp) {
         Label scaleLabel = new Label(comp, SWT.NONE);
-        scaleLabel.setText(Messages.ExportPage_Destination);
+        scaleLabel.setText(Messages.ExportResourceSelectionPage_destination);
         scaleLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false,
                 false));
     }
@@ -229,7 +229,7 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
                 return; //(this is temporary until multiple format export is supported)
             }
         }
-        
+
         // set all children to same check state
         Object o = event.getElement();
         ResourceContentProvider p = (ResourceContentProvider) viewer.getContentProvider();
@@ -246,12 +246,12 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
         }
 
         syncWithUI(); //update the selected layers value in the state
-        
+
     }
 
 
     private Tree createTree( Tree tree ) {
-        
+
         TableLayout tableLayout = new TableLayout();
         tableLayout.addColumnData(new ColumnWeightData(1,true));
         tableLayout.addColumnData(new ColumnWeightData(1,true));
@@ -260,7 +260,7 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
         TreeColumn name=new TreeColumn(tree, SWT.DEFAULT);
         name.setMoveable(false);
         name.setResizable(true);
-        
+
         TreeColumn projection=new TreeColumn(tree, SWT.DEFAULT);
         projection.setMoveable(false);
         projection.setResizable(true);
@@ -273,7 +273,7 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
     }
 
     public void syncWithUI() {
-        ExportResourceSelectionState state = (ExportResourceSelectionState) getState(); 
+        ExportResourceSelectionState state = (ExportResourceSelectionState) getState();
         List<Data> selectedLayers = new ArrayList<Data>();
         Object[] elements = getViewer().getCheckedElements();
         for( int i = 0; i < elements.length; i++ ) {
@@ -306,16 +306,16 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
                 viewer.setChecked(data, checked);
             }
         }
-        
+
         if (viewer.getCheckedElements().length > 0) {
             setPageComplete(true);
         } else {
             setPageComplete(false);
         }
-        
+
         syncWithUI();
     }
-    
+
     /**
      * @see org.eclipse.jface.wizard.WizardPage#isPageComplete()
      */
@@ -323,7 +323,7 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
     public boolean isPageComplete() {
         return viewer.getCheckedElements().length > 0;
     }
-     
+
     Button findButton( Control[] children, int id ) {
         if (((Integer) getShell().getDefaultButton().getData()).intValue() == id)
             return getShell().getDefaultButton();
@@ -346,7 +346,6 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
 
     private static class ResourceContentProvider implements ITreeContentProvider {
 
-        @SuppressWarnings("unchecked")
         public Object[] getElements( Object inputElement ) {
             return getChildren(inputElement);
         }
@@ -392,7 +391,7 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
             wrapped = new DecoratingLabelProvider(titleDecorator.getSource(),
                     titleDecorator);
         }
-        
+
         public void addListener( ILabelProviderListener listener ) {
             wrapped.addListener(listener);
         }
@@ -437,11 +436,11 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
                 if( data.getName()==null ){
                     return wrapped.getText(data.getResource());
                 }else{
-                    return data.getName(); 
+                    return data.getName();
                 }
             case 1:
             	if( crs==null )
-            		return "undefined";
+            		return Messages.ExportResourceSelectionPage_undefinedCRS;
                 return crs.getName().toString();
 
             default:
@@ -451,10 +450,10 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
         }
 
     }
-    
+
     public void pageChanged( PageChangedEvent event ) {
     }
-    
+
     public class SelectButtonListener implements SelectionListener {
 
         public void widgetDefaultSelected(SelectionEvent e) {

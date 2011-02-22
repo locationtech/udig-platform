@@ -43,21 +43,28 @@ import net.refractions.udig.tools.edit.support.Selection;
  * <li>sets Edit State to Modified</li>
  * </ul>
  *
- * <p>Requirements: * <ul> * <li>eventType RELEASED</li>
+ * <p>Requirements:
+ * <ul>
+ * <li>eventType RELEASED</li>
  * <li>handler has currentGeom</li>
  * <li>edit state is modified or NONE</li>
  * <li>only one of ctrl or shift is</li>
  * <li>Mouse is over a vertex</li>
- *</ul> * </p> * <p>Action: * <ul> * <li>if no modifiers clears selection and adds selected vertex</li>
+ *</ul>
+ * </p>
+ * <p>Action:
+ * <ul>
+ * <li>if no modifiers clears selection and adds selected vertex</li>
  * <li>if shift down adds selected vertex</li>
  * <li>if ctrl down removes vertex if in selection or adds selected vertex if not</li>
  * <li>sets Edit State to Modified</li>
- *</ul> * </p>
+ *</ul>
+ * </p>
  * @author jones
  * @since 1.1.0
  */
 public class SelectVertexBehaviour implements EventBehaviour {
-    
+
     public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
        boolean currentGeomNotNull = handler.getCurrentGeom()!=null;
         boolean eventTypePressed = eventType==EventType.RELEASED;
@@ -65,7 +72,7 @@ public class SelectVertexBehaviour implements EventBehaviour {
         boolean singleModifierDown = !(twoModifiersDown);
         boolean altUp=!e.isAltDown();
         boolean button1Changed=(e.button^MapMouseEvent.BUTTON1)==0;
-        
+
         if ( !(currentGeomNotNull && eventTypePressed&& singleModifierDown&&altUp&&button1Changed) )
             return false;
         EditGeom geom = handler.getCurrentGeom();
@@ -88,7 +95,7 @@ public class SelectVertexBehaviour implements EventBehaviour {
         Selection selection = editBlackboard.getSelection();
         List<UndoableMapCommand> commands=new ArrayList<UndoableMapCommand>();
         if( e.isShiftDown() ){
-            if( geoms!=null && geoms.contains(handler.getCurrentGeom()) 
+            if( geoms!=null && geoms.contains(handler.getCurrentGeom())
                     && !editBlackboard.getSelection().contains(point) ){
                 commands.add( new SelectVertexCommand(editBlackboard, point, Type.ADD ) );
             }
@@ -97,7 +104,7 @@ public class SelectVertexBehaviour implements EventBehaviour {
                 if( selection.contains(point) )
                     commands.add( new SelectVertexCommand(editBlackboard, point, Type.REMOVE) );
                 else{
-                    commands.add( new SelectVertexCommand(editBlackboard, point, Type.ADD) );                    
+                    commands.add( new SelectVertexCommand(editBlackboard, point, Type.ADD) );
                 }
             }
         }else{

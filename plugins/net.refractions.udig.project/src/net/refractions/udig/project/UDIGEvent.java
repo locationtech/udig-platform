@@ -30,10 +30,10 @@ public abstract class UDIGEvent {
         this.newValue=newValue2;
         this.oldValue=oldValue2;
     }
-    
+
     /**
      * Gets the new value, if it applies.
-     * 
+     *
      * @return The new value, if it applies.
      */
     public Object getNewValue() {
@@ -42,7 +42,7 @@ public abstract class UDIGEvent {
 
     /**
      * Gets the old value, if it applies.
-     * 
+     *
      * @return The old value, if it applies.
      */
     public Object getOldValue() {
@@ -51,7 +51,7 @@ public abstract class UDIGEvent {
 
     /**
      * Gets the source of the event.
-     * 
+     *
      * @return the source of the event.
      */
     public abstract Object getSource();

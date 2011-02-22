@@ -49,7 +49,7 @@ public class RendererPlugin extends Plugin {
      * This should be used for user level messages.
      * </p>
      * @param message Message to tell the user
-     * @param e Throwable assocaited with this message 
+     * @param e Throwable assocaited with this message
      */
     public static void log( String message, Throwable e) {
         getDefault().getLog().log(new Status(IStatus.INFO, ID, 0, message, e));
@@ -78,14 +78,14 @@ public class RendererPlugin extends Plugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
      * @return true if -debug is used with a .options file to enable tracing
      */
     public static boolean isDebugging( final String trace ){
         boolean on = true; //getDefault().isDebugging();
-        boolean enable = "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$ 
+        boolean enable = "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
         return on && enable;
-                
-    }    
+
+    }
 }

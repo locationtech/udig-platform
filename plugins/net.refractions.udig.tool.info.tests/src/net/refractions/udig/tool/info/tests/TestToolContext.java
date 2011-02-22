@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.tool.info.tests;
 
@@ -27,8 +27,8 @@ public class TestToolContext extends ToolContextImpl {
 	public TestToolContext() {
 		super();
 	}
-	
-	
+
+
 
 	/**
 	 * @param bbox
@@ -77,6 +77,6 @@ public class TestToolContext extends ToolContextImpl {
 	public void sendASyncCommand(Command command) {
 		return;
 	}
-	
-	
+
+
 }

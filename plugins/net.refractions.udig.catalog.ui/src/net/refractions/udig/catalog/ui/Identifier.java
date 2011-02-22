@@ -19,41 +19,27 @@ package net.refractions.udig.catalog.ui;
 import java.io.File;
 import java.net.URL;
 
-import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.ui.internal.Messages;
 
 
 /**
  * URLs are used for resolve.getId(), this class contains utility methods to help work with urls
  * used in this manner.
- * 
+ *
  * @author jgarnett
  * @since 0.9.0
- * @deprecated Please use ID
  */
 public class Identifier {
-	/**
-	 * @deprecated Please use new ID( url ).isFile()
-	 * @param url
-	 * @return true if url is a file url
-	 */
+
     public static final boolean isFile( URL url ) {
         return "file".equals(url.getProtocol()); //$NON-NLS-1$
     }
 
-    /**
-     * @deprecated Please use new ID( url ).isGraphc()
-     * @param url
-     * @return true if url is a graphic url
-     */
     public static boolean isGraphic( URL url ) {
         // http://localhost/mapgraphic
         String HOST = url.getHost();
         String PROTOCOL = url.getProtocol();
         String PATH = url.getPath();
-        if ("mapgraphic".equals(PROTOCOL)){
-            return true; // we are hitting some mangled url
-        }
         if (!"http".equals(PROTOCOL))return false; //$NON-NLS-1$
         if (!"localhost".equals(HOST))return false; //$NON-NLS-1$
 
@@ -62,11 +48,6 @@ public class Identifier {
         return true;
     }
 
-    /**
-     * @deprecated Please use new ID( url ).isMemory()
-     * @param url
-     * @return true url identifies an in memory resource
-     */
     public static boolean isMemory( URL url ) {
         String HOST = url.getHost();
         String PROTOCOL = url.getProtocol();
@@ -79,11 +60,6 @@ public class Identifier {
         return true;
     }
 
-    /**
-     * @deprecated Please use new ID( url ).isWMS()
-     * @param url
-     * @return true if url refers to a web map server
-     */
     public static boolean isWMS( URL url ) {
         String PATH = url.getPath();
         String QUERY = url.getQuery();
@@ -98,11 +74,7 @@ public class Identifier {
         }
         return false;
     }
-    /**
-     * @deprecated Please use new ID( url ).isWFS()
-     * @param url
-     * @return true if ID refers to a web feature server
-     */
+
     public static final boolean isWFS( URL url ) {
         String PATH = url.getPath();
         String QUERY = url.getQuery();
@@ -118,16 +90,11 @@ public class Identifier {
         }
         return false;
     }
-    /**
-     * @deprecated Please use new ID( url ).isJDBC()
-     * @param url
-     * @return true if ID refers to a database (ie is a jdbc url)
-     */
+
     public static final boolean isJDBC( URL url ) {
-    	return new ID( url ).isJDBC();
-//        String PROTOCOL = url.getProtocol();
-//        String HOST = url.getHost();
-//        return "http".equals(PROTOCOL) && HOST != null && HOST.indexOf(".jdbc") != -1; //$NON-NLS-1$ //$NON-NLS-2$
+        String PROTOCOL = url.getProtocol();
+        String HOST = url.getHost();
+        return "http".equals(PROTOCOL) && HOST != null && HOST.indexOf(".jdbc") != -1; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
@@ -153,13 +120,13 @@ public class Identifier {
      * <li>http://kraken.postgis.jdbc:5432/production.... becomes road
      * </ul>
      * <li>
-     * @deprecated Please use new ID( url ).labelResource()
+     *
      * @param url
      * @return label describing the URL as a resource (ie file or content)
      */
     final static public String labelResource( URL url ) {
         if (url == null)
-            return Messages.ResolveLabelProvider_missingText; 
+            return Messages.ResolveLabelProvider_missingText;
 
         String HOST = url.getHost();
         String QUERY = url.getQuery();
@@ -247,13 +214,13 @@ public class Identifier {
      * <li>http://kraken.postgis.jdbc:5432/production becomes postgis://kraken:5432
      * </ul>
      * <li>
-     * @deprecated Please use new ID( url ).labelServer()
+     *
      * @param server
      * @return label as if url points to just a server
      */
     final static public String labelServer( URL url ) {
         if (url == null)
-            return Messages.ResolveLabelProvider_missingText; 
+            return Messages.ResolveLabelProvider_missingText;
 
         String HOST = url.getHost();
         int PORT = url.getPort();

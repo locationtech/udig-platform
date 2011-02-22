@@ -1,50 +1,50 @@
-<class-diagram generalizations="true" realizations="true" associations="true" dependencies="true" 
-  nesting-relationships="true">  
-  <classifier-display autosize="true" package="true" attributes="false" operations="false" initial-value="false" 
-    signature="true" visibility="false"/>  
-  <association-display labels="true" multiplicity="true"/>  
-  <class type="java" name="net.refractions.udig.tutorials.catalog.csv.CSVServiceExtension" 
-    project="net.refractions.udig.tutorials.catalog.csv" 
-    file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVServiceExtension.java" 
-    corner="BOTTOM_RIGHT">    
-    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true" 
-      visibility="false"/>    
-    <position x="246" y="305" width="-1" height="-1"/>  
-  </class>  
-  <class type="java" name="net.refractions.udig.tutorials.catalog.csv.CSVService" 
-    project="net.refractions.udig.tutorials.catalog.csv" 
-    file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVService.java" 
-    corner="BOTTOM_RIGHT">    
-    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true" 
-      visibility="false"/>    
-    <position x="504" y="399" width="-1" height="-1"/>  
-  </class>  
-  <class type="java" name="net.refractions.udig.catalog.IService" project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IService.java" corner="BOTTOM_RIGHT">    
-    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true" 
-      visibility="false"/>    
-    <position x="504" y="305" width="-1" height="-1"/>  
-  </class>  
-  <dependency>    
-    <source project="net.refractions.udig.tutorials.catalog.csv" 
-      name="net.refractions.udig.tutorials.catalog.csv.CSVServiceExtension" 
-      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVServiceExtension.java"/>    
-    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IService" 
-      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IService.java"/>  
-  </dependency>  
-  <dependency>    
-    <source project="net.refractions.udig.tutorials.catalog.csv" 
-      name="net.refractions.udig.tutorials.catalog.csv.CSVServiceExtension" 
-      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVServiceExtension.java"/>    
-    <target project="net.refractions.udig.tutorials.catalog.csv" 
-      name="net.refractions.udig.tutorials.catalog.csv.CSVService" 
-      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVService.java"/>  
-  </dependency>  
-  <generalization>    
-    <source project="net.refractions.udig.tutorials.catalog.csv" 
-      name="net.refractions.udig.tutorials.catalog.csv.CSVService" 
-      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVService.java"/>    
-    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IService" 
-      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IService.java"/>  
+<class-diagram generalizations="true" realizations="true" associations="true" dependencies="true"
+  nesting-relationships="true">
+  <classifier-display autosize="true" package="true" attributes="false" operations="false" initial-value="false"
+    signature="true" visibility="false"/>
+  <association-display labels="true" multiplicity="true"/>
+  <class type="java" name="net.refractions.udig.tutorials.catalog.csv.CSVServiceExtension"
+    project="net.refractions.udig.tutorials.catalog.csv"
+    file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVServiceExtension.java"
+    corner="BOTTOM_RIGHT">
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true"
+      visibility="false"/>
+    <position x="246" y="305" width="-1" height="-1"/>
+  </class>
+  <class type="java" name="net.refractions.udig.tutorials.catalog.csv.CSVService"
+    project="net.refractions.udig.tutorials.catalog.csv"
+    file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVService.java"
+    corner="BOTTOM_RIGHT">
+    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true"
+      visibility="false"/>
+    <position x="504" y="399" width="-1" height="-1"/>
+  </class>
+  <class type="java" name="net.refractions.udig.catalog.IService" project="net.refractions.udig.catalog"
+    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IService.java" corner="BOTTOM_RIGHT">
+    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true"
+      visibility="false"/>
+    <position x="504" y="305" width="-1" height="-1"/>
+  </class>
+  <dependency>
+    <source project="net.refractions.udig.tutorials.catalog.csv"
+      name="net.refractions.udig.tutorials.catalog.csv.CSVServiceExtension"
+      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVServiceExtension.java"/>
+    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IService"
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IService.java"/>
+  </dependency>
+  <dependency>
+    <source project="net.refractions.udig.tutorials.catalog.csv"
+      name="net.refractions.udig.tutorials.catalog.csv.CSVServiceExtension"
+      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVServiceExtension.java"/>
+    <target project="net.refractions.udig.tutorials.catalog.csv"
+      name="net.refractions.udig.tutorials.catalog.csv.CSVService"
+      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVService.java"/>
+  </dependency>
+  <generalization>
+    <source project="net.refractions.udig.tutorials.catalog.csv"
+      name="net.refractions.udig.tutorials.catalog.csv.CSVService"
+      file="/net.refractions.udig.tutorials.catalog.csv/src/net/refractions/udig/tutorials/catalog/csv/CSVService.java"/>
+    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IService"
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IService.java"/>
   </generalization>
 </class-diagram>

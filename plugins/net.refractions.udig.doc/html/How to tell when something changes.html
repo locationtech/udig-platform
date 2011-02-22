@@ -1,0 +1,110 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : How to tell when something changes</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : How to tell when something changes -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>The uDig "application model" is maintained with EMF (the eclipse modeling framework).  As such it is very easy to morph uDig to meet your needs.</p>
+
+<p>That is the good part.</p>
+
+<p>The bad part is uDig (indeed all EMF projects) do not look that "normal", and trying to tell when something changes falls into the this category.</p>
+
+<h2><a name="Howtotellwhensomethingchanges-Step0LookforaListener">Step 0 - Look for a Listener</a></h2>
+
+<p>We have set up add/remove listener methods as people request them:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">layer.addListener( <span class="code-keyword">new</span> ILayerListener(){
+   <span class="code-keyword">public</span> refresh( LayerEvent event ){
+       <span class="code-keyword">if</span>( event.getType() == LayerEvent.EventType.STYLE ){
+           ILayer layer = event.getSource();
+           IStyleBlackboard style = (IStyleBlackboard ) event.getNewValue();
+
+           <span class="code-comment">// layer has changed style
+</span>       }
+   }
+});</pre>
+</div></div>
+<h2><a name="Howtotellwhensomethingchanges-Step1AskforHelp">Step 1 - Ask for Help</a></h2>
+
+<p>Email the list and ask "How to I tell when this changes". We will set up a normal add/remove listener.</p>
+
+<h2><a name="Howtotellwhensomethingchanges-Step2UseanAdapter">Step 2 - Use an Adapter</a></h2>
+
+<p>On the off chance you have a deadline, and need to figure it out now you can listen to anything using the following code example:</p>
+
+<p>Example:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">layer.eAdapters().add( <span class="code-keyword">new</span> AdapterImpl(){
+   <span class="code-keyword">public</span> void notifyChanged( Notificaiton msg ) {
+       <span class="code-keyword">if</span>( msg.getNotifier() instnaceof Layer ){
+           Layer layer = (Layer) msg.getNotifier();
+           <span class="code-keyword">switch</span>( msg.getFeatureID(Layer.class) ) {
+           <span class="code-keyword">case</span> ProjectPackage.LAYER__NAME:
+                <span class="code-object">System</span>.out.println( layer.getName() +<span class="code-quote">" renamed"</span>);
+                <span class="code-keyword">break</span>;
+           <span class="code-keyword">case</span> ProjectPackage.LAYER__GEO_RESOURCES:
+                <span class="code-object">System</span>.out.println( <span class="code-quote">"We have <span class="code-keyword">new</span> data!"</span>);
+                FeatureType schema = layer.getSchema();
+                <span class="code-keyword">if</span>( schema != <span class="code-keyword">null</span> ){
+                     <span class="code-object">System</span>.out.println( <span class="code-quote">"changed to "</span>+schema.getTypeName() );
+                }
+                <span class="code-keyword">break</span>;
+           }
+       }
+   }
+});</pre>
+</div></div>
+
+<p>Backgroun: an adapter is a traditional pater when you want to use one data model and "morph" it to fit another interface.  One of the side effects of this is you need to pay attention to the origional data, and pass any changes along.</p>
+
+<p>You can see lots of examples of this idea in Java code. People setting up custom JTreeModels to visualize an internal data structure etc...</p>
+
+<p>Since this need happens <b>all</b> the time the EMF crew decided design for it in mind. It is a much more difficult, and interesting, problem them simply listening for changes (Indeed it is a superset of change notification - basically change notification with interface change). The benifit is that you can "force" EMF models (and thus uDig) into about anything.</p>
+
+<p>So the above example is "an adapter", and we are only paying attention to the changes.</p>
+
+<h3><a name="Howtotellwhensomethingchanges-ExamplesofAnything">Examples of Anything</a></h3>
+
+<p>Here is how you can watch the "Viewport Model" (ie. Zoom, Pan, CRS):</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">map.getViewportModel().addViewportModelListener(<span class="code-keyword">new</span> IViewportModelListener()){
+  <span class="code-keyword">public</span> void changed(ViewportModel event){
+    <span class="code-keyword">if</span>( event.getType()==EventType.CRS }
+      <span class="code-comment">// crs has changed <span class="code-keyword">do</span> something
+</span>    <span class="code-keyword">else</span> <span class="code-keyword">if</span>( event.getType()==EventType.BOUNDS ){
+      <span class="code-comment">// bounds have changed <span class="code-keyword">do</span> something <span class="code-keyword">else</span>
+</span>    }
+  }
+}</pre>
+</div></div>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=8359">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=8359">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

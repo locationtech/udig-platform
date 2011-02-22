@@ -22,9 +22,9 @@ public class DummyConnectionFactory extends UDIGConnectionFactory {
 				HashMap<String, Serializable> map = new HashMap<String, Serializable>();
 				map.put("dummy", url); //$NON-NLS-1$
 				return map;
-			}	
+			}
 		}
-		
+
 		return null;
 	}
 
@@ -33,10 +33,10 @@ public class DummyConnectionFactory extends UDIGConnectionFactory {
 		if (params != null) {
 			return (URL) params.get("dummy"); //$NON-NLS-1$
 		}
-		
+
 		return null;
 	}
-    
+
     @Override
     public UDIGConnectionPage createConnectionPage(int i) {
         return new DummyConnectionPage();

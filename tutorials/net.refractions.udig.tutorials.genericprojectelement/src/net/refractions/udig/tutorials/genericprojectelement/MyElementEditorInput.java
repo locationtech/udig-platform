@@ -17,7 +17,7 @@ public class MyElementEditorInput extends UDIGEditorInput {
 	public String getToolTipText() {
 		return "A tutorial editor";
 	}
-	
+
 	public MyProjectElement getBackingObject(){
 		return (MyProjectElement) ((ProjectElementAdapter) getProjectElement()).getBackingObject();
 	}

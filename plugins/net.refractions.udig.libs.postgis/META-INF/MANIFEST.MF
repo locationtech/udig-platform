@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Postgis Plug-in
+Bundle-SymbolicName: net.refractions.udig.libs.postgis
+Bundle-Version: 1.1.2
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Bundle-ClassPath: libs/postgis-driver-1.0.jar,
+ libs/postgresql-8.1-407.jdbc3.jar
+Eclipse-RegisterBuddy: net.refractions.udig.libs
+Require-Bundle: net.refractions.udig.libs

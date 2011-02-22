@@ -11,12 +11,12 @@ import org.opengis.referencing.operation.TransformException;
  * A strategy for determining the bounds of the map to display... Because
  * the aspect ration of the final image is likely not the same as the
  * viewport. Or a particualr scale is required
- * 
+ *
  * This is used by
  * {@link ApplicationGIS#drawMap(net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter)}
- * 
+ *
  * @author jesse
- * 
+ *
  * @see ApplicationGIS#drawMap(net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter)
  */
 public class BoundsStrategy {
@@ -33,8 +33,8 @@ public class BoundsStrategy {
 	/**
 	 * Create a new instance that zooms to the given scale denominator with
 	 * the center of the map staying unchanged.
-	 * 
-	 * 
+	 *
+	 *
 	 * @param scaleDenominator
 	 */
 	public BoundsStrategy(double scaleDenominator) {
@@ -45,7 +45,7 @@ public class BoundsStrategy {
 	/**
 	 * Create a new strategy that will make the map zoom to the given
 	 * envelope
-	 * 
+	 *
 	 * @param boundsToDisplay
 	 */
 	public BoundsStrategy(ReferencedEnvelope boundsToDisplay) {
@@ -58,10 +58,10 @@ public class BoundsStrategy {
 	 * implementation will set the model to {@link #boundsToDisplay} if it
 	 * is non-null otherwise will use the scale denominator. Or if the
 	 * scaleDenominator is <1 it will zoom to the model's current bounds.
-	 * 
+	 *
 	 * @param model
 	 *            the viewport model to set the bounds on.
-	 * @param currentBounds 
+	 * @param currentBounds
 	 * 			  the bounds of the original map
 	 */
 	public void setBounds(ViewportModel model, ReferencedEnvelope currentBounds) {

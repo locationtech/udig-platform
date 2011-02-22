@@ -14,15 +14,16 @@
  */
 package net.refractions.udig.project.internal.commands.selection;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.MapCommand;
+import net.refractions.udig.project.command.UndoableCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Messages;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Command that selects the currently selected layer of a map.
@@ -35,7 +36,7 @@ public class SelectLayerCommand extends AbstractCommand implements MapCommand, U
     private ILayer layer;
 
     /**
-     * new instance 
+     * new instance
      * @param layer layer to select
      */
     public SelectLayerCommand( ILayer layer ) {
@@ -50,7 +51,7 @@ public class SelectLayerCommand extends AbstractCommand implements MapCommand, U
     public void run( IProgressMonitor monitor ) throws Exception {
         monitor.beginTask(Messages.SelectLayerCommand_selecting, 2);
         monitor.worked(1);
-        
+
         EditManager editManagerInternal = getMap().getEditManagerInternal();
         old=editManagerInternal.getSelectedLayer();
         editManagerInternal.setSelectedLayer((Layer) layer);
@@ -60,7 +61,7 @@ public class SelectLayerCommand extends AbstractCommand implements MapCommand, U
     public void rollback( IProgressMonitor monitor ) throws Exception {
         monitor.beginTask(Messages.SelectLayerCommand_undoing, 2);
         monitor.worked(1);
-        
+
         EditManager editManagerInternal = getMap().getEditManagerInternal();
         editManagerInternal.setSelectedLayer(old);
         monitor.done();

@@ -36,7 +36,7 @@ import net.refractions.udig.catalog.IResolveDelta.Kind;
  * <p>
  * You can use this code as an example of a good IResolveDeltaVisitor.
  * </p>
- * 
+ *
  * @author jgarnett
  * @since 0.6.0
  */
@@ -65,7 +65,7 @@ public class SearchResolveDeltaVisitor implements IResolveDeltaVisitor {
     }
     /**
      * Best match IResolveDelta for handle, may be null if search came up empty.
-     * 
+     *
      * @return Best match IResolveDelta for handle
      */
     public IResolveDelta getFound() {

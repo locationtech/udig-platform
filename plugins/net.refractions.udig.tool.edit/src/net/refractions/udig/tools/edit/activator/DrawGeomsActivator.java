@@ -27,32 +27,31 @@ import net.refractions.udig.tools.edit.Activator;
 import net.refractions.udig.tools.edit.EditPlugin;
 import net.refractions.udig.tools.edit.EditState;
 import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.commands.DrawEditGeomsCommand;
 import net.refractions.udig.tools.edit.commands.StyleStrategy;
+import net.refractions.udig.tools.edit.commands.DrawEditGeomsCommand;
 import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
 import net.refractions.udig.tools.edit.support.Point;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
 
 /**
- * 
  * Adds a DrawGeomsCommand to the draw commands and invalidates it at the end.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class DrawGeomsActivator implements Activator {
 
-    protected DrawEditGeomsCommand command;
+    private DrawEditGeomsCommand command;
     private DrawType type;
     private boolean showMouseLocation = true;
     private MapMouseMotionListener listener;
-    protected ViewportPane pane;
-    protected EditToolHandler handler;
+    private ViewportPane pane;
+    private EditToolHandler handler;
     private IBlackboardListener mapBBListener;
 
     /**
      * Returns true if the mouse position will be shown. Default is true.
-     * 
+     *
      * @return Returns true if the mouse position will be shown. Default is true.
      */
     public boolean isShowMouseLocation() {
@@ -66,10 +65,6 @@ public class DrawGeomsActivator implements Activator {
         this.showMouseLocation = showMouseLocation;
     }
 
-    /**
-     * 
-     * @param type
-     */
     public DrawGeomsActivator( DrawType type ) {
         this.type = type;
     }
@@ -82,14 +77,14 @@ public class DrawGeomsActivator implements Activator {
         StyleStrategy colorizationStrategy = command.getColorizationStrategy();
         colorizationStrategy.setFill(new IProvider<Color>(){
 
-            public Color get( Object... params ) {
+            public Color get(Object... params) {
                 return PreferenceUtil.instance().getDrawGeomsFill();
             }
 
         });
         colorizationStrategy.setLine(new IProvider<Color>(){
 
-            public Color get( Object... params ) {
+            public Color get(Object... params) {
                 return PreferenceUtil.instance().getDrawGeomsLine();
             }
 
@@ -108,12 +103,12 @@ public class DrawGeomsActivator implements Activator {
         handler.getContext().getMap().getBlackboard().removeListener(mapBBListener);
     }
 
-    protected void addMouseListener() {
+    private void addMouseListener() {
         listener = new MapMouseMotionListener(){
 
             public void mouseMoved( MapMouseEvent event ) {
-                if (type == DrawType.POINT || !showMouseLocation)
-                    return;
+                if( type==DrawType.POINT || !showMouseLocation)
+                    return ;
                 if (listener != this) {
                     ((ViewportPane) event.source).removeMouseMotionListener(this);
                 }
@@ -137,21 +132,21 @@ public class DrawGeomsActivator implements Activator {
         };
         pane.addMouseMotionListener(listener);
 
-        mapBBListener = new IBlackboardListener(){
+        mapBBListener=new IBlackboardListener(){
 
             public void blackBoardCleared( IBlackboard source ) {
-                if (mapBBListener != this) {
+                if( mapBBListener!=this ){
                     source.removeListener(this);
                 }
                 command.setCurrentLocation(null, null);
             }
 
             public void blackBoardChanged( BlackboardEvent event ) {
-                if (mapBBListener != this) {
+                if( mapBBListener!=this ){
                     event.getSource().removeListener(this);
                 }
-                if (EditToolHandler.CURRENT_SHAPE.equals(event.getKey())) {
-                    command.setCurrentLocation(null, (PrimitiveShape) event.getNewValue());
+                if( EditToolHandler.CURRENT_SHAPE.equals(event.getKey()) ){
+                    command.setCurrentLocation(null, (PrimitiveShape)event.getNewValue() );
                 }
             }
 
@@ -163,15 +158,14 @@ public class DrawGeomsActivator implements Activator {
     public void deactivate( EditToolHandler handler ) {
         if (command != null)
             command.setValid(false);
-        mapBBListener = null;
-        listener = null;
+        mapBBListener=null;
+        listener=null;
         removeMouseListener();
     }
 
     public void handleActivateError( EditToolHandler handler, Throwable error ) {
         EditPlugin.log("Error creating and sending command", error); //$NON-NLS-1$
     }
-
     public void handleDeactivateError( EditToolHandler handler, Throwable error ) {
         EditPlugin.log("Error invalidating command", error); //$NON-NLS-1$
     }

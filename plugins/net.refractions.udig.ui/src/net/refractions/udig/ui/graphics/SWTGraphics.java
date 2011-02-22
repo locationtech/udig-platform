@@ -10,10 +10,13 @@ package net.refractions.udig.ui.graphics;
 
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.Transparency;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 
 import org.eclipse.jface.resource.FontRegistry;
@@ -26,6 +29,7 @@ import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Transform;
@@ -33,7 +37,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * A Graphics object that wraps SWT's GC object
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -41,7 +45,7 @@ public class SWTGraphics implements ViewportGraphics {
 	/** The <code>TRANSPARENT</code> color */
 	public final static int TRANSPARENT = 0x220000 | 0x2200 | 0x22;
 
-    static final AffineTransform AFFINE_TRANSFORM = new AffineTransform();
+    private static final AffineTransform AFFINE_TRANSFORM = new AffineTransform();
 
     private Transform swtTransform;
 
@@ -54,58 +58,56 @@ public class SWTGraphics implements ViewportGraphics {
 	private Display display;
 
 	private Font font = null;
-	
+
 	/**
 	 * Construct <code>SWTGraphics</code>.
-	 * 
+	 *
 	 * @param Image
 	 *            image
-     *  @param display the display to use with the 
+     *  @param display the display to use with the
 	 * @param display
 	 *            The display object
 	 */
 	public SWTGraphics(Image image, Display display) {
 		this(new GC(image), display);
-        
+
 	}
 
 	/**
 	 * Construct <code>SWTGraphics</code>.
-	 * 
+	 *
 	 * @param gc
 	 *            The GC object
 	 * @param display
 	 *            The display object
 	 */
 	public SWTGraphics(GC gc, Display display) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         this.display=display;
 		setGraphics(gc, display);
 	}
 
     void setGraphics( GC gc, Display display ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         this.gc = gc;
         // this.display=display;
         if (back != null)
             back.dispose();
         back = new Color(display, 255, 255, 255);
         gc.setBackground(back);
-        
+
 
         gc.setAdvanced(true);
     }
-	
-    public <T> T getGraphics( Class<T> adaptee ) {
-        AWTSWTImageUtils.checkAccess();
-        if (adaptee.isAssignableFrom(GC.class)) {
-            return adaptee.cast(gc);
-        }
-        return null;
-    }
+
+	public GC getGC(){
+        checkAccess();
+		return gc;
+	}
+
 
     public void dispose() {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         if (fore != null)
             fore.dispose();
         if (back != null)
@@ -116,7 +118,7 @@ public class SWTGraphics implements ViewportGraphics {
     }
 
     public void drawPath( Path path ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         gc.drawPath(path);
     }
 
@@ -124,32 +126,60 @@ public class SWTGraphics implements ViewportGraphics {
      * @see net.refractions.udig.project.render.ViewportGraphics#draw(java.awt.Shape)
      */
     public void draw( Shape s ) {
-        AWTSWTImageUtils.checkAccess();
-        Path path = AWTSWTImageUtils.convertToPath(s, display);
+        checkAccess();
+        Path path = convertToPath(s, display);
         if( path!=null ){
             gc.drawPath(path);
             path.dispose();
         }
-        
+
     }
 
     /**
      * Converts the shape to a path object.  Remember to dispose of the path object when
      * done.
-     * 
+     *
      * @param shape
      * @return the shape converted to a {@link Path} object.
-     * @deprecated Use {@link AWTSWTImageUtils#convertToPath(Shape,Device)} instead
      */
     public static Path convertToPath( Shape shape, Device device  ) {
-        return AWTSWTImageUtils.convertToPath(shape, device);
+        checkAccess();
+        PathIterator p = shape.getPathIterator(AFFINE_TRANSFORM);
+
+        return createPath(p, device);
     }
 
-    /**
-     * @deprecated Use {@link AWTSWTImageUtils#createPath(PathIterator,Device)} instead
-     */
     public static Path createPath( PathIterator p, Device device ) {
-        return AWTSWTImageUtils.createPath(p, device);
+        if (p.isDone())
+            return null;
+
+        float[] current = new float[6];
+        Path path = new Path(device);
+        while( !p.isDone() ) {
+            int result = p.currentSegment(current);
+            switch( result ) {
+            case PathIterator.SEG_CLOSE:
+                path.close();
+                break;
+            case PathIterator.SEG_LINETO:
+                path.lineTo(current[0], current[1]);
+                break;
+            case PathIterator.SEG_MOVETO:
+                path.moveTo(current[0], current[1]);
+                break;
+            case PathIterator.SEG_QUADTO:
+                path.quadTo(current[0],   current[1],  current[2],
+                         current[3]);
+                break;
+            case PathIterator.SEG_CUBICTO:
+                path.cubicTo( current[0],  current[1],  current[2],
+                         current[3],  current[4],  current[5]);
+                break;
+            default:
+            }
+            p.next();
+        }
+        return path;
     }
 
 
@@ -158,14 +188,14 @@ public class SWTGraphics implements ViewportGraphics {
      */
     public void fill( Shape s ) {
         Color tmp = prepareForFill();
-        Path path = AWTSWTImageUtils.convertToPath(s, display);
+        Path path = convertToPath(s, display);
         gc.fillPath(path);
         path.dispose();
         gc.setBackground(tmp);
     }
 
     private Color prepareForFill() {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         Color tmp=gc.getBackground();
         if( fore==null ){
             gc.setBackground(gc.getForeground());
@@ -194,15 +224,15 @@ public class SWTGraphics implements ViewportGraphics {
     public void fillRect( int x, int y, int width, int height ) {
         Color tmp = prepareForFill();
         gc.fillRectangle(new Rectangle(x, y, width, height));
-        
+
         gc.setBackground(tmp);
     }
 
 	/**
 	 * @see net.refractions.udig.project.render.ViewportGraphics#setColor(java.awt.Color)
 	 */
-	public void setColor(final java.awt.Color c) { 
-        AWTSWTImageUtils.checkAccess();
+	public void setColor(final java.awt.Color c) {
+        checkAccess();
 		Color color = new Color(display, c.getRed(), c.getGreen(), c.getBlue());
 		gc.setForeground(color);
 		gc.setAlpha(c.getAlpha());
@@ -213,11 +243,11 @@ public class SWTGraphics implements ViewportGraphics {
 
     /**
      * This is hard because - background doesn't mean what we think it means.
-     * 
+     *
      * @see net.refractions.udig.project.render.ViewportGraphics#setBackground(java.awt.Color)
      */
     public void setBackground( java.awt.Color c ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         Color color = new Color(display, c.getRed(), c.getGreen(), c.getBlue());
         gc.setBackground(color);
         if (back != null)
@@ -229,8 +259,8 @@ public class SWTGraphics implements ViewportGraphics {
      * @see net.refractions.udig.project.render.ViewportGraphics#setStroke(int, int)
      */
     public void setStroke( int style, int width ) {
-        AWTSWTImageUtils.checkAccess();
-        
+        checkAccess();
+
         gc.setLineWidth(width);
         switch( style ) {
         case LINE_DASH: {
@@ -271,7 +301,7 @@ public class SWTGraphics implements ViewportGraphics {
      * @see net.refractions.udig.project.render.ViewportGraphics#setClip(java.awt.Rectangle)
      */
     public void setClip( java.awt.Rectangle r ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         gc.setClipping(r.x, r.y, r.width, r.height);
     }
 
@@ -279,7 +309,7 @@ public class SWTGraphics implements ViewportGraphics {
 	 * @see net.refractions.udig.project.render.ViewportGraphics#translate(java.awt.Point)
 	 */
 	public void translate(Point offset) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         if( swtTransform==null ){
             swtTransform=new Transform(display);
         }
@@ -288,58 +318,162 @@ public class SWTGraphics implements ViewportGraphics {
 	}
 
     public void clearRect( int x, int y, int width, int height ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         gc.fillRectangle(x, y, width, height);
     }
 
     public void drawImage( RenderedImage rimage, int x, int y ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         drawImage(rimage, x, y, x + rimage.getWidth(),
                 y + rimage.getHeight(), 0, 0, rimage.getWidth(), rimage.getHeight());
     }
 
-    /**
-     * @deprecated Use {@link AWTSWTImageUtils#createDefaultImage(Display,int,int)} instead
-     */
     public static Image createDefaultImage( Display display, int width, int height ) {
-        return AWTSWTImageUtils.createDefaultImage(display, width, height);
+        checkAccess();
+        ImageData swtdata = null;
+        PaletteData palette;
+        int depth;
+
+        depth = 24;
+        palette = new PaletteData(0xFF0000, 0xFF00, 0xFF);
+        swtdata = new ImageData(width, height, depth, palette);
+        swtdata.transparentPixel = TRANSPARENT;
+        swtdata.alpha = -1;
+        swtdata.alphaData = new byte[swtdata.data.length];
+        int j=2;
+        for( int i = 0; i < swtdata.alphaData.length; i++ ) {
+            swtdata.alphaData[i] = (byte) 255;
+            swtdata.data[i]=(byte)((TRANSPARENT>>(j*8) & 0xFF));
+            j--;
+            if( j<0 )
+                j=2;
+        }
+
+        return new Image(display, swtdata);
+
     }
 
-    /**
-     * @deprecated Use {@link AWTSWTImageUtils#createImageDescriptor(RenderedImage,boolean)} instead
-     */
+//    private ImageData awtImageToSWT( Raster raster, Rectangle size ) {
+//        if( Display.getCurrent() == null )
+//            SWT.error (SWT.ERROR_THREAD_INVALID_ACCESS);
+//        ImageData swtdata = null;
+//        int width = size.width;
+//        int height = size.height;
+//        PaletteData palette;
+//        int depth;
+//
+//        depth = 24;
+//        palette = new PaletteData(0xFF0000, 0xFF00, 0xFF);
+//        swtdata = new ImageData(width, height, depth, palette);
+//        swtdata.transparentPixel = TRANSPARENT;
+//
+//        byte blueT = (byte) ((TRANSPARENT) & 0xFF);
+//        byte greenT = (byte) ((TRANSPARENT >> 8) & 0xFF);
+//        byte redT = (byte) ((TRANSPARENT >> 16) & 0xFF);
+//        // System.out.println("red="+redT+"blue"+blueT+"green"+greenT);
+//        // System.out.println("Transparent"+TRANSPARENT);
+//
+//        // awtImage2.getRGB();
+//        int[] awtdata = raster.getPixels(0, 0, width, height, new int[width * height
+//                * raster.getNumBands()]);
+//        int step = swtdata.depth / 8;
+//
+//        byte[] data = swtdata.data;
+//        int baseindex = 0;
+//        for( int y = 0; y < height; y++ ) {
+//            int idx = ((0 + y) * swtdata.bytesPerLine) + (0 * step);
+//
+//            for( int x = 0; x < width; x++ ) {
+//                baseindex = (x + (y * width)) * 4;
+//
+//                if (awtdata[baseindex + 3] == 0) {
+//                    data[idx++] = blueT;
+//                    data[idx++] = greenT;
+//                    data[idx++] = redT;
+//                } else {
+//                    data[idx++] = (byte) awtdata[baseindex];
+//                    data[idx++] = (byte) awtdata[baseindex + 1];
+//                    data[idx++] = (byte) awtdata[baseindex + 2];
+//                }
+//            }
+//        }
+//
+//		return swtdata;
+//	}
+
     public static ImageDescriptor createImageDescriptor( final RenderedImage image,
             final boolean transparent ) {
-                return AWTSWTImageUtils.createImageDescriptor(image, transparent);
+        checkAccess();
+        return new ImageDescriptor(){
+            public ImageData getImageData() {
+                return createImageData(image, transparent);
             }
+        };
+    }
 
-    /** Create a buffered image that can be be converted to SWTland later 
-     * @deprecated Use {@link AWTSWTImageUtils#createBufferedImage(int,int)} instead*/
+    /** Create a buffered image that can be be coverted to SWTland later */
     public static BufferedImage createBufferedImage( int w, int h ) {
-        return AWTSWTImageUtils.createBufferedImage(w, h);
+        checkAccess();
+        return new BufferedImage(w, h, BufferedImage.TYPE_4BYTE_ABGR_PRE);
     }
 
-    /**
-     * @deprecated Use {@link AWTSWTImageUtils#createSWTImage(RenderedImage,boolean)} instead
-     */
     public static Image createSWTImage( RenderedImage image, boolean transparent ) {
-        return AWTSWTImageUtils.createSWTImage(image, transparent);
+        checkAccess();
+
+        ImageData data;
+        if( image instanceof BufferedImage ){
+            data=createImageData((BufferedImage)image);
+        }else
+            data = createImageData(image, transparent);
+
+        return new org.eclipse.swt.graphics.Image(Display.getDefault(), data);
     }
 
 
-    /**
-     * @deprecated Use {@link AWTSWTImageUtils#createImageData(RenderedImage,boolean)} instead
-     */
     public static ImageData createImageData( RenderedImage image, boolean transparent ) {
-        return AWTSWTImageUtils.createImageData(image, transparent);
+        checkAccess();
+
+        ImageData swtdata = null;
+        int width = image.getWidth();
+        int height = image.getHeight();
+        PaletteData palette;
+        int depth;
+
+        depth = 24;
+        palette = new PaletteData(0xFF, 0xFF00, 0xFF0000);
+        swtdata = new ImageData(width, height, depth, palette);
+        Raster raster = image.getData();
+        int numbands = raster.getNumBands();
+        int[] awtdata = raster.getPixels(0, 0, width, height, new int[width * height * numbands]);
+        int step = swtdata.depth / 8;
+
+        byte[] data = swtdata.data;
+        swtdata.transparentPixel = -1;
+        int baseindex = 0;
+        for( int y = 0; y < height; y++ ) {
+            int idx = ((0 + y) * swtdata.bytesPerLine) + (0 * step);
+
+            for( int x = 0; x < width; x++ ) {
+                int pixel = (x + (y * width));
+                baseindex = pixel * numbands;
+
+                data[idx++] = (byte) awtdata[baseindex + 2];
+                data[idx++] = (byte) awtdata[baseindex + 1];
+                data[idx++] = (byte) awtdata[baseindex];
+                if (numbands == 4 && transparent) {
+                    swtdata.setAlpha(x, y, awtdata[baseindex + 3]);
+                }
+            }
+        }
+        return swtdata;
     }
 
     public void drawString( String string, int x, int y, int alignx, int aligny ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         org.eclipse.swt.graphics.Point text = gc.stringExtent(string);
         int w = (int)text.x;
         int h = (int)text.y;
-        
+
         int x2 = (alignx == 0) ? x - w/2 : (alignx > 0) ? x - w : x;
         int y2 = (aligny == 0) ? y + h/2 : (aligny > 0) ? y + h : y;
 
@@ -347,46 +481,46 @@ public class SWTGraphics implements ViewportGraphics {
     }
 
     public void setTransform( AffineTransform transform ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         double[] matrix=new double[6];
         transform.getMatrix(matrix);
         if( swtTransform==null ){
-            swtTransform=new Transform(display, 
-                    (float)matrix[0], (float)matrix[1], (float)matrix[2], 
+            swtTransform=new Transform(display,
+                    (float)matrix[0], (float)matrix[1], (float)matrix[2],
                     (float)matrix[3], (float)matrix[4], (float)matrix[5] );
         }else{
             swtTransform.setElements(
-                    (float)matrix[0], (float)matrix[1], (float)matrix[2], 
+                    (float)matrix[0], (float)matrix[1], (float)matrix[2],
                     (float)matrix[3], (float)matrix[4], (float)matrix[5] );
         }
-        
+
         gc.setTransform(swtTransform);
     }
 
     public int getFontHeight() {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         return gc.getFontMetrics().getHeight();
     }
 
     public int stringWidth( String str ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         return -1;
     }
 
     public int getFontAscent() {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         return gc.getFontMetrics().getAscent();
     }
 
     public Rectangle2D getStringBounds( String str ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         org.eclipse.swt.graphics.Point extent = gc.textExtent(str);
-        
+
         return new java.awt.Rectangle(0,0,extent.x, extent.y);
     }
 
     public void drawLine( int x1, int y1, int x2, int y2 ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         gc.drawLine(x1, y1, x2, y2);
     }
 
@@ -395,24 +529,24 @@ public class SWTGraphics implements ViewportGraphics {
      *      Current version can only draw Image if the image is an RenderedImage
      */
     public void drawImage( java.awt.Image awtImage, int x, int y ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         RenderedImage rimage = (RenderedImage) awtImage;
         drawImage(rimage, x, y);
     }
 
     public void drawImage( RenderedImage rimage, int dx1, int dy1, int dx2, int dy2, int sx1,
             int sy1, int sx2, int sy2 ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         assert rimage != null;
         Image swtImage = null;
         try {
             if( rimage instanceof BufferedImage )
-                swtImage = AWTSWTImageUtils.convertToSWTImage((BufferedImage)rimage);
+                swtImage = createSWTImage((BufferedImage)rimage);
             else{
-                swtImage = AWTSWTImageUtils.createSWTImage(rimage);
+                swtImage = createSWTImage(rimage);
             }
             if (swtImage != null) {
-                gc.drawImage(swtImage, sx1, sy1, Math.abs(sx2-sx1), Math.abs(sy2-sy1), 
+                gc.drawImage(swtImage, sx1, sy1, Math.abs(sx2-sx1), Math.abs(sy2-sy1),
                         dx1, dy1, Math.abs(dx2-dx1), Math.abs(dy2-dy1) );
                 swtImage.dispose();
             }
@@ -420,7 +554,7 @@ public class SWTGraphics implements ViewportGraphics {
             if (swtImage != null)
                 swtImage.dispose();
         }
-    
+
     }
 
     /**
@@ -429,35 +563,35 @@ public class SWTGraphics implements ViewportGraphics {
      */
     public void drawImage( java.awt.Image awtImage, int dx1, int dy1, int dx2, int dy2, int sx1,
             int sy1, int sx2, int sy2 ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         RenderedImage rimage = (RenderedImage) awtImage;
         drawImage(rimage, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2);
     }
 
     public void drawImage( Image swtImage, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1,
             int sx2, int sy2 ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
 
-        gc.drawImage(swtImage, sx1, sy1, Math.abs(sx2-sx1), Math.abs(sy2-sy1), 
+        gc.drawImage(swtImage, sx1, sy1, Math.abs(sx2-sx1), Math.abs(sy2-sy1),
                 dx1, dy1, Math.abs(dx2-dx1), Math.abs(dy2-dy1) );
 
     }
-    
+
     public void drawImage( Image swtImage, int x, int y ) {
         gc.drawImage(swtImage, x, y);
     }
 
     public AffineTransform getTransform() {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         if( swtTransform==null )
             return AFFINE_TRANSFORM;
-        
+
         float[] matrix=new float[6];
         swtTransform.getElements(matrix);
         return new AffineTransform(matrix);
     }
-    
-    
+
+
     public void drawOval( int x, int y, int width, int height ){
         gc.drawOval(x,y,width, height);
     }
@@ -465,16 +599,47 @@ public class SWTGraphics implements ViewportGraphics {
     public void fillOval( int x, int y, int width, int height ) {
         gc.fillOval(x, y, width, height);
     }
-    
+
+    /**
+     * Creates an image with a depth of 24 and has a transparency channel.
+     *
+     * @param device device to use for creating the image
+     * @param width the width of the final image
+     * @param height the height of the final image
+     * @return an image with a depth of 24 and has a transparency channel.
+     */
+    public static Image createDefaultImage( Device device, int width, int height ) {
+        checkAccess();
+        ImageData swtdata = null;
+        PaletteData palette;
+        int depth;
+
+        depth = 24;
+        palette = new PaletteData(0xFF0000, 0xFF00, 0xFF);
+        swtdata = new ImageData(width, height, depth, palette);
+        swtdata.transparentPixel = -1;
+        swtdata.alpha = -1;
+        swtdata.alphaData = new byte[swtdata.data.length];
+        for( int i = 0; i < swtdata.alphaData.length; i++ ) {
+            swtdata.alphaData[i] = 0;
+        }
+        return new Image(device, swtdata);
+
+    }
+
     /**
      * Creates an image descriptor that from the source image.
      *
      * @param image source image
      * @return  an image descriptor that from the source image.
-     * @deprecated Use {@link AWTSWTImageUtils#createImageDescriptor(BufferedImage)} instead
      */
     public static ImageDescriptor createImageDescriptor( final BufferedImage image ) {
-        return AWTSWTImageUtils.createImageDescriptor(image);
+        checkAccess();
+        return new ImageDescriptor(){
+            public ImageData getImageData() {
+                return createImageData(image);
+            }
+        };
     }
 
     /**
@@ -483,12 +648,15 @@ public class SWTGraphics implements ViewportGraphics {
      *
      * @param image source image.
      * @return a swtimage showing the source image.
-     * @deprecated Use {@link AWTSWTImageUtils#convertToSWTImage(BufferedImage)} instead
      */
-    public static Image convertToSWTImage( BufferedImage image ) {
-        return AWTSWTImageUtils.convertToSWTImage(image);
+    public static Image createSWTImage( BufferedImage image ) {
+        checkAccess();
+        ImageData data;
+        data = createImageData(image);
+
+        return new org.eclipse.swt.graphics.Image(Display.getDefault(), data);
     }
-    
+
     /**
      * Creates an ImageData from the 0,0,width,height section of the source BufferedImage.
      * <p>
@@ -497,12 +665,25 @@ public class SWTGraphics implements ViewportGraphics {
      *
      * @param image source image.
      * @return an ImageData from the 0,0,width,height section of the source BufferedImage
-     * @deprecated Use {@link AWTSWTImageUtils#createImageData(BufferedImage)} instead
      */
     public static ImageData createImageData( BufferedImage image ) {
-        return AWTSWTImageUtils.createImageData(image);
+        checkAccess();
+
+        if( image.getType()!=BufferedImage.TYPE_3BYTE_BGR ){
+            return createImageData((RenderedImage)image, image.getTransparency()!=Transparency.OPAQUE);
+        }
+
+        int width=image.getWidth();
+        int height=image.getHeight();
+        int bands=image.getColorModel().getColorSpace().getNumComponents();
+        int depth=24;
+        byte[] pixels = ((DataBufferByte) image.getRaster()
+                .getDataBuffer()).getData();
+        ImageData data = new ImageData(width, height, depth, new PaletteData(
+                0x0000ff, 0x00ff00, 0xff0000), width * bands, pixels);
+        return data;
     }
-    
+
     /**
      * Converts a RenderedImage to an SWT Image.  You are responsible for disposing the created image.  This
      * method is slower than calling {@link #createSWTImage(BufferedImage, int, int)}.
@@ -511,24 +692,36 @@ public class SWTGraphics implements ViewportGraphics {
      * @param width the width of the final image
      * @param height the height of the final image
      * @return a swtimage showing the 0,0,width,height rectangle of the source image.
-     * @deprecated Use {@link AWTSWTImageUtils#createSWTImage(RenderedImage)} instead
      */
     public static Image createSWTImage( RenderedImage image  ) {
-        return AWTSWTImageUtils.createSWTImage(image);
+        checkAccess();
+        ImageData data = createImageData(image);
+
+        return new org.eclipse.swt.graphics.Image(Display.getDefault(), data);
     }
-    
+
     /**
      * Creates an ImageData from the source RenderedImage.
      * <p>
-     * This method is slower than using {@link AWTSWTImageUtils#createImageData(BufferedImage, int, int)}.
+     * This method is slower than using {@link #createImageData(BufferedImage, int, int)}.
      * </p>
      *
      * @param image source image.
      * @return an ImageData from the source RenderedImage.
-     * @deprecated Use {@link AWTSWTImageUtils#createImageData(RenderedImage)} instead
      */
     public static ImageData createImageData( RenderedImage image ) {
-        return AWTSWTImageUtils.createImageData(image);
+        checkAccess();
+
+        if( image instanceof BufferedImage )
+            return createImageData((BufferedImage)image);
+        int depth=24;
+        int width=image.getWidth();
+        int height=image.getHeight();
+        byte[] pixels = ((DataBufferByte) image.getTile(0, 0)
+                .getDataBuffer()).getData();
+        ImageData data = new ImageData(width, height, depth, new PaletteData(
+                0xff0000, 0x00ff00, 0x0000ff), width, pixels);
+        return data;
     }
     public Shape getClip() {
         Rectangle clipping = gc.getClipping();
@@ -540,34 +733,30 @@ public class SWTGraphics implements ViewportGraphics {
     }
 
 	public java.awt.Color getBackgroundColor() {
-        AWTSWTImageUtils.checkAccess();
-		return AWTSWTImageUtils.swtColor2awtColor(gc, gc.getBackground());
+        checkAccess();
+		return swt2awt(gc, gc.getBackground());
 	}
 
 	public java.awt.Color getColor() {
-        AWTSWTImageUtils.checkAccess();
-		return AWTSWTImageUtils.swtColor2awtColor(gc, gc.getForeground());
+        checkAccess();
+		return swt2awt(gc, gc.getForeground());
 	}
-	
-	/**
-     * @deprecated Use {@link AWTSWTImageUtils#swtColor2awtColor(GC,Color)} instead
-     */
-    public static java.awt.Color swtColor2awtColor(GC gc, Color swt) {
-        return AWTSWTImageUtils.swtColor2awtColor(gc, swt);
-    }
+
+	public static java.awt.Color swt2awt(GC gc, Color swt) {
+        java.awt.Color awt = new java.awt.Color(swt.getRed(), swt.getGreen(), swt.getBlue(), gc.getAlpha());
+		return awt;
+	}
 
     public void drawRoundRect( int x, int y, int width, int height, int arcWidth, int arcHeight ) {
-        AWTSWTImageUtils.checkAccess();
+        checkAccess();
         gc.drawRoundRectangle(x, y, width, height, arcWidth, arcHeight);
     }
 
-    /**
-     * @deprecated Use {@link AWTSWTImageUtils#checkAccess()} instead
-     */
-    static void checkAccess() {
-        AWTSWTImageUtils.checkAccess();
+    private static void checkAccess() {
+        if( Display.getCurrent() == null )
+            SWT.error (SWT.ERROR_THREAD_INVALID_ACCESS);
     }
-    
+
     public void fillRoundRect(  int x, int y, int width, int height, int arcWidth, int arcHeight ) {
         Color tmp = prepareForFill();
         gc.fillRoundRectangle(x, y, width, height, arcWidth, arcHeight);
@@ -586,18 +775,25 @@ public class SWTGraphics implements ViewportGraphics {
      *
      * @param style
      * @return
-     * @deprecated Use {@link AWTSWTImageUtils#toFontStyle(java.awt.Font)} instead
      */
     public static int toFontStyle( java.awt.Font f ){
-        return AWTSWTImageUtils.toFontStyle(f);
+        int s = SWT.NORMAL;
+
+        if( f.isItalic()){
+            s = s | SWT.ITALIC;
+        }
+        if( f.isBold() ){
+            s = s | SWT.BOLD;
+        }
+        return s;
     }
-    
+
     public void setFont(java.awt.Font f){
-        Font swtFont;  
-        
+        Font swtFont;
+
         int size = (f.getSize()* getDPI() ) / 72;
-        int style = AWTSWTImageUtils.toFontStyle( f );
-                
+        int style = toFontStyle( f );
+
         swtFont = new Font( gc.getDevice(),f.getFamily(), size, style );
         if (font != null){
             font.dispose();
@@ -605,7 +801,7 @@ public class SWTGraphics implements ViewportGraphics {
         font = swtFont;
         gc.setFont(font);
     }
-    
+
     public int getDPI() {
         return gc.getDevice().getDPI().y;
     }
@@ -626,24 +822,45 @@ public class SWTGraphics implements ViewportGraphics {
 
     /**
      * Converts SWT FontData to a AWT Font
-     * 
+     *
      * @param fontData the font data
      * @return the equivalent AWT font
-     * @deprecated Use {@link AWTSWTImageUtils#swtFontToAwt(FontData)} instead
      */
     public static java.awt.Font swtFontToAwt( FontData fontData ) {
-        return AWTSWTImageUtils.swtFontToAwt(fontData);
+        int style = java.awt.Font.PLAIN;
+        if ((fontData.getStyle() & SWT.BOLD) == SWT.BOLD) {
+            style = java.awt.Font.BOLD;
+        }
+        if ((fontData.getStyle() & SWT.ITALIC) == SWT.ITALIC) {
+            style |= java.awt.Font.ITALIC;
+        }
+
+        java.awt.Font font = new java.awt.Font(fontData.getName(), style, fontData.getHeight());
+        return font;
     }
 
     /**
      * Converts an AWTFont to a SWT Font
-     * 
+     *
      * @param font and AWT Font
      * @param fontRegistry
      * @return the equivalent SWT Font
-     * @deprecated Use {@link AWTSWTImageUtils#awtFontToSwt(java.awt.Font,FontRegistry)} instead
      */
     public static org.eclipse.swt.graphics.Font awtFontToSwt( java.awt.Font font, FontRegistry fontRegistry ) {
-        return AWTSWTImageUtils.awtFontToSwt(font, fontRegistry);
+        String fontName = font.getFontName();
+        if (fontRegistry.hasValueFor(fontName)) {
+            return fontRegistry.get(fontName);
+        }
+
+        int style = 0;
+        if ((font.getStyle() & java.awt.Font.BOLD) == java.awt.Font.BOLD) {
+            style = SWT.BOLD;
+        }
+        if ((font.getStyle() & java.awt.Font.ITALIC) == java.awt.Font.ITALIC) {
+            style |= SWT.ITALIC;
+        }
+        FontData data = new FontData(fontName, font.getSize(), style);
+        fontRegistry.put(fontName, new FontData[]{data});
+        return fontRegistry.get(fontName);
     }
 }

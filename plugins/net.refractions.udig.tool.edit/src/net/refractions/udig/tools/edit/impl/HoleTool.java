@@ -25,15 +25,18 @@ import net.refractions.udig.tools.edit.DefaultEditToolBehaviour;
 import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
 import net.refractions.udig.tools.edit.EnablementBehaviour;
 import net.refractions.udig.tools.edit.activator.DeleteGlobalActionSetterActivator;
+import net.refractions.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
 import net.refractions.udig.tools.edit.activator.DrawGeomsActivator;
+import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
 import net.refractions.udig.tools.edit.activator.GridActivator;
+import net.refractions.udig.tools.edit.activator.SetRenderingFilter;
 import net.refractions.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
 import net.refractions.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
-import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
 import net.refractions.udig.tools.edit.behaviour.AcceptWhenOverFirstVertexBehaviour;
 import net.refractions.udig.tools.edit.behaviour.AddVertexWhileCreatingBehaviour;
 import net.refractions.udig.tools.edit.behaviour.CursorControlBehaviour;
 import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
+import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
 import net.refractions.udig.tools.edit.behaviour.SelectFeatureBehaviour;
 import net.refractions.udig.tools.edit.behaviour.SetSnapSizeBehaviour;
 import net.refractions.udig.tools.edit.behaviour.StartHoleCuttingBehaviour;
@@ -43,7 +46,7 @@ import net.refractions.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviou
 import net.refractions.udig.tools.edit.validator.ValidHoleValidator;
 
 import org.eclipse.swt.SWT;
-import org.opengis.filter.spatial.BBOX;
+import org.geotools.filter.FilterType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPolygon;
@@ -59,9 +62,9 @@ public class HoleTool extends AbstractEditTool {
     @Override
     protected void initActivators( Set<Activator> activators ) {
         DrawType type = DrawGeomsActivator.DrawType.POLYGON;
-        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultEditActivators(type);
+        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultActivators(type);
         activators.addAll(defaults);
-        
+
         activators.add(new DeleteGlobalActionSetterActivator());
         activators.add(new SetSnapBehaviourCommandHandlerActivator());
         activators.add(new GridActivator());
@@ -81,7 +84,7 @@ public class HoleTool extends AbstractEditTool {
     @Override
     protected void initEventBehaviours( EditToolConfigurationHelper helper ) {
         helper.add( new CursorControlBehaviour(handler, new ConditionalProvider(handler, Messages.HoleTool_create_feature, Messages.HoleTool_add_vertex_or_finish),
-                new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_SIZEALL),new ConditionalProvider(handler, Messages.HoleTool_move_vertex,null), 
+                new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_SIZEALL),new ConditionalProvider(handler, Messages.HoleTool_move_vertex,null),
                 new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_CROSS), new ConditionalProvider(handler, Messages.HoleTool_add_vertex, null)));
 
 
@@ -94,11 +97,11 @@ public class HoleTool extends AbstractEditTool {
         helper.stopOrderedList();
         helper.startOrderedList(true);
         // behaviours that select the geometry and hole
-        helper.add(new SelectFeatureBehaviour(new Class[]{Polygon.class, MultiPolygon.class}, BBOX.class));
+        helper.add(new SelectFeatureBehaviour(new Class[]{Polygon.class, MultiPolygon.class}, FilterType.GEOMETRY_BBOX));
         helper.add( new StartHoleCuttingBehaviour());
         helper.stopOrderedList();
         helper.stopMutualExclusiveList();
-        
+
         helper.add( new SetSnapSizeBehaviour());
         helper.add( new AcceptOnDoubleClickBehaviour() );
         helper.done();

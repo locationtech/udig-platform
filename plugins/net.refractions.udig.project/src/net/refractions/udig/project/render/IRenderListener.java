@@ -23,12 +23,12 @@ import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
 /**
- * A listener that listeners for the current state of rendering.  
+ * A listener that listeners for the current state of rendering.
  * <p>
  * An {@link IRenderListener} is notified when rendering starts, finishes,
  * when {@link IMapDisplay} is updated and when renderers are added or removed.
- * </p> 
- * 
+ * </p>
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -41,7 +41,7 @@ public interface IRenderListener {
      * @param screenBounds the area that to being rendered, on screen.
      * @param renderers the renderers that are being rendered.
      */
-    void renderStarted(RenderingCoordinator source, ReferencedEnvelope worldBounds, 
+    void renderStarted(RenderingCoordinator source, ReferencedEnvelope worldBounds,
             Rectangle screenBounds, List<IRenderer> renderers);
     /**
      * Called when a rendering is finished.
@@ -51,7 +51,7 @@ public interface IRenderListener {
      * @param screenBounds the area that was rendered, on screen.
      * @param renderers the renderers that did the rendering.
      */
-    void renderEnded(RenderingCoordinator source, ReferencedEnvelope updatedMap, 
+    void renderEnded(RenderingCoordinator source, ReferencedEnvelope updatedMap,
             Rectangle updatedScreen, List<IRenderer> renderers);
     /**
      * Called when there is information ready.  The MapDisplay should update when this is called
@@ -61,7 +61,7 @@ public interface IRenderListener {
      * @param screenBounds the area that has been updated, in screen coordinates.
      * @param renderers the renderers that did the rendering.
      */
-    void updateReady(RenderingCoordinator source, ReferencedEnvelope updatedMap, 
+    void updateReady(RenderingCoordinator source, ReferencedEnvelope updatedMap,
             Rectangle updatedScreen, List<IRenderer> renderers);
     /**
      * Called when a renderer has been added to the render coordinator

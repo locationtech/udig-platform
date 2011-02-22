@@ -4,13 +4,13 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
 import net.refractions.udig.project.ui.commands.IDrawCommand;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Composite drawing command.
@@ -20,13 +20,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * <p>
  * The composite command is responsible for the running all internal
  * commands.
- * 
+ *
  * @author Vitalus
  * @since 1.1.0
- * 
+ *
  */
 public class CompositeDrawCommand extends AbstractDrawCommand {
-	
+
 	private List<IDrawCommand> internalCommands = null;
 
 	public CompositeDrawCommand(IDrawCommand[] commandsArray) {
@@ -36,9 +36,9 @@ public class CompositeDrawCommand extends AbstractDrawCommand {
 			internalCommands.add(commandsArray[i]);
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param commandsList list of <code>IDrawCommand</code>s.
 	 */
 	public CompositeDrawCommand(List<? extends IDrawCommand> commandsList) {
@@ -48,8 +48,8 @@ public class CompositeDrawCommand extends AbstractDrawCommand {
 	public Rectangle getValidArea() {
 		return null;
 	}
-	
-	
+
+
 
 	@Override
 	public void setGraphics(ViewportGraphics graphics, IMapDisplay display) {
@@ -64,7 +64,7 @@ public class CompositeDrawCommand extends AbstractDrawCommand {
 
 	@Override
 	public void setValid(boolean valid) {
-		
+
 		super.setValid(valid);
 		if(internalCommands != null){
 			for (IDrawCommand command : internalCommands) {
@@ -74,7 +74,7 @@ public class CompositeDrawCommand extends AbstractDrawCommand {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
 	public void setMap(IMap map) {
@@ -88,10 +88,10 @@ public class CompositeDrawCommand extends AbstractDrawCommand {
 
 
 	/**
-	 * 
+	 *
 	 */
 	public void run(IProgressMonitor monitor) throws Exception {
-		
+
 		for  (IDrawCommand command : internalCommands) {
 			try {
 				if(command.isValid())

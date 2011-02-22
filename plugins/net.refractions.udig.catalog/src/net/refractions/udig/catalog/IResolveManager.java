@@ -19,13 +19,13 @@ import java.io.IOException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * An IResolverFactoryManager processes the net.refractions.udig.resolvers extension point and allows client 
- * code to resolve {@link IResolve} objects to other objects. 
- * 
+ * An IResolverFactoryManager processes the net.refractions.udig.resolvers extension point and allows client
+ * code to resolve {@link IResolve} objects to other objects.
+ *
  * <p>
  * This class is similar in functionality to the IAdapterManager in eclipse.
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -50,7 +50,7 @@ public interface IResolveManager {
      * @return true if the resolve can be resolved to the targetClass.
      */
     public boolean canResolve(IResolve resolve, Class<?> targetClass);
-    
+
     /**
      * Registers a factory with the ResolveManager
      *
@@ -64,12 +64,12 @@ public interface IResolveManager {
      * @param factory factory to unregister.
      */
     public void unregisterResolves(IResolveAdapterFactory factory);
-    
+
     /**
      * Excludes a type from being resolved for a given factory.  IE ResolveManager will not use the provided factory to
      * resolve to the resolveType
      *
-     * @param factory 
+     * @param factory
      * @param resolveType
      */
     public void unregisterResolves(IResolveAdapterFactory factory, Class<?> resolveType);

@@ -8,13 +8,12 @@ import java.util.List;
 import java.util.Set;
 
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.internal.ui.actions.CatalogImportDropAction;
 import net.refractions.udig.catalog.ui.workflow.ResourceSelectionState;
-import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Layer;
@@ -36,15 +35,15 @@ public class MapDropAction extends CatalogImportDropAction {
         if ( data2.getClass().isArray() ){
             Object[] objects = ((Object[])data2);
             for( Object object : objects ) {
-                if( canAccept(object) ){
-                    return true;
+                if( !canAccept(object) ){
+                    return false;
                 }
             }
-            return false;
+                return true;
         }else {
             return canAccept(data2);
         }
-        
+
     }
 
     private boolean canAccept( Object data2 ) {
@@ -52,7 +51,7 @@ public class MapDropAction extends CatalogImportDropAction {
             ILayer layer=((LayerResource) data2).getLayer();
             if ( desinationContainsLayer(layer) )
                 return false;
-            if ( destinationLayerMapContainsLayer(layer)) 
+            if ( destinationLayerMapContainsLayer(layer))
                 return false;
         }
         if( data2 instanceof IGeoResource ){
@@ -62,9 +61,6 @@ public class MapDropAction extends CatalogImportDropAction {
             IAdaptable adaptable=(IAdaptable) data2;
             if( adaptable.getAdapter(IGeoResource.class)!=null )
                 return true;
-        }
-        if (data2 instanceof IResolve){
-            return true;
         }
         return canImport(data2);
     }
@@ -86,26 +82,24 @@ public class MapDropAction extends CatalogImportDropAction {
         }
         return false;
     }
-    
+
     @Override
 	public void perform(IProgressMonitor monitor) {
         List<IGeoResource> resources=new ArrayList<IGeoResource>();
         List<Object> otherData=new ArrayList<Object>();
-        
+
         Object data2 = getData();
         Object[] array;
         if( data2.getClass().isArray() ){
             array=(Object[]) data2;
             for( int i = 0; i < array.length; i++ ) {
                 Object object = array[i];
-                if(canAccept(object)){
-                	seperateGeoResources(resources, otherData, object);
-                }
+                seperateGeoResources(resources, otherData, object);
             }
         }else{
             seperateGeoResources(resources, otherData, data2);
         }
-        
+
         int layerpos=-1;
 		layerpos = calculateDropPosition();
         IMap map=null;
@@ -182,7 +176,7 @@ public class MapDropAction extends CatalogImportDropAction {
             ILayer target=(ILayer) getDestination();
             ViewerDropLocation location = getViewerLocation();
             layerpos = target.getZorder();
-            
+
             if (location == ViewerDropLocation.NONE) {
                 layerpos=0;
             }

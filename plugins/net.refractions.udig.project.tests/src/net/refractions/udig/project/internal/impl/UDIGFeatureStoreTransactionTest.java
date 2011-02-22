@@ -13,13 +13,11 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Transaction;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
+import org.geotools.filter.Filter;
 
 /**
  * Confirms that the transaction of a feature store keeps its state correctly (UDIG-1051).
- *  
+ *
  * @author chorner
  * @since 1.1.0
  */
@@ -32,14 +30,14 @@ public class UDIGFeatureStoreTransactionTest extends AbstractProjectTestCase {
         ILayer layer = map.getLayersInternal().get(0);
         EditManager manager = (EditManager) layer.getMap().getEditManager();
         //wrapper/decorator
-        FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(FeatureStore.class, new NullProgressMonitor());
+        FeatureStore store = layer.getResource(FeatureStore.class, new NullProgressMonitor());
         //we are in read mode, so the wrapper doesn't delegate to the transaction
         assertTrue(store.getTransaction() == Transaction.AUTO_COMMIT);
         //read, bounds doesn't start a transaction
         store.getBounds();
         assertTrue(store.getTransaction() == Transaction.AUTO_COMMIT);
         //start editing
-        store.removeFeatures(Filter.EXCLUDE);
+        store.removeFeatures(Filter.ALL);
         assertTrue(store.getTransaction() != Transaction.AUTO_COMMIT);
         //read keeps transaction open
         store.getFeatures();
@@ -48,11 +46,11 @@ public class UDIGFeatureStoreTransactionTest extends AbstractProjectTestCase {
         manager.rollbackTransaction();
         assertTrue(store.getTransaction() == Transaction.AUTO_COMMIT);
         //remove starts again
-        store.removeFeatures(Filter.INCLUDE);
+        store.removeFeatures(Filter.NONE);
         assertTrue(store.getTransaction() != Transaction.AUTO_COMMIT);
         //done
         manager.commitTransaction();
         assertTrue(store.getTransaction() == Transaction.AUTO_COMMIT);
     }
-    
+
 }

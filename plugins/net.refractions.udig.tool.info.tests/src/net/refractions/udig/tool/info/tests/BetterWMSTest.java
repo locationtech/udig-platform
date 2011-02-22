@@ -23,6 +23,6 @@ public class BetterWMSTest extends AbstractProjectUITest {
 	public void testWMS() throws Exception {
 		Dimension displaySize = new Dimension(400, 400);
 		IMap map = MapTests.createDefaultMap("bork", 4, true, displaySize);
-		
+
 	}
 }

@@ -20,7 +20,7 @@ public class LayerColoursTest extends AbstractProjectTestCase {
 
     //TODO: ensure removed colours are reused (they currently are not)
     //TODO: use more unique identifier than layer ID for scheme mapping key
-    
+
     public void testColourScheme() throws Exception {
          //add and remove some layers, and make sure the colours are proper
         Map map = MapTests.createDefaultMap("test", 2, true, new Dimension(10,10)); //$NON-NLS-1$
@@ -37,19 +37,19 @@ public class LayerColoursTest extends AbstractProjectTestCase {
         IGeoResource resource6 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(
                 "type6", 4), false); //$NON-NLS-1$
         assertEquals(1, map.getMapLayers().size());
-        
+
         assertEquals(8, map.getColourScheme().getColourPalette().getMaxColors());
-        
+
         List<IGeoResource> resources = new ArrayList<IGeoResource>();
         resources.add(resource1);
-        
+
         assertTrue(coloursAreUnique(map.getColourScheme()));
-        
+
         addLayer(resource1, map);
         assertEquals(2, map.getMapLayers().size());
         assertTrue(coloursAreUnique(map.getColourScheme()));
         showDefaultColours(map);
-        
+
         removeLayer(map, 0);
         assertEquals(1, map.getMapLayers().size());
         assertTrue(coloursAreUnique(map.getColourScheme()));
@@ -105,25 +105,25 @@ public class LayerColoursTest extends AbstractProjectTestCase {
         }
         return true;
     }
-    
+
     private void addLayer(IGeoResource resource, IMap map) throws Exception {
         AddLayersCommand addCommand = new AddLayersCommand(getResource(resource));
         addCommand.setMap(map);
         addCommand.run(new NullProgressMonitor());
     }
-    
+
     private void removeLayer(IMap map, int index) throws Exception {
         DeleteLayerCommand deleteCommand = new DeleteLayerCommand((Layer) map.getMapLayers().get(index));
         deleteCommand.setMap(map);
         deleteCommand.run(new NullProgressMonitor());
     }
-    
+
     private List<IGeoResource> getResource(IGeoResource resource) {
         List<IGeoResource> resources = new ArrayList<IGeoResource>();
         resources.add(resource);
         return resources;
     }
-    
+
     private void showDefaultColours(Map map) {
 //        System.out.println("COLOURS:");
 //        List<ILayer> mapLayers = map.getMapLayers();

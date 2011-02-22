@@ -16,7 +16,7 @@ import org.eclipse.swt.browser.LocationListener;
  */
 public interface ExternalCatalogueImportPage extends IWizardPage {
     /** ExternalCatalogueImportPage XPID field */
-    public static final String XPID = 
+    public static final String XPID =
         "net.refractions.udig.browser.externalCatalogWizard"; //$NON-NLS-1$
     /**
      *

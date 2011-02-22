@@ -10,12 +10,12 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 
 /**
  * Assesses if a tools is valid for a given property value.
- * 
+ *
  * @author rgould
  * @since 1.1.0
  */
 class OpFilterPropertyValueCondition implements OpFilter {
-   
+
     private static final PropertyValue FAILED_TO_LOAD = new PropertyValue<Object>(){
 
         public void addListener( IOpFilterListener listener ) {
@@ -35,7 +35,7 @@ class OpFilterPropertyValueCondition implements OpFilter {
 
         public void removeListener( IOpFilterListener listener ) {
         }
-        
+
     };
     private final String equalsValue;
     private final IConfigurationElement propertyElement;
@@ -76,8 +76,8 @@ class OpFilterPropertyValueCondition implements OpFilter {
         return v.isTrue(object, this.equalsValue);
     }
 
-    
-    
+
+
     private PropertyValue getValue() {
         if (propertyValueInstance == null) {
             try {

@@ -16,25 +16,25 @@ package net.refractions.udig.ui;
 
 /**
  * Maps between the Name of a type in the combo box cell editor and the class of the type.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class LegalAttributeTypes {
     private final String name;
     private final Class type;
-    
+
     public LegalAttributeTypes(String nameA, Class typeA) {
         name=nameA;
         type=typeA;
     }
-    
+
     public String getName(){
         return name;
     }
-    
+
     public Class getType(){
         return type;
     }
-    
+
 }

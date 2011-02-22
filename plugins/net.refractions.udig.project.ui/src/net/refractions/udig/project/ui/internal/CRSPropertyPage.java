@@ -17,6 +17,7 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import net.refractions.udig.project.internal.command.navigation.ZoomCommand;
 import net.refractions.udig.project.internal.commands.ChangeCRSCommand;
 import net.refractions.udig.project.ui.internal.commands.SetLayerCRSCommand;
 import net.refractions.udig.ui.CRSChooser;
@@ -25,6 +26,7 @@ import net.refractions.udig.ui.Controller;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
+import org.eclipse.jface.preference.IPreferencePageContainer;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
@@ -47,7 +49,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  * <li>Allow the default CRS of a workbench to be set</li>
  * </ul>
  * </p>
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -67,7 +69,7 @@ public class CRSPropertyPage extends PropertyPage {
             return map.getViewportModel().getCRS();
         }
     }
-    
+
     public static class LayerStrategy implements ApplyCRSStrategy {
         private static final String SHOW_DIALOG_KEY="SHOW_DIALOG_WHEN_UPDATE_LAYER_CRS_KEY"; //$NON-NLS-1$
         private static final String UPDATE_MAP_CRS_KEY="UPDATE_MAP_CRS_WHEN_UNKOWN_IS_CHANGED"; //$NON-NLS-1$
@@ -80,7 +82,7 @@ public class CRSPropertyPage extends PropertyPage {
             UndoableComposite commands=new UndoableComposite();
             List<MapCommand> commandList = commands.getCommands();
             commandList.add(new SetLayerCRSCommand(layer, crs));
-            if( layer.getCRS()==ILayer.UNKNOWN_CRS && 
+            if( layer.getCRS()==ILayer.UNKNOWN_CRS &&
                     layer.getMap().getViewportModel().getCRS().equals(ILayer.UNKNOWN_CRS) ){
                 IPreferenceStore store=ProjectUIPlugin.getDefault().getPreferenceStore();
                 store.setDefault(SHOW_DIALOG_KEY, true);
@@ -88,12 +90,12 @@ public class CRSPropertyPage extends PropertyPage {
                 boolean updateMapCRS;
                 if( openDialog ){
                     Shell shell=PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-                    MessageDialogWithToggle dialog=MessageDialogWithToggle.openYesNoQuestion(shell, 
-                            Messages.CRSPropertyPage_title, 
-                            Messages.CRSPropertyPage_message, 
-                            Messages.CRSPropertyPage_toggle_message, 
-                            false, 
-                            store, 
+                    MessageDialogWithToggle dialog=MessageDialogWithToggle.openYesNoQuestion(shell,
+                            Messages.CRSPropertyPage_title,
+                            Messages.CRSPropertyPage_message,
+                            Messages.CRSPropertyPage_toggle_message,
+                            false,
+                            store,
                             SHOW_DIALOG_KEY );
                     int returnCode=dialog.getReturnCode();
                     updateMapCRS=returnCode==IDialogConstants.YES_ID?true:false;
@@ -116,21 +118,21 @@ public class CRSPropertyPage extends PropertyPage {
     /**
      * In order to make CRSPropertyPage more re-usable this strategy is used to apply the CRS to the
      * object that this page applies to. In addition it retrieves the current CRS from the object.
-     * 
+     *
      * @author Jesse
      * @since 1.1.0
      */
     public static interface ApplyCRSStrategy {
         /**
          * Called when a new CRS has been chosen. Should set the crs on the object.
-         * 
+         *
          * @param crs new CRS. Will not be the same as returned by
          *        {@link #getCurrentCoordinateReferenceSystem()}
          */
         public void applyCoordinateReferenceSystem( CoordinateReferenceSystem crs );
         /**
          * Returns the current CRS. Should not return null.
-         * 
+         *
          * @return current crs of object.
          */
         public CoordinateReferenceSystem getCurrentCoordinateReferenceSystem();
@@ -145,15 +147,15 @@ public class CRSPropertyPage extends PropertyPage {
         public void handleOk() {
             CRSPropertyPage.this.performOk();
         }
-        
+
     });
 
     private ApplyCRSStrategy strategy;
 
     public CRSPropertyPage( ) {
-        setTitle(Messages.CRSPropertyPage_coordinateSystems_title); 
+        setTitle(Messages.CRSPropertyPage_coordinateSystems_title);
     }
-    
+
     public void setStrategy( ApplyCRSStrategy strategy){
         this.strategy=strategy;
     }
@@ -208,7 +210,7 @@ public class CRSPropertyPage extends PropertyPage {
         chooser.setFocus();
         return control;
     }
-    
+
     /**
      * @see org.eclipse.jface.preference.PreferencePage#doComputeSize()
      */
@@ -222,5 +224,5 @@ public class CRSPropertyPage extends PropertyPage {
     public void init( IWorkbench workbench ) {
     }
 
-    
+
 }

@@ -43,14 +43,14 @@ public class PageEditorPaletteFactory {
     private static final int DEFAULT_PALETTE_SIZE = 125;
 
     private static PaletteContainer createControlGroup(PaletteRoot root) {
-        PaletteGroup controlGroup = new PaletteGroup(Messages.PageEditorPaletteFactory_controlGroup_title); 
+        PaletteGroup controlGroup = new PaletteGroup(Messages.PageEditorPaletteFactory_controlGroup_title);
 
         List<ToolEntry> entries = new ArrayList<ToolEntry>();
         ToolEntry tool = new SelectionToolEntry();
         tool.setToolClass(SelectionToolWithDoubleClick.class);
         entries.add(tool);
         root.setDefaultEntry(tool);
-        
+
 
         controlGroup.addAll(entries);
         return controlGroup;
@@ -58,12 +58,12 @@ public class PageEditorPaletteFactory {
 
      private static PaletteContainer createComponentsDrawer() {
 
-        PaletteDrawer drawer = new PaletteDrawer(Messages.PageEditorPaletteFactory_components_title, null); 
+        PaletteDrawer drawer = new PaletteDrawer(Messages.PageEditorPaletteFactory_components_title, null);
 
         List<ToolEntry> entries = new ArrayList<ToolEntry>();
-        
+
         List<BoxFactory> boxFactories = PrintingPlugin.getDefault().getVisibleBoxes();
-        
+
         for (BoxFactory factory : boxFactories) {
         	ToolEntry tool = new CombinedTemplateCreationEntry(
         			factory.getName(),
@@ -94,18 +94,18 @@ public class PageEditorPaletteFactory {
         paletteRoot.addAll(createCategories(paletteRoot));
         return paletteRoot;
      }
-     
-     
+
+
      private static IPreferenceStore getPreferenceStore() {
          return PrintingPlugin.getDefault().getPreferenceStore();
      }
-     
+
      static FlyoutPreferences createPalettePreferences() {
-         
+
         getPreferenceStore().setDefault(PALETTE_DOCK_LOCATION, -1);
      	getPreferenceStore().setDefault(PALETTE_STATE, 4);
      	getPreferenceStore().setDefault(PALETTE_SIZE, DEFAULT_PALETTE_SIZE);
-         
+
          return new FlyoutPreferences(){
      		public int getDockLocation() {
     			return getPreferenceStore().getInt(PALETTE_DOCK_LOCATION);
@@ -127,9 +127,9 @@ public class PageEditorPaletteFactory {
     		}
         };
      }
-     
+
      public static class SelectionToolWithDoubleClick extends SelectionTool{
-         
+
          @Override
         protected boolean handleDoubleClick( int button ) {
              if (getTargetEditPart() instanceof BoxPart) {

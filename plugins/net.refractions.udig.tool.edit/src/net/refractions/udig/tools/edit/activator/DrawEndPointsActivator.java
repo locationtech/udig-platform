@@ -22,19 +22,19 @@ import net.refractions.udig.tools.edit.commands.DrawEndPointsCommand;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
 
 /**
- * Adds a draw command to the viewport model that will draw the end points of the 
+ * Adds a draw command to the viewport model that will draw the end points of the
  * current shape if the current shape is a LINE
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class DrawEndPointsActivator implements Activator {
 
-    
+
     private DrawEndPointsCommand drawEndPoints;
 
     public void activate( final EditToolHandler handler ) {
-        
+
         drawEndPoints=new DrawEndPointsCommand( handler.getMouseTracker(), new CurrentProvider(handler) );
         handler.getDrawCommands().add(drawEndPoints);
         handler.getContext().sendASyncCommand(drawEndPoints);    }
@@ -51,10 +51,10 @@ public class DrawEndPointsActivator implements Activator {
     public void handleDeactivateError( EditToolHandler handler, Throwable error ) {
         EditPlugin.log("", error); //$NON-NLS-1$
     }
-    
+
     private static class CurrentProvider implements IProvider<PrimitiveShape>{
         private final EditToolHandler handler;
-        
+
         public CurrentProvider( final EditToolHandler handler ) {
             this.handler = handler;
         }
@@ -62,7 +62,7 @@ public class DrawEndPointsActivator implements Activator {
         public PrimitiveShape get(Object... params) {
             return handler.getCurrentShape();
         }
-        
+
     }
 
 }

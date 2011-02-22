@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 3 UDIGImportPage Checklist</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 3 UDIGImportPage Checklist -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>The preceeding sections on <a href="1 Hacking Guidelines.html" title="1 Hacking Guidelines">1 Hacking Guidelines</a>,<a href="Eclipse House Rules.html" title="Eclipse House Rules">Eclipse House Rules</a> and <a href="2 User Interface Guidelines.html" title="2 User Interface Guidelines">2 User Interface Guidelines</a> may be a little bit abstract. Here is the results of apply those guidelines into an actual Quality Assurance Checklist for the UDIGImportPage.</p>
+
+<table class='confluenceTable'>
+<tr>
+<th class='confluenceTh'> Check </th>
+<th class='confluenceTh'> Load Data </th>
+</tr>
+<tr>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> listed in the "Add Layer" and "Data Import" wizards </td>
+</tr>
+<tr>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> banner and a title </td>
+</tr>
+<tr>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> starts with a prompt (not an error message) </td>
+</tr>
+<tr>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> tab order as fields are filled in </td>
+</tr>
+<tr>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> test if data is loaded correctly </td>
+</tr>
+<tr>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> test that new content is selected (in layer or catalog view) </td>
+</tr>
+<tr>
+<th class='confluenceTh'> Check </th>
+<th class='confluenceTh'> Context and Error </th>
+</tr>
+<tr>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> starts with fields based on workspace context (ie the data we just loaded)</td>
+</tr>
+<tr>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> restart page and check that history is remembered </td>
+</tr>
+<tr>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> fill out the fields incorrectly and check reporting of error messages </td>
+</tr>
+<tr>
+<th class='confluenceTh'> Check </th>
+<th class='confluenceTh'> DnD </th>
+</tr>
+<tr>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> DnD with appropriate URL (check of canProcess method) </td>
+</tr>
+<tr>
+<th class='confluenceTh'> Check </th>
+<th class='confluenceTh'> Help and Internationalization </th>
+</tr>
+<tr>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> Check for presense of online reference page for this wizard </td>
+</tr>
+<tr>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> Press F1 and (or click on the ?) for context sensitive help </td>
+</tr>
+<tr>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> Restart and run tests with French </td>
+</tr>
+</table>
+
+<h3><a name="3UDIGImportPageChecklist-ImplementationTips">Implementation Tips</a></h3>
+
+<ul>
+	<li>Workspace context is based on IDataWizard.getSelection().</li>
+	<li>History is maintained in Dialog settings and is remembered across runs (See <a href="3 Adding History to Dialogs and Wizards.html" title="3 Adding History to Dialogs and Wizards">3 Adding History to Dialogs and Wizards</a>)</li>
+	<li>Steal an existing <a href="wizban.html" title="wizban">wizban</a> image and modify</li>
+	<li>jdbc urls are not "valid" urls, see the <a href="http://java.sun.com/docs/books/tutorial/jdbc/basics/connecting.html" title="Visit page outside Confluence">jdbc trail</a> and are not usual done using DND</li>
+</ul>
+
+
+<h3><a name="3UDIGImportPageChecklist-CodeChecks">Code Checks</a></h3>
+
+<ul>
+	<li>Turn on all warnings as in enironment setup</li>
+	<li>Classes have at minimum a javadoc comment</li>
+	<li>Strings should be externalized for internationalization</li>
+</ul>
+
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=4950">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=4950">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

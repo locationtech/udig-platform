@@ -1,5 +1,5 @@
 /**
- * <copyright></copyright> $Id$
+ * <copyright></copyright> $Id: EditManagerImpl.java 28588 2008-01-03 20:33:55Z jeichar $
  */
 package net.refractions.udig.project.internal.impl;
 
@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.AdaptableFeature;
 import net.refractions.udig.project.EditManagerEvent;
 import net.refractions.udig.project.IEditManagerListener;
@@ -46,22 +45,17 @@ import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Transaction;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Id;
-import org.opengis.filter.identity.Identifier;
+import org.geotools.filter.Filter;
+import org.geotools.filter.FilterFactoryFinder;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * The default implementation of the EditManager interface.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -70,35 +64,33 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
 
     /**
-     * The default value of the '{@link #getEditFeature() <em>Edit SimpleFeature</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The default value of the '{@link #getEditFeature() <em>Edit Feature</em>}' attribute. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getEditFeature()
      * @generated
      * @ordered
      */
-    protected static final SimpleFeature EDIT_FEATURE_EDEFAULT = null;
+    protected static final Feature EDIT_FEATURE_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getEditFeature() <em>Edit SimpleFeature</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The cached value of the '{@link #getEditFeature() <em>Edit Feature</em>}' attribute. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getEditFeature()
      * @generated
      * @ordered
      */
-    protected SimpleFeature editFeature = EDIT_FEATURE_EDEFAULT;
+    protected Feature editFeature = EDIT_FEATURE_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getEditLayerInternal() <em>Edit Layer Internal</em>}'
-     * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The cached value of the '{@link #getEditLayerInternal() <em>Edit Layer Internal</em>}' reference.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getEditLayerInternal()
      * @generated
      * @ordered
@@ -108,7 +100,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     /**
      * The default value of the '{@link #getTransactionType() <em>Transaction Type</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see #getTransactionType()
      * @generated
      * @ordered
@@ -118,32 +109,27 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     /**
      * The default value of the '{@link #isEditLayerLocked() <em>Edit Layer Locked</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see #isEditLayerLocked()
      * @generated
      * @ordered
      */
     protected static final boolean EDIT_LAYER_LOCKED_EDEFAULT = false;
 
-    /**
-     * Transaction used for the map.
-     */
     final UDIGTransaction transaction = new UDIGTransaction();
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @SuppressWarnings("unchecked")
     protected EditManagerImpl() {
         super();
-        eAdapters().add(eventCreator);
+        eAdapters().add( eventCreator );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected EClass eStaticClass() {
@@ -152,7 +138,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Map getMapInternal() {
@@ -163,7 +148,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setMapInternal( Map newMapInternal ) {
@@ -189,16 +173,14 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
-    public SimpleFeature getEditFeature() {
+    public Feature getEditFeature() {
         return editFeature;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Layer getEditLayerInternal() {
@@ -207,7 +189,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Class getTransactionType() {
@@ -226,20 +207,20 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
-    public void setEditFeature( SimpleFeature feature, Layer layer ) {
+    public void setEditFeature( Feature feature, Layer layer ) {
         if (layer == null && isEditLayerLocked()) {
             layer = editLayerInternal;
         }
 
-        if (isEditLayerLocked() && (layer != editLayerInternal && editLayerInternal != null)) {
+        if (isEditLayerLocked() && (layer != editLayerInternal && editLayerInternal != null))
             throw new IllegalArgumentException(
                     "Edit Layer is locked so argument 'layer' should be not be changed."); //$NON-NLS-1$
-        }
-        SimpleFeature value = getAdaptableFeature(feature, layer);
-        SimpleFeature oldFeature = editFeature;
+
+        Feature value = getAdaptableFeature(feature, layer);
+        Feature oldFeature = editFeature;
         if (editFeature != null) {
             editFeature = null;
         }
@@ -250,18 +231,15 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
             this.editLayerInternal = layer;
         }
 
-        if (eNotificationRequired()) {
-            if (oldFeature == value) {
+        if (eNotificationRequired())
+            if (oldFeature == value)
                 return;
-            }
-        }
         eNotify(new ENotificationImpl(this, Notification.SET,
                 ProjectPackage.EDIT_MANAGER__EDIT_FEATURE, oldFeature, value));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void startTransaction() {
@@ -270,109 +248,105 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
         throw new UnsupportedOperationException();
     }
 
-    private SimpleFeature getAdaptableFeature( SimpleFeature feature, Layer layer ) {
+    private Feature getAdaptableFeature( Feature feature, Layer layer ) {
         if (feature == null || feature instanceof IAdaptable)
             return feature;
 
-        return (SimpleFeature) new AdaptableFeature(feature, layer);
+        return (Feature) new AdaptableFeature(feature, layer);
     }
 
     /**
-     * Disables edit events so that the renderers and others listening to edit events won't be
-     * triggered until after the commit or rollback.
-     * 
+     * Disables edit events so that the renderers and others listening to edit events won't be triggered until after the
+     * commit or rollback.
      * @param dialogMessage
      */
-    private void startCommitRollback( String dialogMessage ) {
-        List<Layer> layers = getMapInternal().getLayersInternal();
+    private void startCommitRollback(String dialogMessage){
+    	List<Layer> layers = getMapInternal().getLayersInternal();
 
-        for( Layer layer : layers ) {
-            layer.eSetDeliver(false);
-        }
+    	for (Layer layer : layers) {
+			layer.eSetDeliver(false);
+		}
 
-        RenderManager rm = getMapInternal().getRenderManagerInternal();
-        if (rm != null) {
-            rm.disableRendering();
-        }
+    	RenderManager rm = getMapInternal().getRenderManagerInternal();
+    	if( rm !=null ){
+    		rm.disableRendering();
+    	}
 
-        showCommitDialog(dialogMessage);
+    	showCommitDialog(dialogMessage);
 
     }
 
-    private void showCommitDialog( final String message ) {
-        // the commit flag controls whether or not the commit (progress) dialog stays open.
-        committing = true;
-        final Display display = Display.getDefault();
-        final IRunnableWithProgress progressRunnable = new IRunnableWithProgress(){
+	private void showCommitDialog(final String message) {
+		// the commit flag controls whether or not the commit (progress) dialog stays open.
+		committing = true;
+    	final Display display = Display.getDefault();
+    	final IRunnableWithProgress progressRunnable = new IRunnableWithProgress() {
 
-            public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                    InterruptedException {
-                monitor.beginTask(message, IProgressMonitor.UNKNOWN);
-                while( committing ) {
-                    if (!display.readAndDispatch()) {
-                        Thread.sleep(200);
-                    }
-                }
-            }
-        };
+			public void run(IProgressMonitor monitor)
+					throws InvocationTargetException,
+					InterruptedException {
+				monitor.beginTask(message, IProgressMonitor.UNKNOWN);
+				while( committing ){
+					if( !display.readAndDispatch() ){
+						Thread.sleep(200);
+					}
+				}
+			}
+		};
 
-        display.asyncExec(new Runnable(){
-            public void run() {
-                BusyIndicator.showWhile(display, new Runnable(){
-                    public void run() {
-                        ProgressMonitorDialog dialog = new ProgressMonitorDialog(display
-                                .getActiveShell());
 
-                        try {
-                            dialog.run(false, false, progressRunnable);
-                        } catch (InvocationTargetException e) {
-                            // won't happen
-                            ProjectPlugin.log("", e);
-                        } catch (InterruptedException e) {
-                            // won't happen
-                            ProjectPlugin.log("", e);
-                        }
+		display.asyncExec(new Runnable() {
+			public void run() {
+				BusyIndicator.showWhile(display, new Runnable() {
+					public void run() {
+						ProgressMonitorDialog dialog = new ProgressMonitorDialog(display.getActiveShell());
 
-                    }
-                });
+						try {
+							dialog.run(false, false, progressRunnable);
+						} catch (InvocationTargetException e) {
+							// won't happen
+							ProjectPlugin.log("", e);
+						} catch (InterruptedException e) {
+							// won't happen
+							ProjectPlugin.log("", e);
+						}
 
-            }
-        });
-    }
+					}
+				});
 
-    /**
-     * As long as committing is true then the Commit Dialog will stay open. It should be set to true
-     * in the {@link #showCommitDialog()} and to false in {@link #commitRollbackComplete()}
-     */
+			}
+		});
+	}
+
+	/**
+	 * As long as committing is true then the Commit Dialog will stay open.  It should be set to true
+	 * in the {@link #showCommitDialog()} and to false in {@link #commitRollbackComplete()}
+	 */
     private volatile boolean committing = false;
 
     /**
-     * Enables rendering again and informs the feature store that editing has completed and the
-     * transaction should be reset.
-     * 
+     * Enables rendering again and
+     * informs the feature store that editing has completed and the transaction should be reset.
+     *
      * @see UDIGFeatureStore#editComplete()
      * @throws IOException
      */
     private void commitRollbackComplete() throws IOException {
         List<Layer> layers = getMapInternal().getLayersInternal();
 
-        for( Layer layer1 : layers ) {
-            layer1.eSetDeliver(true);
-        }
+		for (Layer layer1 : layers) {
+			layer1.eSetDeliver(true);
+		}
 
-        RenderManager rm = getMapInternal().getRenderManagerInternal();
-        if (rm != null) {
-            rm.enableRendering();
-        }
+		RenderManager rm = getMapInternal().getRenderManagerInternal();
+		if( rm !=null ){
+			rm.enableRendering();
+		}
 
         for( Layer layer : getMapInternal().getLayersInternal() ) {
-            FeatureStore<?,?> resource = layer.getResource(FeatureStore.class, ProgressManager.instance().get());
-            if( resource == null ) {
-                continue;
-            }
-            if( resource instanceof UDIGStore) {
-                UDIGStore store = (UDIGStore) resource;
-                store.editComplete();
+            FeatureStore resource = layer.getResource(FeatureStore.class, ProgressManager.instance().get());
+            if (resource != null && resource instanceof UDIGFeatureStore) {
+                ((UDIGFeatureStore) resource).editComplete();
             }
         }
         // the next line closes the CommitDialog
@@ -380,14 +354,14 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     }
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void commitTransaction() throws IOException {
         // if (!isEditing() ) return; // check for edit events? May not arrive so lets do what the
         // user tells us
 
-        fireEvent(new EditManagerEvent(this, EditManagerEvent.PRE_COMMIT, null, null));
+        fireEvent(new EditManagerEvent(this, EditManagerEvent.PRE_COMMIT, null, null) );
 
         startCommitRollback("Comitting changes all layers in map");
 
@@ -399,15 +373,11 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            FeatureIterator<SimpleFeature> reader = null;
+            FeatureIterator reader = null;
             try {
-                FeatureSource<SimpleFeatureType, SimpleFeature> source = editLayerInternal
-                        .getResource(FeatureSource.class, null);
-                FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
-                        .getDefaultHints());
-                FeatureCollection<SimpleFeatureType, SimpleFeature> results = source
-                        .getFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory,
-                                editFeature.getID())));
+                FeatureSource source = editLayerInternal.getResource(FeatureSource.class, null);
+                FeatureCollection results = source.getFeatures(FilterFactoryFinder.createFilterFactory()
+                        .createFidFilter(editFeature.getID()));
                 reader = results.features();
                 setEditFeature(reader.next(), editLayerInternal);
             } catch (Exception e2) {
@@ -419,50 +389,49 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
             }
             ProjectPlugin.getPlugin().log(e);
         } finally {
-            commitRollbackComplete();
+        	commitRollbackComplete();
         }
 
-        fireEvent(new EditManagerEvent(this, EditManagerEvent.POST_COMMIT, null, null));
+        fireEvent(new EditManagerEvent(this, EditManagerEvent.POST_COMMIT, null, null) );
 
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @throws IOException
      * @generated NOT
      */
     public void rollbackTransaction() throws IOException {
-        fireEvent(new EditManagerEvent(this, EditManagerEvent.PRE_ROLLBACK, null, null));
+        fireEvent(new EditManagerEvent(this, EditManagerEvent.PRE_ROLLBACK, null, null) );
         startCommitRollback("Rolling back to Previous checkpoint");
 
-        HashMap<List<FeatureEvent>, FeatureEvent> modified = new HashMap<List<FeatureEvent>, FeatureEvent>();
+        HashMap<List<FeatureEvent>, FeatureEvent> modified=new HashMap<List<FeatureEvent>, FeatureEvent>();
         try {
-            synchronized (this) {
+        	synchronized (this) {
 
-                for( Layer layer : getMapInternal().getLayersInternal() ) {
-                    if (layer.getFeatureChanges().size() != 0) {
-                        List<FeatureEvent> changes = layer.getFeatureChanges();
-                        // create an event that notifies listeners that the area has changed again.
-                        // calculate bounds of all the Changes to date.
-                        // The reason for this is that otherwise I would have to make the entire
-                        // viewport re-render on a rollback. This little hack is to
-                        // get around that.
-                        Envelope envelope = new Envelope();
-                        for( FeatureEvent event : changes ) {
-                            envelope.expandToInclude(event.getBounds());
-                        }
-                        FeatureSource<SimpleFeatureType, SimpleFeature> source = layer.getResource(
-                                FeatureSource.class, null);
-                        FeatureEvent event = new FeatureEvent(source,
-                                FeatureEvent.FEATURES_CHANGED, envelope);
+	            for( Layer layer : getMapInternal().getLayersInternal() ) {
+	                if (layer.getFeatureChanges().size() != 0) {
+	                    List<FeatureEvent> changes = layer.getFeatureChanges();
+	                    // create an event that notifies listeners that the area has changed again.
+	                    // calculate bounds of all the Changes to date.
+	                    // The reason for this is that otherwise I would have to make the entire
+	                    // viewport re-render on a rollback. This little hack is to
+	                    // get around that.
+	                    Envelope envelope = new Envelope();
+	                    for( FeatureEvent event : changes ) {
+	                        envelope.expandToInclude(event.getBounds());
+	                    }
+	                    FeatureSource source = layer.getResource(FeatureSource.class, null);
+	                    FeatureEvent event = new FeatureEvent(source, FeatureEvent.FEATURES_CHANGED,
+	                            envelope);
 
-                        modified.put(changes, event);
-                    }
-                }
-            }
+	                    modified.put(changes, event);
+	                }
+	            }
+        	}
             if (selectedLayer != null)
-                selectedLayer.setFilter(Filter.EXCLUDE);
+                selectedLayer.setFilter(Filter.ALL);
             transaction.rollbackInternal();
 
         } catch (IOException e) {
@@ -474,7 +443,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
             setEditFeature(null, null);
 
-            fireEvent(new EditManagerEvent(this, EditManagerEvent.POST_ROLLBACK, null, null));
+            fireEvent(new EditManagerEvent(this, EditManagerEvent.POST_ROLLBACK, null, null) );
         }
     }
 
@@ -490,7 +459,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID, Class baseClass,
@@ -512,7 +480,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
@@ -530,7 +497,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public NotificationChain eBasicRemoveFromContainer( NotificationChain msgs ) {
@@ -549,7 +515,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
@@ -574,7 +539,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void eSet( EStructuralFeature eFeature, Object newValue ) {
@@ -594,7 +558,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void eUnset( EStructuralFeature eFeature ) {
@@ -614,7 +577,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public boolean eIsSet( EStructuralFeature eFeature ) {
@@ -640,7 +602,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public String toString() {
@@ -659,47 +620,50 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     /**
      * @throws IOException
      */
-    @SuppressWarnings("unchecked")
-    public void addFeature( final SimpleFeature feature, Layer layer ) throws IOException {
+    public void addFeature( final Feature feature, Layer layer ) throws IOException {
 
-        SimpleFeature adaptableFeature = feature;
+        Feature adaptableFeature = feature;
         if (!(feature instanceof IAdaptable)) {
             adaptableFeature = new AdaptableFeature(feature, layer);
-        }
-        // TODO FeatureInterceptor
-        
-        final SimpleFeature finalFeature = adaptableFeature;
-        // setEditFeature(feature, layer);
 
-        FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(
-                FeatureStore.class, null);
-        FeatureCollection<SimpleFeatureType, SimpleFeature> c = new org.geotools.feature.collection.AdaptorFeatureCollection(
-                "copyCollection", store.getSchema()){
+        }
+        final Feature finalFeature = adaptableFeature;
+        // setEditFeature(feature, layer);
+        FeatureStore store = layer.getResource(FeatureStore.class, null);
+        FeatureCollection c=new org.geotools.feature.collection.AbstractFeatureCollection(store.getSchema()){
+
             @Override
             public int size() {
                 return 1;
             }
+
             @Override
             protected Iterator openIterator() {
                 return new Iterator(){
+
                     boolean more = true;
+
                     public boolean hasNext() {
                         return more;
                     }
+
                     public Object next() {
                         more = false;
                         return finalFeature;
                     }
+
                     public void remove() {
                         throw new UnsupportedOperationException();
                     }
+
                 };
             }
+
             @Override
             protected void closeIterator( Iterator close ) {
             }
+
         };
-        
         store.addFeatures(c);
     }
 
@@ -707,36 +671,27 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
      * @see net.refractions.udig.project.internal.EditManager#refreshEditFeature()
      */
     public void refreshEditFeature() {
-        Layer editLayer = getEditLayerInternal();
         try {
-            FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
-                    .getDefaultHints());
-            FeatureStore resource = editLayer.getResource(FeatureStore.class, null);
-            Set<Identifier> fids = FeatureUtils.stringToId(filterFactory, getEditFeature().getID());
-            Id filter = filterFactory.id(fids);
-            FeatureIterator<SimpleFeature> features = resource.getFeatures(filter).features();
-            if (features.hasNext()) {
-                SimpleFeature feature = features.next();
-                setEditFeature(feature, editLayer);
-            } else {
-                setEditFeature(null, editLayer);
-            }
-
+            FeatureIterator editFeatureReader = getEditLayerInternal().getResource(
+                    FeatureStore.class, null).getFeatures(
+                    FilterFactoryFinder.createFilterFactory().createFidFilter(getEditFeature().getID()))
+                    .features();
+            setEditFeature(editFeatureReader.next(), getEditLayerInternal());
         } catch (Exception e) {
             ProjectPlugin.log(null, e);
-            setEditFeature(null, editLayer);
+            setEditFeature(null, getEditLayerInternal());
         }
 
     }
 
     /**
      * Returns the currently selected Layer
-     * 
+     *
      * @return the currently selected Layer
      */
     public Layer getSelectedLayer() {
-        if (selectedLayer != null && !getMap().getMapLayers().contains(selectedLayer)) {
-            selectedLayer = null;
+        if( selectedLayer !=null && !getMap().getMapLayers().contains(selectedLayer)){
+        		selectedLayer=null;
         }
         if (selectedLayer == null) {
             List<Layer> layers = getMapInternal().getLayersInternal();
@@ -748,8 +703,8 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public Layer basicGetSelectedLayer() {
@@ -758,12 +713,11 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * Sets the currently selected Layer
-     * 
+     *
      * @uml.property name="selectedLayer"
      */
     public void setSelectedLayer( Layer selectedLayer ) {
-        if (!getMapInternal().getLayersInternal().contains(selectedLayer)
-                || selectedLayer == this.selectedLayer)
+        if (!getMapInternal().getLayersInternal().contains(selectedLayer) || selectedLayer==this.selectedLayer)
             return;
         setSelectedLayerGen(selectedLayer);
     }
@@ -815,8 +769,8 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
                         msg.getNewValue(), msg.getOldValue()));
                 break;
             case ProjectPackage.EDIT_MANAGER__SELECTED_LAYER:
-                fireEvent(new EditManagerEvent(EditManagerImpl.this,
-                        EditManagerEvent.SELECTED_LAYER, msg.getNewValue(), msg.getOldValue()));
+                fireEvent(new EditManagerEvent(EditManagerImpl.this, EditManagerEvent.SELECTED_LAYER,
+                        msg.getNewValue(), msg.getOldValue()));
                 break;
             default:
                 break;
@@ -833,8 +787,8 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
         listeners.add(listener);
     }
 
-    public boolean containsListener( IEditManagerListener listener ) {
-        return listeners.contains(listener);
+    public boolean containsListener( IEditManagerListener listener){
+    	return listeners.contains(listener);
     }
 
     public void removeListener( IEditManagerListener listener ) {
@@ -843,12 +797,12 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     void fireEvent( EditManagerEvent event ) {
         listeners.remove(null);
-        for( IEditManagerListener object : listeners ) {
-            try {
-                if (object != null)
+        for( IEditManagerListener object: listeners ) {
+            try{
+                if( object!=null )
                     object.changed(event);
-            } catch (Throwable e) {
-                ProjectPlugin.log("Error while notifying listener of event: " + event.getType(), e); //$NON-NLS-1$
+            }catch(Throwable e){
+                ProjectPlugin.log("Error while notifying listener of event: "+event.getType(), e); //$NON-NLS-1$
             }
         }
     }
@@ -863,7 +817,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setEditLayerLocked( boolean newEditLayerLocked ) {

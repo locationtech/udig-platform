@@ -21,7 +21,7 @@ import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * A Cell editor 
+ * A Cell editor
  * @author Jesse
  * @since 1.1.0
  */
@@ -37,7 +37,7 @@ public class BasicTypeCellEditor extends TextCellEditor {
             throw new IllegalArgumentException(type+" is not a supported type by this editor"); //$NON-NLS-1$
         this.type=type;
     }
- 
+
     @Override
     protected boolean isCorrect( Object value ) {
         if( value == null )
@@ -48,7 +48,7 @@ public class BasicTypeCellEditor extends TextCellEditor {
             return super.isCorrect(value);
         }
     }
-    
+
     @Override
     protected Object doGetValue() {
         return safeConvertToType(super.doGetValue());
@@ -107,7 +107,7 @@ public class BasicTypeCellEditor extends TextCellEditor {
         }
         return false;
     }
-  
+
     private Object convertToType( String value ) {
         if( type == Short.class ){
             return Short.valueOf(value);

@@ -16,7 +16,7 @@ public class SelectHoleBehaviourTest extends TestCase {
     public void testIsValid() throws Exception {
         TestHandler handler=new TestHandler();
         handler.getTestEditBlackboard().util.setVertexRadius(4);
-        
+
         SelectHoleBehaviour behavior=new SelectHoleBehaviour();
 
         handler.setCurrentState(EditState.MODIFYING);
@@ -24,18 +24,18 @@ public class SelectHoleBehaviourTest extends TestCase {
         //Current Shape must be set
         MapMouseEvent event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         EditGeom editGeom = handler.getEditBlackboard().getGeoms().get(0);
         handler.setCurrentShape(editGeom.getShell());
         handler.getEditBlackboard().addPoint(11,11, handler.getCurrentShape());
-        
+
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertTrue(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // no buttons should be down
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.BUTTON2, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // button2 isn't legal
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON2);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
@@ -48,17 +48,17 @@ public class SelectHoleBehaviourTest extends TestCase {
         handler.setCurrentState(EditState.NONE);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // works only with MODIFYING
         handler.setCurrentState(EditState.CREATING);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // should work, just checking state is still good;
         handler.setCurrentState(EditState.MODIFYING);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertTrue(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // doesn't work with event pressed
         assertFalse(behavior.isValid(handler, event, EventType.PRESSED));
 

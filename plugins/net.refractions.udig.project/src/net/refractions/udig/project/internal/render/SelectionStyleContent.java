@@ -3,50 +3,42 @@ package net.refractions.udig.project.internal.render;
 import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.StyleContent;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.ui.graphics.SLDs;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.IMemento;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.filter.ConstantExpression;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.GeometryAttributeType;
+import org.geotools.filter.CompareFilter;
+import org.geotools.filter.Expression;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.filter.FilterType;
 import org.geotools.filter.IllegalFilterException;
 import org.geotools.filter.function.FilterFunction_geometryType;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
-import org.geotools.styling.Graphic;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.Mark;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Rule;
-import org.geotools.styling.SLD;
-import org.geotools.styling.SLDTransformer;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
-import org.geotools.styling.StyleAttributeExtractor;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.StyleFactory;
-import org.geotools.styling.StyleVisitor;
+import org.geotools.styling.StyleFactoryFinder;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.UserLayer;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.PropertyIsEqualTo;
-import org.opengis.filter.expression.Expression;
 
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -57,10 +49,8 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
 /**
- * Class that manages the style used for Selection.
- * <p>
- * This class is in charge of making a good selection based on preferences configured by the user.
- * </p>
+ * The style used for Selection
+ *
  * @author jeichar
  * @since 0.6.0
  */
@@ -70,23 +60,22 @@ public class SelectionStyleContent extends StyleContent {
     public static final String ID = "net.refractions.udig.project.selectionStyle"; //$NON-NLS-1$
 
     private static final StyleBuilder builder = new StyleBuilder();
-    private static final StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory(GeoTools
-            .getDefaultHints());
+    private static final StyleFactory styleFactory = StyleFactoryFinder.createStyleFactory();
 
     private static final String fTypeName = "fTypeName"; //$NON-NLS-1$
 
-    private static Color getSelectionColor() {
+    private static Color getSelectionColor(){
         IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-        RGB rgb = PreferenceConverter.getColor(store, PreferenceConstants.P_SELECTION_COLOR);
+        RGB rgb=PreferenceConverter.getColor(store, PreferenceConstants.P_SELECTION_COLOR);
         return new Color(rgb.red, rgb.green, rgb.blue);
     }
-    private static Color getSelectionColor2() {
+    private static Color getSelectionColor2(){
         IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-        RGB rgb = PreferenceConverter.getColor(store, PreferenceConstants.P_SELECTION2_COLOR);
+        RGB rgb=PreferenceConverter.getColor(store, PreferenceConstants.P_SELECTION2_COLOR);
         return new Color(rgb.red, rgb.green, rgb.blue, 75);
     }
 
-    private StyleBuilder styleBuilder = new StyleBuilder();
+    private StyleBuilder styleBuilder=new StyleBuilder();
 
     /**
      * Construct <code>SelectionStyleContent</code>.
@@ -118,7 +107,7 @@ public class SelectionStyleContent extends StyleContent {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.project.StyleContent#createDefaultStyle(net.refractions.udig.catalog.IGeoResource)
      */
     public Object createDefaultStyle( IGeoResource resource, Color colour, IProgressMonitor monitor ) {
@@ -127,7 +116,7 @@ public class SelectionStyleContent extends StyleContent {
     }
 
     public static Style createDefaultStyle( Layer layer ) {
-        SimpleFeatureType schema = layer.getSchema();
+        FeatureType schema = layer.getSchema();
         return createDefaultStyle(schema);
     }
 
@@ -136,152 +125,131 @@ public class SelectionStyleContent extends StyleContent {
      * @param schema
      * @return
      */
-    private static Style createDefaultStyle( SimpleFeatureType schema ) {
+    private static Style createDefaultStyle( FeatureType schema ) {
         Style style = builder.createStyle();
 
         SelectionStyleContent ssc = new SelectionStyleContent();
-        if (schema == null)
+        if( schema==null )
             return null;
-        GeometryDescriptor geom = schema.getGeometryDescriptor();
-        if (isLine(geom)) {
-            ssc.getDefaultRule(style).setSymbolizers(createLineSymbolizers(ssc));
-        } else if (isPoint(geom)) {
-            int size = queryPointSize(style);
-            PointSymbolizer sym = ssc.createPointSymbolizer(getSelectionColor(), size);
-            Symbolizer[] symbolizers = new Symbolizer[]{sym};
-            ssc.getDefaultRule(style).setSymbolizers(symbolizers);
-        } else if (isPolygon(geom)) {
-            ssc.getDefaultRule(style).setSymbolizers(createPolygonSymbolizarts(ssc));
-        } else {
-            try {
-                int size = queryPointSize(style);
-                ssc.createGeometrySLD(getSelectionColor2(), getSelectionColor(), schema
-                        .getGeometryDescriptor().getName().getLocalPart(), style, size);
-            } catch (Exception e) {
-                ProjectPlugin.log("", e); //$NON-NLS-1$
-                ssc.getDefaultRule(style).setSymbolizers(
-                        new Symbolizer[]{ssc.createLineSymbolizer(getSelectionColor2(), false),
-                                ssc.createLineSymbolizer(getSelectionColor(), true)});
-            }
-        }
+        GeometryAttributeType geom = schema.getDefaultGeometry();
+		if (isLine(geom)) {
+			ssc.getDefaultRule(style)
+					.setSymbolizers(createLineSymbolizers(ssc));
+		} else if (isPoint(geom)) {
+			ssc.getDefaultRule(style).setSymbolizers(
+					new Symbolizer[] { ssc.createPointSymbolizer(getSelectionColor()) });
+		} else if (isPolygon(geom)) {
+			ssc.getDefaultRule(style)
+					.setSymbolizers(
+							createPolygonSymbolizarts(ssc));
+		} else {
+			try {
+				ssc.createGeometrySLD(getSelectionColor2(), getSelectionColor(), schema
+						.getDefaultGeometry().getName(), style);
+			} catch (Exception e) {
+				ProjectPlugin.log("", e); //$NON-NLS-1$
+				ssc.getDefaultRule(style)
+						.setSymbolizers(
+								new Symbolizer[] { ssc
+										.createLineSymbolizer(getSelectionColor2(), false), ssc
+                                        .createLineSymbolizer(getSelectionColor(), true) });
+			}
+		}
 
-        // nest the style in an SLD
-        createDefaultStyledLayerDescriptor(style);
+		// nest the style in an SLD
+		createDefaultStyledLayerDescriptor(style);
         return style;
     }
-    
-    private static int queryPointSize( Object style ) {
-        int size = 6;
-        if( style instanceof Style ){
-            PointSymbolizer pointSymbolizer = SLD.pointSymbolizer( (Style) style );
-            if( pointSymbolizer != null ){
-                Mark mark = SLD.mark( pointSymbolizer );
-                if( mark != null ){
-                    size = SLD.size( mark );
-                }
-            }
-        }
-        if( style instanceof FeatureTypeStyle){
-            PointSymbolizer pointSymbolizer = SLD.pointSymbolizer( (FeatureTypeStyle) style );
-            if( pointSymbolizer != null ){
-                Mark mark = SLD.mark( pointSymbolizer );
-                if( mark != null ){
-                    size = SLD.size( mark );
-                }
-            }
-        }
-        return size;
-    }
-    /**
-     * @param ssc
-     * @return
-     */
-    private static Symbolizer[] createLineSymbolizers( SelectionStyleContent ssc ) {
-        return new Symbolizer[]{ssc.createLineSymbolizer(getSelectionColor2(), false, 3, 0.5),
-                ssc.createLineSymbolizer(getSelectionColor(), true)};
-    }
-    /**
-     * @param ssc
-     * @return
-     */
-    private static Symbolizer[] createPolygonSymbolizarts( SelectionStyleContent ssc ) {
-        return new Symbolizer[]{ssc.createPolygonSymbolizer(getSelectionColor(), true),
-                ssc.createLineSymbolizer(getSelectionColor2(), false, 3, 0.5),
-                ssc.createLineSymbolizer(getSelectionColor(), false, 1, 1),};
-    }
+	/**
+	 * @param ssc
+	 * @return
+	 */
+	private static Symbolizer[] createLineSymbolizers(SelectionStyleContent ssc) {
+		return new Symbolizer[] { ssc.createLineSymbolizer(getSelectionColor2(), false,3,0.5), ssc.createLineSymbolizer(getSelectionColor(), true) };
+	}
+	/**
+	 * @param ssc
+	 * @return
+	 */
+	private static Symbolizer[] createPolygonSymbolizarts(
+			SelectionStyleContent ssc) {
+		return new Symbolizer[] {
+				ssc.createPolygonSymbolizer(getSelectionColor(), true),
+				ssc.createLineSymbolizer(getSelectionColor2(), false, 3, 0.5),
+				ssc.createLineSymbolizer(getSelectionColor(), false, 1, 1),
+				};
+	}
 
-    private PropertyIsEqualTo createGeometryFunctionFilter( String geomXPath,
-            Object geometryClassSimpleName ) throws IllegalFilterException {
-        FilterFactory factory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-        FilterFunction_geometryType geomTypeExpr = new FilterFunction_geometryType();
-        List<Expression> params = Arrays.asList(new Expression[]{factory.property(geomXPath)});
-        geomTypeExpr.setParameters(params);
+    private CompareFilter createGeometryFunctionFilter( String geomXPath, Object geometryClassSimpleName ) throws IllegalFilterException {
+        FilterFactory factory=FilterFactoryFinder.createFilterFactory();
+        FilterFunction_geometryType geomTypeExpr=new FilterFunction_geometryType();
+        geomTypeExpr.setArgs(new Expression[]{ factory.createAttributeExpression(geomXPath)});
 
-        PropertyIsEqualTo filter = factory.equals(geomTypeExpr, factory
-                .literal(geometryClassSimpleName));
+        CompareFilter filter = factory.createCompareFilter(FilterType.COMPARE_EQUALS);
+        filter.addLeftValue(geomTypeExpr);
+        filter.addRightValue(factory.createLiteralExpression(geometryClassSimpleName));
         return filter;
     }
 
-    private void createGeometrySLD( Color colour, Color colour2, String geomXPath, Style style,
-            int size ) throws IllegalFilterException {
+    private void createGeometrySLD( Color colour, Color colour2, String geomXPath, Style style ) throws IllegalFilterException {
         // create Point rule
-        Rule rule = getDefaultRule(style);
-        PropertyIsEqualTo filter = createGeometryFunctionFilter(geomXPath, Point.class
-                .getSimpleName());
+        Rule rule=getDefaultRule(style);
+        CompareFilter filter = createGeometryFunctionFilter(geomXPath, Point.class.getSimpleName());
         rule.setFilter(filter);
-        Symbolizer[] pointSymbolizers = new Symbolizer[]{createPointSymbolizer(colour, size)};
-        rule.setSymbolizers(pointSymbolizers);
+        Symbolizer[] pointSymbolizers = new Symbolizer[]{createPointSymbolizer(colour)};
+		rule.setSymbolizers(pointSymbolizers);
         getDefaultFeatureTypeStyle(style).addRule(rule);
 
         // create MultiPoint rule
-        rule = styleBuilder.createRule(new Symbolizer[]{});
+        rule=styleBuilder.createRule(new Symbolizer[]{});
         filter = createGeometryFunctionFilter(geomXPath, MultiPoint.class.getSimpleName());
         rule.setFilter(filter);
         rule.setSymbolizers(pointSymbolizers);
         getDefaultFeatureTypeStyle(style).addRule(rule);
 
         // create LineString rule
-        rule = styleBuilder.createRule(new Symbolizer[]{});
+        rule=styleBuilder.createRule(new Symbolizer[]{});
         filter = createGeometryFunctionFilter(geomXPath, LineString.class.getSimpleName());
         rule.setFilter(filter);
         Symbolizer[] lineSymbolizers = createLineSymbolizers(this);
-        rule.setSymbolizers(lineSymbolizers);
+		rule.setSymbolizers(lineSymbolizers);
         getDefaultFeatureTypeStyle(style).addRule(rule);
 
         // create LinearRing rule
-        rule = styleBuilder.createRule(new Symbolizer[]{});
+        rule=styleBuilder.createRule(new Symbolizer[]{});
         filter = createGeometryFunctionFilter(geomXPath, LinearRing.class.getSimpleName());
         rule.setFilter(filter);
         rule.setSymbolizers(lineSymbolizers);
         getDefaultFeatureTypeStyle(style).addRule(rule);
 
         // create MultiLineString rule
-        rule = styleBuilder.createRule(new Symbolizer[]{});
+        rule=styleBuilder.createRule(new Symbolizer[]{});
         filter = createGeometryFunctionFilter(geomXPath, MultiLineString.class.getSimpleName());
         rule.setFilter(filter);
         rule.setSymbolizers(lineSymbolizers);
         getDefaultFeatureTypeStyle(style).addRule(rule);
 
         // create Polygon rule
-        rule = styleBuilder.createRule(new Symbolizer[]{});
+        rule=styleBuilder.createRule(new Symbolizer[]{});
         filter = createGeometryFunctionFilter(geomXPath, Polygon.class.getSimpleName());
         rule.setFilter(filter);
         Symbolizer[] polygonSymbolizers = createPolygonSymbolizarts(this);
-        rule.setSymbolizers(polygonSymbolizers);
+		rule.setSymbolizers(polygonSymbolizers);
         getDefaultFeatureTypeStyle(style).addRule(rule);
 
         // create MultiPolygon rule
-        rule = styleBuilder.createRule(new Symbolizer[]{});
+        rule=styleBuilder.createRule(new Symbolizer[]{});
         filter = createGeometryFunctionFilter(geomXPath, MultiPolygon.class.getSimpleName());
         rule.setFilter(filter);
         rule.setSymbolizers(polygonSymbolizers);
         getDefaultFeatureTypeStyle(style).addRule(rule);
     }
 
+
     /**
      * @return the first rule in the default feature type style.
      */
-    public Rule getDefaultRule( Style style ) {
+    public Rule getDefaultRule(Style style) {
         FeatureTypeStyle ftStyle = getDefaultFeatureTypeStyle(style);
         if (ftStyle.getRules() == null || ftStyle.getRules().length == 0) {
             // create an empty rule
@@ -296,11 +264,10 @@ public class SelectionStyleContent extends StyleContent {
     /**
      * Returns the the first feature type style for the SLD style. The feature type style is created
      * if it does not exist.
-     * 
+     *
      * @return The default (first) feature type style.
      */
-    public FeatureTypeStyle getDefaultFeatureTypeStyle( Style style ) {
-        List< ? extends org.opengis.style.FeatureTypeStyle> fts = style.featureTypeStyles();
+    public FeatureTypeStyle getDefaultFeatureTypeStyle(Style style) {
         FeatureTypeStyle[] styles = style.getFeatureTypeStyles();
         if (styles == null || styles.length == 0 || styles[0].getRules().length == 0) {
             // create a feature type style
@@ -312,43 +279,40 @@ public class SelectionStyleContent extends StyleContent {
         return styles[0];
     }
 
-    protected PointSymbolizer createPointSymbolizer( Color colour, int size ) {
+
+    protected PointSymbolizer createPointSymbolizer(Color colour) {
+        PointSymbolizer symb=styleBuilder.createPointSymbolizer();
         Fill fill = styleBuilder.createFill(Color.YELLOW, 0.0);
+
         Stroke stroke = builder.createStroke(colour, 2);
-        Mark mark = styleBuilder.createMark("square", fill, stroke); //$NON-NLS-1$
-
-        Graphic graph2 = styleBuilder.createGraphic(null, mark, null, 1, size, 0);
-        PointSymbolizer symb = styleBuilder.createPointSymbolizer(graph2);
-
-        symb.getGraphic().setMarks(new Mark[]{mark});
+        symb.getGraphic().setMarks(new Mark[]{styleBuilder.createMark("square", fill, stroke)}); //$NON-NLS-1$
 
         return symb;
     }
 
-    protected LineSymbolizer createLineSymbolizer( Color colour, boolean dashed ) {
-        return createLineSymbolizer(colour, dashed, 1, 1.0);
+    protected LineSymbolizer createLineSymbolizer(Color colour, boolean dashed ) {
+    	return createLineSymbolizer(colour, dashed, 1, 1.0);
     }
-    protected LineSymbolizer createLineSymbolizer( Color colour, boolean dashed, int thickness,
-            double opacity ) {
+    protected LineSymbolizer createLineSymbolizer(Color colour, boolean dashed, int thickness, double opacity ) {
         LineSymbolizer symbolizer = styleBuilder.createLineSymbolizer();
 
         Stroke stroke = builder.createStroke(colour, thickness, opacity);
-        // if( dashed ){
-        // stroke.setDashArray(new float[]{5, 3});
-        // }
+//        if( dashed ){
+//            stroke.setDashArray(new float[]{5, 3});
+//        }
         symbolizer.setStroke(stroke);
 
         return symbolizer;
     }
 
-    protected PolygonSymbolizer createPolygonSymbolizer( Color colour, boolean dashed ) {
+    protected  PolygonSymbolizer createPolygonSymbolizer(Color colour, boolean dashed) {
         PolygonSymbolizer symbolizer = styleBuilder.createPolygonSymbolizer();
 
-        // Stroke stroke = builder.createStroke(Color., 3);
-        // if( dashed ){
-        // stroke.setDashArray(new float[]{5, 3});
-        // }
-        // symbolizer.setStroke(stroke);
+//        Stroke stroke = builder.createStroke(Color., 3);
+//        if( dashed ){
+//            stroke.setDashArray(new float[]{5, 3});
+//        }
+//        symbolizer.setStroke(stroke);
 
         Fill fill = styleBuilder.createFill();
         fill.setColor(styleBuilder.colorExpression(colour));
@@ -368,53 +332,49 @@ public class SelectionStyleContent extends StyleContent {
     /**
      * Creates an SLD and UserLayer, and nests the style (SLD-->UserLayer-->Style). This method is a
      * copy of the one in SLDContent to avoid a cyclic dependency.
-     * 
+     *
      * @see net.refractions.style.sld.SLDContent#createDefaultStyledLayerDescriptor
      * @param style
      * @return SLD
      */
-    private static StyledLayerDescriptor createDefaultStyledLayerDescriptor( Style style ) {
+    private static StyledLayerDescriptor createDefaultStyledLayerDescriptor(Style style) {
         StyledLayerDescriptor sld = styleFactory.createStyledLayerDescriptor();
         UserLayer layer = styleFactory.createUserLayer();
         sld.addStyledLayer(layer);
         layer.addUserStyle(style);
         return sld;
     }
-    public static final boolean isPolygon( SimpleFeatureType featureType ) {
-        if (featureType == null)
-            return false;
-        return isPolygon(featureType.getGeometryDescriptor());
-    }
+	public static final boolean isPolygon( FeatureType featureType ){
+		if( featureType == null ) return false;
+		return isPolygon( featureType.getDefaultGeometry() );
+	}
     /* This needed to be a function as it was being writen poorly everywhere */
-    public static final boolean isPolygon( GeometryDescriptor geometryType ) {
-        if (geometryType == null)
-            return false;
-        Class type = geometryType.getType().getBinding();
-        return Polygon.class.isAssignableFrom(type) || MultiPolygon.class.isAssignableFrom(type);
-    }
-    public static final boolean isLine( SimpleFeatureType featureType ) {
-        if (featureType == null)
-            return false;
-        return isLine(featureType.getGeometryDescriptor());
-    }
+	public static final boolean isPolygon( GeometryAttributeType geometryType ){
+		if( geometryType == null ) return false;
+		Class type = geometryType.getType();
+		return Polygon.class.isAssignableFrom( type ) ||
+		       MultiPolygon.class.isAssignableFrom( type );
+	}
+	public static final boolean isLine( FeatureType featureType ){
+		if( featureType == null ) return false;
+		return isLine( featureType.getDefaultGeometry() );
+	}
     /* This needed to be a function as it was being writen poorly everywhere */
-    public static final boolean isLine( GeometryDescriptor geometryType ) {
-        if (geometryType == null)
-            return false;
-        Class type = geometryType.getType().getBinding();
-        return LineString.class.isAssignableFrom(type)
-                || MultiLineString.class.isAssignableFrom(type);
-    }
-    public static final boolean isPoint( SimpleFeatureType featureType ) {
-        if (featureType == null)
-            return false;
-        return isPoint(featureType.getGeometryDescriptor());
-    }
+	public static final boolean isLine( GeometryAttributeType geometryType ){
+		if( geometryType == null ) return false;
+		Class type = geometryType.getType();
+		return LineString.class.isAssignableFrom( type ) ||
+		       MultiLineString.class.isAssignableFrom( type );
+	}
+	public static final boolean isPoint( FeatureType featureType ){
+		if( featureType == null ) return false;
+		return isPoint( featureType.getDefaultGeometry() );
+	}
     /* This needed to be a function as it was being writen poorly everywhere */
-    public static final boolean isPoint( GeometryDescriptor geometryType ) {
-        if (geometryType == null)
-            return false;
-        Class type = geometryType.getType().getBinding();
-        return Point.class.isAssignableFrom(type) || MultiPoint.class.isAssignableFrom(type);
-    }
+	public static final boolean isPoint( GeometryAttributeType geometryType ){
+		if( geometryType == null ) return false;
+		Class type = geometryType.getType();
+		return Point.class.isAssignableFrom( type ) ||
+		       MultiPoint.class.isAssignableFrom( type );
+	}
 }

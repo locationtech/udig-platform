@@ -44,18 +44,18 @@ import org.eclipse.gef.commands.Command;
 public class DeleteCommand extends Command {
     private Page parent;
     private Box child;
-    
+
     public DeleteCommand() {
-        super(Messages.DeleteCommand_delete); 
+        super(Messages.DeleteCommand_delete);
     }
-    
+
     public void execute() {
         parent.getBoxes().remove(child);
     }
     public void undo() {
         parent.getBoxes().add(child);
     }
-    
+
     public void setChild( Box child ) {
         this.child = child;
     }

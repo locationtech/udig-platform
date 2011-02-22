@@ -4,15 +4,11 @@
 package net.refractions.udig.project.internal.render.impl;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-
-import javax.media.jai.JAI;
-import javax.media.jai.TileCache;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.ILayer;
@@ -28,27 +24,17 @@ import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.Query;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.filter.FidFilter;
+import org.geotools.filter.Filter;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.filter.FilterType;
 import org.geotools.filter.IllegalFilterException;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.ReferencingFactoryFinder;
-import org.geotools.referencing.operation.matrix.GeneralMatrix;
-import org.geotools.renderer.label.LabelCacheImpl;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Id;
-import org.opengis.referencing.operation.MathTransform2D;
-
-import com.vividsolutions.jts.geom.Coordinate;
+import org.geotools.renderer.lite.LabelCacheDefault;
 
 /**
  * The default implementation of the RenderContext interface.
- * <p>
- * This method is responsible for holding on to an Image for a
- * renderer to draw into. A renderer can supply an image; or
- * ask the render context to create one.
- * <p>
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -56,50 +42,32 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
 
     /**
      * The cached value of the '{@link #getImage() <em>Image</em>}' attribute.
-     * 
+     *
      * @see #getImage()
      */
     protected volatile BufferedImage image = null;
-        
-    /**
-     * The size of the image (width and height in pixels)
-     */
-    protected Dimension imagesize = null;
-    
-    /**
-     * The "world" bounds that the tile represents.
-     */
-    protected ReferencedEnvelope imageBounds = null;
 
     public static final BufferedImage dummyImage = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR);
 
-    /**
-     * Key used to retrieve the LabelPainter to and from the map blackboard.
-     */
-    private static final String LABEL_PAINTER = "LABEL_PAINTER"; //$NON-NLS-1$
+    private static final String LABEL_PAINTER = "LABEL_PAINTER";
 
     /**
      * The cached value of the '{@link #getLayerInternal() <em>Layer Internal</em>}' reference.
-     * 
+     *
      * @see #getLayerInternal()
      */
     protected Layer layerInternal = null;
 
     /**
      * The cached value of the '{@link #getGeoResourceInternal() <em>Geo Resource Internal</em>}'
-     * attribute. 
-     * 
+     * attribute.
+     *
      * @see #getGeoResourceInternal()
      */
     protected IGeoResource geoResourceInternal = null;
 
     private boolean selection;
 
-    protected TileCache tempCache;
-
-
-    //private ILabelPainter labelPainter;
-    
     public RenderContextImpl() {
         super();
     }
@@ -113,75 +81,24 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
         super(impl);
         setGeoResourceInternal(impl.getGeoResourceInternal());
         setLayerInternal(impl.getLayerInternal());
-        
-        if (impl.imagesize != null){
-            this.imagesize = new Dimension(impl.imagesize);    
-        }
-        
-        this.imageBounds = impl.imageBounds;
     }
 
-    public synchronized TileCache getTileCache(){
-        if( tempCache == null){
-            tempCache =JAI.createTileCache();
-            tempCache.setMemoryCapacity(16*1024*1024);
-            tempCache.setMemoryThreshold(0.75f);
-        }
-        return tempCache;
-    }
-    /**
-     * Sets the size of the image.  If set to null the size of the image will
-     * be the same as the mapdisplay.
-     * 
-     *<p>This is used by the tile rendering system to use fixed tile sized images.
-     *
-     * @param d
-     */
-    public void setImageSize(Dimension d){
-        this.imagesize = d;
-    }
-    /**
-     * Provide a BufferedImage of the correct size for the map display.
-     * 
-     * @return BufferedImage for use by the Renderer
-     */
     public BufferedImage getImage() {
-        Dimension size = getImageSize();
-        if( size == null || size.width < 1 || size.height <1 ){
-            return dummyImage; // dummy image
-        }
-        return getImage(size.width, size.height); // will create if needed
+        int width = getMapDisplay().getWidth(), height = getMapDisplay().getHeight();
+        return getImage(width, height);
     }
-    
-    /**
-     * Updates the image associated with the context
-     * to point to the new image.
-     *
-     * @param bi   new image
-     */
-   public synchronized void setImage( BufferedImage bi ) {
-        this.image = bi;
-    }
-   
-   
-    /**
-     * This method will create an image of the requested size.
-     * <p>
-     * The image will be created if needed; this implementation
-     * will make use of the swtimage if it has been previously created
-     * with a getSWTImage() and the sizes match.
-     * </p>
-     * @return a BufferedImage of the requested size (the image is cached) 
-     */
+
     public synchronized BufferedImage getImage( int width, int height ) {
-        if (width < 1 || height < 1){
+
+        if (width < 1 || height < 1)
             return dummyImage;
-        }
+
         if (image == null || image.getWidth() < width || image.getHeight() < height) {
             synchronized (this) {
                 if (image == null || image.getWidth() < width || image.getHeight() < height) {
-                    image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
                 }
+
             }
         }
         return image;
@@ -196,7 +113,7 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
      * Default behavior is to return 0 if no layers are associated otherwise returns the zorder of
      * the first layer in the list.
      * </p>
-     * 
+     *
      * @return Default behavior is to return 0 if no layers are associated otherwise returns the
      *         zorder of the first layer in the list. <!-- end-user-doc -->
      */
@@ -242,16 +159,16 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
 
     public boolean hasContent( Point screenLocation ) {
          BufferedImage image = getImage();
-         
+
          int alpha = image.getAlphaRaster().getSample(screenLocation.x, screenLocation.y, 0);
-         
+
          return alpha>0;
-         
+
         // ColorModel cm = image.getColorModel();
         // SampleModel sm = image.getSampleModel();
         // WritableRaster raster = image.getRaster();
-        //        
-        //        
+        //
+        //
         // Object array;
         // switch( sm.getTransferType() ){
         // case DataBuffer.TYPE_BYTE:
@@ -284,7 +201,7 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
         if( o==this )
             return 0;
         int result = getLayer().compareTo(o.getLayer());
-        
+
         // don't have same rendermanager then they are not the same.
         if( result==0 && getRenderManager()!=o.getRenderManager() )
             return 1;
@@ -299,34 +216,32 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
     }
 
     public void clearImage() {
-//        IMapDisplay mapDisplay = getMapDisplay();
-//        if( mapDisplay!=null ){
-//        	clearImage(new Rectangle(0, 0, mapDisplay.getWidth(), mapDisplay.getHeight()));
-//        }
-        
-        clearImage(new Rectangle(0, 0, getImageSize().width, getImageSize().height));
+        IMapDisplay mapDisplay = getMapDisplay();
+        if( mapDisplay!=null ){
+        	clearImage(new Rectangle(0, 0, mapDisplay.getWidth(), mapDisplay.getHeight()));
+        }
     }
 
     public Query getFeatureQuery() {
         Query query = getLayer().getQuery(getLayer() instanceof SelectionLayer);
-        if( query.getFilter()==Filter.EXCLUDE )
+        if( query.getFilter()==Filter.ALL )
             return query;
-        FilterFactory ff=CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
+        FilterFactory ff=FilterFactoryFinder.createFilterFactory();
         Object editFilter=getLayer().getBlackboard().get(ProjectBlackboardConstants.MAP__RENDERING_FILTER);
         if (!(editFilter instanceof Filter) ){
             return query;
         }
-        if( (editFilter instanceof Id) && ((Id)editFilter).getIDs().isEmpty() ){
+        if( (editFilter instanceof FidFilter) && ((FidFilter)editFilter).getFids().length==0 ){
         	return query;
         }
-        
+
         Filter newFilter;
         try {
-            if( query.getFilter()==Filter.INCLUDE){
-                newFilter=ff.not((Filter) editFilter);
+            if( query.getFilter()==Filter.NONE){
+                newFilter=ff.createLogicFilter((Filter) editFilter, FilterType.LOGIC_NOT);
             }else{
-                editFilter=ff.not((Filter) editFilter);
-                newFilter=ff.and((Filter)query.getFilter(), (Filter) editFilter);
+                editFilter=ff.createLogicFilter((Filter) editFilter, FilterType.LOGIC_NOT);
+                newFilter=ff.createLogicFilter(query.getFilter(), (Filter) editFilter, FilterType.LOGIC_AND);
             }
         } catch (IllegalFilterException e) {
             return query;
@@ -340,7 +255,7 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
         }
         Graphics2D graphics = getImage().createGraphics();
         graphics.setBackground(new Color(0, 0, 0, 0));
-//        graphics.setTransform(new AffineTransform());
+        graphics.setTransform(new AffineTransform());
         graphics.clearRect(paintArea.x, paintArea.y, paintArea.width, paintArea.height);
         graphics.dispose();
     }
@@ -377,12 +292,8 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
 
     public void dispose() {
         image = null;
-        if( tempCache != null){
-            tempCache.flush();
-            tempCache = null;
-        }
     }
-    
+
     public RenderContextImpl copy() {
         return new RenderContextImpl(this);
     }
@@ -417,157 +328,17 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
                 return false;
         } else if (!layerInternal.equals(other.layerInternal))
             return false;
-        
-        //check image size
-        if (imagesize == null){
-            if (other.imagesize != null){
-                return false;
-            }
-        }else{
-            if (other.imagesize == null){
-                return false;
-            }else{
-                if (imagesize.height != other.imagesize.height || imagesize.width != other.imagesize.width){
-                    return false;
-                }
-            }
-        }
-        
-        //check image bounds
-        if (imageBounds == null){
-            if (other.imageBounds != null){
-                return false;
-            }
-        }else {
-            if (!imageBounds.equals(other.imageBounds)){
-                return false;
-            }
-        }
-        
         return true;
     }
 
-    /**
-     * Gets the label painter.  
-     * <p>
-     * If the labelPainter is null then it look on the map
-     * blackboard for a labelPainter. If it can't find one it creates one
-     * and adds it to the map blackboard.
-     * </p>
-     * 
-     */
-    public synchronized ILabelPainter getLabelPainter() {     
+    public synchronized ILabelPainter getLabelPainter() {
         ILabelPainter labelPainter = (ILabelPainter) getMap().getBlackboard().get(LABEL_PAINTER);
-        if (labelPainter == null){
-            //create a new one and put it on the blackboard for others to use
-            LabelCacheImpl defaultLabelCache = new LabelCacheImpl();
+        if ( labelPainter==null ){
+            LabelCacheDefault defaultLabelCache = new LabelCacheDefault();
             labelPainter=new UDIGLabelCache(defaultLabelCache);
             getMap().getBlackboard().put(LABEL_PAINTER, labelPainter);
         }
+
         return labelPainter;
     }
-
-    /**
-     * Sets the label painter to use with the context.
-     * <p>
-     * This is used to draw the labels for features.
-     * </p>
-     *
-     * @param labelPainter
-     */
-    public synchronized void setLabelPainter(ILabelPainter labelPainter){
-        getMap().getBlackboard().put(LABEL_PAINTER, labelPainter);
-    }
-    
-    /**
-     * Returns the bounds represented by this render context.
-     */
-    public ReferencedEnvelope getImageBounds() {
-        if (imageBounds == null ){
-            //returns the bounds of the viewport model
-            return getViewportModel().getBounds();
-        }
-        //return the image bounds
-        return imageBounds;
-    }
-
-    /**
-     * Returns the size of the image to be generated for display.  If imagesize is null then it returns the display size from
-     * the map display.
-     * 
-     * <p>This is used by the tile rendering system so a tile can have a fixed size.
-     *
-     * @return
-     */
-    public Dimension getImageSize(){
-        if (imagesize == null){
-            IMapDisplay mapDisplay = getMapDisplay();
-            if( mapDisplay == null ){
-                return null;
-            }
-            return mapDisplay.getDisplaySize();
-        }else{
-            return imagesize;
-        }
-    }
-    /**
-     * Sets the image bounds represented by this context.  If set to null then the bounds of the image is assumed to match the bounds
-     * of the viewport model.
-     */
-    public void setImageBounds( ReferencedEnvelope bounds ) {
-        this.imageBounds = bounds;
-    }
-    
-    /**
-     * Converts a coordinate expressed on the image
-     * back to real world coordinates.
-     * 
-     *  <p>A convenience method.
-     * 
-     * @param x horizontal coordinate on device space (image)
-     * @param y vertical coordinate on device space (image)
-     * 
-     * @return The correspondent real world coordinate
-     */
-    @Override
-    public Coordinate pixelToWorld( int x, int y ){
-        return ScaleUtils.pixelToWorld(x, y, getImageBounds(), getImageSize());
-    }
-    
-    
-    /**
-     * Gets up the affine transform that will transform from the world to the display of size
-     * destination. A convenience method. This method is independent of the CRS.
-     * 
-     * @return a transform that maps from real world coordinates to the screen
-     */
-    @Override
-    public AffineTransform worldToScreenTransform() { 
-        return ScaleUtils.worldToScreenTransform(getImageBounds(), getImageSize());
-    }
-
-    /**
-     * Returns the pixel on the screen for a given coordinate in world space.
-     * 
-     * @param coord A coordinate in world space.
-     * @return The pixel on the screen that the world coordinate is drawn on.
-     * @see Point
-     * @see Coordinate
-     */
-    @Override
-    public Point worldToPixel( Coordinate coord ) {
-        return ScaleUtils.worldToPixel(coord, getImageBounds(), getImageSize());
-    }
-
-    @Override
-    public MathTransform2D worldToScreenMathTransform() {
-        GeneralMatrix matrix = new GeneralMatrix(worldToScreenTransform());
-        try {
-            return (MathTransform2D) ReferencingFactoryFinder.getMathTransformFactory(null)
-                    .createAffineTransform(matrix);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    
 } // RenderContextImpl

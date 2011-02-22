@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.tool.info.tests;
 
@@ -34,8 +34,8 @@ public class WMSLayer implements ILayer {;
 
 	public WMSLayer() {
 	}
-	
-	
+
+
 
 	/**
 	 * @param map
@@ -53,7 +53,7 @@ public class WMSLayer implements ILayer {;
 
 	public void addListener(ILayerListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public Filter createBBoxFilter(Envelope boundingBox, IProgressMonitor monitor) {
@@ -128,7 +128,7 @@ public class WMSLayer implements ILayer {;
 		if (resourceType == Layer.class) {
 			return (E) this.wmslayer;
 		}
-		
+
 		if (resourceType == WebMapServer.class) {
 			return (E) this.wms;
 		}
@@ -169,7 +169,7 @@ public class WMSLayer implements ILayer {;
 		if (resourceType == Layer.class) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -189,27 +189,27 @@ public class WMSLayer implements ILayer {;
 
 	public void refresh(Envelope bounds) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void removeListener(ILayerListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setStatus(int status) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setStatusMessage(String string) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public int compareTo(ILayer arg0) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 }

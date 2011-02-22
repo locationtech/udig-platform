@@ -32,8 +32,8 @@ import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.LockingBehaviour;
 import net.refractions.udig.tools.edit.animation.MessageBubble;
 import net.refractions.udig.tools.edit.commands.DrawSnapAreaCommand;
-import net.refractions.udig.tools.edit.commands.MoveVertexCommand;
 import net.refractions.udig.tools.edit.commands.SetEditStateCommand;
+import net.refractions.udig.tools.edit.commands.MoveVertexCommand;
 import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 import net.refractions.udig.tools.edit.support.EditGeom;
@@ -71,7 +71,7 @@ import com.vividsolutions.jts.geom.Polygon;
  * <li>Locks the EditTool handler until mouse is released so other behaviours won't interfere</li>
  * </ul>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -115,7 +115,7 @@ public class MoveVertexBehaviour implements EventBehaviour, LockingBehaviour {
 		public IEditValidator get(Object... params) {
 			return new LegalShapeValidator();
 		}
-		
+
 	};
 
     public UndoableMapCommand getCommand( EditToolHandler handler, MapMouseEvent e,
@@ -137,16 +137,16 @@ public class MoveVertexBehaviour implements EventBehaviour, LockingBehaviour {
                 for( EditGeom geom : editBlackboard2.getGeoms() ) {
                     changedStatus.put(geom, geom.isChanged());
                 }
-                
+
                 IEditValidator validator = validatorFactory.get(handler, e, eventType);
 
                 // If at the start the geometry isn't valid then who are we to complain?
                 if( validator.isValid(handler, e, eventType)!=null ){
                 	validator=null;
                 }
-                
+
                 tracker = new PositionTracker(closestPoint, handler.getMouseTracker()
-                        .getDragStarted(), getPointsToMove(handler, editBlackboard2), 
+                        .getDragStarted(), getPointsToMove(handler, editBlackboard2),
                         changedStatus, validator);
                 handler.getBehaviours().add(tracker);
                 if (isSnappingValid() && PreferenceUtil.instance().getSnapBehaviour()!=SnapBehaviour.GRID ) {
@@ -182,7 +182,7 @@ public class MoveVertexBehaviour implements EventBehaviour, LockingBehaviour {
 
     /**
      * Returns true if snapping should be used.
-     * 
+     *
      * @return
      */
     protected boolean isSnappingValid() {
@@ -191,7 +191,7 @@ public class MoveVertexBehaviour implements EventBehaviour, LockingBehaviour {
 
     /**
      * Returns the points that will be moved.
-     * 
+     *
      * @param handler
      * @return the points that will be moved.
      */
@@ -212,7 +212,7 @@ public class MoveVertexBehaviour implements EventBehaviour, LockingBehaviour {
 
         public PositionTracker( Point closestPoint, Point dragStarted, Selection selection,
                 Map<EditGeom, Boolean> dirtyStatesBeforeMove, IEditValidator validator ) {
-            
+
             this.selection = selection;
             lastPoint = closestPoint != null ? closestPoint : dragStarted;
             this.start = lastPoint;
@@ -234,7 +234,7 @@ public class MoveVertexBehaviour implements EventBehaviour, LockingBehaviour {
             handler.getBehaviours().remove(this);
             tracker = null;
             handler.unlock(this);
-            
+
             if( validator!=null ){
                 return doValidation(handler, e, eventType);
             }
@@ -249,7 +249,7 @@ public class MoveVertexBehaviour implements EventBehaviour, LockingBehaviour {
 
         private UndoableMapCommand doValidation( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
             String errorMessage = validator.isValid(handler, e, eventType);
-            
+
             if( errorMessage==null ){
                 return createMoveCommand(handler);
             }else{
@@ -275,7 +275,7 @@ public class MoveVertexBehaviour implements EventBehaviour, LockingBehaviour {
             case LINE:
                 return LineString.class;
             case POINT:
-                return com.vividsolutions.jts.geom.Point.class;            
+                return com.vividsolutions.jts.geom.Point.class;
             case POLYGON:
                 return Polygon.class;
             default:
@@ -284,11 +284,11 @@ public class MoveVertexBehaviour implements EventBehaviour, LockingBehaviour {
     	}
 
 		private void openErrorBubble( EditToolHandler handler, MapMouseEvent e, String errorMessage ) {
-            MessageBubble bubble=new MessageBubble(e.getPoint().x, e.getPoint().y, errorMessage, //$NON-NLS-1$ 
+            MessageBubble bubble=new MessageBubble(e.getPoint().x, e.getPoint().y, errorMessage, //$NON-NLS-1$
                     PreferenceUtil.instance().getMessageDisplayDelay());
             AnimationUpdater.runTimer(handler.getContext().getMapDisplay(), bubble);
             EditBlackboard editBlackboard = handler.getEditBlackboard(handler.getEditLayer());
-            doMove(start.getX()-lastPoint.getX(), start.getY()-lastPoint.getY(), 
+            doMove(start.getX()-lastPoint.getX(), start.getY()-lastPoint.getY(),
                     handler, editBlackboard, selection);
             Set<Entry<EditGeom, Boolean>> entries = dirtyStatesBeforeMove.entrySet();
             for( Entry<EditGeom, Boolean> entry : entries ) {
@@ -333,11 +333,11 @@ public class MoveVertexBehaviour implements EventBehaviour, LockingBehaviour {
     /**
      * Sets the factory to use for validating the geometries that are being edited.  The default returns the {@link LegalShapeValidator}
      * class.
-     * 
+     *
      * <p>
      * The parameters passed in to the provider are:  {@link EditToolHandler}, {@link MapMouseEvent}, {@link EventType}
      * </p>
-     * 
+     *
      * @param validatorFactory the factory for creating the validator
      */
 	public void setValidatorFactory(IProvider<IEditValidator> validatorFactory) {

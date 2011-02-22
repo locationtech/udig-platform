@@ -22,7 +22,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * TODO Purpose of
  * <p>
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
@@ -42,7 +42,7 @@ public class GotoBookmarkCommand extends AbstractNavCommand {
                  .getResourceSet().getResource(mapID, true).getContents().get(0));
          ApplicationGIS.openMap(map);
          IViewportModel v = map.getViewportModel();
-         
+
          final ReferencedEnvelope bookmarkEnvelope = target.getEnvelope();
          final Envelope viewportBounds = v.getBounds();
 
@@ -50,7 +50,7 @@ public class GotoBookmarkCommand extends AbstractNavCommand {
          final CoordinateReferenceSystem bookmarkCrs = bookmarkEnvelope.getCoordinateReferenceSystem();
 
          final ReferencedEnvelope bookmarkedEnvelopeInVieportCRS;
-         
+
          if(bookmarkCrs.equals(viewportCrs)){
          	bookmarkedEnvelopeInVieportCRS = bookmarkEnvelope;
          }else{

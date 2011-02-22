@@ -26,28 +26,28 @@ import org.eclipse.swt.graphics.RGB;
 
 /**
  * Provides help for obtaining values that are preferences or will be.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class PreferenceUtil {
 
     protected static PreferenceUtil instance= new PreferenceUtil();
-    
+
     protected PreferenceUtil(){
         //singleton class
         // only tests should override this.
     }
-    
+
     public static PreferenceUtil instance() {
         return instance;
     }
 
 
     IPreferenceStore store =  EditPlugin.getDefault().getPreferenceStore();
-    
+
     /**
-     * Returns the radius of a vertex 
+     * Returns the radius of a vertex
      *
      * @return
      */
@@ -105,7 +105,7 @@ public class PreferenceUtil {
     public int getSnappingRadius(){
         return store.getInt(PreferenceConstants.P_SNAP_RADIUS);
     }
-    
+
     /**
      * Returns the color used to draw the shape to show the PostSnapping area.
      *
@@ -117,11 +117,11 @@ public class PreferenceUtil {
 
     /**
      * Returns the color used to draw the selection area.
-     * 
+     *
      * @return the color used to draw the selection area.
      */
     public Color getSelectionColor() {
-        return getColor(ProjectPlugin.getPlugin().getPreferenceStore(), 
+        return getColor(ProjectPlugin.getPlugin().getPreferenceStore(),
                 net.refractions.udig.project.preferences.PreferenceConstants.P_SELECTION_COLOR);
     }
 
@@ -138,15 +138,15 @@ public class PreferenceUtil {
     }
 
     /**
-     * Reduces the transparency of the color by some factor.  
-     *  
+     * Reduces the transparency of the color by some factor.
+     *
      * @param base the starting color
      * @param factor the amount to reduce by. Should be between 0-1;
-     * 
+     *
      * @return The color with the same RGB but reduced alpha
      */
     public static Color reduceTransparency( Color base, float factor ) {
-        
+
         float alpha = (float)base.getAlpha();
         int i = Math.round(alpha*factor);
         Color color = new Color(base.getRed(), base.getGreen(), base.getBlue(), i );
@@ -179,7 +179,7 @@ public class PreferenceUtil {
             return SnapBehaviour.ALL_LAYERS;
         if( preference.equals(SnapBehaviour.GRID.toString()) )
             return SnapBehaviour.GRID;
-        
+
         return SnapBehaviour.OFF;
     }
 
@@ -207,5 +207,5 @@ public class PreferenceUtil {
     public short getMessageDisplayDelay() {
         return 2000;
     }
-    
+
 }

@@ -20,8 +20,6 @@ import java.awt.Color;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import javax.xml.transform.TransformerException;
@@ -35,8 +33,13 @@ import net.refractions.udig.ui.graphics.SLDs;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
 import org.geotools.data.FeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.GeometryAttributeType;
+import org.geotools.filter.CompareFilter;
+import org.geotools.filter.Expression;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.filter.FilterType;
 import org.geotools.filter.IllegalFilterException;
 import org.geotools.filter.function.FilterFunction_geometryType;
 import org.geotools.styling.FeatureTypeConstraint;
@@ -54,18 +57,13 @@ import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.StyleFactory;
+import org.geotools.styling.StyleFactoryFinder;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.UserLayer;
-import org.geotools.styling.visitor.DuplicatingStyleVisitor;
+import org.geotools.styling.visitor.DuplicatorStyleVisitor;
 import org.opengis.coverage.grid.GridCoverage;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.PropertyIsEqualTo;
-import org.opengis.filter.expression.Expression;
 
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -76,23 +74,9 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
 /**
- * StyleContent allowing a Style Layer Descriptor (SLD) document to be saved on the style blackboard.
- * <p>
- * This class is final and not intended for extension.
- * </p>
- * We have added several utility methods to this class to assist programmers in working with
- * the Style data structure.
- * <p>
- * Other recommended utility classes are:
- * <ul>
- * <li>net.refractions.udig.graphics.SLDs - a utility class for handling the "Default" rule in a style</li>
- * <li>org.geotools.styling.SLD - a port of our SLDs class to GeoTools/li>
- * <li>net.refractions.udig.style.sld.SLD - an enum with methods for checking for POINT, LINE, POLYGON
- * <li>SLDContentManager 
- * <li>StyleFactory, StyleFactory2 - direct creation of style objects
- * <li>StyleBuilder - creation of style objects; but allowing for default values
- * </ul>
- * 
+ * Style content for Style Layer Descriptor (SLD).
+ * This class is not intended for extension (jg: so I marked it final).
+ *
  * @author Justin Deoliveira, Refractions Research Inc.
  */
 public final class SLDContent extends StyleContent {
@@ -101,7 +85,7 @@ public final class SLDContent extends StyleContent {
     public static final String ID = "net.refractions.udig.style.sld"; //$NON-NLS-1$
 
     /** factory used to create style and builder * */
-    private static StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory(GeoTools.getDefaultHints());
+    private static StyleFactory styleFactory = StyleFactoryFinder.createStyleFactory();
 
     /** factory used to create style content * */
     private static StyleBuilder styleBuilder = new StyleBuilder(styleFactory);
@@ -118,16 +102,16 @@ public final class SLDContent extends StyleContent {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.project.StyleContent#getStyleClass()
      */
-    public Class<?> getStyleClass() {
+    public Class getStyleClass() {
         return Style.class;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.project.StyleContent#save(org.eclipse.ui.IMemento,
      *      java.lang.Object)
      */
@@ -152,7 +136,7 @@ public final class SLDContent extends StyleContent {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.project.StyleContent#load(org.eclipse.ui.IMemento)
      */
     public Object load( IMemento momento ) {
@@ -171,7 +155,7 @@ public final class SLDContent extends StyleContent {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.project.StyleContent#load(java.net.URL)
      */
     public Object load( URL url, IProgressMonitor m ) throws IOException {
@@ -180,18 +164,18 @@ public final class SLDContent extends StyleContent {
 
     public static void apply(ILayer layer, Style style, IProgressMonitor m)
     	throws IOException {
-    	
+
     	if (layer == null) return;
     	if (style == null) return;
-    		
+
     	if (layer.hasResource(FeatureSource.class)) {
-    		IGeoResource resource = layer.findGeoResource(FeatureSource.class);
-    		FeatureSource<SimpleFeatureType, SimpleFeature> featureSource 
+    		IGeoResource resource = layer.getGeoResource(FeatureSource.class);
+    		FeatureSource featureSource
     			= resource.resolve(FeatureSource.class, m);
-    		
+
     		if (featureSource != null) {
     			//match up the feature type style name and the feature type name
-    			SimpleFeatureType type = featureSource.getSchema();
+    			FeatureType type = featureSource.getSchema();
     			FeatureTypeStyle fstyle = SLDs.featureTypeStyle(style,type);
     			if (fstyle == null) {
     				//force a name match
@@ -200,42 +184,43 @@ public final class SLDContent extends StyleContent {
     					fstyle = fstyles[0];
     				}
     			}
-    			
+
     			if (fstyle != null) {
-    				fstyle.setName(type.getName().getLocalPart());
+    				fstyle.setName(type.getTypeName());
     				StyleBlackboard styleBlackboard = (StyleBlackboard) layer.getStyleBlackboard();
                     styleBlackboard.put(SLDContent.ID, style);
 			        styleBlackboard.setSelected(new String[]{SLDContent.ID});
 
 //    				//force a rerender, TODO: blackboard events
 //    				layer.getMap().getRenderManager().refresh(
-//    					layer, resource.getInfo(m).getBounds()	
+//    					layer, resource.getInfo(m).getBounds()
 //    				);
     			}
     		}
     	}
     }
-    
+
     /**
      * This will need to know the "scheme."
      */
-    public Object createDefaultStyle( IGeoResource resource, Color colour, 
+    public Object createDefaultStyle( IGeoResource resource, Color colour,
             IProgressMonitor m ) throws IOException {
-        
+
         if( resource.canResolve(Style.class)){
             Style style = resource.resolve( Style.class, null);
             if( style != null ){
-                DuplicatingStyleVisitor v = new DuplicatingStyleVisitor();
+                StyleBuilder builder = new StyleBuilder();
+                DuplicatorStyleVisitor v = new DuplicatorStyleVisitor(builder.getStyleFactory(), builder.getFilterFactory());
                 style.accept(v);
                 return v.getCopy();
             }
         }
-        
+
         if( resource.canResolve(FeatureSource.class) ){
-             FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = null;
+            FeatureSource featureSource = null;
             try {
                 featureSource = resource.resolve(FeatureSource.class, m);
-            } 
+            }
             catch (IOException e) {
                 e.printStackTrace();
                 return null;
@@ -250,33 +235,21 @@ public final class SLDContent extends StyleContent {
         return null; // there is no good Style default for this resource type
     }
 
-    private Style createDefaultGridCoverageStyle( IGeoResource resource, Color colour ) {
-        RasterSymbolizer rasterSymbolizer = styleFactory.createRasterSymbolizer();
-        
-        Style style = styleBuilder.createStyle();
-        SLDContentManager sldContentManager = new SLDContentManager(styleBuilder, style);
-        sldContentManager.addSymbolizer(rasterSymbolizer);
-        
-        style.setName("simpleStyle");
-              
-        return style;
-    }
-
     private Style createDefaultFeatureStyle( IGeoResource resource, Color colour,
-             FeatureSource<SimpleFeatureType, SimpleFeature> featureSource ) throws IOException {
+            FeatureSource featureSource ) {
         if (featureSource == null) {
             return null;
         }
-        
-        SimpleFeatureType schema = featureSource.getSchema();
-        GeometryDescriptor geom = schema.getGeometryDescriptor();
+
+        FeatureType schema = featureSource.getSchema();
+        GeometryAttributeType geom = schema.getDefaultGeometry();
         if( geom==null )
             return null;
-        
+
         Style style = null;
 
-        SLDContentManager sldContentManager; 
-        
+        SLDContentManager sldContentManager;
+
         if (style == null) {
             // fall back to create some default
             style = styleBuilder.createStyle();
@@ -293,7 +266,7 @@ public final class SLDContent extends StyleContent {
                     sldContentManager.addSymbolizer(symbol);
                 } else {
                     try {
-                        createGeometrySLD(colour, schema.getGeometryDescriptor().getName().getLocalPart(),
+                        createGeometrySLD(colour, schema.getDefaultGeometry().getName(),
                                 sldContentManager);
                     } catch (Exception e) {
                         SLDPlugin.log("Failed to create geometry SLD", e); //$NON-NLS-1$
@@ -310,14 +283,26 @@ public final class SLDContent extends StyleContent {
         fts.setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
         fts.setName("simple"); //$NON-NLS-1$
         fts.setSemanticTypeIdentifiers(new String[] {"generic:geometry", "simple"}); //$NON-NLS-1$ //$NON-NLS-2$
-        
+
         return style;
     }
-    
+
+    private Style createDefaultGridCoverageStyle( IGeoResource resource, Color colour ) {
+        RasterSymbolizer rasterSymbolizer = styleFactory.createRasterSymbolizer();
+
+        Style style = styleBuilder.createStyle();
+        SLDContentManager sldContentManager = new SLDContentManager(styleBuilder, style);
+        sldContentManager.addSymbolizer(rasterSymbolizer);
+
+        style.setName("simpleStyle");
+
+        return style;
+    }
+
     private void createGeometrySLD( Color colour, String geomXPath, SLDContentManager sldContentManager ) throws IllegalFilterException {
         // create Point rule.
         Rule rule=sldContentManager.getDefaultRule();
-        PropertyIsEqualTo filter = createGeometryFunctionFilter(geomXPath, Point.class.getSimpleName());
+        CompareFilter filter = createGeometryFunctionFilter(geomXPath, Point.class.getSimpleName());
         rule.setFilter(filter);
         rule.setSymbolizers(new Symbolizer[]{createPointSymbolizer(colour)});
 
@@ -327,28 +312,28 @@ public final class SLDContent extends StyleContent {
         rule.setFilter(filter);
         rule.setSymbolizers(new Symbolizer[]{createPointSymbolizer(colour)});
         sldContentManager.getDefaultFeatureTypeStyle().addRule(rule);
-        
+
         // create LineString rule
         rule=sldContentManager.createRule();
         filter = createGeometryFunctionFilter(geomXPath, LineString.class.getSimpleName());
         rule.setFilter(filter);
         rule.setSymbolizers(new Symbolizer[]{createLineSymbolizer(colour)});
         sldContentManager.getDefaultFeatureTypeStyle().addRule(rule);
-        
+
         // create LinearRing rule
         rule=sldContentManager.createRule();
         filter = createGeometryFunctionFilter(geomXPath, LinearRing.class.getSimpleName());
         rule.setFilter(filter);
         rule.setSymbolizers(new Symbolizer[]{createLineSymbolizer(colour)});
         sldContentManager.getDefaultFeatureTypeStyle().addRule(rule);
-        
+
         // create MultiLineString rule
         rule=sldContentManager.createRule();
         filter = createGeometryFunctionFilter(geomXPath, MultiLineString.class.getSimpleName());
         rule.setFilter(filter);
         rule.setSymbolizers(new Symbolizer[]{createLineSymbolizer(colour)});
         sldContentManager.getDefaultFeatureTypeStyle().addRule(rule);
- 
+
         // create Polygon rule
         rule=sldContentManager.createRule();
         filter = createGeometryFunctionFilter(geomXPath, Polygon.class.getSimpleName());
@@ -365,34 +350,33 @@ public final class SLDContent extends StyleContent {
 
     }
 
-    private PropertyIsEqualTo createGeometryFunctionFilter( String geomXPath, Object geometryClassSimpleName ) throws IllegalFilterException {
-        FilterFactory factory=CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
+    private CompareFilter createGeometryFunctionFilter( String geomXPath, Object geometryClassSimpleName ) throws IllegalFilterException {
+        FilterFactory factory=FilterFactoryFinder.createFilterFactory();
         FilterFunction_geometryType geomTypeExpr=new FilterFunction_geometryType();
-        List<Expression> params = new ArrayList<Expression>();
-        params.add(factory.property(geomXPath));
-        geomTypeExpr.setParameters(params);
+        geomTypeExpr.setArgs(new Expression[]{ factory.createAttributeExpression(geomXPath)});
 
-        
-        
-        return factory.equals(geomTypeExpr, factory.literal(geometryClassSimpleName));
+        CompareFilter filter = factory.createCompareFilter(FilterType.COMPARE_EQUALS);
+        filter.addLeftValue(geomTypeExpr);
+        filter.addRightValue(factory.createLiteralExpression(geometryClassSimpleName));
+        return filter;
     }
 
     public static Style parse(URL url) throws IOException {
-    	StyleFactory factory = CommonFactoryFinder.getStyleFactory(GeoTools.getDefaultHints());
+    	StyleFactory factory = StyleFactoryFinder.createStyleFactory();
         SLDParser styleReader = new SLDParser(factory, url);
         Style style = styleReader.readXML()[0];
 
         return style;
     }
-    
+
     public static StyledLayerDescriptor createDefaultStyledLayerDescriptor() {
         StyledLayerDescriptor sld = styleFactory.createStyledLayerDescriptor();
         return sld;
     }
-    
+
     /**
-     * Creates an SLD and UserLayer, and nests the style (SLD-->UserLayer-->Style). 
-     * 
+     * Creates an SLD and UserLayer, and nests the style (SLD-->UserLayer-->Style).
+     *
      * @see net.refractions.project.internal.render.SelectionStyleContent#createDefaultStyledLayerDescriptor
      * @param style
      * @return SLD
@@ -400,17 +384,17 @@ public final class SLDContent extends StyleContent {
     public static StyledLayerDescriptor createDefaultStyledLayerDescriptor(Style style) {
         StyledLayerDescriptor sld = createDefaultStyledLayerDescriptor();
         UserLayer layer = styleFactory.createUserLayer();
-        //FeatureTypeConstraint ftc = styleFactory.createFeatureTypeConstraint(null, Filter.INCLUDE, null);
+        //FeatureTypeConstraint ftc = styleFactory.createFeatureTypeConstraint(null, Filter.NONE, null);
         layer.setLayerFeatureConstraints(new FeatureTypeConstraint[] {null});
         sld.addStyledLayer(layer);
         layer.addUserStyle(style);
         return sld;
     }
-    
+
     public static Style createDefaultStyle() {
         Style style = styleBuilder.createStyle();
         SLDContentManager sldContentManager = new SLDContentManager(styleBuilder, style);
-                
+
         // sldContentManager.addSymbolizer(styleBuilder.createPointSymbolizer());
         sldContentManager.addSymbolizer(createLineSymbolizer(createRandomColor()));
         sldContentManager.addSymbolizer(createPolygonSymbolizer(createRandomColor()));
@@ -421,7 +405,7 @@ public final class SLDContent extends StyleContent {
         FeatureTypeStyle fts = style.getFeatureTypeStyles()[0];
         fts.setName("simple"); //$NON-NLS-1$
         fts.setSemanticTypeIdentifiers(new String[] {"generic:geometry", "simple"}); //$NON-NLS-1$ //$NON-NLS-2$
-        
+
         //TODO: add StyledLayerDescriptor to sldContentManager?
         return style;
     }
@@ -436,18 +420,18 @@ public final class SLDContent extends StyleContent {
 
     protected static PointSymbolizer createPointSymbolizer(Color colour) {
         PointSymbolizer symb=styleBuilder.createPointSymbolizer();
-        Fill fill = styleBuilder.createFill(colour, 1.0);        
-        Stroke outline=styleBuilder.createStroke(Color.BLACK,1,1);        
+        Fill fill = styleBuilder.createFill(colour, 1.0);
+        Stroke outline=styleBuilder.createStroke(Color.BLACK,1,1);
         symb.getGraphic().setMarks(new Mark[]{styleBuilder.createMark(StyleBuilder.MARK_SQUARE, fill, outline)});
-        symb.getGraphic().setSize( styleBuilder.literalExpression(6.0));
+
         return symb;
     }
 
     /**
      * Creates a simple LineSymbolizer using the specified colour.
-     * 
+     *
      * @author Pati
-     * @param colour 
+     * @param colour
      * @return LineSymbolizer
      */
     protected static LineSymbolizer createLineSymbolizer(Color colour) {
@@ -465,9 +449,9 @@ public final class SLDContent extends StyleContent {
 
     /**
      * Creates a simple PolygonSymbolizer using the specified colour.
-     * 
+     *
      * @author Pati
-     * @param colour 
+     * @param colour
      * @return LineSymbolizer
      */
     protected static PolygonSymbolizer createPolygonSymbolizer(Color colour) {
@@ -501,6 +485,6 @@ public final class SLDContent extends StyleContent {
     protected static Color createRandomColor() {
         return new Color(random.nextInt(200), random.nextInt(200), random.nextInt(200));
     }
-    
-    
+
+
 }

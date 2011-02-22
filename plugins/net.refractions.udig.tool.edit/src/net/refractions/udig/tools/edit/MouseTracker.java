@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * Keeps track of the what mouse events have happened.  Must be in event thread to call this method.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -45,7 +45,7 @@ public class MouseTracker {
     public MouseTracker( EditToolHandler handler2 ){
         this.handler=handler2;
     }
-    
+
     /**
      * Called by EditToolhandler to updates the state.
      *
@@ -55,10 +55,10 @@ public class MouseTracker {
     protected void updateState(MapMouseEvent e, EventType type){
         checkAccess();
         previousEvents.add(e);
-        
+
         if( previousEvents.size()>MAX_QUEUE_SIZE)
             previousEvents.remove();
-        
+
         switch( type ) {
         case PRESSED:
             break;
@@ -66,13 +66,13 @@ public class MouseTracker {
             currentPoint=Point.valueOf(e.x, e.y);
             break;
         case DOUBLE_CLICK:
-            
+
             break;
         case ENTERED:
-            
+
             break;
         case EXITED:
-            
+
             break;
         case MOVED:
             currentPoint=dragStarted=Point.valueOf(e.x, e.y);
@@ -83,14 +83,14 @@ public class MouseTracker {
         default:
             break;
         }
-        
+
         if( updateTriggers.contains(type) ){
             if( e.source instanceof ViewportPane ){
                 handler.repaint();
             }
         }
     }
-    
+
     private void checkAccess() {
         if( Display.getCurrent()==null )
             SWT.error(SWT.ERROR_THREAD_INVALID_ACCESS);
@@ -106,7 +106,7 @@ public class MouseTracker {
 
     /**
      * This is a copy modifying queue will have no effect on original queue
-     * 
+     *
      * @return Returns the queue of previous events.
      */
     public Queue<MapMouseEvent> getPreviousEvents() {
@@ -124,7 +124,7 @@ public class MouseTracker {
 
     /**
      * Returns the previous events queue.  This is a thread-safe queue.
-     * 
+     *
      * @param previousEvents The previousEvents to set.
      */
     protected Queue<MapMouseEvent> getModifiablePreviousEvents( ) {

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.ui;
 
@@ -46,23 +46,23 @@ import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
  * Useful methods for adding drag and drop support to controls or
  * viewers.  It hooks up the control with the udig drag and drop
  * framework.
- * 
+ *
  * @author jones
  *
  */
 public class UDIGDragDropUtilities {
-	   
+
 	/**
      * This class listens for selection events and enables and disables the applicable transfer types.
-     * 
+     *
      * @author jones
      * @since 1.0.0
      */
     private static class DragController implements ISelectionChangedListener {
         private static final Transfer[] EMPTY=new Transfer[0];
         private DragSource dragSource;
-        private Set<Transfer> transfers; 
-        
+        private Set<Transfer> transfers;
+
         public DragController( DragSource dragSourceA, Set<Transfer> transfersA ) {
             this.dragSource=dragSourceA;
             transfers=transfersA;
@@ -79,12 +79,12 @@ public class UDIGDragDropUtilities {
 
         private void setTransfers( IStructuredSelection selection ) {
             CopyOnWriteArrayList<Transfer> toSet=new CopyOnWriteArrayList<Transfer>(transfers);
-            
+
             for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
                 if( toSet.isEmpty() )
                     break;
                 Object element = iter.next();
-                
+
                 for( Transfer transfer : toSet ) {
                     if( transfer instanceof UDIGTransfer){
                         UDIGTransfer t=(UDIGTransfer) transfer;
@@ -126,7 +126,7 @@ public class UDIGDragDropUtilities {
                     }
                 }
             }
-            
+
             if( toSet.isEmpty() )
                 dragSource.setTransfer(EMPTY);
             else
@@ -140,10 +140,10 @@ public class UDIGDragDropUtilities {
      * <p>For this to work the destination object must have a dropAction extension
      * defined for it.<p>
      * Feedback is enabled but scroll and expand is not.
-     * 
+     *
      * @param viewer the viewer to have drag and drop support added to it.
      * @param defaultTarget The target to use if the mouse is not over an item in the viewer
-     * 
+     *
      */
     public static void addDragDropSupport(StructuredViewer viewer, IDropTargetProvider defaultTarget) {
         addDragDropSupport(viewer, defaultTarget, true, false);
@@ -153,34 +153,34 @@ public class UDIGDragDropUtilities {
      * Adds both drag and drop support to the StructuredViewer.
      * <p>For this to work the destination object must have a dropAction extension
      * defined for it.<p>
-     * 
+     *
      * @param viewer the viewer to have drag and drop support added to it.
      * @param defaultTarget The target to use if the mouse is not over an item in the viewer
      */
-    public static void addDragDropSupport(StructuredViewer viewer, IDropTargetProvider defaultTarget, boolean showDropFeedback, 
+    public static void addDragDropSupport(StructuredViewer viewer, IDropTargetProvider defaultTarget, boolean showDropFeedback,
             boolean expandTree) {
         addDragSupport(viewer.getControl(), viewer);
         addDropSupport(viewer, defaultTarget, showDropFeedback, expandTree);
     }
-	
+
     /**
      * Adds drop support to the StructuredViewer.
      * <p>For this to work the destination object must have a dropAction extension
      * defined for it.<p>
      * Feedback is enabled but scroll and expand is not.
-     * 
+     *
      * @param viewer the viewer to have drop support added to it.
      * @param destination The target to use if the mouse is not over an item in the viewer
      */
     public static UDIGDropTargetListener addDropSupport(StructuredViewer viewer, IDropTargetProvider defaultTarget) {
         return addDropSupport(viewer, defaultTarget, true, false);
-    }   
-    
+    }
+
     /**
      * Adds drop support to the StructuredViewer.
      * <p>For this to work the destination object must have a dropAction extension
      * defined for it.<p>
-     * 
+     *
      * @param viewer the viewer to have drop support added to it.
      * @param destination The target to use if the mouse is not over an item in the viewer
      * @param showDropFeedback if true the feedback bars will be shown in the viewer.
@@ -194,16 +194,16 @@ public class UDIGDragDropUtilities {
         UDIGViewerDropAdapter viewerDropAdapter = new UDIGViewerDropAdapter(viewer, defaultTarget);
         viewerDropAdapter.setFeedbackEnabled(showDropFeedback);
         viewerDropAdapter.setScrollExpandEnabled(scrollExpandEnabled);
-        viewer.addDropSupport(dndOperations, 
+        viewer.addDropSupport(dndOperations,
                 transfers.toArray(new Transfer[transfers.size()]),
                 viewerDropAdapter);
         return viewerDropAdapter;
-    }   
+    }
 	/**
 	 * Adds both drag and drop support to the StructuredViewer.
 	 * <p>For this to work the destination object must have a dropAction extension
 	 * defined for it.<p>
-	 * 
+	 *
 	 * @param control the viewer to have drag and drop support added to it.
 	 * @param destination the destination that determines what actions will take
 	 * place when a drag or drop event occurs.
@@ -216,11 +216,11 @@ public class UDIGDragDropUtilities {
 	 * Adds drag support to the StructuredViewer.
 	 * <p>For this to work the destination object must have a dropAction extension
 	 * defined for it.<p>
-	 * 
+	 *
 	 * @param control the viewer to have drag support added to it.
 	 * @param destination the destination that determines what actions will take
 	 * place when a drag event occurs.
-	 * @return 
+	 * @return
 	 */
 	public static DragSourceDescriptor addDragSupport(Control control, ISelectionProvider provider) {
 		int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK | DND.DROP_DEFAULT;
@@ -240,11 +240,11 @@ public class UDIGDragDropUtilities {
 	 * Adds drop support to the StructuredViewer.
 	 * <p>For this to work the destination object must have a dropAction extension
 	 * defined for it.<p>
-	 * 
+	 *
 	 * @param control the viewer to have drop support added to it.
 	 * @param destination the destination that determines what actions will take
 	 * place when a drop event occurs.
-	 * @return 
+	 * @return
 	 */
 	public static DropTargetDescriptor addDropSupport(Control control, IDropTargetProvider destination) {
 		int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK | DND.DROP_DEFAULT;
@@ -259,7 +259,7 @@ public class UDIGDragDropUtilities {
 	/**
 	 * Returns the transfers that are available with the current
 	 * udig configuration.
-	 * 
+	 *
 	 * @return the transfers that are available with the current
 	 * udig configuration.
 	 */
@@ -281,10 +281,10 @@ public class UDIGDragDropUtilities {
     }
 
     /**
-     * Creates a drop listener that will send the drop event to the 
+     * Creates a drop listener that will send the drop event to the
      * currently active editor.
-     * 
-     * @return  a drop listener that will send the drop event to the 
+     *
+     * @return  a drop listener that will send the drop event to the
      * currently active editor.
      */
 	public static UDIGControlDropListener getEditorDropListener() {
@@ -301,7 +301,7 @@ public class UDIGDragDropUtilities {
             listener=listenerA;
         }
     }
-    
+
     public static class DropTargetDescriptor{
         public final DropTarget target;
         public final UDIGDropTargetListener listener;
@@ -310,14 +310,14 @@ public class UDIGDragDropUtilities {
             listener=listenerA;
         }
     }
-    
+
 	static private class EditorPlaceholder implements IEditorPart, IDropTargetProvider {
 
 		IEditorPart getEditorPart() {
 			return PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 				.getActivePage().getActiveEditor();
 		}
-		
+
 		public IEditorInput getEditorInput() {
 			return getEditorPart() != null ? getEditorPart().getEditorInput()
 				: null;
@@ -328,15 +328,15 @@ public class UDIGDragDropUtilities {
 				: null;
 		}
 
-		public void init(IEditorSite site, IEditorInput input) 
+		public void init(IEditorSite site, IEditorInput input)
 			throws PartInitException {
-			
-			if (getEditorPart() != null) 
+
+			if (getEditorPart() != null)
 					getEditorPart().init(site, input);
 		}
 
 		public void addPropertyListener(IPropertyListener listener) {
-			if (getEditorPart() != null) 
+			if (getEditorPart() != null)
 				getEditorPart().addPropertyListener(listener);
 		}
 
@@ -351,22 +351,22 @@ public class UDIGDragDropUtilities {
 		}
 
 		public IWorkbenchPartSite getSite() {
-			return getEditorPart() != null ? getEditorPart().getSite() 
+			return getEditorPart() != null ? getEditorPart().getSite()
 					: null;
 		}
 
 		public String getTitle() {
-			return getEditorPart() != null ? getEditorPart().getTitle() 
+			return getEditorPart() != null ? getEditorPart().getTitle()
 					: null;
 		}
 
 		public Image getTitleImage() {
-			return getEditorPart() != null ? getEditorPart().getTitleImage() 
+			return getEditorPart() != null ? getEditorPart().getTitleImage()
 					: null;
 		}
 
 		public String getTitleToolTip() {
-			return getEditorPart() != null ? getEditorPart().getTitleToolTip() 
+			return getEditorPart() != null ? getEditorPart().getTitleToolTip()
 					: null;
 		}
 
@@ -381,7 +381,7 @@ public class UDIGDragDropUtilities {
 		}
 
 		public Object getAdapter(Class adapter) {
-			return getEditorPart() != null 
+			return getEditorPart() != null
 				? getEditorPart().getAdapter(adapter)
 				: null;
 		}
@@ -407,7 +407,7 @@ public class UDIGDragDropUtilities {
 		}
 
 		public boolean isSaveOnCloseNeeded() {
-			return getEditorPart() != null 
+			return getEditorPart() != null
 				? getEditorPart().isSaveOnCloseNeeded()
 				: false;
 		}
@@ -415,7 +415,7 @@ public class UDIGDragDropUtilities {
         public Object getTarget(DropTargetEvent event) {
             return this;
         }
-		
+
 	}
 
 }

@@ -23,7 +23,7 @@ public class UIUtilities {
 
 	/**
 	 * Copied from org.eclipse.ui.internal.dialogs.AboutDialog
-	 * 
+	 *
 	 * Open a link
 	 */
 	public static void openLink(String href) {
@@ -50,11 +50,11 @@ public class UIUtilities {
 
 	/**
 	 * Copied from org.eclipse.ui.internal.dialogs.AboutDialog
-	 * 
+	 *
 	 * This method encodes the url, removes the spaces from the url and replaces
 	 * the same with <code>"%20"</code>. This method is required to fix Bug
 	 * 77840.
-	 * 
+	 *
 	 * @since 3.0.2
 	 */
 	public static String urlEncodeForSpaces(char[] input) {

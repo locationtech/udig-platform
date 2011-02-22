@@ -34,8 +34,8 @@ import net.refractions.udig.project.internal.commands.edit.SetGeometryCommand;
 import net.refractions.udig.project.internal.commands.edit.WriteEditFeatureCommand;
 import net.refractions.udig.project.internal.commands.selection.CommitCommand;
 
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.filter.Filter;
+import org.geotools.feature.Feature;
+import org.geotools.filter.Filter;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -43,7 +43,7 @@ import com.vividsolutions.jts.geom.Geometry;
 /**
  * Creates Edit commands which must be used to modify editable feature data. API internal classes
  * are in the returned API
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -51,7 +51,7 @@ import com.vividsolutions.jts.geom.Geometry;
 public class EditCommandFactory extends net.refractions.udig.project.command.EditCommandFactory {
     /**
      * Creates a new EditCommandFactory object
-     * 
+     *
      * @return a new EditCommandFactory object
      */
     public static EditCommandFactory getInstance() {
@@ -65,8 +65,8 @@ public class EditCommandFactory extends net.refractions.udig.project.command.Edi
 
     /**
      * Creates a {@linkplain SetAttributeCommand}object.
-     * 
-     * @param xpath xpath that identifies an attribute in the current editable SimpleFeature
+     *
+     * @param xpath xpath that identifies an attribute in the current editable Feature
      * @param value the value that the attribute will be set to.
      * @return a new {@linkplain SetAttributeCommand}object
      * @see EditCommand
@@ -77,8 +77,8 @@ public class EditCommandFactory extends net.refractions.udig.project.command.Edi
 
     /**
      * Creates a {@linkplain SetGeometryCommand}object.
-     * 
-     * @param xpath xpath that identifies an attribute in the current editable SimpleFeature
+     *
+     * @param xpath xpath that identifies an attribute in the current editable Feature
      * @param geom the geom (in <b>layer </b> CRS) that the geometry will be set to.
      * @return a new {@linkplain SetGeometryCommand}object
      * @see EditCommand
@@ -90,7 +90,7 @@ public class EditCommandFactory extends net.refractions.udig.project.command.Edi
 
     /**
      * Creates a {@linkplain SetGeometryCommand}object that sets the default geometry.
-     * 
+     *
      * @param geom the geom (in <b>layer </b> CRS) that the geometry will be set to.
      * @return a new {@linkplain SetGeometryCommand}object.
      * @see EditCommand
@@ -101,34 +101,34 @@ public class EditCommandFactory extends net.refractions.udig.project.command.Edi
     }
     /**
      * Creates a {@linkplain SetAttributeCommand}object.
-     * 
-     * @param xpath xpath that identifies an attribute in the current editable SimpleFeature
+     *
+     * @param xpath xpath that identifies an attribute in the current editable Feature
      * @param value the value that the attribute will be set to.
      * @return a new {@linkplain SetAttributeCommand}object
      * @see EditCommand
      */
-    public UndoableMapCommand createSetAttributeCommand( SimpleFeature feature, ILayer layer, String xpath, Object value ) {
-        return new SetAttributeCommand(new StaticBlockingProvider<SimpleFeature>(feature), 
+    public UndoableMapCommand createSetAttributeCommand( Feature feature, ILayer layer, String xpath, Object value ) {
+        return new SetAttributeCommand(new StaticBlockingProvider<Feature>(feature),
                 new StaticBlockingProvider<ILayer>(layer), xpath, value);
     }
 
     /**
      * Creates a {@linkplain SetGeometryCommand}object.
-     * 
-     * @param xpath xpath that identifies an attribute in the current editable SimpleFeature
+     *
+     * @param xpath xpath that identifies an attribute in the current editable Feature
      * @param geom the geom (in <b>layer </b> CRS) that the geometry will be set to.
      * @return a new {@linkplain SetGeometryCommand}object
      * @see EditCommand
      * @see Geometry
      */
-    public UndoableMapCommand createSetGeomteryCommand( SimpleFeature feature, ILayer layer, String xpath, Geometry geom ) {
-        return new SetGeometryCommand(new StaticBlockingProvider<SimpleFeature>(feature), 
+    public UndoableMapCommand createSetGeomteryCommand( Feature feature, ILayer layer, String xpath, Geometry geom ) {
+        return new SetGeometryCommand(new StaticBlockingProvider<Feature>(feature),
                 new StaticBlockingProvider<ILayer>(layer), xpath, geom);
     }
 
     /**
      * Creates a {@linkplain SetGeometryCommand}object that sets the default geometry.
-     * 
+     *
      * @param feature a feature that has a default feature type that will accept the geometry type.
      * @param layer the layer containing the feature.
      * @param geom the geom (in <b>layer </b> CRS) that the geometry will be set to.
@@ -136,14 +136,14 @@ public class EditCommandFactory extends net.refractions.udig.project.command.Edi
      * @see EditCommand
      * @see Geometry
      */
-    public UndoableMapCommand createSetGeomteryCommand(SimpleFeature feature,  ILayer layer, Geometry geom ) {
-        return new SetGeometryCommand( new StaticBlockingProvider<SimpleFeature>(feature), 
+    public UndoableMapCommand createSetGeomteryCommand(Feature feature,  ILayer layer, Geometry geom ) {
+        return new SetGeometryCommand( new StaticBlockingProvider<Feature>(feature),
                 new StaticBlockingProvider<ILayer>(layer), SetGeometryCommand.DEFAULT, geom);
     }
 
     /**
      * Creates a {@linkplain SetGeometryCommand}object that sets the default geometry.
-     * 
+     *
      * @param featureID the id of a feature in layer.
      * @param layer the layer containing the feature.
      * @param geom the geom (in <b>layer </b> CRS) that the geometry will be set to.
@@ -158,20 +158,20 @@ public class EditCommandFactory extends net.refractions.udig.project.command.Edi
 
     /**
      * Creates a {@linkplain SetEditFeatureCommand}object that sets the current editVictim victim.
-     * 
-     * @param feature the feature that will be the new editable SimpleFeature.
-     * @param layer A victim Store that contains the editable SimpleFeature.
+     *
+     * @param feature the feature that will be the new editable Feature.
+     * @param layer A victim Store that contains the editable Feature.
      * @return a new {@linkplain SetEditFeatureCommand}object.
-     * @see SimpleFeature
+     * @see Feature
      * @see Layer
      * @see UndoableMapCommand
      */
-    public UndoableMapCommand createSetEditFeatureCommand( SimpleFeature feature, ILayer layer ) {
+    public UndoableMapCommand createSetEditFeatureCommand( Feature feature, ILayer layer ) {
         return new SetEditFeatureCommand(feature, layer);
     }
     /**
      * Create a Commit command
-     * 
+     *
      * @return a new {@linkplain CommitCommand} object that deletes the feature.
      * @see CommitCommand
      */
@@ -180,7 +180,7 @@ public class EditCommandFactory extends net.refractions.udig.project.command.Edi
     }
     /**
      * Create a Commit command
-     * 
+     *
      * @return a new {@linkplain RollbackCommand} object that deletes the feature.
      * @see RollbackCommand
      */
@@ -189,27 +189,27 @@ public class EditCommandFactory extends net.refractions.udig.project.command.Edi
     }
 
     /**
-     * Creates a {@linkplain SetEditFeatureCommand}object that sets the current editable SimpleFeature.
-     * 
-     * @param feature the feature that will be the new editable SimpleFeature.
+     * Creates a {@linkplain SetEditFeatureCommand}object that sets the current editable Feature.
+     *
+     * @param feature the feature that will be the new editable Feature.
      * @return a new {@linkplain SetEditFeatureCommand}object.
      * @see UndoableMapCommand
-     * @see SimpleFeature
+     * @see Feature
      */
-    public UndoableMapCommand createSetEditFeatureCommand( SimpleFeature feature ) {
+    public UndoableMapCommand createSetEditFeatureCommand( Feature feature ) {
         return new SetEditFeatureCommand(feature);
     }
 
     /**
-     * Creates a {@linkplain SetEditFeatureCommand}object that sets the current editable SimpleFeature
+     * Creates a {@linkplain SetEditFeatureCommand}object that sets the current editable Feature
      * to null.
-     * 
+     *
      * @return a new {@linkplain SetEditFeatureCommand}object that sets the current editable
-     *         SimpleFeature to null..
+     *         Feature to null..
      * @see UndoableMapCommand
      */
     public UndoableMapCommand createNullEditFeatureCommand() {
-        return new SetEditFeatureCommand((SimpleFeature) null, (ILayer) null);
+        return new SetEditFeatureCommand((Feature) null, (ILayer) null);
     }
 
     /**
@@ -220,10 +220,10 @@ public class EditCommandFactory extends net.refractions.udig.project.command.Edi
     public UndoableMapCommand createFeature( Coordinate[] coordinates ) {
         return new CreateFeatureCommand(coordinates);
     }
-    
+
     /**
      * Create a delete multiple layers command
-     * 
+     *
      * @param map the map containing the layer
      * @param evaluationObject the layer to delete
      * @return a new {@linkplain DeleteLayerCommand}object that deletes the layer.
@@ -235,9 +235,9 @@ public class EditCommandFactory extends net.refractions.udig.project.command.Edi
 
     /**
      * Create a delete layer command
-     * 
+     *
      * @deprecated use optimized createDeleteLayers(ILayer[]) method.
-     * 
+     *
      * @param map the map containing the layer
      * @param layer the layer to delete
      * @return a new {@linkplain DeleteLayerCommand}object that deletes the layer.
@@ -248,60 +248,60 @@ public class EditCommandFactory extends net.refractions.udig.project.command.Edi
     }
 
     /**
-     * Create a Delete SimpleFeature command
-     * 
+     * Create a Delete Feature command
+     *
      * @param layer the layer containing the feature
      * @param feature the feature to delete
      * @return a new {@linkplain DeleteFeatureCommand}object that deletes the feature.
      * @see DeleteFeatureCommand
      */
-    public UndoableMapCommand createDeleteFeature( SimpleFeature feature, ILayer layer ) {
-        return new DeleteFeatureCommand(new StaticBlockingProvider<SimpleFeature>(feature), new StaticBlockingProvider<ILayer>(layer));
+    public UndoableMapCommand createDeleteFeature( Feature feature, ILayer layer ) {
+        return new DeleteFeatureCommand(new StaticBlockingProvider<Feature>(feature), new StaticBlockingProvider<ILayer>(layer));
     }
 
     /**
-     * Create a Delete SimpleFeature command
-     * 
+     * Create a Delete Feature command
+     *
      * @param evaluationObject the layer containing the feature
      * @param feature the feature to delete
      * @return a new {@linkplain DeleteFeatureCommand}object that deletes the feature.
      * @see DeleteFeatureCommand
      */
-    public UndoableMapCommand createDeleteFeature(IBlockingProvider<SimpleFeature> provider, IBlockingProvider<ILayer> layerProvider) {
+    public UndoableMapCommand createDeleteFeature(IBlockingProvider<Feature> provider, IBlockingProvider<ILayer> layerProvider) {
     	return new DeleteFeatureCommand(provider, layerProvider);
     }
 
     /**
      * Create a {@linkplain WriteEditFeatureCommand} command
-     * 
+     *
      * @return a new {@linkplain WriteEditFeatureCommand} object that deletes the feature.
      * @see WriteEditFeatureCommand
      */
     public UndoableMapCommand createWriteEditFeatureCommand() {
         return new WriteEditFeatureCommand();
     }
-    
+
     /**
      * Create a {@linkplain CreateLayerCommand}
-     * 
+     *
      * @see CreateLayerCommand
      */
     public UndoableMapCommand createCreateLayerCommand(URL resourceId){
     	return new CreateLayerCommand(resourceId);
     }
-    
+
     /**
      * Create a {@linkplain CreateLayerCommand}
-     * 
+     *
      * @see CreateLayerCommand
      */
     public UndoableMapCommand createCreateLayerCommand(IGeoResource resource){
     	return new CreateLayerCommand(resource);
     }
-    
+
     /**
      * Create a {@linkplain ResetEditFeatureCommand} command
-     * 
+     *
      * @return a new {@linkplain ResetEditFeatureCommand} object that deletes the feature.
      * @see ResetEditFeatureCommand
      */
@@ -317,9 +317,9 @@ public class EditCommandFactory extends net.refractions.udig.project.command.Edi
         return new CopyFeaturesCommand(sourceLayer, filter, (Layer) destinationLayer);
     }
 
-    public UndoableMapCommand createAddFeatureCommand( SimpleFeature feature, ILayer layer ) {
+    public UndoableMapCommand createAddFeatureCommand( Feature feature, ILayer layer ) {
         return new AddFeatureCommand(feature,layer );
     }
-    
-      
+
+
 }

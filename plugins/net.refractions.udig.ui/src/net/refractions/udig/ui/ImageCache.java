@@ -3,7 +3,7 @@
  * This program and the accompanying materials are made available under the
  * terms of the Common Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/cpl-v10.html
- * 
+ *
  * Contributors: IBM Corporation - initial API and implementation
  ******************************************************************************/
 package net.refractions.udig.ui;
@@ -30,27 +30,27 @@ import org.eclipse.swt.widgets.Display;
  * in memory while their descriptors are defined. When the image descriptors
  * become weakly referred to, the corresponding images in the array of images
  * will be disposed.
- * 
+ *
  * Weak references of equivalent image descriptors are mapped to the same array
  * of images (where equivalent descriptors are <code>equals(Object)</code>).
- * 
+ *
  * It is recommended to use this class as a singleton, since it creates a thread
  * for cleaning out images.
- * 
+ *
  * It is the responsibility of the user to ensure that the image descriptors are
  * kept around as long as the images are needed. The users of this cache should
  * not explicitly dispose the images.
- * 
+ *
  * Upon request of a disabled or gray image, the normal image will be created as
  * well (if it was not already in the cache) in order to create the disabled or
  * gray version of the image.
- * 
+ *
  * This cache makes no guarantees on how long the cleaning process will take, or
  * when exactly it will occur.
- * 
- * 
+ *
+ *
  * This class may be instantiated; it is not intended to be subclassed.
- * 
+ *
  * @since 3.1
  */
 public final class ImageCache {
@@ -59,7 +59,7 @@ public final class ImageCache {
 	 * An equivalent set of weak references to equivalent descriptors. The
 	 * equivalence of image descriptors is determined through
 	 * <code>equals(Object)</code>.
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	private static final class EquivalenceSet {
@@ -77,7 +77,7 @@ public final class ImageCache {
 
 		/**
 		 * Create an equivalence set and add the weak reference to the list.
-		 * 
+		 *
 		 * @param referenceToAdd
 		 *            The weak reference to add to the list of weak references.
 		 */
@@ -92,7 +92,7 @@ public final class ImageCache {
 		/**
 		 * Add a weak refrence to the equivalence set. This method assumes that
 		 * the reference to add does belong in this set.
-		 * 
+		 *
 		 * @param referenceToAdd
 		 *            The weak reference to add.
 		 * @return true if the weak reference was added to the set, and false if
@@ -117,7 +117,7 @@ public final class ImageCache {
 
 		/**
 		 * Clear the weak references in this equivalence set.
-		 * 
+		 *
 		 */
 		public void clear() {
 			ImageCacheWeakReference currentReference = null;
@@ -133,7 +133,7 @@ public final class ImageCache {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see java.lang.Object#equals(java.lang.Object)
 		 */
 		public boolean equals(Object object) {
@@ -160,7 +160,7 @@ public final class ImageCache {
 		/**
 		 * Get a non-null image descriptor from the list of weak references to
 		 * image descriptors.
-		 * 
+		 *
 		 * @return a non null image descriptor, or null if none could be found.
 		 */
 		public ImageDescriptor getFirstReachableDescriptor() {
@@ -181,7 +181,7 @@ public final class ImageCache {
 
 		/**
 		 * Return the number of items in the list of weak references.
-		 * 
+		 *
 		 * @return the number of items in the list of weak references.
 		 */
 		public int getSize() {
@@ -190,7 +190,7 @@ public final class ImageCache {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see java.lang.Object#hashCode()
 		 */
 		public int hashCode() {
@@ -201,7 +201,7 @@ public final class ImageCache {
 		 * Remove a hashable weak reference from the list. This method makes no
 		 * assumptions as to whether the reference to remove belongs in this
 		 * equivalence set or not.
-		 * 
+		 *
 		 * @param referenceToRemove
 		 *            The weak reference to remove.
 		 * @return true if the reference was removed succesfully.
@@ -216,7 +216,7 @@ public final class ImageCache {
 	 * A wrapper around the weak reference to imae descriptors in order to be
 	 * able to store the referrent's hash code since it will be null when
 	 * enqueued.
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	private static final class ImageCacheWeakReference extends WeakReference {
@@ -228,7 +228,7 @@ public final class ImageCache {
 
 		/**
 		 * Creates a weak reference for an image descriptor.
-		 * 
+		 *
 		 * @param referent
 		 *            The image descriptor. Will not be <code>null</code>.
 		 * @param queue
@@ -241,7 +241,7 @@ public final class ImageCache {
 
 		/**
 		 * The referent's cached hash code value.
-		 * 
+		 *
 		 * @return the referent's cached hash code value.
 		 */
 		public int getCachedHashCode() {
@@ -255,7 +255,7 @@ public final class ImageCache {
 	 * value), as well as the key. This allows to retrieve BOTH the key (the
 	 * equivalence set) and the value (the array of images) from the map
 	 * directly.
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	private static final class ImageMapEntry {
@@ -272,7 +272,7 @@ public final class ImageCache {
 		/**
 		 * Create an entry that consists of the equivalence set (key) as well as
 		 * the array of images.
-		 * 
+		 *
 		 * @param equivalenceSet
 		 *            The equivalence set.
 		 * @param images
@@ -286,7 +286,7 @@ public final class ImageCache {
 		/**
 		 * Return the equivalence set in this entry. Should not be
 		 * <code>null</code>.
-		 * 
+		 *
 		 * @return the entry set.
 		 */
 		public EquivalenceSet getEquivalenceSet() {
@@ -296,7 +296,7 @@ public final class ImageCache {
 		/**
 		 * Return the array of images in this entry. Should not be
 		 * <code>null</code>.
-		 * 
+		 *
 		 * @return the array of images.
 		 */
 		public Image[] getImages() {
@@ -312,7 +312,7 @@ public final class ImageCache {
 	 * the map. If the value is an array of images, then the defined images in
 	 * that array are is disposed. To shutdown the thread, call
 	 * <code>stopCleaning()</code>.
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	private static class ReferenceCleanerThread extends Thread {
@@ -344,7 +344,7 @@ public final class ImageCache {
 
 		/**
 		 * Constructs a new instance of <code>ReferenceCleanerThread</code>.
-		 * 
+		 *
 		 * @param referenceQueue
 		 *            The reference queue to check for garbage.
 		 * @param map
@@ -364,7 +364,7 @@ public final class ImageCache {
 		/**
 		 * Remove the reference enqueued by iterating through the set of keys in
 		 * the map.
-		 * 
+		 *
 		 * @param currentReference
 		 *            The current reference.
 		 */
@@ -468,7 +468,7 @@ public final class ImageCache {
 	 * the process of cleaning images, stopping the thread will not prevent
 	 * those images from being disposed. They will be disposed by the image
 	 * cache's dispose method.
-	 * 
+	 *
 	 */
 	private static class StaleImages {
 		/**
@@ -478,7 +478,7 @@ public final class ImageCache {
 
 		/**
 		 * Create the list of stale images.
-		 * 
+		 *
 		 */
 		public StaleImages() {
 			staleImages = Collections.synchronizedList(new ArrayList());
@@ -487,7 +487,7 @@ public final class ImageCache {
 		/**
 		 * Add the array of images to the list of images to dispose. This is
 		 * called only from the cleaner thread.
-		 * 
+		 *
 		 * @param images
 		 *            The array of images.
 		 */
@@ -497,7 +497,7 @@ public final class ImageCache {
 
 		/**
 		 * Dispose images that require disposal.
-		 * 
+		 *
 		 */
 		public void disposeStaleImages() {
 			Image[] imagesToDispose = null;
@@ -583,7 +583,7 @@ public final class ImageCache {
 	 * thread to monitor the reference queue for image clean up. If the passed
 	 * initial load capacity is negative, the image map is created with the
 	 * default <code>HashMap</code> constructor.
-	 * 
+	 *
 	 * @param initialLoadCapacity
 	 *            Initial load capacity for the image hash map.
 	 */
@@ -607,7 +607,7 @@ public final class ImageCache {
 	 * initial load capacity is negative or if the load factor is nonpositive,
 	 * the image map is created with the default <code>HashMap</code>
 	 * constructor.
-	 * 
+	 *
 	 * @param initialLoadCapacity
 	 *            Initial load capacity for the image hash map.
 	 * @param loadFactor
@@ -629,7 +629,7 @@ public final class ImageCache {
 
 	/**
 	 * Add a new equivalence set to the imag map.
-	 * 
+	 *
 	 * @param imageDescriptor
 	 *            The image descriptor.
 	 * @param temporaryKey
@@ -723,7 +723,7 @@ public final class ImageCache {
 	 * (regular, gray and disabled) will be cleaned up if they have been
 	 * created. This clean up makes no guarantees about how long or when it will
 	 * take place.
-	 * 
+	 *
 	 * @param descriptor
 	 *            The image descriptor with which a regular image should be
 	 *            created; may be <code>null</code>.
@@ -744,7 +744,7 @@ public final class ImageCache {
 	 * images (regular, gray and disabled) will be cleaned up if they have been
 	 * created. This clean up makes no guarantees about how long or when it will
 	 * take place.
-	 * 
+	 *
 	 * @param descriptor
 	 *            The image descriptor with which the requested image should be
 	 *            created; may be <code>null</code>.
@@ -799,7 +799,7 @@ public final class ImageCache {
 	/**
 	 * Retrieve the image from the cache, or create it if it has not been
 	 * created yet.
-	 * 
+	 *
 	 * @param imageDescriptor
 	 *            The image descriptor.
 	 * @param mapEntry
@@ -849,7 +849,7 @@ public final class ImageCache {
 	/**
 	 * Returns the image to display when no image can be found, or none is
 	 * specified. This image is only disposed when the cache is disposed.
-	 * 
+	 *
 	 * @return The image to display for missing images. This value will never be
 	 *         <code>null</code>.
 	 */

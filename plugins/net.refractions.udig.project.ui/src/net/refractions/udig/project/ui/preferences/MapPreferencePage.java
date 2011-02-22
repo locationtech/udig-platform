@@ -40,41 +40,41 @@ public class MapPreferencePage extends FieldEditorPreferencePage
     public MapPreferencePage() {
         super(GRID);
         setPreferenceStore(ProjectPlugin.getPlugin().getPreferenceStore());
-        setDescription(Messages.MapPreferencePage_map_preferences_description);  
+        setDescription(Messages.MapPreferencePage_map_preferences_description);
     }
 
     @Override
     protected void createFieldEditors() {
         BooleanFieldEditor removeTempLayers = new BooleanFieldEditor(
                 PreferenceConstants.P_REMOVE_LAYERS,
-                Messages.MapPreferencePage_pref_remove_layer_label, 
+                Messages.MapPreferencePage_pref_remove_layer_label,
                 getFieldEditorParent());
         addField(removeTempLayers);
         addField(
                 new BooleanFieldEditor(
                     PreferenceConstants.P_WARN_IRREVERSIBLE_COMMAND,
-                    Messages.MapPreferencePage_warnIrreversible, 
+                    Messages.MapPreferencePage_warnIrreversible,
                     getFieldEditorParent()));
 
         IntegerFieldEditor integerFieldEditor = new IntegerFieldEditor(
                 PreferenceConstants.P_DEFAULT_CRS,
-                Messages.MapPreferences_defaultCRS, 
+                Messages.MapPreferences_defaultCRS,
                 getFieldEditorParent(), 7);
         integerFieldEditor.setValidRange(-1, 9999999);
-        integerFieldEditor.setErrorMessage(Messages.MapPreferences_errorMessage); 
+        integerFieldEditor.setErrorMessage(Messages.MapPreferences_errorMessage);
         addField(integerFieldEditor);
         addField(new ColorFieldEditor(PreferenceConstants.P_BACKGROUND,
-                Messages.MapPreferences_backgroundColor, 
+                Messages.MapPreferences_backgroundColor,
                 getFieldEditorParent()));
         addField(new ColorFieldEditor(PreferenceConstants.P_SELECTION_COLOR,
-                Messages.MapPreferences_selectionColor, 
+                Messages.MapPreferences_selectionColor,
                 getFieldEditorParent()));
         addField(new ColorFieldEditor(PreferenceConstants.P_SELECTION2_COLOR,
-                Messages.MapPreferencePage_selectionColor2, 
+                Messages.MapPreferencePage_selectionColor2,
                 getFieldEditorParent()));
         PaletteSelectionFieldEditor defaultPalette = new PaletteSelectionFieldEditor(
                 PreferenceConstants.P_DEFAULT_PALETTE,
-                Messages.MapPreferences_defaultPalette, 
+                Messages.MapPreferences_defaultPalette,
                 getFieldEditorParent());
         addField(defaultPalette);
     }

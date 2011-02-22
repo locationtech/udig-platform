@@ -9,8 +9,8 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 
 /**
- * 
- * Configures a style object. 
+ *
+ * Configures a style object.
  * <p>
  * Responsibilities:
  * <ul>
@@ -21,17 +21,17 @@ import org.eclipse.ui.PartInitException;
  * </ul>
  * </p>
  * <p>
- * Style objects are stored a StyleBlackboard. Configurators use the blackboard 
- * to collaborate. Objects are stored on the blackboard by id. When a configurator 
- * queries the blackboard for an object and it does not exist, a default object 
+ * Style objects are stored a StyleBlackboard. Configurators use the blackboard
+ * to collaborate. Objects are stored on the blackboard by id. When a configurator
+ * queries the blackboard for an object and it does not exist, a default object
  * should be created and placed on the blackboard. The following is an example:
  * <code>
  *      ...
  *      StyleBlackboard styleBlackboard = getStyleBlackboard();
  *      Point style = styleBlackboard.lookup("point.style");
- *      
+ *
  *      if (style == null) {
- *          style = new Point();    
+ *          style = new Point();
  *          style.setX(0);
  *          style.setY(0);
  *          styleBlackboard.put("point.style", style);
@@ -53,7 +53,7 @@ import org.eclipse.ui.PartInitException;
  *      ...
  *      style.setX(10);
  *      style.setY(10);
- *      
+ *
  *      styleBlackboard.put("point.style", style);
  * </code>
  * </p>
@@ -63,27 +63,27 @@ import org.eclipse.ui.PartInitException;
  * style object should be written to immediately to reflect the change.
  * When the configurator becomes active, the ui widgets should be initialized
  * from the values of style objects on the blackboard. This should be performed
- * every time refresh() is called. 
+ * every time refresh() is called.
  * </p>
  * <p>
- * Whenever style objects are read from the blackboard, 
+ * Whenever style objects are read from the blackboard,
  * </p>
-  
+
  * <p>
  * <code>
  *  void apply() {
  *      StyleBlackboard styleBlackboard = getStyleBlackboard();
  *      Point style = styleBlackboard.lookup("point.style");
- *      
+ *
  *      if (style == null) {
- *          style = new Point();    
+ *          style = new Point();
  *          styleBlackboard.put("point.style", style);
  *      }
- *      
+ *
  *      style.setX(...) //set to some value from ui
  *      style.setY(...) //set to some value from ui
  *  }
- *  
+ *
  *  void init() {
  *      StyleBlackboard styleBlackboard = getStyleBlackboard();
  *      Point style = styleBlackboard.lookup("point.style");
@@ -100,10 +100,10 @@ import org.eclipse.ui.PartInitException;
  * </p>
  * @author Justin Deoliveira
  * @since 0.6.0
- * 
+ *
  */
 public abstract class IStyleConfigurator {
-    
+
     /** extension point id **/
     public static final String XPID = "net.refractions.udig.style.styleConfigurator"; //$NON-NLS-1$
     private String styleId;
@@ -112,16 +112,16 @@ public abstract class IStyleConfigurator {
     private Layer layer;
     private IAction applyAction;
 
-    
+
     /**
-     * Sets the apply action. 
-     * 
+     * Sets the apply action.
+     *
      * @param applyAction1
      */
     public final void setAction(IAction applyAction1) {
         this.applyAction = applyAction1;
     }
-    
+
     /**
      * Runs the apply action.
      */
@@ -140,7 +140,7 @@ public abstract class IStyleConfigurator {
     public void preApply(){
         //
     }
-    
+
     /**
      * Returns the declared style id of the style the configurator depends on.
      * <p>
@@ -170,31 +170,31 @@ public abstract class IStyleConfigurator {
 
     /**
      * Returns the label describing the configurator. Used mainly for ui purposes.
-     * 
+     *
      * @return A short description of the configurator.
      */
     public final String getLabel(){
         return label;
     }
-    
+
     /**
      * Sets the label describing the configurator. Used mainly for ui purposes.
-     * 
+     *
      * @param label A short description of the configurator.
      */
     public void setLabel(String label){
         this.label = label;
     }
-    
+
     /**
-     * Returns the site for this view. 
+     * Returns the site for this view.
      * This method is equivalent to <code>(IViewSite) getSite()</code>.
-     * <p>  
-     * The site can be <code>null</code> while the view is being initialized. 
+     * <p>
+     * The site can be <code>null</code> while the view is being initialized.
      * After the initialization is complete, this value must be non-<code>null</code>
      * for the remainder of the view's life cycle.
      * </p>
-     * 
+     *
      * @return the view site; this value may be <code>null</code> if the view
      *         has not yet been initialized
      */
@@ -203,15 +203,15 @@ public abstract class IStyleConfigurator {
     }
 
     /**
-     * Initializes this view with the given view site. 
+     * Initializes this view with the given view site.
      * <p>
      * This method is automatically shortly after the part is instantiated.
-     * It marks the start of the views's lifecycle.  Clients must not call this 
+     * It marks the start of the views's lifecycle.  Clients must not call this
      * method.
      * </p>
      *
      * @param viewSite the view site
-     * @throws PartInitException 
+     * @throws PartInitException
      */
     public void init(IViewSite viewSite) throws PartInitException{
         this.site = viewSite;
@@ -222,16 +222,16 @@ public abstract class IStyleConfigurator {
      * <p>
      * You must call super.init();
      * </p>
-     * @throws PartInitException 
+     * @throws PartInitException
      */
     protected void init() throws PartInitException {
         // subclass can override
     }
-    
+
     /**
      * Determines if the configurator can be used to configure the style
      * for a specified layer.
-     * 
+     *
      * @param aLayer The layer to be styled.
      * @return true if the configurator can work with the layer, otherwise false.
      */
@@ -241,23 +241,23 @@ public abstract class IStyleConfigurator {
      * Gets the current layer to which the current style being configured is
      * to be applied to.
      * <p>
-     * The layer can be <code>null</code> while the view is being initialized or created. 
+     * The layer can be <code>null</code> while the view is being initialized or created.
      * This value must be non-<code>null</code> when the IStyleConfigurator.getControl()
      * is visiable.
-     * </p> 
+     * </p>
      * @return Layer being edited at the moment
      */
     public final Layer getLayer(){
         return layer;
     }
-     
-    
+
+
     /**
-     * Returns the style blackboard that the configurator is populating with 
+     * Returns the style blackboard that the configurator is populating with
      * style information.
      * <p>
      * <p>
-     * The blackboard can be <code>null</code> while the view is being initialized or created. 
+     * The blackboard can be <code>null</code> while the view is being initialized or created.
      * This value must be non-<code>null</code> when the IStyleConfigurator.getControl()
      * is visiable.
      * </p>
@@ -270,28 +270,29 @@ public abstract class IStyleConfigurator {
         }
     	return layer.getStyleBlackboard();
     }
-    
+
     /**
-     * Sets the layer (and thus changes the style blackboard) being targetted.
-     * <p>
-     * When this method is called  the user interface state should be re-initialised against
+     * Sets the layer and style blackboard that the configurator
+     * can populate with style.
+     * information. Upon this method, ui state should be reinitialized against
      * the new layer and blackboard.
      * <p>
-     * When using this method to change between layers:
+     * When changing layers:
      * <ul>
-     * <li>getLayer() is updated
-     * <li>getBlackboard() is updated (actually calls layer.getStyleBlackboard()
-     * <li>refresh() is called to update the user interface
-     * </p> 
-     * 
-     * @param targetLayer The layer being styled.
+     * <li>setLayer( newLayer ) is called
+     * <li>setBlackboard( newBlackboard )
+     * <li>refresh()
+     * </p>
+     *
+     * @param layer1 The layer being styled.
      */
-    public void focus(Layer targetLayer){
-        this.layer = targetLayer;
-        refresh();        
+    public void focus(Layer layer1){
+        this.layer = layer1;
+        //this.styleBlackboard = styleBlackboard;
+        refresh();
     }
-    
-    /** 
+
+    /**
      * Called when new layer and blackbard values are available.
      * <p>
      * This provides update information as a callback (rather than an
@@ -300,24 +301,24 @@ public abstract class IStyleConfigurator {
      * This should only be called after create part control has had a chance to
      * be called.
      */
-    protected abstract void refresh(); 
-     
+    protected abstract void refresh();
+
     /**
      * Creates the control that is to be used to configure the style.
      * <p>
      * This method uses a template pattern to get the subclass to create
      * the control. This method will not be called until after init and
-     * setViewPart. The parent container (composite) passed in is for the 
+     * setViewPart. The parent container (composite) passed in is for the
      * explicit use of the configurator, this method must set a layout for
-     * the container. 
-     * </p>  
+     * the container.
+     * </p>
      * <p>
      * You can set the layout to the parent to be whatever you want.
      * </p>
-     * @param parent 
+     * @param parent
      */
     public abstract void createControl( Composite parent );
-    
+
     /**
      * Cleans up any resources (like icons) held by this StyleConfigurator.
      * <p>

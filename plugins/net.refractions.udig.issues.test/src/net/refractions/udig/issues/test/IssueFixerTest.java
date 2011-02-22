@@ -14,7 +14,7 @@ public class IssueFixerTest extends AbstractProjectUITestCase {
     FixableIssue issue1;
     IIssue issue2;
     IMemento fixerMemento;
-    
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -23,7 +23,7 @@ public class IssueFixerTest extends AbstractProjectUITestCase {
         issue2 = new DummyIssue(0);
         fixerMemento = XMLMemento.createWriteRoot("fixerMemento"); //$NON-NLS-1$
     }
-    
+
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
@@ -40,16 +40,16 @@ public class IssueFixerTest extends AbstractProjectUITestCase {
         assertFalse(fixer.canFix(issue2, fixerMemento));
         assertTrue(fixer.canFix(issue1, fixerMemento));
     }
-    
+
     public void testFix() {
         fixerMemento.putString(DummyIssueFixer.KEY_FIXABLE, "TRUE"); //$NON-NLS-1$
         assertEquals(Resolution.UNRESOLVED, issue1.getResolution());
-        fixer.fix(issue1, fixerMemento);       
+        fixer.fix(issue1, fixerMemento);
         assertEquals(Resolution.IN_PROGRESS, issue1.getResolution());
         fixer.complete(issue1);
         assertEquals(Resolution.RESOLVED, issue1.getResolution());
     }
-    
+
     public void testExtension() {
         fixerMemento.putString(DummyIssueFixer.KEY_FIXABLE, "TRUE"); //$NON-NLS-1$
         issue1.setFixerMemento(fixerMemento);

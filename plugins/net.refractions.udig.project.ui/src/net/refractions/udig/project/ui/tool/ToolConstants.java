@@ -1,10 +1,12 @@
 package net.refractions.udig.project.ui.tool;
 
+import org.eclipse.jface.action.SubCoolBarManager;
+import org.eclipse.ui.IActionBars;
 
 /**
  * Constants that are often used when defining tool extensions or creating tool extensions. Some of
  * the constants are the well known tool category ids.
- * 
+ *
  * @author jones
  */
 public interface ToolConstants {
@@ -14,17 +16,17 @@ public interface ToolConstants {
     public static final String SELECTION_CA = "net.refractions.udig.tool.category.selection"; //$NON-NLS-1$
     public static final String INFO_CA = "net.refractions.udig.tool.category.info"; //$NON-NLS-1$
     public static final String EDIT_CA = "net.refractions.udig.tool.category.edit"; //$NON-NLS-1$
-    
-    
+
+
     /**
      * Key for default tool cursor ID.
-     * 
+     *
      * @see net.refractions.udig.project.ui.tool.Tool#getProperty()
      * @see net.refractions.udig.project.ui.tool.Tool#setProperty()
      */
     public static final String DEFAULT_CURSOR_ID_KEY = "defaultCursorId";  //$NON-NLS-1$
-    
-    
+
+
     /**
      * The ID of the action tools toolbar contribution item.
      * <p>
@@ -34,7 +36,7 @@ public interface ToolConstants {
      * @see IToolManager.contributeToCoolBar( SubCoolBarManager cbmanager, IActionBars bars )
      */
     public static final String ACTION_TOOLBAR_ID = "net.refractions.udig.tool.actionToolBar"; //$NON-NLS-1$
-    
+
     /**
      * The ID of the modal tools toolbar contribution item.
      */

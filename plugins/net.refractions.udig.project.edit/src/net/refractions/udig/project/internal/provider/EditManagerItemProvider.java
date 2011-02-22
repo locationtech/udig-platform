@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: EditManagerItemProvider.java 24145 2007-02-01 18:03:34Z jeichar $
  */
 package net.refractions.udig.project.internal.provider;
 
@@ -23,12 +23,12 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 /**
  * This is the item provider adapter for a {@link net.refractions.udig.project.internal.EditManager}
  * object. <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class EditManagerItemProvider extends ItemProviderAdapter
@@ -40,7 +40,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
             IItemPropertySource {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
@@ -48,7 +48,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
     /**
      * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public EditManagerItemProvider( AdapterFactory adapterFactory ) {
@@ -58,7 +58,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
     /**
      * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public List getPropertyDescriptors( Object object ) {
@@ -74,9 +74,9 @@ public class EditManagerItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * This adds a property descriptor for the Edit SimpleFeature feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Edit Feature feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addEditFeaturePropertyDescriptor( Object object ) {
@@ -94,7 +94,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Edit Layer Internal feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addEditLayerInternalPropertyDescriptor( Object object ) {
@@ -112,7 +112,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Transaction Type feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addTransactionTypePropertyDescriptor( Object object ) {
@@ -130,7 +130,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Edit Layer Locked feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addEditLayerLockedPropertyDescriptor( Object object ) {
@@ -147,7 +147,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
 
     /**
      * This returns EditManager.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Object getImage( Object object ) {
@@ -157,21 +157,21 @@ public class EditManagerItemProvider extends ItemProviderAdapter
     /**
      * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated NOT
      */
     public String getText( Object object ) {
-        SimpleFeature labelValue = ((EditManager) object).getEditFeature();
+        Feature labelValue = ((EditManager) object).getEditFeature();
         String label = labelValue == null ? null : labelValue.toString();
-        return label == null || label.length() == 0 ? "Edit Manager" : 
-                label; 
+        return label == null || label.length() == 0 ? "Edit Manager" :
+                label;
     }
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
      * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void notifyChanged( Notification notification ) {
@@ -191,7 +191,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
     /**
      * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public ResourceLocator getResourceLocator() {

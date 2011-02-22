@@ -23,11 +23,11 @@ import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 /**
  * Sets the current geometry in the handler to be the passed in geometry
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -37,9 +37,9 @@ public class SetCurrentGeomCommand extends AbstractCommand implements UndoableMa
     PrimitiveShape oldShape;
     PrimitiveShape newShape;
     private IBlockingProvider<PrimitiveShape> provider;
-    private SimpleFeature oldEditFeature;
+    private Feature oldEditFeature;
     private Layer oldEditLayer;
-    
+
     /**
      * @param handler2
      * @param newShape2
@@ -64,7 +64,7 @@ public class SetCurrentGeomCommand extends AbstractCommand implements UndoableMa
         if( oldEditFeature!=null ){
             getMap().getEditManagerInternal().setEditFeature(null, null);
         }
-        
+
         if( oldShape==null )
             oldShape=handler.getCurrentShape();
         if(newShape==null && provider!=null)

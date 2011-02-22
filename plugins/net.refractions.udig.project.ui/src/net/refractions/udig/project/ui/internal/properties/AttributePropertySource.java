@@ -22,26 +22,26 @@ import net.refractions.udig.project.ui.internal.Messages;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource2;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
-import org.opengis.feature.type.AttributeDescriptor;
+import org.geotools.feature.AttributeType;
 
 /**
  * Allows complex attributes to be a property source. Only nested attributes are property
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
 public class AttributePropertySource implements IPropertySource2 {
     private Object attr;
     IPropertyDescriptor[] descriptors;
-    private static final String OTHER = Messages.AttributePropertySource_other; 
+    private static final String OTHER = Messages.AttributePropertySource_other;
 
     /**
      * Creates a new instance of AttributePropertySource
-     * 
+     *
      * @param type
      * @param attr
      */
-    public AttributePropertySource( AttributeDescriptor type, Object attr ) {
+    public AttributePropertySource( AttributeType type, Object attr ) {
         this.attr = attr;
     }
     /**
@@ -61,7 +61,7 @@ public class AttributePropertySource implements IPropertySource2 {
      */
     public IPropertyDescriptor[] getPropertyDescriptors() {
         if (descriptors == null) {
-            descriptors = new IPropertyDescriptor[]{new PropertyDescriptor(OTHER, 
+            descriptors = new IPropertyDescriptor[]{new PropertyDescriptor(OTHER,
             		Messages.AttributePropertySource_value)};
         }
 

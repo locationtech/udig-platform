@@ -26,10 +26,12 @@ import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
 import net.refractions.udig.tools.edit.EnablementBehaviour;
 import net.refractions.udig.tools.edit.activator.AdvancedBehaviourCommandHandlerActivator;
 import net.refractions.udig.tools.edit.activator.DeleteGlobalActionSetterActivator;
+import net.refractions.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
 import net.refractions.udig.tools.edit.activator.DrawGeomsActivator;
+import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
 import net.refractions.udig.tools.edit.activator.GridActivator;
+import net.refractions.udig.tools.edit.activator.SetRenderingFilter;
 import net.refractions.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
 import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
 import net.refractions.udig.tools.edit.behaviour.AddVertexWhileCreatingBehaviour;
 import net.refractions.udig.tools.edit.behaviour.CursorControlBehaviour;
@@ -51,7 +53,7 @@ import net.refractions.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviou
 import net.refractions.udig.tools.edit.support.ShapeType;
 
 import org.eclipse.swt.SWT;
-import org.opengis.filter.spatial.Intersects;
+import org.geotools.filter.FilterType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
@@ -67,13 +69,13 @@ public class LineTool extends AbstractEditTool {
 
     @Override
     protected void initActivators( Set<Activator> activators ) {
-        
-        DrawType type = DrawGeomsActivator.DrawType.LINE;
-        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultCreateActivators(type);
-        activators.addAll(defaults);
+        activators.add(new EditStateListenerActivator());
         activators.add(new DeleteGlobalActionSetterActivator());
+        activators.add(new DrawGeomsActivator(DrawGeomsActivator.DrawType.LINE));
+        activators.add(new DrawCurrentGeomVerticesActivator());
         activators.add(new SetSnapBehaviourCommandHandlerActivator());
         activators.add(new AdvancedBehaviourCommandHandlerActivator());
+        activators.add(new SetRenderingFilter());
         activators.add(new GridActivator());
     }
 
@@ -97,7 +99,7 @@ public class LineTool extends AbstractEditTool {
 
         helper.startAdvancedFeatures();
         helper.add( new CursorControlBehaviour(handler, new ConditionalProvider(handler, Messages.LineTool_select_or_create_feature, Messages.LineTool_add_vertex_or_finish),
-                new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_SIZEALL),new ConditionalProvider(handler, Messages.LineTool_move_vertex,null), 
+                new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_SIZEALL),new ConditionalProvider(handler, Messages.LineTool_move_vertex,null),
                 new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_CROSS), new ConditionalProvider(handler, Messages.LineTool_add_vertex, null)));
         helper.stopAdvancedFeatures();
 
@@ -110,9 +112,9 @@ public class LineTool extends AbstractEditTool {
         helper.add(new SelectVertexOnMouseDownBehaviour());
         helper.add( new SelectVertexBehaviour());
         helper.stopAdvancedFeatures();
-        
+
         helper.startAdvancedFeatures();
-        SelectFeatureBehaviour selectGeometryBehaviour = new SelectFeatureBehaviour(new Class[]{LineString.class, LinearRing.class, MultiLineString.class}, Intersects.class);
+        SelectFeatureBehaviour selectGeometryBehaviour = new SelectFeatureBehaviour(new Class[]{LineString.class, LinearRing.class, MultiLineString.class}, FilterType.GEOMETRY_INTERSECTS);
         selectGeometryBehaviour.initDefaultStrategies(ShapeType.LINE);
         helper.add(selectGeometryBehaviour);
         helper.add(new InsertVertexOnEdgeBehaviour());
@@ -120,7 +122,7 @@ public class LineTool extends AbstractEditTool {
         helper.startElseFeatures();
         helper.add(new StartEditingBehaviour(ShapeType.LINE));
         helper.stopElseFeatures();
-        
+
         helper.stopAdvancedFeatures();
         helper.stopMutualExclusiveList();
 
@@ -129,7 +131,7 @@ public class LineTool extends AbstractEditTool {
         helper.add( new MoveVertexBehaviour() );
         helper.add( new MoveGeometryBehaviour());
         helper.stopMutualExclusiveList();
-        
+
 
         helper.add( new SelectVerticesWithBoxBehaviour() );
         helper.stopAdvancedFeatures();

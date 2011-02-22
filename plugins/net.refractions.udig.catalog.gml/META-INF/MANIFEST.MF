@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Gml Plug-in
+Bundle-SymbolicName: net.refractions.udig.catalog.gml; singleton:=true
+Bundle-Version: 1.1.2
+Bundle-Activator: net.refractions.udig.catalog.internal.gml.GmlPlugin
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ net.refractions.udig.catalog,
+ net.refractions.udig.libs,
+ net.refractions.udig.catalog.ui
+Eclipse-LazyStart: true

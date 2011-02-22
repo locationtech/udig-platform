@@ -17,18 +17,20 @@ import net.refractions.udig.catalog.IGeoResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.data.Query;
+import org.geotools.feature.FeatureType;
+import org.geotools.filter.Filter;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * Layer interface (part of a map).
- * 
+ * TODO Purpose of net.refractions.udig.project
+ * <p>
+ * </p>
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -38,7 +40,7 @@ public interface ILayer extends Comparable<ILayer> {
      * Indicates the crs that will be used if the layer does not declare a crs. This crs is wgs84
      * crs with the name: Messages.LayerImpl_unknown (unkown in english)
      */
-    public static final CoordinateReferenceSystem UNKNOWN_CRS = DefaultEngineeringCRS.GENERIC_2D; 
+    public static final CoordinateReferenceSystem UNKNOWN_CRS = DefaultEngineeringCRS.GENERIC_2D;
 
 
     /** <code>UNCONFIGURED</code> associated GeoResource is unconfigured, or is unavailable */
@@ -80,16 +82,14 @@ public interface ILayer extends Comparable<ILayer> {
     /**
      * Resource the user associates with this layer. This is not the same as getGeoResource(Class
      * clazz).
-     * <p>
-     * This is usually the first GeoResource among "friends"
-     * 
+     *
      * @return Resource the user associates with this layer.
      */
     public IGeoResource getGeoResource();
 
     /**
      * Returns the first found geoResource that can resolve to clazz.
-     * 
+     *
      * @param clazz the clazz that the returned georesource can resolve to.
      * @return the first found geoResource that can resolve to clazz.
      * @deprecated
@@ -100,7 +100,7 @@ public interface ILayer extends Comparable<ILayer> {
      * Locate the first IGeoResource that canResolve the provided resource type.
      * <p>
      * Example implementation:
-     * 
+     *
      * <pre><code>
      * for( IGeoResource resource : getGeoResources() ) {
      *     if (resource.canResolve(FeatureSource.class)) {
@@ -109,21 +109,21 @@ public interface ILayer extends Comparable<ILayer> {
      * }
      * return null;
      * </code></pre>
-     * 
+     *
      * </p>
-     * 
+     *
      * @param clazz class of the resource that the IGeoResource claims it can adapt to.
      * @return true if a IGeoResource exists that canResolve to resourceType.
      */
     <T> IGeoResource findGeoResource( Class<T> clazz);
-    
+
     /**
      * StyleBlackboard used for collaboration with the rendering process.
      * <p>
      * This Blackboard is persisted, any modications made to the blackboard will result refresh of
      * the effected layers.
      * <p>
-     * 
+     *
      * @return Blackboard used for renderer collaboration.
      */
     public IStyleBlackboard getStyleBlackboard();
@@ -132,17 +132,17 @@ public interface ILayer extends Comparable<ILayer> {
      * Check if a IGeoResource exists that canResolve to the provided resource type.
      * <p>
      * Example:
-     * 
+     *
      * <pre><code>
      * if (layer.hasResource(FeatureSource.class)) {
-     *     return layer.getResource(FeatureSource.class, monitor);
+     *     return handle.getResource(FeatureSource.class, monitor);
      * }
      * </code></pre>
-     * 
+     *
      * </p>
      * The blocking {@linkplain #getResource(Class, IProgressMonitor)} method allow the object to be
      * obtained.
-     * 
+     *
      * @param resourceType  the type of resource calleer is interested in.
      * @return true if a IGeoResource exists that canResolve to resourceType.
      */
@@ -162,7 +162,7 @@ public interface ILayer extends Comparable<ILayer> {
      * </p>
      * <p>
      * Example implementation:
-     * 
+     *
      * <pre><code>
      * for( IGeoResource resource : getGeoResources() ) {
      *     if (resource.canResolve(FeatureSource.class)) {
@@ -171,15 +171,15 @@ public interface ILayer extends Comparable<ILayer> {
      * }
      * return null;
      * </code></pre>
-     * 
+     *
      * </p>
-     * 
+     *
      * <p>
-     * <b>IMPORTANT:</b> unlike using {@link IGeoResource#resolve(Class, IProgressMonitor)} {@link #getResource(Class, IProgressMonitor)} 
+     * <b>IMPORTANT:</b> unlike using {@link IGeoResource#resolve(Class, IProgressMonitor)} {@link #getResource(Class, IProgressMonitor)}
      * returns the same <em>instance</em> of the resource.  The {@link IGeoResource#resolve(Class, IProgressMonitor)} method returns a new instance
      * each time and therefore should <b>NOT</b> be used as a replacement for {@link #getResource(Class, IProgressMonitor)}.
      * </p>
-     * 
+     *
      * @param resourceType
      * @return true if a IGeoResource exists that canResolve to resourceType.
      */
@@ -192,21 +192,21 @@ public interface ILayer extends Comparable<ILayer> {
      * filter during user edit opperations.
      * </p>
      * <p>
-     * Note: Filter.EXCLUDE indicates no selected Features. (All features are filtered out)
+     * Note: Filter.ALL indicates no selected Features. (All features are filtered out)
      * </p>
      * <p>
      * A tool may wish to record the previous Filter, before replacing (or adding to) this value.
      * </p>
      * Will never return null.
-     * 
-     * @return Filter indicating the selected features. Filter.EXCLUDE indicates no selected Features.
+     *
+     * @return Filter indicating the selected features. Filter.ALL indicates no selected Features.
      */
     Filter getFilter();
 
     /**
      * Returns the ZOrder of the Layer. The Z-Order dictates the order in which the Layer is rendered
      * Low z-orders are rendered first and higher z-orders are rendered on top.
-     * 
+     *
      * @return the ZOrder of the Layer.
      */
     public int getZorder();
@@ -217,7 +217,7 @@ public interface ILayer extends Comparable<ILayer> {
      * This is used to provide feedback for a Layers rendering status.
      * </p>
      * Future versions will return an enum.
-     * 
+     *
      * @return
      * @uml.property name="status"
      */
@@ -228,7 +228,7 @@ public interface ILayer extends Comparable<ILayer> {
      * <p>
      * This is used to provide feedback for a Layers rendering status.
      * </p>
-     * 
+     *
      * @return message to provide the user with additional feed back about the current rendering
      *         status.
      */
@@ -241,7 +241,7 @@ public interface ILayer extends Comparable<ILayer> {
      * determined quickly from a layer property like "selectable" for the selection toolset. Other
      * toolsets may need to perform a more detailed examination.
      * </p>
-     * 
+     *
      * @see isSelectable
      * @param toolCategoryId
      * @return
@@ -250,28 +250,28 @@ public interface ILayer extends Comparable<ILayer> {
 
     /**
      * Gets the name from the associated metadata.
-     * 
+     *
      * @return the name from the associated metadata
      */
     public String getName();
 
     /**
      * Gets the unique id, unique within a context model
-     * 
+     *
      * @return the id of the layerRef
      */
     public URL getID();
 
     /**
      * Returns whether this layer is currently visible
-     * 
+     *
      * @return whether this layer is currently visible
      */
     public boolean isVisible();
 
     /**
      * Access to resources that hold data for this layer.
-     * 
+     *
      * @return IGeoResources that can used to obtain layer data
      */
     public List<IGeoResource> getGeoResources();
@@ -280,7 +280,7 @@ public interface ILayer extends Comparable<ILayer> {
      * ImageDescriptor for this Layer.
      * <p>
      * Note we need to do the decorator exention on Layer to reflect status.
-     * 
+     *
      * @return Custom glyph - or null if none available.
      */
     public ImageDescriptor getGlyph();
@@ -297,7 +297,7 @@ public interface ILayer extends Comparable<ILayer> {
      * <p>
      * Convenience method
      * </p>
-     * 
+     *
      * @param layer The layer the Query is associated with.
      * @param selection true will return a query for the selected features.
      * @return If selection if false then the features that are not selected are returned, otherwise
@@ -314,34 +314,34 @@ public interface ILayer extends Comparable<ILayer> {
      * </p>
      * <p>
      * This is similar to the following check:
-     * 
+     *
      * <pre><code>
-     *  
+     *
      *   data = getResource();
      *   &lt;b&gt;return&lt;/b&gt; data != null ? data.getSchema() : null;
-     *   
+     *
      * </code></pre>
-     * 
+     *
      * </p>
-     * 
+     *
      * @return Schema information if available, otherwise null.
      */
-    public SimpleFeatureType getSchema();
+    public FeatureType getSchema();
 
     /**
      * Gets the CRS for the layer. NOTE: THIS METHOD MAY BLOCK!!!
-     * 
+     *
      * @param monitor may be null.
      * @return the CoordinateReferenceSystem of the layer or if the CRS cannot be determined. the
      *         current map's CRS will be returned, or if this fails the CRS will be WGS84.
-     * 
-     *  @deprecated use getCRS()
+     *
+     *  @deprecated
      */
     CoordinateReferenceSystem getCRS( IProgressMonitor monitor );
 
     /**
      * Gets the CRS for the layer. NOTE: THIS METHOD MAY BLOCK!!!
-     * 
+     *
      * @return the CoordinateReferenceSystem of the layer or if the CRS cannot be determined. the
      *         current map's CRS will be returned, or if this fails the CRS will be WGS84.
      */
@@ -349,7 +349,7 @@ public interface ILayer extends Comparable<ILayer> {
 
     /**
      * Triggers the layer to rerender if it is currently displayed.
-     * 
+     *
      * @param bounds The area to render or the entire viewport if null.
      */
     void refresh( Envelope bounds );
@@ -360,7 +360,7 @@ public interface ILayer extends Comparable<ILayer> {
      * <p>
      * getMap().getViewportModel() will return the ViewportModel.
      * </p>
-     * 
+     *
      * @see net.refractions.udig.project.render.IViewportModel
      */
     MathTransform layerToMapTransform() throws IOException;
@@ -371,7 +371,7 @@ public interface ILayer extends Comparable<ILayer> {
      * <p>
      * getMap().getViewportModel() will return the ViewportModel.
      * </p>
-     * 
+     *
      * @see net.refractions.udig.project.render.IViewportModel
      */
     MathTransform mapToLayerTransform() throws IOException;
@@ -389,7 +389,7 @@ public interface ILayer extends Comparable<ILayer> {
      * Note: Please don't use this to work around limitations of our object model, instead send
      * email and we can set up a long term solution.
      * </p>
-     * 
+     *
      * @return Blackboard used for lightweight collaboration.
      * @deprecated
      */
@@ -408,9 +408,9 @@ public interface ILayer extends Comparable<ILayer> {
      * Note: Please don't use this to work around limitations of our object model, instead send
      * email and we can set up a long term solution.
      * </p>
-     * 
+     *
      * @return Blackboard used for lightweight collaboration.
-     * 
+     *
      */
     IBlackboard getBlackboard();
 
@@ -419,7 +419,7 @@ public interface ILayer extends Comparable<ILayer> {
      * crs provided. If the crs parameter is null then the native envelope will be returned. If the
      * native projection is not known or if a transformation is not possible then the native
      * envelope will be returned.. This method may be blocking.
-     * 
+     *
      * @param monitor
      * @param crs the desired CRS for the returned envelope.
      * @return the envelope of the layer. If the native crs is not known or if a transformation is
@@ -432,7 +432,7 @@ public interface ILayer extends Comparable<ILayer> {
      * <p>
      * getMap().getViewportModel() will return the ViewportModel.
      * </p>
-     * 
+     *
      * @see net.refractions.udig.project.render.IViewportModel
      * @param boundingBox in the same crs as the viewport model.
      * @return a Geometry filter in the correct CRS or null if an exception occurs.
@@ -441,14 +441,14 @@ public interface ILayer extends Comparable<ILayer> {
 
     /**
      * The Map that "owns" or "contains" the current layer.
-     * 
+     *
      * @return the containing map.
      */
     public IMap getMap();
 
     /**
      * Sets the current status of the Layer.
-     * 
+     *
      * @param status the status. Will be an enum in the future but current EMF implementation
      *        prevents this.
      * @uml.property name="status"
@@ -457,7 +457,7 @@ public interface ILayer extends Comparable<ILayer> {
 
     /**
      * Sets the current status message
-     * 
+     *
      * @param message the status message
      */
     public void setStatusMessage( String string );

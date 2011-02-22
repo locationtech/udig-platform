@@ -2,6 +2,7 @@ package net.refractions.udig.project.ui.internal.tool.display;
 
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IContributionManager;
+import org.eclipse.jface.internal.provisional.action.IToolBarContributionItem;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.CoolBar;
 import org.eclipse.swt.widgets.Menu;
@@ -40,7 +41,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
     /**
      * Constructs a new instance of <code>PlaceholderContributionItem</code>
      * from the item it is intended to replace.
-     * 
+     *
      * @param item
      *            The item to be replaced; must not be <code>null</code>.
      */
@@ -54,7 +55,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#dispose()
      */
     public void dispose() {
@@ -63,7 +64,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#fill(org.eclipse.swt.widgets.Composite)
      */
     public void fill(Composite parent) {
@@ -72,7 +73,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#fill(org.eclipse.swt.widgets.CoolBar,
      *      int)
      */
@@ -83,7 +84,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#fill(org.eclipse.swt.widgets.Menu,
      *      int)
      */
@@ -94,7 +95,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#fill(org.eclipse.swt.widgets.ToolBar,
      *      int)
      */
@@ -105,7 +106,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /**
      * The height of the replaced contribution item.
-     * 
+     *
      * @return The height.
      */
     int getHeight() {
@@ -114,7 +115,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#getId()
      */
     public String getId() {
@@ -123,16 +124,16 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /**
      * The width of the replaced contribution item.
-     * 
+     *
      * @return The width.
      */
     int getWidth() {
         return storedWidth;
     }
-    
+
     /**
      * Returns the minimum number of tool items to show in the cool item.
-     * 
+     *
      * @return the minimum number of tool items to show, or <code>SHOW_ALL_ITEMS</code>
      *         if a value was not set
      * @see #setMinimumItemsToShow(int)
@@ -141,10 +142,10 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
     int getMinimumItemsToShow() {
         return storedMinimumItems;
     }
-    
+
     /**
      * Returns whether chevron support is enabled.
-     * 
+     *
      * @return <code>true</code> if chevron support is enabled, <code>false</code>
      *         otherwise
      * @since 3.2
@@ -155,7 +156,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#isDirty()
      */
     public boolean isDirty() {
@@ -164,7 +165,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#isDynamic()
      */
     public boolean isDynamic() {
@@ -173,7 +174,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#isEnabled()
      */
     public boolean isEnabled() {
@@ -183,7 +184,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#isGroupMarker()
      */
     public boolean isGroupMarker() {
@@ -192,7 +193,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#isSeparator()
      */
     public boolean isSeparator() {
@@ -201,7 +202,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#isVisible()
      */
     public boolean isVisible() {
@@ -210,7 +211,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#saveWidgetState()
      */
     public void saveWidgetState() {
@@ -220,7 +221,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#setParent(org.eclipse.jface.action.IContributionManager)
      */
     public void setParent(IContributionManager parent) {
@@ -230,7 +231,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#setVisible(boolean)
      */
     public void setVisible(boolean visible) {
@@ -247,7 +248,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#update()
      */
     public void update() {
@@ -257,7 +258,7 @@ public class PlaceholderToolbarContributionItem implements IContributionItem {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.action.IContributionItem#update(java.lang.String)
      */
     public void update(String identifier) {

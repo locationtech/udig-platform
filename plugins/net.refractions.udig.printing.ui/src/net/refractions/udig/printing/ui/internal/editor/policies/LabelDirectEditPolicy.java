@@ -27,19 +27,19 @@ import org.eclipse.gef.requests.DirectEditRequest;
 
 /**
  * Allows the text of a label to be edited.
- * 
+ *
  * @author Richard Gould
  * @since 0.3
  */
 public class LabelDirectEditPolicy extends DirectEditPolicy {
-    
+
     protected Command getDirectEditCommand(DirectEditRequest request) {
         RenameLabelCommand cmd = new RenameLabelCommand();
         cmd.setNode((LabelBoxPrinter) ((Box) getHost().getModel()).getBoxPrinter());
         cmd.setName((String) request.getCellEditor().getValue());
         return cmd;
     }
-    
+
     protected void showCurrentEditValue( DirectEditRequest request ) {
         String value = (String) request.getCellEditor().getValue();
         ((BoxFigure) getHostFigure()).setName(value);

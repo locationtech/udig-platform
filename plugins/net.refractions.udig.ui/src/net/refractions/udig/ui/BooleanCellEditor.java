@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Composite;
 
 /**
  * Cell editor for Boolean choices
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

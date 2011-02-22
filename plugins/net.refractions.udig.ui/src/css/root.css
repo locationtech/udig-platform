@@ -1,6 +1,6 @@
-/* 
+/*
  * Set up general font colours, sizes, etc.  Some of these will override
- * settings from the shared CSS 
+ * settings from the shared CSS
  */
 
 .intro-header H1 {
@@ -43,7 +43,7 @@ body {
 	height : expression(document.body.clientHeight < 450? "450px": "100%" );
 }
 
-/* 
+/*
  * Set up the navigation bar.  It should be centered in the middle
  * of the page
  */
@@ -60,9 +60,9 @@ body {
 }
 */
 
-/* specify a width for Moz so we can center.  
- * **Important** If additional links are added, we will have to increase this width 
- * to accomodate them, otherwise they will wrap to a new line 
+/* specify a width for Moz so we can center.
+ * **Important** If additional links are added, we will have to increase this width
+ * to accomodate them, otherwise they will wrap to a new line
  */
 
 #links-background > #page-links {
@@ -295,9 +295,9 @@ a#news .background-image {
 	border-right : 0px;
 }
 
-/* Styles for debugging 
+/* Styles for debugging
 div#links-background a {
   border: #000000 solid;}
-	
+
 #page-links a img {
 	border: #000000 dotted;} */

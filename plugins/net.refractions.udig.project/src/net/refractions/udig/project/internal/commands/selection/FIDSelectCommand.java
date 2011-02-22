@@ -8,7 +8,6 @@
  */
 package net.refractions.udig.project.internal.commands.selection;
 
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
@@ -16,17 +15,15 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
+import org.geotools.feature.Feature;
+import org.geotools.filter.Filter;
+import org.geotools.filter.FilterFactoryFinder;
 
 /**
  * TODO Purpose of net.refractions.udig.project.internal.commands.selection
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -38,7 +35,7 @@ public class FIDSelectCommand extends AbstractCommand implements UndoableMapComm
 
     /**
      * Set the select of a layer to be a single feature as specified by the FID
-     * 
+     *
      * @param layer
      * @param featureID
      */
@@ -49,11 +46,11 @@ public class FIDSelectCommand extends AbstractCommand implements UndoableMapComm
 
     /**
      * Set the select of a layer to be a single feature as specified by the feature
-     * 
+     *
      * @param layer
      * @param featureID
      */
-    public FIDSelectCommand( ILayer layer, SimpleFeature feature ) {
+    public FIDSelectCommand( ILayer layer, Feature feature ) {
         this.layer = (Layer) layer;
         this.id = feature.getID();
     }
@@ -71,8 +68,7 @@ public class FIDSelectCommand extends AbstractCommand implements UndoableMapComm
      */
     public void run( IProgressMonitor monitor ) {
         oldFilter = layer.getFilter();
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-		Filter filter = filterFactory.id(FeatureUtils.stringToId(filterFactory, id));
+        Filter filter = FilterFactoryFinder.createFilterFactory().createFidFilter(id);
         layer.setFilter(filter);
     }
 
@@ -80,7 +76,7 @@ public class FIDSelectCommand extends AbstractCommand implements UndoableMapComm
      * @see net.refractions.udig.project.command.MapCommand#getName()
      */
     public String getName() {
-        return Messages.FIDSelectCommand_featureSelection; 
+        return Messages.FIDSelectCommand_featureSelection;
     }
 
 }

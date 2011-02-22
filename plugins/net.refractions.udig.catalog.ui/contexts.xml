@@ -6,17 +6,17 @@
     on content to add it to the current map.</description>
     <topic label="Data Discovery" href="tasks/datadiscovery.html"/>
     <topic label="Catalog View" href="UDIGGuide/catalog.htm"/>
-    <topic label="Catalog" href="concepts/catalog.htm"/>	
+    <topic label="Catalog" href="concepts/catalog.htm"/>
   </context>
   <context id="import_service_action_context">
     <description>This command import a service into the catalog.</description>
     <topic label="Data Discovery" href="tasks/datadiscovery.html"/>
-    <topic label="Local Repository View" href="reference/catalog.htm"/>    
+    <topic label="Local Repository View" href="reference/catalog.htm"/>
   </context>
   <context id="remove_service_action_context">
     <description>This command removes a service from the catalog, be careful it may be in use.</description>
     <topic label="Catalog View" href="reference/catalog.htm"/>
-    <topic label="Local Repository" href="concepts/localregistry.htm"/>	
+    <topic label="Local Repository" href="concepts/localregistry.htm"/>
     <topic label="Local Repository" href="concepts/datasource.htm"/>
   </context>
 </contexts>

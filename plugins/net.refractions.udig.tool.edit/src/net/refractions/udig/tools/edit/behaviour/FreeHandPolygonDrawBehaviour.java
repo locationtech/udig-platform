@@ -52,7 +52,7 @@ import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.feature.FeatureType;
 
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -76,7 +76,7 @@ import com.vividsolutions.jts.geom.Polygon;
  * <li>handler is locked until mouse is released</li>
  * </ul>
  * </p>
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -101,11 +101,11 @@ public class FreeHandPolygonDrawBehaviour implements LockingBehaviour {
         if (creator == null || generalPath==null || drawEndPoints==null || drawShapeCommand==null )
             command = init(handler, e, eventType);
         generalPath.lineTo(e.x, e.y);
-        
+
         updateShapes(handler, e);
-        
+
         SetEditStateCommand setEditStateCommand = new SetEditStateCommand(handler, EditState.CREATING);
-        
+
         return executeCommand(handler, command, setEditStateCommand);
     }
 
@@ -134,9 +134,9 @@ public class FreeHandPolygonDrawBehaviour implements LockingBehaviour {
         if( isOverEndPoint(e, PreferenceUtil.instance().getVertexRadius(), dragStarted)){
             drawEndPoints.setFill(PreferenceUtil.instance().getDrawVertexFillColor());
         }else{
-            drawEndPoints.setFill(null);            
+            drawEndPoints.setFill(null);
         }
-        
+
         if (type == ShapeType.POLYGON)
             drawShapeCommand.line(e.x, e.y, dragStarted.getX(), dragStarted.getY());
 
@@ -160,16 +160,16 @@ public class FreeHandPolygonDrawBehaviour implements LockingBehaviour {
 
         if( nearestPoint==null )
             nearestPoint=dragStarted;
-        
+
         initShapePath(nearestPoint);
 
-        SimpleFeatureType schema = selectedLayer.getSchema();
+        FeatureType schema = selectedLayer.getSchema();
         determineShapeType(schema);
-        
+
         if( type==ShapeType.POLYGON && EditPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_FILL_POLYGONS) ){
             drawShapeCommand.setFill(PreferenceUtil.instance().getDrawGeomsFill());
         }
-        
+
         EditBlackboard blackboard = editBlackboard;
         PrimitiveShape currentShape = handler.getCurrentShape();
         if (currentShape == null) {
@@ -178,7 +178,7 @@ public class FreeHandPolygonDrawBehaviour implements LockingBehaviour {
         }
 
         currentShape=currentShape.getEditGeom().getShell();
-        
+
         //if current shape is a line and point matches up with one of the end points then
         // continue line.
         if( currentShape.getEditGeom().getShapeType()==ShapeType.LINE ){
@@ -187,24 +187,24 @@ public class FreeHandPolygonDrawBehaviour implements LockingBehaviour {
                 EditUtils.instance.reverseOrder(currentShape);
                 return null;
             }
-            
+
             if( currentShape.getNumPoints()>1 && !nearestPoint.equals(currentShape.getPoint(currentShape.getNumPoints()-1)) ){
                 // not over one of the end points
                 return createNewGeom(handler);
             }
             return null;
         }
-        
-        
+
+
         if (currentShape.getEditGeom().getShapeType()==ShapeType.POINT) {
-            // it's a point create a new point. 
+            // it's a point create a new point.
             return createNewGeom(handler);
         }else{
             if (currentShape.contains(nearestPoint, true)) {
                 if (handler.getCurrentGeom().getShell() == currentShape) {
                     for( PrimitiveShape hole : handler.getCurrentGeom().getHoles() ) {
                         if (hole.contains(nearestPoint, true)) {
-                            return createNewGeom(handler);    
+                            return createNewGeom(handler);
                         }
                     }
                     type=ShapeType.POLYGON;
@@ -232,8 +232,8 @@ public class FreeHandPolygonDrawBehaviour implements LockingBehaviour {
 
         }
 
-        commands.add(new SetCurrentGeomCommand(handler, new PrimitiveProvider())); 
-        
+        commands.add(new SetCurrentGeomCommand(handler, new PrimitiveProvider()));
+
         if( handler.getContext().getEditManager().getEditFeature()!=null ){
             commands.add(handler.getContext().getEditFactory().createNullEditFeatureCommand());
         }
@@ -241,13 +241,13 @@ public class FreeHandPolygonDrawBehaviour implements LockingBehaviour {
         return undoableComposite;
     }
 
-    private void determineShapeType( SimpleFeatureType schema ) {
-        if (Polygon.class.isAssignableFrom(schema.getGeometryDescriptor().getType().getBinding())
-                || MultiPolygon.class.isAssignableFrom(schema.getGeometryDescriptor().getType().getBinding()))
+    private void determineShapeType( FeatureType schema ) {
+        if (Polygon.class.isAssignableFrom(schema.getDefaultGeometry().getType())
+                || MultiPolygon.class.isAssignableFrom(schema.getDefaultGeometry().getType()))
             type = ShapeType.POLYGON;
-        else if (LineString.class.isAssignableFrom(schema.getGeometryDescriptor().getType().getBinding())
-                || LinearRing.class.isAssignableFrom(schema.getGeometryDescriptor().getType().getBinding())
-                || MultiLineString.class.isAssignableFrom(schema.getGeometryDescriptor().getType().getBinding()))
+        else if (LineString.class.isAssignableFrom(schema.getDefaultGeometry().getType())
+                || LinearRing.class.isAssignableFrom(schema.getDefaultGeometry().getType())
+                || MultiLineString.class.isAssignableFrom(schema.getDefaultGeometry().getType()))
             type = ShapeType.LINE;
         else {
             type = ShapeType.UNKNOWN;
@@ -286,7 +286,7 @@ public class FreeHandPolygonDrawBehaviour implements LockingBehaviour {
             }
             drawEndPoints.setPath(path);
             handler.getContext().sendASyncCommand(drawEndPoints);
-            
+
         }
     }
 
@@ -299,12 +299,12 @@ public class FreeHandPolygonDrawBehaviour implements LockingBehaviour {
 
     /**
      * Runs the accept behaviours, creates a new EditGeom and sets it to be the Current Geom
-     * 
+     *
      * @param handler
      */
     private UndoableMapCommand createNewGeom( EditToolHandler handler ) {
         List<UndoableMapCommand> commands=new ArrayList<UndoableMapCommand>();
-        
+
         EditBlackboard editBlackboard = handler.getCurrentShape().getEditBlackboard();
         final CreateEditGeomCommand createEditGeomCommand = new CreateEditGeomCommand(
                 editBlackboard, "freeHandDraw"+System.currentTimeMillis(), ShapeType.LINE); //$NON-NLS-1$
@@ -316,11 +316,11 @@ public class FreeHandPolygonDrawBehaviour implements LockingBehaviour {
 
         }
 
-        commands.add(new SetCurrentGeomCommand(handler, new PrimitiveProvider())); 
-       
+        commands.add(new SetCurrentGeomCommand(handler, new PrimitiveProvider()));
+
         return new UndoableComposite(commands);
     }
-    
+
     public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
         EditPlugin.log("", error); //$NON-NLS-1$
     }
@@ -372,17 +372,17 @@ public class FreeHandPolygonDrawBehaviour implements LockingBehaviour {
                 } else {
                     shape.getEditGeom().setShapeType(type);
                 }
-                
+
                 if( shape.getEditGeom().getShapeType()==ShapeType.POLYGON  )
                     generalPath.close();
-                
+
                 UndoableComposite appendPathToShape;
                     appendPathToShape = EditUtils.instance.appendPathToShape(handler, generalPath.getPathIterator(),
                         shape);
                 // Now we need to collapse the last two vertices if they are
-                // within snapping distance.  
+                // within snapping distance.
                 if ( shape.getEditGeom().getShapeType()==ShapeType.POLYGON ){
-                    
+
                     List< ? extends MapCommand> commands = appendPathToShape.getCommands();
                     AddVertexCommand lastVertexCommand=(AddVertexCommand) commands.get(commands.size()-1);
                     AddVertexCommand previousVertexCommand=(AddVertexCommand) commands.get(commands.size()-2);
@@ -397,10 +397,10 @@ public class FreeHandPolygonDrawBehaviour implements LockingBehaviour {
                 else{
                     appendPathToShape.getFinalizerCommands().add(new SetEditStateCommand( handler, EditState.CREATING));
                 }
-                
+
                 appendPathToShape.setMap(handler.getContext().getMap());
                 appendPathToShape.run(new NullProgressMonitor());
-                
+
                 return new UndoRedoCommand(appendPathToShape);
             } catch (Exception exception) {
                 throw (RuntimeException) new RuntimeException( exception );

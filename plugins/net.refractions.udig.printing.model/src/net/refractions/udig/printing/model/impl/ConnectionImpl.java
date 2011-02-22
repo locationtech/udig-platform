@@ -35,256 +35,270 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class ConnectionImpl extends ElementImpl implements Connection {
 	/**
-     * The default value of the '{@link #isConnected() <em>Connected</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #isConnected() <em>Connected</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isConnected()
-     * @generated
-     * @ordered
-     */
+	 * @see #isConnected()
+	 * @generated
+	 * @ordered
+	 */
     protected static final boolean CONNECTED_EDEFAULT = false;
 
 	/**
-     * The cached value of the '{@link #isConnected() <em>Connected</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #isConnected() <em>Connected</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isConnected()
-     * @generated
-     * @ordered
-     */
+	 * @see #isConnected()
+	 * @generated
+	 * @ordered
+	 */
     protected boolean connected = CONNECTED_EDEFAULT;
 
 	/**
-     * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getSource()
-     * @generated
-     * @ordered
-     */
-    protected Box source;
+	 * @see #getSource()
+	 * @generated
+	 * @ordered
+	 */
+    protected Box source = null;
 
 	/**
-     * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTarget()
-     * @generated
-     * @ordered
-     */
-    protected Box target;
+	 * @see #getTarget()
+	 * @generated
+	 * @ordered
+	 */
+    protected Box target = null;
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ConnectionImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
+	 * @generated
+	 */
     protected EClass eStaticClass() {
-        return ModelPackage.Literals.CONNECTION;
-    }
+		return ModelPackage.eINSTANCE.getConnection();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public boolean isConnected() {
-        return connected;
-    }
+		return connected;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setConnected(boolean newConnected) {
-        boolean oldConnected = connected;
-        connected = newConnected;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.CONNECTION__CONNECTED, oldConnected, connected));
-    }
+		boolean oldConnected = connected;
+		connected = newConnected;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.CONNECTION__CONNECTED, oldConnected, connected));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Box getSource() {
-        if (source != null && source.eIsProxy()) {
-            InternalEObject oldSource = (InternalEObject)source;
-            source = (Box)eResolveProxy(oldSource);
-            if (source != oldSource) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.CONNECTION__SOURCE, oldSource, source));
-            }
-        }
-        return source;
-    }
+		if (source != null && source.eIsProxy()) {
+			Box oldSource = source;
+			source = (Box)eResolveProxy((InternalEObject)source);
+			if (source != oldSource) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.CONNECTION__SOURCE, oldSource, source));
+			}
+		}
+		return source;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Box basicGetSource() {
-        return source;
-    }
+		return source;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setSource(Box newSource) {
-        Box oldSource = source;
-        source = newSource;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.CONNECTION__SOURCE, oldSource, source));
-    }
+		Box oldSource = source;
+		source = newSource;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.CONNECTION__SOURCE, oldSource, source));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Box getTarget() {
-        if (target != null && target.eIsProxy()) {
-            InternalEObject oldTarget = (InternalEObject)target;
-            target = (Box)eResolveProxy(oldTarget);
-            if (target != oldTarget) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.CONNECTION__TARGET, oldTarget, target));
-            }
-        }
-        return target;
-    }
+		if (target != null && target.eIsProxy()) {
+			Box oldTarget = target;
+			target = (Box)eResolveProxy((InternalEObject)target);
+			if (target != oldTarget) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.CONNECTION__TARGET, oldTarget, target));
+			}
+		}
+		return target;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Box basicGetTarget() {
-        return target;
-    }
+		return target;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setTarget(Box newTarget) {
-        Box oldTarget = target;
-        target = newTarget;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.CONNECTION__TARGET, oldTarget, target));
-    }
+		Box oldTarget = target;
+		target = newTarget;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.CONNECTION__TARGET, oldTarget, target));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case ModelPackage.CONNECTION__CONNECTED:
-                return isConnected();
-            case ModelPackage.CONNECTION__SOURCE:
-                if (resolve) return getSource();
-                return basicGetSource();
-            case ModelPackage.CONNECTION__TARGET:
-                if (resolve) return getTarget();
-                return basicGetTarget();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+	 * @generated
+	 */
+    public Object eGet(EStructuralFeature eFeature, boolean resolve) {
+		switch (eDerivedStructuralFeatureID(eFeature)) {
+			case ModelPackage.CONNECTION__LOCATION:
+				return getLocation();
+			case ModelPackage.CONNECTION__SIZE:
+				return getSize();
+			case ModelPackage.CONNECTION__CONNECTED:
+				return isConnected() ? Boolean.TRUE : Boolean.FALSE;
+			case ModelPackage.CONNECTION__SOURCE:
+				if (resolve) return getSource();
+				return basicGetSource();
+			case ModelPackage.CONNECTION__TARGET:
+				if (resolve) return getTarget();
+				return basicGetTarget();
+		}
+		return eDynamicGet(eFeature, resolve);
+	}
 
-    /**
-     * <!-- begin-user-doc -->
+	/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case ModelPackage.CONNECTION__CONNECTED:
-                setConnected((Boolean)newValue);
-                return;
-            case ModelPackage.CONNECTION__SOURCE:
-                setSource((Box)newValue);
-                return;
-            case ModelPackage.CONNECTION__TARGET:
-                setTarget((Box)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+	 * @generated
+	 */
+    public void eSet(EStructuralFeature eFeature, Object newValue) {
+		switch (eDerivedStructuralFeatureID(eFeature)) {
+			case ModelPackage.CONNECTION__LOCATION:
+				setLocation((Point)newValue);
+				return;
+			case ModelPackage.CONNECTION__SIZE:
+				setSize((Dimension)newValue);
+				return;
+			case ModelPackage.CONNECTION__CONNECTED:
+				setConnected(((Boolean)newValue).booleanValue());
+				return;
+			case ModelPackage.CONNECTION__SOURCE:
+				setSource((Box)newValue);
+				return;
+			case ModelPackage.CONNECTION__TARGET:
+				setTarget((Box)newValue);
+				return;
+		}
+		eDynamicSet(eFeature, newValue);
+	}
 
-    /**
-     * <!-- begin-user-doc -->
+	/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void eUnset(int featureID) {
-        switch (featureID) {
-            case ModelPackage.CONNECTION__CONNECTED:
-                setConnected(CONNECTED_EDEFAULT);
-                return;
-            case ModelPackage.CONNECTION__SOURCE:
-                setSource((Box)null);
-                return;
-            case ModelPackage.CONNECTION__TARGET:
-                setTarget((Box)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+	 * @generated
+	 */
+    public void eUnset(EStructuralFeature eFeature) {
+		switch (eDerivedStructuralFeatureID(eFeature)) {
+			case ModelPackage.CONNECTION__LOCATION:
+				setLocation(LOCATION_EDEFAULT);
+				return;
+			case ModelPackage.CONNECTION__SIZE:
+				setSize(SIZE_EDEFAULT);
+				return;
+			case ModelPackage.CONNECTION__CONNECTED:
+				setConnected(CONNECTED_EDEFAULT);
+				return;
+			case ModelPackage.CONNECTION__SOURCE:
+				setSource((Box)null);
+				return;
+			case ModelPackage.CONNECTION__TARGET:
+				setTarget((Box)null);
+				return;
+		}
+		eDynamicUnset(eFeature);
+	}
 
-    /**
-     * <!-- begin-user-doc -->
+	/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case ModelPackage.CONNECTION__CONNECTED:
-                return connected != CONNECTED_EDEFAULT;
-            case ModelPackage.CONNECTION__SOURCE:
-                return source != null;
-            case ModelPackage.CONNECTION__TARGET:
-                return target != null;
-        }
-        return super.eIsSet(featureID);
-    }
+	 * @generated
+	 */
+    public boolean eIsSet(EStructuralFeature eFeature) {
+		switch (eDerivedStructuralFeatureID(eFeature)) {
+			case ModelPackage.CONNECTION__LOCATION:
+				return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
+			case ModelPackage.CONNECTION__SIZE:
+				return SIZE_EDEFAULT == null ? size != null : !SIZE_EDEFAULT.equals(size);
+			case ModelPackage.CONNECTION__CONNECTED:
+				return connected != CONNECTED_EDEFAULT;
+			case ModelPackage.CONNECTION__SOURCE:
+				return source != null;
+			case ModelPackage.CONNECTION__TARGET:
+				return target != null;
+		}
+		return eDynamicIsSet(eFeature);
+	}
 
-    /**
-     * <!-- begin-user-doc -->
+	/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
+	 * @generated
+	 */
     public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (connected: ");
-        result.append(connected);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (connected: "); //$NON-NLS-1$
+		result.append(connected);
+		result.append(')');
+		return result.toString();
+	}
 
 	public void disconnect() {
 		if (isConnected()) {
@@ -304,15 +318,15 @@ public class ConnectionImpl extends ElementImpl implements Connection {
 		if (src == null) {
 			throw new IllegalArgumentException("Source cannot be null"); //$NON-NLS-1$
 		}
-		
+
 		if (trg == null) {
 			throw new IllegalArgumentException("Target cannot be null"); //$NON-NLS-1$
 		}
-		
+
 		if (trg == src) {
 			throw new IllegalArgumentException("Target and source cannot be the same"); //$NON-NLS-1$
 		}
-		
+
 		disconnect();
 		setSource(src);
 		setTarget(trg);

@@ -12,14 +12,13 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
 	 */
 	public void initializeDefaultPreferences() {
-		IPreferenceStore store = CatalogPlugin.getDefault().getPreferenceStore();
-		
+		IPreferenceStore store = CatalogPlugin.getDefault()
+				.getPreferenceStore();
 		store.setDefault(PreferenceConstants.P_TEMP_FT, false);
-		store.setDefault(PreferenceConstants.P_WMSCTILE_MAX_CON_REQUESTS, 16);
 	}
 
 }

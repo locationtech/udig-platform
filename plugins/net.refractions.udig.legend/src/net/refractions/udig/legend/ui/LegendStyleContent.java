@@ -29,11 +29,11 @@ import org.eclipse.ui.IMemento;
 public class LegendStyleContent extends StyleContent {
 
     public static final String ID = "net.refractions.udig.legend.legendStyle"; //$NON-NLS-1$
-    
+
     public LegendStyleContent() {
         super(ID);
     }
-    
+
     @Override
     public Class<?> getStyleClass() {
         return LegendStyle.class;
@@ -59,21 +59,21 @@ public class LegendStyleContent extends StyleContent {
             return null;
         return createDefault();
     }
-    
+
     public static LegendStyle createDefault() {
         LegendStyle style = new LegendStyle();
-        
-        style.verticalMargin = 3; 
-        style.horizontalMargin = 2; 
-        style.verticalSpacing = 5; 
-        style.horizontalSpacing = 3; 
+
+        style.verticalMargin = 3;
+        style.horizontalMargin = 2;
+        style.verticalSpacing = 5;
+        style.horizontalSpacing = 3;
         style.indentSize = 10;
         style.imageHeight = 16;
         style.imageWidth = 16;
-               
+
         style.foregroundColour = Color.BLACK;
         style.backgroundColour = Color.WHITE;
-                
+
         return style;
     }
 }

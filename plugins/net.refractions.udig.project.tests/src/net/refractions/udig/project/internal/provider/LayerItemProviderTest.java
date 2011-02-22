@@ -29,7 +29,7 @@ public class LayerItemProviderTest extends TestCase {
         AdapterFactory adapterFactoryImpl = new ProjectItemProviderAdapterFactory();
         LayerItemProvider itemProvider = new LayerItemProvider(adapterFactoryImpl);
         AdapterFactoryLabelProvider fac=new AdapterFactoryLabelProvider(adapterFactoryImpl);
-        
+
         Image image = null;
         Image image2 = null;
         try {
@@ -44,22 +44,22 @@ public class LayerItemProviderTest extends TestCase {
 
             image2 = (Image) fac.getImage(layer);
             assertNotSame(image, image2);
-            
+
             layer.getProperties().put(LayerItemProvider.GENERATED_ICON,
                     Glyph.geometry(Color.GREEN, Color.BLACK));
 
             image = (Image) fac.getImage(layer);
             assertNotSame(image, image2);
-            
+
             layer.setGlyph(Glyph.geometry(Color.GREEN, Color.RED));
             image2 = (Image) fac.getImage(layer);
             assertNotSame(image, image2);
-            
+
             layer.getProperties().put(LayerItemProvider.GENERATED_ICON,
                     Glyph.geometry(Color.GREEN, Color.BLUE));
             image = (Image) fac.getImage(layer);
             assertSame(image, image2);
-            
+
         } finally {
             fac.dispose();
             itemProvider.dispose();

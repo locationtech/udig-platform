@@ -26,12 +26,11 @@ import net.refractions.udig.tools.edit.Behaviour;
 import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
 import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.EnablementBehaviour;
-import net.refractions.udig.tools.edit.activator.ClearCurrentSelectionActivator;
 import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
 import net.refractions.udig.tools.edit.activator.ResetHandlerActivator;
 import net.refractions.udig.tools.edit.activator.SetRenderingFilter;
-import net.refractions.udig.tools.edit.behaviour.CreateShapeBehaviour;
 import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
+import net.refractions.udig.tools.edit.behaviour.CreateShapeBehaviour;
 import net.refractions.udig.tools.edit.behaviour.CreateShapeBehaviour.ShapeFactory;
 import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
 import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
@@ -47,7 +46,7 @@ import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Tool for drawing and resizing rectangles.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -55,7 +54,7 @@ public class RectangleTool extends AbstractEditTool {
     @Override
     protected void initEnablementBehaviours( List<EnablementBehaviour> helper ) {
         helper.add(new WithinLegalLayerBoundsBehaviour());
-        helper.add(new ValidToolDetectionActivator(new Class[]{Geometry.class, MultiLineString.class, 
+        helper.add(new ValidToolDetectionActivator(new Class[]{Geometry.class, MultiLineString.class,
                 LineString.class, LinearRing.class, Polygon.class, MultiPolygon.class}));
     }
 
@@ -64,7 +63,6 @@ public class RectangleTool extends AbstractEditTool {
         activators.add(new EditStateListenerActivator());
         activators.add(new ResetHandlerActivator());
         activators.add(new SetRenderingFilter());
-        activators.add(new ClearCurrentSelectionActivator());
     }
 
     @Override
@@ -81,7 +79,7 @@ public class RectangleTool extends AbstractEditTool {
                 return super.isValid(handler) && handler.getCurrentGeom().getShapeType()==ShapeType.LINE;
             }
         });
-        
+
     }
 
     @Override
@@ -105,7 +103,7 @@ public class RectangleTool extends AbstractEditTool {
                 path.append(new Rectangle(width, height).getPathIterator(new AffineTransform()), false);
                 return path;
             }
-            
+
         };
     }
 

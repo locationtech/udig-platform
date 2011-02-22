@@ -14,9 +14,9 @@
  */
 package net.refractions.udig.validation;
 
+import org.geotools.feature.FeatureType;
 import org.geotools.validation.FeatureValidation;
 import org.geotools.validation.spatial.LineNoSelfOverlappingValidation;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.vividsolutions.jts.geom.LineString;
 
@@ -25,7 +25,7 @@ import com.vividsolutions.jts.geom.LineString;
  * validation type.
  * <p>
  * </p>
- * 
+ *
  * @author chorner
  * @since 1.0.1
  */
@@ -35,8 +35,8 @@ public class ValidateLineNoSelfOverlapping extends FeatureValidationOp {
     }
 
     @Override
-    protected boolean canValidate( SimpleFeatureType featureType ) {
-        if (featureType.getGeometryDescriptor() instanceof LineString) {
+    protected boolean canValidate( FeatureType featureType ) {
+        if (featureType.getDefaultGeometry() instanceof LineString) {
             return true;
         }
         return false;

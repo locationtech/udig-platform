@@ -18,7 +18,6 @@ package net.refractions.udig.catalog.internal.oracle;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -37,46 +36,41 @@ import net.refractions.udig.catalog.internal.CatalogImpl;
 import net.refractions.udig.catalog.internal.ResolveChangeEvent;
 import net.refractions.udig.catalog.internal.ResolveDelta;
 import net.refractions.udig.catalog.oracle.internal.Messages;
-import net.refractions.udig.core.internal.CorePlugin;
 import net.refractions.udig.ui.ErrorManager;
 import net.refractions.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.geotools.data.oracle.OracleNGDataStoreFactory;
-import org.geotools.jdbc.JDBCDataStore;
+import org.geotools.data.oracle.OracleDataStore;
+import org.geotools.data.oracle.OracleDataStoreFactory;
 
 /**
- * Service handle representing an oracle database.
- * 
+ * Provides ...TODO summary sentence
+ * <p>
+ * TODO Description
+ * </p>
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
 public class OracleServiceImpl extends IService {
 
     private URL url = null;
-    private Map<String, Serializable> params = null;
-    public OracleServiceImpl( URL arg1, Map<String, Serializable> arg2 ) {
-        if (arg1 == null) {
-            String jdbc_url = OracleServiceExtension.getJDBCUrl(arg2);
-            try {
-                url = new URL(null, jdbc_url, CorePlugin.RELAXED_HANDLER);
-            } catch (MalformedURLException e) {
-                throw new NullPointerException(
-                        "id provided and params could not be used to make one");
-            }
-        } else {
-            url = arg1;
-        }
+    private Map<String,Serializable> params = null;
+    public OracleServiceImpl(URL arg1, Map<String,Serializable> arg2){
+        url = arg1;
         params = arg2;
         checkPort(params);
     }
 
     /*
-     * Required adaptions: <ul> <li>IServiceInfo.class <li>List.class <IGeoResource> </ul>
-     * @see net.refractions.udig.catalog.IService#resolve(java.lang.Class,
-     * org.eclipse.core.runtime.IProgressMonitor)
+     * Required adaptions:
+     * <ul>
+     * <li>IServiceInfo.class
+     * <li>List.class <IGeoResource>
+     * </ul>
+     *
+     * @see net.refractions.udig.catalog.IService#resolve(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
         if (monitor == null)
@@ -86,8 +80,8 @@ public class OracleServiceImpl extends IService {
             throw new NullPointerException("No adaptor specified"); //$NON-NLS-1$
         }
 
-        if (adaptee.isAssignableFrom(JDBCDataStore.class)) {
-            return adaptee.cast(getDS(monitor));
+        if(adaptee.isAssignableFrom(OracleDataStore.class)){
+            return adaptee.cast( getDS(monitor));
         }
         return super.resolve(adaptee, monitor);
     }
@@ -95,12 +89,13 @@ public class OracleServiceImpl extends IService {
      * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
-        if (adaptee == null)
+        if(adaptee == null)
             return false;
-        return (adaptee.isAssignableFrom(JDBCDataStore.class)) || super.canResolve(adaptee);
+        return (adaptee.isAssignableFrom(OracleDataStore.class))||
+                super.canResolve(adaptee);
     }
     public void dispose( IProgressMonitor monitor ) {
-        if (members == null)
+        if( members==null)
             return;
 
         int steps = (int) ((double) 99 / (double) members.size());
@@ -120,72 +115,69 @@ public class OracleServiceImpl extends IService {
      * @see net.refractions.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
     public List<OracleGeoResource> resources( IProgressMonitor monitor ) throws IOException {
-        if (members == null) {
+
+    	if(members == null){
             rLock.lock();
-            try {
-                if (members == null) {
+            try{
+            	if(members == null){
                     getDS(monitor); // load ds
                     members = new LinkedList<OracleGeoResource>();
                     String[] typenames = ds.getTypeNames();
-                    if (typenames != null){
-                        for( int i = 0; i < typenames.length; i++ ) {
-                            String typeName = typenames[i];
-                            members.add(new OracleGeoResource(this, typeName));
-                        }
+                    if(typenames!=null)
+                    for(int i=0;i<typenames.length;i++){
+                    	members.add(new OracleGeoResource(this,typenames[i]));
                     }
-                }
-            } finally {
+            	}
+            }finally{
                 rLock.unlock();
             }
-        }
+    	}
         return members;
     }
     private volatile List<OracleGeoResource> members = null;
 
-    @Override
-    public IServiceOracleInfo getInfo( IProgressMonitor monitor ) throws IOException {
-        return (IServiceOracleInfo) super.getInfo(monitor);
-    }
     /*
      * @see net.refractions.udig.catalog.IService#getInfo(org.eclipse.core.runtime.IProgressMonitor)
      */
-    protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        JDBCDataStore dataStore = getDS(monitor); // load ds
-        if (dataStore == null) {
-            return null;
-        }
-        rLock.lock();
-        try {
-            info = new IServiceOracleInfo(dataStore);
-
-        } finally {
-            rLock.unlock();
-
+    public IServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
+        getDS(monitor); // load ds
+        if(info == null && ds!=null){
+            rLock.lock();
+            try{
+                if(info == null){
+                    info = new IServiceOracleInfo(ds);
+                }
+            }finally{
+                rLock.unlock();
+            }
+            IResolveDelta delta = new ResolveDelta( this, IResolveDelta.Kind.CHANGED );
+            ((CatalogImpl)CatalogPlugin.getDefault().getLocalCatalog()).fire( new ResolveChangeEvent( this, IResolveChangeEvent.Type.POST_CHANGE, delta )  );
         }
         return info;
     }
+    private volatile IServiceInfo info = null;
     /*
      * @see net.refractions.udig.catalog.IService#getConnectionParams()
      */
-    public Map<String, Serializable> getConnectionParams() {
+    public Map<String,Serializable> getConnectionParams() {
         return params;
     }
     private Throwable msg = null;
-    private volatile JDBCDataStore ds = null;
-    protected Lock rLock = new UDIGDisplaySafeLock();
+    private volatile OracleDataStore ds = null;
+    protected Lock rLock=new UDIGDisplaySafeLock();
     private static final Lock dsLock = new UDIGDisplaySafeLock();
 
-    JDBCDataStore getDS( IProgressMonitor monitor ) throws IOException {
+    OracleDataStore getDS(IProgressMonitor monitor ) throws IOException{
         if (ds == null) {
             dsLock.lock();
             try {
                 if (ds == null) {
-                    OracleNGDataStoreFactory dsf = new OracleNGDataStoreFactory();
+                    OracleDataStoreFactory dsf = new OracleDataStoreFactory();
                     checkPort(params);
                     assert params.get("port") instanceof String; //$NON-NLS-1$
-                    if (dsf.canProcess(params)) {
+                    if(dsf.canProcess(params)){
                         try {
-                            ds = dsf.createDataStore(params);
+                            ds = (OracleDataStore) dsf.createDataStore(params);
                         } catch (IOException e) {
                             msg = e;
                             throw e;
@@ -195,9 +187,8 @@ public class OracleServiceImpl extends IService {
             } finally {
                 dsLock.unlock();
             }
-            IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
-            ((CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog())
-                    .fire(new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, delta));
+            IResolveDelta delta = new ResolveDelta( this, IResolveDelta.Kind.CHANGED );
+            ((CatalogImpl)CatalogPlugin.getDefault().getLocalCatalog()).fire( new ResolveChangeEvent( this, IResolveChangeEvent.Type.POST_CHANGE, delta )  );
         }
         return ds;
     }
@@ -205,7 +196,7 @@ public class OracleServiceImpl extends IService {
      * @see net.refractions.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
-        return msg != null ? Status.BROKEN : ds == null ? Status.NOTCONNECTED : Status.CONNECTED;
+        return msg != null? Status.BROKEN : ds == null? Status.NOTCONNECTED : Status.CONNECTED;
     }
     /*
      * @see net.refractions.udig.catalog.IResolve#getMessage()
@@ -222,56 +213,51 @@ public class OracleServiceImpl extends IService {
 
     private class IServiceOracleInfo extends IServiceInfo {
 
-        IServiceOracleInfo( JDBCDataStore resource ) {
+        IServiceOracleInfo( OracleDataStore resource ){
             super();
-            String[] tns = null;
-            try {
-                tns = resource.getTypeNames();
-            } catch (IOException e) {
-                OraclePlugin.log(null, e);
-                tns = new String[0];
-            }
-            keywords = new String[tns.length + 1];
-            System.arraycopy(tns, 0, keywords, 1, tns.length);
-            keywords[0] = "oracle"; //$NON-NLS-1$
+                String[] tns = null;
+                try {
+                    tns = resource.getTypeNames();
+                } catch (IOException e) {
+                    OraclePlugin.log( null, e);
+                    tns = new String[0];
+                }
+                keywords = new String[tns.length+1];
+                System.arraycopy(tns,0,keywords,1,tns.length);
+                keywords[0] = "oracle"; //$NON-NLS-1$
 
-            try {
-                schema = new URI("jdbc://oracle/gml"); //$NON-NLS-1$
-            } catch (URISyntaxException e) {
-                OraclePlugin.log(null, e);
-            }
+                try {
+                    schema = new URI("jdbc://oracle/gml"); //$NON-NLS-1$
+                } catch (URISyntaxException e) {
+                    OraclePlugin.log( null, e);
+                }
         }
 
         public String getDescription() {
             return getIdentifier().toString();
         }
 
-        public URI getSource() {
-            try {
-                return getIdentifier().toURI();
-            } catch (URISyntaxException e) {
-                // This would be bad
-                throw (RuntimeException) new RuntimeException().initCause(e);
-            }
+        public URL getSource() {
+            return getIdentifier();
         }
 
         public String getTitle() {
-            return Messages.OracleServiceImpl_oracle_spatial + getIdentifier().getHost();
+            return Messages.OracleServiceImpl_oracle_spatial+getIdentifier().getHost();
         }
     }
 
     /**
-     * Checks to make sure the port hasn't been switched from String to Integer and corrects if
-     * necessary.
-     * 
+     * Checks to make sure the port hasn't been switched from String to Integer and corrects if necessary.
+     *
      * @param params Parameters object
      */
-    private void checkPort( Map<String, Serializable> params ) {
-        String portKey = OracleNGDataStoreFactory.PORT.key;
-        if (params != null && params.containsKey(portKey) && params.get(portKey) instanceof Integer) {
+    private void checkPort(Map<String,Serializable> params) {
+        String portKey = OracleServiceExtension.getFactory().getParametersInfo()[2].key;
+        if (params!=null && params.containsKey(portKey) && params.get(portKey) instanceof Integer){
             Integer val = (Integer) params.get(portKey);
             params.remove(portKey);
             params.put(portKey, val.toString());
         }
     }
 }
+

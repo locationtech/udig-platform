@@ -18,7 +18,7 @@ import org.eclipse.swt.dnd.TransferData;
 
 /**
  * Makes public the validate method so that the udig DND framework can validate a transfer
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -29,7 +29,7 @@ public interface UDIGTransfer {
      * @return true if the transfer can transfer to and from the object.
      */
     public boolean validate(Object object);
-    
+
     /**
      * @see org.eclipse.swt.dnd.Transfer#javaToNative(java.lang.Object, org.eclipse.swt.dnd.TransferData)
      */

@@ -25,8 +25,6 @@ import net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.render.glass.GlassPane;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
 import net.refractions.udig.ui.graphics.NonAdvancedSWTGraphics;
 import net.refractions.udig.ui.graphics.SWTGraphics;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
@@ -49,11 +47,9 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * The ViewportPaneImpl is a java.awt.Panel that is the display 
- * area for a Map. It Registers itself
- * with a RenderStack and obtains the image from the RenderStack 
- * if the RenderStack is "ready"
- * 
+ * The ViewportPaneImpl is a java.awt.Panel that is the display area for a Map. It Registers itself
+ * with a RenderStack and obtains the image from the RenderStack if the RenderStack is "ready"
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -88,13 +84,6 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     private Image buffer;
 
     private final int dpi;
-    
-    /**
-     * The glass pane associated with the viewport pane.
-     * Allows direct drawing on the image (similar to 
-     * draw commands).
-     */
-    private GlassPane glass;
 
     /**
      * Create a image that is compatible with this ViewportPane.
@@ -105,7 +94,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
      * <p>
      * This image is *not* expected to be hardware accelarated, althought the blit process will be.
      * </p>
-     * 
+     *
      * @see net.refractions.udig.project.render.ViewportPane#acquireImage(int, int)
      * @param w width
      * @param h height
@@ -115,20 +104,15 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
         return new BufferedImage(w, h, BufferedImage.TYPE_4BYTE_ABGR);
     }
 
-    public ViewportPaneSWT( Composite comp, MapPart editor ) {
-        this(comp, SWT.NO_BACKGROUND|SWT.DOUBLE_BUFFERED, editor );
-    }
-    
     /**
      * Creates a new ViewportPaneImpl object.
-     * 
+     *
      * @param comp The Composite that this pane will be embedded into
-     * @param style recommended SWT.NO_BACKGROUND|SWT.DOUBLE_BUFFERED
      * @param renderStack The renderstack that is rendering onto this viewport
      * @param vmodel The Viewport model that models this viewport
      */
-    public ViewportPaneSWT( Composite comp, int style, MapPart editor ) {
-        super(comp, style);
+    public ViewportPaneSWT( Composite comp, MapPart editor ) {
+        super(comp, SWT.NO_BACKGROUND|SWT.DOUBLE_BUFFERED);
         dpi=calculateDPI();
         ProjectUIPlugin.trace(Trace.VIEWPORT, getClass(), "ViewportPaneSWT created", null); //$NON-NLS-1$
 
@@ -137,7 +121,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
 
         addEventListeners();
     }
-   
+
     private void addEventListeners() {
 
         handler = new EventHandler(this, eventJob);
@@ -167,14 +151,13 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
         addListener(SWT.MouseWheel, handler);
         addListener(SWT.Resize, handler);
         addListener(SWT.KeyDown, handler);
-        
         addPaintListener(new PaintListener(){
             public void paintControl( PaintEvent event ) {
                 paint(event.gc, event.display);
             }
         });
     }
-    
+
     private int calculateDPI() {
         Point dpi = getDisplay().getDPI();
         if (dpi.x != dpi.y)
@@ -193,7 +176,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
 
     /**
      * Called by the Paint listener to update the canvas
-     * 
+     *
      * @param display the display of the canvas.
      * @param g the GC object to use to draw with.
      */
@@ -205,13 +188,13 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
             if (repaintRequest != ZERO_RECTANGLE) {
             	if (g.getClipping() == null || repaintRequest == null) {
             		repaintRequest = ZERO_RECTANGLE;
-            		
+
             	} else if (g.getClipping().equals(repaintRequest)) {
                     repaintRequest = ZERO_RECTANGLE;
-                    
+
             	} else if (g.getClipping().width==0 && g.getClipping().height==0 ) {
                     repaintRequest = ZERO_RECTANGLE;
-                    
+
             	} else if (clipContainsRepaintRequest(g.getClipping())) {
             		repaintRequest = ZERO_RECTANGLE;
             	}
@@ -224,7 +207,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
             antiAliasing=SWT.OFF;
         g.setAntialias(antiAliasing);
         Image swtImage = getImage();
-        
+
         int minHeight;
         int minWidth;
         if (swtImage == null) {
@@ -235,8 +218,8 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
             minWidth = Math.min(bounds.width, getWidth());
             minHeight = Math.min(bounds.height, getHeight());
         }
-        
-        
+
+
         getDoubleBufferGraphics(display,g,minWidth, minHeight);
 
 
@@ -252,16 +235,16 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
 
     private void getDoubleBufferGraphics( final Display display, GC gc, int minWidth, int minHeight ) {
     	IPreferenceStore store = UiPlugin.getDefault().getPreferenceStore();
-    	boolean useAdvancedGraphics = store.getBoolean(net.refractions.udig.ui.preferences.PreferenceConstants.P_ADVANCED_GRAPHICS); 
-    	
+    	boolean useAdvancedGraphics = store.getBoolean(net.refractions.udig.ui.preferences.PreferenceConstants.P_ADVANCED_GRAPHICS);
+
         if ((getStyle()&SWT.DOUBLE_BUFFERED)==0){
             if (buffer == null) {
                 buffer = new Image(display, displaySize.width, displaySize.height);
             }
 
             ViewportGraphics swtGraphics = null;
-            
-            if (useAdvancedGraphics) { 
+
+            if (useAdvancedGraphics) {
             	swtGraphics = new SWTGraphics(buffer, display);
             } else {
             	swtGraphics = new NonAdvancedSWTGraphics(buffer, display);
@@ -274,7 +257,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
         }else{
 
         	ViewportGraphics swtGraphics = null;
-        	
+
         	if (useAdvancedGraphics) {
         		swtGraphics = new SWTGraphics(gc, display);
         	} else {
@@ -298,7 +281,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
 
     /**
      * Returns buffer image and if necessary creates the new one while disposing the old.
-     * 
+     *
      * @return
      */
     org.eclipse.swt.graphics.Image getImage() {
@@ -326,14 +309,14 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
 
     /**
      * Creates the new buffer image.
-     * 
+     *
      * @return
      */
     private org.eclipse.swt.graphics.Image createImage() {
         org.eclipse.swt.graphics.Image newImage;
         RenderedImage image = renderManager.getImage();
         if (image != null)
-            newImage = AWTSWTImageUtils.createSWTImage(image, false);
+            newImage = SWTGraphics.createSWTImage(image, false);
         else {
             newImage = new Image(getDisplay(), getWidth(), getHeight());
         }
@@ -527,7 +510,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     public void repaint( int x, int y, int width, int height ) {
         if (width == 0 || height == 0)
             return;
-        
+
         synchronized (repaintRequestMutex) {
             Rectangle rectangle = new Rectangle(x, y, width, height);
             if (repaintRequest == null) {
@@ -540,10 +523,6 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
             }
         }
 
-    }
-    
-    public void update(){
-        super.update();
     }
 
     /**
@@ -581,7 +560,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
                 return;
             if (!isDisposed()) {
                 redraw(x, y, width, height, false);
-            } 
+            }
         }
 
     }
@@ -593,26 +572,5 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     @Override
     public void setCursor( org.eclipse.swt.graphics.Cursor cursor ) {
         super.setCursor(cursor);
-    }
-    
-    /**
-     * Gets the GlassPane.
-     * <p>
-     * Will return null if no glass pane set.
-     * </p>
-     * 
-     * @return the GlassPane if set; or null if no GlassPane set
-     */
-    public GlassPane getGlass() {
-        return this.glass;
-    }
-
-    /**
-     * Sets the GlassPane
-     * 
-     * @param g
-     */
-    public void setGlass( GlassPane glass ) {
-        this.glass = glass;
     }
 }

@@ -2,9 +2,9 @@ package net.refractions.udig.catalog.util;
 
 import java.util.List;
 
-import net.refractions.udig.catalog.IResolve;
-
 import org.eclipse.core.runtime.IProgressMonitor;
+
+import net.refractions.udig.catalog.IResolve;
 
 /**
  * Used to allow peer GeoSpatial resources to associate with each other.
@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * @author Jody Garnett
  */
 public abstract class IFriend {
-	
+
 	/** List of known peers for the provided resource. */
 	public abstract List<IResolve> friendly( IResolve handle, IProgressMonitor monitor );
 }

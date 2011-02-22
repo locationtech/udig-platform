@@ -27,39 +27,36 @@ import java.util.concurrent.ConcurrentHashMap;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.ui.Drawing;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.graphics.AWTGraphics;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
 import net.refractions.udig.ui.graphics.SWTGraphics;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
-import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.eclipse.ui.views.properties.IPropertyDescriptor;
+import org.geotools.feature.Feature;
+import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.styling.Symbolizer;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.geometry.MismatchedDimensionException;
-import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * Draws a feature on the screen.
- * 
+ *
  * @author jeichar
  * @since 0.9
  */
 public class DrawFeatureCommand extends AbstractDrawCommand {
 
-    private SimpleFeature feature;
+    private Feature feature;
     private static final Map<MathTransformKey, MathTransform> mtCache=new ConcurrentHashMap<MathTransformKey, MathTransform>();
 
     private Drawing drawing = Drawing.create();
@@ -75,18 +72,17 @@ public class DrawFeatureCommand extends AbstractDrawCommand {
      */
 //    private Point imageLocation;
     /**
-     * The image of the drawn feature.  
+     * The image of the drawn feature.
      * @see #preRender()
      */
     private Image image;
-    private boolean errorReported;
-    
+
     /**
      * @param feature
      * @param layer layer that feature is from
      * @throws IOException
      */
-    public DrawFeatureCommand( SimpleFeature feature, ILayer layer ) throws IOException {
+    public DrawFeatureCommand( Feature feature, ILayer layer ) throws IOException {
         this(feature, layer.getCRS());
     }
 
@@ -94,7 +90,7 @@ public class DrawFeatureCommand extends AbstractDrawCommand {
      * @param feature
      * @param crs
      */
-    public DrawFeatureCommand( SimpleFeature feature, CoordinateReferenceSystem crs ) {
+    public DrawFeatureCommand( Feature feature, CoordinateReferenceSystem crs ) {
         this.feature = feature;
         if (crs == null)
             this.featureCRS = DefaultGeographicCRS.WGS84;
@@ -105,10 +101,10 @@ public class DrawFeatureCommand extends AbstractDrawCommand {
     /**
      * @param feature
      */
-    public DrawFeatureCommand( SimpleFeature feature ) {
-        this(feature, feature.getFeatureType().getCoordinateReferenceSystem());
+    public DrawFeatureCommand( Feature feature ) {
+        this(feature, feature.getFeatureType().getDefaultGeometry().getCoordinateSystem());
     }
-    
+
     /**
      * Renders the feature to a image buffer so that drawing command will be fast.
      * If feature is large you should call this so that there isn't a big delay in the display
@@ -120,12 +116,12 @@ public class DrawFeatureCommand extends AbstractDrawCommand {
      * If this method is called then this object must be sent to the ViewportPane or be disposed
      * because a Image object is created that needs to be disposed.
      * </p>
-     * 
+     *
      */
     public void preRender(){
-        
+
         if( BUFFER_READY ){
-        
+
             PlatformGIS.syncInDisplayThread(new Runnable(){
                 public void run() {
                     renderInternal();
@@ -133,42 +129,41 @@ public class DrawFeatureCommand extends AbstractDrawCommand {
             });
         }
     }
-    
+
     private void renderInternal(){
         if( syms!=null )
-            syms = Drawing.getSymbolizers(((Geometry)feature.getDefaultGeometry()).getClass(), color,false);
+            syms = Drawing.getSymbolizers(feature.getDefaultGeometry().getClass(), color,false);
         MathTransform mt = getMathTransform(featureCRS);
         AffineTransform toScreen=getMap().getViewportModel().worldToScreenTransform();
 
         // calculate the size of the image and where it will be in the display
         Envelope envelope;
         try{
-            ReferencedEnvelope bounds = new ReferencedEnvelope(feature.getBounds());
-            envelope = bounds.transform(getMap().getViewportModel().getCRS(), true);
+            envelope = JTS.transform(feature.getBounds(), null, mt, 10);
         }catch (Exception e) {
-            envelope=new ReferencedEnvelope(feature.getBounds());
+            envelope=feature.getBounds();
         }
-        double[] screenbounds=new double[]{ 
-                envelope.getMinX(), envelope.getMinY(), 
-                envelope.getMaxX(), envelope.getMaxY(), 
+        double[] screenbounds=new double[]{
+                envelope.getMinX(), envelope.getMinY(),
+                envelope.getMaxX(), envelope.getMaxY(),
                 };
         toScreen.transform(screenbounds, 0, screenbounds, 0, 2);
-        
+
 //        imageLocation=new Point((int)(Math.min(screenbounds[0], screenbounds[2])), (int)(Math.min(screenbounds[1], screenbounds[3])) );
-        
+
         int width = (int) Math.abs(screenbounds[2]-screenbounds[0]);
         int height = (int) Math.abs(screenbounds[3]-screenbounds[1]);
         //create transparent image
-        image=AWTSWTImageUtils.createDefaultImage(Display.getDefault(), width, height);
-        
+        image=SWTGraphics.createDefaultImage(Display.getDefault(), width, height);
+
         // draw feature
         SWTGraphics graphics=new SWTGraphics(image, Display.getDefault());
-        
+
         drawing.drawFeature(graphics, feature,
                 getMap().getViewportModel().worldToScreenTransform(envelope, new Dimension(width,height)), false, syms, mt);
         graphics.dispose();
     }
-    
+
     /** I haven't been able to get the SWT image buffer going yet
      * So this flag is so I can quickly enable the unstable code for
      * development and disable it for committing my changes.
@@ -181,7 +176,7 @@ public class DrawFeatureCommand extends AbstractDrawCommand {
     public void run( IProgressMonitor monitor ) throws Exception {
         if( !BUFFER_READY || graphics instanceof AWTGraphics ){
             if( syms==null )
-                syms = Drawing.getSymbolizers(((Geometry)feature.getDefaultGeometry()).getClass(), color, false);
+                syms = Drawing.getSymbolizers(feature.getDefaultGeometry().getClass(), color, false);
             MathTransform mt = getMathTransform(featureCRS);
             drawing.drawFeature(graphics, feature,
                     getMap().getViewportModel().worldToScreenTransform(), false, syms, mt);
@@ -227,7 +222,7 @@ public class DrawFeatureCommand extends AbstractDrawCommand {
     /**
      * Allows the symbolizers to be set
      *
-     * @param syms symbolizers to use to draw features.  
+     * @param syms symbolizers to use to draw features.
      */
     public void setSymbolizers( Symbolizer[] syms){
         if( syms==null )
@@ -242,27 +237,11 @@ public class DrawFeatureCommand extends AbstractDrawCommand {
     public Rectangle getValidArea() {
         if( feature!=null ){
             try {
-                Envelope bounds = new ReferencedEnvelope(feature.getBounds()).transform(getMap().getViewportModel().getCRS(), true);
+                Envelope bounds = JTS.transform(feature.getBounds(), getMathTransform(featureCRS));
                 double[] points=new double[]{bounds.getMinX(), bounds.getMinY(), bounds.getMaxX(), bounds.getMaxY()};
                 getMap().getViewportModel().worldToScreenTransform().transform(points, 0, points, 0, 2);
                 return new Rectangle((int)points[0], (int)points[1], (int)Math.abs(points[2]-points[0]), (int)Math.abs(points[3]-points[1]));
             } catch (TransformException e) {
-                if( !errorReported ){
-                    errorReported = true;
-                    ProjectUIPlugin.log("error calculating valid area, this will not be reported again", e);
-                }
-                return null;
-            } catch (MismatchedDimensionException e) {
-                if( !errorReported ){
-                    errorReported = true;
-                    ProjectUIPlugin.log("error calculating valid area, this will not be reported again", e);
-                }
-                return null;
-            } catch (FactoryException e) {
-                if( !errorReported ){
-                    errorReported = true;
-                    ProjectUIPlugin.log("error calculating valid area, this will not be reported again", e);
-                }
                 return null;
             }
         }
@@ -275,7 +254,7 @@ public class DrawFeatureCommand extends AbstractDrawCommand {
         if( !valid )
             dispose();
     }
-    
+
     protected void finalize(){
         dispose();
     }
@@ -289,7 +268,7 @@ public class DrawFeatureCommand extends AbstractDrawCommand {
             image=null;
         }
     }
-    
+
     private static class MathTransformKey{
         final CoordinateReferenceSystem from, to;
 
@@ -327,6 +306,6 @@ public class DrawFeatureCommand extends AbstractDrawCommand {
                 return false;
             return true;
         }
-        
+
     }
 }

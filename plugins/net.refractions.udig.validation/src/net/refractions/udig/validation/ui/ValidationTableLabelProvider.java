@@ -56,7 +56,7 @@ public class ValidationTableLabelProvider implements ITableLabelProvider {
 				return value.toString();
 			}
 		default:
-			return Messages.ValidationTableLabelProvider_invalidColumn + columnIndex; 
+			return Messages.ValidationTableLabelProvider_invalidColumn + columnIndex;
 		}
 	}
 

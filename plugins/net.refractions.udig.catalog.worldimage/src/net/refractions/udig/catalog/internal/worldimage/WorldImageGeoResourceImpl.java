@@ -28,83 +28,80 @@ import java.nio.channels.ReadableByteChannel;
 import java.util.HashMap;
 
 import net.refractions.udig.catalog.CatalogPlugin;
+import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.URLUtils;
 import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource;
-import net.refractions.udig.catalog.rasterings.GridCoverageLoader;
 import net.refractions.udig.catalog.worldimage.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.geotools.data.PrjFileReader;
+import org.geotools.data.shapefile.prj.PrjFileReader;
+import org.geotools.gce.image.WorldImageFormat;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.parameter.DefaultParameterDescriptor;
 import org.geotools.parameter.DefaultParameterDescriptorGroup;
 import org.geotools.parameter.ParameterGroup;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.opengis.coverage.grid.GridGeometry;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.parameter.GeneralParameterDescriptor;
+import org.opengis.parameter.ParameterDescriptor;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
+import com.vividsolutions.jts.geom.Envelope;
+
 /**
- * Provides a handle to a world image resource allowing the service to be lazily loaded.
- * 
+ * Provides a handle to a world image resource allowing the service to be lazily
+ * loaded.
  * @author mleslie
  * @since 0.6.0
  */
 public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
+    private IGeoResourceInfo info;
     private URL prjURL;
-    private InMemoryCoverageLoader loader;
+    String name;
 
     /**
      * Construct <code>WorldImageGeoResourceImpl</code>.
-     * 
+     *
      * @param service Service creating this resource.
      * @param name Human readable name of this resource.
-     * @param prjURL Name a projection file associated with this resource can be expected to have.
+     * @param prjURL Name a projection file associated with this resource
+     *                can be expected to have.
      */
-    public WorldImageGeoResourceImpl( WorldImageServiceImpl service, String name, URL prjURL ) {
+    public WorldImageGeoResourceImpl(WorldImageServiceImpl service,
+            String name, URL prjURL) {
         super(service, name);
         this.prjURL = prjURL;
-        try {
-            this.loader = new InMemoryCoverageLoader(this, fileName);
-        } catch (IOException e) {
-            throw (RuntimeException) new RuntimeException().initCause(e);
-        }
     }
-    @Override
-    public WorldImageInfo getInfo( IProgressMonitor monitor ) throws IOException {
-        return (WorldImageInfo) super.getInfo(monitor);
-    }
-    protected WorldImageInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        this.lock.lock();
-        try {
-            if (getStatus() == Status.BROKEN) {
-                return null; // unavailable
-            }
-            CoordinateReferenceSystem crs = readCrs();
-            return new WorldImageInfo(this, crs);
-        } finally {
-            lock.unlock();
+
+    public IGeoResourceInfo getInfo(IProgressMonitor monitor) throws IOException {
+        if(this.info == null && getStatus() != Status.BROKEN) {
+            this.info = new IGeoResourceWorldImageInfo();
         }
+        return this.info;
     }
 
     /**
-     * Convenience method for opening a PrjFileReader. Stolen from Geotools ShapefileSomethingROther
-     * 
+     * Convenience method for opening a PrjFileReader.  Stolen from Geotools
+     * ShapefileSomethingROther
+     *
      * @return A new PrjFileReader
+     *
      * @throws IOException If an error occurs during creation.
      */
-    private PrjFileReader openPrjReader( URL prjURL ) throws IOException, FactoryException {
+    private PrjFileReader openPrjReader(URL prjURL)
+            throws IOException, FactoryException {
         ReadableByteChannel rbc = null;
-        try {
-            if (prjURL != null) {
-                rbc = getReadChannel(prjURL);
-            }
-        } catch (IOException e) {
+        try{
+            rbc = getReadChannel(prjURL);
+        }
+        catch(IOException e){
             CatalogPlugin.getDefault().getLog().log(
                     new org.eclipse.core.runtime.Status(IStatus.WARNING,
-                            "net.refractions.udig.catalog", 0, //$NON-NLS-1$
-                            Messages.WorldImageGeoResourceImpl_PrjUnavailable, e));
+                    "net.refractions.udig.catalog", 0,  //$NON-NLS-1$
+                    Messages.WorldImageGeoResourceImpl_PrjUnavailable, e ));
         }
         if (rbc == null) {
             return null;
@@ -113,43 +110,22 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
         return new PrjFileReader(rbc);
     }
 
-    @Override
-    public <T> boolean canResolve( Class<T> adaptee ) {
-        if (GridCoverageLoader.class.isAssignableFrom(adaptee) && !isTiff())
-            return true;
-
-        return super.canResolve(adaptee);
-    }
-
-    @Override
-    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
-        if (GridCoverageLoader.class.isAssignableFrom(adaptee) && !isTiff()) {
-            return adaptee.cast(loader);
-        }
-
-        return super.resolve(adaptee, monitor);
-    }
-
-    private boolean isTiff() {
-        boolean isTiff = fileName.toLowerCase().endsWith(".tiff") || fileName.toLowerCase().endsWith(".tif"); //$NON-NLS-1$ //$NON-NLS-2$
-        return isTiff;
-    }
-
     /**
      * Convienience method to create a ReadableByteChannel from a URL.
-     * 
+     *
      * @param prjURL
      * @return A Channel for the given file
      * @throws IOException
      */
-    private ReadableByteChannel getReadChannel( URL prjURL ) throws IOException {
+    private ReadableByteChannel getReadChannel(URL prjURL)
+            throws IOException {
         ReadableByteChannel channel = null;
 
         if (prjURL.getProtocol().equalsIgnoreCase("file")) { //$NON-NLS-1$
-            File file = URLUtils.urlToFile(prjURL);
+        	File file = URLUtils.urlToFile(prjURL);
 
             if (!file.exists() || !file.canRead()) {
-                throw new FileNotFoundException(file.getAbsolutePath());
+            	throw new FileNotFoundException(file.getAbsolutePath());
             }
             FileInputStream in = new FileInputStream(file);
             channel = in.getChannel();
@@ -164,64 +140,120 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
 
     public ParameterGroup getReadParameters() {
         try {
-            CoordinateReferenceSystem crsSys = readCrs();
+            PrjFileReader prjRead=null;
+            try{
+                if( prjURL!=null ){
+                 prjRead = openPrjReader(this.prjURL);
+                }
+            }catch (FileNotFoundException e) {
+                CatalogPlugin.getDefault().getLog().log(
+                        new org.eclipse.core.runtime.Status(IStatus.WARNING,
+                        "net.refractions.udig.catalog", 0,  //$NON-NLS-1$
+                        "", e )); //$NON-NLS-1$
+            }
+            CoordinateReferenceSystem crsSys = null;
+            if (prjRead != null) {
+            	crsSys = prjRead.getCoodinateSystem();
+            }
+            else {
+            	//prj file not read, default to lat long
+            	crsSys = DefaultEngineeringCRS.GENERIC_2D;
+            }
 
-            DefaultParameterDescriptor<CoordinateReferenceSystem> crs = new DefaultParameterDescriptor<CoordinateReferenceSystem>(
-                    "crs", //$NON-NLS-1$
+            DefaultParameterDescriptor crs = new DefaultParameterDescriptor("crs", //$NON-NLS-1$
                     CoordinateReferenceSystem.class, null, crsSys);
+            ParameterDescriptor env = WorldImageFormat.ENVELOPE;
 
-            DefaultParameterDescriptor<GridGeometry> gridGeometryDescriptor = getWorldGridGeomDescriptor();
-
-            // Stolen from WorldImageFormat, as mInfo is not externally
-            // accesible
-            HashMap<String, Object> info1 = new HashMap<String, Object>();
-            info1.put("name", "WorldImage"); //$NON-NLS-1$//$NON-NLS-2$
+            // Stolen from WorldImageFormat, as mInfo is not externally accesible
+            HashMap<String,String> info1 = new HashMap<String,String>();
+            info1.put("name", "WorldImage");  //$NON-NLS-1$//$NON-NLS-2$
             info1.put("description", //$NON-NLS-1$
-                    "A raster file accompanied by a spatial data file"); //$NON-NLS-1$
+                "A raster file accompanied by a spatial data file"); //$NON-NLS-1$
             info1.put("vendor", "Geotools"); //$NON-NLS-1$ //$NON-NLS-2$
             info1.put("docURL", "http://www.geotools.org/WorldImageReader+formats"); //$NON-NLS-1$ //$NON-NLS-2$
             info1.put("version", "1.0"); //$NON-NLS-1$ //$NON-NLS-2$
-            return new ParameterGroup(new DefaultParameterDescriptorGroup(info1,
-                    new GeneralParameterDescriptor[]{crs, gridGeometryDescriptor}));
+            return new ParameterGroup(new DefaultParameterDescriptorGroup(
+                    info1, new GeneralParameterDescriptor[] { crs, env }));
 
         } catch (MalformedURLException e) {
             CatalogPlugin.getDefault().getLog().log(
                     new org.eclipse.core.runtime.Status(IStatus.WARNING,
-                            "net.refractions.udig.catalog", 0, //$NON-NLS-1$
-                            "", e)); //$NON-NLS-1$
+                    "net.refractions.udig.catalog", 0,  //$NON-NLS-1$
+                    "", e ));  //$NON-NLS-1$
             return super.getReadParameters();
         } catch (IOException e) {
             CatalogPlugin.getDefault().getLog().log(
                     new org.eclipse.core.runtime.Status(IStatus.WARNING,
-                            "net.refractions.udig.catalog", 0, //$NON-NLS-1$
-                            "", e)); //$NON-NLS-1$
+                    "net.refractions.udig.catalog", 0,  //$NON-NLS-1$
+                    "", e ));  //$NON-NLS-1$
+            return super.getReadParameters();
+        } catch (FactoryException e) {
+            CatalogPlugin.getDefault().getLog().log(
+                    new org.eclipse.core.runtime.Status(IStatus.WARNING,
+                    "net.refractions.udig.catalog", 0,  //$NON-NLS-1$
+                    "", e ));  //$NON-NLS-1$
             return super.getReadParameters();
         }
     }
 
-    private CoordinateReferenceSystem readCrs() throws IOException {
-        PrjFileReader prjRead = null;
-        try {
-            prjRead = openPrjReader(this.prjURL);
-        } catch (FileNotFoundException e) {
-            CatalogPlugin.getDefault().getLog().log(
-                    new org.eclipse.core.runtime.Status(IStatus.WARNING,
-                            "net.refractions.udig.catalog", 0, //$NON-NLS-1$
-                            "", e)); //$NON-NLS-1$
-        } catch (FactoryException e) {
-            CatalogPlugin.getDefault().getLog().log(
-                    new org.eclipse.core.runtime.Status(IStatus.WARNING,
-                            "net.refractions.udig.catalog", 0, //$NON-NLS-1$
-                            "", e)); //$NON-NLS-1$
-        }
-        CoordinateReferenceSystem crsSys = null;
-        if (prjRead != null) {
-            crsSys = prjRead.getCoordinateReferenceSystem();
-        } else {
-            // prj file not read, default to lat long
-            crsSys = DefaultEngineeringCRS.GENERIC_2D;
-        }
-        return crsSys;
-    }
+    /**
+     * Describes this Resource.
+     * @author mleslie
+     * @since 0.6.0
+     */
+    public class IGeoResourceWorldImageInfo extends IGeoResourceInfo {
+        IGeoResourceWorldImageInfo() {
+            this.keywords = new String[] {
+                    "WorldImage", "world image", ".gif", ".jpg", ".jpeg",   //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$//$NON-NLS-4$ //$NON-NLS-5$
+                    ".tif", ".tiff", ".png"};   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
 
+            this.title = getIdentifier().getFile();
+            int indexOf = title.lastIndexOf('/');
+            if( indexOf>-1 && indexOf<title.length() ){
+                title=title.substring(indexOf+1);
+            }
+
+            this.name=this.title;
+            this.description = getIdentifier().toString();
+            this.bounds = getBounds();
+        }
+
+        /*
+         * @see net.refractions.udig.catalog.IGeoResourceInfo#getBounds()
+         */
+        public ReferencedEnvelope getBounds() {
+            if(this.bounds == null) {
+                Envelope env = null;
+                try {
+                    GridCoverage source = (GridCoverage)findResource();
+                    org.opengis.spatialschema.geometry.Envelope ptBounds =
+                        source.getEnvelope();
+                    env = new Envelope( ptBounds.getMinimum(0), ptBounds.getMaximum(0),
+                            ptBounds.getMinimum(1), ptBounds.getMaximum(1));
+
+                    CoordinateReferenceSystem geomcrs =
+                        source.getCoordinateReferenceSystem();
+
+                    this.bounds = new ReferencedEnvelope(env, geomcrs);
+                    /*
+                    if(geomcrs != null) {
+                        if(!geomcrs.equals(CRS.decode("EPSG:4269"))) { //$NON-NLS-1$
+                            bounds = JTS.transform(bounds, CRS.decode("EPSG:4269")); //$NON-NLS-1$
+                        }
+                    } else {
+                        System.err.println("CRS unknown for WorldImage"); //$NON-NLS-1$
+                    }
+                    */
+                } catch (Exception e) {
+                    CatalogPlugin.getDefault().getLog().log(
+                            new org.eclipse.core.runtime.Status(IStatus.WARNING,
+                            "net.refractions.udig.catalog", 0,  //$NON-NLS-1$
+                            "Error while getting the bounds of a layer", e ));   //$NON-NLS-1$
+
+                    this.bounds = new ReferencedEnvelope(new Envelope(-180,180,-90,90), DefaultGeographicCRS.WGS84);
+                }
+            }
+            return this.bounds;
+        }
+    }
 }

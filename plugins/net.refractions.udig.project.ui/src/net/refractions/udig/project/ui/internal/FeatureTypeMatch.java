@@ -18,22 +18,19 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.Name;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.Feature;
+import org.geotools.feature.FeatureType;
 
 /**
  * This class is used to determine whether a FeatureEditor can be used to edit a feature of a given
- * SimpleFeatureType.
+ * FeatureType.
  * <p>
- * This class uses the SimpleFeatureType element of the FeatureEditor Extension point to determine
- * whether the editor can be used. See the FeatureEditor extension point declaration for more
- * information.
+ * This class uses the FeatureType element of the FeatureEditor Extension point to determine whether
+ * the editor can be used. See the FeatureEditor extension point declaration for more information.
  * </p>
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -41,13 +38,13 @@ public class FeatureTypeMatch {
 
     /**
      * Matches a features attributeType to the featureType declared in the extension.
-     * 
+     *
      * @author jones
      * @since 1.0.0
      */
     protected static class AttributeMatcher {
         String name;
-        Class< ? > type;
+        Class type;
 
         /**
          * New instance.
@@ -65,41 +62,26 @@ public class FeatureTypeMatch {
 
         /**
          * returns true if the attr.getType == type and (name==null or name.equals(attr.getName))
-         * 
+         *
          * @param attr
          * @return
          */
-        public AttributeDescriptor match( SimpleFeatureType featureType,
-                List<AttributeDescriptor> used ) {
+        public AttributeType match( FeatureType featureType, List<AttributeType> used ) {
             if (name != null) {
-                AttributeDescriptor attr = featureType.getDescriptor(name);
+                AttributeType attr = featureType.getAttributeType(name);
                 if (type == null || attr == null)
                     return null;
-                if (type != attr.getType().getBinding())
+                if (type != attr.getType())
                     return null;
                 return attr;
             }
             for( int i = 0; i < featureType.getAttributeCount(); i++ ) {
-                if (!used.contains(featureType.getDescriptor(i))) {
-                    if (type == featureType.getDescriptor(i).getType().getBinding())
-                        return featureType.getDescriptor(i);
+                if (!used.contains(featureType.getAttributeType(i))) {
+                    if (type == featureType.getAttributeType(i).getType())
+                        return featureType.getAttributeType(i);
                 }
             }
             return null;
-        }
-        @Override
-        public String toString() {
-            StringBuffer buf = new StringBuffer();
-            buf.append("match(");
-            if (this.name != null) {
-                buf.append(this.name);
-            }
-            if (this.type != null) {
-                buf.append(" ");
-                buf.append(type.getSimpleName());
-            }
-            buf.append(")");
-            return buf.toString();
         }
     }
     /** A matcher that matches all FeatureTypes */
@@ -120,7 +102,7 @@ public class FeatureTypeMatch {
 
     /**
      * Create a FeatureTypeMatcher Object
-     * 
+     *
      * @param element
      */
     public FeatureTypeMatch( IConfigurationElement element ) {
@@ -144,21 +126,10 @@ public class FeatureTypeMatch {
 
     }
     /**
-     * @param element
-     * @return true if matches( element ) is greater the -1
-     */
-    public boolean isMatch( Object element ) {
-        int matches = matches(element);
-        return matches > -1;
-    }
-
-    public static int PERFECT = 0;
-    public static int NO_MATCH = -1;
-    /**
-     * Returns >-1 if the editor has specified a SimpleFeatureType declaration that matches the
-     * SimpleFeature passed in as a parameter. Each inaccuracy increases the count by 1. a 0 is a
-     * perfect match, using the featureType name and namespace. 1 would be all the attributeTypes
-     * have a name and type and there are no extra attributes in the feature's feature type.
+     * Returns >-1 if the editor has specified a FeatureType declaration that matches the Feature
+     * passed in as a parameter. Each inaccuracy increases the count by 1. a 0 is a perfect match,
+     * using the featureType name and namespace. 1 would be all the attributeTypes have a name and
+     * type and there are no extra attributes in the feature's feature type.
      * <p>
      * The matching is done as follows:
      * <ul>
@@ -175,87 +146,47 @@ public class FeatureTypeMatch {
      * find a match and each attributeType may be matched only once</li>
      * </ul>
      * </ul>
-     * 
+     *
      * @param element
-     * @return 0 for a perfect match,
+     * @return true if the editor has specified a FeatureType declaration that matches the Feature
+     *         passed in as a parameter.
      */
     public int matches( Object element ) {
-      SimpleFeatureType schema = null;
-      if (element instanceof SimpleFeature) {
-          schema = ((SimpleFeature) element).getFeatureType();
-      } else if (element instanceof SimpleFeatureType) {
-          schema = (SimpleFeatureType) element;
-      } else if(element instanceof IAdaptable) {
-        IAdaptable adaptable = (IAdaptable) element;
-        if(adaptable.getAdapter(SimpleFeatureType.class) != null) {
-          schema = (SimpleFeatureType) adaptable.getAdapter(SimpleFeatureType.class);
-        } else if(adaptable.getAdapter(SimpleFeature.class) != null) {
-          schema = ((SimpleFeature) adaptable.getAdapter(SimpleFeatureType.class)).getFeatureType();
-        }
-      }
-
-        if (schema != null) {
-            Name featureName = schema.getName();
+        int accuracy = 0;
+        if (element instanceof Feature) {
+            Feature feature = (Feature) element;
             if (namespace != null) {
-
-                if (namespace.equals(featureName.getNamespaceURI())
-                        && typeName.equals(featureName.getLocalPart())) {
-                    return PERFECT;
-                }
-                return NO_MATCH;
+                if (namespace.equals(feature.getFeatureType().getNamespace())
+                        && typeName.equals(feature.getFeatureType().getTypeName()))
+                    return 0;
+                return -1;
             }
-            if (attributes.length == 0) {
-                return NO_MATCH;
-            }
-            int accuracy = 0;
+            if (attributes.length == 0)
+                return -1;
             accuracy++;
-            List<AttributeDescriptor> matched = new ArrayList<AttributeDescriptor>();
-            // 1st pass check all named attributes are accounted for
+            List<AttributeType> matched = new ArrayList<AttributeType>();
             for( AttributeMatcher current : attributes ) {
-                if (current.name == null) {
-                    continue; // skip
-                }
-                AttributeDescriptor currentMatch = current.match(schema, matched);
-                if (currentMatch == null) {
-                    return NO_MATCH;
-                }
+                if (current.name == null)
+                    continue;
+                AttributeType currentMatch = current.match(feature.getFeatureType(), matched);
+                if (currentMatch == null)
+                    return -1;
                 matched.add(currentMatch);
             }
-            // section pass check unnamed attributes ... match default geometry type?
             for( AttributeMatcher current : attributes ) {
-                if (current.name != null) {
+                if (current.name != null)
                     continue;
-                }
+
                 accuracy++;
 
-                AttributeDescriptor currentMatch = current.match(schema, matched);
-                if (currentMatch == null) {
-                    return NO_MATCH;
-                }
+                AttributeType currentMatch = current.match(feature.getFeatureType(), matched);
+                if (currentMatch == null)
+                    return -1;
                 matched.add(currentMatch);
             }
-            accuracy += schema.getAttributeCount() - matched.size();
+            accuracy += feature.getFeatureType().getAttributeCount() - matched.size();
             return accuracy;
         }
-        return NO_MATCH;
-    }
-
-    @Override
-    public String toString() {
-        StringBuffer buf = new StringBuffer();
-        buf.append("FeatureTypeMatch ");
-        if (this.namespace != null) {
-            buf.append(this.namespace);
-        }
-        buf.append(this.typeName);
-        if (this.attributes != null) {
-            for( int i = 0; i < this.attributes.length; i++ ) {
-                buf.append(this.attributes[i]);
-                if (i < this.attributes.length - 1) {
-                    buf.append(",");
-                }
-            }
-        }
-        return buf.toString();
+        return -1;
     }
 }

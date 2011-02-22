@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.TreeItem;
 /**
  * Delegates to the {@link ICellEditorValidator} object responsible for the modifying the
  * {@link SummaryData} object. (It is obtained from the {@link SummaryData})
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

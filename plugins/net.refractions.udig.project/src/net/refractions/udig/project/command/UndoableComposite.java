@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 /**
  * A UndoableCommand composed of multiple UndoableCommands. Executes and rollsback as a atomic
  * command. See Composite Pattern.
- * 
+ *
  * @author jeichar
  * @since 0.3
  * @see CompositeCommand
@@ -27,7 +27,7 @@ UndoableMapCommand, PostDeterminedEffectCommand {
 
     /**
      * Creates a new instance of UndoableComposite
-     * 
+     *
      * @param undoableCommands an ordered list of UndoableCommands
      */
     public UndoableComposite() {
@@ -35,21 +35,21 @@ UndoableMapCommand, PostDeterminedEffectCommand {
     }
     /**
      * Creates a new instance of UndoableComposite
-     * 
+     *
      * API List<UndoableCommand>
-     * 
+     *
      * @param undoableCommands an ordered list of UndoableCommands
      */
     public UndoableComposite(List undoableCommands) {
         super(undoableCommands);
     }
 
-    
+
     @Override
     public void run( IProgressMonitor monitor ) throws Exception {
         execute(monitor);
     }
-    
+
 	/**
 	 * @see net.refractions.udig.project.internal.command.UndoableCommand#rollback()
 	 */
@@ -96,14 +96,11 @@ UndoableMapCommand, PostDeterminedEffectCommand {
                 }
                 subProgressMonitor.done();
             }
-            
+
         }
         monitor.done();
 
         return changedState;
-    }
-    public void add( MapCommand command ) {
-        commands.add( command );
     }
 
 }

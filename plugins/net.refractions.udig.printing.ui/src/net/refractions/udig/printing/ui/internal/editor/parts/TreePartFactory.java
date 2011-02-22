@@ -45,17 +45,17 @@ import org.eclipse.gef.EditPartFactory;
 public class TreePartFactory implements EditPartFactory {
 
     public EditPart createEditPart( EditPart context, Object model ) {
-        
+
         if (model instanceof Box) {
             Box box = (Box) model;
             if (model instanceof Page) {
                 return new PageTreeEditPart((Page) model);
             }
-            
+
             if (box.getBoxPrinter() instanceof MapBoxPrinter) {
                 return new MapTreePart(box);
             }
-            
+
             return new BoxTreeEditPart((Box) model);
         }
         return null;

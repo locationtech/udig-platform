@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 <toc label="Guida Utente">
-            
+
         <topic label="HOME" href="IT/HOME.html">
-        
-                            
+
+
         <topic label="Come iniziare" href="IT/Come iniziare.html">
-        
-                            
+
+
         <topic label="Primi passi" href="IT/Primi passi.html">
-        
+
                 </topic>
         </topic>
         </topic>

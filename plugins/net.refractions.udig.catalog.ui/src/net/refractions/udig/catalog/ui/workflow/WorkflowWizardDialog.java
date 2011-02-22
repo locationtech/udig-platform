@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.internal.Messages;
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.ProgressManager;
 
@@ -21,53 +22,41 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
-public class WorkflowWizardDialog extends WizardDialog implements Listener {
+public class WorkflowWizardDialog extends WizardDialog implements Workflow.Listener {
 
+    /** the wizard * */
+    WorkflowWizard wizard;
     /** flag to indicate whether headless execution is occurring * */
     boolean headless = false;
-    private WorkflowWizardAdapter workflowWizardAdapter;
 
     public WorkflowWizardDialog( Shell parentShell, WorkflowWizard wizard ) {
         super(parentShell, wizard);
+//        setShellStyle(getShellStyle()|SWT.ON_TOP);
 
+        this.wizard = wizard;
 
         wizard.getWorkflow().addListener(this);
     }
 
-    @Override
-    protected WorkflowWizard getWizard() {
-        return (WorkflowWizard) super.getWizard();
-    }
-    
     public WorkflowWizard getWorkflowWizard() {
-        return getWizard();
+        return wizard;
     }
 
-    @Override
-    public WorkflowWizardPage getCurrentPage() {
-        return (WorkflowWizardPage) super.getCurrentPage();
-    }
-    
     @Override
     protected void nextPressed() {
         // if there are no more states, do nothing
-        if (getWorkflowWizard().getWorkflow().isFinished()){
+        if (getWorkflowWizard().getWorkflow().isFinished())
             return;
-        }
-        if( !getCurrentPage().leavingPage() ){
-            return;
-        }
-        
+
         // move workflow to next state, start up a new thread to do it.
-        final Workflow pipe = getWizard().getWorkflow();
+        final Workflow pipe = wizard.getWorkflow();
 
         try {
-        	// don't fork, can cancel during transition
-            run(false, true, new IRunnableWithProgress(){
+            run(true, true, new IRunnableWithProgress(){
 
                 public void run( IProgressMonitor monitor ) throws InvocationTargetException,
                         InterruptedException {
-                    pipe.next(monitor); // progress through the workflow
+                    pipe.next(monitor);
                 }
 
             });
@@ -76,39 +65,41 @@ public class WorkflowWizardDialog extends WizardDialog implements Listener {
         }
 
     }
-    
+
     @Override
-    public void run( boolean fork, boolean cancelable, final IRunnableWithProgress request )
+    public void run( boolean fork, boolean cancelable, final IRunnableWithProgress runnable1 )
             throws InvocationTargetException, InterruptedException {
         if( headless && Display.getCurrent()==null ){
-            PlatformGIS.run(request);
+            PlatformGIS.run(runnable1);
             return;
         }
-        
+
         if (getProgressMonitor() instanceof ProgressMonitorPart) {
                 ProgressMonitorPart part = (ProgressMonitorPart) getProgressMonitor();
                 if( Display.getCurrent()!=null )
                     part.setVisible(true);
-                
+
                 try {
                     setEnablement(buttonBar,false);
-                    if( fork ){
-                        PlatformGIS.run(request, part);
-                    }else{
-                        PlatformGIS.runBlockingOperation(request, part);
-                    }
+                    PlatformGIS.runBlockingOperation(new IRunnableWithProgress(){
+
+                        public void run( IProgressMonitor monitor ) throws InvocationTargetException,
+                                InterruptedException {
+                            runnable1.run(monitor);
+                        }
+
+                    }, part);
                 } finally {
                     setEnablement(buttonBar, true);
                     if(Display.getCurrent()!=null && !part.isDisposed())
                         part.setVisible(false);
                 }
-            } else {
-                if( fork ){
-                    PlatformGIS.run(request);
-                } else {
-                    PlatformGIS.runBlockingOperation(request, ProgressManager.instance().get());
-                }
-            }
+            } else
+                fallbackRun(fork, cancelable, runnable1);
+
+        if (buttonBar != null && !buttonBar.isDisposed()){
+                updateButtons();
+        }
     }
 
     private void setEnablement(Control controlA, boolean enabled ) {
@@ -124,29 +115,42 @@ public class WorkflowWizardDialog extends WizardDialog implements Listener {
             if( controlA != getButton(IDialogConstants.CANCEL_ID))
             controlA.setEnabled(enabled);
         }
-            
+
+    }
+
+    private void fallbackRun( boolean fork, boolean cancelable, final IRunnableWithProgress runnable1 )
+            throws InvocationTargetException, InterruptedException {
+        IRunnableWithProgress runnable = new IRunnableWithProgress(){
+            public void run( IProgressMonitor monitor ) throws InvocationTargetException,
+                    InterruptedException {
+                PlatformGIS.runBlockingOperation(new IRunnableWithProgress(){
+
+                    public void run( IProgressMonitor monitor ) throws InvocationTargetException,
+                            InterruptedException {
+                        runnable1.run(monitor);
+                    }
+
+                }, monitor);
+            }
+        };
+
+        super.run(fork, cancelable, runnable);
     }
 
     protected void nextPressedSuper() {
         try {
             super.nextPressed();
         } catch (Exception e) {
-            setErrorMessage(Messages.WorkflowWizard_PageTransitionError);
-            CatalogUIPlugin.log("WorkflowWizardDialog#nextPressedSuper(): Error moving to "+getWorkflowWizard().getWorkflow().getCurrentState().getName(), e); //$NON-NLS-1$
+            setErrorMessage("An error occurred during page transition.  This is most likely a programming error.  Please report it");
+            CatalogUIPlugin.log("WorkflowWizardDialog#nextPressedSuper(): Error moving to "+getWorkflowWizard().getWorkflow().getCurrentState().getName(), e);
         }
     }
 
     @Override
     protected void backPressed() {
         // move workflow to previous state, start up a new thread to do it.
-        final Workflow pipe = getWizard().getWorkflow();
+        final Workflow pipe = wizard.getWorkflow();
 
-        if( pipe.getCurrentState().getPreviousState()==null ){
-            // this means that this wizard is part of a larger wizard and we need to return control
-            // to it.  See setAdapter for details
-            workflowWizardAdapter.backPressed();
-        }
-        
         IRunnableWithProgress runnable = new IRunnableWithProgress(){
             public void run( IProgressMonitor monitor ) throws InvocationTargetException,
                     InterruptedException {
@@ -155,7 +159,7 @@ public class WorkflowWizardDialog extends WizardDialog implements Listener {
             }
         };
         try {
-            run(false, true, runnable);
+            run(true, true, runnable);
         } catch (InvocationTargetException e) {
             CatalogUIPlugin.log(e.getLocalizedMessage(), e);
         } catch (InterruptedException e) {
@@ -169,35 +173,7 @@ public class WorkflowWizardDialog extends WizardDialog implements Listener {
 
     @Override
     protected void finishPressed() {
-        // if there are no more states, do nothing
-        if (getWorkflowWizard().getWorkflow().isFinished())
-            return;
-
-        /*
-         * what happens if the page is driven by the state?  I
-         * guess it means the state knows that it can pass so 
-         * go for it.
-         */
-        if( !getCurrentPage().leavingPage() ){
-            return;
-        }
-        
-        // move workflow to next state, start up a new thread to do it.
-        final Workflow pipe = getWizard().getWorkflow();
-
-        try {
-            run(false, true, new IRunnableWithProgress(){
-
-                public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                        InterruptedException {
-                    pipe.run(monitor);
-                }
-
-            });
-        } catch (Exception e) {
-            CatalogUIPlugin.log("Exception while moving workflow forward", e); //$NON-NLS-1$
-        }
-
+        nextPressed();
     }
 
     protected void finishPressedSuper() {
@@ -211,12 +187,6 @@ public class WorkflowWizardDialog extends WizardDialog implements Listener {
     }
 
     @Override
-    public boolean close() {
-        getWorkflowWizard().getWorkflow().shutdown();
-        return super.close();
-    }
-    
-    @Override
     public void showPage( IWizardPage page ) {
         super.showPage(page);
 
@@ -227,16 +197,16 @@ public class WorkflowWizardDialog extends WizardDialog implements Listener {
 
     /**
      * Runs the dialog in headless mode. The dialog will run headless while the workflow can run.
-     * 
+     *
      * @param monitor
-     * @param true if the workflow ran and completed correctly. 
+     * @param true if the workflow ran and completed correctly.
      *        False if it failed or the user cancelled (because user interaction was required)
      */
     public boolean runHeadless( IProgressMonitor monitor ) {
         try {
             this.headless = true;
             int ticks = getWorkflowWizard().getWorkflow().getStates().length * 10;
-            monitor.beginTask(Messages.WorkflowWizardDialog_importTask, ticks); 
+            monitor.beginTask(Messages.WorkflowWizardDialog_importTask, ticks);
             // we must ensure that the contents of the dialog (shell) have been
             // creates, needed for wizard pages
             if (getShell() == null) {
@@ -248,12 +218,12 @@ public class WorkflowWizardDialog extends WizardDialog implements Listener {
                     });
             }
 
-            Workflow pipe = getWizard().getWorkflow();
+            Workflow pipe = wizard.getWorkflow();
             pipe.run(new SubProgressMonitor(monitor, ticks));
             final boolean[] result = new boolean[]{true};
             if (!pipe.isFinished()) {
                 // show the page corresponding to the current state
-                final IWizardPage page = getWizard().getPage(pipe.getCurrentState());
+                final IWizardPage page = wizard.getPage(pipe.getCurrentState());
                 if (page != null) {
                     // ensure the page has a state if it is a DataPipelinePage
                     if (page instanceof WorkflowWizardPage) {
@@ -289,9 +259,9 @@ public class WorkflowWizardDialog extends WizardDialog implements Listener {
         // start the workflow
         // TODO: This can potentially freeze up the ui if the fist state
         // does alot of work in the #init(IProgressMonitor) method. Perhaps
-        // it should be made part of the contract of the dialog that the pipe
+        // it should be made part of the contact of the dialog that the pipe
         // already be started before open is called.
-        final Workflow pipe = getWizard().getWorkflow();
+        final Workflow pipe = wizard.getWorkflow();
         final IRunnableWithProgress runnable = new IRunnableWithProgress(){
             public void run( IProgressMonitor monitor ) throws InvocationTargetException,
                     InterruptedException {
@@ -341,7 +311,7 @@ public class WorkflowWizardDialog extends WizardDialog implements Listener {
         if (headless)
             return;
 
-            // move the wizard to the previous page
+            // move the wizard to the previopus page
             PlatformGIS.syncInDisplayThread(new Runnable(){
 
                 public void run() {
@@ -363,31 +333,14 @@ public class WorkflowWizardDialog extends WizardDialog implements Listener {
     public void finished( State last ) {
         if (headless) {
             // signal to the wizard that we are finished
-            getWizard().performFinish();
+            wizard.performFinish();
         } else {
             Runnable runnable=new Runnable(){
                 public void run() {
                     finishPressedSuper();
                 }
             };
-            PlatformGIS.asyncInDisplayThread(runnable, true);
+            PlatformGIS.syncInDisplayThread(runnable);
         }
-    }
-
-    /**
-     * This method is a hook for the {@link WorkflowWizardAdapter} so that it can get notification when the previous button
-     * is pressed on the first page.  If there is a {@link WorkflowWizardAdapter} it means that this wizard is really part of a
-     * large wizard that is created by the eclipse framework.  This dialog is opened to handle the workflow wizard work but
-     * it needs the previous button on always and needs to notify the adapter when that button is pressed so that this
-     * dialog can be hidden until needed again.
-     *
-     * @param workflowWizardAdapter the adapter that interfaces with the other wizard.
-     * @param previousPage the page that is previous to this page 
-     */
-    void setAdapter(final WorkflowWizardAdapter workflowWizardAdapter, IWizardPage previousPage ) {
-        this.workflowWizardAdapter = workflowWizardAdapter;
-        IWizardPage startingPage = getWizard().getStartingPage();
-        startingPage.setPreviousPage(previousPage);
-        updateButtons();
     }
 }

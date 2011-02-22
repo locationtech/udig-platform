@@ -1,19 +1,19 @@
 <copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
-								
+
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/vecmath-1.3.jar"/>
-								
-								
+
+
 								<include name="**/opengis-legacy-0.1.jar"/>
 								<include name="**/mockrunner-0.2.jar"/>
-								
+
 								<include name="**/commons-jelly-tags-velocity-20030303.205659.jar"/>
 								<include name="**/velocity-1.3.jar"/>
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
 								<include name="**/vecmath-1.3.jar"/>
@@ -26,10 +26,10 @@
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/jlfgr-1.0.jar"/>
 								<include name="**/opengis-css-0.1.jar"/>
-								
-								
-								
-								
+
+
+
+
 								<include name="**/vecmath-1.3.jar"/>
 								<include name="**/units-0.01.jar"/>
 								<include name="**/commons-jelly-tags-velocity-20030303.205659.jar"/>
@@ -37,14 +37,14 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/commons-jelly-tags-velocity-20030303.205659.jar"/>
 								<include name="**/velocity-1.3.jar"/>
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/jdom-1.0b10.jar"/>
 								<include name="**/units-0.01.jar"/>
 								<include name="**/JTS-1.6.jar"/>
@@ -55,9 +55,9 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
-								
-								
+
+
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
 								<include name="**/units-0.01.jar"/>
@@ -67,21 +67,21 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
-								
+
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/vecmath-1.3.jar"/>
-								
-								
+
+
 								<include name="**/opengis-legacy-0.1.jar"/>
 								<include name="**/mockrunner-0.2.jar"/>
-								
+
 								<include name="**/commons-jelly-tags-velocity-20030303.205659.jar"/>
 								<include name="**/velocity-1.3.jar"/>
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
 								<include name="**/vecmath-1.3.jar"/>
@@ -90,7 +90,7 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
 								<include name="**/units-0.01.jar"/>
@@ -135,7 +135,7 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
 								<include name="**/units-0.01.jar"/>
@@ -161,7 +161,7 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/units-0.01.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
@@ -175,27 +175,27 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/commons-cli-1.0.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/commons-jelly-tags-velocity-20030303.205659.jar"/>
 								<include name="**/velocity-1.3.jar"/>
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/units-0.01.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
 								<include name="**/vecmath-1.3.jar"/>
-								
+
 								<include name="**/commons-jelly-tags-velocity-20030303.205659.jar"/>
 								<include name="**/velocity-1.3.jar"/>
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/opengis-legacy-0.1.jar"/>
-								
+
 								<include name="**/units-0.01.jar"/>
 								<include name="**/jsde_sdk-9.0.jar"/>
 								<include name="**/jsde_concurrent-9.0.jar"/>
@@ -206,7 +206,7 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/units-0.01.jar"/>
 								<include name="**/vecmath-1.3.jar"/>
 								<include name="**/db2jcc_dummy-8.2.jar"/>
@@ -217,29 +217,29 @@
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"/></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
-								
-								
+
+
+
 								<include name="**/log4j-1.2.8.jar"/>
 								<include name="**/commons-jelly-tags-velocity-20030303.205659.jar"/>
 								<include name="**/velocity-1.3.jar"/>
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/commons-jelly-tags-velocity-20030303.205659.jar"/>
 								<include name="**/velocity-1.3.jar"/>
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/hsqldb-1.7.3.jar"/>
 								<include name="**/commons-jelly-tags-velocity-20030303.205659.jar"/>
 								<include name="**/velocity-1.3.jar"/>
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
 								<include name="**/units-0.01.jar"/>
@@ -255,7 +255,7 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
 								<include name="**/vecmath-1.3.jar"/>
@@ -270,10 +270,10 @@
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
 								<include name="**/vecmath-1.3.jar"/>
-								
+
 								<include name="**/geoapi-20050403.jar"/>
 								<include name="**/units-0.01.jar"/>
-								
+
 								<include name="**/commons-jelly-tags-velocity-20030303.205659.jar"/>
 								<include name="**/velocity-1.3.jar"/>
 								</fileset></copy>
@@ -285,7 +285,7 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/vecmath-1.3.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
@@ -295,18 +295,18 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/units-0.01.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
 								<include name="**/vecmath-1.3.jar"/>
-								
+
 								<include name="**/commons-jelly-tags-velocity-20030303.205659.jar"/>
 								<include name="**/velocity-1.3.jar"/>
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/vecmath-1.3.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
@@ -317,15 +317,15 @@
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/mysql-connector-java-3.0.9.jar"/>
-								
+
 								<include name="**/commons-jelly-tags-velocity-20030303.205659.jar"/>
 								<include name="**/velocity-1.3.jar"/>
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
-								
+
 								<include name="**/dummy_spatial-8.1.8.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
 								<include name="**/vecmath-1.3.jar"/>
@@ -334,7 +334,7 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/postgis-driver-1.0.jar"/>
 								<include name="**/postgresql-74.213.jar"/>
 								<include name="**/wkb4j-1.0-RC1.jar"/>
@@ -347,7 +347,7 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/jdom-1.0b10.jar"/>
 								<include name="**/units-0.01.jar"/>
 								<include name="**/JTS-1.6.jar"/>
@@ -364,18 +364,18 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
-								
+
 								<include name="**/commons-jelly-tags-velocity-20030303.205659.jar"/>
 								<include name="**/velocity-1.3.jar"/>
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
+
 								<include name="**/JTS-1.6.jar"/>
-								
-								
+
+
 								<include name="**/units-0.01.jar"/>
 								<include name="**/vecmath-1.3.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
@@ -385,8 +385,8 @@
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
 		<copy todir="lib" flatten="true"><fileset dir="${user.home}/.maven/repository"><include name="**/junit-3.8.1.jar"/>
-								
-								
+
+
 								<include name="**/JTS-1.6.jar"/>
 								<include name="**/units-0.01.jar"/>
 								<include name="**/opengis-legacy-0.1.jar"/>
@@ -396,4 +396,4 @@
 								<include name="**/velocity-1.3.jar"/>
 								<include name="**/geoapi-20050403.jar"/>
 								</fileset></copy>
-		
+

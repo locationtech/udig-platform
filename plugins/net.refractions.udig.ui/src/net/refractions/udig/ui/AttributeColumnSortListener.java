@@ -21,11 +21,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TableColumn;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 /**
  * Listens for clicks on the column header and sorts the columns according to the direction of the column.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -52,16 +52,16 @@ class AttributeColumnSortListener implements Listener {
             dir = SWT.DOWN;
         }
         // sort the data based on column and direction
-        Comparator<SimpleFeature> comparator = getComparator(selectedColumn, SWT.DOWN);
+        Comparator<Feature> comparator = getComparator(selectedColumn, SWT.DOWN);
         featureTable.sort( comparator, dir, selectedColumn );
         // update data displayed in tree
     }
 
-    private Comparator<SimpleFeature> getComparator(TableColumn currentColumn, int dir) {
+    private Comparator<Feature> getComparator(TableColumn currentColumn, int dir) {
         if( columnProperty.equals(FeatureTableControl.FEATURE_ID_COLUMN_PROPERTY) ){
             return new FIDComparator(dir);
         }
-        return new AttributeComparator(dir, columnProperty); 
+        return new AttributeComparator(dir, columnProperty);
     };
 
 }

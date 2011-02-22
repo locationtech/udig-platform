@@ -30,11 +30,11 @@ import org.eclipse.draw2d.geometry.Rectangle;
  */
 public class PageFigure extends Layer {
 
-    private static final int INSETS = 0;
+    private static final int INSETS = 10;
 
     public PageFigure( Dimension size ) {
-        int twoInsets = INSETS * 2;
-        setBounds(new Rectangle(INSETS, INSETS, size.width + twoInsets, size.height + twoInsets));
-        setBorder(new LineBorder(ColorConstants.gray, INSETS));
+        int twoInsets = INSETS*2;
+        setBounds( new Rectangle(-INSETS,-INSETS,size.width+twoInsets ,size.height+twoInsets) );
+        setBorder( new LineBorder(ColorConstants.gray, INSETS) );
     }
 }

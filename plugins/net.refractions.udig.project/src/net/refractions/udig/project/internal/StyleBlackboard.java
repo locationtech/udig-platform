@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * Provides persistence, storage for Style information and shared collaboration between renderers
  * and the user.
- * 
+ *
  * @author Richard Gould
  * @since 0.6.0
  * @model
@@ -40,14 +40,14 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
      * Note: This list should not be accessed by client code - it is for use by the EMF model.
      * Please use the lookup methods provided.
      * </p>
-     * 
+     *
      * @model containment="true" type="StyleEntry"
      */
     List<StyleEntry> getContent();
 
     /**
      * Retreives the style value by the styleId.
-     * 
+     *
      * @param styleId A well known String constant identifying the style agreed upon by the Renderer
      *        and the StyleConfigurator.
      * @return The requested style object or null if it does not exist
@@ -58,7 +58,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
     /**
      * Retreives the style value by the class of the style object. Returns the first object that
      * meets the criteria.
-     * 
+     *
      * @param theClass A superclass of the class of the style object.
      * @return The requested style object or null if it does not exist
      * @model
@@ -67,7 +67,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
 
     /**
      * Convenience method for testing for the existance of a style.
-     * 
+     *
      * @param styleId A well known String constant identifying the style agreed upon by the Renderer
      *        and the StyleConfigurator.
      * @return true if the style extists, otherwise false.
@@ -77,7 +77,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
 
     /**
      * Places a style onto the blackboard.
-     * 
+     *
      * @param styleId A well known String constant identifying the style agreed upon by the Renderer
      *        and the StyleConfigurator. Since the id is assumed to be unique, if a style entry
      *        already exists with the specified id, it should be overwritten.
@@ -88,7 +88,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
 
     /**
      * Loads a style from a URL pointing to a resource. This method blocks.
-     * 
+     *
      * @param url the URL pointing to the style.
      * @param monitor A progress monitor. Allowed to be null.
      * @throws IOException if there is an error getting the style.
@@ -97,7 +97,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
     void put( URL url, IProgressMonitor monitor ) throws IOException;
 
     /**
-     * Sets the styles indicated by the ids to be <em>selected</em>.  
+     * Sets the styles indicated by the ids to be <em>selected</em>.
      * <p>Selected styles are those that were selected/created by the user rather than the framework</p>
      * <p>Example:
      *      <p>A layer has WMS and WFS {@link IGeoResource}s so either a FeatureRenderer or a WMSRenderer could render the layer.</p>
@@ -111,11 +111,11 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
      * @param ids
      */
     void setSelected(String[] ids);
-    
+
     /**
      * Removes the style value identified by styleId from the blackboard. FIXME: Can we reduce this
      * to put( styleId, null ) ?
-     * 
+     *
      * @param styleId A well known String constant identifying the style agreed upon by the Renderer
      *        and the StyleConfigurator.
      * @return The style object removed from the blackboard, or null if no such entry exists.
@@ -125,7 +125,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
 
     /**
      * Creates a clone of the blackboard.
-     * 
+     *
      * @return A clone of the blackboard.
      * @model
      */

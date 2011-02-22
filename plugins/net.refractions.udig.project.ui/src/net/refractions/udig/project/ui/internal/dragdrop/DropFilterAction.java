@@ -14,7 +14,6 @@
  */
 package net.refractions.udig.project.ui.internal.dragdrop;
 
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.MapCommand;
@@ -25,23 +24,21 @@ import net.refractions.udig.ui.IDropAction;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
+import org.geotools.feature.Feature;
+import org.geotools.filter.Filter;
+import org.geotools.filter.FilterFactoryFinder;
 
 /**
  * If the filter can adapt to a layer then features from the layer are copied to the destination
  * layer otherwise the filter is set on the destination as the selection filter.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class DropFilterAction extends IDropAction {
 
     /**
-     * 
+     *
      */
     public DropFilterAction() {
         super();
@@ -56,7 +53,7 @@ public class DropFilterAction extends IDropAction {
     public void perform( IProgressMonitor monitor ) {
         Layer destinationLayer;
         IMap destinationMap;
-        
+
         if( getDestination() instanceof IMap ){
             destinationMap=(IMap) getDestination();
             destinationLayer=(Layer) destinationMap.getEditManager().getSelectedLayer();
@@ -66,22 +63,19 @@ public class DropFilterAction extends IDropAction {
         }else {
             return;
         }
-        
+
         if( getData() instanceof IAdaptable ){
             ILayer layer=(ILayer) ((IAdaptable)getData()).getAdapter(ILayer.class);
             Filter filter=(Filter) ((IAdaptable)getData()).getAdapter(Filter.class);
-            
+
             if (filter == null) {
-            	SimpleFeature feature = (SimpleFeature) ((IAdaptable) getData()).getAdapter(SimpleFeature.class);
-            	FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-				if (feature != null) {
-					filter = filterFactory.id(FeatureUtils.stringToId(
-							filterFactory, feature.getID()));
-				} else {
-					return;
-				}
+            	Feature feature = (Feature) ((IAdaptable) getData()).getAdapter(Feature.class);
+                if( feature!=null )
+                    filter = FilterFactoryFinder.createFilterFactory().createFidFilter(feature.getID());
+                else
+                    return;
             }
-            
+
             if( layer==null){
                 setSelection(filter==null?(Filter)getData():filter, destinationLayer, monitor);
             }else{
@@ -94,11 +88,11 @@ public class DropFilterAction extends IDropAction {
     }
 
     private void setSelection( Filter filter, Layer layer, IProgressMonitor monitor ) {
-        monitor.beginTask(Messages.DropFilterAction_taskname, 2); 
+        monitor.beginTask(Messages.DropFilterAction_taskname, 2);
         monitor.worked(1);
         layer.setFilter(filter);
         monitor.done();
     }
 
- 
+
 }

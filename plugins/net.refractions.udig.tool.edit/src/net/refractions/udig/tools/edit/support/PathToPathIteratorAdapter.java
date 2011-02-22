@@ -16,12 +16,11 @@ package net.refractions.udig.tools.edit.support;
 
 import java.awt.geom.PathIterator;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.PathData;
 
 /**
- * Wraps a Path and allows it to be traversed like a PathIterator.  
+ * Wraps a Path and allows it to be traversed like a PathIterator.
  * <p><em>WARNING: This class takes a snap shot of the path upon creation so any changes after creation will be missed</em></p>
  * @author Jesse
  * @since 1.1.0
@@ -33,7 +32,7 @@ public class PathToPathIteratorAdapter implements PathIterator {
 
     /**
      * Creates a new instance.
-     * 
+     *
      * <p><em>WARNING: This class takes a snap shot of the path upon creation so any changes after creation will be missed</em></p>
      */
     public PathToPathIteratorAdapter( Path path ) {
@@ -48,15 +47,15 @@ public class PathToPathIteratorAdapter implements PathIterator {
 
     private int getSegType() {
         switch(data.types[typeIndex]){
-        case SWT.PATH_MOVE_TO: // moveTo
+        case 1: // moveTo
             return SEG_MOVETO;
-        case SWT.PATH_LINE_TO: // lineTo
+        case 2: // lineTo
             return SEG_LINETO;
-        case SWT.PATH_QUAD_TO: // quadTo
+        case 3: // quadTo
            return SEG_QUADTO;
-        case SWT.PATH_CUBIC_TO: // cubeTo
+        case 4: // cubeTo
             return SEG_CUBICTO;
-        case SWT.PATH_CLOSE: // close
+        case 5: // close
             return SEG_CLOSE;
         }
         throw new IllegalArgumentException(data.types[typeIndex]+" is an unknown value"); //$NON-NLS-1$
@@ -85,15 +84,15 @@ public class PathToPathIteratorAdapter implements PathIterator {
 
     private int getNumPoints() {
         switch(data.types[typeIndex]){
-        case SWT.PATH_MOVE_TO: // moveTo
+        case 1: // moveTo
             return 2;
-        case SWT.PATH_LINE_TO: // lineTo
+        case 2: // lineTo
             return 2;
-        case SWT.PATH_QUAD_TO: // quadTo
+        case 3: // quadTo
            return 4;
-        case SWT.PATH_CUBIC_TO: // cubeTo
+        case 4: // cubeTo
             return 6;
-        case SWT.PATH_CLOSE: // close
+        case 5: // close
             return 0;
         }
         throw new IllegalArgumentException(data.types[typeIndex]+" is an unknown value"); //$NON-NLS-1$

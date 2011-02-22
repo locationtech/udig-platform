@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %plugin.name
+Bundle-SymbolicName: net.refractions.udig.catalog.cgdi; singleton:=true
+Bundle-Version: 1.1.0
+Bundle-Activator: net.refractions.udig.catalog.cgdi.CgdiPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ net.refractions.udig.catalog,
+ org.eclipse.swt,
+ org.eclipse.ui,
+ net.refractions.udig.libs
+Eclipse-LazyStart: true

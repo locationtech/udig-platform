@@ -1,6 +1,7 @@
 package net.refractions.udig.catalog.internal.shp;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -8,90 +9,72 @@ import java.util.Map;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IResolve;
+import net.refractions.udig.catalog.IResolveAdapterFactory;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
 import net.refractions.udig.catalog.ServiceMover;
 import net.refractions.udig.catalog.URLUtils;
 
-import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.shapefile.indexed.IndexedShapefileDataStoreFactory;
 
-/**
- * This class represents a Shapefile that is known to be on disk.
- * <p>
- * This class implements the ServiceMover - indicating that the file(s) can
- * be moved to another location. (specifically client code can adapt to
- * the ServiceMover interface and move the files on disk
- * and update the connection parameters in one go.
- * <p>
- * If this class was public we could provide additional shapefile on
- * disk specific methods (such as create index).
- */
-public class ShapeMover implements ServiceMover {
-	
-	/** Our handle to the shapefile on disk */
-    private ShpServiceImpl shapefile;
-    
-    /**
-     * The following extentions are considered part of the shapefile.
-     */
+public class ShapeMover implements IResolveAdapterFactory, ServiceMover {
+
+    private IResolve resolve;
     private String[] extentions = new String[]{".shp", ".prj", ".dbf", ".shx", ".fix", ".qix",      //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$//$NON-NLS-4$//$NON-NLS-5$//$NON-NLS-6$
             ".xml", ".grx"};  //$NON-NLS-1$//$NON-NLS-2$
 
+    public ShapeMover() {
+    }
+
     public ShapeMover( IResolve resolve ) {
-        this.shapefile = (ShpServiceImpl) resolve;
+        this.resolve = resolve;
     }
 
-    /**
-     * The file as indicated in the connection parameters.
-     * @return file as indicated in the connection parameters (may be relative)
-     */
-    public File toFile(){
-    	Map<String, Serializable> parametersMap = shapefile.getConnectionParams();
-        URL url = (URL) parametersMap.get(ShapefileDataStoreFactory.URLP.key);
-        return URLUtils.urlToFile(url);        
+    @SuppressWarnings("unchecked")
+    public Object adapt( IResolve resolve, Class adapter, IProgressMonitor monitor )
+            throws IOException {
+
+        if (adapter.isAssignableFrom(ShapeMover.class)) {
+            this.resolve = resolve;
+            return new ShapeMover(resolve);
+        }
+
+        return null;
     }
-        
-    /**
-     * Move this shapefile to the indicated destinationFolder.
-     */
+
+    @SuppressWarnings("unchecked")
+    public boolean canAdapt( IResolve resolve, Class adapter ) {
+        return adapter.isAssignableFrom(ShapeMover.class);
+    }
+
     public String move( File destinationFolder ) {
-    	if (!destinationFolder.exists() || !destinationFolder.isDirectory() ){
-    		/*
-             * shapefile are moved into a folder that has to exist
-             */
-            return "Indicated directory does not exist:"+destinationFolder; 
-    	}
-        Map<String, Serializable> parametersMap = shapefile.getConnectionParams();
-        
-        URL url = (URL) parametersMap.get(ShapefileDataStoreFactory.URLP.key);        
-        File file = URLUtils.urlToFile(url);
-        
-        String completeShapeFilePath = file.getAbsolutePath();
-        completeShapeFilePath.replaceAll("\\\\", "/");
-        int dotPosition = completeShapeFilePath.lastIndexOf("."); //$NON-NLS-1$
-        String completeShapefileBasePath = completeShapeFilePath.substring(0, dotPosition);
+        /*
+         * shapefile are moved into a folder that has to exist
+         */
+        if (destinationFolder.isDirectory() && destinationFolder.exists()) {
+            ShpServiceImpl shpServiceImpl = (ShpServiceImpl) resolve;
 
-        // update parameter so service indicates correct file
-        try {
-			updateConnectionParameters(destinationFolder, parametersMap, completeShapeFilePath);
-		} catch (MalformedURLException e) {
-			return "Failed to update the service's connection Parameters";
-		}
-        
-        for( String extention : extentions ) {
-            File tmpFile = new File(completeShapefileBasePath + extention);
-            if (tmpFile.exists()) {
-                // Move file to new directory
-                boolean success = tmpFile.renameTo(new File(destinationFolder, tmpFile
-                        .getName()));
-                if (!success) {
-                    return "Wasn't able to move file: " + tmpFile.getAbsolutePath();
-                }
-            } else {// try uppercase
-                extention = extention.toUpperCase();
-                tmpFile = new File(completeShapefileBasePath + extention);
+            Map<String, Serializable> parametersMap = shpServiceImpl.getConnectionParams();
+            URL url = (URL) parametersMap.get(IndexedShapefileDataStoreFactory.URLP.key);
+
+            File file = URLUtils.urlToFile(url);
+            String completeShapeFilePath = file.getAbsolutePath();
+            completeShapeFilePath.replaceAll("\\\\", "/");
+            int dotPosition = completeShapeFilePath.lastIndexOf("."); //$NON-NLS-1$
+            String completeShapefileBasePath = completeShapeFilePath.substring(0, dotPosition);
+
+            // update parameter so service indicates correct file
+            try {
+				updateConnectionParameters(destinationFolder, parametersMap, completeShapeFilePath);
+			} catch (MalformedURLException e) {
+				return "Failed to update the service's connection Parameters";
+			}
+
+            for( String extention : extentions ) {
+
+                File tmpFile = new File(completeShapefileBasePath + extention);
                 if (tmpFile.exists()) {
                     // Move file to new directory
                     boolean success = tmpFile.renameTo(new File(destinationFolder, tmpFile
@@ -99,15 +82,28 @@ public class ShapeMover implements ServiceMover {
                     if (!success) {
                         return "Wasn't able to move file: " + tmpFile.getAbsolutePath();
                     }
+                } else {// try uppercase
+                    extention = extention.toUpperCase();
+                    tmpFile = new File(completeShapefileBasePath + extention);
+                    if (tmpFile.exists()) {
+                        // Move file to new directory
+                        boolean success = tmpFile.renameTo(new File(destinationFolder, tmpFile
+                                .getName()));
+                        if (!success) {
+                            return "Wasn't able to move file: " + tmpFile.getAbsolutePath();
+                        }
+                    }
                 }
             }
+            URL id = resolve.getIdentifier();
+			IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
+			IService newService = serviceFactory.createService(parametersMap).iterator().next();
+			ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
+			localCatalog.replace(id, newService );
+            return null;
         }
-        ID id = shapefile.getID();
-		IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
-		IService newService = serviceFactory.createService(parametersMap).iterator().next();
-		ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
-		localCatalog.replace(id, newService );
-        return null;
+
+        return "Problems in preparing the consolidation environment.";
     }
 
 	private void updateConnectionParameters(File destinationFolder,
@@ -120,7 +116,7 @@ public class ShapeMover implements ServiceMover {
 		String urlString = destinationPath+shpName;
 		urlString = urlString.replaceAll("//", "/");
 		URL url = new URL("file://"+urlString);
-		parametersMap.put(ShapefileDataStoreFactory.URLP.key, 
+		parametersMap.put(IndexedShapefileDataStoreFactory.URLP.key,
 				url);
 	}
 

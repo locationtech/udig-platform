@@ -14,6 +14,7 @@
  */
 package net.refractions.udig.ui;
 
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,6 +26,8 @@ import net.refractions.udig.ui.action.NewObjectDelegateComparator;
 import net.refractions.udig.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IProduct;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
@@ -61,10 +64,9 @@ import org.eclipse.ui.actions.ContributionItemFactory;
  *        id=&quot;net.refractions.udig.ui.uDigMenuBuilder&quot;/&gt;
  * &lt;/extension&gt;
  * </pre></code>
- * 
+ *
  * @author cole.markham
  * @since 1.0.1
- * @deprecated
  */
 public class UDIGMenuBuilder implements MenuBuilder {
     /**
@@ -464,7 +466,16 @@ public class UDIGMenuBuilder implements MenuBuilder {
 
         if (helpMenu.findUsingPath(ActionFactory.ABOUT.getId()) == null) {
             IAction about = ActionFactory.ABOUT.create(window);
-            about.setText(Messages.UDIGWorkbenchAdvisor_aboutUDig_text);
+            String pattern = Messages.UDIGWorkbenchAdvisor_aboutUDig_text;
+            IProduct product = Platform.getProduct();
+            String productName;
+            if( product == null ){
+            	UiPlugin.log("there is no product so default to uDig", null);
+            	productName = "uDig";
+            }else{
+            	productName = product.getName();
+            }
+			about.setText(MessageFormat.format(pattern, productName));
             // About should always be at the bottom, so just append it to the menu
             helpMenu.add(about);
         }

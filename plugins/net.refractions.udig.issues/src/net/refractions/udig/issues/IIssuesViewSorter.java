@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.ViewerSorter;
 
 /**
  * Interface for a sorting strategy for sorting and expanding elements/branches in the issues view.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -29,15 +29,15 @@ public interface IIssuesViewSorter{
      * Returns a negative, zero, or positive number depending on whether
      * the first element is less than, equal to, or greater than
      * the second element.
-     * 
+     *
      * @param viewer viewer that the sorter is sorting
-     * @param defaultSorter the default sorter.  
+     * @param defaultSorter the default sorter.
      * @param selectedColumn the selected column.
-     * @param direction if true then the order should be ascending if false then descending.  This is changed when the header of the 
+     * @param direction if true then the order should be ascending if false then descending.  This is changed when the header of the
      * selected column is clicked.  It is normal table functionality in many apps.
      * @param e1 the first object
      * @param e2 the second object
-     * @return a negative number if the first element is less  than the 
+     * @return a negative number if the first element is less  than the
      *  second element; the value <code>0</code> if the first element is
      *  equal to the second element; and a positive number if the first
      *  element is greater than the second element
@@ -45,21 +45,21 @@ public interface IIssuesViewSorter{
     public int compare( Viewer viewer, ViewerSorter defaultSorter, Column selectedColumn, boolean direction, Object e1, Object e2 );
 
     /**
-     * Returns the extension id so that the system can instantiate the 
+     * Returns the extension id so that the system can instantiate the
      * sorter again in the future after the workbench has been shutdown.
-     * 
+     *
      * @return pluginID.extensionid.
      */
     String getExtensionID();
     /**
-     * Returns whether this viewer sorter would be affected 
+     * Returns whether this viewer sorter would be affected
      * by a change to the given property of the given element.
      * <p>
      * The default implementation of this method returns <code>false</code>.
      * Subclasses may reimplement.
      * </p>
      *
-     * @param defaultSorter the default sorter.  
+     * @param defaultSorter the default sorter.
      * @param element the element
      * @param property the property
      * @return <code>true</code> if the sorting would be affected,
@@ -77,7 +77,7 @@ public interface IIssuesViewSorter{
      * non-trivial categorization.
      * </p>
      *
-     * @param defaultSorter the default sorter.  
+     * @param defaultSorter the default sorter.
      * @param element the element
      * @return the category
      */

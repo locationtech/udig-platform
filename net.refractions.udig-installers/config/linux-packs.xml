@@ -1,0 +1,29 @@
+<pack name="uDig Application" required="no">
+    <description>The uDig Application</description>
+    <file src="installer-resources/README.html"
+        targetdir="$INSTALL_PATH/uDig" />
+    <file src="installer-resources/LICENSE.txt"
+        targetdir="$INSTALL_PATH/uDig" />
+
+    <!-- Add all the platform independent data. (Notice the excludes) -->
+    <!-- The script will replace @platform@ with the "real" value -->
+    <fileset dir="export/win32.win32.x86/udig"
+        targetdir="$INSTALL_PATH/uDig">
+    </fileset>
+</pack>
+<pack name="Linux x86 Bundle" required="yes">
+    <depends packname="uDig Application" />
+    <description>The files required for running on a Linux</description>
+    <!-- set the launcher to be executable -->
+    <executable targetfile="$INSTALL_PATH/uDig/@{launchername}"
+        stage="never" />
+</pack>
+<pack name="Java Runtime" required="no">
+    <depends packname="uDig Application" />
+    <description>The recommended java runtime for running uDig</description>
+    <!-- set the launcher to be executable -->
+    <fileset dir="jre/linux.x86/jre"
+        targetdir="$INSTALL_PATH/uDig/jre">
+    </fileset>
+</pack>
+

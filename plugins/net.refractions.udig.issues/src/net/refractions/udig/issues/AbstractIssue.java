@@ -33,7 +33,7 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 
 /**
  * Implements the non-required methods of IIssue.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -47,8 +47,8 @@ public abstract class AbstractIssue implements IIssue {
     private String id;
     private IMemento viewMemento;
     private Collection<IIssueListener> listeners=new CopyOnWriteArraySet<IIssueListener>();
-    private Map<String, String> properties=new HashMap<String, String>(); 
-    
+    private Map<String, String> properties=new HashMap<String, String>();
+
 
     public String getViewPartId() {
         return null;
@@ -58,7 +58,7 @@ public abstract class AbstractIssue implements IIssue {
         if( viewMemento!=null )
             memento.putMemento(viewMemento);
     }
-    
+
     /**
      * Memento is stored and is copied to memento argument in {@link #getViewMemento(IMemento)}
      *
@@ -123,28 +123,28 @@ public abstract class AbstractIssue implements IIssue {
         this.description = description;
         notifyListeners(IssueChangeType.DESCRIPTION, description, old);
     }
-    
+
     /**
      * Default implementation returns "default".
      */
     public String getGroupId() {
     	return groupId;
     }
-    
+
     /**
      * Default implementation returns an empty array.
      */
     public String[] getPropertyNames() {
     	return properties.keySet().toArray(new String[0]);
     }
-    
+
     /**
      * Default implementation always returns null;
      */
     public Object getProperty(String property) {
     	return properties.get(property);
     }
-    
+
     /**
      * Sets a property
      *
@@ -182,22 +182,22 @@ public abstract class AbstractIssue implements IIssue {
     public void removeIssueListener( IIssueListener listener ) {
         listeners.remove(listener);
     }
-    
+
     protected void notifyListeners(IssueChangeType type, Object newValue, Object oldValue){
         IssueEvent event=new IssueEvent(this, type, newValue, oldValue);
         for( IIssueListener l : listeners ) {
             l.notifyChanged(event);
         }
     }
-    
+
     protected void notifyPropertyListeners(String propertyName, Object newValue, Object oldValue){
         IssuePropertyChangeEvent event=new IssuePropertyChangeEvent(this, propertyName, newValue, oldValue);
         for( IIssueListener l : listeners ) {
             l.notifyPropertyChanged(event);
         }
-        
+
     }
-    
+
     public String toString(){
         return getId();
     }

@@ -27,10 +27,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
 /**
- * Command used by (@link net.refractions.udig.tools.edit.EditToolHandler} and 
- * {@link net.refractions.udig.tools.edit.OrderedCompositeEventBehavior} for executing the 
+ * Command used by (@link net.refractions.udig.tools.edit.EditToolHandler} and
+ * {@link net.refractions.udig.tools.edit.OrderedCompositeEventBehavior} for executing the
  * behaviours in a tool.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -49,7 +49,7 @@ public class EventBehaviourCommand extends AbstractCommand implements PostDeterm
         this.event=event;
         this.eventType=eventType;
     }
-    
+
     public boolean execute( IProgressMonitor monitor ) throws Exception {
         if( commandsRan.isEmpty() ){
             monitor.beginTask(getName(), commandsRan.size()*12);
@@ -98,7 +98,7 @@ public class EventBehaviourCommand extends AbstractCommand implements PostDeterm
 
     /**
      * Returns true if the handler is unlocked or the behaviour has the correct key.
-     * 
+     *
      * @param behaviour trying to run
      * @return Returns true if the handler is unlocked or the behaviour has the correct key.
      */
@@ -119,7 +119,7 @@ public class EventBehaviourCommand extends AbstractCommand implements PostDeterm
     public String getName() {
         return name;
     }
-    
+
     public void setName( String name ) {
         this.name = name;
     }

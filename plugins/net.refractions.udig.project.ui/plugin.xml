@@ -7,9 +7,7 @@
    <extension-point id="tool" name="%tool.point" schema="schema/tool.exsd"/>
    <extension-point id="featureEditor" name="%featureEditor.point" schema="schema/featureEditor.exsd"/>
    <extension-point id="toolManagers" name="toolManagers" schema="schema/toolManagers.exsd"/>
-   <extension-point id="pdfTemplates" name="PDF Templates" schema="schema/pdfTemplates.exsd"/>
-   <extension-point id="featurePanel" name="%featurePanel.point" schema="schema/featurePanel.exsd"/>
-   
+
  	<extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
@@ -31,19 +29,19 @@
                menubarPath="additions"
                id="net.refractions.udig.project.ui.AddGeoToCurrentMap">
          </action>
-      </objectContribution>      
+      </objectContribution>
       <objectContribution
             objectClass="net.refractions.udig.project.IProject"
             adaptable="true"
             id="net.refractions.udig.project.ui.ProjectContributions">
-       <!--  <action
+         <action
                class="net.refractions.udig.project.ui.internal.actions.ConsolidateAction"
                enablesFor="1"
                id="net.refractions.udig.project.ui.action1"
                label="%consolidate.action"
                menubarPath="additions"
                style="push">
-         </action> -->
+         </action>
          <action
                enablesFor="1"
                label="%rename.label"
@@ -56,21 +54,6 @@
                icon="icons/etool16/newmap_wiz.gif"
                id="net.refractions.udig.project.ui.newMap"
                label="%map.new.label"/>
-         <action
-                 class="net.refractions.udig.project.ui.internal.actions.SaveAsProject"
-                 enablesFor="1"
-                 icon="icons/obj16/project_save.gif"
-                 id="net.refractions.udig.project.ui.saveAsProject"
-                 label="%project.action.save.name"
-                 tooltip="%project.action.save.tooltip">
-         </action>
-         <action
-               class="net.refractions.udig.project.ui.internal.actions.OpenMapAction"
-               enablesFor="+"
-               icon="icons/obj16/project_obj.gif"
-               id="net.refractions.udig.project.ui.action2"
-               label="%map.action.open.name">
-         </action>
       </objectContribution>
      <objectContribution
             adaptable="true"
@@ -140,7 +123,38 @@
                menubarPath="additions"/>
       </objectContribution>
    </extension>
-
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="%ProjectView"
+            icon="icons/obj16/project_obj.gif"
+            category="net.refractions.udig.project.ui.project"
+            class="net.refractions.udig.project.ui.internal.ProjectExplorer"
+            id="net.refractions.udig.project.ui.projectExplorer">
+      </view>
+      <category
+            name="%ProjectCategory"
+            id="net.refractions.udig.project.ui.project">
+      </category>
+      <view
+            name="%LayerManager.name"
+            icon="icons/eview16/layer_view.gif"
+            category="net.refractions.udig.project.ui.project"
+            class="net.refractions.udig.project.ui.internal.LayersView"
+            id="net.refractions.udig.project.ui.layerManager">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="net.refractions.udig.project.ui.internal.MapEditor"
+            contributorClass="net.refractions.udig.project.ui.internal.MapEditorActionBarContributor"
+            default="true"
+            icon="icons/obj16/map_obj.gif"
+            id="net.refractions.udig.project.ui.mapEditor"
+            name="%mapEditor.name">
+      </editor>
+   </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
@@ -167,7 +181,7 @@
          <actionSet id="net.refractions.udig.project.ui.renameSet"/>
          <actionSet id="net.refractions.udig.project.ui.OpenProjectSet"/>
       </perspectiveExtension>
-      <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
+      <perspectiveExtension targetID="net.refractions.udig.ui.alternateMapPerspective">
          <actionSet id="net.refractions.udig.project.ui.LayerActions"/>
          <actionSet id="net.refractions.udig.project.ui.renameSet"/>
          <actionSet id="net.refractions.udig.project.ui.OpenProjectSet"/>
@@ -232,21 +246,28 @@
             objectClass="net.refractions.udig.project.internal.Layer">
       </page>
    </extension>
-
+   <extension
+         point="net.refractions.udig.project.ui.editorInputs">
+      <editorInput
+            editorPartID="net.refractions.udig.project.ui.mapEditor"
+            projectElement="net.refractions.udig.project.internal.impl.MapImpl"
+            class="net.refractions.udig.project.ui.internal.MapEditorInput"
+            name="net.refractions.udig.project.internal.ui.mapEditorInput"/>
+   </extension>
       <extension
             id="net.refractions.udig.project.ui.adapters"
             point="org.eclipse.core.runtime.adapters">
      <factory
            class="net.refractions.udig.project.ui.internal.adapters.FeatureAdapterFactory"
-           adaptableType="org.opengis.feature.Feature">
+           adaptableType="org.geotools.feature.Feature">
         <adapter type="org.eclipse.ui.views.properties.IPropertySource"/>
         <adapter type="org.eclipse.ui.views.properties.IPropertySource2"/>
         <adapter type="org.eclipse.jface.viewers.ITreeContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.IStructuredContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.IContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>
-        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
-        <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>   
+        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>
         <adapter type="net.refractions.udig.project.ui.internal.adapters.FeatureTableProvider"/>
         <adapter type="org.eclipse.core.runtime.IAdaptable"/>
      </factory>
@@ -258,9 +279,9 @@
         <adapter type="org.eclipse.jface.viewers.ITreeContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.IStructuredContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.IContentProvider"/>
-        <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>   
-        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
-        <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>   
+        <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>
         <adapter type="net.refractions.udig.project.ui.internal.adapters.FeatureTableProvider"/>
 	</factory>
      <factory
@@ -272,8 +293,8 @@
         <adapter type="org.eclipse.jface.viewers.IStructuredContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.IContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>
-        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
-        <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>   
+        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>
         <adapter type="net.refractions.udig.project.ui.internal.adapters.FeatureTableProvider"/>
      </factory>
      <factory
@@ -283,8 +304,8 @@
         <adapter type="org.eclipse.jface.viewers.IStructuredContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.IContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>
-        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
-        <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>   
+        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>
         <adapter type="net.refractions.udig.project.ui.internal.adapters.FeatureTableProvider"/>
      </factory>
      <factory
@@ -296,7 +317,7 @@
         <adapter type="org.eclipse.jface.viewers.IStructuredContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.IContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>
-        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
+        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>
         <adapter type="net.refractions.udig.project.ui.internal.adapters.FeatureTableProvider"/>
      </factory>
   </extension>
@@ -337,7 +358,7 @@
       <extension
             id="net.refractions.udig.ui.layerDecorators"
             name="%layerDecorators.name"
-            point="org.eclipse.ui.decorators">      
+            point="org.eclipse.ui.decorators">
          <decorator
                lightweight="false"
                adaptable="false"
@@ -378,6 +399,19 @@
               state="true"/>
      </extension>
       <extension
+            point="net.refractions.udig.ui.newObjectAction">
+         <action
+               label="%map.new.label"
+               icon="icons/etool16/newmap_wiz.gif"
+               class="net.refractions.udig.project.ui.internal.actions.AddToNewMap"
+               id="net.refractions.udig.project.ui.newMap"/>
+         <action
+               label="%layer.new.label"
+               icon="icons/etool16/newlayer_wiz.gif"
+               class="net.refractions.udig.project.ui.internal.actions.AddLayersAction"
+               id="net.refractions.udig.project.ui.newLayer"/>
+      </extension>
+      <extension
             point="org.eclipse.ui.contexts">
          <context
                description="%context.tool.description"
@@ -385,7 +419,7 @@
                name="%Tools"
                parentId="org.eclipse.ui.contexts.window"/>
       </extension>
-      
+
 	<extension
        point="net.refractions.udig.ui.dropAction">
 	    <action
@@ -415,7 +449,6 @@
      </action>
      <action
            class="net.refractions.udig.project.ui.internal.actions.LayerDropAction"
-           enablesFor="+"
            name="%LayerDropAction.name">
         <destination class="net.refractions.udig.project.ILayer"/>
         <acceptedType class="net.refractions.udig.project.ILayer"/>
@@ -426,10 +459,8 @@
         <destination
               adapt="true"
               class="net.refractions.udig.project.ILayer"/>
-        <acceptedType
-              adapt="true"
-              class="org.opengis.filter.Filter"/>
-        <acceptedType class="org.opengis.feature.Feature"/>
+        <acceptedType class="org.geotools.filter.Filter"/>
+        <acceptedType class="org.geotools.feature.Feature"/>
         <destination
               adapt="true"
               class="net.refractions.udig.project.IMap"/>
@@ -464,17 +495,8 @@
               adapt="true"
               class="net.refractions.udig.catalog.IGeoResource"/>
         <acceptedType
-        	  adapt="true"
-        	  class="net.refractions.udig.catalog.IResolveFolder"/>
-        <acceptedType
               adapt="true"
               class="net.refractions.udig.catalog.IService"/>
-        <acceptedType
-              adapt="true"
-              class="java.lang.String"/>
-              <acceptedType
-              adapt="true"
-              class="java.io.File"/>
      </action>
      <action
            class="net.refractions.udig.project.ui.internal.dragdrop.MoveLayerDropAction"
@@ -515,6 +537,7 @@
         <destination
               adapt="false"
               class="net.refractions.udig.project.internal.Project"/>
+        <description/>
         <acceptedType
               adapt="false"
               class="org.eclipse.emf.ecore.EObject"/>
@@ -658,7 +681,10 @@
             sequence="F2"/>
 
    </extension>
-
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup class="net.refractions.udig.project.ui.internal.StartupOpenMaps"/>
+   </extension>
    <extension
          point="net.refractions.udig.catalog.ui.connectionFactory">
       <factory class="net.refractions.udig.project.internal.ui.wizard.URLConnectionFactory"
@@ -709,12 +735,6 @@
            class="net.refractions.udig.project.ui.preferences.StylePreferencePage"
            id="net.refractions.udig.project.ui.preferences.style"
            name="%style.preferences.name"/>
-     <page
-           category="net.refractions.udig.project.ui.preferences.tool"
-           class="net.refractions.udig.project.ui.MousePreferences"
-           id="net.refractions.udig.project.ui.preferences.mouse"
-           name="%tool.mouse.preferences.name">
-     </page>
    </extension>
    <extension
         point="org.eclipse.ui.exportWizards">
@@ -726,23 +746,20 @@
          <description>
             %exportToImage.desc
          </description>
-      </wizard>     
+      </wizard>
      <wizard
-           class="net.refractions.udig.project.ui.wizard.export.ExportFeatureSelection$FeatureSelectionExportWizard"
+           class="net.refractions.udig.project.ui.internal.wizard.ExportLayer"
            icon="icons/etool16/exportselection_wiz.gif"
            id="net.refractions.udig.project.ui.dataExportWizard"
            name="%selectionExport.name">
+        <selection
+              class="net.refractions.udig.project.IMap"
+              />
+        <selection
+              class="net.refractions.udig.project.ILayer"
+              />
         <description>
            %selectionExport.desc
-        </description>
-     </wizard>
-     <wizard
-           class="net.refractions.udig.project.ui.wizard.export.project.ExportProjectWizard"
-           icon="icons/etool16/exportproject_wiz.png"
-           id="net.refractions.udig.project.ui.export.project"
-           name="%exportProject.name">
-        <description>
-           %exportProject.desc
         </description>
      </wizard>
    </extension>
@@ -756,7 +773,121 @@
          point="org.eclipse.core.runtime.preferences">
       <initializer class="net.refractions.udig.project.ui.preferences.PreferenceInitializer"/>
    </extension>
-
+   <extension
+         id="net.refractions.udig.project.ui.map"
+         point="org.eclipse.ui.actionSets">
+       <actionSet
+            id="net.refractions.udig.project.ui.map.menu"
+            label="Map"
+            visible="false">
+      </actionSet>
+      <actionSet
+            id="net.refractions.udig.project.ui.layer.menu"
+            label="Layer">
+      </actionSet>
+      <actionSet
+            label="%LayerActions.label"
+            description="%LayerActions.name"
+            visible="false"
+            id="net.refractions.udig.project.ui.LayerActions">
+                  <action
+                        class="net.refractions.udig.project.ui.internal.actions.NewLayerAction"
+                        definitionId="net.refractions.udig.project.ui.command.new.layer"
+                        icon="icons/etool16/newlayer_wiz.gif"
+                        id="net.refractions.udig.project.ui.action1"
+                        label="%new.label"
+                        menubarPath="layer/add.ext"
+                        style="push">
+                  </action>
+                  <action
+                        label="%add.label"
+                        class="net.refractions.udig.project.ui.internal.actions.AddLayersAction"
+                        tooltip="%add.tooltip"
+                        icon="icons/etool16/newlayer_wiz.gif"
+                        definitionId="net.refractions.udig.project.ui.addLayerCommand"
+                        style="push"
+                        menubarPath="layer/add.ext"
+                        id="net.refractions.udig.project.ui.AddLayerAction">
+        </action>
+                  <action
+                        class="net.refractions.udig.project.ui.internal.actions.MylarAction"
+                        icon="icons/elcl16/mylar_mode.gif"
+                        id="net.refractions.udig.project.ui.mylar.action"
+                        label="%mylarAction.label"
+                        menubarPath="map/mode.ext"
+                        style="push">
+                  </action>
+    </actionSet>
+      <actionSet
+            label="%renameActionSet.label"
+            description="%renameActionSet.description"
+            visible="false"
+            id="net.refractions.udig.project.ui.renameSet">
+         <action
+               allowLabelUpdate="true"
+               class="net.refractions.udig.project.ui.internal.actions.Rename"
+               definitionId="net.refractions.udig.project.ui.renameCommand"
+               enablesFor="1"
+               id="net.refractions.udig.project.ui.renameAction"
+               label="%rename.label"
+               menubarPath="file/refresh"
+               style="push"
+               tooltip="%rename.tooltip">
+            <enablement>
+               <or>
+                  <objectClass name="net.refractions.udig.project.IProjectElement"/>
+                  <objectClass name="net.refractions.udig.project.ILayer"/>
+                  <objectClass name="net.refractions.udig.project.IProject"/>
+               </or>
+            </enablement>
+         </action>
+      </actionSet>
+      <actionSet
+            label="%OpenProjectSet.label"
+            visible="false"
+            id="net.refractions.udig.project.ui.OpenProjectSet">
+         <action
+               label="%project.action.open.name"
+               icon="icons/obj16/project_obj.gif"
+               class="net.refractions.udig.project.ui.internal.actions.OpenProject"
+               tooltip="%project.action.open.tooltip"
+               definitionId="net.refractions.udig.project.ui.openProjectCommand"
+               style="push"
+               menubarPath="file/project.ext"
+               id="net.refractions.udig.project.ui.openProject"/>
+         <action
+               allowLabelUpdate="true"
+               enablesFor="+"
+               label="%project.close.label"
+               tooltip="%project.close.tooltip"
+               class="net.refractions.udig.project.ui.internal.actions.CloseProject"
+               style="push"
+               menubarPath="file/project.ext"
+               id="net.refractions.udig.project.ui.closeProject">
+            <enablement>
+               <objectClass name="net.refractions.udig.project.IProject"/>
+            </enablement>
+         </action>
+      </actionSet>
+      <actionSet
+            description="%Layer.Query.Description"
+            id="net.refractions.udig.project.ui.layerQuerySet"
+            label="%Layer.Query.Name"
+            visible="true">
+      </actionSet>
+      <actionSet
+            description="%Layer.Modify.Description"
+            id="net.refractions.udig.project.ui.layerModifySet"
+            label="%Layer.Modify.Name"
+            visible="true">
+      </actionSet>
+      <actionSet
+            description="%Layer.Style.Description"
+            id="net.refractions.udig.project.ui.layerStyleSet"
+            label="%Layer.Style.Name"
+            visible="true">
+      </actionSet>
+   </extension>
    <extension
          point="org.eclipse.core.expressions.definitions">
       <definition
@@ -832,8 +963,178 @@
          </with>
       </definition>
    </extension>
-	
- 	
+	<extension
+      id="net.refractions.udig.project.ui.menus"
+      name="Project Menus"
+      point="org.eclipse.ui.menus">
+         <menuContribution
+               locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+            <menu
+                  id="layer"
+                  label="%Layer.Name"
+                  mnemonic="L">
+               <visibleWhen>
+                  <reference
+                        definitionId="net.refractions.udig.project.ui.contribution.inLayerMenu">
+                  </reference>
+               </visibleWhen>
+            </menu>
+         </menuContribution>
+         <menuContribution
+               locationURI="menu:layer">
+            <separator
+                  name="layerStart"
+                  visible="true">
+            </separator>
+            <separator
+                  name="add.ext"
+                  visible="false">
+            </separator>
+            <separator
+                  name="layerAddEnd"
+                  visible="true">
+            </separator>
+            <separator
+                  name="mapGraphic.ext"
+                  visible="false">
+            </separator>
+            <separator
+                  name="mapGraphicOther.ext">
+            </separator>
+            <separator
+                  name="mapGraphicEnd"
+                  visible="true">
+            </separator>
+            <separator
+                  name="edit.ext">
+            </separator>
+            <dynamic
+                  class="net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.project.ui.operation.layerCategory"
+                  id="layerCategory">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </dynamic>
+            <separator
+                  name="additions">
+            </separator>
+            <separator
+                  name="layerEnd"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="net.refractions.udig.project.ui.layerProperties"
+                  label="%Layer.properties.name"
+                  style="push"
+                  tooltip="%Layer.properties.tooltip">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </command>
+         </menuContribution>
+         <menuContribution
+               locationURI="menu:org.eclipse.ui.main.menu?after=layer">
+            <menu
+                  id="map"
+                  label="%Map.Name"
+                  mnemonic="P"
+                  tooltip="%Map.Tooltip">
+               <visibleWhen>
+                  <reference
+                        definitionId="net.refractions.udig.project.ui.contribution.inMapMenu">
+                  </reference>
+               </visibleWhen>
+            </menu>
+         </menuContribution>
+        <menuContribution
+               locationURI="menu:map">
+            <separator
+                  name="mapStart">
+            </separator>
+            <separator
+                  name="mode.ext">
+            </separator>
+            <separator
+                  name="modal.ext">
+            </separator>
+            <dynamic
+                  class="net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.project.ui.operation.mapCategory"
+                  id="mapCategory">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </dynamic>
+            <separator
+                  name="action.ext"
+                  visible="false">
+            </separator>
+            <dynamic
+                  class="net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.project.ui.operation.mapModifyCategory"
+                  id="mapModifyCategory">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </dynamic>
+            <separator
+                  name="additions">
+            </separator>
+            <separator
+                  name="mapEnd"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="net.refractions.udig.project.ui.mapProperties"
+                  label="%Map.properties.name"
+                  style="push"
+                  tooltip="%Map.properties.tooltip">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </command>
+         </menuContribution>
+         <menuContribution
+               locationURI="menu:edit?after=add.ext">
+            <dynamic
+                  class="net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.project.ui.operation.addCategory"
+                  id="addCategory">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </dynamic>
+         </menuContribution>
+         <menuContribution
+               locationURI="menu:edit?after=additions">
+            <dynamic
+                  class="net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.project.ui.operation.featureCategory"
+                  id="featureCategory">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </dynamic>
+            <dynamic
+                  class="net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.project.ui.operation.featureModifyCategory"
+                  id="modifyFeatureCategory">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </dynamic>
+            <dynamic
+                  class="net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.project.ui.operation.selectionCategory"
+                  id="selectionCategory">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </dynamic>
+            <dynamic
+                  class="net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.project.ui.operation.selectionModifyCategory"
+                  id="modifySelectionCategory">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </dynamic>
+         </menuContribution>
+      </extension>
+
 	<extension
         point="net.refractions.udig.ui.operation"
         id="net.refractions.udig.project.ui.op">
@@ -841,15 +1142,15 @@
 	    	   context="Layer"
                id="net.refractions.udig.project.ui.operation.addCategory"
                name="%Add.Category">
-               </category> 
+               </category>
          <operation
                categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
-               class="net.refractions.udig.project.ui.operations.example.MultiTargetOp"
+               class="net.refractions.udig.project.ui.operations.example.ResourceSummary"
                id="net.refractions.udig.project.ui.resourceSummary"
                name="%resourceSummary"
-               targetClass="net.refractions.udig.catalog.IGeoResource"/>      
+               targetClass="net.refractions.udig.catalog.IGeoResource"/>
  	</extension>
-      
+
       <extension
             id="net.refractions.udig.project.ui.op.map"
             name="Map Operations"
@@ -871,7 +1172,7 @@
                name="%featuresView"
                targetClass="net.refractions.udig.project.IMap"/>
      </extension>
-     
+
       <extension
             id="net.refractions.udig.project.ui.op.layer"
             name="Layer Operations"
@@ -879,17 +1180,16 @@
         <category
 	            id="net.refractions.udig.project.ui.operation.layerCategory"
 	            name="%Layer.Category">
-	            </category>	            
-        <operation
+	            </category>
+         <operation
                categoryId="net.refractions.udig.project.ui.operation.layerCategory"
-               class="net.refractions.udig.project.ui.operations.SyncProjection"
-               enablesFor="1"
-               id="net.refractions.udig.project.ui.syncProjection"
-               name="%Layer.SetMapProjection"
-               targetClass="net.refractions.udig.project.ILayer">
-         </operation>      
+               class="net.refractions.udig.project.ui.operations.example.LayerSummary"
+               id="net.refractions.udig.project.ui.layerSummary"
+               menuPath="layer/additions"
+               name="%layerSummary"
+               targetClass="net.refractions.udig.project.ILayer"/>
  	</extension>
- 	         
+
       <extension
             id="net.refractions.udig.project.ui.op.feature"
             name="Feature Operations"
@@ -904,8 +1204,8 @@
                id="net.refractions.udig.project.ui.operation.featureModifyCategory"
                name="%Feature.Modify.Category">
         </category>
- 	</extension> 
-        
+ 	</extension>
+
      <extension
            id="net.refractions.udig.project.ui.op.selection"
            name="Selection Operations"
@@ -914,7 +1214,7 @@
                context="Selection"
                id="net.refractions.udig.project.ui.operation.selectionCategory"
                name="%Selection.Category">
-         </category>            
+         </category>
          <category
                context="Selection"
                id="net.refractions.udig.project.ui.operation.selectionModifyCategory"
@@ -922,12 +1222,18 @@
          </category>
          <operation
                categoryId="net.refractions.udig.project.ui.operation.selectionCategory"
-               class="net.refractions.udig.project.ui.operations.MakeHole"
+               class="net.refractions.udig.project.ui.operations.example.SelectedFeatureop"
                enablesFor="1"
-               id="net.refractions.udig.project.ui.operations.MakeHole"
-               name="%Selection.MakeHole"
+               id="net.refractions.udig.project.ui.featureCount"
+               menuPath="layer/additions"
+               name="%featureCount"
                targetClass="net.refractions.udig.project.ILayer">
-         </operation>         
+            <enablement>
+               <adaptsTo
+                     target="org.geotools.data.FeatureSource">
+               </adaptsTo>
+            </enablement>
+         </operation>
          <!--operation
                categoryId="net.refractions.udig.project.ui.operation.selectionCategory"
                class="net.refractions.udig.project.ui.operations.CreateLayerView"
@@ -988,69 +1294,7 @@
         <action
         	  id="reshape.addtomap"
               class="net.refractions.udig.project.ui.internal.AddReshapedToMap"
-              name="%AddToMap">
+              name="Add to Map">
         </action>
-     </extension>
-     <extension
-           id="net.refractions.udig.project.ui.map"
-           point="org.eclipse.ui.actionSets">
-        <actionSet
-              id="net.refractions.udig.project.ui.OpenProjectSet"
-              label="%OpenProjectSet.label"
-              visible="false">
-           <action
-                 class="net.refractions.udig.project.ui.internal.actions.OpenMapAction"
-                 definitionId="net.refractions.udig.project.ui.openMapCommand"
-                 icon="icons/obj16/project_obj.gif"
-                 id="net.refractions.udig.project.ui.openMapAction"
-                 label="%map.action.open.name"
-                 menubarPath="file/project.ext"
-                 style="push"
-                 tooltip="%project.action.open.tooltip">
-           </action>
-           <action
-                 allowLabelUpdate="true"
-                 class="net.refractions.udig.project.ui.internal.actions.CloseProject"
-                 enablesFor="+"
-                 icon="icons/obj16/project_close.gif"
-                 id="net.refractions.udig.project.ui.closeProject"
-                 label="%project.close.label"
-                 menubarPath="file/project.ext"
-                 style="push"
-                 tooltip="%project.close.tooltip">
-              <enablement>
-                 <objectClass
-                       name="net.refractions.udig.project.IProject">
-                 </objectClass>
-              </enablement>
-           </action>
-           <action
-                 allowLabelUpdate="true"
-                 class="net.refractions.udig.project.ui.internal.actions.SaveAsProject"
-                 enablesFor="1"
-                 icon="icons/obj16/project_save.gif"
-                 id="net.refractions.udig.project.ui.saveAsProject"
-                 label="%project.action.save.name"
-                 menubarPath="file/project.ext"
-                 style="push"
-                 tooltip="%project.action.save.tooltip">
-              <enablement>
-               <or>
-                  <objectClass name="net.refractions.udig.project.IMap"/>
-                  <objectClass name="net.refractions.udig.project.IProject"/>
-               </or>
-            </enablement>
-           </action>
-           <action
-                 class="net.refractions.udig.project.ui.internal.actions.OpenProject"
-                 definitionId="net.refractions.udig.project.ui.openProjectCommand"
-                 icon="icons/obj16/project_obj.gif"
-                 id="net.refractions.udig.project.ui.openProject"
-                 label="%project.action.open.name"
-                 menubarPath="file/project.ext"
-                 style="push"
-                 tooltip="%project.action.open.tooltip">
-           </action>
-        </actionSet>
      </extension>
    </plugin>

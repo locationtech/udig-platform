@@ -45,5 +45,5 @@ public enum IssuesManagerEventType {
      * </p>
      */
     SAVE
-    
+
 }

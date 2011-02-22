@@ -19,7 +19,7 @@ public class MouseDownVertexSelectTest extends TestCase {
         final int alt = MapMouseEvent.ALT_DOWN_MASK;
         final int button1 = MapMouseEvent.BUTTON1;
         final int button2 = MapMouseEvent.BUTTON2;
-        
+
         TestHandler handler=new TestHandler();
         assertFalse(mode.isValid(handler, new MapMouseEvent(null, 0, 0, none, none, 0), EventType.DOUBLE_CLICK));
         assertFalse(mode.isValid(handler, new MapMouseEvent(null, 0, 0, none, button1, button1), EventType.PRESSED));
@@ -27,7 +27,7 @@ public class MouseDownVertexSelectTest extends TestCase {
         handler.setCurrentShape(handler.getEditBlackboard().getGeoms().get(0).getShell());
         handler.getEditBlackboard().addPoint(10,0, handler.getCurrentGeom().getShell());
 
-        
+
         assertTrue(mode.isValid(handler,  new MapMouseEvent(null, 10, 0, none, button1, button1), EventType.PRESSED));
         assertFalse(mode.isValid(handler, new MapMouseEvent(null, 10, 0, none, button1, button1), EventType.DRAGGED));
         assertFalse(mode.isValid(handler, new MapMouseEvent(null, 10, 0, none, button1, button1), EventType.DRAGGED));
@@ -39,9 +39,9 @@ public class MouseDownVertexSelectTest extends TestCase {
         assertFalse(mode.isValid(handler, new MapMouseEvent(null, 10,0, shift, button1, button1), EventType.PRESSED));
 
         assertFalse(mode.isValid(handler, new MapMouseEvent(null, 10,0, alt, button1, button1), EventType.PRESSED));
-        assertFalse(mode.isValid(handler, new MapMouseEvent(null, 
+        assertFalse(mode.isValid(handler, new MapMouseEvent(null,
                 0, 0, shift|ctrl, button1, button1), EventType.PRESSED));
-        
+
         assertFalse(mode.isValid(handler,  new MapMouseEvent(null, 10, 0, none, button2, button2), EventType.PRESSED));
     }
 
@@ -53,7 +53,7 @@ public class MouseDownVertexSelectTest extends TestCase {
 
         final int none=MapMouseEvent.NONE;
         final int button1 = MapMouseEvent.BUTTON1;
-        
+
         TestHandler handler=new TestHandler();
         handler.getBehaviours().add(mode);
         handler.getTestEditBlackboard().util.setVertexRadius(4);
@@ -62,7 +62,7 @@ public class MouseDownVertexSelectTest extends TestCase {
         handler.getEditBlackboard().addPoint(15,15, handler.getCurrentGeom().getShell());
         handler.getEditBlackboard().addPoint(20,15, handler.getCurrentGeom().getShell());
         handler.getEditBlackboard().addPoint(30,25, handler.getCurrentGeom().getShell());
-        
+
         //test click on point
         handler.handleEvent( new MapMouseEvent(null, 9, 10, none, button1, button1), EventType.PRESSED);
         assertEquals(1, handler.getEditBlackboard().getSelection().size());
@@ -72,17 +72,17 @@ public class MouseDownVertexSelectTest extends TestCase {
         handler.handleEvent( new MapMouseEvent(null, 10, 10, none, button1, button1), EventType.PRESSED);
         assertEquals(Point.valueOf(10,10), handler.getEditBlackboard().getSelection().iterator().next());
         assertEquals(1, handler.getEditBlackboard().getSelection().size());
-        
+
         //test click on new point
         handler.handleEvent( new MapMouseEvent(null, 15, 15, none, button1, button1), EventType.PRESSED);
         assertEquals(Point.valueOf(15,15), handler.getEditBlackboard().getSelection().iterator().next());
         assertEquals(1, handler.getEditBlackboard().getSelection().size());
-        
+
         //do nothing on click on nothing
         MapMouseEvent event = new MapMouseEvent(null, 300, 300, none, button1, button1);
         handler.handleEvent( event, EventType.PRESSED);
         assertEquals(1, handler.getEditBlackboard().getSelection().size());
-        
+
     }
 
 }

@@ -1,23 +1,13 @@
-/* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2010, Refractions Research Inc.
- * (C) 2000, 2005 IBM Corporation and others
- * ------
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation;
- * version 2.1 of the License.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * --------
+/*******************************************************************************
+ * Copyright (c) 2000, 2005 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- */
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
 package net.refractions.udig.ui.dialogs;
 
 import java.util.Arrays;
@@ -76,7 +66,7 @@ public abstract class WizardDataTransferPage extends WizardPage implements
      * @param newEntry the entry to add to the history
      */
     protected String[] addToHistory(String[] history, String newEntry) {
-        java.util.ArrayList l = new java.util.ArrayList(Arrays.asList(history));
+        java.util.ArrayList<String> l = new java.util.ArrayList<String>(Arrays.asList(history));
         addToHistory(l, newEntry);
         String[] r = new String[l.size()];
         l.toArray(r);
@@ -91,7 +81,7 @@ public abstract class WizardDataTransferPage extends WizardPage implements
      * @param history the current history
      * @param newEntry the entry to add to the history
      */
-    protected void addToHistory(List history, String newEntry) {
+    protected void addToHistory(List<String> history, String newEntry) {
         history.remove(newEntry);
         history.add(0, newEntry);
 
@@ -166,7 +156,7 @@ public abstract class WizardDataTransferPage extends WizardPage implements
     /**
      * Returns whether this page is complete. This determination is made based upon
      * the current contents of this page's controls.  Subclasses wishing to include
-     * their controls in this determination should override the hook methods 
+     * their controls in this determination should override the hook methods
      * <code>validateSourceGroup</code> and/or <code>validateOptionsGroup</code>.
      *
      * @return <code>true</code> if this page is complete, and <code>false</code> if
@@ -195,7 +185,7 @@ public abstract class WizardDataTransferPage extends WizardPage implements
         //Do not make an empty path absolute so as not to confuse with the root
         if (text.length() == 0)
             return new Path(text);
-       
+
         return (new Path(text)).makeAbsolute();
     }
 
@@ -220,17 +210,17 @@ public abstract class WizardDataTransferPage extends WizardPage implements
         ListDialog dialog = new ListDialog(getControl().getShell());
         dialog.setInput( ApplicationGIS.getOpenMaps() );
         dialog.setInitialSelections( new Object[]{ ApplicationGIS.getActiveMap()} );
-        
+
         if( msg != null )
             dialog.setMessage( msg );
-        
+
         if (title != null)
             dialog.setTitle(title);
-        
-        dialog.setAddCancelButton( true );        
+
+        dialog.setAddCancelButton( true );
         dialog.open();
         Object[] result = dialog.getResult();
-        
+
         if (result != null && result.length == 1) {
             return (IMap) result[0];
         }
@@ -246,7 +236,7 @@ public abstract class WizardDataTransferPage extends WizardPage implements
      */
     protected boolean queryYesNoQuestion(String message) {
         MessageDialog dialog = new MessageDialog(getContainer().getShell(),
-                Messages.WizardDataTransferPage_dialog_title, 
+                Messages.WizardDataTransferPage_dialog_title,
                 (Image) null,
                 message, MessageDialog.QUESTION,
                 new String[] { IDialogConstants.YES_LABEL,
@@ -258,7 +248,7 @@ public abstract class WizardDataTransferPage extends WizardPage implements
 
     /**
      * Restores control settings that were saved in the previous instance of this
-     * page.  
+     * page.
      * <p>
      * The <code>WizardDataTransferPage</code> implementation of this method does
      * nothing. Subclasses may override this hook method.
@@ -269,7 +259,7 @@ public abstract class WizardDataTransferPage extends WizardPage implements
 
     /**
      * Saves control settings that are to be restored in the next instance of
-     * this page.  
+     * this page.
      * <p>
      * The <code>WizardDataTransferPage</code> implementation of this method does
      * nothing. Subclasses may override this hook method.
@@ -279,7 +269,7 @@ public abstract class WizardDataTransferPage extends WizardPage implements
     }
 
     /**
-     * Determine if the page is complete and update the page appropriately. 
+     * Determine if the page is complete and update the page appropriately.
      */
     protected void updatePageCompletion() {
         boolean pageComplete = determinePageCompletion();
@@ -307,7 +297,7 @@ public abstract class WizardDataTransferPage extends WizardPage implements
      * <code>true</code>. Subclasses may reimplement this hook method.
      * </p>
      *
-     * @return <code>true</code> indicating validity of all controls in the 
+     * @return <code>true</code> indicating validity of all controls in the
      *   destination specification group
      */
     protected boolean validateDestinationGroup() {
@@ -337,7 +327,7 @@ public abstract class WizardDataTransferPage extends WizardPage implements
      * <code>true</code>. Subclasses may reimplement this hook method.
      * </p>
      *
-     * @return <code>true</code> indicating validity of all controls in the 
+     * @return <code>true</code> indicating validity of all controls in the
      *   source specification group
      */
     protected boolean validateSourceGroup() {
@@ -356,7 +346,7 @@ public abstract class WizardDataTransferPage extends WizardPage implements
         optionsGroup.setLayout(layout);
         optionsGroup.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL
                 | GridData.GRAB_HORIZONTAL));
-        optionsGroup.setText(Messages.WizardDataTransferPage_group_options_text); 
+        optionsGroup.setText(Messages.WizardDataTransferPage_group_options_text);
         optionsGroup.setFont(parent.getFont());
 
         createOptionsGroupButtons(optionsGroup);
@@ -374,7 +364,7 @@ public abstract class WizardDataTransferPage extends WizardPage implements
     }
 
     /**
-     * Display an error dislog with the information from the
+     * Display an error dialog with the information from the
      * supplied exception.
      * @param exception Throwable
      */
@@ -391,7 +381,7 @@ public abstract class WizardDataTransferPage extends WizardPage implements
      * override.
      */
     protected String getErrorDialogTitle() {
-        return Messages.WizardDataTransferPage_error_transferError; 
+        return Messages.WizardDataTransferPage_error_transferError;
     }
 
 }

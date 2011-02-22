@@ -1,9 +1,10 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.catalog.memory;
 
 import java.io.Serializable;
+import java.net.URI;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -18,12 +19,13 @@ import net.refractions.udig.catalog.ui.internal.Messages;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataStore;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.AttributeTypeFactory;
+import org.geotools.feature.FeatureTypes;
 
 /**
  * A ConnectionFactory for creating a new layer.  The data will reside on disk.
- * 
+ *
  * @author jones
  */
 public class NewServiceConnectionFactory extends UDIGConnectionFactory {
@@ -36,7 +38,7 @@ public class NewServiceConnectionFactory extends UDIGConnectionFactory {
     @Override
     public Map<String, Serializable> createConnectionParameters( Object context) {
         Map<String, Serializable> params=null;
-        
+
         IProgressMonitor monitor=new NullProgressMonitor();
         try {
             MemoryServiceExtensionImpl ext = new MemoryServiceExtensionImpl();
@@ -50,15 +52,9 @@ public class NewServiceConnectionFactory extends UDIGConnectionFactory {
             while( typenames.contains(typename+i)){
                 i++;
             }
-            SimpleFeatureTypeBuilder build = new SimpleFeatureTypeBuilder();
-            build.setName(typename+i);
-            build.setNamespaceURI( "http://udig.refractions.net");
-            build.setAbstract(false);
-            build.add(Messages.NewServiceConnectionFactory_defaultGeom,com.vividsolutions.jts.geom.Geometry.class);
-            
-            SimpleFeatureType schema = build.buildFeatureType(); 
-            
-            ds.createSchema( schema ); //$NON-NLS-1$
+            AttributeType at = AttributeTypeFactory.newAttributeType(Messages.NewServiceConnectionFactory_defaultGeom, com.vividsolutions.jts.geom.Geometry.class);
+
+            ds.createSchema(FeatureTypes.newFeatureType(new AttributeType[]{at}, typename+i, new URI("http://udig.refractions.net"),false)); //$NON-NLS-1$
         } catch (Exception e) {
             CatalogUIPlugin.log("Error creating MemoryDatastore or feature type", e); //$NON-NLS-1$
             return null;

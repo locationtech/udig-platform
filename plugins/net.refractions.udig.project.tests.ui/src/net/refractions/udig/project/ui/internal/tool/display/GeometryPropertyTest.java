@@ -2,10 +2,11 @@ package net.refractions.udig.project.ui.internal.tool.display;
 
 import java.net.URL;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+
 import junit.framework.TestCase;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.tests.CatalogTests;
@@ -13,8 +14,6 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.ui.operations.IOpFilterListener;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
 
 public class GeometryPropertyTest extends TestCase {
 
@@ -52,32 +51,32 @@ public class GeometryPropertyTest extends TestCase {
             public void notifyChange( Object c ) {
                 changed[0]++;
             }
-            
+
         };
         prop.addListener(l);
         // to test that a listener is only added once
         prop.addListener(l);
-        
+
         URL id = layer.getID();
         ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
-        IGeoResource resource = localCatalog.getById(IGeoResource.class, new ID(id), new NullProgressMonitor());
+        IGeoResource resource = localCatalog.getById(IGeoResource.class, id, new NullProgressMonitor());
         IService parent = resource.service(new NullProgressMonitor());
-        localCatalog.replace(parent.getID(), parent);
-        
+        localCatalog.replace(parent.getIdentifier(), parent);
+
         assertEquals(0, changed[0]);
-        
+
         assertTrue(prop.isTrue(layer, "Polygon")); //$NON-NLS-1$
         assertTrue(prop.isTrue(layer, "Polygon")); //$NON-NLS-1$
         assertTrue(prop.isTrue(layer, "Polygon")); //$NON-NLS-1$
         assertTrue(prop.isTrue(layer, "Polygon")); //$NON-NLS-1$
 
-        localCatalog.replace(parent.getID(), parent);
-        
+        localCatalog.replace(parent.getIdentifier(), parent);
+
         assertEquals(1, changed[0]);
-        
+
         parent=CatalogTests.createResource(null, "ResolveTo").service(new NullProgressMonitor()); //$NON-NLS-1$
 
-        localCatalog.replace(parent.getID(), parent);
+        localCatalog.replace(parent.getIdentifier(), parent);
         changed[0]=0;
         assertEquals(0, changed[0]);
     }

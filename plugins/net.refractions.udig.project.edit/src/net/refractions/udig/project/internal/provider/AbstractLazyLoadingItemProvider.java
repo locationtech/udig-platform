@@ -20,7 +20,7 @@ public class AbstractLazyLoadingItemProvider extends ItemProviderAdapter {
 
     /**
      * Gets the "real" list of children so that the children in childFetcher doesn't have to be kept in sync with
-     * the real data... 
+     * the real data...
      *
      * @param object object that is the parent.
      * @return
@@ -45,7 +45,7 @@ public class AbstractLazyLoadingItemProvider extends ItemProviderAdapter {
             Object value = getFeatureValue((EObject) object, feature);
             if( value instanceof Collection ){
                 Collection<Object> collection = (Collection) value;
-                
+
                 // index of child is in another feature
                 if( currentIndex+collection.size()<childIndex )
                     continue;
@@ -83,16 +83,16 @@ public class AbstractLazyLoadingItemProvider extends ItemProviderAdapter {
     public Collection getChildren( Object object ) {
         if( Display.getCurrent()==null )
             throw new SWTException("Invalid Thread access, not in UI thread."); //$NON-NLS-1$
-           
+
         if (!getChildFetcher().dataReady) {
         	getChildFetcher().parent = object;
         	getChildFetcher().schedule();
         	return getChildFetcher().getChildren();
         }
-        
+
         return getConcreteChildren(object);
     }
-    
+
     public ChildFetcher getChildFetcher() {
         if( childFetcher==null ){
             synchronized (this) {
@@ -101,12 +101,12 @@ public class AbstractLazyLoadingItemProvider extends ItemProviderAdapter {
                 }
             }
         }
-            
+
         return childFetcher;
     }
-    
+
     private static final LoadingPlaceHolder LOADING_PLACEHOLDER = new LoadingPlaceHolder(){
-        
+
         public Image getImage() {
             return null;
         }
@@ -142,5 +142,5 @@ public class AbstractLazyLoadingItemProvider extends ItemProviderAdapter {
     public AbstractLazyLoadingItemProvider( AdapterFactory adapterFactory ) {
         super(adapterFactory);
     }
-    
+
 }

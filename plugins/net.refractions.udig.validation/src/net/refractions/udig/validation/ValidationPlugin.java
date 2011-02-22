@@ -2,11 +2,12 @@ package net.refractions.udig.validation;
 
 import java.net.URL;
 
+
+import org.eclipse.ui.plugin.*;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -18,7 +19,7 @@ public class ValidationPlugin extends AbstractUIPlugin {
     private Images images = new Images();
 	private static final String ID = "net.refractions.udig.validation"; //$NON-NLS-1$
     public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
-	
+
 	/**
 	 * The constructor.
 	 */
@@ -32,7 +33,7 @@ public class ValidationPlugin extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
         final URL iconsUrl = context.getBundle().getEntry( ICONS_PATH );
-        images.initializeImages( iconsUrl, getImageRegistry() );        
+        images.initializeImages( iconsUrl, getImageRegistry() );
 	}
 
 	/**
@@ -60,7 +61,7 @@ public class ValidationPlugin extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return AbstractUIPlugin.imageDescriptorFromPlugin(ID, path);
 	}
-	
+
     /**
      * Writes an info log in the plugin's log.
      * @param message
@@ -86,7 +87,7 @@ public class ValidationPlugin extends AbstractUIPlugin {
      * private static final String RENDERING = "net.refractions.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
-     * 
+     *
      */
     public static void trace( String message, Throwable e ) {
         if (getDefault().isDebugging()) {
@@ -98,13 +99,13 @@ public class ValidationPlugin extends AbstractUIPlugin {
     }
     /**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
-     * Available trace options can be found in the Trace class.  (They must also be part of the .options file) 
+     * Available trace options can be found in the Trace class.  (They must also be part of the .options file)
      * <p>
      * It is much prefered to do this:<pre><code>
      * private static final String RENDERING = "net.refractions.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
-     * 
+     *
      */
     public static void trace( String traceID, String message, Throwable e ) {
         if (getDefault().isDebugging()) {
@@ -116,7 +117,7 @@ public class ValidationPlugin extends AbstractUIPlugin {
             }
         }
     }
-    
+
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
      * <p>
@@ -125,17 +126,17 @@ public class ValidationPlugin extends AbstractUIPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ) {
         return getDefault().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
 
     }
-    
+
     /**
      * Images instance for use with ImageConstants.
-     * 
+     *
      * @return Images for use with ImageConstants.
      */
     public Images getImages() {

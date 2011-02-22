@@ -1,9 +1,11 @@
 package net.refractions.udig.catalog.internal.shp;
 
+import java.io.Serializable;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import net.refractions.udig.catalog.shp.preferences.PreferenceConstants;
@@ -13,7 +15,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.geotools.data.shapefile.ShapefileDataStore;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -25,10 +27,9 @@ public class ShpPlugin extends AbstractUIPlugin {
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
 
-    public static final String SHP_TRACE_FINEST = "net.refractions.udig.catalog.shp/debug/finest"; //$NON-NLS-1$
-    public static final String SHP_TRACE_FINE = "net.refractions.udig.catalog.shp/debug/fine"; //$NON-NLS-1$
-    
-	
+    public static final String SHP_TRACE = "net.refractions.udig.catalog.shp/debug/trace"; //$NON-NLS-1$
+
+
     public static final String ID = "net.refractions.udig.catalog.shp"; //$NON-NLS-1$
 	/**
 	 * The constructor.
@@ -43,22 +44,41 @@ public class ShpPlugin extends AbstractUIPlugin {
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
-        Logger logger = ShapefileDataStoreFactory.LOGGER;
-        if (ShpPlugin.isDebugging(SHP_TRACE_FINEST) || ShpPlugin.isDebugging(SHP_TRACE_FINE)) {
-            if( ShpPlugin.isDebugging(SHP_TRACE_FINE)){
-                logger.setLevel(Level.FINE);
-            }else{
+        ClassLoader current = Thread.currentThread().getContextClassLoader();
+        try {
+            Thread.currentThread().setContextClassLoader(ShapefileDataStore.class.getClassLoader());
+            Logger logger = Logger.getLogger("org.geotools.data.shapefile");//$NON-NLS-1$
+            if (ShpPlugin.isDebugging(SHP_TRACE)) {
                 logger.setLevel(Level.FINEST);
+                logger.addHandler(new Handler(){
+
+                    @Override
+                    public void publish( LogRecord record ) {
+                        System.err.println(record.getMessage());
+                    }
+
+                    @Override
+                    public void flush() {
+                        System.err.flush();
+                    }
+
+                    @Override
+                    public void close() throws SecurityException {
+
+                    }
+
+                });
+            } else {
+                logger.setLevel(Level.SEVERE);
             }
-        } else {
-            logger.setLevel(Level.SEVERE);
+        } finally {
+            Thread.currentThread().setContextClassLoader(current);
         }
-        logger.addHandler(new ConsoleHandler());
     }
 
 	/**
-     * This method is called when the plug-in is stopped
-     */
+	 * This method is called when the plug-in is stopped
+	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		resourceBundle = null;
@@ -109,14 +129,14 @@ public class ShpPlugin extends AbstractUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:
-     * 
+     *
      * <pre><code>
      * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging()
      *      &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *  System.out.println(&quot;your message here&quot;);
      * }
-     * 
+     *
      */
     public static void trace(String message, Throwable e) {
         if (getDefault().isDebugging()) {
@@ -135,13 +155,13 @@ public class ShpPlugin extends AbstractUIPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace
      *            currently only RENDER is defined
      */
     public static boolean isDebugging(final String trace) {
         return getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
     /**
      * Returns true if spatial indexes will be created by default.

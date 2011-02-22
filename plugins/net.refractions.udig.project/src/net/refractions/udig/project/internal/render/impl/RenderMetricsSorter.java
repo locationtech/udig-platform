@@ -5,6 +5,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+import javax.media.jai.util.Range;
+
+import net.refractions.udig.core.internal.ExtensionPointProcessor;
+import net.refractions.udig.core.internal.ExtensionPointUtil;
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IStyleBlackboard;
@@ -13,11 +17,12 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.render.MultiLayerRenderer;
 import net.refractions.udig.project.internal.render.impl.InternalRenderMetricsFactory.InternalRenderMetrics;
 
-import org.geotools.util.Range;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
 
 /**
  * Sorts RenderMetrics objects based on how well the renderer suits the Layer and the resource
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -30,7 +35,7 @@ public class RenderMetricsSorter implements Comparator<InternalRenderMetrics>, S
 
     /**
      * Create new instance
-     * 
+     *
      * @param layers the layers to sort
      */
     public RenderMetricsSorter( List<Layer> layers ) {
@@ -50,12 +55,16 @@ public class RenderMetricsSorter implements Comparator<InternalRenderMetrics>, S
                 return 0;
             return 1;
         }
-            
+
         if( !canRender(o2) ){
             return -1;
         }
 
-        return compareMetrics(o1, o2);
+        int result1 = rate(o1);
+        int result2 = rate(o2);
+        if (result1 == result2)
+            return 0;
+        return result1 > result2 ? -1 : 1;
     }
 
     private boolean canRender( InternalRenderMetrics o1 ) {
@@ -72,115 +81,47 @@ public class RenderMetricsSorter implements Comparator<InternalRenderMetrics>, S
         } catch (Throwable e) {
             ProjectPlugin.log("Error while calling CanRender() on " + o1.getId(), e); //$NON-NLS-1$
             return false;
-        }    
+        }
         return true;
     }
 
-    /**
-     * Compares two metrics return a value of 0 (same), -1 (o1 preferred), 1 (02 preferred)
-     *
-     * @param o1
-     * @param o2
-     * @return
-     */
-    private int compareMetrics ( InternalRenderMetrics o1, InternalRenderMetrics o2 ){
-        int first = -1;
-        int last = 1;
-        
-        // check the layer/map blackboard for a preferred or non-preferred renderer 
-        int perferredMapRenderer = rateUsingBlackboardSettings(o1, o1.getRenderContext().getMap().getBlackboard());
-        if (perferredMapRenderer > 0){
-            return first;
-        }
-        if (perferredMapRenderer < 0){
-            return last;
-        }
-        
-        double r1 = rate(o1);
-        double r2 = rate(o2);
-        
-        //lower rating better
-        if (r1 > r2) return last;
-        if (r1 < r2) return first;
-        
-        return 0;
-    }
-    
-    /*
-     * Weighting to apply to metrics when computing a rating for a given metrics factory.
-     */
-    protected final double WEIGHT_RENDER_APPEARANCE_METRIC = 0.2;
-    protected final double WEIGHT_USER_APPEARANCE_METRIC = 0.25;
-    protected final double WEIGHT_SCALERANGE_METRIC = 0.15;
-    protected final double WEIGHT_LATENCY_METRIC = 0.1;
-    protected final double WEIGHT_DRAWING_TIME_METRIC = 0.1;
-    protected final double WEIGHT_RESOLUTION_METRIC = 0.1;
-    protected final double WEIGHT_MULTILAYER_METRIC = 0.1;
-
-    protected final long MAXIMUM_LATENCY =  120000 ;  //2 minutes
-    protected final long MAXIMUM_DRAWINGTIME = 120000; //2 minutes
-    
-    /**
-     * Computes a rating for the metric.  The rating for the metric is based on the
-     * appearance metrics, speed metrics, resolution metrics.  
-     * <p>
-     * Each metric is converted to a percent between 0 & 1 and given a weighting depending
-     * on how important the metric is.  Appearance metrics currently have higher weighting 
-     * that performance.
-     * </p> 
-     * 
-     *
-     * @param metrics
-     * @return A rating for a given metric.  The lower the rating the better fit the metric is.
-     */
-    private double rate( InternalRenderMetrics metrics ) {
+    private int rateAppearance( final InternalRenderMetrics metrics ) {
         ILayer layer = metrics.getRenderContext().getLayer();
         final IStyleBlackboard style = layer.getStyleBlackboard();
-        
-        //render metrics - 
-        //guarenteed to be between 0 & 1 - higher better so we subtract one to get make lower better
-        double renderAppearanceMetric = 1 - metrics.getUserAppearanceMetric(style);
-        double userAppearanceMetric = 1 - metrics.getRenderAppearanceMetric(style);
-        
-        double latencyMetric = metrics.getLatencyMetric();
-        latencyMetric = latencyMetric / MAXIMUM_LATENCY;
-        
-        double drawingTimeMetric = metrics.getDrawingTimeMetric();
-        drawingTimeMetric = drawingTimeMetric / MAXIMUM_DRAWINGTIME;
-        
-        // resolution metric - close to 1 the better
-        //worst case is the screen size
-        double width = metrics.getRenderContext().getMapDisplay().getWidth();
-        double resolutionMetric = metrics.getResolutionMetric();
-        double diff = Math.abs(resolutionMetric - 1);
-        if (diff == 0){
-            resolutionMetric = 0; //perfect match (lower is better)
-        }else{
-            resolutionMetric = (diff / width);  //lower number 
-        }
-        
-        int multiLayerMetric = 1 - rateMultiLayerRenderer(metrics);
-        double scaleRangeMetric = 1 - rateScaleRange(metrics);
-        
-        double rating = renderAppearanceMetric * WEIGHT_RENDER_APPEARANCE_METRIC;
-        rating += userAppearanceMetric * WEIGHT_USER_APPEARANCE_METRIC;
-        rating += latencyMetric * WEIGHT_LATENCY_METRIC;
-        rating += drawingTimeMetric * WEIGHT_DRAWING_TIME_METRIC;
-        rating += resolutionMetric * WEIGHT_RESOLUTION_METRIC;
-        rating += multiLayerMetric * WEIGHT_MULTILAYER_METRIC;
-        rating += scaleRangeMetric * WEIGHT_SCALERANGE_METRIC;
-        
+        class Evaluator implements ExtensionPointProcessor {
+            int rating = 0;
+            public void process( IExtension extension, IConfigurationElement element )
+                    throws Exception {
+                String id = element.getAttribute("id"); //$NON-NLS-1$
+                Object value = style.get(id);
+                if (metrics.canStyle(id, value)) {
+                    rating++; // more stylish
+                    if( style.isSelected(id) )
+                        rating++;
+                }
+            }
+        };
+        Evaluator judge = new Evaluator();
+        ExtensionPointUtil.process(ProjectPlugin.getPlugin(),
+                "net.refractions.udig.project.style", judge); //$NON-NLS-1$
+        return judge.rating;
+    }
+
+    private int ratePerformance( InternalRenderMetrics metrics ) {
+        return metrics.isOptimized() ? 1 : 0;
+    }
+
+    private int rate( InternalRenderMetrics metrics ) {
+
+        int rating = rateAppearance(metrics);
+        rating += ratePerformance(metrics);
+        rating += rateScaleRange(metrics);
+        rating = rateMultiLayerRenderer(metrics, rating);
+        rating = rateUsingBlackboardSettings(metrics, metrics.getRenderContext().getMap().getBlackboard(), 100,rating);
+        rating = rateUsingBlackboardSettings(metrics, metrics.getRenderContext().getLayer().getBlackboard(), 200,rating);
+        if (rating == 0)
+            return -1;
         return rating;
-        
-//        int rating = rateAppearance(metrics);
-//        rating += ratePerformance(metrics);
-//        rating += rateScaleRange(metrics);
-//        rating = rateMultiLayerRenderer(metrics, rating);
-//        rating = rateUsingBlackboardSettings(metrics, metrics.getRenderContext().getMap().getBlackboard(), 100,rating);
-//        rating = rateUsingBlackboardSettings(metrics, metrics.getRenderContext().getLayer().getBlackboard(), 200,rating);
-//        if (rating == 0)
-//            return -1;
-//        return rating;
     }
 
     /**
@@ -190,8 +131,8 @@ public class RenderMetricsSorter implements Comparator<InternalRenderMetrics>, S
      * @return 1 if the renderer can render at the current scale.
      */
     private int rateScaleRange( InternalRenderMetrics metrics ) {
-        Set<Range<Double>> scales = metrics.getValidScaleRanges();
-        for( Range<Double> range : scales ) {
+        Set<Range> scales = metrics.getValidScaleRanges();
+        for( Range range : scales ) {
             if( range.contains(metrics.getRenderContext().getViewportModel().getScaleDenominator()) ){
                 return 1;
             }
@@ -200,49 +141,41 @@ public class RenderMetricsSorter implements Comparator<InternalRenderMetrics>, S
     }
 
     /**
-     * Looks if the renderer is set on the style blackboard as the preferred renderer.  If
-     * so then the rating is inflated so that this renderer is always used.
-     * 
-     * Can either add to the renderer score if it is a preferred renderer, or detract from
-     * a renderer score if it is a last resort renderer.
-     * 
      * @param metrics metrics in question
      * @param blackboard the blackboard to search (map or layer)
-     * 
-     * @return 1 if preferred renderer<br>0 neither preferred or last resort<br>-1 if last resort renderer
+     * @param valueOfMatch how much a match is worth
+     * @param rating2 the current rating.
+     * @return the new rating.
      */
-    private int rateUsingBlackboardSettings( InternalRenderMetrics metrics, IBlackboard blackboard) {
+    private int rateUsingBlackboardSettings( InternalRenderMetrics metrics, IBlackboard blackboard, int valueOfMatch, int rating2 ) {
+        int rating = rating2;
         String rendererId = metrics.getId();
         if (rendererId == null)
-            return 0;
+            return rating;
         String preferredRenderer = blackboard.getString(RendererCreatorImpl.PREFERRED_RENDERER_ID);
         String lastResortRenderer = blackboard.getString(RendererCreatorImpl.LAST_RESORT_RENDERER_ID);
         if ( rendererId.equals(preferredRenderer)) {
-            return 1;
+            rating += valueOfMatch;
         }
         if ( rendererId.equals(lastResortRenderer)) {
-            return -1;
+            rating -= valueOfMatch;
         }
-        return 0;
+        return rating;
     }
 
-    /**
-     * if it can render more than one layer in the list
-     * 
-     * @return 0 - if cannot use multi layer renderer<br>1 - if multi layer render can be used.
-     */
-    private int rateMultiLayerRenderer( InternalRenderMetrics metrics ) {
+    private int rateMultiLayerRenderer( InternalRenderMetrics metrics, int rating2 ) {
+        int rating = rating2;
         if (MultiLayerRenderer.class.isAssignableFrom(metrics.getRenderMetricsFactory()
                 .getRendererType())) {
             int indexOf = getLayers().indexOf(metrics.getRenderContext().getLayer());
             if( indexOf>0 )
                 if( metrics.canAddLayer(getLayers().get(indexOf-1)) )
-                    return 1;
+                    rating++;
             if( indexOf<getLayers().size()-1 )
                 if( metrics.canAddLayer(getLayers().get(indexOf+1)) )
-                    return 1;
+                    rating++;
         }
-        return 0;
+        return rating;
     }
 
 }

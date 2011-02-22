@@ -20,18 +20,8 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "net.refractions.udig.mapgraphic.internal.messages"; //$NON-NLS-1$
-	public static String BarStyle_LabelFilled;
-    public static String BarStyle_LabelFilledLine;
-    public static String BarStyle_LabelLine;
-    public static String BarStyle_LabelSimple;
-    public static String BarStyleConfigurator_barstylelabel;
-    public static String BarStyleConfigurator_colorlable;
-    public static String BarStyleConfigurator_divisionslabel;
-    public static String BarStyleConfigurator_ImperialUnits;
-    public static String BarStyleConfigurator_MetricUnits;
-    public static String BarStyleConfigurator_AutoUnits;
-    public static String BarStyleConfigurator_UnitsLabel;
-    public static String Font_ExampleText;
+	public static String FontStyleConfigurator_example;
+    public static String FontStyleConfigurator_Select;
     public static String GridStyleConfigurator_0;
     public static String GridStyleConfigurator_1;
     public static String GridStyleConfigurator_2;
@@ -66,7 +56,6 @@ public class Messages extends NLS {
     public static String ScalebarStyleConfigurator_middle;
     public static String ScalebarStyleConfigurator_top;
     public static String GridMapGraphic_grids_too_close;
-    public static String UnitListener_MixedUnits;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

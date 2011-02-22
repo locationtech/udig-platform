@@ -10,7 +10,6 @@ import java.util.Map;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.internal.ServiceFactoryImpl;
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
 import net.refractions.udig.catalog.ui.UDIGConnectionPage;
 import net.refractions.udig.project.ui.internal.Messages;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
@@ -18,6 +17,7 @@ import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.wizard.IWizardPage;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Label;
  * @author Amr Alam TODO To change the template for this generated type comment go to Window -
  *         Preferences - Java - Code Style - Code Templates
  */
-public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListener, UDIGConnectionPage {
+public class URLWizardPage extends WizardPage implements ModifyListener, UDIGConnectionPage {
 
     final static String[] types = {};
     /** <code>url</code> field */
@@ -46,7 +46,7 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
      * Construct <code>URLWizardPage</code>.
      */
     public URLWizardPage() {
-        super(Messages.URLWizardPage_title); 
+        super(Messages.URLWizardPage_title);
 
         settings = ProjectUIPlugin.getDefault().getDialogSettings().getSection(URL_WIZARD);
         if (settings == null) {
@@ -87,7 +87,7 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
         gridData = new GridData();
 
         Label urlLabel = new Label(composite, SWT.NONE);
-        urlLabel.setText(Messages.URLWizardPage_label_url_text); 
+        urlLabel.setText(Messages.URLWizardPage_label_url_text);
         urlLabel.setLayoutData(gridData);
 
         gridData = new GridData(GridData.FILL_HORIZONTAL);
@@ -121,7 +121,7 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
 
     /**
      * Double click in list, or return from url control.
-     * 
+     *
      * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
      * @param e
      */
@@ -138,7 +138,7 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
     public List<IService> getResources( IProgressMonitor monitor ) throws Exception {
         URL location = new URL(url.getText());
         ServiceFactoryImpl serviceFactory = new ServiceFactoryImpl();
-        List<IService> services = serviceFactory.createService(location);
+        List<IService> services = serviceFactory.acquire(location);
         /*
          * Success! Store the URL in history.
          */
@@ -151,7 +151,7 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
             new URL(url.getText());
             setErrorMessage(null);
         } catch (MalformedURLException exception) {
-            setErrorMessage(Messages.URLWizardPage_error_invalidURL); 
+            setErrorMessage(Messages.URLWizardPage_error_invalidURL);
         }
         getWizard().getContainer().updateButtons();
     }
@@ -175,7 +175,7 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
      * Adds an entry to a history, while taking care of duplicate history items and excessively long
      * histories. The assumption is made that all histories should be of length
      * <code>COMBO_HISTORY_LENGTH</code>.
-     * 
+     *
      * @param history the current history
      * @param newEntry the entry to add to the history
      * @return the history with the new entry appended Stolen from
@@ -193,7 +193,7 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
      * Adds an entry to a history, while taking care of duplicate history items and excessively long
      * histories. The assumption is made that all histories should be of length
      * <code>COMBO_HISTORY_LENGTH</code>.
-     * 
+     *
      * @param history the current history
      * @param newEntry the entry to add to the history Stolen from
      *        org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage

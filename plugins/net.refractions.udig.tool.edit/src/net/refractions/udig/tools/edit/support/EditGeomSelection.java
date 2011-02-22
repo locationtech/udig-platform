@@ -16,7 +16,7 @@ package net.refractions.udig.tools.edit.support;
 
 /**
  * A selection that IS a EditGeom.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -37,5 +37,5 @@ public class EditGeomSelection extends Selection {
     public EditGeom getGeom() {
         return geom;
     }
-    
+
 }

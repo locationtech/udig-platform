@@ -13,7 +13,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Sub-class me and fill in the appripriate protected methods ...
- * 
+ *
  * @author dzwiers
  */
 public abstract class AbstractResolveTest extends TestCase {
@@ -23,7 +23,7 @@ public abstract class AbstractResolveTest extends TestCase {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.eclipse.core.runtime.IProgressMonitor#beginTask(java.lang.String, int)
          */
         public void beginTask( String name, int totalWork ) {
@@ -37,7 +37,7 @@ public abstract class AbstractResolveTest extends TestCase {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.eclipse.core.runtime.IProgressMonitor#done()
          */
         public void done() {
@@ -50,7 +50,7 @@ public abstract class AbstractResolveTest extends TestCase {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.eclipse.core.runtime.IProgressMonitor#internalWorked(double)
          */
         public void internalWorked( double work ) {
@@ -59,7 +59,7 @@ public abstract class AbstractResolveTest extends TestCase {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.eclipse.core.runtime.IProgressMonitor#isCanceled()
          */
         public boolean isCanceled() {
@@ -68,7 +68,7 @@ public abstract class AbstractResolveTest extends TestCase {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.eclipse.core.runtime.IProgressMonitor#setCanceled(boolean)
          */
         public void setCanceled( boolean value ) {
@@ -80,7 +80,7 @@ public abstract class AbstractResolveTest extends TestCase {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.eclipse.core.runtime.IProgressMonitor#setTaskName(java.lang.String)
          */
         public void setTaskName( String name ) {
@@ -89,7 +89,7 @@ public abstract class AbstractResolveTest extends TestCase {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.eclipse.core.runtime.IProgressMonitor#subTask(java.lang.String)
          */
         public void subTask( String name ) {
@@ -98,7 +98,7 @@ public abstract class AbstractResolveTest extends TestCase {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.eclipse.core.runtime.IProgressMonitor#worked(int)
          */
         public void worked( int work ) {

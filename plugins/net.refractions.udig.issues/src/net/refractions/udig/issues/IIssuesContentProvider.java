@@ -18,16 +18,16 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 
 /**
  * A content provider that the issues view can use to determine the issues it displays.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public interface IIssuesContentProvider extends ITreeContentProvider{
 
     /**
-     * Returns the extension id so that the system can instantiate the 
+     * Returns the extension id so that the system can instantiate the
      * sorter again in the future after the workbench has been shutdown.
-     * 
+     *
      * @return pluginID.extensionid.
      */
     String getExtensionID();

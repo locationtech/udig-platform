@@ -1,8 +1,6 @@
 Manifest-Version: 1.0
 Bundle-Name: %pluginName
-Bundle-SymbolicName: net.refractions.udig_printing.source;singleton:=true
-Bundle-Version: 1.2.0.qualifier
-Bundle-Vendor: udig.refractions.net
-Bundle-ManifestVersion: 2
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: org.eclipse.pde.core;resolution:=optional
+Bundle-SymbolicName: net.refractions.udig_printing.source; singleton=true
+Bundle-Version: 1.1.2
+Bundle-Localization: plugin
+Bundle-Vendor: %providerName

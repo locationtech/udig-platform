@@ -25,7 +25,7 @@ import org.eclipse.jface.action.StatusLineManager;
 public class StatusLineMessageBoardAdapter implements IMessageBoard{
 
     final IStatusLineManager manager;
-    
+
     public StatusLineMessageBoardAdapter( final IStatusLineManager manager ) {
         this.manager = manager;
     }

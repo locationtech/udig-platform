@@ -6,7 +6,7 @@
          name="Distance Tool Example"
          point="net.refractions.udig.project.ui.tool">
       <modalTool
-            categoryId="net.refractions.udig.tutorials.distancetool.mycategory"
+            categoryId="net.refractions.udig.tool.category.info"
             class="net.refractions.udig.tutorials.distancetool.DistanceTool"
             icon="icons/etool16/measure_mode.gif"
             id="net.refractions.udig.tutorials.distancetool"
@@ -18,31 +18,6 @@
                hotspotY="10"
                image="icons/pointers/measure_source.gif"/>
       </modalTool>
-	  <category
-            commandId="net.refractions.udig.tutorials.mycommand"
-            icon="icons/pointers/measure_source.gif"
-            id="net.refractions.udig.tutorials.distancetool.mycategory"
-            name="My Category">
-      </category>
-   </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-       <key
-            commandId="net.refractions.udig.tutorials.mycommand"
-            contextId="net.refractions.udig.project.ui.tool"
-            sequence="M"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
-   </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-         <category
-            description="%category.description"
-            name="%category.name"
-            id="net.refractions.udig.tools.toolCategory"/>
-         <command
-            categoryId="net.refractions.udig.tools.toolCategory"
-            name="My Command"
-            id="net.refractions.udig.tutorials.mycommand"/>
    </extension>
 
 </plugin>

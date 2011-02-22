@@ -35,17 +35,17 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureStore;
+import org.geotools.feature.Feature;
 import org.geotools.feature.IllegalAttributeException;
 import org.geotools.feature.SchemaException;
+import org.geotools.filter.Filter;
 import org.geotools.styling.Style;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.filter.Filter;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 public class MapTests {
 	/**
-	 * Creates a map that will not respond to events but is ready to render to the internal RenderContexts.  
+	 * Creates a map that will not respond to events but is ready to render to the internal RenderContexts.
 	 * <p>
 	 * The viewport model will contain all the features in the resource and will be the same CRS.
 	 * <p>
@@ -90,40 +90,35 @@ public class MapTests {
 		map.getLayersInternal().add(layer);
         if( createRenderManager){
     		map.setRenderManagerInternal(new RenderManagerImpl(){
-                
+
     		    @Override
     		    public boolean isViewer() {
     		        return true;
     		    }
-                
+
                 @Override
                 public void refresh( Envelope bounds ) {
                     // do nothing
-                    
+
                 }
-                
+
                 @Override
                 public void refresh( ILayer layer, Envelope bounds ) {
                     //do nothing
                 }
-                
+
                 @Override
                 public void refreshSelection( ILayer layer, Envelope bounds ) {
                     // do nothing
-                }
-                
-                @Override
-                public void refreshImage() {
-                    //do nothing
                 }
             });
     		RenderManager rm=map.getRenderManagerInternal();
     		rm.setMapDisplay(new TestMapDisplay(displaySize));
     		rm.getRendererCreator().getLayers().add(layer);
-            
+
             map.getViewportModelInternal().setCRS(layer.getCRS());
             map.getViewportModelInternal().zoomToExtent();
-            
+
     		MultiLayerRenderer renderer=(MultiLayerRenderer) RenderFactory.eINSTANCE.createCompositeRenderer();
     		RenderContext context=new CompositeRenderContextImpl();
     		context.setRenderManagerInternal(rm);
@@ -142,16 +137,16 @@ public class MapTests {
 	 * Calles createService and finds the georesource containing the features.
      * @deprecated
 	 */
-	public static IGeoResource createGeoResource(SimpleFeature [] features, boolean deleteService) throws IOException{
+	public static IGeoResource createGeoResource(Feature [] features, boolean deleteService) throws IOException{
 		return CatalogTests.createGeoResource(features, deleteService);
 	}
 
 	/**
-	 * Creates a MemoryDatastore service from an array of features.  Does not add to catalog. 
-	 * @param deleteService 
+	 * Creates a MemoryDatastore service from an array of features.  Does not add to catalog.
+	 * @param deleteService
      * @deprecated
 	 */
-	public static IService getService(SimpleFeature[] features, boolean deleteService) throws IOException {
+	public static IService getService(Feature[] features, boolean deleteService) throws IOException {
 		return CatalogTests.getService(features, deleteService);
 	}
 
@@ -165,25 +160,25 @@ public class MapTests {
      * @return
      * @throws Exception
      */
-    public static Map createDefaultMap(String featureTypeName, int numFeatures, 
+    public static Map createDefaultMap(String featureTypeName, int numFeatures,
             boolean deleteExistingService, Dimension displaySize) throws Exception{
         return createDefaultMap(featureTypeName, numFeatures, deleteExistingService, displaySize, true);
     }
 
-    public static Map createDefaultMap(String featureTypeName, int numFeatures, 
+    public static Map createDefaultMap(String featureTypeName, int numFeatures,
             boolean deleteExistingService, Dimension displaySize, boolean createRenderManager) throws Exception {
         int toCreate=numFeatures;
         if( numFeatures == 0)
             toCreate=1;
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures(featureTypeName, toCreate);
-        IGeoResource resource = CatalogTests.createGeoResource(features, deleteExistingService);
+        Feature[] features = UDIGTestUtil.createDefaultTestFeatures(featureTypeName, toCreate);
+        IGeoResource resource = createGeoResource(features, deleteExistingService);
         if( numFeatures == 0)
-            resource.resolve(FeatureStore.class, new NullProgressMonitor()).removeFeatures(Filter.INCLUDE);
+            resource.resolve(FeatureStore.class, new NullProgressMonitor()).removeFeatures(Filter.NONE);
         return createNonDynamicMapAndRenderer(resource, displaySize, null, createRenderManager);
     }
 
     /**
-     * @deprecated Moved to CatalogTests
+     * @deprecated
      */
     public static IGeoResource createGeoResource( String typeName, int numFeatures, boolean deleteService ) throws IOException, SchemaException, IllegalAttributeException {
         return CatalogTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(typeName, numFeatures), deleteService);
@@ -234,17 +229,17 @@ public class MapTests {
                 break;
             }
         }
-        
+
         if( s==null )
             throw new AssertionError();
         if( !(s.resources(null).size()>0))
             throw new AssertionError();
-        
+
     	CatalogPlugin.getDefault().getLocalCatalog().add(s);
-    	List<IResolve> resources = CatalogPlugin.getDefault().getLocalCatalog().find(new URL(resourceURL), null); 
+    	List<IResolve> resources = CatalogPlugin.getDefault().getLocalCatalog().find(new URL(resourceURL), null);
     	if( !(resources.size()>0) )
             throw new AssertionError();
-        
+
         Layer layer = map.getLayerFactory().createLayer((IGeoResource) resources.get(0));
     	layer.setName(name);
     	return layer;
@@ -253,5 +248,5 @@ public class MapTests {
     public static Map createDefaultMapNoRenderManager( String featureTypeName, int numFeatures, boolean deleteExistingService ) throws Exception {
         return createDefaultMap(featureTypeName, numFeatures, deleteExistingService, null, false);
     }
-	
+
 }

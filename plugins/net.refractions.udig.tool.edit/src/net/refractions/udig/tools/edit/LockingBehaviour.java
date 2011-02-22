@@ -24,16 +24,16 @@ import net.refractions.udig.tools.edit.support.EditGeom;
  * </p><p>
  * Example:
  * </p><p>
- * The Polygon tool has a BoxSelection behaviour that accepts drag events and draws a 
- * rectangle until the mouse is released (at that point it selects the vertices that are with 
- * the box).  
+ * The Polygon tool has a BoxSelection behaviour that accepts drag events and draws a
+ * rectangle until the mouse is released (at that point it selects the vertices that are with
+ * the box).
  * </p><p>
  * The Polygon tool also has a move geometry behaviour that moves the geometry when the mouse
- * is dragged over an {@link EditGeom}.  
- * </p><p> 
- * Given these two behaviours the following case can occur:  The mouse is pressed (not over a 
+ * is dragged over an {@link EditGeom}.
+ * </p><p>
+ * Given these two behaviours the following case can occur:  The mouse is pressed (not over a
  * geometry) and the BoxSelection behaviour starts drawing the selection box.  The mouse drags
- * over a Geometry and the MoveGeometry behaviour starts as well.  
+ * over a Geometry and the MoveGeometry behaviour starts as well.
  * </p><p>
  * One solution is to put both behaviours in a {@link net.refractions.udig.tools.edit.MutualExclusiveEventBehavior} so that if the BoxSelection
  * behaviour is running then the MoveGeometryBehaviour won't.  However if the MoveGeometryBehaviour

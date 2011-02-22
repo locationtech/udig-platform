@@ -22,54 +22,55 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IService;
+import net.refractions.udig.catalog.internal.ui.ConnectionPageDecorator;
 import net.refractions.udig.catalog.ui.internal.Messages;
 import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
-import net.refractions.udig.ui.PlatformGIS;
+import net.refractions.udig.catalog.ui.workflow.Workflow;
+import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
+import net.refractions.udig.catalog.ui.workflow.WorkflowWizardDialog;
+import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.dialogs.IPageChangedListener;
+import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.wizard.IWizardContainer;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 
 /**
  * A wizard page that opens a file dialog and closes the wizard when dialog is closed.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
-public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGConnectionPage {
+public class FileConnectionPage extends WorkflowWizardPage
+	implements UDIGConnectionPage, IPageChangedListener {
 
-    private final Set<URL> list = new HashSet<URL>();
+    private boolean canFlipToNextPage = false;
+    private Set<URL> list;
     private Composite comp;
 
     private FileConnectionFactory factory = new FileConnectionFactory();
     private FileDialog fileDialog;
-    private Collection<URL> resourceIds = new HashSet<URL>();
-    private ListViewer viewer;
 
     public String getId() {
         return "net.refractions.udig.catalog.ui.openFilePage"; //$NON-NLS-1$
@@ -82,14 +83,6 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         super(Messages.OpenFilePage_pageTitle);
     }
 
-    /**
-     * Process a list of URLs resulting in candidate IService instances
-     * that may need to be added to the catalog.
-     *
-     * @param urls
-     * @param monitor
-     * @return Candidate IServices
-     */
     List<IService> process( List<URL> urls, IProgressMonitor monitor ) {
         List<IService> resources = new ArrayList<IService>();
         monitor.beginTask(Messages.OpenFilePage_1, list.size());
@@ -99,22 +92,25 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
                 return null;
             try {
                 monitor.subTask(url.toExternalForm());
-                List<IService> acquire = CatalogPlugin.getDefault().getServiceFactory()
-                        .createService(url);
+                List<IService> acquire = CatalogPlugin.getDefault().getServiceFactory().createService(url);
                 resources.addAll(acquire);
             } catch (Throwable e) {
-                CatalogUIPlugin.log("error obtaining services from service factory", e); //$NON-NLS-1$
+                CatalogUIPlugin.log( "error obtaining services from service factory", e); //$NON-NLS-1$
             }
             monitor.worked(worked++);
         }
         return resources;
     }
 
-    private void pushButton( final int buttonId ) {
+    private void cancelWizard() {
         try {
+            getShell().getDisplay().asyncExec(new Runnable(){
+                public void run() {
+                    findButton(getShell().getChildren(), IDialogConstants.BACK_ID).notifyListeners(
+                            SWT.Selection, new Event());
+                }
 
-            findButton(getShell().getChildren(), buttonId).notifyListeners(SWT.Selection,
-                    new Event());
+            });
         } catch (Exception e) {
             CatalogUIPlugin.log("", e); //$NON-NLS-1$
         }
@@ -139,88 +135,135 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         }
         return null;
     }
-    
-    /**
-     * Check if only one resource is available; in which case we can skip asking.
-     *
-     * @param monitor
-     * @param services
-     * @return
-     * @throws IOException
-     */
-    protected boolean hasOneResource( SubProgressMonitor monitor, List<IService> services )
-            throws IOException {
-        if (services.size() > 1 || services.isEmpty())
+
+    Workflow workflow;
+    private void finishWizard() {
+        try {
+        	if (getContainer() instanceof WizardDialog) {
+        		final IWizardContainer dialog = getContainer();
+        		WorkflowWizard wizard = null;
+        		if (dialog instanceof WorkflowWizardDialog) {
+        			wizard = ((WorkflowWizardDialog)dialog).getWorkflowWizard();
+        		}
+        		else if (dialog.getCurrentPage().getWizard() instanceof WorkflowWizard) {
+        			wizard = (WorkflowWizard)dialog.getCurrentPage().getWizard();
+        		}
+
+        		if (wizard != null) {
+        			//move workflow to next state
+        			workflow = wizard.getWorkflow();
+                    final EndConnectionState currentState = (EndConnectionState)workflow.getCurrentState();
+                    (currentState).setURLs(getURLs());
+
+                    final boolean[] finished=new boolean[]{false};
+
+        			dialog.run(true, true, new IRunnableWithProgress() {
+            			public void run(IProgressMonitor monitor)
+            				throws InvocationTargetException ,InterruptedException {
+                            monitor.beginTask(Messages.FileConnectionPage_taskname, IProgressMonitor.UNKNOWN);
+                            try {
+//                                if (currentState.run(new SubProgressMonitor(monitor, 4))
+//                                        && hasOneResource(new SubProgressMonitor(monitor, 4),
+//                                                currentState.getServices()) ) {
+                                    finished[0]=workflow.run(new SubProgressMonitor(monitor, 4));
+//                                }else{
+//                                    workflow.next(new SubProgressMonitor(monitor, 8));
+//                                }
+                            }catch (Exception e) {
+                                throw new InvocationTargetException(e);
+                            }
+            			};
+            		});
+        			if( finished[0] && dialog!=null && dialog.getShell()!=null && !dialog.getShell().isDisposed()){
+                        Display.getDefault().asyncExec(new Runnable(){
+                            public void run() {
+                                dialog.getShell().close();
+                            }
+                        });
+                    }
+        		}
+
+        		//one good hack deserves another
+        		if (!(dialog instanceof WizardDialog)) {
+        			//manually move wizard to next state
+        			((WizardDialog) dialog).addPageChangedListener(this);
+        		}
+
+        	}
+
+        } catch (Exception e) {
+            CatalogUIPlugin.log("", e); //$NON-NLS-1$
+        }
+    }
+
+    protected boolean hasOneResource( SubProgressMonitor monitor, List<IService> services ) throws IOException {
+        if( services.size()>1 || services.isEmpty() )
             return false;
 
-        if (services.get(0).resources(monitor).size() == 1)
+        if (services.get(0).resources(monitor).size()==1)
             return true;
         return false;
+    }
+
+    public void pageChanged(PageChangedEvent event) {
+    	if (getContainer().getCurrentPage() instanceof ConnectionPageDecorator) {
+    		WizardDialog dialog = (WizardDialog)getContainer();
+    		dialog.removePageChangedListener(this);
+
+    		final int button = workflow.hasMoreStates() ? IDialogConstants.NEXT_ID :
+    			IDialogConstants.FINISH_ID;
+
+    		getShell().getDisplay().asyncExec(
+    			new Runnable() {
+    				public void run() {
+    					findButton(getShell().getChildren(), button)
+    						.notifyListeners(SWT.Selection,new Event());
+
+    				}
+    			}
+    		);
+
+    	}
     }
 
     /**
      * @see org.eclipse.jface.wizard.WizardPage#canFlipToNextPage()
      */
     public boolean canFlipToNextPage() {
-        return (list != null && list.size() > 1);
+        return (list != null && list.size() > 1) || canFlipToNextPage;
+    }
+
+    /**
+     * @see net.refractions.udig.ui.UDIGImportPage#setCanFlipToNextPage(boolean)
+     */
+    public void setCanFlipToNextPage( boolean value ) {
+        canFlipToNextPage = true;
     }
 
     /**
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      */
     public void createControl( Composite parent ) {
-        comp = new Composite(parent, SWT.NONE);
-        comp.setLayout(new GridLayout(1,true));
-
-        Label label = new Label(comp,SWT.NONE);
-        GridDataFactory.swtDefaults().applyTo(label);
-        label.setText(Messages.FileConnectionPage_waitMessage);
-        
-        viewer = new ListViewer(comp,SWT.READ_ONLY| SWT.H_SCROLL | SWT.V_SCROLL);
-        viewer.setContentProvider(new ArrayContentProvider());
-        viewer.setLabelProvider(new LabelProvider());
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(viewer.getControl());
-        
+        comp = new Composite(parent, SWT.NULL);
+        // comp.setLayout(new GridLayout(1,true));
+        // viewer=new ListViewer(comp);
+        // viewer.getControl().setLayoutData(new GridData(SWT.FILL,SWT.FILL,true, true));
+        // viewer.setContentProvider(new ArrayContentProvider());
+        // viewer.setLabelProvider(new LabelProvider());
         setControl(comp);
-    }
 
-    @Override
-    public void shown() {
-        Runnable openFileDialog = new Runnable(){
+        Display.getCurrent().asyncExec(new Runnable(){
             public void run() {
-                selectAndContinueWizard();
+                boolean open = openFileDialog(comp);
+                if (open) {
+                    finishWizard();
+                } else {
+                    cancelWizard();
+                }
             }
-        };
-        // file dialog must be opened asynchronously so that the workflow can finish the
-        // next action. Otherwise we will deadlock
-        PlatformGIS.asyncInDisplayThread(openFileDialog, false);
+        });
     }
 
-    private void selectAndContinueWizard() {
-        boolean okPressed;
-        list.clear();
-        okPressed = openFileDialog(comp);
-        viewer.setInput(list);
-        getContainer().updateButtons();
-        
-        /*
-         * XXX I'm not liking this. I think the workflow should be used to drive the pages because
-         * by trying to put the buttons it is dependent the implementation of
-         * ConnectionPageDecorator's isPageComplete method as well as what order the
-         * WorkflowWizard's canFinish method is implemented. IE if canFinish does not call
-         * isPageComplete before calling dryRun() the finish button will not be activated.
-         */
-        if (okPressed) {
-            if (findButton(getShell().getChildren(), IDialogConstants.FINISH_ID).isEnabled()) {
-                pushButton(IDialogConstants.FINISH_ID);
-            } else {
-                pushButton(IDialogConstants.NEXT_ID);
-            }
-        } else {
-            pushButton(IDialogConstants.BACK_ID);
-        }
-
-    }
     private boolean checkDND( FileDialog fileDialog ) {
         try {
 
@@ -236,7 +279,7 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
             }
 
             if (urlList.size() != 0) {
-                list.addAll(urlList);
+                list = urlList;
                 String file = urlList.iterator().next().getFile();
                 String ext = file.substring(file.lastIndexOf('.'));
                 String dir = new File(file).getParent();
@@ -248,7 +291,7 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
                 String[] filters = fileDialog.getFilterExtensions();
                 if (filters == null || filters.length == 0) {
                     // no filters set, set em up
-                    fileDialog.setFilterExtensions(new String[]{"*" + ext, "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$	
+                    fileDialog.setFilterExtensions(new String[]{"*" + ext, "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
                 } else {
                     // we have some filters, look for the one in question
                     // in the list
@@ -291,15 +334,14 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
     private boolean openFileDialog( Composite parent ) {
         String lastOpenedDirectory = PlatformUI.getPreferenceStore().getString(
                 CatalogUIPlugin.PREF_OPEN_DIALOG_DIRECTORY);
-        fileDialog = new FileDialog(parent.getShell(), SWT.MULTI | SWT.OPEN);
-
+        fileDialog = new FileDialog(parent.getShell(), SWT.MULTI);
         List<String> fileTypes = factory.getExtensionList();
 
         StringBuffer all = new StringBuffer();
         for( Iterator<String> i = fileTypes.iterator(); i.hasNext(); ) {
             all.append(i.next());
             if (i.hasNext())
-                all.append(";"); //$NON-NLS-1$ //semicolon is magic in eclipse FileDialog
+                all.append(";"); //semicolon is magic in eclipse FileDialog
         }
         fileTypes.add(0, all.toString());
 
@@ -307,16 +349,18 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
 
         fileDialog.setFilterExtensions(fileTypes.toArray(new String[fileTypes.size()]));
 
-        if (lastOpenedDirectory != null && !checkDND(fileDialog)) {
+        if (lastOpenedDirectory != null && !checkDND(fileDialog) ) {
             fileDialog.setFilterPath(lastOpenedDirectory);
         }
+
+
 
         // //this is a HACK to check for headless execution
         // if (getContainer() instanceof HeadlessWizardDialog) {
         // if (dnd)
         // return true; //there was a workbench selection that allowed us select a file
         // }
-        //        
+        //
         String result = fileDialog.open();
         if (result == null) {
             return false;
@@ -324,58 +368,28 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         String path = fileDialog.getFilterPath();
         PlatformUI.getPreferenceStore().setValue(CatalogUIPlugin.PREF_OPEN_DIALOG_DIRECTORY, path);
         String[] filenames = fileDialog.getFileNames();
+        list = new HashSet<URL>();
         for( int i = 0; i < filenames.length; i++ ) {
             try {
-                //URL url = new File(path + System.getProperty("file.separator") + filenames[i]).toURL(); //$NON-NLS-1$
-                URL url = new File(path + System.getProperty("file.separator") + filenames[i]).toURI().toURL(); //$NON-NLS-1$
+                URL url = new File(path + System.getProperty("file.separator") + filenames[i]).toURL(); //$NON-NLS-1$
                 list.add(url);
             } catch (Throwable e) {
                 CatalogUIPlugin.log("", e); //$NON-NLS-1$
             }
         }
         return true;
+        // viewer.setInput(urls);
     }
 
-    @Override
-    public Collection<IService> getServices() {
-        resourceIds.clear();
+    public Set<URL> getURLs() {
+        if (list == null || list.isEmpty())
+            return null;
 
-        final Collection<IService> services = new ArrayList<IService>();
-        IRunnableWithProgress runnable = new IRunnableWithProgress(){
-
-            public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                    InterruptedException {
-                services.addAll(EndConnectionState.constructServices(monitor,
-                        new HashMap<String, Serializable>(), list));
-                for( IService service : services ) {
-                    try {
-                        List< ? extends IGeoResource> resources = service.resources(SubMonitor
-                                .convert(monitor));
-                        if (resources.size() == 1) {
-                            IGeoResource resource = resources.iterator().next();
-                            resourceIds.add(resource.getIdentifier());
-                        }
-                    } catch (IOException e) {
-                        // skip
-                        CatalogUIPlugin.log("error resolving:" + service.getIdentifier(), e); //$NON-NLS-1$
-                    }
-                }
-            }
-
-        };
-        try {
-            getContainer().run(false, true, runnable);
-        } catch (InvocationTargetException e) {
-            throw (RuntimeException) new RuntimeException().initCause(e);
-        } catch (InterruptedException e) {
-            throw (RuntimeException) new RuntimeException().initCause(e);
-        }
-        return services;
+        return list;
     }
 
-    @Override
-    public Collection<URL> getResourceIDs() {
-        return resourceIds;
+    public Map<String, Serializable> getParams() {
+        return null; // no specific connection parameters
     }
 
 }

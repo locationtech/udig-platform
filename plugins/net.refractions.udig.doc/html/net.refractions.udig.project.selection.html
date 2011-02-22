@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : net.refractions.udig.project.selection</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : net.refractions.udig.project.selection -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>Maintains Selection state for a Map, used in conjunction with the LayerManager by the renderer to determine screen appearance.</p>
+
+<h5><a name="net.refractions.udig.project.selection-FunctionalRequirements">Functional Requirements</a></h5>
+<ul>
+	<li>selection by map interaction</li>
+	<li>selection by table interaction</li>
+	<li>selection by "Query" ui</li>
+	<li>scalable</li>
+	<li>programmatic access for operative plug-ins</li>
+</ul>
+
+
+<h5><a name="net.refractions.udig.project.selection-NonFunctionalRequirements">Non Functional Requirements</a></h5>
+<ul>
+	<li>sub-second notification of selection activity</li>
+	<li>selection should take less then 5 to 10 seconds for alpha</li>
+</ul>
+
+
+<h5><a name="net.refractions.udig.project.selection-DesignNotes%3A">Design Notes:</a></h5>
+<ul>
+	<li>maintain a Filter associated with each Layer</li>
+	<li>Filter can be Fid based to capture individual selections</li>
+	<li>Filter can be BBox based to capture spatial selection on Map</li>
+	<li>Filter can be be constructed via a "Query ui"</li>
+	<li>Selection inverts can be formed quickly with the use of "not( filter )"</li>
+	<li>receives events from Visualization Stack and transforms Bbox into the "Layer" coordinate system.</li>
+</ul>
+
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=255">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=255">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

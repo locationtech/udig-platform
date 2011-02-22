@@ -1,17 +1,3 @@
-/* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2008, Refractions Research Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation;
- * version 2.1 of the License.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- */
 package net.refractions.udig.style.sld.editor;
 
 import java.io.File;
@@ -44,21 +30,21 @@ public class ExportSLD extends ExportTo {
             filename = sld.getTitle();
             if (filename == null) filename = sld.getName();
         }
-        if (filename == null) filename = Messages.ImportExport_new; 
+        if (filename == null) filename = Messages.ImportExport_new;
         filename = filename.replace(':', '_');
         return filename + " " + Messages.ImportExport_selected;  //$NON-NLS-1$
     }
-    
+
     @Override
-    public String prompt( Object target ) {       
-        return Messages.ExportSLD_export; 
+    public String prompt( Object target ) {
+        return Messages.ExportSLD_export;
     }
-    
+
     @Override
     public String[] getExtentions() {
         return addTo(new String[] {"sld"}, super.getExtentions()); //$NON-NLS-1$
     }
-    
+
     @Override
     public void exportTo( Object target, File file, IProgressMonitor monitor ) throws Exception {
         SLDTransformer aTransformer = new SLDTransformer();
@@ -78,7 +64,7 @@ public class ExportSLD extends ExportTo {
 
     @Override
     public String[] getFilterNames() {
-        return addTo(new String[]{ Messages.ImportExportSLD_document}, super.getFilterNames()); 
+        return addTo(new String[]{ Messages.ImportExportSLD_document}, super.getFilterNames());
     }
 
 }

@@ -20,7 +20,6 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "net.refractions.udig.project.internal.messages"; //$NON-NLS-1$
-
 	public static String ChangeCRSCommand_undoName;
 	public static String ChangeCRSCommand_name;
     public static String CommandManager_warning2;
@@ -115,20 +114,6 @@ public class Messages extends NLS {
 	public static String DeleteFeatureCommand_deleteFeature;
 	public static String RenderExecutorImpl_1;
 	public static String RenderExecutorImpl_2;
-	public static String ExportProjectWizard_Title;
-	public static String ExportProjectWizard_Destination2;
-	public static String ExportProjectWizard_Exporting;
-	public static String ExportSelectionPage_Destination;
-	public static String ExportSelectionPage_MissingDir;
-	public static String ExportSelectionPage_Project;
-	public static String ExportSelectionPage_SelectProject;
-	public static String ExportSelectionPage_ExportProject;
-	public static String SaveProject_Destination;
-    public static  String SaveProject_Export;
-    public static  String SaveProject_Overwrite;
-    public static  String SaveProject_Success;
-    public static  String SaveProject_Fail;
-	
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

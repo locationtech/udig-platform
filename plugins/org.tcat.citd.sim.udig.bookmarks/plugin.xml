@@ -115,4 +115,15 @@
                tooltip="%Bookmarks.actions.Remove.tt2"/>
       </objectContribution>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="net.refractions.udig.ui.alternateMapPerspective">
+         <view
+               id="org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView"
+               relationship="stack"
+               relative="net.refractions.udig.project.ui.layerManager"
+               visible="true"/>
+         <viewShortcut id="org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView"/>
+      </perspectiveExtension>
+   </extension>
 </plugin>

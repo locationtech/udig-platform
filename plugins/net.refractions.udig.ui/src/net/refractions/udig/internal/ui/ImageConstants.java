@@ -18,11 +18,11 @@ package net.refractions.udig.internal.ui;
 
 /**
  * Image constants for use with Images class.
- * 
+ *
  * @author jgarnett
  */
 public interface ImageConstants {
-	
+
 	/**
 	 * Enabled toolbar icons
 	 */
@@ -35,11 +35,11 @@ public interface ImageConstants {
 	 * Disabled toolbar icons.
 	 */
 	//public final static String PATH_DTOOL = ICONS_PATH+"dtool16/"; //$NON-NLS-1$
-	
+
 	/**
 	 * Enabled local toolbar icons.
 	 */
-	public final static String PATH_ELOCALTOOL = "elcl16/"; //$NON-NLS-1$    
+	public final static String PATH_ELOCALTOOL = "elcl16/"; //$NON-NLS-1$
     /** <code>FIRST_CO</code> field */
     public final static String FIRST_CO = PATH_ETOOL + "next_co.gif"; //$NON-NLS-1$
     /** <code>PREV_CO</code> field */
@@ -48,33 +48,33 @@ public interface ImageConstants {
     public final static String NEXT_CO = PATH_ETOOL + "next_co.gif"; //$NON-NLS-1$
     /** <code>LAST_CO</code> field */
     public final static String LAST_CO = PATH_ETOOL + "last_co.gif"; //$NON-NLS-1$
-    
-	
+
+
 	/**
 	 * Disabled local toolbar icons
 	 */
 	public final static String PATH_DLOCALTOOL = "dlcl16/"; //$NON-NLS-1$
-	
+
 	/**
 	 * View icons
 	 */
 	public final static String PATH_EVIEW = "eview16/"; //$NON-NLS-1$
-	
+
 	/**
 	 * Product images
 	 */
 	public final static String PATH_PROD = "prod/";	//$NON-NLS-1$
-	
+
 	/**
 	 * Model object icons
 	 */
 	public final static String PATH_OBJECT = "obj16/"; //$NON-NLS-1$
-	
+
 	/**
 	 * Pointer icons
 	 */
 	public final static String PATH_POINTER = "pointer/";  //$NON-NLS-1$
-	
+
 	/**
 	 * Wizard banners
 	 */
@@ -87,10 +87,10 @@ public interface ImageConstants {
 	 * Misc icons
 	 */
 	public final static String PATH_MISC = "misc/"; //$NON-NLS-1$
-	
+
 	/**
 	 * icons Overlays
 	 */
 	public final static String PATH_OVERLAY = "ovr16/"; //$NON-NLS-1$
-		
+
 }

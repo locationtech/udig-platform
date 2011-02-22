@@ -28,7 +28,7 @@ import org.eclipse.swt.graphics.Image;
  * </p>
  */
 public class OverlayCache {
-    
+
     private ImageCache imageCache = new ImageCache(); /*from OverlayIcon to Image*/
 
     /**
@@ -55,9 +55,9 @@ public class OverlayCache {
      * applyDescriptors( base,
      *                   new ImageDescriptor[][]={
      *                       null,     // TOP_LEFT     unsure if we will use this
-     *                       modified, // TOP_RIGHT    indicate content modified (w/ *) 
+     *                       modified, // TOP_RIGHT    indicate content modified (w/ *)
      *                       status,   // BOTTOM_LEFT  called the auxiliary overlay warn, error, success
-     *                       cached,   // BOTTOM_RIGHT not yet defined, recommened cache status...  
+     *                       cached,   // BOTTOM_RIGHT not yet defined, recommened cache status...
      *                       null,     // UNDERLAY     not sure if we will use this
      *                   }
      * );
@@ -73,7 +73,7 @@ public class OverlayCache {
         return getImageFor(icon);
     }
     public Image applyStatus(Image source, ImageDescriptor status ) {
-        DecoratorOverlayIcon icon = new DecoratorOverlayIcon(source, 
+        DecoratorOverlayIcon icon = new DecoratorOverlayIcon(source,
                 new ImageDescriptor[] { null, null, status, null, null} );
         return getImageFor(icon);
     }

@@ -16,7 +16,7 @@ package net.refractions.udig.project.internal.render;
 
 /**
  * Interface for renderers that wrap other renderers in order to extend their functionality.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

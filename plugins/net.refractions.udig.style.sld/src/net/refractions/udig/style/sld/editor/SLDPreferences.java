@@ -11,31 +11,31 @@ import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
 /**
- * 
- * TODO Purpose of 
+ *
+ * TODO Purpose of
  * <p>
  *
  * </p>
  * @author chorner
  * @since 1.1.M1
- * @see org.eclipse.core.runtime.preferences.IEclipsePreferences
+ * @see org.eclipse.core.internal.preferences.EclipsePreferences
  */
 public class SLDPreferences implements IEclipsePreferences, IScope {
 
-    protected Map<String,Object> children;
+    protected Map children;
     protected final String name;
     protected final SLDPreferences parent;
-    
+
     public SLDPreferences() {
         this(null, null);
     }
-    
+
     public SLDPreferences(SLDPreferences parent, String name) {
         super();
         this.parent = parent;
         this.name = name;
     }
-    
+
     public void addNodeChangeListener( INodeChangeListener listener ) {
     }
 
@@ -150,9 +150,9 @@ public class SLDPreferences implements IEclipsePreferences, IScope {
     protected synchronized IEclipsePreferences addChild(String childName, IEclipsePreferences child) {
         //Thread safety: synchronize method to protect modification of children field
         if (children == null)
-            children = Collections.synchronizedMap(new HashMap<String,Object>());
+            children = Collections.synchronizedMap(new HashMap());
         children.put(childName, child == null ? (Object) childName : child);
         return child;
     }
-    
+
 }

@@ -26,7 +26,7 @@ import net.refractions.udig.project.render.ICompositeRenderContext;
  * versions</li>
  * </ul>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 0.5
  */
@@ -68,6 +68,6 @@ public interface CompositeRenderContext extends RenderContext, ICompositeRenderC
      * @param contexts contexts to remove
      */
     void removeContexts( Collection<? extends RenderContext> contexts );
-    
+
     public CompositeRenderContext copy();
 }

@@ -48,53 +48,167 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * The tool proxy allows tools to be loaded lazily. It acts as a proxy for a tool as far as the Map
  * editors are concerned.
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
 public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
- 
+    /**
+     * Handles lazy cursor loading.
+     *
+     * @author jeichar
+     * @since 0.9.0
+     *
+     * @deprecated use {@link CursorProxy} class instead.
+     */
+    public static class CursorLoader {
+
+        private volatile Cursor cursor;
+        private String imagePath;
+        private String hotspotX;
+        private String hotspotY;
+        private String cursorId;
+        private String pluginID;
+        /**
+         * Construct <code>ToolProxy.CursorLoader</code>.
+         */
+        public CursorLoader( IConfigurationElement cursorDef ) {
+            if (cursorDef != null) {
+                imagePath = cursorDef.getAttribute("image"); //$NON-NLS-1$
+                hotspotX = cursorDef.getAttribute("hotspotX"); //$NON-NLS-1$
+                hotspotY = cursorDef.getAttribute("hotspotY"); //$NON-NLS-1$
+                cursorId = cursorDef.getAttribute("id"); //$NON-NLS-1$
+                pluginID = cursorDef.getNamespace();
+            } else {
+                cursorId = ModalTool.DEFAULT_CURSOR;
+            }
+        }
+
+        /**
+         * @return Returns the cursor.
+         */
+        public Cursor getCursor() {
+            if (cursor == null) {
+                synchronized (this) {
+                    if (cursor == null) {
+                        if (imagePath == null) {
+                            cursor = parseCursorId(cursorId);
+                        } else {
+                            ImageDescriptor imageDescriptor = AbstractUIPlugin
+                                    .imageDescriptorFromPlugin(pluginID, imagePath);
+                            int x;
+                            try {
+                                x = Integer.parseInt(hotspotX);
+                            } catch (Exception e) {
+                                x = 0;
+                            }
+                            int y;
+                            try {
+                                y = Integer.parseInt(hotspotY);
+                            } catch (Exception e) {
+                                y = 0;
+                            }
+                            if (imageDescriptor == null || imageDescriptor.getImageData() == null)
+                                cursor = parseCursorId(cursorId);
+                            else
+                                cursor = new Cursor(Display.getDefault(), imageDescriptor
+                                        .getImageData(), x, y);
+                        }
+                    }
+                }
+            }
+
+            return cursor;
+        }
+
+        Cursor parseCursorId( String cursor ) {
+        	Display display = PlatformUI.getWorkbench().getDisplay();
+            if (cursor == null)
+                return display.getSystemCursor(SWT.CURSOR_ARROW);
+            if (cursor.equals(ModalTool.CROSSHAIR_CURSOR))
+                return display.getSystemCursor(SWT.CURSOR_CROSS);
+            if (cursor.equals(ModalTool.E_RESIZE_CURSOR))
+                return display.getSystemCursor(SWT.CURSOR_SIZEE);
+            if (cursor.equals(ModalTool.HAND_CURSOR))
+                return display.getSystemCursor(SWT.CURSOR_HAND);
+            if (cursor.equals(ModalTool.MOVE_CURSOR))
+                return display.getSystemCursor(SWT.CURSOR_SIZEALL);
+            if (cursor.equals(ModalTool.N_RESIZE_CURSOR))
+                return display.getSystemCursor(SWT.CURSOR_SIZEN);
+            if (cursor.equals(ModalTool.NE_RESIZE_CURSOR))
+                return display.getSystemCursor(SWT.CURSOR_SIZENE);
+            if (cursor.equals(ModalTool.NW_RESIZE_CURSOR))
+                return display.getSystemCursor(SWT.CURSOR_SIZENW);
+            if (cursor.equals(ModalTool.S_RESIZE_CURSOR))
+                return display.getSystemCursor(SWT.CURSOR_SIZES);
+            if (cursor.equals(ModalTool.SE_RESIZE_CURSOR))
+                return display.getSystemCursor(SWT.CURSOR_SIZESE);
+            if (cursor.equals(ModalTool.SW_RESIZE_CURSOR))
+                return display.getSystemCursor(SWT.CURSOR_SIZESW);
+            if (cursor.equals(ModalTool.TEXT_CURSOR))
+                return display.getSystemCursor(SWT.CURSOR_IBEAM);
+            if (cursor.equals(ModalTool.W_RESIZE_CURSOR))
+                return display.getSystemCursor(SWT.CURSOR_SIZESW);
+            if (cursor.equals(ModalTool.WAIT_CURSOR))
+                return display.getSystemCursor(SWT.CURSOR_WAIT);
+            return  display.getSystemCursor(SWT.CURSOR_ARROW);
+        }
+
+        /**
+         * Dispose the cursor.
+         */
+        public void dispose() {
+            if (cursor != null)
+                cursor.dispose();
+            cursor = null;
+        }
+
+    }
+
     /**
      * The actual tool implementation. To be lazily loaded.
      */
     Tool tool = null;
-    
+
     /**
      * The current tool context.
      */
     IToolContext toolContext = null;
-    
+
     /**
      * Configuration from extension registry for this tool.
      */
     IConfigurationElement element = null;
-    
+
     //TODO make use of this.
     boolean hasControl = false;
-    
+
     /*
      * The tool cursor ID if <code>toolCursorId</code> is specified in tool extension.
      */
     String defaultCursorID;
-    
+
     private boolean onToolbar = true;
     int type = -1;
     static final int MODAL = 1;
     static final int BACKGROUND = 2;
     static final int ACTION = 3;
-    
+
     /**
      * The tool category ID. It is configured in extension registry.
      */
     private String categoryId;
-    
+
     /**
      * The ID of the default tool: Zoom
      */
@@ -108,36 +222,36 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     private boolean disposed=false;
     private volatile IMapEditorSelectionProvider selectionProviderInstance;
 
-    
+
     /**
      * The tool manager.
      */
     private ToolManager toolManager;
-    
+
     /**
      * Creates an new instance of MapViewport.ToolAction
-     * 
+     *
      * @param extension The Tool extension
      * @param tool The configuration element which describes the tool
      * @param newParam TODO
      */
     public ToolProxy( IExtension extension, IConfigurationElement tool, ToolManager toolManager ) {
         super();
-        
+
         this.toolManager = toolManager;
-        
+
         categoryId = tool.getAttribute("categoryId"); //$NON-NLS-1$
         String type = tool.getName();
         String pluginid = extension.getNamespaceIdentifier() ;
         String id = tool.getAttribute("id"); //$NON-NLS-1$
         String name = tool.getAttribute("name"); //$NON-NLS-1$
         if (name == null)
-            name = Messages.ToolProxy_unnamed; 
+            name = Messages.ToolProxy_unnamed;
         String toolTip = tool.getAttribute("tooltip"); //$NON-NLS-1$
         String iconID = tool.getAttribute("icon"); //$NON-NLS-1$
 
         defaultCursorID = tool.getAttribute("toolCursorId"); //$NON-NLS-1$
-        
+
         //FIXME For compatibility. To BE REMOVED later.
         if(defaultCursorID == null){
         	IConfigurationElement[] children = tool.getChildren("cursor"); //$NON-NLS-1$
@@ -149,11 +263,11 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         		defaultCursorID = ModalTool.DEFAULT_CURSOR;
         	}
         }
-        
+
         OpFilter parseEnablement = EnablementUtil.parseEnablement( extension.getNamespaceIdentifier()+"."+tool.getName(), tool.getChildren("enablement")); //$NON-NLS-1$ //$NON-NLS-2$;
-        enablement = new LazyOpFilter(this, parseEnablement); 
+        enablement = new LazyOpFilter(this, parseEnablement);
         operationCategories = parseOperationCategories(tool);
-        
+
         String bool = tool.getAttribute("hasCustomControl"); //$NON-NLS-1$
         hasControl = ((bool != null) && bool.equalsIgnoreCase("true")) ? true : false; //$NON-NLS-1$
         bool = tool.getAttribute("onToolbar"); //$NON-NLS-1$
@@ -166,7 +280,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
             icon = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid, iconID);
         }
         setImageDescriptor(icon);
-    
+
         this.element = tool;
         setName(name);
         setToolTipText(toolTip);
@@ -192,31 +306,40 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     private List<OperationCategory> parseOperationCategories(IConfigurationElement toolElement) {
         IConfigurationElement[] children = toolElement.getChildren("operationCategory"); //$NON-NLS-1$
-        
+
         if (children == null || children.length == 0) {
             return null;
-        }        
-        
+        }
+
         Map<String, OperationCategory> categories = UiPlugin.getDefault().getOperationMenuFactory().getCategories();
         ArrayList<OperationCategory> results = new ArrayList<OperationCategory>();
-        
+
         for (IConfigurationElement element : children) {
             String opCategoryID = element.getAttribute("categoryID"); //$NON-NLS-1$
-            
+
             if (opCategoryID == null || opCategoryID.length() == 0) {
                 ProjectUIPlugin.log("Warning: CategoryID attribute of operationCategory element in tool '"+id+"' is empty.",null); //$NON-NLS-1$ //$NON-NLS-2$
                 continue;
             }
-            
+
             OperationCategory opCategory = categories.get(opCategoryID);
             if (opCategory == null) {
                 ProjectUIPlugin.log("Warning: CategoryID attribute of operationCategory element in tool '"+id+"' cannot be found. Does it actually exist?", null); //$NON-NLS-1$ //$NON-NLS-2$
                 continue;
             }
-            
+
             results.add(opCategory);
         }
         return results;
+    }
+
+    CursorLoader parseCursor( IConfigurationElement toolDef ) {
+
+        // should only be one
+        IConfigurationElement[] children = toolDef.getChildren("cursor"); //$NON-NLS-1$
+
+        return new CursorLoader(children.length > 0 ? children[0] : null);
+
     }
 
     /**
@@ -236,10 +359,10 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
         if (type == BACKGROUND) {
             getTool().setContext(toolContext);
-            
+
         } else if ( type == MODAL && toolManager.activeModalToolProxy == this) {
         	ModalTool modalTool =  getModalTool();
-        	
+
         	modalTool.setContext(toolContext);
             String currentCursorID = modalTool.getCursorID();
             toolContext.getViewportPane().setCursor(
@@ -262,10 +385,10 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     ActionTool getModelessTool() {
         return (ActionTool) getTool();
     }
-    
+
     /**
      * Returns proxy
-     * 
+     *
      * @return
      */
     public Tool getTool() {
@@ -283,11 +406,11 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
                                 try {
                                     Object o = element.createExecutableExtension("class"); //$NON-NLS-1$
                                     tool = (Tool) o;
-                                    
+
                                     if(tool instanceof AbstractTool){
                                         ((AbstractTool)tool).init(element);
                                     }
-                                    
+
                                     /* Tool cursors framework */
                                     if(tool instanceof ModalTool){
                                         if(defaultCursorID != null){
@@ -313,7 +436,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
                     });
                 }
             };
-            
+
             PlatformGIS.syncInDisplayThread(runnable);
         }
         return tool;
@@ -328,7 +451,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     /**
      * If the current action is a ActionTool then the menu path of the tool action is returned
-     * 
+     *
      * @return the menu path of the tool action or null if the current tool is not an ActionTool.
      */
     public String getMenuPath() {
@@ -350,7 +473,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     /**
      * Returns ID of tool category from  extention registry.
-     * 
+     *
      * @return
      */
     public String getCategoryId() {
@@ -359,22 +482,22 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     /**
      * Creates an action that will run the tool referenced by this proxy
-     * 
+     *
      * @return an action that will run the tool referenced by this proxy
      */
     public IAction getAction() {
         if (action == null) {
             synchronized (this) {
                 if (action == null) {
-                    action = new ToolAction(this);                    
+                    action = new ToolAction(this);
                 }
                 action.setEnabled(isEnabled());
             }
         }
         return action;
     }
-    
-    
+
+
 
     /**
      *  (non-Javadoc)
@@ -384,12 +507,12 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 	public boolean isEnabled() {
     	if(tool == null)
     		return super.isEnabled();
-    	
+
     	return tool.isEnabled();
 	}
 
     Lock enabledLock = new ReentrantLock(true);
-    
+
 	/**
      *  (non-Javadoc)
      * @see net.refractions.udig.project.ui.tool.ModalTool#setEnabled(boolean)
@@ -402,19 +525,19 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
                     }
                 });
     }
-    
-    
-    
+
+
+
     protected void toolProxySetEnabled( boolean enabled ) {
         enabledLock.lock();
         try {
 
             super.setEnabled(enabled);
-            
+
             if(tool != null){
                 tool.setEnabled(enabled);
             }
-            
+
             if( action!=null )
                 action.setEnabled(enabled);
         } finally {
@@ -422,7 +545,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         }
     }
 
-    /** 
+    /**
      * (non-Javadoc)
      * @see net.refractions.udig.project.ui.tool.ActionTool#run()
      */
@@ -442,7 +565,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         ToolProxy activeToolProxy = (ToolProxy)getActiveItem();
     	if (activeToolProxy != null)
     		activeToolProxy.setActive(false);
-    	
+
     	setActive(true);
      	setActiveItem(this);
     }
@@ -476,14 +599,14 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     public void setActive( boolean active ) {
     	if (toolContext == null)
     		return;
-    	
+
     	setChecked(active);
-    	
+
     	if (getTool() instanceof ModalTool) {
     		ModalTool modalTool = (ModalTool)getTool();
-    		
+
     		getModalTool().setActive(active);
-    		
+
     		if (active){
     			String currentCursorID = modalTool.getCursorID();
     			toolContext.getViewportPane().setCursor(
@@ -500,7 +623,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         if (tool != null) {
             tool.dispose();
         }
-        
+
 //        if (this == toolManager.activeModalToolProxy)
 //        	toolManager.activeModalToolProxy = null;
 
@@ -543,14 +666,14 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     public boolean isActive() {
         return getModalTool().isActive();
     }
-    
-    
+
+
 
     @Override
     public boolean isDisposed() {
         return disposed;
     }
-    
+
     private Lock selectionProviderLock = new ReentrantLock();
 
     public IMapEditorSelectionProvider getSelectionProvider() {
@@ -584,8 +707,8 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         }
         return selectionProviderInstance;
     }
-    
-    
+
+
     /** (non-Javadoc)
      * @see net.refractions.udig.project.ui.tool.ModalTool#getCursorID()
      */
@@ -593,10 +716,10 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     	throw new UnsupportedOperationException("Call ToolProxy.getTool().getCursorID() method instead"); //$NON-NLS-1$
 	}
 
-    
+
 	/**
 	 * Empty implementation
-	 * 
+	 *
 	 * @see net.refractions.udig.project.ui.tool.ModalTool#setCursorID(java.lang.String)
 	 */
 	public void setCursorID(String id) {
@@ -615,12 +738,12 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 	 */
 	public void setProperty(String key, Object value) {
 		throw new UnsupportedOperationException("Call ToolProxy.getTool().setProperty(String, String) method instead"); //$NON-NLS-1$
-		
+
 	}
 
 	public void addListener(ToolLifecycleListener listener) {
 		throw new UnsupportedOperationException("Call ToolProxy.getTool().addListener(ToolLifecycleListener) method instead"); //$NON-NLS-1$
-		
+
 	}
 
 	public void removeListener(ToolLifecycleListener listener) {
@@ -633,8 +756,8 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
 	public void setSelectionProvider(IMapEditorSelectionProvider selectionProvider) {
 		throw new UnsupportedOperationException("Call ToolProxy.getTool().setSelectionProvider(IMapEditorSelectionProvider) method instead"); //$NON-NLS-1$
-		
+
 	}
-    
-    
+
+
 }

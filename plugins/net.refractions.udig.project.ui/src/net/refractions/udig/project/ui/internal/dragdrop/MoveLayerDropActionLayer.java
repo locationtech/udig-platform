@@ -43,10 +43,10 @@ public class MoveLayerDropActionLayer extends IDropAction {
     @Override
     public void perform( IProgressMonitor monitor ) {
         Collection<Layer> layers = MoveLayerDropAction.toCollection(getData());
-        
+
         Layer layer=(Layer) getDestination();
         layer.getMap().sendCommandASync(new AddLayersCommand(layers, layer.getZorder()));
-        
+
         layers.iterator().next().getMap().sendCommandASync(new DeleteLayersCommand(layers.toArray(new Layer[0])));
     }
 

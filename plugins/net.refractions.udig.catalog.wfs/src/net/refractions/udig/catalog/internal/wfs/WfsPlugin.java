@@ -3,8 +3,10 @@ package net.refractions.udig.catalog.internal.wfs;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -23,7 +25,7 @@ public class WfsPlugin extends AbstractUIPlugin {
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
 	public static final String ID = "net.refractions.udig.catalog.internal.wfs"; //$NON-NLS-1$
-	
+
 	/**
 	 * The constructor.
 	 */
@@ -37,7 +39,6 @@ public class WfsPlugin extends AbstractUIPlugin {
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
-        /*
         ClassLoader current = Thread.currentThread().getContextClassLoader();
         try {
             Thread.currentThread().setContextClassLoader(WFSDataStore.class.getClassLoader());
@@ -51,20 +52,18 @@ public class WfsPlugin extends AbstractUIPlugin {
         } finally {
             Thread.currentThread().setContextClassLoader(current);
         }
-        */
     }
 
-    /*
     private void setLoggerLevel( String loggerID, String traceID ) {
         Logger logger = Logger.getLogger(loggerID);
-        if( isDebugging(traceID) ) 
+        if( isDebugging(traceID) )
             logger.setLevel(Level.FINE);
         else
             logger.setLevel(Level.SEVERE);
         ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setLevel(Level.ALL);
         logger.addHandler(consoleHandler);
-    }*/
+    }
 
 	/**
 	 * This method is called when the plug-in is stopped
@@ -115,8 +114,8 @@ public class WfsPlugin extends AbstractUIPlugin {
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      * </ul>
      * </p>
-     * @param message 
-     * @param t 
+     * @param message
+     * @param t
      */
     public static void log( String message, Throwable t ) {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
@@ -132,8 +131,8 @@ public class WfsPlugin extends AbstractUIPlugin {
      * }
      * </code></pre>
      * </p>
-     * @param message 
-     * @param e 
+     * @param message
+     * @param e
      */
     public static void trace( String message, Throwable e) {
         if( getDefault().isDebugging() ) {
@@ -148,12 +147,12 @@ public class WfsPlugin extends AbstractUIPlugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
-     * @return true if -debug is on for this plugin 
+     * @return true if -debug is on for this plugin
      */
     public static boolean isDebugging( final String trace ){
         return getDefault().isDebugging() &&
-            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
-    }    
+            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
+    }
 }

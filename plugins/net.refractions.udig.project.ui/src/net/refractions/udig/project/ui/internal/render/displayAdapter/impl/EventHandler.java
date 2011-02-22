@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.ui.internal.render.displayAdapter.impl;
 
@@ -68,7 +68,7 @@ public class EventHandler implements Listener {
 
     /**
      * TODO summary sentence for mouseWheel ...
-     * 
+     *
      * @param event
      */
     private void mouseWheel( Event e ) {
@@ -86,7 +86,7 @@ public class EventHandler implements Listener {
      */
     public void controlResized( final Event e ) {
         if( e==null )
-            return; 
+            return;
         synchronized (this) {
             scheduledTime=System.currentTimeMillis()+400;
         }
@@ -129,7 +129,7 @@ public class EventHandler implements Listener {
         int button1 = (e.stateMask&SWT.BUTTON1)!=0?1:-1;
         int button2 = (e.stateMask&SWT.BUTTON2)!=0?2:-1;
         int button3 = (e.stateMask&SWT.BUTTON3)!=0?3:-1;
-        
+
         return getButton(button1)|getButton(button2)|getButton(button3);
     }
 

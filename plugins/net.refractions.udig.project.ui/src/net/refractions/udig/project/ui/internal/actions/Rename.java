@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * An action for renaming objects in UDIG
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
@@ -42,30 +42,28 @@ public class Rename extends UDIGGenericAction {
 
     protected void operate( Layer layer ) {
         layer.setName(getNewName(layer.getName()));
-        layer.getMapInternal().getProjectInternal().eResource().setModified(true);
+        layer.getContextModel().getMap().getProjectInternal().eResource().setModified(true);
     }
 
     @Override
-    protected void operate( Layer[] layers, Object context ) {
+    protected void operate( Layer[] layers ) {
         if (layers != null)
             operate(layers[0]);
     }
-    
-    @Override
-    protected void operate( ProjectElement element, Object context ) {
+
+    protected void operate( ProjectElement element ) {
         element.setName(getNewName(element.getName()));
         element.getProjectInternal().eResource().setModified(true);
     }
-    
-    @Override
-    protected void operate( Project project, Object context ) {
+
+    protected void operate( Project project ) {
         project.setName(getNewName(project.getName()));
         project.eResource().setModified(true);
     }
 
     /**
      * Opens a dialog asking the user for a new name.
-     * 
+     *
      * @return The new name of the element.
      */
     private String getNewName( String oldName ) {

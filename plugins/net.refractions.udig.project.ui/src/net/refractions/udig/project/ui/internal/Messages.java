@@ -20,7 +20,6 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "net.refractions.udig.project.ui.internal.messages"; //$NON-NLS-1$
-    public static String Delete_deleteMultipleProjects = null;
 	public static String AbstractToolbarContributionItem_warning_message;
 	public static String AbstractToolbarContributionItem_warning_title;
 	public static String AddToNewMap_resource_selection_page_title;
@@ -30,6 +29,10 @@ public class Messages extends NLS {
     public static String ExportLayer_Message0;
     public static String ExportLayer_PageTitle;
     public static String ExportLayer_WizardTitle;
+    public static String ExportMapToImageWizard_failureMessage;
+    public static String ExportMapToImageWizard_mapSelectorPageDescription;
+    public static String ExportMapWizard_2;
+    public static String ExportMapWizard_windowsTitle;
     public static String FeatureEditorFieldEditor_label;
     public static String ImageExportPage_ImageSettings;
     public static String ImageExportPage_ImageSettingsDescription;
@@ -57,11 +60,9 @@ public class Messages extends NLS {
     public static String MapSummary_abstract;
     public static String MapSummary_mapBounds;
     public static String MapSummary_viewportBounds;
-    public static String MapSummary_viewportCRS;
 	public static String MenuToolCategory_menu_manager_title;
 	public static String MultiTargetOp_resource_summary;
 	public static String NewLayerAction_duplicate_type_name;
-	public static String NewLayerAction_duplicateName;
     public static String NewProjectWizardPage_err_project_name;
 	public static String NewProjectWizardPage_label_projectDir;
 	public static String NewProjectWizardPage_err_project_exists;
@@ -83,7 +84,6 @@ public class Messages extends NLS {
 	public static String DropFilterAction_taskname;
 	public static String PaletteDefaultChooserPanel_check;
 	public static String PaletteDefaultChooserPanel_colours;
-    public static String PaletteDefaultChooserPanel_MapBackgroundColor;
 	public static String PaletteDefaultChooserPanel_palette;
 	public static String PaletteDefaultChooserPanel_title;
 	public static String MapFactory_error;
@@ -93,27 +93,8 @@ public class Messages extends NLS {
 	public static String StopAnimationCommand_name;
     public static String Delete_filesystem;
     public static String Delete_delete;
-    public static String Delete_deleteElement;
-    public static String Delete_deleteMultipleElements;
 	public static String Delete_deleteProject;
-	public static String IssuesView_showGroups;
-	public static String IssuesView_DeleteIssueTooltip;
-	public static String IssuesView_DeleteIssueAction;
-	public static String IssuesView_dialogMessage;
-	public static String IssuesView_deleteGroup;
-	public static String IssuesView_deleteRelatedAction;
-	public static String IssueHandler_error_view;
-	public static String IssuesView_timer_name;
-	public static String IssueHandler_error_perspective;
-	public static String IssuesView_fix_action_tooltip;
-	public static String IssueHandler_error_editor;
-	public static String IssuesView_fix_action_name;
-	public static String IssuesView_showIssues_action_tooltip;
-	public static String IssuesView_showIssues_action_name;
-	public static String IssuesView_name_title;
-	public static String IssuesView_desc_title;
 	public static String PalettePropertyPage_Title;
-	public static String LayerGeneratedGlyphDecorator_error;
 	public static String LayerGeneratedGlyphDecorator_jobName;
 	public static String LayerSummary_title;
 	public static String LayerSummary_selection;
@@ -122,7 +103,6 @@ public class Messages extends NLS {
 	public static String LayerSummary_zorder;
 	public static String LayerSummary_id;
 	public static String LayerSummary_name;
-	public static String LayerSummary_0;
 	public static String SLDDropAction_sldParseError;
 	public static String SLDDropAction_badSldUrl;
 	public static String FeaturesInView_3;
@@ -148,13 +128,6 @@ public class Messages extends NLS {
 	public static String LayerApplicabilityMenuCreator_ApplicabilityMenuName;
 	public static String DeleteFeature_confirmation_text;
 	public static String DeleteFeature_confirmation_title;
-	public static String EventJob_job_title;
-	public static String ViewportPaneJava_resize_title;
-	public static String DrawFeatureCommand_drawFeature;
-	public static String DrawShapeCommand_setStroke;
-	public static String TranslateCommand_translateDisplayArea;
-	public static String ZoomDrawCommand_setDisplayAreaZoom;
-	public static String DrawEditFeatureCommand_drawFeature;
 	public static String LayerPreferences_none;
 	public static String LayerPreferences_foreground;
 	public static String LayerPreferences_background;
@@ -167,15 +140,12 @@ public class Messages extends NLS {
 	public static String MapPreferences_backgroundColor;
 	public static String MapPreferences_errorMessage;
 	public static String MapPreferences_defaultCRS;
-	public static String RenderPreferences_tiledRendering;
-    public static String RenderPreferences_tilingRendererPref;
 	public static String RenderPreferences_transparencies;
 	public static String RenderPreferences_antialiasing;
 	public static String RenderPreferences_pageDescription;
 	public static String RenderManagerDynamic_allLayers;
 	public static String FeatureEditorExtensionProcessor_editWithMenu;
 	public static String FeatureEditorExtensionProcessor_editMenu;
-	public static String FeatureEditorExtensionProcessor_EditWithMenu;
 	public static String FeaturePropertySource_noOtherAttributes;
 	public static String FeaturePropertySource_featureAttributes;
 	public static String FeaturePropertySource_geometry;
@@ -195,16 +165,12 @@ public class Messages extends NLS {
 	public static String AttributePropertyDescriptor_true;
 	public static String AttributePropertySource_value;
 	public static String AttributePropertySource_other;
-	public static String CoordinateSetPropertySource_coordinates;
 	public static String ScemaDescriptor_attributeTypes;
 	public static String ScemaDescriptor_geometry;
 	public static String GeometryPropertyDescriptor_viewButton_text;
 	public static String Rename_enterNewName;
-	public static String ResourceSelectionPage_title;
 	public static String OpenMapCommand_taskName;
-	public static String OpenProject_ErrorMessage;
-    public static String OpenProject_ErrorTitle;
-    public static String OpenProject_openProject;
+	public static String OpenProject_openProject;
 	public static String OpenMapCommand_commandName;
 	public static String OpenProject_selectProject;
 	public static String OpenProject_openProject_title;
@@ -234,26 +200,17 @@ public class Messages extends NLS {
 	public static String ProjectUIPlugin_resourceSelectionPage_title;
 	public static String ProjectExplorer_openProject_tooltip;
 	public static String ProjectUIPlugin_loadingProject_task;
-	public static String ProjectNewPage_label_newProject_text;
 	public static String ProjectUIPlugin_loadingServices_task;
-	public static String ProjectNewPage_label_newProject_tooltip;
 	public static String NewProjectWizardPage_err_project_dir_absolute;
 	public static String NewProjectWizardPage_err_project_dir_valid;
 	public static String NewProjectWizardPage_newProject_description;
 	public static String ProjectUIPlugin_loadingServices_title;
 	public static String ProjectExplorer_link_tooltip;
-	public static String ProjectExplorer_properties_text;
-	public static String ProjectNewPage_error_filename;
 	public static String ProjectExplorer_openProject_text;
-	public static String ProjectNewPage_button_browse_text;
-	public static String NewProjectWizardPage_newProject_filename;
 	public static String ProjectUIPlugin_error;
 	public static String ProjectUIPlugin_success;
-	public static String ProjectExplorer_1;
-	public static String ProjectExplorer_delete;
 	public static String ProjectExplorer_link_name;
 	public static String ProjectExplorer_open_text;
-	public static String ProjectNewPage_exists;
 	public static String NewProjectWizardPage_newProject;
 	public static String ToolCategory_other;
 	public static String ToolManager_back_tooltip;
@@ -262,8 +219,6 @@ public class Messages extends NLS {
 	public static String ToolManager_forward;
 	public static String ToolManager_undoAction;
 	public static String ToolManager_redoAction;
-	public static String ToolManager_enterAction;
-	public static String ToolManager_enterActionTooltip;
 	public static String ToolCategory_other_menu;
 	public static String ToolProxy_unnamed;
     public static String ProjectPreferencePage_deleteFiles;
@@ -292,11 +247,9 @@ public class Messages extends NLS {
     public static String ImageExportPage_leftMargin;
     public static String ImageExportPage_lowerMargin;
     public static String ImageExportPage_marginsGroup;
-	public static String ImageExportPage_pageTitle;
 	public static String ImageExportPage_PDF_Group_Description;
+	public static String ImageExportPage_png;
     public static String ImageExportPage_rightMargin;
-	public static String ImageExportPage_scaleDenom_Text;
-	public static String ImageExportPage_scaleDenomToolTip;
 	public static String ImageExportPage_browse;
 	public static String ImageExportPage_size_Label;
     public static String ImageExportPage_topMargin;
@@ -304,16 +257,10 @@ public class Messages extends NLS {
     public static String MapSelectorPage_pageName;
     public static String MapSelectorPage_selectmapsExport;
     public static String MapSelectorPage_selectMapsLabel;
-    public static String MapSelectorPage_Add;
-    public static String MapSelectorPage_Remove;
-    
     public static String MapSelectorPageWithScaleColumn_defaultScale;
     public static String MapSelectorPageWithScaleColumn_invalidScaleError;
     public static String MapSelectorPageWithScaleColumn_scale;
     public static String MapSelectorPageWithScaleColumn_scaleColumnText;
-    
-    public static String mousePreferences_setvalue;
-    public static String mousePreferences_title;
 
     static {
 		// initialize resource bundle

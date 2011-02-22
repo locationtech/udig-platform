@@ -25,16 +25,16 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.GeometryDescriptor;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.Feature;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.GeometryAttributeType;
 
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * Nested browser used to display LayerPointInfo.
- * 
+ *
  * @author Jody Garnett
  * @since 0.3
  */
@@ -44,25 +44,25 @@ public class FeatureDisplay extends InfoDisplay {
     protected Text text;
     //private Text location;
     //private ViewForm viewForm;
-    
+
     /**
-     * Nested viewForm containing text, and locationbar 
+     * Nested viewForm containing text, and locationbar
      * @return Control maintained by this display
      */
     public Control getControl() {
         return text; //viewForm;
     }
-    
+
     public void createDisplay( Composite parent ) {
         /*
-        viewForm= new ViewForm( parent, SWT.NONE);        
+        viewForm= new ViewForm( parent, SWT.NONE);
         GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 2;
         viewForm.setLayout(gridLayout);
-        
+
         Label labelAddress = new Label(viewForm, SWT.NONE);
         labelAddress.setText("A&ddress");
-        
+
         location = new Text(viewForm, SWT.BORDER);
         GridData data = new GridData();
         data = new GridData();
@@ -79,48 +79,48 @@ public class FeatureDisplay extends InfoDisplay {
         data.grabExcessHorizontalSpace = true;
         data.grabExcessVerticalSpace = true;
         text.setLayoutData(data);
-        */              
+        */
     }
-    
-    public void setInfo( SimpleFeature feature ) {
+
+    public void setInfo( Feature feature ) {
         text.setToolTipText( null );
         if( feature == null ) {
             text.setText( "" ); //$NON-NLS-1$
             return;
         }
-        SimpleFeatureType type = feature.getFeatureType();
-        
+        FeatureType type = feature.getFeatureType();
+
         StringBuffer buf = new StringBuffer();
         buf.append( feature.getID() );
         buf.append( ": (" ); //$NON-NLS-1$
-        buf.append( type.getName().getNamespaceURI() );
+        buf.append( type.getNamespace() );
         buf.append( ":" ); //$NON-NLS-1$
-        buf.append( type.getName().getLocalPart() );
-        
-        for( int i=0; i<feature.getAttributeCount(); i++ ) {
-            AttributeDescriptor attribute = type.getDescriptor( i );
+        buf.append( type.getTypeName() );
+
+        for( int i=0; i<feature.getNumberOfAttributes(); i++ ) {
+            AttributeType attribute = type.getAttributeType( i );
             Object value = feature.getAttribute( i );
             buf.append( "\n" ); //$NON-NLS-1$
             buf.append( attribute.getName() );
             buf.append( " = " ); //$NON-NLS-1$
-            if ( attribute instanceof GeometryDescriptor ) {
+            if ( attribute instanceof GeometryAttributeType ) {
                 buf.append( ((Geometry) value).getGeometryType() );
             }
             else {
                 buf.append( value );
             }
-        }                
-        text.setText( buf.toString() );                    
+        }
+        text.setText( buf.toString() );
     }
     public void setInfo( LayerPointInfo info ) {
         if( info == null ){
             text.setText( "" );             //$NON-NLS-1$
         }
         else {
-            SimpleFeature feature;
+            Feature feature;
             try {
-                feature = (SimpleFeature) info.acquireValue();
-                setInfo( feature );                
+                feature = (Feature) info.acquireValue();
+                setInfo( feature );
             } catch (IOException noValue) {
                 text.setText( noValue.getLocalizedMessage() );
             }
@@ -133,6 +133,6 @@ public class FeatureDisplay extends InfoDisplay {
                 text.setToolTipText( info.getMimeType() );
             }
         }
-    }    
-    
+    }
+
 }

@@ -38,7 +38,7 @@ package net.refractions.udig.catalog.memory.internal;
 public interface MemoryServiceListener {
     /**
      * TODO summary sentence for schemaChanged ...
-     * 
+     *
      */
     public void schemaChanged();
 }

@@ -1,0 +1,141 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : Targets</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : Targets -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h3><a name="Targets-LegalTargets">Legal Targets</a></h3>
+<p>One of the most common questions are "What are legal targets?" and "How do I know when those targets will be active?"  </p>
+
+<p>Targets are tied very closely to the Eclipse workspace's selection framework and is designed to operate in a similar manner as the org.eclipse.popupMeus extension point.  In Eclipse each <b>view</b> has a selection and the <em>current</em> selection is the selection of the current view.  A selection can be empty, a single object or many objects.  It may be heterogeneous or homogeneous.  Currently operations will always be inactive if the selection is made up of many heterogeneous objects.  However, as with the popupMenus extension point, operations can be defined so they are active for one or many and filters can be defined as well to further restrict what selections the operations will be enabled for.</p>
+
+<p>For the basic case, where only the target is defined, the object in the current selection is examined to see if it matches the declared target in the operation.  However more than just and instanceof check is made.  uDig, as with eclipse, uses the Extensible Interface/Adaptable pattern quite heavily.  So if the object(s) in the selection can adapt to the target object then that is also considered a match.</p>
+
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='infoMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/information.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">Extensible Interface Pattern</b><br />
+<p>In a nutshell, the Extensible Interface pattern allows an object to <em>adapt</em> to objects of other types.  An example of this is WMS IServices can <em>adapt</em> to WebMapServer objects.</p></td></tr></table></div></div>
+
+<p>I'm now going to provide a little tour of the standard views in uDig and what selections you can expect in the different views.</p>
+
+<h3><a name="Targets-Viewsandtheselectionsthatcanbeexpected">Views and the selections that can be expected</a></h3>
+<ul>
+	<li>Project Explorer: IMap, IProject, IProjectElement, IPage</li>
+	<li>Layers View: ILayer
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='warningMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/forbidden.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td>Layers also adapt to their IGeoResources.  However adapting only goes 1 level.  So while layers adapt to IGeoResources they do not adapt to FeatureSources</td></tr></table></div></div></li>
+	<li>Catalog View: IServices, IGeoResources
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='tipMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/check.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td>IServices can adapt to many different objects such as WebMapServers and DataStores</td></tr></table></div></div>
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='tipMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/check.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td>IGeoResources can adapt to objects such as FeatureSources, FeatureStores, GridCoverages and WMSLayers</td></tr></table></div></div></li>
+	<li>Info View: Features</li>
+	<li>Selection View (Soon to be renamed to Table View): Features</li>
+	<li>Feature Editor: Feature</li>
+	<li>MapEditor:  This is a trickier workbench part.  The selection is determined by the active tool.  By default, the current selection is the map but some tools (editing tools for example) will cause the current selection to be features.
+	<ul>
+		<li>Pan, Measurement and Zoom: Map</li>
+		<li>Selection tools:  AdaptiveFilter which is a org.geotools.filter.Filter and can adapt to the ILayer that it applies to.</li>
+		<li>Info tool: ???  I don't know yet probably features</li>
+		<li>Edit tools: The features on the EditBlackboard</li>
+	</ul>
+	</li>
+</ul>
+
+
+<h3><a name="Targets-Objectpassedtotheoperation">Object passed to the operation</a></h3>
+<p>When the op method is called by the framework, the objected passed to the method is an instance of the declared class, not necessarily the class that is in the selection.  For example if the class FeatureStore is the target class and the object that is clicked on is a IGeoResource that can resolve to a FeatureStore then a FeatureStore instance is passed to the operation, not the IGeoResource.   </p>
+
+<p>A second point to note is that if the the class declares 1 as the enablesFor parameter then the single object will be passed to the operation.  <b>However</b>, if the enablesFor parameter is anything else, (+,*,3,etc..) an array of the target type will be passed in as the target parameter.  See Code Snippets for an example.</p>
+
+<h3><a name="Targets-CodeSnippets">Code Snippets</a></h3>
+<p><b>Example where target is a single IMap</b><br/>
+The follow example declares an operation that is enabled when the selection is a <em>single</em> IMap object.  This operation would be enabled in the MapEditor and the Project Explorer.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;operation               categoryId=<span class="code-quote">"net.refractions.udig.project.ui.informationOperations"</span>
+class=<span class="code-quote">"net.refractions.udig.project.ui.operations.example.FeaturesInView"</span>
+               enablesFor=<span class="code-quote">"1"</span>
+               id=<span class="code-quote">"net.refractions.udig.project.ui.featuresInView"</span>
+               name=<span class="code-quote">"%featuresView"</span>
+               targetClass=<span class="code-quote">"net.refractions.udig.project.IMap"</span>/&gt;</pre>
+</div></div>
+
+<div class="code"><div class="codeHeader"><b>FeaturesInView.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> void op( <span class="code-keyword">final</span> Display display, <span class="code-object">Object</span> target, IProgressMonitor monitor )
+            <span class="code-keyword">throws</span> Exception {
+        IMap map = (IMap) target;
+
+<span class="code-comment">// ... some work
+</span>}</pre>
+</div></div>
+
+<p><b>Example where target is exactly 2 ILayers</b><br/>
+The following example would be enabled when exactly 2 ILayers are selected.  No more and no less.  The standard views where this operation could be enabled in are the Layers View and Project Explorer.</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;operation
+            class=<span class="code-quote">"net.refractions.udig.tool.edit.DifferenceOp"</span>
+            enablesFor=<span class="code-quote">"2"</span>
+            id=<span class="code-quote">"net.refractions.udig.tool.edit.difference"</span>
+            name=<span class="code-quote">"%difference.name"</span>
+            targetClass=<span class="code-quote">"net.refractions.udig.project.ILayer"</span>/&gt;</pre>
+</div></div>
+
+<div class="code"><div class="codeHeader"><b>DifferenceOp.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> void op( <span class="code-keyword">final</span> Display display, <span class="code-object">Object</span> target, IProgressMonitor monitor ) <span class="code-keyword">throws</span> Exception {
+        <span class="code-keyword">final</span> ILayer[] layers=(ILayer[]) target;
+<span class="code-comment">// ... some work
+</span>}</pre>
+</div></div>
+
+<p><b>Example using enablement filter</b><br/>
+The following example show the declaration of an operation that is enabled only when the selection consists of a single IService that can adapt (resolve in the case of IService) to a DataStore object.  The difference between this example and simply having the target as a DataStore is that the object that is passed in is a IService and not a DataStore.  Obviously the functionality of IService is required and not the functionality of a DataStore.</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;operation
+     categoryId=<span class="code-quote">"net.refractions.udig.ui.edit"</span>
+          class=<span class="code-quote">"net.refractions.udig.catalog.internal.ui.ops.NewFeatureTypeOp"</span>
+           enablesFor=<span class="code-quote">"1"</span>
+           id=<span class="code-quote">"net.refractions.udig.catalog.ui.newFeatureType"</span>
+           menuPath=<span class="code-quote">"file/new"</span>
+           name=<span class="code-quote">"%newFeatureType"</span>
+           targetClass=<span class="code-quote">"net.refractions.udig.catalog.IService"</span>&gt;
+        <span class="code-tag">&lt;enablement&gt;</span>
+           <span class="code-tag">&lt;filter adaptsTo=<span class="code-quote">"org.geotools.data.DataStore"</span>/&gt;</span>
+        <span class="code-tag">&lt;/enablement&gt;</span></pre>
+</div></div>
+
+<p>Notice in the following snippet that the service is not checked to see if it can resolve to a DataStore, it is known because the operation is not enabled if the service cannot resolve to a DataStore.</p>
+<div class="code"><div class="codeHeader"><b>NewFeatureTypeOp.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> void op( <span class="code-keyword">final</span> Display display, <span class="code-keyword">final</span> <span class="code-object">Object</span> target, <span class="code-keyword">final</span> IProgressMonitor monitor )
+            <span class="code-keyword">throws</span> Exception {
+        IService service = (IService) target;
+        DataStore ds = service.resolve(DataStore.class, monitor);
+<span class="code-comment">// ... some work
+</span>}</pre>
+</div></div>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=8600">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=8600">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

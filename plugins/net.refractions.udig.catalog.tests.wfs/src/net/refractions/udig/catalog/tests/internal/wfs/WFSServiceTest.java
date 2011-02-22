@@ -13,7 +13,7 @@ public class WFSServiceTest extends AbstractServiceTest {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see junit.framework.TestCase#setUp()
      */
     protected void setUp() throws Exception {
@@ -25,7 +25,7 @@ public class WFSServiceTest extends AbstractServiceTest {
     private IService service = null;
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.catalog.tests.AbstractServiceTest#getResolve()
      */
     protected IService getResolve() {
@@ -34,7 +34,7 @@ public class WFSServiceTest extends AbstractServiceTest {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.catalog.tests.AbstractResolveTest#hasParent()
      */
     protected boolean hasParent() {
@@ -43,7 +43,7 @@ public class WFSServiceTest extends AbstractServiceTest {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.catalog.tests.AbstractResolveTest#isLeaf()
      */
     protected boolean isLeaf() {

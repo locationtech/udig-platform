@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Project UI Test Plug-in
 Bundle-SymbolicName: net.refractions.udig.project.tests.ui; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.0.0
 Bundle-Activator: net.refractions.udig.project.ui.TestsUIPlugin
 Bundle-Localization: plugin
 Export-Package: net.refractions.udig,
@@ -30,5 +30,4 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.mapgraphic,
  net.refractions.udig.ui.tests;visibility:=reexport,
  net.refractions.udig.issues
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-LazyStart: true

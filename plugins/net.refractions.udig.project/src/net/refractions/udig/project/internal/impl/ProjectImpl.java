@@ -1,5 +1,5 @@
 /**
- * <copyright></copyright> $Id$
+ * <copyright></copyright> $Id: ProjectImpl.java 30936 2008-10-29 12:21:56Z jeichar $
  */
 package net.refractions.udig.project.internal.impl;
 
@@ -26,6 +26,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -36,7 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * Default implementation
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -298,7 +299,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
 
         synchronized (CommandManager.class) {
             if (commandManager == null) {
-                commandManager = new CommandManager(Messages.ProjectImpl_commandManagerName, new DefaultErrorHandler()); 
+                commandManager = new CommandManager(Messages.ProjectImpl_commandManagerName, new DefaultErrorHandler());
             }
         }
     }
@@ -313,7 +314,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
         initCommandManager();
         commandManager.syncExecute(command);
     }
-    
+
 	/**
 	 * Creates a new Resource from map.  The new Resource will be in the same directory as the project's
 	 * resource.  The Resource will start with map appended with a number that will make the name unique.
@@ -330,9 +331,9 @@ public class ProjectImpl extends EObjectImpl implements Project {
 
 			String projectPath = findProjectResourcePath(projectURI);
 
-            if (!projectPath.equals(elementPath)) 
+            if (!projectPath.equals(elementPath))
                 doCreation(projectElement, projectResource, elementPath, projectPath);
-                
+
 		}
 	}
 
@@ -351,11 +352,11 @@ public class ProjectImpl extends EObjectImpl implements Project {
         String projectPath = projectURI.toFileString();
         projectPath = projectPath.substring(0, projectPath
         		.lastIndexOf(File.separatorChar));
-        while (projectPath.startsWith(File.separator + File.separator)) { 
+        while (projectPath.startsWith(File.separator + File.separator)) {
         	projectPath = projectPath.substring(1);
         }
         if (Platform.getOS().equals(Platform.OS_WIN32)
-        		&& projectPath.startsWith(File.separator)) { 
+        		&& projectPath.startsWith(File.separator)) {
         	projectPath = projectPath.substring(1);
         }
         return projectPath;
@@ -367,11 +368,11 @@ public class ProjectImpl extends EObjectImpl implements Project {
         	elementPath = projectElement.eResource().getURI().toFileString();
             elementPath = elementPath.substring(0, elementPath
                     .lastIndexOf(File.separatorChar));
-            while (elementPath.startsWith(File.separator + File.separator)) { 
+            while (elementPath.startsWith(File.separator + File.separator)) {
                 elementPath = elementPath.substring(1);
             }
             if (Platform.getOS().equals(Platform.OS_WIN32)
-                    && elementPath.startsWith(File.separator)) { 
+                    && elementPath.startsWith(File.separator)) {
                 elementPath = elementPath.substring(1);
             }
         }
@@ -391,7 +392,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
 			i++;
 			//TODO Add file extension name to ProjectElement
 			uri = generateResourceName(projectPath, projectElement, i);
-			
+
 			URI normalizedURI = uriConverter.normalize(uri);
 			for (Resource resource2 : list) {
 				if (uriConverter.normalize(resource2.getURI()).equals(
@@ -417,11 +418,10 @@ public class ProjectImpl extends EObjectImpl implements Project {
         resourceName = resourceName.replaceAll("[/\\\\]", ""); //$NON-NLS-1$ //$NON-NLS-2$
         resourceName = resourceName.replaceAll("\\s", "_"); //$NON-NLS-1$ //$NON-NLS-2$
         resourceName = resourceName.replaceAll("_+", "_"); //$NON-NLS-1$ //$NON-NLS-2$
-        resourceName = resourceName.replaceAll(":", "_"); //$NON-NLS-1$ //$NON-NLS-2$
         String extension = projectElement.getFileExtension();
         if( !extension.startsWith(".") ) //$NON-NLS-1$
             extension="."+extension; //$NON-NLS-1$
-        String tempPath = "file://" + projectPath + File.separator + resourceName + extension; //$NON-NLS-1$  
+        String tempPath = "file://" + projectPath + File.separator + resourceName + extension; //$NON-NLS-1$
         uri = URI.createURI(tempPath);
         return uri;
     }

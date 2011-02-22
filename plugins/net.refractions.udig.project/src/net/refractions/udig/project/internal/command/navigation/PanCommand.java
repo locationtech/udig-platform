@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 /**
  * A command that pans the viewport. The command can be defined in terms of pixels on the screen or
  * in terms of world units.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -33,7 +33,7 @@ public class PanCommand extends AbstractNavCommand implements NavCommand {
 
     /**
      * Creates a new instance of PanCommand
-     * 
+     *
      * @param pixelx The amount to pan in the x direction
      * @param pixely The amount to pan in the y direction
      */
@@ -45,7 +45,7 @@ public class PanCommand extends AbstractNavCommand implements NavCommand {
 
     /**
      * Creates a new instance of PanCommand
-     * 
+     *
      * @param worldx The amount to pan in the x direction
      * @param worldy The amount to pan in the y direction
      */
@@ -79,7 +79,7 @@ public class PanCommand extends AbstractNavCommand implements NavCommand {
      * @see net.refractions.udig.project.command.MapCommand#getName()
      */
     public String getName() {
-        return Messages.PanCommand_pan; 
+        return Messages.PanCommand_pan;
     }
 
 }

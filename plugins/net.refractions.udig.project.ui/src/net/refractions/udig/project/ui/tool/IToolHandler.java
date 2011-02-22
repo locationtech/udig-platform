@@ -23,7 +23,7 @@ import org.eclipse.core.commands.IHandler;
  * <p>
  * Must have a public default constructor so that the plugin frame work can instantiate the class.
  * </p>
- * 
+ *
  * @see net.refractions.udig.project.ui.tool.AbstractToolCommandHandler
  * @author jeichar
  * @since 0.6.0
@@ -33,14 +33,14 @@ public interface IToolHandler extends IHandler {
 
     /**
      * Called before any of the IHandler methods are called.
-     * 
+     *
      * @param tool
      */
     void setTool( Tool tool );
 
     /**
      * Called before any of the IHandler methods are called.
-     * 
+     *
      * @param currentCommandId
      */
     void setCurrentCommandId( String currentCommandId );

@@ -18,7 +18,7 @@ import net.refractions.udig.issues.IIssuesManager;
 
 /**
  * A listener that is notified when the state of the {@link IIssuesManager} changes.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

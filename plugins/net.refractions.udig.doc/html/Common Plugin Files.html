@@ -1,0 +1,194 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : Common Plugin Files</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : Common Plugin Files -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>The following represents all the "well-known" files you will encounter during plugin development.</p>
+
+<p>Links are povided to the pages where the file is discussed.</p>
+
+<table class='confluenceTable'>
+<tr>
+<th class='confluenceTh'> plugin xyz                   </th>
+<th class='confluenceTh'> Links to definition/explaination </th>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>src/</b>                        </td>
+<td class='confluenceTd'> <a href="1 Creating a Plugin.html" title="1 Creating a Plugin">source files</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>src/net/refractions/udig/xyz</b>                     </td>
+<td class='confluenceTd'> <a href="API rules of engagement.html" title="API rules of engagement">API package</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> src/net/refractions/udig/xyz/<a href="3 Plugin Class.html" title="3 Plugin Class">XYZPlugin.java</a> </td>
+<td class='confluenceTd'> plugin resource and lifecycle management </td>
+</tr>
+<tr>
+<td class='confluenceTd'> src/net/refractions/udig/xyz/<a href="4 Plugin Internationalization with ResourceBundles.html" title="4 Plugin Internationalization with ResourceBundles">XYZPlugin.properties</a> </td>
+<td class='confluenceTd'> option 1 for internationlization </td>
+</tr>
+<tr>
+<td class='confluenceTd'> src/net/refractions/udig/xyz/<a href="5 Image Cache and Images.html" title="5 Image Cache and Images">ISharedImages.java</a> </td>
+<td class='confluenceTd'> Constants to retrive shared images </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>src/net/refractions/udig/xyz/internal</b>                   </td>
+<td class='confluenceTd'> <a href="API rules of engagement.html" title="API rules of engagement">Non API package</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> src/net/refractions/udig/xyz/internal/<a href="6 Plugin Help.html" title="6 Plugin Help">IHelpContextIds.java</a> </td>
+<td class='confluenceTd'> constants used for context sensitve help </td>
+</tr>
+<tr>
+<td class='confluenceTd'> src/net/refractions/udig/xyz/internal/<a href="5 Image Cache and Images.html" title="5 Image Cache and Images">IImageConstants.java</a> </td>
+<td class='confluenceTd'> Constants used to retrive images </td>
+</tr>
+<tr>
+<td class='confluenceTd'> src/net/refractions/udig/xyz/internal/<a href="5 Image Cache and Images.html" title="5 Image Cache and Images">Images.java</a> </td>
+<td class='confluenceTd'> Manages images for plugin class </td>
+</tr>
+<tr>
+<td class='confluenceTd'> src/net/refractions/udig/xyz/internal/<a href="4 Plugin Internationalization with ResourceBundles.html" title="4 Plugin Internationalization with ResourceBundles">Messages.java</a> </td>
+<td class='confluenceTd'> option 2 for internationlization </td>
+</tr>
+<tr>
+<td class='confluenceTd'> src/net/refractions/udig/xyz/internal/<a href="4 Plugin Internationalization with ResourceBundles.html" title="4 Plugin Internationalization with ResourceBundles">Messages.properties</a> </td>
+<td class='confluenceTd'> text for internationlization </td>
+</tr>
+<tr>
+<td class='confluenceTd'> src/net/refractions/udig/xyz/internal/<a href="4 Plugin Internationalization with ResourceBundles.html" title="4 Plugin Internationalization with ResourceBundles">Policy.java</a> </td>
+<td class='confluenceTd'> option 3 for internationlization </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>src/net/refractions/udig/xyz/examples</b>            </td>
+<td class='confluenceTd'> <a href="API rules of engagement.html" title="API rules of engagement">Non API package</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>src/net/refractions/udig/xyz/tests</b>               </td>
+<td class='confluenceTd'> <a href="API rules of engagement.html" title="API rules of engagement">Non-API package</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>bin/</b> - don't add to svn     </td>
+<td class='confluenceTd'> <a href="1 Creating a Plugin.html" title="1 Creating a Plugin">generated class files</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>doc/</b> - don't add to svn     </td>
+<td class='confluenceTd'> <a href="1 Creating and Using Extension Points.html" title="1 Creating and Using Extension Points">generated schema doc files</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> doc/xyz_schema.xml            </td>
+<td class='confluenceTd'> <a href="1 Creating and Using Extension Points.html" title="1 Creating and Using Extension Points">generated schema doc files</a>  </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>html/</b>                       </td>
+<td class='confluenceTd'> <a href="6 Plugin Help.html" title="6 Plugin Help">online help</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> html/aHtmlDocument.html       </td>
+<td class='confluenceTd'> <a href="6 Plugin Help.html" title="6 Plugin Help">an online help page</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>/icons/dlcl16/</b>              </td>
+<td class='confluenceTd'> <a href="Icons and Imagery.html" title="Icons and Imagery">disabled local toolbar</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>/icons/dtool16/</b>             </td>
+<td class='confluenceTd'> <a href="Icons and Imagery.html" title="Icons and Imagery">disabled toolbar</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>/icons/dview16/</b>             </td>
+<td class='confluenceTd'> <a href="Icons and Imagery.html" title="Icons and Imagery">disabled view</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>/icons/elcl16/</b>              </td>
+<td class='confluenceTd'> <a href="Icons and Imagery.html" title="Icons and Imagery">enabled local toolbar</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>/icons/etool16/</b>             </td>
+<td class='confluenceTd'> <a href="Icons and Imagery.html" title="Icons and Imagery">enabled toolbar</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>/icons/eview16/</b>             </td>
+<td class='confluenceTd'> <a href="Icons and Imagery.html" title="Icons and Imagery">enabled view</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>/icons/obj16/</b>               </td>
+<td class='confluenceTd'> <a href="Icons and Imagery.html" title="Icons and Imagery">model object</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>/icons/ovr16/</b>               </td>
+<td class='confluenceTd'> <a href="Icons and Imagery.html" title="Icons and Imagery">overlay</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <b>/icons/wizban/</b>              </td>
+<td class='confluenceTd'> <a href="Icons and Imagery.html" title="Icons and Imagery">wizard banner</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> plugin.xml                    </td>
+<td class='confluenceTd'> <a href="2 Plugin Setup.html" title="2 Plugin Setup">plugin manifest file</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> plugin.properties             </td>
+<td class='confluenceTd'> <a href="2 Plugin Setup.html" title="2 Plugin Setup">plugin manifest internationalization</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> build.xml                     </td>
+<td class='confluenceTd'> <a href="2 Plugin Setup.html" title="2 Plugin Setup">generated ant export script</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> build.properties              </td>
+<td class='confluenceTd'> <a href="2 Plugin Setup.html" title="2 Plugin Setup">describes src, and export contents</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> .classpath                    </td>
+<td class='confluenceTd'> <a href="/confluence/display/UDIG/Your+first+build" title="Your first build">generated plug-in classpath information</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> .project                      </td>
+<td class='confluenceTd'> <a href="/confluence/display/UDIG/Your+first+build" title="Your first build">plug-in project file</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> toc.xml                       </td>
+<td class='confluenceTd'> <a href="6 Plugin Help.html" title="6 Plugin Help">table of contents for the top level book</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> tocSubject.xml                </td>
+<td class='confluenceTd'> <a href="6 Plugin Help.html" title="6 Plugin Help">table of contents for subject</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> contexts.xml                  </td>
+<td class='confluenceTd'> <a href="6 Plugin Help.html" title="6 Plugin Help">Maps context Ids to context-sensitve help</a> </td>
+</tr>
+</table>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=124">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=124">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

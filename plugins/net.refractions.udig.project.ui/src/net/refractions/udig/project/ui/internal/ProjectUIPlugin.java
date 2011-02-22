@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.project.ui.feature.FeaturePanelProcessor;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.CoreException;
@@ -31,7 +30,6 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
@@ -41,24 +39,17 @@ import org.osgi.framework.BundleContext;
 /**
  * The Plugin class for the net.refractions.udig.project plugin. Provides access to plugin
  * resources.
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
 public class ProjectUIPlugin extends AbstractUIPlugin {
-
-
     /**
      * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public static final ProjectUIPlugin INSTANCE = new ProjectUIPlugin();
-
-    /**
-     * The default speed for mouse double click in milliseconds.
-     */
-    public static final int DEFAULT_DOUBLECLICK_SPEED_MILLIS = 1000;
 
     private static final String ICONS_PATH = "icons/"; //$NON-NLS-1$
 
@@ -82,8 +73,6 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
 
     private static final String ADAPTER_FACTORIES_ID = "net.refractions.udig.project.ui.itemProviderAdapterFactories"; //$NON-NLS-1$
 
-    public static final String MOUSE_SPEED_KEY = "MOUSE_SPEED_KEY";
-
     private PropertySheetPage propertySheetPage;
 
     /**
@@ -94,16 +83,15 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
         plugin = this;
     }
 
-    FeatureEditorExtensionProcessor featureEditProcessor = new FeatureEditorExtensionProcessor();
-    
-    FeaturePanelProcessor featurePanelProcessor = new FeaturePanelProcessor();
-    
+    FeatureEditorExtensionProcessor featureEditProcessor;
+
     /**
      * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
 
+        featureEditProcessor = new FeatureEditorExtensionProcessor();
         final URL iconsUrl = context.getBundle().getEntry(ICONS_PATH);
 
         PlatformGIS.syncInDisplayThread(new Runnable(){
@@ -111,13 +99,13 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
                 images.initializeImages(iconsUrl, getImageRegistry());
             }
         });
-        
+
         new ActiveMapTracker().startup();
     }
 
     /**
      * Returns the system created plugin object
-     * 
+     *
      * @return the plugin object
      */
     public static ProjectUIPlugin getDefault() {
@@ -133,7 +121,7 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
 
     /**
      * Returns the ToolManager singleton.
-     * 
+     *
      * @return the ToolManager singleton.
      * @deprecated
      */
@@ -175,7 +163,7 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
     /**
      * This accesses a cached version of the property sheet. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @return An IProperty page for the selected object
      */
     public IPropertySheetPage getPropertySheetPage() {
@@ -205,7 +193,7 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
 
     /**
      * Returns the adapterfactory instance.
-     * 
+     *
      * @return the adapterfactory instance.
      */
     public AdapterFactory getAdapterFactory() {
@@ -237,23 +225,14 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
 
     /**
      * Gets the FeatureEditorProcessor instance.
-     * 
+     *
      * @return
      */
     public FeatureEditorExtensionProcessor getFeatureEditProcessor() {
-        if (!featureEditProcessor.isRunning()){
+        if (!featureEditProcessor.isRunning())
             featureEditProcessor.startPartListener();
-        }
+
         return featureEditProcessor;
-    }
-    
-    /**
-     * Gets the FeatureEditorProcessor instance.
-     * 
-     * @return
-     */
-    public FeaturePanelProcessor getFeaturePanelProcessor() {
-        return featurePanelProcessor;
     }
 
     /**
@@ -265,7 +244,7 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
     public static void log( String message2, Throwable e ) {
         String message=message2;
         if (message == null)
-            message = Messages.ProjectUIPlugin_error + e; 
+            message = Messages.ProjectUIPlugin_error + e;
         getDefault().getLog().log(new Status(IStatus.INFO, ID, IStatus.OK, message, e));
     }
     /**
@@ -275,7 +254,7 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
      * private static final String RENDERING = "net.refractions.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
-     * 
+     *
      */
     private static void trace( String message, Throwable e ) {
         if (getDefault().isDebugging()) {
@@ -287,7 +266,7 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
     }
     /**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
-     * Available trace options can be found in the Trace class.  (They must also be part of the .options file) 
+     * Available trace options can be found in the Trace class.  (They must also be part of the .options file)
      */
     public static void trace( String traceID, Class caller, String message, Throwable e ) {
         if (isDebugging(traceID)) {
@@ -296,7 +275,7 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
     }
 
     /**
-     * Adds the name of the caller class to the message. 
+     * Adds the name of the caller class to the message.
      *
      * @param caller class of the object doing the trace.
      * @param message tracing message, may be null.
@@ -305,7 +284,7 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
     public static void trace( Class caller, String message, Throwable e ) {
         trace("Tracing - "+caller.getSimpleName()+": "+message, e); //$NON-NLS-1$ //$NON-NLS-2$
     }
-    
+
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
      * <p>
@@ -314,29 +293,15 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ) {
         return getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
-    }
-    /**
-     * The delay used to determine double click speed.
-     * 
-     * <p>
-     * The delay defaults to 100 milliseconds.
-     * </p>
-     * 
-     * @return the milliseconds used for the double-click speed.
-     */
-    public int getDoubleClickSpeed() {
-        IPreferenceStore store = ProjectUIPlugin.getDefault().getPreferenceStore();
-        int mouseSpeed = store.getInt(MOUSE_SPEED_KEY);
-        if (mouseSpeed == 0) {
-            mouseSpeed = DEFAULT_DOUBLECLICK_SPEED_MILLIS;
-        }
-        return mouseSpeed; 
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 
+    public int getDoubleClickSpeed() {
+        return 400;
+    }
 }

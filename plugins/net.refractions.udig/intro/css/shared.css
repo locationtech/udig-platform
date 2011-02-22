@@ -1,5 +1,5 @@
-/* 
- * Set up general fonts, sizes and colors 
+/*
+ * Set up general fonts, sizes and colors
  */
 body { font-family : Arial, sans-serif; }
 
@@ -31,7 +31,7 @@ H4 .div-label {
 	clear : both;
 }
 
-.page-description { 
+.page-description {
 	font-size : 10pt;
 	float : none;
 	clear : both;
@@ -65,7 +65,7 @@ p .group-description {
 }
 
 
-/* 
+/*
  * Set up other general properties like padding/margins
  */
 html, body { width : 100%; height : 100%; }
@@ -107,8 +107,8 @@ html,body { overflow: auto; }
 html>body { overflow: visible; }
 
 /*
- * Set up the body, decorative background, and navigation for the content 
- * pages. 
+ * Set up the body, decorative background, and navigation for the content
+ * pages.
  * Note: the root page handles its own background and navigation; these
  * settings primarily apply to the content pages
  */
@@ -124,14 +124,14 @@ body {
 	height : 164px;
 	background-image : url(graphics/UDIG_WelcomeScreen.jpg);
 	background-repeat : no-repeat;
-	background-position : top left;	
+	background-position : top left;
 	position : absolute;
 	top : 0px;
 	z-index : -100;
 }
 
 /*
-#curve-image { 
+#curve-image {
 	width : 100%;
 	height : 164px;
 	position : absolute;
@@ -156,7 +156,7 @@ body, .page{
 }
 
 /*
-.page { 
+.page {
 	background-image : url(graphics/contentpage/wordmark.gif);
 	background-repeat : no-repeat;
 	background-position : bottom left;
@@ -170,8 +170,8 @@ body, .page{
 	height : 70%;
 }
 
-/* 
- * Lay out the navigation links 
+/*
+ * Lay out the navigation links
  * (Root page does something similar for its navigation)
  */
 #navigation-links {
@@ -199,8 +199,8 @@ body, .page{
 
 #navigation-links a .text { display : none; }
 
-#navigation-links a:hover, 
-#navigation-links a:focus 
+#navigation-links a:hover,
+#navigation-links a:focus
 #navigation-links a:active { border-right : 0px;}
 
 /* properties for each of the navigation-links  */
@@ -235,13 +235,13 @@ body, .page{
 #navigation-links a#workbench:focus img,
 #navigation-links a#workbench:active img { background-image : url(graphics/icons/ctool/wb48.gif); }
 
-/* 
- * Lay out the page title and description 
+/*
+ * Lay out the page title and description
  */
 h1, p { margin-left : 10px; } /* required in mozilla so the page description is properly indented */
 
 /* position the page content so that the page title overlays the bottom
- * of the background image, but make sure the content is always on top 
+ * of the background image, but make sure the content is always on top
  * (using z-index) */
 #page-content {
 	float : none;
@@ -252,9 +252,9 @@ h1, p { margin-left : 10px; } /* required in mozilla so the page description is 
 
 .page > #page-content { margin-top : 50px; }
 
-#page-content p { 
-	padding-bottom : 15px; 
-	text-align : left; 
+#page-content p {
+	padding-bottom : 15px;
+	text-align : left;
 	float : none;
 	clear : both;
 }

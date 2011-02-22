@@ -16,55 +16,55 @@ import net.refractions.udig.project.internal.commands.CreateMapCommand;
 import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
 
 public class CreateMapCommandTest extends AbstractProjectTestCase {
-	
+
 	IService service;
-	
+
 	@Override
 	protected void setUp() throws Exception {
         super.setUp();
 		//get a georesource
-		IServiceFactory sFactory 
+		IServiceFactory sFactory
 			= CatalogPlugin.getDefault().getServiceFactory();
-		
+
 		HashMap<String, Serializable> map = new HashMap<String, Serializable>();
 		map.put("dummy", DummyService.url); //$NON-NLS-1$
-		
+
 		List<IService> services = sFactory.createService(map);
 		service = services.get(0);
 //        catalog.add(service);
 	}
-	
+
 	@SuppressWarnings("unchecked")
     public void testWithProjectWithName() throws Exception {
 		Project project = ProjectPlugin.getPlugin().getProjectRegistry()
 			.getDefaultProject();
-		
-		CreateMapCommand cmCommand 
+
+		CreateMapCommand cmCommand
 			= new CreateMapCommand("MyMap", (List<IGeoResource>) service.resources(null), project); //$NON-NLS-1$
 		project.sendSync(cmCommand);
-		
+
 		Map map = (Map) cmCommand.getCreatedMap();
 		assertNotNull(map);
 		assertEquals(map.getProject(),project);
 		assertEquals(map.getName(), "MyMap"); //$NON-NLS-1$
-		
+
 	}
-	
+
 	@SuppressWarnings("unchecked")
     public void testWithoutProjectWithoutName() throws Exception {
 		Project project = ProjectPlugin.getPlugin().getProjectRegistry()
 		.getDefaultProject();
-	
+
 		List<IGeoResource> members = (List<IGeoResource>) service.resources(null);
-        CreateMapCommand cmCommand 
+        CreateMapCommand cmCommand
 			= new CreateMapCommand(null, members, null);
 		project.sendSync(cmCommand);
-	
+
 		Map map = (Map) cmCommand.getCreatedMap();
 		assertNotNull(map);
 		assertNotNull(map.getProject());
-		
-		assertEquals(map.getName(),members.get(0).getInfo(null).getTitle()); 
-	
+
+		assertEquals(map.getName(),members.get(0).getInfo(null).getTitle());
+
 	}
 }

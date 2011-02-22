@@ -16,6 +16,7 @@
  */
 package net.refractions.udig.project.internal.commands;
 
+import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
@@ -36,7 +37,7 @@ public class AddLayerCommand extends AbstractCommand implements UndoableMapComma
     private ILayer selectedLayer;
     /**
      * Construct <code>AddLayerCommand</code>.
-     * 
+     *
      * @param layer the layer that will be added.
      */
     public AddLayerCommand( Layer layer ) {
@@ -45,7 +46,7 @@ public class AddLayerCommand extends AbstractCommand implements UndoableMapComma
 
     /**
      * Construct <code>AddLayerCommand</code>.
-     * 
+     *
      * @param layer the layer that will be added.
      * @param index the zorder that the layer will be added.
      */
@@ -56,7 +57,7 @@ public class AddLayerCommand extends AbstractCommand implements UndoableMapComma
 
     /**
      * Remove the layer that was added during execution.
-     * 
+     *
      * @see net.refractions.udig.project.command.UndoableCommand#rollback()
      */
     public void rollback( IProgressMonitor monitor ) throws Exception {
@@ -67,7 +68,7 @@ public class AddLayerCommand extends AbstractCommand implements UndoableMapComma
     /**
      * Adds a layer to the map. Defensive programming is recommended but command framework protects
      * against exceptions raised in commands.
-     * 
+     *
      * @see net.refractions.udig.project.command.MapCommand#run()
      */
     public void run( IProgressMonitor monitor ) throws Exception {
@@ -80,11 +81,11 @@ public class AddLayerCommand extends AbstractCommand implements UndoableMapComma
 
     /**
      * Each command has a name that is displayed with the undo/redo buttons.
-     * 
+     *
      * @see net.refractions.udig.project.command.MapCommand#getName()
      */
     public String getName() {
-        return Messages.AddLayerCommand_Name + layer.getName(); 
+        return Messages.AddLayerCommand_Name + layer.getName();
     }
 
 }

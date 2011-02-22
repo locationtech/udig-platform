@@ -55,12 +55,12 @@ public final class CharSetFieldEditor extends FieldEditor {
         Label label = new Label(parent,SWT.NONE);
         label.setText(getLabelText());
         label.setLayoutData(new GridData());
-        
+
         text = new Text(parent, SWT.BORDER);
         GridData layout = new GridData(GridData.FILL_HORIZONTAL);
         layout.horizontalSpan = numColumns-2;
         text.setLayoutData(layout);
-        
+
         Button button = new Button(parent, SWT.PUSH);
         button.setLayoutData(new GridData());
         button.setText(Messages.CharSetFieldEditor_select);
@@ -72,7 +72,7 @@ public final class CharSetFieldEditor extends FieldEditor {
                 text.setText(((Charset) dialog.getFirstResult()).name());
                 store();
             }
-            
+
         });
     }
     @Override

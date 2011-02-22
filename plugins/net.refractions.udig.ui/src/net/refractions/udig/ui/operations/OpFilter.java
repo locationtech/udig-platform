@@ -20,7 +20,7 @@ package net.refractions.udig.ui.operations;
  * @since 1.1.0
  */
 public interface OpFilter {
-    
+
     OpFilter TRUE = new OpFilter(){
 
         public boolean accept( Object object ) {
@@ -40,9 +40,9 @@ public interface OpFilter {
 
         public void removeListener( IOpFilterListener listener ) {
         }
-        
-        
-        
+
+
+
     };
     OpFilter FALSE = new OpFilter(){
 
@@ -63,7 +63,7 @@ public interface OpFilter {
 
         public void removeListener( IOpFilterListener listener ) {
         }
-        
+
     };
 
     /**
@@ -75,24 +75,24 @@ public interface OpFilter {
     boolean accept(Object object);
     /**
      * Returns true if the results can be cached.
-     * 
+     *
      * <p>A result can be cached if
      * <ol>
      * <li>The value will never change</li>
-     * <li>It is possible for the filter to listen for changes and update listeners 
+     * <li>It is possible for the filter to listen for changes and update listeners
      * added via the {@link #addListener(IOpFilterListener)} method</li>
      * </ol>
      * </p><p>
-     * Therefore this method only returns false if it must be calculated each time because there is 
+     * Therefore this method only returns false if it must be calculated each time because there is
      * no way to listen for state changes.  If it is non-blocking that is fine, if it is blocking
      * then try to do this rarely.
      * </p>
-     * <p>WARNING:  If this returns true then the listeners must be notified for the new value to be 
+     * <p>WARNING:  If this returns true then the listeners must be notified for the new value to be
      * recognized</p>
-     * @return true if the results can be cached.  
+     * @return true if the results can be cached.
      */
     boolean canCacheResult();
-    
+
     /**
      * Returns true if processing this filter may block when {@link #accept(Object)} is called or takes a large amount
      * of time to execute.
@@ -113,5 +113,5 @@ public interface OpFilter {
      * @param listener listener to remove
      */
     void removeListener(IOpFilterListener listener);
-    
+
 }

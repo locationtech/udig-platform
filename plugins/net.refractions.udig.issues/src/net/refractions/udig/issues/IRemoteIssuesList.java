@@ -20,7 +20,7 @@ import java.io.IOException;
 /**
  * Indicates a subtype of issues list that is backed onto a (probably) remote source that does not notify when it is changed and therefore must
  * be manually refreshed().
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

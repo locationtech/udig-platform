@@ -24,9 +24,9 @@ import org.eclipse.ui.internal.preferences.WorkbenchPreferenceExtensionNode;
 /**
  * A class which handles filtering preferences nodes based on a supplied
  * matching string.
- * 
+ *
  * @since 3.1
- * 
+ *
  */
 public class PatternItemFilter extends PatternFilter {
 
@@ -41,7 +41,7 @@ public class PatternItemFilter extends PatternFilter {
 
     /**
      * Create a new instance of a PatternItemFilter
-     * 
+     *
      * @param isMatchItem
      */
     public PatternItemFilter(boolean isMatchItem) {
@@ -51,7 +51,7 @@ public class PatternItemFilter extends PatternFilter {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.viewers.ViewerFilter#select(org.eclipse.jface.viewers.Viewer,
      *      java.lang.Object, java.lang.Object)
      */
@@ -67,7 +67,7 @@ public class PatternItemFilter extends PatternFilter {
 
         if(wordMatches(text))
             return true;
-        
+
         if (matchItem) {
 
             // Will return true if any subnode of the element matches the search
@@ -99,15 +99,15 @@ public class PatternItemFilter extends PatternFilter {
      * Return whether or not if any of the words in text satisfy the
      * match critera.
      * @param text
-     * @return boolean <code>true</code> if one of the words in text 
+     * @return boolean <code>true</code> if one of the words in text
      * satisifes the match criteria.
      */
     private boolean wordMatches(String text) {
-        
+
         //If the whole text matches we are all set
         if(match(text))
             return true;
-        
+
         // Break the text up into words, separating based on whitespace and
         // common punctuation.
         // Previously used String.split(..., "\\W"), where "\W" is a regular

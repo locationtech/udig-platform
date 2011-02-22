@@ -17,7 +17,7 @@ import org.geotools.data.FeatureEvent;
 
 /**
  * An event indicating a change in a layer.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -51,17 +51,17 @@ public class LayerEvent extends EventObject {
          */
         NAME,
         /**
-         * Indicates "something" changed.  Inspect the layer.  Shouldn't be used often. 
+         * Indicates "something" changed.  Inspect the layer.  Shouldn't be used often.
          */
         ALL,
         /**
          * Indicates that and edit event has occurred
-         * OldValue will always be null. 
+         * OldValue will always be null.
          * NewValue will always be a {@link FeatureEvent}
          */
         EDIT_EVENT
     }
-    
+
     /** Type of event, FILTER, RESOURCE, ALL or STYLE */
     private EventType type;
 
@@ -99,7 +99,7 @@ public class LayerEvent extends EventObject {
     /**
      * Creates a new event for the given source, indicating that all labels provided by the source
      * are no longer valid and should be updated.
-     * 
+     *
      * @param source the label provider
      */
     public LayerEvent( ILayer layer ) {
@@ -121,7 +121,7 @@ public class LayerEvent extends EventObject {
 
     /**
      * The layer being modified.
-     * 
+     *
      * @return The modified layer
      * @see ILayer
      */
@@ -166,7 +166,7 @@ public class LayerEvent extends EventObject {
 
     /**
      * Type of event
-     * 
+     *
      * @see EventType
      * @param type
      */

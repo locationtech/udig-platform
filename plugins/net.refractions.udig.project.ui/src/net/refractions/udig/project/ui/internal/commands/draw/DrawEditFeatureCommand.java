@@ -25,7 +25,6 @@ import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.render.ViewportModel;
 import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.ui.Drawing;
 
@@ -33,11 +32,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.feature.Feature;
+import org.geotools.geometry.jts.JTS;
 import org.geotools.styling.Symbolizer;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.geometry.MismatchedDimensionException;
-import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
@@ -48,7 +45,7 @@ import com.vividsolutions.jts.geom.Point;
 
 /**
  * Draws the currently edited feature on the screen.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -74,11 +71,9 @@ public class DrawEditFeatureCommand extends AbstractDrawCommand {
 
     private MathTransform mt;
 
-    private boolean errorReported;
-
     /**
      * Creates a new instance of DrawFeatureCommand
-     * 
+     *
      * @param model The viewportmodel that the command uses to determine how the victim should be
      *        drawn.
      */
@@ -90,7 +85,7 @@ public class DrawEditFeatureCommand extends AbstractDrawCommand {
      * @see net.refractions.udig.project.internal.command.MapCommand#open()
      */
     public void run( IProgressMonitor monitor ) {
-        SimpleFeature feature = model.getMapInternal().getEditManager().getEditFeature();
+        Feature feature = model.getMapInternal().getEditManager().getEditFeature();
         if (feature == null)
             return;
 
@@ -144,32 +139,14 @@ public class DrawEditFeatureCommand extends AbstractDrawCommand {
     }
 
     public Rectangle getValidArea() {
-        SimpleFeature feature=getMap().getEditManager().getEditFeature();
+        Feature feature=getMap().getEditManager().getEditFeature();
         if( feature!=null ){
             try {
-                Envelope bounds = new ReferencedEnvelope(feature.getBounds())
-                        .transform(getMap().getViewportModel().getCRS(), true);
-                double[] points = new double[] { bounds.getMinX(),
-                        bounds.getMinY(), bounds.getMaxX(), bounds.getMaxY() };
+                Envelope bounds = JTS.transform(feature.getBounds(), getMathTransform());
+                double[] points=new double[]{bounds.getMinX(), bounds.getMinY(), bounds.getMaxX(), bounds.getMaxY()};
                 getMap().getViewportModel().worldToScreenTransform().transform(points, 0, points, 0, 2);
                 return new Rectangle((int)points[0], (int)points[1], (int)Math.abs(points[2]-points[0]), (int)Math.abs(points[3]-points[1]));
             } catch (TransformException e) {
-                if( !errorReported ){
-                    errorReported = true;
-                    ProjectUIPlugin.log("error calculating valid area, this will not be reported again", e);
-                }
-                return null;
-            } catch (MismatchedDimensionException e) {
-                if( !errorReported ){
-                    errorReported = true;
-                    ProjectUIPlugin.log("error calculating valid area, this will not be reported again", e);
-                }
-                return null;
-            } catch (FactoryException e) {
-                if( !errorReported ){
-                    errorReported = true;
-                    ProjectUIPlugin.log("error calculating valid area, this will not be reported again", e);
-                }
                 return null;
             }
         }

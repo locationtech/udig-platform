@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.ui.wizard.export.image;
 
@@ -13,7 +13,7 @@ import org.geotools.resources.XMath;
 /**
  * This is a class in Geotools but it has different package name in GT 2.2 vs trunk and therefore until I abandon 2.2 I need
  * this class
- * 
+ *
  * @author Jesse
  */
 public class XAffineTransform extends AffineTransform{
@@ -167,7 +167,7 @@ public class XAffineTransform extends AffineTransform{
     /**
      * Check whether or not this {@code XAffineTransform} is the identity by
      * using the provided {@code tolerance}.
-     * 
+     *
      * @param tolerance The tolerance to use for this check.
      * @return {@code true} if the transform is identity, {@code false} otherwise.
      *
@@ -192,7 +192,7 @@ public class XAffineTransform extends AffineTransform{
      * [ 0.0                    0.999999999999999999999  0.0 ]
      * [ 0.0                    0.0                      1.0 ]
      * </pre></blockquote>
-     *   
+     *
      * @param tr The affine transform to be checked for identity.
      * @param tolerance The tolerance value to use when checking for identity.
      * return {@code true} if this tranformation is close enough to the
@@ -469,7 +469,7 @@ public class XAffineTransform extends AffineTransform{
      * speeding up image displays.  Above all, it is efficient when we know that
      * a matrix has a chance of being close to the similarity matrix.
      * <p>
-     * It is crucial to note that this method uses a default rounding threshold 
+     * It is crucial to note that this method uses a default rounding threshold
      * whose value is held by the field {@link #EPS} which is {@value #EPS}.
      *
      * @deprecated Use {@link #round(AffineTransform, double)} instead.

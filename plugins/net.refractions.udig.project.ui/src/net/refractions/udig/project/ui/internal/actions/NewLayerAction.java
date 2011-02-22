@@ -21,7 +21,6 @@ import java.util.Iterator;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.core.AdapterUtil;
-import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.ApplicationGIS;
@@ -29,10 +28,9 @@ import net.refractions.udig.project.ui.internal.Messages;
 import net.refractions.udig.ui.FeatureTypeEditor;
 import net.refractions.udig.ui.FeatureTypeEditorDialog;
 import net.refractions.udig.ui.ProgressManager;
-import net.refractions.udig.ui.FeatureTypeEditorDialog.ValidateFeatureType;
+import net.refractions.udig.ui.FeatureTypeEditorDialog.ValidateFeatureTypeBuilder;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -41,32 +39,33 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.actions.ActionDelegate;
 import org.geotools.data.FeatureSource;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.FeatureTypeBuilder;
+import org.geotools.feature.GeometryAttributeType;
 
 /**
- * Allows a SimpleFeatureType to be created and adds the feature type to the current map (or creates a new map if there is no current map)
- * 
+ * Allows a FeatureType to be created and adds the feature type to the current map (or creates a new map if there is no current map)
+ *
  * @author Jesse
  * @since 1.0.0
  */
 public class NewLayerAction extends ActionDelegate implements IWorkbenchWindowActionDelegate {
     private IGeoResource resource=null;
 
-    private final ValidateFeatureType performOK=new ValidateFeatureType(){
+    private final ValidateFeatureTypeBuilder performOK=new ValidateFeatureTypeBuilder(){
 
-        public String validate( SimpleFeatureType featureType ) {
+        public boolean validate( FeatureTypeBuilder featureBuilder ) {
             try {
                 resource = CatalogPlugin.getDefault().getLocalCatalog().
-                    createTemporaryResource(featureType);
-                return null;
+                    createTemporaryResource(featureBuilder.getFeatureType());
+                return true;
             } catch (Exception e) {
-                return Messages.NewLayerAction_duplicateName;
-            }            
+                resource = null;
+                featureBuilder.setName(Messages.NewLayerAction_duplicate_type_name);
+                return false;
+            }
         }
-        
+
     };
 
 	private IWorkbenchWindow window;
@@ -101,46 +100,37 @@ public class NewLayerAction extends ActionDelegate implements IWorkbenchWindowAc
 		if( window.getSelectionService()==null ){
 			return;
 		}
-		
+
 		ISelection selection = window.getSelectionService().getSelection();
-		
-		GeometryDescriptor geom = findGeometryType(selection);
-		
+
+		GeometryAttributeType geom = findGeometryType(selection);
+
 		if( geom==null ){
 		    IMap map = ApplicationGIS.getActiveMap();
 		    if( map==ApplicationGIS.NO_MAP ){
 		        return;
 		    }
-		    
-		    IEditManager editManager = map.getEditManager();
-		    if( editManager == null ){
-		        return;
+
+		    ILayer selectedLayer = map.getEditManager().getSelectedLayer();
+		    if( selectedLayer==null ){
+		    	return;
 		    }
-            ILayer selectedLayer = editManager.getSelectedLayer();
-            if( selectedLayer == null ){
-                return;
-            }
-            SimpleFeatureType schema = selectedLayer.getSchema();
+			FeatureType schema = selectedLayer.getSchema();
 		    if( schema ==null ){
 		        return;
 		    }
-		    geom = schema.getGeometryDescriptor();		    
-		}		
+		    geom = schema.getDefaultGeometry();
+		}
+
 		FeatureTypeEditor editor = dialog.getEditor();
-        SimpleFeatureType ft = editor.createDefaultFeatureType();
-        SimpleFeatureTypeBuilder builder = editor.builderFromFeatureType(ft);
-        String defaultGeometry = ft.getGeometryDescriptor().getLocalName();
-        if( defaultGeometry == null ){
-            return;
-        }
-        builder.remove(defaultGeometry);
-        builder.add(geom);
-        builder.setDefaultGeometry(geom.getLocalName());
-        dialog.setDefaultFeatureType(builder.buildFeatureType());
+        FeatureTypeBuilder builder = editor.createDefaultFeatureType();
+        builder.removeType(builder.getDefaultGeometry());
+        builder.setDefaultGeometry(geom);
+        dialog.setDefaultBuilder(builder);
 	}
 
     @SuppressWarnings("unchecked")
-	private GeometryDescriptor findGeometryType(ISelection selection) {
+	private GeometryAttributeType findGeometryType(ISelection selection) {
 
         if( selection.isEmpty() ){
             return null;
@@ -151,9 +141,9 @@ public class NewLayerAction extends ActionDelegate implements IWorkbenchWindowAc
 			while(iter.hasNext()){
 				Object elem = iter.next();
 				try {
-					FeatureSource<SimpleFeatureType, SimpleFeature> source = AdapterUtil.instance.adaptTo(FeatureSource.class, elem, ProgressManager.instance().get());
+					FeatureSource source = AdapterUtil.instance.adaptTo(FeatureSource.class, elem, ProgressManager.instance().get());
 					if( source != null ){
-						return source.getSchema().getGeometryDescriptor();
+						return source.getSchema().getDefaultGeometry();
 					}
 					if (elem instanceof IMap) {
 						IMap map = (IMap) elem;
@@ -161,7 +151,7 @@ public class NewLayerAction extends ActionDelegate implements IWorkbenchWindowAc
 						if( layer!=null ){
 							source = AdapterUtil.instance.adaptTo(FeatureSource.class, layer, ProgressManager.instance().get());
 							if( source != null ){
-								return source.getSchema().getGeometryDescriptor();
+								return source.getSchema().getDefaultGeometry();
 							}
 						}
 					}

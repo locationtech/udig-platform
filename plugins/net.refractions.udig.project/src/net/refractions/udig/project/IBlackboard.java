@@ -22,7 +22,7 @@ import java.util.Set;
  * which one to call based on the signature? API moreover, you might want to consider on 'Objects'
  * and the use of <T> in the API, using generics to avoid multiple get and put methods. API looks
  * alot like a Map ... either document a comparison or add an extends clause?
- * 
+ *
  * @author Jody Garnett
  * @since 0.7.0
  */
@@ -44,14 +44,14 @@ public interface IBlackboard {
     boolean removeListener(IBlackboardListener listener);
     /**
      * Check if blackboard has an entry for key.
-     * 
+     *
      * @return <code>true</code> if a value is known for key
      */
     boolean contains( String key );
 
     /**
      * Returns the object value of the given key.
-     * 
+     *
      * @param key the key
      * @return the value, or null if the key was not found
      */
@@ -59,7 +59,7 @@ public interface IBlackboard {
 
     /**
      * Sets the value of the given key.
-     * 
+     *
      * @param key the key
      * @param value the value
      */
@@ -67,7 +67,7 @@ public interface IBlackboard {
 
     /**
      * Returns the floating point value of the given key.
-     * 
+     *
      * @param key the key
      * @return the value, or <code>null</code> if the key was not found or was found but was not a
      *         floating point number
@@ -76,7 +76,7 @@ public interface IBlackboard {
 
     /**
      * Returns the integer value of the given key.
-     * 
+     *
      * @param key the key
      * @return the value, or <code>null</code> if the key was not found or was found but was not
      *         an integer
@@ -85,7 +85,7 @@ public interface IBlackboard {
 
     /**
      * Returns the string value of the given key.
-     * 
+     *
      * @param key the key
      * @return the value, or <code>null</code> if the key was not found
      */
@@ -93,7 +93,7 @@ public interface IBlackboard {
 
     /**
      * Sets the value of the given key to the given floating point number.
-     * 
+     *
      * @param key the key
      * @param value the value
      */
@@ -101,7 +101,7 @@ public interface IBlackboard {
 
     /**
      * Sets the value of the given key to the given integer.
-     * 
+     *
      * @param key the key
      * @param value the value
      */
@@ -109,19 +109,11 @@ public interface IBlackboard {
 
     /**
      * Sets the value of the given key to the given string.
-     * 
+     *
      * @param key the key
      * @param value the value
      */
     public void putString( String key, String value );
-    
-    /**
-    * Removes the value identified by key from the blackboard.
-    * 
-    * @param key the key
-    * @return The object removed from the blackboard, or null if no such entry exists.
-    */
-   Object remove( String key );
 
     /**
      * Clear the contents of this blackboard.
@@ -142,14 +134,14 @@ public interface IBlackboard {
      * </p>
      */
     public void flush();
-    
+
     /**
      * adds all the contents of the source blackboard to the destination blackboard
      *
      * @param blackboard
      */
     void addAll( IBlackboard blackboard );
-    
+
     /**
      * return the set of keys on the blackboard.
      *

@@ -36,7 +36,7 @@ public class CurrentShapeTypePropertyValue implements PropertyValue {
         PrimitiveShape shape = (PrimitiveShape) map.getBlackboard().get(EditToolHandler.CURRENT_SHAPE);
         if( shape==null )
             return false;
-        
+
         return shape.getEditGeom()!=null && shape.getEditGeom().getShapeType().toString().equalsIgnoreCase(value.trim());
     }
 

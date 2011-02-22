@@ -20,7 +20,7 @@ import net.refractions.udig.project.ui.tool.AbstractActionTool;
 
 /**
  * Cancel all currently running jobs.
- * 
+ *
  * @author jgarnett
  * @since 0.6.0
  */

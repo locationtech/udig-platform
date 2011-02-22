@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+<toc label="UDIG Developer Guide">
+
+
+
+
+
+
+               	                      <topic label="Home" href="html/Home.html">
+               <!-- Home -->
+
+                        <topic label="0 Getting Started" href="html/0 Getting Started.html">
+
+                        <topic label="Plugin Development" href="html/Plugin Development.html">
+
+
+            </topic>
+                            <topic label="Plugin Examples" href="html/Plugin Examples.html">
+
+
+            </topic>
+                            <topic label="Plugin Tutorial" href="html/Plugin Tutorial.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="2 Programmer's Guide" href="html/2 Programmer's Guide.html">
+
+                        <topic label="1 Overview" href="html/1 Overview.html">
+
+                        <topic label="1 Welcome to the Programmer's Guide" href="html/1 Welcome to the Programmer's Guide.html">
+
+
+            </topic>
+                            <topic label="2 Why a platform" href="html/2 Why a platform.html">
+
+
+            </topic>
+                            <topic label="3 Platform Architecture" href="html/3 Platform Architecture.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="2 Guidelines and Rules" href="html/2 Guidelines and Rules.html">
+
+                        <topic label="1 Hacking Guidelines" href="html/1 Hacking Guidelines.html">
+
+                        <topic label="Eclipse House Rules" href="html/Eclipse House Rules.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="2 User Interface Guidelines" href="html/2 User Interface Guidelines.html">
+
+                        <topic label="01 General UI Guidelines" href="html/01 General UI Guidelines.html">
+
+
+            </topic>
+                            <topic label="02 Visual Design Guidelines" href="html/02 Visual Design Guidelines.html">
+
+
+            </topic>
+                            <topic label="03 Commands Guidelines" href="html/03 Commands Guidelines.html">
+
+
+            </topic>
+                            <topic label="04 Dialogs Guidelines" href="html/04 Dialogs Guidelines.html">
+
+
+            </topic>
+                            <topic label="05 Wizards Guidelines" href="html/05 Wizards Guidelines.html">
+
+
+            </topic>
+                            <topic label="06 Editors Guidelines" href="html/06 Editors Guidelines.html">
+
+
+            </topic>
+                            <topic label="07 Views Guidelines" href="html/07 Views Guidelines.html">
+
+
+            </topic>
+                            <topic label="08 Perspectives Guidelines" href="html/08 Perspectives Guidelines.html">
+
+
+            </topic>
+                            <topic label="09 Windows Guidelines" href="html/09 Windows Guidelines.html">
+
+
+            </topic>
+                            <topic label="10 Properties Guidelines" href="html/10 Properties Guidelines.html">
+
+
+            </topic>
+                            <topic label="11 Widgets Guidelines" href="html/11 Widgets Guidelines.html">
+
+
+            </topic>
+                            <topic label="12 Standard Components Guidelines" href="html/12 Standard Components Guidelines.html">
+
+
+            </topic>
+                            <topic label="13 Flat Look Design" href="html/13 Flat Look Design.html">
+
+
+            </topic>
+                            <topic label="14 Tao of Resource" href="html/14 Tao of Resource.html">
+
+
+            </topic>
+                            <topic label="15 Accessibility Guidelines" href="html/15 Accessibility Guidelines.html">
+
+
+            </topic>
+                            <topic label="Icons and Imagery" href="html/Icons and Imagery.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="3 UDIGImportPage Checklist" href="html/3 UDIGImportPage Checklist.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="3 Working with Plugins" href="html/3 Working with Plugins.html">
+
+                        <topic label="1 Creating a Plugin" href="html/1 Creating a Plugin.html">
+
+                        <topic label="Common Plugin Files" href="html/Common Plugin Files.html">
+
+
+            </topic>
+                            <topic label="PlugIn Structure" href="html/PlugIn Structure.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="2 Plugin Setup" href="html/2 Plugin Setup.html">
+
+                        <topic label="Plugin Dependency" href="html/Plugin Dependency.html">
+
+
+            </topic>
+                            <topic label="Plugin Internationalization" href="html/Plugin Internationalization.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="3 Plugin Class" href="html/3 Plugin Class.html">
+
+
+            </topic>
+                            <topic label="4 Plugin Internationalization with ResourceBundles" href="html/4 Plugin Internationalization with ResourceBundles.html">
+
+
+            </topic>
+                            <topic label="5 Image Cache and Images" href="html/5 Image Cache and Images.html">
+
+
+            </topic>
+                            <topic label="6 Plugin Help" href="html/6 Plugin Help.html">
+
+
+            </topic>
+                            <topic label="7 Plugin Notes" href="html/7 Plugin Notes.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="4 Working with the GIS Platform" href="html/4 Working with the GIS Platform.html">
+
+                        <topic label="1 GIS Platform" href="html/1 GIS Platform.html">
+
+
+            </topic>
+                            <topic label="2 Catalog" href="html/2 Catalog.html">
+
+
+            </topic>
+                            <topic label="3 Tracking Changes" href="html/3 Tracking Changes.html">
+
+
+            </topic>
+                            <topic label="4 Drag and Drop" href="html/4 Drag and Drop.html">
+
+
+            </topic>
+                            <topic label="5 Opperations" href="html/5 Opperations.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="5 Working with GIS Application" href="html/5 Working with GIS Application.html">
+
+                        <topic label="1 GIS Application" href="html/1 GIS Application.html">
+
+
+            </topic>
+                            <topic label="2 Adding History to Dialogs and Wizards" href="html/2 Adding History to Dialogs and Wizards.html">
+
+
+            </topic>
+                            <topic label="3 Adding new file format" href="html/3 Adding new file format.html">
+
+
+            </topic>
+                            <topic label="4 Commands" href="html/4 Commands.html">
+
+                        <topic label="Command Example" href="html/Command Example.html">
+
+
+            </topic>
+                            <topic label="Composite Command Example" href="html/Composite Command Example.html">
+
+
+            </topic>
+                            <topic label="Draw Command Example" href="html/Draw Command Example.html">
+
+
+            </topic>
+                            <topic label="Edit Command Example" href="html/Edit Command Example.html">
+
+
+            </topic>
+                            <topic label="NavCommand Example" href="html/NavCommand Example.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="5 Tools" href="html/5 Tools.html">
+
+
+            </topic>
+                            <topic label="6 Operations" href="html/6 Operations.html">
+
+                        <topic label="Layer Summary Operation" href="html/Layer Summary Operation.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="7 Renderers" href="html/7 Renderers.html">
+
+
+            </topic>
+                            <topic label="8 Style" href="html/8 Style.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="6 Working with the Rich Client Platform" href="html/6 Working with the Rich Client Platform.html">
+
+                        <topic label="1 Adding a Menu" href="html/1 Adding a Menu.html">
+
+
+            </topic>
+                            <topic label="2 Creating a Custom Application" href="html/2 Creating a Custom Application.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="7 Working with SWT and JFace" href="html/7 Working with SWT and JFace.html">
+
+                        <topic label="1 Actions" href="html/1 Actions.html">
+
+
+            </topic>
+                            <topic label="2 Wizards" href="html/2 Wizards.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="8 Working with Extention Points" href="html/8 Working with Extention Points.html">
+
+                        <topic label="0 What is an Extention Point" href="html/0 What is an Extention Point.html">
+
+
+            </topic>
+                            <topic label="1 Creating and Using Extension Points" href="html/1 Creating and Using Extension Points.html">
+
+
+            </topic>
+                            <topic label="2 uDig extension points list" href="html/2 uDig extension points list.html">
+
+
+            </topic>
+                            <topic label="3 Example of creating a view" href="html/3 Example of creating a view.html">
+
+
+            </topic>
+                            <topic label="4 Example of extending an existing perspective" href="html/4 Example of extending an existing perspective.html">
+
+
+            </topic>
+                            <topic label="5 Example of creating a new perspective" href="html/5 Example of creating a new perspective.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="9 Testing" href="html/9 Testing.html">
+
+                        <topic label="1 Writing JUnit Test Plugins" href="html/1 Writing JUnit Test Plugins.html">
+
+
+            </topic>
+
+            </topic>
+
+            </topic>
+                            <topic label="3 Reference" href="html/3 Reference.html">
+
+                        <topic label="1 API Reference" href="html/1 API Reference.html">
+
+
+            </topic>
+                            <topic label="2 Extension Point Reference" href="html/2 Extension Point Reference.html">
+
+
+            </topic>
+                            <topic label="3 Toolkit API Reference" href="html/3 Toolkit API Reference.html">
+
+
+            </topic>
+                            <topic label="4 Other Reference Information" href="html/4 Other Reference Information.html">
+
+                        <topic label="API rules of engagement" href="html/API rules of engagement.html">
+
+
+            </topic>
+                            <topic label="Guide To EMF" href="html/Guide To EMF.html">
+
+
+            </topic>
+                            <topic label="Icons" href="html/Icons.html">
+
+                        <topic label="lcl16" href="html/lcl16.html">
+
+
+            </topic>
+                            <topic label="obj16" href="html/obj16.html">
+
+
+            </topic>
+                            <topic label="ovr16" href="html/ovr16.html">
+
+
+            </topic>
+                            <topic label="tool16" href="html/tool16.html">
+
+
+            </topic>
+                            <topic label="view16" href="html/view16.html">
+
+
+            </topic>
+                            <topic label="wizban" href="html/wizban.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="Imagry" href="html/Imagry.html">
+
+
+            </topic>
+                            <topic label="Requirements" href="html/Requirements.html">
+
+                        <topic label="net.refractions.udig" href="html/net.refractions.udig.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.catalog" href="html/net.refractions.udig.catalog.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.catalog.grid" href="html/net.refractions.udig.catalog.grid.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.catalog.wms" href="html/net.refractions.udig.catalog.wms.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.core" href="html/net.refractions.udig.core.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.help" href="html/net.refractions.udig.help.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.libs" href="html/net.refractions.udig.libs.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.printing" href="html/net.refractions.udig.printing.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.printing.context" href="html/net.refractions.udig.printing.context.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.printing.page" href="html/net.refractions.udig.printing.page.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.printing.template" href="html/net.refractions.udig.printing.template.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.printing.wizard" href="html/net.refractions.udig.printing.wizard.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.project.context" href="html/net.refractions.udig.project.context.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.project.layer" href="html/net.refractions.udig.project.layer.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.project.selection" href="html/net.refractions.udig.project.selection.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.project.ui" href="html/net.refractions.udig.project.ui.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.project.ui.layerManager" href="html/net.refractions.udig.project.ui.layerManager.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.registry.ui.featureType" href="html/net.refractions.udig.registry.ui.featureType.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.render" href="html/net.refractions.udig.render.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.render.decorator" href="html/net.refractions.udig.render.decorator.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.render.features" href="html/net.refractions.udig.render.features.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.render.stack" href="html/net.refractions.udig.render.stack.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.style" href="html/net.refractions.udig.style.html">
+
+
+            </topic>
+                            <topic label="net.refractions.udig.wms.ui" href="html/net.refractions.udig.wms.ui.html">
+
+
+            </topic>
+
+            </topic>
+
+            </topic>
+
+            </topic>
+                            <topic label="4 FAQ" href="html/4 FAQ.html">
+
+                        <topic label="Eclipse RCP Questions" href="html/Eclipse RCP Questions.html">
+
+                        <topic label="How can I display my views by default" href="html/How can I display my views by default.html">
+
+
+            </topic>
+                            <topic label="How should I use a Progress Monitor" href="html/How should I use a Progress Monitor.html">
+
+
+            </topic>
+                            <topic label="How to wait in the display thread" href="html/How to wait in the display thread.html">
+
+
+            </topic>
+
+            </topic>
+                            <topic label="GIS Application Questions" href="html/GIS Application Questions.html">
+
+                        <topic label="How can I set up a custom splash screen" href="html/How can I set up a custom splash screen.html">
+
+
+            </topic>
+                            <topic label="How do I make a new type of layer" href="html/How do I make a new type of layer.html">
+
+
+            </topic>
+
+            </topic>
+
+            </topic>
+
+            </topic>
+
+
+               	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   	   </toc>

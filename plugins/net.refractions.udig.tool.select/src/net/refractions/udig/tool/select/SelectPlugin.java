@@ -20,7 +20,7 @@ public class SelectPlugin extends AbstractUIPlugin {
      * Comment for <code>ID</code>
      */
     public static final String ID = "net.refractions.udig.tool.select"; //$NON-NLS-1$
-	
+
 	/**
 	 * The constructor.
 	 */
@@ -56,7 +56,7 @@ public class SelectPlugin extends AbstractUIPlugin {
 	/**
 	 * Returns the string from the plugin's resource bundle,
 	 * or 'key' if not found.
-	 * @param key 
+	 * @param key
 	 * @return x
 	 */
 	public static String getResourceString(String key) {

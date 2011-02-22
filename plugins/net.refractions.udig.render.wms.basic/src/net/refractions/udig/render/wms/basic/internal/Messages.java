@@ -29,18 +29,6 @@ public class Messages extends NLS {
 	public static String BasicWMSRenderer2_refreshJob_title;
 	public static String BasicWMSRendererPreferencePage_warning;
     public static String projectionwarning0;
-    public static String WMSCTilePreferencePage_pageTitle;
-	public static String WMSCTilePreferencePage_pageDescription;
-	public static String WMSCTilePreferencePage_caching_desc;
-	public static String WMSCTilePreferencePage_inmemory;
-	public static String WMSCTilePreferencePage_ondisk;
-	public static String WMSCTilePreferencePage_disklabel;
-	public static String WMSCTilePreferencePage_clearcachebtn;
-	public static String WMSCTilePreferencePage_clearcacheConfirm;
-	public static String WMSCTilePreferencePage_clearcacheError;
-	public static String WMSCTilePreferencePage_clearcacheSuccess;
-	public static String WMSCTilePreferencePage_maxConRequests;
-    
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

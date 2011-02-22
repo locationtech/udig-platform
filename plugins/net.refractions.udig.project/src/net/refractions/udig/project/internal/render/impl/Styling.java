@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,6 @@ import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.ui.graphics.SLDs;
 
-import org.geotools.data.ows.StyleImpl;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.LineSymbolizer;
@@ -35,7 +33,7 @@ import org.geotools.styling.StyleBuilder;
 
 /**
  * A utility class for obtaining precanned or random styles
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -45,20 +43,20 @@ public class Styling {
     public static final Map STYLES;
     static {
         Map<String, Integer> styles = new HashMap<String, Integer>();
-        styles.put(Messages.Styling_blueLine, Integer.valueOf(0)); 
-        styles.put(Messages.Styling_greenLine, Integer.valueOf(1)); 
-        styles.put(Messages.Styling_blackLine, Integer.valueOf(2)); 
-        styles.put(Messages.Styling_blackLine_blueFill, Integer.valueOf(3)); 
-        styles.put(Messages.Styling_blackLine_greenFill, Integer.valueOf(4)); 
-        styles.put(Messages.Styling_blackLine_semitransparentBlueFill, Integer.valueOf(5)); 
-        styles.put(Messages.Styling_blackLine_semitransparentYellowFill, Integer.valueOf(6)); 
-        styles.put(Messages.Styling_pointStyle, Integer.valueOf(7)); 
+        styles.put(Messages.Styling_blueLine, Integer.valueOf(0));
+        styles.put(Messages.Styling_greenLine, Integer.valueOf(1));
+        styles.put(Messages.Styling_blackLine, Integer.valueOf(2));
+        styles.put(Messages.Styling_blackLine_blueFill, Integer.valueOf(3));
+        styles.put(Messages.Styling_blackLine_greenFill, Integer.valueOf(4));
+        styles.put(Messages.Styling_blackLine_semitransparentBlueFill, Integer.valueOf(5));
+        styles.put(Messages.Styling_blackLine_semitransparentYellowFill, Integer.valueOf(6));
+        styles.put(Messages.Styling_pointStyle, Integer.valueOf(7));
         STYLES = Collections.unmodifiableMap(styles);
     }
 
     /**
      * Returns a Style object give a style name and a feature typename.
-     * 
+     *
      * @param styleName The name of the style to creates. The list of name can be obtained from
      *        {@link #getStyleNames(Layer)}
      * @param typeName the TypeName of the feature type the style will style.
@@ -70,7 +68,7 @@ public class Styling {
 
     /**
      * Returns a Style object given a value from {@link #STYLES}and the feature typename.
-     * 
+     *
      * @param index a value from {@link #STYLES}
      * @param typeName the TypeName of the feature type the style will style.
      * @return a Style object given a value from {@link #STYLES}and the feature typename
@@ -101,7 +99,7 @@ public class Styling {
 
     /**
      * Returns a simple style to use in default cases.
-     * 
+     *
      * @param typeName the TypeName of the feature type the style will style.
      * @return a simple style to use in default cases.
      */
@@ -111,7 +109,7 @@ public class Styling {
 
     /**
      * Returns a simple style to use in default cases.
-     * 
+     *
      * @param typeName the TypeName of the feature type the style will style.
      * @param color the color of the style
      * @return a simple style to use in default cases.
@@ -124,7 +122,7 @@ public class Styling {
         linestyle.addFeatureTypeStyle(sb.createFeatureTypeStyle(line));
 
         FeatureTypeStyle fts = linestyle.getFeatureTypeStyles()[0];
-        fts.setName(Messages.Styling_name); //tag as simple 
+        fts.setName(Messages.Styling_name); //tag as simple
         fts.setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
         fts.setSemanticTypeIdentifiers(new String[] {"generic:geometry", "simple"}); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -133,7 +131,7 @@ public class Styling {
 
     /**
      * Returns a simple style to use in default cases.
-     * 
+     *
      * @param typeName the TypeName of the feature type the style will style.
      * @return a simple style to use in default cases.
      */
@@ -143,7 +141,7 @@ public class Styling {
 
     /**
      * Returns a simple style to use in default cases.
-     * 
+     *
      * @param typeName the TypeName of the feature type the style will style.
      * @param line the color of the outlines.
      * @param fill The color of the fills
@@ -162,7 +160,7 @@ public class Styling {
 
     /**
      * Returns a simple style to use in default cases.
-     * 
+     *
      * @param typeName the TypeName of the feature type the style will style.
      * @return a simple style to use in default cases.
      */
@@ -179,7 +177,7 @@ public class Styling {
 
     /**
      * Returns a simple style to use in default cases.
-     * 
+     *
      * @param typeName the TypeName of the feature type the style will style.
      * @return as simple style to use in default cases.
      */
@@ -195,7 +193,7 @@ public class Styling {
 
     /**
      * Returns a list of style names that can be used on the given layer.
-     * 
+     *
      * @param currentLayer The layer to finds styles for.
      * @return a list of style names that can be used on the given layer.
      */
@@ -207,14 +205,12 @@ public class Styling {
 
             List<String> l = new LinkedList<String>();
             try {
-            	for (Iterator<StyleImpl> iterator = currentLayer.getResource(org.geotools.data.ows.Layer.class, null).getStyles().iterator(); iterator.hasNext();) {
-            		StyleImpl style = (StyleImpl) iterator.next();
-            		l.add(style.getName());
-				}
+                l.addAll(currentLayer.getResource(org.geotools.data.ows.Layer.class, null)
+                        .getStyles());
             } catch (IOException e) {
                 ProjectPlugin.log(null, e);
             }
-            l.add(Messages.Styling_default); 
+            l.add(Messages.Styling_default);
             return l;
         }
 

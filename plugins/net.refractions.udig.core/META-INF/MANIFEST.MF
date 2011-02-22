@@ -2,19 +2,16 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.core;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.core.internal.CorePlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Eclipse-BuddyPolicy: ext
 Export-Package: net.refractions.udig.core,
  net.refractions.udig.core.enums,
- net.refractions.udig.core.filter,
  net.refractions.udig.core.internal,
- net.refractions.udig.core.jts,
- net.refractions.udig.core.opengis
+ net.refractions.udig.core.jts
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  net.refractions.udig.libs;visibility:=reexport
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-LazyStart: true

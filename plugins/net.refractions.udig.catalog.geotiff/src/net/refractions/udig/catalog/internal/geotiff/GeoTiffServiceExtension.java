@@ -23,14 +23,19 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ID;
+import javax.imageio.metadata.IIOMetadata;
+import javax.media.jai.JAI;
+import javax.media.jai.RenderedOp;
+
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ServiceExtension2;
 import net.refractions.udig.catalog.geotiff.internal.Messages;
 
 import org.geotools.gce.geotiff.GeoTiffFormat;
 import org.geotools.gce.geotiff.GeoTiffFormatFactorySpi;
+import org.geotools.gce.geotiff.GeoTiffIIOMetadataAdapter;
 
+import com.sun.media.jai.operator.ImageReadDescriptor;
 
 /**
  * Provides the interface to the catalog service extension point.
@@ -38,15 +43,13 @@ import org.geotools.gce.geotiff.GeoTiffFormatFactorySpi;
  * This class is responsible for ensuring that only those services that the GeoTiff plug-in is
  * capable of processing are created.
  * </p>
- * 
+ *
  * @author mleslie
  * @since 0.6.0
  */
 public class GeoTiffServiceExtension implements ServiceExtension2 {
     /** <code>URL_PARAM</code> field */
     public final static String URL_PARAM = "URL"; //$NON-NLS-1$
-
-    public static final String TYPE = "geotiff"; //$NON-NLS-1$
 
     private static GeoTiffFormatFactorySpi factory;
     private static GeoTiffFormat format;
@@ -91,7 +94,7 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
         return id;
     }
 
-    private synchronized static GeoTiffFormat getFormat() {
+    private static GeoTiffFormat getFormat() {
         if (format == null) {
             format = (GeoTiffFormat) getFactory().createFormat();
         }
@@ -100,10 +103,10 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
 
     /**
      * Finds or creates a GeoTiffFormatFactorySpi.
-     * 
+     *
      * @return Default GeoTiffFormatFactorySpi
      */
-    public synchronized static GeoTiffFormatFactorySpi getFactory() {
+    public static GeoTiffFormatFactorySpi getFactory() {
         if (factory == null) {
             factory = new GeoTiffFormatFactorySpi();
         }
@@ -138,19 +141,20 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
 
         if( !isSupportedExtension(url) )
             return Messages.GeoTiffServiceExtension_badExt;
-        
+
         File file = null;
         try {
-            ID id = new ID( url );
-            file = id.toFile();
+            file = new File(url.getFile());
         } catch (IllegalArgumentException ex) {
             return url.toExternalForm()+Messages.GeoTiffServiceExtension_notFile;
         }
-        
+
         if (!file.exists() )
             return file+Messages.GeoTiffServiceExtension_notExist;
-        
 
+        String result = geotiffFile(file);
+        if (result!=null)
+            return result;
         try {
             if (!getFormat().accepts(file))
                 return Messages.GeoTiffServiceExtension_unknown;
@@ -165,6 +169,42 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
 
         return (file.endsWith(".tiff") || file.endsWith(".tif")); //$NON-NLS-1$ //$NON-NLS-2$
     }
+    private String geotiffFile(File file) {
+        RenderedOp img=null;
+        try{
+            img = JAI.create("ImageRead", file); //$NON-NLS-1$
+        }catch (Throwable e) {
+            return Messages.GeoTiffServiceExtension_notReadWError+e;
+        }
+        if (img == null) {
+            return Messages.GeoTiffServiceExtension_NotRead;
+        }
 
-    
+        // Get the metadata object.
+        Object metadataImage = img.getProperty(ImageReadDescriptor.PROPERTY_NAME_METADATA_IMAGE);
+
+        if (!(metadataImage instanceof IIOMetadata)) {
+            return Messages.GeoTiffServiceExtension_NotTiff1;
+        }
+
+        IIOMetadata check = (IIOMetadata) metadataImage;
+
+        GeoTiffIIOMetadataAdapter metadata = new GeoTiffIIOMetadataAdapter(check);
+
+        // does the GeoKey Directory exist?
+        boolean geoTiffFile = false;
+
+        try {
+            metadata.getGeoKeyDirectoryVersion();
+            geoTiffFile = true;
+        } catch (UnsupportedOperationException ue) {
+            // this state is captured by the geoTiffFile flag == false
+        }
+
+        if ( !geoTiffFile )
+            return Messages.GeoTiffServiceExtension_NotTiff;
+
+        return null;
+    }
+
 }

@@ -2,11 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Coverage Edit Tool Plug-in
 Bundle-SymbolicName: net.refractions.udig.tutorials.tool.coverage;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.tutorials.tool.coverage.Activator
-Bundle-Vendor: udig.refractions.net
+Bundle-Vendor: Student
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- net.refractions.udig.tools.edit,
- net.refractions.udig.project.ui
-Bundle-ActivationPolicy: lazy
+ net.refractions.udig.tools.edit
+Eclipse-LazyStart: true

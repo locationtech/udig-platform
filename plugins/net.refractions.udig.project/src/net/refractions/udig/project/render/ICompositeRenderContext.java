@@ -35,7 +35,7 @@ import net.refractions.udig.project.ILayer;
  * versions</li>
  * </ul>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 0.5
  * @see IRenderContext
@@ -55,13 +55,13 @@ public interface ICompositeRenderContext extends IRenderContext {
      * <p>
      * The method iterates throught the list of contexts and collects all the Layers
      * </p>
-     * 
+     *
      * @return List <ILayer>The list of Layers
      * @see ILayer
      * @see List
      */
     List<ILayer> getLayers();
-    
+
     public ICompositeRenderContext copy();
 
 }

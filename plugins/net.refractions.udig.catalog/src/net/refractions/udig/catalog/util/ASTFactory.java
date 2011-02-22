@@ -12,8 +12,6 @@ import java.util.ListIterator;
 import java.util.Stack;
 
 /**
- * Used by catalog to implement search.
- * 
  * @author David Zwiers, Refractions Research
  */
 public class ASTFactory {
@@ -24,14 +22,11 @@ public class ASTFactory {
      * Creates an AST for the pattern The pattern uses the following conventions: use " " to
      * surround a phase use + to represent 'AND' use - to represent 'OR' use ! to represent 'NOT'
      * use ( ) to designate scope
-     * 
+     *
      * @param pattern Search pattern
      * @return AST
      */
     public static AST parse( String str ) {
-        if( str == null || str.trim().length() == 0){
-            return null;
-        }
         List<String> tokens = tokenize(str);
         Stack<AST> s = new Stack<AST>();
         ListIterator<String> li = tokens.listIterator();
@@ -161,7 +156,6 @@ public class ASTFactory {
     private static class And implements AST {
         private AST left, right;
 
-        @SuppressWarnings("unused")
         private And() {/* should not be used */
         }
         public And( AST left, AST right ) {
@@ -171,19 +165,18 @@ public class ASTFactory {
 
         /**
          * TODO summary sentence for accept ...
-         * 
+         *
          * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
          * @param datum
          * @return
          */
         public boolean accept( String datum ) {
-            if( datum == null ) return false;
             return left != null && right != null && left.accept(datum) && right.accept(datum);
         }
 
         /**
          * TODO summary sentence for type ...
-         * 
+         *
          * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#type()
          * @return
          */
@@ -192,7 +185,7 @@ public class ASTFactory {
         }
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see net.refractions.udig.catalog.util.AST#getLeft()
          */
         public AST getLeft() {
@@ -200,7 +193,7 @@ public class ASTFactory {
         }
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see net.refractions.udig.catalog.util.AST#getRight()
          */
         public AST getRight() {
@@ -211,7 +204,6 @@ public class ASTFactory {
     private static class Or implements AST {
         private AST left, right;
 
-        @SuppressWarnings("unused")
         private Or() {/* should not be used */
         }
         public Or( AST left, AST right ) {
@@ -221,19 +213,18 @@ public class ASTFactory {
 
         /**
          * TODO summary sentence for accept ...
-         * 
+         *
          * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
          * @param datum
          * @return
          */
         public boolean accept( String datum ) {
-            if( datum == null ) return false;
             return (right != null && right.accept(datum)) || (left != null && left.accept(datum));
         }
 
         /**
          * TODO summary sentence for type ...
-         * 
+         *
          * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#type()
          * @return
          */
@@ -242,7 +233,7 @@ public class ASTFactory {
         }
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see net.refractions.udig.catalog.util.AST#getLeft()
          */
         public AST getLeft() {
@@ -251,7 +242,7 @@ public class ASTFactory {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see net.refractions.udig.catalog.util.AST#getRight()
          */
         public AST getRight() {
@@ -262,7 +253,6 @@ public class ASTFactory {
     private static class Not implements AST {
         private AST child;
 
-        @SuppressWarnings("unused")
         private Not() {/* should not be used */
         }
         public Not( AST child ) {
@@ -271,19 +261,18 @@ public class ASTFactory {
 
         /**
          * TODO summary sentence for accept ...
-         * 
+         *
          * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
          * @param datum
          * @return
          */
         public boolean accept( String datum ) {
-            if( datum == null ) return false;
             return !(child != null && child.accept(datum));
         }
 
         /**
          * TODO summary sentence for type ...
-         * 
+         *
          * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#type()
          * @return
          */
@@ -292,7 +281,7 @@ public class ASTFactory {
         }
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see net.refractions.udig.catalog.util.AST#getLeft()
          */
         public AST getLeft() {
@@ -300,7 +289,7 @@ public class ASTFactory {
         }
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see net.refractions.udig.catalog.util.AST#getRight()
          */
         public AST getRight() {
@@ -311,7 +300,6 @@ public class ASTFactory {
     private static class Literal implements AST {
         private String value;
 
-        @SuppressWarnings("unused")
         private Literal() {/* should not be used */
         }
         public Literal( String value ) {
@@ -320,19 +308,20 @@ public class ASTFactory {
 
         /**
          * TODO summary sentence for accept ...
-         * 
+         *
          * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
          * @param datum
          * @return
          */
         public boolean accept( String datum ) {
+            // TODO check this
             return value != null && datum != null
                     && datum.toUpperCase().indexOf(value.toUpperCase()) > -1;
         }
 
         /**
          * TODO summary sentence for type ...
-         * 
+         *
          * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#type()
          * @return
          */
@@ -341,7 +330,7 @@ public class ASTFactory {
         }
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see net.refractions.udig.catalog.util.AST#getLeft()
          */
         public AST getLeft() {
@@ -349,7 +338,7 @@ public class ASTFactory {
         }
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see net.refractions.udig.catalog.util.AST#getRight()
          */
         public AST getRight() {

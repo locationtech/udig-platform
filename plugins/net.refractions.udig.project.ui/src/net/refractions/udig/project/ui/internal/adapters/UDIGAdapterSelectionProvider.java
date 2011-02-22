@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.Display;
 /**
  * A SelectionProvider Decorator that wraps a selection provider and attempts (using the Platform's
  * Adapter Factory mechanism) to adapt all non-adaptable objects to adaptable objects.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -47,7 +47,7 @@ public class UDIGAdapterSelectionProvider implements ISelectionProvider, ISelect
 
     /**
      * Construct <code>UDIGAdapterSelectionProvider</code>.*
-     * 
+     *
      * @param provider
      */
     public UDIGAdapterSelectionProvider( ISelectionProvider provider ) {
@@ -132,7 +132,7 @@ public class UDIGAdapterSelectionProvider implements ISelectionProvider, ISelect
         	});
         }
 		}
-    
+
 
     /**
      * This is ONLY for testing

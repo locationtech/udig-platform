@@ -24,7 +24,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 
 /**
- * Uses the EditManager and SelectionModel to provide a current selection.
+ * Uses the EditManager and SelectionModel to provide a curent selection.
  * <p>
  * Listen to EditManager and SelectionModel events and notify the Eclipse Platform of selection
  * changes.
@@ -37,7 +37,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
  * <li>set the selection of the eclipse Platform to one that reflects the state of SelectionModel
  * and LayerManager </li>
  * </ul>
- * 
+ *
  * @author Jesse
  * @since 0.6
  */

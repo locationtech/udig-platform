@@ -17,7 +17,7 @@ package net.refractions.udig.ui;
 
 /**
  * Accepts only values that are less than 10
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -29,18 +29,18 @@ public class AcceptLessTen extends AlwaysAcceptDropAction {
             super();
             this.i = i;
         }
-        
+
     }
-    
+
 
     @Override
     public boolean accept() {
         if( !(getData() instanceof Data) )
             return false;
-        
+
         if( ((Data)getData()).i<10 )
             return true;
-            
+
         return false;
     }
 

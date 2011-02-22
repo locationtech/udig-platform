@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.internal.commands;
 
@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  *
  */
 public class NullCommand extends AbstractCommand implements MapCommand, UndoableMapCommand, UndoableCommand {
-	
+
 	/* (non-Javadoc)
 	 * @see net.refractions.udig.project.command.Command#run(org.eclipse.core.runtime.IProgressMonitor)
 	 */

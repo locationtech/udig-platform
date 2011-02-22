@@ -15,8 +15,8 @@
 package net.refractions.udig.project.render;
 
 /**
- * Enumerates the different types Rendering Events 
- * 
+ * Enumerates the different types Rendering Events
+ *
  * @author Jesse
  * @since 1.1.0
  */

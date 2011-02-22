@@ -38,8 +38,8 @@ public class SelectLayersPage extends WizardPage implements ISelectionChangedLis
     List layerRefs;
 
     protected SelectLayersPage() {
-        super(Messages.SelectLayersPage_page_title); 
-        this.setDescription(Messages.SelectLayersPage_page_description); 
+        super(Messages.SelectLayersPage_page_title);
+        this.setDescription(Messages.SelectLayersPage_page_description);
     }
 
     /**
@@ -52,9 +52,9 @@ public class SelectLayersPage extends WizardPage implements ISelectionChangedLis
         composite.setLayout(gridLayout);
 
         Label label = new Label(composite, SWT.NONE);
-        label.setText(Messages.SelectLayersPage_label_selectLayers_text); 
+        label.setText(Messages.SelectLayersPage_label_selectLayers_text);
         label.setLayoutData(new GridData(SWT.END, SWT.TOP, false, false));
-        label.setToolTipText(Messages.SelectLayersPage_label_selectLayers_tooltip); 
+        label.setToolTipText(Messages.SelectLayersPage_label_selectLayers_tooltip);
 
         layers = new CatalogTreeViewer(composite);
         layers.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));

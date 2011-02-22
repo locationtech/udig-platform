@@ -35,16 +35,16 @@ import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Draws the grid on the map.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class GridMapGraphic implements MapGraphic {
 
     public void draw( MapGraphicContext context ) {
-        ViewportGraphics graphics = context.getGraphics();
-        GridStyle style = getStyle(context.getLayer());
-        
+        ViewportGraphics graphics=context.getGraphics();
+        GridStyle style=getStyle(context.getLayer());
+
         graphics.setColor(style.getColor());
         graphics.setStroke(style.getLineStyle(), style.getLineWidth());
 
@@ -61,8 +61,8 @@ public class GridMapGraphic implements MapGraphic {
             }
             break;
 
-        default:            
-            throw new AssertionError("Should be impossible to reach here: "+getStyle(context.getLayer()).getType()); //$NON-NLS-1$
+        default:
+            throw new AssertionError("Should be impossible to reach here: "+getStyle(context.getLayer()).getType());
 
         }
     }
@@ -77,25 +77,25 @@ public class GridMapGraphic implements MapGraphic {
         final double[] gridSize = style.getGridSize();
         final int dx = (int) gridSize[0];
         final int dy = (int) gridSize[1];
-        
+
         int width = context.getMapDisplay().getWidth();
         int height = context.getMapDisplay().getHeight();
 
-        
+
         ViewportGraphics g = context.getGraphics();
-        
+
         int x=0,y=0;
-        
+
         while( x<width){
             x+=dx;
             g.drawLine(x, 0, x, height);
         }
-        
+
         while ( y<height ){
             y+=dy;
             g.drawLine(0, y, width, y);
         }
-        
+
     }
 
     /**
@@ -108,7 +108,7 @@ public class GridMapGraphic implements MapGraphic {
         double[] gridSize=style.getGridSize();
         try{
             MathTransform mt = CRS.findMathTransform(DefaultGeographicCRS.WGS84, context.getCRS(), true);
-        
+
             if( !mt.isIdentity() ){
                 double x=gridSize[0]/2.0;
                 double y=gridSize[1]/2.0;
@@ -134,7 +134,7 @@ public class GridMapGraphic implements MapGraphic {
         ViewportGraphics graphics = context.getGraphics();
         Point pixel = null;
         while(true){
-            pixel = context.worldToPixel(coord);            
+            pixel = context.worldToPixel(coord);
             coord.x+=gridSize[0];
             coord.y-=gridSize[1];
             Point next=context.worldToPixel(coord);
@@ -145,7 +145,7 @@ public class GridMapGraphic implements MapGraphic {
             }
             if( (pixel.x>=context.getMapDisplay().getWidth() && pixel.y>=context.getMapDisplay().getHeight()) )
                 break;
-            
+
             if( pixel.x<context.getMapDisplay().getWidth())
                 graphics.drawLine(pixel.x,0,pixel.x,context.getMapDisplay().getHeight());
             if( pixel.y<context.getMapDisplay().getHeight())
@@ -165,14 +165,14 @@ public class GridMapGraphic implements MapGraphic {
      * white strips, and labels for the grid lines are placed in the white strips.
      */
     private void worldCenteredGridMapGraphic( MapGraphicContext context, boolean showLabels ) {
-        
+
         GridStyle style = getStyle(context.getLayer());
         double[] gridSize=style.getGridSize();
-     
+
 
         try{
             MathTransform mt = CRS.findMathTransform(DefaultGeographicCRS.WGS84, context.getCRS(), true);
-        
+
             if( !mt.isIdentity() ){
                 double x=gridSize[0]/2.0;
                 double y=gridSize[1]/2.0;
@@ -186,10 +186,10 @@ public class GridMapGraphic implements MapGraphic {
         }
 
         Envelope bounds = context.getViewportModel().getBounds();
-        
+
         Coordinate centerCoord = bounds.centre();
         gridSize = style.getGridSize();
-        Coordinate topLeftCenterCoord = new Coordinate(centerCoord.x - gridSize[0]/2, 
+        Coordinate topLeftCenterCoord = new Coordinate(centerCoord.x - gridSize[0]/2,
                                                        centerCoord.y + gridSize[1]/2);
         Coordinate topLeftMostCoord = new Coordinate(topLeftCenterCoord);
         while (topLeftMostCoord.x - gridSize[0] > bounds.getMinX()) {
@@ -203,26 +203,26 @@ public class GridMapGraphic implements MapGraphic {
         ViewportGraphics graphics = context.getGraphics();
         int mapPixelWidth = context.getMapDisplay().getWidth();
         int mapPixelHeight = context.getMapDisplay().getHeight();
-        
+
         //cover the right side and bottom of map with thin strips
         final int RIGHT_STRIP_WIDTH = (int)(mapPixelWidth * 0.05);
         final int BOTTOM_STRIP_HEIGHT = (int)(mapPixelHeight * 0.03);
         final int GRID_LINE_EXTENSION = (int)(RIGHT_STRIP_WIDTH * 0.1);
         graphics.setColor(Color.white);
-        graphics.fillRect(mapPixelWidth - RIGHT_STRIP_WIDTH, 
-                          0, 
-                          RIGHT_STRIP_WIDTH, 
-                          mapPixelHeight); 
-        graphics.fillRect(0, 
-                          mapPixelHeight - BOTTOM_STRIP_HEIGHT, 
-                          mapPixelWidth, 
-                          BOTTOM_STRIP_HEIGHT);   
-        
+        graphics.fillRect(mapPixelWidth - RIGHT_STRIP_WIDTH,
+                          0,
+                          RIGHT_STRIP_WIDTH,
+                          mapPixelHeight);
+        graphics.fillRect(0,
+                          mapPixelHeight - BOTTOM_STRIP_HEIGHT,
+                          mapPixelWidth,
+                          BOTTOM_STRIP_HEIGHT);
+
         //draw grid lines
         graphics.setColor(style.getColor());
         Point pixel = null;
         while(true){
-            pixel = context.worldToPixel(coord);            
+            pixel = context.worldToPixel(coord);
             coord.x+=gridSize[0];
             coord.y-=gridSize[1];
             Point next=context.worldToPixel(coord);
@@ -233,7 +233,7 @@ public class GridMapGraphic implements MapGraphic {
             }
             if( (pixel.x>=mapPixelWidth && pixel.y>=mapPixelHeight) )
                 break;
-            
+
             //draw vertical lines and labels
             if( pixel.x<mapPixelWidth)
                 graphics.drawLine(pixel.x,
@@ -241,37 +241,37 @@ public class GridMapGraphic implements MapGraphic {
                                   pixel.x,
                                   mapPixelHeight - BOTTOM_STRIP_HEIGHT + GRID_LINE_EXTENSION);
                 if (showLabels) {
-                    graphics.drawString( String.valueOf( (int) coord.y ), 
-                                    pixel.x, 
-                                    mapPixelHeight - BOTTOM_STRIP_HEIGHT + GRID_LINE_EXTENSION, 
-                                    ViewportGraphics.ALIGN_MIDDLE, 
+                    graphics.drawString((int)(coord.y)+"",
+                                    pixel.x,
+                                    mapPixelHeight - BOTTOM_STRIP_HEIGHT + GRID_LINE_EXTENSION,
+                                    ViewportGraphics.ALIGN_MIDDLE,
                                     ViewportGraphics.ALIGN_TOP);
                 }
-            
+
             //draw horizontal lines and labels
             if( pixel.y<mapPixelHeight)
-                graphics.drawLine(0, 
+                graphics.drawLine(0,
                                   pixel.y,
                                   mapPixelWidth - RIGHT_STRIP_WIDTH + GRID_LINE_EXTENSION,
                                   pixel.y);
                 if (showLabels) {
-                    graphics.drawString( String.valueOf( (int)coord.x) , 
-                                    mapPixelWidth - RIGHT_STRIP_WIDTH + GRID_LINE_EXTENSION, 
-                                    pixel.y, 
-                                    ViewportGraphics.ALIGN_LEFT, 
+                    graphics.drawString((int)(coord.x)+"",
+                                    mapPixelWidth - RIGHT_STRIP_WIDTH + GRID_LINE_EXTENSION,
+                                    pixel.y,
+                                    ViewportGraphics.ALIGN_LEFT,
                                     ViewportGraphics.ALIGN_MIDDLE);
                 }
             pixel=next;
         }
-    
-        //outline the map        
-        graphics.drawRect(0, 
-                          0, 
-                          mapPixelWidth - RIGHT_STRIP_WIDTH, 
+
+        //outline the map
+        graphics.drawRect(0,
+                          0,
+                          mapPixelWidth - RIGHT_STRIP_WIDTH,
                           mapPixelHeight - BOTTOM_STRIP_HEIGHT);
-      
-    }        
-    
+
+    }
+
     private GridStyle getStyle( ILayer layer ) {
         GridStyle gridStyle = (GridStyle) layer.getStyleBlackboard().get(GridStyle.ID);
         if( gridStyle==null ){
@@ -281,23 +281,23 @@ public class GridMapGraphic implements MapGraphic {
     }
 
     /**
-     * calculates the closest point to x,y.  
+     * calculates the closest point to x,y.
      *
      * @param x x coord in screen coords
      * @param y y coord in screen coords
      * @param layer layer containing this map graphic
-     * @return the closest point on the grid  in map coords  
-     * @throws FactoryException 
+     * @return the closest point on the grid  in map coords
+     * @throws FactoryException
      */
     public double[] closest( int x, int y, ILayer layer ) throws FactoryException {
         switch( getStyle(layer).getType() ) {
         case SCREEN:
-            
+
             return screenClosest(x,y,layer);
         case WORLD:
             return worldClosest(x, y,layer);
         default:
-            AssertionError e=new AssertionError("Should be impossible to reach here: "+getStyle(layer).getType()); //$NON-NLS-1$
+            AssertionError e=new AssertionError("Should be impossible to reach here: "+getStyle(layer).getType());
             MapGraphicPlugin.log(null, e );
             throw e;
         }
@@ -308,7 +308,7 @@ public class GridMapGraphic implements MapGraphic {
 
         double newx = Math.round(x/gridSize[0])*gridSize[0];
         double newy = Math.round(y/gridSize[1])*gridSize[1];
-        
+
         Coordinate result = layer.getMap().getViewportModel().pixelToWorld((int)newx, (int)newy);
         return new double[]{result.x, result.y};
     }
@@ -320,7 +320,7 @@ public class GridMapGraphic implements MapGraphic {
 
         double[] gridSize = getStyle(layer).getGridSize();
         try{
-        
+
             if( !mt.isIdentity() ){
                 double tx=gridSize[0]/2.0;
                 double ty=gridSize[1]/2.0;

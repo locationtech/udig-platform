@@ -17,40 +17,25 @@ package net.refractions.udig.project.internal.interceptor;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IResourceInterceptor;
 import net.refractions.udig.project.internal.impl.UDIGFeatureStore;
-import net.refractions.udig.project.internal.impl.UDIGSimpleFeatureStore;
-import net.refractions.udig.project.internal.impl.UDIGStore;
 
 import org.geotools.data.FeatureStore;
-import org.geotools.data.simple.SimpleFeatureStore;
-import org.opengis.feature.Feature;
-import org.opengis.feature.type.FeatureType;
 
 /**
- * Wraps a FeatureStore in a UDIGFeatureStore (ensuring that the transaction is only set once!).
- * 
+ * Wraps a FeatureStore in a UDIGFeatureStore
  * @author Jesse
  * @since 1.1.0
  */
-public class WrapFeatureStore implements IResourceInterceptor<FeatureStore< ? , ? >> {
+public class WrapFeatureStore implements IResourceInterceptor<FeatureStore> {
 
-    public FeatureStore< ? , ? > run( ILayer layer, FeatureStore< ? , ? > resource,
-            Class< ? super FeatureStore< ? , ? >> requestedType ) {
-        
-        if( resource instanceof UDIGStore ){
-            return resource;
-        }
-        
-        if (requestedType.isAssignableFrom(SimpleFeatureStore.class) ||
-                requestedType.isAssignableFrom(FeatureStore.class) ){
-            if( resource instanceof SimpleFeatureStore){
-                return new UDIGSimpleFeatureStore(resource, layer);
-            }
-            else {
-                @SuppressWarnings("unchecked")
-                FeatureStore<FeatureType,Feature> prep = (FeatureStore<FeatureType,Feature>) resource;
-                return new UDIGFeatureStore( prep, layer);
-            }
+    @SuppressWarnings("unchecked")
+    public FeatureStore run( ILayer layer, FeatureStore resource,Class<? super FeatureStore> requestedType ) {
+        if( !(resource instanceof UDIGFeatureStore)){
+            if( requestedType.isAssignableFrom(FeatureStore.class))
+                return new UDIGFeatureStore(resource, layer);
+            else
+                return resource;
         }
         return resource;
     }
+
 }

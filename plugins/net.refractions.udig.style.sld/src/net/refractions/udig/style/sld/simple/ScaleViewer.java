@@ -29,11 +29,11 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * Allows editing/viewing of a scale. Used to build the min/max scale editors for a rule.  
+ * Allows editing/viewing of a scale. Used to build the min/max scale editors for a rule.
  * <p>
  * Here is the pretty picture: <pre><code>
- *          +-+ +-------------+             
- *    Scale:|x| | 90%       \/| 
+ *          +-+ +-------------+
+ *    Scale:|x| | 90%       \/|
  *          +-+ +-------------+
  * </code></pre>
  * </p>
@@ -52,27 +52,27 @@ import org.eclipse.swt.widgets.Composite;
  * <li>fire( SelectionSevent ) - notify SimpleStyleConfigurator/SimpleRasterConfigurator of change
  * <li>getScale( ) - returns the specified scale
  * </ul>
- * </p>  
+ * </p>
  * @author Andrea Aime
  * @since 1.1
  */
 public class ScaleViewer {
 	public static final int MIN = 0;
 	public static final int MAX = 1;
-	
+
     boolean enabled;
     double scale;
     int type;
-    
+
     Button on;
     Combo scaleEditor;
-    
+
     private class Listener implements SelectionListener,ModifyListener {
-        public void widgetSelected( SelectionEvent e ) { sync( e ); };            
+        public void widgetSelected( SelectionEvent e ) { sync( e ); };
         public void widgetDefaultSelected( SelectionEvent e ) { sync( e ); };
         public void modifyText( ModifyEvent e ) {
             sync(AbstractSimpleConfigurator.selectionEvent(e));
-        };            
+        };
         private void sync(SelectionEvent selectionEvent ){
             try {
                 ScaleViewer.this.enabled = ScaleViewer.this.on.getSelection();
@@ -84,25 +84,25 @@ public class ScaleViewer {
             catch( Throwable t ){
                 SLDPlugin.trace( "Scale sync failure", t ); //$NON-NLS-1$
             }
-            finally {                    
-                ScaleViewer.this.scaleEditor.setEnabled( ScaleViewer.this.enabled );                                
+            finally {
+                ScaleViewer.this.scaleEditor.setEnabled( ScaleViewer.this.enabled );
             }
         }
-        
+
     };
     Listener sync = new Listener();
     private SelectionListener listener;
-    
+
     public ScaleViewer(int type) {
     	if(type != MIN && type != MAX)
     		throw new IllegalArgumentException("Type should be either MIN or MAX"); //$NON-NLS-1$
     	this.type = type;
     	this.scale = type == MIN ? 0 : Double.MAX_VALUE;
     }
-    
+
     /**
      * Accepts a listener that will be notified when content changes.
-     * @param listener1 
+     * @param listener1
      */
     public void addListener( SelectionListener listener1 ) {
         this.listener = listener1;
@@ -110,7 +110,7 @@ public class ScaleViewer {
 
     /**
      * Remove listener.
-     * @param listener1 
+     * @param listener1
      */
     public void removeListener( SelectionListener listener1 ) {
         if (this.listener == listener1)
@@ -119,7 +119,7 @@ public class ScaleViewer {
 
     /**
      * TODO summary sentence for fire ...
-     * 
+     *
      * @param event
      */
     protected void fire( SelectionEvent event ) {
@@ -129,32 +129,32 @@ public class ScaleViewer {
     }
     /**
      * TODO summary sentence for createControl ...
-     * 
+     *
      * @param parent
-     * @param kListener 
+     * @param kListener
      * @return Generated composite
      */
     public Composite createControl(Composite parent, KeyListener kListener) {
     	String labelId = type == MIN ? Messages.SimpleStyleConfigurator_minscaleden_label : Messages.SimpleStyleConfigurator_maxscaleden_label;
-        Composite part = AbstractSimpleConfigurator.subpart( parent, labelId); 
-        
+        Composite part = AbstractSimpleConfigurator.subpart( parent, labelId);
+
         this.on = new Button( part, SWT.CHECK );
-        this.on.addSelectionListener( this.sync );                
-        
+        this.on.addSelectionListener( this.sync );
+
         this.scaleEditor = new Combo( part, SWT.DROP_DOWN );
         this.scaleEditor.setItems( new String[]{ "100","1000","10000","100000","1000000", "10000000"} );  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
         this.scaleEditor.setTextLimit( 10 );
         this.scaleEditor.addKeyListener(kListener);
         String tooltip = type == MIN ? Messages.ScaleViewer_minscaleden_tooltip : Messages.ScaleViewer_maxscaleden_tooltip;
-        this.scaleEditor.setToolTipText(tooltip);  
-        return part; 
+        this.scaleEditor.setToolTipText(tooltip);
+        return part;
     }
-    
+
     /**
      * Gets the scale denominator chosen by the user, or the default value for this type if none was selected.
      * Default values are 0 for MIN type, {@linkplain Double#MAX_VALUE} for the MAX type
-     * @param build 
-     * 
+     * @param build
+     *
      * @return Fill defined by this model
      */
     public double getScale() {
@@ -163,14 +163,14 @@ public class ScaleViewer {
     	else
     		return scale;
     }
-    
+
     /**
      * Sets the scale denominator, or disables the component if the provided scale is not a positive number
      * @param scale
      */
     public void setScale(double scale2, long defaultScale) {
     	listen( false );
-        
+
 
         this.scale=scale2;
         this.enabled=true;
@@ -179,13 +179,13 @@ public class ScaleViewer {
             this.enabled=false;
         }
 
-    	scaleEditor.setText(Double.toString(scale)); 
+    	scaleEditor.setText(Double.toString(scale));
         this.on.setSelection( this.enabled );
         this.scaleEditor.setEnabled( this.enabled );
         listen( true );
     }
-    
-    
+
+
     void listen(boolean listen) {
         if( listen ){
             this.on.addSelectionListener(this.sync);
@@ -201,5 +201,5 @@ public class ScaleViewer {
     public boolean isEnabled() {
         return enabled;
     }
-    
+
 }

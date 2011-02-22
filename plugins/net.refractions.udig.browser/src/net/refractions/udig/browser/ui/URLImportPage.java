@@ -37,21 +37,21 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * TODO Purpose of 
+ * TODO Purpose of
  * <p>
  *
  * </p>
  * @author mleslie
  * @since 1.0.0
  */
-public class URLImportPage extends WizardPage 
+public class URLImportPage extends WizardPage
         implements ModifyListener, ExternalCatalogueImportPage {
-    
+
     private static String URL_WIZARD = "URL_WIZARD"; //$NON-NLS-1$
     private static String URL_RECENT = "URL_RECENT"; //$NON-NLS-1$
     private static int RECENT_COUNT = 10;
     private URL url;
-    
+
     private Combo urlCombo;
     private Label urlLabel;
     private IDialogSettings settings;
@@ -59,9 +59,9 @@ public class URLImportPage extends WizardPage
     private LocationListener listen;
     private String emptyOption = "http://"; //$NON-NLS-1$
     private String viewName;
-    
+
     /**
-     * 
+     *
      */
     public URLImportPage() {
         super("External Catalog by URL"); //$NON-NLS-1$
@@ -87,11 +87,11 @@ public class URLImportPage extends WizardPage
             setErrorMessage("Invalid URL"); //$NON-NLS-1$
         }
     }
-    
+
     public boolean canFlipToNextPage() {
         return false;
     }
-    
+
     public boolean isPageComplete() {
         try {
             String urlString = urlCombo.getText();
@@ -102,7 +102,7 @@ public class URLImportPage extends WizardPage
         updateSettings();
         return true;
     }
-    
+
     private void updateSettings() {
         List<String> list = new LinkedList<String>();
         String[] recents = urlCombo.getItems();

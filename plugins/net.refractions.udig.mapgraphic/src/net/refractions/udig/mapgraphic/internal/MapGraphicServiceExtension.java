@@ -8,20 +8,18 @@ import java.util.Map;
 import net.refractions.udig.catalog.ServiceExtension;
 
 public class MapGraphicServiceExtension implements ServiceExtension {
-    /**
-     * Key used to record the URL indicating a local map graphic service.
-     */
+
 	public static final String KEY = "graphic"; //$NON-NLS-1$
-	
+
     /**
      * TODO summary sentence for createService ...
-     * 
+     *
      * @see net.refractions.udig.catalog.ServiceExtension#createService(java.net.URL, java.util.Map)
      * @param id
      * @param params
      * @return
      */
-    public MapGraphicService createService( URL id, Map<String,Serializable> params ) {
+    public MapGraphicService createService( URL id, Map params ) {
         if( params.containsKey(KEY)){
             return new MapGraphicService();
         }
@@ -30,7 +28,7 @@ public class MapGraphicServiceExtension implements ServiceExtension {
 
     /**
      * TODO summary sentence for createParams ...
-     * 
+     *
      * @see net.refractions.udig.catalog.ServiceExtension#createParams(java.net.URL)
      * @param url
      * @return
@@ -39,9 +37,9 @@ public class MapGraphicServiceExtension implements ServiceExtension {
         if( url != null && url.toExternalForm().startsWith( MapGraphicService.SERVICE_URL.toExternalForm())){
             Map<String,Serializable> map = new HashMap<String,Serializable>();
             map.put( KEY, url );
-            return map;            
+            return map;
         }
         return null;
     }
-    
+
 }

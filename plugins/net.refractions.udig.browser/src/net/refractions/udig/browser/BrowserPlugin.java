@@ -12,7 +12,7 @@ public class BrowserPlugin extends AbstractUIPlugin {
 	public static final String ICON_GO = "icons/elcl16/go.png"; //$NON-NLS-1$
     //The shared instance.
 	private static BrowserPlugin plugin;
-	
+
 	/**
 	 * The constructor.
 	 */
@@ -22,8 +22,8 @@ public class BrowserPlugin extends AbstractUIPlugin {
 
 	/**
 	 * This method is called upon plug-in activation
-	 * @param context 
-	 * @throws Exception 
+	 * @param context
+	 * @throws Exception
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
@@ -31,8 +31,8 @@ public class BrowserPlugin extends AbstractUIPlugin {
 
 	/**
 	 * This method is called when the plug-in is stopped
-	 * @param context 
-	 * @throws Exception 
+	 * @param context
+	 * @throws Exception
 	 */
 	public void stop(BundleContext context) throws Exception {
 		super.stop(context);

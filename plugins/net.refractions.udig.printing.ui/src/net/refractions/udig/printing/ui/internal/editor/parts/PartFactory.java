@@ -25,7 +25,7 @@ import org.eclipse.gef.EditPartFactory;
 
 /**
  * A Factory for GEF so that it can create the visual parts from the model items
- * 
+ *
  * @author Richard Gould
  * @since 0.3
  */
@@ -38,7 +38,7 @@ public class PartFactory implements EditPartFactory {
             part = new ConnectionPart();
         } else if (model instanceof Page) {
             part = new PagePart();
-        } 
+        }
 
         // Default to something that will provide a decent default
         if (part == null && model instanceof Box) {

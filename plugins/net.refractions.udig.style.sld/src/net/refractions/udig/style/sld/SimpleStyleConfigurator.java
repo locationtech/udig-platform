@@ -2,7 +2,6 @@ package net.refractions.udig.style.sld;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.refractions.udig.project.internal.Layer;
@@ -16,18 +15,15 @@ import net.refractions.udig.style.sld.simple.ScaleViewer;
 import net.refractions.udig.style.sld.simple.StrokeViewer;
 import net.refractions.udig.ui.graphics.SLDs;
 
-import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.geotools.data.FeatureSource;
+import org.geotools.feature.FeatureType;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
@@ -40,24 +36,19 @@ import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.FeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.feature.type.PropertyDescriptor;
 
 /**
  * Defines a "simple" StyleConfigurator for working with SLD documents.
  * <p>
  * This style configurator is defined as follows:
- * 
- * <pre>
- * &lt;code&gt;
+ *
+ * <pre><code>
  *         Mode: (*) Point ( ) Line ( ) Polygon
  *               +-+ +-------+ +------+ +------+
  *         Line: |x| | color | |size\/| |100%\/|
  *           	 +-+ +-------+ +------+ +------+
- *           	 +-+ +-------+ +------+             
- *         Fill: |x| | color | | 90%\/| 
+ *           	 +-+ +-------+ +------+
+ *         Fill: |x| | color | | 90%\/|
  *           	 +-+ +-------+ +------+
  *           	 +-+ +----------------+ +------+
  *        Label: |x| |         title\/| | Font |
@@ -71,9 +62,8 @@ import org.opengis.feature.type.PropertyDescriptor;
  *               +-+ +-------------+
  * Max scale d.: |x| |      scale\/|
  *               +-+ +-------------+
- * &lt;/code&gt;
- * </pre>
- * 
+ * </code></pre>
+ *
  * </p>
  * Where:
  * <ul>
@@ -102,62 +92,34 @@ import org.opengis.feature.type.PropertyDescriptor;
  * <p>
  * We will do our best to make this thing reusable on an Array of Symbolizers.
  * </p>
- * 
+ *
  * @author Jody Garnett
  * @since 1.0.0
  */
 public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
-    private static final String DEFAULT_GEOMETRY = "(default)"; //$NON-NLS-1$
-
-    /**
-     * Viewer capturing the geometry name; may be "default" or an explicit geometryName provided by
-     * the user
-     */
-    ComboViewer geometryName;
-
-    /** Radio button used to indicate point geometry type */
     Button pointMode;
-
-    /** Radio button used to indicate polygon geometry type */
     Button polyMode;
-
-    /** Radio button used to indicate linestring geometry type */
     Button lineMode;
-
-    /** Viewer used to allow interaction with Stroke definition */
     StrokeViewer line = new StrokeViewer();
-
-    /** Viewer used to allow interaction with Fill definition */
     FillViewer fill = new FillViewer();
-
-    /** Viewer used to allow interaction with Graphic definition */
     GraphicViewer point = new GraphicViewer();
-
-    /** Viewer used to allow interaction with TextSymbolizer definition */
     LabelViewer label = new LabelViewer();
-
-    /** Viewer used to allow interaction with minScale definition */
     ScaleViewer minScale = new ScaleViewer(ScaleViewer.MIN);
-
-    /** Viewer used to allow interaction with maxScale definition */
     ScaleViewer maxScale = new ScaleViewer(ScaleViewer.MAX);
 
-    /** The current mode we are working with */
     Mode mode;
 
-    /**
-     * Used to respond to any widget selection event; will call synchronize() method to extract any
-     * changes of state from the user interface
-     */
     SelectionListener synchronize = new SelectionListener(){
+
         public void widgetSelected( SelectionEvent e ) {
             synchronize();
         }
+
         public void widgetDefaultSelected( SelectionEvent e ) {
             synchronize();
         }
-    };
 
+    };
     private Button replace;
     /**
      * Construct <code>SimpleStyleConfigurator</code>.
@@ -179,25 +141,31 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
         return false;
     }
 
-    public Mode determineMode( SimpleFeatureType schema, boolean askUser ) {
+    public Mode determineMode(FeatureType schema, boolean askUser){
         if (schema == null) {
             return Mode.NONE;
-        } else if (SLD.isLine(schema)) {
+        }
+        else if (SLD.isLine(schema)) {
             return Mode.LINE;
-        } else if (SLD.isPolygon(schema)) {
+        }
+        else if (SLD.isPolygon(schema) ) {
             return Mode.POLYGON;
-        } else if (SLD.isPoint(schema)) {
+        }
+        else if (SLD.isPoint(schema)) {
             return Mode.POINT;
-        } else {
+        }
+        else {
             // we must be Geometry?
-            if (askUser) {
+            if( askUser ){
                 // could not figure it out from the schema
                 // try trusting the user?
-                if (polyMode.getSelection()) {
+                if( polyMode.getSelection() ){
                     return Mode.POLYGON;
-                } else if (lineMode.getSelection()) {
+                }
+                else if( lineMode.getSelection() ){
                     return Mode.LINE;
-                } else if (pointMode.getSelection()) {
+                }
+                else if( pointMode.getSelection() ){
                     return Mode.POINT;
                 }
             }
@@ -208,31 +176,31 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
     protected void refresh() {
         Style style = getStyle(); // grab an SLD style or bust
 
-        List<FeatureTypeStyle> ftsList = style.featureTypeStyles();
+        // obtain the fts (if an FTS tagged with the SemanticTypeIdentifier "simple" doesn't exist,
+        // null is fine)
+        FeatureTypeStyle[] ftsList = style.getFeatureTypeStyles();
         FeatureTypeStyle fts = null;
-        if (ftsList.size()>0) {
-            fts  = ftsList.get(0);
+        for( int i = 0; i < ftsList.length; i++ ) {
+            if (SLDs.isSemanticTypeMatch(ftsList[i], "simple")) { //$NON-NLS-1$
+                fts = ftsList[i];
+            }
+            // note: the last matching fts is returned (the one drawn last) -- although there should
+            // only be one tagged "simple"
         }
 
-        SimpleFeatureType schema = getLayer().getSchema();
-        geometryName.setInput(schema);
-        String name = DEFAULT_GEOMETRY;
-
+        FeatureType schema = getLayer().getSchema();
         Stroke stroke = null;
         Fill fill = null;
         Graphic graphic = null;
         TextSymbolizer text = null;
         LabelPlacement placement = null;
 
-        List<Rule> rules = fts.rules();
-        if (rules.size() > 1) {
-            // simple mode trimms away all but the first rule
-            Rule keepRule = rules.get(0);
-            rules.clear();
-            rules.add(keepRule);
-        }
-        this.mode = determineMode(schema, true);
+        this.mode = determineMode( schema, true );
 
+        text = SLDs.textSymbolizer(fts);
+        if (text != null && placement != null) {
+            text.setPlacement(placement);
+        }
         if (mode == Mode.NONE) {
             pointMode.setSelection(false);
             polyMode.setSelection(false);
@@ -242,41 +210,21 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
             LineSymbolizer sym = SLDs.lineSymbolizer(fts);
             stroke = SLDs.stroke(sym);
             placement = SLDs.getPlacement(SLDs.ALIGN_LEFT, SLDs.ALIGN_MIDDLE, 0);
-
-            name = sym == null ? null : sym.getGeometryPropertyName();
-        } else if (mode == Mode.POLYGON) {
+        } else if (mode == Mode.POLYGON ){
             polyMode.setSelection(true);
             PolygonSymbolizer sym = SLDs.polySymbolizer(fts);
             stroke = SLDs.stroke(sym);
             fill = SLDs.fill(sym);
             placement = SLDs.getPlacement(SLDs.ALIGN_CENTER, SLDs.ALIGN_MIDDLE, 0);
-
-            name = sym == null ? null : sym.getGeometryPropertyName();
         } else if (mode == Mode.POINT || mode == Mode.ALL) { // default to handling as Point
             pointMode.setSelection(true);
-
             PointSymbolizer sym = SLDs.pointSymbolizer(fts);
             stroke = SLDs.stroke(sym);
             fill = SLDs.fill(sym);
             graphic = SLDs.graphic(sym);
             placement = SLDs.getPlacement(SLDs.ALIGN_LEFT, SLDs.ALIGN_MIDDLE, 0);
-
-            name = sym == null ? null : sym.getGeometryPropertyName();
         }
-        
-        text = SLDs.textSymbolizer(fts);
-        if (text != null && placement != null) {
-            text.setLabelPlacement(placement);
-        }
-        
-        if (name == null) {
-            name = DEFAULT_GEOMETRY;
-            geometryName.getCombo().setText(name);
-        }
-        else {
-            geometryName.getCombo().setText(name);    
-        }
-        Mode raw = determineMode(schema, false);
+        Mode raw = determineMode( schema, false );
         pointMode.setEnabled(raw == Mode.ALL);
         polyMode.setEnabled(raw == Mode.ALL);
         lineMode.setEnabled(raw == Mode.ALL);
@@ -289,12 +237,9 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
 
         this.fill.setFill(fill, this.mode, defaultColor);
         this.point.setGraphic(graphic, this.mode, defaultColor);
-        
         this.label.set(schema, text, this.mode);
-        this.minScale.setScale(minScaleDen, Math.round(getLayer().getMap().getViewportModel()
-                .getScaleDenominator()));
-        this.maxScale.setScale(maxScaleDen, Math.round(getLayer().getMap().getViewportModel()
-                .getScaleDenominator()));
+        this.minScale.setScale(minScaleDen, Math.round(getLayer().getMap().getViewportModel().getScaleDenominator()));
+        this.maxScale.setScale(maxScaleDen, Math.round(getLayer().getMap().getViewportModel().getScaleDenominator()));
     }
 
     /** Synchronize the SLD with the array of symbolizers */
@@ -303,66 +248,39 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
         List<Symbolizer> acquire = new ArrayList<Symbolizer>();
         TextSymbolizer textSym = this.label.get(this.build);
 
-        SimpleFeatureType schema = getLayer().getSchema();
+        FeatureType schema = getLayer().getSchema();
         this.mode = determineMode(schema, true);
 
-        String geometryPropertyName = null;
-        if (geometryName.getCombo().getSelectionIndex() != 0) {
-            geometryPropertyName = geometryName.getCombo().getText();
-        }
-
         switch( this.mode ) {
-        case LINE: {
-            LineSymbolizer lineSymbolizer = this.build.createLineSymbolizer(this.line
-                    .getStroke(this.build));
-            acquire.add(lineSymbolizer);
-            lineSymbolizer.setGeometryPropertyName(geometryPropertyName);
+        case LINE:
+            acquire.add(this.build.createLineSymbolizer(this.line.getStroke(this.build)));
             if (textSym != null) {
                 acquire.add(textSym);
             }
-        }
             break;
-
-        case POLYGON: {
-            PolygonSymbolizer polygonSymbolizer = this.build.createPolygonSymbolizer(this.line
-                    .getStroke(this.build), this.fill.getFill(this.build));
-            polygonSymbolizer.setGeometryPropertyName(geometryPropertyName);
-            acquire.add(polygonSymbolizer);
+        case POLYGON:
+            acquire.add(this.build.createPolygonSymbolizer(this.line.getStroke(this.build),
+                    this.fill.getFill(this.build)));
             if (textSym != null) {
                 acquire.add(textSym);
             }
-        }
             break;
-
-        case POINT: {
-            PointSymbolizer pointSymbolizer = this.build.createPointSymbolizer(this.point
-                    .getGraphic(this.fill.getFill(this.build), this.line.getStroke(this.build),
-                            this.build));
-            pointSymbolizer.setGeometryPropertyName(geometryPropertyName);
-            acquire.add(pointSymbolizer);
+        case POINT:
+            acquire.add(this.build.createPointSymbolizer(this.point.getGraphic(this.fill
+                    .getFill(this.build), this.line.getStroke(this.build), this.build)));
             if (textSym != null) {
                 acquire.add(textSym);
             }
-        }
             break;
-        case ALL: {
-            LineSymbolizer lineSymbolizer = this.build.createLineSymbolizer(this.line
-                    .getStroke(this.build));
-            acquire.add(lineSymbolizer);
-            acquire.add(lineSymbolizer);
-            PolygonSymbolizer polygonSymbolizer = this.build.createPolygonSymbolizer(this.line
-                    .getStroke(this.build), this.fill.getFill(this.build));
-            polygonSymbolizer.setGeometryPropertyName(geometryPropertyName);
-            acquire.add(polygonSymbolizer);
-            PointSymbolizer pointSymbolizer = this.build.createPointSymbolizer(this.point
-                    .getGraphic(this.fill.getFill(this.build), this.line.getStroke(this.build),
-                            this.build));
-            pointSymbolizer.setGeometryPropertyName(geometryPropertyName);
-            acquire.add(pointSymbolizer);
+        case ALL:
+            acquire.add(this.build.createLineSymbolizer(this.line.getStroke(this.build)));
+            acquire.add(this.build.createPolygonSymbolizer(this.line.getStroke(this.build),
+                    this.fill.getFill(this.build)));
+            acquire.add(this.build.createPointSymbolizer(this.point.getGraphic(this.fill
+                    .getFill(this.build), this.line.getStroke(this.build), this.build)));
             if (textSym != null) {
                 acquire.add(textSym);
             }
-        }
             break;
         case NONE:
         }
@@ -371,46 +289,36 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
 
         Symbolizer[] array = acquire.toArray(new Symbolizer[acquire.size()]);
         Rule rule = this.build.createRule(array);
-        if (minScale.isEnabled())
+        if( minScale.isEnabled() )
             rule.setMinScaleDenominator(minScaleDen);
-        if (maxScale.isEnabled())
+        if( maxScale.isEnabled() )
             rule.setMaxScaleDenominator(maxScaleDen);
-        FeatureTypeStyle featureTypeStyle = this.build.createFeatureTypeStyle(
-                SLDs.GENERIC_FEATURE_TYPENAME, rule);
+        FeatureTypeStyle featureTypeStyle = this.build.createFeatureTypeStyle(SLDs.GENERIC_FEATURE_TYPENAME, rule);
         featureTypeStyle.setName("simple"); //$NON-NLS-1$
         featureTypeStyle.setSemanticTypeIdentifiers(new String[]{"generic:geometry", "simple"}); //$NON-NLS-1$ //$NON-NLS-2$
 
         Style style = (Style) getStyleBlackboard().get(SLDContent.ID);
         style.setDefault(true);
-        if (replace.getSelection()) {
-            // if repalce was hit we are going to completly redfine the style
-            // based on what the user has here
-            //
-            style.featureTypeStyles().clear();
-            style.featureTypeStyles().add(featureTypeStyle);
-        } else {
-            // if we are just responding to what is going on we will try and update the existing
-            // style in place (leaving any other content alone)
-            //
-            List<FeatureTypeStyle> fts = style.featureTypeStyles();
+        if(replace.getSelection()){
+            style.setFeatureTypeStyles(new FeatureTypeStyle[]{featureTypeStyle});
+        }else{
+            FeatureTypeStyle[] fts = style.getFeatureTypeStyles();
             boolean match = false;
-            for( int i = fts.size() - 1; i > -1; i-- ) {
-                if (SLDs.isSemanticTypeMatch(fts.get(i), "simple")) { //$NON-NLS-1$
-                    fts.set(i, featureTypeStyle);
+            for( int i = fts.length - 1; i > -1; i-- ) {
+                if (SLDs.isSemanticTypeMatch(fts[i], "simple")) { //$NON-NLS-1$
+                    fts[i] = featureTypeStyle;
                     match = true;
                     break;
                 }
             }
             if (match) {
-                style.featureTypeStyles().clear();
-                style.featureTypeStyles().addAll(fts);
+                style.setFeatureTypeStyles(fts);
             } else {
                 // add the new entry to the array
-                List<FeatureTypeStyle> fts2 = new ArrayList<FeatureTypeStyle>(fts);
-                Collections.copy(fts2, fts);
-                fts2.add(featureTypeStyle);
-                style.featureTypeStyles().clear();
-                style.featureTypeStyles().addAll(fts2);
+                FeatureTypeStyle[] fts2 = new FeatureTypeStyle[fts.length + 1];
+                System.arraycopy(fts, 0, fts2, 0, fts.length);
+                fts2[fts.length] = featureTypeStyle;
+                style.setFeatureTypeStyles(fts2);
             }
         }
         // put style on blackboard
@@ -421,11 +329,6 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
     @Override
     public void createControl( Composite parent ) {
         setLayout(parent);
-        //ensure vertical layout
-        ((RowLayout)parent.getLayout()).type = SWT.VERTICAL;
-        ((RowLayout)parent.getLayout()).spacing = 3;
-        
-        
         KeyAdapter adp = new KeyAdapter(){
             @Override
             public void keyReleased( KeyEvent e ) {
@@ -439,41 +342,18 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
                 }
             }
         };
-        Composite part = AbstractSimpleConfigurator.subpart(parent, Messages.SimpleStyleConfigurator_GeometryLabel);
-        geometryName = new ComboViewer(part);
-        geometryName.setContentProvider(new IStructuredContentProvider(){
-            FeatureType schema;
-            public Object[] getElements( Object inputElement ) {
-                // note use of descriptors; so we can make use of associations if available
-                ArrayList<String> names = new ArrayList<String>();
-                names.add(DEFAULT_GEOMETRY);
-                if (schema != null) {
-                    for( PropertyDescriptor descriptor : schema.getDescriptors() ) {
-                        if (descriptor instanceof GeometryDescriptor) {
-                            names.add(((GeometryDescriptor) descriptor).getLocalName());
-                        }
-                    }
-                }
-                return names.toArray();
-            }
-            public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
-                // we don't really care since we are not listening to the change in schema
-                schema = (FeatureType) newInput;
-            }
-            public void dispose() {
-            }
-        });
-        geometryName.getCombo().setText(DEFAULT_GEOMETRY);
-        geometryName.getCombo().addSelectionListener( synchronize );
-
-        
-        part = AbstractSimpleConfigurator.subpart(parent, Messages.SimpleStyleConfigurator_ModeLabel);
+        Composite part = AbstractSimpleConfigurator.subpart(parent, Messages.SimpleStyleConfigurator_mode );
         this.pointMode = new Button(part, SWT.RADIO);
-        pointMode.setText(Messages.SimpleStyleConfigurator_PointMode);
+        pointMode.setText(Messages.SimpleStyleConfigurator_point);
+        pointMode.addSelectionListener(synchronize);
+
         this.lineMode = new Button(part, SWT.RADIO);
-        lineMode.setText(Messages.SimpleStyleConfigurator_LineMode);
+        lineMode.setText(Messages.SimpleStyleConfigurator_line);
+        lineMode.addSelectionListener(synchronize);
+
         this.polyMode = new Button(part, SWT.RADIO);
-        polyMode.setText(Messages.SimpleStyleConfigurator_PolygonMode);
+        polyMode.setText(Messages.SimpleStyleConfigurator_polygon);
+        polyMode.addSelectionListener(synchronize);
 
         this.line.createControl(parent, adp);
         this.fill.createControl(parent, adp);
@@ -482,8 +362,7 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
         this.minScale.createControl(parent, adp);
         this.maxScale.createControl(parent, adp);
 
-        Composite replaceComp = AbstractSimpleConfigurator.subpart(parent,
-                Messages.SimpleStyleConfigurator_replaceButton);
+        Composite replaceComp = AbstractSimpleConfigurator.subpart(parent, Messages.SimpleStyleConfigurator_replaceButton );
         this.replace = new Button(replaceComp, SWT.CHECK);
         replace.addSelectionListener(synchronize);
         replace.setSelection(true);

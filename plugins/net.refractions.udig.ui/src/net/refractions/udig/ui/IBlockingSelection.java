@@ -16,7 +16,7 @@ package net.refractions.udig.ui;
 
 /**
  * This is a selection that may block upon retrieving selection.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

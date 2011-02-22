@@ -36,7 +36,7 @@ import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Test MoveGeometryBehaviour.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -168,41 +168,41 @@ public class MoveGeometryBehaviourTest extends TestCase {
         GeometryFactory fac=new GeometryFactory();
         Polygon lake = fac.createPolygon(fac.createLinearRing(coords), new LinearRing[0]);
         Envelope env = lake.getEnvelopeInternal();
-        
+
         ViewportModel model = ((ViewportModel) handler.getContext().getMap().getViewportModel());
         model.setBounds(env);
         model.setWidth(env.getWidth()*200);
-        
+
         handler.setEditBlackboard(new EditBlackboard(10, 10, model.worldToScreenTransform(),
                 TestEditBlackboard.IDENTITY));
 
         EditBlackboard editBlackboard = handler.getEditBlackboard();
         editBlackboard.setGeometries(lake, "lake"); //$NON-NLS-1$
-        
+
         handler.getAcceptBehaviours().add(new AcceptChangesBehaviour(Polygon.class, false));
         Point[] points = new Point[coords.length];
         for( int i = 0; i < coords.length; i++ ) {
             points[i] = editBlackboard.toPoint(coords[i]);
         }
-        
+
         for( int i = 0; i < points.length; i++ ) {
             List<Coordinate> list = editBlackboard.getCoords(points[i].getX(), points[i].getY());
             System.out.println(list.size());
             assertTrue(!list.isEmpty());
         }
-        
+
         System.out.println("Done first check"); //$NON-NLS-1$
-        
+
         handler.getMouseTracker().setDragStarted(points[0]);
         PrimitiveShape shell = editBlackboard.getGeoms().get(0).getShell();
         handler.setCurrentShape(shell);
 
         Coordinate[] shellCoords=new Coordinate[coords.length];
-        
+
         for( int i = 0; i < shellCoords.length; i++ ) {
             shellCoords[i]=shell.getCoord(i);
         }
-        
+
         MapMouseEvent event = new MapMouseEvent(handler.getContext().getMapDisplay(), points[0]
                 .getX(), points[0].getY(), MapMouseEvent.ALT_DOWN_MASK
                 | MapMouseEvent.CTRL_DOWN_MASK, MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
@@ -212,7 +212,7 @@ public class MoveGeometryBehaviourTest extends TestCase {
                 .getX() + 1, points[0].getY(), MapMouseEvent.ALT_DOWN_MASK
                 | MapMouseEvent.CTRL_DOWN_MASK, MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.DRAGGED);
-        
+
 
         event = new MapMouseEvent(handler.getContext().getMapDisplay(), points[0]
                 .getX() + 2, points[0].getY(), MapMouseEvent.ALT_DOWN_MASK
@@ -228,23 +228,23 @@ public class MoveGeometryBehaviourTest extends TestCase {
         for( int i = 0; i < points.length; i++ ) {
             List<EditGeom> list = editBlackboard.getGeoms(points[i].getX()+2, points[i].getY());
             System.out.println(list.size());
-            assertTrue(!list.isEmpty()); 
+            assertTrue(!list.isEmpty());
         }
-        
+
 //        for( int i = 0; i < coords.length; i++ ) {
 //            assertSame(  );
 //        }
-        
+
         Coordinate deltaPart1 = editBlackboard.toCoord(Point.valueOf(points[0].getX()+2, points[0].getY()));
         Coordinate deltaPart2 = editBlackboard.toCoord(points[0]);
         double deltaX = deltaPart1.x-deltaPart2.x;
         double deltaY = deltaPart1.y-deltaPart2.y;
-        
+
         for( int i = 0; i < coords.length; i++ ) {
-            assertEquals( new Coordinate( coords[i].x+deltaX, coords[i].y+deltaY ), 
+            assertEquals( new Coordinate( coords[i].x+deltaX, coords[i].y+deltaY ),
                     shell.getCoord(i) );
         }
-        
-        
+
+
     }
 }

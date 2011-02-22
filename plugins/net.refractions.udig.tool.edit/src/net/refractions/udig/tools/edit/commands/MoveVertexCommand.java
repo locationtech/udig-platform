@@ -37,7 +37,7 @@ import com.vividsolutions.jts.geom.Coordinate;
  * how much the vertex has moved from its original position so the incremental move can be undone.
  * Additionally this command performs post-order snapping. It searches the layer below it for the
  * closest vertex and snaps to that vertex.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -67,11 +67,11 @@ public class MoveVertexCommand extends AbstractCommand implements UndoableMapCom
         if (command == null) {
             ILayer selectedLayer = handler.getEditLayer();
             EditBlackboard editBlackboard = handler.getEditBlackboard(selectedLayer);
-            
+
             Coordinate destinationCoord=null;
             Point dest;
-            destinationCoord = calculateDestinationPoint(editBlackboard, destinationCoord); 
-    
+            destinationCoord = calculateDestinationPoint(editBlackboard, destinationCoord);
+
             dest=editBlackboard.toPoint(destinationCoord);
             int deltaX = dest.getX() - lastPoint.getX();
             int deltaY = dest.getY()
@@ -80,11 +80,11 @@ public class MoveVertexCommand extends AbstractCommand implements UndoableMapCom
                 editBlackboard.moveSelection(deltaX, deltaY, toMove);
             }
             editBlackboard.setCoords(dest, destinationCoord);
-    
+
             deltaX = dest.getX() - start.getX();
             deltaY = dest.getY() - start.getY();
-    
-            
+
+
             command=new MoveSelectionCommand(editBlackboard, deltaX, deltaY, toMove );
             command.setMap(getMap());
 
@@ -95,7 +95,7 @@ public class MoveVertexCommand extends AbstractCommand implements UndoableMapCom
 
     private Coordinate calculateDestinationPoint( EditBlackboard editBlackboard, Coordinate destinationCoord ) {
         if( doSnap  ){
-            destinationCoord = EditUtils.instance.getClosestSnapPoint(handler, editBlackboard, lastPoint, false, 
+            destinationCoord = EditUtils.instance.getClosestSnapPoint(handler, editBlackboard, lastPoint, false,
                     snapBehaviour, stateAfterSnap);
         }
         Point dest;
@@ -109,7 +109,7 @@ public class MoveVertexCommand extends AbstractCommand implements UndoableMapCom
     }
 
     public String getName() {
-        return Messages.SnapToVertexCommand_name; 
+        return Messages.SnapToVertexCommand_name;
     }
 
     public void rollback( IProgressMonitor monitor ) throws Exception {

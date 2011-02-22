@@ -51,12 +51,12 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.feature.Feature;
+import org.geotools.feature.FeatureType;
 
 /**
  * Processes the feature editor extension points and creates the menu items.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
@@ -64,7 +64,7 @@ public class FeatureEditorExtensionProcessor {
 
     FeatureEditorViewpartListener partListener;
 
-    Map<SimpleFeatureType, EditActionContribution> selectedEditors = new HashMap<SimpleFeatureType, EditActionContribution>();
+    Map<FeatureType, EditActionContribution> selectedEditors = new HashMap<FeatureType, EditActionContribution>();
 
     List<FeatureEditorLoader> editorLoaders = new ArrayList<FeatureEditorLoader>();
 
@@ -79,22 +79,25 @@ public class FeatureEditorExtensionProcessor {
      */
     public FeatureEditorExtensionProcessor() {
 
-        List<IConfigurationElement> list = ExtensionPointList
-                .getExtensionPointList(FEATURE_EDITOR_ID);
+        List<IConfigurationElement> list = ExtensionPointList.getExtensionPointList(FEATURE_EDITOR_ID);
         for( IConfigurationElement element : list ) {
-            FeatureEditorLoader loader = new FeatureEditorLoader(this, element);
-            ScopedPreferenceStore preferences = ProjectPlugin.getPlugin().getPreferenceStore();
-            if (loader.id.equals(preferences
-                    .getString(PreferenceConstants.P_DEFAULT_FEATURE_EDITOR)))
-                editorLoaders.add(0, loader);
-            else
-                editorLoaders.add(loader);
+            try {
+                FeatureEditorLoader loader = new FeatureEditorLoader(this, element);
+                ScopedPreferenceStore preferences = ProjectPlugin.getPlugin().getPreferenceStore();
+                if( loader.id.equals( preferences.getString(PreferenceConstants.P_DEFAULT_FEATURE_EDITOR) ) )
+                    editorLoaders.add(0, loader);
+                else
+                    editorLoaders.add(loader);
+            }
+            catch ( Throwable t ){
+                t.printStackTrace();
+            }
         }
     }
 
     /**
      * Creates the edit feature action
-     * 
+     *
      * @return the edit feature action
      */
     public IContributionItem getEditFeatureAction( final ISelection selection ) {
@@ -107,7 +110,7 @@ public class FeatureEditorExtensionProcessor {
         if (!sameFeatureTypes(structuredSelection))
             return new GroupMarker("editAction"); //$NON-NLS-1$
 
-        SimpleFeature feature = (SimpleFeature) structuredSelection.getFirstElement();
+        Feature feature = (Feature) structuredSelection.getFirstElement();
         IContributionItem item = selectedEditors.get(feature.getFeatureType());
         if (item != null)
             return item;
@@ -121,7 +124,7 @@ public class FeatureEditorExtensionProcessor {
 
     /**
      * returns the feature editor that is customized closest for the feature(s) in the selection
-     * 
+     *
      * @param selection a selection that contains 1 or more features.
      * @return the feature editor that is customized closest for the feature(s) in the selection.
      */
@@ -145,28 +148,28 @@ public class FeatureEditorExtensionProcessor {
 
     /**
      * Creates the edit menu item.
-     * 
+     *
      * @param loader
      * @param selection
      * @param feature
      * @return
      */
     EditActionContribution createEditAction( final FeatureEditorLoader loader,
-            final ISelection selection, SimpleFeature feature ) {
+            final ISelection selection, Feature feature ) {
         EditActionContribution item;
-        item = new EditActionContribution(new EditAction(loader, selection));
+        item = new EditActionContribution(new EditAction(loader,selection));
         selectedEditors.put(feature.getFeatureType(), item);
         return item;
     }
 
-    static class EditAction extends Action {
+    static class EditAction extends Action{
         private ISelection selection;
         private final FeatureEditorLoader loader;
 
-        public EditAction( FeatureEditorLoader loader, ISelection selection ) {
+        public EditAction(FeatureEditorLoader loader, ISelection selection) {
             super(Messages.FeatureEditorExtensionProcessor_editMenu, loader.icon);
-            this.selection = selection;
-            this.loader = loader;
+            this.selection=selection;
+            this.loader=loader;
             setId(loader.id);
         }
 
@@ -186,23 +189,23 @@ public class FeatureEditorExtensionProcessor {
 
         public EditActionContribution( IAction action ) {
             super(action);
-            editAction = (EditAction) action;
+            editAction=(EditAction)action;
         }
 
-        public void setSelection( ISelection selection ) {
+        public void setSelection(ISelection selection) {
             editAction.setSelection(selection);
         }
 
     }
 
     boolean sameFeatureTypes( IStructuredSelection structuredSelection ) {
-        SimpleFeatureType type = null;
+        FeatureType type = null;
         for( Iterator iter = structuredSelection.iterator(); iter.hasNext(); ) {
             Object obj = iter.next();
-            if (!(obj instanceof SimpleFeature))
+            if (!(obj instanceof Feature))
                 return false;
 
-            SimpleFeature feature = (SimpleFeature) obj;
+            Feature feature = (Feature) obj;
             if (type == null)
                 type = feature.getFeatureType();
             else if (!type.equals(feature.getFeatureType()))
@@ -213,14 +216,13 @@ public class FeatureEditorExtensionProcessor {
 
     /**
      * Creates the edit/editWith menu items if the current selection is a feature.
-     * 
+     *
      * @return the edit/editWith menu items if the current selection is a feature.
      */
     public IContributionItem getEditWithFeatureMenu( ISelection selection ) {
         if (selection.isEmpty())
             return new GroupMarker("editWithMenu"); //$NON-NLS-1$
-        MenuManager editWithMenu = new MenuManager(
-                Messages.FeatureEditorExtensionProcessor_editWithMenu);
+        MenuManager editWithMenu = new MenuManager(Messages.FeatureEditorExtensionProcessor_editWithMenu);
         for( FeatureEditorLoader loader : editorLoaders ) {
             IAction editorAction = loader.getAction(selection);
             if (editorAction != null)
@@ -307,8 +309,7 @@ public class FeatureEditorExtensionProcessor {
                 MapPart editor = (MapPart) partRef.getPart(false);
                 synchronized (this) {
 
-                    if (currentContext == null
-                            || currentContext.getMapInternal() != editor.getMap())
+                    if (currentContext == null || currentContext.getMapInternal() != editor.getMap())
                         return;
 
                     currentContext.getEditManagerInternal().eAdapters().remove(this);
@@ -317,7 +318,7 @@ public class FeatureEditorExtensionProcessor {
                 for( IUDIGView view : views ) {
                     view.setContext(null);
                 }
-            }
+                }
         }
 
         /**
@@ -350,42 +351,40 @@ public class FeatureEditorExtensionProcessor {
                 IUDIGView udigview = (IUDIGView) partRef.getPart(false);
                 if (!views.contains(udigview))
                     views.add(udigview);
-                SimpleFeature editFeature;
+                Feature editFeature;
                 ToolContext copy;
                 synchronized (this) {
-                    if (!validateContext(currentContext))
+                    if( !validateContext(currentContext) )
                         return;
-                    copy = currentContext.copy();
+                    copy=currentContext.copy();
                     editFeature = currentContext.getEditManager().getEditFeature();
                 }
-                try {
+                try{
                     udigview.setContext(copy);
-                    if (editFeature != null)
+                    if( editFeature!=null )
                         udigview.editFeatureChanged(editFeature);
-                } catch (Throwable e) {
-                    UiPlugin.log(udigview + " threw an exception", e); //$NON-NLS-1$
+                }catch (Throwable e) {
+                    UiPlugin.log(udigview+" threw an exception", e); //$NON-NLS-1$
                 }
 
             } else if (partRef.getPart(false) instanceof MapEditor) {
 
                 MapPart editor = (MapPart) partRef.getPart(false);
                 synchronized (this) {
-                    if (currentContext != null
-                            && currentContext.getMapInternal() == editor.getMap())
+                    if (currentContext != null && currentContext.getMapInternal() == editor.getMap())
                         return;
                     if (currentContext != null)
                         currentContext.getEditManagerInternal().eAdapters().remove(this);
 
                     currentContext = new ToolContextImpl();
                     currentContext.setMapInternal(editor.getMap());
-                    currentContext.setRenderManagerInternal(editor.getMap()
-                            .getRenderManagerInternal());
+                    currentContext.setRenderManagerInternal(editor.getMap().getRenderManagerInternal());
                     currentContext.getEditManagerInternal().eAdapters().add(this);
                     for( IUDIGView view : views ) {
-                        try {
+                        try{
                             view.setContext(currentContext);
-                        } catch (Throwable e) {
-                            UiPlugin.log(view + " threw an exception", e); //$NON-NLS-1$
+                        }catch (Throwable e) {
+                            UiPlugin.log(view+" threw an exception", e); //$NON-NLS-1$
                         }
                     }
                 }
@@ -393,17 +392,17 @@ public class FeatureEditorExtensionProcessor {
         }
 
         private boolean validateContext( ToolContext currentContext2 ) {
-            if (currentContext2 == null)
+            if( currentContext2==null )
                 return false;
-            if (currentContext2.getMap() == null)
+            if( currentContext2.getMap()==null )
                 return false;
-            if (currentContext2.getViewportModel() == null)
+            if( currentContext2.getViewportModel()==null )
                 return false;
-            if (currentContext2.getRenderManager() == null)
+            if( currentContext2.getRenderManager()==null )
                 return false;
-            if (currentContext2.getDisplay() == null)
+            if( currentContext2.getDisplay()==null )
                 return false;
-            if (currentContext2.getEditManager() == null)
+            if( currentContext2.getEditManager()==null )
                 return false;
 
             return true;
@@ -422,7 +421,7 @@ public class FeatureEditorExtensionProcessor {
         public void notifyChanged( final Notification msg ) {
             if (msg.getNotifier() instanceof EditManager) {
                 if (msg.getFeatureID(EditManager.class) == ProjectPackage.EDIT_MANAGER__EDIT_FEATURE) {
-                    PlatformGIS.syncInDisplayThread(new Runnable(){
+                    PlatformGIS.syncInDisplayThread( new Runnable(){
                         public void run() {
                             updateEditFeatureViews(msg);
                         }
@@ -432,12 +431,12 @@ public class FeatureEditorExtensionProcessor {
         }
 
         private void updateEditFeatureViews( Notification msg ) {
-            SimpleFeature newFeature = (SimpleFeature) msg.getNewValue();
+            Feature newFeature = (Feature) msg.getNewValue();
             for( IUDIGView view : views ) {
-                try {
+                try{
                     view.editFeatureChanged(newFeature);
-                } catch (Throwable e) {
-                    UiPlugin.log(view + " threw an exception", e); //$NON-NLS-1$
+                }catch (Throwable e) {
+                    UiPlugin.log(view+" threw an exception", e); //$NON-NLS-1$
                 }
             }
         }
@@ -450,7 +449,7 @@ public class FeatureEditorExtensionProcessor {
 
         /**
          * Construct <code>EditorDialog</code>.
-         * 
+         *
          * @param parentShell
          */
         protected EditorDialog( Shell parentShell, IUDIGDialogPage page ) {
@@ -474,7 +473,7 @@ public class FeatureEditorExtensionProcessor {
 
     /**
      * Indicates whether the listener has been added to the workbench
-     * 
+     *
      * @return
      */
     public boolean isRunning() {

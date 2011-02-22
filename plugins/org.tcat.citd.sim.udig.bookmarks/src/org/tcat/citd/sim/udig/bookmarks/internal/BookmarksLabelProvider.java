@@ -13,7 +13,7 @@ import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
  * Provide labels with images to the bookmarks view
  * <p>
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */

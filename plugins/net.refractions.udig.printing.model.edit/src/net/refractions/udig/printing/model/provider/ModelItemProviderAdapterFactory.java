@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: ModelItemProviderAdapterFactory.java 29060 2008-02-04 05:21:17Z jeichar $
  */
 package net.refractions.udig.printing.model.provider;
 
@@ -57,7 +57,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    protected Collection<Object> supportedTypes = new ArrayList<Object>();
+    protected Collection supportedTypes = new ArrayList();
 
     /**
      * This constructs an instance.
@@ -74,15 +74,34 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link net.refractions.udig.printing.model.Box} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected BoxItemProvider boxItemProvider;
+
+    /**
      * This creates an adapter for a {@link net.refractions.udig.printing.model.Box}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Adapter createBoxAdapter() {
-        return new BoxItemProvider(this);
+        if (boxItemProvider == null) {
+            boxItemProvider = new BoxItemProvider(this);
+        }
+
+        return boxItemProvider;
     }
+
+    /**
+     * This keeps track of the one adapter used for all {@link net.refractions.udig.printing.model.Connection} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ConnectionItemProvider connectionItemProvider;
 
     /**
      * This creates an adapter for a {@link net.refractions.udig.printing.model.Connection}.
@@ -90,10 +109,21 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Adapter createConnectionAdapter() {
-        return new ConnectionItemProvider(this);
+        if (connectionItemProvider == null) {
+            connectionItemProvider = new ConnectionItemProvider(this);
+        }
+
+        return connectionItemProvider;
     }
+
+    /**
+     * This keeps track of the one adapter used for all {@link net.refractions.udig.printing.model.Element} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ElementItemProvider elementItemProvider;
 
     /**
      * This creates an adapter for a {@link net.refractions.udig.printing.model.Element}.
@@ -101,10 +131,21 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Adapter createElementAdapter() {
-        return new ElementItemProvider(this);
+        if (elementItemProvider == null) {
+            elementItemProvider = new ElementItemProvider(this);
+        }
+
+        return elementItemProvider;
     }
+
+    /**
+     * This keeps track of the one adapter used for all {@link net.refractions.udig.printing.model.Page} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected PageItemProvider pageItemProvider;
 
     /**
      * This creates an adapter for a {@link net.refractions.udig.printing.model.Page}.
@@ -112,9 +153,12 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Adapter createPageAdapter() {
-        return new PageItemProvider(this);
+        if (pageItemProvider == null) {
+            pageItemProvider = new PageItemProvider(this);
+        }
+
+        return pageItemProvider;
     }
 
     /**
@@ -142,7 +186,6 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isFactoryForType(Object type) {
         return supportedTypes.contains(type) || super.isFactoryForType(type);
     }
@@ -153,7 +196,6 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Adapter adapt(Notifier notifier, Object type) {
         return super.adapt(notifier, this);
     }
@@ -163,11 +205,10 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Object adapt(Object object, Object type) {
         if (isFactoryForType(type)) {
             Object adapter = super.adapt(object, type);
-            if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
+            if (!(type instanceof Class) || (((Class)type).isInstance(adapter))) {
                 return adapter;
             }
         }

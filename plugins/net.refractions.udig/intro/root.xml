@@ -21,7 +21,7 @@
       </link>
 	</group>
   </page>
-  
+
   <!--  Hack to fix null pointer exception don't ask me why... Maybe the anchors? -->
   <page alt-style="css/standby_swt.properties" style="css/standby_root.css" id="standby" style-id="page">
         <title style-id="intro-header">Welcome to uDig</title>

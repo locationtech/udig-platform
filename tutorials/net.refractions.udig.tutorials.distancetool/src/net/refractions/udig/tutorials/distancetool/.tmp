@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.tutorials.distancetool;
 
@@ -31,7 +31,7 @@ public class DistanceTool extends AbstractModalTool implements ModalTool {
 	public void mousePressed(MapMouseEvent e) {
 		start=getContext().pixelToWorld(e.x, e.y);
 	}
-	
+
 	public void mouseReleased(MapMouseEvent e) {
 		Coordinate end=getContext().pixelToWorld(e.x, e.y);
 		try {
@@ -68,7 +68,7 @@ public class DistanceTool extends AbstractModalTool implements ModalTool {
 			public void run() {
 				statusBar.setMessage("Distance =  "+km+","+meters+"m "+finalcm+"cm");
 			}
-			
+
 		});
 	}
 }

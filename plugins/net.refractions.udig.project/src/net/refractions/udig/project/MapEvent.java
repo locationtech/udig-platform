@@ -15,9 +15,9 @@
 package net.refractions.udig.project;
 
 /**
- * An event that indicates a change to the map.  See the Enum for more information of the types of events taht 
- * are raised.  
- * 
+ * An event that indicates a change to the map.  See the Enum for more information of the types of events taht
+ * are raised.
+ *
  * @author Jesse
  * @see MapEventType
  * @since 1.1.0
@@ -38,11 +38,11 @@ public class MapEvent extends UDIGEvent {
          */
         ABSTRACT,
         /**
-         * Type indicating a NavCommand has been executed. 
+         * Type indicating a NavCommand has been executed.
          */
         NAV_COMMAND,
         /**
-         * Type indicating a MapCommand has been executed. 
+         * Type indicating a MapCommand has been executed.
          */
         MAP_COMMAND,
         /**
@@ -73,7 +73,7 @@ public class MapEvent extends UDIGEvent {
     private final MapEventType type;
     /**
      * Construct <code>EditManagerEvent</code>.
-     * 
+     *
      * @param source the object that raised the event.
      * @param type the type of event this object represents.
      * @param newValue the new value, if this applies.
@@ -86,13 +86,13 @@ public class MapEvent extends UDIGEvent {
 
     /**
      * Gets the type of the event.
-     * 
+     *
      * @return the type of the event.
      * @see MapEventType
      */
     public MapEventType getType() {
         return type;
-    }    
+    }
     @Override
     public String toString() {
         return getSource().getName()+" eventType="+type+" old="+oldValue+" new="+newValue;   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$

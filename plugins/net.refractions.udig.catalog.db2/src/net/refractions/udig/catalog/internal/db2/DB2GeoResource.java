@@ -19,7 +19,6 @@ package net.refractions.udig.catalog.internal.db2;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import net.refractions.udig.catalog.CatalogPlugin;
@@ -31,20 +30,21 @@ import net.refractions.udig.ui.graphics.Glyph;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.DataSourceException;
 import org.geotools.data.DataStore;
+import org.geotools.data.FeatureReader;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.feature.FeatureType;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.resources.CRSUtilities;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Resource handle for the DB2 Universal Database.
- * 
+ *
  * @author Justin Deoliveira,Refractions Research Inc.,jdeolive@refractions.net
  */
 public class DB2GeoResource extends IGeoResource {
@@ -55,8 +55,10 @@ public class DB2GeoResource extends IGeoResource {
     /** feature type (table) name * */
     String name;
 
+    /** info object * */
+    volatile DB2GeoResourceInfo info;
+
     DB2GeoResource( DB2Service parent, String name ) {
-        this.service = parent;
         this.parent = parent;
         this.name = name;
     }
@@ -79,19 +81,19 @@ public class DB2GeoResource extends IGeoResource {
             return null;
 
         if (adaptee.isAssignableFrom(IGeoResourceInfo.class))
-            return adaptee.cast(createInfo(monitor));
+            return adaptee.cast(getInfo(monitor));
 
         if (adaptee.isAssignableFrom(FeatureSource.class)) {
             DataStore ds = parent.getDataStore(monitor);
             if (ds != null) {
-                FeatureSource<SimpleFeatureType, SimpleFeature> fs = ds.getFeatureSource(name);
+                FeatureSource fs = ds.getFeatureSource(name);
                 if (fs != null)
                     return adaptee.cast(fs);
             }
         }
 
         if (adaptee.isAssignableFrom(FeatureStore.class)) {
-            FeatureSource<SimpleFeatureType, SimpleFeature> fs = resolve(FeatureSource.class, monitor);
+            FeatureSource fs = resolve(FeatureSource.class, monitor);
             if (fs != null && fs instanceof FeatureStore) {
                 return adaptee.cast(fs);
             }
@@ -102,6 +104,9 @@ public class DB2GeoResource extends IGeoResource {
         }
 
         return super.resolve(adaptee, monitor);
+    }
+    public IService service( IProgressMonitor monitor ) throws IOException {
+        return parent;
     }
     public Status getStatus() {
         return parent.getStatus();
@@ -124,22 +129,22 @@ public class DB2GeoResource extends IGeoResource {
     }
 
     @Override
-    public DB2GeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
-        return (DB2GeoResourceInfo) super.getInfo(monitor);
-    }
-    @Override
-	protected DB2GeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        try {
-            parent.rLock.lock();
-            return  new DB2GeoResourceInfo(monitor, name);
-        } finally {
+    public IGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
+        parent.rLock.lock();
+        try{
+            if (info == null) {
+                info = new DB2GeoResourceInfo(monitor, name);
+            }
+        }finally{
             parent.rLock.unlock();
         }
+
+        return info;
     }
 
     class DB2GeoResourceInfo extends IGeoResourceInfo {
 
-        private SimpleFeatureType ft = null;
+        private FeatureType ft = null;
 
         DB2GeoResourceInfo( IProgressMonitor monitor, String nameArg ) throws IOException {
             DataStore ds = parent.getDataStore(monitor);
@@ -153,16 +158,18 @@ public class DB2GeoResource extends IGeoResource {
             }
 
             try {
-                FeatureSource<SimpleFeatureType, SimpleFeature> fs = resolve(FeatureSource.class, null);
+                FeatureSource fs = resolve(FeatureSource.class, null);
                 if (fs != null) {
                     bounds = (ReferencedEnvelope) fs.getBounds();
                 }
 
                 if (bounds == null) {
-                    CoordinateReferenceSystem crs = fs.getSchema().getCoordinateReferenceSystem();
+                    CoordinateReferenceSystem crs = fs.getSchema().getDefaultGeometry()
+                            .getCoordinateSystem();
 
                     // try getting an envelope out of the crs
-                    org.opengis.geometry.Envelope envelope = CRS.getEnvelope(crs);
+                    org.opengis.spatialschema.geometry.Envelope envelope = CRSUtilities
+                            .getEnvelope(crs);
 
                     if (envelope != null) {
                         bounds = new ReferencedEnvelope(new Envelope(envelope.getLowerCorner()
@@ -174,15 +181,15 @@ public class DB2GeoResource extends IGeoResource {
                         // wether to do a full table scan
                         // bounds = new ReferencedEnvelope(new Envelope(),crs);
                         // as a last resort do the full scan
-                    	FeatureIterator<SimpleFeature> r = fs.getFeatures().features();
+                        FeatureIterator r = fs.getFeatures().features();
                         try{
-                        SimpleFeature f = r.next();
+                        Feature f = r.next();
 
                         bounds = new ReferencedEnvelope(new Envelope(), crs);
                         bounds.init(f.getBounds());
                         for( ; r.hasNext(); ) {
                             f = r.next();
-                            bounds.include(f.getBounds());
+                            bounds.expandToInclude(f.getBounds());
                         }
                         }finally{
                             r.close();
@@ -195,28 +202,24 @@ public class DB2GeoResource extends IGeoResource {
 
             icon=Glyph.icon(ft);
             keywords = new String[]{"db2", //$NON-NLS-1$
-                    ft.getName().getLocalPart(), ft.getName().getNamespaceURI()};
+                    ft.getTypeName(), ft.getNamespace().toString()};
         }
 
         public CoordinateReferenceSystem getCRS() {
-            return ft.getCoordinateReferenceSystem();
+            return ft.getDefaultGeometry().getCoordinateSystem();
         }
 
         @SuppressWarnings("unqualified-field-access")
         public String getName() {
-            return ft.getName().getLocalPart();
+            return ft.getTypeName();
         }
 
         public URI getSchema() {
-            try {
-				return new URI( ft.getName().getNamespaceURI());
-			} catch (URISyntaxException e) {
-				return null;
-			}
+            return ft.getNamespace();
         }
 
         public String getTitle() {
-            return ft.getName().getLocalPart();
+            return ft.getTypeName();
         }
     }
 }

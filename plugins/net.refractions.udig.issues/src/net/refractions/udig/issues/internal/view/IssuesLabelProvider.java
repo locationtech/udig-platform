@@ -17,8 +17,8 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * Provides images for each of the resolution and priority types.
- * If the object is a String then the string is displayed in the Problem Object column. 
- * 
+ * If the object is a String then the string is displayed in the Problem Object column.
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -85,7 +85,7 @@ public class IssuesLabelProvider extends LabelProvider implements
 				return groupId;
 			default:
 				break;
-			}			
+			}
 		}
 		return null;
 	}
@@ -116,9 +116,9 @@ public class IssuesLabelProvider extends LabelProvider implements
     public String getHeaderText( Column column ) {
         switch( column ) {
         case DESCRIPTION:
-            return Messages.IssuesView_desc_title; 
+            return Messages.IssuesView_desc_title;
         case PROBLEM_OBJECT:
-            return Messages.IssuesView_name_title; 
+            return Messages.IssuesView_name_title;
         default:
         }
         return ""; //$NON-NLS-1$

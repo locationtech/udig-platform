@@ -8,11 +8,7 @@
  */
 package net.refractions.udig.project.memento;
 
-import static net.refractions.udig.project.memento.Tokens.__null__;
-import static net.refractions.udig.project.memento.Tokens._children_;
-import static net.refractions.udig.project.memento.Tokens._data_;
-import static net.refractions.udig.project.memento.Tokens._memento_;
-import static net.refractions.udig.project.memento.Tokens._text_;
+import static net.refractions.udig.project.memento.Tokens.*;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -33,18 +29,16 @@ import org.eclipse.ui.IMemento;
 
 /**
  * Memento that uses a JSon like format to persist the data
- * 
+ *
  * @author jesse
  */
 public class UdigMemento implements IMemento {
     private final Map<String, List<IMemento>> m_children = new HashMap<String, List<IMemento>>();
     private Map<String, String> m_data = new HashMap<String, String>();
     private String m_text;
-    private String m_type;
 
     public UdigMemento createChild( String type ) {
         UdigMemento child = new UdigMemento();
-        child.m_type=type;
         List<IMemento> list = getTypeList(type);
         list.add(child);
         return child;
@@ -131,9 +125,9 @@ public class UdigMemento implements IMemento {
 
     public void putMemento( IMemento memento ) {
         if( !(memento instanceof UdigMemento) ){
-            throw new IllegalArgumentException(memento.getClass()+" cannot be put into a UdigMemento"); //$NON-NLS-1$
+            throw new IllegalArgumentException(memento.getClass()+" cannot be put into a UdigMemento");
         }
-        
+
         UdigMemento other = (UdigMemento) memento;
         m_children.putAll(other.m_children);
         m_data.putAll(other.m_data);
@@ -149,7 +143,7 @@ public class UdigMemento implements IMemento {
 
     public void write( OutputStream outputStream, int indent ) {
         PrintStream out = new PrintStream(outputStream);
-        println(out, indent, _memento_ +"{"); //$NON-NLS-1$
+        println(out, indent, _memento_ +"{");
 
         if( m_text!=null){
             writeText(indent+1,out);
@@ -160,29 +154,29 @@ public class UdigMemento implements IMemento {
         if( m_children.size()>0){
             writeChildren(indent+1, out);
         }
-        
-        println(out, indent, "}"); //$NON-NLS-1$
+
+        println(out, indent, "}");
     }
 
     private void writeText( int indent, PrintStream out ) {
-        println(out,indent,_text_+"{"); //$NON-NLS-1$
+        println(out,indent,_text_+"{");
         println(out,0,m_text);
-        println(out,indent,"}"); //$NON-NLS-1$
+        println(out,indent,"}");
     }
 
     private void writeData( int indent, PrintStream out ) {
-        println(out, indent, _data_ +"{"); //$NON-NLS-1$
+        println(out, indent, _data_ +"{");
 
         Set<Entry<String, String>> dataItems = m_data.entrySet();
         for( Entry<String, String> entry : dataItems ) {
             final String value = toNullToken(entry.getValue());
             final String key = toNullToken(entry.getKey());
-            println(out, indent + 1, "|"+key + "|{"); //$NON-NLS-1$ //$NON-NLS-2$
+            println(out, indent + 1, "|"+key + "|{");
             println(out,0,value);
-            println(out,indent+1,"}"); //$NON-NLS-1$
+            println(out,indent+1,"}");
         }
 
-        println(out, indent, "}"); //$NON-NLS-1$
+        println(out, indent, "}");
     }
 
     private String toNullToken( String value ) {
@@ -193,12 +187,12 @@ public class UdigMemento implements IMemento {
     }
 
     private void writeChildren( int indent, PrintStream out ) {
-        println(out, indent, _children_+"{"); //$NON-NLS-1$
+        println(out, indent, _children_+"{");
 
         Set<Entry<String, List<IMemento>>> childEntries = m_children.entrySet();
         for( Entry<String, List<IMemento>> entry2 : childEntries ) {
             String typeName = toNullToken(entry2.getKey());
-            println(out, indent + 1, typeName + "{"); //$NON-NLS-1$
+            println(out, indent + 1, typeName + "{");
 
             boolean isFirst = true;
             List<IMemento> mementos = entry2.getValue();
@@ -206,14 +200,14 @@ public class UdigMemento implements IMemento {
                 if (isFirst) {
                     isFirst = false;
                 } else {
-                    println(out, indent + 2, ","); //$NON-NLS-1$
+                    println(out, indent + 2, ",");
                 }
                 ((UdigMemento) memento).write(out, indent + 2);
             }
-            println(out, indent+1, "}"); //$NON-NLS-1$
+            println(out, indent+1, "}");
         }
 
-        println(out, indent, "}"); //$NON-NLS-1$
+        println(out, indent, "}");
     }
 
     private void println( PrintStream out, int indent, String string ) {
@@ -223,7 +217,7 @@ public class UdigMemento implements IMemento {
 
     private void indent( PrintStream out, int indent ) {
         for( int i = 0; i < indent; i++ ) {
-            out.print("  "); //$NON-NLS-1$
+            out.print("  ");
         }
     }
 
@@ -243,7 +237,7 @@ public class UdigMemento implements IMemento {
         write(out,0);
         return new String(out.toByteArray());
     }
-    
+
     /**
      * Reads the string obtained from toString and populates this memento.
      */
@@ -252,28 +246,5 @@ public class UdigMemento implements IMemento {
         return read(in);
     }
 
-    public String[] getAttributeKeys() {
-        return m_data.keySet().toArray(new String[0]);
-    }
-
-    public Boolean getBoolean( String key ) {
-        if( m_data.containsKey(key)){
-            try {
-                return Boolean.parseBoolean(m_data.get(key));
-            } catch (NumberFormatException e) {
-                return null;
-            }
-        }
-        return null;
-    }
-
-    public String getType() {
-        return m_type;
-    }
-
-    public void putBoolean( String key, boolean value ) {
-        m_data.put(key, String.valueOf(value));
-    }
-    
 
 }

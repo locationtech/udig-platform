@@ -18,15 +18,15 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 import org.eclipse.swt.SWT;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 /**
- * Sorts features according to their FIDS.  
- * 
+ * Sorts features according to their FIDS.
+ *
  * @author Jesse
  * @since 1.1.0
  */
-public class FIDComparator implements Comparator<SimpleFeature>, Serializable {
+public class FIDComparator implements Comparator<Feature>, Serializable {
 
     /** long serialVersionUID field */
     private static final long serialVersionUID = 6541004741916267811L;
@@ -43,12 +43,12 @@ public class FIDComparator implements Comparator<SimpleFeature>, Serializable {
         }else
             throw new IllegalArgumentException("dir must be SWT.UP or SWT.DOWN was: "+dir); //$NON-NLS-1$
     }
-    
-    public int compare( SimpleFeature o1, SimpleFeature o2 ) {
-        
+
+    public int compare( Feature o1, Feature o2 ) {
+
         String id1 = o1.getID();
         String id2 = o2.getID();
-        
+
         // we're going to try to strip out the same section and see if the remaining is a number
         // this is so that id.2 will be sorted before id.10
         // assumption is that the number is at the end... not always a good assumption.
@@ -58,7 +58,7 @@ public class FIDComparator implements Comparator<SimpleFeature>, Serializable {
         }
         String diff1 = id1.substring(i-1);
         String diff2 = id2.substring(i-1);
-        
+
         try{
             Integer num1=Integer.valueOf(diff1);
             Integer num2=Integer.valueOf(diff2);
@@ -91,5 +91,5 @@ public class FIDComparator implements Comparator<SimpleFeature>, Serializable {
         return true;
     }
 
-    
+
 }

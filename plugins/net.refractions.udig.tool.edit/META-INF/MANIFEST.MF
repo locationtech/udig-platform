@@ -2,17 +2,16 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.tools.edit; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.tools.edit.EditPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- net.refractions.udig.project.ui,
- net.refractions.udig.ui,
+ net.refractions.udig.project.ui;visibility:=reexport,
  net.refractions.udig.mapgraphic,
  net.refractions.udig.style
-Bundle-ActivationPolicy: lazy
+Eclipse-LazyStart: true
 Export-Package: net.refractions.udig.tool.edit,
  net.refractions.udig.tool.edit.internal,
  net.refractions.udig.tools.edit,
@@ -28,4 +27,3 @@ Export-Package: net.refractions.udig.tool.edit,
  net.refractions.udig.tools.edit.preferences,
  net.refractions.udig.tools.edit.support,
  net.refractions.udig.tools.edit.validator
-Bundle-RequiredExecutionEnvironment: J2SE-1.5

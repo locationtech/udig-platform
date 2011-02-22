@@ -1,0 +1,114 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : net.refractions.udig.render.features</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : net.refractions.udig.render.features -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+
+<p>The raster pipeline takes a feature Collection and renders them to a Graphics2D object.</p>
+
+<h5><a name="net.refractions.udig.render.features-FunctionalRequirements">Functional Requirements</a></h5>
+<ul>
+	<li>Renders geometries from a feature store</li>
+	<li>Maintains a caches to improve rendering performance</li>
+	<li>Transform between the following coordinate systems when needed
+	<ul>
+		<li>LayerCS
+		<ul>
+			<li>The Coordinate System that the features are in when they reach the feature renderer</li>
+		</ul>
+		</li>
+		<li>mapCS
+		<ul>
+			<li>The Coordinate System that the user will see on the screen</li>
+		</ul>
+		</li>
+		<li>textCS
+		<ul>
+			<li>The Java2D coordinate system.</li>
+		</ul>
+		</li>
+		<li>DeviceCS
+		<ul>
+			<li>The device coordinate system. Each "unit" is a pixel of device-dependent size.</li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+	<li>Styles features with SLD styling</li>
+	<li>Renders non-selected features onto on Graphics2D</li>
+	<li>Selected Features:
+	<ul>
+		<li>Renders selected features to a Graphics2D (not the same Graphics2D as selected features)</li>
+		<li>Styles selected Features based on SLD</li>
+	</ul>
+	</li>
+</ul>
+
+
+<h5><a name="net.refractions.udig.render.features-NonfunctionalRequirements%3A">Non-functional Requirements:</a></h5>
+<ul>
+	<li>Render features set in 3-5 seconds</li>
+	<li>Must be able to render customized styles.</li>
+	<li>Multiple rendering options:
+	<ul>
+		<li>Render all features associated with a query</li>
+		<li>render a selection</li>
+		<li>Rendering status can be on/off Feature Renderer Pipeline</li>
+	</ul>
+	</li>
+</ul>
+
+
+<h5><a name="net.refractions.udig.render.features-DesignNotes%3A">Design Notes:</a></h5>
+<ul>
+	<li>Inputs:
+	<ul>
+		<li>FeatureStore</li>
+		<li>Query</li>
+		<li>Selection Filters</li>
+		<li>Style</li>
+		<li>view area</li>
+	</ul>
+	</li>
+	<li>Outputs:
+	<ul>
+		<li>ImageBuffer with rendered features</li>
+		<li>ImageBuffer with selected features</li>
+	</ul>
+	</li>
+	<li>Listens to <a href="net.refractions.udig.project.context.html" title="net.refractions.udig.project.context">DEV:net.refractions.udig.project.context</a> for Bbox and SRS events</li>
+	<li>Listens to DataStore for feature change events</li>
+	<li>Listens to <a href="net.refractions.udig.project.selection.html" title="net.refractions.udig.project.selection">DEV:net.refractions.udig.project.selection</a> for selection events</li>
+</ul>
+
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=261">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=261">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

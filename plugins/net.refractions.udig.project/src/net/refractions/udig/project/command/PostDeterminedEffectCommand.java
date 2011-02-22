@@ -17,10 +17,10 @@ package net.refractions.udig.project.command;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * This is a special type of command that may or may not affect global state.  Whether is does or not is 
+ * This is a special type of command that may or may not affect global state.  Whether is does or not is
  * not known until after the command has been ran.  If the {@link #execute(IProgressMonitor)} method returns true
  * the command will be put on Undo stack otherwise it won't be because it does not need to be undone.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */

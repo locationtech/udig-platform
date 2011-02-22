@@ -50,5 +50,5 @@ public abstract class AbstractServiceTest extends AbstractResolveTest {
         if (!isLeaf())
             assertTrue("May not have null info", info != null); //$NON-NLS-1$
     }
-    
+
 }

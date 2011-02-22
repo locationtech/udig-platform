@@ -25,7 +25,7 @@ import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * Factory that creates actions for MapEditPolicies and LabelDirectEditPolicies.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -35,11 +35,11 @@ public class StandardEditActionFactory implements EditActionFactory {
         if (policy instanceof LabelDirectEditPolicy) {
             return new DirectEditAction(part);
         }
-        
+
         if (policy instanceof MapEditPolicy ) {
             return new EditMapAction(part);
         }
-        
+
         return null;
     }
 

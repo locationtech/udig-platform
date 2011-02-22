@@ -1,18 +1,10 @@
 /*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
- *
- *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation;
- *    version 2.1 of the License.
- *
- *    This library is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *    Lesser General Public License for more details.
- *
+ * uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004,
+ * Refractions Research Inc. This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the Free Software
+ * Foundation; version 2.1 of the License. This library is distributed in the hope that it will be
+ * useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 package net.refractions.udig.style.sld.internal;
 
@@ -40,7 +32,7 @@ import org.geotools.styling.StyleBuilder;
 
 /**
  * Simple view part for editing a Marker.
- * 
+ *
  * @author aalam
  * @since 1.0.0
  */
@@ -62,7 +54,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.style.sld.SLDEditorPart#getContentType()
      */
     public Class getContentType() {
@@ -71,7 +63,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.style.sld.SLDEditorPart#init()
      */
     public void init() {
@@ -80,7 +72,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.style.sld.SLDEditorPart#reset()
      */
     public void reset() {
@@ -153,7 +145,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.style.StyleConfigurator#apply()
      */
     private void apply() {
@@ -196,7 +188,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
      * Creates a composite with a grid layout of the specifed columns, and a label with text from
      * tag.
      * </p>
-     * 
+     *
      * @param parent
      * @param tag
      * @param numColumns number of columns (usually 2_
@@ -227,7 +219,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
 
     /**
      * Create a row layout, with individual rows provided by sub part.
-     * 
+     *
      * @see net.refractions.udig.style.StyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
      */
     protected Control createPartControl( Composite parent ) {
@@ -261,7 +253,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         markerWidth.setMaximum(30);
         markerWidth.setPageIncrement(5);
         markerWidth.addSelectionListener(this);
-        markerWidth.setToolTipText(Messages.SLDMarkerEditorPart_width_tooltip); 
+        markerWidth.setToolTipText(Messages.SLDMarkerEditorPart_width_tooltip);
     }
 
     private void borderPart( Composite parent ) {
@@ -269,7 +261,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
 
         borderEnabled = new Button(border, SWT.CHECK);
         borderEnabled.addSelectionListener(this);
-        borderEnabled.setToolTipText(Messages.SLDMarkerEditorPart_border_enabled_tooltip); 
+        borderEnabled.setToolTipText(Messages.SLDMarkerEditorPart_border_enabled_tooltip);
 
         borderColour = new StolenColorEditor(border, this);
 
@@ -278,19 +270,19 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         borderWidth.setMaximum(30);
         borderWidth.setPageIncrement(5);
         borderWidth.addSelectionListener(this);
-        borderWidth.setToolTipText(Messages.SLDMarkerEditorPart_border_width_tooltip); 
+        borderWidth.setToolTipText(Messages.SLDMarkerEditorPart_border_width_tooltip);
 
         borderOpacity = new Spinner(border, SWT.NONE);
         borderOpacity.setMinimum(0);
         borderOpacity.setMaximum(opacityMaxValue);
         borderOpacity.setPageIncrement(10);
-        borderOpacity.setToolTipText(Messages.SLDMarkerEditorPart_border_opacity_tooltip); 
+        borderOpacity.setToolTipText(Messages.SLDMarkerEditorPart_border_opacity_tooltip);
     }
     private void fillPart( Composite parent ) {
         Composite fill = subpart(parent, Messages.SLDMarkerEditorPart_label_fill , 3);
         markerEnabled = new Button(fill, SWT.CHECK);
         markerEnabled.addSelectionListener(this);
-        markerEnabled.setToolTipText(Messages.SLDMarkerEditorPart_marker_enabled_tooltip); 
+        markerEnabled.setToolTipText(Messages.SLDMarkerEditorPart_marker_enabled_tooltip);
 
         markerColour = new StolenColorEditor(fill, this);
 
@@ -298,12 +290,12 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         markerOpacity.setMinimum(0);
         markerOpacity.setMaximum(opacityMaxValue);
         markerOpacity.setPageIncrement(10);
-        markerOpacity.setToolTipText(Messages.SLDMarkerEditorPart_fill_opacity_tooltip); 
+        markerOpacity.setToolTipText(Messages.SLDMarkerEditorPart_fill_opacity_tooltip);
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
      */
     public void widgetDefaultSelected( SelectionEvent e ) {
@@ -313,7 +305,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
      */
     public void widgetSelected( SelectionEvent e ) {

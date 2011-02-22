@@ -26,10 +26,9 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
 
 import com.vividsolutions.jts.geom.Geometry;
 
@@ -55,37 +54,37 @@ implements ITableLabelProvider, IColorProvider {
     /**
      *
      * Returns the value of the column / feature attribute.
-     * 
+     *
      * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang.Object, int)
      * @param element the array of feature attributes.
      * @param columnIndex the column index / feature attribute.
      * @return the string representation of the feature attribute, except
-     * for attributes of type Geometry in which a string representing the 
+     * for attributes of type Geometry in which a string representing the
      * type of Geometry is returned.
      */
     public String getColumnText( Object element, int columnIndex ) {
     	if (element instanceof FeatureCollection) {
-            FeatureCollection<SimpleFeatureType, SimpleFeature> fc = (FeatureCollection<SimpleFeatureType, SimpleFeature>) element;
+            FeatureCollection fc = (FeatureCollection) element;
             if (columnIndex == 0) {
-                return fc.getSchema().getName().getLocalPart();
+                return fc.getSchema().getTypeName();
             }
             return ""; //$NON-NLS-1$
-        } else if (element instanceof SimpleFeature) {
-            SimpleFeature f = (SimpleFeature) element;            
+        } else if (element instanceof Feature) {
+            Feature f = (Feature) element;
             if (columnIndex == 0) return f.getID();
             if( owningFeatureTableControl.features==null )
                 return ""; //$NON-NLS-1$
             String attName = owningFeatureTableControl.getViewer().getTable().getColumn(columnIndex).getText();
-            AttributeDescriptor at = f.getFeatureType().getDescriptor(attName);
-            if (Geometry.class.isAssignableFrom(at.getType().getBinding())) { //was at.isGeometry()
+            AttributeType at = f.getFeatureType().getAttributeType(attName);
+            if (Geometry.class.isAssignableFrom(at.getType())) { //was at.isGeometry()
                 Object att = f.getAttribute(attName);
                 if( att==null )
                     return ""; //$NON-NLS-1$
-                String s = 
+                String s =
                     att.getClass().getName();
                 return s.substring(s.lastIndexOf('.')+1);
             }
-        
+
             Object attribute = f.getAttribute(attName);
             return attribute == null ? "" : attribute.toString(); //$NON-NLS-1$
         }else if( element instanceof Throwable  ){
@@ -96,7 +95,7 @@ implements ITableLabelProvider, IColorProvider {
         }else if( element instanceof String ){
             return (String) element;
         }else
-        	return Messages.FeatureTableControl_loadingMessage; 
+        	return Messages.FeatureTableControl_loadingMessage;
     }
 
     public Color getBackground( Object element ) {
@@ -106,8 +105,8 @@ implements ITableLabelProvider, IColorProvider {
         if(  element instanceof Throwable ){
             return currentDisplay.getSystemColor(SWT.COLOR_RED);
         }
-        if( element instanceof SimpleFeature ){
-            SimpleFeature feature=(SimpleFeature) element;
+        if( element instanceof Feature ){
+            Feature feature=(Feature) element;
             if( owningFeatureTableControl.getSelectionProvider().getSelectionFids().contains(feature.getID()) ){
                 return getSelectionColor(currentDisplay);
             }
@@ -128,7 +127,7 @@ implements ITableLabelProvider, IColorProvider {
             return currentColor;
         }
     }
-    
+
     @Override
     public void dispose() {
         super.dispose();
@@ -142,8 +141,8 @@ implements ITableLabelProvider, IColorProvider {
         if(  element instanceof Throwable ){
             return currentDisplay.getSystemColor(SWT.COLOR_WHITE);
         }
-        if( element instanceof SimpleFeature ){
-            SimpleFeature feature=(SimpleFeature) element;
+        if( element instanceof Feature ){
+            Feature feature=(Feature) element;
             if( owningFeatureTableControl.getSelectionProvider().getSelectionFids().contains(feature.getID()) ){
                 if( darkBackground() ){
                     return currentDisplay.getSystemColor(SWT.COLOR_WHITE);

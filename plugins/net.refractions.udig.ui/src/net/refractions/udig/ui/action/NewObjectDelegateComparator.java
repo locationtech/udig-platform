@@ -7,7 +7,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 
 /**
  * Used to hack the contributions into an expected order.
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */

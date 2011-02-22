@@ -20,8 +20,6 @@ package net.refractions.udig.render.internal.gridcoverage.basic;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -30,7 +28,7 @@ import org.osgi.framework.BundleContext;
  * @since 0.6.0
  */
 public class RendererPlugin extends Plugin {
-    public static final String ID = "net.refractions.udig.render.gridcoverage.basic"; //$NON-NLS-1$
+
     private static RendererPlugin plugin;
 
     /**
@@ -45,38 +43,15 @@ public class RendererPlugin extends Plugin {
     public static Plugin getDefault(){
         return plugin;
     }
-    
+
     public static void log(Exception e){
-        getDefault().getLog().log(new Status(IStatus.ERROR, ID, 
+        getDefault().getLog().log(new Status(IStatus.ERROR, "net.refractions.udig.render.gridcoverage.basic", //$NON-NLS-1$
                 0, e.getLocalizedMessage(), e));
     }
-    
-    /**
-     * Writes an info log in the plugin's log.
-     * <p>
-     * This should be used for user level messages.
-     * </p>
-     */
-    public static void log( String message, Throwable e) {
-        getDefault().getLog().log(new Status(IStatus.INFO, ID, 0, message, e));
-    }
-    
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 	}
 	public void stop(BundleContext context) throws Exception {
 		super.stop(context);
 	}
-	
-	/**
-     * Returns an image descriptor for the image file at the given
-     * plug-in relative path.
-     *
-     * @param path the path
-     * @return the image descriptor
-     */
-    public static ImageDescriptor getImageDescriptor(String path) {
-        return AbstractUIPlugin.imageDescriptorFromPlugin("net.refractions.udig.render.gridcoverage.basic", path); //$NON-NLS-1$
-    }
-    
 }

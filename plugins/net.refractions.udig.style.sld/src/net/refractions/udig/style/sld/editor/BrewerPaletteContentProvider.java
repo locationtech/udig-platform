@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.style.sld.editor;
 
@@ -7,13 +7,12 @@ import java.util.ArrayList;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.geotools.brewer.color.BrewerPalette;
 import org.geotools.brewer.color.ColorBrewer;
 
 final class BrewerPaletteContentProvider implements
 		IStructuredContentProvider {
 	/**
-	 * 
+	 *
 	 */
 	private final StyleThemePage styleThemePage;
 
@@ -24,19 +23,17 @@ final class BrewerPaletteContentProvider implements
 		this.styleThemePage = styleThemePage;
 	}
 
-	@SuppressWarnings("unchecked")
-    public Object[] getElements(Object inputElement) {
+	public Object[] getElements(Object inputElement) {
 	  if (inputElement instanceof ArrayList) {
-	      ArrayList<Object> list = (ArrayList<Object>) inputElement;
+	      ArrayList list = (ArrayList) inputElement;
 	      return list.toArray();
-	  } else 
+	  } else
 	    if (inputElement instanceof ColorBrewer) {
 	        ColorBrewer brewer = (ColorBrewer) inputElement;
 	        int selection = this.styleThemePage.getCombo(StyleThemePage.COMBO_PALETTES).getSelectionIndex();
-	        if (selection == 0) {
-                BrewerPalette[] palettes = brewer.getPalettes(ColorBrewer.ALL);
-                return palettes;
-            } else if (selection == 1) //Numerical
+	        if (selection == 0) //All
+	            return brewer.getPalettes(ColorBrewer.ALL);
+	        else if (selection == 1) //Numerical
 	            return brewer.getPalettes(ColorBrewer.SUITABLE_RANGED);
 	        else if (selection == 2) //Sequential
 	            return brewer.getPalettes(ColorBrewer.SEQUENTIAL);

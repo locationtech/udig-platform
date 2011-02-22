@@ -28,11 +28,11 @@ import net.refractions.udig.tools.edit.support.EditUtils;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.opengis.filter.Filter;
+import org.geotools.filter.Filter;
 
 /**
  * Clears the edit Blackboards and the current edit shape and state.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -58,8 +58,8 @@ public class DefaultCancelEditingCommand extends AbstractCommand implements Undo
         handler.setCurrentShape(null);
         handler.setCurrentState(EditState.NONE);
 
-        oldFilter = (Filter) editLayer.getFilter();
-        editLayer.setFilter(Filter.EXCLUDE);
+        oldFilter = editLayer.getFilter();
+        editLayer.setFilter(Filter.ALL);
 
         EditUtils.instance.cancelHideSelection(editLayer);
 
@@ -78,7 +78,7 @@ public class DefaultCancelEditingCommand extends AbstractCommand implements Undo
     public void rollback( IProgressMonitor monitor ) throws Exception {
         Layer editLayer = (Layer) handler.getEditLayer();
         editLayer.setFilter(oldFilter);
-        
+
         EditBlackboard editBlackboard = handler.getEditBlackboard(editLayer);
         editBlackboard.startBatchingEvents();
         for( EditGeom geom : geoms ) {
@@ -91,7 +91,7 @@ public class DefaultCancelEditingCommand extends AbstractCommand implements Undo
 
     /**
      * Copies the geometry back onto the editblackboard.
-     * 
+     *
      * @return
      */
     private void copyFeature( EditBlackboard editBlackboard, EditGeom geom ) {

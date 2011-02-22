@@ -18,30 +18,20 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IResourceInterceptor;
 
 import org.geotools.data.FeatureSource;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
- * Each Layer is able to listen for feature events; this interceptor hooks them up.
- * <p>
- * This is not really an scalable solution; and should be replaced with an extension point that
- * allows layers to listen to content changing in a generic way.
- * 
+ * This is a temporary hack and will be removed soon
  * @author Jesse
  * @since 1.1.0
  */
-public class ListenerAddingInterceptor
-        implements
-            IResourceInterceptor<FeatureSource<SimpleFeatureType, SimpleFeature>> {
+public class ListenerAddingInterceptor implements IResourceInterceptor<FeatureSource> {
 
-    public FeatureSource<SimpleFeatureType, SimpleFeature> run( ILayer layer,
-            FeatureSource<SimpleFeatureType, SimpleFeature> resource,
-            Class< ? super FeatureSource<SimpleFeatureType, SimpleFeature>> requestedType ) {
-        if (layer instanceof LayerImpl) {
-            LayerImpl layerInternal = (LayerImpl) layer;
-            resource.addFeatureListener( layerInternal.featureListener);
-        }
+
+    public FeatureSource run( ILayer layer,FeatureSource resource, Class<? super FeatureSource> requestedType ) {
+        if( layer instanceof LayerImpl)
+            resource.addFeatureListener(((LayerImpl)layer).featureListener );
         return resource;
     }
 
 }
+

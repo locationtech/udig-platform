@@ -1,153 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 <toc label="uDig Aide En-ligne">
-            
+
         <topic label="Home" href="FR/Home.html">
-        
-        <!-- HOME -->                     
+
+        <!-- HOME -->
         <topic label="Comment commencer" href="FR/Comment commencer.html">
-        
-                            
+
+
         <topic label="Démarrage rapide" href="FR/12057.html">
-        
+
                 </topic>
         </topic>
-                    
+
         <topic label="Concepts" href="FR/Concepts.html">
-        
-                            
+
+
         <topic label="Le Workbench" href="FR/Le Workbench.html">
-        
+
                 </topic>
-                    
+
         <topic label="Les éditeurs et les vues" href="FR/3632.html">
-        
-                            
+
+
         <topic label="Editors" href="FR/Editors.html">
-        
+
                 </topic>
-                    
+
         <topic label="Les vues" href="FR/Les vues.html">
-        
+
                 </topic>
         </topic>
         </topic>
-                    
+
         <topic label="Reference" href="FR/Reference.html">
-        
-                            
+
+
         <topic label="Les curseurs d'emplacement" href="FR/Les curseurs d'emplacement.html">
-        
+
                 </topic>
         </topic>
-                    
+
         <topic label="Tâches" href="FR/3810.html">
-        
-                            
+
+
         <topic label="Accès à l'aide contextuelle" href="FR/3906.html">
-        
+
                 </topic>
-                    
+
         <topic label="Agrandir" href="FR/Agrandir.html">
-        
+
                 </topic>
-                    
+
         <topic label="Changer le style des couches" href="FR/Changer le style des couches.html">
-        
+
                 </topic>
-                    
+
         <topic label="Creating fast views" href="FR/Creating fast views.html">
-        
+
                 </topic>
-                    
+
         <topic label="Creer un nouveau projet" href="FR/Creer un nouveau projet.html">
-        
+
                 </topic>
-                    
+
         <topic label="Creer une nouvelle carte" href="FR/Creer une nouvelle carte.html">
-        
+
                 </topic>
-                    
+
         <topic label="Importing" href="FR/Importing.html">
-        
-                            
+
+
         <topic label="Import Wizard" href="FR/Import Wizard.html">
-        
+
                 </topic>
         </topic>
-                    
+
         <topic label="Imprimer la carte courante" href="FR/Imprimer la carte courante.html">
-        
+
                 </topic>
-                    
+
         <topic label="Les vues rapides" href="FR/Les vues rapides.html">
-        
+
                 </topic>
-                    
+
         <topic label="Naviguer les ressources" href="FR/Naviguer les ressources.html">
-        
+
                 </topic>
-                    
+
         <topic label="Quitter le Workbench" href="FR/Quitter le Workbench.html">
-        
+
                 </topic>
-                    
+
         <topic label="Rearranging views" href="FR/Rearranging views.html">
-        
+
                 </topic>
-                    
+
         <topic label="Rearranging views and editors" href="FR/Rearranging views and editors.html">
-        
+
                 </topic>
-                    
+
         <topic label="Restructurer les vues en languettes" href="FR/Restructurer les vues en languettes.html">
-        
+
                 </topic>
-                    
+
         <topic label="Tiling editors" href="FR/Tiling editors.html">
-        
+
                 </topic>
-                    
+
         <topic label="Tools" href="FR/Tools.html">
-        
-                            
+
+
         <topic label="Edit" href="FR/Edit.html">
-        
+
                 </topic>
-                    
+
         <topic label="Pan" href="FR/Pan.html">
-        
+
                 </topic>
-                    
+
         <topic label="Zoom" href="FR/Zoom.html">
-        
+
                 </topic>
         </topic>
-                    
+
         <topic label="Un éditeur de clôture" href="FR/3636.html">
-        
+
                 </topic>
-                    
+
         <topic label="Using the File menu" href="FR/Using the File menu.html">
-        
+
                 </topic>
-                    
+
         <topic label="Utiliser le bouton Nouveau" href="FR/Utiliser le bouton Nouveau.html">
-        
+
                 </topic>
-                    
+
         <topic label="Utiliser le menu Contextuel" href="FR/Utiliser le menu Contextuel.html">
-        
+
                 </topic>
-                    
+
         <topic label="Working with fast views" href="FR/Working with fast views.html">
-        
+
                 </topic>
         </topic>
         </topic>
-            
+
         <topic label="Comment nous aider?" href="FR/2720191.html">
-        
+
                 </topic>
     </toc>
 <!-- Document generated by Confluence on Sep 10, 2008 02:39 -->

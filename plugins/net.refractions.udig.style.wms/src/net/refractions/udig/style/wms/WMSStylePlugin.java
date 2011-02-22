@@ -1,7 +1,7 @@
 package net.refractions.udig.style.wms;
 
+import org.eclipse.ui.plugin.*;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -10,10 +10,10 @@ import org.osgi.framework.BundleContext;
 public class WMSStylePlugin extends AbstractUIPlugin {
 
     public static final String ID = "net.refractions.udig.style.wms"; //$NON-NLS-1$
-    
+
 	//The shared instance.
 	private static WMSStylePlugin plugin;
-	
+
 	/**
 	 * The constructor.
 	 */

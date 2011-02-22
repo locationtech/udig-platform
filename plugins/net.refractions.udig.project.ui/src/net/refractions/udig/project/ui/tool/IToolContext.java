@@ -16,6 +16,9 @@
  */
 package net.refractions.udig.project.ui.tool;
 
+import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.ui.IActionBars2;
+
 import net.refractions.udig.project.IAbstractContext;
 import net.refractions.udig.project.command.Command;
 import net.refractions.udig.project.command.MapCommand;
@@ -25,9 +28,6 @@ import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.command.factory.SelectionCommandFactory;
 import net.refractions.udig.project.ui.commands.DrawCommandFactory;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-
-import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.ui.IActionBars2;
 
 /**
  * A set of tools that is provided to Tool extensions.
@@ -44,14 +44,14 @@ import org.eclipse.ui.IActionBars2;
  * versions</li>
  * </ul>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 0.5
  */
 public interface IToolContext extends IAbstractContext {
     /**
      * Casts getDisplay to ViewportPane;
-     * 
+     *
      * @return getDisplay cast to ViewportPane
      * @see ViewportPane
      */
@@ -59,7 +59,7 @@ public interface IToolContext extends IAbstractContext {
 
     /**
      * Returns a DrawCommandFactory. Used to create commands that draw on the display.
-     * 
+     *
      * @return a DrawCommandFactory
      * @see DrawCommandFactory
      */
@@ -67,7 +67,7 @@ public interface IToolContext extends IAbstractContext {
 
     /**
      * Returns a EditCommandFactory. Used to create commands that edit the data model.
-     * 
+     *
      * @return a EditCommandFactory
      * @see EditCommandFactory
      */
@@ -76,23 +76,22 @@ public interface IToolContext extends IAbstractContext {
     /**
      * Returns a NavigationCommandFactory. Used to create commands that change the current view of
      * the map.
-     * 
+     *
      * @return a NavigationCommandFactory
      * @see NavigationCommandFactory
-     * @deprecated Please use navigation commands directly
      */
     public NavigationCommandFactory getNavigationFactory();
 
     /**
      * Returns a SelectionCommandFactory. Used to create commands that changes the current
      * selection.
-     * 
+     *
      * @return a SelectionCommandFactory
      */
     public SelectionCommandFactory getSelectionFactory();
     /**
-     * Returns a BasicCommandFactory. 
-     * 
+     * Returns a BasicCommandFactory.
+     *
      * @return a BasicCommandFactory
      */
     public BasicCommandFactory getBasicCommandFactory();
@@ -100,7 +99,7 @@ public interface IToolContext extends IAbstractContext {
     /**
      * Dispatches a command.  If the command is a IDrawCommand the command will
      * be added to the ViewportPane and the ViewportPane will be refreshed.
-     * 
+     *
      * @param command The command to execute.
      * @see MapCommand
      */
@@ -108,16 +107,16 @@ public interface IToolContext extends IAbstractContext {
 
     /**
      * Dispatches a command and blocks until the command has executed.
-     * 
+     *
      * @param command The command to execute.
      * @see MapCommand
      */
     public void sendSyncCommand( Command command );
-    
+
     /**
      * Gets an instance of the status bar from the current editor or null if there is no editor
      * open.
-     * 
+     *
      * @return an instance of the status bar from the current editor or null if there is no editor
      *         open.
      * @deprecated use getActionBars().getStatusLineManager()
@@ -127,15 +126,15 @@ public interface IToolContext extends IAbstractContext {
     /**
      * Gets an instance of the ActionsBars from the current editor or null if there is no editor
      * open.
-     * 
+     *
      * @return an instance of the ActionsBars from the current editor or null if there is no editor
      *         open.
      */
     IActionBars2 getActionBars();
-    
+
     /**
      * Run a code block in the UI thread. This method should always be used when modifying the ui.
-     * 
+     *
      * @param runnable the code block to execute in the ui thread.
      */
     public void updateUI( Runnable runnable );

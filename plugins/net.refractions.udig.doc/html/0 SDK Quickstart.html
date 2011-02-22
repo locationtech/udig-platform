@@ -1,0 +1,360 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 0 SDK Quickstart</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 0 SDK Quickstart -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>This quickstart is aimed at those looking at doing plugin-development against the UDIG platform. Follow these instructions to quickly set up a developmenet environment for working on your own plug-ins.</p>
+
+<p>If you would like to work on the core codebase, please follow the <a href="/confluence/display/UDIG/Project+Quickstart" title="Project Quickstart">Project Quickstart</a>. </p>
+
+<p><em>The links in the headings are to the <b>detailed</b> instructions for windows and linux.</em></p>
+
+<h1><a name="0SDKQuickstart-Environment">Environment <a href="$param0"><img src="http://udig.refractions.net/image/more.gif" border=0></a></a></h1>
+
+<p>This is the fastest quickstart we could come up with, starting from nothing to a full development environment udig in 23 min (depending on your network connection).</p>
+
+<h1><a name="0SDKQuickstart-Downloads">Downloads</a></h1>
+
+<h2><a name="0SDKQuickstart-DownloadingtheUDIGSDK">Downloading the UDIG SDK</a></h2>
+
+<p>You can download the latest UDIG <a href="/confluence/display/UDIG/SDK" title="SDK">SDK</a> release from the <a href="/confluence/display/UDIG/Source+Downloads" title="Source Downloads">Source Downloads</a> page:</p>
+<table width="100%" cellpadding="5" cellspacing="0" border="0" class="sectionMacro"><tr>
+<p><a href="0 SDK Quickstart.html" title="0 SDK Quickstart">SDK Quickstart</a> - Development setup instructions</p>
+<td valign="top" width="140">
+<!--
+Params:
+param0 = version number
+param1 = Name of the download ("Latest" or "Stable" usually)  is case sensitive.
+
+PreConditions.
+downloads in dir=http://udig.refractions.net/downloads
+windows download=udig-$Version$-src.win32.win32.x86.zip
+linux download=udig-$Version$-src.linux.gtk.x86.zip
+mac download=udig-$Version$-src.macosx.carbon.x86.zip
+
+If javascript is off or the OS is not known the link will be to the page
+http://udig.refractions.net/confluence/display/UDIG/UDIG+$VERSION$
+
+icons in dir=http://udig.refractions.net/image
+windows image = download_win.gif
+mac image = download_mac.gif
+linux image = download_linux.gif
+default = download_unkown.gif
+
+-->
+
+<script language="Javascript">
+
+function detectStable( ){
+  var agt=navigator.userAgent.toLowerCase();
+
+  var filename="http://udig.refractions.net/downloads/udig-";
+  var imagename="http://udig.refractions.net/image/download_";
+  if (agt.indexOf("win")!=-1){
+      filename=filename.concat( "1.0.5" , "-src.win32.win32.x86.zip" );
+      imagename=imagename.concat( "win.gif" );
+  }else if (agt.indexOf("mac")!=-1) {
+      filename=filename.concat( "1.0.5" , "-src.macosx.carbon.x86.zip" );
+      imagename=imagename.concat( "mac.gif" );
+  }else if (agt.indexOf("inux")!=-1){
+      filename=filename.concat( "1.0.5" , "-src.linux.gtk.x86.tar.gz" );
+      imagename=imagename.concat( "linux.gif" );
+  }
+
+  var aref=document.getElementById("Stablel");
+  aref.href=filename;
+}
+
+</script>
+
+
+
+
+
+<div class="box" onMouseOver="detectStable()">
+  <a id="Stablel" href="http://udig.refractions.net/confluence/display/UDIG/UDIG+1.0.5">
+  <div class="box1">
+
+      <div class="boxhead"><h3><center>1.0.5 SDK Stable </center></h3></div>
+      <div class="boxbody">
+      <center>
+      <img class="top" src="http://udig.refractions.net/image/download_source.gif" border="0" />
+
+              <img class="top" src="http://udig.refractions.net/image/download.gif" border="0" />
+            </center>
+      </div>
+
+  </div>
+  </a>
+</div>
+
+<!--
+Params:
+param0 = version number
+param1 = Name of the download ("Latest" or "Stable" usually)  is case sensitive.
+
+PreConditions.
+downloads in dir=http://udig.refractions.net/downloads
+windows download=udig-$Version$-src.win32.win32.x86.zip
+linux download=udig-$Version$-src.linux.gtk.x86.zip
+mac download=udig-$Version$-src.macosx.carbon.x86.zip
+
+If javascript is off or the OS is not known the link will be to the page
+http://udig.refractions.net/confluence/display/UDIG/UDIG+$VERSION$
+
+icons in dir=http://udig.refractions.net/image
+windows image = download_win.gif
+mac image = download_mac.gif
+linux image = download_linux.gif
+default = download_unkown.gif
+
+-->
+
+<script language="Javascript">
+
+function detectBeta( ){
+  var agt=navigator.userAgent.toLowerCase();
+
+  var filename="http://udig.refractions.net/downloads/udig-";
+  var imagename="http://udig.refractions.net/image/download_";
+  if (agt.indexOf("win")!=-1){
+      filename=filename.concat( "1.1.RC4" , "-src.win32.win32.x86.zip" );
+      imagename=imagename.concat( "win.gif" );
+  }else if (agt.indexOf("mac")!=-1) {
+      filename=filename.concat( "1.1.RC4" , "-src.macosx.carbon.x86.zip" );
+      imagename=imagename.concat( "mac.gif" );
+  }else if (agt.indexOf("inux")!=-1){
+      filename=filename.concat( "1.1.RC4" , "-src.linux.gtk.x86.tar.gz" );
+      imagename=imagename.concat( "linux.gif" );
+  }
+
+  var aref=document.getElementById("Betal");
+  aref.href=filename;
+}
+
+</script>
+
+
+
+
+
+<div class="box" onMouseOver="detectBeta()">
+  <a id="Betal" href="http://udig.refractions.net/confluence/display/UDIG/UDIG+1.1.RC4">
+  <div class="box1">
+
+      <div class="boxhead"><h3><center>1.1.RC4 SDK Beta </center></h3></div>
+      <div class="boxbody">
+      <center>
+      <img class="top" src="http://udig.refractions.net/image/download_source.gif" border="0" />
+
+              <img class="top" src="http://udig.refractions.net/image/download.gif" border="0" />
+            </center>
+      </div>
+
+  </div>
+  </a>
+</div>
+</td>
+<td valign="top" ></td></tr></table>
+
+<p>This will take a bit of time, lets keep downloading.</p>
+
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='tipMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/check.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">Optional</b><br />
+<p>You may also consider working against the nightly builds:</p>
+<table class='confluenceTable'>
+<tr>
+<td class='confluenceTd'> Windows </td>
+<th class='confluenceTh'> <a href="http://udig.refractions.net/nightly/udig/latest/udig-win32-x86.zip" title="Visit page outside Confluence">uDig</a> </th>
+<th class='confluenceTh'> <a href="http://udig.refractions.net/nightly/udig/latest/udig-SDK-win32-x86.zip" title="Visit page outside Confluence">SDK</a> </th>
+</tr>
+<tr>
+<td class='confluenceTd'> Linux   </td>
+<th class='confluenceTh'> <a href="http://udig.refractions.net/nightly/udig/latest/udig-linux-gtk-x86.tgz" title="Visit page outside Confluence">uDig</a> </th>
+<th class='confluenceTh'> <a href="http://udig.refractions.net/nightly/udig/latest/udig-SDK-linux-gtk-x86.tgz" title="Visit page outside Confluence">SDK</a> </th>
+</tr>
+</table>
+<p>Previous nightly builds are located <a href="http://udig.refractions.net/nightly" title="Visit page outside Confluence">here</a></p></td></tr></table></div></div>
+
+<h2><a name="0SDKQuickstart-DownloadingEclipse">Downloading Eclipse</a></h2>
+
+<p>Let's start with eclipse:</p>
+
+<table class='confluenceTable'>
+<tr>
+<td class='confluenceTd'> <a href="/confluence/display/UDIG/Eclipse" title="Eclipse">Eclipse</a> </td>
+<td class='confluenceTd'> <p>Windows: <a href="http://download.eclipse.org/eclipse/downloads/drops/R-3.2-200606291905/download.php?dropFile=eclipse-SDK-3.2-win32.zip" title="Visit page outside Confluence">Eclipse-SDK-3.2</a><br/>
+Linux: <a href="http://download.eclipse.org/eclipse/downloads/drops/R-3.2-200606291905/download.php?dropFile=eclipse-SDK-3.2-linux-gtk.tar.gz" title="Visit page outside Confluence">Eclipse-SDK-3.2</a><br/>
+MacOSX: <a href="http://download.eclipse.org/eclipse/downloads/drops/R-3.2-200606291905/download.php?dropFile=eclipse-SDK-3.2-macosx-carbon.tar.gz" title="Visit page outside Confluence">Eclipse-SDK-3.2</a></p> </td>
+<td class='confluenceTd'> This is the Eclipse SDK </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <a href="/confluence/display/UDIG/Eclipse+Extras" title="Eclipse Extras">Extras</a>  </td>
+<td class='confluenceTd'> <p><a href="http://udig.refractions.net/downloads/extras-1.1.zip" title="Visit page outside Confluence">uDig 1.1.x extras</a> </p>  </td>
+<td class='confluenceTd'> Includes EMF, GEF, Subclipse, Testing Framework, Developers guide, and Platform language packs</td>
+</tr>
+</table>
+
+<ul>
+	<li>The extras pack contains language files for the RCP-base portions of uDig, for German, Spanish, French, Italian, Japanese, Korean, Portuguese (Brazil), Traditional Chinese and Simplified Chinese.</li>
+</ul>
+
+
+<p>Additional language packs are available at: <a href="http://download.eclipse.org/eclipse/downloads/drops/L-3.1.1_Language_Packs-200510051300/index.php" title="Visit page outside Confluence">&#104;ttp://download.eclipse.org/eclipse/downloads/drops/L-3.1.1_Language_Packs-200510051300/index.php</a></p>
+<ul>
+	<li>extras-1.1.zip already includes the platform-runtime NL-1 pack</li>
+	<li>add the platform-runtime NL-2 or NL-bidi pack (to your target platform) for even more languages</li>
+	<li>add the SDK language pack to your IDE if you want <b>eclipse</b> to be internationalized</li>
+</ul>
+
+
+<p>This will take a while, let's keep downloading.</p>
+
+<h2><a name="0SDKQuickstart-DownloadingtheJavaJRE">Downloading the Java JRE</a></h2>
+
+<p>Okay now we can start downloading the JRE:</p>
+<table class='confluenceTable'>
+<tr>
+<td class='confluenceTd'> Windows </td>
+<td class='confluenceTd'> <a href="http://udig.refractions.net/downloads/eclipse-jre-win32.zip" title="Visit page outside Confluence">&#104;ttp://udig.refractions.net/downloads/eclipse-jre-win32.zip</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Linux </td>
+<td class='confluenceTd'> <a href="http://udig.refractions.net/downloads/eclipse-jre-linux.zip" title="Visit page outside Confluence">&#104;ttp://udig.refractions.net/downloads/eclipse-jre-linux.zip</a> </td>
+</tr>
+</table>
+
+<p>Note: This is a special <a href="/confluence/display/UDIG/Windows+JRE+Install" title="Windows JRE Install">JRE</a> that has been extended with <a href="/confluence/display/UDIG/Windows+Java+Advanced+Imaging+Install" title="Windows Java Advanced Imaging Install">Java Advanced Imaging</a> and <a href="/confluence/display/UDIG/Windows+Image+IO+Install" title="Windows Image IO Install">Image IO</a>.</p>
+
+<h1><a name="0SDKQuickstart-EclipseSDKInstallation">Eclipse SDK Installation <a href="$param0"><img src="http://udig.refractions.net/image/more.gif" border=0></a></a></h1>
+
+
+<p>Hopefully by now your eclipse download has finished, time to install:</p>
+<ol>
+	<li>Unzip the downloaded eclipse SDK zip file to your java directory: <br clear="all" /> C:\java\eclipse will be created</li>
+	<li>Unzip the eclipse-jre-*.zip file into your java directory: <br clear="all" /> C:\java\eclipse\jre will be created</li>
+	<li>Unzip the extras.zip file to your java directory: <br clear="all" /> C:\java\eclipse will gain additional plugins and features</li>
+	<li>If you downloaded any SDK language packs, unzip them as well: <br clear="all" /> (to overwrite C:\java\eclipse as you did with extras.zip)</li>
+	<li>Navigate to your eclipse and right-click on the <b>eclipse.exe</b>- file and select <b>Send To-&gt;Desktop</b>.</li>
+</ol>
+
+
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='tipMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/check.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">Optional</b><br />
+<p>If you have memory to burn, consider spending it on your udig development:</p>
+<ol>
+	<li>Open up the desktop shortcut and change the <b>Target</b>: <br clear="all" /> C:\java\eclipse\eclipse.exe -vmargs -Xmx512m</li>
+</ol>
+</td></tr></table></div></div>
+
+<p>You can now double click your desktop shortcut to start up Eclipse.</p>
+
+<h1><a name="0SDKQuickstart-EclipseWorkspace">Eclipse Workspace <a href="$param0"><img src="http://udig.refractions.net/image/more.gif" border=0></a></a></h1>
+
+<p>When you start Eclipse for the first time:</p>
+
+<ol>
+	<li>Choose a workspace: <br clear="all" /> C:\java\workspace</li>
+</ol>
+
+
+<h2><a name="0SDKQuickstart-EclipsePreferences">Eclipse Preferences <a href="$param0"><img src="http://udig.refractions.net/image/more.gif" border=0></a></a></h2>
+
+<p>We make use of your global preferences to build udig, a few changes will be required.</p>
+
+<p>Open up <b>Window &gt; Preferences</b>:</p>
+<ol>
+	<li>Change <b>Java &gt; Compiler</b>:
+	<ol>
+		<li>Compiler compliance level: 5.0</li>
+	</ol>
+	</li>
+	<li>Confirm <b>Java &gt; Installed JREs</b>:
+	<ul>
+		<li>Should have Location: C:\java\eclipse\jre <br clear="all" /> If not Simple press the <b>Add...</b> button and create a JRE based on the above path.</li>
+	</ul>
+	</li>
+</ol>
+
+
+<h2><a name="0SDKQuickstart-SettingtheBuildTarget">Setting the Build Target</a></h2>
+
+<h3><a name="0SDKQuickstart-Settingupdevelopmentenvironment">Setting up development environment</a></h3>
+<ol>
+	<li>Unzip your UDIG SDK download into: <br clear="all" /> C:\java\sdk</li>
+	<li>Go back to eclipse</li>
+	<li>Open Preferences: <b>Window&gt;Preferences</b>.</li>
+	<li>Select <b>Plugin Development &gt; Target Platform</b>.</li>
+	<li>Change the target platform to: C:\java\sdk\udig<br/>
+  <img src="0 SDK Quickstart_attachments/target.gif" align="absmiddle" border="0" /></li>
+	<li>Click <b>OK</b>.</li>
+</ol>
+
+
+<p>At this point all the source code for the eclipse and udig plugins are available.  You should be able to develop uDig plugin effortlessly now.</p>
+
+<h1><a name="0SDKQuickstart-RunninguDig.">Running uDig.</a></h1>
+
+<ol>
+	<li>Select <b>Run&gt;Run...</b>.</li>
+	<li>Select <b>Eclipse Application</b>.</li>
+	<li>Press <b>New</b> button.</li>
+	<li>Ensure that <b>Run as Product</b> is selected (Under Program to Run section on right).</li>
+	<li>Ensure that <b>net.refractions.udig.product</b> is in <b>Run as Product</b> field.</li>
+	<li>Press <b>Run</b></li>
+</ol>
+
+
+<h1><a name="0SDKQuickstart-Done%21">Done!</a></h1>
+
+<p>Welcome to uDig Plug-in Development. What is next - how about:</p>
+<ul>
+	<li><a href="3 Plugin Tutorial.html" title="3 Plugin Tutorial">Plugin Tutorial</a></li>
+	<li><a href="2 Programmer's Guide.html" title="2 Programmer's Guide">Programmer's Guide</a></li>
+</ul>
+
+
+<p>The above are part of the <a href="Home.html" title="Home">UDIG Developers Guide</a>, you can check out <a href="/confluence/display/UDIG/Plugin+Developer+Documentation" title="Plugin Developer Documentation">UDIG:Plugin Developer Documentation</a> for additional information.</p>
+
+  <img src="http://udig.refractions.net/image/DEV/ngrelr.gif">
+
+<p><a href="1 Switching to uDig SDK.html" title="1 Switching to uDig SDK">1 Switching to uDig SDK</a></p>
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="0 SDK Quickstart_attachments/target.gif">target.gif</a> (image/gif)
+                                <br/>
+                                                    </div>
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=6331">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=6331">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

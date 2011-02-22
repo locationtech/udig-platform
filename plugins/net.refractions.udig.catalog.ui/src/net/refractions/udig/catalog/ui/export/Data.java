@@ -7,13 +7,12 @@ import java.util.HashSet;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.ui.ProgressManager;
 
-import org.geotools.data.DefaultQuery;
 import org.geotools.data.Query;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * A data object that is the values in the tree items in the {@link ExportResourceSelectionPage} viewer.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -24,7 +23,7 @@ public class Data {
     private Query query;
     private String name;
     private boolean checked;
-    
+
     public String getName() {
         return name;
     }
@@ -43,14 +42,25 @@ public class Data {
         try {
             crs=resource.getInfo(ProgressManager.instance().get()).getCRS();
             this.resource = resource;
+            this.query = query;
+        } catch (IOException e) {
+            throw (RuntimeException) new RuntimeException( ).initCause( e );
+        }
+    }
+
+    /**
+     * new instance
+     * @param resource the resource to export from.
+     */
+    public Data(final IGeoResource resource) {
+        super();
+        try {
+            crs=resource.getInfo(ProgressManager.instance().get()).getCRS();
+            this.resource = resource;
             checked = true;
         } catch (IOException e) {
             throw (RuntimeException) new RuntimeException( ).initCause( e );
         }
-        this.query = query;
-    }
-    public Data(final IGeoResource resource) {
-        this( resource, new DefaultQuery());
     }
 
     public CoordinateReferenceSystem getCRS() {
@@ -67,13 +77,10 @@ public class Data {
     /**
      * Adds a collection of resources to the set of exported resources.
      *
-     * @param exportedResource the newly exported resources 
+     * @param exportedResource the newly exported resources
      */
-    public void addNewResource( IGeoResource resource ) {
-        exportedResources.add(resource);
-    }
-    public void addNewResources( Collection<IGeoResource> resources ){
-        exportedResources.addAll( resources );
+    public void addNewResource( IGeoResource exportedResource ) {
+        exportedResources.add(exportedResource);
     }
 
     /**
@@ -82,7 +89,7 @@ public class Data {
     public Collection<IGeoResource> getExportedResources() {
         return exportedResources;
     }
-    
+
     public Query getQuery() {
         return query;
     }
@@ -94,7 +101,8 @@ public class Data {
     public void setChecked( boolean checked ) {
         this.checked = checked;
     }
-    
-    
-    
+
+
+
+
 }

@@ -1,0 +1,370 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : Export SLD Plugin Tutorial</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : Export SLD Plugin Tutorial -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="ExportSLDPluginTutorial-ExportSLDPluginTutorial">Export SLD Plugin Tutorial</a></h1>
+<h2><a name="ExportSLDPluginTutorial-Goals">Goals</a></h2>
+
+<p>After completing this tutorial, you will have gained the skills to:</p>
+<ul class="alternate" type="square">
+	<li>Create a new Plugin</li>
+	<li>Define a new Extension</li>
+	<li>Implement a new Operation Extension</li>
+</ul>
+
+
+
+<h1><a name="ExportSLDPluginTutorial-CreateaNewPlugin">Create a New Plugin</a></h1>
+
+<ol>
+	<li>Open the Plug-in Development perspective (click on <img src="Export SLD Plugin Tutorial_attachments/0Prespective.gif" align="absmiddle" border="0" />)</li>
+	<li>From the File menu, select <b>New &gt; Projectâ?¦</b>. Select Plug-in Project from the dialog, and then click the Next button.<br/>
+<img src="Export SLD Plugin Tutorial_attachments/1NewProject.png" align="absmiddle" border="0" /> <br clear="all" /> <em>Figure 1 - New Plug-in Project</em></li>
+	<li>Create a name for the plug-in by entering <b>net.refractions.udig.sld.export</b> in the <b>Project Name</b> text field and click the <b>Next</b> button.<br/>
+<img src="Export SLD Plugin Tutorial_attachments/2NewPluginProject.png" align="absmiddle" border="0" /> <br clear="all" /> <em>Figure 2 - Naming the New Plug-in</em></li>
+	<li>Accept the default values used to generate the plug-in and click the Finish button.<br/>
+<img src="Export SLD Plugin Tutorial_attachments/3NewPluginContent.png" align="absmiddle" border="0" /> <br clear="all" /> <em>Figure 3 - New Plug-in Details</em><br/>
+At this point the feature editor plug-in is created. Configuring the plug-in is the focus of the next section.</li>
+</ol>
+
+
+<h2><a name="ExportSLDPluginTutorial-ConfiguringYourNewPlugin">Configuring Your New Plug-in</a></h2>
+
+<p>In this section you will configure the feature editor plug-in. Specifically, you will specify dependencies on other plug-ins in order to create a new feature editor.</p>
+
+<ol>
+	<li>Open the Plug-in Development perspective.</li>
+	<li>In the Package Explorer navigate to the plug-in created in the previous section. Open the plug-in manifest by navigating to the META-INF/MANIFEST.MF file under the root of the feature editor plug-in. Double click on the file to open the plug-in manifest editor.<br/>
+<img src="Export SLD Plugin Tutorial_attachments/4PluginManifest.png" align="absmiddle" border="0" /> <br clear="all" /> <em>Figure 4 - Plug-in Manifest Editor</em></li>
+	<li>Open the plug-in dependencies by clicking on the Dependencies tab located at the bottom of the editor area.</li>
+	<li>Click the Addâ?¦ button in the Required plugins column and add the following plugin: <br clear="all" /></li>
+</ol>
+<ul>
+	<li><b>net.refractions.udig.project</b></li>
+	<li><b>net.refractions.udig.project.ui</b></li>
+	<li><b>net.refractions.udig.style.sld</b></li>
+	<li><b>net.refractions.udig.udig.ui</b><br/>
+<img src="Export SLD Plugin Tutorial_attachments/5AddDependencies.png" align="absmiddle" border="0" /> <br clear="all" /> <em>Figure 5 - Add New Plugin Dependencies</em></li>
+</ul>
+<ol>
+	<li>At this point it is critical that you <img src="Export SLD Plugin Tutorial_attachments/save.gif" align="absmiddle" border="0" /> <b>Save</b> your work as the dependencies need to propagate into the project.<br/>
+<img src="Export SLD Plugin Tutorial_attachments/6PluginDependencies.png" align="absmiddle" border="0" /> <br clear="all" /> <em>Figure 6 - Plug-in Dependencies</em></li>
+</ol>
+
+
+<h2><a name="ExportSLDPluginTutorial-ImportResourcesIntoProject">Import Resources Into Project</a></h2>
+
+<p>In this section we are going to set up an icon directory and import the pictures we will use for our export SLD operation.</p>
+
+<ol>
+	<li>Download <span class="error">&#91;^&#93;</span> and <span class="error">&#91;^&#93;</span> to your desktop (Right click and <b>Save Link As...</b>)</li>
+	<li>Select your plug-in project, <b>net.refractions.udig.tutorials.distancetool</b>, in the <b>Package Explorer</b>.</li>
+	<li>Select File â?? New â?? Folder from the Menubar.</li>
+	<li>Enter <b>icons/etool16</b> as the folder name.</li>
+	<li>Click the Finish button.</li>
+	<li>Select <b>icons</b> directory.</li>
+	<li>Select File â?? New â?? Folder from the Menubar.</li>
+	<li>Enter <b>pointers</b> as the folder name.</li>
+	<li>Click the Finish button.<br/>
+<img src="Export SLD Plugin Tutorial_attachments/7NewFolder.png" align="absmiddle" border="0" /></li>
+	<li>Right click on etool16 and select <b>Import</b>.</li>
+	<li>Select File System.<br/>
+<img src="Export SLD Plugin Tutorial_attachments/8Import.png" align="absmiddle" border="0" /></li>
+	<li>Click on browse and choose Desktop from the list (this will populate the directory field).</li>
+	<li>Select the <b>measure_mode.gif</b> file and press Finish.<br/>
+<img src="Export SLD Plugin Tutorial_attachments/9ImportToolIcon.png" align="absmiddle" border="0" /></li>
+	<li>Import the <b>measure_source.gif</b> file into the <b>pointers</b> directory following the same steps.</li>
+</ol>
+
+
+<h2><a name="ExportSLDPluginTutorial-DefineaNewExtension">Define a New Extension</a></h2>
+
+<ol>
+	<li>Open the extensions page by clicking on the <b>Extensions</b> tab</li>
+</ol>
+
+
+<ol>
+	<li>Click the Addâ?¦ button</li>
+	<li>Select the <b>net.refractions.udig.ui.operation</b> extension point from the list.<br/>
+<img src="Export SLD Plugin Tutorial_attachments/10Extention.png" align="absmiddle" border="0" /></li>
+	<li>Click the <b>Finish</b> button.</li>
+	<li>Enter the following Extention Details:
+	<ul>
+		<li>ID: <em>net.refractions.udig.sld.export</em></li>
+		<li>Name: <em>SLD Export to File</em><br/>
+<img src="Export SLD Plugin Tutorial_attachments/11NewExtention.png" align="absmiddle" border="0" /></li>
+	</ul>
+	</li>
+</ol>
+
+
+<h2><a name="ExportSLDPluginTutorial-CreateaNewOperation">Create a New Operation</a></h2>
+
+<ol>
+	<li>Right click on newly added extension, <b>net.refractions.udig.ui.operation</b>, and select <b>New &gt; Operation</b></li>
+	<li>Replace the default data in the id field with <b>net.refractions.udig.style.sld.export.ExportSLD</b>.</li>
+	<li>Enter <b>net.refractions.udig.sld.export.ExportSLD</b> into the class field.</li>
+	<li>Enter <b>icons/etool16/</b> into the icon field. <br clear="all" /> (Or press the Browse button and locate the icon)</li>
+	<li>Enter <b>Export SLD</b> into the name field.</li>
+	<li>Enter <b>net.refractions.udig.project.ui.exportOps</b> into the categoryId field.<br/>
+<img src="Export SLD Plugin Tutorial_attachments/12ExtentionDetails.png" align="absmiddle" border="0" /></li>
+</ol>
+
+
+<h1><a name="ExportSLDPluginTutorial-Implementingaexportoperation">Implementing a export operation</a></h1>
+
+<ol>
+	<li>Select net.refractions.udig.style.sld.export.ExportSLD (operation) in the Extensions editor.</li>
+	<li>It is a child of the net.refractions.udig.style.sld.export.</li>
+	<li>Click the class hotlink.</li>
+</ol>
+
+
+<ol>
+	<li>A dialog is brought up describing the class to be created, Check Generate comments and Inherited abstract methods.<br/>
+<img src="Export SLD Plugin Tutorial_attachments/15NewClassWizard.png" align="absmiddle" border="0" /></li>
+	<li>Press <b>Finish</b>, if not available ensure that all the information is in agreement with the picture above.</li>
+</ol>
+
+
+
+<p>Add the following code to your created class</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class ExportSLD <span class="code-keyword">implements</span> IOp {
+
+    <span class="code-keyword">public</span> class QueryAndSave <span class="code-keyword">implements</span> <span class="code-object">Runnable</span> {
+
+        <span class="code-keyword">private</span> <span class="code-object">String</span> out;
+        <span class="code-keyword">private</span> Layer layer;
+        <span class="code-keyword">private</span> IProgressMonitor monitor;
+        <span class="code-keyword">private</span> Display display;
+
+        <span class="code-keyword">public</span> QueryAndSave( Layer layer, <span class="code-object">String</span> out, Display display, IProgressMonitor monitor ) {
+            <span class="code-keyword">this</span>.layer=layer;
+            <span class="code-keyword">this</span>.out=out;
+            <span class="code-keyword">this</span>.display=display;
+            <span class="code-keyword">this</span>.monitor=monitor;
+        }
+        File file;
+        <span class="code-keyword">public</span> void run() {
+            <span class="code-keyword">do</span>{
+                <span class="code-keyword">if</span> (!getFile())
+                    <span class="code-keyword">return</span>;
+                <span class="code-object">boolean</span> write=<span class="code-keyword">true</span>;
+                <span class="code-keyword">if</span>( file.exists() ){
+                write=MessageDialog.openConfirm(display.getActiveShell(), Messages.getString(<span class="code-quote">"ExportSLD.saveAs"</span>),  <span class="code-comment">//$NON-NLS-1$
+</span>                            file.getAbsolutePath()+Messages.getString(<span class="code-quote">"ExportSLD.exists"</span>) + <span class="code-comment">//$NON-NLS-1$
+</span>                                    Messages.getString(<span class="code-quote">"ExportSLD.replace"</span>)); <span class="code-comment">//$NON-NLS-1$
+</span>                }
+
+                <span class="code-keyword">if</span>( write ){
+                <span class="code-keyword">try</span> {
+                    FileWriter writer=<span class="code-keyword">new</span> FileWriter(file, <span class="code-keyword">false</span>);
+                    writer.write(out);
+                    writer.close();
+                } <span class="code-keyword">catch</span> (Exception e) {
+                    file=<span class="code-keyword">null</span>;
+                    MessageDialog.openError(display.getActiveShell(), Messages.getString(<span class="code-quote">"ExportSLD.saveAs"</span>),<span class="code-comment">//$NON-NLS-1$
+</span>                            Messages.getString(<span class="code-quote">"ExportSLD.modifyError"</span>)); <span class="code-comment">//$NON-NLS-1$
+</span>                }
+                }<span class="code-keyword">else</span>{
+                    file=<span class="code-keyword">null</span>;
+                }
+            }<span class="code-keyword">while</span>( file==<span class="code-keyword">null</span> );
+        }
+
+        <span class="code-keyword">private</span> <span class="code-object">boolean</span> getFile() {
+            FileDialog fileDialog=<span class="code-keyword">new</span> FileDialog(display.getActiveShell(),SWT.SAVE);
+            fileDialog.setFilterExtensions(<span class="code-keyword">new</span> <span class="code-object">String</span>[]{<span class="code-quote">"*.sld"</span>}); <span class="code-comment">//$NON-NLS-1$
+</span>            fileDialog.setFilterNames(<span class="code-keyword">new</span> <span class="code-object">String</span>[]{Messages.getString(<span class="code-quote">"ExportSLD.SLD"</span>)}); <span class="code-comment">//$NON-NLS-1$
+</span>            <span class="code-object">String</span> name=layer.getName();
+            <span class="code-keyword">if</span>( name==<span class="code-keyword">null</span> ){
+                <span class="code-keyword">try</span> {
+                    name=layer.getGeoResource().getInfo(monitor).getTitle();
+                } <span class="code-keyword">catch</span> (IOException e) {
+                    ExportPlugin.log(<span class="code-quote">"error getting name from layer's georesource"</span>, e); <span class="code-comment">//$NON-NLS-1$
+</span>                }
+                <span class="code-keyword">if</span>( name==<span class="code-keyword">null</span> ){
+                    <span class="code-keyword">try</span> {
+                        name=layer.getGeoResource().getInfo(monitor).getName();
+                    } <span class="code-keyword">catch</span> (IOException e) {
+                        ExportPlugin.log(<span class="code-quote">"error getting name from layer's georesource"</span>, e); <span class="code-comment">//$NON-NLS-1$
+</span>                    }
+                }
+            }
+             <span class="code-keyword">if</span>( name!=<span class="code-keyword">null</span>)
+                 fileDialog.setFileName(name+<span class="code-quote">".sld"</span>); <span class="code-comment">//$NON-NLS-1$
+</span>            <span class="code-object">String</span> path=fileDialog.open();
+            <span class="code-keyword">if</span>( path==<span class="code-keyword">null</span>)
+                <span class="code-keyword">return</span> <span class="code-keyword">false</span>;
+            file=<span class="code-keyword">new</span> File(path);
+            <span class="code-keyword">return</span> <span class="code-keyword">true</span>;
+        }
+    }
+    <span class="code-keyword">public</span> void op( Display display, <span class="code-object">Object</span> target, IProgressMonitor monitor ) <span class="code-keyword">throws</span> Exception {
+        Layer layer=(Layer) target;
+        Style style=(Style) layer.getStyleBlackboard().get(SLDContent.ID);
+
+        <span class="code-comment">// serialize out the style objects
+</span>        SLDTransformer sldWriter = <span class="code-keyword">new</span> SLDTransformer();
+        <span class="code-object">String</span> out = ""; <span class="code-comment">//$NON-NLS-1$
+</span>        <span class="code-keyword">try</span> {
+            out = sldWriter.transform(style);
+        } <span class="code-keyword">catch</span> (TransformerException e) {
+            ExportPlugin.log(<span class="code-keyword">null</span>, e);
+            e.printStackTrace();
+        } <span class="code-keyword">catch</span> (Exception e) {
+            ExportPlugin.log(<span class="code-keyword">null</span>, e);
+        }
+        display.asyncExec(<span class="code-keyword">new</span> QueryAndSave(layer, out, display, monitor));
+    }
+}</pre>
+</div></div>
+
+<ol>
+	<li>Click the <b>OK</b> button.</li>
+</ol>
+
+
+<ol>
+	<li>
+	<ol>
+		<li>And then <b>save</b> the file. This should refresh the project and clear up any error markers left behind.</li>
+	</ol>
+	</li>
+</ol>
+
+
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='tipMacro' border='0'><tr><td width='16' valign='top'><img src="/confluence/images/icons/emoticons/check.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">Optional</b><br />
+<p>You may check your work against the completed plugin code available here:</p>
+<ol>
+	<li>Download:  <a href="" title="net.refractions.udig.sld.export_1.0.0.jar attached to Export SLD Plugin Tutorial">net.refractions.udig.sld.export_1.0.0.jar</a></li>
+	<li>Save in your udig plugins directory.</li>
+	<li>Right clicking on any layer will now let you export a SLD file<br/>
+<a href="" title="net.refractions.udig.sld.export_1.0.0.jar attached to Export SLD Plugin Tutorial">net.refractions.udig.sld.export_1.0.0.jar</a> archive file.<br/>
+This file is suitable for use with GeoServer.</li>
+</ol>
+
+
+<p>Source code Avaiable here:<br/>
+<a href="http://svn.geotools.org/udig/trunk/community/jesse/net.refractions.udig.sld.export/" title="Visit page outside Confluence">&#104;ttp://svn.geotools.org/udig/trunk/community/jesse/net.refractions.udig.sld.export/</a></p>
+
+<div class="panel"><div class="panelContent">
+<p>svn co <a href="http://svn.geotools.org/udig/trunk/community/jesse/net.refractions.udig.sld.export/" title="Visit page outside Confluence">&#104;ttp://svn.geotools.org/udig/trunk/community/jesse/net.refractions.udig.sld.export/</a></p>
+</div></div>
+</td></tr></table></div></div>
+
+<h1><a name="ExportSLDPluginTutorial-TestingThePlugin">Testing The Plug-in</a></h1>
+
+<ol>
+	<li>From the Project menu select <b>Run</b> and choose the configuration you set-up in the previous tutorial (see <a href="0 SDK Quickstart.html" title="0 SDK Quickstart">0 SDK Quickstart</a>).</li>
+</ol>
+
+
+
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/6PluginDependencies.PNG">6PluginDependencies.PNG</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/5AddDependencies.png">5AddDependencies.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/4PluginManifest.png">4PluginManifest.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/3NewPluginContent.png">3NewPluginContent.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/2NewPluginProject.png">2NewPluginProject.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/12ExtentionDetails.png">12ExtentionDetails.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/12ExtentionDetails.png">12ExtentionDetails.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/11NewExtention.png">11NewExtention.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/11NewExtention.png">11NewExtention.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/10Extention.png">10Extention.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/10Extention.png">10Extention.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/9ImportToolIcon.png">9ImportToolIcon.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/8Import.png">8Import.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/7NewFolder.png">7NewFolder.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/0Prespective.gif">0Prespective.gif</a> (image/gif)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/16OverrideMethodDialog.png">16OverrideMethodDialog.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/15NewClassWizard.png">15NewClassWizard.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/15NewClassWizard.png">15NewClassWizard.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/15ClassLabel.png">15ClassLabel.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/net.refractions.udig.sld.export_1.0.0.jar">net.refractions.udig.sld.export_1.0.0.jar</a> (application/x-jar)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/1NewProject.png">1NewProject.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Export SLD Plugin Tutorial_attachments/save.gif">save.gif</a> (image/gif)
+                                <br/>
+                                                    </div>
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=8346">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=8346">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

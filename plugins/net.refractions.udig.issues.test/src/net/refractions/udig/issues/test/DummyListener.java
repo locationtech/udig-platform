@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.issues.test;
 
@@ -11,6 +11,6 @@ class DummyListener implements IIssuesListListener{
     int timesCalled;
     public void notifyChange( IssuesListEvent event ) {
         changes+=event.getChanged().size();
-        timesCalled++;    
+        timesCalled++;
     }
 }

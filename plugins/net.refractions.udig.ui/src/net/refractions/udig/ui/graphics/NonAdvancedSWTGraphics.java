@@ -9,7 +9,6 @@
 package net.refractions.udig.ui.graphics;
 
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
@@ -34,7 +33,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * A Graphics object that wraps SWT's GC object
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -60,39 +59,40 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
 
     private Font font;
 
+
     /**
      * Construct <code>SWTGraphics</code>.
-     * 
+     *
      * @param Image
      *            image
      * @param display
      *            The display object
      */
-    public NonAdvancedSWTGraphics( Image image, Display display ) {
-        this(new GC(image), display, new Dimension(image.getImageData().width, image.getImageData().height));
+    public NonAdvancedSWTGraphics(Image image, Display display) {
+        this(new GC(image), display, new Dimension(image.getImageData().width,
+                image.getImageData().height));
     }
 
     /**
      * Construct <code>SWTGraphics</code>.
-     * 
+     *
      * @param gc
      *            The GC object
      * @param display
      *            The display object
      */
-    public NonAdvancedSWTGraphics( GC gc, Display display, Dimension displaySize ) {
+    public NonAdvancedSWTGraphics(GC gc, Display display, Dimension displaySize) {
         setGraphics(gc, display);
     }
 
-    void setGraphics( GC gc, Display display ) {
+    void setGraphics(GC gc, Display display) {
         this.gc = gc;
-        this.display = display;
+        this.display=display;
         if (back != null)
             back.dispose();
         back = new Color(display, 255, 255, 255);
         gc.setBackground(back);
         gc.setAdvanced(false);
-        gc.setAntialias(SWT.ON);
     }
 
     public void dispose() {
@@ -103,50 +103,99 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
         gc.dispose();
     }
 
-    public <T> T getGraphics( Class<T> adaptee ) {
-        AWTSWTImageUtils.checkAccess();
-        if (adaptee.isAssignableFrom(GC.class)) {
-            return adaptee.cast(gc);
-        }
-        return null;
-    }
-
     /**
      * @see net.refractions.udig.project.render.ViewportGraphics#draw(java.awt.Shape)
      */
-    public void draw( Shape s ) {
+    public void draw(Shape s) {
         PathIterator p = s.getPathIterator(transform, 1);
-        if (p.isDone())
+        boolean singlePoint = true;
+        if( p.isDone() )
             return;
 
-        Path path = AWTSWTImageUtils.createPath(p, display);
-        gc.drawPath(path);
-        float[] points = path.getPathData().points;
-        if (points.length == 2) {
-            gc.drawPoint((int) points[0], (int) points[1]);
+        p.currentSegment(current);
+        move_to = current.clone();
+        p.next();
+        while (!p.isDone()) {
+            singlePoint = false;
+            last = current.clone();
+            switch (p.currentSegment(current)) {
+            case PathIterator.SEG_CLOSE:
+                gc.drawLine((int) current[0], (int) current[1],
+                        (int) move_to[0], (int) move_to[1]);
+                break;
+            case PathIterator.SEG_LINETO:
+                gc.drawLine((int) last[0], (int) last[1], (int) current[0],
+                        (int) current[1]);
+                break;
+            case PathIterator.SEG_MOVETO:
+                move_to = current;
+                break;
+            case PathIterator.SEG_QUADTO:
+            case PathIterator.SEG_CUBICTO:
+            default:
+            }
+            p.next();
         }
-        path.dispose();
+        if (singlePoint == true) {
+            gc.drawPoint((int) current[0], (int) current[1]);
+        }
     }
 
     /**
      * @see net.refractions.udig.project.render.ViewportGraphics#draw(java.awt.Shape)
      */
-    public void fill( Shape s ) {
+    public void fill(Shape s) {
         gc.setBackground(fore);
         PathIterator p = s.getPathIterator(transform);
-        Path path = AWTSWTImageUtils.createPath(p, display);
-        gc.fillPath(path);
-        path.dispose();
-        gc.setBackground(back);
+        ArrayList<Integer> pts = new ArrayList<Integer>();
+
+        p.currentSegment(current);
+        pts.add((int)current[0]);
+        pts.add((int)current[1]);
+
+
+        p.next();
+        while (!p.isDone()) {
+            switch (p.currentSegment(current)) {
+
+            case PathIterator.SEG_LINETO:
+                p.currentSegment(current);
+
+                pts.add((int)current[0]); // "line_to"
+                pts.add((int)current[1]); // "line_to"
+                break;
+
+            case PathIterator.SEG_MOVETO:
+            case PathIterator.SEG_CLOSE: {
+                pts.add((int)current[0]);
+                pts.add((int)current[1]);
+                final int SIZE = pts.size();
+                int polygon[] = new int[SIZE];
+                for (int i = 0; i < SIZE; i++)
+                    polygon[i] = pts.get(i);
+                gc.fillPolygon(polygon);
+
+                pts.clear(); // closed we can start again now
+            }
+                break;
+
+            case PathIterator.SEG_QUADTO:
+            case PathIterator.SEG_CUBICTO:
+            default:
+
+            }
+            p.next();
+        }
+        gc.setBackground(fore);
     }
 
     /**
      * Sets an affine transformation for drawing shapes.
-     * 
+     *
      * @param t
      *            The transform.
      */
-    public void setAffineTransform( AffineTransform t ) {
+    public void setAffineTransform(AffineTransform t) {
         this.transform = t;
     }
 
@@ -154,9 +203,9 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
      * @see net.refractions.udig.project.render.ViewportGraphics#fillRect(int,
      *      int, int, int)
      */
-    public void fillRect( int x, int y, int width, int height ) {
-        int x2 = x + (int) transform.getTranslateX();
-        int y2 = y + (int) transform.getTranslateY();
+    public void fillRect(int x, int y, int width, int height) {
+        int x2 = x+(int)transform.getTranslateX();
+        int y2 = y+(int)transform.getTranslateY();
         gc.setBackground(fore);
         gc.fillRectangle(new Rectangle(x2, y2, width, height));
         gc.setBackground(back);
@@ -165,7 +214,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     /**
      * @see net.refractions.udig.project.render.ViewportGraphics#setColor(java.awt.Color)
      */
-    public void setColor( java.awt.Color c ) {
+    public void setColor(java.awt.Color c) {
         Color color = new Color(display, c.getRed(), c.getGreen(), c.getBlue());
         gc.setForeground(color);
         if (fore != null)
@@ -175,10 +224,10 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
 
     /**
      * This is hard because - background doesn't mean what we think it means.
-     * 
+     *
      * @see net.refractions.udig.project.render.ViewportGraphics#setBackground(java.awt.Color)
      */
-    public void setBackground( java.awt.Color c ) {
+    public void setBackground(java.awt.Color c) {
         Color color = new Color(display, c.getRed(), c.getGreen(), c.getBlue());
         gc.setBackground(color);
         if (back != null)
@@ -190,8 +239,8 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
      * @see net.refractions.udig.project.render.ViewportGraphics#setStroke(int,
      *      int)
      */
-    public void setStroke( int style, int width ) {
-        switch( style ) {
+    public void setStroke(int style, int width) {
+        switch (style) {
         case LINE_DASH: {
             gc.setLineStyle(SWT.LINE_DASH);
             break;
@@ -226,14 +275,14 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     /**
      * @see net.refractions.udig.project.render.ViewportGraphics#setClip(java.awt.Rectangle)
      */
-    public void setClip( java.awt.Rectangle r ) {
+    public void setClip(java.awt.Rectangle r) {
         gc.setClipping(r.x, r.y, r.width, r.height);
     }
 
     /**
      * @see net.refractions.udig.project.render.ViewportGraphics#translate(java.awt.Point)
      */
-    public void translate( Point offset ) {
+    public void translate(Point offset) {
         transform.translate(offset.x, offset.y);
     }
 
@@ -241,7 +290,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
      * @see net.refractions.udig.project.render.ViewportGraphics#clearRect(int,
      *      int, int, int)
      */
-    public void clearRect( int x, int y, int width, int height ) {
+    public void clearRect(int x, int y, int width, int height) {
         Color c = gc.getForeground();
         gc.setForeground(gc.getBackground());
         gc.fillRectangle(x, y, width, height);
@@ -252,11 +301,13 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
      * @see net.refractions.udig.project.render.ViewportGraphics#drawImage(javax.media.jai.PlanarImage,
      *      int, int)
      */
-    public void drawImage( RenderedImage rimage, int x, int y ) {
-        drawImage(rimage, 0, 0, rimage.getWidth(), rimage.getHeight(), x, y, x + rimage.getWidth(), y + rimage.getHeight());
+    public void drawImage(RenderedImage rimage, int x, int y) {
+        drawImage(rimage, 0, 0, rimage.getWidth(), rimage.getHeight(), x, y, x
+                + rimage.getWidth(), y + rimage.getHeight());
     }
 
-    public static Image createDefaultImage( Display display, int width, int height ) {
+    public static Image createDefaultImage(Display display, int width,
+            int height) {
         ImageData swtdata = null;
         PaletteData palette;
         int depth;
@@ -267,15 +318,17 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
         swtdata.transparentPixel = -1;
         swtdata.alpha = -1;
         swtdata.alphaData = new byte[swtdata.data.length];
-        for( int i = 0; i < swtdata.alphaData.length; i++ ) {
+        for (int i = 0; i < swtdata.alphaData.length; i++) {
             swtdata.alphaData[i] = (byte) i;
         }
         return new Image(display, swtdata);
 
     }
 
-    public static ImageDescriptor createImageDescriptor( final RenderedImage image, final boolean transparent ) {
-        return new ImageDescriptor(){
+
+    public static ImageDescriptor createImageDescriptor(
+            final RenderedImage image, final boolean transparent) {
+        return new ImageDescriptor() {
             public ImageData getImageData() {
                 return createImageData(image, transparent);
             }
@@ -283,18 +336,18 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     }
 
     /** Create a buffered image that can be be coverted to SWTland later */
-    public static BufferedImage createBufferedImage( int w, int h ) {
+    public static BufferedImage createBufferedImage(int w, int h) {
         return new BufferedImage(w, h, BufferedImage.TYPE_4BYTE_ABGR_PRE);
     }
 
-    public static Image createSWTImage( RenderedImage image, boolean transparent ) {
+    public static Image createSWTImage(RenderedImage image, boolean transparent) {
         ImageData data = createImageData(image, transparent);
 
         return new org.eclipse.swt.graphics.Image(Display.getDefault(), data);
     }
 
     // optimized version that works if the image is rgb with a byte data buffer
-    public static ImageData createImageDataFromBytes( RenderedImage image ) {
+    public static ImageData createImageDataFromBytes(RenderedImage image) {
         ImageData swtdata = null;
         int width = image.getWidth();
         int height = image.getHeight();
@@ -310,7 +363,8 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
         return swtdata;
     }
 
-    public static ImageData createImageData( RenderedImage image, boolean transparent ) {
+    public static ImageData createImageData(RenderedImage image,
+            boolean transparent) {
 
         // if(
         // image.getData().getDataBuffer().getDataType()==DataBuffer.TYPE_BYTE
@@ -337,15 +391,16 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
         }
         Raster raster = image.getData();
         int numbands = raster.getNumBands();
-        int[] awtdata = raster.getPixels(0, 0, width, height, new int[width * height * numbands]);
+        int[] awtdata = raster.getPixels(0, 0, width, height, new int[width
+                * height * numbands]);
         int step = swtdata.depth / 8;
 
         byte[] data = swtdata.data;
         int baseindex = 0;
-        for( int y = 0; y < height; y++ ) {
+        for (int y = 0; y < height; y++) {
             int idx = ((0 + y) * swtdata.bytesPerLine) + (0 * step);
 
-            for( int x = 0; x < width; x++ ) {
+            for (int x = 0; x < width; x++) {
                 baseindex = (x + (y * width)) * numbands;
 
                 if (numbands == 4 && awtdata[baseindex + 3] == 0) {
@@ -362,28 +417,28 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
         return swtdata;
     }
 
-    public void drawString( String string, int x, int y, int alignx, int aligny ) {
+    public void drawString(String string, int x, int y, int alignx, int aligny) {
         org.eclipse.swt.graphics.Point text = gc.stringExtent(string);
-        int w = (int) text.x;
-        int h = (int) text.y;
+        int w = (int)text.x;
+        int h = (int)text.y;
 
-        int x2 = (alignx == 0) ? x - w / 2 : (alignx > 0) ? x - w : x;
-        int y2 = (aligny == 0) ? y + h / 2 : (aligny > 0) ? y + h : y;
+        int x2 = (alignx == 0) ? x - w/2 : (alignx > 0) ? x - w : x;
+        int y2 = (aligny == 0) ? y + h/2 : (aligny > 0) ? y + h : y;
 
-        gc.drawString(string, x2, y2, true);
+        gc.drawString(string, x2, y2,true);
     }
 
-    public void setTransform( AffineTransform transform ) {
+    public void setTransform(AffineTransform transform) {
         this.transform = transform;
     }
 
     /**
      * @see net.refractions.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image,
      *      int, int)
-     * 
+     *
      * Current version can only draw Image if the image is an RenderedImage
      */
-    public void drawImage( java.awt.Image image, int x, int y ) {
+    public void drawImage(java.awt.Image image, int x, int y) {
         RenderedImage rimage = (RenderedImage) image;
         drawImage(rimage, x, y);
     }
@@ -392,12 +447,14 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
      * @see net.refractions.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image,
      *      int, int, int, int, int, int, int, int)
      */
-    public void drawImage( java.awt.Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2 ) {
+    public void drawImage(java.awt.Image image, int dx1, int dy1, int dx2,
+            int dy2, int sx1, int sy1, int sx2, int sy2) {
         RenderedImage rimage = (RenderedImage) image;
         drawImage(rimage, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2);
     }
 
-    public void drawImage( RenderedImage rimage, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2 ) {
+    public void drawImage(RenderedImage rimage, int dx1, int dy1, int dx2,
+            int dy2, int sx1, int sy1, int sx2, int sy2) {
         assert rimage != null;
         Image swtImage = null;
         try {
@@ -407,11 +464,8 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
             int translatedWidth = (int) (transform.getScaleX() * (dx2 - dx1));
             int translatedHeight = (int) (transform.getScaleY() * (dy2 - dy1));
             if (swtImage != null) {
-                if (sx1 < 0)
-                    sx1 = 0;
-                if (sy1 < 0)
-                    sy1 = 0;
-                gc.drawImage(swtImage, sx1, sy1, sx2 - sx1, sy2 - sy1, translatedX, translatedY, translatedWidth,
+                gc.drawImage(swtImage, sx1, sy1, sx2 - sx1, sy2 - sy1,
+                        translatedX, translatedY, translatedWidth,
                         translatedHeight);
                 swtImage.dispose();
             }
@@ -426,7 +480,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
         return gc.getFontMetrics().getHeight();
     }
 
-    public int stringWidth( String str ) {
+    public int stringWidth(String str) {
         return -1;
     }
 
@@ -434,22 +488,24 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
         return gc.getFontMetrics().getAscent();
     }
 
-    public Rectangle2D getStringBounds( String str ) {
+    public Rectangle2D getStringBounds(String str) {
         org.eclipse.swt.graphics.Point extent = gc.textExtent(str);
 
-        return new java.awt.Rectangle(0, 0, extent.x, extent.y);
+        return new java.awt.Rectangle(0,0,extent.x, extent.y);
     }
 
-    public void drawLine( int x1, int y1, int x2, int y2 ) {
+    public void drawLine(int x1, int y1, int x2, int y2) {
         gc.drawLine(x1, y1, x2, y2);
     }
 
-    public void drawImage( Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2 ) {
+    public void drawImage(Image image, int dx1, int dy1, int dx2, int dy2,
+            int sx1, int sy1, int sx2, int sy2) {
         int translatedX = (int) (dx1 + transform.getTranslateX());
         int translatedY = (int) (dy1 + transform.getTranslateY());
         int translatedWidth = (int) (transform.getScaleX() * (dx2 - dx1));
         int translatedHeight = (int) (transform.getScaleY() * (dy2 - dy1));
-        gc.drawImage(image, sx1, sy1, sx2 - sx1, sy2 - sy1, translatedX, translatedY, translatedWidth, translatedHeight);
+        gc.drawImage(image, sx1, sy1, sx2 - sx1, sy2 - sy1, translatedX,
+                translatedY, translatedWidth, translatedHeight);
 
     }
 
@@ -465,11 +521,11 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     }
 
     public void drawRect( int x, int y, int width, int height ) {
-        gc.drawRectangle(new Rectangle(x, y, width, height));
+        gc.drawRectangle(new Rectangle(x,y,width, height));
     }
 
-    public void drawOval( int x, int y, int width, int height ) {
-        gc.drawOval(x, y, width, height);
+    public void drawOval( int x, int y, int width, int height ){
+        gc.drawOval(x,y,width, height);
     }
 
     public void fillOval( int x, int y, int width, int height ) {
@@ -489,13 +545,13 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
         gc.setClipping(new Rectangle(newBounds.x, newBounds.y, newBounds.width, newBounds.height));
     }
 
-    public java.awt.Color getBackgroundColor() {
-        return AWTSWTImageUtils.swtColor2awtColor(gc, gc.getBackground());
-    }
+	public java.awt.Color getBackgroundColor() {
+		return SWTGraphics.swt2awt(gc, gc.getBackground());
+	}
 
-    public java.awt.Color getColor() {
-        return AWTSWTImageUtils.swtColor2awtColor(gc, gc.getForeground());
-    }
+	public java.awt.Color getColor() {
+		return SWTGraphics.swt2awt(gc, gc.getForeground());
+	}
 
     public void drawRoundRect( int x, int y, int width, int height, int arcWidth, int arcHeight ) {
         gc.drawRoundRectangle(x, y, width, height, arcWidth, arcHeight);
@@ -515,14 +571,14 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
         gc.setLineWidth(width);
     }
 
-    public void setFont( java.awt.Font f ) {
+    public void setFont(java.awt.Font f){
         Font swtFont;
 
         int size = f.getSize() * getDPI() / 72;
-        int style = AWTSWTImageUtils.toFontStyle(f);
+        int style = SWTGraphics.toFontStyle( f );
 
-        swtFont = new Font(gc.getDevice(), f.getFamily(), size, style);
-        if (font != null) {
+        swtFont = new Font( gc.getDevice(),f.getFamily(), size, style );
+        if (font != null){
             font.dispose();
         }
         font = swtFont;
@@ -532,10 +588,12 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
         return gc.getDevice().getDPI().y;
     }
 
-    public void fillGradientRectangle( int x, int y, int width, int height, java.awt.Color startColor, java.awt.Color endColor,
-            boolean isVertical ) {
-        Color color1 = new Color(display, startColor.getRed(), startColor.getGreen(), startColor.getBlue());
-        Color color2 = new Color(display, endColor.getRed(), endColor.getGreen(), endColor.getBlue());
+    public void fillGradientRectangle( int x, int y, int width, int height,
+            java.awt.Color startColor, java.awt.Color endColor, boolean isVertical ) {
+        Color color1 = new Color(display, startColor.getRed(), startColor.getGreen(), startColor
+                .getBlue());
+        Color color2 = new Color(display, endColor.getRed(), endColor.getGreen(), endColor
+                .getBlue());
         gc.setForeground(color1);
         gc.setBackground(color2);
 

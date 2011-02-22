@@ -28,15 +28,15 @@ public class MapPerspective implements IPerspectiveFactory {
 
 	/** <code>ID_PERSPECTIVE</code> field */
 	public static final String ID_PERSPECTIVE = "net.refractions.udig.ui.mapPerspective"; //$NON-NLS-1$
-    
+
     /**
      * Creates the initial layout for a page.
      * <p>
      * Implementors of this method may add additional views to a
      * perspective.  The perspective already contains an editor folder
-     * identified by the result of <code>IPageLayout.getEditorArea()</code>.  
-     * Additional views should be added to the layout using this value as 
-     * the initial point of reference.  
+     * identified by the result of <code>IPageLayout.getEditorArea()</code>.
+     * Additional views should be added to the layout using this value as
+     * the initial point of reference.
      * </p>
      *
      * @param layout the page layout
@@ -44,16 +44,16 @@ public class MapPerspective implements IPerspectiveFactory {
     public void createInitialLayout(IPageLayout layout) {
         // Get the editor area.
         String editorArea = layout.getEditorArea();
-        
+
         layout.addView( "net.refractions.udig.project.ui.projectExplorer", IPageLayout.LEFT, 0.25f, editorArea ); //$NON-NLS-1$
         layout.addView( "net.refractions.udig.project.ui.layerManager", IPageLayout.BOTTOM, 0.25f, //$NON-NLS-1$
                 "net.refractions.udig.project.ui.projectExplorer" ); //$NON-NLS-1$
-        
+
         layout.addView("net.refractions.udig.catalog.ui.CatalogView", IPageLayout.BOTTOM, 0.65f, editorArea);         //$NON-NLS-1$
         layout.addActionSet("net.refractions.udig.helpMenuItems");
         layout.addActionSet("net.refractions.udig.ui.default");
-        layout.addPerspectiveShortcut(StylePerspective.ID_PERSPECTIVE);
+        layout.addPerspectiveShortcut(AlternateMapPerspective.ID_PERSPECTIVE);
     }
-    
-     
+
+
 }

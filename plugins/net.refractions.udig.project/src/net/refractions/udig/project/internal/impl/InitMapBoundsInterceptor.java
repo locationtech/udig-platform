@@ -24,7 +24,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 
 /**
  * If first layer it sets the viewport bounds to be the bounds of the layer.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */

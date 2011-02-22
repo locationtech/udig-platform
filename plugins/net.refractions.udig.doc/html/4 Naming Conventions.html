@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 4 Naming Conventions</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 4 Naming Conventions -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>Welcome to the next level, naming stuff. Naming is one of the hardest things to do when developing and the Eclipse project has offered us the following guidelines.</p>
+
+<h2><a name="4NamingConventions-ConventionsfromEclipsePluginDevelopersGuide">Conventions from Eclipse Plug-in Developers Guide</a></h2>
+
+<p>The following package name segments are reserved:</p>
+<ul>
+	<li>internal - indicates an internal implementation package that contains no API</li>
+	<li>tests - indicates a non-API package that contains only test suites</li>
+	<li>examples - indicates a non-API package that contains only examples</li>
+</ul>
+
+
+<p>These name are used as qualifiers, and must only appear following the major package name. For example,</p>
+
+<p>    org.eclipse.core.internal.resources - Correct usage<br/>
+    org.eclipse.internal.core.resources - Incorrect. internal precedes major package name.<br/>
+    org.eclipse.core.resources.internal - Incorrect. internal does not immediately follow major package name.</p>
+
+<p>They also have a convention of seperating out model from ui, so ui plugins get a <b>.ui</b> package name segment.</p>
+
+<p>There is an example from udig:</p>
+<ul>
+	<li>net.refractions.udig (model or core)</li>
+	<li>net.refractions.udig.ui (user interface)</li>
+</ul>
+
+
+<p>As a clue anything that is <em>core</em> can run in headless mode.</p>
+
+  <img src="http://udig.refractions.net/image/DEV/ngrelr.gif">
+
+<p><a href="API rules of engagement.html" title="API rules of engagement">API rules of engagement</a><br/>
+<a href="http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/misc/naming.html" title="Visit page outside Confluence">Naming Conventions(eclipse.org)</a></p>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=8540">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=8540">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

@@ -14,9 +14,9 @@
  */
 package net.refractions.udig.validation;
 
+import org.geotools.feature.FeatureType;
 import org.geotools.validation.FeatureValidation;
 import org.geotools.validation.spatial.LineMustBeASinglePartValidation;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.vividsolutions.jts.geom.LineString;
 
@@ -24,7 +24,7 @@ import com.vividsolutions.jts.geom.LineString;
  * Overrides the FeatureValidationOp abstract class to return LineMustBeASinglePartValidation()
  * <p>
  * </p>
- * 
+ *
  * @author chorner
  * @since 1.0.1
  */
@@ -32,10 +32,10 @@ public class ValidateLineMustBeASinglePart extends FeatureValidationOp {
     public FeatureValidation getValidator() {
         return new LineMustBeASinglePartValidation();
     }
-    
+
     @Override
-    protected boolean canValidate( SimpleFeatureType featureType ) {
-        if (featureType.getGeometryDescriptor() instanceof LineString) {
+    protected boolean canValidate( FeatureType featureType ) {
+        if (featureType.getDefaultGeometry() instanceof LineString) {
             return true;
         }
         return false;

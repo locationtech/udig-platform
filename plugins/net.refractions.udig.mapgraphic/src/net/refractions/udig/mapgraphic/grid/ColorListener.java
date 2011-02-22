@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Event;
 
 /**
  * Opens a color chooser dialog and fires the modify method in the ModifyListener.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -46,11 +46,11 @@ public class ColorListener implements SelectionListener {
         RGB currentRGB = new RGB(currentColor.getRed(), currentColor.getGreen(), currentColor.getBlue());
         dialog.setRGB(currentRGB);
         dialog.open();
-        
+
         RGB rgb = dialog.getRGB();
-        
+
         e.widget.setData(new Color(rgb.red, rgb.green, rgb.blue));
-        
+
         configurator.updateColorButton();
         Event event = new Event();
         event.item=e.item;

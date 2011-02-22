@@ -18,12 +18,12 @@ import org.eclipse.ui.IMemento;
 
 /**
  * Provides a resolution method for fixing a memento item.
- * 
+ *
  * @author chorner
  * @since 1.1.0
  */
 public interface IFixer {
-	
+
     /**
      * Determines if the object memento can be handled by this fixer implementation.
      *
@@ -32,21 +32,21 @@ public interface IFixer {
      * @return
      */
 	public boolean canFix(Object object, IMemento memento);
-	
+
 	/**
      * Performs the fix operation. This could be a zoom to a feature, or simply firing up a cheat
      * sheet/dialog.
-     * 
+     *
      * @param object victim
      * @param memento additional tidbits for fixer initialization and saving state.
      */
     public void fix(Object object, IMemento memento);
-	
+
     /**
      * Informs the fixer that the fix was completed successfully.
-     *   
+     *
      * @param object victim
      */
     public void complete(Object object);
-    
+
 }

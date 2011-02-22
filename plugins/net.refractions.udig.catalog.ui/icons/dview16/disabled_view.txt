@@ -6,7 +6,7 @@ PALETTE: Eclipse 8 colour palette
 View
 ----
 View icons are found on the left side of the titlebar of each view within the
-workbench. These icons indicate each view’s function. 
+workbench. These icons indicate each view?s function.
 
 View Icon Size & Placement
 --------------------------

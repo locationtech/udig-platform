@@ -10,7 +10,6 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.osgi.framework.BundleContext;
@@ -65,7 +64,7 @@ public class BookmarksPlugin extends AbstractUIPlugin {
 
     /**
      * Returns the shared instance.
-     * 
+     *
      * @return The instance of this plugin
      */
     public static BookmarksPlugin getDefault() {
@@ -74,7 +73,7 @@ public class BookmarksPlugin extends AbstractUIPlugin {
 
     /**
      * Returns an image descriptor for the image file at the given plug-in relative path.
-     * 
+     *
      * @param path the path
      * @return the image descriptor
      */
@@ -85,7 +84,7 @@ public class BookmarksPlugin extends AbstractUIPlugin {
 
     /**
      * Returns the bookmark manager for this plug-in.
-     * 
+     *
      * @return the bookmark manager
      */
     public BookmarkManager getBookmarkManager() {
@@ -124,8 +123,7 @@ public class BookmarksPlugin extends AbstractUIPlugin {
                     try {
                         crs = CRS.decode(crsString);
                     } catch (NoSuchAuthorityCodeException e) {
-                        crs = DefaultGeographicCRS.WGS84;
-                    } catch (FactoryException e) {
+                        // TODO Handle NoSuchAuthorityCodeException
                         crs = DefaultGeographicCRS.WGS84;
                     }
                     ReferencedEnvelope bounds = new ReferencedEnvelope(env, crs);
@@ -139,7 +137,7 @@ public class BookmarksPlugin extends AbstractUIPlugin {
 
     /**
      * Stores the bookmarks to the plugin's preference store
-     * 
+     *
      * @throws BackingStoreException
      */
     public void storeToPreferences() throws BackingStoreException {

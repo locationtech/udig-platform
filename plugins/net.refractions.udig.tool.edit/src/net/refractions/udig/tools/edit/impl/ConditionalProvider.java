@@ -24,7 +24,7 @@ import net.refractions.udig.tools.edit.EditToolHandler;
  * @since 1.1.0
  */
 public class ConditionalProvider implements IProvider<String> {
-    
+
     private EditToolHandler handler;
     private String creatingMessage;
     private String defaultMessage;
@@ -34,7 +34,7 @@ public class ConditionalProvider implements IProvider<String> {
         this.creatingMessage=creatingMessage;
         this.defaultMessage=defaultMessage;
     }
-    
+
     public String get(Object... params) {
         if( handler.getCurrentState()==EditState.CREATING)
             return creatingMessage;

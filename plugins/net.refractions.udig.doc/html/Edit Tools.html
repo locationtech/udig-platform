@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : Edit Tools</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : Edit Tools -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="EditTools-EditToolsUNDERCONSTRUCTION">Edit Tools   ---- UNDER CONSTRUCTION ----</a></h1>
+
+<p>Edit tools are another sub-type of tools, however they do not (yet) have their own extension point.  Instead they are extensions of the net.refractions.udig.project.ui.tool extension point.  Because there are a large number of editing tools that can be created an many of them have similar functionality there is a little framework associated with edit tools development.  </p>
+
+<h3><a name="EditTools-SummaryofEditToolFramework">Summary of Edit Tool Framework</a></h3>
+<p>The central classes in the editing framework are the <b>AbstractEditTool</b>, <b>EditToolHandler</b>, <b>EditBlackboard</b>, <b>EventBehaviour</b>, and <b>Activator</b> classes.  </p>
+<ul>
+	<li><b>AbstractEditTool</b> - The super class of all Edit tools that use this framework.  The AbstractEditTool has little functionality beyond configuring the <b>EditToolHandler</b> object upon creation.</li>
+	<li><b>EditToolHandler</b> - The Edit tool handler is composed of <b>EventBehaviours</b>, <b>Activators</b> and <b>AcceptBehaviours</b>.
+	<ul>
+		<li>The <b>EditToolHandler</b> accepts mouse and keyboard events from the <b>AbstractEditTool</b> and delegates the events to "EventBehaviour* objects that are valid for the type of event.  All <b>EventBehaviour</b> objects that are valid will have the commands returned by their getCommand() method to the map's commandStack for execution.</li>
+		<li><b>Activators</b> are ran when the tool is activated and deactivated.</li>
+		<li><b>AcceptBehaviours</b> are ran when the tool is deactived, when a behaviour requests that the current changes be accepted or when the user presses <em>Enter</em> key.</li>
+		<li>The <b>EditToolHandler</b> has a locking mechanism so that a group of <b>EventBehaviours</b> can lock out other potentially valid behaviours.  For example a move vertex behaviour (Valid during drag events) may wish to lock the handler so that the SelectVertexBox behaviour (Also valid during drag events).</li>
+		<li>The current geometry and shape (shell or hole) being edited can be accessed throught the <b>EditToolHandler</b></li>
+		<li>An object called the <b>MouseTracker</b> can be accessed via the <b>EditToolHandler</b></li>
+		<li>The current edit state can be accessed via the <b>EditToolHandler</b>.  The possible edit states are listed in the enum <b>EditState</b>.</li>
+	</ul>
+	</li>
+	<li><b>EditBlackboard</b> - Provides methods for efficiently editing geometries.
+	<ul>
+		<li>Geometries can be added to the blackboard and vertices can be added, removed and moved by making requests to the <b>EditBlackboard</b>.  When a Geometry is added to the <b>EditBlackboard</b> it is converted into one or more <b>EditGeom</b> objects.  All editing is done in terms of pixels, the <b>EditBlackboard</b> will transparently perform a requested operation on all coordinates mapping to the pixel(s) and will handle all the transformations required.</li>
+		<li>The EditBlackboard also has a <b>Selection</b> which is a selection of points and Coordinates at that point.  When the Selection is obtained it is a snap shot of the selection at that point in time.  If a reference is maintained to a selection and a point is added to the selection via the methods on the <b>EditBlackboard</b> the referenced Selection will not change.  <b>HOWEVER</b>, if a point is moved on the EditBlackboard the selection will be updated to reflect the move.  Similarly, if a point is removed from the <b>EditBlackboard</b> the point (and all associated coordinates) will be removed from the selection.  It is important to not keep references to <b>Selections</b> any longer than necessary because <b>Selections</b> will receive events as long as they are referenced.  The <b>EditBlackboard</b>'s list of listeners are weak references so all that needs to be done to remove a listener from the <b>EditBlackboard</b> is to remove all references to the object.  That is also a warning.  If an object is listening to the <b>EditBlackboard</b> it is important to keep a reference to the listener.</li>
+		<li>The <b>EditBlackboard</b> can be useful for implementing coverage-like editing.  If two geometries are added to the <b>EditBlackboard</b> that share an edge; edits moving one of the shared vertices will automatically move the coordinates in both geometries.</li>
+		<li><b>EventBehaviour</b> - Actions that occur when events are raised by the mouse or keyboard.  All <b>EventBehaviours</b> have an <em>isValid()</em> method that is called to determine whether or not the behaviour is valid given the current state of the <b>EditTooHandler</b> and the type of event that occurred.  If the <b>EventBehaviour</b> is valid then the <em>getCommand()</em> method will be called by the <b>EditToolHandler</b> and executed by the current map's command manager.  Since both <em>isValid()</em> and <em>getCommand()</em> are executed in the display thread the amount of work they do must be very quickly executed so as to not impact the user interaction.</li>
+	</ul>
+	</li>
+</ul>
+
+
+<h3><a name="EditTools-ClassDiagramofEditToolframework">Class Diagram of Edit Tool frame work</a></h3>
+<p><a href='/confluence/download/attachments/8001/edit_tool_design.png' target='edit_tool_design.png' onClick='window.open("/confluence/download/attachments/8001/edit_tool_design.png", "edit_tool_design.png", "height=900,width=1218,menubar=no,status=no,toolbar=no"); return false;'><img border='0' src='/confluence/download/thumbnails/8001/edit_tool_design.png' width='340' height='250' align="absmiddle" border="0" ></a></p>
+
+<h3><a name="EditTools-InteractionDiagramofaMouseReleasedEvent">Interaction Diagram of a Mouse Released Event</a></h3>
+<p><a href='/confluence/download/attachments/8001/mouse_click_nonselected_feature_behaviour.png' target='mouse_click_nonselected_feature_behaviour.png' onClick='window.open("/confluence/download/attachments/8001/mouse_click_nonselected_feature_behaviour.png", "mouse_click_nonselected_feature_behaviour.png", "height=407,width=932,menubar=no,status=no,toolbar=no"); return false;'><img border='0' src='/confluence/download/thumbnails/8001/mouse_click_nonselected_feature_behaviour.png' width='400' height='170' title="sequence diagram of clicking on a feature that is not selected" align="absmiddle" border="0" ></a></p>
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Edit Tools_attachments/edit_tool_design.png">edit_tool_design.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Edit Tools_attachments/mouse_click_nonselected_feature_behaviour.png">mouse_click_nonselected_feature_behaviour.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="Edit Tools_attachments/edit_blackboard_design.xmi">edit_blackboard_design.xmi</a> (application/octet-stream)
+                                <br/>
+                                                    </div>
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=8001">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=8001">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

@@ -31,7 +31,6 @@ import net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.render.glass.GlassPane;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.graphics.AWTGraphics;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
@@ -49,14 +48,14 @@ import org.eclipse.swt.widgets.Event;
  * The ViewportPaneImpl is a java.awt.Panel that is the display area for a Map. It Registers itself
  * with a CompositeRenderer and obtains the image from the CompositeRenderer if the
  * CompositeRenderer is "ready"
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
 public class ViewportPaneJava extends Panel implements ViewportPane {
     ViewportPainter painter = new ViewportPainter(this);
     private static final long serialVersionUID = 1L;
-	private static final int DEFAULT_DPI = 72;    
+	private static final int DEFAULT_DPI = 72;
 	ViewportPane pane = this;
     private final static AffineTransform IDENTITY = new AffineTransform();
     private VolatileImage vImage;
@@ -68,18 +67,11 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
     private MapPart editor;
 
     /**
-     * The glass pane associated with the viewport pane.
-     * Allows direct drawing on the image (similar to 
-     * draw commands).
-     */
-    private GlassPane glass;
-    
-    /**
      * Create a image that is compatable with this ViewportPane.
      * <p>
      * This image is expected to be a "Managed Image" and thus hardware accelarated.
      * </p>
-     * 
+     *
      * @see ViewportPane#image(int, int)
      * @param w width
      * @param h height
@@ -90,14 +82,14 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
     }
     /**
      * Creates a new ViewportPaneImpl object.
-     * 
+     *
      * @param comp The Composite that this pane will be embedded into
      * @param editor editor that contains this viewport
      */
     public ViewportPaneJava( Composite comp, MapPart editor ) {
         this.editor = editor;
         handler = new EventHandler(this, eventJob);
-        
+
         comp.addListener(SWT.MouseDoubleClick, handler);
         comp.addListener(SWT.MouseDown, handler);
         comp.addListener(SWT.MouseEnter, handler);
@@ -108,7 +100,7 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
         comp.addListener(SWT.MouseWheel, handler);
         comp.addListener(SWT.Resize, handler);
         comp.addListener(SWT.KeyDown, handler);
-        
+
         Composite child = new Composite(comp, SWT.EMBEDDED | SWT.NO_BACKGROUND );
         child.setEnabled(false);
         SWT_AWT.new_Frame(child).add(this);
@@ -250,10 +242,6 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
         paint(g);
     }
 
-    public void update(){
-        //do nothing
-    }
-    
     /**
      * @see ViewportPane#dispose()
      */
@@ -379,32 +367,12 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
     public void repaint() {
         super.repaint();
     }
-    
+
 	public void enableDrawCommands(boolean enable) {
 		painter.switchOnOff(enable);
 	}
     public boolean isDisposed() {
         return composite.isDisposed();
     }
-    
-    /**
-     * Gets the GlassPane.
-     * <p>
-     * Will return null if no glass pane set.
-     * </p>
-     * 
-     * @return the GlassPane if set; or null if no GlassPane set
-     */
-    public GlassPane getGlass() {
-        return this.glass;
-    }
 
-    /**
-     * Sets the GlassPane
-     * 
-     * @param g
-     */
-    public void setGlass( GlassPane glass ) {
-        this.glass = glass;
-    }
 }

@@ -9,29 +9,29 @@ The install base directly currently contains:
   present simply as a reference to determine exactly which version of the eclipse RCP package is present
   in this install base.  If a new version of the RCP is required, then the install base will need to be
   recreated using the appropriate eclipse RCP version.
-  
+
 - LGPL.txt
 
   This is the license file, and must remain where it is.  The installer reads this file in from its current
   location.
-  
+
 - RCP_Extra.zip
 
   The contents of this archive will have been extracted into the plugins directory (a subdirectory of eclipse)
-  
+
 - Soap-lib.zip
 
   The contents of this archive will have been extracted into the JRE/lib/ext directory (a subdirectory of eclipse)
-  
+
 - uDigInstallScript.nsi
 
   This is the install script.  The only thing that *should* need to be changed in this file is the version
   number of uDIG that is being installed.  The section that needs to be changed is surrounded by 2 :TODO: tags.
-  
+
 - README.txt
 
   This file, detailing exactly what is involved in creating an installer for the latest release of uDIG
-  
+
 - eclipse directory
 
   This is the extracted contents of the RCP file mentioned above.

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: RenderManagerItemProvider.java 24145 2007-02-01 18:03:34Z jeichar $
  */
 package net.refractions.udig.project.internal.render.provider;
 
@@ -31,7 +31,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a
  * {@link net.refractions.udig.project.internal.render.RenderManager} object. <!-- begin-user-doc
  * --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class RenderManagerItemProvider extends ItemProviderAdapter
@@ -43,7 +43,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
             IItemPropertySource {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
@@ -51,7 +51,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
     /**
      * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public RenderManagerItemProvider( AdapterFactory adapterFactory ) {
@@ -61,7 +61,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
     /**
      * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public List getPropertyDescriptors( Object object ) {
@@ -79,7 +79,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Map Display feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addMapDisplayPropertyDescriptor( Object object ) {
@@ -97,7 +97,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Map Internal feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addMapInternalPropertyDescriptor( Object object ) {
@@ -115,7 +115,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Viewport Model Internal feature. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addViewportModelInternalPropertyDescriptor( Object object ) {
@@ -133,7 +133,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Render Executor feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addRenderExecutorPropertyDescriptor( Object object ) {
@@ -154,7 +154,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
      * {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Collection getChildrenFeatures( Object object ) {
@@ -166,7 +166,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
 
     /**
      * This returns RenderManager.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Object getImage( Object object ) {
@@ -176,21 +176,21 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
     /**
      * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated NOT
      */
     public String getText( Object object ) {
         IMapDisplay labelValue = ((RenderManager) object).getMapDisplay();
         String label = labelValue == null ? null : labelValue.toString();
         return label == null || label.length() == 0 ? "RenderManager" :
-                label; 
+                label;
     }
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
      * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void notifyChanged( Notification notification ) {
@@ -209,7 +209,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
      * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
      * describing all of the children that can be created under this object. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     protected void collectNewChildDescriptors( Collection newChildDescriptors, Object object ) {
@@ -219,7 +219,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
     /**
      * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public ResourceLocator getResourceLocator() {

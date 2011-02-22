@@ -87,7 +87,7 @@ public class URLImageDescriptor extends ImageDescriptor {
      * Method declared on Object.
      */
     /**
-     * The <code>URLImageDescriptor</code> implementation of this <code>Object</code> method 
+     * The <code>URLImageDescriptor</code> implementation of this <code>Object</code> method
      * returns a string representation of this object which is suitable only for debugging.
      */
     public String toString() {

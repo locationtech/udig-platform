@@ -20,13 +20,13 @@ import net.refractions.udig.project.ui.tool.AbstractActionTool;
 
 /**
  * Tool that zooms out a fixed amount.
- * 
+ *
  * @author jgarnett
  * @since 0.6.0
  */
 public class ZoomOut extends AbstractActionTool{
 
-    
+
     /*
      * @see net.refractions.udig.project.ui.tool.ActionTool#run()
      */

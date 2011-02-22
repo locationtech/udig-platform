@@ -14,21 +14,12 @@
  */
 package net.refractions.udig.catalog.tests.internal;
 
-import net.refractions.udig.catalog.IResolve;
-
 /**
- * Dummy class for testing, wraps around provided delegate.
+ * Dummy class for testing
  * @author Jesse
  * @since 1.1.0
  */
 public class ResolvedTo {
-	IResolve delegate;
-	public ResolvedTo( IResolve delegate ){
-		this.delegate = delegate;
-	}
-	@Override
-	public String toString() {
-		return "ResolvedTo<"+delegate.getIdentifier()+">";
-	}
+
 
 }

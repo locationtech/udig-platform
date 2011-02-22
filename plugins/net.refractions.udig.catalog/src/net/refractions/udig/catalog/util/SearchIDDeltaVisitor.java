@@ -38,7 +38,7 @@ import net.refractions.udig.catalog.IResolveDelta.Kind;
  * <p>
  * You can use this code as an example of a good IResolveDeltaVisitor.
  * </p>
- * 
+ *
  * @author jgarnett
  * @since 0.6.0
  */
@@ -65,7 +65,7 @@ public class SearchIDDeltaVisitor implements IResolveDeltaVisitor {
     }
     /**
      * Best match IResolveDelta for handle, may be null if search came up empty.
-     * 
+     *
      * @return Best match IResolveDelta for handle
      */
     public IResolveDelta getFound() {
@@ -86,16 +86,10 @@ public class SearchIDDeltaVisitor implements IResolveDeltaVisitor {
         return true;
     }
     /**
-     * Return the "best" match for the provided *id*, used to quickly see
-     * if the event contains anything of interest for a specific IResolve.
+     * Quick method that uses this visitor to search an event.
      * <p>
-     * The check here is *just* based on the provided id, look compare with
-     * SearchResolveDeltaVisitor which checks IResolve identity.
-     * <p>
-     * This serves as a good example of using a visitor, if you are looking
-     * to copy code.
+     * This serves as a good example of using a visitor.
      * </p>
-     * @return IResolveDelta that effects the provided id or null if not applicable.
      */
     public static IResolveDelta search( URL id, IResolveChangeEvent event ) {
         if (id == null || event == null)

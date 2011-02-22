@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Event;
  * This is a wizard page which is used to select from a set of data sources.
  * <p>
  * Each data source is described an instance of
- * 
+ *
  * @see net.refractions.udig.catalog.ui.UDIGImportPageDescriptor.
  *      </p>
  *      <p>
@@ -59,16 +59,16 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 
 	public DataSourceSelectionPage() {
 		super("dataSourceWizardPage"); //$NON-NLS-1$
-		setTitle(Messages.DataSourceSelectionPage_pageTitle); 
-		setDescription(Messages.DataSourceSelectionPage_defaultMessage); 
+		setTitle(Messages.DataSourceSelectionPage_pageTitle);
+		setDescription(Messages.DataSourceSelectionPage_defaultMessage);
 	}
 
 	/**
 	 * Sets the selected set of import page descriptiors.
-	 * 
+	 *
 	 * @param ids
 	 *            A list of import page identifiers.
-	 * 
+	 *
 	 */
 	public void select(List<String> ids) {
 		descriptors=ConnectionFactoryManager.instance().getConnectionFactoryDescriptors(ids);
@@ -77,7 +77,7 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 
 	/**
 	 * Sets the selected import page descriptor.
-	 * 
+	 *
 	 * @param id
 	 *            The id of the import page to select.
 	 */
@@ -89,7 +89,7 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 
 	/**
 	 * Sets the selected import page descriptor.
-	 * 
+	 *
 	 * @param descriptor
 	 *            The descriptor to be selected.
 	 */
@@ -126,23 +126,15 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 		return false;
 	}
 
-	@Override
-	public DataSourceSelectionState getState() {
-	    return (DataSourceSelectionState) super.getState();
-	}
-	
-	@Override
-	public void shown() {
-	    this.selected = (IStructuredSelection) viewer.getSelection();
-        syncStateWithUI();
-	}
 	/**
 	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent) {
+
+
 		Composite comp = new Composite(parent, SWT.NONE);
         comp.setLayout(new FillLayout());
-		
+
 		viewer = new WizardViewer(comp, SWT.SINGLE | SWT.BORDER);
 		viewer.setInput(getDescriptors().toArray());
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
@@ -161,9 +153,9 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 
 		// check the state for an initial selection
 		DataSourceSelectionState state = (DataSourceSelectionState) getState();
-		if (state.getDescriptor() != null){
+		if (state.getDescriptor() != null)
 			viewer.setSelection(new StructuredSelection(state.getDescriptor()));
-		}
+
 		setControl(comp);
 	}
 
@@ -197,11 +189,7 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 	 */
 	public void selectionChanged(SelectionChangedEvent event) {
 		selected = (IStructuredSelection) event.getSelection();
-		syncStateWithUI();
-	}
-
-    private void syncStateWithUI() {
-        if (selected != null && !selected.isEmpty()) {
+		if (selected != null && !selected.isEmpty()) {
 			UDIGConnectionFactoryDescriptor descriptor = (UDIGConnectionFactoryDescriptor) selected
 					.getFirstElement();
 
@@ -210,24 +198,24 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 			setMessage(descriptor.getDescription(0));
 
 			// update the underlying state
-			DataSourceSelectionState state = getState();
+			DataSourceSelectionState state = (DataSourceSelectionState) getState();
 			state.setDescriptor(descriptor);
 		}
 
 		// update the container buttons
 		getWizard().getContainer().updateButtons();
-    }
+	}
 
 	public Viewer getViewer() {
 		return viewer;
 	}
 
 	public List<UDIGConnectionFactoryDescriptor> getDescriptors() {
-        
+
 		List<UDIGConnectionFactoryDescriptor> connectionFactoryDescriptors = ConnectionFactoryManager.instance().getConnectionFactoryDescriptors();
         return connectionFactoryDescriptors;
-	}	
-	
+	}
+
 	protected void saveSelectedDescriptor() {
 		IStructuredSelection selection = (IStructuredSelection) viewer
 				.getSelection();

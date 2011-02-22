@@ -16,10 +16,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//Box"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//Box"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DecoratorBox" eSuperTypes="#//Box">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="map" eType="ecore:EClass ../../net.refractions.udig.project/emf/internal.ecore#//Map"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layer" eType="ecore:EClass ../../net.refractions.udig.project/emf/internal.ecore#//Layer"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Element">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" eType="#//Point"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="#//Dimension"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="paperSize" eType="#//Dimension"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Page" eSuperTypes="#//Element ../../net.refractions.udig.project/emf/internal.ecore#//ProjectElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="boxes" upperBound="-1"

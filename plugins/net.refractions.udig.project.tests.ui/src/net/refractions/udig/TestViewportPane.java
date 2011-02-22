@@ -26,14 +26,13 @@ import net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.render.glass.GlassPane;
 
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Control;
 
 /**
  * A dummy object for testing
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -45,9 +44,6 @@ public class TestViewportPane extends TestMapDisplay implements ViewportPane {
 
     public BufferedImage image( int w, int h ) {
         return null;
-    }
-    
-    public void update(){
     }
 
     public void repaint() {
@@ -118,13 +114,6 @@ public class TestViewportPane extends TestMapDisplay implements ViewportPane {
 
     public boolean isDisposed() {
         return false;
-    }
-
-    public GlassPane getGlass() {
-        return null;
-    }
-
-    public void setGlass( GlassPane glass ) {
     }
 
 }

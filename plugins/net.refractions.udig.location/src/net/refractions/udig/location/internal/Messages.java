@@ -51,7 +51,7 @@ public class Messages extends NLS {
 
 	private Messages() {
 	}
-	
+
 	/**
      * Initialize the given Action from a ResourceBundle.
      * <p>
@@ -63,10 +63,10 @@ public class Messages extends NLS {
      * <li>prefix.description
      * </p>
      * <p>
-     * Note: The use of a single image value is mapped to images for both the enabled and disabled
+     * Note: The use of a single image value is mapped to images for both the enabled and distabled
      * state of the IAction. the Local toolbar (elcl16/ and dlcl16/) is assumed if a path has not
      * been provided.
-     * 
+     *
      * <pre><code>
      *  add_co.gif              (prefix.image)
      *     enabled: elcl16/add_co.gif
@@ -75,9 +75,9 @@ public class Messages extends NLS {
      *     enabled: etool16/discovery_wiz.16
      *    disabled: etool16/discovery_wiz.16
      * </code></pre>
-     * 
+     *
      * </p>
-     * 
+     *
      * @param a action
      * @param id used for binding (id.label, id.tooltip, ...)
      */

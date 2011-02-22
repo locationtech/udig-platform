@@ -1,0 +1,52 @@
+<class-diagram generalizations="true" realizations="true" associations="true" dependencies="true"
+  nesting-relationships="true">
+  <classifier-display autosize="true" package="true" attributes="false" operations="true" initial-value="false"
+    signature="true" visibility="true"/>
+  <association-display labels="true" multiplicity="true"/>
+  <interface type="java" name="org.eclipse.core.runtime.IAdaptable" project="net.refractions.udig.browser"
+    file="C:/java/eclipse/plugins/org.eclipse.equinox.common_3.3.0.v20070426.jar" corner="BOTTOM_RIGHT">
+    <display autosize="true" package="true" attributes="false" operations="true" initial-value="false" signature="true"
+      visibility="true"/>
+    <position x="148" y="133" width="-1" height="-1"/>
+  </interface>
+  <interface type="java" name="org.eclipse.core.runtime.IAdapterManager" project="net.refractions.udig.browser"
+    file="C:/java/eclipse/plugins/org.eclipse.equinox.common_3.3.0.v20070426.jar" corner="BOTTOM_RIGHT">
+    <display autosize="true" package="true" attributes="false" operations="true" initial-value="false" signature="true"
+      visibility="true"/>
+    <position x="203" y="280" width="-1" height="-1"/>
+  </interface>
+  <interface type="java" name="org.eclipse.core.runtime.IAdapterFactory" project="net.refractions.udig.browser"
+    file="C:/java/eclipse/plugins/org.eclipse.equinox.common_3.3.0.v20070426.jar" corner="BOTTOM_RIGHT">
+    <display autosize="true" package="true" attributes="false" operations="true" initial-value="false" signature="true"
+      visibility="true"/>
+    <position x="450" y="280" width="-1" height="-1"/>
+  </interface>
+  <class type="java" name="net.refractions.udig.tutorials.urladapter.URLAdapterFactory"
+    project="net.refractions.udig.tutorials.urladapter"
+    file="/net.refractions.udig.tutorials.urladapter/src/net/refractions/udig/tutorials/urladapter/URLAdapterFactory.java"
+    corner="BOTTOM_RIGHT">
+    <display autosize="true" package="true" attributes="false" operations="true" initial-value="false" signature="true"
+      visibility="true"/>
+    <position x="450" y="453" width="-1" height="-1"/>
+  </class>
+  <dependency>
+    <source project="net.refractions.udig.browser" name="org.eclipse.core.runtime.IAdapterManager"
+      file="C:/java/eclipse/plugins/org.eclipse.equinox.common_3.3.0.v20070426.jar"/>
+    <target project="net.refractions.udig.browser" name="org.eclipse.core.runtime.IAdapterFactory"
+      file="C:/java/eclipse/plugins/org.eclipse.equinox.common_3.3.0.v20070426.jar"/>
+  </dependency>
+  <dependency>
+    <source project="net.refractions.udig.tutorials.urladapter"
+      name="net.refractions.udig.tutorials.urladapter.URLAdapterFactory"
+      file="/net.refractions.udig.tutorials.urladapter/src/net/refractions/udig/tutorials/urladapter/URLAdapterFactory.java"/>
+    <target project="net.refractions.udig.browser" name="org.eclipse.core.runtime.IAdapterFactory"
+      file="C:/java/eclipse/plugins/org.eclipse.equinox.common_3.3.0.v20070426.jar"/>
+  </dependency>
+  <realization>
+    <source project="net.refractions.udig.tutorials.urladapter"
+      name="net.refractions.udig.tutorials.urladapter.URLAdapterFactory"
+      file="/net.refractions.udig.tutorials.urladapter/src/net/refractions/udig/tutorials/urladapter/URLAdapterFactory.java"/>
+    <target project="net.refractions.udig.browser" name="org.eclipse.core.runtime.IAdapterFactory"
+      file="C:/java/eclipse/plugins/org.eclipse.equinox.common_3.3.0.v20070426.jar"/>
+  </realization>
+</class-diagram>

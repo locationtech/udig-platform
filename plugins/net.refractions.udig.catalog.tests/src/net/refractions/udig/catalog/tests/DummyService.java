@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
  * {@link #addResolveTos(Object)} allows the service to be configured by declaring what objects
  * the service can "resolve to".  It can always resolve to a List and a IServiceInfo.
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -35,17 +35,17 @@ public class DummyService extends IService {
 		}
 		catch(MalformedURLException e) {}
 	}
-	
+
 	List<DummyGeoResource> members;
 	Map<String, Serializable> params;
-	
+
 	public DummyService(Map<String, Serializable> params) {
 		this.params = params;
-		
+
 		members = new ArrayList<DummyGeoResource>();
 		members.add(new DummyGeoResource(this, "dummy")); //$NON-NLS-1$
 	}
-	
+
 	public DummyService() {
         params=new HashMap<String, Serializable>();
         params.put("dummy",url); //$NON-NLS-1$
@@ -53,7 +53,7 @@ public class DummyService extends IService {
         members.add(new DummyGeoResource(this, "dummy")); //$NON-NLS-1$
     }
 
-    List<Object> resolveTos=new ArrayList<Object>(); 
+    List<Object> resolveTos=new ArrayList<Object>();
     /**
      * Add an obect that this resource will resolve to.
      *
@@ -76,7 +76,7 @@ public class DummyService extends IService {
 
         if (adaptee == null) {
             throw new NullPointerException("No adaptor specified" );
-        }        
+        }
         for( Object resolveObject : resolveTos ) {
             if( adaptee.isAssignableFrom(resolveObject.getClass()) )
                 return adaptee.cast(resolveObject);
@@ -116,19 +116,15 @@ public class DummyService extends IService {
 	public URL getIdentifier() {
 			return (URL) params.get("dummy"); //$NON-NLS-1$
 	}
-	
+
 	@Override
-	public DummyServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
-	    return (DummyServiceInfo) super.getInfo(monitor);
-	}
-	@Override
-	protected IServiceInfo createInfo(IProgressMonitor monitor) throws IOException {
+	public IServiceInfo getInfo(IProgressMonitor monitor) throws IOException {
 		return new DummyServiceInfo();
 	}
-	
+
 	class DummyServiceInfo extends IServiceInfo {
-		
-		
+
+
 	}
 
     /**
@@ -143,9 +139,9 @@ public class DummyService extends IService {
         URL id2;
         if( id==null )
             id2=url;
-        else 
+        else
             id2=id;
-        
+
         Map<String, Serializable> params=new HashMap<String, Serializable>();
         params.put("dummy",id2); //$NON-NLS-1$
         DummyService service=new DummyService(params);
@@ -153,7 +149,7 @@ public class DummyService extends IService {
         for( Object object : serviceResolveTos ) {
             service.addResolveTos(object);
         }
-        
+
         int i=0;
         List<DummyGeoResource> resources=new ArrayList<DummyGeoResource>();
         if( resourceResolveTos!=null )
@@ -165,10 +161,10 @@ public class DummyService extends IService {
             }
             resources.add(resource);
         }
-        
+
         service.members=resources;
-        
+
         return service;
     }
-	
+
 }

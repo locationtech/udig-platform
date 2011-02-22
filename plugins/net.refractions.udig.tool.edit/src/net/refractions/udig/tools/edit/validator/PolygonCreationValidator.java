@@ -36,9 +36,9 @@ public class PolygonCreationValidator implements IEditValidator {
     public String isValid( EditToolHandler handler, MapMouseEvent event, EventType type ) {
 
         PrimitiveShape shell = handler.getCurrentShape();
-        
+
         assert shell==shell.getEditGeom().getShell();
-        
+
         Point newPoint = Point.valueOf(event.x, event.y);
         int lastPointIndex = shell.getNumPoints()-1;
         if( shell.getNumPoints()>2 && EditUtils.instance.intersection(shell.getPoint(lastPointIndex), newPoint, shell, 0, lastPointIndex) ){

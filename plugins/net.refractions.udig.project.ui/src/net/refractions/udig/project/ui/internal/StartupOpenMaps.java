@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.ui.internal;
 
@@ -38,7 +38,6 @@ import org.eclipse.ui.intro.IIntroManager;
 import org.eclipse.ui.intro.IIntroPart;
 import org.eclipse.ui.part.EditorPart;
 import org.geotools.referencing.CRS;
-import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 
 /**
@@ -47,7 +46,7 @@ import org.opengis.referencing.NoSuchAuthorityCodeException;
  * If the DND extension point will be called so that it will act as if the url/string whatever was
  * dropped on the application. So if a url to shapefile is on the commandline a new map will be
  * openned and will display the shapefile.
- * 
+ *
  * @author jones
  */
 public class StartupOpenMaps implements IStartup {
@@ -162,8 +161,6 @@ public class StartupOpenMaps implements IStartup {
                     CRS.decode("EPSG:4326"); //$NON-NLS-1$
                 } catch (NoSuchAuthorityCodeException e) {
                     throw (RuntimeException) new RuntimeException().initCause(e);
-                } catch (FactoryException e) {
-                    throw (RuntimeException) new RuntimeException( ).initCause( e );
                 }
                 final Object object = resource.getContents().get(0);
                 if (object instanceof IProjectElement) {
@@ -171,7 +168,7 @@ public class StartupOpenMaps implements IStartup {
                             (IProjectElement) object);
                     monitor.setTaskName(Messages.StartupOpenMaps_OpenTask + ": " //$NON-NLS-1$
                             + ((IProjectElement) object).getName());
-                    ApplicationGIS.getActiveProject().sendASync(command);
+                    ApplicationGIS.getActiveProject().sendSync(command);
                 }
             }
         }

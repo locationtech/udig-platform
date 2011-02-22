@@ -15,7 +15,6 @@ import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveChangeEvent;
 import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.catalog.ISearch;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.IResolveChangeEvent.Type;
@@ -110,7 +109,7 @@ public class SearchView extends SearchPart {
     static class Query {
         String text; // match against everything we can
         Envelope bbox; // latlong bbox
-        List<ISearch> scope; // list of catalogs to search
+        List<ICatalog> scope; // list of catalogs to search
     }
 
     @Override
@@ -118,8 +117,8 @@ public class SearchView extends SearchPart {
         super.setOrientation(orientation);
 
         if (splitter.getOrientation() == SWT.HORIZONTAL) {
-            label.setText(Messages.SearchView_prompt); 
-            bbox.setText(Messages.SearchView_bbox);             
+            label.setText(Messages.SearchView_prompt);
+            bbox.setText(Messages.SearchView_bbox);
         } else {
             label.setText(""); //$NON-NLS-1$
             bbox.setText(""); //$NON-NLS-1$
@@ -129,10 +128,10 @@ public class SearchView extends SearchPart {
     @Override
     public void createPartControl( Composite aParent ) {
         label = new Label(aParent, SWT.NONE);
-        label.setText(Messages.SearchView_prompt); 
+        label.setText(Messages.SearchView_prompt);
 
         text = new Text(aParent, SWT.BORDER);
-        text.setText(Messages.SearchView_default); 
+        text.setText(Messages.SearchView_default);
         text.setEditable(true);
         text.addSelectionListener(new SelectionListener(){
             public void widgetDefaultSelected( SelectionEvent e ) {
@@ -145,8 +144,8 @@ public class SearchView extends SearchPart {
 
         // Create bbox button
         bbox = new Button(aParent, SWT.CHECK);
-        bbox.setText(Messages.SearchView_bbox); 
-        bbox.setToolTipText(Messages.SearchView_bboxTooltip); 
+        bbox.setText(Messages.SearchView_bbox);
+        bbox.setToolTipText(Messages.SearchView_bboxTooltip);
         bbox.setSelection(true);
 
         super.createPartControl(aParent);
@@ -237,7 +236,7 @@ public class SearchView extends SearchPart {
          * Attempts to resolve the URL from the IResolve parameter If cached data shares same URL
          * with changed data found, and the Info can be resolved,then we update the cached data and
          * redraw the infoDisplay text field.
-         * 
+         *
          * @param res
          */
         private void refresh( IResolve res ) {
@@ -328,7 +327,7 @@ public class SearchView extends SearchPart {
     }
     /**
      * Construct a query based on the state of the user interface controls, and possibly workbecnh.
-     * 
+     *
      * @return A catalog query
      */
     Query createQuery() {
@@ -359,7 +358,8 @@ public class SearchView extends SearchPart {
                     filter.bbox=new Envelope(minx, maxx, miny,maxy);
                 }
             } catch (Throwable t) {
-                CatalogUIPlugin.log("Unable to create search:"+t, t); //$NON-NLS-1$
+                // ha ha
+                CatalogUIPlugin.log("ha ha", t); //$NON-NLS-1$
             }
         }
         return filter;
@@ -400,10 +400,9 @@ public class SearchView extends SearchPart {
         }
 
         if (cache.keys != null && cache.keys.length > 0) {
-            summary.append(Messages.SearchView_keywords); 
+            summary.append(Messages.SearchView_keywords);
             for( int i = 0; i < cache.keys.length; i++ ) {
-                String keyword = cache.keys[i];
-                keyword = keyword == null ? null : keyword.trim();
+                String keyword = (cache.keys[i]).trim();
 
                 if (keyword != null && !(keyword).equalsIgnoreCase("")) { //$NON-NLS-1$
                     if (i == cache.keys.length - 1) {
@@ -464,7 +463,7 @@ public class SearchView extends SearchPart {
     }
     /**
      * Search the catalog for text and update view contents
-     * 
+     *
      * @param pattern
      */
     @Override
@@ -483,9 +482,9 @@ public class SearchView extends SearchPart {
         if (query.scope == null) {
             query.scope = Arrays.asList(CatalogPlugin.getDefault().getCatalogs());
         }
-        monitor.beginTask(Messages.SearchView_searching, query.scope.size() * 3); 
+        monitor.beginTask(Messages.SearchView_searching, query.scope.size() * 3);
         int work = 0;
-        for( ISearch catalog : query.scope ) {
+        for( ICatalog catalog : query.scope ) {
             String name = null;
             try {
                 name = catalog.getInfo(null).getTitle();
@@ -505,7 +504,7 @@ public class SearchView extends SearchPart {
                     results.addAll(records);
                 }
             } catch (Throwable t) {
-                CatalogUIPlugin.log("Search for " + name + " failed", t); //$NON-NLS-1$ //$NON-NLS-2$
+                CatalogUIPlugin.log("Search for " + name + " in Catalog: "+catalog.getIdentifier()+" failed", t); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
     }
@@ -526,7 +525,7 @@ class Info {
         title = info.getTitle();
         name = null;
         description = info.getDescription();
-        keys = info.getKeywords().toArray(new String[0]);
+        keys = info.getKeywords();
         this.id = id;
     }
 
@@ -541,7 +540,7 @@ class Info {
         title = info.getTitle();
         name = info.getName();
         description = info.getDescription();
-        keys = info.getKeywords().toArray(new String[0]);
+        keys = info.getKeywords();
         this.id = id;
     }
 }

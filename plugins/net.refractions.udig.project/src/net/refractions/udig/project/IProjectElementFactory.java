@@ -14,7 +14,7 @@ import net.refractions.udig.project.internal.ProjectElement;
  * Provides extension points with a mechanism for blinding creating IProjectElement objects.
  * Implementors simply need to implement the create method which will return a new IProjectElement
  * object.
- * 
+ *
  * @author Richard Gould
  * @since 0.3
  */
@@ -23,7 +23,7 @@ public interface IProjectElementFactory {
      * Instantiates an IProjectElement object. This class is only intended to be implemented by
      * extenders that wish to add new project elements to udig; it is not intended to be used by end
      * developers.
-     * 
+     *
      * @return a newly created IProjectElement object
      */
     public ProjectElement create();

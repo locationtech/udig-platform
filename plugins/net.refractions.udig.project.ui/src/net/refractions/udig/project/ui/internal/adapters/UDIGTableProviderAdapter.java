@@ -30,7 +30,7 @@ import org.eclipse.swt.graphics.Image;
  * <p>
  * Used to display UDIG Objects in tables, such as propertie view?
  * </p>
- * 
+ *
  * @author jones
  * @since 0.3
  */

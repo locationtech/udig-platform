@@ -21,11 +21,15 @@ import net.refractions.udig.project.ui.ApplicationGIS;
 import org.eclipse.jface.action.IStatusLineManager;
 
 /**
+ * @author Vitalus
+ *
+ */
+/**
  * An abstract super class that modal tools can extend.
  * <p>
  * The editor will only maintain one modal tool in the "enabled" state at one time.
  * </p>
- * @author Vitalus 
+ *
  * @author jeichar
  * @since 0.3
  * @see AbstractTool
@@ -33,19 +37,19 @@ import org.eclipse.jface.action.IStatusLineManager;
  */
 public abstract class AbstractModalTool extends AbstractTool implements ModalTool {
 
-    
+
 //    String statusBarMessage;
 //    String statusBarErrorMessage;
-    
+
     private boolean active;
 
-    
-    /** 
-     * Current ID of the tool cursor. 
+
+    /**
+     * Current ID of the tool cursor.
      */
     private String currentCursorID;
 
-    
+
 	/**
 	 * By default SimpleTool will simply respond to MOUSE.
 	 * <p>
@@ -61,10 +65,10 @@ public abstract class AbstractModalTool extends AbstractTool implements ModalToo
 	 */
 	public AbstractModalTool(){
 		super( MOUSE );
-	}	
+	}
     /**
      * Creates an new instance of AbstractModalTool
-     * 
+     *
      * @see AbstractTool#AbstractTool(int)
      */
     public AbstractModalTool( int targets ) {
@@ -99,7 +103,7 @@ public abstract class AbstractModalTool extends AbstractTool implements ModalToo
             }
         });
     }
-    
+
     /**
      * @see net.refractions.udig.project.ui.tool.AbstractTool#setContext(net.refractions.udig.project.ui.tool.IToolContext)
      */
@@ -109,9 +113,9 @@ public abstract class AbstractModalTool extends AbstractTool implements ModalToo
         if( isActive() && isEnabled())
             registerMouseListeners();
     }
-    
-    
-    
+
+
+
 	/**
 	 *  (non-Javadoc)
 	 * @see net.refractions.udig.project.ui.tool.ModalTool#getCursorID()
@@ -119,32 +123,32 @@ public abstract class AbstractModalTool extends AbstractTool implements ModalToo
 	public final String getCursorID() {
 		return currentCursorID;
 	}
-	
-	
+
+
 	/**
 	 *  (non-Javadoc)
 	 * @see net.refractions.udig.project.ui.tool.ModalTool#setCursorID(java.lang.String)
 	 */
 	public final void setCursorID(String id) {
 		this.currentCursorID = id;
-		
+
 		if(isActive() && getContext() != null && !getContext().getViewportPane().isDisposed()){
 			getContext().getViewportPane().setCursor(
 					ApplicationGIS.getToolManager().findToolCursor(currentCursorID));
 		}
 	}
 
-	
 
-	
-	
-	/** 
+
+
+
+	/**
 	 * (non-Javadoc)
 	 * @see net.refractions.udig.project.ui.tool.Tool#setEnabled(boolean)
 	 */
 	public void setEnabled(boolean enabled) {
 		boolean oldValue = isEnabled();
-		
+
 		boolean tempNotify = isNotifyListeners();
 		setNotifyListeners(false);
 			super.setEnabled(enabled);
@@ -152,7 +156,7 @@ public abstract class AbstractModalTool extends AbstractTool implements ModalToo
 
 		if(oldValue != enabled){
 			IToolContext toolContext = getContext();
-			
+
 			if(!enabled){
 				if(toolContext != null){
 					if(isActive()){
@@ -170,15 +174,15 @@ public abstract class AbstractModalTool extends AbstractTool implements ModalToo
 					setCursorID(defaultCursorId);
 				}
 			}
-			
+
 		}
-		
+
 		if(isNotifyListeners() && oldValue != enabled){
 			ToolLifecycleEvent event = new ToolLifecycleEvent(this, ToolLifecycleEvent.Type.ENABLE, enabled, oldValue);
 			fireEvent(event);
 		}
-		
+
 	}
-	
-	
+
+
 }

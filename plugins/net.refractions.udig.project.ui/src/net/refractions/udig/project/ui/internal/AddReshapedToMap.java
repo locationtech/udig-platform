@@ -23,7 +23,7 @@ import net.refractions.udig.project.ui.ApplicationGIS;
 
 /**
  * Adds the reshaped resource to the current map
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */

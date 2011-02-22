@@ -21,9 +21,8 @@ import java.net.URL;
 import java.util.Map;
 
 /**
- * Used to advertise the availability of an IService implementation
- * to the catalog.
- * 
+ * This is the required addition on the part of a data provider.
+ *
  * Example:<pre><code>
  * public class MyService implements ServiceExtension {
  *    public Map<String, Serializable> createParams( URL url ) {
@@ -44,7 +43,7 @@ import java.util.Map;
  * }
  * <code></pre>
  * We also use this interface internally, so look in this plugin for additional examples.
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
@@ -57,7 +56,7 @@ public interface ServiceExtension {
      * caching is optional. Error messages can be retrieved using the getStatus and getMessage
      * methods. It is important to note that this method must inspect the url to determine if it can
      * be used to create the service. If it cannot, null must be returned.
-     * 
+     *
      * @param id The sugested service id, should be generated when null.
      * @param params The set of connection params. These param values may either be parsed, or
      *        unparsed (String).
@@ -72,7 +71,7 @@ public interface ServiceExtension {
      * ... in most cases this will be passed to the createService method. It is important to note
      * that this method must inspect the url to determine if it can be used to create the service.
      * If it cannot, null must be returned.
-     * 
+     *
      * @param url The potential source of params.
      * @return Map of params to be used for creation, <code>null</code> if the URL cannot be used.
      */

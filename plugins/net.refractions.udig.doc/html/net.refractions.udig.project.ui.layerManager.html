@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : net.refractions.udig.project.ui.layerManager</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : net.refractions.udig.project.ui.layerManager -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+
+<p>The Layer Manager is the "controller" for a <a href="net.refractions.udig.project.ui.html" title="net.refractions.udig.project.ui">net.refractions.udig.project.ui</a> in this MVC system.<br/>
+The UI and plugins send it requests when <a href="net.refractions.udig.project.ui.html" title="net.refractions.udig.project.ui">net.refractions.udig.project.ui</a> changes are required.  </p>
+
+<h5><a name="net.refractions.udig.project.ui.layerManager-FunctionalRequirements">Functional Requirements</a></h5>
+<ul>
+	<li>Acts as Controller for <a href="net.refractions.udig.project.context.html" title="net.refractions.udig.project.context">net.refractions.udig.project.context</a> in the MVC sense</li>
+	<li>Provide FeatureSource/FeatureStore and GC access for <a href="net.refractions.udig.core.html" title="net.refractions.udig.core">net.refractions.udig.core</a>s by layerRef</li>
+	<li>Locks Features</li>
+	<li>Transactions</li>
+</ul>
+
+
+<h5><a name="net.refractions.udig.project.ui.layerManager-NonFunctionalRequirements">Non-Functional Requirements</a></h5>
+<ul>
+	<li>Hide Locking from end user - be magic</li>
+</ul>
+
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=257">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=257">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

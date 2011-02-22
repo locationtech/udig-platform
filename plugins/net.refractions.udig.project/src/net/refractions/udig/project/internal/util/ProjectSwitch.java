@@ -1,5 +1,5 @@
 /**
- * <copyright></copyright> $Id$
+ * <copyright></copyright> $Id: ProjectSwitch.java 30936 2008-10-29 12:21:56Z jeichar $
  */
 package net.refractions.udig.project.internal.util;
 
@@ -243,7 +243,7 @@ public class ProjectSwitch {
      * Returns the result of interpretting the object as an instance of '<em>Layer</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>Layer</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -257,7 +257,7 @@ public class ProjectSwitch {
      * Returns the result of interpretting the object as an instance of '<em>Map</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>Map</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -271,7 +271,7 @@ public class ProjectSwitch {
      * Returns the result of interpretting the object as an instance of '<em>Project</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>Project</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -285,7 +285,7 @@ public class ProjectSwitch {
      * Returns the result of interpretting the object as an instance of '<em>Element</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>Element</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -455,7 +455,7 @@ public class ProjectSwitch {
      * Returns the result of interpretting the object as an instance of '<em>IMap</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>IMap</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -469,7 +469,7 @@ public class ProjectSwitch {
      * Returns the result of interpretting the object as an instance of '<em>ILayer</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>ILayer</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -587,7 +587,7 @@ public class ProjectSwitch {
      * Returns the result of interpretting the object as an instance of '<em>EObject</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch, but this is the last case anyway. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>EObject</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject)

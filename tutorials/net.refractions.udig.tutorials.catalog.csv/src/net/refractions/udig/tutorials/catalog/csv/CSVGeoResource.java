@@ -6,22 +6,22 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IService;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class CSVGeoResource extends IGeoResource {
 
-    public URL url;
+    private URL url;
+    private CSVService service;
+    private CSVGeoResourceInfo info;
     private CSV csv;
 
     public CSVGeoResource( CSVService service ) {
-        this.service = service;
         File file = service.getFile();
+        this.service = service;
         try {
             url = new URL( service.getIdentifier()+"#"+file.getName() );
-        } catch (MalformedURLException e) {            
+        } catch (MalformedURLException e) {
         }
     }
 
@@ -32,13 +32,21 @@ public class CSVGeoResource extends IGeoResource {
 
     @Override
     public CSVGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
-        return (CSVGeoResourceInfo) super.getInfo(monitor);
+        if (info == null) { //lazy creation
+            synchronized (this) { //support concurrent access
+                if (info == null) {
+                    info = new CSVGeoResourceInfo( this, monitor );
+                }
+            }
+        }
+        return info;
     }
-    
-	protected CSVGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-    	return new CSVGeoResourceInfo( this, monitor );
+
+    @Override
+    public CSVService service( IProgressMonitor monitor ) throws IOException {
+        return service;
     }
-    
+
     public Throwable getMessage() {
         return service.getMessage();
     }
@@ -57,18 +65,13 @@ public class CSVGeoResource extends IGeoResource {
         if (csv == null) { // lazy creation
             synchronized (this) { //support concurrent access
                 if (csv == null) {
-                    csv = new CSV( service(monitor).getFile() );
+                    csv = new CSV( service.getFile() );
                 }
             }
         }
         return csv;
     }
-    
-    @Override
-    public CSVService service(IProgressMonitor monitor) throws IOException {
-    	return (CSVService)super.service(monitor);
-    }
-    
+
     @Override
     public <T> boolean canResolve( Class<T> adaptee ) {
         return adaptee.isAssignableFrom(CSV.class) || super.canResolve(adaptee);

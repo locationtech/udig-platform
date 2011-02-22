@@ -4,7 +4,7 @@ import org.eclipse.core.runtime.ListenerList;
 
 /**
  * General abstract implementation of <code>IGeoSelectionManager</code> interface.
- * 
+ *
  * @author vitalus
  * @version 0.1
  * @since UDIG 1.1

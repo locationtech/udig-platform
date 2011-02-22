@@ -19,7 +19,7 @@ import org.eclipse.swt.dnd.DropTargetEvent;
 /**
  * Implementations provide the target object for the Drag and drop code.
  * <p>A provider is used by the drop adapters to determine what the target object is</p>
- * 
+ *
  * @author jones
  * @since 1.1.0
  */

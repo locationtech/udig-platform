@@ -25,7 +25,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 /**
  * Modal tools are responsible for providing the selection for the MapEditor.  In order to do so they
  * must provide a IMapEditorSelectionProvider that will provide the selection for a given map.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

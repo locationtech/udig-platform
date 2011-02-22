@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="net.refractions.udig.project">
 <annotation>
       <appInfo>
          <meta.schema plugin="net.refractions.udig.project" id="layerInterceptor" name="layerInterceptor"/>
@@ -11,35 +11,30 @@
    </annotation>
 
    <element name="extension">
-      <annotation>
-         <appInfo>
-            <meta.element />
-         </appInfo>
-      </annotation>
       <complexType>
-         <choice minOccurs="0" maxOccurs="unbounded">
-            <element ref="layerAdded"/>
-            <element ref="layerCreated"/>
-            <element ref="layerRemoved"/>
-         </choice>
+         <sequence>
+            <element ref="layerCreated" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="layerAdded" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="layerRemoved" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -62,7 +57,7 @@
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  an id for the interceptor
+                  an id for the extension
                </documentation>
             </annotation>
          </attribute>
@@ -79,7 +74,7 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The LayerInterceptor class.
+                  The interceptor class.
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.LayerInterceptor"/>
@@ -102,7 +97,7 @@
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  an id for the interceptor
+                  an id for the extension
                </documentation>
             </annotation>
          </attribute>
@@ -119,7 +114,7 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The LayerInterceptor class.
+                  The interceptor class.
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.LayerInterceptor"/>
@@ -142,7 +137,7 @@
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  an id for the interceptor
+                  an id for the extension
                </documentation>
             </annotation>
          </attribute>
@@ -159,7 +154,7 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The LayerInterceptor class.
+                  The interceptor class.
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.LayerInterceptor"/>
@@ -174,7 +169,7 @@
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         1.1
+         [Enter the first release in which this extension point appears.]
       </documentation>
    </annotation>
 
@@ -183,35 +178,7 @@
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         An example use is:
-&lt;pre&gt;
-&lt;layerCreated
-  class=&quot;net.refractions.udig.project.internal.impl.SetStyleInterceptor&quot;
-  id=&quot;net.refractions.udig.project.setStyleInterceptor&quot;
-  name=&quot;Set Layer Style&quot;/&gt;
-&lt;/pre&gt;
-
-This entry is used to advertise the SetStyleInterceptor to uDig so that it can be used to configure a layer as it is created.
-
-A layer interceptor is free to change more then just the layer under observation; as an example a layer interceptor is used to expand or set the bounds of a map when it is added.
-
-&lt;pre&gt;
-public class InitMapBoundsInterceptor implements LayerInterceptor {
-    public void run( Layer layer ) {
-        if(layer.getMap()==null ){
-            return; // this check is here because we could be doing a copy            
-        }
-        Map map = layer.getMapInternal();
-        ReferencedEnvelope bounds = map.getViewportModelInternal().getBounds();
-        
-        //  If first layer or if the crs has been unchanged from the original BBox
-  if( map.getMapLayers().size()==1 || bounds==ViewportModel.NIL_BBOX){
-            bounds = map.getBounds(ProgressManager.instance().get());
-            map.getViewportModelInternal().setBounds(bounds);
-        }
-    }
-}
-&lt;/pre&gt;
+         [Enter extension point usage example here.]
       </documentation>
    </annotation>
 
@@ -220,7 +187,7 @@ public class InitMapBoundsInterceptor implements LayerInterceptor {
          <meta.section type="apiInfo"/>
       </appInfo>
       <documentation>
-         Implementors are responsible for providing an implementation of LayerInterceptor.
+         [Enter API information here.]
       </documentation>
    </annotation>
 
@@ -229,7 +196,7 @@ public class InitMapBoundsInterceptor implements LayerInterceptor {
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         The developers guide has a page on &lt;a href=&quot;http://udig.refractions.net/confluence/display/DEV/10+Interceptors&quot;&gt;Interceptors&lt;/a&gt;.
+         [Enter information about supplied implementation of this extension point.]
       </documentation>
    </annotation>
 
@@ -238,7 +205,7 @@ public class InitMapBoundsInterceptor implements LayerInterceptor {
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         2007 udig.refractions.net
+
       </documentation>
    </annotation>
 

@@ -25,7 +25,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Deletes a layer.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -41,7 +41,7 @@ public class DeleteLayerCommand extends AbstractCommand implements UndoableMapCo
 
     /**
      * Construct <code>DeleteLayerCommand</code>.
-     * 
+     *
      * @param map
      */
     public DeleteLayerCommand( Layer layer ) {
@@ -90,8 +90,8 @@ public class DeleteLayerCommand extends AbstractCommand implements UndoableMapCo
         Layer selectedLayer = editManager.getSelectedLayer();
         if( !toRemove.contains(selectedLayer ) )
             // nothing to be done since it is not going to be removed
-            return false; 
-        
+            return false;
+
         // try to select bottom layer above the selected layer that is not being deleted.  If
         // not possible then select top layer below the selected layer
         for( int i=layers.indexOf(selectedLayer)+1; i<layers.size() ; i++ ){
@@ -108,7 +108,7 @@ public class DeleteLayerCommand extends AbstractCommand implements UndoableMapCo
                 return true;
             }
         }
-        
+
         editManager.setSelectedLayer(null);
         return true;
     }
@@ -118,7 +118,7 @@ public class DeleteLayerCommand extends AbstractCommand implements UndoableMapCo
      */
     public String getName() {
         return MessageFormat.format(
-                Messages.DeleteLayerCommand_deleteLayer, new Object[]{layer.getName()}); 
+                Messages.DeleteLayerCommand_deleteLayer, new Object[]{layer.getName()});
     }
 
 }

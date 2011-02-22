@@ -2,7 +2,7 @@
 <feature
       id="net.refractions.udig_tutorials"
       label="net.refractions.udig_tutorials-feature"
-      version="1.2.0.qualifier"
+      version="1.1.2"
       provider-name="Refractions Research">
 
    <description url="http://www.example.com/description">
@@ -32,8 +32,7 @@
          id="net.refractions.udig.tutorials.distanceTool"
          download-size="0"
          install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="net.refractions.udig.tutorials.mapgraphic"
@@ -120,34 +119,6 @@
 
    <plugin
          id="net.refractions.udig.tutorials.workbench"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="net.refractions.udig.tutorials.genericprojectelement"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="net.refractions.udig.tutorials.raster"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="net.refractions.udig.tutorials.rcp"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="net.refractions.udig.tutorials.tracking"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -25,19 +25,19 @@ import org.eclipse.ui.IWorkbenchWindow;
 
 /**
  * Contribution item that will add the "NewObjectDelegate" actions to a drop down button
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
 public class NewObjectContribution extends ContributionItem {
     public static final String NEW_ACTION_ID = "net.refractions.udig.ui.newObjectAction"; //$NON-NLS-1$
 
-    
+
     private ArrayList<NewObjectDelegate> newItems;
     NewObjectDelegate current;
     /**
      * Construct <code>UDIGActionBarAdvisor.NewContribution</code>.
-     * 
+     *
      * @param window The window this action will operate in.
      */
     public NewObjectContribution( IWorkbenchWindow window ) {

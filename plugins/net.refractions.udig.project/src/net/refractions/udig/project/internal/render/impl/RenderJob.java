@@ -25,17 +25,14 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
-import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.opengis.geometry.MismatchedReferenceSystemException;
 import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * An eclipse job that renders a layer. Allows each renderer to run in a separate thread.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -44,24 +41,24 @@ public class RenderJob extends Job {
 
     protected RenderExecutor executor;
 
-    protected ReferencedEnvelope bounds;
+    protected Envelope bounds;
     /**
      * The queue of requests that must be serviced.  It is expected
      */
-    private Queue<ReferencedEnvelope> requests = new LinkedBlockingQueue<ReferencedEnvelope>(); 
+    private Queue<ReferencedEnvelope> requests = new LinkedBlockingQueue<ReferencedEnvelope>();
 
     /**
      * Creates an new instance of AbstractRenderer.RenderThread
      */
     public RenderJob( RenderExecutor executor ) {
-        super(Messages.RenderExecutorImpl_title); 
+        super(Messages.RenderExecutorImpl_title);
         this.executor = executor;
         init();
-        
+
     }
 
     protected void init() {
-        setRule(new RenderJobRule()); 
+        setRule(new RenderJobRule());
         setSystem(true);
     }
 
@@ -75,7 +72,7 @@ public class RenderJob extends Job {
 
     /**
      * Returns the progress monitor or null if not rendering.
-     * 
+     *
      * @return the progress monitor or null if not rendering.
      * @uml.property name="monitor"
      */
@@ -87,19 +84,17 @@ public class RenderJob extends Job {
         Envelope bounds=bounds2;
         //validate bounds
         IRenderContext context2 = getExecutor().getContext();
-        
-        //TODO: should this use getImageBounds from the context instead of the viewport model?
         if (bounds == null
                 || bounds.contains(context2.getViewportModel().getBounds())) {
             bounds=null;
-        } 
-        
+        }
+
         clearBounds(bounds);
 
-        // If the start of the renderer is a render request then 
+        // If the start of the renderer is a render request then
         if( executor.getRenderer().getState()!=IRenderer.RENDER_REQUEST)
             executor.getRenderer().setRenderBounds(bounds);
-        
+
         monitor.beginTask(Messages.RenderExecutorImpl_1, IProgressMonitor.UNKNOWN);
         if( context2.getLayer()!=null ) {
             initializeLabelPainter(context2);
@@ -115,7 +110,7 @@ public class RenderJob extends Job {
     protected void initializeLabelPainter( IRenderContext context2 ) {
     	if( !(context2.getLayer() instanceof SelectionLayer) ) {
 	        String layerId = getLayerId(context2);
-	
+
 	        context2.getLabelPainter().clear(layerId);
 	        context2.getLabelPainter().startLayer(layerId);
     	}
@@ -163,7 +158,7 @@ public class RenderJob extends Job {
      */
     private void handleNullPointerException( Throwable renderError ) {
         executor.getContext().setStatus(ILayer.WARNING);
-        executor.getContext().setStatusMessage( Messages.RenderExecutorImpl_2 );  
+        executor.getContext().setStatusMessage( Messages.RenderExecutorImpl_2 );
     }
 
     /**
@@ -176,7 +171,7 @@ public class RenderJob extends Job {
             executor
                     .getContext()
                     .setStatusMessage(
-                            Messages.RenderExecutorImpl_1 + renderError.getLocalizedMessage()); 
+                            Messages.RenderExecutorImpl_1 + renderError.getLocalizedMessage());
     }
 
     protected void postRendering() {
@@ -194,22 +189,17 @@ public class RenderJob extends Job {
      * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
      */
     protected IStatus run( IProgressMonitor monitor ) {
-    	
+
     	if( !((RenderManager)getExecutor().getContext().getRenderManager()).isRenderingEnabled() ){
     		return Status.OK_STATUS;
     	}
-    	
+
         setThread(Thread.currentThread());
 
         this.monitor = monitor;
-        while( !requests.isEmpty() && !monitor.isCanceled() ) {
+        while( !requests.isEmpty() ) {
             try {
                 bounds = combineRequests();
-                if( bounds.isNull() || bounds.isEmpty()){
-                	// nothing to draw! Should we draw everything?
-                	System.out.println("We combined requests down to nothing?");
-                	continue;
-                }
                 startRendering(bounds, monitor);
                 postRendering();
             } catch (Throwable renderError) {
@@ -217,45 +207,24 @@ public class RenderJob extends Job {
                 renderError.printStackTrace();
                 getExecutor().getRenderer().setState(IRenderer.DONE);
             }
+
         }
         return Status.OK_STATUS;
     }
-    
-    private synchronized ReferencedEnvelope combineRequests() throws TransformException, FactoryException {
-        CoordinateReferenceSystem targetCRS = getExecutor().getContext().getCRS();
-    	ReferencedEnvelope bounds = new ReferencedEnvelope( targetCRS );
-    	try{
-    		for( ReferencedEnvelope env : requests ) {
-    			CoordinateReferenceSystem envCRS = env.getCoordinateReferenceSystem();
-    			if( env.isNull() || env.isEmpty() || envCRS == null){
-    				// these are "invalid" requests and we will skip them
-    				System.out.println("We are skipping an empty request");
-    				continue; // skip!
-    			}
-    			
-    			//Vitalus: fix for deadlock in RenderJob because of MismatchedReferenceSystemException
-    			//during transforming from DefaultEngineeringCRS.GENERIC_2D
-    			//to EPSG projection.  (DefaultEngineeringCRS.GENERIC_2D to EPSG 2393 e.g.)
-    			if (envCRS != DefaultEngineeringCRS.GENERIC_2D
-    					&& envCRS != DefaultEngineeringCRS.GENERIC_3D
-    					&& envCRS != DefaultEngineeringCRS.CARTESIAN_2D
-    					&& envCRS != DefaultEngineeringCRS.CARTESIAN_3D) {
 
-    				if (!CRS.equalsIgnoreMetadata(envCRS, targetCRS)) {
-    					env = env.transform(targetCRS, true);
-    				}
-    			}
-    			if( bounds.isNull() ){
-    				bounds.init((Envelope)env);
-    			}
-    			else {
-    				bounds.include(env);            	
-    				// bounds.expandToInclude(env);
-    			}
-    		}
-    	}finally{
-    		requests.clear();
-    	}
+    private synchronized Envelope combineRequests() throws TransformException, FactoryException {
+        Envelope bounds = new Envelope();
+        for( ReferencedEnvelope env : requests ) {
+            if( !CRS.equalsIgnoreMetadata(env.getCoordinateReferenceSystem(), getExecutor().getContext().getCRS()) ){
+                env.transform(getExecutor().getContext().getCRS(), true);
+            }
+            if( bounds.isNull() ){
+                bounds.init(env);
+            }else{
+                bounds.expandToInclude(env);
+            }
+        }
+        requests.clear();
         return bounds;
     }
 
@@ -269,51 +238,33 @@ public class RenderJob extends Job {
     /**
      * @param object
      */
-    public void setBounds( ReferencedEnvelope bounds ) {
+    public void setBounds( Envelope bounds ) {
         this.bounds = bounds;
     }
 
-    /**
-     * Add a request to draw the provided envelope.
-     * <p>
-     * Please note that the envelope is referenced with a CoordinateReferenceSystem,
-     * the result will be transformed to the viewport CRS (ie the world) in order to
-     * determine what part of the screen needs refreshing.
-     * <p>
-     * @param envelope ReferencedEvelope describing area to draw, or <code>null</code> for the entire screen.
-     */
+
     public synchronized void addRequest(ReferencedEnvelope envelope){
-    	if (envelope == null) {
-            requests.add( getExecutor().getContext().getImageBounds() );
-    	}
-    	else if (envelope.getCoordinateReferenceSystem() == null ){
-    		throw new IllegalArgumentException("You have asked us to draw a region of the screen without a CRS. Did you intend the viewport CRS?");
-    	}
-    	else if (envelope.isNull()){
-    		throw new IllegalArgumentException("The provided envelope had isNull true");
-    	}
-    	else if (envelope.isEmpty()){
-    		throw new IllegalArgumentException("The provided envelope was empty");
-    	}
-    	else {
+        if (envelope == null) {
+            requests.add((ReferencedEnvelope) getExecutor().getContext().getViewportModel().getBounds());
+        } else {
             requests.add(envelope);
         }
         schedule();
     }
-    
+
     /**
      * A scheduling rule that serializes all rendering operations that hit the local filesystem, to
      * avoid bogging down the PC, and lets other kind of georesources be accessed and rendered in a
      * parallel fashion. <br/>
      * The georesource id is used as a discriminator, a Georesource is supposed to be local if its
-     * id starts with "file:/" 
+     * id starts with "file:/"
      */
     private class RenderJobRule implements ISchedulingRule {
-    
+
         public boolean isConflicting(ISchedulingRule rule) {
             if (!(rule instanceof RenderJobRule))
                 return false;
-    
+
             RenderJobRule other = (RenderJobRule) rule;
             if (other == this)
                 return true;
@@ -324,9 +275,9 @@ public class RenderJob extends Job {
                         getRenderer().getClass())
                         && !isCanceled() && !other.isCanceled() &&
                         isUsingLocalResources(getRenderer()) && isUsingLocalResources(other.getRenderer());
-    
+
         }
-    
+
         private boolean isUsingLocalResources(Renderer renderer) {
             try {
                 return renderer.getContext().getGeoResource().getIdentifier().toString().startsWith("file:/"); //$NON-NLS-1$
@@ -334,22 +285,22 @@ public class RenderJob extends Job {
                 return false;
             }
         }
-    
+
         public boolean contains(ISchedulingRule rule) {
             return isConflicting(rule);
         }
-    
+
         Renderer getRenderer() {
             return executor.getRenderer();
         }
-    
+
         boolean isCanceled() {
             if (getMonitor() != null)
                 return getMonitor().isCanceled();
             else
                 return false;
         }
-    
+
     }
 
 }

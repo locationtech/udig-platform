@@ -27,8 +27,6 @@ import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -36,7 +34,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * An Operation that can operate on either GeoResources or on FeatureSources. If the object is a
  * georesource the operation prints out a summary about the resource. if the object is a
  * FeatureSource the number of features are printed.
- * 
+ *
  * @author jones
  */
 public class MultiTargetOp implements IOp {
@@ -50,7 +48,7 @@ public class MultiTargetOp implements IOp {
             IGeoResource resource = (IGeoResource) target;
             op(display, monitor, resource);
         } else if (target instanceof FeatureSource) {
-            FeatureSource<SimpleFeatureType, SimpleFeature> source = (FeatureSource<SimpleFeatureType, SimpleFeature>) target;
+            FeatureSource source = (FeatureSource) target;
             op(display, monitor, source);
         }
     }
@@ -65,14 +63,14 @@ public class MultiTargetOp implements IOp {
             throws IOException {
         IGeoResourceInfo info = resource.getInfo(monitor);
         Envelope bounds = info.getBounds();
-        final List<SummaryData> data=new ArrayList<SummaryData>(); 
+        final List<SummaryData> data=new ArrayList<SummaryData>();
         String crs;
         if (info.getCRS() != null)
             crs = info.getCRS().getName().toString();
         else
-            crs = Messages.MultiTargetOp_unknown; 
+            crs = Messages.MultiTargetOp_unknown;
         crs=crs.replace('\n', ' ');
-        
+
         try {
             data.add(new SummaryData(Messages.MultiTargetOp_name, info.getName()));
             data.add(new SummaryData( Messages.MultiTargetOp_title, info.getTitle()));
@@ -91,8 +89,8 @@ public class MultiTargetOp implements IOp {
         } catch (Exception e) {
             display.asyncExec(new Runnable(){
                 public void run() {
-                    MessageDialog.openError(display.getActiveShell(), Messages.MultiTargetOp_resource_summary, 
-                            Messages.MultiTargetOp_error); 
+                    MessageDialog.openError(display.getActiveShell(), Messages.MultiTargetOp_resource_summary,
+                            Messages.MultiTargetOp_error);
                 }
             });
             ProjectUIPlugin.log(null, e);
@@ -108,12 +106,12 @@ public class MultiTargetOp implements IOp {
         });
     }
 
-    private void op( final Display display, IProgressMonitor monitor,  FeatureSource<SimpleFeatureType, SimpleFeature> source )
+    private void op( final Display display, IProgressMonitor monitor, FeatureSource source )
             throws IOException {
         int tmp = 0;
         tmp = source.getCount(Query.ALL);
         if (tmp == -1) {
-            FeatureIterator<SimpleFeature> iter = source.getFeatures().features();
+            FeatureIterator iter = source.getFeatures().features();
 
             try {
                 while( iter.hasNext() ) {
@@ -135,7 +133,7 @@ public class MultiTargetOp implements IOp {
                         .openInformation(
                                 display.getActiveShell(),
                                 "Number of features", //$NON-NLS-1$
-                                Messages.MultiTargetOp_number + (features == -1 ? Messages.MultiTargetOp_expensive : String.valueOf(features)));  
+                                Messages.MultiTargetOp_number + (features == -1 ? Messages.MultiTargetOp_expensive : String.valueOf(features)));
             }
         });
     }

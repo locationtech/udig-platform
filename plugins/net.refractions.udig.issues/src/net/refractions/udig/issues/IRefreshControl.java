@@ -16,18 +16,18 @@ package net.refractions.udig.issues;
 
 /**
  * An object that will refresh the issues viewer in the issues view upon request.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public interface IRefreshControl {
     /**
-     * Refreshes tree and labels from newly obtained data from the content and label providers.  
+     * Refreshes tree and labels from newly obtained data from the content and label providers.
      * Same as refresh(true);
      */
     void refresh();
     /**
-     * Refreshes tree and labels from newly obtained data from the content and label providers.  
+     * Refreshes tree and labels from newly obtained data from the content and label providers.
      *
      * @param updateLabels true if labels should be refreshed.
      */
@@ -40,7 +40,7 @@ public interface IRefreshControl {
     void refresh(Object element);
     /**
      * Refreshes the viewer starting with the provided element.
-     * Labels are updated if updateLabels is true 
+     * Labels are updated if updateLabels is true
      *
      * @param element root element to refresh
      * @param updateLabels true if labels should be refreshed.

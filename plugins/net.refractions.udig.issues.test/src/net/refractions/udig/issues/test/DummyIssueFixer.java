@@ -16,9 +16,9 @@ public class DummyIssueFixer implements IFixer {
      * conform to our ideals.
      */
     public static final String KEY_FIXABLE = "fixable"; //$NON-NLS-1$
-    
+
     MessageDialog messageDialog = null;
-    
+
     public boolean canFix( Object object, IMemento fixerMemento ) {
         //not null
         if (object == null || fixerMemento == null) {
@@ -47,11 +47,11 @@ public class DummyIssueFixer implements IFixer {
     public void complete( Object object ) {
         ((IIssue) object).setResolution(Resolution.RESOLVED);
     }
-    
+
     /**
      * Obtains the dialog that pops up to ask question (this method is used to programatically click
      * the button).
-     * 
+     *
      * @return MessageDialog
      */
     public MessageDialog getDialog() {

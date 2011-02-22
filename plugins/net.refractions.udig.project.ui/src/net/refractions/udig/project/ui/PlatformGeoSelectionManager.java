@@ -28,21 +28,21 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * 
+ *
  * The UDIG platform standard geoselection manager instance.
  * <p>
  * It is returned by GeoSelectionService.getPlatformSelectionManager().
- * 
+ *
  * @author Vitalus
  * @since UDIG 1.1
  */
 public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
-    
+
     /**
      * ID of the manager.
      */
     public static final String ID = "net.refractions.udig.project.ui.platformGeoSelectionManager"; //$NON-NLS-1$
-    
+
     /**
      * Logger.
      */
@@ -52,18 +52,18 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
      * Key for selection bag in Map's blackboard.
      */
     public static final String PLATFORM_SELECTION_BAG = "net.refractions.udig.project.ui.PLATFORM_SELECTION_BAG"; //$NON-NLS-1$
-    
+
     /**
      * Key for cached selection bag in Map's blackboard.
      */
     public static final String PLATFORM_SELECTION_CACHE_KEY = "net.refractions.udig.project.ui.PLATFORM_SELECTION_CACHE"; //$NON-NLS-1$
-    
+
     private MapEditorPartListener partListener;
-    
+
     private List<IGeoSelectionEntry> cachedSelections;
-    
+
     private IGeoSelectionEntry latestGeoSelection = null;
-    
+
     private boolean initialized = false;
 
     /**
@@ -72,7 +72,7 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
     protected Map currentMap;
 
     /**
-     * 
+     *
      */
     public PlatformGeoSelectionManager() {
         super();
@@ -90,9 +90,9 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
                         if(activePage != null){
                             activePage.addPartListener(partListener);
                             initialized = true;
-                            
+
                             LOGGER.info("PlatformGeoSelectionManager is INITIALIZED.");
-                            
+
                             Map activeMap = ApplicationGISInternal.getActiveMap();
                             if(activeMap != ApplicationGIS.NO_MAP)
                                 setCurrentMap(activeMap);
@@ -109,41 +109,41 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
         if(selectionBag == null){
             selectionBag = new HashMap<String, IGeoSelectionEntry>();
             activeMap.getBlackBoardInternal().put(PLATFORM_SELECTION_BAG, selectionBag);
-            
+
             cachedSelections = Collections.EMPTY_LIST;
         }else{
-            
+
             ArrayList<IGeoSelectionEntry> cache = new ArrayList<IGeoSelectionEntry>(selectionBag.values());
             cachedSelections = Collections.unmodifiableList(cache);
         }
-        
+
         this.currentMap = activeMap;
     }
-    
+
     private void clearSelections(){
-        
+
         if(currentMap != null){
 
             HashMap<String, IGeoSelectionEntry> selectionBag = (HashMap<String, IGeoSelectionEntry>)currentMap.getBlackBoardInternal().get(PLATFORM_SELECTION_BAG);
             for( Entry<String, IGeoSelectionEntry> entry : selectionBag.entrySet() ) {
                 String context = entry.getKey();
                 IGeoSelectionEntry selectionEntry = entry.getValue();
-                
+
                 IGeoSelection oldSelection = selectionEntry.getSelection();
                 GeoSelectionChangedEvent<Map> event = new GeoSelectionChangedEvent<Map>(context,
                         currentMap, oldSelection, null);
 
                 fireSelectionChanged(event);
-                
+
             }
-            
+
             cachedSelections = null;
             currentMap = null;
             latestGeoSelection = null;
-            
+
         }
     }
-    
+
 
     protected Map getCurrentMap() {
         return currentMap;
@@ -173,9 +173,9 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
 
             HashMap<String, IGeoSelectionEntry> selectionBag = (HashMap<String, IGeoSelectionEntry>)currentMap.getBlackBoardInternal().get(PLATFORM_SELECTION_BAG);
             GeoSelectionEntry entry = (GeoSelectionEntry)selectionBag.get(context);
-            
+
             IGeoSelection oldSelection = null;
-            
+
             if(entry == null && selection != null){
                 /*
                  * We need to create new IGeoSelectionEntry and reinitialize cache
@@ -192,10 +192,10 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
                 }
 
             }else if(entry != null && selection != null){
-                
+
                 oldSelection = entry.getSelection();
                 entry.setSelection(selection);
-                
+
             }else if(entry != null && selection == null){
 
                 oldSelection = entry.getSelection();
@@ -220,19 +220,19 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
 
     /**
      * Gets selection from current map by context.
-     * 
+     *
      * @param context
      * @return
      */
     public IGeoSelection getSelection( String context ) {
         if (currentMap != null) {
-            
+
             HashMap<String, IGeoSelectionEntry> selectionBag = (HashMap<String, IGeoSelectionEntry>)currentMap.getBlackBoardInternal().get(PLATFORM_SELECTION_BAG);
-            
+
             IGeoSelectionEntry entry = selectionBag.get(context);
             if(entry == null)
                 return null;
-            
+
             IGeoSelection selection = entry.getSelection();
             return selection;
 //            Object selectionObj = selectionBag.get(context);
@@ -246,7 +246,7 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
 
     /**
      * Fires <code>GeoSelectionChangedEvent</code> to listeners.
-     * 
+     *
      * @param event
      */
     protected void fireSelectionChanged( GeoSelectionChangedEvent event ) {
@@ -259,14 +259,14 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
             try {
                 IGeoSelectionChangedListener listener = (IGeoSelectionChangedListener) listenerObj;
                 listener.geoSelectionChanged(event);
-                
+
             } catch (Throwable t) {
                 LOGGER.log(Level.SEVERE, t.getMessage(), t);
             }
         }
 
     }
-    
+
 
     /* (non-Javadoc)
      * @see net.refractions.udig.project.geoselection.IGeoSelectionManager#getSelections()
@@ -307,7 +307,7 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
 
                     IEditorPart part = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                     .getActivePage().getActiveEditor();
-                    
+
                     /*
                      * Means that the last MapEditor is being closed and we need
                      * to notify selection service listeners

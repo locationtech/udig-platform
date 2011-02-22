@@ -23,10 +23,10 @@ public class IssuesListTest extends AbstractProjectUITestCase {
             assertEquals(String.valueOf(i),issue.getProblemObject());
             i++;
         }
-        
+
         list.addListener(listener);
     }
-    
+
     @Override
     protected void tearDown() throws Exception {
         list.clear();
@@ -35,7 +35,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
         listener.timesCalled=0;
         super.tearDown();
     }
- 
+
 
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.add(IIssue)'
@@ -48,7 +48,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
         assertEquals(11, list.size());
         assertNotNull(list.get(0).getId());
     }
-    
+
     public void testClear() throws Exception {
         list.clear();
         assertEquals(10,listener.changes);
@@ -60,7 +60,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
         toRemove.add(this.list.get(3));
         toRemove.add(this.list.get(4));
         toRemove.add(this.list.get(5));
-        
+
         list.retainAll(toRemove);
 
         assertEquals(7,listener.changes);
@@ -70,21 +70,21 @@ public class IssuesListTest extends AbstractProjectUITestCase {
         for( IIssue issue : list ) {
             assertEquals(String.valueOf(i), (issue.getProblemObject()));
             i++;
-        }     
+        }
     }
-    
+
     public void testSet() throws Exception {
         IIssue issue=list.set(3, list.get(0));
-        
+
 
         assertEquals(String.valueOf(3), (issue.getProblemObject()));
-        
+
         assertEquals(list.get(0), list.get(3));
         assertEquals(2,listener.changes);
         assertEquals(2,listener.timesCalled);
         assertEquals(10, list.size());
     }
-    
+
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.add(int, IIssue)'
      */
@@ -109,7 +109,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
         }
         return list;
     }
-    
+
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.addAll(Collection<? extends IIssue>)'
      */
@@ -125,10 +125,10 @@ public class IssuesListTest extends AbstractProjectUITestCase {
                 assertEquals(i,Integer.parseInt(issue.getProblemObject()));
             }else{
                 int j=Integer.parseInt(issue.getProblemObject());
-                assertEquals(i+10,j);                
+                assertEquals(i+10,j);
             }
             i++;
-        }        
+        }
     }
 
     /*
@@ -145,10 +145,10 @@ public class IssuesListTest extends AbstractProjectUITestCase {
                 assertTrue(Integer.parseInt(issue.getProblemObject())<10);
             }else{
                 int j=Integer.parseInt(issue.getProblemObject());
-                assertTrue(j>10);                
+                assertTrue(j>10);
             }
             i++;
-        }        
+        }
         assertEquals(20, list.size());
     }
 
@@ -217,17 +217,17 @@ public class IssuesListTest extends AbstractProjectUITestCase {
         toRemove.add(this.list.get(3));
         toRemove.add(this.list.get(4));
         toRemove.add(this.list.get(5));
-        
+
         this.list.removeAll(toRemove);
-        
+
         assertEquals(3,listener.changes);
         assertEquals(1,listener.timesCalled);
         for( IIssue issue : this.list ) {
             assertFalse(String.valueOf(3).equals(issue.getProblemObject()));
             assertFalse(String.valueOf(4).equals(issue.getProblemObject()));
             assertFalse(String.valueOf(5).equals(issue.getProblemObject()));
-        }    
-        
+        }
+
     }
 
     /*
@@ -241,7 +241,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
         assertEquals( String.valueOf(1), list.get(0).getProblemObject() );
         assertEquals(9, list.size() );
     }
-    
+
 
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.removeLast()'
@@ -257,5 +257,5 @@ public class IssuesListTest extends AbstractProjectUITestCase {
         }
         assertEquals(9, list.size() );
     }
-    
+
 }

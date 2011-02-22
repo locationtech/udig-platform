@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 3 Edit Commands</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 3 Edit Commands -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="3EditCommands-EditCommands">Edit Commands</a></h1>
+
+<p>Edit commands are commands that affect data within a transaction.</p>
+
+<p>Example would be deleting or adding a feature or editing a feature.  This is also a special case because the frame work ensures that a transaction has been started before edit commands are executed.</p>
+
+<p>Transactions can be controlled using the Commit/Rollback functionality of uDig. By modifying data withing a Transaction you allow your users to "preview" any modifications made before application.</p>
+
+<p>By supporting the concept of a Transaction at the application level, modification made via tools, opperations and wizards can all coexsist together. To follow up these ideas the application also supports a shared "Issues List", so Tools, Opperations an wizards can request user intervention.</p>
+
+<h3><a name="3EditCommands-CodeExample">Code Example</a></h3>
+
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>DeleteFeatureCommand.java</b></div><div class="codeContent">
+<pre class="code-java">/**
+ * Deletes a feature from the provided layer.
+ *
+ * @author jeichar
+ * @since 0.6.0
+ * @see AbstractEditCommand
+ * @see UndoableCommand
+ */
+<span class="code-keyword">public</span> class DeleteFeatureCommand <span class="code-keyword">extends</span> AbstractEditCommand <span class="code-keyword">implements</span>
+		UndoableCommand {
+
+	Feature feature;
+
+	<span class="code-keyword">private</span> Layer sourceLayer;
+
+	<span class="code-keyword">protected</span> <span class="code-object">boolean</span> done;
+
+	/**
+	 * Construct &lt;code&gt;DeleteFeatureCommand&lt;/code&gt;.
+	 */
+	<span class="code-keyword">public</span> DeleteFeatureCommand(Feature feature, Layer layer) {
+		<span class="code-keyword">this</span>.feature = feature;
+		<span class="code-keyword">this</span>.sourceLayer = layer;
+	}
+
+	/**
+	 * @see net.refractions.udig.project.command.Command#run()
+	 */
+	<span class="code-keyword">public</span> void run() <span class="code-keyword">throws</span> Exception {
+		sourceLayer.getResource(FeatureStore.class, <span class="code-keyword">null</span>).removeFeatures(
+				FilterFactory.createFilterFactory().createFidFilter(
+						feature.getID()));
+		map.getEditManagerInternal().setEditFeature(<span class="code-keyword">null</span>, <span class="code-keyword">null</span>);
+	}
+
+	/**
+	 * @see net.refractions.udig.project.command.Command#copy()
+	 */
+	<span class="code-keyword">public</span> Command copy() {
+		<span class="code-keyword">return</span> <span class="code-keyword">new</span> DeleteFeatureCommand(feature, sourceLayer);
+	}
+
+	/**
+	 * @see net.refractions.udig.project.command.Command#getName()
+	 */
+	<span class="code-keyword">public</span> <span class="code-object">String</span> getName() {
+		<span class="code-keyword">return</span> Policy.bind(<span class="code-quote">"DeleteFeatureCommand.deleteFeature"</span>); <span class="code-comment">//$NON-NLS-1$
+</span>	}
+
+	/**
+	 * @see net.refractions.udig.project.command.UndoableCommand#rollback()
+	 */
+	<span class="code-keyword">public</span> void rollback() <span class="code-keyword">throws</span> Exception {
+		map.getEditManagerInternal().setEditFeature(feature, sourceLayer);
+		map.getEditManagerInternal().addFeature(feature, sourceLayer);
+	}
+
+}</pre>
+</div></div>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=4088">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=4088">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

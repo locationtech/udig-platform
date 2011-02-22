@@ -31,7 +31,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
  * <p>
  * The following example adds an observer/listener that only reacts to single layer added events...
  * <b>Note that multiple layers being added are ignored </b>. Example Use:
- * 
+ *
  * <pre><code>
  * contextModel.eAdapters().add(new ContextModelListenerAdapter(){
  *     protected void layerAdded( Notification msg ) {
@@ -39,7 +39,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
  *     }
  * });
  * </code></pre>
- * 
+ *
  * </p>
  * <p>
  * The following example adds an observer/listener that is notified of style change events that
@@ -52,7 +52,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
  * </p>
  * <p>
  * Example Use:
- * 
+ *
  * <pre><code>
  * contextModel.getDeepAdapters().add(new ContextModelListenerAdapter(){
  *     protected void styleChanged( Notification msg ) {
@@ -60,9 +60,9 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
  *     }
  * });
  * </code></pre>
- * 
+ *
  * </p>
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -126,7 +126,7 @@ public class ContextModelListenerAdapter extends AdapterImpl {
      * <p>
      * msg.getNewValue() will return the layer added
      * </p>
-     * 
+     *
      * @param msg The Notification object with all the information about the event.
      */
     protected void layerAdded( Notification msg ) {
@@ -139,7 +139,7 @@ public class ContextModelListenerAdapter extends AdapterImpl {
      * <li>msg.getNotifier() will return the ContextModel</li>
      * </ul>
      * </p>
-     * 
+     *
      * @param msg The Notification object with all the information about the event.
      */
     protected void manyLayersAdded( Notification msg ) {
@@ -154,7 +154,7 @@ public class ContextModelListenerAdapter extends AdapterImpl {
      * <li>msg.getNotifier() will return the ContextModel</li>
      * </ul>
      * </p>
-     * 
+     *
      * @param msg The Notification object with all the information about the event.
      */
     protected void layerRemoved( Notification msg ) {
@@ -169,7 +169,7 @@ public class ContextModelListenerAdapter extends AdapterImpl {
      * <li>msg.getNotifier() will return the ContextModel</li>
      * </ul>
      * </p>
-     * 
+     *
      * @param msg The Notification object with all the information about the event.
      */
     protected void manyLayersRemoved( Notification msg ) {
@@ -190,7 +190,7 @@ public class ContextModelListenerAdapter extends AdapterImpl {
      * <li>msg.getNotifier() will return the ContextModel</li>
      * </ul>
      * </p>
-     * 
+     *
      * @param msg The Notification object with all the information about the event.
      */
     protected void zorderChanged( Notification msg ) {
@@ -206,7 +206,7 @@ public class ContextModelListenerAdapter extends AdapterImpl {
      * <li>msg.getNotifier() will return the Layer</li>
      * </ul>
      * </p>
-     * 
+     *
      * @param msg The Notification object with all the information about the event.
      */
     protected void glyphChanged( Notification msg ) {
@@ -222,7 +222,7 @@ public class ContextModelListenerAdapter extends AdapterImpl {
      * <li>msg.getNotifier() will return the Layer</li>
      * </ul>
      * </p>
-     * 
+     *
      * @param msg The Notification object with all the information about the event.
      */
     protected void styleChanged( Notification msg ) {
@@ -238,7 +238,7 @@ public class ContextModelListenerAdapter extends AdapterImpl {
      * <li>msg.getNotifier() will return the Layer</li>
      * </ul>
      * </p>
-     * 
+     *
      * @param msg The Notification object with all the information about the event.
      */
     protected void visibilityChanged( Notification msg ) {

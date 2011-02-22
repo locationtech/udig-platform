@@ -8,10 +8,6 @@ import net.refractions.udig.tools.edit.support.EditGeom;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -33,38 +29,36 @@ public class AddGeomCommandTest extends TestCase {
         bb.addPoint(10,10, editGeom.getShell());
         bb.addPoint(20,10, editGeom.getShell());
         bb.addPoint(30,10, editGeom.getShell());
-        
+
         hole = editGeom.newHole();
         bb.addPoint(15,10, hole);
         bb.addPoint(25,10, hole);
         bb.addPoint(35,10, hole);
-        
+
         hole = editGeom.newHole();
         bb.addPoint(17,10, hole);
         bb.addPoint(27,10, hole);
         bb.addPoint(35,10, hole);
     }
-    
+
     /*
      * Test method for 'net.refractions.udig.tools.edit.commands.AddGeomCommand.run(IProgressMonitor)'
      */
     public void testRun() throws Exception {
         GeometryFactory factory = new GeometryFactory();
         MultiPolygon mp=factory.createMultiPolygon(new Polygon[]{createPolygon(factory, 0), createPolygon(factory, 10)});
-        
-        SimpleFeatureType schema = handler.getEditLayer().getSchema();
-        SimpleFeature feature = SimpleFeatureBuilder.build(schema, new Object[]{mp, "test"}, "test"); //$NON-NLS-1$ //$NON-NLS-2$
-        SelectFeatureCommand command=new SelectFeatureCommand(handler, feature, null);
-        
+
+        SelectFeatureCommand command=new SelectFeatureCommand(handler, handler.getEditLayer().getSchema().create(new Object[]{mp, "test"}), null); //$NON-NLS-1$
+
         assertEquals(1, bb.getGeoms().size());
         handler.getContext().sendSyncCommand(command);
         assertEquals(3, bb.getGeoms().size());
-        
+
 
         ((CommandManager)((Map)handler.getContext().getMap()).getCommandStack()).undo(false);
         assertEquals(1, bb.getGeoms().size());
         assertEquals(editGeom, bb.getGeoms().get(0));
-        
+
     }
 
     private Polygon createPolygon(  GeometryFactory factory, int i ) {

@@ -1,9 +1,9 @@
 package net.refractions.udig.legend;
 
+import org.eclipse.ui.plugin.*;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -54,7 +54,7 @@ public class LegendPlugin extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
         return AbstractUIPlugin.imageDescriptorFromPlugin(ID, path);
 	}
-    
+
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
@@ -63,8 +63,8 @@ public class LegendPlugin extends AbstractUIPlugin {
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      * </ul>
      * </p>
-     * @param message 
-     * @param t 
+     * @param message
+     * @param t
      */
     public static void log( String message, Throwable t ) {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;

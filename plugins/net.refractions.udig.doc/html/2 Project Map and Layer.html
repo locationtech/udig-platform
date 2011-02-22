@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 2 Project Map and Layer</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 2 Project Map and Layer -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>The uDig application manages your content in the following data structure:</p>
+<ul>
+	<li>Project: represents a location, on disk where your content is saved</li>
+	<li>Map: represents a visualization of spatial information, makes use of a ViewPort indicating the area of interest</li>
+	<li>Layer: a Map is composed of Layers, indicating which spatial information is to be drawn (and in what order)</li>
+</ul>
+
+
+<p>Because this is a dynamic application we ask you not to hack away at these datastructures as the system is running (to do so often freezes the screen). Instead we ask you to assemble a <a href="http://udig.refractions.net/confluence/display/DEV/4+Commands" title="Visit page outside Confluence">command</a> that will be issued in the user interface thread.</p>
+
+<p>uDig is highly threaded, as benefits a client application, ensuring that "work" happens in the correct thread is a large benefit provided to you by the GIS Application.</p>
+
+<h2><a name="2ProjectMapandLayer-Project">Project</a></h2>
+
+<p>The API available to you for a Map is three fold: that which is available all the time (such as the File), that which will need to block (accessing the File), and that which can only be used via a <a href="http://udig.refractions.net/confluence/display/DEV/4+Commands" title="Visit page outside Confluence">command </a> (modifying the contents).</p>
+
+<h2><a name="2ProjectMapandLayer-Map">Map</a></h2>
+
+<p>The API available to you for a Map is three fold: that which is available all the time (such as the File), that which will need to block (accessing the File), and that which can only be used via a command (modifying the contents).</p>
+
+<h3><a name="2ProjectMapandLayer-Highlights%3A">Highlights:</a></h3>
+<ul>
+	<li>Layers</li>
+	<li>Viewport</li>
+	<li>Selection, often used with editing tools</li>
+	<li>IssuesList, common API for "workflow user interfaces"</li>
+</ul>
+
+
+<h2><a name="2ProjectMapandLayer-Layer">Layer</a></h2>
+
+<p>The API available to you for a Layer is three fold: that which is available all the time (such as the File), that which will need to block (accessing a resoruce), and that which can only be used via a command (modifying the contents).</p>
+
+<h3><a name="2ProjectMapandLayer-Highlights%3A">Highlights:</a></h3>
+<ul>
+	<li>Connection Information, used to look up matching resources in the catalog</li>
+	<li>StyleBlackboard, used to control the adaptive rendering system</li>
+	<li>Transaction, for feature information Transaction support is applied for the entire Map!</li>
+</ul>
+
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=7974">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=7974">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

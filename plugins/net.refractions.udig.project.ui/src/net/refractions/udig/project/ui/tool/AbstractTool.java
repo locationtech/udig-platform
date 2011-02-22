@@ -45,11 +45,11 @@ import org.eclipse.swt.widgets.Display;
  * </p>
  * <p>
  * Example:
- * 
+ *
  * <pre><code>
  *  super( MOUSE|MOTION ) indicates that the items will be receive all mouse and mouse motion commands.
  * </code></pre>
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  * @see Tool
@@ -67,8 +67,8 @@ public abstract class AbstractTool
             EventListener {
 
     /** Flag indicating that the tool does not listen for events from the ViewportPane */
-    public final static int NONE = 0;    
-    
+    public final static int NONE = 0;
+
     /** Flag indicating the tool is a {@linkplain MapMouseListener} */
     public final static int MOUSE = 1;
 
@@ -84,28 +84,28 @@ public abstract class AbstractTool
     protected IToolContext context;
 
     private int targets;
-    
+
     private Map<String, Object> properties = new HashMap<String, Object>();
-    
+
     private IMapEditorSelectionProvider selectionProvider;
-    
+
     /**
      * Tool's lifecycle listeners.
      */
     private Set<ToolLifecycleListener> listeners = new HashSet<ToolLifecycleListener>();
-    
-    
+
+
     /**
      * Enablement of the tool.
      */
     protected boolean enabled = true;
-    
+
     private boolean isNotify = true;
 
     /**
      * Assigns renderManager to field and registers as a listener with source. The target field is
      * used to determine which type of listeners to register as.
-     * 
+     *
      * @param targets Used to determine which listeners to register as. The following choices from
      *        the following list can be combined using | and this tool will be registered as both
      *        types of listeners:
@@ -124,12 +124,12 @@ public abstract class AbstractTool
         this.targets = targets;
     }
     /**
-     * Permits the tool to perform some initialization.  
+     * Permits the tool to perform some initialisation.
      * <p> Default implementation does nothing</p>
      * @param element the configuration element that defines the tool extension
      */
     public void init(IConfigurationElement element){
-        
+
     }
 
     /**
@@ -165,11 +165,11 @@ public abstract class AbstractTool
                     if( editor !=null  && !editor.isDragging() ){
                         editor.setDragging(true);
                     }
-     
+
                 }
             });
         }
-        
+
     }
 
     /**
@@ -202,7 +202,7 @@ public abstract class AbstractTool
                     if( editor !=null && editor.isDragging() ){
                         editor.setDragging(false);
                     }
-     
+
                 }
             });
         }
@@ -214,7 +214,7 @@ public abstract class AbstractTool
      * other just changing the current state happens. if false the tool is set as inactive and
      * deregistered with the component. This method does not need to be overridden by subclasses
      * normally.
-     * 
+     *
      * @param items The items that the tool can use in its operations
      * @see IToolContext
      */
@@ -225,12 +225,12 @@ public abstract class AbstractTool
 
         registerMouseListeners();
     }
-    
+
 
 
     /**
      * This method does not need to be overridden by subclasses normally.
-     * 
+     *
      * @see net.refractions.udig.project.ui.tool.Tool#getContext()
      * @see IToolContext
      */
@@ -243,7 +243,7 @@ public abstract class AbstractTool
     public void dispose() {
         deregisterMouseListeners();
     }
-    
+
     /**
      * @see net.refractions.udig.project.ui.tool.Tool#getProperty()
      */
@@ -252,7 +252,7 @@ public abstract class AbstractTool
 
 	}
 
-	
+
 	/**
 	 *  (non-Javadoc)
 	 * @see net.refractions.udig.project.ui.tool.Tool#isEnabled()
@@ -260,31 +260,31 @@ public abstract class AbstractTool
 	public boolean isEnabled() {
 		return enabled;
 	}
-	
+
 	/** (non-Javadoc)
 	 * @see net.refractions.udig.project.ui.tool.Tool#setEnabled(boolean)
 	 */
 	public void setEnabled(boolean enabled) {
-		boolean oldValue = enabled; 
+		boolean oldValue = enabled;
 		this.enabled = enabled;
-		
+
 		if(isNotify && oldValue != enabled){
 			ToolLifecycleEvent event = new ToolLifecycleEvent(this, ToolLifecycleEvent.Type.ENABLE, enabled, oldValue);
 			fireEvent(event);
 		}
 	}
-	
+
     /**
      * @see net.refractions.udig.project.ui.tool.Tool#setProperty()
      */
 	public void setProperty(String key, Object value) {
 		properties.put(key, value);
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	/* (non-Javadoc)
 	 * @see net.refractions.udig.project.ui.tool.Tool#getSelectionProvider()
 	 */
@@ -305,27 +305,27 @@ public abstract class AbstractTool
 	public void addListener(ToolLifecycleListener listener){
 		listeners.add(listener);
 	}
-	
+
 	/** (non-Javadoc)
 	 * @see net.refractions.udig.project.ui.tool.Tool#removeListener(net.refractions.udig.project.ui.tool.ToolLifecycleListener)
 	 */
 	public void removeListener(ToolLifecycleListener listener){
 		listeners.remove(listener);
 	}
-	
+
 	protected void setNotifyListeners(boolean isNotify){
 		this.isNotify = isNotify;
 	}
-	
-	
+
+
 	/**
 	 * @return
 	 */
 	protected boolean isNotifyListeners(){
 		return isNotify;
 	}
-	
-	
+
+
 	/**
 	 * @param event
 	 */
@@ -337,7 +337,7 @@ public abstract class AbstractTool
 
     /**
      * This method may be overridden by subclasses
-     * 
+     *
      * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener#mouseEntered(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
@@ -346,7 +346,7 @@ public abstract class AbstractTool
 
     /**
      * This method may be overridden by subclasses
-     * 
+     *
      * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener#mouseExited(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
@@ -355,7 +355,7 @@ public abstract class AbstractTool
 
     /**
      * This method may be overridden by subclasses
-     * 
+     *
      * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener#mousePressed(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
@@ -364,7 +364,7 @@ public abstract class AbstractTool
 
     /**
      * This method may be overridden by subclasses
-     * 
+     *
      * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener#mouseReleased(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
@@ -373,7 +373,7 @@ public abstract class AbstractTool
 
     /**
      * This method may be overridden by subclasses
-     * 
+     *
      * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener#mouseDragged(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
@@ -382,15 +382,15 @@ public abstract class AbstractTool
 
     /**
      * This method may be overridden by subclasses
-     * 
+     *
      * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener#mouseMoved(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mouseMoved( MapMouseEvent e ) { // do nothing
-    }   
-    
+    }
+
     /**
      * This method may be overridden by subclasses
-     * 
+     *
      * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener#mouseHovered(MapMouseEvent)
      */
     public void mouseHovered( MapMouseEvent e ) { // do nothing
@@ -398,7 +398,7 @@ public abstract class AbstractTool
 
     /**
      * This method may be overridden by subclasses
-     * 
+     *
      * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelListener#mouseWheelMoved(net.refractions.udig.project.render.displayAdapter.MapMouseWheelEvent)
      * @see MapMouseEvent
      */
@@ -407,7 +407,7 @@ public abstract class AbstractTool
 
     /**
      * This method may be overridden by subclasses
-     * 
+     *
      * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener#mouseDoubleClicked(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */

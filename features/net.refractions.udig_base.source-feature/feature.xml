@@ -2,7 +2,7 @@
 <feature
       id="net.refractions.udig_base.source"
       label="net.refractions.udig_base.source"
-      version="1.2.0.qualifier"
+      version="1.1.2"
       provider-name="Udig.Refractions.net">
 
    <description url="http://www.example.com/description">
@@ -16,13 +16,5 @@
    <license url="http://www.example.com/license">
       [Enter License Description here.]
    </license>
-
-   <includes
-         id="org.eclipse.emf.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.gef.source"
-         version="0.0.0"/>
 
 </feature>

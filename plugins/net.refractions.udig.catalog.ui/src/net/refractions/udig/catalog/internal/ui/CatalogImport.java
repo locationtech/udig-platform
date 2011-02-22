@@ -22,13 +22,12 @@ import net.refractions.udig.catalog.ui.workflow.ConnectionFailureState;
 import net.refractions.udig.catalog.ui.workflow.DataSourceSelectionState;
 import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
 import net.refractions.udig.catalog.ui.workflow.IntermediateState;
-import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardAdapter;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardDialog;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -36,45 +35,42 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
-public class CatalogImport { 
+public class CatalogImport {
 
 	Shell shell;
 	private WorkflowWizardDialog dialog;
     protected WorkflowWizard wizard;
-	
+
 	public CatalogImport() {
-		initWorkflow();
+		init();
 	}
-	
-    private void initDialog() {
+
+	void init() {
+		Workflow workflow = createWorkflow();
+		Map<Class<? extends State>, WorkflowWizardPageProvider> map = createPageMapping();
+		wizard = createWorkflowWizard(workflow,map);
+
         if( Display.getCurrent()==null ){
 		PlatformGIS.syncInDisplayThread(
 			new Runnable() {
 				public void run() {
                     shell=createShell();
-				}	
+				}
 			}
 		);
         }else{
             shell=createShell();
         }
-		
+
 		dialog = new WorkflowWizardDialog(
-			shell, wizard	
+			shell, wizard
 		);
 		dialog.setBlockOnOpen(true);
-    }
+	}
 
-    private void initWorkflow() {
-        Workflow workflow = createWorkflow();
-		Map<Class<? extends State>, WorkflowWizardPageProvider> map = createPageMapping();
-		wizard = createWorkflowWizard(workflow,map);
-    }	
-	
     /**
      * Must be called in the Display thread.
      */
@@ -87,37 +83,30 @@ public class CatalogImport {
     }
 
     public WorkflowWizardDialog getDialog() {
-        if( dialog==null ){
-            initDialog();
-        }
-
 		return dialog;
 	}
-	
+
 	public void open() {
 		Display.getDefault().asyncExec(
 			new Runnable() {
 				public void run() {
-					dialog.open();	
+					dialog.open();
 				};
 			}
 		);
 	}
-	
+
 	/**
 	 * Runs the workflow.
 	 *
-	 * @param monitor the monitor for 
+	 * @param monitor the monitor for
 	 * @param context
 	 * @return
 	 */
 	public boolean run(IProgressMonitor monitor, Object context) {
-	    if( dialog==null ){
-	        initDialog();
-	    }
 		dialog.getWorkflowWizard().getWorkflow().setContext(context);
         String bind = MessageFormat.format(Messages.CatalogImport_monitor_task, new Object[] {format(context)});
-        monitor.beginTask(bind, IProgressMonitor.UNKNOWN); 
+        monitor.beginTask(bind, IProgressMonitor.UNKNOWN);
         monitor.setTaskName(bind);
 		try{
 		   return dialog.runHeadless(new SubProgressMonitor(monitor,100));
@@ -126,7 +115,7 @@ public class CatalogImport {
 		}
 	}
 
-    
+
     private String format( Object data ) {
         if( data instanceof URL ){
             return formatURL((URL)data);
@@ -144,69 +133,67 @@ public class CatalogImport {
 
 	protected Workflow createWorkflow() {
 		DataSourceSelectionState state = new DataSourceSelectionState(false);
-		Workflow workflow = new Workflow(new State[]{state});
-		
+		Workflow workflow = new Workflow(new Workflow.State[]{state});
+
 		return workflow;
 	}
-	
+
 	protected Map<Class<? extends State>, WorkflowWizardPageProvider> createPageMapping() {
 		HashMap<Class<? extends State>, WorkflowWizardPageProvider> map = new HashMap<Class<? extends State>, WorkflowWizardPageProvider>();
-		
+
 		addToMap(map, DataSourceSelectionState.class, DataSourceSelectionPage.class);
-        
+
         WorkflowWizardPageProvider provider = new ReflectionWorkflowWizardPageProvider(ConnectionPageDecorator.class);
         map.put(IntermediateState.class, provider);
         map.put(EndConnectionState.class, provider);
-        
+
         addToMap(map, ConnectionErrorState.class, ConnectionErrorPage.class);
-        
+
         addToMap(map, ConnectionFailureState.class, ConnectionFailurePage.class);
 		return map;
 	}
 
-    private void addToMap( Map<Class< ? extends State>, WorkflowWizardPageProvider> map, Class<? extends State> key, 
+    private void addToMap( Map<Class< ? extends State>, WorkflowWizardPageProvider> map, Class<? extends State> key,
             Class<? extends WorkflowWizardPage> page ) {
         WorkflowWizardPageProvider pageFactory = new ReflectionWorkflowWizardPageProvider(page);
         map.put(key, pageFactory);
     }
-	
+
 
     protected WorkflowWizard createWorkflowWizard(Workflow workflow, Map<Class<? extends State>, WorkflowWizardPageProvider> map) {
 		return new CatalogImportWizard(workflow,map);
 	}
-	/**
-	 * Workflow wizard going through the motions of importing a new IService into the catalog.
-	 */
+
 	public static class CatalogImportWizard extends WorkflowWizard {
 
-        /** The provided workflow is used for import */
+
 		public CatalogImportWizard( Workflow workflow,
                 Map<Class< ? extends State>, WorkflowWizardPageProvider> map ) {
             super(workflow, map);
             setWindowTitle("Import");
         }
-		
+
 		@Override
 		protected boolean performFinish(IProgressMonitor monitor) {
 			//get the connection state from the pipe
-			EndConnectionState connState = 
+			EndConnectionState connState =
 				getWorkflow().getState(EndConnectionState.class);
-			
+
 			if (connState == null)
 				return false;
-			
+
 			//add the services to the catalog
 			final Collection<IService> services = connState.getServices();
 			if (services == null || services.isEmpty())
 				return false;
-			
+
 			//add the services to the catalog
 			ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
 			for (IService service : services) catalog.add(service);
-			
+
 			//select the first service
 			//TODO: this has threading issues
-            PlatformGIS.asyncInDisplayThread(
+            PlatformGIS.syncInDisplayThread(
 				new Runnable() {
 					public void run() {
 						try {
@@ -214,17 +201,17 @@ public class CatalogImport {
                             if( view!=null ){
                                 CatalogTreeViewer treeviewer = view.getTreeviewer();
                                 treeviewer.setSelection(
-    								new StructuredSelection(services.iterator().next())	
+    								new StructuredSelection(services.iterator().next())
     							);
                             }
-						} 
+						}
 						catch (Exception e) {
 							CatalogUIPlugin.log(e.getLocalizedMessage(), e);
 						}
 					}
-				}, true
+				}
 			);
-			
+
 			return true;
 		}
 
@@ -241,23 +228,10 @@ public class CatalogImport {
             }else{
                 view = (CatalogView) PlatformUI
                 .getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage().findView(CatalogView.VIEW_ID);                                
+                .getActivePage().findView(CatalogView.VIEW_ID);
             }
             return view;
         }
 	}
-	
-	/**
-	 * Extends {@link WorkflowWizardAdapter} by passing the CatalogImport wizard to the constructor.
-	 * @author jesse
-	 * @since 1.1.0
-	 */
-	public static class CatalogImportAdapter extends WorkflowWizardAdapter implements IImportWizard {
-
-	    public CatalogImportAdapter() {
-	        super(new CatalogImport().wizard);
-	    }
-	}
-
 }
 

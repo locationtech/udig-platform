@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : net.refractions.udig.catalog</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : net.refractions.udig.catalog -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+
+<h3><a name="net.refractions.udig.catalog-FunctionalRequirements">Functional Requirements</a></h3>
+<ul>
+	<li>Servers, store server connection information for sharing between projects.
+	<ul>
+		<li>Store data sources (DataStore and GridCoverageExchange)</li>
+	</ul>
+	</li>
+	<li>Data Directories, store data directories for sharing between projects.</li>
+	<li>Metadata, provide access to metadata on Servers/Data Directories.</li>
+	<li>Data Discovery, provide enough information for a user to define a new layer<br/>
+in their context.
+	<ul>
+		<li>Wizards for DataStore connection</li>
+		<li>Wizards for DataStore creation</li>
+	</ul>
+	</li>
+	<li>Persist Settings, permit exporting and sharing DataStore connection<br/>
+information.</li>
+	<li>DataStores Management, lookup actualized DataStores that are in use.</li>
+	<li>Missing Data, entries referred to by imported projects should be maintained,<br/>
+allowing the user one location to correct data connection information.<br/>
+Local Catalog has a strong interaction with the preferences maintained by the</li>
+	<li>Provide support for temporary results, and facilities for later export</li>
+</ul>
+
+
+<h3><a name="net.refractions.udig.catalog-NonFunctionalRequirements">Non-Functional Requirements</a></h3>
+
+<ul>
+	<li>Ease of Data Location, intent is for the user to be separated from the data<br/>
+source; so they need as little technical knowledge as possible.</li>
+	<li>Security, name/password should be left out of the export/share.</li>
+</ul>
+
+
+<h3><a name="net.refractions.udig.catalog-DesignNotes">Design Notes</a></h3>
+
+<p>Realized as LocalRegistry, was speced out as LocalCatalog in initial design requirements.</p>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=244">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=244">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

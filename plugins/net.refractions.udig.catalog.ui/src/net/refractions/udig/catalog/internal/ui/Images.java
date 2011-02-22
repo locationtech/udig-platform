@@ -55,7 +55,7 @@ public class Images implements ISharedImages {
      * <p>
      * Images are from CatalogUIPlugin.getDefault().getImages()
      * </p>
-     * 
+     *
      * @param id the key
      * @return ImageDescriptor, or null if there is no such image.
      */
@@ -69,7 +69,7 @@ public class Images implements ISharedImages {
     }
     /**
      * Returns the image associated with the given key, or <code>null</code> if none.
-     * 
+     *
      * @param id the key
      * @return the image, or <code>null</code> if none
      */
@@ -86,7 +86,7 @@ public class Images implements ISharedImages {
      * <p>
      * The Images from ISharedImages will be registered with
      * CatalogUIPlugin.getDefault().getImageRegistry().
-     * 
+     *
      * @param url
      * @param shared
      */

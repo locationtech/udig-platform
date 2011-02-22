@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.internal.wms.WMSGeoResourceImpl;
@@ -24,28 +23,33 @@ import org.geotools.data.wms.WebMapServer;
 public class WMSConnectionFactory extends UDIGConnectionFactory {
 
 	public boolean canProcess(Object context) {
-		if( context instanceof IResolve ){
+		 if( context instanceof IResolve ){
            IResolve resolve = (IResolve) context;
            return resolve.canResolve( WebMapServer.class );
        }
-       return toCapabilitiesURL(context) != null;        
+       return toCapabilitiesURL(context) != null;
 	}
-	
+
 	public Map<String, Serializable> createConnectionParameters(Object context) {
 		  if( context instanceof IResolve  ){
 	            Map params = createParams( (IResolve) context );
-	            if( !params.isEmpty() ) return params;            
-	        } 
+	            if( !params.isEmpty() ) return params;
+	        }
 	        URL url = toCapabilitiesURL( context );
+	        if( url == null ){
+	            // so we are not sure it is a wms url
+	            // lets guess
+	            url = CatalogPlugin.locateURL(context);
+	        }
 	        if( url != null ) {
-	            // well we have a url - lets try it!            
+	            // well we have a url - lets try it!
 	            List<IResolve> list = CatalogPlugin.getDefault().getLocalCatalog().find( url, null );
 	            for( IResolve resolve : list ){
 	                Map params = createParams( resolve );
 	                if( !params.isEmpty() ) return params; // we got the goods!
 	            }
-	            return createParams( url );            
-	        }        
+	            return createParams( url );
+	        }
 	        return Collections.EMPTY_MAP;
 	}
 
@@ -63,7 +67,7 @@ public class WMSConnectionFactory extends UDIGConnectionFactory {
                 return wms.getConnectionParams();
             } catch (IOException e) {
                 checkedURL( layer.getIdentifier() );
-            }                    
+            }
         }
         else if( handle.canResolve( WebMapServer.class )){
             // must be some kind of handle from a search!
@@ -71,19 +75,19 @@ public class WMSConnectionFactory extends UDIGConnectionFactory {
         }
         return Collections.EMPTY_MAP;
     }
-	
+
 	/** 'Create' params given the provided url, no magic occurs */
     static public Map<String,Serializable> createParams( URL url ){
         WMSServiceExtension factory = new WMSServiceExtension();
         Map params = factory.createParams( url );
         if( params != null) return params;
-        
+
         Map<String,Serializable> params2 = new HashMap<String,Serializable>();
         params2.put(WMSServiceImpl.WMS_URL_KEY,url);
         return params2;
     }
 
-    
+
 	 /**
      * Convert "data" to a wms capabilities url
      * <p>
@@ -110,11 +114,8 @@ public class WMSConnectionFactory extends UDIGConnectionFactory {
         else if( data instanceof URL ){
             return toCapabilitiesURL( (URL) data );
         }
-//        else if( CatalogPlugin.locateURL(data) != null ){
-//            return toCapabilitiesURL( CatalogPlugin.locateURL(data) );
-//        }
-        else if (ID.cast(data) != null ){
-        	return toCapabilitiesURL(ID.cast(data).toURL());
+        else if( CatalogPlugin.locateURL(data) != null ){
+            return toCapabilitiesURL( CatalogPlugin.locateURL(data) );
         }
         else {
             return null; // no idea what this should be
@@ -125,31 +126,31 @@ public class WMSConnectionFactory extends UDIGConnectionFactory {
         if( resolve instanceof IService ){
             return toCapabilitiesURL( (IService) resolve );
         }
-        return toCapabilitiesURL( resolve.getIdentifier() );        
+        return toCapabilitiesURL( resolve.getIdentifier() );
     }
 
     static URL toCapabilitiesURL( IService resolve ){
         if( resolve instanceof WMSServiceImpl ){
             return toCapabilitiesURL( (WMSServiceImpl) resolve );
         }
-        return toCapabilitiesURL( resolve.getIdentifier() );        
+        return toCapabilitiesURL( resolve.getIdentifier() );
     }
 
     /** No further QA checks needed - we know this one works */
     static URL toCapabilitiesURL( WMSServiceImpl wms ){
-        return wms.getIdentifier();                
+        return wms.getIdentifier();
     }
 
     /** Quick sanity check to see if url is a WMS url */
     static URL toCapabilitiesURL( URL url ){
         if (url == null) return null;
-    
+
         String path = url.getPath() == null ? null : url.getPath().toLowerCase();
         String query = url.getQuery() == null ? null : url.getQuery().toLowerCase();
         String protocol = url.getProtocol() == null ? null : url.getProtocol().toLowerCase();
-    
+
         if (!"http".equals(protocol) //$NON-NLS-1$
-                && !"https".equals(protocol)) { //$NON-NLS-1$ 
+                && !"https".equals(protocol)) { //$NON-NLS-1$
             return null;
         }
         if (query != null && query.indexOf("service=wms") != -1) { //$NON-NLS-1$
@@ -161,7 +162,7 @@ public class WMSConnectionFactory extends UDIGConnectionFactory {
                 return null;
             }
         }
-        
+
         if (path != null && path.toUpperCase().indexOf("GEOSERVER/WMS") != -1 ) { //$NON-NLS-1$
             return checkedURL( url );
         }
@@ -170,17 +171,13 @@ public class WMSConnectionFactory extends UDIGConnectionFactory {
         }
         return null;
     }
-    
+
     /** Check that any trailing #layer is removed from the url */
     static public URL checkedURL( URL url ){
         String check = url.toExternalForm();
-        int tiled = check.toUpperCase().indexOf("TILED=TRUE");
-        if( tiled != -1 ){
-            return null; // we do not support tiled WMS here
-        }
         int hash = check.indexOf('#');
         if ( hash == -1 ){
-            return url;            
+            return url;
         }
         try {
             return new URL( check.substring(0, hash ));
@@ -188,11 +185,9 @@ public class WMSConnectionFactory extends UDIGConnectionFactory {
             return null;
         }
     }
-    
+
 	public URL createConnectionURL(Object context) {
-	    if( context instanceof URL ){
-	        return (URL) context;
-	    }
+		// TODO Auto-generated method stub
 		return null;
 	}
 

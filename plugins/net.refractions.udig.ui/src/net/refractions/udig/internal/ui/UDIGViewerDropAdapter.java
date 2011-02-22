@@ -16,7 +16,7 @@ public class UDIGViewerDropAdapter extends ViewerDropAdapter implements UDIGDrop
 	UDIGDropHandler handler;
     private IDropTargetProvider defaultTarget;
 
-	
+
 	public UDIGViewerDropAdapter(Viewer viewer, IDropTargetProvider defaultTarget) {
 		super(viewer);
         setFeedbackEnabled(true);
@@ -31,23 +31,23 @@ public class UDIGViewerDropAdapter extends ViewerDropAdapter implements UDIGDrop
         handler.setTarget(target);
         handler.setViewerLocation(ViewerDropLocation.valueOf(getCurrentLocation()));
     }
-    
+
 	public UDIGDropHandler getDropHandler() {
         return handler;
 	}
-	
+
 	@Override
 	public void dragEnter(DropTargetEvent event) {
         initHandler(event);
 		handler.dragEnter(event);
 	}
-	
+
 	@Override
 	public void dragOperationChanged(DropTargetEvent event) {
         initHandler(event);
 		handler.dragOperationChanged(event);
 	}
-    
+
     @Override
     public void dragOver( DropTargetEvent event ) {
         initHandler(event);
@@ -66,13 +66,13 @@ public class UDIGViewerDropAdapter extends ViewerDropAdapter implements UDIGDrop
         initHandler(event);
 		handler.drop(event);
 	}
-	
+
 	@Override
 	public boolean performDrop(Object data) {
 		handler.performDrop(data, null);
 		return false;
 	}
-	
+
 	@Override
 	public boolean validateDrop(Object target, int operation, TransferData transferType) {
 		return true;
@@ -85,7 +85,7 @@ public class UDIGViewerDropAdapter extends ViewerDropAdapter implements UDIGDrop
     public void setDropTargetProvider( IDropTargetProvider newProvider ) {
         defaultTarget=newProvider;
     }
-    
+
     @Override
     protected int determineLocation( DropTargetEvent event ) {
         if (!(event.item instanceof Item)) {

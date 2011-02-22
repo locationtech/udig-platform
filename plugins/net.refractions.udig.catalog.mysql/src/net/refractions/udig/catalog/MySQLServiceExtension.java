@@ -23,12 +23,14 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.refractions.udig.catalog.AbstractDataStoreServiceExtension;
+import net.refractions.udig.catalog.IService;
+import net.refractions.udig.catalog.ServiceExtension2;
 import net.refractions.udig.catalog.internal.mysql.MySQLPlugin;
+import net.refractions.udig.catalog.internal.mysql.MySQLServiceImpl;
 import net.refractions.udig.catalog.mysql.internal.Messages;
 import net.refractions.udig.core.internal.CorePlugin;
 
-import org.geotools.data.DataStoreFactorySpi;
-import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.data.mysql.MySQLDataStoreFactory;
 
 
@@ -38,8 +40,7 @@ import org.geotools.data.mysql.MySQLDataStoreFactory;
  * @author Harry Bullen, Intelligent Automation
  * @since 1.1.0
  */
-public class MySQLServiceExtension extends AbstractDataStoreServiceExtension
-    implements ServiceExtension2 {
+public class MySQLServiceExtension extends AbstractDataStoreServiceExtension implements ServiceExtension2 {
 
     /**
      * @param id
@@ -73,14 +74,14 @@ public class MySQLServiceExtension extends AbstractDataStoreServiceExtension
         String the_database = (String) params.get(MySQLDataStoreFactory.DATABASE.key);
         String the_username = (String) params.get(MySQLDataStoreFactory.USER.key);
         String the_password = (String) params.get(MySQLDataStoreFactory.PASSWD.key);
-        
+
         URL toURL = toURL(the_username, the_password, the_host, intPort, the_database);
         return toURL;
     }
 
     /**
      * Creates some  Params for mysql based off a url that is passed in
-     * 
+     *
      * @see net.refractions.udig.catalog.ServiceExtension#createParams(java.net.URL)
      * @param url for the mysql database
      * @return x
@@ -91,15 +92,15 @@ public class MySQLServiceExtension extends AbstractDataStoreServiceExtension
         }
 
         ParamInfo info=parseParamInfo(url);
-        
+
         Map<String, Serializable> params = new HashMap<String, Serializable>();
-        params.put(MySQLDataStoreFactory.DBTYPE.key, (Serializable)MySQLDataStoreFactory.DBTYPE.sample);  //$NON-NLS-1$
-        params.put(MySQLDataStoreFactory.HOST.key, info.host); 
-        params.put(MySQLDataStoreFactory.PORT.key, info.the_port.toString() ); 
-        params.put(MySQLDataStoreFactory.DATABASE.key, info.the_database); 
-        params.put(MySQLDataStoreFactory.USER.key, info.username); 
+        params.put(MySQLDataStoreFactory.DBTYPE.key, "mysql");  //$NON-NLS-1$
+        params.put(MySQLDataStoreFactory.HOST.key, info.host);
+        params.put(MySQLDataStoreFactory.PORT.key, info.the_port.toString() );
+        params.put(MySQLDataStoreFactory.DATABASE.key, info.the_database);
+        params.put(MySQLDataStoreFactory.USER.key, info.username);
         params.put(MySQLDataStoreFactory.PASSWD.key, info.password);
-        
+
         return params;
     }
 
@@ -113,21 +114,6 @@ public class MySQLServiceExtension extends AbstractDataStoreServiceExtension
         }
         return factory;
     }
-    /**
-     * Look up Param by key; used to access the correct sample
-     * value for DBTYPE.
-     *
-     * @param key
-     * @return
-     */
-    public static Param getPram( String key ){
-        for( Param param : getFactory().getParametersInfo()){
-            if( key.equals( param.key )){
-                return param;
-            }
-        }
-        return null;
-    }
 
     /** A couple quick checks on the url */
     public static final boolean isMySQL( URL url ) {
@@ -140,11 +126,11 @@ public class MySQLServiceExtension extends AbstractDataStoreServiceExtension
     public static URL toURL( String username, String password, String host, String database) throws MalformedURLException {
     	return toURL(username, password, host, 3306, database);
     }
-    
+
     public static URL toURL( String username, String password, String host, Integer port, String database) throws MalformedURLException {
     	return toURL(username, password, host, port.toString(), database);
     }
-    
+
     public static URL toURL( String username, String password, String host, String port, String database) throws MalformedURLException {
         String the_spec = "mysql.jdbc://" + username //$NON-NLS-1$
                 + ":" + password + "@" + host //$NON-NLS-1$ //$NON-NLS-2$
@@ -159,13 +145,8 @@ public class MySQLServiceExtension extends AbstractDataStoreServiceExtension
 
     public String reasonForFailure( URL url ) {
         if( ! isMySQL(url) )
-            return Messages.MySQLServiceExtension_badURL; 
+            return Messages.MySQLServiceExtension_badURL;
         return reasonForFailure(createParams(url));
-    }
-
-    @Override
-    protected DataStoreFactorySpi getDataStoreFactory() {
-        return getFactory();
     }
 
 }

@@ -3,7 +3,7 @@ package net.refractions.udig.project.ui.tool;
 import net.refractions.udig.project.UDIGEvent;
 
 /**
- * 
+ *
  * Event of tool lifecycle changing, such as:
  * <p>
  * <ul>
@@ -11,32 +11,32 @@ import net.refractions.udig.project.UDIGEvent;
  * <li>setEnabled(boolean) is called</li>
  * <li>setContext(IToolContext) - the new context is set</li>
  * </ul>
- * 
- * 
+ *
+ *
  * @author Vitalus
  * @since UDIG 1.1
  *
  */
 public class ToolLifecycleEvent extends UDIGEvent {
-	
+
 	public static enum Type{
-		
-		
+
+
 		ACTIVE,
-		
-		
+
+
 		ENABLE,
-		
-		
+
+
 		TOOL_CONTEXT
-		
-		
+
+
 	}
-	
+
 	private Type type;
 
 	/**
-	 * 
+	 *
 	 * @param source2
 	 * @param type
 	 * @param newValue2
@@ -48,13 +48,13 @@ public class ToolLifecycleEvent extends UDIGEvent {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public ToolLifecycleEvent.Type getType(){
 		return type;
 	}
-	
+
 	@Override
 	public Object getSource() {
 		return source;

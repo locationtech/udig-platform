@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.TreeItem;
 
 /**
  * Default expansion provider that always returns true.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

@@ -24,7 +24,7 @@ import java.io.IOException;
  * used to decide which renderers to instantiate to render a layer. As the state of udig changes
  * different renderers may be more suited so the RenderMetrics object are also used to judge whether
  * a new renderer should be used for rendering a layer.
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -33,7 +33,7 @@ public interface IRenderMetricsFactory {
     /**
      * This method is used to determine whether the renderer can render the layer. It is used so
      * that not all metrics need to be created.
-     * 
+     *
      * @param toolkit A toolkit containing reference to everything a renderer needs.
      * @return true if the associated renderer can render the layer using the data provided by data.
      * @throws IOException
@@ -47,7 +47,7 @@ public interface IRenderMetricsFactory {
      * modeled by <code>vmodel</code>. NOTE: These metrics is a active object and cached by the
      * RenderManager. As such no references should be maintained to the objects returned by this
      * method.
-     * 
+     *
      * @param toolkit A toolkit containing reference to everything a renderer needs.
      * @return A RenderMetrics object which provides metrics for a renderer while rendering
      *         <code>layer</code> using <code>data</code> as the data source and rendering to a
@@ -56,7 +56,7 @@ public interface IRenderMetricsFactory {
      * @see IRenderContext
      */
 
-    public AbstractRenderMetrics createMetrics( IRenderContext context );
+    public IRenderMetrics createMetrics( IRenderContext context );
 
     /**
      * Returns the type of the Renderer that will be created.
@@ -66,7 +66,7 @@ public interface IRenderMetricsFactory {
      * </p>
      * Please return the class that this RenderMetricsFactory will create (if given
      * the appropriate context).
-     * 
+     *
      * @return the type of the Renderer that will be created
      */
     public Class< ? extends IRenderer> getRendererType();

@@ -16,11 +16,12 @@ package net.refractions.udig.mapgraphic.grid;
 
 import java.awt.Color;
 
+
 import net.refractions.udig.ui.graphics.ViewportGraphics;
 
 /**
  * Style for the {@link GridMapGraphic}.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -30,7 +31,7 @@ public class GridStyle {
         SCREEN, WORLD
     }
 
-    public static final String ID = "net.refractions.udig.tool.edit.mapgraphic.grid.style"; //$NON-NLS-1$
+    public static final String ID = "net.refractions.udig.tool.edit.mapgraphic.grid.style";
     public static final GridStyle DEFAULT_STYLE = new GridStyle(Type.SCREEN, 25, 25, new Color(0,
             0, 255, 100), ViewportGraphics.LINE_DOT, 1);
 
@@ -39,7 +40,7 @@ public class GridStyle {
     private Color color;
     private boolean centerGrid;
     private boolean showLabels;
-    
+
     /**
      * One of
      * <ul>
@@ -75,13 +76,9 @@ public class GridStyle {
         showLabels = oldStyle.isShowLabels();
     }
 
-    /**
-     * Returns a copy of the grid size array - use setGridSize to modify
-     *
-     * @return copy of grid size array
-     */
     public double[] getGridSize() {
-        return new double[]{ gridSize[0], gridSize[1] };
+        return gridSize;
+
     }
 
     public Type getType() {

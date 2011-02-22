@@ -35,7 +35,7 @@ public class EditGeomPathIteratorTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-        layerToWorld = CRS.findMathTransform(DefaultGeographicCRS.WGS84, DefaultGeographicCRS.WGS84);
+        layerToWorld = CRS.transform(DefaultGeographicCRS.WGS84, DefaultGeographicCRS.WGS84);
         if (INTERACTIVE) {
             frame = new JFrame("EditGeomPathIterator Test"); //$NON-NLS-1$
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +50,7 @@ public class EditGeomPathIteratorTest extends TestCase {
                   g.drawRect(0,0,width, height);
                 }
             });
-            
+
             frame.getContentPane().add(new JPanel(){
                 /** long serialVersionUID field */
                 private static final long serialVersionUID = 1L;
@@ -61,11 +61,11 @@ public class EditGeomPathIteratorTest extends TestCase {
                   g.drawRect(0,0,width, height);
                 }
             });
-            
-            
-            
+
+
+
             frame.setSize(width*2+20, height+50);
-            
+
             frame.setVisible(true);
         }
     }
@@ -110,7 +110,7 @@ public class EditGeomPathIteratorTest extends TestCase {
         update();
         assertImagesEqual();
     }
-    
+
     public void testDrawLine() throws Exception {
         Graphics2D testG = testImage.createGraphics();
         Graphics2D exampleG = exampleImage.createGraphics();
@@ -235,7 +235,7 @@ public class EditGeomPathIteratorTest extends TestCase {
 
         testG.setColor(Color.BLUE);
         testG.fill(iter.toShape());
-        testG.setColor(Color.RED);        
+        testG.setColor(Color.RED);
         testG.draw(iter.toShape());
         exampleG.setColor(Color.BLUE);
         exampleG.fill(path);
@@ -252,7 +252,7 @@ public class EditGeomPathIteratorTest extends TestCase {
 
         testG.setColor(Color.BLUE);
         testG.fill(iter.toShape());
-        testG.setColor(Color.RED);        
+        testG.setColor(Color.RED);
         testG.draw(iter.toShape());
         exampleG.setColor(Color.BLUE);
         exampleG.fill(path);
@@ -300,7 +300,7 @@ public class EditGeomPathIteratorTest extends TestCase {
         exampleG.clearRect(0, 0, width, height);
         testG.setColor(Color.BLUE);
         testG.fill(iter.toShape());
-        testG.setColor(Color.RED);        
+        testG.setColor(Color.RED);
         testG.draw(iter.toShape());
         exampleG.setColor(Color.BLUE);
         exampleG.fill(path);

@@ -23,7 +23,7 @@ import net.refractions.udig.issues.IssueConfiguration;
 
 /**
  * Lists the constants used for keys and values in the preferences.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -60,7 +60,7 @@ public interface PreferenceConstants {
      * @see IssueConfiguration#setLabelProvider(IIssuesLabelProvider)
      */
     static final String KEY_VIEW_LABEL_PROVIDER = "KEY_VIEW_LABEL_PROVIDER"; //$NON-NLS-1$
-    
+
     //Standard values
     /**
      * default value for {@link #KEY_ACTIVE_LIST}

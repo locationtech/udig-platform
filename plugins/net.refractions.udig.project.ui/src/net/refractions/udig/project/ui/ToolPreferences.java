@@ -26,7 +26,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  * @since 1.1.0
  */
 public class ToolPreferences extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-    
+
     public ToolPreferences(){
         super(GRID);
         setPreferenceStore(ProjectPlugin.getPlugin().getPreferenceStore());

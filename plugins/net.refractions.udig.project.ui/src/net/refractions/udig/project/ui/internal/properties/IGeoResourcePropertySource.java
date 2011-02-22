@@ -27,24 +27,22 @@ import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource2;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.geotools.data.FeatureSource;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * A Property source for services.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
 public class IGeoResourcePropertySource implements IPropertySource2 {
     private IGeoResource geoResource;
     private IPropertyDescriptor[] descriptors;
-    private static final String RESOURCE = Messages.IGeoResourcePropertySource_0; 
+    private static final String RESOURCE = Messages.IGeoResourcePropertySource_0;
     IPropertyDescriptor resourceDescriptor;
-    private static final String FEATURE_SOURCE = Messages.IGeoResourcePropertySource_1; 
+    private static final String FEATURE_SOURCE = Messages.IGeoResourcePropertySource_1;
     /**
      * Creates a new instance of DataPropertySource
-     * 
+     *
      * @param entry
      */
     public IGeoResourcePropertySource( IGeoResource entry ) {
@@ -67,9 +65,9 @@ public class IGeoResourcePropertySource implements IPropertySource2 {
                 if (geoResource.canResolve(FeatureSource.class)) {
                     resourceDescriptor = new SchemaDescriptor(
                             FEATURE_SOURCE,
-                            Messages.IGeoResourcePropertySource_schema, (FeatureSource<SimpleFeatureType, SimpleFeature>) geoResource.resolve(FeatureSource.class, null)); 
+                            Messages.IGeoResourcePropertySource_schema, (FeatureSource) geoResource.resolve(FeatureSource.class, null));
                 } else {
-                    resourceDescriptor = new PropertyDescriptor(RESOURCE, 
+                    resourceDescriptor = new PropertyDescriptor(RESOURCE,
                     		Messages.IGeoResourcePropertySource_data);
                 }
             } catch (IOException e) {

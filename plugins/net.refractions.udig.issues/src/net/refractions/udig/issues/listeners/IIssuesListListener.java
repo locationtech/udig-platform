@@ -18,7 +18,7 @@ package net.refractions.udig.issues.listeners;
 
 /**
  * Listens to changes to the listener list.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */

@@ -20,12 +20,12 @@ import com.vividsolutions.jts.geom.Coordinate;
  * Wraps a Coordinate and calculates its position only requested. This allows the point it maps to
  * to be moved around without the more time consuming process of calculating the coordinate
  * location.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class LazyCoord extends Coordinate {
-    
+
     /** long serialVersionUID field */
     private static final long serialVersionUID = 8814031966871200006L;
 
@@ -35,7 +35,7 @@ public class LazyCoord extends Coordinate {
     PointCoordCalculator pointCoordCalculator;
     private double differenceX;
     private double differenceY;
-    
+
     private final Object obj=new Object();
 
     public LazyCoord( Point point2, Coordinate coord2, EditBlackboard bb2 ) {
@@ -95,12 +95,12 @@ public class LazyCoord extends Coordinate {
     public String toString() {
         return start.toString();
     }
-    
+
     @Override
     public boolean equals( Object obj ) {
         return (this == obj);
     }
-    
+
     @Override
     public int hashCode() {
         return obj.hashCode();

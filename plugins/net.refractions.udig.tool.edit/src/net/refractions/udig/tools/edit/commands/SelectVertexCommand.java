@@ -29,7 +29,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 /**
  * Sets the selection on the editblackboard.  Depending on the Enum used
  * the new points may be added to the selection or may replace the selection.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -41,7 +41,7 @@ public class SelectVertexCommand extends AbstractCommand implements UndoableMapC
     private Selection oldPoints;
 
     /**
-     * new instance 
+     * new instance
      * @param editBlackboard blackboard to modify
      * @param points points to add or set
      * @param type indicates whether to add or set.
@@ -53,7 +53,7 @@ public class SelectVertexCommand extends AbstractCommand implements UndoableMapC
     }
 
     /**
-     * new instance 
+     * new instance
      * @param editBlackboard blackboard to modify
      * @param point point to add or set
      * @param type indicates whether to add or set.
@@ -76,7 +76,7 @@ public class SelectVertexCommand extends AbstractCommand implements UndoableMapC
             if( !points.isEmpty() )
                 editBlackboard.selectionRemoveAll(points);
         }
-         editBlackboard.fireBatchedEvents();   
+         editBlackboard.fireBatchedEvents();
     }
 
     public String getName() {
@@ -90,7 +90,7 @@ public class SelectVertexCommand extends AbstractCommand implements UndoableMapC
             editBlackboard.selectionAddAll(oldPoints);
         }
     }
-    
+
     public enum Type{ ADD, SET, REMOVE };
 
 }

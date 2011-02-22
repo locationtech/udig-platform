@@ -14,6 +14,8 @@
  */
 package net.refractions.udig.mapgraphic.grid;
 
+import net.refractions.udig.mapgraphic.internal.Messages;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Combo;
@@ -21,25 +23,24 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Spinner;
 
 /**
- * Controls the behavior of the Spinner and Combo for setting the horizontal or vertical
+ * Controls the behaviour of the Spinner and Combo for setting the horizontal or vertical
  * spacing of lines.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 class SpacerController {
-    
+
     private final Spinner spinner;
     private final Combo unit;
 
-    /** this information should be coming out of the java.units package */
     static final String PIXELS = "pixels"; //$NON-NLS-1$
     static final String DEGREES = "degrees"; //$NON-NLS-1$
     static final String MINUTES = "minutes"; //$NON-NLS-1$
     static final String SECONDS = "seconds"; //$NON-NLS-1$
 
     static final String[] UNITS = new String[]{PIXELS, DEGREES, MINUTES, SECONDS};
-    
+
     public SpacerController( final Spinner spinner, final Combo unit ) {
         super();
         this.spinner = spinner;
@@ -67,7 +68,7 @@ class SpacerController {
         spinner.setDigits(digits);
         spinner.setPageIncrement(pageinc);
     }
-    
+
 
     /**
      * Sets the spinner to the correct setting for the unit.  Sets the incrememnt,
@@ -86,7 +87,7 @@ class SpacerController {
     }
 
     /**
-     * Updates otherSpacer to be in the same unit as this if it is in pixel space.  
+     * Updates otherSpacer to be in the same unit as this if it is in pixel space.
      * If not it leave it alone.
      *
      * @return true if it updated the other spacer.
@@ -103,7 +104,7 @@ class SpacerController {
     /**
      * Updates otherSpacer to be in the same unit as this if it is in world space.  If not it leave it alone.
      *
-     * @param otherSpacer 
+     * @param otherSpacer
      * @return true if it updated the other spacer.
      */
     public boolean validatePixels(SpacerController otherSpacer) {
@@ -124,7 +125,7 @@ class SpacerController {
     }
 
     /**
-     * adds listener to unit and spinner as for Modify event listeners ;  
+     * adds listener to unit and spinner as for Modify event listeners ;
      * Adds modify listener to unit.
      *
      * @param modifyListener
@@ -137,7 +138,7 @@ class SpacerController {
         spinner.addListener(SWT.KeyUp, listener);
 
     }
-    
+
     /**
      * Removes listeners from unit and spinner.
      *
@@ -150,9 +151,9 @@ class SpacerController {
         spinner.removeListener(SWT.Modify, listener);
         spinner.removeListener(SWT.KeyUp, listener);
     }
-    
+
     /**
-     * Sets the unit and spinner in this spacer to the correct value.  If the spacer is 
+     * Sets the unit and spinner in this spacer to the correct value.  If the spacer is
      * currently in pixel space then it will be changed to degrees.
      *
      * @param value value in DEGREES

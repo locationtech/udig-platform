@@ -30,13 +30,13 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         store.setDefault(PreferenceConstants.P_SHOW_ANIMATIONS, true);
         store.setDefault(PreferenceConstants.P_MAX_UNDO, 10);
         store.setDefault(PreferenceConstants.P_DEFAULT_FEATURE_EDITOR, P_DEFAULT_FEATURE_EDITOR_VALUE );
-        
+
         PreferenceConverter.setDefault(store, PreferenceConstants.P_BACKGROUND, new RGB(255,255,255));
         PreferenceConverter.setDefault(store,PreferenceConstants.P_SELECTION_COLOR, new RGB(255,255,0));
         PreferenceConverter.setDefault(store,PreferenceConstants.P_SELECTION2_COLOR, new RGB(0,0,0));
-        
-        
-        
+
+
+
       store.setDefault(PreferenceConstants.P_FEATURE_EVENT_REFRESH_ALL, false);
       store.setDefault(PreferenceConstants.P_IGNORE_LABELS_OVERLAPPING, false);
       store.setDefault(PreferenceConstants.P_CHECK_DUPLICATE_LAYERS, false);

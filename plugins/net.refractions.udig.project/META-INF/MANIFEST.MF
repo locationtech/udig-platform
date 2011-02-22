@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: net.refractions.udig.project; singleton:=true
-Bundle-Version: 1.2.1.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.project.internal.ProjectPlugin$Implementation
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
@@ -16,15 +16,14 @@ Require-Bundle: org.eclipse.core.runtime,
  net.refractions.udig.catalog;visibility:=reexport,
  org.eclipse.emf.ecore.xmi,
  net.refractions.udig.ui,
- org.junit4;resolution:=optional
-Bundle-ActivationPolicy: lazy
+ org.junit4;resolution:=optional,
+ net.refractions.udig.ui.tests;resolution:=optional
+Eclipse-LazyStart: true
 Export-Package: net.refractions.udig.project,
  net.refractions.udig.project.command,
  net.refractions.udig.project.command.factory,
- net.refractions.udig.project.command.map,
  net.refractions.udig.project.command.provider,
  net.refractions.udig.project.element,
- net.refractions.udig.project.element.impl,
  net.refractions.udig.project.element.util,
  net.refractions.udig.project.geoselection,
  net.refractions.udig.project.interceptor,
@@ -39,7 +38,6 @@ Export-Package: net.refractions.udig.project,
  net.refractions.udig.project.internal.render.impl,
  net.refractions.udig.project.internal.render.util,
  net.refractions.udig.project.internal.util,
- net.refractions.udig.project.memento,
  net.refractions.udig.project.preferences,
  net.refractions.udig.project.render,
  net.refractions.udig.project.render.displayAdapter

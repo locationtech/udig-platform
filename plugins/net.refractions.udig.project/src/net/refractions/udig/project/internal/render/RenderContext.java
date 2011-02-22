@@ -8,12 +8,9 @@
  */
 package net.refractions.udig.project.internal.render;
 
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
-import javax.media.jai.TileCache;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.ILayer;
@@ -22,11 +19,10 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.render.IRenderContext;
 
 import org.geotools.data.Query;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 
 /**
  * @see IRenderContext
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -37,7 +33,7 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
      * <p>
      * Used to optimize getInfo and selection tools.
      * </p>
-     * 
+     *
      * @param screenLocation
      * @return true if non transparent pixel is rendered at screenLocation
      */
@@ -49,12 +45,12 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
      * <p>
      * Often this feedback takes place on the display under direction of the tool.
      * </p>
-     * 
+     *
      * @param rectangle Rectangle indicating area of interest
      * @return Buffered image copied from the raster, or null if unavailable
      */
     public BufferedImage copyImage( Rectangle rectangle );
-    
+
     /**
      * Returns a bufferedImage that a renderer can render to.
      * <p>
@@ -65,7 +61,7 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
      * The user of the image is required to clear the image. The image maybe cached and as a result
      * may be dirty.
      * </p>
-     * 
+     *
      * @return The bufferedImage that the renderer renders to.
      */
     public BufferedImage getImage( int width, int height );
@@ -75,14 +71,14 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
      * <p>
      * The returned image will be the same size as the display or bigger
      * </p>
-     * 
+     *
      * @return The bufferedImage that the renderer renders to.
      */
     public BufferedImage getImage();
 
     /**
      * Returns the query that selects all the features that need to be rendered for the layer.
-     * 
+     *
      * @return the query that selects all the features that need to be rendered for the layer.
      */
     public Query getQuery( ILayer layer );
@@ -98,7 +94,7 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
     /**
      * Sets the value of the '{@link net.refractions.udig.project.internal.render.RenderContext#getLayerInternal <em>Layer Internal</em>}'
      * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @param value the new value of the '<em>Layer Internal</em>' reference.
      * @see #getLayerInternal()
      */
@@ -109,7 +105,7 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
      * <p>
      * Should normally be used when only one layer is being rendered.
      * </p>
-     * 
+     *
      * @model many="false"
      */
     IGeoResource getGeoResourceInternal();
@@ -117,7 +113,7 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
     /**
      * Sets the value of the '{@link net.refractions.udig.project.internal.render.RenderContext#getGeoResourceInternal <em>Geo Resource Internal</em>}'
      * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @param value the new value of the '<em>Geo Resource Internal</em>' attribute.
      * @see #getGeoResourceInternal()
      * @generated
@@ -129,7 +125,7 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
      * <p>
      * In most cases it is recommended that the zorder=layer.getZorder()
      * <p>
-     * 
+     *
      * @model changeable="false" transient="true" notify="true" volatile="true"
      */
     public int getZorder();
@@ -140,7 +136,7 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
      * If not layer is not a CompositeRenderer then this is just a call to ILayer.isVisible().
      * Otherwise if one of the layers is visible then it should return true
      * </p>
-     * 
+     *
      * @return true if the renderer has visible data.
      * @model volatile="true" changeable="false"
      */
@@ -148,7 +144,7 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
 
     /**
      * Initialize context so it matches the argument.
-     * 
+     *
      * @param renderContext
      */
     public void init( RenderContext renderContext );
@@ -166,43 +162,17 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
 
     /**
      * Clears the area.
-     * 
+     *
      * @param paintArea
      */
     public void clearImage( Rectangle paintArea );
 
     /**
      * Sets the status of the layer contained by the context.
-     * 
+     *
      * @param error
      */
     public void setStatus( int status );
 
     public RenderContext copy();
-    
-    
-    /**
-     * Sets the size of the image to draw.  If set to null the image size will be the same as the MapDisplay size.
-     * <p>
-     * For the regular renderers this will be the mapDisplay size; however for the tiled renderer this
-     * will be tile size
-     *
-     * @param width
-     * @param height
-     */
-    public void setImageSize(Dimension d);
-    
-    
-    /**
-     * Sets the bounds in world coordinates that the image represents.  If set to null the bounds of the image
-     * are assumed to match the bounds of the viewport model.  
-     * 
-     * <p>
-     * This is used by the tiled renderer so each context can represent a specific tiled area.
-     * 
-     *
-     * @param bounds
-     */
-    public void setImageBounds(ReferencedEnvelope bounds);
-    
 }

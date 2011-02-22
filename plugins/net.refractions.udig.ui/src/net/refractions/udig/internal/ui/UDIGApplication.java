@@ -15,31 +15,27 @@
  * Created on Jun 23, 2004
  */
 package net.refractions.udig.internal.ui;
+import java.awt.Rectangle;
+import java.rmi.server.UID;
+import java.util.Iterator;
+import java.util.Set;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
-import java.text.MessageFormat;
+import javax.units.SI;
 
-import net.refractions.udig.libs.internal.Activator;
+import net.refractions.udig.ui.graphics.SWTGraphics;
 import net.refractions.udig.ui.internal.Messages;
 
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.WorkbenchAdvisor;
-import org.geotools.referencing.factory.epsg.ThreadedH2EpsgFactory;
-import org.osgi.framework.Bundle;
+import org.geotools.referencing.FactoryFinder;
 
 /**
  * IApplication used by the uDig product - subclass for your own application.
@@ -57,7 +53,7 @@ import org.osgi.framework.Bundle;
  * <h2>Rolling your Own</h2>
  * Your application will need to be registered with the
  * <code>org.eclipse.equinox.applications</code> extension-point.
- * 
+ *
  * @author Jesse Eichar, Refractions Research Inc.
  * @author Jody Garnett, Refractions Research Inc.
  * @since 0.3
@@ -75,7 +71,7 @@ public class UDIGApplication implements IApplication {
      * Note: This method is called by the platform; it is not intended to be called directly by
      * clients.
      * </p>
-     * 
+     *
      * @return the return value of the application
      * @see #EXIT_OK
      * @see #EXIT_RESTART
@@ -83,52 +79,13 @@ public class UDIGApplication implements IApplication {
      * @param context the application context to pass to the application
      * @exception Exception if there is a problem running this application.
      */
+    @SuppressWarnings("unused")
     public Object start( IApplicationContext context ) throws Exception {
         WorkbenchAdvisor workbenchAdvisor = createWorkbenchAdvisor();
         Display display = PlatformUI.createDisplay();
 
-        String udigNameStr = "udig"; //$NON-NLS-1$
-        if (Platform.getOS().equals(Platform.OS_WIN32)) {
-            udigNameStr = "udig.exe"; //$NON-NLS-1$
-        }
-
-        for( String arg : Platform.getCommandLineArgs() ) {
-            if ("--help".equalsIgnoreCase(arg) || "-h".equalsIgnoreCase(arg)) { //$NON-NLS-1$ //$NON-NLS-2$
-                String helpString = MessageFormat.format(Messages.UDIGApplication_helpstring,
-                        udigNameStr);
-                System.out.println(helpString);
-                return EXIT_OK;
-            }
-            if ("--version".equalsIgnoreCase(arg) || "-v".equalsIgnoreCase(arg)) { //$NON-NLS-1$ //$NON-NLS-2$
-                // get udig version
-                URL mappingsUrl = Platform
-                        .getBundle("net.refractions.udig").getResource("about.mappings"); //$NON-NLS-1$ //$NON-NLS-2$  
-                String mappingsPathPath = FileLocator.toFileURL(mappingsUrl).getPath();
-
-                BufferedReader bR = new BufferedReader(new FileReader(mappingsPathPath));
-                String udigVersion = "version not available";
-                String line = null;
-                while( (line = bR.readLine()) != null ) {
-                    if (line.startsWith("1=")) {
-                        udigVersion = line.split("=")[1];
-                        break;
-                    }
-                }
-
-                System.out.println("Version Information:"); //$NON-NLS-1$
-                System.out.println("uDig version: " + udigVersion); //$NON-NLS-1$ 
-                System.out.println("Java VM: " + System.getProperty("java.version")); //$NON-NLS-1$ //$NON-NLS-2$
-                System.out
-                        .println("OS:      " + System.getProperty("os.name") + " " + System.getProperty("os.arch")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                return EXIT_OK;
-            }
-        }
-        if (!login()) {
-            // user did not login
-            return EXIT_OK;
-        }
-        if (!init()) {            
-            // could not init
+        boolean isInitalized = init();
+        if (!isInitalized) {
             return EXIT_OK;
         }
         int returnCode = EXIT_OK;
@@ -137,7 +94,7 @@ public class UDIGApplication implements IApplication {
         } catch (Throwable t) {
             UiPlugin.log(Messages.UDIGApplication_error, t);
         } finally {
-            context.applicationRunning();
+            Platform.endSplash();
             display.dispose();
         }
         if (returnCode == PlatformUI.RETURN_RESTART) {
@@ -147,70 +104,11 @@ public class UDIGApplication implements IApplication {
     }
 
     /**
-     * We have a couple things that need to happen
-     * before the workbench is opened. The org.eclipse.ui.startup
-     * extension point is willing to run stuff for us *after*
-     * the workbench is opened - but that is not so useful
-     * when we need to configure the EPSG database for libs
-     * and load up the local catalog.
-     * <p>
-     * Long term we will want to create a startup list
-     * (much like we have shutdown hooks).
-     */
-    @SuppressWarnings("restriction")
-    protected boolean init() {
-        ProgressMonitorDialog progress = new ProgressMonitorDialog( Display.getCurrent().getActiveShell());
-        final Bundle bundle = Platform.getBundle(Activator.ID);
-        
-        // We should kick the libs plugin to load the EPSG database now
-        if( ThreadedH2EpsgFactory.isUnpacked()){
-            // if there is not going to be a long delay
-            // don't annoy users with a dialog
-            Activator.initializeReferencingModule( null );            
-        }
-        else {
-            // We are going to take a couple of minutes to set this up
-            // so we better set up a progress dialog thing
-            //
-            try {
-                progress.run(false,false, new IRunnableWithProgress(){            
-                    public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                            InterruptedException {
-                        Activator.initializeReferencingModule( monitor);
-                    }
-                });
-            } catch (InvocationTargetException e) {
-                Platform.getLog(bundle).log(
-                        new Status(IStatus.ERROR, UiPlugin.ID, e.getCause().getLocalizedMessage(), e
-                                .getCause()));
-                return false;
-            } catch (InterruptedException e) {
-                Platform.getLog(bundle).log(
-                        new Status(IStatus.ERROR, UiPlugin.ID, e.getCause().getLocalizedMessage(), e
-                                .getCause()));
-                return false;
-            }
-        }
-        // We should kick the CatalogPlugin to load now...
-        return true;
-    }
-
-    /**
-     * You can override this method to do any kind of login
-     * routine you may need.
-     *
-     * @return
-     */
-    protected boolean login() {
-        return true;
-    }
-
-    /**
-     * Returns the WorkbenchAdvisor that will control the setup of the application 
+     * Returns the WorkbenchAdvisor that will control the setup of the application
      * <p>
      * It is recommended but not required that the advisor be a subclass of {@link UDIGWorkbenchAdvisor}
      * </p>
-     * 
+     *
      * @return the WorkbenchAdvisor that will control the setup of the application
      * @see UDIGWorkbenchAdvisor
      */
@@ -232,16 +130,144 @@ public class UDIGApplication implements IApplication {
      */
     public void stop() {
         final IWorkbench workbench = PlatformUI.getWorkbench();
-        if (workbench == null) {
+        if (workbench == null){
             return;
         }
         final Display display = workbench.getDisplay();
         display.syncExec(new Runnable(){
             public void run() {
-                if (!display.isDisposed()) {
+                if (!display.isDisposed()){
                     workbench.close();
                 }
             }
         });
     };
+
+    /**
+     * Called before the workbench is created.
+     * <p>
+     * The following checks are performed:
+     * <ul>
+     * <li>checkForJAI(): optional - Dig will work with reduced functionality if JAI is not
+     * available
+     * <li>checkForGDI(): required - uDig will not function on WIN_32 if GDI is not present
+     * </ul>
+     * This method also loads some commonly used objects; subclasses may override this method (say
+     * to ask the user to login)
+     *
+     * @return <code>true </code> on successful startup; false to exit the application with an
+     *         error.
+     */
+    protected boolean init() {
+        checkForJAI();
+        boolean required = checkForGDI();
+
+        if (!required) {
+            // we could not meet our requirements; please exit!
+            return false;
+        }
+
+        loadCommonlyUsedObject();
+
+        boolean login = checkLogin();
+        if (!login) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Forces the class loader to load several troublesome classes; mostly focused on FactorySPI
+     * plugins used by the GeoTools library.
+     */
+    private void loadCommonlyUsedObject() {
+        // potential fix for win32 (occasionally blocks in Drawing.feature(Point/etc) during first
+        // render)
+        new UID(); // seed the random number generator
+
+        load(FactoryFinder.getCoordinateOperationAuthorityFactories());
+        load(FactoryFinder.getCoordinateOperationAuthorityFactories());
+        load(FactoryFinder.getCRSFactories());
+        load(FactoryFinder.getCSFactories());
+        load(FactoryFinder.getDatumAuthorityFactories());
+        load(FactoryFinder.getDatumFactories());
+        load(FactoryFinder.getMathTransformFactories());
+        @SuppressWarnings("unused")
+        Object o = SI.BIT;
+        o = SI.GRAM;
+        o = SI.KILOGRAM;
+        o = SI.METER;
+        o = SI.RADIAN;
+        o = SI.SECOND;
+        o = SI.STERADIAN;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void load( Set coordinateOperationAuthorityFactories ) {
+        for( Iterator iter = coordinateOperationAuthorityFactories.iterator(); iter.hasNext(); ) {
+            iter.next();
+        }
+    }
+
+    /**
+     * Ensures that GDI is available for the windows inclined. GDI is used by SWT to perform matrix
+     * operations; uDIG cannot function without GDI on windows.
+     *
+     * @return false if GDI is needed and not found.
+     */
+    public static boolean checkForGDI() {
+        if (Platform.getOS().equals(Platform.OS_WIN32)) {
+            // test to make sure that GDI+ is installed
+            Image image = null;
+            Path path = null;
+            try {
+                image = new Image(Display.getCurrent(), 10, 10);
+                path = SWTGraphics.convertToPath(new Rectangle(0, 0, 8, 8), Display.getCurrent());
+            } catch (Exception e) {
+                MessageDialog
+                        .openError(
+                                Display.getCurrent().getActiveShell(),
+                                Messages.UDIGApplication_title,
+                                Messages.UDIGApplication_error1
+                                        + Messages.UDIGApplication_error2
+                                        + "http://www.microsoft.com/downloads/details.aspx?FamilyID=6A63AB9C-DF12-4D41-933C-BE590FEAA05A&displaylang=en"); //$NON-NLS-1$
+                return false;
+            } finally {
+                if (image != null)
+                    image.dispose();
+                if (path != null)
+                    path.dispose();
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Ensures Java Advanced Imaging is installed into the JRE being used.
+     * <p>
+     * If JAI is not available a dialog will be displayed and false is returned. JAI is not required
+     * for everything; currently rasters will not function without JAI; but many simple vector
+     * formats will.
+     * </p>
+     *
+     * @return true if JAI is available.
+     */
+    public static boolean checkForJAI() {
+        try {
+            Class.forName("javax.media.jai.operator.OrDescriptor"); //$NON-NLS-1$
+            return true;
+        } catch (Throwable th) {
+            JaiErrorDialog.display();
+            return false;
+        }
+    }
+
+    /**
+     * Override to perform your own security check.
+     *
+     * @return true to indicate a successful login
+     */
+    public boolean checkLogin() {
+        return true;
+    }
 }

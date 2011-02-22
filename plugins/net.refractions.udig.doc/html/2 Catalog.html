@@ -1,0 +1,256 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 2 Catalog</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 2 Catalog -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="2Catalog-CatalogPluginServices">Catalog Plug-in Services</a></h1>
+
+<p>The Catalog plugin provides the following services:</p>
+
+<ul>
+	<li>The concept of Handles to actual Resources</li>
+	<li>Discovery of additional resources using Search facilities</li>
+	<li>Programmatic Management of geospatial resources</li>
+</ul>
+
+
+<p>The Catalog plugin supports several formats right out of the box and is easily extended for custom content.</p>
+
+<p><img class="emoticon" src="./icons/emoticons/add.gif" height="16" width="16" align="absmiddle" alt="" border="0"/> EXT: To extend catalog for additional formats you will need to make an implementation of IService, IGeoResource and a WizardPage for your new content.</p>
+
+<h3><a name="2Catalog-BackgroundInformation">Background Information</a></h3>
+
+<p>We are going to launch right into technical details here â?? if you require additional background information please consider the following references:</p>
+
+<ul>
+	<li>Contributing to Eclipse (nice explanation of IResource, and Iadaptable)</li>
+	<li>Eclipse FAQ</li>
+	<li><a href="Eclipse House Rules.html" title="Eclipse House Rules">Eclipse House Rules</a></li>
+</ul>
+
+
+<p>The above references do no cover any additional ground beyond what is needed for normal eclipse plug-in development. Most of the above documentation is written from the perspective of IDE development. The only additional restriction to watch out for is limit yourself to plug-ins available using a Rich Client Platform application.</p>
+
+<p>Common mistakes:</p>
+<ul>
+	<li>Rich Client Platform: Please do not depend on IResource, it will not be available at runtime as it is part of the Eclipse IDE</li>
+	<li><a href="Eclipse House Rules.html" title="Eclipse House Rules">Eclipse House Rules</a>: You may only depend on public API packages (example net.refractions.udig.catalog)</li>
+</ul>
+
+
+<h2><a name="2Catalog-OverviewoftheCatalogPlugin">Overview of the CatalogPlugin</a></h2>
+
+<p>CatalogPlugin provides the following (from AbstractUIPlugin):</p>
+
+<ul>
+	<li>getDialogSettings() - used to hold persistent state data for wizards and plug-ins</li>
+	<li>getImageRegistry() - images that are shared for frequently used within the plugin</li>
+	<li>getPreferenceStore() - used to hold persistent user or internal settings</li>
+</ul>
+
+
+<p>CatalogPlugin explicitly provides for the following:</p>
+<ul>
+	<li>ID â?? convenience field, this is the same value used by plugin extention point, can be used to locate Platform resources associated with the CatalogPlugin</li>
+	<li>getDefault() - the single instance of the CatalogPlugin</li>
+	<li>addListener( .. ) â?? listen to resource change notification</li>
+	<li>removeListener( .. ) â?? stop listening for change notification</li>
+	<li>getCatalogs() - known catalogs, including registered web catalogs</li>
+	<li>getLocalCatalog() - catalog of known resources</li>
+	<li>getServiceFactory() - used to create new content from a URL</li>
+</ul>
+
+
+<h4><a name="2Catalog-CodeExampleUseofIDandLog">Code Example - Use of ID and Log</a></h4>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> void <span class="code-keyword">static</span> countCatalog(){
+    CatalogPlugin catalog = CatalogPlugin.getDefault();
+    <span class="code-keyword">try</span> {
+        <span class="code-keyword">return</span> catalog.getCatalogs().length;
+    }
+    <span class="code-keyword">catch</span>( Throwable t ){
+        catalog.getLog(
+            <span class="code-keyword">new</span> Status( IStatus.WARNING, CatalogPlugin.ID, IStatus.OK, <span class="code-keyword">null</span>, t)
+        );
+        <span class="code-keyword">return</span> 0;
+    }
+}</pre>
+</div></div>
+
+<p>The above example makes use of CatalogPlugin, any problems are reported using the CatalogPlugin ID to the logging system.</p>
+
+<h2><a name="2Catalog-OverviewofIResolve">Overview of IResolve</a></h2>
+
+<p>Catalog uses the model of a "handle" to allow access to spatial resources. The handle idea is captured by the IResolve class, this has the same design as the normal Eclipse IResource class.</p>
+
+<p>It makes use of the following design element:</p>
+<ul>
+	<li>Acts as a Proxy for remote content, the associated resource considered remote* Acts as an "Extensible Interface", you can turn IResolve into the object you really want</li>
+</ul>
+
+
+<p>With this in mind let us explore the core responsibilities of IResolve:</p>
+<ul>
+	<li>IResolve.getIdentifier() is a unique URL used to identify this resource</li>
+	<li>IResolve.canResolve( Class type ) is a non blocking check to see a type of resource is available</li>
+	<li>IResolve.resolve( Class type, IProgressMonitor monitor ) will acquire the requested resource</li>
+</ul>
+
+
+<p>IResolve handles can form a tree using the following methods:</p>
+<ul>
+	<li>members( IResolve parent, IProgressMonitor )</li>
+	<li>parent( IProgressMonitor )</li>
+</ul>
+
+
+<p>Finally, just because a handle exists does not mean the real resource resources exists or is working. A service may be down, or a shapefile may not be created yet.</p>
+
+<p>Here is how to check on the status of a IResolve:</p>
+<ul>
+	<li>IResolve.getStatus(), one of CONNECTED, NOTCONNECTED or BROKEN</li>
+</ul>
+
+
+<p>Note: Methods that are blocking make use of a IProgressMonitor, and throw an IOException in the event of a problem. This allows for both feedback during the operation, and strongly indicates to calling code that blocking input/output will occur.</p>
+
+<p>Let's quickly work with an example (to make this real)</p>
+
+<h4><a name="2Catalog-CodeExampleUseofcanResolveandresolvemethods">Code Example - Use of canResolve and resolve methods</a></h4>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> count shapes( File shapefile ){
+    CatalogPlugin catalog = CatalogPlugin.getDefault();
+    IServiceFactory factory = catalog.getServiceFactory();
+    <span class="code-keyword">for</span>( IResolve resolve : factory.acquire( shapefile.toUrl() ) ){
+       <span class="code-keyword">if</span>( resolve.canResolve( DataStore.class ) ){
+           DataStore shape = resolve.resolve( DataStore.class );
+           <span class="code-object">String</span> typeName = shape.getTypeNames()[0];
+           <span class="code-keyword">return</span> shape.getFeatureSource( typeName ).count();
+       }
+    }
+    <span class="code-keyword">return</span> 0;
+}</pre>
+</div></div>
+<p>Note: Remember this is Java 5, there is less casting than you may expect</p>
+
+<h4><a name="2Catalog-ComparisonwithIResource">Comparison with IResource</a></h4>
+
+<p>IResolve offers the following advantages over normal Eclipse IResource:</p>
+<ul>
+	<li>IResolve explicitly represents a handle for a remote resource</li>
+	<li>IResolve blocking behavior is explicit at the API level</li>
+	<li>IResolve is available for RCP applications, normal IResource is part of the Eclipse IDE and cannot be used in a RCP application</li>
+	<li>IResolve uses Java 5 enums, type narrowing and Templates for a simplified API</li>
+</ul>
+
+
+<p><img class="emoticon" src="./icons/emoticons/forbidden.gif" height="16" width="16" align="absmiddle" alt="" border="0"/> IDE: Your instance of IResolve could also implement IAdaptable (we ensured that no method names would conflict). Implementing IAdaptable, and providing an adapter for IResource allows for seamless integration with the Eclipse IDE. This is out of scope for our current development effort â?? however the implementation is straight forward and would allow integration of the GISPlatform with the wider Eclipse community. The Eclipse workbench already checks for the classes supporting IAdaptable, and will automatically integrate any class that responds to isAdaptable( IResource.class ).</p>
+
+<h3><a name="2Catalog-CatalogAPI">Catalog API</a></h3>
+
+<p>Now that the role and use of IResolve is known we can begin to describe the uDig Catalog API in some detail.</p>
+
+<p>The Catalog API is split between three abstractions:</p>
+<ul>
+	<li>ICatalog â?? catalog of spatial resources, both local and remote catalogs are available</li>
+	<li>IService â?? represents an external service such as a Web Feature Service or Shapefile</li>
+	<li>IGeoResource â?? actual spatial information such as a Web Map Server layer or shapefile contents</li>
+</ul>
+
+
+<p>It is also time to introduce an additional design element:</p>
+<ul>
+	<li>Acts as a Bridge â?? you can navigate from your handle to information about the real resource</li>
+</ul>
+
+
+<h3><a name="2Catalog-IGeoResourceOverview">IGeoResource Overview</a></h3>
+
+<p>Lets start with the most specific, and the most useful member of the Catalog API. IGeoResource represents real information, the kind you can display on screen or work with.</p>
+
+
+<p>Here are a few examples to get us started with:</p>
+<ul>
+	<li>A Table or View in a database</li>
+	<li>A FeatureCollection made available through a Web Feature Server (WFS)</li>
+	<li>A Web Map Server (WMS) Layer</li>
+	<li>The contents of a shapefile</li>
+	<li>A GridCoverage contained in an ArcGrid file</li>
+</ul>
+
+
+<p>The IGeoResource implementation does not place any restrictions on the interface used to represent the external resource. That said here are our top contenders for most popular interface:</p>
+
+<ol>
+	<li>Geotools FeatureSource used to represent Feature information available in a File, Database or Web Feature Server</li>
+	<li>Geotools FeatureStore used to represent Feature information that allows modification.</li>
+	<li>Geotools WMS Layer, represents a externalized rendering service advertised by a WMS</li>
+	<li>GeoAPI GridCoverage, represents raster information such as GeoTIFF or ArcGRID content</li>
+</ol>
+
+
+<p><img class="emoticon" src="./icons/emoticons/add.gif" height="16" width="16" align="absmiddle" alt="" border="0"/> EXT: This API is designed to be extended with your own content, CAD file formats, feature content from other toolkits, and dynamically generated content are exciting possibilities.</p>
+
+<h3><a name="2Catalog-IGeoResourceandIGeoResourceInfo">IGeoResource and IGeoResourceInfo</a></h3>
+
+<p>IGeoResource has the following extensions to IResolve:</p>
+<ul>
+	<li>parent is an IService<br/>
+<img src="2 Catalog_attachments/resolve.gif" align="absmiddle" border="0" /></li>
+	<li>getInfo is a IGeoResourceInfo</li>
+</ul>
+
+
+<h3><a name="2Catalog-ResolutionManager%28Pending%29">Resolution Manager (Pending)</a></h3>
+
+<p>Just because we know how to do a few tricks with Shapefiles, turn them into a FeatureSource does not mean you are left out of the game.  You can teach the uDig catalog system new tricks.</p>
+
+<p><img src="2 Catalog_attachments/resolvemanager.png" align="absmiddle" border="0" /></p>
+
+<p>The ResolutionManager processes an extention point binding IResolve to new classes, you can use this facility to integrate your own functionality with the uDig application.</p>
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="2 Catalog_attachments/resolve.gif">resolve.gif</a> (image/gif)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="2 Catalog_attachments/resolvemanager.png">resolvemanager.png</a> (image/png)
+                                <br/>
+                                                    </div>
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=3459">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=3459">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

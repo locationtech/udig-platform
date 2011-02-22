@@ -31,32 +31,32 @@ public class OperationSorter extends ViewerSorter {
      * the second element.
      */
     public int compare(Viewer viewer, Object e1, Object e2) {
-        
+
         //Categories are always greater than actions.
         if (e1 instanceof OpAction && e2 instanceof OperationCategory) {
             return 1;
-        } 
+        }
         if (e1 instanceof OperationCategory && e2 instanceof OpAction) {
             return -1;
         }
-        
+
         String str1 = null;
         String str2 = null;
-                
+
         if (e1 instanceof OpAction) {
             str1 = DialogUtil.removeAccel(((OpAction) e1)
                     .getText());
         } else if (e1 instanceof OperationCategory) {
             str1 = DialogUtil.removeAccel(((OperationCategory) e1).getMenuText());
         }
-        
+
         if (e2 instanceof OpAction) {
             str2 = DialogUtil.removeAccel(((OpAction) e2)
                     .getText());
         } else if (e2 instanceof OperationCategory) {
             str2 = DialogUtil.removeAccel(((OperationCategory) e2).getMenuText());
         }
-        
+
         return collator.compare(str1, str2);
     }
 }

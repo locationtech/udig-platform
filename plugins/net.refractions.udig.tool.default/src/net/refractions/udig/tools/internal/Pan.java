@@ -21,9 +21,7 @@ import java.awt.Point;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.Command;
 import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.command.navigation.PanCommand;
 import net.refractions.udig.project.internal.render.ViewportModel;
 import net.refractions.udig.project.ui.internal.commands.draw.TranslateCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
@@ -66,7 +64,7 @@ public class Pan extends AbstractModalTool implements ModalTool {
      * @see net.refractions.udig.project.ui.tool.AbstractTool#mousePressed(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mousePressed(MapMouseEvent e) {
-    	
+
         if (validModifierButtonCombo(e)) {
         	((ViewportPane)context.getMapDisplay()).enableDrawCommands(false);
             dragging = true;
@@ -96,13 +94,7 @@ public class Pan extends AbstractModalTool implements ModalTool {
         if (dragging) {
         	((ViewportPane)context.getMapDisplay()).enableDrawCommands(true);
             Point end=e.getPoint();
-            NavigationCommandFactory r = context.getNavigationFactory();
-            NavCommand finalPan = new PanCommand((start.x-end.x), (start.y-end.y));
-
-            //clear any events before we try to pan.  This dramatically reduces the number
-            //of images drawn to the screen in the wrong spot
-            ((ViewportPane) getContext().getMapDisplay()).update();
-            
+            NavCommand finalPan = context.getNavigationFactory().createPanCommandUsingScreenCoords(start.x-end.x, start.y-end.y);
             context.sendASyncCommand(new PanAndInvalidate(finalPan, command));
 
             dragging = false;
@@ -138,13 +130,11 @@ public class Pan extends AbstractModalTool implements ModalTool {
         }
 
         public void run( IProgressMonitor monitor ) throws Exception {
-            //we need to expire the translate command first otherwise
-            //the image gets drawn in the wrong spot the first time
-            // and we see weird affects
-            expire.setValid(false);
-
-            command.run(monitor);
-           
+            try {
+                command.run(monitor);
+            } finally {
+                expire.setValid(false);
+            }
         }
 
         public void setViewportModel( ViewportModel model ) {

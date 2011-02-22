@@ -20,8 +20,8 @@ import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.tools.edit.EditBlackboardUtil;
 
 /**
- * When a map is closed this cleans out all the references to the blackboard so it can be garbage collected.  
- * 
+ * When a map is closed this cleans out all the references to the blackboard so it can be garbage collected.
+ *
  * @author jesse
  * @since 1.1.0
  */

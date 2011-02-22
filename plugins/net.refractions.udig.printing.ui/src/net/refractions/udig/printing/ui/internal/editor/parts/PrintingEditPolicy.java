@@ -21,7 +21,7 @@ import org.eclipse.gef.editpolicies.AbstractEditPolicy;
 
 /**
  * EditPolicy for {@link LabelPart}.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -44,6 +44,6 @@ public class PrintingEditPolicy extends AbstractEditPolicy {
     public BoxAction getAction() {
         return action;
     }
-    
-    
+
+
 }

@@ -19,7 +19,7 @@ package net.refractions.udig.project.ui.commands;
 /**
  * PreMapDrawCommands are draw commands that are executed before the map is drawn onto the
  * IMapDisplay. A translation is an example
- * 
+ *
  * @author jeichar
  * @since 0.3
  */

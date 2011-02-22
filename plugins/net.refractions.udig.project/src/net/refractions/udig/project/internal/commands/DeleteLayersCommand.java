@@ -15,7 +15,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 /**
  * Deletes specified layers from the map.
  * <p>
- * 
+ *
  * @author Vitalus
  * @since UDIG 1.1.0
  */
@@ -59,7 +59,7 @@ public class DeleteLayersCommand extends AbstractCommand implements UndoableMapC
         selectedLayer=map.getEditManager().getSelectedLayer();
         if( !DeleteLayerCommand.selectNewLayer(map, removedLayers) )
             selectedLayer=null;
-        
+
         List< ? extends ILayer> layers = map.getLayersInternal();
         layers.removeAll(removedLayers);
         for( ILayer layer : removedLayers ) {

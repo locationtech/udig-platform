@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.tools.edit.support;
 
@@ -16,6 +16,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
+import net.refractions.udig.core.WeakHashSet;
 import net.refractions.udig.tools.edit.EditPlugin;
 import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
 import net.refractions.udig.tools.edit.support.EditBlackboardEvent.EventType;
@@ -32,7 +33,7 @@ import com.vividsolutions.jts.geom.Polygon;
 /**
  * Maps between each pixel to a list of coordinates. Also provides convenience methods to move all
  * coordinates at a location
- * 
+ *
  * @author jeichar
  */
 public class EditBlackboard {
@@ -53,7 +54,7 @@ public class EditBlackboard {
     /**
      * Creates a PixelCoordMap. A default GeomShape will be created and can be obtained by
      * {@link #getGeoms()}.get(0)
-     * 
+     *
      * @param width width of the current ViewportPane
      * @param height height of the current ViewportPane
      * @param toScreen transform to take the coordinates to a screen location.
@@ -75,7 +76,7 @@ public class EditBlackboard {
     /**
      * Returns the list of Listeners so that listeners can be added and removed. This is thread
      * safe. Each Listener can only be added once.
-     * 
+     *
      * @return Returns the listeners.
      */
     public Set<EditBlackboardListener> getListeners() {
@@ -85,7 +86,7 @@ public class EditBlackboard {
     /**
      * Adds a Geometry to the contained geometries. If the Geometry is a MultiGeometry it will not
      * be in the mapping only the sub geometries will be in the geometry.
-     * 
+     *
      * @param geom the geometry that will be added.
      * @param featureId The id of the feature the geometry was part of. Maybe null.
      */
@@ -114,7 +115,7 @@ public class EditBlackboard {
     /**
      * Adds a Geometry to the contained geometries. If the Geometry is a MultiGeometry it will not
      * be in the mapping only the sub geometries will be in the geometry.
-     * 
+     *
      * @param geom the geometry that will be added.
      * @param featureID The id of the feature the geometry was part of. Maybe null.
      */
@@ -143,11 +144,11 @@ public class EditBlackboard {
      * <p>
      * If two edges are equidistant the first edge in the geometry will be targeted edge
      * </p>
-     * 
+     *
      * @param x the x screen location to place the new coordinate
      * @param y the x screen location to place the new coordinate
      * @param geom the geometry to append the point to.
-     * @param treatUnknownAsPolygon declares whether to treat geometries of type UNKNOWN as a polygon 
+     * @param treatUnknownAsPolygon declares whether to treat geometries of type UNKNOWN as a polygon
      * @returns The edge that the point was added to.
      */
     public ClosestEdge addToNearestEdge( int x, int y, EditGeom geom, boolean treatUnknownAsPolygon )
@@ -187,10 +188,10 @@ public class EditBlackboard {
      * If the vertex would end up being added to the same location as an existing vertex then no
      * vertext is added
      * </p>
-     * 
+     *
      * @param x the x screen location to place the new coordinate
      * @param y the x screen location to place the new coordinate
-     * @param treatUnknownAsPolygon declares whether to treat geometries of type UNKNOWN as a polygon 
+     * @param treatUnknownAsPolygon declares whether to treat geometries of type UNKNOWN as a polygon
      * @return the list of GeomShapes that had the coordinate added to.
      */
     public List<ClosestEdge> addToNearestEdge( int x, int y, boolean treatUnknownAsPolygon ) throws IllegalArgumentException {
@@ -229,7 +230,7 @@ public class EditBlackboard {
     /**
      * Adds a Coordinate at the x,y location on the screen to the end of the geomtry. Closure of the
      * hole is not enforced.
-     * 
+     *
      * @param x the x screen location to place the new coordinate
      * @param y the x screen location to place the new coordinate
      * @param holeIndex the hole to append to.
@@ -296,7 +297,7 @@ public class EditBlackboard {
      * <p>
      * The index is the position in the coordinate list in the shell of the geometry.
      * </p>
-     * 
+     *
      * @param x the x screen location to place the new coordinate
      * @param y the x screen location to place the new coordinate
      * @param pointIndex the index in terms of points in the shape to add the coordinate.
@@ -327,7 +328,7 @@ public class EditBlackboard {
 
     /**
      * Inserts the list of coordinates into the shape at the index indicated.
-     * 
+     *
      * @param pointIndex the location that the coordinates will be inserted.
      * @param coords coords that will inserted.insertCoords
      * @param shape the shape that will have the coords inserted.
@@ -372,10 +373,10 @@ public class EditBlackboard {
     /**
      * Returns the GeomShapes that will have the coordinate added if
      * {@linkplain #addToNearestEdge(int, int)} is called.
-     * 
+     *
      * @param x the x screen location to place the new coordinate
      * @param y the x screen location to place the new coordinate
-     * @param treatUnknownAsPolygon declares whether to treat geometries of type UNKNOWN as a polygon 
+     * @param treatUnknownAsPolygon declares whether to treat geometries of type UNKNOWN as a polygon
      * @return the GeomShapes that will have the coordinate added if
      *         {@linkplain #addToNearestEdge(int, int)} is called.
      */
@@ -412,7 +413,7 @@ public class EditBlackboard {
      * outside of this class then the model is messed up and crazy bugs will happen. The weakness is
      * permitted for performance reasons. I'm trusting people to not be stupid.
      * </p>
-     * 
+     *
      * @return the list of coordinates at location:(x,y). <b>TREAT COORDINATES AS IMMUTABLE!!</b>
      */
     public synchronized List<Coordinate> getCoords( int x, int y ) {
@@ -425,7 +426,7 @@ public class EditBlackboard {
 
     /**
      * The list of geometries mapped.
-     * 
+     *
      * @return list of geometries mapped.
      */
     public synchronized List<EditGeom> getGeoms() {
@@ -435,7 +436,7 @@ public class EditBlackboard {
     /**
      * Returns a list of the geometries with vertices at the position (x,y). Edges are not
      * calculated.
-     * 
+     *
      * @param x x coordinate of point
      * @param y x coordinate of point
      * @return
@@ -450,7 +451,7 @@ public class EditBlackboard {
 
     /**
      * Moves all the coordinates at location by an offset of (deltaX, deltaY).
-     * 
+     *
      * @param x x coordinate of coords to move
      * @param y y coordinate of coords to move
      * @param deltaX the number of pixels to move coords in the positive x direction(Screen space)
@@ -518,7 +519,7 @@ public class EditBlackboard {
 
     /**
      * Moves the selection
-     * 
+     *
      * @param diffX the distance to move the geometry in the x direction. The delta is in pixels.
      * @param diffY the distance to move the geometry in the y direction. The delta is in pixels.
      * @param selection the selection to move.
@@ -607,7 +608,7 @@ public class EditBlackboard {
 
     /**
      * Moves a geometry deltaX, deltaY pixels.
-     * 
+     *
      * @param deltaX the distance to move the geometry in the x direction. The delta is in pixels.
      * @param deltaY the distance to move the geometry in the y direction. The delta is in pixels.
      * @param geom the geometry to move.
@@ -674,7 +675,7 @@ public class EditBlackboard {
 
     /**
      * Deletes all the coordinates at a location <b>TREAT COORDINATES AS IMMUTABLE!!</b>
-     * 
+     *
      * @return the deleted coordinates. <b>TREAT COORDINATES AS IMMUTABLE!!</b>
      */
     public List<Coordinate> removeCoordsAtPoint( int x, int y ) {
@@ -715,7 +716,7 @@ public class EditBlackboard {
 
     /**
      * Deletes the coordinates at the provided point in the provided shape.
-     * 
+     *
      * @param x x coordinate in screen coords
      * @param y y coordinate in screen coords
      * @param shape shape to delete from.
@@ -751,7 +752,7 @@ public class EditBlackboard {
      * Removes a coordinate from the shape. The index indicates which point to remove, the Point
      * parameter is a check to ensure that the correct point is indicated, and the coord is the
      * coordinate that will be removed
-     * 
+     *
      * @param pointIndex index of point in shape
      * @param coord coordinate to remove
      * @param shape shape to remove from
@@ -804,7 +805,7 @@ public class EditBlackboard {
 
     /**
      * Transforms a Coordinate into the point location it would occupy on the screen.
-     * 
+     *
      * @param coord coordinate object
      * @return point coordinate would occupy on the screen.
      */
@@ -815,7 +816,7 @@ public class EditBlackboard {
     /**
      * Modifies the mapping of points to coordinates so that the transform passed in as a parameter
      * is the new toScreen transform.
-     * 
+     *
      * @param transform new transform
      */
     public void setToScreenTransform( AffineTransform newToScreen ) {
@@ -873,7 +874,7 @@ public class EditBlackboard {
     /**
      * Removes all the geometries in the list from the blackboard and all the coordinates in the
      * geometries
-     * 
+     *
      * @param geomsToRemove the list of geometries to remove.
      */
     public List<EditGeom> removeGeometries( Collection<EditGeom> geomsToRemove ) {
@@ -902,7 +903,7 @@ public class EditBlackboard {
     /**
      * Creates a new EditGeom in the map. If there is only one geometry on the bb and it has no
      * points and has not been editted it will be removed.
-     * 
+     *
      * @param featureId The id of the feature the geometry was part of. Maybe null.
      * @param type the type of geometry to create if null then the type will be unknown
      * @return the created geometry
@@ -965,7 +966,7 @@ public class EditBlackboard {
 
     /**
      * Returns the point closest to location. The search is a square of height and width radius + 1.
-     * 
+     *
      * @param location the locations to start searching from.
      * @param radius the distance away from location to search.
      * @return the point closest to location or null if no point exists.
@@ -976,7 +977,7 @@ public class EditBlackboard {
     /**
      * Returns the point closest to location. If ignore is true the point at locations will not be
      * returned. The search is a square of height and width radius + 1.
-     * 
+     *
      * @param location the locations to start searching from.
      * @param radius radius the distance away from location to search.
      * @param ignore true if the vertex at location is ignored
@@ -1080,9 +1081,9 @@ public class EditBlackboard {
 
     private void doAddGeometry( Geometry geom, Map<Geometry, EditGeom> jtsEditGeomMapping,
             String featureID ) {
-        
+
         Envelope bbox = geom.getEnvelopeInternal();
-        
+
         if (geom instanceof GeometryCollection) {
             int num = geom.getNumGeometries();
             for( int i = 0; i < num; i++ ) {
@@ -1153,7 +1154,7 @@ public class EditBlackboard {
 
     /**
      * Searchs for a vertext in a square i pixels away from the location.
-     * 
+     *
      * @param location center of search
      * @param i distance from center to search (is not an area search)
      * @param ignore
@@ -1215,8 +1216,8 @@ public class EditBlackboard {
 
     /**
      * Returns true if the blackboard currently holds the noted feature ID.
-     * 
-     * @param fid SimpleFeature ID
+     *
+     * @param fid Feature ID
      * @return boolean
      */
     public boolean contains( String fid ) {
@@ -1262,7 +1263,7 @@ public class EditBlackboard {
     /**
      * Sets all the coordinates at the point to provided coordinate.
      * <em>The coodinate must still map to the point</em>
-     * 
+     *
      * @param point the point at which all the coordinates will be changed
      * @param newValue the new coordinate value of coordinates at the point
      */
@@ -1296,5 +1297,6 @@ public class EditBlackboard {
     public boolean isEmpty() {
         return geomMapping.isEmpty();
     }
+
 
 }

@@ -50,7 +50,7 @@ public class WMSStyleContent extends StyleContent {
         if( !resource.canResolve(Layer.class) ){
             return null;
         }
-        List<StyleImpl> styles = WMSStyleConfigurator.getStyles(resource);
+        List<Object> styles = WMSStyleConfigurator.getStyles(resource);
         if( styles.isEmpty() )
             return null;
         else

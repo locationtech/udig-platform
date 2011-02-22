@@ -25,7 +25,7 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * Handles refreshing the issues viewer
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -63,9 +63,9 @@ public class IssuesViewRefresher implements IRefreshControl {
                 }
             }
         };
-        
+
             PlatformGIS.syncInDisplayThread(runnable);
-        
+
         return (IssuesView) view[0];
     }
 

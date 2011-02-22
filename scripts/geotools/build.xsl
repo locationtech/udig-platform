@@ -7,7 +7,7 @@
 	<xsl:param name="name"/>
 
   <xsl:template match="classpath">
-		<xsl:element name="project"> 
+		<xsl:element name="project">
 			<xsl:attribute name="name"><xsl:value-of select="$name"/></xsl:attribute>
 			<xsl:attribute name="basedir">.</xsl:attribute>
 			<xsl:attribute name="default">build</xsl:attribute>
@@ -18,7 +18,7 @@
 			<!-- for each library dependency, copy to local lib directory -->
 			<xsl:element name="target">
 				<xsl:attribute name="name">build</xsl:attribute>
-			
+
 				<xsl:text>
 				</xsl:text>
 				<xsl:element name="mkdir">
@@ -43,7 +43,7 @@
 										</xsl:element>
 									</xsl:otherwise>
 								</xsl:choose>
-									
+
 								<xsl:text>
 								</xsl:text>
 

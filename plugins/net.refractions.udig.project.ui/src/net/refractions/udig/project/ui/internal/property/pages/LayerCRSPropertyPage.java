@@ -30,7 +30,7 @@ public class LayerCRSPropertyPage extends CRSPropertyPage implements IWorkbenchP
     public LayerCRSPropertyPage() {
         setMessage("Only change if the current projection is wrong.  Changes only affect how the data is interpreted, they are not modified,", WARNING);
     }
-    
+
     @Override
     public void setElement( IAdaptable element ) {
         Layer layer;
@@ -41,5 +41,5 @@ public class LayerCRSPropertyPage extends CRSPropertyPage implements IWorkbenchP
         }
         super.setStrategy(new LayerStrategy(layer) );
     }
-    
+
 }

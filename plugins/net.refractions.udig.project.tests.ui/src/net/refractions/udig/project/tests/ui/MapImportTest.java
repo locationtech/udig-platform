@@ -18,8 +18,8 @@ import net.refractions.udig.catalog.tests.DummyService;
 import net.refractions.udig.catalog.tests.ui.workflow.DialogDriver;
 import net.refractions.udig.catalog.tests.ui.workflow.DummyMonitor;
 import net.refractions.udig.catalog.ui.workflow.ResourceSelectionState;
-import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Project;
@@ -38,13 +38,13 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 
 public class MapImportTest extends AbstractProjectUITestCase {
-	
-	MapImport mapImport;	
-	
+
+	MapImport mapImport;
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		
+
 		mapImport = new MapImport();
 		mapImport.getDialog().setBlockOnOpen(false);
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow()
@@ -56,16 +56,16 @@ public class MapImportTest extends AbstractProjectUITestCase {
 //        Project p=(Project) ApplicationGIS.getActiveProject();
         List<Project> projects = ProjectPlugin.getPlugin().getProjectRegistry().getProjects();
         for( Project p : projects ) {
-            p.getElementsInternal().clear();            
+            p.getElementsInternal().clear();
         }
         super.tearDown();
     }
-    
+
     public void testNormal() throws Exception {
         Object context = getContext();
-        
+
         ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-        
+
         List members = catalog.members(new DummyMonitor());
         if (!members.isEmpty()) {
             //clear the catalog
@@ -78,28 +78,28 @@ public class MapImportTest extends AbstractProjectUITestCase {
         assertTrue(members.isEmpty());
 
         runMapImport(context);
-        
+
         IMap map = ApplicationGIS.getActiveMap();
         assertNotNull(map);
-        
+
         List<ILayer> layers = map.getMapLayers();
         assertFalse(layers.isEmpty());
-        
+
         for (ILayer layer : layers) {
             assertGeoResourceType(layer, DummyService.class);
         }
 
         mapImport=new MapImport();
         runMapImport(context);
-        
+
         assertEquals(2, map.getMapLayers().size());
         assertEquals(map, ApplicationGIS.getActiveMap());
         IEditorReference[] editors = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences();
         assertEquals(1, editors.length);
-        
+
     }
 
-    private void runMapImport( Object context ) throws Exception {        
+    private void runMapImport( Object context ) throws Exception {
 
         mapImport.run(new DummyMonitor(),context);
 
@@ -109,18 +109,18 @@ public class MapImportTest extends AbstractProjectUITestCase {
                 IMap map = ApplicationGIS.getActiveMap();
                 if (map == ApplicationGIS.NO_MAP)
                     return false;
-                
+
                 List<ILayer> layers = map.getMapLayers();
                 if (layers.isEmpty())
                 	return false;
                 return true;
 			}
-        	
+
         };
       UDIGTestUtil.inDisplayThreadWait(5000, object, true);
 //      UDIGTestUtil.inDisplayThreadWait(5000000, object, true);
 
-        
+
         if (mapImport.getDialog().getShell().isVisible()) {
             ResourceSelectionPage page = (ResourceSelectionPage) mapImport.getDialog()
                     .getWorkflowWizard().getPage(Messages.MapImport_selectLayers);
@@ -134,9 +134,9 @@ public class MapImportTest extends AbstractProjectUITestCase {
 
     public void testMultiResource() throws Exception {
         Object context = DummyMultiResourceService.url;
-        
+
         ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-        
+
         List members = catalog.members(new DummyMonitor());
         if (!members.isEmpty()) {
             //clear the catalog
@@ -147,13 +147,13 @@ public class MapImportTest extends AbstractProjectUITestCase {
         }
         members = catalog.members(new DummyMonitor());
         assertTrue(members.isEmpty());
-        
+
 
         final WorkflowWizard workflowWizard = mapImport.getDialog().getWorkflowWizard();
 		workflowWizard.getWorkflow()
             .setContext(context);
         mapImport.run(new DummyMonitor(),context);
-        
+
         UDIGTestUtil.inDisplayThreadWait(3000, new WaitCondition(){
 
 			public boolean isTrue()  {
@@ -162,62 +162,62 @@ public class MapImportTest extends AbstractProjectUITestCase {
 					return true;
 				return false;
 			}
-        	
+
         }, true);
         assertTrue(workflowWizard.getWorkflow().getCurrentState() instanceof ResourceSelectionState);
-        
+
         //check the resource page to ensure that it isn't ignored
         ResourceSelectionState currentState = (ResourceSelectionState) workflowWizard.getWorkflow().getCurrentState();
 
         assertTrue(currentState.getResources()==null || currentState.getResources().isEmpty());
-        
+
         //Set the resources on the state and press finish
         IService service=currentState.getServices().iterator().next();
         Map<IGeoResource, IService> resources=new HashMap<IGeoResource, IService>();
-        
+
         for (IResolve resolve : service.resources(new NullProgressMonitor())) {
 			resources.put((IGeoResource) resolve, service);
 		}
-        
-        
+
+
         currentState.setResources(resources);
-        
+
         net.refractions.udig.project.internal.Map activeMap = ApplicationGISInternal.getActiveMap();
         if( activeMap!=ApplicationGIS.NO_MAP )
             activeMap.getLayersInternal().clear();
 
-        
+
         DialogDriver.pushButton(mapImport.getDialog(), IDialogConstants.FINISH_ID);
-       
+
         UDIGTestUtil.inDisplayThreadWait(4000, new WaitCondition(){
 
 			public boolean isTrue()  {
 			    IMap map = ApplicationGIS.getActiveMap();
 			    if( map==ApplicationGIS.NO_MAP )
 			    	return false;
-			    
+
 			    return true;
 			}
-        	
+
         }, true);
-        
+
         IMap map = ApplicationGIS.getActiveMap();
         assertNotSame(ApplicationGIS.NO_MAP, map);
-        
+
         List<ILayer> layers = map.getMapLayers();
         assertEquals(2, layers.size());
-        
+
         for (ILayer layer : layers) {
             assertGeoResourceType(layer, DummyMultiResourceService.class);
         }
     }
-    
+
 	Object getContext() throws Exception {
 		URL url = DummyService.url;
-		
+
 		return url;
 	}
-	
+
 	void assertGeoResourceType(ILayer layer, Class<? extends Object> type) throws Exception {
 		assertTrue(layer.getGeoResources().get(0).parent(null).canResolve(type));
 	}

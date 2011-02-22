@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.issues;
 
@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 
 /**
  * @author Jesse
- * 
+ *
  */
 public final class IssuesListUtil {
 
@@ -27,7 +27,7 @@ public final class IssuesListUtil {
 	 * Looks up the issue type from the extension point ID. If the current
 	 * installation does not have the extension then null is returned. Look in
 	 * the log for the reason.
-	 * 
+	 *
 	 * @param extensionPointID
 	 * @return
 	 * @throws CoreException

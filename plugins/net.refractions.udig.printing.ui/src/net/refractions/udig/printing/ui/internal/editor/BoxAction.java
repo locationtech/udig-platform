@@ -33,7 +33,7 @@ import org.eclipse.ui.IWorkbenchPart;
 /**
  * An action that is added to a PageEditor. Each BoxAction corresponds to a editAction in a box
  * extension point.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -53,14 +53,14 @@ public class BoxAction extends SelectionAction {
 
         setText(editActionElement2.getAttribute("name")); //$NON-NLS-1$
         String attribute = editActionElement2.getAttribute("image");//$NON-NLS-1$
-        ImageDescriptor image; 
+        ImageDescriptor image;
         if( attribute!=null && attribute.trim().length()!=0){
             image = PrintingPlugin.imageDescriptorFromPlugin(editActionElement2
                     .getNamespaceIdentifier(), attribute);
             setImageDescriptor(image);
         }
         final String id = editActionElement2.getNamespaceIdentifier()+"."+editActionElement2.getAttribute("id"); //$NON-NLS-1$ //$NON-NLS-2$
-        setId( id ); 
+        setId( id );
 
         request = new Request(){
             String type=id;
@@ -68,7 +68,7 @@ public class BoxAction extends SelectionAction {
             public Object getType() {
                 return type;
             }
-        }; 
+        };
     }
 
     public BoxAction( BoxAction action ) {
@@ -82,7 +82,7 @@ public class BoxAction extends SelectionAction {
         this.editActionElement=action.editActionElement;
         this.request=action.request;
     }
-    
+
     @Override
     protected boolean calculateEnabled() {
         if (getSelectedObjects().size() == 1 && (getSelectedObjects().get(0) instanceof EditPart)) {
@@ -139,14 +139,14 @@ public class BoxAction extends SelectionAction {
             try{
                 editAction=(IBoxEditAction) editActionElement.createExecutableExtension("class"); //$NON-NLS-1$
             }catch (Exception e) {
-                PrintingPlugin.getDefault().getLog().log(new Status(IStatus.ERROR, 
+                PrintingPlugin.getDefault().getLog().log(new Status(IStatus.ERROR,
                         editActionElement.getNamespaceIdentifier(), IStatus.OK, "", e)); //$NON-NLS-1$
             }
         }
         return editAction;
     }
-    
-    
+
+
     @Override
     public String toString() {
         return "BoxAction for: "+acceptable+" boxes";  //$NON-NLS-1$//$NON-NLS-2$

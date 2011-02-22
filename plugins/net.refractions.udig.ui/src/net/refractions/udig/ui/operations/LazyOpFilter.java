@@ -26,7 +26,7 @@ import net.refractions.udig.internal.ui.UiPlugin;
 /**
  * A non-blocking version of the LazyOpFilter. Returns false first then calculates whether it is in
  * fact false or true in a seperate thread and notifies the listeners of the actual state.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -38,7 +38,7 @@ public class LazyOpFilter implements OpFilter {
     final Map<Object, Boolean> cache=new WeakHashMap<Object, Boolean>();
     final boolean blocking, caching;
     final Lock lock =new ReentrantLock();
-    
+
     private IOpFilterListener changeListener = new IOpFilterListener(){
 
         public void notifyChange( Object changed ) {
@@ -107,7 +107,7 @@ public class LazyOpFilter implements OpFilter {
 
         if( result==null )
             result=defaultReturnValue;
-        
+
         if (blocking) {
             worker = new Worker(object);
             executor.submit(worker);
@@ -160,7 +160,7 @@ public class LazyOpFilter implements OpFilter {
     public void removeListener( IOpFilterListener listener ) {
         throw new UnsupportedOperationException();
     }
-    
+
     public void disable(){
         lock.lock();
         try{
@@ -170,5 +170,5 @@ public class LazyOpFilter implements OpFilter {
             lock.unlock();
         }
     }
-    
+
 }

@@ -21,7 +21,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 
 /**
  * The handler for tool commands.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */

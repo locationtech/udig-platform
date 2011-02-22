@@ -17,13 +17,12 @@ package net.refractions.udig.legend.internal;
 import java.awt.Rectangle;
 import java.io.IOException;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
 import net.refractions.udig.legend.ui.LegendGraphic;
 import net.refractions.udig.mapgraphic.internal.MapGraphicResource;
-import net.refractions.udig.mapgraphic.style.LocationStyleContent;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Resolved LegendGraphic Resources
@@ -36,16 +35,16 @@ public class ResolversFactory implements IResolveAdapterFactory {
             IProgressMonitor monitor ) throws IOException {
         MapGraphicResource resource = (MapGraphicResource) resolve;
         if( canResolveToRectangle(adapter, resource)){
-            // this is the null style.  It says to place it in the 
+            // this is the null style.  It says to place it in the
             // bottom left at the optimal size
-            return new Rectangle(-LocationStyleContent.XPAD_RIGHT,-LocationStyleContent.YPAD_BOTTOM,0,0);
+            return new Rectangle(-1,-1,0,0);
         }
         return null;
     }
 
     public boolean canAdapt( IResolve resolve, Class< ? extends Object> adapter ) {
         MapGraphicResource resource = (MapGraphicResource) resolve;
-        
+
         return canResolveToRectangle(adapter, resource);
     }
 
@@ -56,7 +55,7 @@ public class ResolversFactory implements IResolveAdapterFactory {
                 return true;
             }
         }
-        
+
         return false;
     }
 

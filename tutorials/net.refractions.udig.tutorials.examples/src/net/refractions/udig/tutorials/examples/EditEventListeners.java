@@ -26,7 +26,7 @@ import org.geotools.data.FeatureSource;
 /**
  * In this example an FeatureEvent listener is created and added to a FeatureSource in order to receive
  * notification when the data is changed, for example when an edit occurs.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -52,7 +52,7 @@ public class EditEventListeners {
                     break;
                 }
             }
-            
+
         });
     }
 }

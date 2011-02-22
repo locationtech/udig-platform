@@ -14,14 +14,14 @@
  */
 package net.refractions.udig.ui;
 
-import junit.framework.TestCase;
-
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import junit.framework.TestCase;
+
 /**
  * Test Cell Editor
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -33,12 +33,12 @@ public class BasicTypeCellEditorTest extends TestCase {
         super.setUp();
         shell=new Shell(Display.getCurrent());
     }
-    
+
     @Override
     protected void tearDown() throws Exception {
         shell.dispose();
     }
-    
+
     public void testShort() throws Exception {
         try{
             @SuppressWarnings("unused")
@@ -47,11 +47,11 @@ public class BasicTypeCellEditorTest extends TestCase {
         }catch( Exception e){
             // good
         }
-        runTest(Short.valueOf((short) 2), Short.valueOf((short) 3), Short.class);        
+        runTest(Short.valueOf((short) 2), Short.valueOf((short) 3), Short.class);
     }
 
     public void testInteger() throws Exception {
-        runTest(Integer.valueOf(2), Integer.valueOf(3), Integer.class);     
+        runTest(Integer.valueOf(2), Integer.valueOf(3), Integer.class);
     }
 
     public void testByte() throws Exception {
@@ -63,29 +63,29 @@ public class BasicTypeCellEditorTest extends TestCase {
     }
 
     public void testLong() throws Exception {
-        runTest(Long.valueOf(2l), Long.valueOf(3l), Long.class); 
-        
+        runTest(Long.valueOf(2l), Long.valueOf(3l), Long.class);
+
     }
-    
+
     public void testDouble() throws Exception {
-        runTest(Double.valueOf(2), Double.valueOf(3), Double.class); 
+        runTest(Double.valueOf(2), Double.valueOf(3), Double.class);
     }
 
     public void testFloat() throws Exception {
-        runTest(Float.valueOf(2), Float.valueOf(3), Float.class); 
+        runTest(Float.valueOf(2), Float.valueOf(3), Float.class);
     }
 
 
     private void runTest( Object value, Object value2, Class<? extends Object> class1 ) {
         BasicTypeCellEditor editor;
         editor = new BasicTypeCellEditor(shell, class1);
-        
+
         editor.setValue(value);
         assertEquals( value, editor.getValue() );
 
         editor.setValue(value2);
         assertEquals( value2, editor.getValue() );
-        
+
         try{
             editor.setValue(true);
             fail();
@@ -94,5 +94,5 @@ public class BasicTypeCellEditorTest extends TestCase {
         }
     }
 
-    
+
 }

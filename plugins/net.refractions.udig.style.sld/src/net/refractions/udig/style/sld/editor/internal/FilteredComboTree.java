@@ -24,16 +24,17 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.internal.WorkbenchPlugin;
 
 /**
- * The FilteredComboTree is a filtered tree that uses an 
+ * The FilteredComboTree is a filtered tree that uses an
  * editable combo rather than just a text.
  */
 public class FilteredComboTree extends FilteredTree {
 
     private Combo filterCombo;
-    
+
     private static final String SEARCHHISTORY = "search"; //$NON-NLS-1$
 
     //Set a number limitation of items to be saved in combo
@@ -83,19 +84,19 @@ public class FilteredComboTree extends FilteredTree {
             public void focusLost(FocusEvent e) {
                 String [] textValues = filterCombo.getItems();
                 String newText = filterCombo.getText();
-                
+
                 if((newText.equals(""))||(newText .equals(initialText)))//$NON-NLS-1$
                     return;
-            
+
                 for (int i = 0; i < textValues.length; i++) {
                     if(textValues[i].equals(newText))
-                        return;                 
+                        return;
                 }
-                    
-                if(textValues.length >= maxNumItems)                
-                    //Discard the oldest search to get space for new search 
+
+                if(textValues.length >= maxNumItems)
+                    //Discard the oldest search to get space for new search
                     filterCombo.remove(maxNumItems-1);
-                
+
                 filterCombo.add(newText,0);
             }
         });
@@ -107,9 +108,9 @@ public class FilteredComboTree extends FilteredTree {
                 textChanged();
             }
         });
-        
+
         filterCombo.addDisposeListener(new DisposeListener() {
-        
+
             /* (non-Javadoc)
              * @see org.eclipse.swt.events.DisposeListener#widgetDisposed(org.eclipse.swt.events.DisposeEvent)
              */
@@ -117,9 +118,9 @@ public class FilteredComboTree extends FilteredTree {
                 saveDialogSettings();
             }
         });
-        
+
         filterCombo.getAccessible().addAccessibleListener(getAccessibleListener());
-        
+
     }
 
     /* (non-Javadoc)
@@ -143,11 +144,11 @@ public class FilteredComboTree extends FilteredTree {
         filterCombo.setText(string);
         selectAll();
     }
-    
+
     protected void selectAll() {
         filterCombo.setSelection(new Point(0,filterCombo.getText().length()));
     }
-    
+
     /**
      * Get the combo box used by the receiver.
      * @return Combo
@@ -155,14 +156,14 @@ public class FilteredComboTree extends FilteredTree {
     public Combo getFilterCombo() {
         return filterCombo;
     }
-    
+
     /* (non-Javadoc)
      * @see org.eclipse.ui.internal.dialogs.FilteredTree#getFilterText()
      */
     protected String getFilterText() {
         return filterCombo.getText();
     }
-        
+
     /**
      * Return a dialog setting section for this dialog
      */
@@ -175,34 +176,34 @@ public class FilteredComboTree extends FilteredTree {
             thisSettings = settings.addNewSection(getClass().getName());
         return thisSettings;
     }
-   
-    
+
+
     /**
-     * Get the preferences search history for this eclipse's start, 
+     * Get the preferences search history for this eclipse's start,
      * Note that this history will not be cleared until this eclipse closes
-     * 
+     *
      */
-    public void getPreferenceSearchHistory(){       
+    public void getPreferenceSearchHistory(){
         IDialogSettings settings = getDialogSettings();
         String[] search = settings.getArray(SEARCHHISTORY);
-        
+
         if(search == null)
             return;
-        
+
         for(int i = 0; i < search.length;i++){
             filterCombo.add(search[i]);
         }
-                
+
     }
-    
+
      /**
      * Saves the search history.
      */
-    private void saveDialogSettings() {   
+    private void saveDialogSettings() {
         IDialogSettings settings =getDialogSettings();
-        
+
         //If the settings contains the same key, the previous value will be replaced by new one
         settings.put(SEARCHHISTORY,filterCombo.getItems());
-               
+
     }
 }

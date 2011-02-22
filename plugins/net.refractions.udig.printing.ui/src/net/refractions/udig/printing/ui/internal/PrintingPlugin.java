@@ -14,7 +14,6 @@ import java.util.Map;
 
 import net.refractions.udig.core.internal.ExtensionPointList;
 import net.refractions.udig.printing.model.PrintingModelPlugin;
-import net.refractions.udig.printing.ui.Template;
 import net.refractions.udig.printing.ui.TemplateFactory;
 import net.refractions.udig.printing.ui.internal.editor.BoxAction;
 
@@ -57,10 +56,6 @@ public class PrintingPlugin extends AbstractUIPlugin {
         return plugin;
     }
 
-    /**
-     * Produces a of Name --> TemplateFactory
-     * @return
-     */
     public Map<String, TemplateFactory> getTemplateFactories() {
         if (templateFactories == null) {
             templateFactories = gatherTemplateFactories();
@@ -75,49 +70,22 @@ public class PrintingPlugin extends AbstractUIPlugin {
 
         IExtension[] extensions = extensionPoint.getExtensions();
 
-        final HashMap<String, TemplateFactory> results = new HashMap<String, TemplateFactory>();
+        HashMap<String, TemplateFactory> results = new HashMap<String, TemplateFactory>();
 
-        
         for( int i = 0; i < extensions.length; i++ ) {
-            for( IConfigurationElement element : extensions[i].getConfigurationElements() ) {
-                if( "templateFactory".equals( element.getName() )){
-                    try {
-                        Object templateFactory = element.createExecutableExtension("class"); //$NON-NLS-1$
-                        if (templateFactory instanceof TemplateFactory) {
-                            String id = element.getAttribute("id"); //$NON-NLS-1$
-                            results.put(id, (TemplateFactory) templateFactory);
-                        } else {
-                            log("Bad extension! Declared class is not of type TemplateFactory!", null); //$NON-NLS-1$
-                        }
-                    } catch (CoreException e) {
-                        e.printStackTrace();
+            IConfigurationElement[] elements = extensions[i].getConfigurationElements();
+
+            for( int j = 0; j < elements.length; j++ ) {
+                try {
+                    Object templateFactory = elements[j].createExecutableExtension("class"); //$NON-NLS-1$
+                    if (templateFactory instanceof TemplateFactory) {
+                        String id = elements[j].getAttribute("id"); //$NON-NLS-1$
+                        results.put(id, (TemplateFactory) templateFactory);
+                    } else {
+                        log("Bad extension! Declared class is not of type TemplateFactory!", null); //$NON-NLS-1$
                     }
-                }
-                else if( "template".equals( element.getName() )){
-                    final String id = element.getAttribute("id"); //$NON-NLS-1$
-                    final IConfigurationElement remember = element;                            
-                    TemplateFactory fakeFactory = new TemplateFactory(){
-                        public Template createTemplate() {
-                            try {
-                                Object created = remember.createExecutableExtension("class"); //$NON-NLS-1$
-                                if( created instanceof Template){
-                                    return (Template) created;
-                                }
-                                else {
-                                    log("Bad template for "+id+" Declared class is not of type Template", null); //$NON-NLS-1$
-                                    results.remove(id);
-                                }
-                            }
-                            catch (CoreException eek){
-                                log( "Could not create template for "+id, eek );
-                            }
-                            return null;
-                        }
-                        public String getName() {
-                            return remember.getAttribute("name"); //$NON-NLS-1$
-                        }
-                    };
-                    results.put(id, fakeFactory );
+                } catch (CoreException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -185,7 +153,7 @@ public class PrintingPlugin extends AbstractUIPlugin {
 
     /**
      * Gets all the boxes that will appear in the tool bar.
-     * 
+     *
      * @return all the boxes that will appear in the tool bar.
      */
     public synchronized List<BoxFactory> getVisibleBoxes() {
@@ -203,8 +171,8 @@ public class PrintingPlugin extends AbstractUIPlugin {
 
     /**
      * Returns all the BoxFactories
-     * 
-     * @return all the BoxFactories 
+     *
+     * @return all the BoxFactories
      */
     public List<BoxFactory> getBoxes() {
         List<BoxFactory> boxes = gatherBoxes(ExtensionPointList
@@ -238,7 +206,7 @@ public class PrintingPlugin extends AbstractUIPlugin {
 
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
-     * 
+     *
      * @param trace constant, defined in the Trace class
      * @return true if -debug is on for this plugin
      */
@@ -249,7 +217,7 @@ public class PrintingPlugin extends AbstractUIPlugin {
 
     /**
      * Outputs a message or an Exception if the current plug-in is debugging.
-     * 
+     *
      * @param message if not null, message will be sent to standard out
      * @param e if not null, e.printStackTrace() will be called.
      */

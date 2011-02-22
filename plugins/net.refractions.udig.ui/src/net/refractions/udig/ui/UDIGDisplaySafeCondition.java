@@ -30,16 +30,16 @@ class UDIGDisplaySafeCondition implements Condition{
     private final Condition nonDisplayCondition;
     private final Condition displayCondition;
     private volatile Set<Thread> displayNotified=new HashSet<Thread>();
-    
+
     UDIGDisplaySafeCondition( UDIGDisplaySafeLock lock ) {
         if( lock==null )
             throw new NullPointerException("Lock cannot be null"); //$NON-NLS-1$
         owningLock = lock;
-        
+
         nonDisplayCondition=owningLock.internalLock.newCondition();
         displayCondition=owningLock.internalLock.newCondition();
     }
-    
+
     public void await() throws InterruptedException {
         doAwait( -1, null, true);
     }
@@ -48,7 +48,7 @@ class UDIGDisplaySafeCondition implements Condition{
      * @param wait
      * @param unit
      * @param allowInterrupts
-     * @return see {@linkplain Condition#await(long, TimeUnit)}  
+     * @return see {@linkplain Condition#await(long, TimeUnit)}
      * @throws InterruptedException
      */
     boolean doAwait(  long wait, TimeUnit unit, boolean allowInterrupts ) throws InterruptedException {
@@ -56,7 +56,7 @@ class UDIGDisplaySafeCondition implements Condition{
         try{
             checkState();
             owningLock.unlock();
-            
+
             if ( Display.getCurrent()==null ){
                 if( !allowInterrupts ){
                     // findbugs note:  this is correct behaviour.  I know its not in a while loop
@@ -83,13 +83,13 @@ class UDIGDisplaySafeCondition implements Condition{
         long remaining;
         displayNotified.add(Thread.currentThread());
         long start=System.nanoTime();
-        
+
         if( unit!=null ){
             remaining=TimeUnit.NANOSECONDS.convert(time, unit);
         }else{
             remaining=-1;
         }
-        
+
         long nextInterval=TimeUnit.NANOSECONDS.convert(100, TimeUnit.MILLISECONDS);;
         Display current = Display.getCurrent();
         while( nextInterval>0 && displayNotified.contains(Thread.currentThread())){
@@ -145,7 +145,7 @@ class UDIGDisplaySafeCondition implements Condition{
     public boolean awaitUntil( Date deadline ) throws InterruptedException {
             checkState();
             long waitTime=deadline.getTime()-System.currentTimeMillis();
-            
+
             return doAwait(waitTime, TimeUnit.MILLISECONDS, true);
     }
 
@@ -153,7 +153,7 @@ class UDIGDisplaySafeCondition implements Condition{
         owningLock.internalLock.lock();
         try{
             checkState();
-            
+
             if( !displayNotified.isEmpty() ){
                 Thread next = displayNotified.iterator().next();
                 displayNotified.remove(next);
@@ -186,9 +186,9 @@ class UDIGDisplaySafeCondition implements Condition{
     }
 
     public int getWaitQueueLength() {
-        
+
         int count=displayNotified.size();
-        
+
         int i = count+owningLock.internalLock.getWaitQueueLength(this.nonDisplayCondition);
         return i;
     }
@@ -196,5 +196,5 @@ class UDIGDisplaySafeCondition implements Condition{
     public boolean isOwner( UDIGDisplaySafeLock lock ) {
         return owningLock==lock;
     }
-    
+
 }

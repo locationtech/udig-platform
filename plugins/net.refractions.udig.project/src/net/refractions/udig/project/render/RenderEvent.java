@@ -20,15 +20,15 @@ import net.refractions.udig.project.internal.render.RenderingCoordinator;
 
 /**
  * Encapsulates an rendering event.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
 public class RenderEvent {
     private final RenderingCoordinator source;
-    private final RenderEventType type; 
+    private final RenderEventType type;
     private final Object oldValue, newValue;
-    
+
     public RenderEvent( final RenderingCoordinator source, final RenderEventType type, final Object oldValue, final Object newValue ) {
         super();
         this.source = source;
@@ -52,5 +52,5 @@ public class RenderEvent {
     public RenderingCoordinator getSource() {
         return source;
     }
-    
+
 }

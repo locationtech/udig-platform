@@ -45,7 +45,7 @@ import net.refractions.udig.tools.edit.support.Point;
  * </ul>
  * </p>
  * Note: This is not undoable.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -73,7 +73,7 @@ public class SetSnapSizeBehaviour implements EventBehaviour {
                     public Point get(Object... params) {
                         return Point.valueOf(e.x, e.y);
                     }
-                    
+
                 }
                 command = new DrawSnapAreaCommand(new PointProvider());
                 handler.getContext().sendSyncCommand(command);
@@ -97,9 +97,9 @@ public class SetSnapSizeBehaviour implements EventBehaviour {
         synchronized (this) {
             bounds = command.getValidArea();
         }
-        if( oldBounds!=null ) 
+        if( oldBounds!=null )
             bounds.createUnion(oldBounds);
-        
+
         handler.getContext().getViewportPane().repaint(bounds.x, bounds.y, bounds.width, bounds.height);
         return null;
     }

@@ -29,24 +29,23 @@ import org.eclipse.core.runtime.Platform;
  */
 public class AdapterUtil {
     public static final AdapterUtil instance=new AdapterUtil();
-    
+
     private AdapterUtil(){}
-    
+
     /**
-     * Determines if a class can be adapted based on its string representation.  
+     * Determines if a class can be adapted based on its string representation.
      *
      * @param targetClass class name to check if adaptation can go to
      * @param obj source object to adapt from
      * @return
      */
     public boolean canAdaptTo(String targetClass, Object obj) {
-        if (obj == null) return false;
         ClassLoader classLoader = obj.getClass().getClassLoader();
         return canAdaptTo(targetClass, obj, classLoader);
     }
-    
+
     /**
-     * Determines if a object can be adapted based on its string representation.  
+     * Determines if a object can be adapted based on its string representation.
      *
      * @param targetClass class name to check if adaptation can go to
      * @param obj source object to adapt from
@@ -55,7 +54,6 @@ public class AdapterUtil {
      */
     public boolean canAdaptTo(String targetClass, Object obj, ClassLoader classLoader) {
         Class< ? > target=null;
-        if (obj == null) return false;
         if (classLoader == null) {
             classLoader = obj.getClass().getClassLoader();
         }
@@ -67,28 +65,28 @@ public class AdapterUtil {
         }
         if( target.isAssignableFrom(obj.getClass()) )
             return true;
-        
+
         return canAdaptTo(obj, target);
     }
 
     /**
      * Tests whether the object can be adapted to the provided target class.
-     * 
+     *
      * @param obj the class to test
      * @param target the target/desired class
-     * 
+     *
      * @return true if the object is an instanceof or can adapt to
      */
     public boolean canAdaptTo( Object obj, Class< ? > target ) {
         //see if platform can adapt the object
         if (Platform.getAdapterManager().hasAdapter(obj, target.getName()) )
             return true;
-        
+
         // see if the object is a blocking adaptable object and can adapt to the correct class type
         IBlockingAdaptable blockingAdaptable=getBlockingAdapter(obj);
         if( blockingAdaptable!=null && blockingAdaptable.canAdaptTo(target))
             return true;
-        
+
         // see if the object is adaptable and can adapt to the class type.
         IAdaptable adaptable=getAdaptable(obj);
         if( adaptable!=null ){
@@ -96,7 +94,7 @@ public class AdapterUtil {
         }
         return false;
     }
-    
+
     /**
      * Adapt the object to an IAdaptable
      */
@@ -129,14 +127,14 @@ public class AdapterUtil {
      * <p>
      * Example:
      * </p>
-     * A SimpleFeatureType readonly operation is called on a IResolve. The getOperationTarget would
-     * resolve(FeatureSource.class) and return the SimpleFeature Source for the operation.
-     * 
+     * A FeatureType readonly operation is called on a IResolve. The getOperationTarget would
+     * resolve(FeatureSource.class) and return the Feature Source for the operation.
+     *
      * @param target the object the action is called on.
      * @param definition the Configuration element definition of the operation.
      * @param monitor The progress monitor for the operation job.
      * @return
-     * @throws IOException 
+     * @throws IOException
      */
     @SuppressWarnings("unchecked")
     public <T> T adapt( String targetClass, Object obj, IProgressMonitor monitor ) throws IOException{
@@ -149,9 +147,9 @@ public class AdapterUtil {
             CorePlugin.log( "This exception is bad.  The framework should not allow this to be reached.",e); //$NON-NLS-1$
             return null;
         }
-        
-        
-         
+
+
+
     }
 
     /**
@@ -161,17 +159,17 @@ public class AdapterUtil {
      * <p>
      * Example:
      * </p>
-     * A SimpleFeatureType readonly operation is called on a IResolve. The getOperationTarget would
-     * resolve(FeatureSource.class) and return the SimpleFeature Source for the operation.
-     * 
+     * A FeatureType readonly operation is called on a IResolve. The getOperationTarget would
+     * resolve(FeatureSource.class) and return the Feature Source for the operation.
+     *
      * @param target the object the action is called on.
      * @param definition the Configuration element definition of the operation.
      * @param monitor The progress monitor for the operation job.
      * @return
-     * @throws IOException 
+     * @throws IOException
      */
     public <T> T adaptTo( Class<T> target, Object obj, IProgressMonitor monitor ) throws IOException{
-        
+
             if( target.isAssignableFrom(obj.getClass()) )
                 return target.cast(obj);
         if (Platform.getAdapterManager().hasAdapter(obj, target.getName()) ){

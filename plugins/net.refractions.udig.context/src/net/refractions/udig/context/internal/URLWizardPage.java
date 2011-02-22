@@ -61,16 +61,16 @@ import org.eclipse.swt.widgets.Text;
  * such a use the end of this process would be the URL being
  * "dropped" onto the current selection.
  * </p>
- * 
+ *
  * @author Jody Garnett
  * @since 1.0.5
  */
 public class URLWizardPage extends WizardPage implements KeyListener {
-    
+
     protected URL url = null;
     private Text text;
-    private String promptMessage = Messages.URLWizardPage_prompt_initial; 
-    
+    private String promptMessage = Messages.URLWizardPage_prompt_initial;
+
     /**
      * Force subclasses to actually cough up the stuff needed for
      * a pretty user interface.
@@ -101,49 +101,49 @@ public class URLWizardPage extends WizardPage implements KeyListener {
     public void createControl( Composite parent ) {
         Composite composite = new Composite(parent,SWT.NULL);
         composite.setLayout(new GridLayout(3, false));
-        
+
         // add url
         Label label = new Label( composite, SWT.NONE );
-        label.setText(Messages.URLWizardPage_label_url_text ); 
+        label.setText(Messages.URLWizardPage_label_url_text );
         label.setLayoutData( new GridData(SWT.END, SWT.DEFAULT, false, false ) );
 
         text = new Text( composite, SWT.BORDER );
         text.setLayoutData( new GridData(GridData.FILL_HORIZONTAL) );
         text.setText( "" ); //$NON-NLS-1$
         text.addKeyListener( this );
-        
+
         Button button = new Button(composite, SWT.PUSH);
         button.setLayoutData(new GridData());
 
-        button.setText(Messages.URLWizardPage_button_browse_text); 
+        button.setText(Messages.URLWizardPage_button_browse_text);
         button.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 Display display = Display.getCurrent();
                 if (display == null) { // not on the ui thread?
                     display = Display.getDefault();
                 }
-                
+
                 FileDialog dialog = new FileDialog(display.getActiveShell(), SWT.OPEN);
                 //dialog.setFilterExtensions(new String[]{"*.shp"});
-                dialog.setText( Messages.URLWizardPage_dialog_text ); // hope for open ? 
-                
+                dialog.setText( Messages.URLWizardPage_dialog_text ); // hope for open ?
+
                 String open = dialog.open();
                 if(open == null){
                     // canceled - no change
                 }
                 else {
                     text.setText( open );
-                    setPageComplete(isPageComplete());                    
+                    setPageComplete(isPageComplete());
                 }
             }
-        });        
+        });
         setControl(text);
-        
+
 //      eclipse ui guidelines say we must start with prompt (not error)
         setMessage( null );
-        setPageComplete(true);        
+        setPageComplete(true);
     }
-    
+
     /**
      * We cannot assume how far we got in the consturction process.
      * So we have to carefully tear the roof down over our heads and
@@ -152,13 +152,13 @@ public class URLWizardPage extends WizardPage implements KeyListener {
     @Override
     public void dispose() {
         if( text != null ){
-            text.removeKeyListener( this ); 
+            text.removeKeyListener( this );
             text.dispose();
             text = null;
         }
         super.dispose();
     }
-    
+
     public void keyReleased( KeyEvent e ) {
         if(isPageComplete()){
             setPageComplete(true);
@@ -179,16 +179,16 @@ public class URLWizardPage extends WizardPage implements KeyListener {
      * Subclasses may override to perform extra sanity checks on
      * the URL (for things like extention, magic, etc...)
      * </p>
-     * 
+     *
      * @see org.eclipse.jface.wizard.IWizardPage#isPageComplete()
      * @return true if we have a useful URL
      */
     public boolean isPageComplete() {
         url = null;
-        
+
         String txt = text.getText();
-        Exception errorMessage = null; 
-        
+        Exception errorMessage = null;
+
         if( txt == null || txt.length() == 0 ){
             // not available
         }
@@ -215,8 +215,8 @@ public class URLWizardPage extends WizardPage implements KeyListener {
             else {
                 setMessage( "" ); //$NON-NLS-1$
             }
-        }        
-        setMessage( Messages.URLWizardPage_prompt_import ); 
+        }
+        setMessage( Messages.URLWizardPage_prompt_import );
         return true;
     }
     /**
@@ -231,14 +231,14 @@ public class URLWizardPage extends WizardPage implements KeyListener {
      * <code>null</code>. Please override to check for things like
      * the correct extention ...
      * </p>
-     * 
+     *
      * @param url
      * @return true if url is okay
      */
     protected boolean urlCheck( URL url ){
         return url != null;
     }
-    
+
     /**
      * Used for a <b>quick</b> file check - don't open it!
      * <p>
@@ -261,13 +261,13 @@ public class URLWizardPage extends WizardPage implements KeyListener {
     protected boolean fileCheck( File file ){
         if( file.exists() ){
             return true;
-        }        
+        }
         //file = file.getAbsoluteFile();
         while( file.getParent() != null && !file.exists() ){
             file = file.getParentFile();
         }
         setErrorMessage( MessageFormat.format(Messages.URLWizardPage_prompt_error_fileNotExist, file.getName()));
-        
+
         return false;
     }
 }

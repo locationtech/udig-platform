@@ -3,15 +3,30 @@ uDIG Application
 This java project is used to share common dependencies between the plug-ins
 comprising the uDig Application.
 
-The refresh.xml ant file is set up to download the required
-jars into a lib folder if it has not done so already.
+It contains the "latest" jars at the time of writing:
 
-To force it to download the files you will need to manually
-build the project. This will download the files from
-http://lists.refractions.net/ and ibiblio.org as needed.
+We have chosen not to include the version number information, this will allow
+svn's binary diff facitlities to track changes beween releases.
 
-To customize the servers used by refresh.xml modify
-copy.properties - this is very helpful if you are
-building udig in other parts of the world.  You can also 
-specify the location of your local maven repository and the
-build target will you that as well as downloading files.
+We relize that this will not result in a large savings given the nature
+of jar compression.
+
+The lib directory contains:
+-----------+-------+----------------
+jts        | 1.4.0 | http://www.vividsolutions.com/jts/download.htm
+junit      |       |
+junit-src  |       |
+wmc        | 0.1.x | pending
+wfc        | 0.1.x | pending
+gml        | 0.1.x | pending
+render     | 0.1.x | pending
+-----------+-------+----------------
+
+When using this project in your own Eclipse workspace you
+can juggle between using a jar from this lib directory,
+, or directly depending on its build output (assuming you have
+it in your workspace).
+
+As an example you can make this project depend on "gtbuild" and
+turn of exporting of all the geotools-*.jar files, replacing them
+with an export of the gtbuild builds results.

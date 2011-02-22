@@ -25,12 +25,12 @@ import org.geotools.data.FeatureStore;
 import org.geotools.data.FeatureWriter;
 import org.geotools.data.Transaction;
 import org.geotools.data.memory.MemoryDataStore;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureType;
 import org.geotools.feature.SchemaException;
-import org.geotools.feature.collection.AdaptorFeatureCollection;
+import org.geotools.feature.collection.AbstractFeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.MultiPolygon;
@@ -47,11 +47,8 @@ public class IssuesListTestHelper {
     public static final String DESCRIPTION_ATTR = "description"; //$NON-NLS-1$
     public static final String ISSUE_MEMENTO_DATA_ATTR = "memento"; //$NON-NLS-1$
     public static final String VIEW_MEMENTO_DATA_ATTR = "viewMenento"; //$NON-NLS-1$
-    public static void createFeature(String id, Resolution r, Priority p,
-			ReferencedEnvelope bounds,
-			FeatureWriter<SimpleFeatureType, SimpleFeature> writer)
-			throws Exception {
-        SimpleFeature feature=writer.next();
+    public static void createFeature( String id, Resolution r, Priority p, ReferencedEnvelope bounds, FeatureWriter writer) throws Exception {
+        Feature feature=writer.next();
         feature.setAttribute(BOUNDS, IssuesListTestHelper.createBounds(bounds));
         feature.setAttribute(EXTENSION_ID_ATTR, FeatureIssue.EXT_ID);
         feature.setAttribute(ISSUE_ID_ATTR, id);
@@ -66,56 +63,56 @@ public class IssuesListTestHelper {
         Polygon[] polygons=new Polygon[]{(Polygon)factory.toGeometry(env)};
         return factory.createMultiPolygon(polygons);
     }
-    public static void addFeatures(DataStore store, SimpleFeatureType featureType) throws Exception {
-    	FeatureWriter<SimpleFeatureType, SimpleFeature> writer = store.getFeatureWriterAppend(featureType.getName().getLocalPart(), Transaction.AUTO_COMMIT);
-        
-        createFeature("0", //$NON-NLS-1$ 
+    public static void addFeatures(DataStore store, FeatureType featureType) throws Exception {
+        FeatureWriter writer = store.getFeatureWriterAppend(featureType.getTypeName(), Transaction.AUTO_COMMIT);
+
+        createFeature("0", //$NON-NLS-1$
                 Resolution.UNKNOWN,
                 Priority.CRITICAL,
                 new ReferencedEnvelope(-180,0,-90,0,StrategizedIssuesListTest.crs),
-                writer); 
-        
-        createFeature("1", //$NON-NLS-1$ 
+                writer);
+
+        createFeature("1", //$NON-NLS-1$
                 Resolution.UNKNOWN,
                 Priority.WARNING,
                 new ReferencedEnvelope(0,180,-90,0,StrategizedIssuesListTest.crs),
-                writer); 
-        createFeature("2", //$NON-NLS-1$ 
+                writer);
+        createFeature("2", //$NON-NLS-1$
                 Resolution.IN_PROGRESS,
                 Priority.WARNING,
                 new ReferencedEnvelope(0,180,0,90,StrategizedIssuesListTest.crs),
-                writer); 
-        createFeature("3", //$NON-NLS-1$ 
+                writer);
+        createFeature("3", //$NON-NLS-1$
                 Resolution.IN_PROGRESS,
                 Priority.TRIVIAL,
                 new ReferencedEnvelope(-180,0,0,90,StrategizedIssuesListTest.crs),
-                writer); 
-        
+                writer);
+
         writer.close();
-        
-        
+
+
     }
     /**
-     * 
+     *
      *
      * @param store empty array of size 1.  Will be assigned the Datastore that is created for the list
-     * @param featureType empty array of size 1.  Will be assigned the SimpleFeatureType that is created for the list
+     * @param featureType empty array of size 1.  Will be assigned the FeatureType that is created for the list
      * @return the new issuesList
      * @throws SchemaException
      * @throws IOException
      * @throws Exception
      */
-    public static IRemoteIssuesList createInMemoryDatastoreIssuesList(DataStore[] store, 
-            SimpleFeatureType[] featureType) throws SchemaException, IOException, Exception {
+    public static IRemoteIssuesList createInMemoryDatastoreIssuesList(DataStore[] store,
+            FeatureType[] featureType) throws SchemaException, IOException, Exception {
         class TestMemoryDataStore extends MemoryDataStore{
             @Override
             protected Map features( String typeName ) throws IOException {
                 return super.features(typeName);
             }
         };
-        
+
         final TestMemoryDataStore ds = new TestMemoryDataStore();
-        final SimpleFeatureType ft = DataUtilities.createType("IssuesFeatureType",  //$NON-NLS-1$
+        final FeatureType ft = DataUtilities.createType("IssuesFeatureType",  //$NON-NLS-1$
                 "*"+BOUNDS+":MultiPolygon," + //$NON-NLS-1$ //$NON-NLS-2$
                 EXTENSION_ID_ATTR+":String,"+ //$NON-NLS-1$
                 ISSUE_ID_ATTR+":String,"+ //$NON-NLS-1$
@@ -125,14 +122,14 @@ public class IssuesListTestHelper {
                 DESCRIPTION_ATTR+":String,"+ //$NON-NLS-1$
                 ISSUE_MEMENTO_DATA_ATTR+":String,"+ //$NON-NLS-1$
                 VIEW_MEMENTO_DATA_ATTR+":String"); //$NON-NLS-1$
-        
+
         ds.createSchema(ft);
-        
+
         IListStrategy strategy=new AbstractDatastoreStrategy(){
-        
+
             @Override
-            public FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures() throws IOException {
-                return new AdaptorFeatureCollection("type", ft){
+            public FeatureCollection getFeatures() throws IOException {
+                return new AbstractFeatureCollection(ft){
 
                     @Override
                     protected void closeIterator( Iterator close ) {
@@ -142,15 +139,15 @@ public class IssuesListTestHelper {
                     @Override
                     protected Iterator openIterator() {
                         try {
-                            ArrayList<SimpleFeature> features = new ArrayList<SimpleFeature>(ds.features(ft.getName().getLocalPart()).values());
-                            Collections.sort(features, new Comparator<SimpleFeature>(){
+                            ArrayList<Feature> features = new ArrayList<Feature>(ds.features(ft.getTypeName()).values());
+                            Collections.sort(features, new Comparator<Feature>(){
 
-                                public int compare( SimpleFeature o1, SimpleFeature o2 ) {
+                                public int compare( Feature o1, Feature o2 ) {
                                     return ((String)o1.getAttribute(ISSUE_ID_ATTR)).compareTo((String)o2.getAttribute(ISSUE_ID_ATTR));
                                 }
-                                
+
                             });
-                            final Iterator<SimpleFeature> iter=features.iterator();
+                            final Iterator<Feature> iter=features.iterator();
                             return new Iterator(){
 
                                 public boolean hasNext() {
@@ -164,7 +161,7 @@ public class IssuesListTestHelper {
                                 public void remove() {
                                     throw new UnsupportedOperationException();
                                 }
-                                
+
                             };
                         } catch (IOException e) {
                             throw (RuntimeException) new RuntimeException( ).initCause( e );
@@ -175,17 +172,17 @@ public class IssuesListTestHelper {
                     @Override
                     public int size() {
                         try {
-                            return ds.features(ft.getName().getLocalPart()).size();
+                            return ds.features(ft.getTypeName()).size();
                         } catch (IOException e) {
                             throw (RuntimeException) new RuntimeException( ).initCause( e );
                         }
                     }
-                    
+
                 };
             }
-            
-            protected FeatureStore<SimpleFeatureType, SimpleFeature> getFeatureStore() throws IOException {
-                return (FeatureStore<SimpleFeatureType, SimpleFeature>) ds.getFeatureSource(ft.getName().getLocalPart());
+
+            protected FeatureStore getFeatureStore() throws IOException {
+                return (FeatureStore) ds.getFeatureSource(ft.getTypeName());
             }
 
             public String getExtensionID() {
@@ -196,12 +193,12 @@ public class IssuesListTestHelper {
             protected DataStore getDataStore() throws IOException {
                 return ds;
             }
-            
-        }; 
-        
+
+        };
+
         StrategizedIssuesList list=new StrategizedIssuesList();
         list.init(strategy);
-        
+
         if( store!=null && store.length>0 ){
             store[0]=ds;
         }
@@ -210,13 +207,12 @@ public class IssuesListTestHelper {
         }
         return list;
     }
-    
-    
+
+
     public static FeatureIssue createFeatureIssue(String id) throws Exception {
         IMap map=MapTests.createDefaultMap("testMap", 1, true, new java.awt.Dimension(10,10)); //$NON-NLS-1$
         ILayer layer=map.getMapLayers().get(0);
-        FeatureCollection<SimpleFeatureType, SimpleFeature> collection = layer.getResource(FeatureSource.class, null).getFeatures();
-        SimpleFeature feature=collection.features().next();
+        Feature feature=layer.getResource(FeatureSource.class, null).getFeatures().features().next();
         FeatureIssue issue=new FeatureIssue(Priority.WARNING, "test description", layer, feature, "groupID"); //$NON-NLS-1$ //$NON-NLS-2$
         issue.setId(id);
         return issue;

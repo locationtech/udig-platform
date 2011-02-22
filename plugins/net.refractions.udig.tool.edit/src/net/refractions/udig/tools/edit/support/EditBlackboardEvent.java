@@ -23,7 +23,7 @@ import java.util.Set;
 
 /**
  * Event detailing a change in the blackboard.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -75,7 +75,7 @@ public class EditBlackboardEvent {
          * <li>The NewValue is a Collection of {@link EditGeom} objects</li>
          * </ul>
          */
-        SET_GEOMS, 
+        SET_GEOMS,
         /**
          * One or more Geometries were removed from the blackboard.
          * <ul>
@@ -84,9 +84,9 @@ public class EditBlackboardEvent {
          * <li>The NewValue is a null</li>
          * </ul>
          */
-        REMOVE_GEOMS, 
+        REMOVE_GEOMS,
         /**
-         * The Map to Screen transform has changed 
+         * The Map to Screen transform has changed
          * <ul>
          * <li>The source is a {@link EditBlackboard} </li>
          * <li>The OldValue is the previous AffineTransform of the Blackboard</li>
@@ -104,7 +104,7 @@ public class EditBlackboardEvent {
          * <li>The NewValue is a the new selection</li>
          * </ul>
          */
-        SELECTION, 
+        SELECTION,
         /**
          * A special case where a single point was added to many geometries.
          * <ul>
@@ -119,11 +119,11 @@ public class EditBlackboardEvent {
     private final Object source;
     private final Object before;
     private final Object after;
-    
+
     private final EventType type;
     private EditBlackboard editBlackboard;
     /**
-     * Some data where information can be squirreled away for use by the framework. this should not be depended on by 
+     * Some data where information can be squirreled away for use by the framework. this should not be depended on by
      * non-uDig developers.
      */
     public Object privateData;
@@ -152,7 +152,7 @@ public class EditBlackboardEvent {
     public Object getNewValue() {
         return after;
     }
-    
+
     /**
      * @return Returns the value before the change.
      * @see EventType
@@ -319,7 +319,7 @@ public class EditBlackboardEvent {
             default:
             break;
         }
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -329,7 +329,7 @@ public class EditBlackboardEvent {
         }
         return (Map<Point, List<Point>>) after;
     }
-    
+
     @Override
     public String toString() {
         return getType()+" before: "+before+" after:"+after;  //$NON-NLS-1$//$NON-NLS-2$

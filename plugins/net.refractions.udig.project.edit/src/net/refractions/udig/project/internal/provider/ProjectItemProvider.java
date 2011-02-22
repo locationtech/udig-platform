@@ -2,12 +2,13 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: ProjectItemProvider.java 29071 2008-02-05 02:33:06Z jeichar $
  */
 package net.refractions.udig.project.internal.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import net.refractions.udig.project.IProject;
@@ -18,6 +19,8 @@ import net.refractions.udig.project.internal.ProjectPackage;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -30,7 +33,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 /**
  * This is the item provider adapter for a {@link net.refractions.udig.project.internal.Project}
  * object. <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated NOT
  */
 public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
@@ -42,14 +45,14 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
             IItemPropertySource {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
     /**
      * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public ProjectItemProvider( AdapterFactory adapterFactory ) {
@@ -59,7 +62,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public List getPropertyDescriptors( Object object ) {
@@ -74,7 +77,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Name feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addNamePropertyDescriptor( Object object ) {
@@ -95,7 +98,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
      * {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Collection getChildrenFeatures( Object object ) {
@@ -114,7 +117,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
 //    }
     /**
      * This returns Project.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Object getImage( Object object ) {
@@ -124,13 +127,13 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated NOT
      */
     public String getText( Object object ) {
         String label = ((Project) object).getName();
         return label == null || label.length() == 0 ? "Project" : //$NON-NLS-1$
-                label; 
+                label;
     }
 
     /**
@@ -140,13 +143,13 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
         return true;
     }
 
-    
-    
+
+
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
      * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void notifyChanged( Notification notification ) {
@@ -179,7 +182,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
 
         return super.getConcreteChildren(object);
     }
-    
-    
+
+
 
 }

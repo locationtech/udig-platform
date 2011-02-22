@@ -20,7 +20,7 @@ import java.util.Map;
 
 /**
  * PathIterator that wraps a primitive shape.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -41,16 +41,16 @@ public class PrimitiveShapeIterator extends AbstractShapeIterator {
                 for( EditGeom geom: geoms ) {
                     map.remove(geom);
                 }
-                
+
                 if( map.isEmpty() ){
                     ((EditBlackboard) event.getSource()).getListeners().remove(this);
-                }                
+                }
                 break;
             default:
                 break;
             }
         }
-        
+
         @Override
         public void batchChange( List<EditBlackboardEvent> e ) {
             for( EditBlackboardEvent event : e ) {
@@ -63,7 +63,7 @@ public class PrimitiveShapeIterator extends AbstractShapeIterator {
     protected PrimitiveShapeIterator( PrimitiveShape shape ) {
         super(shape);
     }
-    
+
     public static PrimitiveShapeIterator getPathIterator(PrimitiveShape shape){
         PrimitiveShapeIterator iter=map.get(shape);
         if ( iter==null ){
@@ -76,7 +76,7 @@ public class PrimitiveShapeIterator extends AbstractShapeIterator {
         }
         return iter;
     }
-    
+
 
     public int currentSegment( float[] coords ) {
 

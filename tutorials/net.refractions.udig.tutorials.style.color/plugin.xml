@@ -36,16 +36,5 @@
             styleId="net.refractions.udig.tutorials.style.color.colorStyle">
       </styleConfigurator>
    </extension>
-   <extension
-         point="net.refractions.udig.ui.operation">
-      <operation
-            class="net.refractions.udig.tutorials.style.color.RemoveColorOp"
-            enablesFor="1"
-            id="net.refractions.udig.tutorials.style.color.removeOp"
-            name="Remove Color"
-            targetClass="net.refractions.udig.project.internal.Layer">
-         <enablement></enablement>
-      </operation>
-   </extension>
 
 </plugin>

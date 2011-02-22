@@ -14,21 +14,19 @@
  */
 package net.refractions.udig.project.render;
 
-import java.awt.Rectangle;
-
 import org.eclipse.core.runtime.IAdaptable;
 import org.geotools.renderer.lite.LabelCache;
 
 /**
- * The Labeller draws the labels from each renderer on the top layer of the map.  New implementations can be 
+ * The Labeller draws the labels from each renderer on the top layer of the map.  New implementations can be
  * registered using the net.refractions.udig.project.ui.label.painter extension point.
  * <p>
- * The basic implementation maintains a cache of Labels so that various heuristics can be ran on them.  For example making 
- * sure that labels don't overlap.  At the end of each rendering the cached labels are deleted.  Except for those added 
+ * The basic implementation maintains a cache of Labels so that various heuristics can be ran on them.  For example making
+ * sure that labels don't overlap.  At the end of each rendering the cached labels are deleted.  Except for those added
  * using the putPermanentLabel.
  * </p>
  * @author Jesse
  * @since 1.1.0
  */
-public interface ILabelPainter extends IAdaptable,LabelCache {  
+public interface ILabelPainter extends IAdaptable,LabelCache {
 }

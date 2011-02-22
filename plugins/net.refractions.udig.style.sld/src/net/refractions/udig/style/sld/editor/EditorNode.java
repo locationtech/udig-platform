@@ -1,17 +1,3 @@
-/* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2008, Refractions Research Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation;
- * version 2.1 of the License.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- */
 package net.refractions.udig.style.sld.editor;
 
 import java.util.ArrayList;
@@ -28,13 +14,13 @@ import net.refractions.udig.style.sld.IStyleEditorPage;
 import net.refractions.udig.style.sld.SLDPlugin;
 import net.refractions.udig.style.sld.editor.internal.IEditorNode;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -46,12 +32,8 @@ import org.eclipse.ui.internal.util.BundleUtility;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
- * Abstract IEditorNode used as the abstract class for all page nodes.
- * <p>
- * This class implements IPluginContribution allowing the plug-in defining
- * this EditorNode to be held accountable.
+ * The EditorNode is the abstract class for all page nodes.
  */
-@SuppressWarnings("restriction")
 public class EditorNode implements IPluginContribution, IEditorNode {
 
         private static final String TAG_KEYWORD_REFERENCE = "keywordReference"; //$NON-NLS-1$
@@ -61,9 +43,9 @@ public class EditorNode implements IPluginContribution, IEditorNode {
         public static final String ATT_LABEL = "label"; //$NON-NLS-1$
         public static final String ATT_CATEGORY = "category"; //$NON-NLS-1$
         public static final String ATT_REQUIRES = "requires"; //$NON-NLS-1$
-        
-        private Collection<String> keywordReferences;
-        
+
+        private Collection keywordReferences;
+
         private IConfigurationElement configurationElement;
 
         private ImageDescriptor imageDescriptor;
@@ -95,13 +77,13 @@ public class EditorNode implements IPluginContribution, IEditorNode {
          */
         private String label;
 
-        private Collection<String> keywordLabelCache;
-        
+        private Collection keywordLabelCache;
+
         /**
          * Create a new instance of the receiver.
-         * 
+         *
          * @param id
-         * @param configurationElement 
+         * @param configurationElement
          */
         public EditorNode(String id, IConfigurationElement configurationElement) {
         	this(id);
@@ -110,10 +92,10 @@ public class EditorNode implements IPluginContribution, IEditorNode {
 
         /**
          * Get the ids of the keywords the receiver is bound to.
-         * 
+         *
          * @return Collection of <code>String</code>.  Never <code>null</code>.
          */
-        public Collection<String> getKeywordReferences() {
+        public Collection getKeywordReferences() {
             if (keywordReferences == null) {
                 IConfigurationElement[] references = getConfigurationElement()
                         .getChildren(TAG_KEYWORD_REFERENCE);
@@ -128,40 +110,40 @@ public class EditorNode implements IPluginContribution, IEditorNode {
                 if (!list.isEmpty())
                     keywordReferences = list;
                 else
-                    keywordReferences = Collections.emptySet();
-                
+                    keywordReferences = Collections.EMPTY_SET;
+
             }
             return keywordReferences;
         }
 
         /**
          * Get the labels of all of the keywords of the receiver.
-         * 
+         *
          * @return Collection of <code>String</code>.  Never <code>null</code>.
          */
-        public Collection<String> getKeywordLabels() {
+        public Collection getKeywordLabels() {
             if (keywordLabelCache != null)
                 return keywordLabelCache;
-            
-            Collection<String> refs = getKeywordReferences();
-            
+
+            Collection refs = getKeywordReferences();
+
             if(refs == Collections.EMPTY_SET) {
-                keywordLabelCache = Collections.emptySet(); 
+                keywordLabelCache = Collections.EMPTY_SET;
                 return keywordLabelCache;
             }
-            
-            keywordLabelCache = new ArrayList<String>(refs.size());
-            Iterator<String> referenceIterator = refs.iterator();
+
+            keywordLabelCache = new ArrayList(refs.size());
+            Iterator referenceIterator = refs.iterator();
             while(referenceIterator.hasNext()){
-                String label = KeywordRegistry.getInstance().getKeywordLabel(
+                Object label = KeywordRegistry.getInstance().getKeywordLabel(
                         (String) referenceIterator.next());
                 if(label != null)
                     keywordLabelCache.add(label);
             }
-            
+
             return keywordLabelCache;
         }
-        
+
         /**
          * Clear the keyword cache, if any.
          */
@@ -188,7 +170,7 @@ public class EditorNode implements IPluginContribution, IEditorNode {
         /* (non-Javadoc)
          * @see org.eclipse.jface.preference.SLDEditorPageNode#getLabelImage()
          */
-        public Image getLabelImage() {      
+        public Image getLabelImage() {
             if (image == null) {
                 ImageDescriptor desc = getImageDescriptor();
                 if (desc != null)
@@ -207,30 +189,30 @@ public class EditorNode implements IPluginContribution, IEditorNode {
 
         /**
          * Returns the image descriptor for this node.
-         * 
+         *
          * @return the image descriptor
          */
         public ImageDescriptor getImageDescriptor() {
-            if (imageDescriptor != null) 
+            if (imageDescriptor != null)
                 return imageDescriptor;
-            
+
             String imageName = getConfigurationElement().getAttribute(ATT_ICON);
             if (imageName != null) {
-                String contributingPluginId = getConfigurationElement().getNamespaceIdentifier();
+                String contributingPluginId = getConfigurationElement().getNamespace();
                 imageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(contributingPluginId, imageName);
             }
             return imageDescriptor;
         }
-        
+
         /**
          * Return the configuration element.
-         * 
+         *
          * @return the configuration element
          */
         public IConfigurationElement getConfigurationElement() {
             return configurationElement;
         }
-        
+
         /* (non-Javadoc)
          * @see org.eclipse.ui.activities.support.IPluginContribution#getLocalId()
          */
@@ -242,12 +224,12 @@ public class EditorNode implements IPluginContribution, IEditorNode {
          * @see org.eclipse.ui.activities.support.IPluginContribution#getPluginId()
          */
         public String getPluginId() {
-            return getConfigurationElement().getNamespaceIdentifier();
+            return getConfigurationElement().getNamespace();
         }
-        
+
         /**
          * Creates the page this node stands for.
-         * The page is created, but its composite won't exist 
+         * The page is created, but its composite won't exist
          */
         public void createPage(Composite parent, IEditorPageContainer container) {
             StyleEditorPage page;
@@ -256,7 +238,7 @@ public class EditorNode implements IPluginContribution, IEditorNode {
                 if (pageInstance instanceof IStyleConfigurator) {
                     page = new StyleEditorPageAdapter((IStyleConfigurator) pageInstance);
                 } else if (pageInstance instanceof StyleEditorPage) {
-                    page = (StyleEditorPage) pageInstance; 
+                    page = (StyleEditorPage) pageInstance;
                 } else {
                     //TODO: log
                     return;
@@ -282,8 +264,8 @@ public class EditorNode implements IPluginContribution, IEditorNode {
          */
         public String getCategory() {
             return getConfigurationElement().getAttribute(ATT_CATEGORY);
-        }   
-        
+        }
+
         /**
          * Return the required class the layer must resolve to.
          *
@@ -297,11 +279,11 @@ public class EditorNode implements IPluginContribution, IEditorNode {
             }
             return requires;
         }
-        
+
         /**
          * Creates a new preference node with the given id. The new node has no
          * subnodes.
-         * 
+         *
          * @param id
          *            the node id
          */
@@ -315,7 +297,7 @@ public class EditorNode implements IPluginContribution, IEditorNode {
          * lazily-loaded preference page. The preference node assumes (sole)
          * responsibility for disposing of the image; this will happen when the node
          * is disposed.
-         * 
+         *
          * @param id
          *            the node id
          * @param label
@@ -341,7 +323,7 @@ public class EditorNode implements IPluginContribution, IEditorNode {
          * Creates an editor node with the given id and editor page. The
          * title of the editor page is used for the node label. The node will
          * not have an image.
-         * 
+         *
          * @param id
          *            the node id
          * @param page
@@ -424,7 +406,7 @@ public class EditorNode implements IPluginContribution, IEditorNode {
 
         /**
          * Set the current page to be newPage.
-         * 
+         *
          * @param newPage
          */
         public void setPage(IStyleEditorPage newPage) {
@@ -455,7 +437,7 @@ public class EditorNode implements IPluginContribution, IEditorNode {
                 // If plugin has been loaded create extension.
                 // Otherwise, show busy cursor then create extension.
                 if (BundleUtility.isActivated(element.getDeclaringExtension()
-                        .getNamespaceIdentifier())) {
+                        .getNamespace())) {
                     return element.createExecutableExtension(classAttribute);
                 }
                 final Object[] ret = new Object[1];
@@ -480,13 +462,5 @@ public class EditorNode implements IPluginContribution, IEditorNode {
                 throw new CoreException(new Status(IStatus.ERROR, SLDPlugin.ID,
                         IStatus.ERROR, WorkbenchMessages.WorkbenchPlugin_extension,e));
             }
-        }
-
-        public String getClassname() {
-            return classname;
-        }
-
-        public String getLabel() {
-            return label;
         }
 }

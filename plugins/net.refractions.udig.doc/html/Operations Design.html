@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : Operations Design</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : Operations Design -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="OperationsDesign-Summary">Summary</a></h1>
+
+<p>The <b>net.refractions.udig.ui.operation</b> extension point allows an operation to be defined for one or more objects.  When an object or set of objects are selected anywhere in uDig operations are enabled or disabled depending on the configuration specified in the operation extension definition.  Enabled operations can then be ran from the Operations menu item or (usually) from the context menu.</p>
+
+<h1><a name="OperationsDesign-ExtensionDefinitionInformation">Extension Definition Information</a></h1>
+
+<div class="code"><div class="codeHeader"><b>Example Extension Definition</b></div><div class="codeContent">
+<pre class="code-xml">&lt;operation
+    class=<span class="code-quote">"net.refractions.udig.tool.edit.SplitLineOp"</span>
+    enablesFor=<span class="code-quote">"+"</span>
+    id=<span class="code-quote">"net.refractions.udig.tool.edit.operation1"</span>
+    menuPath=<span class="code-quote">"edit/add.ext"</span>
+    name=<span class="code-quote">"%operation.splitLine.name"</span>
+    targetClass=<span class="code-quote">"net.refractions.udig.tools.edit.support.Point"</span>&gt;
+    <span class="code-tag">&lt;enablement&gt;</span>
+        <span class="code-tag">&lt;and&gt;</span>
+	    <span class="code-tag">&lt;property name=<span class="code-quote">"CurrentShape.ShapeType"</span> target=<span class="code-quote">"LINE"</span>/&gt;</span>
+            <span class="code-tag">&lt;property name=<span class="code-quote">"OpenMap"</span> target=<span class="code-quote">"java.lang.Object"</span>/&gt;</span>
+        <span class="code-tag">&lt;/and&gt;</span>
+    <span class="code-tag">&lt;/enablement&gt;</span>
+<span class="code-tag">&lt;/operation&gt;</span></pre>
+</div></div>
+
+<p>There are multiple ways that the objects that the operation applies to can be defined.  To start with the object class type can be used to restrict the potential operations.  In the example above the line: <em>targetClass="net.refractions.udig.tools.edit.support.Point"</em> indicates that the operation can only operate on a Point object. </p>
+
+<p>A second method for specifying operation enablement is the enablesFor attribute.  Legal values are <ins>,?,*, n or n</ins> (where n is a number).  The attribute specifies how many objects there may be in the current selection.  In the example above there must be 1 or more selected points.</p>
+
+<p>The third option for specifying the enablement is the enablement child element.  The enablement element (also used by the tool framework) can be used to define the enablement with very fine precision.  The enablement element uses another extension point, <b>net.refractions.udig.ui.objectProperty</b>, to determine if an operation can be enabled for an object.  In the example above both properties: <em>CurrentShape.ShapeType==LINE</em> and <em>OpenMap</em> must be true.  The exact semantics of an property is determined by the extension.  </p>
+
+<p>Since ObjectProperty is an extension it is possible to nearly an method of determining whether an operation is enabled.</p>
+
+<h1><a name="OperationsDesign-ImplementationInformation">Implementation Information</a></h1>
+
+<p>The IOp interface must be implemented by all operations.  All operations that are executed are ran in a background thread so implementors do not have to be concerned with blocking the UI thread.  However, since operations are not ran in the UI thread the UI cannot be updated without calling display.asyncExec() or display.syncExec().  The current display is passed in as a parameter.</p>
+
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=9094">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=9094">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

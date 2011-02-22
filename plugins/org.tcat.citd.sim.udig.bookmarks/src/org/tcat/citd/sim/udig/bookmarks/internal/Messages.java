@@ -44,7 +44,7 @@ public class Messages extends NLS {
 	public static String BookmarkAction_removemapaction;
 	public static String BookmarkAction_removebookmarkaction;
 	public static String BookmarkAction_dialogprompt_enterbookmarkname;
-	
+
     static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

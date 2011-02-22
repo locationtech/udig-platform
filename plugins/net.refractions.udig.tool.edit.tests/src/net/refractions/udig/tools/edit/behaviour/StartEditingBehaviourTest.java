@@ -1,7 +1,6 @@
 package net.refractions.udig.tools.edit.behaviour;
 
 import junit.framework.TestCase;
-import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.CommandManager;
 import net.refractions.udig.project.internal.EditManager;
@@ -19,8 +18,7 @@ import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.WaitCondition;
 
 import org.geotools.data.FeatureSource;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.feature.Feature;
 
 public class StartEditingBehaviourTest extends TestCase {
 
@@ -29,7 +27,7 @@ public class StartEditingBehaviourTest extends TestCase {
      */
     public void testIsValid() throws Exception {
         TestHandler handler=new TestHandler();
-        
+
         StartEditingBehaviour behavior=new StartEditingBehaviour(ShapeType.POLYGON);
 
         MapMouseEvent event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
@@ -37,7 +35,7 @@ public class StartEditingBehaviourTest extends TestCase {
 
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.BUTTON2, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON2);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
 
@@ -49,41 +47,40 @@ public class StartEditingBehaviourTest extends TestCase {
         handler.setCurrentState(EditState.CREATING);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // works only with NONE
         handler.setCurrentState(EditState.CREATING);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
 
-        
+
         // should work, just checking state is still good;
         handler.setCurrentState(EditState.NONE);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertTrue(behavior.isValid(handler, event, EventType.RELEASED));
         // doesn't work with event pressed
-        assertFalse(behavior.isValid(handler, event, EventType.PRESSED));        
+        assertFalse(behavior.isValid(handler, event, EventType.PRESSED));
     }
 
     public void testRun() throws Exception {
         final TestHandler handler=new TestHandler();
-        
+
         ILayer layer = handler.getContext().getMapLayers().get(0);
-        FeatureSource<SimpleFeatureType, SimpleFeature> resource = layer.getResource(FeatureSource.class, null);
-        SimpleFeature feature = resource.getFeatures().features().next();
-        IEditManager editManager = handler.getContext().getEditManager();
-		((EditManager)editManager).setEditFeature(feature, (Layer) layer);
-        
+        FeatureSource resource = layer.getResource(FeatureSource.class, null);
+        Feature feature = resource.getFeatures().features().next();
+        ((EditManager)handler.getContext().getEditManager()).setEditFeature(feature, (Layer) layer);
+
         EditBlackboard editBlackboard = handler.getEditBlackboard();
         PrimitiveShape shell = editBlackboard.getGeoms().get(0).getShell();
         editBlackboard.addPoint(100,100,shell);
         shell.getEditGeom().setShapeType(ShapeType.POINT);
         editBlackboard.newGeom("newone", null); //$NON-NLS-1$
-        
+
         StartEditingBehaviour behav=new StartEditingBehaviour(ShapeType.POLYGON);
 
         handler.getBehaviours().add(behav);
-        
-        assertNotNull( editManager.getEditFeature());
-        
+
+        assertNotNull( handler.getContext().getEditManager().getEditFeature());
+
         handler.setTesting(false);
         MapMouseEvent event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.RELEASED);
@@ -93,16 +90,15 @@ public class StartEditingBehaviourTest extends TestCase {
             // its expected
         }
         assertEquals(1, handler.getEditBlackboard().getGeoms().size());
-        
+
         ((CommandManager)((Map)handler.getContext().getMap()).getCommandStack()).undo(false);
-        
-        assertEquals("Is the feature ID equal", feature.getID(), editManager.getEditFeature().getID());        
-        assertEquals("Is the feature equal", feature, editManager.getEditFeature());
+
+        assertEquals(feature, handler.getContext().getEditManager().getEditFeature());
         assertFalse( handler.isLocked() );
         assertEquals(2, editBlackboard.getGeoms().size());
         assertEquals(ShapeType.POINT, editBlackboard.getGeoms().get(0).getShapeType());
         assertEquals(Point.valueOf(100,100), editBlackboard.getGeoms().get(0).getShell().getPoint(0));
-        
+
     }
-    
+
 }

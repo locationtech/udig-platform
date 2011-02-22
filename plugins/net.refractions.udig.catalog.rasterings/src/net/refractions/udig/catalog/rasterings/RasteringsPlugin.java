@@ -17,7 +17,7 @@ public class RasteringsPlugin extends AbstractUIPlugin {
 	private static RasteringsPlugin plugin;
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
-	
+
 	/**
 	 * The constructor.
 	 */
@@ -28,8 +28,8 @@ public class RasteringsPlugin extends AbstractUIPlugin {
 
 	/**
 	 * This method is called upon plug-in activation
-	 * @param context 
-	 * @throws Exception 
+	 * @param context
+	 * @throws Exception
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
@@ -37,14 +37,14 @@ public class RasteringsPlugin extends AbstractUIPlugin {
 
 	/**
 	 * This method is called when the plug-in is stopped
-	 * @param context 
-	 * @throws Exception 
+	 * @param context
+	 * @throws Exception
 	 */
 	public void stop(BundleContext context) throws Exception {
-		
+
 		plugin = null;
 		this.resourceBundle = null;
-		
+
 		super.stop(context);
 	}
 
@@ -59,7 +59,7 @@ public class RasteringsPlugin extends AbstractUIPlugin {
 	/**
 	 * Returns the string from the plugin's resource bundle,
 	 * or 'key' if not found.
-	 * @param key 
+	 * @param key
 	 * @return Value of the indicated resource string.
 	 */
 	public static String getResourceString(String key) {
@@ -95,7 +95,7 @@ public class RasteringsPlugin extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return AbstractUIPlugin.imageDescriptorFromPlugin("net.refractions.udig.catalog.rasterings", path); //$NON-NLS-1$
 	}
-	
+
     public static void log( String message2, Throwable t ) {
         String message=message2;
         if (message == null)

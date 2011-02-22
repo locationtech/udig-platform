@@ -1,0 +1,107 @@
+<project name="udig" default="build" basedir=".">
+	<property file="build.properties"/>
+
+	<taskdef resource="svntask.properties"/>
+
+	<available property="plugins.exists" file="build/plugins" type="dir"/>
+	<available property="features.exists" file="build/features" type="dir"/>
+	<available property="fragments.exists" file="build/fragments" type="dir"/>
+	<available property="doc.exists" file="build/doc" type="dir"/>
+
+	<target name="update-plugins" if="plugins.exists">
+		<echo message="updating plugins"/>
+		<svn javahl="false">
+			<update dir="build/plugins"/>
+		</svn>
+	</target>
+
+	<target name="checkout-plugins" unless="plugins.exists">
+		<echo message="checkout out plugins"/>
+		<svn javahl="false">
+			<checkout url="http://svn.geotools.org/udig/trunk/plugins" destPath="build/plugins"/>
+		</svn>
+	</target>
+
+	<target name="update-features" if="features.exists">
+		<echo message="updating features"/>
+		<svn javahl="false">
+			<update dir="build/features"/>
+		</svn>
+	</target>
+
+	<target name="checkout-features" unless="features.exists">
+		<echo message="checkout out fragments"/>
+		<svn javahl="false">
+			<checkout url="http://svn.geotools.org/udig/trunk/features" destPath="build/features"/>
+		</svn>
+	</target>
+
+	<target name="update-fragments" if="fragments.exists">
+		<echo message="updating fragments"/>
+		<svn javahl="false">
+			<update dir="build/fragments"/>
+		</svn>
+	</target>
+
+	<target name="checkout-fragments" unless="fragments.exists">
+		<echo message="checkout out fragments"/>
+		<svn javahl="false">
+			<checkout url="http://svn.geotools.org/udig/trunk/fragments" destPath="build/fragments"/>
+		</svn>
+	</target>
+
+	<target name="update-doc" if="doc.exists">
+		<echo message="updating doc"/>
+		<svn javahl="false">
+			<update dir="build/doc"/>
+		</svn>
+	</target>
+
+	<target name="checkout-doc" unless="doc.exists">
+		<echo message="checkout out doc"/>
+		<svn javahl="false">
+			<checkout url="http://svn.geotools.org/udig/trunk/doc" destPath="build/doc"/>
+		</svn>
+	</target>
+
+	<target name="update">
+		<!-- update all the source -->
+		<svn javahl="false">
+			<update dir="${basedir}"/>
+		</svn>
+		<antcall target="update-plugins"/>
+		<antcall target="checkout-plugins"/>
+		<antcall target="update-features"/>
+		<antcall target="checkout-features"/>
+		<antcall target="update-fragments"/>
+		<antcall target="checkout-fragments"/>
+	</target>
+
+	<target name="init">
+		<!-- update docs to get a fresh psf file -->
+		<antcall target="update-doc"/>
+		<antcall target="checkout-doc"/>
+
+		<!-- autogenerate clean, log, and doc scripts -->
+		<ant antfile="gen.xml" target="all"/>
+
+		<!-- run the clean script -->
+		<ant antfile="clean.xml"/>
+	</target>
+
+	<target name="build" depends="init,update">
+		<!-- fire up the pde build -->
+
+		<java classname="org.eclipse.core.launcher.Main" fork="true" failonerror="true">
+			<classpath>
+				<fileset dir="${baseLocation}" includes="startup.jar"/>
+			</classpath>
+			<arg value="-application"/>
+			<arg value="org.eclipse.ant.core.antRunner"/>
+			<arg value="-buildfile build.xml"/>
+			<arg value="-Dbuilder=."/>
+		</java>
+
+	</target>
+
+</project>

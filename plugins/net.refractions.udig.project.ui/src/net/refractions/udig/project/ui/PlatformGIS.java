@@ -28,6 +28,7 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.ui.internal.MapEditor;
 import net.refractions.udig.project.ui.internal.MapFactory;
 import net.refractions.udig.project.ui.internal.MapPart;
+import net.refractions.udig.project.ui.internal.ProjectExplorer;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -47,7 +48,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * A facade into udig to simplify operations such as getting the active map
  * and openning a map editor.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  * @deprecated - use to {@link ApplicationGIS}
@@ -55,20 +56,20 @@ import org.eclipse.ui.PlatformUI;
 public class PlatformGIS {
     /**
      * May return null of no project is active.
-     * 
+     *
      * @return The current active project, or null if no such project exists.
      * @deprecated - use to {@link ApplicationGIS#getActiveProject()}
      */
     public static IProject getActiveProject() {
         Project project = ProjectPlugin.getPlugin().getProjectRegistry()
             .getCurrentProject();
-        
+
         if (project != null) return project;
-        
+
         return ProjectPlugin.getPlugin().getProjectRegistry()
             .getCurrentProject();
     }
-    
+
     /**
      * May return null if the active editor is not a Map Editor.
      * @return the map contained by the current MapEditor or null if the active
@@ -76,7 +77,7 @@ public class PlatformGIS {
       * @deprecated - use to {@link ApplicationGIS#getActiveMap()()}
     */
     public static IMap getActiveMap(){
-        
+
             //need to be in an event thread
             final ArrayList<IMap> l = new ArrayList<IMap>();
             net.refractions.udig.ui.PlatformGIS.syncInDisplayThread(
@@ -95,13 +96,13 @@ public class PlatformGIS {
                 }
               }
             );
-            
+
             if (!l.isEmpty())
                 return l.get(0);
-        
+
         return null;
     }
-    
+
     /**
      * May return null if no Map Editors exist.
      * @return a list of maps contained or null if no Map Editors exist.
@@ -109,7 +110,7 @@ public class PlatformGIS {
      */
     public static List<IMap> getMaps(){
         try{
-            //For some reason, getting the active workbench doesn't seem to work??!! So looping 
+            //For some reason, getting the active workbench doesn't seem to work??!! So looping
             // through all the workbenches and all their pages was the slow way to go...
             //IEditorReference[] editors = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences();
             IWorkbenchWindow[] wWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
@@ -178,10 +179,10 @@ public class PlatformGIS {
     /**
      * Gets a reference to a view.  If the view has not been opened previously then the view will be
      * opened.
-     * 
+     *
      * @param show whether to show the view or not.
      * @param id the id of the view to show.
-     * @return returns the view or null if the view does not exist 
+     * @return returns the view or null if the view does not exist
      * @deprecated - use to {@link ApplicationGIS#getView(boolean, String))}
      */
     public static IViewPart getView(boolean show, String id){
@@ -209,9 +210,9 @@ public class PlatformGIS {
         }
         if( infoRef!=null )
             return (IViewPart) infoRef.getPart(show);
-        
+
         return null;
-    
+
     }
 
     /**
@@ -223,7 +224,7 @@ public class PlatformGIS {
     public static void run( ISafeRunnable request){
         runner.addRequest(request);
     }
-    
+
     private static Runner runner=new Runner();
     private static class Runner extends Job{
         /**
@@ -237,7 +238,7 @@ public class PlatformGIS {
 
         List<ISafeRunnable> requests=new LinkedList<ISafeRunnable>();
         IProgressMonitor current;
-        
+
         /**
          * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
          */
@@ -251,9 +252,9 @@ public class PlatformGIS {
             }
             return Status.OK_STATUS;
         }
-        
+
         /**
-         * Add a runnable object to be run.  
+         * Add a runnable object to be run.
          * @param runnable
          */
         public void addRequest(ISafeRunnable runnable){

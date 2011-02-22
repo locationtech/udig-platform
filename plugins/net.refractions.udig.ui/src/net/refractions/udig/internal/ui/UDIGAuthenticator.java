@@ -30,15 +30,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.service.prefs.Preferences;
 
-/**
- * This is an Authenticator used when URL connection negotiation
- * needs to ask for the users credentials.
- * <p>
- * This implementation is written to prompt the user with SWT; and
- * to store the username/password if possible.
- * </p>
- * @since 1.0.0
- */
 public class UDIGAuthenticator extends Authenticator {
     private static final String NAME = "NAME"; //$NON-NLS-1$
     private static final String PASSWORD = "PASSWORD"; //$NON-NLS-1$
@@ -46,7 +37,7 @@ public class UDIGAuthenticator extends Authenticator {
     private String username;
     private String password;
     private boolean storePassword;
-    
+
     /**
      * The {@link Set} of nodeKeys that this authenticator has tried the stored username/password
      * pair for. This is to make sure that the user is asked to reenter username/password instead of
@@ -57,7 +48,7 @@ public class UDIGAuthenticator extends Authenticator {
     protected PasswordAuthentication getPasswordAuthentication() {
         final String[] name=new String[1];
         final String[] pass=new String[1];
-        
+
         // only try the stored username/password once before asking the user
         // for a new username/password.
         if (!isTriedStored()) {
@@ -65,7 +56,7 @@ public class UDIGAuthenticator extends Authenticator {
             pass[0] = loadPassword();
             setTriedStored(true);
         }
-        
+
         if (name[0] == null && pass[0] == null) {
             //TODO check if credentials have been previously entered and remembered
             PlatformGIS.syncInDisplayThread(new Runnable(){
@@ -83,7 +74,7 @@ public class UDIGAuthenticator extends Authenticator {
             store(name[0], pass[0]);
         return new PasswordAuthentication(name[0], pass[0].toCharArray());
     }
-    
+
     private boolean isTriedStored() {
         try {
             return triedStoredForNodeKey.contains(getNodeKey());
@@ -92,7 +83,7 @@ public class UDIGAuthenticator extends Authenticator {
             return false;
         }
     }
-    
+
     private void setTriedStored(boolean mark) {
         try {
             if(mark) {
@@ -104,7 +95,7 @@ public class UDIGAuthenticator extends Authenticator {
             UiPlugin.log("", e); //$NON-NLS-1$
         }
     }
-    
+
     private void store(String name, String pass) {
         try {
             Preferences node = UiPlugin.getUserPreferences().node(getNodeKey());
@@ -121,7 +112,7 @@ public class UDIGAuthenticator extends Authenticator {
             String pass = node.get(PASSWORD, null);
             if( pass == null )
                 return null;
-            
+
             return pass;
         } catch (Exception e) {
             UiPlugin.log("", e); //$NON-NLS-1$
@@ -137,7 +128,7 @@ public class UDIGAuthenticator extends Authenticator {
         try {
             Preferences node = UiPlugin.getUserPreferences().node(getNodeKey());
             return node.get(NAME, null);
-            
+
         } catch (Exception e) {
             UiPlugin.log("", e); //$NON-NLS-1$
             return null;
@@ -145,7 +136,7 @@ public class UDIGAuthenticator extends Authenticator {
     }
 
     protected void promptForPassword() {
-        
+
         Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
         AuthenticationDialog dialog = new AuthenticationDialog(shell);
         dialog.setBlockOnOpen(true);

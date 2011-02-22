@@ -12,7 +12,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * A type of commands that can be undone/rolled-back. API use
- * 
+ *
  * @author jeichar
  * @since 0.2
  * @see MapCommand
@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public interface UndoableCommand extends Command {
     /**
      * Rollback the effects of the command
-     * 
+     *
      * @throws Exception
      */
     public void rollback( IProgressMonitor monitor ) throws Exception;

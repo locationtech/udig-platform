@@ -30,7 +30,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Calls newGeom on the EditBlackboard.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -44,7 +44,7 @@ public class CreateEditGeomCommand extends AbstractCommand implements UndoableMa
 
     /**
      * New Instance
-     * 
+     *
      * @param blackboard the blackboard to creat the new geom on.
      * @param fid the string to use as the feature id of the new Geom
      */
@@ -54,7 +54,7 @@ public class CreateEditGeomCommand extends AbstractCommand implements UndoableMa
 
     /**
      * New Instance
-     * 
+     *
      * @param blackboard the blackboard to creat the new geom on.
      * @param fid the string to use as the feature id of the new Geom
      * @param shapeType the type of shape to create.
@@ -87,13 +87,13 @@ public class CreateEditGeomCommand extends AbstractCommand implements UndoableMa
     public IBlockingProvider<PrimitiveShape> getShapeProvider() {
         return new ShapeProvider();
     }
-    
+
     class ShapeProvider implements IBlockingProvider<PrimitiveShape>{
 
         public PrimitiveShape get(IProgressMonitor monitor, Object... params) {
             return geom.getShell();
         }
-        
+
     }
 
 }

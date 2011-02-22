@@ -39,7 +39,7 @@ import org.eclipse.ui.PlatformUI;
  * Abstract class can be used to implement your own "import from" operations.
  */
 public class ImportFrom implements IOp {
-    
+
     /**
      * Let the extention point perform any additional checks
      * before bothering the users with a prompt.
@@ -47,7 +47,7 @@ public class ImportFrom implements IOp {
      * The extention point lets you specify the exact interface (or class)
      * required. This method returns <code>true</code>, but could be used
      * to perform a more indepth check of say a Layer's Schema to pervent
-     * the export of a SimpleFeatureType with multiple Geometry attributes
+     * the export of a FeatureType with multiple Geometry attributes
      * being exported as a Shapefile.
      * </p>
      * @param target Target to be considered for export
@@ -56,35 +56,35 @@ public class ImportFrom implements IOp {
     public boolean canImport( Object target ){
         return target != null;
     }
-    
+
     public void importFrom( Object target, File file, IProgressMonitor monitor ) throws Exception {
         target = importFrom(file, monitor);
     }
-    
+
     /**
      * Subclass should override to actually do something.
-     * 
-     * @param target 
+     *
+     * @param target
      * @param file
      * @param monitor
-     * @throws Exception 
+     * @throws Exception
      */
     public Object importFrom( File file, IProgressMonitor monitor ) throws Exception {
-        return null; 
+        return null;
     }
 
-    
-    
+
+
     /**
      * Prompt to use for title (example: "Import from")
      *
-     * @param target 
+     * @param target
      * @return Prompt (may be based on target), should be internationalized
      */
     public String prompt( Object target ){
-        return Messages.ImportFrom_title; 
+        return Messages.ImportFrom_title;
     }
-    
+
     /**
      * Default name for provided target.
      * <p>
@@ -96,12 +96,12 @@ public class ImportFrom implements IOp {
      * @return Default filename based on target, default is "new"
      */
     public String defaultName( Object target ){
-        return Messages.ImportExport_new; 
+        return Messages.ImportExport_new;
     }
-    
+
     /**
      * Override as required (example "*.sld").
-     * 
+     *
      * @return filter, default "*.*"
      */
     public String[] getFilterExtentions(){
@@ -111,16 +111,16 @@ public class ImportFrom implements IOp {
        }
        return filters.toArray( new String[ filters.size() ]);
     }
-    
+
     /**
      * Called by getFilterExtentions (example "sld").
-     * 
+     *
      * @return filter, default "*"
      */
     public String[] getExtentions(){
         return new String[]{"*"}; //$NON-NLS-1$
     }
-    
+
     /**
      * Override as required (example "Style Layer Descriptor document").
      * <p>
@@ -129,9 +129,9 @@ public class ImportFrom implements IOp {
      * @return Filter names, default "All Files"
      */
     public String[] getFilterNames(){
-        return new String[]{Messages.ImportExport_all_files}; 
+        return new String[]{Messages.ImportExport_all_files};
     }
-    
+
     /**
      * Responsible for asking the user for a filename and calleding exporTo.
      * <p>
@@ -144,10 +144,10 @@ public class ImportFrom implements IOp {
     protected class PromptAndImport implements Runnable {
         Display display;
         Object target;
-        
+
         // results of prompt
         File file;
-        
+
         /**
          * @param display
          * @param target
@@ -157,7 +157,7 @@ public class ImportFrom implements IOp {
             this.display = display;
             this.target = target;
         }
-        
+
         /** Run with Display.asyncExec */
         public void run() {
             file = promptFile( display, target );
@@ -167,7 +167,7 @@ public class ImportFrom implements IOp {
             return file;
         }
     }
-    
+
     /**
      * Asks the users for a filename to import ...
      * <p>
@@ -183,12 +183,12 @@ public class ImportFrom implements IOp {
         //String name = defaultName( target );
         String prompt = prompt( target );
         FileDialog fileDialog=new FileDialog( display.getActiveShell(),SWT.OPEN );
-        
+
         fileDialog.setFilterExtensions( getFilterExtentions() );
-        fileDialog.setFilterNames( getFilterNames() );            
+        fileDialog.setFilterNames( getFilterNames() );
         //fileDialog.setFileName( name+"."+getExtentions()[0] );
         fileDialog.setText( prompt );
-                    
+
         String path=fileDialog.open();
         if( path==null){
             return null; // user canceled
@@ -204,16 +204,16 @@ public class ImportFrom implements IOp {
 
     /**
      * This method is called in a non ui thread...
-     * 
+     *
      */
     public void op( Display display, Object target, IProgressMonitor monitor ) throws Exception {
-        if( !canImport( target )){            
+        if( !canImport( target )){
             return; // should we log this? Or disable the op...
         }
-        PromptAndImport prompt = new PromptAndImport( display, target, monitor ); 
+        PromptAndImport prompt = new PromptAndImport( display, target, monitor );
         display.syncExec( prompt );
         File file = prompt.getFile();
-        
+
         status(MessageFormat.format(Messages.ImportFrom_reading, file));
         importFrom( target, file, monitor );
         status(MessageFormat.format(Messages.ImportFrom_finished, file));
@@ -226,23 +226,23 @@ public class ImportFrom implements IOp {
     public void status(final String msg ) {
         final IStatusLineManager statusBar = getStatusBar();
         final Display display = Display.getCurrent();
-        
+
         if( statusBar == null || display == null ) return;
-        
+
         display.syncExec(new Runnable(){
             public void run(){
                 statusBar.setMessage( msg);
             }
         });
     }
-    
+
     private IStatusLineManager getStatusBar(){
         IEditorSite site=getEditorSite();
         if( site==null )
             return null;
         return site.getActionBars().getStatusLineManager();
     }
-    
+
     private IEditorSite getEditorSite() {
         IWorkbenchWindow window = getWindow();
         if( window == null )

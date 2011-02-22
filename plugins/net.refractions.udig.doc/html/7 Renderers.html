@@ -1,0 +1,189 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 7 Renderers</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 7 Renderers -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="7Renderers-Renderers">Renderers</a></h1>
+
+<p>Renderers bring to gether information and put it on the screen. The interesting thing about the uDig renderering system is it is <b>adaptive</b>.  The correct geospatial inforamtion is brought together based on the available metadata information (such as style or performance metrics).</p>
+
+
+<h3><a name="7Renderers-AvailableRenderingTechnology">Available Rendering Technology</a></h3>
+
+<p>uDig currently uses <b>StreamingRenderer</b> as a general purpose feature renderer.  </p>
+
+<p>There is an optimized <b>ShapefileRenderer</b> which is used to render shapefiles only.  The shapefile renderer can only render data from shapefiles but it can do so at speeds from 20-500% faster than StreamingRenderer.  Both feature renderers are fully SLD compliant.</p>
+
+<p>It also uses has separate renderers for communicating with WMSs, and rendering Coverages.</p>
+
+<h3><a name="7Renderers-RendererInterface">Renderer Interface</a></h3>
+
+<p>Renderers are associated with layers, and are specific to a GeoResources.</p>
+
+<p>A renderer is chosen if: </p>
+<ol>
+	<li>It can render the layer using an available GeoResource.</li>
+	<li>It can style the layer.  The renderer capable of the most accurate styling is chosen if both 1 and 2 are satisfied.</li>
+	<li>It is optimized for the particular GeoResource type.</li>
+</ol>
+
+
+<p>A Renderer class implements one of:</p>
+<ul>
+	<li>Renderer interface: is responsible for renderering a <b>single</b> layer.</li>
+	<li>MultiLayerRenderer interface: is responsible for renderering multiple layers</li>
+</ul>
+
+
+<h3><a name="7Renderers-MakingitEasytoImplement">Making it Easy to Implement</a></h3>
+
+<p>Through the Map datastructure you have access to rather a lot of information, to make matters easier we have gathered together the "useful" information for you ... into a <b>RenderContext</b>. The Pattern police call this a Facade, we call it easier.</p>
+
+<p>Each renderer is provided with a context:</p>
+<ul>
+	<li>Renderers get a IRenderContext</li>
+	<li>MultiLayerRenderers get a ICompositeRenderContextfor<br/>
+  (A ICompositeRenderContext contains a set of IRenderContexts, not necessarily ordered).</li>
+</ul>
+
+
+<p>The context objects provide access to the Map data model, provide useful methods, have methods to access the layer and GeoResource that the renderer must use and render and contains the image that the renderer must render to.  </p>
+
+<h3><a name="7Renderers-TheBigPicture">The Big Picture</a></h3>
+
+<p><a href='/confluence/download/attachments/5049/RenderingClassDiagram.jpg' target='RenderingClassDiagram.jpg' onClick='window.open("/confluence/download/attachments/5049/RenderingClassDiagram.jpg", "RenderingClassDiagram.jpg", "height=457,width=841,menubar=no,status=no,toolbar=no"); return false;'><img border='0' src='/confluence/download/thumbnails/5049/RenderingClassDiagram.jpg' width='400' height='213' align="absmiddle" border="0" ></a></p>
+
+<table class='confluenceTable'>
+<tr>
+<th class='confluenceTh'>Object</th>
+<th class='confluenceTh'>Task</th>
+</tr>
+<tr>
+<td class='confluenceTd'>RenderManager</td>
+<td class='confluenceTd'>Responsible for creating renderers and triggering refreshes.</td>
+</tr>
+<tr>
+<td class='confluenceTd'>RendererCreator</td>
+<td class='confluenceTd'>The default implementation uses a renderer creator to create renderers.  The default implementation chooses a renderer based on the criteria mentioned earler.</td>
+</tr>
+<tr>
+<td class='confluenceTd'>RenderMetricsFactory</td>
+<td class='confluenceTd'>Can create the RenderMetrics for a given renderer.  It is the class that is created from Extensions.  It has a short cut method that can detect whether a resource will ever be able to render the resource.</td>
+</tr>
+<tr>
+<td class='confluenceTd'>RenderMetrics</td>
+<td class='confluenceTd'>Provides information on whether the renderer can correctly style a layer, if it the renderer has been optimized for rendering the resource and whether more resources can be added to the context object (in the case where the renderer is a MultiLayerRenderer).  It also creates the renderer.  The RenderMetrics is provided with a RenderContext to make these calculations.  The Metrics <b>MUST</b> base its information on the assumption that the renderer will use the GeoResource provided by the RenderContext.</td>
+</tr>
+<tr>
+<td class='confluenceTd'>RendererExecutor</td>
+<td class='confluenceTd'>Each renderer has an executor that runs the renderer in a separate thread.  There are currently 3 implementations.  One for each type of renderer.  (Composite/MultiLayer/Renderer).  The CompositeRendererExecutor provides the incremental update functionality.</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Renderer</td>
+<td class='confluenceTd'>Renders a resource, specifically, the resource referenced by the RenderContext.  The renderer is responsible for listening to their resource and triggering updates when the resource changes.</td>
+</tr>
+<tr>
+<td class='confluenceTd'><ul>
+	<li>MultiLayerRenderer</li>
+</ul>
+</td>
+<td class='confluenceTd'>Takes a CompositeRenderContext and renders all the resources in the contexts into the image obtained from the composite RenderContext.</td>
+</tr>
+<tr>
+<td class='confluenceTd'><ul>
+	<li>CompositeRenderer</li>
+</ul>
+</td>
+<td class='confluenceTd'>Creates a seperate renderer for each context in the CompositeRenderContext.  Each Renderer is assigned to its own RenderExecutor.  (The Standard implementation uses the same RendererCreator as the RenderManager).</td>
+</tr>
+<tr>
+<td class='confluenceTd'>RenderContext</td>
+<td class='confluenceTd'>A RenderContext is a facade into the system in addition to having references to the Layer that the Renderer must render as and the GeoResource that the will be used by the renderer.  Finally the RenderContext contains the image that the Renderer must render to and has a number of generally useful methods.</td>
+</tr>
+<tr>
+<td class='confluenceTd'><ul>
+	<li>CompositeRenderContext</li>
+</ul>
+</td>
+<td class='confluenceTd'> A CompositeRenderContext contains a set of RenderContexts.  The image that is rendered to is the image contained by the CompositeRenderContext, the contained RenderContexts will not be rendered to.</td>
+</tr>
+</table>
+
+<h3><a name="7Renderers-BeingAdaptive">Being Adaptive</a></h3>
+
+<p>As mentioned at the start of the page, uDig makes use of metadata and metrics to figure out which Renderer is best suited to the task at hand.</p>
+
+<p>Lets see how this works with a quick example.</p>
+
+<h4><a name="7Renderers-ExampleOne%3ANamedStyle">Example One: Named Style</a></h4>
+
+<p><img src="7 Renderers_attachments/wms1.png" align="absmiddle" border="0" /><br/>
+<em>A layer makes use of a WMS GeoResource, a NamedStyle from the Blackboard, this results in a WMSRenderer being chosen to draw onto the screen.</em></p>
+
+<div class="panel"><div class="panelContent">
+<p>Note: just because a WMS is being used to draw does not prevent other tools from using the layer in a different manner.<br/>
+<img src="7 Renderers_attachments/wms2.png" align="absmiddle" border="0" /><br/>
+<em>An editor makes use of the same layer, this time a WFS is used to access the real Feature data</em></p>
+</div></div>
+
+<h4><a name="7Renderers-ExampleTwo%3ANamedStyleandSLD">Example Two: Named Style and SLD</a></h4>
+
+<p>Note that several renderers may draw from the same layer at once.<br/>
+<img src="7 Renderers_attachments/wms3.png" align="absmiddle" border="0" /><br/>
+<em>This time a custom SLD style is being used to draw the "selected" features</em></p>
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="7 Renderers_attachments/RenderingClassDiagram.jpg">RenderingClassDiagram.jpg</a> (image/jpeg)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="7 Renderers_attachments/wms1.png">wms1.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="7 Renderers_attachments/wms2.png">wms2.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="7 Renderers_attachments/wms2.png">wms2.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="7 Renderers_attachments/wms3.png">wms3.png</a> (image/png)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="7 Renderers_attachments/wms3.png">wms3.png</a> (image/png)
+                                <br/>
+                                                    </div>
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=5049">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=5049">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

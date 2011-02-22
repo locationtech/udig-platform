@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: LayerFactoryImpl.java 29095 2008-02-06 02:27:41Z jeichar $
  */
 package net.refractions.udig.project.internal.impl;
 
@@ -13,7 +13,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
@@ -50,23 +49,22 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link net.refractions.udig.project.internal.impl.LayerFactoryImpl#getMap <em>Map</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.impl.LayerFactoryImpl#getMap <em>Map</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected LayerFactoryImpl() {
@@ -75,7 +73,6 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected EClass eStaticClass() {
@@ -84,7 +81,6 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Map getMap() {
@@ -95,7 +91,6 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setMap( Map newMap ) {
@@ -121,7 +116,6 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -144,7 +138,6 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -163,7 +156,6 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public NotificationChain eBasicRemoveFromContainer( NotificationChain msgs ) {
@@ -182,7 +174,6 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
@@ -195,7 +186,6 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void eSet( EStructuralFeature eFeature, Object newValue ) {
@@ -209,7 +199,6 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void eUnset( EStructuralFeature eFeature ) {
@@ -223,7 +212,6 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public boolean eIsSet( EStructuralFeature eFeature ) {
@@ -236,7 +224,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * Creates a list of {@linkplain Layer}objects from the provided selection.
-     * 
+     *
      * @param selection A selection of CatalogEntries obtained from a {@linkplain CatalogTreeViewer}
      *        object.
      * @return a list of {@linkplain Layer}objects from the provided selection.
@@ -276,53 +264,52 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
         return layers;
     }
 
-    // /**
-    // * Creates a LayerRef for WMSs.
-    // *
-    // * @param service the registry entry parent of the CatalogEntry that the Layer ref references.
-    // * @param geoResource the CatalogEntry that the Ref refers to.
-    // * @return a LayerRef for DataStores.
-    // * @throws IOException
-    // */
-    // protected Layer createWMSLayer( IService service, IGeoResource geoResource ) throws
-    // IOException {
-    //
-    // org.geotools.data.ows.Layer wmslayer = null;
-    //
-    // IGeoResourceInfo info = geoResource.resolve(IGeoResourceInfo.class, null);
-    // String layerName = info.getName();
-    // if (layerName == null || layerName.length() == 0) {
-    //            throw new IllegalArgumentException("Cannot determine name of resource."); //$NON-NLS-1$
-    // }
-    //
-    // WebMapServer wms = service.resolve(WebMapServer.class, null);
-    // if (wms == null) {
-    //            throw new IOException("Cannot communicate with Web Map Server."); //$NON-NLS-1$
-    // }
-    // org.geotools.data.ows.Layer[] layers = WMSUtils.getNamedLayers(wms.getCapabilities());
-    // for( org.geotools.data.ows.Layer layer : layers ) {
-    // String targetName = layer.getName();
-    // if (targetName.equals(layerName)) {
-    // wmslayer = layer;
-    // break;
-    // }
-    // }
-    //
-    // if (wmslayer == null) {
-    // throw new IOException(
-    //                    "This resource (" + layerName + ") is not a part of the service. This is likely caused by inconsistent data returned by a search."); //$NON-NLS-1$//$NON-NLS-2$
-    // }
-    //        
-    // Layer layer = ProjectFactory.eINSTANCE.createLayer();
-    //
-    // layer.setID(geoResource.getIdentifier());
-    //
-    // return layer;
-    // }
+//    /**
+//     * Creates a LayerRef for WMSs.
+//     *
+//     * @param service the registry entry parent of the CatalogEntry that the Layer ref references.
+//     * @param geoResource the CatalogEntry that the Ref refers to.
+//     * @return a LayerRef for DataStores.
+//     * @throws IOException
+//     */
+//    protected Layer createWMSLayer( IService service, IGeoResource geoResource ) throws IOException {
+//
+//        org.geotools.data.ows.Layer wmslayer = null;
+//
+//        IGeoResourceInfo info = geoResource.resolve(IGeoResourceInfo.class, null);
+//        String layerName = info.getName();
+//        if (layerName == null || layerName.length() == 0) {
+//            throw new IllegalArgumentException("Cannot determine name of resource."); //$NON-NLS-1$
+//        }
+//
+//        WebMapServer wms = service.resolve(WebMapServer.class, null);
+//        if (wms == null) {
+//            throw new IOException("Cannot communicate with Web Map Server."); //$NON-NLS-1$
+//        }
+//        org.geotools.data.ows.Layer[] layers = WMSUtils.getNamedLayers(wms.getCapabilities());
+//        for( org.geotools.data.ows.Layer layer : layers ) {
+//            String targetName = layer.getName();
+//            if (targetName.equals(layerName)) {
+//                wmslayer = layer;
+//                break;
+//            }
+//        }
+//
+//        if (wmslayer == null) {
+//            throw new IOException(
+//                    "This resource (" + layerName + ") is not a part of the service. This is likely caused by inconsistent data returned by a search."); //$NON-NLS-1$//$NON-NLS-2$
+//        }
+//
+//        Layer layer = ProjectFactory.eINSTANCE.createLayer();
+//
+//        layer.setID(geoResource.getIdentifier());
+//
+//        return layer;
+//    }
 
     /**
      * Returns a LayerFactory object
-     * 
+     *
      * @return a LayerFactory object.
      */
     public static LayerFactoryImpl create() {
@@ -332,28 +319,28 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
     /**
      * Creates a layer from a service and a resource. The layer is represented the data in resource.
      * May return null if it cannot resolve the service.
-     * 
+     *
      * @param service
      * @param resource
      * @return
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
-    public Layer createLayer( IGeoResource resource ) throws IOException {
+	public Layer createLayer( IGeoResource resource ) throws IOException {
         IService service = resource.service(ProgressManager.instance().get());
 
         if (service == null) {
             return null;
         }
-        // check that the service is part of catalog... If not add
-        if (CatalogPlugin.getDefault().getLocalCatalog().getById(IService.class, service.getID(),
-                new NullProgressMonitor()) == null) {
+        //check that the service is part of catalog... If not add
+        if (CatalogPlugin.getDefault().getLocalCatalog().getById(IService.class,
+                service.getIdentifier(),
+                new NullProgressMonitor())==null) {
             CatalogPlugin.getDefault().getLocalCatalog().add(resource.service(null));
         }
 
-        LayerImpl layer = (LayerImpl) ProjectFactory.eINSTANCE.createLayer();
-
-        layer.setResourceID(resource.getID());
+        Layer layer = ProjectFactory.eINSTANCE.createLayer();
+        layer.setID(resource.getIdentifier());
 
         if (layer == null) {
             throw new IOException(
@@ -365,30 +352,23 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
         // TODO: the style objects need access to preference system
         final Layer theLayer = layer;
 
-        ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
-        List<IResolve> resolves = localCatalog.find(layer.getResourceID(), ProgressManager
-                .instance().get());
-        EList resources = new EDataTypeUniqueEList(IGeoResource.class, this,
+        List<IResolve> resolves = CatalogPlugin.getDefault().getLocalCatalog().find(layer.getID(), ProgressManager.instance().get());
+        EList  resources = new EDataTypeUniqueEList(IGeoResource.class, this,
                 ProjectPackage.LAYER__GEO_RESOURCES);
-        LayerResource preferredResource = null;
-        for( IResolve resolve : resolves ) {
-            if (resolve instanceof IGeoResource) {
-                LayerResource layerResource = new LayerResource((LayerImpl) layer,
-                        (IGeoResource) resolve);
-                if (resolve.getID().equals(layer.getResourceID())) {
-                    resources.add(0, layerResource);
-                } else {
-                    resources.add(layerResource);
-                }
-                if (resolve == resource)
-                    preferredResource = layerResource;
-            }
-        }
+        LayerResource preferredResource=null;
+        for (IResolve resolve : resolves) {
+			if( resolve instanceof IGeoResource ){
+				LayerResource layerResource = new LayerResource((LayerImpl) layer, (IGeoResource)resolve);
+				resources.add( layerResource);
+				if( resolve==resource )
+					preferredResource=layerResource;
+			}
+		}
 
-        ((LayerImpl) layer).geoResources = resources;
+        ((LayerImpl)layer).geoResources=resources;
         layer.setGeoResource(preferredResource);
 
-        // determine the default colour
+        //determine the default colour
         ColourScheme colourScheme = getColorScheme();
         Color colour = colourScheme.addItem(theLayer.getID().toString());
         theLayer.setDefaultColor(colour);
@@ -399,28 +379,24 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
     }
 
     private ColourScheme getColorScheme() {
-        if (getMap() == null) {
+        if( getMap()==null ){
             return ColourScheme.getDefault(PlatformGIS.getColorBrewer().getPalettes()[0]);
         }
         return getMap().getColourScheme();
     }
 
     private void runLayerCreatedInterceptor( Layer layer ) {
-        List<IConfigurationElement> list = ExtensionPointList
-                .getExtensionPointList(LayerInterceptor.EXTENSION_ID);
+        List<IConfigurationElement> list = ExtensionPointList.getExtensionPointList(LayerInterceptor.EXTENSION_ID);
         for( IConfigurationElement element : list ) {
-            if (element.getName().equals(LayerInterceptor.CREATED_ID)) {
+            if( element.getName().equals(LayerInterceptor.CREATED_ID) ){
                 String attribute = element.getAttribute("name"); //$NON-NLS-1$
                 try {
-                    LayerInterceptor interceptor = (LayerInterceptor) element
-                            .createExecutableExtension("class"); //$NON-NLS-1$
+                    LayerInterceptor interceptor=(LayerInterceptor) element.createExecutableExtension("class"); //$NON-NLS-1$
                     interceptor.run(layer);
                 } catch (CoreException e) {
-                    ProjectPlugin
-                            .log(
-                                    "Error creating class: " + element.getAttribute("class") + " part of layer interceptor: " + attribute, e); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-                } catch (Throwable t) {
-                    ProjectPlugin.log("error running interceptor: " + attribute, t); //$NON-NLS-1$
+                    ProjectPlugin.log( "Error creating class: "+element.getAttribute("class")+" part of layer interceptor: "+attribute, e);  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+                } catch (Throwable t){
+                    ProjectPlugin.log("error running interceptor: "+attribute, t);  //$NON-NLS-1$
                 }
             }
         }

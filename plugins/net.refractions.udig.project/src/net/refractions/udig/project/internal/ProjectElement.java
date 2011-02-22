@@ -29,7 +29,7 @@ public interface ProjectElement extends EObject, IProjectElement, IAdaptable {
 
     /**
      * Returns the owner project of Map.
-     * 
+     *
      * @return the owner project of Map.
      * @model many="false" opposite="elementsInternal"
      */
@@ -46,7 +46,7 @@ public interface ProjectElement extends EObject, IProjectElement, IAdaptable {
 
     /**
      * Returns the owner project of Map.
-     * 
+     *
      * @return the owner project of Map.
      * @uml.property name="name"
      * @model many="false"
@@ -55,7 +55,7 @@ public interface ProjectElement extends EObject, IProjectElement, IAdaptable {
 
     /**
      * The new name for the project element.
-     * 
+     *
      * @param name
      * @uml.property name="name"
      */

@@ -15,33 +15,29 @@
 package net.refractions.udig.tools.edit;
 
 /**
- * A "callback" object used to activate and deactivate functionality
- * associated with an EditTool - use is similar to a Runnable.
- * <p>
- * An EditToolHandler is provided for context information; an Activator
- * is called
+ * A safe runnable.
  * @author jones
  * @since 1.1.0
  */
 public interface Activator {
 
     /**
-     * The action to be performed by when activating.
+     * The action to be performed by this activator when activating.
      *
      * @param handler
      */
     public void activate( EditToolHandler handler );
     /**
-     * The action to be performed by when deactivating.
+     * The action to be performed by this activator when deactivating.
      *
      * @param handler
      */
     public void deactivate( EditToolHandler handler );
-    
+
     /**
-     * This method is called if an exception occurs during the execution of the activate method.  
+     * This method is called if an exception occurs during the execution of the activate method.
      * <p>
-     * This method should 
+     * This method should
      * <ol>
      * <li>Rollback the changes made during the run method</li>
      * <li>Log the error in the plugin's log</li>
@@ -51,11 +47,11 @@ public interface Activator {
      * @param activating Indicates whether activator is being activated.
      */
     public void handleActivateError( EditToolHandler handler, Throwable error );
-    
+
     /**
-     * This method is called if an exception occurs during the execution of the deactivate method.  
+     * This method is called if an exception occurs during the execution of the deactivate method.
      * <p>
-     * This method should 
+     * This method should
      * <ol>
      * <li>Rollback the changes made during the run method</li>
      * <li>Log the error in the plugin's log</li>

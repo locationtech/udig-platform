@@ -22,11 +22,11 @@ import org.eclipse.ui.IMemento;
 /**
  * A interface for classes that can configuring an IssuesList.  Each Configurator is defined in the same extension as the IssuesList it can
  * configure.  Some IIssuesLists don't require a configurator.  An example of an issues list that requires a configuration is one that is backed onto
- * a database.  The username/password and connection information need to be set; it is the job of the IssuesListConfigurator to do this.  
+ * a database.  The username/password and connection information need to be set; it is the job of the IssuesListConfigurator to do this.
  * <p>
  * The configuration appears in the preference pages of the application.
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -45,8 +45,8 @@ public interface IssuesListConfigurator {
      */
     public void getConfiguration(IMemento memento);
     /**
-     * Returns a control that will configure the issues list.  Should use the configuration memento to fill out the controls.  
-     * <p>Warning: the memento may be null</p>  
+     * Returns a control that will configure the issues list.  Should use the configuration memento to fill out the controls.
+     * <p>Warning: the memento may be null</p>
      *
      * @param parent the composite that will be used to create the control.  The Layout of the parent is a FillLayout.
      * @return a control that will configure the issues list.
@@ -60,8 +60,8 @@ public interface IssuesListConfigurator {
      */
     public boolean isConfigured();
     /**
-     * This method is called after {@link #isConfigured()} is called.  If {@link #isConfigured()} returns false this method is called to obtain a 
-     * human readable error message. 
+     * This method is called after {@link #isConfigured()} is called.  If {@link #isConfigured()} returns false this method is called to obtain a
+     * human readable error message.
      *
      * @return a human readable error message.  Or null if isConfigured was not previously called or if there was no error.
      */

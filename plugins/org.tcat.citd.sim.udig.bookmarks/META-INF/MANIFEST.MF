@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Bookmarks Plug-in
 Bundle-SymbolicName: org.tcat.citd.sim.udig.bookmarks; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
@@ -10,6 +10,5 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.ui;visibility:=reexport,
  net.refractions.udig.project;visibility:=reexport,
  net.refractions.udig.project.ui;visibility:=reexport
-Bundle-ActivationPolicy: lazy
+Eclipse-LazyStart: true
 Export-Package: org.tcat.citd.sim.udig.bookmarks
-Bundle-RequiredExecutionEnvironment: J2SE-1.5

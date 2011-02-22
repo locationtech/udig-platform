@@ -23,19 +23,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import net.refractions.udig.catalog.ServiceExtension;
 import net.refractions.udig.catalog.ServiceExtension2;
 import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.core.Pair;
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 import net.refractions.udig.core.internal.ExtensionPointList;
-
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * A State that will occur if no services were able to be created from a param map or a URL.  This state is designed
  * to explain "why" the failure occurred.
- *  
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -73,23 +73,23 @@ public class ConnectionFailureState extends State {
 
     @Override
     public void init( IProgressMonitor monitor ) throws IOException {
-        
+
         if( params==null && urls==null ){
             reports.put( "msg", Collections.singletonList(new Data("msg", "No Connection Information", "For some reason the previous wizard page did not"))); //$NON-NLS-1$ //$NON-NLS-2$
             return ;
         }
-        
+
         List<IConfigurationElement> list = ExtensionPointList.getExtensionPointList(ServiceExtension.EXTENSION_ID);
         for( IConfigurationElement element : list ) {
             List<Data> data=new ArrayList<Data>();
-            
+
             String id = element.getNamespaceIdentifier().toString()+"."+element.getAttribute("id"); //$NON-NLS-1$ //$NON-NLS-2$
             String name = element.getAttribute("name"); //$NON-NLS-1$
             if( name==null ){
                 name=element.getAttribute("id"); //$NON-NLS-1$
             }
 
-            
+
             try{
                 ServiceExtension extension = (ServiceExtension) element.createExecutableExtension("class"); //$NON-NLS-1$
                 if( extension instanceof ServiceExtension2 ){
@@ -104,16 +104,12 @@ public class ConnectionFailureState extends State {
                 }
                 if( data.isEmpty())
                     data.add(new Data(id, name, "Implementation does not provide any debug information"));
-                
+
             }catch(Throwable e){
                 data.add(new Data(id, name, e.getLocalizedMessage()));
             }
             reports.put(id, data);
         }
-    }
-    @Override
-    public Pair<Boolean, State> dryRun() {
-        return new Pair<Boolean, State>(false, null);
     }
 
     @Override
@@ -144,6 +140,6 @@ public class ConnectionFailureState extends State {
                 throw new NullPointerException();
             this.url=url;
         }
-        
+
     }
 }

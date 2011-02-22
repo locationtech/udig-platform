@@ -14,23 +14,22 @@
  */
 package net.refractions.udig.printing.ui.internal.editor;
 
-import java.awt.Color;
 import java.awt.Font;
 
 import net.refractions.udig.printing.model.impl.LabelBoxPrinter;
 import net.refractions.udig.printing.ui.IBoxEditAction;
 import net.refractions.udig.printing.ui.internal.editor.parts.BoxPart;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import net.refractions.udig.ui.graphics.SWTGraphics;
 
 import org.eclipse.gef.commands.Command;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FontDialog;
 
 /**
  * Changes the font of a LabelBoxPrinter
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -42,25 +41,16 @@ public class SetLabelBoxFontAction implements IBoxEditAction {
     public Command getCommand() {
         return new Command(){
             private Font oldFont = getBoxPrinter().getFont();
-            private Font newFont = AWTSWTImageUtils.swtFontToAwt(dialog.getFontList()[0]);
-            private RGB oldFontRgb = new RGB(0, 0, 0);
-            private RGB newFontRgb = dialog.getRGB();
-
+            private Font newFont = SWTGraphics.swtFontToAwt(dialog.getFontList()[0]);
             @Override
             public void execute() {
                 getBoxPrinter().setFont(newFont);
-                if (newFontRgb != null) {
-                    getBoxPrinter().setFontColor(
-                            new Color(newFontRgb.red, newFontRgb.green, newFontRgb.blue));
-                }
                 owner.refresh();
             }
 
             @Override
             public void undo() {
                 getBoxPrinter().setFont(oldFont);
-                getBoxPrinter().setFontColor(
-                        new Color(oldFontRgb.red, oldFontRgb.green, oldFontRgb.blue));
             }
         };
     }
@@ -74,21 +64,11 @@ public class SetLabelBoxFontAction implements IBoxEditAction {
     }
 
     public boolean isDone() {
-        return true;
+        return dialog!=null && dialog.getFontList()!=null && dialog.getFontList().length>0;
     }
 
     public void perform() {
         dialog = new FontDialog(Display.getCurrent().getActiveShell());
-        Font oldFont = getBoxPrinter().getFont();
-        if (oldFont != null) {
-            FontData fData = new FontData(oldFont.getName(), oldFont.getSize(), oldFont.getStyle());
-            dialog.setFontList(new FontData[]{fData});
-            Color fontColor = getBoxPrinter().getFontColor();
-            if (fontColor != null) {
-                RGB rbg = new RGB(fontColor.getRed(), fontColor.getGreen(), fontColor.getBlue());
-                dialog.setRGB(rbg);
-            }
-        }
         dialog.open();
     }
 

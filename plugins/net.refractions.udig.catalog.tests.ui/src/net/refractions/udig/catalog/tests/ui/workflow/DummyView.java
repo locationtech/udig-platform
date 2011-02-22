@@ -49,10 +49,10 @@ import org.eclipse.ui.part.ViewPart;
  */
 
 public class DummyView extends ViewPart {
-	
-	public static final String VIEW_ID 
+
+	public static final String VIEW_ID
 		= "net.refractions.udig.catalog.tests.ui.workflow.DummyView"; //$NON-NLS-1$
-	
+
 	private ListViewer viewer;
 	private Action action1;
 	private Action action2;
@@ -64,10 +64,10 @@ public class DummyView extends ViewPart {
 	 * existing objects in adapters or simply return
 	 * objects as-is. These objects may be sensitive
 	 * to the current input of the view, or ignore
-	 * it and always show the same content 
+	 * it and always show the same content
 	 * (like Task List, for example).
 	 */
-	 
+
 	class ViewContentProvider implements IStructuredContentProvider {
 		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
 		}
@@ -107,9 +107,9 @@ public class DummyView extends ViewPart {
 		viewer.setContentProvider(new ArrayContentProvider());
 		viewer.setLabelProvider(new LabelProvider());
 		viewer.setInput(new Object[]{});
-		
+
 		getSite().setSelectionProvider(viewer);
-		
+
 		makeActions();
 		hookContextMenu();
 		hookDoubleClickAction();
@@ -119,7 +119,7 @@ public class DummyView extends ViewPart {
 	public Viewer getViewer() {
 		return viewer;
 	}
-	
+
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu"); //$NON-NLS-1$
 		menuMgr.setRemoveAllWhenShown(true);
@@ -151,7 +151,7 @@ public class DummyView extends ViewPart {
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
-	
+
 	private void fillLocalToolBar(IToolBarManager manager) {
 		manager.add(action1);
 		manager.add(action2);
@@ -167,7 +167,7 @@ public class DummyView extends ViewPart {
 		action1.setToolTipText("Action 1 tooltip"); //$NON-NLS-1$
 		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-		
+
 		action2 = new Action() {
 			public void run() {
 				showMessage("Action 2 executed"); //$NON-NLS-1$

@@ -14,52 +14,53 @@
  */
 package net.refractions.udig.catalog.ui.export;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.refractions.udig.catalog.CatalogPlugin;
 
-import org.geotools.feature.DecoratingFeature;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.GeometryAttributeType;
 import org.geotools.feature.IllegalAttributeException;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.geotools.feature.type.GeometricAttributeType;
 
+import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
-
 /**
- * Adapts an existing feature of one SimpleFeature type to another of a "compatible" feature type.  
+ * Adapts an existing feature of one Feature type to another of a "compatible" feature type.
  * <p>
- * A compatible feature type are feature types that have the same attributes types but maybe in a different order 
- * and the second (the type being adapted to) may have fewer attribute types. 
+ * A compatible feature type are feature types that have the same attributes types but maybe in a different order
+ * and the second (the type being adapted to) may have fewer attribute types.
  * </p>
- * 
+ *
  * @author Jesse
  */
-class FeatureWrapper extends DecoratingFeature implements SimpleFeature{
-    protected final SimpleFeatureType featureType;
+class FeatureWrapper implements Feature{
+    protected final Feature wrapped;
+    protected final FeatureType featureType;
     protected final Geometry[] geometry;
     protected final String[] geomAttNames;
     protected Geometry defaultGeometry;
 
 	/**
 	 * New instance
-	 * @param wrapped SimpleFeature that needs to be adapted to new FeatureType
-	 * @param featureType the new feature type.  Must be "compatible" with featureType of wrapped.  
+	 * @param wrapped Feature that needs to be adapted to new FeatureType
+	 * @param featureType the new feature type.  Must be "compatible" with featureType of wrapped.
 	 * 			See javadocs for class for more information
 	 * @param geometries the geometries to use instead of the feature's geometries this allows the geometries to be transformed
 	 * @param geomAttNames the attribute names of the geometries so we know how to put them in the attribute array.
-	 * 
+	 *
 	 * @throws IllegalAttributeException Thrown if the default geometry does not exist
 	 */
-    public FeatureWrapper( final SimpleFeature wrapped, final SimpleFeatureType featureType, Geometry[] geometries, String[] geomAttNames ) throws IllegalArgumentException {
-        super( wrapped );
+    public FeatureWrapper( final Feature wrapped, final FeatureType featureType, Geometry[] geometries, String[] geomAttNames ) throws IllegalArgumentException {
+        super();
+        this.wrapped = wrapped;
         this.featureType=featureType;
         this.geometry=geometries;
         this.geomAttNames=geomAttNames;
-        String defaultGeomName = featureType.getGeometryDescriptor().getName().getLocalPart();
+        String defaultGeomName = featureType.getDefaultGeometry().getName();
         this.defaultGeometry=findTransformedGeometry(defaultGeomName);
     }
 
@@ -73,56 +74,66 @@ class FeatureWrapper extends DecoratingFeature implements SimpleFeature{
 	}
 
 	public final Object getAttribute( int index ) {
-        return getAttribute(featureType.getDescriptor(index).getName().getLocalPart());
+        return getAttribute(featureType.getAttributeType(index).getName());
     }
 
-    public final Object getAttribute( String xPath ) {
-    	AttributeDescriptor type=featureType.getDescriptor(xPath);
-    	
-    	if( type instanceof GeometryDescriptor ){
+    public Object getAttribute( String xPath ) {
+    	AttributeType type=featureType.getAttributeType(xPath);
+
+    	if( type instanceof GeometryAttributeType ){
 			return findTransformedGeometry(xPath);
     	}
-        
-        return delegate.getAttribute(xPath);
+
+        return wrapped.getAttribute(xPath);
     }
 
-    static int indexOf( SimpleFeatureType schema, String name ){
-    	for( int i=0; i<schema.getAttributeCount(); i++){
-    		if( schema.getDescriptor(i).getLocalName().equalsIgnoreCase( name )){
-    			return i;
-    		}
+    public Object[] getAttributes( Object[] attributes ) {
+    	if( attributes==null ||  attributes.length==0){
+    		attributes = new Object[featureType.getAttributeCount()];
     	}
-    	return -1;
+    	if( attributes.length<featureType.getAttributeCount() )
+    		throw new IllegalArgumentException("There needs to be at least "+featureType.getAttributeCount()+" elements in the provided array"); //$NON-NLS-1$ //$NON-NLS-2$
+
+    	Object[] atts = new Object[wrapped.getNumberOfAttributes()];
+        atts=wrapped.getAttributes(atts);
+        for (int i = 0; i < atts.length; i++) {
+			Object object = atts[i];
+			AttributeType attributeType = wrapped.getFeatureType().getAttributeType(i);
+			int index = featureType.find(attributeType.getName());
+			if( index==-1 )
+				continue;
+			if( attributeType instanceof GeometricAttributeType ){
+				attributes[index]=findTransformedGeometry(attributeType.getName());
+			}else{
+				attributes[index]=object;
+			}
+		}
+        return attributes;
     }
 
-    public ReferencedEnvelope getBounds() {
-    	ReferencedEnvelope bounds = new ReferencedEnvelope( delegate.getBounds());
-    	if( bounds != null ) return bounds;
-    	CoordinateReferenceSystem crs = featureType.getCoordinateReferenceSystem();    	
-        return new ReferencedEnvelope( defaultGeometry.getEnvelopeInternal(), crs );
+    public Envelope getBounds() {
+        return defaultGeometry.getEnvelopeInternal();
     }
 
     public Geometry getDefaultGeometry() {
         return defaultGeometry;
     }
-    public Geometry getPrimaryGeometry() {
-    	return getDefaultGeometry();
-    }
-	public void setPrimaryGeometry(Geometry geometry)
-			throws IllegalAttributeException {
-		setDefaultGeometry(geometry);
-	}
 
-    public SimpleFeatureType getFeatureType() {
+    public FeatureType getFeatureType() {
         return featureType;
     }
 
     public String getID() {
-        return delegate.getID();
+        return wrapped.getID();
     }
 
-    public int getAttributeCount() {
+    public int getNumberOfAttributes() {
         return featureType.getAttributeCount();
+    }
+
+    @SuppressWarnings("deprecation")
+    public FeatureCollection getParent() {
+        return wrapped.getParent();
     }
 
     public void setAttribute( int position, Object val ) throws IllegalAttributeException, ArrayIndexOutOfBoundsException {
@@ -137,27 +148,7 @@ class FeatureWrapper extends DecoratingFeature implements SimpleFeature{
         throw new UnsupportedOperationException();
     }
 
-    public void setParent( FeatureCollection<SimpleFeatureType, SimpleFeature> collection ) {
+    public void setParent( FeatureCollection collection ) {
         throw new UnsupportedOperationException();
-    }
-    
-    @Override
-    public List<Object> getAttributes() {
-        List<Object> attributes = new ArrayList<Object>( delegate.getAttributes());
-        for (int i = 0; i < attributes.size(); i++) {
-            Object object = attributes.get(i);
-            AttributeDescriptor attributeType = delegate.getFeatureType().getDescriptor(i);
-            
-            
-            int index = indexOf( featureType, attributeType.getName().getLocalPart() );
-            if( index==-1 )
-                continue;
-            if( attributeType instanceof GeometryDescriptor ){
-                attributes.set(index,findTransformedGeometry(attributeType.getName().getLocalPart()));
-            }else{
-                attributes.set(index,object);
-            }
-        }
-        return attributes;
     }
 }

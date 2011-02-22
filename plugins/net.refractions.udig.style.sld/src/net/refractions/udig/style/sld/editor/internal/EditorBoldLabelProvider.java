@@ -13,7 +13,7 @@ import org.eclipse.swt.graphics.Font;
 public class EditorBoldLabelProvider extends EditorPageLabelProvider
         implements IFontProvider {
 
-    
+
     private FilteredComboTree comboTree;
 
     public EditorBoldLabelProvider(FilteredComboTree comboTree) {

@@ -20,7 +20,7 @@ import net.refractions.udig.core.internal.Icons;
 
 /**
  * Image constants for use with Images class.
- * 
+ *
  * @author jgarnett
  */
 public interface ImageConstants {

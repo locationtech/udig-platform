@@ -19,10 +19,10 @@ final class PageHistoryEntry {
     private String id;
     private String label;
     private Object argument;
-    
+
     /**
      * Creates a new entry.
-     * 
+     *
      * @param id the page id
      * @param label the label to display, usually the page label
      * @param argument an argument to pass to the page, may be
@@ -35,34 +35,34 @@ final class PageHistoryEntry {
         this.label = label;
         this.argument = argument;
     }
-    
+
     /**
      * Returns the page id.
-     * 
+     *
      * @return the page id
      */
     public String getId() {
         return id;
     }
-    
+
     /**
      * Returns the page argument.
-     * 
+     *
      * @return the page argument
      */
     public Object getArgument() {
         return argument;
     }
-    
+
     /**
      * Returns the page label.
-     * 
+     *
      * @return the page label
      */
     public String getLabel() {
         return label;
     }
-    
+
     /*
      * @see java.lang.Object#toString()
      */
@@ -72,7 +72,7 @@ final class PageHistoryEntry {
             return id;
         return id + "(" + argument + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
-    
+
     /*
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -86,7 +86,7 @@ final class PageHistoryEntry {
         }
         return super.equals(obj);
     }
-    
+
     /*
      * @see java.lang.Object#hashCode()
      */

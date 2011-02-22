@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Sets the current state in the handler.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -33,7 +33,9 @@ public class SetEditStateCommand extends AbstractCommand implements UndoableMapC
     private EditToolHandler handler;
     private EditState oldState;
     private EditState state;
-    
+
+
+
     public SetEditStateCommand( EditToolHandler handler2, EditState newState ) {
         this.handler=handler2;
         this.state=newState;
@@ -50,10 +52,6 @@ public class SetEditStateCommand extends AbstractCommand implements UndoableMapC
 
     public void rollback( IProgressMonitor monitor ) throws Exception {
         handler.setCurrentState(oldState);
-    }
-    @Override
-    public String toString() {
-        return state.name();
     }
 
 }

@@ -10,7 +10,7 @@ public class TestPlugin extends Plugin {
 
 	//The shared instance.
 	private static TestPlugin plugin;
-	
+
 	/**
 	 * The constructor.
 	 */

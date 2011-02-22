@@ -4,7 +4,7 @@
 
      <extension
          point="net.refractions.udig.catalog.ICatalog">
-      <catalog class="net.refractions.udig.catalog.google.GoogleCatalog"/>      
+      <catalog class="net.refractions.udig.catalog.google.GoogleCatalog"/>
    </extension>
 
 </plugin>

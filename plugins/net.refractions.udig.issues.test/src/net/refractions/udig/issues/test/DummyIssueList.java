@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.issues.test;
 
@@ -10,7 +10,7 @@ class DummyIssueList extends IssuesList{
     private static final long serialVersionUID = 1L;
 
     void clearlisteners(){
-        listeners.clear();            
+        listeners.clear();
     }
 
 }

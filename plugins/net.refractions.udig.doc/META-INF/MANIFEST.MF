@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Documentation Plug-in
+Bundle-SymbolicName: net.refractions.udig.doc; singleton:=true
+Bundle-Version: 1.1.0
+Bundle-Vendor: refractions.net
+Bundle-Localization: plugin
+Require-Bundle: org.apache.ant,
+ org.apache.lucene,
+ org.eclipse.help.appserver,
+ org.eclipse.help.base,
+ org.eclipse.help.ui,
+ org.eclipse.help.webapp,
+ org.eclipse.tomcat
+Eclipse-LazyStart: true

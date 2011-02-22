@@ -43,5 +43,5 @@ public class MapCRSPropertyPage extends CRSPropertyPage implements IWorkbenchPro
         }
         super.setStrategy(new MapStrategy(map) );
     }
-    
+
 }

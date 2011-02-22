@@ -31,7 +31,6 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.catalog.URLUtils;
 import net.refractions.udig.catalog.internal.ui.ResourceSelectionPage;
 import net.refractions.udig.project.ProjectBlackboardConstants;
 import net.refractions.udig.project.internal.Layer;
@@ -58,14 +57,13 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
-import org.jfree.data.general.DatasetUtilities;
 
 /**
  * A Factory for creating maps from different types of resources.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
- * 
+ *
  * @deprecated use {@link ApplicationGIS}
  */
 public class MapFactory {
@@ -89,7 +87,7 @@ public class MapFactory {
      * <p>
      * This is equivalent to calling <code>processURLs(resources, null)</code>.
      * </p>
-     * 
+     *
      * @param resources a List of URLs pointing to services (WMS, Shapefile, etc)
      * @deprecated use {@link ApplicationGIS#createAndOpenMap(List)}
      */
@@ -107,7 +105,7 @@ public class MapFactory {
      * <p>
      * This is equivalent to calling <code>processURLs(resources, target, false)</code>.
      * </p>
-     * 
+     *
      * @param resources a List of URLs pointing to services (WMS, Shapefile, etc)
      * @param target Project to use if a new map is going to be created
      * @deprecated use {@link ApplicationGIS#createAndOpenMap(List, net.refractions.udig.project.IProject)}
@@ -124,12 +122,12 @@ public class MapFactory {
      * will be added to a new map, contained in the project designated by <code>target</code>, or
      * the current project if <code>target</code> is null.
      * </p>
-     * 
+     *
      * @param resources a List of URLs pointing to services (WMS, Shapefile, etc)
      * @param target Project to use if a new map is going to be created
      * @param newMap if true, a new map will be created even if there is one already open
      * @deprecated use {@link ApplicationGIS#addLayersToMap(net.refractions.udig.project.IProject, List)} or {@link ApplicationGIS#createAndOpenMap(List, net.refractions.udig.project.IProject)}
-     * 
+     *
      */
     public void processURLs( List<URL> resources, Project target, boolean newMap ) {
         process(target, resources, newMap);
@@ -143,7 +141,7 @@ public class MapFactory {
      * will be added to a new map, contained in the project designated by <code>target</code>, or
      * the current project if <code>target</code> is null.
      * </p>
-     * 
+     *
      * @param resources a List of IResolves to load onto a map
      * @param target Project to use if a new map is going to be created
      * @param newMap if true, a new map will be created even if there is one already open
@@ -156,7 +154,7 @@ public class MapFactory {
      * This method will perform all of its work in a Job and will not block.
      * <p>
      * TODO fix this Process a list of X, try and make
-     * 
+     *
      * @param resources a List of IResolves
      * @param newMap forces a new map to be created
      */
@@ -165,8 +163,8 @@ public class MapFactory {
             throw new InvalidParameterException("Parameter 'resources' cannot be null."); //$NON-NLS-1$
         }
 
-        Job job = new Job(Messages.ProjectUIPlugin_loadingServices_title){ 
-            @SuppressWarnings("unchecked") 
+        Job job = new Job(Messages.ProjectUIPlugin_loadingServices_title){
+            @SuppressWarnings("unchecked")
             protected IStatus run( final IProgressMonitor monitor ) {
 
                 List<Throwable> exceptions = new ArrayList<Throwable>();
@@ -179,7 +177,7 @@ public class MapFactory {
                     if (monitor.isCanceled()) {
                         return Status.CANCEL_STATUS;
                     }
-                    monitor.beginTask(Messages.MapFactory_taskSorting, resources.size()); 
+                    monitor.beginTask(Messages.MapFactory_taskSorting, resources.size());
                     try {
                         if (object instanceof URL) {
                             services.addAll(handleURL((URL) object, monitor));
@@ -217,7 +215,7 @@ public class MapFactory {
 
                 for( IResolve resolve : services ) {
                     monitor.beginTask(
-                            Messages.ProjectUIPlugin_loadingServices_task, services.size()); 
+                            Messages.ProjectUIPlugin_loadingServices_task, services.size());
                     if (monitor.isCanceled()) {
                         return Status.CANCEL_STATUS;
                     }
@@ -250,10 +248,10 @@ public class MapFactory {
                 if (map == null || newMap) {
                     map = getMap(monitor, target, newMap);
                 }
-                
+
                 if( map.getBlackboard().get(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR)==null ){
                     IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-                    RGB background = PreferenceConverter.getColor(store, PreferenceConstants.P_BACKGROUND); 
+                    RGB background = PreferenceConverter.getColor(store, PreferenceConstants.P_BACKGROUND);
                     map.getBlackboard().put(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR, new Color(background.red, background.green, background.blue ));
                 }
 
@@ -271,7 +269,7 @@ public class MapFactory {
                 }
 
                 for( IGeoResource resource : geoResources ) {
-                    monitor.beginTask(Messages.MapFactory_retrieveTask, geoResources.size()); 
+                    monitor.beginTask(Messages.MapFactory_retrieveTask, geoResources.size());
                     if (monitor.isCanceled()) {
                         return Status.CANCEL_STATUS;
                     }
@@ -302,16 +300,16 @@ public class MapFactory {
                 if (exceptions.size() != 0) {
                     String message = null;
                     if (exceptions.size() > 1) {
-                        message = Messages.MapFactory_multiError; 
+                        message = Messages.MapFactory_multiError;
                     } else {
-                        message = Messages.MapFactory_error; 
+                        message = Messages.MapFactory_error;
                     }
 
                     ExceptionDisplayer.displayExceptions(exceptions, message, ProjectUIPlugin.ID);
                 }
                 monitor.done();
 
-                return new Status(IStatus.OK, ProjectUIPlugin.ID, IStatus.OK, 
+                return new Status(IStatus.OK, ProjectUIPlugin.ID, IStatus.OK,
                 		Messages.ProjectUIPlugin_success, null);
             }
         };
@@ -378,16 +376,15 @@ public class MapFactory {
 
     private void handleProjectURL( URL url, IProgressMonitor monitor ) {
         monitor = validateMonitor(monitor);
-        monitor.subTask(Messages.ProjectUIPlugin_loadingProject_task); 
-        File file = URLUtils.urlToFile(url);
-        
-        ProjectPlugin.getPlugin().getProjectRegistry().getProject( file.getAbsolutePath() );
+        monitor.subTask(Messages.ProjectUIPlugin_loadingProject_task);
+
+        ProjectPlugin.getPlugin().getProjectRegistry().getProject(url.getPath());
         return;
     }
 
     /**
      * Same as processResources(monitor, resources, null);
-     * 
+     *
      * @param monitor
      * @param resources
      * @return
@@ -401,7 +398,7 @@ public class MapFactory {
      * <p>
      * If no servies work we will just punt out the exception from the last entry.
      * </p>
-     * 
+     *
      * @param url
      * @return
      * @throws IOException
@@ -439,13 +436,13 @@ public class MapFactory {
      * Processes each element within the list of resources and returns all the Layers that have been
      * discovered as a result. This is typically used to turn URLs, Files, IServices and
      * IGeoResources into Layers.
-     * 
+     *
      * @param monitor a progress monitor to indicate a user of work, can be null
      * @param resources a list of objects to be processed
      * @param target a target indicating that this is being performed on some object, can be null
      * @return a List <Layer>containing all discovered layers
      */
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
     public List<Layer> processResources( IProgressMonitor monitor, List<Object> resources,
             Object target ) {
 
@@ -527,7 +524,7 @@ public class MapFactory {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.lang.Runnable#run()
          */
         public void run() {
@@ -554,7 +551,7 @@ public class MapFactory {
     }
 
     private String getNewMapName( Project currentProject ) {
-        String name = Messages.ProjectUIPlugin_newMap_name; 
+        String name = Messages.ProjectUIPlugin_newMap_name;
 
         int count = currentProject.getElementsInternal().size() + 1;
 

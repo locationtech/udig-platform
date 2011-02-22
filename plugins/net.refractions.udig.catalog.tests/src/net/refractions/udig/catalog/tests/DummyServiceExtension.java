@@ -14,7 +14,7 @@ public class DummyServiceExtension implements ServiceExtension {
 		if (params.containsKey("dummy")) { //$NON-NLS-1$
 			return new DummyService(params);
 		}
-		
+
 		return null;
 	}
 
@@ -24,8 +24,8 @@ public class DummyServiceExtension implements ServiceExtension {
 			map.put("dummy", url); //$NON-NLS-1$
 			return map;
 		}
-		
+
 		return null;
 	}
-	
+
 }

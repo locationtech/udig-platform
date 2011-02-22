@@ -38,7 +38,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * Command for inserting a Vertex to a {@link net.refractions.udig.tools.edit.support.EditGeom}
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -62,7 +62,7 @@ public class InsertVertexCommand extends AbstractCommand implements UndoableMapC
         this.point = toAdd;
         this.toAdd=performSnapCalculation(toAdd, useSnapping);
     }
-    
+
 
     private Coordinate performSnapCalculation(Point point, boolean useSnapping) {
         Coordinate toCoord = board.toCoord(point);
@@ -75,10 +75,10 @@ public class InsertVertexCommand extends AbstractCommand implements UndoableMapC
         }
         return toCoord;
         }
-        
+
         return toCoord;
     }
-    
+
     public void rollback( IProgressMonitor monitor ) throws Exception {
         board.startBatchingEvents();
 
@@ -86,12 +86,12 @@ public class InsertVertexCommand extends AbstractCommand implements UndoableMapC
             IAnimation animation = new DeleteVertexAnimation(point);
             AnimationUpdater.runTimer(handler.getContext().getMapDisplay(), animation);
         }
-        
+
         board.removeCoordinate(index, toAdd, shape.get(new SubProgressMonitor(monitor, 1)));
         board.selectionClear();
         board.selectionAddAll(oldSelection);
         board.fireBatchedEvents();
-        
+
         if ( getMap()!=null )
             handler.repaint();
 
@@ -108,11 +108,11 @@ public class InsertVertexCommand extends AbstractCommand implements UndoableMapC
         board.fireBatchedEvents();
         if ( getMap()!=null )
             handler.repaint();
-        
+
         if( mapDisplay!=null ){
             IAnimation animation=new AddVertexAnimation(point.getX(), point.getY());
             AnimationUpdater.runTimer(mapDisplay, animation);
-            handler.repaint();                
+            handler.repaint();
         }
     }
 

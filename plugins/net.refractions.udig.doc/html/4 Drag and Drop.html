@@ -1,0 +1,154 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 4 Drag and Drop</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 4 Drag and Drop -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="4DragandDrop-DragandDrop">Drag and Drop</a></h1>
+
+<p>There are two broad categories of drag and drop in udig.  </p>
+<ol>
+	<li>Drag and drop between components with in udig itself</li>
+	<li>Drag and drop between udig and the outside elements (Internet Explorer for example).</li>
+</ol>
+
+
+<p>There are a set of extension points that allows a programmer to configure the behaviour of drag and drop for Drag and Drop category 1 which is also used, but to a lesser degree for category 2 drag and drop events.  </p>
+
+<h3><a name="4DragandDrop-DragandDropwithinuDig">Drag and Drop within uDig</a></h3>
+
+<p>There are two drag and drop extension points that control the behaviour of drag and drop within udig.  The most important of the two is the <a href="http://svn.geotools.org/udig/trunk/plugins/net.refractions.udig.ui/schema/dropAction.exsd" title="Visit page outside Confluence">net.refractions.udig.ui.dropAction</a> extention point.  This extension point defines a destination object (the object that objects can be dropped on), an action to take when objects are dropped on the object and the objects that can be dropped on the object for that action.</p>
+
+<p>The second extension point is the <a href="http://svn.geotools.org/udig/trunk/plugins/net.refractions.udig.ui/schema/dropTransfer.exsd" title="Visit page outside Confluence">net.refractions.udig.ui.dropTransfers</a> extension point.  This extension point advertises <a href="http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html" title="Visit page outside Confluence">Transfer</a> objects that are available for use.  The Transfers defined by the normal udig platform are:</p>
+<ul>
+	<li>UDigByteAndLocalTransfer - Transfers objects within udig.  This transfer is not useful outside of udig.</li>
+	<li><a href="http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/TextTransfer.html" title="Visit page outside Confluence">TextTransfer</a> - Transfers text.  (Part of eclipse DND)</li>
+	<li><a href="http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/FileTransfer.html" title="Visit page outside Confluence">FileTransfer</a> - Transfers files. (Part of eclipse DND)</li>
+	<li><a href="http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/RTFTransfer.html" title="Visit page outside Confluence">RTFTransfer</a> - Transfers rich text formatted text. (Part of eclipse DND)</li>
+	<li><a href="http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/HTMLTransfer.html" title="Visit page outside Confluence">HTMLTransfer</a> - Transfers HTML formatted text. (Part of eclipse DND)</li>
+	<li>FeatureTextTransfer - Converts features to and from GML2 text. (uDig 1.1 only)</li>
+	<li>GeometryTextTransfer - Converts geometries from and to text, either GML or vivid solution well known text format (uDig 1.1 only)</li>
+</ul>
+
+
+
+<h3><a name="4DragandDrop-DragandDroptoandfromuDig">Drag and Drop to and from uDig</a></h3>
+<p>To drag things into uDig a dropAction extension must be defined that expects data to be in the form provided by one of the standard transfer types.  <a href="http://svn.geotools.org/udig/trunk/plugins/net.refractions.udig.project.ui/plugin.xml" title="Visit page outside Confluence">net.refractions.udig.project.ui/project.xml</a> has contains examples of both.  Drop actions that accept String objects will activate if a url or some text are dropped from outside of udig.</p>
+
+<p>Only uDig 1.1 and later support dragging from udig to other applications.  When dragging and dropping between uDig and the outside world, derivatives of the eclipse DND transfers must be used.  In uDig 1.1 and later the XXXTextTransfers can be used to transform objects with in udig to the outside world.  They do this by advertising themselves as text transfers to the outside world.</p>
+
+<h3><a name="4DragandDrop-Example">Example</a></h3>
+<p>Example of a drag and drop action that takes a url to an SLD document and styles a layer when the url is dropped on a layer.</p>
+
+<h5><a name="4DragandDrop-plugin.xmlExtensionDefinition">plugin.xml Extension Definition</a></h5>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;action class=<span class="code-quote">"net.refractions.udig.project.ui.internal.actions.SLDDropAction"</span> name=<span class="code-quote">"SLD Drag and Drop"</span>&gt;</span>
+        <span class="code-tag">&lt;destination class=<span class="code-quote">"net.refractions.udig.project.ILayer"</span>/&gt;</span>
+        <span class="code-tag">&lt;acceptedType class=<span class="code-quote">"java.io.File"</span>/&gt;</span>
+        <span class="code-tag">&lt;acceptedType class=<span class="code-quote">"java.net.URL"</span>/&gt;</span>
+        <span class="code-tag">&lt;acceptedType class=<span class="code-quote">"java.lang.String"</span>/&gt;</span>
+     <span class="code-tag">&lt;/action&gt;</span></pre>
+</div></div>
+
+<h5><a name="4DragandDrop-DropActionCode">DropAction Code</a></h5>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> java.io.File;
+<span class="code-keyword">import</span> java.io.IOException;
+<span class="code-keyword">import</span> java.net.MalformedURLException;
+<span class="code-keyword">import</span> java.net.URL;
+
+<span class="code-keyword">import</span> net.refractions.udig.project.internal.Layer;
+<span class="code-keyword">import</span> net.refractions.udig.project.ui.internal.Policy;
+<span class="code-keyword">import</span> net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+<span class="code-keyword">import</span> net.refractions.udig.style.sld.SLDContent;
+<span class="code-keyword">import</span> net.refractions.udig.ui.IDropAction;
+
+<span class="code-keyword">import</span> org.eclipse.core.runtime.IProgressMonitor;
+<span class="code-keyword">import</span> org.geotools.styling.Style;
+
+<span class="code-keyword">public</span> class SLDDropAction <span class="code-keyword">extends</span> IDropAction {
+
+    /** the sld url * */
+    URL url;
+
+    @Override
+    <span class="code-keyword">public</span> <span class="code-object">boolean</span> accept( <span class="code-object">Object</span> source, <span class="code-object">Object</span> destination ) {
+        <span class="code-comment">// make sure we can turn the object into an sld
+</span>        <span class="code-keyword">try</span> {
+            <span class="code-keyword">if</span> (source <span class="code-keyword">instanceof</span> URL) {
+                url = (URL) source;
+            } <span class="code-keyword">else</span> <span class="code-keyword">if</span> (source <span class="code-keyword">instanceof</span> File) {
+                url = ((File) source).toURL();
+            } <span class="code-keyword">else</span> <span class="code-keyword">if</span> (source <span class="code-keyword">instanceof</span> <span class="code-object">String</span>) {
+                <span class="code-keyword">try</span> {
+                    url = <span class="code-keyword">new</span> URL((<span class="code-object">String</span>) source);
+                } <span class="code-keyword">catch</span> (MalformedURLException e) {
+                    <span class="code-comment">// <span class="code-keyword">try</span> attaching a file protocol
+</span>                    url = <span class="code-keyword">new</span> URL(<span class="code-quote">"file:<span class="code-comment">///"</span> + (<span class="code-object">String</span>) source); //$NON-NLS-1$
+</span>                }
+
+            }
+        } <span class="code-keyword">catch</span> (MalformedURLException e) {
+            <span class="code-object">String</span> msg = Policy.bind(<span class="code-quote">"SLDDropAction.badSldUrl"</span>); <span class="code-comment">//$NON-NLS-1$
+</span>            ProjectUIPlugin.log(msg, e);
+        }
+
+        <span class="code-keyword">return</span> url != <span class="code-keyword">null</span>;
+    }
+
+    @Override
+    <span class="code-keyword">public</span> void perform( <span class="code-object">Object</span> source, <span class="code-object">Object</span> destination, IProgressMonitor monitor ) {
+
+        <span class="code-comment">// grab the actual target
+</span>        <span class="code-object">Object</span> target = getDropHandler().getTarget();
+        <span class="code-keyword">if</span> (target != <span class="code-keyword">null</span> &amp;&amp; target <span class="code-keyword">instanceof</span> Layer) {
+            Layer layer = (Layer) target;
+            <span class="code-comment">// parse the sld object
+</span>
+            <span class="code-keyword">try</span> {
+                Style style = SLDContent.parse(url);
+                <span class="code-keyword">if</span> (style != <span class="code-keyword">null</span>) {
+                    SLDContent.apply(layer, style, monitor);
+                }
+                layer.refresh(<span class="code-keyword">null</span>);
+
+            } <span class="code-keyword">catch</span> (IOException e) {
+                <span class="code-object">String</span> msg = Policy.bind(<span class="code-quote">"SLDDropAction.sldParseError"</span>); <span class="code-comment">//$NON-NLS-1$
+</span>                ProjectUIPlugin.log(msg, e);
+            }
+        }
+
+    }
+
+}</pre>
+</div></div>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=6758">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=6758">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.Shell;
 /**
  * Queries user if they want to save. Return values are: {@link IDialogConstants#CANCEL_ID}
  * {@link IDialogConstants#NO_ID} {@link IDialogConstants#YES_ID}
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -43,13 +43,13 @@ public class SaveDialog extends IconAndMessageDialog {
     @Override
     protected Control createDialogArea(Composite parent) {
         message = Messages.MapEditor_saveQuestion+" "+map.getName()+"?";  //$NON-NLS-1$//$NON-NLS-2$
-        
+
         Composite composite = (Composite) super.createDialogArea(parent);
         ((GridLayout)composite.getLayout()).numColumns = 2;
         ((GridLayout)composite.getLayout()).makeColumnsEqualWidth = false;
-        
+
         createMessageArea(composite);
-        
+
         return composite;
     }
 

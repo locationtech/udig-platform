@@ -30,8 +30,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * Editor for modifying the default SimpleFeature Editor
- * 
+ * Editor for modifying the default Feature Editor
+ *
  * @author Jesse
  * @since 1.1.0
  */

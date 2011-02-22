@@ -12,7 +12,6 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.ErrorEditorPart;
 import org.eclipse.ui.intro.IIntroManager;
 import org.eclipse.ui.intro.IIntroPart;
 
@@ -24,7 +23,7 @@ public class AbstractProjectUITestCase extends AbstractProjectTestCase {
     public AbstractProjectUITestCase() {
         super();
     }
-    
+
     protected void setUp() throws Exception {
         super.setUp();
         final IIntroManager introManager = PlatformUI.getWorkbench().getIntroManager();
@@ -36,8 +35,8 @@ public class AbstractProjectUITestCase extends AbstractProjectTestCase {
 				public boolean isTrue() {
 					return introManager.getIntro()==null;
 				}
-	        	
-	        }, true);		
+
+	        }, true);
 		}
     }
 
@@ -49,47 +48,34 @@ public class AbstractProjectUITestCase extends AbstractProjectTestCase {
                 CompositeDropActionJob actionJob = UDIGDropHandler.getActionJob();
                 return actionJob.getJobQueue().isEmpty() && actionJob.getState()==Job.NONE;
             }
-            
+
         }, false);
 
         final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         IEditorReference[] editors = activePage.getEditorReferences();
         for( IEditorReference reference : editors ) {
             IEditorPart editor = reference.getEditor(false);
-            if( editor instanceof ErrorEditorPart){
-            	System.out.println("Error opening "+editor.getTitle());
-            	continue;
-            }
-            assertFalse( "Error encountered loading", editor instanceof ErrorEditorPart);
-			
             if (editor instanceof MapEditor) {
                 MapEditor mapEditor = (MapEditor) editor;
-                
-                if( mapEditor!=null ) {
+
+                if( mapEditor!=null )
                     mapEditor.isTesting=true;
-                }
             }
         }
-        while ( !activePage.closeAllEditors(false)  ||  activePage.getEditorReferences().length!=0);         
+        while ( !activePage.closeAllEditors(false)  ||  activePage.getEditorReferences().length!=0);
         super.tearDown();
-        
+
         editors = activePage.getEditorReferences();
         for( IEditorReference reference : editors ) {
-        	IEditorPart editor = reference.getEditor(false);            
-        	if( editor instanceof ErrorEditorPart){
-            	System.out.println("Error opening "+editor.getTitle());
-            	continue;
-            }
-        	MapEditor mapEditor = (MapEditor) editor;
-            if( mapEditor!=null ){
+            MapEditor mapEditor = ((MapEditor)reference.getEditor(false));
+            if( mapEditor!=null )
                 mapEditor.isTesting=true;
-            }
         }
-        while ( !activePage.closeAllEditors(false)  ||  activePage.getEditorReferences().length!=0);         
+        while ( !activePage.closeAllEditors(false)  ||  activePage.getEditorReferences().length!=0);
 
         editors = activePage.getEditorReferences();
         assertEquals(0,editors.length);
-        
+
     }
 
 }

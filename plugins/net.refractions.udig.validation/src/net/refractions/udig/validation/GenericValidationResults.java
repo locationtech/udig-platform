@@ -26,41 +26,41 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.validation.internal.Messages;
 
+import org.geotools.feature.Feature;
 import org.geotools.validation.Validation;
 import org.geotools.validation.ValidationResults;
-import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * A generic version of the validation results class which returns mostly everything you would want
  * to know about the validation results.
  * <p>
  * </p>
- * 
+ *
  * @since 1.0.1
  */
-public class GenericValidationResults implements ValidationResults, Iterable<SimpleFeature> {
+public class GenericValidationResults implements ValidationResults, Iterable<Feature> {
     public ArrayList<Validation> validationList;
-    public ArrayList<SimpleFeature> failedFeatures;
-    public ArrayList<SimpleFeature> warningFeatures;
+    public ArrayList<Feature> failedFeatures;
+    public ArrayList<Feature> warningFeatures;
     public ArrayList<String> failureMessages;
     public ArrayList<String> warningMessages;
     public ArrayList<FeatureIssue> issues;
-    
+
     /**
      * GenericValidationResults constructor.
      * <p>
      * Description
      * </p>
-     * 
+     *
      */
     public GenericValidationResults() {
         validationList = new ArrayList<Validation>();
-        failedFeatures = new ArrayList<SimpleFeature>();
-        warningFeatures = new ArrayList<SimpleFeature>();
+        failedFeatures = new ArrayList<Feature>();
+        warningFeatures = new ArrayList<Feature>();
         failureMessages = new ArrayList<String>();
         warningMessages = new ArrayList<String>();
         issues = new ArrayList<FeatureIssue>();
-        
+
     }
 
     /**
@@ -69,7 +69,7 @@ public class GenericValidationResults implements ValidationResults, Iterable<Sim
      * Description ...
      * </p>
      * @see org.geotools.validation.ValidationResults#setValidation(org.geotools.validation.Validation)
-     * 
+     *
      * @param validation
      */
     public void setValidation( Validation validation ) {
@@ -83,12 +83,12 @@ public class GenericValidationResults implements ValidationResults, Iterable<Sim
      * <p>
      * Description ...
      * </p>
-     * @see org.geotools.validation.ValidationResults#error(org.geotools.feature.SimpleFeature, java.lang.String)
-     * 
+     * @see org.geotools.validation.ValidationResults#error(org.geotools.feature.Feature, java.lang.String)
+     *
      * @param feature
      * @param message
      */
-    public void error( SimpleFeature feature, String message ) {
+    public void error( Feature feature, String message ) {
         //add the error to our list of failed features + failure messages
     	if (message == null) message = ""; //$NON-NLS-1$
     	failedFeatures.add(feature);
@@ -102,13 +102,13 @@ public class GenericValidationResults implements ValidationResults, Iterable<Sim
         Layer layer = null;
         for (Iterator i = layers.listIterator(); i.hasNext();) {
         	Layer thisLayer = (Layer) i.next();
-        	if (feature.getName().getLocalPart().equals(thisLayer.getName())) {
+        	if (feature.getFeatureType().getTypeName().equals(thisLayer.getName())) {
                 layer = thisLayer;
         		break;
         	}
         }
         //add the error to the issues list
-        FeatureIssue issue = new FeatureIssue(Priority.HIGH, message, layer, feature,  Messages.GenericValidationResults_validationError ); 
+        FeatureIssue issue = new FeatureIssue(Priority.HIGH, message, layer, feature,  Messages.GenericValidationResults_validationError );
         issues.add(issue);
     }
 
@@ -117,12 +117,12 @@ public class GenericValidationResults implements ValidationResults, Iterable<Sim
      * <p>
      * Description ...
      * </p>
-     * @see org.geotools.validation.ValidationResults#warning(org.geotools.feature.SimpleFeature, java.lang.String)
-     * 
+     * @see org.geotools.validation.ValidationResults#warning(org.geotools.feature.Feature, java.lang.String)
+     *
      * @param feature
      * @param message
      */
-    public void warning( SimpleFeature feature, String message ) {
+    public void warning( Feature feature, String message ) {
         //add the warning to our list of warned features + warning messages
         warningFeatures.add(feature);
         warningMessages.add(feature.getID() + ": " + message); //$NON-NLS-1$
@@ -131,19 +131,19 @@ public class GenericValidationResults implements ValidationResults, Iterable<Sim
         ILayer layer = null;
         for (Iterator i = layers.listIterator(); i.hasNext();) {
         	layer = (ILayer) i.next();
-        	if (feature.getName().getLocalPart().equals(layer.getName())) {
+        	if (feature.getFeatureType().getTypeName().equals(layer.getName())) {
         		break;
         	}
         }
         //add the error to the issues list
-        FeatureIssue issue = new FeatureIssue(Priority.WARNING, message, layer, feature, Messages.GenericValidationResults_validationWarning); 
+        FeatureIssue issue = new FeatureIssue(Priority.WARNING, message, layer, feature, Messages.GenericValidationResults_validationWarning);
         issues.add(issue);
     }
 
     /**
      * returns the failed features from validation
      */
-    public Iterator<SimpleFeature> iterator() {
+    public Iterator<Feature> iterator() {
         return failedFeatures.iterator();
     }
 

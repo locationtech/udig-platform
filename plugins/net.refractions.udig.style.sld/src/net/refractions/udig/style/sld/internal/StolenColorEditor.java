@@ -84,7 +84,7 @@ public class StolenColorEditor {
     public void setListener( SelectionListener newListener ) {
         listener = newListener;
     }
-    
+
     private void notifyParent( SelectionEvent event ) {
         if( listener != null )
             listener.widgetSelected(event);
@@ -100,8 +100,8 @@ public class StolenColorEditor {
         }
         else {
             RGB rgb = new RGB(color.getRed(), color.getGreen(), color.getBlue() );
-            setColorValue( rgb );    
-        }                
+            setColorValue( rgb );
+        }
     }
     public void setEnabled( boolean isEnabled ){
         getButton().setEnabled( isEnabled );

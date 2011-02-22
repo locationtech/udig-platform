@@ -29,7 +29,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Draws the two end points of the Shape provided by the Provider<PrimitiveShape>
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -58,7 +58,7 @@ public class DrawEndPointsCommand extends AbstractDrawCommand implements IDrawCo
 
         if( start==null || end==null )
             return;
-        
+
         if( showMouseOver && tracker.getCurrentPoint()!=null ){
             MinFinder finder=new MinFinder(tracker.getCurrentPoint());
             graphics.setColor(PreferenceUtil.instance().getDrawVertexFillColor());
@@ -75,8 +75,8 @@ public class DrawEndPointsCommand extends AbstractDrawCommand implements IDrawCo
         graphics.setColor(PreferenceUtil.instance().getDrawVertexLineColor());
         graphics.draw(new Rectangle(start.getX()-radius, start.getY()-radius, radius*2, radius*2 ));
         graphics.draw(new Rectangle(end.getX()-radius, end.getY()-radius, radius*2, radius*2 ));
-        
-            
+
+
     }
 
     /**

@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+
 import com.csvreader.CsvReader;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -13,21 +16,21 @@ import com.vividsolutions.jts.geom.Point;
 
 /**
  * A Comma Separated Value document.
- * 
+ *
  * @author Jody
  */
 public class CSV {
     private File file;
-    private int size = -1;    
+    private int size = -1;
     public CSV( File file ){
         this.file = file;
     }
     /**
      * Retrieves a CsvReader; this should be closed after use.
      * Please be sure to close the reader after use.
-     * 
+     *
      * @return CsvReader
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException
      */
     public CsvReader reader() throws IOException {
         Reader reader = new FileReader( file );
@@ -38,21 +41,21 @@ public class CSV {
         if( size == -1 ){
             size = 0;
             try {
-                CsvReader reader = reader();            
+                CsvReader reader = reader();
                 reader.readHeaders();
                 while( reader.readRecord() ){
                     size++;
                 }
             }
-            catch (IOException eek){                
-            }            
+            catch (IOException eek){
+            }
         }
         return size;
     }
     public String toString() {
         return file.toString();
-    }  
-    
+    }
+
     /**
      * Utility method that will return a Point for the current reader.
      * @param reader
@@ -66,5 +69,5 @@ public class CSV {
         Coordinate coordinate = new Coordinate(x,y);
         return geometryFactory.createPoint( coordinate );
     }
-    
+
 }

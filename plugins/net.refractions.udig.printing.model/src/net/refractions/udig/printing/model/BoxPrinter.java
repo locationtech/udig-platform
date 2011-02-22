@@ -22,15 +22,15 @@ import org.eclipse.ui.IMemento;
 
 /**
  * Draws the preview for a box and prints the contents of a box.  Must have a default constructor.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public interface BoxPrinter extends IAdaptable {
-    
+
     /**
      * Passes in a memento object so that the printer can be saved.
-     * 
+     *
      * @see AbstractBox
      */
     void save(IMemento memento);
@@ -40,19 +40,19 @@ public interface BoxPrinter extends IAdaptable {
      * @see #save(IMemento)
      */
     void load(IMemento value);
-    
+
     /**
      * This method will be called by Page when the actual printing is being performed.
-     * 
+     *
      * The graphics object passed in will have its appropriate clipping set,
      * so the drawing code can only draw inside this clip.
-     * 
+     *
      * @see Page
      * @param graphics A <code>Graphics2D</code> object to perform the drawing on
      * @param monitor
      */
     public void draw(Graphics2D graphics, IProgressMonitor monitor);
-    
+
     /**
      * This method is called by the frame work when it is time to display itself on
      * the screen.  It does not have to be a perfect representation of the actual printed value because
@@ -60,10 +60,10 @@ public interface BoxPrinter extends IAdaptable {
      * much as possible.  This method may take as long as necessary, it is not run in the display thread.
      *
      * @param graphics A <code>Graphics2D</code> object to perform the drawing on.
-     * @param monitor 
+     * @param monitor
      */
     public void createPreview( Graphics2D graphics, IProgressMonitor monitor);
-    
+
     /**
      * Returns true if a the preview has changed since last call of {@link #createPreview(Graphics2D, IProgressMonitor)}
      * This method must <b>NOT</b> always return true because as long as it returns true createPreview is
@@ -87,7 +87,7 @@ public interface BoxPrinter extends IAdaptable {
      * @return the id of the extension point that is used to load the BoxPrinter
      */
     public String getExtensionPointID();
-    
+
     /**
      * Returns the box the box set when the setBox method is called.
      *

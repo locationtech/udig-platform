@@ -16,7 +16,7 @@ package net.refractions.udig.tools.edit;
 
 /**
  * Enumerates the various states an editing tool may be in.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -24,7 +24,7 @@ public enum EditState {
     /**
      * No editing has occured
      */
-    NONE, 
+    NONE,
     /**
      * An existing feature is being modified
      */
@@ -40,14 +40,14 @@ public enum EditState {
     /**
      * Editing is not permitted
      */
-    ILLEGAL, 
+    ILLEGAL,
     /**
-     * Something is going on 
+     * Something is going on
      */
-    BUSY, 
+    BUSY,
     /**
      * A commit is taking place.
      */
-    COMMITTING 
-    
+    COMMITTING
+
 }

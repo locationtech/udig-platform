@@ -128,7 +128,7 @@ public class ImageDecorator implements Decorator {&lt;br&gt;
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         
+
       </documentation>
    </annotation>
 

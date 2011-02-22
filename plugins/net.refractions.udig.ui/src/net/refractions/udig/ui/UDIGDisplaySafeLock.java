@@ -29,9 +29,9 @@ import org.eclipse.swt.widgets.Display;
  * This lock is reentrant and guarantees that a display thread will not block,
  * it will continue to call {@link Display#readAndDispatch()}.  The Display thread
  * gets priority over non-display threads.
- * 
+ *
  * API is copied from the {@link ReentrantLock}
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -45,22 +45,22 @@ public class UDIGDisplaySafeLock implements Lock {
         public boolean isHeldByCurrentThread() {
             return true;
         }
-        
+
         @Override
         public boolean isLocked() {
             return true;
         }
-        
+
         @Override
         public void unlock() {
             internalLock.unlock();
         }
-        
+
         @Override
         public void lock() {
             internalLock.lock();
         }
-        
+
         public void lockInterruptibly() throws InterruptedException {
             internalLock.lockInterruptibly();
         }
@@ -69,9 +69,9 @@ public class UDIGDisplaySafeLock implements Lock {
             // do nothing
         }
     };
-    
+
     /**
-     * Indicates the number of times the lock has been locked. 
+     * Indicates the number of times the lock has been locked.
      */
     private AtomicInteger lockCount;
     ReentrantLock internalLock;
@@ -80,7 +80,7 @@ public class UDIGDisplaySafeLock implements Lock {
      */
     volatile Thread lockThread;
     /**
-     * The condition that is used for Display thread 
+     * The condition that is used for Display thread
      */
     private UDIGDisplaySafeCondition displayCondition;
     /**
@@ -89,7 +89,7 @@ public class UDIGDisplaySafeLock implements Lock {
     private UDIGDisplaySafeCondition condition;
     private static int ID=0;
     private int id=ID++;;
-    
+
     public UDIGDisplaySafeLock() {
         init();
     }
@@ -100,11 +100,11 @@ public class UDIGDisplaySafeLock implements Lock {
         condition=new UDIGDisplaySafeCondition(new NullLock(internalLock));
         displayCondition=new UDIGDisplaySafeCondition(new NullLock(internalLock));
     }
-    
+
     /**
      * Queries the number of holds on this lock by the current thread.
      *
-     * <p>A thread has a hold on a lock for each lock action that is not 
+     * <p>A thread has a hold on a lock for each lock action that is not
      * matched by an unlock action.
      *
      * <p>The hold count information is typically only used for testing and
@@ -115,8 +115,8 @@ public class UDIGDisplaySafeLock implements Lock {
      * <pre>
      * class X {
      *   ReentrantLock lock = new ReentrantLock();
-     *   // ...     
-     *   public void m() { 
+     *   // ...
+     *   public void m() {
      *     assert lock.getHoldCount() == 0;
      *     lock.lock();
      *     try {
@@ -139,7 +139,7 @@ public class UDIGDisplaySafeLock implements Lock {
             internalLock.unlock();
         }
     }
-    
+
     /**
      * Returns an estimate of the number of threads waiting on the
      * given condition associated with this lock. Note that because
@@ -149,16 +149,16 @@ public class UDIGDisplaySafeLock implements Lock {
      * state, not for synchronization control.
      * @param condition the condition
      * @return the estimated number of waiting threads.
-     * @throws IllegalMonitorStateException if this lock 
+     * @throws IllegalMonitorStateException if this lock
      * is not held
      * @throws IllegalArgumentException if the given condition is
      * not associated with this lock
      * @throws NullPointerException if condition null
-     */ 
+     */
     public int getWaitQueueLength( Condition condition ) {
         internalLock.lock();
         try{
-            
+
             if( condition == null )
                 throw new NullPointerException("Condition cannot be null"); //$NON-NLS-1$
             if( !( condition instanceof UDIGDisplaySafeCondition)  )
@@ -167,7 +167,7 @@ public class UDIGDisplaySafeLock implements Lock {
             if(  !casted.isOwner(this) )
                 throw new IllegalStateException("Condition is not owned by this lock!"); //$NON-NLS-1$
             return casted.getWaitQueueLength();
-            
+
         }finally{
             internalLock.unlock();
         }
@@ -181,12 +181,12 @@ public class UDIGDisplaySafeLock implements Lock {
      * monitoring of the system state.
      * @param condition the condition
      * @return <tt>true</tt> if there are any waiting threads.
-     * @throws IllegalMonitorStateException if this lock 
+     * @throws IllegalMonitorStateException if this lock
      * is not held
      * @throws IllegalArgumentException if the given condition is
      * not associated with this lock
      * @throws NullPointerException if condition null
-     */ 
+     */
     public boolean hasWaiters( Condition condition ) {
         internalLock.lock();
         try{
@@ -208,7 +208,7 @@ public class UDIGDisplaySafeLock implements Lock {
      *   ReentrantLock lock = new ReentrantLock();
      *   // ...
      *
-     *   public void m() { 
+     *   public void m() {
      *       assert lock.isHeldByCurrentThread();
      *       // ... method body
      *   }
@@ -223,7 +223,7 @@ public class UDIGDisplaySafeLock implements Lock {
      *   ReentrantLock lock = new ReentrantLock();
      *   // ...
      *
-     *   public void m() { 
+     *   public void m() {
      *       assert !lock.isHeldByCurrentThread();
      *       lock.lock();
      *       try {
@@ -234,7 +234,7 @@ public class UDIGDisplaySafeLock implements Lock {
      *   }
      * }
      * </pre>
-     * @return <tt>true</tt> if current thread holds this lock and 
+     * @return <tt>true</tt> if current thread holds this lock and
      * <tt>false</tt> otherwise.
      */
     public boolean isHeldByCurrentThread() {
@@ -277,7 +277,7 @@ public class UDIGDisplaySafeLock implements Lock {
 
         }finally{
             internalLock.unlock();
-        }    
+        }
     }
 
     private void doLock() {
@@ -290,7 +290,7 @@ public class UDIGDisplaySafeLock implements Lock {
                 lockCount.incrementAndGet();
             }else{
                 if( UiPlugin.isDebugging(Trace.UDIG_DISPLAY_SAFE_LOCK) )
-                    UiPlugin.trace(getClass(), 
+                    UiPlugin.trace(getClass(),
                             "Illegal state.  Trying to increment lock count even though lock is not held by current Thread.  " + //$NON-NLS-1$
                             "\n\tcurrentThread = "+Thread.currentThread()+" Lock thread=="+lockThread, null); //$NON-NLS-1$ //$NON-NLS-2$
                 throw new IllegalStateException("Illegal state.  Trying to increment lock count even though lock is not held by current Thread.  " + //$NON-NLS-1$
@@ -301,7 +301,7 @@ public class UDIGDisplaySafeLock implements Lock {
     private void wait( long timeout, TimeUnit unit, boolean allowInterrupts ) throws InterruptedException {
         if (allowInterrupts && Thread.interrupted() )
             throw new InterruptedException("Thread has been interrupted"); //$NON-NLS-1$
-        
+
         if( UiPlugin.isDebugging(Trace.UDIG_DISPLAY_SAFE_LOCK) )
             UiPlugin.trace(getClass(), Thread.currentThread().getName()+" is waiting for Lock "+id+". Interruptible="+allowInterrupts, null); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -347,13 +347,13 @@ public class UDIGDisplaySafeLock implements Lock {
             internalLock.unlock();
         }
     }
-    
+
     public void unlock() {
         internalLock.lock();
         try{
             if( this.lockThread!=Thread.currentThread() )
                 throw new IllegalStateException("Current thread does not own lock!  Lock owner == "+lockThread); //$NON-NLS-1$
-            
+
             if( UiPlugin.isDebugging(Trace.UDIG_DISPLAY_SAFE_LOCK) )
                 UiPlugin.trace(getClass(), Thread.currentThread().getName()+" is unlocking Lock "+id+" remaining holds="+(lockCount.get()-1), null); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -367,7 +367,7 @@ public class UDIGDisplaySafeLock implements Lock {
                     lockThread=null;
                 }
             }
-            
+
         }finally{
             internalLock.unlock();
         }

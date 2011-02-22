@@ -44,12 +44,12 @@ import org.eclipse.ui.actions.ActionFactory;
 /**
  * Sets the Delete Global handler so that the selected vertices are deleted when the delete action
  * is pressed.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class DeleteGlobalActionSetterActivator implements Activator {
-    
+
     private IAction oldAction;
     private DeleteVertexHandler deleteVertexHandler;
 
@@ -76,23 +76,20 @@ public class DeleteGlobalActionSetterActivator implements Activator {
 
     public void deactivate( EditToolHandler handler ) {
         IActionBars2 actionBars = handler.getContext().getActionBars();
-        if( actionBars==null || oldAction==null ){
+        if( actionBars==null || oldAction==null )
             return;
-        }
+
         IWorkbenchPart part=ApplicationGISInternal.getActiveEditor();
-        
         IKeyBindingService keyBindingService = part.getSite().getKeyBindingService();
         keyBindingService.unregisterAction(deleteVertexHandler);
         deleteVertexHandler=null;
-        
+
         ApplicationGIS.getToolManager().setDELETEAction(oldAction,part);
         actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), oldAction);
-        if( oldAction!=null ){
+        if( oldAction!=null )
             keyBindingService.registerAction(oldAction);
-        }
+
         oldAction=null;
-        
-        actionBars.updateActionBars();
     }
 
     public void handleActivateError( EditToolHandler handler, Throwable error ) {
@@ -144,5 +141,5 @@ public class DeleteGlobalActionSetterActivator implements Activator {
             return true;
         }
     }
-    
+
 }

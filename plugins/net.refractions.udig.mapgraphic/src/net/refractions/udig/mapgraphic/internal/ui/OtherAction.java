@@ -30,7 +30,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
 /**
  * Opens a dialog with all the MapGraphics
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -42,7 +42,7 @@ public class OtherAction implements IWorkbenchWindowActionDelegate {
     public void run( IAction action ) {
         MapGraphicChooserDialog d = new MapGraphicChooserDialog(Display.getCurrent().getActiveShell(), true);
         d.open();
-        
+
         List<IGeoResource> resources = new ArrayList<IGeoResource>();
         for( IGeoResource geoResource : d.getSelectedResources() ) {
             resources.add(geoResource);
@@ -57,5 +57,5 @@ public class OtherAction implements IWorkbenchWindowActionDelegate {
 
     public void dispose() {
     }
-    
+
 }

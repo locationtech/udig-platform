@@ -38,7 +38,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * A commands Manager executes commands in a seperate thread, either synchronously or a
  * synchronously.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -59,7 +59,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
 
     /**
      * Creates a new instance of CommandManager
-     * 
+     *
      * @param handler an error handler to use to handle thrown exceptions.
      */
     public CommandManager( String managerName, ErrorHandler handler, CommandListener commandCompletionListener ) {
@@ -70,7 +70,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     }
     /**
      * Creates a new instance of CommandManager
-     * 
+     *
      * @param handler an error handler to use to handle thrown exceptions.
      */
     public CommandManager( String managerName, ErrorHandler handler ) {
@@ -78,19 +78,19 @@ public class CommandManager implements CommandStack, NavCommandStack {
     }
     /**
      * Creates a new instance of CommandManager
-     * 
+     *
      * @param handler an error handler to use to handle thrown exceptions.
      */
     public CommandManager( String managerName, ErrorHandler handler, CommandListener commandCompletionListener,
             long timeout2 ) {
         this(managerName, handler, commandCompletionListener);
         this.timeout = timeout2;
-        
+
     }
 
     /**
      * Executes a command. Calls the Errorhandler if an exception is thrown.
-     * 
+     *
      * @param command The command to execute
      * @param async flag indicating wether command should be executed sync vs async.
      * @return true if no problems were encountered while queueing command. Problems will typically
@@ -101,7 +101,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
         return doMakeRequest(command, async, type);
 
     }
-    
+
     /**
      * @param command command to perform
      * @param async whether to do request synchronously
@@ -112,7 +112,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
         Request request = new Request(type, command, async, Display.getCurrent() != null);
         synchronized (this) {
             if (commandExecutor == null) {
-                commandExecutor = new Executor(managerName); 
+                commandExecutor = new Executor(managerName);
             }
         }
         commandExecutor.addRequest(request);
@@ -142,7 +142,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     }
 
     private long waitOnRequest( Request request ) throws InterruptedException {
-        ProjectPlugin.trace(TRACE_ID,getClass(), 
+        ProjectPlugin.trace(TRACE_ID,getClass(),
                 "synchronous command NOT in display thread\nTimout=" + timeout, null); //$NON-NLS-1$
         long tries = 0;
 
@@ -157,14 +157,14 @@ public class CommandManager implements CommandStack, NavCommandStack {
     /**
      * This method is special wait command that ensures that the display does not block. It executes
      * the jobs waiting for display.
-     * 
+     *
      * @param current the current display
      * @param request
      * @throws InterruptedException
      * @see Display#readAndDispatch()
      */
     private long waitInDisplay( Display current, Request request ) throws InterruptedException {
-        ProjectPlugin.trace(TRACE_ID,getClass(), 
+        ProjectPlugin.trace(TRACE_ID,getClass(),
                 "synchronous command IN display thread\nTimout=" + timeout, null); //$NON-NLS-1$
         long start = System.currentTimeMillis();
 
@@ -188,13 +188,13 @@ public class CommandManager implements CommandStack, NavCommandStack {
     private boolean mustWait( Request request, long tries ) {
         ProjectPlugin
                 .trace(
-                        TRACE_ID, getClass(), 
+                        TRACE_ID, getClass(),
                         "timeout :" + timeout + ", tries: " + tries + ", completed:" + request.completed, null); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         return !request.completed && (tries < timeout || timeout == -1);
     }
     /**
      * Executes the last undone command, if there are any commands to undo.
-     * 
+     *
      * @param runAsync true to run undo asynchronously
      */
     public void redo( boolean runAsync ) {
@@ -203,7 +203,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
 
     /**
      * Undoes the last command if possible.
-     * 
+     *
      * @param runAsync true to run undo asynchronously
      */
     public void undo( boolean runAsync ) {
@@ -212,7 +212,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
 
     /**
      * Adds an Errorhandler to the list of error handlers
-     * 
+     *
      * @param handler the error handler to add.
      * @see ErrorHandler
      */
@@ -222,7 +222,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
 
     /**
      * Removes an Errorhandler from the list of error handlers
-     * 
+     *
      * @param handler the error handler to remove.
      * @see ErrorHandler
      */
@@ -236,7 +236,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     public boolean canUndo() {
         if( commandExecutor ==null )
             return false;
-        
+
         Command c;
         if (!commandExecutor.history.isEmpty()) {
             c = (Command) commandExecutor.history.peek();
@@ -273,7 +273,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     /**
      * Executes commands in a seperate thread from the requesting thread. JONES: Should support
      * force kill of a command.
-     * 
+     *
      * @author Jesse
      * @since 1.0.0
      */
@@ -286,7 +286,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
 
         /**
          * Construct <code>Executor</code>.
-         * 
+         *
          * @param name the name of the job
          * @param type the type of the executor. (RUN, UNDO, REDO)
          */
@@ -299,9 +299,9 @@ public class CommandManager implements CommandStack, NavCommandStack {
         Request currentRequest;
         @Override
         protected IStatus run( IProgressMonitor monitor ) {
-            monitor.beginTask(Messages.CommandManager_ProgressMonitor, IProgressMonitor.UNKNOWN); 
+            monitor.beginTask(Messages.CommandManager_ProgressMonitor, IProgressMonitor.UNKNOWN);
             while( !getThread().isInterrupted() ) {
-                
+
                 synchronized (this) {
                     currentRequest = commands.poll();
                     if( currentRequest==null )
@@ -340,7 +340,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
 
         /**
          * Adds a command to the stack of commands that needs to be executed.
-         * 
+         *
          * @param request
          */
         public void addRequest( Request request ) {
@@ -375,7 +375,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
 
         /**
          * Executes a command. Calls the Errorhandler if an exception is thrown.
-         * 
+         *
          * @param command The command to execute
          */
         private void execute( final Command command, IProgressMonitor monitor ) {
@@ -425,7 +425,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
                 history.removeFirst();
             history.addLast(command);
         }
-        
+
         private boolean openWarning( final Command command ) {
             final boolean[] runCommand=new boolean[1];
             if (!(command instanceof UndoableCommand)
@@ -439,7 +439,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
                 PlatformGIS.syncInDisplayThread(new Runnable(){
                     public void run() {
                         String string = Messages.CommandManager_warning + command.getName();
-                        if ( command instanceof RollbackCommand || 
+                        if ( command instanceof RollbackCommand ||
                                 command instanceof CommitCommand )
                             string += "?"; //$NON-NLS-1$
                         else
@@ -448,8 +448,8 @@ public class CommandManager implements CommandStack, NavCommandStack {
                                 .openOkCancelConfirm(
                                         PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                                                 .getShell(),
-                                        Messages.CommandManager_warningTitle, string,  
-                                        Messages.CommandManager_toggleMessage, false, preferenceStore, PreferenceConstants.P_WARN_IRREVERSIBLE_COMMAND); 
+                                        Messages.CommandManager_warningTitle, string,
+                                        Messages.CommandManager_toggleMessage, false, preferenceStore, PreferenceConstants.P_WARN_IRREVERSIBLE_COMMAND);
                         runCommand[0] = dialog.getReturnCode() == IDialogConstants.OK_ID;
                         if (dialog.getToggleState()) {
                             preferenceStore
@@ -468,14 +468,14 @@ public class CommandManager implements CommandStack, NavCommandStack {
          * Notifies the owner that the command has been executed.
          */
         private void notifyOwner( Command command ) {
-            
+
             for( CommandListener listener : completionHandlers ) {
                 if (command instanceof NavCommand) {
                     listener.commandExecuted(MapCommandListener.NAV_COMMAND);
                 } else {
                     listener.commandExecuted(MapCommandListener.COMMAND);
                 }
-                
+
             }
 
         }
@@ -487,7 +487,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
             if( undone.isEmpty() )
                 return;
             Command command = undone.removeLast();
-            monitor.beginTask(Messages.CommandManager_redo + command.getName(), 1000); 
+            monitor.beginTask(Messages.CommandManager_redo + command.getName(), 1000);
             try {
                 if (command instanceof PostDeterminedEffectCommand) {
                     PostDeterminedEffectCommand post = (PostDeterminedEffectCommand) command;
@@ -532,7 +532,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
                 c = history.removeLast();
                 if (c instanceof UndoableCommand) {
                     UndoableCommand command = (UndoableCommand) c;
-                    monitor.beginTask(Messages.CommandManager_undo + command.getName(), 1000); 
+                    monitor.beginTask(Messages.CommandManager_undo + command.getName(), 1000);
                     try {
                         command.rollback(new SubProgressMonitor(monitor, 1000));
                         addToUndone(command);
@@ -582,7 +582,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
      * TODO Purpose of net.refractions.udig.project.command
      * <p>
      * </p>
-     * 
+     *
      * @author Jesse
      * @since 1.0.0
      */
@@ -608,7 +608,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
 
         /**
          * Construct <code>Request</code>.
-         * 
+         *
          * @param type the type of request
          * @param command the command to be done/undone/redone
          */
@@ -622,7 +622,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
 
         /**
          * Determines if the request is synchronous.
-         * 
+         *
          * @return
          */
         public boolean isSync() {
@@ -631,7 +631,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     }
     /**
      * Execute Command syncrounously. IE wait until command is complete before returning.
-     * 
+     *
      * @return true if no problems were encountered while queueing command. Problems will typically
      *         occur when the command is synchronous and it times out or is interrupted.
      */
@@ -644,12 +644,12 @@ public class CommandManager implements CommandStack, NavCommandStack {
     /**
      * Execute Command asyncrounously. IE return immediately, do not wait until command is complete
      * before returning.
-     * 
+     *
      * @return true if no problems were encountered while queueing command. Problems will typically
      *         occur when the command is synchronous and it times out or is interrupted.
      */
     public boolean aSyncExecute( Command command ) {
         return execute(command, true);
     }
-    
+
 }

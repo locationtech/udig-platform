@@ -6,7 +6,7 @@ import org.eclipse.emf.ecore.EObject;
  * TODO Purpose of net.refractions.udig.project.internal
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @model
@@ -21,7 +21,7 @@ public interface BlackboardEntry extends EObject {
 
     /**
      * The key identifiying the object.
-     * 
+     *
      * @uml.property name="key"
      * @model
      */
@@ -38,7 +38,7 @@ public interface BlackboardEntry extends EObject {
 
     /**
      * Contents to persist.
-     * 
+     *
      * @uml.property name="memento"
      * @model
      */
@@ -55,7 +55,7 @@ public interface BlackboardEntry extends EObject {
 
     /**
      * Returns the cached type of the object being stored.
-     * 
+     *
      * @uml.property name="objectClass"
      * @model transient="true" volatile="true"
      */
@@ -75,7 +75,7 @@ public interface BlackboardEntry extends EObject {
      * <p>
      * Value is generated using IPersister.load( Memento mem ).
      * </p>
-     * 
+     *
      * @return the object if it exists, or null if the cache is empty.
      * @uml.property name="object"
      * @model transient="true" volatile="true"

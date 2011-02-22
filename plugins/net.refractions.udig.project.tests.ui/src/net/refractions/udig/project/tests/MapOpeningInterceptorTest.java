@@ -15,7 +15,7 @@ public class MapOpeningInterceptorTest extends AbstractProjectUITestCase {
         TestMapOpeningInterceptor.mapOpening=null;
     }
 
-    
+
     public void testMapOpeningInterceptor() throws Exception {
         assertNull(TestMapOpeningInterceptor.mapOpening);
         Map createDefaultMap = MapTests.createDefaultMap("ftn", 3, true, null); //$NON-NLS-1$
@@ -25,9 +25,9 @@ public class MapOpeningInterceptorTest extends AbstractProjectUITestCase {
             public boolean isTrue() {
                 return TestMapOpeningInterceptor.mapOpening!=null;
             }
-            
+
         }, false);
-        
+
         assertEquals(createDefaultMap, TestMapOpeningInterceptor.mapOpening);
     }
 }

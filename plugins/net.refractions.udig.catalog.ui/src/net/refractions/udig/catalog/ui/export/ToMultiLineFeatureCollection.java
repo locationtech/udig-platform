@@ -16,9 +16,8 @@ package net.refractions.udig.catalog.ui.export;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.feature.FeatureCollection;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.GeometryAttributeType;
 import org.opengis.referencing.operation.MathTransform;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -26,15 +25,15 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 
 /**
- * Takes a FeatureCollection with features with MultiPointand Point and converts them all to 
- * MultiPoint and returns the features.  
- * 
+ * Takes a FeatureCollection with features with MultiPointand Point and converts them all to
+ * MultiPoint and returns the features.
+ *
  * @author Jesse
  * @since 1.1.0
  */
 class ToMultiLineFeatureCollection extends AbstractGeometryTransformingFeatureCollection{
 
-    public ToMultiLineFeatureCollection( FeatureCollection<SimpleFeatureType, SimpleFeature> source, SimpleFeatureType schema, GeometryDescriptor typeToUseAsGeometry, 
+    public ToMultiLineFeatureCollection( FeatureCollection source, FeatureType schema, GeometryAttributeType typeToUseAsGeometry,
             MathTransform mt, IProgressMonitor monitor ) {
         super(source, schema, typeToUseAsGeometry, mt, monitor);
     }

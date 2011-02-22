@@ -16,29 +16,25 @@
  */
 package net.refractions.udig.project.render;
 
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
-import javax.media.jai.TileCache;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.IAbstractContext;
 import net.refractions.udig.project.ILayer;
 
 import org.geotools.data.Query;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 
 /**
- * Simplifies access of resource data and output image for renderers.  
+ * Simplifies access of resource data and output image for renderers.
  * A RenderContext has three main Jobs:
  * <ul>
  * <li> Maps between a Renderer and the Layer and GeoResource it must use </li>
  * <li> Provides access to the BufferedImage that the renderer should draw to </li>
  * <li> Acts as a facade to the rest of the model </li>
  * </ul>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -49,7 +45,7 @@ public interface IRenderContext extends IAbstractContext {
      * <p>
      * Used to optimize getInfo and selection tools.
      * </p>
-     * 
+     *
      * @param screenLocation
      * @return true if non transparent pixel is rendered at screenLocation
      */
@@ -61,22 +57,13 @@ public interface IRenderContext extends IAbstractContext {
      * <p>
      * Often this feedback takes place on the display under direction of the tool.
      * </p>
-     * 
+     *
      * @param rectangle Rectangle indicating area of interest
      * @return Buffered image copied from the raster, or null if unavailable
      * @see BufferedImage
      */
     public BufferedImage copyImage( Rectangle rectangle );
 
-    /**
-     * Grab a TileCache to use for JAI operations; this tile
-     * cache can be flushed at any time; and is flushed out
-     * when this context is disposed.
-     * 
-     * @return TileCache for use with JAI operations
-     */
-    public TileCache getTileCache();
-    
     /**
      * Returns a bufferedImage that a renderer can render to.
      * <p>
@@ -87,7 +74,7 @@ public interface IRenderContext extends IAbstractContext {
      * The user of the image is required to clear the image. The image maybe cached and as a result
      * may be dirty.
      * </p>
-     * 
+     *
      * @return The bufferedImage that the renderer renders to.
      * @see BufferedImage
      */
@@ -98,7 +85,7 @@ public interface IRenderContext extends IAbstractContext {
      * <p>
      * The returned image will be the same size as the display or bigger
      * </p>
-     * 
+     *
      * @return The bufferedImage that the renderer renders to.
      * @see BufferedImage
      */
@@ -109,7 +96,7 @@ public interface IRenderContext extends IAbstractContext {
      * <p>
      * Should normally be used when only one layer is being rendered.
      * </p>
-     * 
+     *
      * @return ILayer
      * @see ILayer
      */
@@ -120,14 +107,14 @@ public interface IRenderContext extends IAbstractContext {
      * <p>
      * Should normally be used when only one layer is being rendered.
      * </p>
-     * 
+     *
      * @return IGeoResource the georesource that will be used to render the layer.
      */
     IGeoResource getGeoResource();
 
     /**
      * Determines the zorder of the renderer. Convenience method for getLayer.getZorder()
-     * 
+     *
      * @return the zorder of the layer contained in the context.
      * @see ILayer#getZorder()
      */
@@ -139,7 +126,7 @@ public interface IRenderContext extends IAbstractContext {
      * If not layer is not a CompositeRenderer then this is just a call to ILayer.isVisible().
      * Otherwise if one of the layers is visible then it should return true
      * </p>
-     * 
+     *
      * @return true if the renderer has visible data.
      * @see ILayer#isVisible()
      */
@@ -150,7 +137,7 @@ public interface IRenderContext extends IAbstractContext {
      * <p>
      * Convenience for clearImage(getImage().getWidth(), getImage.getHeight());
      * <p>
-     * 
+     *
      * @see clearImage(Rectangle)
      */
     public void clearImage();
@@ -162,7 +149,7 @@ public interface IRenderContext extends IAbstractContext {
 
     /**
      * Clears the area of the image indicated by the rectangle.
-     * 
+     *
      * @param paintArea
      * @see clearImage()
      */
@@ -170,7 +157,7 @@ public interface IRenderContext extends IAbstractContext {
 
     /**
      * Sets the status of the layer contained by the context.
-     * 
+     *
      * @see ILayer#DONE
      * @see ILayer#ERROR
      * @see ILayer#MISSING
@@ -185,7 +172,7 @@ public interface IRenderContext extends IAbstractContext {
 
     /**
      * Gets the status of the layer contained by the context.
-     * 
+     *
      * @see ILayer#DONE
      * @see ILayer#ERROR
      * @see ILayer#MISSING
@@ -201,7 +188,7 @@ public interface IRenderContext extends IAbstractContext {
      * <p>
      * This is used to provide feedback for a Layer's rendering status.
      * </p>
-     * 
+     *
      * @see ILayer#getStatusMessage()
      * @see #setStatus(int)
      * @see #getStatus()
@@ -214,7 +201,7 @@ public interface IRenderContext extends IAbstractContext {
 
     /**
      * Sets the current rendering status message
-     * 
+     *
      * @param message the status message
      * @see ILayer#getStatusMessage()
      * @see ILayer#getStatus()
@@ -223,35 +210,13 @@ public interface IRenderContext extends IAbstractContext {
      * @uml.property name="statusMessage"
      */
     public void setStatusMessage( String message );
-    
+
     public IRenderContext copy();
-    
+
     /**
-     * Returns the labeller for the next rendering.  
+     * Returns the labeller for the next rendering.
      *
      * @return the labeller that draws the labels on the top of the map.
      */
     public ILabelPainter getLabelPainter();
-    
-    
-    /**
-     * Returns the size of the image to be generated for display.  If imagesize is null then it returns the display size from
-     * the map display.
-     * 
-     * <p>This is used by the tile rendering system so a tile can have a fixed size.</p>
-     *
-     * @return
-     */
-    public Dimension getImageSize();
-   
-    
-    /**
-     * Returns the bounds in world coordinates represented by the image.
-     * <p>
-     * For regular renderers this will be the viewport bounds, however for a tiled  renderer this
-     * will be the bounds of the tile.
-     *
-     * @return
-     */
-    public ReferencedEnvelope getImageBounds();
 }

@@ -30,6 +30,7 @@ import net.refractions.udig.catalog.ui.internal.Messages;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
@@ -53,12 +54,12 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 /**
  * An abstract class that simplifies making a PreferencePage for obtaining a 3rd party proprietary jar required for a plugin.
- * 
+ *
  * <p> An example of this is the Oracle Spatial JDBC Driver jar.  It cannot be shipped with uDig because of licensing so it has
- * a preference page that allows the user to easily install the jar into uDig</p> 
- * 
+ * a preference page that allows the user to easily install the jar into uDig</p>
+ *
  * @see OracleSpatialPreferences
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -117,17 +118,17 @@ public abstract class AbstractProprietaryJarPreferencePage extends PreferencePag
         layout.marginRight = 0;
         layout.marginLeft = 0;
         comp.setLayout(layout);
-    
+
         ui=new UI[getRequiredJarsCount()];
         List<Control> tablist=new ArrayList<Control>();
-        
+
         for( int i = 0; i < ui.length; i++ ) {
             ui[i]=createJDBCdriverUI(getDefaultJarName(i), getDriverLabel(i), comp, null);
             tablist.add(ui[i].input);
             tablist.add(ui[i].browse);
         }
         comp.setTabList(tablist.toArray(new Control[0]));
-        
+
         return comp;
     }
 
@@ -142,7 +143,7 @@ public abstract class AbstractProprietaryJarPreferencePage extends PreferencePag
      *
      * @param jarIndex the jar input area being created.
      * @see #getRequiredJarsCount()
-     * 
+     *
      * @return  The label beside the text area that indicates what type of file the user needs to add.
      */
     protected abstract String getDriverLabel(int jarIndex);
@@ -168,21 +169,21 @@ public abstract class AbstractProprietaryJarPreferencePage extends PreferencePag
     private UI createJDBCdriverUI( String jar_name, String label, final Composite comp, Control above ) {
     	final UI ui=new UI(jar_name);
         ui.label = new Label(comp, SWT.FLAT);
-        ui.label.setText(label); 
+        ui.label.setText(label);
         GridData layoutData = new GridData(SWT.LEFT, SWT.CENTER, false, false);
         ui.label.setLayoutData(layoutData);
-    
+
         ui.input = new Text(comp, SWT.SINGLE | SWT.BORDER);
         ui.input.addModifyListener(new ModifyListener(){
             public void modifyText( org.eclipse.swt.events.ModifyEvent e ) {
                 File srcDriver = new File(ui.input.getText());
                 if (installed() )
-                    acceptance(Messages.DependencyQueryPreferencePage_fileExists, ui.input); 
+                    acceptance(Messages.DependencyQueryPreferencePage_fileExists, ui.input);
                 else if (!srcDriver.exists() )
-                	error(Messages.DependencyQueryPreferencePage_fileNotFound, ui.input); 
+                	error(Messages.DependencyQueryPreferencePage_fileNotFound, ui.input);
                 else
-                	error(Messages.DependencyQueryPreferencePage_notValid, ui.input); 
-    
+                	error(Messages.DependencyQueryPreferencePage_notValid, ui.input);
+
             };
         });
         String storedValue = getPreferenceStore().getString(ui.jar_name);
@@ -192,30 +193,30 @@ public abstract class AbstractProprietaryJarPreferencePage extends PreferencePag
         ui.input.setText(storedValue == null ? ui.jar_name : storedValue);
         layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
         ui.input.setLayoutData(layoutData);
-    
+
         ui.browse = new Button(comp, SWT.PUSH);
-        ui.browse.setText(Messages.DependencyQueryPreferencePage_browse); 
-    
+        ui.browse.setText(Messages.DependencyQueryPreferencePage_browse);
+
         ui.browse.addSelectionListener(new SelectionListener(){
-    
+
             public void widgetSelected( SelectionEvent e ) {
                 widgetDefaultSelected(e);
             }
-    
+
             public void widgetDefaultSelected( SelectionEvent e ) {
                 FileDialog fileDialog = new FileDialog(comp.getShell(), SWT.OPEN);
                 fileDialog.setFilterExtensions(new String[]{"*.jar"}); //$NON-NLS-1$
-                fileDialog.setFilterNames(new String[]{Messages.DependencyQueryPreferencePage_archive}); 
+                fileDialog.setFilterNames(new String[]{Messages.DependencyQueryPreferencePage_archive});
                 String result = fileDialog.open();
                 if (result != null)
                     ui.input.setText(result);
             }
-    
+
         });
-    
+
         layoutData = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
         ui.browse.setLayoutData(layoutData);
-        
+
         return ui;
     }
 
@@ -225,7 +226,7 @@ public abstract class AbstractProprietaryJarPreferencePage extends PreferencePag
     		ui.input.setText(ui.jar_name);
     	}
         super.performDefaults();
-    
+
         if (listener != null)
             listener.handleEvent(null);
     }
@@ -260,17 +261,17 @@ public abstract class AbstractProprietaryJarPreferencePage extends PreferencePag
                 getPreferenceStore().putValue(current.jar_name, current.input.getText());
             }
         }
-    
+
         if (listener != null)
             listener.handleEvent(null);
-    
+
         boolean restart = MessageDialog.openQuestion(getShell(),
                 Messages.DependencyQueryPreferencePage_restartTitle, Messages.DependencyQueryPreferencePage_restartNeeded
                         + Messages.DependencyQueryPreferencePage_restartQuestion);
         if (restart) {
             PlatformUI.getWorkbench().restart();
         }
-    
+
         return true;
     }
 
@@ -289,7 +290,7 @@ public abstract class AbstractProprietaryJarPreferencePage extends PreferencePag
     private void renameFile( File flag, String newname, boolean deleteOnFail ) {
         if (flag != null) {
             File dest = new File(flag.getParentFile(), newname);
-    
+
             try {
                 if (dest.exists())
                     dest.delete();
@@ -317,10 +318,10 @@ public abstract class AbstractProprietaryJarPreferencePage extends PreferencePag
             fileOutputStream = new FileOutputStream(dest);
             // Create channel on the source
             srcChannel = fileInputStream.getChannel();
-    
+
             // Create channel on the destination
             dstChannel = fileOutputStream.getChannel();
-    
+
             // Copy file contents from source to destination
             dstChannel.transferFrom(srcChannel, 0, srcChannel.size());
         } finally {
@@ -353,13 +354,13 @@ public abstract class AbstractProprietaryJarPreferencePage extends PreferencePag
     }
 
     private void error( String message, Text field ) {
-    	setMessage(message, IStatus.WARNING); 
+    	setMessage(message, IStatus.WARNING);
         field.setForeground(getRed());
         field.setToolTipText(message);
     }
 
     private void acceptance( String message, Text field ) {
-    	setMessage(null, IStatus.WARNING); 
+    	setMessage(null, IStatus.WARNING);
         field.setForeground(getBlack());
         field.setToolTipText(message);
     }

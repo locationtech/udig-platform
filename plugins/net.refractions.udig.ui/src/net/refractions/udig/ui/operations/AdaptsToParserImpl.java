@@ -18,7 +18,7 @@ import net.refractions.udig.internal.ui.UiPlugin;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 
-public class AdaptsToParserImpl implements FilterParser { 
+public class AdaptsToParserImpl implements FilterParser {
 
     public OpFilter parse( IConfigurationElement element ) {
         String adaptsTo = element.getAttribute("target"); //$NON-NLS-1$

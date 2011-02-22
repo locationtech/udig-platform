@@ -15,7 +15,7 @@
 package net.refractions.udig.issues;
 
 /**
- * Collection of public constants 
+ * Collection of public constants
  * @author Jesse
  * @since 1.1.0
  */

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.catalog.memory;
 
@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
 import net.refractions.udig.catalog.ui.UDIGConnectionPage;
+import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * @author jones
  */
-public class NewServiceConnectionPage extends AbstractUDIGImportPage implements UDIGConnectionPage {
+public class NewServiceConnectionPage extends WorkflowWizardPage implements UDIGConnectionPage {
 
     private Map<String, Serializable> params=new HashMap<String, Serializable>();
     public NewServiceConnectionPage() {

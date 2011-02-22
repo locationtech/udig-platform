@@ -16,16 +16,12 @@
  */
 package net.refractions.udig.catalog.internal.ui;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.List;
 
 import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IRepository;
 import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.core.internal.CorePlugin;
 
 import org.eclipse.jface.viewers.Viewer;
@@ -41,26 +37,11 @@ public class CatalogViewDropAdapter extends ViewerDropAdapter {
     @Override
     public boolean performDrop( Object data ) {
 
-        IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
-        IRepository local = CatalogPlugin.getDefault().getLocal();
-        
         if (data instanceof URL) {
-            URL url = (URL) data;
-            try {
-                local.acquire( url, null );  // add to catalog if needed
-                
-            } catch (IOException e) {
-                CatalogUIPlugin.log( "Drag and Drop "+url, e);
-            }
-            //List<IService> candidates = serviceFactory.createService((URL) data);
+            CatalogPlugin.getDefault().getServiceFactory().createService((URL) data);
         } else if (data instanceof java.util.Map) {
-            java.util.Map<String, Serializable> connectionParams = (java.util.Map<String, Serializable>) data;
-            try {
-                local.acquire(connectionParams, null);
-            } catch (IOException e) {
-                CatalogUIPlugin.log( "Drag and Drop "+connectionParams, e);
-            }
-            //List<IService> candidates = serviceFactory.createService( connectionParams );            
+            CatalogPlugin.getDefault().getServiceFactory().createService(
+                    (java.util.Map<String, Serializable>) data);
         } else if (data instanceof String || data instanceof String[]) {
             List<URL> urls = null;
             if (data instanceof String) {
@@ -68,14 +49,16 @@ public class CatalogViewDropAdapter extends ViewerDropAdapter {
             } else {
                 urls = CorePlugin.stringsToURLs((String[]) data);
             }
+
             for( URL url : urls ) {
-                List<IService> services = serviceFactory
+                List<IService> services = CatalogPlugin.getDefault().getServiceFactory()
                         .createService(url);
                 for( IService service : services ) {
                     CatalogPlugin.getDefault().getLocalCatalog().add(service);
                 }
             }
         }
+
         return true;
     }
 

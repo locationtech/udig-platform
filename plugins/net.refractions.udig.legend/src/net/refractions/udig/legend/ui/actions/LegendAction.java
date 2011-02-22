@@ -34,7 +34,7 @@ public class LegendAction extends AbstractToggleMapGraphicAction implements IWor
     protected String getExtensionID() {
         return "legend"; //$NON-NLS-1$
     }
-    
+
     public void init( IWorkbenchWindow window ) {
     }
 

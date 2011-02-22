@@ -1,3 +1,2 @@
 net.refractions.udig.catalog.shp/debug=true
-net.refractions.udig.catalog.shp/debug/finest=true
-net.refractions.udig.catalog.shp/debug/fine=true
+net.refractions.udig.catalog.shp/debug/trace=true

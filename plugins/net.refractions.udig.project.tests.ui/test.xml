@@ -8,7 +8,7 @@
   <!-- sets the library-file -->
   <property name="library-file"
             value="${eclipse-home}/plugins/${org.eclipse.test}/library.xml"/>
-	
+
   <!-- plugin specific properties -->
   <property name="plugin-name" value="net.refractions.udig.project.tests.ui"/>
 	<property name="testClass" value="net.refractions.udig.project.tests.ui.ProjectUITestSuite"/>
@@ -27,7 +27,7 @@
 
   <!-- This target defines the tests that need to be run. -->
   <target name="suite">
-    <property name="test-folder" 
+    <property name="test-folder"
               value="${eclipse-home}/${testTarget}_folder"/>
     <delete dir="${test-folder}" quiet="true"/>
     <ant target="core-test" antfile="${library-file}" dir="${eclipse-home}">

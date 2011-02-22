@@ -20,14 +20,14 @@ package net.refractions.udig.catalog.internal.ui;
  * Image constants for use with Images class.
  * <p>
  * Example use:
- * 
+ *
  * <pre><code>
  *  Images.
  *  TODO WRITE MORE DOCS HERE, JODY
  * </code></pre>
- * 
+ *
  * </p>
- * 
+ *
  * @author jgarnett
  */
 public interface ImageConstants {
@@ -89,7 +89,7 @@ public interface ImageConstants {
     /** <code>GRID_OBJ</code> field */
     public final static String GRID_OBJ = PATH_OBJECT + "grid_obj.gif"; //$NON-NLS-1$
     /** <code>GRID_FILE_OBJ</code> field */
-    public final static String GRID_FILE_OBJ = PATH_OBJECT + "grid_file_obj.gif"; //$NON-NLS-1$    
+    public final static String GRID_FILE_OBJ = PATH_OBJECT + "grid_file_obj.gif"; //$NON-NLS-1$
     /** <code>MAPFOLDER_OBJ</code> field */
     public final static String MAPFOLDER_OBJ = PATH_OBJECT + "mapfolder_obj.gif"; //$NON-NLS-1$
     /** <code>MAPFOLDER_NOEXIST_OBJ</code> field */
@@ -97,7 +97,7 @@ public interface ImageConstants {
     /** <code>MEMORY_OBJ</code> field */
     public final static String MEMORY_OBJ = PATH_OBJECT + "memory_obj.gif"; //$NON-NLS-1$
     /** <code>LAYER_OBJ</code> field */
-    public final static String LAYER_OBJ = PATH_OBJECT + "layer_obj.gif"; //$NON-NLS-1$    
+    public final static String LAYER_OBJ = PATH_OBJECT + "layer_obj.gif"; //$NON-NLS-1$
     /** <code>REPOSITORY_OBJ</code> field */
     public final static String REPOSITORY_OBJ = PATH_OBJECT + "repository_obj.gif"; //$NON-NLS-1$
     /** <code>SERVER_OBJ</code> field */
@@ -122,7 +122,7 @@ public interface ImageConstants {
 
     /** <code>DATA_WIZBAN</code> field used for import data wizard */
     public final static String DATA_WIZBAN = PATH_WIZBAN + "catalog_wiz.gif"; //$NON-NLS-1$
-    
+
     /** <code>DATA_WIZBAN</code> field used for selecting resources */
     public static final String CHOOSE_LAYER_WIZARD = PATH_WIZBAN+"chooselayer_wiz.gif";
 

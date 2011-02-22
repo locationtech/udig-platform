@@ -17,13 +17,11 @@ package net.refractions.udig.ui.operations;
 /**
  * Determines whether a property value is true or false given an object.
  * <p>
- * This class is must be implemented by objectProperty extensions to teach the system new
- * properties for objects.
+ * This class is must be implemented by objectProperty extensions to teach the system new properties for
+ * objects.
  * </p>
- * You can compare this to the idea of "core expressions" introduced to the RCP
- * platform in eclipse. This is something like a core expression that can only
- * be a Boolean.
- * 
+ *
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -34,26 +32,26 @@ public interface PropertyValue<T> {
      * are legal values.
      *
      * @param object the object that will be used to determine if the value is legal
-     * @param value an arbitrary string. 
-     * @return Returns true if the value provided is a legal value for the object.  
+     * @param value an arbitrary string.
+     * @return Returns true if the value provided is a legal value for the object.
      */
     boolean isTrue( T object, String value );
     /**
      * Returns true if the results can be cached.  A result can be cached if
      * <ol>
      * <li>The value will never change</li>
-     * <li>It is possible for the filter to listen for changes and update listeners 
+     * <li>It is possible for the filter to listen for changes and update listeners
      * added via the {@link #addListener(IOpFilterListener)} method</li>
      * </ol>
-     * 
-     * Therefore this method only returns false if it must be calculated each time because there is 
+     *
+     * Therefore this method only returns false if it must be calculated each time because there is
      * no way to listen for state changes.  If it is non-blocking that is fine, if it is blocking
      * then try to do this rarely.
      *
-     * @return true if the results can be cached.  
+     * @return true if the results can be cached.
      */
     boolean canCacheResult();
-    
+
     /**
      * Returns true if processing this filter may block when {@link #accept(Object)} is called.
      *
@@ -61,7 +59,7 @@ public interface PropertyValue<T> {
      */
     boolean isBlocking();
     /**
-     * Adds a listener to listen for events indicating the value has changed. 
+     * Adds a listener to listen for events indicating the value has changed.
      *
      * @param listener listener to add
      */

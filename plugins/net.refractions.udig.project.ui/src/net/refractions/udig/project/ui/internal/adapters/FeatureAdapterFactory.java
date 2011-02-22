@@ -32,14 +32,15 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySource2;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
+import org.geotools.feature.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * Adapts Geotools objects to Eclipse objects, such as Adaptable objects, property sources, etc...
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -50,7 +51,7 @@ public class FeatureAdapterFactory implements IAdapterFactory {
             IStructuredContentProvider.class, ITableLabelProvider.class, ITableColorProvider.class,
             FeatureTableProvider.class, IAdaptable.class};
 
-    static final Class[] adaptableClasses = new Class[]{SimpleFeature.class, Coordinate.class,
+    static final Class[] adaptableClasses = new Class[]{Feature.class, Coordinate.class,
             Coordinate[].class, Geometry.class, IGeoResource.class};
 
     /**
@@ -60,7 +61,7 @@ public class FeatureAdapterFactory implements IAdapterFactory {
         if (!canAdaptTo(adapterType) || !canAdapt(adaptableObject))
             return null;
         if (IPropertySource.class.isAssignableFrom(adapterType)) {
-            if (SimpleFeature.class.isAssignableFrom(adaptableObject.getClass()))
+            if (Feature.class.isAssignableFrom(adaptableObject.getClass()))
                 return createFeaturePropertySource(adaptableObject);
 
             if (Geometry.class.isAssignableFrom(adaptableObject.getClass()))
@@ -86,7 +87,7 @@ public class FeatureAdapterFactory implements IAdapterFactory {
 
     /**
      * Returns true if the adaptableObject can be adapted to one of the supported adapters.
-     * 
+     *
      * @param adaptableObject the object to adapt
      * @return true if the adaptableObject can be adapted to one of the supported adapters.
      */
@@ -103,7 +104,7 @@ public class FeatureAdapterFactory implements IAdapterFactory {
      * <p>
      * A convenience method that searches the array from getAdapterList()
      * </p>
-     * 
+     *
      * @param adapterType the class to see if the factory can create an adapter for.
      * @return true if an adapter can be made for the type.
      */
@@ -117,17 +118,17 @@ public class FeatureAdapterFactory implements IAdapterFactory {
 
     /**
      * Creates a PropertySource for Features
-     * 
+     *
      * @param adaptableObject
      * @return a PropertySource for Features
      */
     private IPropertySource2 createFeaturePropertySource( Object adaptableObject ) {
-        return new FeaturePropertySource((SimpleFeature) adaptableObject);
+        return new FeaturePropertySource((Feature) adaptableObject);
     }
 
     /**
      * Creates a PropertySource for Features
-     * 
+     *
      * @param adaptableObject
      * @return a PropertySource for Features
      */
@@ -137,7 +138,7 @@ public class FeatureAdapterFactory implements IAdapterFactory {
 
     /**
      * Creates a PropertySource for Features
-     * 
+     *
      * @param adaptableObject
      * @return a PropertySource for Features
      */

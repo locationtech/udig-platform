@@ -41,43 +41,40 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * This is the class an edit tool configures to do all the work.
- * <p>
- * The tool receives events from the view port, and forwards those events to 
- * this handler. The handler will figure out behaviour to run; taking the
- * resulting commands to execute.
- * 
+ * This is the class that does all the work. An Edit tool adds Mode objects to the EditToolHandler.
+ * Each Mode has attributes that indicate whether it is valid.
+ *
  * @author jones
  * @since 1.1.0
  */
 public class EditToolHandler {
 
     /**
-     * The key for the currently selected/edit state.  
+     * The key for the currently selected/edit state.
      * It is put on the map referenced by the context (see {@link #getContext()})
      */
     public static final String EDITSTATE = "EDIT_TOOL_HANDLER_EDIT_STATE_KEY_33847562"; //$NON-NLS-1$
     /**
-     * The key for the lock required if modifying the edit state or shape.  
+     * The key for the lock required if modifying the edit state or shape.
      * It is put on the map referenced by the context (see {@link #getContext()})
      */
     private static final String LOCK = "EDIT_TOOL_HANDLER_LOCK_KEY_345280194"; //$NON-NLS-1$
     /**
-     * The key for the currently selected/edit shape.  
+     * The key for the currently selected/edit shape.
      * It is put on the map referenced by the context (see {@link #getContext()})
      */
     public static final String CURRENT_SHAPE = "EDIT_TOOL_HANDLER_CURRENT_SHAPE_KEY_872839"; //$NON-NLS-1$
     /** When there is a switch in the currently selected layer the current state is stored on the old layer so if the
      * layer selected layer the state can be restored.
-     * 
-     * <p>Modify with <em>Care</em> this is primarily used by the framework for its workflow but if the workflow 
+     *
+     * <p>Modify with <em>Care</em> this is primarily used by the framework for its workflow but if the workflow
      * is not pleasing then modification is permitted.  </p>
      */
     public static final String STORED_CURRENT_STATE = "STORED_CURRENT_STATE"; //$NON-NLS-1$
     /** When there is a switch in the currently selected layer the current shape is stored on the old layer so if the
      * layer selected layer the state can be restored.
-     * 
-     * <p>Modify with <em>Care</em> this is primarily used by the framework for its workflow but if the workflow 
+     *
+     * <p>Modify with <em>Care</em> this is primarily used by the framework for its workflow but if the workflow
      * is not pleasing then modification is permitted.  </p>
      */
     public static final String STORED_CURRENT_SHAPE = "STORED_CURRENT_SHAPE"; //$NON-NLS-1$
@@ -100,8 +97,6 @@ public class EditToolHandler {
     private IToolContext context;
     private MouseTracker mouseTracker = new MouseTracker(this);
     protected boolean testing = false;
-    protected AbstractEditTool tool;
-    
 
     // see #lock
     Object behaviourLock;
@@ -115,14 +110,14 @@ public class EditToolHandler {
     }
 
     /**
-     * Called by AbstractEditTool when activated. 
-     * 
+     * Called by AbstractEditTool when activated.
+     *
      * @param active
      */
     protected void setActive( boolean active ) {
         if (active) {
             oldState=EditState.NONE;
-            
+
             // if current geom no longer on BB then delete
             ILayer editLayer = getEditLayer();
             if (!getEditBlackboard(editLayer).getGeoms().contains(
@@ -155,7 +150,7 @@ public class EditToolHandler {
                 runnable.handleDeactivateError(this, error);
             }
         }
-        
+
         EditUtils.instance.clearLayerStateShapeCache(getContext().getMapLayers());
 
         for( IDrawCommand drawCommand : drawCommands ) {
@@ -167,7 +162,7 @@ public class EditToolHandler {
 
     private void disableListeners() {
         EditBlackboardUtil.doneListening();
-        
+
         EditBlackboardUtil.disableClearBlackboardCommand();
     }
 
@@ -186,22 +181,22 @@ public class EditToolHandler {
 
     private void enableListeners() {
         EditManagerListener.enableEditManagerListener(this);
-        
+
         EditBlackboardUtil.enableClearBlackboardCommand(context);
     }
 
     // This state is used to store the state before it is set to Illegal by
-    // the enablement behaviours.  Since enablement behaviours can set the state to 
+    // the enablement behaviours.  Since enablement behaviours can set the state to
     // illegal based on unknown reasons the previous state has to be maintaned
     // by the framework to remove that burden from the
     // enablement behaviour implementors.
     private EditState oldState;
-    
+
     /**
      * Runs a list of behaviours. Expected uses are
      * handler.runBehaviours(handler.getAcceptBehaviours()); or
      * handler.runBehaviours(handler.getCancelBehaviours());
-     * 
+     *
      * @param list
      */
     public BehaviourCommand getCommand( List<Behaviour> list ) {
@@ -210,12 +205,12 @@ public class EditToolHandler {
 
     /**
      * Runs through the list of modes and runs all the modes that are valid in the current context.
-     * 
+     *
      * @param e mouse event that just occurred.
      * @param eventType the type of event that just occurred
      */
     protected void handleEvent( MapMouseEvent e, EventType eventType ) {
-        
+
         synchronized (this) {
             needRepaint = false;
             this.processingEvent = true;
@@ -223,14 +218,14 @@ public class EditToolHandler {
         try {
             if (getCurrentState() == EditState.BUSY)
                 return;
-            
+
             runEnablementBehaviours(e,eventType);
-            
+
             if (getCurrentState() == EditState.ILLEGAL )
                 return;
 
             mouseTracker.updateState(e, eventType);
-           
+
             runEventBehaviours(e, eventType);
         } finally {
             synchronized (this) {
@@ -251,7 +246,7 @@ public class EditToolHandler {
                     break;
                 }
         }
-        
+
         if( errorMessage==null  ){
             if( getCurrentState()==EditState.ILLEGAL ){
                 setCurrentState(oldState);
@@ -291,7 +286,7 @@ public class EditToolHandler {
     }
     /**
      * Returns true if the handler is unlocked or the behaviour has the correct key.
-     * 
+     *
      * @param behaviour trying to run
      * @return Returns true if the handler is unlocked or the behaviour has the correct key.
      */
@@ -383,7 +378,7 @@ public class EditToolHandler {
     /**
      * Returns the EventBehaviours that may be run when an event occurs. This list is thread safe and may be
      * modified.
-     * 
+     *
      * @return the EventBehaviours that may be run when an event occurs. This list is thread safe and may be
      * modified.
      */
@@ -403,14 +398,14 @@ public class EditToolHandler {
 
     /**
      * Gets the EditBlackboard of the map.
-     * 
+     *
      * @return
      */
     public EditBlackboard getEditBlackboard( ILayer layer ) {
 
         return EditBlackboardUtil.getEditBlackboard(getContext(), layer);
     }
-    
+
     /**
      * Returns the currently selected layer, or if the EditManager is locked,
      * it will return the edit layer.
@@ -428,7 +423,7 @@ public class EditToolHandler {
     /**
      * Returns the Activators that are run during activation and deactivation This list is thread
      * safe and may be modified.
-     * 
+     *
      * @return Returns the activationActions.
      */
     public Set<Activator> getActivators() {
@@ -440,7 +435,7 @@ public class EditToolHandler {
      * <p>
      * This list is thread safe and may be modified.
      * </p>
-     * 
+     *
      * @return Returns the drawCommands.
      */
     public List<IDrawCommand> getDrawCommands() {
@@ -449,7 +444,7 @@ public class EditToolHandler {
 
     /**
      * Gets the tool context object that Modes and Activators may use.
-     * 
+     *
      * @return
      */
     public IToolContext getContext() {
@@ -465,13 +460,13 @@ public class EditToolHandler {
 
     /**
      * Sets the ViewportPane's cursor
-     * 
+     *
      * @param cursor_id the SWT.CURSOR_XXX id of the cursor to set.
      * @deprecated
      */
     public void setCursor( final int cursor_id ) {
         if (Display.getCurrent() != null) {
-        	
+
         	if(tool != null){
         		tool.setCursorID(cursor_id+""); //$NON-NLS-1$
         	}
@@ -489,17 +484,17 @@ public class EditToolHandler {
             });
         }
     }
-    
+
     /**
      * The method gets ID of the cursor as configured by extension or
      * by <code>ModalTool.*_CURSOR</code> value corresponding to <i>SWT.CURSOR_*</i> constants
      *  and delegates the call to <code>ModalTool</code> to find the cursor
      *  in cache and set it.
-     * 
+     *
      * @param cursorID
      */
     public void setCursor(final String cursorID) {
-    	
+
         if (Display.getCurrent() != null) {
         	if(tool != null){
         		tool.setCursorID(cursorID);
@@ -518,18 +513,18 @@ public class EditToolHandler {
 
     /**
      * Sets the ViewportPane's cursor
-     * 
+     *
      * @param cursor new cursor
      * @deprecated
      */
-    public void setCursor( final Cursor cursor ) {       
+    public void setCursor( final Cursor cursor ) {
 
         if( Display.getCurrent()!=null ){
             getContext().getViewportPane().setCursor(cursor);
         }else{
             final Display display = PlatformUI.getWorkbench().getDisplay();
             display.asyncExec(new Runnable(){
-    
+
                 public void run() {
                     getContext().getViewportPane().setCursor(cursor);
                 }
@@ -548,7 +543,7 @@ public class EditToolHandler {
      * Returns the list of behaviours that are run when the Enter key is pressed. EventBehaviours
      * are welcome to run these behaviours as well if they wish to accept the current edit. The list
      * is thread safe and can be modified.
-     * 
+     *
      * @return Returns the acceptBehaviours.
      */
     public List<Behaviour> getAcceptBehaviours() {
@@ -558,7 +553,7 @@ public class EditToolHandler {
     /**
      * Returns the list of behaviours that are run when the Esc key is pressed. The list is thread
      * safe and can be modified.
-     * 
+     *
      * @see #getCommand(List)
      * @return Returns the cancelBehaviours.
      */
@@ -574,7 +569,7 @@ public class EditToolHandler {
      * This is not a reentrant lock so it cannot be locked multiple times. Also the lock cannot be
      * null
      * </p>
-     * 
+     *
      * @param behaviour the behaviour that is locking the handler
      */
     public void lock( LockingBehaviour behaviour ) {
@@ -588,7 +583,7 @@ public class EditToolHandler {
 
     /**
      * Returns true if Handler has been locked by {@link #lock(LockingBehaviour)}
-     * 
+     *
      * @return Returns true if Handler has been locked by {@link #lock(LockingBehaviour)}
      */
     public boolean isLocked() {
@@ -599,7 +594,7 @@ public class EditToolHandler {
      * Unlocks the handler so all behaviours can run. The behaviour's
      * {@link LockingBehaviour#getKey(EditToolHandler)} method must return the same object as the
      * locking behaviours {@link LockingBehaviour#getKey(EditToolHandler)} method.
-     * 
+     *
      * @param behaviour
      */
     public void unlock( LockingBehaviour behaviour ) {
@@ -612,7 +607,7 @@ public class EditToolHandler {
     /**
      * Returns true if the behaviour's {@link LockingBehaviour#getKey(EditToolHandler)} returns the
      * key for the lock.
-     * 
+     *
      * @param behaviour the behaviour to test
      * @return Returns true if the behaviour's {@link LockingBehaviour#getKey(EditToolHandler)}
      *         returns the key for the lock.
@@ -640,25 +635,15 @@ public class EditToolHandler {
             needRepaint = true;
         }
     }
-    
+
+    protected AbstractEditTool tool;
+
     public void setTool(AbstractEditTool tool){
     	this.tool = tool;
     }
 
-    /**
-     * Returns the tool that the handler works with
-     *
-     * @return the tool that the handler works with
-     */
     public AbstractEditTool getTool(){
     	return tool;
-    }
-
-    /**
-     * A convenience method for obtaining the current edit blackboard.
-     */
-    public EditBlackboard getCurrentEditBlackboard() {
-        return getEditBlackboard(getEditLayer());
     }
 
 }

@@ -34,11 +34,10 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource2;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.GeometryDescriptor;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.Feature;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.GeometryAttributeType;
 import org.opengis.util.CodeList;
 
 import com.vividsolutions.jts.geom.Envelope;
@@ -46,8 +45,8 @@ import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * An adapter that allows features to act as a property source for a property sheet. The sheet
- * allows the victim's attributes to be edited and viewed.
- * 
+ * allows the victim's attributes to be editted and viewed.
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -56,39 +55,37 @@ public class FeaturePropertySource implements IPropertySource2 {
     private static final String DEFAULT_GEOM = "DEFAULT_GEOM"; //$NON-NLS-1$
     private static final String BOUNDING_BOX = "BOUNDING_BOX"; //$NON-NLS-1$
     private static final String FEATURE = "FEATURE"; //$NON-NLS-1$
-    
-    private SimpleFeature feature = null;
-    private SimpleFeature old = null;
-    
+    private Feature feature = null;
+    private Feature old = null;
     private Map<Geometry, Object> geomProperties = new HashMap<Geometry, Object>();
-    private Map<AttributeDescriptor,Object> attrProperties = new HashMap<AttributeDescriptor,Object>();
-    private List<AttributeDescriptor> attrs;
+    private Map<AttributeType,Object> attrProperties = new HashMap<AttributeType,Object>();
+    private AttributeType[] attrs;
     private IPropertyDescriptor[] descriptors;
     private boolean attribute;
-    
-    /** Are the attributes editable in cell editors. */ 
+
+    /** Are the attributes editable in cell editors. */
     private boolean editable = true;
     private IMap map;
 
     /**
      * Creates a new instance of FeaturePropertySource
-     * 
+     *
      * @param feature The feature that this property source refers to.
      */
-    public FeaturePropertySource( SimpleFeature feature ) {
+    public FeaturePropertySource( Feature feature ) {
         this(feature, false);
     }
     /**
      * Creates a new instance of FeaturePropertySource
-     * 
+     *
      * @param feature2
      * @param attribute
      */
-    public FeaturePropertySource( SimpleFeature feature2, boolean attribute ) {
+    public FeaturePropertySource( Feature feature2, boolean attribute ) {
         boolean editable=false;
         if( feature2 instanceof IAdaptable ){
             IAdaptable adaptable = (IAdaptable)feature2;
-            if( adaptable.getAdapter(ILayer.class)!=null 
+            if( adaptable.getAdapter(ILayer.class)!=null
                     || adaptable.getAdapter(IMap.class)!=null ){
                 editable=true;
             }
@@ -96,16 +93,15 @@ public class FeaturePropertySource implements IPropertySource2 {
     	init( feature2, attribute, editable);
 
     }
-    
-    public FeaturePropertySource( SimpleFeature feature2, boolean attribute, boolean editable ){
+
+    public FeaturePropertySource( Feature feature2, boolean attribute, boolean editable ){
         init(feature2, attribute, editable);
     }
-    
-    private void init( SimpleFeature feature2, boolean attribute, boolean editable ) {
+    private void init( Feature feature2, boolean attribute, boolean editable ) {
         this.feature = feature2;
         try {
             if (feature2 != null)
-                old = SimpleFeatureBuilder.copy(feature);
+                old = feature.getFeatureType().duplicate(feature);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -124,14 +120,13 @@ public class FeaturePropertySource implements IPropertySource2 {
 
         }
     }
-    
+
     /**
      * @see org.eclipse.ui.views.properties.IPropertySource#getEditableValue()
      */
     public Object getEditableValue() {
         return ""; //$NON-NLS-1$
     }
-    
     /**
      * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
      */
@@ -140,14 +135,14 @@ public class FeaturePropertySource implements IPropertySource2 {
             boolean hasAttrs = false;
             List<IPropertyDescriptor> descrps = new ArrayList<IPropertyDescriptor>();
             PropertyDescriptor d = new PropertyDescriptor(ID, "ID"); //$NON-NLS-1$
-            d.setCategory(Messages.FeaturePropertySource_feature); 
+            d.setCategory(Messages.FeaturePropertySource_feature);
             descrps.add(d);
-            d = new GeometryPropertyDescriptor(DEFAULT_GEOM, 
+            d = new GeometryPropertyDescriptor(DEFAULT_GEOM,
             		Messages.FeaturePropertySource_defaultGeometry);
-            d.setCategory(Messages.FeaturePropertySource_geometries); 
+            d.setCategory(Messages.FeaturePropertySource_geometries);
             descrps.add(d);
-            d = new PropertyDescriptor(BOUNDING_BOX, Messages.FeaturePropertySource_bounds); 
-            d.setCategory(Messages.FeaturePropertySource_feature); 
+            d = new PropertyDescriptor(BOUNDING_BOX, Messages.FeaturePropertySource_bounds);
+            d.setCategory(Messages.FeaturePropertySource_feature);
             d.setLabelProvider(new LabelProvider(){
                 /**
                  * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
@@ -167,24 +162,23 @@ public class FeaturePropertySource implements IPropertySource2 {
             });
             descrps.add(d);
             if (!attribute) {
-                SimpleFeatureType ft = feature.getFeatureType();
-                attrs = ft.getAttributeDescriptors();
-                int i = -1;
-                for (AttributeDescriptor at : attrs) {
-                	i++;
-                    String name = at.getName().getLocalPart().toLowerCase();
+                FeatureType ft = feature.getFeatureType();
+                attrs = ft.getAttributeTypes();
+                for( int i = 0; i < attrs.length; i++ ) {
+                    AttributeType at = attrs[i];
+                    String name = at.getName().toLowerCase();
                     name = name.substring(0, 1).toUpperCase() + name.substring(1);
-                    if ( at instanceof GeometryDescriptor ) {
-                        if (feature.getAttribute(at.getLocalName()) != feature.getDefaultGeometry()) {
+                    if ( at instanceof GeometryAttributeType ) {
+                        if (feature.getAttribute(i) != feature.getDefaultGeometry()) {
                             d = new GeometryPropertyDescriptor(Integer.valueOf(i), name
-                                    + Messages.FeaturePropertySource_geometry); 
-                            d.setCategory(Messages.FeaturePropertySource_geometries); 
+                                    + Messages.FeaturePropertySource_geometry);
+                            d.setCategory(Messages.FeaturePropertySource_geometries);
                             descrps.add(d);
                         }
                     } else {
-                        if (SimpleFeature.class.isAssignableFrom(at.getType().getBinding())) {
+                        if (Feature.class.isAssignableFrom(at.getType())) {
                             d = new PropertyDescriptor(FEATURE + Integer.valueOf(i), name);
-                        } else if (Collection.class.isAssignableFrom(at.getType().getBinding()))
+                        } else if (Collection.class.isAssignableFrom(at.getType()))
                             d = new PropertyDescriptor(Integer.valueOf(i), name);
                         else {
                             d = new AttributePropertyDescriptor(Integer.valueOf(i), name, at, ft, editable);
@@ -203,11 +197,11 @@ public class FeaturePropertySource implements IPropertySource2 {
                         // d.setValidator(new AttributeValidator(at));
 
                         if (name.equalsIgnoreCase("name")) { //$NON-NLS-1$
-                            d.setCategory(Messages.FeaturePropertySource_feature); 
+                            d.setCategory(Messages.FeaturePropertySource_feature);
                             descrps.add(0, d);
                         } else {
                             hasAttrs = true;
-                            d.setCategory(Messages.FeaturePropertySource_featureAttributes); 
+                            d.setCategory(Messages.FeaturePropertySource_featureAttributes);
                             descrps.add(d);
                         }
                     }
@@ -216,7 +210,7 @@ public class FeaturePropertySource implements IPropertySource2 {
             if (!hasAttrs) {
                 d = new PropertyDescriptor(
                         "", Messages.FeaturePropertySource_noOtherAttributes);   //$NON-NLS-1$
-                d.setCategory(Messages.FeaturePropertySource_featureAttributes); 
+                d.setCategory(Messages.FeaturePropertySource_featureAttributes);
                 descrps.add(d);
             }
             descriptors = new IPropertyDescriptor[descrps.size()];
@@ -236,20 +230,20 @@ public class FeaturePropertySource implements IPropertySource2 {
             if (sid.equals(ID))
                 return feature.getID();
             if (sid.equals(DEFAULT_GEOM))
-                return getGeomProperty((Geometry) feature.getDefaultGeometry());
+                return getGeomProperty(feature.getDefaultGeometry());
             if (sid.equals(BOUNDING_BOX))
                 return feature.getBounds();
             if (sid.startsWith(FEATURE)) {
                 int i = Integer.parseInt(sid.substring(FEATURE.length()));
-                return new FeaturePropertySource((SimpleFeature) feature.getAttribute(i), true);
+                return new FeaturePropertySource((Feature) feature.getAttribute(i), true);
             }
         }
         if (id instanceof Integer) {
             Integer i = (Integer) id;
-            AttributeDescriptor attrType = attrs.get(i.intValue());
-            if ( attrType instanceof GeometryDescriptor ) 
+            AttributeType attrType = attrs[i.intValue()];
+            if ( attrType instanceof GeometryAttributeType )
                 return getGeomProperty((Geometry) feature.getAttribute(i.intValue()));
-            if (Collection.class.isAssignableFrom(attrType.getType().getBinding()))
+            if (Collection.class.isAssignableFrom(attrType.getType()))
                 return getAttrProperty(attrType, feature.getAttribute(i.intValue()));
             // return feature.getAttribute(i.intValue()).toString();
             Object attr = feature.getAttribute(i.intValue());
@@ -272,11 +266,6 @@ public class FeaturePropertySource implements IPropertySource2 {
         }
         return null;
     }
-    
-    public SimpleFeature getFeature() {
-        return feature;
-    }
-    
     /**
      * @see org.eclipse.ui.views.properties.IPropertySource#isPropertySet(java.lang.Object)
      */
@@ -319,7 +308,7 @@ public class FeaturePropertySource implements IPropertySource2 {
                 int i = ((Integer) id).intValue();
                 Object attr = feature.getAttribute(i);
                 EditCommand command = (EditCommand) EditCommandFactory.getInstance().createSetAttributeCommand(
-                        attrs.get(i).getName().getLocalPart(), value);
+                        attrs[i].getName(), value);
                 map.sendCommandASync(command);
                 if (attr instanceof String) {
                     feature.setAttribute(i, value);
@@ -356,7 +345,7 @@ public class FeaturePropertySource implements IPropertySource2 {
         }
         return geom;
     }
-    private Object getAttrProperty( AttributeDescriptor id, Object value ) {
+    private Object getAttrProperty( AttributeType id, Object value ) {
         Object attr = geomProperties.get(id);
         if (attr == null) {
             attr = new AttributePropertySource(id, value);

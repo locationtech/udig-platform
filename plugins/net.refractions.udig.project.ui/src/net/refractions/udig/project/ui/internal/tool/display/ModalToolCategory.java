@@ -33,10 +33,11 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.ui.IWorkbenchPartSite;
 
 /**
  * A category object that contributes to a toolbar.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
@@ -48,7 +49,7 @@ public class ModalToolCategory extends ToolCategory {
 
     /**
      * Construct <code>ToolbarToolCategory</code>.
-     * 
+     *
      * @param element
      * @param manager
      */
@@ -58,7 +59,7 @@ public class ModalToolCategory extends ToolCategory {
 
     /**
      * Construct <code>ModalToolCategory</code>.
-     * 
+     *
      * @param manager
      */
     public ModalToolCategory( IToolManager manager ) {
@@ -78,7 +79,7 @@ public class ModalToolCategory extends ToolCategory {
 
     /**
      * Returns  a  current UI contribution item for this category of modal tools.
-     * 
+     *
      * @return
      */
     public AbstractToolbarContributionItem getContribution() {
@@ -127,10 +128,10 @@ public class ModalToolCategory extends ToolCategory {
 
     /**
      * The class representing contribution item for modal tools on the toolbar.
-     * 
+     *
      * @author jeichar
      * @author Vitalus
-     * 
+     *
      */
     protected class CurrentModalToolContribution extends AbstractToolbarContributionItem {
 
@@ -152,14 +153,14 @@ public class ModalToolCategory extends ToolCategory {
                 editor.setSelectionProvider(provider);
 
         }
-        
+
         /**
          * @see net.refractions.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#getTools()
          */
         protected List<ModalItem> getTools() {
             List<ModalItem> onToolbar=new ArrayList<ModalItem>();
             ModalItem enabled=null;
-            
+
             for( ModalItem item : items ) {
                 if( ((ToolProxy)item).isOnToolbar() )
                     onToolbar.add(item);
@@ -170,7 +171,7 @@ public class ModalToolCategory extends ToolCategory {
                 onToolbar.remove(enabled);
                 onToolbar.add(0, enabled);
             }
-                
+
             return onToolbar;
         }
 

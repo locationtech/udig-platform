@@ -30,10 +30,10 @@ import org.eclipse.swt.widgets.Display;
  * @since 1.0.1
  */
 public class ValidationDialogOp implements IOp {
-    
+
     private Dialog dialog;
     private ILayer[] layer;
-    
+
     public void op( final Display display, Object target, IProgressMonitor monitor ) throws Exception {
         // define the ILayer array (save it as a private var)
         if (target.getClass().isArray()) {
@@ -47,12 +47,12 @@ public class ValidationDialogOp implements IOp {
 
             public void run() {
                 if (dialog == null) {
-                    dialog = new ValidationDialog(display.getActiveShell(), layer);    
+                    dialog = new ValidationDialog(display.getActiveShell(), layer);
                 }
                 dialog.open();
             }
         });
-        
+
         // done
         monitor.done();
     }

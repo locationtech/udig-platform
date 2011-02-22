@@ -14,21 +14,21 @@ public class TestRemotePreferenceStore extends TestCase {
     private static final String key_dbl = new String("DOUBLE_KEY"); //$NON-NLS-1$
     private static final String key_flt = new String("FLOAT_KEY"); //$NON-NLS-1$
     private static final String key_lng = new String("LONG_KEY"); //$NON-NLS-1$
-    
+
     private static final String val_str = new String("SOMETHING SOMETHING"); //$NON-NLS-1$
-    private static final Boolean val_boo = new Boolean(false); 
-    private static final Integer val_int = new Integer(1); 
-    private static final Double val_dbl = new Double(24.779); 
-    private static final Float val_flt = new Float(103.00); 
-    private static final Long val_lng = new Long(500000); 
+    private static final Boolean val_boo = new Boolean(false);
+    private static final Integer val_int = new Integer(1);
+    private static final Double val_dbl = new Double(24.779);
+    private static final Float val_flt = new Float(103.00);
+    private static final Long val_lng = new Long(500000);
 
     private static final String val2_str = new String("SoMeThInG eLsE"); //$NON-NLS-1$
-    private static final Boolean val2_boo = new Boolean(true); 
-    private static final Integer val2_int = new Integer(5432); 
-    private static final Double val2_dbl = new Double(0.707); 
-    private static final Float val2_flt = new Float(1.4142); 
-    private static final Long val2_lng = new Long(1234567890); 
-    
+    private static final Boolean val2_boo = new Boolean(true);
+    private static final Integer val2_int = new Integer(5432);
+    private static final Double val2_dbl = new Double(0.707);
+    private static final Float val2_flt = new Float(1.4142);
+    private static final Long val2_lng = new Long(1234567890);
+
     @Override
     protected void setUp() throws Exception {
         prefStore = new DummyRemotePreferenceStore();
@@ -50,7 +50,7 @@ public class TestRemotePreferenceStore extends TestCase {
         assertEquals(val_flt.floatValue(), prefStore.getDefaultFloat(key_flt));
         assertEquals(val_lng.floatValue(), prefStore.getDefaultFloat(key_lng));
     }
-    
+
     public void testWriteAndRead() throws IOException {
         //check initial value of remote store (should be null, since nothing is defined there yet)
         assertNull(prefStore.getValue(key_str));
@@ -68,7 +68,7 @@ public class TestRemotePreferenceStore extends TestCase {
         prefStore.setValue(key_flt, val2_flt);
         prefStore.setValue(key_lng, val2_lng);
         prefStore.save();
-        
+
         //read it back again
         assertEquals(val2_str, prefStore.getValue(key_str));
         assertEquals(val2_boo.booleanValue(), Boolean.parseBoolean(prefStore.getValue(key_boo)));
@@ -77,5 +77,5 @@ public class TestRemotePreferenceStore extends TestCase {
         assertEquals(val2_flt.floatValue(), Float.parseFloat(prefStore.getValue(key_flt)));
         assertEquals(val2_lng.longValue(), Long.parseLong(prefStore.getValue(key_lng)));
     }
-    
+
 }

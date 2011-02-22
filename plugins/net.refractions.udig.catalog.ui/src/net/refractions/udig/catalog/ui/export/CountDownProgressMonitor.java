@@ -26,8 +26,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
 /**
- * Each time worked is called the total is decremented and the task name is done. 
- * 
+ * Each time worked is called the total is decremented and the task name is done.
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -65,7 +65,7 @@ public class CountDownProgressMonitor extends SubProgressMonitor{
         setTaskName(Messages.CountDownProgressMonitor_taskNamePart1+name+","+Messages.CountDownProgressMonitor_taskNamePart2+remaining); //$NON-NLS-1$
         lastChange=System.currentTimeMillis();
     }
-    
+
     @Override
     public void worked( int work ) {
         worked++;

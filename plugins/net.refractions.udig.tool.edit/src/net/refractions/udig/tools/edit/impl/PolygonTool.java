@@ -21,30 +21,31 @@ import net.refractions.udig.tool.edit.internal.Messages;
 import net.refractions.udig.tools.edit.AbstractEditTool;
 import net.refractions.udig.tools.edit.Activator;
 import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.DefaultEditToolBehaviour;
 import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
 import net.refractions.udig.tools.edit.EnablementBehaviour;
 import net.refractions.udig.tools.edit.activator.AdvancedBehaviourCommandHandlerActivator;
 import net.refractions.udig.tools.edit.activator.DeleteGlobalActionSetterActivator;
+import net.refractions.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
 import net.refractions.udig.tools.edit.activator.DrawGeomsActivator;
+import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
 import net.refractions.udig.tools.edit.activator.GridActivator;
+import net.refractions.udig.tools.edit.activator.SetRenderingFilter;
 import net.refractions.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
-import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
 import net.refractions.udig.tools.edit.behaviour.AcceptWhenOverFirstVertexBehaviour;
+import net.refractions.udig.tools.edit.behaviour.InsertVertexOnEdgeBehaviour;
 import net.refractions.udig.tools.edit.behaviour.AddVertexWhileCreatingBehaviour;
 import net.refractions.udig.tools.edit.behaviour.CursorControlBehaviour;
 import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
+import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
 import net.refractions.udig.tools.edit.behaviour.DrawCreateVertexSnapAreaBehaviour;
-import net.refractions.udig.tools.edit.behaviour.InsertVertexOnEdgeBehaviour;
+import net.refractions.udig.tools.edit.behaviour.SelectVertexOnMouseDownBehaviour;
 import net.refractions.udig.tools.edit.behaviour.MoveGeometryBehaviour;
 import net.refractions.udig.tools.edit.behaviour.MoveVertexBehaviour;
 import net.refractions.udig.tools.edit.behaviour.SelectFeatureBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SelectVertexBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SelectVertexOnMouseDownBehaviour;
 import net.refractions.udig.tools.edit.behaviour.SelectVerticesWithBoxBehaviour;
 import net.refractions.udig.tools.edit.behaviour.SetSnapSizeBehaviour;
 import net.refractions.udig.tools.edit.behaviour.StartEditingBehaviour;
+import net.refractions.udig.tools.edit.behaviour.SelectVertexBehaviour;
 import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
 import net.refractions.udig.tools.edit.behaviour.accept.DeselectEditShapeAcceptBehaviour;
 import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
@@ -53,7 +54,7 @@ import net.refractions.udig.tools.edit.support.ShapeType;
 import net.refractions.udig.tools.edit.validator.PolygonCreationValidator;
 
 import org.eclipse.swt.SWT;
-import org.opengis.filter.spatial.Intersects;
+import org.geotools.filter.FilterType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPolygon;
@@ -61,7 +62,7 @@ import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Creates and edits Polygons
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -84,7 +85,7 @@ public class PolygonTool extends AbstractEditTool {
         helper.add( new DrawCreateVertexSnapAreaBehaviour());
         helper.startAdvancedFeatures();
         helper.add( new CursorControlBehaviour(handler, new ConditionalProvider(handler, Messages.PolygonTool_add_vertex_or_finish, Messages.PolygonTool_create_feature),
-                new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_SIZEALL),new ConditionalProvider(handler, Messages.PolygonTool_move_vertex,null), 
+                new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_SIZEALL),new ConditionalProvider(handler, Messages.PolygonTool_move_vertex,null),
                 new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_CROSS), new ConditionalProvider(handler, Messages.PolygonTool_add_vertex, null)));
         helper.stopAdvancedFeatures();
 //      vertex selection OR geometry selection should not both happen so make them a mutual exclusion behaviour
@@ -101,25 +102,25 @@ public class PolygonTool extends AbstractEditTool {
         helper.stopAdvancedFeatures();
 
         helper.startAdvancedFeatures();
-        SelectFeatureBehaviour selectGeometryBehaviour = new SelectFeatureBehaviour(new Class[]{Polygon.class, MultiPolygon.class}, Intersects.class);
+        SelectFeatureBehaviour selectGeometryBehaviour = new SelectFeatureBehaviour(new Class[]{Polygon.class, MultiPolygon.class}, FilterType.GEOMETRY_INTERSECTS);
         selectGeometryBehaviour.initDefaultStrategies(ShapeType.POLYGON);
         helper.add( selectGeometryBehaviour);
         helper.add( new InsertVertexOnEdgeBehaviour() );
-        
+
         helper.startElseFeatures();
         helper.add(new StartEditingBehaviour(ShapeType.POLYGON));
         helper.stopElseFeatures();
-        
+
         helper.stopAdvancedFeatures();
         helper.stopMutualExclusiveList();
-        
+
         helper.startAdvancedFeatures();
         helper.startMutualExclusiveList();
         helper.add( new MoveVertexBehaviour() );
         helper.add( new MoveGeometryBehaviour());
         helper.stopMutualExclusiveList();
-        
-        
+
+
         helper.add( new SelectVerticesWithBoxBehaviour() );
         helper.stopAdvancedFeatures();
         helper.add( new AcceptOnDoubleClickBehaviour() );
@@ -136,12 +137,13 @@ public class PolygonTool extends AbstractEditTool {
 
     @Override
     protected void initActivators( Set<Activator> activators ) {
-        DrawType type = DrawGeomsActivator.DrawType.POLYGON;
-        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultCreateActivators(type);
-        activators.addAll(defaults);
+        activators.add(new EditStateListenerActivator());
         activators.add(new DeleteGlobalActionSetterActivator());
+        activators.add(new DrawCurrentGeomVerticesActivator());
+        activators.add(new DrawGeomsActivator(DrawGeomsActivator.DrawType.POLYGON));
         activators.add(new SetSnapBehaviourCommandHandlerActivator());
         activators.add(new AdvancedBehaviourCommandHandlerActivator());
+        activators.add(new SetRenderingFilter());
         activators.add(new GridActivator());
    }
 

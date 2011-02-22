@@ -19,29 +19,29 @@ import java.util.List;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Find a location, using the USG service.
- *  
+ *
  * @author Jody Garnett
  * @since 1.0.0
  */
-public class USGLocation implements Location {
+public class USGLocation {
 
-    public List<SimpleFeature> search( String pattern, Envelope bbox, IProgressMonitor monitor )
+    public List<Feature> search( String pattern, Envelope bbox, IProgressMonitor monitor )
             throws IOException {
         AddressSeeker seek = new AddressSeeker();
-        List<SimpleFeature> stuff;
+        List<Feature> stuff;
         try {
             stuff = seek.geocode( pattern );
         } catch (IOException e) {
             return null;
         } catch (XmlRpcException e) {
             return null;
-        }        
+        }
         return stuff;
     }
 

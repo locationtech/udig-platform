@@ -15,9 +15,9 @@
 package net.refractions.udig.catalog.ui;
 
 /**
- * Abstracts out a place to post messages.  
- * 
- * @see StatusLineMessageBoardAdapter 
+ * Abstracts out a place to post messages.
+ *
+ * @see StatusLineMessageBoardAdapter
  * @author Jesse
  * @since 1.1.0
  */
@@ -28,9 +28,9 @@ public interface IMessageBoard {
      * @param message message to set on the message board.
      */
     void putMessage( String message, Type messageType );
-    
+
     enum Type{
-        NORMAL, 
+        NORMAL,
         ERROR,
         WARNING
     }

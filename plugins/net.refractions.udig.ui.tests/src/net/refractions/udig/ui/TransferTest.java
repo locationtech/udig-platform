@@ -7,33 +7,29 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Display;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.referencing.CRS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.spatial.BBOX;
-import org.opengis.geometry.BoundingBox;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.geotools.feature.Feature;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.filter.FilterType;
+import org.geotools.filter.GeometryFilter;
 
 public class TransferTest extends TestCase {
     public void testFeatureTransfering() throws Exception {
         Display display=Display.getCurrent();
         Clipboard cp=new Clipboard(display);
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("test", 1); //$NON-NLS-1$
+        Feature[] features = UDIGTestUtil.createDefaultTestFeatures("test", 1); //$NON-NLS-1$
         cp.setContents(features,new Transfer[]{UDigByteAndLocalTransfer.getInstance()});
         assertSame(features[0], cp.getContents(UDigByteAndLocalTransfer.getInstance()));
 
 //        cp.setContents(features,new Transfer[]{FeatureTextTransfer.getInstance()});
-//        SimpleFeature contents = (SimpleFeature) cp.getContents(FeatureTextTransfer.getInstance());
+//        Feature contents = (Feature) cp.getContents(FeatureTextTransfer.getInstance());
 //        Geometry defaultGeometry = features[0].getDefaultGeometry();
 //        assertTrue(defaultGeometry.equalsExact(contents.getDefaultGeometry()));
     }
     public void testGeometryTransfering() throws Exception {
         Display display=Display.getCurrent();
         Clipboard cp=new Clipboard(display);
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("test", 1); //$NON-NLS-1$
+        Feature[] features = UDIGTestUtil.createDefaultTestFeatures("test", 1); //$NON-NLS-1$
         cp.setContents(new Object[]{features[0].getDefaultGeometry()},new Transfer[]{UDigByteAndLocalTransfer.getInstance()});
         assertSame(features[0].getDefaultGeometry(), cp.getContents(UDigByteAndLocalTransfer.getInstance()));
 
@@ -46,13 +42,12 @@ public class TransferTest extends TestCase {
     public void testSelectionTransfering() throws Exception{
         Display display=Display.getCurrent();
         Clipboard cp=new Clipboard(display);
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("test", 1); //$NON-NLS-1$
-        FilterFactory factory= CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-        SimpleFeatureType featureType = features[0].getFeatureType();
-        BoundingBox bounds = features[0].getBounds();
-        CoordinateReferenceSystem crs= featureType.getCoordinateReferenceSystem();
-		BBOX filter = factory.bbox(featureType.getGeometryDescriptor().getName().getLocalPart(), bounds.getMinX(),
-        		bounds.getMinY(), bounds.getMaxX(), bounds.getMaxY(), CRS.lookupIdentifier(crs, false));
+        Feature[] features = UDIGTestUtil.createDefaultTestFeatures("test", 1); //$NON-NLS-1$
+        FilterFactory factory= FilterFactoryFinder.createFilterFactory();
+        GeometryFilter filter=factory.createGeometryFilter(FilterType.GEOMETRY_BBOX);
+        filter.addRightGeometry(factory.createBBoxExpression(features[0].getBounds()));
+        filter.addLeftGeometry(factory.createAttributeExpression(features[0].getFeatureType(),
+        		features[0].getFeatureType().getDefaultGeometry().getName()));
         cp.setContents(new Object[]{filter},new Transfer[]{UDigByteAndLocalTransfer.getInstance()});
         assertSame(filter, cp.getContents(UDigByteAndLocalTransfer.getInstance()));
 

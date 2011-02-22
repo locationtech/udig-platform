@@ -58,7 +58,7 @@ public class UDIGControlDropListener extends DropTargetAdapter implements UDIGDr
     public UDIGDropHandler getHandler() {
     	return handler;
     }
-    
+
     /**
      * Returns nulls
      * @author jones
@@ -90,5 +90,5 @@ public class UDIGControlDropListener extends DropTargetAdapter implements UDIGDr
     }
     public void setDropTargetProvider( IDropTargetProvider newProvider ) {
         destinationProvider=newProvider;
-    }   
+    }
 }

@@ -13,6 +13,7 @@ import static net.refractions.udig.project.internal.provider.LayerItemProvider.G
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -42,14 +43,14 @@ import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.graphics.Image;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.wms.WebMapServer;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.GeometryAttributeType;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.Symbolizer;
 import org.opengis.coverage.grid.GridCoverageReader;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
@@ -76,7 +77,7 @@ import com.vividsolutions.jts.geom.Polygon;
  * <p>
  * Generation only kicks in if getGlyph or getName return null.
  * </p>
- * 
+ *
  * @author jgarnett
  * @since 0.7.0
  */
@@ -132,7 +133,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
      * turned into an Image by the decorateImage method as required.
      * </p>
      */
-    Job picasso = new Job(Messages.LayerGeneratedGlyphDecorator_jobName){ 
+    Job picasso = new Job(Messages.LayerGeneratedGlyphDecorator_jobName){
 
         @SuppressWarnings("unchecked")
         public IStatus run( IProgressMonitor monitor ) {
@@ -154,7 +155,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
                 }
                 try {
                     boolean notifyIcon = refreshIcon(layer);
-                    
+
                     boolean notifyLabel = refreshLabel(layer);
 
                     if (notifyIcon || notifyLabel) {
@@ -173,7 +174,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
          * <p>
          * Icon will be placed on GENERATED_ICON
          * </p>
-         * 
+         *
          * @param layer
          * @param notify
          * @return true if label was changed
@@ -196,7 +197,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
 
         /**
          * Refresh icon if required, true if icon was changed.
-         * 
+         *
          * @param layer
          * @param notify
          * @return ture if icon was changed
@@ -286,7 +287,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
      * the right text. If null is returned the thread will be started in the hopes of producing
      * something.
      * <p>
-     * 
+     *
      * @returns Label for layer, or <code>null</code> if unavailable
      */
     static String label( Layer layer ) {
@@ -302,54 +303,50 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
     }
 
     /**
-     * Generate label.
+     * Genearte label.
      * <p>
      * This is used to generate a value for layer.getProperties().getString( GENERATED_NAME ).
      * <p>
      * The generated label from Resource.getInfo().getTitle(). This method will block and should not
      * be called from the event thread.
      * </p>
-     * 
+     *
      * @return gernated layer, or <code>null</code> if none can be determined
      */
     public static String generateLabel( Layer layer ) {
-        String name = layer.getName();
-        if( name != null ){
-            return name; // user supplied name for the win!
-        }
-        IGeoResource resource = layer.getGeoResource();
-        if (resource == null){
+        IGeoResource resource = layer.getGeoResources().get(0);
+        if (resource == null)
             return null;
+
+        IGeoResourceInfo info = null;
+        try {
+            info = resource.getInfo(null);
+        } catch (IOException e) {
+            return null; // aka use origional label provided by item provider
         }
-        String title = resource.getTitle(); // this is from the non-blocking cache!
-        if( title == null){
-            // fine - no title let us try to connect to find one
-            IGeoResourceInfo info = null;
-            try {
-                info = resource.getInfo(null);
-                title = info.getTitle();
-                if( title == null ){
-                    title = info.getName();
-                }
-            } catch (IOException e) {
-            }
+        if (info == null) {
+            return null; // aka use origional label provided by item provider
         }
-        String layerName = title;
-        if( layerName == null ){
-            layerName = resource.getID().toBaseFile();
+
+        String layerName = null;
+        String title = info.getTitle();
+        if (title != null) {
+            layerName = title;
+        } else {
+	        String name = info.getName();
+	        if (name != null)
+	            layerName = name;
         }
-        // Add qualifier if present        
-        //String qualifier = resource.getID().getTypeQualifier();
-        //if( qualifier != null ){
-        //    layerName += "("+qualifier+")";
-        //}
+
         // Side note: Original label, made by item provider uses,
         // resource.getIdentifier() which is non blocking
         //
+
+
     	if( layer.hasResource(ITransientResolve.class)){
     		layerName += " *";
     	}
-    	return layerName;
+    	return layerName; // give up
     }
 
     /**
@@ -365,7 +362,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
      * the right image. If <code>null</code> is returned the thread will be started in the hopes
      * of producing something.
      * <p>
-     * 
+     *
      * @returns Image for layer, or <code>null</code> if unavailable Image icon( Layer layer ) {
      *          ImageDescriptor glyph = layer.getGlyph(); if (glyph != null) return
      *          cache.getImage(glyph); Image genglyph = (Image)
@@ -379,7 +376,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
      * <p>
      * Label is genrated from Resource.
      * </p>
-     * 
+     *
      * @return gernated layer
      */
     public static ImageDescriptor generateIcon( Layer layer ) {
@@ -402,7 +399,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
      * Will return null if an icom based on the current style could not be generated. You may
      * consult generateDefaultIcon( layer ) for a second opionion based on just the layer
      * information.
-     * 
+     *
      * @param layer
      * @return ImageDecriptor for layer, or null in style could not be indicated
      */
@@ -454,10 +451,10 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
 
     public static ImageDescriptor generateStyledIcon( ILayer layer, Rule rule ) {
         if (layer.hasResource(FeatureSource.class) && rule != null) {
-            SimpleFeatureType type = layer.getSchema();
-            GeometryDescriptor geom = type.getGeometryDescriptor();
+            FeatureType type = layer.getSchema();
+            GeometryAttributeType geom = type.getDefaultGeometry();
             if (geom != null) {
-                Class geom_type = geom.getType().getBinding();
+                Class geom_type = geom.getType();
                 if (geom_type == Point.class || geom_type == MultiPoint.class) {
                     return Glyph.point(rule);
                 } else if (geom_type == LineString.class || geom_type == MultiLineString.class) {
@@ -479,7 +476,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
             info = null;
         }
         if (info != null) {
-            ImageDescriptor infoIcon = info.getImageDescriptor();
+            ImageDescriptor infoIcon = info.getIcon();
             if (infoIcon != null)
                 return infoIcon;
         }
@@ -502,11 +499,11 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
      * The following information is checked:
      * <ul>
      * <li>All WMS resources known to the layer - they often have default icon
-     * <li>FeatureSoruce known to the layer - icon can be based on SimpleFeatureType
+     * <li>FeatureSoruce known to the layer - icon can be based on FeatureType
      * <li>IGeoResourceInfo type information
      * </ul>
      * </p>
-     * 
+     *
      * @param layer
      * @return Icon based on layer, null if unavailable
      */
@@ -525,10 +522,10 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
         //
         if (layer.hasResource(FeatureSource.class)) {
 
-            SimpleFeatureType type = layer.getSchema();
-            GeometryDescriptor geom = type.getGeometryDescriptor();
+            FeatureType type = layer.getSchema();
+            GeometryAttributeType geom = type.getDefaultGeometry();
             if (geom != null) {
-                Class geom_type = geom.getType().getBinding();
+                Class geom_type = geom.getType();
                 if (geom_type == Point.class || geom_type == MultiPoint.class) {
                     return Glyph.point(null, null);
                 } else if (geom_type == LineString.class || geom_type == MultiLineString.class) {
@@ -542,18 +539,21 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
                 }
             }
         }
-        
+
         //
         // Resource based glyph?
         //
         IGeoResourceInfo info = null;
         try {
-            info = layer.getGeoResources().get(0).getInfo(null);
+            List<IGeoResource> geoResources = layer.getGeoResources();
+            if( geoResources != null && !geoResources.isEmpty()){
+                info = geoResources.get(0).getInfo(null);
+            }
         } catch (IOException e) {
             //
         }
         if (info != null) {
-            ImageDescriptor infoIcon = info.getImageDescriptor();
+            ImageDescriptor infoIcon = info.getIcon();
             if (infoIcon != null)
                 return infoIcon;
         }
@@ -605,9 +605,9 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
      * We are not allowed to block, test if generation is needed and start up the queue.
      * <p>
      * State Table of Image \ Image Descriptor:
-     * 
+     *
      * <pre><code>
-     *            | null         | icon                
+     *            | null         | icon
      *   ---------+--------------+---------------------+
      *   disposed | queue        | image =             |
      *    or null |   layer      |  icon.createImage() |
@@ -615,7 +615,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
      *   image    | both         | image               |
      *            +--------------+---------------------+
      * </code></pre>
-     * 
+     *
      * This attempts to reduce the amount of flicker experienced as the layer figures out its glyph
      * in the face of many events.
      * </p>
@@ -636,7 +636,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
      * *every* time. Who knows maybe style or something will change and we can do better then the
      * default.
      * </p>
-     * 
+     *
      * @see org.eclipse.jface.viewers.ILabelDecorator#decorateImage(org.eclipse.swt.graphics.Image,
      *      java.lang.Object)
      */

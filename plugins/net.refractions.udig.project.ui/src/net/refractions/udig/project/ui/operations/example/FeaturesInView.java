@@ -29,13 +29,11 @@ import org.eclipse.swt.widgets.Display;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.FeatureCollection;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
+import org.geotools.filter.Filter;
 
 /**
  * Counts all the features that are within the current view.
- * 
+ *
  * @author jeichar
  * @since 1.0
  */
@@ -55,13 +53,13 @@ public class FeaturesInView implements IOp {
         for( ILayer layer : map.getMapLayers() ) {
             if (layer.isType(FeatureSource.class) && layer.isVisible()) {
                 try {
-                    FeatureSource<SimpleFeatureType, SimpleFeature> source = layer.getResource(FeatureSource.class, monitor);
+                    FeatureSource source = layer.getResource(FeatureSource.class, monitor);
                     Filter filter = layer.createBBoxFilter(map.getViewportModel().getBounds(),
                             monitor);
-                    FeatureCollection<SimpleFeatureType, SimpleFeature>  results = source.getFeatures(new DefaultQuery(layer.getSchema()
-                            .getName().getLocalPart(), filter));
+                    FeatureCollection results = source.getFeatures(new DefaultQuery(layer.getSchema()
+                            .getTypeName(), filter));
                     int count = results.size();
-                    // FeatureReader<SimpleFeatureType, SimpleFeature> reader=results.reader()
+                    // FeatureReader reader=results.reader()
                     if (count > 0) {
                         featureCount += count;
                     }
@@ -78,11 +76,11 @@ public class FeaturesInView implements IOp {
         display.asyncExec(new Runnable(){
             public void run() {
                 if (exception == null)
-                    MessageDialog.openInformation(display.getActiveShell(), 
+                    MessageDialog.openInformation(display.getActiveShell(),
                     		Messages.FeaturesInView_0,
-                            Messages.FeaturesInView_1 + finalCount); 
+                            Messages.FeaturesInView_1 + finalCount);
                 else
-                    MessageDialog.openInformation(display.getActiveShell(), 
+                    MessageDialog.openInformation(display.getActiveShell(),
                     		Messages.FeaturesInView_0,
                     		MessageFormat.format(Messages.FeaturesInView_3, new Object[] {finalCount})
                     );

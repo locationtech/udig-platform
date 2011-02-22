@@ -38,11 +38,11 @@ public class AnimationUpdaterTest extends AbstractProjectUITestCase {
     public void testViewportPaneSWTRunTimer() throws Exception {
         runAnimationTest();
     }
-    
+
     public void testMultipleAnimations() throws Exception {
         final TestAnimation anim1=new TestAnimation();
         TestAnimation anim2=new TestAnimation();
-        
+
         AnimationUpdater.runTimer(map.getRenderManagerInternal().getMapDisplay(), anim1);
         AnimationUpdater.runTimer(map.getRenderManagerInternal().getMapDisplay(), anim2);
         UDIGTestUtil.inDisplayThreadWait(10000, new WaitCondition(){
@@ -51,7 +51,7 @@ public class AnimationUpdaterTest extends AbstractProjectUITestCase {
                 return !anim1.isValid();
             }
         }, true);
-        
+
         assertAnimationRan(anim1);
         assertAnimationRan(anim2);
     }
@@ -93,7 +93,7 @@ public class AnimationUpdaterTest extends AbstractProjectUITestCase {
         if( map==null ){
         map = ProjectFactory.eINSTANCE.createMap(ProjectPlugin.getPlugin().getProjectRegistry().getCurrentProject(),
                 "AnimationTest", new ArrayList<Layer>()); //$NON-NLS-1$
-        
+
         ApplicationGIS.openMap(map);
         try {
             UDIGTestUtil.inDisplayThreadWait(2000, new WaitCondition(){
@@ -101,7 +101,7 @@ public class AnimationUpdaterTest extends AbstractProjectUITestCase {
                 public boolean isTrue()  {
                     return ApplicationGIS.getActiveMap()!=null;
                 }
-                
+
             }, true);
         } catch (Exception e) {
             throw (RuntimeException) new RuntimeException( ).initCause( e );
@@ -109,11 +109,11 @@ public class AnimationUpdaterTest extends AbstractProjectUITestCase {
         }
         return map;
     }
-    
-    
-    
+
+
+
     final static short FRAME_INTERVAL=300;
-    
+
     class TestAnimation extends AbstractDrawCommand implements IAnimation{
 
         volatile int frame=0;
@@ -122,7 +122,7 @@ public class AnimationUpdaterTest extends AbstractProjectUITestCase {
         public TestAnimation() {
             executionTimes.add(System.currentTimeMillis());
         }
-        
+
         public short getFrameInterval() {
             return FRAME_INTERVAL;
         }
@@ -133,7 +133,7 @@ public class AnimationUpdaterTest extends AbstractProjectUITestCase {
         public boolean hasNext() {
             return frame<12;
         }
-        
+
         volatile int lastframeRendered=-1;
         public void run( IProgressMonitor monitor ) throws Exception {
             if( lastframeRendered!=frame && isValid() ){

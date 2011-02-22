@@ -36,10 +36,10 @@ public class StylePreferencePage extends FieldEditorPreferencePage
         super(GRID);
         setPreferenceStore(ProjectPlugin.getPlugin().getPreferenceStore());
     }
-    
+
     @Override
     protected void createFieldEditors() {
-        IntegerFieldEditor defaultPerpOffset = new IntegerFieldEditor(PreferenceConstants.P_STYLE_DEFAULT_PERPENDICULAR_OFFSET, Messages.StylePreferencePage_perpendicularOffset, getFieldEditorParent(), 3); 
+        IntegerFieldEditor defaultPerpOffset = new IntegerFieldEditor(PreferenceConstants.P_STYLE_DEFAULT_PERPENDICULAR_OFFSET, Messages.StylePreferencePage_perpendicularOffset, getFieldEditorParent(), 3);
         addField(defaultPerpOffset);
     }
 

@@ -52,15 +52,14 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.data.FeatureSource;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
+import org.geotools.filter.Filter;
 
 /**
  * Adds selected features as issues to the issues list
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -81,8 +80,8 @@ public class AddIssueOperation implements IOp {
         Collection<IIssue> issues;
         if (array[0] instanceof Filter) {
             issues = addFeatureIssues((Filter[]) array, dialog, monitor);
-        } else if (array[0] instanceof SimpleFeature) {
-            issues = addFeatureIssues((SimpleFeature[]) array, dialog, monitor);
+        } else if (array[0] instanceof Feature) {
+            issues = addFeatureIssues((Feature[]) array, dialog, monitor);
         }else{
         	issues = null;
         }
@@ -146,12 +145,12 @@ public class AddIssueOperation implements IOp {
         return dialog[0];
     }
 
-    private Collection<IIssue> addFeatureIssues( SimpleFeature[] features, InformationDialog dialog,
+    private Collection<IIssue> addFeatureIssues( Feature[] features, InformationDialog dialog,
             IProgressMonitor monitor ) {
 
         Collection<IIssue> issues = new HashSet<IIssue>();
-        
-        for( SimpleFeature feature : features ) {
+
+        for( Feature feature : features ) {
             if (feature instanceof IAdaptable) {
                 IAdaptable adaptable = (IAdaptable) feature;
                 ILayer layer = (ILayer) adaptable.getAdapter(ILayer.class);
@@ -172,14 +171,14 @@ public class AddIssueOperation implements IOp {
         }
         issues.remove(null);
         return issues;
-        
+
     }
 
     private Collection<IIssue> addFeatureIssues( Filter[] filters, InformationDialog dialog,
             IProgressMonitor monitor ) throws IOException {
     	Collection<IIssue> issues = new HashSet<IIssue>();
         for( Filter filter : filters ) {
-             FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = null;
+            FeatureSource featureSource = null;
             ILayer layer = null;
             if (filter instanceof IAdaptable) {
                 IAdaptable adaptable = (IAdaptable) filter;
@@ -188,12 +187,12 @@ public class AddIssueOperation implements IOp {
                     featureSource = layer.getResource(FeatureSource.class, monitor);
                 }
             }
-            
+
             if (featureSource == null) {
-                IssuesActivator.log("SimpleFeature Source for filter: " + filter, null); //$NON-NLS-1$
+                IssuesActivator.log("Feature Source for filter: " + filter, null); //$NON-NLS-1$
             } else {
-                FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featureSource.getFeatures(filter);
-                FeatureIterator<SimpleFeature> iter = features.features();
+                FeatureCollection features = featureSource.getFeatures(filter);
+                FeatureIterator iter = features.features();
                 try {
                     while( iter.hasNext() ) {
                         issues.add(addFeatureIssue(iter.next(), layer, dialog));
@@ -208,7 +207,7 @@ public class AddIssueOperation implements IOp {
         return issues;
     }
 
-    private IIssue addFeatureIssue( SimpleFeature feature, ILayer layer, InformationDialog dialog ) {
+    private IIssue addFeatureIssue( Feature feature, ILayer layer, InformationDialog dialog ) {
         if (feature == null) {
             IssuesActivator.log("Can't construct an issue from a null feature!", null); //$NON-NLS-1$
             return null;
@@ -262,7 +261,7 @@ public class AddIssueOperation implements IOp {
             createGroupIDWidgets(comp);
 
             createDescriptionWidgets(comp);
-            
+
             createOperationDescription(comp);
 
             return comp;

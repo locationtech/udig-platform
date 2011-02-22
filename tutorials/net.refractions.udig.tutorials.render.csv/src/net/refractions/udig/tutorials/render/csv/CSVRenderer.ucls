@@ -1,87 +1,84 @@
-<class-diagram icons="false" always-add-relationships="false" generalizations="true" realizations="true" 
-  associations="true" dependencies="true" nesting-relationships="true" version="0.9.65">  
-  <classifier-display autosize="true" package="false" attributes="false" operations="true" initial-value="false" 
-    signature="true" visibility="false">    
-    <attributes public="true" package="true" protected="true" private="true"/>    
-    <operations public="true" package="true" protected="true" private="true"/>  
-  </classifier-display>  
-  <association-display labels="true" multiplicity="true"/>  
-  <class language="java" name="net.refractions.udig.tutorials.render.csv.CSVRenderMetricsFactory" 
-    project="net.refractions.udig.tutorials.render.csv" 
-    file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderMetricsFactory.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <display autosize="true" package="false" initial-value="false" signature="true" visibility="false">      
-      <attributes public="false" package="false" protected="false" private="false"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
-    </display>    
-    <position x="233" y="436" width="-1" height="-1"/>  
-  </class>  
-  <class language="java" name="net.refractions.udig.tutorials.render.csv.CSVRenderMetrics" 
-    project="net.refractions.udig.tutorials.render.csv" 
-    file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderMetrics.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <display autosize="true" package="false" initial-value="false" signature="true" visibility="false">      
-      <attributes public="false" package="false" protected="false" private="false"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
-    </display>    
-    <position x="235" y="291" width="-1" height="-1"/>  
-  </class>  
-  <class language="java" name="net.refractions.udig.tutorials.render.csv.CSVRenderer" 
-    project="net.refractions.udig.tutorials.render.csv" 
-    file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderer.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <display autosize="true" package="false" initial-value="false" signature="true" visibility="false">      
-      <attributes public="false" package="false" protected="false" private="false"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
-    </display>    
-    <position x="559" y="285" width="-1" height="-1"/>  
-  </class>  
-  <class language="java" name="net.refractions.udig.project.render.AbstractRenderMetrics" 
-    project="net.refractions.udig.project" 
-    file="/net.refractions.udig.project/src/net/refractions/udig/project/render/AbstractRenderMetrics.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <display autosize="true" package="false" initial-value="false" signature="true" visibility="false">      
-      <attributes public="false" package="false" protected="false" private="false"/>      
-      <operations public="false" package="false" protected="false" private="false"/>    
-    </display>    
-    <position x="235" y="182" width="-1" height="-1"/>  
-  </class>  
-  <class language="java" name="net.refractions.udig.project.internal.render.impl.RendererImpl" 
-    project="net.refractions.udig.project" 
-    file="/net.refractions.udig.project/src/net/refractions/udig/project/internal/render/impl/RendererImpl.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <display autosize="true" package="false" initial-value="false" signature="true" visibility="false">      
-      <attributes public="false" package="false" protected="false" private="false"/>      
-      <operations public="false" package="false" protected="false" private="false"/>    
-    </display>    
-    <position x="560" y="193" width="-1" height="-1"/>  
-  </class>  
-  <dependency>    
-    <source project="net.refractions.udig.tutorials.render.csv" 
-      name="net.refractions.udig.tutorials.render.csv.CSVRenderMetricsFactory" 
-      file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderMetricsFactory.java" 
-      binary="false"/>    
-    <target project="net.refractions.udig.tutorials.render.csv" 
-      name="net.refractions.udig.tutorials.render.csv.CSVRenderMetrics" 
-      file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderMetrics.java" 
-      binary="false"/>  
-  </dependency>  
-  <generalization>    
-    <source project="net.refractions.udig.tutorials.render.csv" 
-      name="net.refractions.udig.tutorials.render.csv.CSVRenderer" 
-      file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderer.java" 
-      binary="false"/>    
-    <target project="net.refractions.udig.project" name="net.refractions.udig.project.internal.render.impl.RendererImpl" 
-      file="/net.refractions.udig.project/src/net/refractions/udig/project/internal/render/impl/RendererImpl.java" 
-      binary="false"/>  
-  </generalization>  
-  <generalization>    
-    <source project="net.refractions.udig.tutorials.render.csv" 
-      name="net.refractions.udig.tutorials.render.csv.CSVRenderMetrics" 
-      file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderMetrics.java" 
-      binary="false"/>    
-    <target project="net.refractions.udig.project" name="net.refractions.udig.project.render.AbstractRenderMetrics" 
-      file="/net.refractions.udig.project/src/net/refractions/udig/project/render/AbstractRenderMetrics.java" 
-      binary="false"/>  
+<class-diagram generalizations="true" realizations="true" associations="true" dependencies="true"
+  nesting-relationships="true">
+  <classifier-display autosize="true" package="false" attributes="false" operations="true" initial-value="false"
+    signature="true" visibility="false"/>
+  <association-display labels="true" multiplicity="true"/>
+  <class type="java" name="net.refractions.udig.tutorials.render.csv.CSVRenderMetricsFactory"
+    project="net.refractions.udig.tutorials.render.csv"
+    file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderMetricsFactory.java"
+    corner="BOTTOM_RIGHT">
+    <display autosize="true" package="false" attributes="false" operations="true" initial-value="false" signature="true"
+      visibility="false"/>
+    <position x="233" y="436" width="-1" height="-1"/>
+  </class>
+  <class type="java" name="net.refractions.udig.tutorials.render.csv.CSVRenderMetrics"
+    project="net.refractions.udig.tutorials.render.csv"
+    file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderMetrics.java"
+    corner="BOTTOM_RIGHT">
+    <display autosize="true" package="false" attributes="false" operations="true" initial-value="false" signature="true"
+      visibility="false"/>
+    <position x="235" y="291" width="-1" height="-1"/>
+  </class>
+  <class type="java" name="net.refractions.udig.tutorials.render.csv.CSVRenderer"
+    project="net.refractions.udig.tutorials.render.csv"
+    file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderer.java"
+    corner="BOTTOM_RIGHT">
+    <display autosize="true" package="false" attributes="false" operations="true" initial-value="false" signature="true"
+      visibility="false"/>
+    <position x="559" y="285" width="-1" height="-1"/>
+  </class>
+  <class type="java" name="net.refractions.udig.project.render.AbstractRenderMetrics"
+    project="net.refractions.udig.project"
+    file="/net.refractions.udig.project/src/net/refractions/udig/project/render/AbstractRenderMetrics.java"
+    corner="BOTTOM_RIGHT">
+    <display autosize="true" package="false" attributes="false" operations="false" initial-value="false"
+      signature="true" visibility="false"/>
+    <position x="235" y="182" width="-1" height="-1"/>
+  </class>
+  <class type="java" name="net.refractions.udig.project.internal.render.impl.RendererImpl"
+    project="net.refractions.udig.project"
+    file="/net.refractions.udig.project/src/net/refractions/udig/project/internal/render/impl/RendererImpl.java"
+    corner="BOTTOM_RIGHT">
+    <display autosize="true" package="false" attributes="false" operations="false" initial-value="false"
+      signature="true" visibility="false"/>
+    <position x="560" y="193" width="-1" height="-1"/>
+  </class>
+  <generalization>
+    <source project="net.refractions.udig.tutorials.render.csv"
+      name="net.refractions.udig.tutorials.render.csv.CSVRenderer"
+      file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderer.java"/>
+    <target project="net.refractions.udig.project" name="net.refractions.udig.project.internal.render.impl.RendererImpl"
+      file="/net.refractions.udig.project/src/net/refractions/udig/project/internal/render/impl/RendererImpl.java"/>
   </generalization>
+  <generalization>
+    <source project="net.refractions.udig.tutorials.render.csv"
+      name="net.refractions.udig.tutorials.render.csv.CSVRenderMetrics"
+      file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderMetrics.java"/>
+    <target project="net.refractions.udig.project" name="net.refractions.udig.project.render.AbstractRenderMetrics"
+      file="/net.refractions.udig.project/src/net/refractions/udig/project/render/AbstractRenderMetrics.java"/>
+  </generalization>
+  <dependency>
+    <source project="net.refractions.udig.tutorials.render.csv"
+      name="net.refractions.udig.tutorials.render.csv.CSVRenderMetricsFactory"
+      file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderMetricsFactory.java"/>
+    <target project="net.refractions.udig.tutorials.render.csv"
+      name="net.refractions.udig.tutorials.render.csv.CSVRenderMetrics"
+      file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderMetrics.java"/>
+  </dependency>
+  <dependency>
+    <source project="net.refractions.udig.tutorials.render.csv"
+      name="net.refractions.udig.tutorials.render.csv.CSVRenderMetrics"
+      file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderMetrics.java"/>
+    <target project="net.refractions.udig.tutorials.render.csv"
+      name="net.refractions.udig.tutorials.render.csv.CSVRenderer"
+      file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderer.java"/>
+  </dependency>
+  <dependency>
+    <source project="net.refractions.udig.tutorials.render.csv"
+      name="net.refractions.udig.tutorials.render.csv.CSVRenderMetricsFactory"
+      file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderMetricsFactory.java"/>
+    <target project="net.refractions.udig.tutorials.render.csv"
+      name="net.refractions.udig.tutorials.render.csv.CSVRenderer"
+      file="/net.refractions.udig.tutorials.render.csv/src/net/refractions/udig/tutorials/render/csv/CSVRenderer.java"/>
+  </dependency>
 </class-diagram>

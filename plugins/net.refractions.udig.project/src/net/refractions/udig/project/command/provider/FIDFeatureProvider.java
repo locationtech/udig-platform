@@ -1,72 +1,46 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.command.provider;
 
 import java.io.IOException;
 
 import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.data.FeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Id;
+import org.geotools.filter.FidFilter;
+import org.geotools.filter.FilterFactoryFinder;
 
-public class FIDFeatureProvider implements IBlockingProvider<SimpleFeature> {
+public class FIDFeatureProvider implements IBlockingProvider<Feature> {
 
-    private IBlockingProvider<ILayer> layerProvider;
+    private IBlockingProvider<ILayer> layer;
     private String fid;
-    private SimpleFeature feature;
+    private Feature feature;
 
     public FIDFeatureProvider( String fid2, IBlockingProvider<ILayer> layer2 ) {
-        this.layerProvider = layer2;
-        if( fid2 == null ){
-            throw new NullPointerException("Fid must not be null");
-        }
+        this.layer = layer2;
         this.fid = fid2;
     }
 
-    public synchronized SimpleFeature get( IProgressMonitor monitor, Object... params ) {
+    public synchronized Feature get( IProgressMonitor monitor, Object... params ) {
         if (feature == null) {
-            FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
-                    .getDefaultHints());
-            Id fidFilter = filterFactory.id(FeatureUtils.stringToId(filterFactory, fid));
-            
-            if( monitor == null ) monitor = new NullProgressMonitor();                
+            FidFilter fidFilter = FilterFactoryFinder.createFilterFactory()
+                    .createFidFilter(fid);
             try {
-                monitor.beginTask("Get Feature", 100 );
-                
-                ILayer layer = layerProvider.get( new SubProgressMonitor(monitor, 25) );
-                FeatureSource<SimpleFeatureType, SimpleFeature> source = layer
-                        .getResource(FeatureSource.class, new SubProgressMonitor(monitor, 25));
-                
-                FeatureIterator<SimpleFeature> iter = source.getFeatures(fidFilter).features();
-                monitor.worked(25);
+                FeatureSource source = layer.get(monitor).getResource(FeatureSource.class, monitor);
+                FeatureIterator iter = source.getFeatures(fidFilter).features();
                 try {
-                    if (iter.hasNext()) {
-                        feature = iter.next();
-                    }
-                    else {
-                        // feature not available
-                    }
-                    monitor.worked(25);
+                    feature=iter.next();
                 } finally {
                     iter.close();
                 }
+
             } catch (IOException e) {
                 throw (RuntimeException) new RuntimeException().initCause(e);
-            }
-            finally {
-                monitor.done();
             }
         }
         return feature;

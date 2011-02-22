@@ -1,21 +1,14 @@
 package net.refractions.udig.mapgraphic;
 
-import java.net.URL;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import net.refractions.udig.mapgraphic.scalebar.BarStyle;
 
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -23,25 +16,25 @@ import org.osgi.framework.BundleContext;
  */
 public class MapGraphicPlugin extends AbstractUIPlugin {
 	//The shared instance.
-	private static MapGraphicPlugin plugin = null;
+	private static MapGraphicPlugin plugin;
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
-	
+
     public static final String ID = "net.refractions.udig.mapgraphic"; //$NON-NLS-1$
-    
+
 	/**
 	 * The constructor.
 	 */
 	public MapGraphicPlugin() {
 		super();
+		plugin = this;
 	}
 
 	/**
 	 * This method is called upon plug-in activation
 	 */
 	public void start(BundleContext context) throws Exception {
-	    super.start(context);
-	    plugin = this;        	    
+		super.start(context);
 	}
 
 	/**
@@ -96,7 +89,7 @@ public class MapGraphicPlugin extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return AbstractUIPlugin.imageDescriptorFromPlugin("net.refractions.udig.mapgraphic", path); //$NON-NLS-1$
 	}
-    
+
     /**
      * Processes the map graphic extension point and creates resources for
      * each map graphic.
@@ -106,7 +99,7 @@ public class MapGraphicPlugin extends AbstractUIPlugin {
 //        //create the map graphic service
 //        final MapGraphicService mgService = new MapGraphicService();
 //        CatalogPlugin.getDefault().getLocalCatalog().add(mgService);
-//                                                                            
+//
 //        try {
 //            ExtensionPointProcessor p = new ExtensionPointProcessor() {
 //                public void process( IExtension extension, IConfigurationElement element ) throws Exception {
@@ -127,8 +120,8 @@ public class MapGraphicPlugin extends AbstractUIPlugin {
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      * </ul>
      * </p>
-     * @param message 
-     * @param t 
+     * @param message
+     * @param t
      */
     public static void log( String message, Throwable t ) {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
@@ -144,8 +137,8 @@ public class MapGraphicPlugin extends AbstractUIPlugin {
      * }
      * </code></pre>
      * </p>
-     * @param message 
-     * @param e 
+     * @param message
+     * @param e
      */
     public static void trace( String message, Throwable e) {
         if( getDefault().isDebugging() ) {
@@ -160,28 +153,12 @@ public class MapGraphicPlugin extends AbstractUIPlugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
-     * @return true if -debug is on for this plugin 
+     * @return true if -debug is on for this plugin
      */
     public static boolean isDebugging( final String trace ){
         return getDefault().isDebugging() &&
-            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
-    } 
-    
-    protected void initializeImageRegistry(ImageRegistry reg) {
-        Bundle bundle = Platform.getBundle(ID);
-        
-        addImage(bundle, reg, BarStyle.BarType.SIMPLE.imageName);
-        addImage(bundle, reg, BarStyle.BarType.SIMPLE_LINE.imageName);
-        addImage(bundle, reg, BarStyle.BarType.FILLED.imageName);
-        addImage(bundle, reg, BarStyle.BarType.FILLED_LINE.imageName);
-    }
-    
-    private void addImage(Bundle bundle, ImageRegistry reg, String spath){
-        IPath path = new Path(spath);
-        URL url = FileLocator.find(bundle, path, null);        
-        ImageDescriptor desc = ImageDescriptor.createFromURL(url);
-        reg.put(spath, desc);
+            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 }

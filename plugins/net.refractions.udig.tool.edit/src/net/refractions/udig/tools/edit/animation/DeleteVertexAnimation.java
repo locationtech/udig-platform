@@ -57,7 +57,7 @@ public class DeleteVertexAnimation extends AbstractDrawCommand implements IAnima
         graphics.fill(new Rectangle(x+c, y,rad,rad));
         graphics.fill(new Rectangle(x, y+c,rad,rad));
         graphics.fill(new Rectangle(x, y-c,rad,rad));
-        
+
         graphics.fill(new Rectangle(x-a, y-a,rad,rad));
         graphics.fill(new Rectangle(x+a, y-a,rad,rad));
         graphics.fill(new Rectangle(x+a, y+a,rad,rad));
@@ -72,5 +72,5 @@ public class DeleteVertexAnimation extends AbstractDrawCommand implements IAnima
 
         return new Rectangle( x-c, y-c, c+c, c+c );
     }
-    
+
 }

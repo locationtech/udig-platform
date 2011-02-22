@@ -24,9 +24,9 @@ import net.refractions.udig.catalog.memory.internal.MemoryServiceListener;
 
 import org.geotools.data.FeatureReader;
 import org.geotools.data.memory.MemoryDataStore;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.feature.FeatureType;
 
 /**
  * This is an extended MemoryDataStore which provides proper event
@@ -34,7 +34,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * of MemoryDataStore for use in the MemoryService extension
  * should sub-class this class, as that will permit the Catalog
  * to be notified by events.
- * 
+ *
  * @author mleslie
  * @author rgould
  * @since 0.6.0
@@ -55,7 +55,7 @@ public class ActiveMemoryDataStore extends MemoryDataStore {
      *
      * @param collection
      */
-    public ActiveMemoryDataStore( FeatureCollection<SimpleFeatureType, SimpleFeature> collection ) {
+    public ActiveMemoryDataStore( FeatureCollection collection ) {
         super(collection);
     }
 
@@ -64,7 +64,7 @@ public class ActiveMemoryDataStore extends MemoryDataStore {
      *
      * @param array
      */
-    public ActiveMemoryDataStore( SimpleFeature[] array ) {
+    public ActiveMemoryDataStore( Feature[] array ) {
         super(array);
     }
 
@@ -74,36 +74,36 @@ public class ActiveMemoryDataStore extends MemoryDataStore {
      * @param reader
      * @throws IOException
      */
-    public ActiveMemoryDataStore( FeatureReader<SimpleFeatureType, SimpleFeature> reader ) throws IOException {
+    public ActiveMemoryDataStore( FeatureReader reader ) throws IOException {
         super(reader);
     }
-    
+
     /**
      * TODO summary sentence for addFeatureListener ...
-     * 
+     *
      * @param listener
      */
     public void addListener(MemoryServiceListener listener) {
         this.list.add(listener);
     }
-    
+
     /**
      * TODO summary sentence for removeFeatureListener ...
-     * 
+     *
      * @param listener
      * @return true if removed
      */
     public boolean removeListener(MemoryServiceListener listener) {
         return this.list.remove(listener);
     }
-    
-    public void createSchema(SimpleFeatureType featureType) throws IOException {
+
+    public void createSchema(FeatureType featureType) throws IOException {
        super.createSchema(featureType);
        for(MemoryServiceListener listener : this.list) {
            listener.schemaChanged();
        }
     }
-    
+
     public void removeSchema( String typeName ) {
         schema.remove(typeName);
         memory.remove(typeName);

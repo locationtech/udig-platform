@@ -11,7 +11,7 @@ public class ConnectionDeleteCommand extends Command {
 
 	public ConnectionDeleteCommand(Connection connection) {
 		super();
-		setLabel(Messages.ConnectionDeleteCommand_label); 
+		setLabel(Messages.ConnectionDeleteCommand_label);
 		this.connection = connection;
 	}
 	public void execute() {

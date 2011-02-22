@@ -16,7 +16,7 @@ package net.refractions.udig.ui;
 
 /**
  * Listener that is notified when a drop is completed.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

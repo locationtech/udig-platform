@@ -16,7 +16,7 @@ public class AWTColor {
     // List<Color> allColours = new ArrayList();
     private Color colour;
     /**
-     * 
+     *
      */
     public AWTColor( Color colour ) {
         super();
@@ -39,7 +39,7 @@ public class AWTColor {
 //    /**
 //     * An AWTCOlor is equal to another when the red, green, blue and alpha for each colour are
 //     * identical.
-//     * 
+//     *
 //     * @param otherColour
 //     * @return
 //     */
@@ -76,6 +76,6 @@ public class AWTColor {
             return false;
         return true;
     }
-    
-    
+
+
 }

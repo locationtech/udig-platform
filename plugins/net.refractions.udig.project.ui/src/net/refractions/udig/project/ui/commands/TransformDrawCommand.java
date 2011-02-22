@@ -14,7 +14,6 @@
  */
 package net.refractions.udig.project.ui.commands;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 
@@ -22,7 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Tranforms the Viewport's graphics current transform.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -36,28 +35,20 @@ public class TransformDrawCommand extends AbstractDrawCommand
     private int translateY;
     private int translateX;
     private double rotation;
-    private Point fixedPoint;
 
     public Rectangle getValidArea() {
         return null;
     }
 
     public synchronized void run( IProgressMonitor monitor ) throws Exception {
-        if (fixedPoint == null) {
-            fixedPoint = new Point(display.getWidth() / 2, display.getHeight() / 2);
-        }
         AffineTransform t = new AffineTransform();
-        t.translate(fixedPoint.getX(), fixedPoint.getY());
+        t.translate((double)display.getWidth()/(double)2, (double)display.getHeight()/(double)2);
         t.rotate(rotation);
         t.scale(scaleFactorX, scaleFactorY);
-        t.translate(-fixedPoint.getX(), -fixedPoint.getY());
+        t.translate((double)-display.getWidth()/(double)2, (double)-display.getHeight()/(double)2);
         t.translate(translateX, translateY);
         t.concatenate(graphics.getTransform());
         graphics.setTransform(t);
-    }
-
-    public synchronized void fixPoint( Point fixedPoint ) {
-        this.fixedPoint = fixedPoint;
     }
 
     public synchronized void zoom( double scaleFactorX, double scaleFactorY ) {

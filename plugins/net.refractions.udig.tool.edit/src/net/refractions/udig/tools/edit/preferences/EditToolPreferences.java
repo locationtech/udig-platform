@@ -36,7 +36,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 /**
  * Preference page for all tools.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -57,7 +57,7 @@ public class EditToolPreferences extends FieldEditorPreferencePage
                 getFieldEditorParent()));
         addField(new BooleanFieldEditor(PreferenceConstants.P_SELECT_POST_ACCEPT, Messages.EditToolPreferences_CreateFeaturePreference,
                 getFieldEditorParent()));
-        addField(new IntegerFieldEditor(PreferenceConstants.P_SNAP_RADIUS, 
+        addField(new IntegerFieldEditor(PreferenceConstants.P_SNAP_RADIUS,
         		Messages.EditToolPreferences_snapRadius,
                 getFieldEditorParent()));
         addField(new RadioGroupFieldEditor(
@@ -75,14 +75,14 @@ public class EditToolPreferences extends FieldEditorPreferencePage
                                 Messages.EditToolPreferences_all, SnapBehaviour.ALL_LAYERS.toString()},
                         {
                                 Messages.EditToolPreferences_grid, SnapBehaviour.GRID.toString()}}, getFieldEditorParent(), true));
-        addField(new IntegerFieldEditor(PreferenceConstants.P_VERTEX_SIZE, 
+        addField(new IntegerFieldEditor(PreferenceConstants.P_VERTEX_SIZE,
         		Messages.EditToolPreferences_vertexDiameter,
                 getFieldEditorParent()));
 
-        addField(new ColorFieldEditor(PreferenceConstants.P_SNAP_CIRCLE_COLOR, 
+        addField(new ColorFieldEditor(PreferenceConstants.P_SNAP_CIRCLE_COLOR,
         		Messages.EditToolPreferences_feedbackColor,
                 getFieldEditorParent()));
-        
+
         addField(new FeatureEditorFieldEditor(getFieldEditorParent()));
     }
 
@@ -98,7 +98,7 @@ public class EditToolPreferences extends FieldEditorPreferencePage
         }
 
        protected void adjustForNumColumns( int numColumns ) {
-            
+
         }
 
         @Override

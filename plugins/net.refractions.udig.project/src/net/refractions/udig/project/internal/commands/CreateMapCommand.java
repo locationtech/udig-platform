@@ -55,23 +55,16 @@ public class CreateMapCommand extends AbstractCommand implements UndoableMapComm
         if (name == null) {
             if (resources.size() > 0) {
                 IGeoResource resource = resources.get(0);
-                String title = resource.getTitle();
-                if( title == null || title.trim().length() == 0 ){
-                    IGeoResourceInfo info = resource.getInfo(monitor);
-                    if (info != null) {
-                        title = info.getTitle();
-                    }
+
+                IGeoResourceInfo info = resource.getInfo(monitor);
+                if (info != null) {
+                    name = info.getTitle();
+                    if (name == null)
+                        name = info.getName();
                 }
-                if (title != null && !title.contains("(") ){
-                    name = title;
-                }
-                if( name == null ){
-                    name = resource.getID().toBaseFile();
-                }                
             }
-            
             if (name == null) {
-                name = Messages.CreateMapCommand_defaultname; 
+                name = Messages.CreateMapCommand_defaultname;
             }
 
             int i=1;
@@ -86,9 +79,9 @@ public class CreateMapCommand extends AbstractCommand implements UndoableMapComm
         map = ProjectFactory.eINSTANCE.createMap(owner, name, new ArrayList());
 
         IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-        RGB background = PreferenceConverter.getColor(store, PreferenceConstants.P_BACKGROUND); 
+        RGB background = PreferenceConverter.getColor(store, PreferenceConstants.P_BACKGROUND);
         map.getBlackboard().put(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR, new Color(background.red, background.green, background.blue ));
-        
+
         LayerFactory layerFactory = map.getLayerFactory();
         List<Layer> toAdd=new ArrayList<Layer>(resources.size());
         for( IGeoResource resource : resources ) {
@@ -97,9 +90,9 @@ public class CreateMapCommand extends AbstractCommand implements UndoableMapComm
         }
 
         map.getLayersInternal().addAll(toAdd);
-        
+
         trace(toAdd);
-        
+
     }
 
     private void trace( List<Layer> toAdd ) {
@@ -120,7 +113,7 @@ public class CreateMapCommand extends AbstractCommand implements UndoableMapComm
     }
 
     public String getName() {
-        return Messages.CreateMapCommand_commandname; 
+        return Messages.CreateMapCommand_commandname;
     }
 
     public IMap getCreatedMap() {

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.catalog.tests.ui.workflow;
 
@@ -19,7 +19,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 /**
  * This class is insane the good part is the push and findbuttons as helpers for testing.
- * 
+ *
  */
 public class DialogDriver extends Job {
 

@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests Plug-in
 Bundle-SymbolicName: net.refractions.udig.tool.edit.tests
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.0.0
 Bundle-Activator: net.refractions.udig.tool.edit.tests.TestsPlugin
-Bundle-Vendor: udig.refractions.net
+Bundle-Vendor: Refractions Research Inc
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.libs,
@@ -15,5 +15,4 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.ui.tests,
  org.junit,
  net.refractions.udig.project.tests.ui
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-LazyStart: true

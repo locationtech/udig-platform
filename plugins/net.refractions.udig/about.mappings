@@ -3,9 +3,6 @@
 # java.io.Properties file (ISO 8859-1 with "\" escapes)
 # This file does not need to be translated.
 
-# Comment this out if you are doing a headless build, replaces them with the current time and version
-# 0=@date@
-# 1=@version@-@timestamp@
-
-0=2011-02-21
-1=1.2.2
+0=20081028-1+
+1=1.1.2
+2=2004-2008

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.tools.edit;
 
@@ -10,13 +10,13 @@ import net.refractions.udig.project.IEditManagerListener;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 import net.refractions.udig.tools.edit.support.EditGeom;
 
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * Activator that listens to the EditManager's selected feature. 
- * 
+ * Activator that listens to the EditManager's selected feature.
+ *
  * @author Jesse
  */
 public class EditManagerListenerActivator implements Activator, IEditManagerListener {
@@ -56,9 +56,9 @@ public class EditManagerListenerActivator implements Activator, IEditManagerList
 	public void changed(EditManagerEvent event) {
 		int type = event.getType();
 		if(type == EditManagerEvent.EDIT_FEATURE){
-			
+
 			EditGeom currentGeom = handler.getCurrentGeom();
-			SimpleFeature newValue = (SimpleFeature) event.getNewValue();
+			Feature newValue = (Feature) event.getNewValue();
 			if( currentGeom==null && newValue!=null ){
 				setCurrentGeom(newValue);
 			} else if( currentGeom!=null && newValue==null ) {
@@ -70,19 +70,19 @@ public class EditManagerListenerActivator implements Activator, IEditManagerList
 				}
 			}
 		}
-		
+
 	}
 
 	/**
 	 * @param newValue
 	 */
-	private void setCurrentGeom(SimpleFeature newValue) {
+	private void setCurrentGeom(Feature newValue) {
 		EditBlackboard bb = handler.getEditBlackboard(handler.getContext().getSelectedLayer());
-		Map<Geometry, EditGeom> editGeoms = bb.setGeometries((Geometry) newValue.getDefaultGeometry(), newValue.getID());
+		Map<Geometry, EditGeom> editGeoms = bb.setGeometries(newValue.getDefaultGeometry(), newValue.getID());
 		if( editGeoms.isEmpty() ){
 			return;
 		}
-		
+
 		EditGeom firstShape = editGeoms.values().iterator().next();
 		handler.setCurrentShape(firstShape.getShell());
 	}

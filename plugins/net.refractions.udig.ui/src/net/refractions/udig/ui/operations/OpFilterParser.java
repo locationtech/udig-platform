@@ -7,10 +7,10 @@ import org.eclipse.core.runtime.IConfigurationElement;
 public class OpFilterParser {
 
     FilterParser[] filterParsers;
-    
+
     public OpFilterParser( FilterParser[] filterParser ) {
         super();
-        
+
         assert filterParser != null;
 
         int i = 0;
@@ -21,7 +21,7 @@ public class OpFilterParser {
         System.arraycopy(filterParser, 0, this.filterParsers, 0, i);
 
     }
-    
+
     public OpFilter parseFilter( IConfigurationElement element ) {
 
         if( element==null ){
@@ -40,9 +40,9 @@ public class OpFilterParser {
             return andFilter(element);
         }
         for( FilterParser parser : filterParsers ) {
-            if( elementName.equals(parser.getElementName())){ 
+            if( elementName.equals(parser.getElementName())){
                 return parser.parse(element);
-            }            
+            }
         }
         UiPlugin.log("OpFilterParser: Parsing OpFilter: no parser found for parsing "+element.getNamespaceIdentifier(), null); //$NON-NLS-1$
 
@@ -51,16 +51,16 @@ public class OpFilterParser {
 
     private OpFilter andFilter( IConfigurationElement element ) {
         And andFilter=new And();
-        
+
         IConfigurationElement[] children = element.getChildren();
         if( children.length== 0){
             UiPlugin.log("OpFilterParser: Parsing OpFilter: No children of an AND OpFilter "+element.getNamespaceIdentifier(), null); //$NON-NLS-1$
             return OpFilter.TRUE;
         }
         for( IConfigurationElement element2 : children ) {
-            andFilter.getFilters().add(parseFilter(element2));            
+            andFilter.getFilters().add(parseFilter(element2));
         }
-        
+
         return andFilter;
     }
 
@@ -74,7 +74,7 @@ public class OpFilterParser {
 
     private OpFilter orFilter( IConfigurationElement element ) {
         Or orFilter=new Or();
-        
+
         IConfigurationElement[] children = element.getChildren();
         if( children.length== 0){
             UiPlugin.log("OpFilterParser: Parsing OpFilter: No children of an OR OpFilter "+element.getNamespaceIdentifier(), null); //$NON-NLS-1$
@@ -82,13 +82,13 @@ public class OpFilterParser {
             return OpFilter.TRUE;
         }
         for( IConfigurationElement element2 : children ) {
-            orFilter.getFilters().add(parseFilter(element2));            
+            orFilter.getFilters().add(parseFilter(element2));
         }
-        
+
         return orFilter;
 
     }
-    
+
     private boolean  validateChildren( IConfigurationElement[] children ) {
         if( children.length<1){
             return false;

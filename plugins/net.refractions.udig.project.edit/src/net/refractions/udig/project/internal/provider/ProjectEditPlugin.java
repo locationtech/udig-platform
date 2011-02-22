@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: ProjectEditPlugin.java 30923 2008-10-25 04:34:39Z jeichar $
  */
 package net.refractions.udig.project.internal.provider;
 
@@ -24,6 +24,12 @@ public final class ProjectEditPlugin extends EMFPlugin {
      * @generated NOT
      */
     public static final String ID = "net.refractions.udig.project.edit"; //$NON-NLS-1$
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
+    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
+
     /**
      * Keep track of the singleton.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -54,7 +60,6 @@ public final class ProjectEditPlugin extends EMFPlugin {
      * @return the singleton instance.
      * @generated
      */
-    @Override
     public ResourceLocator getPluginResourceLocator() {
         return plugin;
     }
@@ -110,7 +115,7 @@ public final class ProjectEditPlugin extends EMFPlugin {
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      * </ul>
      * </p>
-     * 
+     *
      * @param message
      * @param t
      */
@@ -122,16 +127,16 @@ public final class ProjectEditPlugin extends EMFPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:
-     * 
+     *
      * <pre><code>
      * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }
      * </code></pre>
-     * 
+     *
      * </p>
-     * 
+     *
      * @param message
      * @param e
      */
@@ -151,11 +156,11 @@ public final class ProjectEditPlugin extends EMFPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      * @return true if -debug is on for this plugin
      */
     public static boolean isDebugging( final String trace ) {
-        return getPlugin().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+        return getPlugin().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 }

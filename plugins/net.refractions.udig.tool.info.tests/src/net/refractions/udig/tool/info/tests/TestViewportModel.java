@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.tool.info.tests;
 
@@ -36,8 +36,8 @@ public class TestViewportModel implements ViewportModel {
 
 	TestViewportModel() {
 	}
-	
-	
+
+
 
 	/**
 	 * @param displaySize
@@ -123,57 +123,57 @@ public class TestViewportModel implements ViewportModel {
 
 	public void setBounds(Envelope value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setBounds(double minx, double maxx, double miny, double maxy) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setCRS(CoordinateReferenceSystem value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setCenter(Coordinate value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setHeight(double value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setInitialized(boolean initialized) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setMapInternal(Map value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setRenderManagerInternal(RenderManager value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setScale(double scaleDenominator) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setWidth(double value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void unsetCRS() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public Point worldToPixel(Coordinate coord) {
@@ -194,12 +194,12 @@ public class TestViewportModel implements ViewportModel {
 
 	public void zoomToBox(Envelope box) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void zoomToExtent() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public TreeIterator eAllContents() {
@@ -264,12 +264,12 @@ public class TestViewportModel implements ViewportModel {
 
 	public void eSet(EStructuralFeature arg0, Object arg1) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void eUnset(EStructuralFeature arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public EList eAdapters() {
@@ -284,22 +284,22 @@ public class TestViewportModel implements ViewportModel {
 
 	public void eNotify(Notification arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void eSetDeliver(boolean arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void sizeChanged(MapDisplayEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void addViewportModelListener(IViewportModelListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public IMap getMap() {
@@ -314,7 +314,7 @@ public class TestViewportModel implements ViewportModel {
 
 	public void removeViewportModelListener(IViewportModelListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public AffineTransform worldToScreenTransform(Envelope mapExtent, Dimension displaySize) {
@@ -328,5 +328,5 @@ public class TestViewportModel implements ViewportModel {
 
         return at;
 	}
-	
+
 }

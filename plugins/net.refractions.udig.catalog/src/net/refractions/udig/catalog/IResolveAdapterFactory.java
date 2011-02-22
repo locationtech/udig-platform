@@ -30,17 +30,17 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * <ul>
  * <li>we need to explicitly account for contacting external resources
  * </ul>
- * 
+ *
  * @author Justin Deoliveira, The Open Planning Project, jdeolive@openplans.org
  *
  */
 public interface IResolveAdapterFactory {
     /**
-     * Determines if a particular adaptation is supported.  
-     * 
+     * Determines if a particular adaptation is supported.
+     *
      * <p>
      * <b>NOTE</b>  If this factory is declared in an extension point
-     * and the {@link ResolveManager} is responsible for canResolve then this method 
+     * and the {@link ResolveManager} is responsible for canResolve then this method
      * will not be called because the information from the xml will be used instead.
      * </p>
      *

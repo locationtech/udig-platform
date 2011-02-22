@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: net.refractions.udig.project.edit; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.project.internal.provider.ProjectEditPlugin$Implementation
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
@@ -15,5 +15,4 @@ Require-Bundle: net.refractions.udig.project;visibility:=reexport,
  org.eclipse.emf.edit.ui;visibility:=reexport,
  org.eclipse.core.runtime,
  net.refractions.udig.catalog.ui
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-LazyStart: true

@@ -17,7 +17,7 @@ package net.refractions.udig.project;
 
 /**
  * Listener for listening to a {@link net.refractions.udig.project.IBlackboard} objects.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -32,7 +32,7 @@ public interface IBlackboardListener {
 
     /**
      * Called before the blackboard has been cleared.
-     * 
+     *
      * @param source the blackboard that has been cleared.
      */
     void blackBoardCleared( IBlackboard source );

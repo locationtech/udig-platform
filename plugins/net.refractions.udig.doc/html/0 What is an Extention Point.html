@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 0 What is an Extention Point</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 0 What is an Extention Point -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>An extension point is a formal declaration in a plugin.xml file that customization is allowed. Customization takes the place of other plugins (any other plugin) providing a little chunk of xml describing the customization that is requested.</p>
+
+<p>In practice most extention points allow the xml to indicate a <b>class</b> of some sort (where all the magic occurs).  If we were just doing straight up object oriented programming we would handle this kind of thing by allowing other to provide a <b>stratagy object</b> that conformed to a specific interface.</p>
+
+<p>It works the same way with most extention points, when they allow a class contribution they indicate what interface is required.</p>
+
+<p>But remember this is not straight up object oriented programming, that chunk of xml (the extention) also needs to correspond to an interface. In XML speak that is what is know as an XML Schema.</p>
+
+<p>Here is a link to the extention points used by udig right now: <a href="http://udig.refractions.net/nightly/udig/latest/docs/schema/" title="Visit page outside Confluence">udig extention points</a>. In addition to these extention points you can use any of the extention points defined by the Eclipse RCP application (allowing you do do everything from additional view to online help).</p>
+
+<hr />
+
+<p>When the class/interface is extended to create a plug-in the plugin.xml file must be undated with the appropriate information.</p>
+
+<p>for example:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;</span>
+<span class="code-tag">&lt;?eclipse version=<span class="code-quote">"3.0"</span>?&gt;</span>
+&lt;plugin
+	id=<span class="code-quote">"com.example.helloworld"</span>
+	name=<span class="code-quote">"Helloworld Plugâ??in"</span>
+	version=<span class="code-quote">"1.0.0"</span>
+	provider=<span class="code-quote">"EXAMPLE"</span>
+	class=<span class="code-quote">"com.example.helloworld.HelloworldPlugin"</span>&gt;
+
+   <span class="code-tag">&lt;runtime&gt;</span>
+    <span class="code-tag">&lt;library name=<span class="code-quote">"helloworld.jar"</span>&gt;</span>
+     <span class="code-tag">&lt;export name=<span class="code-quote">"*"</span>/&gt;</span>
+	<span class="code-tag">&lt;/library&gt;</span>
+   <span class="code-tag">&lt;/runtime&gt;</span>
+
+   <span class="code-tag">&lt;requires&gt;</span>
+	<span class="code-tag">&lt;import plugin=<span class="code-quote">"org.eclipse.ui"</span>/&gt;</span>
+	<span class="code-tag">&lt;import plugin=<span class="code-quote">"org.eclipse.core.runtime"</span>/&gt;</span>
+	<span class="code-tag">&lt;import plugin=<span class="code-quote">"org.eclipse.core.runtime.compatibility"</span>/&gt;</span>
+   <span class="code-tag">&lt;/requires&gt;</span>
+
+   &lt;extension
+         point=<span class="code-quote">"org.eclipse.ui.views"</span>&gt;
+      &lt;category
+            name=<span class="code-quote">"Hello Category"</span>
+            id=<span class="code-quote">"com.example.helloworld"</span>&gt;
+      <span class="code-tag">&lt;/category&gt;</span>
+      &lt;view
+            name=<span class="code-quote">"Hello View"</span>
+            icon=<span class="code-quote">"icons/sample.gif"</span>
+            category=<span class="code-quote">"com.example.helloworld"</span>
+            class=<span class="code-quote">"com.example.helloworld.HelloWorldView"</span>
+            id=<span class="code-quote">"com.example.helloworld.HelloWorldView"</span>&gt;
+      <span class="code-tag">&lt;/view&gt;</span>
+   <span class="code-tag">&lt;/extension&gt;</span>
+
+<span class="code-tag">&lt;/plugin&gt;</span></pre>
+</div></div>
+
+<p>Notice the &lt;extension&gt; tag. The extension point for this example hello world plug-in is the org.eclipse.ui.views class. </p>
+
+<table class='confluenceTable'>
+<tr>
+<td class='confluenceTd'>The above example code can be found in the section:<br/>
+"Plug it in: Hello World meets the workbench"</td>
+</tr>
+</table>
+
+<table class='confluenceTable'>
+<tr>
+<td class='confluenceTd'>of the "Platform Plug-in Developer Guide":<br/>
+org.eclipse.platform.doc.isv_3.0.1.pdf</td>
+</tr>
+</table>
+
+<table class='confluenceTable'>
+<tr>
+<td class='confluenceTd'>Located on Eclipse's documentation page:<br/>
+<a href="http://www.eclipse.org/documentation/main.html" title="Visit page outside Confluence">&#104;ttp://www.eclipse.org/documentation/main.html</a></td>
+</tr>
+</table>
+
+<p>The Plugin.xml file contains the XML code that allows the Eclipse run-time engine to execute new plug-ins. By specifing an "Extension Point" in the xml file Eclipse can run the class and because the class implements an already existing interface Eclipse knows what functions it must run.</p>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=5353">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=5353">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

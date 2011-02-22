@@ -15,7 +15,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * A command for making the viewport zoom out fully so the entire map is displayed.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -39,7 +39,7 @@ public class ZoomExtentCommand extends AbstractNavCommand {
      * @see net.refractions.udig.project.command.MapCommand#getName()
      */
     public String getName() {
-        return Messages.ZoomExtentCommand_name; 
+        return Messages.ZoomExtentCommand_name;
     }
 
 }

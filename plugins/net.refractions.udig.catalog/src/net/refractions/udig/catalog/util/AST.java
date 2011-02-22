@@ -8,7 +8,7 @@ package net.refractions.udig.catalog.util;
 
 /**
  * Use the visitor pattern to traverse the AST
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */

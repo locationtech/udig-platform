@@ -25,7 +25,7 @@
                         label="TestGetRenderers"
                         menubarPath="test/additions"
                         style="push"/>
-                 
+
     </actionSet>
     </extension>
       <extension

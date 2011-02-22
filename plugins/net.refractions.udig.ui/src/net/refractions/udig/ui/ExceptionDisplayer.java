@@ -34,7 +34,7 @@ public class ExceptionDisplayer {
             Status status = new Status(IStatus.ERROR, pluginID, IStatus.ERROR, exception.getLocalizedMessage(), exception);
             multi.add(status);
         }
-        
+
        PlatformGIS.syncInDisplayThread(new Runnable(){
             public void run() {
                 Dialog dialog = new ErrorDialog(Display.getDefault().getActiveShell(), Messages.ExceptionDisplayer_very_informative_error, message, multi, IStatus.ERROR);

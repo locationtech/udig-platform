@@ -16,7 +16,7 @@ public class WFSGeoResourceTest extends AbstractGeoResourceTest {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see junit.framework.TestCase#setUp()
      */
     protected void setUp() throws Exception {
@@ -30,7 +30,7 @@ public class WFSGeoResourceTest extends AbstractGeoResourceTest {
     private IGeoResource resource = null;
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.catalog.tests.AbstractGeoResourceTest#getResolve()
      */
     protected IGeoResource getResolve() {
@@ -38,7 +38,7 @@ public class WFSGeoResourceTest extends AbstractGeoResourceTest {
     }
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.catalog.tests.AbstractResolveTest#hasParent()
      */
     protected boolean hasParent() {

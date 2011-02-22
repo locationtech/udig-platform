@@ -20,27 +20,27 @@ import org.eclipse.swt.widgets.TreeItem;
 /**
  * An expansion provider controls which elements in the issues viewer are expanded or not.  This is by necessity
  * dependent on which {@link IIssuesContentProvider} is set on the viewer.
- * 
+ *
  * @see IssueConfiguration#setExpansionProvider(IIssuesExpansionProvider)
  * @see IssueConfiguration#setContentProvider(IIssuesContentProvider)
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public interface IIssuesExpansionProvider {
-    
+
     /**
      * Called when an object has a child.  Should return true if the element should be expanded.
      * <b>Do NOT modify item or viewer just use the read only methods.</b>
-     *  
-     * @param viewer tree viewer that is being expanded. 
+     *
+     * @param viewer tree viewer that is being expanded.
      * @param item tree item that contains the object.
      * @param element element to test whether it should be expanded.
      * @return true if element should be expanded.
      */
     boolean expand(TreeViewer viewer, TreeItem item, Object element);
     /**
-     * Returns the extension id so that the system can instantiate the 
+     * Returns the extension id so that the system can instantiate the
      * sorter again in the future after the workbench has been shutdown.
      * @return pluginID.extensionid.
      */

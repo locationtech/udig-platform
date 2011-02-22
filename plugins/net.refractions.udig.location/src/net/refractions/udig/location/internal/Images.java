@@ -26,21 +26,21 @@ import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 
 /**
- * The image descriptors for the plugin
+ * The image descrptors for the plugin
  */
-public class Images {        
+public class Images {
     public final static String PATH_ELOCALTOOL = "elcl16/"; //$NON-NLS-1$
     public final static String REFRESH_CO = PATH_ELOCALTOOL + "refresh_co.gif"; //$NON-NLS-1$
     public final static String REMOVE_CO = PATH_ELOCALTOOL + "remove_co.gif"; //$NON-NLS-1$
-                   
+
     public final static String PATH_OBJECT = "obj16/"; //$NON-NLS-1$
     // later need address icon!
     public static final String SHOW_CO = PATH_ELOCALTOOL + "show_co.gif"; //$NON-NLS-1$
-    
+
     /** Hashtable of ImageDescriptors */
     private ImageRegistry imageCache;
-    private URL baseURL; 
-    
+    private URL baseURL;
+
     /**
      * Creates an image descriptor for later use.
      */
@@ -55,7 +55,7 @@ public class Images {
         imageCache.put(id, image );
         return image;
     }
-    
+
     /**
      * Returns the image descriptor for ID, or null if not found.
      * <p>
@@ -73,7 +73,7 @@ public class Images {
         return images.create( id );
     }
     /**
-     * Returns the image associated with the given key, 
+     * Returns the image associated with the given key,
      * or <code>null</code> if none.
      *
      * @param id the key
@@ -97,8 +97,8 @@ public class Images {
      */
     public void initializeImages(URL url, ImageRegistry shared ) {
         imageCache = shared;
-        baseURL = url;                
-    }    
+        baseURL = url;
+    }
     /**
      * Cleanup image cache.
      */
@@ -111,5 +111,5 @@ public class Images {
      */
     public ImageDescriptor getImageDescriptor( String id ) {
         return getDescriptor( id );
-    }    
+    }
 }

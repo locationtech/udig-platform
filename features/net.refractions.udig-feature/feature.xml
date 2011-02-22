@@ -2,16 +2,17 @@
 <feature
       id="net.refractions.udig"
       label="net.refractions.udig-feature"
-      version="1.2.0.qualifier"
-      provider-name="udig.refractions.net"
+      version="1.1.2"
+      provider-name="Refractions Research"
       plugin="net.refractions.udig">
 
-   <description url="http://udig.refractions.net/">
-      uDig example application
+   <description>
+      These are the uDig plugins that must be added to a normal Eclipse
+RPC download in order to produce the uDig application.
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright>
+      (c) 2008 Refractions Research
    </copyright>
 
    <license url="http://www.example.com/license">
@@ -19,14 +20,11 @@
    </license>
 
    <url>
-      <update label="User-friendly Desktop Internet GIS Updates" url="http://udig.refractions.net/update/"/>
-      <discovery label="uDig Updates" url="http://udig.refractions.net/update/"/>
-      <discovery label="uDig Community Updates" url="http://udig.refractions.net/update-community/"/>
+      <update label="User-friendly Desktop Internet GIS Updates" url="http://udig.refractions.net/files/update/1.1/udig/"/>
+      <discovery label="JGrass" url="http://jgrass.dev.fsc.bz.it/eu.hydrologis.jgrass.update/"/>
+      <discovery label="uDig 1.1 Discovery Site" url="http://udig.refractions.net/files/update/1.1/community/"/>
+      <discovery label="UWB updates" url="http://git.zcu.cz/udigupdates/"/>
    </url>
-
-   <includes
-         id="org.eclipse.rcp"
-         version="0.0.0"/>
 
    <includes
          id="net.refractions.udig_platform"
@@ -38,21 +36,22 @@
 
    <includes
          id="net.refractions.udig_printing"
-         version="0.0.0"/>
+         version="0.0.0"
+         optional="true"/>
 
    <includes
          id="net.refractions.udig_base"
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.help"
+         id="net.refractions.udig_language"
          version="0.0.0"/>
 
    <plugin
          id="net.refractions.udig"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.1.0"
          unpack="false"/>
 
 </feature>

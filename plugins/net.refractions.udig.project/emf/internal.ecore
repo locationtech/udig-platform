@@ -31,19 +31,19 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EditManager" eSuperTypes="#//IEditManager">
     <eOperations name="setEditFeature" eExceptions="#//IllegalArgumentException">
-      <eParameters name="value" eType="#//SimpleFeature"/>
+      <eParameters name="value" eType="#//Feature"/>
       <eParameters name="layer" eType="#//Layer"/>
     </eOperations>
     <eOperations name="startTransaction"/>
     <eOperations name="commitTransaction" eExceptions="#//IOException"/>
     <eOperations name="rollbackTransaction" eExceptions="#//IOException"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="editFeature" eType="#//SimpleFeature"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="editFeature" eType="#//Feature"
         changeable="false" transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mapInternal" eType="#//Map"
         transient="true" eOpposite="#//Map/editManagerInternal"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="editLayerInternal" eType="#//Layer"
         changeable="false" transient="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transactionType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transactionType" eType="#//Class"
         changeable="false" volatile="true" transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="editLayerLocked" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="selectedLayer" eType="#//Layer"/>
@@ -147,11 +147,7 @@
       <eParameters name="styleId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
     <eOperations name="lookup" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject">
-      <eParameters name="theClass">
-        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
-          <eTypeArguments/>
-        </eGenericType>
-      </eParameters>
+      <eParameters name="theClass" eType="#//Class"/>
     </eOperations>
     <eOperations name="contains" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eParameters name="styleId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -176,7 +172,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="memento" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
         volatile="true" transient="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="styleClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="styleClass" eType="#//Class"
         volatile="true" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Cloneable" instanceTypeName="Cloneable"
@@ -196,7 +192,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="BlackboardEntry">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="memento" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="objectClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="objectClass" eType="#//Class"
         volatile="true" transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="object" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
         volatile="true" transient="true"/>
@@ -210,10 +206,10 @@
   <eClassifiers xsi:type="ecore:EDataType" name="AffineTransform" instanceClassName="java.awt.geom.AffineTransform"/>
   <eClassifiers xsi:type="ecore:EDataType" name="NavCommandStack" instanceClassName="net.refractions.udig.project.command.NavCommandStack"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IGeoResource" instanceClassName="net.refractions.udig.catalog.IGeoResource"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Filter" instanceClassName="org.opengis.filter.Filter"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Filter" instanceClassName="org.geotools.filter.Filter"/>
   <eClassifiers xsi:type="ecore:EDataType" name="CoordinateReferenceSystem" instanceClassName="org.opengis.referencing.crs.CoordinateReferenceSystem"/>
   <eClassifiers xsi:type="ecore:EDataType" name="CommandStack" instanceClassName="net.refractions.udig.project.command.CommandStack"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Feature" instanceClassName="org.geotools.feature.SimpleFeature"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Feature" instanceClassName="org.geotools.feature.Feature"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="java.awt.Point"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Adapter" instanceClassName="org.eclipse.emf.common.notify.Adapter"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IProgressMonitor" instanceClassName="org.eclipse.core.runtime.IProgressMonitor"/>
@@ -232,7 +228,7 @@
   <eClassifiers xsi:type="ecore:EDataType" name="MutablePicoContainer" instanceClassName="org.picocontainer.MutablePicoContainer"/>
   <eClassifiers xsi:type="ecore:EDataType" name="ReferencedEnvelope" instanceClassName="org.geotools.geometry.jts.ReferencedEnvelope"/>
   <eClassifiers xsi:type="ecore:EDataType" name="FeatureEvent" instanceClassName="org.geotools.data.FeatureEvent"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="SimpleFeature" instanceClassName="org.opengis.feature.simple.SimpleFeature"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Class" instanceClassName="java.lang.Class"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IllegalArgumentException" instanceClassName="java.lang.IllegalArgumentException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IOException" instanceClassName="java.io.IOException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Color" instanceClassName="java.awt.Color"/>

@@ -16,7 +16,7 @@ package net.refractions.udig.issues.listeners;
 
 /**
  * The types of change that can happen to a list. Add, remove, save
- * 
+ *
  * @author jones
  * @since 1.0.0
  */

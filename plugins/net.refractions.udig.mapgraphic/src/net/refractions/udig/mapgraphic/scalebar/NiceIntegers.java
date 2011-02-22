@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2008, Refractions Research Inc.
+ * (C) 2004, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,8 +17,8 @@ package net.refractions.udig.mapgraphic.scalebar;
 import net.refractions.udig.core.IProviderWithParam;
 
 /**
- * Provides numbers like:  1, 2, 5, 10, 20, 50, 100, ... 
- * 
+ * Provides numbers like:  1, 2, 5, 10, 20, 50, 100, ...
+ *
  * @author jesse
  * @since 1.1.0
  */

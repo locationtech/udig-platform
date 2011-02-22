@@ -92,7 +92,7 @@ import org.eclipse.ui.part.ViewPart;
 
 /**
  * Lists the current issues and allows the issues to fixed.
- * 
+ *
  * @see net.refractions.udig.issues.IIssue for more information how how they
  *      can be fixed.
  * @author jones
@@ -111,7 +111,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 
     // Listens for setIssuesList to be called
     private final IIssuesManagerListener managerListener=createIssuesManagerListener();
-    
+
     public static final String CONFIGURATION_EXTENSION_POINT_ID = "net.refractions.udig.issues.issuesViewConfiguration"; //$NON-NLS-1$
     public static final String VIEW_ID = "net.refractions.udig.issues.view.issues"; //$NON-NLS-1$
 
@@ -124,7 +124,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 	public static final int DESC_COLUMN = 3;
 
 	private static final String SHOW_GROUPS_KEY = "SHOW_GROUPS"; //$NON-NLS-1$
-	
+
 	private static final int SHOW_GROUPS = 1;
 
 	boolean resolvedIssuesShown = false;
@@ -204,7 +204,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 
 		viewer.setColumnProperties(new String[] {
 				String.valueOf(RESOLUTION_COLUMN),
-				String.valueOf(PRIORITY_COLUMN), 
+				String.valueOf(PRIORITY_COLUMN),
                 String.valueOf(OBJECT_COLUMN),
 				String.valueOf(DESC_COLUMN), });
 
@@ -222,12 +222,12 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 		descriptionColumn.setAlignment(SWT.CENTER);
 
         viewer.setUseHashlookup(true);
-        
+
 		initViewerProviders();
-        
+
 		viewer.setInput(IIssuesManager.defaultInstance.getIssuesList());
         doExpand();
-        
+
 		viewer.getControl().addListener(SWT.MouseDoubleClick, new Listener() {
 			public void handleEvent(Event event) {
 				ISelection selection = viewer.getSelection();
@@ -243,13 +243,13 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 		});
 
         initAction();
-        
+
 		addActions();
 
 		addContextMenu();
 
 		IIssuesManager.defaultInstance.addIssuesListListener(issuesListener);
-        
+
         IIssuesManager.defaultInstance.addListener(managerListener);
 	}
 
@@ -261,9 +261,9 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 		sorter = new StrategizedSorter();
         sorter.setStrategy(load("sorter", KEY_VIEW_SORTER, new IssuesSorter())); //$NON-NLS-1$
         viewer.setSorter(sorter);
-        
+
         setExpansionProvider(load("expansionProvider", KEY_VIEW_EXPANSION_PROVIDER, new IssueExpansionProvider())); //$NON-NLS-1$
-        
+
 		IssuesContentProvider contentProvider = load("contentProvider", KEY_VIEW_CONTENT_PROVIDER, new IssuesContentProvider()); //$NON-NLS-1$
 		if( contentProvider instanceof IssuesContentProvider ){
 			((IssuesContentProvider)contentProvider).setShowGroup(defaultShowGroup );
@@ -283,7 +283,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
         for( IConfigurationElement element : extensions ) {
             String string = element.getNamespaceIdentifier() + "." + element.getAttribute("id");//$NON-NLS-1$//$NON-NLS-2$
             String extensionElementName = element.getName();
-            if ((string).equals(extensionPoint) && extensionElementName.equals(expectedConfigurationElementName)) { 
+            if ((string).equals(extensionPoint) && extensionElementName.equals(expectedConfigurationElementName)) {
                 return (T) element.createExecutableExtension("class"); //$NON-NLS-1$
             }
         }
@@ -292,7 +292,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
         }
         return defaultValue;
     }
-    
+
     private void initAction() {
         this.fixAction = createFixAction();
         this.deleteAction = createDeleteAction();
@@ -314,22 +314,22 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
                     break;
                 case ISSUES_LIST_CHANGE:
                     refreshAction.setEnabled(enabled);
-                    
+
                     break;
                 case SAVE:
                     if( saveAction.isEnabled() )
                         saveAction.setEnabled(false);
-                    
+
                     break;
 
                 default:
                     break;
                 }
             }
-            
+
         };
     }
-    
+
 	private IIssuesListListener createIssuesListener() {
 		return new IIssuesListListener() {
 			public void notifyChange(IssuesListEvent event) {
@@ -375,7 +375,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 	private boolean testing=false;
 
 	private IAction createDeleteGroupAction() {
-		IAction action = new Action(Messages.IssuesView_deleteRelatedAction, Images 
+		IAction action = new Action(Messages.IssuesView_deleteRelatedAction, Images
 				.getDescriptor(ImageConstants.DELETE_GROUP)) {
 			@Override
 			public void runWithEvent(Event event) {
@@ -393,8 +393,8 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 				boolean doDelete;
 				if( !testing ){
 				doDelete = MessageDialog.openConfirm(event.display
-						.getActiveShell(), Messages.IssuesView_deleteGroup, 
-						Messages.IssuesView_dialogMessage); 
+						.getActiveShell(), Messages.IssuesView_deleteGroup,
+						Messages.IssuesView_dialogMessage);
 				}else{
 					doDelete=true;
 				}
@@ -443,7 +443,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 	}
 
 	private IAction createDeleteAction() {
-		Action action = new Action(Messages.IssuesView_DeleteIssueAction, Images 
+		Action action = new Action(Messages.IssuesView_DeleteIssueAction, Images
 				.getDescriptor(ImageConstants.DELETE)) {
 			@SuppressWarnings("unchecked")
 			@Override
@@ -459,7 +459,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 
 			}
 		};
-		action.setToolTipText(Messages.IssuesView_DeleteIssueTooltip); 
+		action.setToolTipText(Messages.IssuesView_DeleteIssueTooltip);
 		if (viewer.getSelection().isEmpty()) {
 			action.setEnabled(false);
 		} else {
@@ -488,7 +488,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 	}
 
 	private IAction createShowGroupsAction(){
-		final Action action =new Action(Messages.IssuesView_showGroups, IAction.AS_CHECK_BOX ){ 
+		final Action action =new Action(Messages.IssuesView_showGroups, IAction.AS_CHECK_BOX ){
 			@Override
 			public void runWithEvent(Event event) {
 				IContentProvider contentProvider = viewer.getContentProvider();
@@ -500,20 +500,20 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 			}
 		};
 		action.setChecked(false);
-        
+
         action.setEnabled( viewer.getContentProvider() instanceof IssuesContentProvider );
 		return action;
 	}
-	
+
 	@Override
 	public void init(IViewSite site, IMemento memento) throws PartInitException {
-		
+
 		if( memento!=null && memento.getInteger(SHOW_GROUPS_KEY)==SHOW_GROUPS ){
 			defaultShowGroup = true;
 		}
 		super.init(site, memento);
 	}
-	
+
 	@Override
 	public void saveState(IMemento memento) {
 		super.saveState(memento);
@@ -523,7 +523,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 			memento.putInteger(SHOW_GROUPS_KEY, SHOW_GROUPS-1);
 		}
 	}
-	
+
 	private IAction createShowResolvedIssuesAction() {
 		final Action action = new Action(
 				Messages.IssuesView_showIssues_action_name, IAction.AS_CHECK_BOX) {
@@ -548,8 +548,8 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
         };
         action.setImageDescriptor(Images
                 .getDescriptor(ImageConstants.GOTO_ISSUE));
-        action.setText(Messages.IssuesView_fix_action_name); 
-        action.setToolTipText(Messages.IssuesView_fix_action_tooltip); 
+        action.setText(Messages.IssuesView_fix_action_name);
+        action.setToolTipText(Messages.IssuesView_fix_action_tooltip);
         if (viewer.getSelection().isEmpty()) {
             action.setEnabled(false);
         } else {
@@ -579,7 +579,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
         action.setHoverImageDescriptor(template.getHoverImageDescriptor());
 
         action.setEnabled((issuesManager.getIssuesList() instanceof IRemoteIssuesList) && issuesManager.isDirty());
-        
+
         return action;
     }
 
@@ -606,7 +606,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
         action.setDisabledImageDescriptor(dtool);
 
         action.setEnabled(IIssuesManager.defaultInstance.getIssuesList() instanceof IRemoteIssuesList);
-        
+
         return action;
     }
 
@@ -667,7 +667,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 		}
 		deleteGroupListeners.clear();
 	}
-    
+
     /**
      * <b>FOR TESTING ONLY</b>
      */
@@ -744,7 +744,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 	// updates the viewer. Usually called when the resolution has changed to
 	// resolved.
 	// It waits a couple seconds before updating so user can change mind.
-	Job updateTimerJob = new Job(Messages.IssuesView_timer_name) { 
+	Job updateTimerJob = new Job(Messages.IssuesView_timer_name) {
 
 		@Override
 		protected IStatus run(final IProgressMonitor monitor) {
@@ -752,7 +752,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 				public void run() {
                     if( PlatformUI.getWorkbench().isClosing() || monitor.isCanceled() )
                         return ;
-                    
+
 					updateViewer();
 				}
 			});
@@ -848,7 +848,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 		if( settingSelection )
 			return ;
 		if( selection instanceof IStructuredSelection ){
-			List<IIssue> newselection=new LinkedList<IIssue>(); 
+			List<IIssue> newselection=new LinkedList<IIssue>();
 			IStructuredSelection sel=(IStructuredSelection) selection;
 			for (Iterator iter = sel.iterator(); iter.hasNext();) {
 				Object selected = iter.next();
@@ -880,7 +880,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 		public IssuesTreeViewer(Composite parent, int style) {
 			super(parent, style);
 		}
-		
+
         boolean canfindItem(Object item){
             return findItem(item)!=null;
         }
@@ -942,7 +942,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
         viewer.setLabelProvider(provider);
     }
 
-    
+
     public void setContentProvider( IIssuesContentProvider provider ) {
         viewer.setContentProvider(provider);
         if( showGroupAction!=null )
@@ -966,7 +966,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 
     private void doExpand() {
         Tree tree=viewer.getTree();
-        
+
         TreeItem[] children = tree.getItems();
         for( TreeItem item : children ) {
             doExpand(item);
@@ -1015,7 +1015,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
         try {
             IIssuesManager.defaultInstance.save(monitor);
         } catch (IOException e) {
-            throw (RuntimeException) new RuntimeException( net.refractions.udig.issues.internal.Messages.IssuesView_saveError).initCause( e ); 
+            throw (RuntimeException) new RuntimeException( net.refractions.udig.issues.internal.Messages.IssuesView_saveError).initCause( e );
         }
     }
 

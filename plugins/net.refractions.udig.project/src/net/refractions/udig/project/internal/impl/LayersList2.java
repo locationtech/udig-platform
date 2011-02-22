@@ -37,16 +37,17 @@ import org.eclipse.emf.ecore.InternalEObject;
 /**
  * Wraps a EList and makes sure that when a layer is added the layer interceptor is fired and a deep
  * adapter is added.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
-class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
+class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList  {
 
     /** long serialVersionUID field */
     private static final long serialVersionUID = 4584718175140573610L;
 
-    private Collection<Adapter> deepAdapters = new CopyOnWriteArraySet<Adapter>();
+    private Collection<Adapter>     deepAdapters     = new CopyOnWriteArraySet<Adapter>();
+
 
     @SuppressWarnings("unchecked")
     public LayersList2( Class dataClass, InternalEObject owner, int featureID, int inverseFeatureID ) {
@@ -55,24 +56,24 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
 
     /**
      * adds the adapter to all layers and the context model
-     * 
+     *
      * @param adapter adapter to add to all layers.
      */
     @SuppressWarnings("unchecked")
     public void addDeepAdapter( Adapter adapter ) {
         deepAdapters.add(adapter);
-        if (!owner.eAdapters().contains(adapter))
+        if( !owner.eAdapters().contains(adapter))
             owner.eAdapters().add(adapter);
         for( Object object : this ) {
-            Layer layer = (Layer) object;
-            if (!layer.eAdapters().contains(adapter))
+            Layer layer=(Layer) object;
+            if( !layer.eAdapters().contains(adapter))
                 layer.eAdapters().add(adapter);
         }
     }
 
     /**
      * removes the adapter from all layers.
-     * 
+     *
      * @param toRemove
      */
     public void removeDeepAdapter( Adapter toRemove ) {
@@ -93,11 +94,8 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
     @Override
     public NotificationChain inverseAdd( Object object, NotificationChain notifications ) {
         NotificationChain notificationChain = super.inverseAdd(object, notifications);
-        if (ProjectPlugin.isDebugging(Trace.MODEL))
-            ProjectPlugin
-                    .trace(
-                            getClass(),
-                            "inverseAdd() = " + ((Layer) object).getID() + " to map " + getMap().getName(), null); //$NON-NLS-1$ //$NON-NLS-2$
+        if( ProjectPlugin.isDebugging(Trace.MODEL))
+            ProjectPlugin.trace(getClass(), "inverseAdd() = "+((Layer)object).getID()+" to map "+getMap().getName(), null);  //$NON-NLS-1$ //$NON-NLS-2$
 
         runAddInterceptors(object);
         return notificationChain;
@@ -105,26 +103,23 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
 
     @Override
     protected Object assign( int index, Object object ) {
-        if (!(object instanceof Layer))
-            throw new AssertionError("Can only add " + Layer.class.getName() + " to a map.  Was: " //$NON-NLS-1$ //$NON-NLS-2$
-                    + object.getClass().getName());
+            if (!(object instanceof Layer))
+                throw new AssertionError("Can only add " + Layer.class.getName() + " to a map.  Was: " //$NON-NLS-1$ //$NON-NLS-2$
+                        + object.getClass().getName());
 
-        if (ProjectPlugin.isDebugging(Trace.MODEL))
-            ProjectPlugin
-                    .trace(
-                            getClass(),
-                            "Adding " + ((Layer) object).getID() + " to map " + getMap().getName() + " at location: " + index, null); //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
-        Object object2 = super.assign(index, object);
-        if (ProjectPlugin.isDebugging(Trace.MODEL))
-            ProjectPlugin.trace(getClass(), "Resulting list=" + this, null); //$NON-NLS-1$
+            if( ProjectPlugin.isDebugging(Trace.MODEL))
+                ProjectPlugin.trace(getClass(), "Adding "+((Layer)object).getID()+" to map "+getMap().getName()+" at location: "+index, null);  //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
+            Object object2 = super.assign(index, object);
+            if( ProjectPlugin.isDebugging(Trace.MODEL))
+                ProjectPlugin.trace(getClass(), "Resulting list="+this, null);  //$NON-NLS-1$
 
-        return object2;
+            return object2;
     }
 
     private IMap getMap() {
-        if (owner instanceof IMap)
-            return (IMap) owner;
-        if (owner.eContainer() instanceof IMap)
+        if( owner instanceof IMap )
+            return (IMap)owner;
+        if( owner.eContainer() instanceof IMap )
             return (IMap) owner.eContainer();
         throw new IllegalStateException("Owner should be IMap or ContextModel"); //$NON-NLS-1$
     }
@@ -134,11 +129,8 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
         Object toRemove = get(index);
         runRemoveInterceptor(toRemove);
 
-        if (ProjectPlugin.isDebugging(Trace.MODEL))
-            ProjectPlugin
-                    .trace(
-                            getClass(),
-                            "Removing " + ((Layer) toRemove).getID() + " from map " + getMap().getName(), null); //$NON-NLS-1$ //$NON-NLS-2$
+        if( ProjectPlugin.isDebugging(Trace.MODEL))
+            ProjectPlugin.trace(getClass(), "Removing "+((Layer)toRemove).getID()+" from map "+getMap().getName(), null);  //$NON-NLS-1$ //$NON-NLS-2$
 
         return super.doRemove(index);
     }
@@ -148,9 +140,8 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
         Object[] toRemove = toArray();
         removeAllInterceptors(Arrays.asList(toRemove));
 
-        if (ProjectPlugin.isDebugging(Trace.MODEL))
-            ProjectPlugin.trace(getClass(),
-                    "Removing all layers from map:" + getMap().getName(), null); //$NON-NLS-1$
+        if( ProjectPlugin.isDebugging(Trace.MODEL))
+            ProjectPlugin.trace(getClass(), "Removing all layers from map:"+getMap().getName(), null);  //$NON-NLS-1$
 
         super.doClear();
     }
@@ -167,10 +158,10 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
     @SuppressWarnings("unchecked")
     private void runAddInterceptors( Object element ) {
         Layer layer = (Layer) element;
-        for( Adapter deepAdapter : deepAdapters ) {
-            if (!layer.eAdapters().contains(deepAdapter))
-                layer.eAdapters().add(deepAdapter);
-        }
+        for (Adapter deepAdapter : deepAdapters) {
+			if(!layer.eAdapters().contains(deepAdapter))
+				layer.eAdapters().add(deepAdapter);
+		}
         runLayerInterceptor(layer, LayerInterceptor.ADDED_ID);
     }
 
@@ -189,21 +180,17 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
     }
 
     private void runNonDeprecatedInterceptors( Layer layer, String configurationName ) {
-        List<IConfigurationElement> list = ExtensionPointList
-                .getExtensionPointList(LayerInterceptor.EXTENSION_ID);
+        List<IConfigurationElement> list = ExtensionPointList.getExtensionPointList(LayerInterceptor.EXTENSION_ID);
         for( IConfigurationElement element : list ) {
-            if (element.getName().equals(configurationName)) {
+            if( element.getName().equals(configurationName) ){
                 String attribute = element.getAttribute("name"); //$NON-NLS-1$
                 try {
-                    LayerInterceptor interceptor = (LayerInterceptor) element
-                            .createExecutableExtension("class"); //$NON-NLS-1$
+                    LayerInterceptor interceptor=(LayerInterceptor) element.createExecutableExtension("class"); //$NON-NLS-1$
                     interceptor.run(layer);
                 } catch (CoreException e) {
-                    ProjectPlugin
-                            .log(
-                                    "Error creating class: " + element.getAttribute("class") + " part of layer interceptor: " + attribute, e); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-                } catch (Throwable t) {
-                    ProjectPlugin.log("error running interceptor: " + attribute, t); //$NON-NLS-1$
+                    ProjectPlugin.log( "Error creating class: "+element.getAttribute("class")+" part of layer interceptor: "+attribute, e);  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+                } catch (Throwable t){
+                    ProjectPlugin.log("error running interceptor: "+attribute, t);  //$NON-NLS-1$
                 }
             }
         }
@@ -213,9 +200,8 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
         List<IConfigurationElement> interceptors = ExtensionPointList
                 .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT);
         for( IConfigurationElement element : interceptors ) {
-            if (!configurationName.equals(element.getName())) {
+            if (!configurationName.equals(element.getName()))
                 continue;
-            }
             try {
                 LayerInterceptor interceptor = (LayerInterceptor) element
                         .createExecutableExtension("class"); //$NON-NLS-1$

@@ -8,26 +8,30 @@
  */
 package net.refractions.udig.project.internal.render;
 
+import java.io.IOException;
+
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerDecorator;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.internal.ProjectPackage;
+import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.project.internal.impl.LayerImpl;
 import net.refractions.udig.ui.graphics.SLDs;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.geotools.data.FeatureSource;
+import org.geotools.filter.Filter;
 import org.geotools.styling.Style;
-import org.opengis.filter.Filter;
 
 /**
  * TODO Purpose of net.refractions.udig.project.internal.render
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -39,7 +43,7 @@ public class SelectionLayer extends LayerDecorator {
 
     /**
      * Construct <code>SelectionLayer</code>.
-     * 
+     *
      * @param layer
      */
     public SelectionLayer( Layer layer ) {
@@ -50,7 +54,7 @@ public class SelectionLayer extends LayerDecorator {
      * @see net.refractions.udig.project.internal.Layer#isVisible()
      */
     public boolean isVisible() {
-        return layer.isVisible() && !Filter.EXCLUDE.equals(getFilter());
+        return layer.isVisible() && !Filter.ALL.equals(getFilter());
     }
 
     /**
@@ -62,22 +66,10 @@ public class SelectionLayer extends LayerDecorator {
             styleBlackboard = ProjectFactory.eINSTANCE.createStyleBlackboard();
 
         styleBlackboard.clear();
-        Style style = null;
-        
-        //if the original layer has a selection style on its blackboard, copy
-        //it to this blackboard
-        if (layer.getStyleBlackboard() != null) {
-            style = (Style)layer.getStyleBlackboard().get(SelectionStyleContent.ID);
-        }
-        
-        //no selection style defined on original layer, so create a default one
-        if (style == null) {
-            style = SelectionStyleContent.createDefaultStyle(layer);
-            style.getFeatureTypeStyles()[0].setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
-        }
+        Style style = SelectionStyleContent.createDefaultStyle(layer);
         if (style == null)
             return styleBlackboard;
-        
+        style.getFeatureTypeStyles()[0].setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
         styleBlackboard.put(SelectionStyleContent.ID, style);
         return styleBlackboard;
     }
@@ -111,7 +103,7 @@ public class SelectionLayer extends LayerDecorator {
         return LayerImpl.doComparison(this, layer2);
     }
 
-    
+
     /**
      * @see net.refractions.udig.project.internal.Layer#setStatus(int)
      */

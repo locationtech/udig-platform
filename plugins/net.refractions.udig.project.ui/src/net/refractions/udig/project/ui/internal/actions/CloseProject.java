@@ -36,7 +36,7 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * Closes the selected projects
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */

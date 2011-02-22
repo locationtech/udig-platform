@@ -1,32 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <description name="uDig Community Update Site" url="http://udig.refractions.net/files/update/1.2/community">
+   <description url="http://udig.refractions.net/update-community">
       This is the Refractions Research update site for the User-friendly Desktop Internet GIS (uDig) community contributions.
    </description>
-   <feature url="features/es.axios.udig.editingtools_1.3.0.m5.jar" id="es.axios.udig.editingtools" version="1.3.0.m5">
-      <category name="Axios Extensions for uDig"/>
+   <feature url="features/net.refractions.udig.community.jody.visual_feature_1.0.0.jar" id="net.refractions.udig.community.jody.visual_feature" version="1.0.0">
+      <category name="Jody"/>
    </feature>
-   <feature url="features/es.axios.udig.spatialoperations_1.3.0.m5.jar" id="es.axios.udig.spatialoperations" version="1.3.0.m5">
-      <category name="Axios Extensions for uDig"/>
+   <feature url="features/net.pragmatic.design.udig.tools_1.0.0.jar" id="net.pragmatic.design.udig.tools" version="1.0.0">
+      <category name="Jesse"/>
    </feature>
-   <category-def name="Axios Extensions for uDig" label="Axios Extensions for uDig"/>
-   <feature url="features/eu.hydrologis.jgrass.feature_3.0.0.jar" id="eu.hydrologis.jgrass.feature" version="3.0.0">
-      <category name="JGrass Extensions for uDig"/>
+   <feature url="features/es.axios.udig.extensions_0.1.0.rc3.jar" id="es.axios.udig.extensions" version="0.1.0.rc3">
+      <category name="Axios"/>
    </feature>
-   <feature url="features/eu.hydrologis.jgrass.extras_1.2.0.jar" id="eu.hydrologis.jgrass.extras" version="1.2.0">
-      <category name="JGrass Extensions for uDig"/>
+   <feature url="features/net.refractions.udig.transformtool_feature_1.0.0.jar" id="net.refractions.udig.transformtool_feature" version="1.0.0">
+      <category name="Jan Jezek"/>
    </feature>
-   <feature url="features/eu.hydrologis.jgrass.feature.gpls_3.0.0.jar" id="eu.hydrologis.jgrass.feature.gpls" version="3.0.0">
-      <category name="JGrass Import-Export tools"/>
+   <feature url="features/net.pragmatic.design.groovy_1.0.0.jar" id="net.pragmatic.design.groovy" version="1.0.0">
+      <category name="Jesse"/>
    </feature>
-   <category-def name="JGrass Extensions for uDig" label="JGrass Extensions for uDig">
-      <description>
-         The JGrass hydro-geomorphologic extentions.
-      </description>
-   </category-def>
-   <category-def name="JGrass Import-Export tools" label="JGrass Import-Export tools">
-      <description>
-         Extra gpl import-export features of JGrass (dxf, osm, etc...).
-      </description>
-   </category-def>
+   <category-def name="Axios" label="Axios"/>
+   <category-def name="Jody" label="Jody"/>
+   <category-def name="Jan Jezek" label="Jan Jezek"/>
+   <category-def name="Jesse" label="Jesse"/>
 </site>

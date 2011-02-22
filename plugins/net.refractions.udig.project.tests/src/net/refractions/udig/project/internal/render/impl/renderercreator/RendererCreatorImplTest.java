@@ -67,17 +67,17 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
     public void testGetLayers() throws Exception {
         Map map = MapTests.createDefaultMap("typename", 2, true, null); //$NON-NLS-1$
         map.getLayersInternal().add(map.getLayerFactory().createLayer(MapTests.createGeoResource("type2", 3, false))); //$NON-NLS-1$
-        
+
         RendererCreatorImpl creator = MapTests.createRendererCreator(map);
-        
+
         SortedSet<Layer> layers = creator.getLayers();
         layers.clear();
         layers.addAll(map.getLayersInternal());
         layers.add(new SelectionLayer(map.getLayersInternal().get(0)));
         layers.add(new SelectionLayer(map.getLayersInternal().get(1)));
-        
+
         Iterator<Layer> iter = layers.iterator();
-        
+
         Layer layer = iter.next();
         assertEquals( map.getLayersInternal().get(0),layer );
         layer = iter.next();
@@ -86,39 +86,39 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         assertEquals( map.getLayersInternal().get(0),sl.getWrappedLayer() );
         sl = (SelectionLayer) iter.next();
         assertEquals( map.getLayersInternal().get(1),sl.getWrappedLayer() );
-        
-        
+
+
     }
-    
+
     /**
      * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#getRenderer(net.refractions.udig.project.internal.render.RenderContext)}.
-     * @throws Exception 
+     * @throws Exception
      */
     public void testGetRenderer() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForSingleRenderer(), null);
-        
+
         RendererCreatorImpl creator = MapTests.createRendererCreator(layer.getMapInternal());
         creator.getLayers().add(layer);
-        
+
         creator.reset();
         RenderContext context = creator.getConfiguration().iterator().next();
         Renderer renderer = creator.getRenderer(context);
         assertTrue( renderer instanceof SingleRenderer );
-        
+
         // now test case where there is no good renderer
         layer = MapTests.createLayer(null, "HELLO", null); //$NON-NLS-1$
-        
+
         creator = MapTests.createRendererCreator(layer.getMapInternal());
         creator.getLayers().add(layer);
-        
+
         creator.reset();
-        
+
         context = creator.getConfiguration().iterator().next();
         renderer = creator.getRenderer(context);
         assertTrue( renderer instanceof PlaceHolder );
         assertEquals(context, renderer.getContext());
-        
-        
+
+
     }
 
     /**
@@ -130,22 +130,23 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
 
     /**
      * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#changed(org.eclipse.emf.common.notify.Notification)}.
-     * @throws Exception 
+     * @throws Exception
      */
+    @SuppressWarnings("unchecked")
     public void testChanged() throws Exception {
-        
+
         LayerImpl layer = MapTests.createLayer(null, new TestFeatureStore(), null);
-    
+
         RendererCreatorImpl creator = MapTests.createRendererCreator(layer.getMapInternal());
-    
-        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD, 
+
+        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD,
                 ProjectPackage.CONTEXT_MODEL__LAYERS, null, layer);
         creator.changed(notificationImpl);
-       
+
         SortedSet<Layer> layers = creator.getLayers();
-        
+
         assertEquals(2, layers.size());
-        
+
         Iterator<Layer> iter = layers.iterator();
         boolean selectionLayerFound=false;
         while( iter.hasNext() ){
@@ -159,41 +160,41 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
             }
         }
         assertTrue( selectionLayerFound );
-        
+
         ContextModelListener listener = new ContextModelListener();
         layer.getContextModel().eAdapters().add(listener);
-        
+
         layer.getMapInternal().getLayersInternal().remove(layer);
         creator.changed(listener.lastNotification);
-       
+
 
         layers = creator.getLayers();
-        
+
         assertEquals(0, layers.size());
     }
 
     /**
      * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#findSelectionLayer(net.refractions.udig.project.ILayer)}.
-     * @throws Exception 
+     * @throws Exception
      */
     public void testFindSelectionLayer() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, new TestFeatureStore(), null);
         Map map = layer.getMapInternal();
         LayerImpl layer2 = MapTests.createLayer(null, new TestFeatureStore(), map);
-        
+
         RendererCreatorImpl creator = MapTests.createRendererCreator(map);
-        
-        NotificationImpl event = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD, 
+
+        NotificationImpl event = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD,
                 ProjectPackage.CONTEXT_MODEL__LAYERS, null, layer);
 
         creator.changed(event);
-        event = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD, 
+        event = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD,
                 ProjectPackage.CONTEXT_MODEL__LAYERS, null, layer2);
 
         creator.changed(event);
         assertEquals( layer, ((SelectionLayer)creator.findSelectionLayer(layer)).getWrappedLayer());
         assertEquals( layer2, ((SelectionLayer)creator.findSelectionLayer(layer2)).getWrappedLayer());
-        
+
     }
 
     /**
@@ -201,10 +202,10 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
      */
     public void testGetConfigurationSingleLayer() throws Throwable {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForSingleRenderer(), null);
-        
+
         RendererCreatorImpl creator = MapTests.createRendererCreator(layer.getMapInternal());
 
-        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD, 
+        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD,
                 ProjectPackage.CONTEXT_MODEL__LAYERS, null, layer);
         creator.changed(notificationImpl);
         RenderContext context = creator.getConfiguration().iterator().next();
@@ -215,18 +216,18 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         assertEquals(1, creator.getConfiguration().size());
 
         layer=MapTests.createLayer(null, new RendererCreatorTestObjForSingleRenderer(), layer.getMapInternal());
-        notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD, 
+        notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD,
                 ProjectPackage.CONTEXT_MODEL__LAYERS, null, layer);
         creator.changed(notificationImpl);
-        
+
         assertEquals(2, creator.getLayers().size());
         assertEquals(2, creator.getConfiguration().size());
-        for( RenderContext context2 : creator.getConfiguration() ) {        
+        for( RenderContext context2 : creator.getConfiguration() ) {
             renderer = creator.getRenderer(context2);
             assertTrue("Expected SingleRenderer but was "+renderer, renderer instanceof SingleRenderer); //$NON-NLS-1$
         }
 
-        notificationImpl = new ENotificationImpl((InternalEObject)  layer.getContextModel(), Notification.REMOVE, 
+        notificationImpl = new ENotificationImpl((InternalEObject)  layer.getContextModel(), Notification.REMOVE,
                 ProjectPackage.CONTEXT_MODEL__LAYERS, layer,  null);
         creator.changed(notificationImpl);
         context = creator.getConfiguration().iterator().next();
@@ -236,21 +237,22 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         assertTrue("Expected SingleRenderer but was "+renderer, renderer instanceof SingleRenderer); //$NON-NLS-1$
         assertEquals(1, creator.getConfiguration().size());
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testGetConfigurationMultiLayerRenderer() throws Throwable {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForMulitRenderer(), null);
         Map map=layer.getMapInternal();
         ContextModelListener listener = new ContextModelListener();
         layer.getContextModel().eAdapters().add(listener);
-        
+
         RendererCreatorImpl creator = MapTests.createRendererCreator(layer.getMapInternal());
 
         // Listener added after first layer was added so make notification by hand
-        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD, 
+        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD,
                 ProjectPackage.CONTEXT_MODEL__LAYERS, null, layer);
         creator.changed(notificationImpl);
         RenderContext context = creator.getConfiguration().iterator().next();
-        
+
         assertEquals(1, creator.getLayers().size());
         Renderer renderer = creator.getRenderer(context);
         assertSame( context, renderer.getContext() );
@@ -259,7 +261,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
 
         layer=MapTests.createLayer(new URL( "http://multi_dummy"), new RendererCreatorTestObjForMulitRenderer(), layer.getMapInternal()); //$NON-NLS-1$
         creator.changed(listener.lastNotification);
-        
+
         assertEquals(2, creator.getLayers().size());
         assertEquals(1, creator.getConfiguration().size());
         context=creator.getConfiguration().iterator().next();
@@ -267,28 +269,28 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         assertSame( context, renderer.getContext() );
         CompositeRenderContext compositeRenderContext = ((CompositeRenderContext)creator.getConfiguration().iterator().next());
         assertEquals(2, compositeRenderContext.getContexts().size());
-        
+
         assertTrue("Expected MultiRenderer but was "+renderer, renderer instanceof MultiLayerRenderer); //$NON-NLS-1$
-        
+
         layer=MapTests.createLayer(new URL( "http://othername"), new RendererCreatorTestObjForMulitRenderer(), layer.getMapInternal()); //$NON-NLS-1$
         creator.changed(listener.lastNotification);
 
         assertEquals(3, creator.getLayers().size());
         assertEquals(2, creator.getConfiguration().size());
-        for( RenderContext context2 : creator.getConfiguration() ) {        
+        for( RenderContext context2 : creator.getConfiguration() ) {
             renderer = creator.getRenderer(context2);
             assertTrue("Expected SingleRenderer but was "+renderer, renderer instanceof MultiLayerRenderer); //$NON-NLS-1$
         }
-        
+
         map.lowerLayer(layer);
-        
+
         int indexOfOtherName=map.getMapLayers().indexOf(layer);
-        
+
         creator.changed(listener.lastNotification);
 
         assertEquals(3, creator.getLayers().size());
         assertEquals(3, creator.getConfiguration().size());
-        for( RenderContext context2 : creator.getConfiguration() ) {        
+        for( RenderContext context2 : creator.getConfiguration() ) {
             renderer = creator.getRenderer(context2);
             assertTrue("Expected SingleRenderer but was "+renderer, renderer instanceof MultiLayerRenderer); //$NON-NLS-1$
         }
@@ -296,13 +298,13 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         layer=MapTests.createLayer(new URL( "http://dummy"), new RendererCreatorTestObjForMulitRenderer(), null); //$NON-NLS-1$
         map.getLayersInternal().set(indexOfOtherName, layer);
         creator.changed(listener.lastNotification);
-        
+
         assertEquals(3, creator.getLayers().size());
         assertEquals(1, creator.getConfiguration().size());
         renderer = creator.getRenderer(creator.getConfiguration().iterator().next());
         compositeRenderContext = ((CompositeRenderContext)creator.getConfiguration().iterator().next());
         assertEquals(3, compositeRenderContext.getContexts().size());
-        
+
         map.getLayersInternal().remove(0);
         creator.changed(listener.lastNotification);
         assertEquals(2, creator.getLayers().size());
@@ -310,46 +312,46 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         renderer = creator.getRenderer(creator.getConfiguration().iterator().next());
         compositeRenderContext = ((CompositeRenderContext)creator.getConfiguration().iterator().next());
         assertEquals(2, compositeRenderContext.getContexts().size());
-        
+
     }
-    
+
     public void testGetConfigurationMixedLayers() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForSingleRenderer(), null);
-        
+
         RendererCreatorImpl creator = MapTests.createRendererCreator(layer.getMapInternal());
 
         LayerImpl layer2 = MapTests.createLayer(null, new RendererCreatorTestObjForMulitRenderer(), layer.getMapInternal());
         LayerImpl layer3 = MapTests.createLayer(null, new RendererCreatorTestObjForMulitRenderer(), layer.getMapInternal());
         LayerImpl layer4 = MapTests.createLayer(null, new RendererCreatorTestObjForSingleRenderer(), layer.getMapInternal());
-        
-        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD, 
+
+        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD,
                 ProjectPackage.CONTEXT_MODEL__LAYERS, null, layer);
         creator.changed(notificationImpl);
-        
+
         creator.reset();
         Collection<RenderContext> config = creator.getConfiguration();
-        
+
         assertEquals( 1, config.size() );
-        
-        Iterator<RenderContext> iter = config.iterator(); 
-        
+
+        Iterator<RenderContext> iter = config.iterator();
+
         RenderContext context = iter.next();
         assertEquals(layer, context.getLayer());
-        
-        notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD_MANY, 
+
+        notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD_MANY,
                 ProjectPackage.CONTEXT_MODEL__LAYERS, null, Arrays.asList(new Layer[]{layer2, layer3, layer4}));
         creator.changed(notificationImpl);
         creator.reset();
         config = creator.getConfiguration();
 
-        iter = config.iterator(); 
-        
+        iter = config.iterator();
+
         context = iter.next();
         assertEquals(layer, context.getLayer());
-        
+
         assertEquals( 3, config.size() );
-        
-        
+
+
         CompositeRenderContext compContext = (CompositeRenderContext) iter.next();
         assertEquals(layer2, compContext.getContexts().get(0).getLayer());
         assertEquals(layer3, compContext.getContexts().get(1).getLayer());
@@ -362,7 +364,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
      *      add 1 wms layer to map
      *      add a shapefile below wms layer
      *      add a 2nd wms layer below shp
-     *      move top layer below 2nd wms layer. 
+     *      move top layer below 2nd wms layer.
      *      still 2 wms renderer but only 1 renders
      *      move bottom above.... now they are together
      *
@@ -379,20 +381,20 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         layer3.setName("layer3"); //$NON-NLS-1$
 
         creator.getLayers().addAll(Arrays.asList(new Layer[]{layer,layer2,layer3}));
-        
+
         creator.reset();
-        
+
         layer3.setZorder(0);
-        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.MOVE, 
+        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.MOVE,
                 ProjectPackage.CONTEXT_MODEL__LAYERS, null, layer3,0);
         creator.changed(notificationImpl);
 
         Collection<RenderContext> config = creator.getConfiguration();
-        
+
         assertEquals(3, creator.getLayers().size());
         assertEquals(2, config.size());
     }
-    
+
     public void testBlackboardPreferred() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForSingleRenderer(), null);
         layer.setName("Layer1"); //$NON-NLS-1$
@@ -404,38 +406,38 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         layer.getBlackboard().clear();
         layer2.getBlackboard().clear();
         map.getBlackboard().clear();
-        
-        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD_MANY, 
+
+        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD_MANY,
                 ProjectPackage.CONTEXT_MODEL__LAYERS, null, Arrays.asList(new Layer[]{layer,layer2}));
         creator.changed(notificationImpl);
-        
+
         sameRenderer(creator, SingleRenderer.class, 2);
-        
+
         layer.getBlackboard().put(RendererCreator.PREFERRED_RENDERER_ID, "net.refractions.udig.project.tests.single2"); //$NON-NLS-1$
-        
-        firstLayerR2SecondR1(creator);        
-        
+
+        firstLayerR2SecondR1(creator);
+
         // now both layers have it so both should use renderer2
         layer2.getBlackboard().put(RendererCreator.PREFERRED_RENDERER_ID, "net.refractions.udig.project.tests.single2"); //$NON-NLS-1$
-        
+
         sameRenderer(creator , SingleRenderer2.class, 2);
-        
+
         map.getBlackboard().put(RendererCreator.PREFERRED_RENDERER_ID, "net.refractions.udig.project.tests.single2"); //$NON-NLS-1$
-        
+
         sameRenderer(creator, SingleRenderer2.class, 2);
-        
+
         layer2.getBlackboard().clear();
-        
+
         sameRenderer(creator, SingleRenderer2.class, 2);
-        
+
         layer2.getBlackboard().put(RendererCreator.PREFERRED_RENDERER_ID, "net.refractions.udig.project.tests.single"); //$NON-NLS-1$
-        
-        // map has renderer2 but layer2 has renderer1 so it should be renderer1 on layer2.  
+
+        // map has renderer2 but layer2 has renderer1 so it should be renderer1 on layer2.
         // layer1 still has renderer2 on it.
         firstLayerR2SecondR1(creator);
 
         layer.getBlackboard().clear();
-        
+
         //Now layer1 is clear but map dictates that Renderer2 is the important one.
         firstLayerR2SecondR1(creator);
     }
@@ -451,38 +453,38 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         layer.getBlackboard().clear();
         layer2.getBlackboard().clear();
         map.getBlackboard().clear();
-        
-        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD_MANY, 
+
+        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD_MANY,
                 ProjectPackage.CONTEXT_MODEL__LAYERS, null, Arrays.asList(new Layer[]{layer,layer2}));
         creator.changed(notificationImpl);
-        
+
         sameRenderer(creator, SingleRenderer.class, 2);
-        
+
         layer.getBlackboard().put(RendererCreator.LAST_RESORT_RENDERER_ID, "net.refractions.udig.project.tests.single"); //$NON-NLS-1$
-        
-        firstLayerR2SecondR1(creator);        
-        
+
+        firstLayerR2SecondR1(creator);
+
         // now both layers have it so both should use renderer2
         layer2.getBlackboard().put(RendererCreator.LAST_RESORT_RENDERER_ID, "net.refractions.udig.project.tests.single"); //$NON-NLS-1$
-        
+
         sameRenderer(creator , SingleRenderer2.class, 2);
-        
+
         map.getBlackboard().put(RendererCreator.LAST_RESORT_RENDERER_ID, "net.refractions.udig.project.tests.single"); //$NON-NLS-1$
-        
+
         sameRenderer(creator, SingleRenderer2.class, 2);
-        
+
         layer2.getBlackboard().clear();
-        
+
         sameRenderer(creator, SingleRenderer2.class, 2);
-        
+
         layer2.getBlackboard().put(RendererCreator.LAST_RESORT_RENDERER_ID, "net.refractions.udig.project.tests.single2"); //$NON-NLS-1$
-        
-        // map has renderer2 but layer2 has renderer1 so it should be renderer1 on layer2.  
+
+        // map has renderer2 but layer2 has renderer1 so it should be renderer1 on layer2.
         // layer1 still has renderer2 on it.
         firstLayerR2SecondR1(creator);
 
         layer.getBlackboard().clear();
-        
+
         //Now layer1 is clear but map dictates that Renderer2 is the important one.
         firstLayerR2SecondR1(creator);
     }
@@ -493,7 +495,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         configuration = creator.getConfiguration();
 
         assertEquals(expectedContexts, configuration.size());
-        
+
         // map has it but layer2 doesn't yet since map has the renderer2 both should still use renderer2.
         for( RenderContext context : configuration ) {
             renderer = creator.getRenderer(context);
@@ -509,42 +511,42 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         configuration = creator.getConfiguration();
         assertEquals(2, configuration.size());
         iter = configuration.iterator();
-        
+
         renderer = creator.getRenderer(iter.next());
         assertTrue("Expected SingleRenderer but was "+renderer, renderer instanceof SingleRenderer2); //$NON-NLS-1$
         renderer = creator.getRenderer(iter.next());
         assertTrue("Expected SingleRenderer but was "+renderer, renderer instanceof SingleRenderer); //$NON-NLS-1$
         assertFalse(iter.hasNext());
     }
-    
+
     public void testPreference() throws Exception {
-        //TODO 
+        //TODO
     }
-    
+
     public void testSwitchStyle() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForSingleRenderer(), null);
         layer.setName("Layer1"); //$NON-NLS-1$
-        IService createService = DummyService.createService(new URL("http://dummy77"), Collections.emptyList(), //$NON-NLS-1$ 
+        IService createService = DummyService.createService(new URL("http://dummy77"), Collections.emptyList(), //$NON-NLS-1$
                         Collections.singletonList(Arrays.asList(new Object[]{new RendererCreatorTestObjForMulitRenderer()})));
         layer.getGeoResources().add(createService.resources(null).get(0));
-        
+
         StyleBlackboard bb = layer.getStyleBlackboard();
-        
+
         bb.put(SingleRendererStyleContent.ID, new SingleRendererStyleContent());
-        
+
         RendererCreatorImpl creator = MapTests.createRendererCreator(layer.getMapInternal());
-        
-        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD, 
+
+        NotificationImpl notificationImpl = new ENotificationImpl((InternalEObject) layer.getContextModel(), Notification.ADD,
                 ProjectPackage.CONTEXT_MODEL__LAYERS, null, layer);
         creator.changed(notificationImpl);
-        
+
         sameRenderer(creator, SingleRenderer.class, 1);
 
         bb.clear();
         bb.put(MultiRendererStyleContent.ID, new MultiRendererStyleContent());
-        
+
         sameRenderer(creator, MultiLayerRenderer.class, 1);
-        
+
         bb.put(SingleRendererStyleContent.ID, new SingleRendererStyleContent());
         bb.setSelected(new String[]{SingleRendererStyleContent.ID});
 
@@ -554,63 +556,63 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
 
         sameRenderer(creator, MultiLayerRenderer.class, 1);
     }
-    
+
     public void testBadMetrics() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, BadRenderMetricsFactory.ALWAYS_EXCEPTION, null);
-        
+
         RendererCreatorImpl creator = MapTests.createRendererCreator(layer.getMapInternal());
         creator.getLayers().add(layer);
-        
+
         Collection<RenderContext> configuration = creator.getConfiguration();
-        
+
         assertEquals(0, configuration.size());
-        
+
         layer = MapTests.createLayer(null, BadRenderMetricsFactory.CAN_RENDER_NO_EXCEPTION, null);
-        
+
         creator.getLayers().clear();
         creator.getLayers().add(layer);
 
         creator.reset();
         configuration = creator.getConfiguration();
-        
+
         assertEquals(1, configuration.size());
         assertTrue( creator.getRenderer(configuration.iterator().next()) instanceof PlaceHolder );
-        
+
         layer = MapTests.createLayer(null, BadRenderMetricsFactory.CAN_CREATE_METRICS, null);
-        
+
         creator.getLayers().clear();
         creator.getLayers().add(layer);
 
         creator.reset();
         configuration = creator.getConfiguration();
-        
+
         assertEquals(1, configuration.size());
         assertTrue( creator.getRenderer(configuration.iterator().next()) instanceof PlaceHolder );
-        
+
         layer = MapTests.createLayer(null, BadRenderMetricsFactory.CAN_ADD_LAYER_EXCEPTION, null);
-        
+
         creator.getLayers().clear();
         layer.setName("layer1"); //$NON-NLS-1$
         creator.getLayers().add(layer);
         layer = MapTests.createLayer(null, BadRenderMetricsFactory.CAN_ADD_LAYER_EXCEPTION, layer.getMapInternal());
         layer.setName("layer2"); //$NON-NLS-1$
         creator.getLayers().add(layer);
-        
+
         creator.reset();
         configuration = creator.getConfiguration();
-        
+
         assertEquals(2, configuration.size());
         Iterator<RenderContext> iter = configuration.iterator();
         assertFalse( creator.getRenderer(iter.next()) instanceof PlaceHolder );
         assertFalse( creator.getRenderer(iter.next()) instanceof PlaceHolder );
-        
+
     }
-    
-    
+
+
     public void testResourceChanged() throws Exception {
         //TODO
     }
-    
+
     private class ContextModelListener extends AdapterImpl{
         Notification lastNotification;
 
@@ -619,5 +621,5 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
             lastNotification=msg;
         }
     }
-    
+
 }

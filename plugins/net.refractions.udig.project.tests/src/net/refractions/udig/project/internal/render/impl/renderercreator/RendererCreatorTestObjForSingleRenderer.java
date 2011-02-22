@@ -15,8 +15,8 @@
 package net.refractions.udig.project.internal.render.impl.renderercreator;
 
 /**
- * Just for testing the renderer creator.  
- * 
+ * Just for testing the renderer creator.
+ *
  * @author Jesse
  * @since 1.1.0
  */

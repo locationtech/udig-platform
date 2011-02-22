@@ -26,7 +26,7 @@ import org.eclipse.jface.viewers.ViewerSorter;
 
 /**
  * Sort the viewer by one of the columns
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -34,7 +34,7 @@ public class IssuesSorter implements IIssuesViewSorter {
     public int compare( Viewer viewer, ViewerSorter defaultSorter, Column selectedColumn, boolean direction, Object e1, Object e2 ) {
         if( !(e1 instanceof IIssue) )
             return defaultSorter.compare(viewer, e1, e2);
-        
+
         IIssue issue1 = (IIssue) e1;
         IIssue issue2 = (IIssue) e2;
 

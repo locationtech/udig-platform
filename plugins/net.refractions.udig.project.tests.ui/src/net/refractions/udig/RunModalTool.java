@@ -23,7 +23,7 @@ import org.eclipse.jface.action.IAction;
 
 /**
  * Tests activating a modal tool from another tool.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -32,7 +32,7 @@ public class RunModalTool implements ActionTool {
     public void run() {
         IAction tool = ApplicationGIS.getToolManager().getTool("net.refractions.udig.tools.Pan",  //$NON-NLS-1$
                 "net.refractions.udig.tool.category.pan"); //$NON-NLS-1$
-        
+
         tool.run();
     }
 

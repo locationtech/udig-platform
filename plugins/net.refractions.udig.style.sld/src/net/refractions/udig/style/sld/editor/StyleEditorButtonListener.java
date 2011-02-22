@@ -15,8 +15,10 @@
 package net.refractions.udig.style.sld.editor;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
 
+import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.internal.SetDefaultStyleProcessor;
 import net.refractions.udig.style.internal.StyleLayer;
 import net.refractions.udig.style.sld.SLDContent;
@@ -28,14 +30,14 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
+import org.geotools.data.FeatureSource;
 import org.geotools.styling.Style;
+import org.geotools.styling.StyleBuilder;
+import org.geotools.styling.StyleFactoryFinder;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.visitor.DuplicatorStyleVisitor;
+import org.opengis.coverage.grid.GridCoverage;
 
-/**
- * Listen to the style editor workflow.
- * 
- * @since 1.1.0
- */
 class StyleEditorButtonListener implements Listener {
 
     /** StyleEditorButtonListener styleEditorDialog field */
@@ -48,13 +50,10 @@ class StyleEditorButtonListener implements Listener {
         this.styleEditorDialog = styleEditorDialog;
     }
 
-    /**
-     * Will dispatch the even to the correct method (doApply, doRevert, etc...).
-     */
     public void handleEvent( Event event ) {
-        
+
         int buttonId = (Integer) event.widget.getData();
-        
+
         switch( buttonId ) {
         case StyleEditorDialog.IMPORT_ID:
             doImport();
@@ -83,13 +82,10 @@ class StyleEditorButtonListener implements Listener {
         default:
             break;
         }
-        
+
     }
 
     private boolean doApply() {
-        if( this.styleEditorDialog.getCurrentPage() == null){
-            return false;
-        }
         if (this.styleEditorDialog.getCurrentPage().performApply()) {
             this.styleEditorDialog.setExitButtonState();
             this.styleEditorDialog.selectedLayer.apply();
@@ -109,30 +105,29 @@ class StyleEditorButtonListener implements Listener {
             }
             this.styleEditorDialog.selectedLayer.apply();
             this.styleEditorDialog.selectedLayer.getMap().getRenderManager().refresh(this.styleEditorDialog.selectedLayer, null);
-            
+
             if( oldSLD!=null ){
                 StyledLayerDescriptor newSLD = this.styleEditorDialog.getSLD();
+                this.styleEditorDialog.moveListeners(oldSLD, newSLD);
+
             }
             this.styleEditorDialog.setExitButtonState();
             this.styleEditorDialog.getCurrentPage().refresh();
     }
     private void doRevert() {
         //store the old sld
-        //StyledLayerDescriptor oldSLD = this.styleEditorDialog.getSLD();
-        
+        StyledLayerDescriptor oldSLD = this.styleEditorDialog.getSLD();
         //return to the blackboard state before we loaded the dialog
         this.styleEditorDialog.selectedLayer.revertAll();
         this.styleEditorDialog.selectedLayer.apply();
         this.styleEditorDialog.selectedLayer.getMap().getRenderManager().refresh(this.styleEditorDialog.selectedLayer, null);
-        
         //move listeners to new sld
-        //StyledLayerDescriptor newSLD = this.styleEditorDialog.getSLD();
+        StyledLayerDescriptor newSLD = this.styleEditorDialog.getSLD();
+        this.styleEditorDialog.moveListeners(oldSLD, newSLD);
         this.styleEditorDialog.setExitButtonState();
-        
-        // TODO: update button states, page updates
         this.styleEditorDialog.getCurrentPage().refresh();
     }
-    
+
     private void doImport() {
         ImportSLD importe = new ImportSLD();
         StyledLayerDescriptor sld = null;
@@ -142,7 +137,7 @@ class StyleEditorButtonListener implements Listener {
                 sld = (StyledLayerDescriptor) importe.importFrom(file, null);
             } catch (Exception e1) {
                 MessageBox mb = new MessageBox(this.styleEditorDialog.getShell(), SWT.ICON_ERROR | SWT.OK);
-                mb.setMessage(MessageFormat.format(Messages.StyleEditor_import_failed, e1.getLocalizedMessage())); 
+                mb.setMessage(MessageFormat.format(Messages.StyleEditor_import_failed, e1.getLocalizedMessage()));
                 mb.open();
                 throw (RuntimeException) new RuntimeException().initCause(e1);
             }
@@ -155,9 +150,9 @@ class StyleEditorButtonListener implements Listener {
             this.styleEditorDialog.getCurrentPage().refresh();
         }
     }
-    
+
     private void doExport() {
-        StyledLayerDescriptor sld = this.styleEditorDialog.getSLD();
+        Object sld = this.styleEditorDialog.getSLD();
         ExportSLD export = new ExportSLD();
         File file = export.promptFile(Display.getDefault(), sld);
         if (file != null) {
@@ -169,5 +164,5 @@ class StyleEditorButtonListener implements Listener {
             }
         }
     }
-    
+
 }

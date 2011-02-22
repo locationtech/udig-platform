@@ -19,8 +19,8 @@ import net.refractions.udig.tools.edit.EditState;
 import net.refractions.udig.tools.edit.EditToolHandler;
 
 /**
- * Resets the state that has to do with Editing.  IE.  Current edit state and shape 
- * 
+ * Resets the state that has to do with Editing.  IE.  Current edit state and shape
+ *
  * @author jones
  * @since 1.1.0
  */

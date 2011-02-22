@@ -22,9 +22,9 @@ public class DummyMulitResourceConnectionFactory extends DummyConnectionFactory 
                 HashMap<String, Serializable> map = new HashMap<String, Serializable>();
                 map.put(DummyMultiResourceServiceExtension.ID, url);
                 return map;
-            }   
+            }
         }
-        
+
         return null;
     }
 

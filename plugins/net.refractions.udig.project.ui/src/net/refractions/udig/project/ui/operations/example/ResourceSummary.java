@@ -29,8 +29,8 @@ import org.geotools.data.wms.WebMapServer;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * Prints out a summary about the resource. 
- * 
+ * Prints out a summary about the resource.
+ *
  * @author jones
  */
 public class ResourceSummary implements IOp {
@@ -54,14 +54,14 @@ public class ResourceSummary implements IOp {
             throws IOException {
         IGeoResourceInfo info = resource.getInfo(monitor);
         Envelope bounds = info.getBounds();
-        final List<SummaryData> data=new ArrayList<SummaryData>(); 
+        final List<SummaryData> data=new ArrayList<SummaryData>();
         String crs;
         if (info.getCRS() != null)
             crs = info.getCRS().getName().toString();
         else
-            crs = Messages.MultiTargetOp_unknown; 
+            crs = Messages.MultiTargetOp_unknown;
         crs=crs.replace('\n', ' ');
-        
+
         try {
             data.add(new SummaryData(Messages.MultiTargetOp_name, info.getName()));
             data.add(new SummaryData( Messages.MultiTargetOp_title, info.getTitle()));
@@ -80,8 +80,8 @@ public class ResourceSummary implements IOp {
         } catch (Exception e) {
             display.asyncExec(new Runnable(){
                 public void run() {
-                    MessageDialog.openError(display.getActiveShell(), Messages.MultiTargetOp_resource_summary, 
-                            Messages.MultiTargetOp_error); 
+                    MessageDialog.openError(display.getActiveShell(), Messages.MultiTargetOp_resource_summary,
+                            Messages.MultiTargetOp_error);
                 }
             });
             ProjectUIPlugin.log(null, e);

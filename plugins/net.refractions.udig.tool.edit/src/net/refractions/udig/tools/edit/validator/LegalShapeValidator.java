@@ -29,7 +29,7 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 
 /**
  * Checks for:
- * 
+ *
  * <ul>
  * <li>If polygon:
  * <ul>
@@ -41,7 +41,7 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
  * </li>
  * <li>If other shapes then anything goes</li>
  * </ul>
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

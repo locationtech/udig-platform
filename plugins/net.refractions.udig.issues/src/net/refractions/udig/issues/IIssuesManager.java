@@ -25,7 +25,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Provides access to the issues list and allows listeners to be added to it.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -53,19 +53,19 @@ public interface IIssuesManager {
      */
     public void addIssuesListListener( IIssuesListListener listener );
     /**
-     * Removes a listener to the issues list.  
+     * Removes a listener to the issues list.
      * <p>
      * <em>WARNING:</em> if {@link #addIssuesListListener(IIssuesListListener)} is used to add a listener
      * then {@link #removeIssuesListListener(IIssuesListListener)} should be used to remove the listener because otherwise
      * the listener will be added to a new list if {@link #setIssuesList(IIssuesList)} is called.
-     * 
+     *
      * @param listener the listener to remove
      */
     public void removeIssuesListListener( IIssuesListListener listener );
     /**
-     * Sets the currently used {@link IssuesList}.  
+     * Sets the currently used {@link IssuesList}.
      *
-     * @param newList the new list that will be used. 
+     * @param newList the new list that will be used.
      */
     public void setIssuesList( IIssuesList newList );
 	/**
@@ -80,7 +80,7 @@ public interface IIssuesManager {
      */
     public boolean save(IProgressMonitor monitor) throws IOException;
     /**
-     * Returns true if there is one or more dirty issues in the issues list.  If the issues list is not a 
+     * Returns true if there is one or more dirty issues in the issues list.  If the issues list is not a
      * {@link IRemoteIssuesList} then this always returns false (since only {@link IRemoteIssuesList} need to
      * be saved).
      *

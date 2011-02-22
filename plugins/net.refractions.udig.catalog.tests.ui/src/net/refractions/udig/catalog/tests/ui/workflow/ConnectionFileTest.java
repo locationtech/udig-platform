@@ -11,7 +11,6 @@ import net.refractions.udig.catalog.ui.ConnectionFactoryManager;
 import net.refractions.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
 import net.refractions.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
 import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
-import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardDialog;
@@ -39,17 +38,17 @@ public class ConnectionFileTest extends TestCase {
 
 		ArrayList<String> l = new ArrayList<String>();
 		l.add("net.refractions.udig.catalog.ui.openFilePage"); //$NON-NLS-1$
-		
+
 		UDIGConnectionFactoryDescriptor d = ConnectionFactoryManager.instance().getConnectionFactoryDescriptors(l).get(0);
 		state = new EndConnectionState(d,true);
 		page = new ConnectionPageDecorator();
 
-		Map<Class<? extends State>, WorkflowWizardPageProvider> map = new HashMap<Class<? extends State>, WorkflowWizardPageProvider>();
+		Map<Class<? extends Workflow.State>, WorkflowWizardPageProvider> map = new HashMap<Class<? extends Workflow.State>, WorkflowWizardPageProvider>();
 		map.put(state.getClass(), new BasicWorkflowWizardPageFactory(page));
 		map.put(SimpleState.class, new SimplePage());
 
 		workflow = new Workflow();
-		workflow.setStates(new State[] { state, new SimpleState() });
+		workflow.setStates(new Workflow.State[] { state, new SimpleState() });
 		wizard = new WorkflowWizard(workflow, map);
 
 		shell = new Shell(Display.getDefault());
@@ -62,11 +61,11 @@ public class ConnectionFileTest extends TestCase {
 		if (!shell.isDisposed())
 			shell.dispose();
 	}
-    
+
     public void testPlaceholder() throws Exception {
         //TODO fix tests in this class
     }
-	
+
 //	public void testButtonState() {
 //		Assertion a1 = new Assertion() {
 //			@Override
@@ -76,30 +75,30 @@ public class ConnectionFileTest extends TestCase {
 //			}
 //		};
 //		Object[] actions = new Object[]{a1,IDialogConstants.CANCEL_ID};
-//		
+//
 //		DialogDriver driver = new DialogDriver(dialog,actions);
 //		driver.schedule();
-//		
+//
 //		dialog.open();
-//		
+//
 //		assertFalse(a1.fail);
 //		driver.cancel();
 //	}
-	
+
 //	public void testWorkbenchSelection() {
 //		// create a workbench selection
 //		try {
 //			URL url = CatalogTestsUIPlugin.getDefault().getBundle()
 //				.getEntry("data/");
 //			url = FileLocator.toFileURL(new URL(url, "streams.shp"));
-//			
+//
 //			workflow.setContext(url);
-//		} 
+//		}
 //		catch (Exception e) {
 //			e.printStackTrace();
 //			fail();
 //		}
-//		
+//
 //		Assertion a1 = new Assertion() {
 //			@Override
 //			public void run() {
@@ -108,12 +107,12 @@ public class ConnectionFileTest extends TestCase {
 //			}
 //		};
 //		Object[] actions = new Object[]{a1,IDialogConstants.CANCEL_ID};
-//		
+//
 //		DialogDriver driver = new DialogDriver(dialog,actions);
 //		driver.schedule();
-//		
+//
 //		dialog.open();
-//		
+//
 //		assertFalse(a1.fail);
 //		driver.cancel();
 //	}
@@ -125,25 +124,25 @@ public class ConnectionFileTest extends TestCase {
 //				.getEntry("data/"); //$NON-NLS-1$
 //			url = FileLocator.toFileURL(new URL(url, "streams.shp")); //$NON-NLS-1$
 //			workflow.setContext(url);
-//		} 
+//		}
 //		catch (Exception e) {
 //			e.printStackTrace();
 //			fail();
 //		}
-//		
+//
 //
 //		Object[] actions = new Object[]{
 //			IDialogConstants.NEXT_ID,IDialogConstants.CANCEL_ID
 //		};
-//		
+//
 //		DialogDriver driver = new DialogDriver(dialog,actions);
 //		driver.schedule();
-//		
+//
 //		dialog.open();
 //		driver.cancel();
-//		
+//
 //		assertNotNull(state.getServices());
 //		assertFalse(state.getServices().isEmpty());
-//		
+//
 //	}
 }

@@ -20,7 +20,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,7 +41,6 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
-import javax.imageio.spi.ImageReaderSpi;
 import javax.naming.OperationNotSupportedException;
 
 import net.refractions.udig.catalog.util.CRSUtil;
@@ -56,6 +54,9 @@ import net.refractions.udig.project.render.ICompositeRenderContext;
 import net.refractions.udig.project.render.IMultiLayerRenderer;
 import net.refractions.udig.project.render.IRenderContext;
 import net.refractions.udig.project.render.RenderException;
+import net.refractions.udig.render.gridcoverage.basic.GridCoverageRendererUtils;
+import net.refractions.udig.render.gridcoverage.basic.State;
+import net.refractions.udig.render.internal.gridcoverage.basic.BasicGridCoverageRenderer;
 import net.refractions.udig.render.wms.basic.WMSPlugin;
 import net.refractions.udig.render.wms.basic.internal.Messages;
 import net.refractions.udig.render.wms.basic.preferences.PreferenceConstants;
@@ -76,30 +77,26 @@ import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.data.Query;
 import org.geotools.data.ows.Layer;
 import org.geotools.data.ows.Service;
-import org.geotools.data.ows.StyleImpl;
+import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.data.wms.request.GetMapRequest;
-import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.filter.Filter;
 import org.geotools.geometry.GeneralEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.ows.ServiceException;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.geotools.renderer.lite.RendererUtilities;
-import org.geotools.renderer.lite.gridcoverage2d.GridCoverageRenderer;
-import org.geotools.resources.image.ImageUtilities;
-import org.geotools.styling.RasterSymbolizer;
+import org.geotools.renderer.lite.GridCoverageRenderer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.xml.DocumentWriter;
 import org.geotools.xml.filter.FilterSchema;
-import org.opengis.filter.Filter;
-import org.opengis.geometry.MismatchedDimensionException;
+import org.opengis.metadata.Identifier;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
-import org.opengis.referencing.ReferenceIdentifier;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
+import org.opengis.spatialschema.geometry.MismatchedDimensionException;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
@@ -122,12 +119,14 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
      * Construct a new BasicWMSRenderer
      */
     public BasicWMSRenderer2() {
-        ClassLoader current = Thread.currentThread().getContextClassLoader();
-        try {
-            Thread.currentThread().setContextClassLoader(WebMapServer.class.getClassLoader());
-            Logger logger = Logger.getLogger("org.geotools.data.ows");//$NON-NLS-1$
-            if (WMSPlugin.isDebugging(Trace.RENDER)) {
-                logger.setLevel(Level.FINE);
+        super();
+        if (WMSPlugin.getDefault().isDebugging()) {
+            ClassLoader current = Thread.currentThread().getContextClassLoader();
+            try {
+                Thread.currentThread().setContextClassLoader(
+                        ShapefileDataStore.class.getClassLoader());
+                Logger logger = Logger.global;
+                logger.setLevel(Level.FINEST);
                 logger.addHandler(new Handler(){
 
                     @Override
@@ -146,17 +145,15 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                     }
 
                 });
-            } else {
-                logger.setLevel(Level.SEVERE);
+            } finally {
+                Thread.currentThread().setContextClassLoader(current);
             }
-        } finally {
-            Thread.currentThread().setContextClassLoader(current);
-        }        
+        }
     }
 
     @Override
     public void render( Graphics2D destination, IProgressMonitor monitor ) throws RenderException {
-        render(destination, getContext().getImageBounds(), monitor);
+        render(destination, getViewportBBox(), monitor);
     }
 
     @Override
@@ -168,15 +165,11 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
     public synchronized void render( Graphics2D destination, Envelope bounds2,
             IProgressMonitor monitor ) throws RenderException {
 
-        
-        ReferencedEnvelope bounds = null;
-        
+        Envelope bounds = bounds2;
         int endLayerStatus = ILayer.DONE;
         try {
-            if (bounds2 == null || bounds2.isNull()) {
-                bounds = getContext().getImageBounds();
-            }else{
-                bounds = new ReferencedEnvelope(bounds2, getViewportCRS());
+            if (bounds == null || bounds.isNull()) {
+                bounds = getViewportBBox();
             }
             if (monitor.isCanceled())
                 return;
@@ -210,7 +203,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 
                 if (currScale >= minScale && currScale <= maxScale) {
                     // check for a wms style
-                    StyleImpl wmsStyle = (StyleImpl) ilayer.getStyleBlackboard().get(
+                    org.opengis.layer.Style wmsStyle = (org.opengis.layer.Style)ilayer.getStyleBlackboard().get(
                             WMSStyleContent.WMSSTYLE);
                     if (wmsStyle != null) {
                         request.addLayer(layer, wmsStyle);
@@ -224,35 +217,29 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                 return;
 
             List<Layer> wmsLayers = getWMSLayers();
-            if (wmsLayers == null || wmsLayers.isEmpty()){
-                endLayerStatus = ILayer.WARNING;
-                return;
-            }
-            
+
             // figure out request CRS
             String requestCRScode = findRequestCRS(wmsLayers, getViewportCRS(), getContext().getMap());
             // TODO: make findRequestCRS more efficient (we are running CRS.decode at *least* twice)
             CoordinateReferenceSystem requestCRS = CRS.decode(requestCRScode);
 
             // figure out viewport
-//            ReferencedEnvelope viewport;
-//            Envelope viewportBBox = getViewportBBox();
-//            CoordinateReferenceSystem viewportCRS = getViewportCRS();
-//            if (viewportBBox == null) {
-//                // change viewport to world
-//                viewportBBox = new Envelope(-180, 180, -90, 90);
-//                if (!DefaultGeographicCRS.WGS84.equals(viewportCRS)) { // reproject
-//                    viewport = new ReferencedEnvelope(viewportBBox, DefaultGeographicCRS.WGS84);
-//                    viewportBBox = viewport.transform(viewportCRS, true);
-//                }
-//            }
-
+            ReferencedEnvelope viewport;
+            Envelope viewportBBox = getViewportBBox();
+            CoordinateReferenceSystem viewportCRS = getViewportCRS();
+            if (viewportBBox == null) {
+                // change viewport to world
+                viewportBBox = new Envelope(-180, 180, -90, 90);
+                if (!DefaultGeographicCRS.WGS84.equals(viewportCRS)) { // reproject
+                    viewport = new ReferencedEnvelope(viewportBBox, DefaultGeographicCRS.WGS84);
+                    viewportBBox = viewport.transform(viewportCRS, true);
+                }
+            }
 
             ReferencedEnvelope requestBBox = null;
             Envelope backprojectedBBox = null; // request bbox projected to the viewport crs
-//            viewport = new ReferencedEnvelope(viewportBBox, viewportCRS);
-//            requestBBox = calculateRequestBBox(wmsLayers, viewport, requestCRS);
-            requestBBox = calculateRequestBBox(wmsLayers, bounds, requestCRS);
+            viewport = new ReferencedEnvelope(viewportBBox, viewportCRS);
+            requestBBox = calculateRequestBBox(wmsLayers, viewport, requestCRS);
 
             // check that a request is needed (not out of a bounds, invalid, etc)
             if (requestBBox == NILL_BOX) {
@@ -270,7 +257,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             if (WMSPlugin.isDebugging(Trace.RENDER)) {
                 WMSPlugin.trace("Viewport CRS: " + getViewportCRS().getName()); //$NON-NLS-1$
                 WMSPlugin.trace("Request CRS: " + requestCRS.getName()); //$NON-NLS-1$
-                WMSPlugin.trace("Context bounds: " + getContext().getImageBounds()); //$NON-NLS-1$
+                WMSPlugin.trace("Viewport bounds: " + getViewportBBox()); //$NON-NLS-1$
                 WMSPlugin.trace("Request bounds: " + requestBBox); //$NON-NLS-1$
                 WMSPlugin.trace("Backprojected request bounds: " + backprojectedBBox); //$NON-NLS-1$
             }
@@ -278,9 +265,8 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             Service wmsService = wms.getCapabilities().getService();
             Dimension maxDimensions = new Dimension(wmsService.getMaxWidth(), wmsService
                     .getMaxHeight());
-//            Dimension imageDimensions = calculateImageDimensions(getContext().getMapDisplay()
-//                    .getDisplaySize(), maxDimensions, getViewportBBox(), backprojectedBBox);
-            Dimension imageDimensions = calculateImageDimensions(getContext().getImageSize(), maxDimensions, bounds, backprojectedBBox);
+            Dimension imageDimensions = calculateImageDimensions(getContext().getMapDisplay()
+                    .getDisplaySize(), maxDimensions, getViewportBBox(), backprojectedBBox);
             if (imageDimensions.height < 1 || imageDimensions.width < 1) {
                 endLayerStatus = ILayer.WARNING;
                 return;
@@ -292,7 +278,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                     + "," + requestBBox.getMaxY()); //$NON-NLS-1$
 
             // epsg could be under identifiers or authority.
-            Set<ReferenceIdentifier> identifiers = requestCRS.getIdentifiers();
+            Set<Identifier> identifiers = requestCRS.getIdentifiers();
             if (identifiers.isEmpty())
                 request.setSRS(EPSG_4326);
             else
@@ -342,15 +328,14 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                     ProjectBlackboardConstants.LAYER__DATA_QUERY);
             Filter filter;
             if (layerFilter instanceof Query) {
-                filter = (Filter) ((Query) layerFilter).getFilter();
+                filter = ((Query) layerFilter).getFilter();
             } else if (layerFilter instanceof Filter) {
                 filter = (Filter) layerFilter;
             } else {
                 filter = mapFilter;
             }
-            if (filter != null && filter != Filter.INCLUDE){
+            if (filter != null)
                 filters.put(layer, filter);
-            }
         }
 
         if (filters.isEmpty())
@@ -393,8 +378,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 
         Envelope envelope = bounds;
         if (envelope == null || envelope.isNull()) {
-            //get the bounds from the context
-            envelope = getContext().getImageBounds();
+            envelope = getContext().getViewportModel().getBounds();
         }
         Point upperLeft = getContext().worldToPixel(
                 new Coordinate(envelope.getMinX(), envelope.getMinY()));
@@ -405,14 +389,72 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 
         GridCoverage2D coverage = convertImageToGridCoverage(requestBBox, image);
 
-        AffineTransform worldToScreen = RendererUtilities.worldToScreenTransform(envelope, screenSize, destinationCRS);
-		GridCoverageRenderer paint = new GridCoverageRenderer( destinationCRS, envelope, screenSize, worldToScreen  );
-                     
-        RasterSymbolizer symbolizer = CommonFactoryFinder.getStyleFactory(null).createRasterSymbolizer();
-                        
-        paint.paint( graphics, coverage, symbolizer );  
+        GridCoverageRenderer renderer = GridCoverageRendererUtils.createRenderer(coverage, destinationCRS);
 
+//        renderer.paint(graphics);
+        State renderState = GridCoverageRendererUtils.getRenderState(context);
+        renderState.bounds = bounds;
+        renderState.displayArea = screenSize;
+        BasicGridCoverageRenderer.doRender(renderer, graphics, renderState);
     }
+
+    // private void renderGridCoverageOld( Graphics2D destination, Envelope bounds, Dimension
+    // dimension, ReferencedEnvelope requestBBox, BufferedImage image ) throws RenderException {
+    // CoordinateReferenceSystem viewportCRS = getViewportCRS();
+    //
+    // Rectangle paintArea = new Rectangle(calculateImageOffset().x, calculateImageOffset().y,
+    // dimension.width, dimension.height);
+    //
+    // // if( !viewportCRS.equals(requestBBox.getCoordinateReferenceSystem()) )
+    // // rasterReprojection=true;
+    //
+    // GridCoverage2D gc = convertImageToGridCoverage(requestBBox, image);
+    // //GridCoverageRenderer renderer = new GridCoverageRenderer(gc, crs);
+    //
+    //
+    // Envelope projEnv = new Envelope(gc.getEnvelope().getMinimum(0), gc.getEnvelope()
+    // .getMaximum(0), gc.getEnvelope().getMinimum(1), gc.getEnvelope().getMaximum(1));
+    //
+    // try {
+    // projEnv = org.geotools.geometry.jts.JTS.transform(
+    // projEnv, null,
+    // CRS.findMathTransform(gc.getCoordinateReferenceSystem(), viewportCRS, true),
+    // 10 );
+    // } catch (Exception e) {
+    // throw wrapException(e);
+    // }
+    // Envelope imageAreaBBox = bounds;
+    // if (imageAreaBBox.contains(projEnv)) {
+    // imageAreaBBox = projEnv;
+    // }
+    // try {
+    // GridCoverageRenderer renderer = new GridCoverageRenderer(
+    // viewportCRS, imageAreaBBox, paintArea );
+    //
+    // // streamingRenderer.setConcatTransforms(true);
+    // trace("Preparing to render image returned from server."); //$NON-NLS-1$
+    // trace("PaintArea: " + paintArea); //$NON-NLS-1$
+    // trace("ImageAreaBBox: " + imageAreaBBox); //$NON-NLS-1$
+    // trace("Map's viewport: " + bounds); //$NON-NLS-1$
+    //
+    // RasterSymbolizer rasterSymbolizer;
+    // rasterSymbolizer = factory.createRasterSymbolizer();
+    //
+    // renderer.paint( destination, gc, rasterSymbolizer );
+    // } catch (FactoryException e) {
+    // throw (RuntimeException) new RuntimeException( ).initCause( e );
+    // } catch (TransformException e) {
+    // throw (RuntimeException) new RuntimeException( ).initCause( e );
+    // } catch (NoninvertibleTransformException e) {
+    // throw (RuntimeException) new RuntimeException( ).initCause( e );
+    // }
+    //
+    // //State renderState = BasicGridCoverageRenderer.getRenderState(context);
+    // //renderState.bounds = imageAreaBBox;
+    // //renderState.displayArea = paintArea;
+    // //BasicGridCoverageRenderer.doRender(renderer, destination, renderState);
+    // }
+
     private GridCoverage2D convertImageToGridCoverage( ReferencedEnvelope requestBBox,
             BufferedImage image ) throws RenderException {
         Envelope env = requestBBox;
@@ -465,6 +507,20 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                 try {
                     inputStream = wms.issueRequest(request).getInputStream();
                     image[0] = ImageIO.read(inputStream);
+
+                    /*
+                     * Vitalus: fix for potential deadlock
+                     * ImageIO.read() may return null object (reproduced with MapServer
+                     * when parameters are not correct in GetMap request) and rendering
+                     * job may infinitly be in loop:
+                     * while( image[0] == null && !monitor.isCanceled() && exception[0] == null ) {..
+                     * TODO: Customize exception message.
+                     */
+                    if(image[0] == null){
+                        image[0] = getContext().getImage();;
+                        exception[0]=new RenderException(Messages.BasicWMSRenderer2_errorObtainingImage);
+                    }
+
                 } catch (IOException e1) {
                     exception[0] = wrapException(e1);
                 } catch (ServiceException e) {
@@ -505,7 +561,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                 }
             }
         }
-        
+
         if( exception[0]!=null )
             throw exception[0];
         return image[0];
@@ -514,21 +570,19 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
     private boolean formatSupportsTransparency( String format ) {
         if (format.equalsIgnoreCase("image/png")) //$NON-NLS-1$
             return true;
-        if (format.equalsIgnoreCase("image/png8")) //$NON-NLS-1$
-            return true;
         if (format.equalsIgnoreCase("image/gif")) //$NON-NLS-1$
             return true;
         if (format.equalsIgnoreCase("image/tiff")) //$NON-NLS-1$
             return true;
         if (format.equalsIgnoreCase("image/bmp")) //$NON-NLS-1$
-            return true;
+            return false;
         return false;
     }
 
     /**
      * Determines the dimensions of the image to request, usually 1:1 to display, but sometimes more
      * (too fuzzy) or less (image too large) when reprojecting.
-     * 
+     *
      * @param maxDimensions TODO
      * @param viewport
      * @param request
@@ -567,7 +621,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
      * Using the viewport bounds and combined wms layer extents, determines an appropriate bounding
      * box by projecting the viewport into the request CRS, intersecting the bounds, and returning
      * the result.
-     * 
+     *
      * @param wmsLayers all adjacent wms layers we are requesting
      * @param viewport map editor bounds and crs
      * @param requestCRS coordinate reference system supported by the server
@@ -734,12 +788,30 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
         return envelope;
     }
 
+    // private boolean supportsCRS( CoordinateReferenceSystem crs ) throws IOException {
+    // boolean result = false;
+    //
+    // EPSG_CODE: for( Identifier id : crs.getIdentifiers() ) {
+    // String epsgCode = id.toString();
+    // for( ILayer ilayer : getLayers() ) {
+    // Layer layer = ilayer.getResource(Layer.class, null);
+    //
+    // if (!layer.getSrs().contains(epsgCode)) {
+    // continue EPSG_CODE;
+    // }
+    // }
+    // return true;
+    // }
+    //
+    // return result;
+    // }
+
     /**
      * We have made this visible so that WMSDescribeLayer (used by InfoView2)
      * can figure out how to make the *exact* same request in order
      * to a getInfo operation. We should really store the last request
      * on the layer blackboard for this intra module communication.
-     * 
+     *
      * @return SRS code
      */
     public static String findRequestCRS( List<Layer> layers, CoordinateReferenceSystem viewportCRS, IMap map ) {
@@ -751,12 +823,12 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 
         Collection<String> viewportEPSG=extractEPSG(map, viewportCRS);
         if( viewportEPSG!=null ){
-        	
+
         	String match=matchEPSG(layers, viewportEPSG);
 			if( match!=null )
         		return match;
         }
-        
+
 		if( matchEPSG(layers, EPSG_4326) )
 			return EPSG_4326;
 
@@ -774,10 +846,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                 CRS.decode(epsgCode);
             } catch (NoSuchAuthorityCodeException e) {
                 continue;
-            } catch (FactoryException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+            }
 
             if (matchEPSG(layers, epsgCode)) {
                 requestCRS = epsgCode;
@@ -802,15 +871,14 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 		return null;
 	}
 
-
 	private static Collection<String> extractEPSG( final IMap map,
             final CoordinateReferenceSystem crs ) {
-	    
+
 	    if( CRS.equalsIgnoreMetadata(crs, DefaultGeographicCRS.WGS84)){
 	        return Collections.singleton(EPSG_4326);
 	    }
         final Collection<String> codes = new HashSet<String>();
-        codes.addAll(CRSUtil.extractAuthorityCodes(crs));
+            codes.addAll(CRSUtil.extractAuthorityCodes(crs));
 
         final String DONT_FIND = "DONT_FIND";
         boolean search = map.getBlackboard().get(EPSG_CODE)!=DONT_FIND;
@@ -856,7 +924,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 
         return codes;
     }
-	
+
 
     private static void dontFind( final IMap map, final String DONT_FIND ) {
         map.getBlackboard().put(EPSG_CODE,
@@ -945,7 +1013,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 
     /**
      * Determine whether the image needs to be refreshed
-     * 
+     *
      * @return Whether the image needs to be refreshed
      */
     protected boolean needRefresh() {
@@ -966,6 +1034,10 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 
     private CoordinateReferenceSystem getViewportCRS() {
         return getContext().getViewportModel().getCRS();
+    }
+
+    private Envelope getViewportBBox() {
+        return getContext().getViewportModel().getBounds();
     }
 
     private IPreferenceStore getPreferencesStore() {

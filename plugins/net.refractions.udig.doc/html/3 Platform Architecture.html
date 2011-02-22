@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 3 Platform Architecture</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 3 Platform Architecture -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>The UDIG GISPlatform is built around the concept of plug-ins to the base Eclipse Rich Client Platform. Several other well-known eclipse plug-ins are used, such as the Eclipse Modeling Framework and the Graphic Modeling Framework.<br/>
+<img src="3 Platform Architecture_attachments/TierDiagram.gif" align="absmiddle" border="0" /><br/>
+It is useful to consider the UDIG application as a series of Tiers each with different responsibilities and capabilities. </p>
+
+<h3><a name="3PlatformArchitecture-GISToolkits">GIS Toolkits</a></h3>
+
+<p>Tier 0: The Toolkits used, such as GeoTools and GeoAPI, provide useful abstractions (such as Features) and data connectivity. These libraries are all gathered into a single plug-in (net.refractions.udig.libs plugin) so they may share a classloader. </p>
+
+<h3><a name="3PlatformArchitecture-GISPlatform">GIS Platform</a></h3>
+
+<p>Tier 1: Catalog Services provide a common API for data access and may serve as foundation for different GIS applications </p>
+
+<h3><a name="3PlatformArchitecture-GISApplication">GIS Application</a></h3>
+<p>Tier 2: Project services opperates as a UDIG application providing Maps and Printing under user control </p>
+
+<h3><a name="3PlatformArchitecture-VisualizationandInteraction">Visualization and Interaction</a></h3>
+
+<p>Tier 3: Rendering and Tool services allow control of display and screen interaction. </p>
+
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="3 Platform Architecture_attachments/tierdiagram.gif">tierdiagram.gif</a> (image/gif)
+                                <br/>
+                                                    </div>
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=3484">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=3484">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

@@ -9,10 +9,10 @@ import org.osgi.framework.BundleContext;
  */
 public class CatalogTestsUIPlugin extends AbstractUIPlugin {
 
-	
+
 	//The shared instance.
 	private static CatalogTestsUIPlugin plugin;
-	
+
 	/**
 	 * The constructor.
 	 */

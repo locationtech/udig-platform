@@ -15,7 +15,7 @@ public class AddVertexWhileCreatingBehaviourTest extends TestCase {
     public void testIsValid() throws Exception {
         TestHandler handler=new TestHandler();
         handler.getTestEditBlackboard().util.setVertexRadius(4);
-        
+
         AddVertexWhileCreatingBehaviour behavior=new AddVertexWhileCreatingBehaviour();
 
         handler.setCurrentState(EditState.CREATING);
@@ -23,7 +23,7 @@ public class AddVertexWhileCreatingBehaviourTest extends TestCase {
         //Current Shape must be set
         MapMouseEvent event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         EditGeom editGeom = handler.getEditBlackboard().getGeoms().get(0);
         handler.setCurrentShape(editGeom.getShell());
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
@@ -43,21 +43,21 @@ public class AddVertexWhileCreatingBehaviourTest extends TestCase {
         handler.setCurrentState(EditState.MODIFYING);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // works only with CREATING
         handler.setCurrentState(EditState.NONE);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // should work, just checking state is still good;
         handler.setCurrentState(EditState.CREATING);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertTrue(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // doesn't work with event pressed
         assertFalse(behavior.isValid(handler, event, EventType.PRESSED));
-        
-        //doesn't work if the mouse is over an existing vertex in current shape 
+
+        //doesn't work if the mouse is over an existing vertex in current shape
         handler.getEditBlackboard().addPoint(11,11, handler.getCurrentShape());
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));

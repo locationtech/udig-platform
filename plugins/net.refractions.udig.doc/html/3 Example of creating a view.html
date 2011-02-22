@@ -1,0 +1,132 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 3 Example of creating a view</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 3 Example of creating a view -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h2><a name="3Exampleofcreatingaview-CreatinganewView">Creating a new View</a></h2>
+
+<h3><a name="3Exampleofcreatingaview-Step1%3A">Step 1:</a></h3>
+<p>Create a new plugin using the new plugin wizard.  <br/>
+<div align="center"><img src="3 Example of creating a view_attachments/NewPlugin.gif" border="0" /></div></p>
+
+<h3><a name="3Exampleofcreatingaview-Step2%3A">Step 2:</a></h3>
+<p>Ensure that the plugin depends on org.eclipse.core.runtime and org.eclipse.ui.  This is done by opening the plugin.xml file and adding them in the dependencies tab or by hand by adding: <br/>
+<div align="center"><img src="3 Example of creating a view_attachments/dependencies.gif" border="0" /></div></p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;requires&gt;</span>
+      <span class="code-tag">&lt;import plugin=<span class="code-quote">"org.eclipse.ui"</span>/&gt;</span>
+      <span class="code-tag">&lt;import plugin=<span class="code-quote">"org.eclipse.core.runtime"</span>/&gt;</span>
+   <span class="code-tag">&lt;/requires&gt;</span></pre>
+</div></div>
+
+<h3><a name="3Exampleofcreatingaview-Step3%3A">Step 3:</a></h3>
+<p>Define a new view in the plugin.xml of a plugin using the form in the extensions tab of the plugin.xml editor:</p>
+
+<p><div align="center"><img src="3 Example of creating a view_attachments/extensionsForm.gif" border="0" /></div></p>
+
+<p>The declaration of the new view can also be done by adding:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;extension
+         point=<span class="code-quote">"org.eclipse.ui.views"</span>&gt;
+      &lt;view
+            class=<span class="code-quote">"tutorial.ViewExample"</span>
+            id=<span class="code-quote">"tutorial.view1"</span>
+            name=<span class="code-quote">"tutorial.view1"</span>/&gt;
+   <span class="code-tag">&lt;/extension&gt;</span></pre>
+</div></div>
+
+<p>to the plugin.xml file.  The example has defined a view that is has the name and id "tutorial.view1" and the class that is used is "tutorial.ViewExample".  That class will be created by the platform and used to create the views contents.</p>
+
+<h3><a name="3Exampleofcreatingaview-Step4%3A">Step 4:</a></h3>
+<p>Create the class "tutorial.ViewExample":</p>
+<div class="code"><div class="codeHeader"><b>ViewExample.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> tutorial;
+
+<span class="code-keyword">import</span> org.eclipse.swt.SWT;
+<span class="code-keyword">import</span> org.eclipse.swt.widgets.Button;
+<span class="code-keyword">import</span> org.eclipse.swt.widgets.Composite;
+<span class="code-keyword">import</span> org.eclipse.ui.part.ViewPart;
+
+
+<span class="code-keyword">public</span> class ViewExample <span class="code-keyword">extends</span> ViewPart {
+
+	<span class="code-keyword">private</span> Button button;
+
+	<span class="code-keyword">public</span> ViewExample() {
+		<span class="code-keyword">super</span>();
+	}
+
+	@Override
+	<span class="code-keyword">public</span> void createPartControl(Composite parent) {
+		button=<span class="code-keyword">new</span> Button(parent,SWT.DEFAULT);
+		button.setText(<span class="code-quote">"Button In New View"</span>);
+	}
+
+	@Override
+	<span class="code-keyword">public</span> void setFocus() {
+		button.setFocus();
+	}
+
+}</pre>
+</div></div>
+
+<h3><a name="3Exampleofcreatingaview-Checkoutviewineclipse">Checkout view in eclipse</a></h3>
+<ul>
+	<li>Right click on your new plugin and select Run As &gt; Eclipse Application.</li>
+	<li>A fresh eclipse will open up.  Select Menu item Windows &gt; Show View &gt; Other.</li>
+	<li>In folder "Other" select your new view (tutorial.view1)</li>
+	<li>Your view should open up and you can click you button (which does nothing currently).</li>
+</ul>
+
+
+<p><div align="center"><img src="3 Example of creating a view_attachments/running.gif" border="0" /></div></p>
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="3 Example of creating a view_attachments/extensionsform.gif">extensionsform.gif</a> (image/gif)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="3 Example of creating a view_attachments/dependencies.gif">dependencies.gif</a> (image/gif)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="3 Example of creating a view_attachments/newplugin.gif">newplugin.gif</a> (image/gif)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="3 Example of creating a view_attachments/running.gif">running.gif</a> (image/gif)
+                                <br/>
+                                                    </div>
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=4846">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=4846">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

@@ -35,15 +35,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
-/**
- * Class used to represent a feature Editor; can perform "matches" against
- * a provided feature; and will create the view or dialog on request.
- * 
- * @author jones
- * @since 1.1.0
- */
 public class FeatureEditorLoader {
     /** FeatureEditorLoader processor field */
     final FeatureEditorExtensionProcessor processor;
@@ -68,8 +61,7 @@ public class FeatureEditorLoader {
         this.processor = processor;
         String iconID = definition.getAttribute("icon"); //$NON-NLS-1$
         if (iconID != null) {
-            icon = AbstractUIPlugin.imageDescriptorFromPlugin(definition.getNamespaceIdentifier(),
-                    iconID);
+            icon = AbstractUIPlugin.imageDescriptorFromPlugin(definition.getNamespaceIdentifier(), iconID);
         }
 
         id = definition.getAttribute("id"); //$NON-NLS-1$
@@ -85,19 +77,16 @@ public class FeatureEditorLoader {
     }
 
     IAction getAction( final ISelection selection ) {
-        if (!(selection instanceof IStructuredSelection)){
+        if (!(selection instanceof IStructuredSelection))
             return null;
-        }
 
         IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-        if (!processor.sameFeatureTypes(structuredSelection)){
+        if (!processor.sameFeatureTypes(structuredSelection))
             return null;
-        }
 
-        final SimpleFeature feature = (SimpleFeature) structuredSelection.getFirstElement();
-        if (featureTypeMatcher.matches(feature) == -1){
-            return null; // no match
-        }
+        final Feature feature = (Feature) structuredSelection.getFirstElement();
+        if (featureTypeMatcher.matches(feature) == -1)
+            return null;
         contribution = new Action(name, IAction.AS_RADIO_BUTTON){
             public void runWithEvent( org.eclipse.swt.widgets.Event event ) {
 
@@ -111,12 +100,11 @@ public class FeatureEditorLoader {
         };
         contribution.setId(id);
         contribution.setImageDescriptor(icon);
-        EditActionContribution selected = this.processor.selectedEditors.get(feature
-                .getFeatureType());
+        EditActionContribution selected = this.processor.selectedEditors.get(feature.getFeatureType());
         if (selected == null) {
             selected = processor.createEditAction(processor.getClosestMatch(selection), selection,
                     feature);
-        } else {
+        }else{
             selected.setSelection(selection);
         }
         if (selected != null && selected.getId().equals(id))
@@ -128,17 +116,16 @@ public class FeatureEditorLoader {
     }
 
     public void open( Display display, ISelection selection ) {
-        SimpleFeature feature = (SimpleFeature) ((IStructuredSelection) selection)
-                .getFirstElement();
+        Feature feature = (Feature) ((IStructuredSelection) selection).getFirstElement();
 
         if (viewId != null) {
             try {
                 IUDIGView view = (IUDIGView) PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                         .getActivePage().showView(viewId, null, IWorkbenchPage.VIEW_VISIBLE);
-                try {
+                try{
                     view.editFeatureChanged(feature);
-                } catch (Throwable e) {
-                    UiPlugin.log(view + " threw an exception", e); //$NON-NLS-1$
+                }catch (Throwable e) {
+                    UiPlugin.log(view+" threw an exception", e); //$NON-NLS-1$
                 }
             } catch (PartInitException e) {
                 ProjectUIPlugin.log(null, e);
@@ -152,8 +139,8 @@ public class FeatureEditorLoader {
                     toolContext = this.processor.partListener.currentContext;
                 }
                 page.setContext(toolContext);
-                Dialog dialog = new FeatureEditorExtensionProcessor.EditorDialog(new Shell(display
-                        .getActiveShell(), SWT.RESIZE | SWT.PRIMARY_MODAL), page);
+                Dialog dialog = new FeatureEditorExtensionProcessor.EditorDialog(new Shell(display.getActiveShell(),
+                        SWT.RESIZE | SWT.PRIMARY_MODAL), page);
                 dialog.setBlockOnOpen(false);
                 page.setFeature(feature);
                 dialog.open();
@@ -175,7 +162,7 @@ public class FeatureEditorLoader {
      * -1 indicates no match, 0 a perfect match and each number higher is a match but a poorer
      * match.
      * </p>
-     * 
+     *
      * @param selection
      * @return
      */
@@ -184,12 +171,12 @@ public class FeatureEditorLoader {
         if (!processor.sameFeatureTypes(structuredSelection))
             return -1;
 
-        final SimpleFeature feature = (SimpleFeature) structuredSelection.getFirstElement();
+        final Feature feature = (Feature) structuredSelection.getFirstElement();
         return featureTypeMatcher.matches(feature);
     }
     /**
      * Returns the dialog page if the feature editor is a dialog, or null otherwise.
-     * 
+     *
      * @return the dialog page if the feature editor is a dialog, or null otherwise.
      */
     public String getDialogPage() {
@@ -198,7 +185,7 @@ public class FeatureEditorLoader {
 
     /**
      * Returns the name of the feature editor
-     * 
+     *
      * @returnthe name of the feature editor
      */
     public String getName() {
@@ -206,7 +193,7 @@ public class FeatureEditorLoader {
     }
     /**
      * Returns the viewid if the feature editor is a view, or null otherwise.
-     * 
+     *
      * @return the dviewid if the feature editor is a view, or null otherwise.
      */
     public String getViewId() {

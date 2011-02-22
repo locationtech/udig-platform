@@ -53,15 +53,15 @@ public class ResolveManagerTest extends TestCase {
     public void testRegisterResolves() {
         assertFalse(resolveManager.canResolve(service, Integer.class));
         IResolveAdapterFactory factory = new IResolveAdapterFactory(){
-        
+
                     public Object adapt( IResolve resolve, Class adapter, IProgressMonitor monitor ) throws IOException {
                         return new Integer(1);
                     }
-        
+
                     public boolean canAdapt( IResolve resolve, Class adapter ) {
                         return adapter == Integer.class;
                     }
-                    
+
                 };
         resolveManager.registerResolves(factory);
         assertTrue(resolveManager.canResolve(service, Integer.class));
@@ -81,7 +81,7 @@ public class ResolveManagerTest extends TestCase {
      */
     public void testUnregisterResolvesIResolveAdapterFactoryClass() {
         IResolveAdapterFactory factory = new IResolveAdapterFactory(){
-            
+
             public Object adapt( IResolve resolve, Class adapter, IProgressMonitor monitor ) throws IOException {
                 return new Integer(1);
             }
@@ -89,19 +89,19 @@ public class ResolveManagerTest extends TestCase {
             public boolean canAdapt( IResolve resolve, Class adapter ) {
                 return adapter == Integer.class || adapter == Float.class;
             }
-            
+
         };
 
         resolveManager.registerResolves(factory);
-        
+
         assertTrue(resolveManager.canResolve(service, Integer.class));
         assertTrue(resolveManager.canResolve(service, Float.class));
-        
+
         resolveManager.unregisterResolves(factory, Integer.class);
-        
+
         assertFalse(resolveManager.canResolve(service, Integer.class));
         assertTrue(resolveManager.canResolve(service, Float.class));
-        
+
     }
 
 }

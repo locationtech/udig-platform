@@ -2,6 +2,22 @@ package net.refractions.udig.tutorials.tool.coverage;
 
 import java.io.IOException;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.FeatureSource;
+import org.geotools.feature.Feature;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
+import org.geotools.feature.FeatureType;
+import org.geotools.filter.AttributeExpression;
+import org.geotools.filter.BBoxExpression;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.filter.FilterType;
+import org.geotools.filter.GeometryFilter;
+import org.geotools.filter.IllegalFilterException;
+
+import com.vividsolutions.jts.geom.Envelope;
+
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.UndoableComposite;
 import net.refractions.udig.tools.edit.commands.SelectFeatureCommand;
@@ -9,65 +25,42 @@ import net.refractions.udig.tools.edit.commands.SelectionParameter;
 import net.refractions.udig.tools.edit.commands.SelectionStrategy;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.data.FeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.feature.FeatureCollection;
-import org.opengis.feature.Feature;
-import org.opengis.feature.FeatureVisitor;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.FilterFactory2;
-import org.opengis.filter.expression.PropertyName;
-import org.opengis.filter.spatial.BBOX;
-import org.opengis.geometry.BoundingBox;
-
-/**
- * This selection strategy uses the provided feature to query the FeatureSource
- * for this layer.
- * <p>
- * The features returned by the FeatureSource are added as individual SelectFeatureCommands
- * to the provided UndoableComposite.
- */
 public class SelectNeightborsStrategy implements SelectionStrategy {
 
-	public void run(IProgressMonitor monitor, final UndoableComposite commands,
-			SelectionParameter parameters, SimpleFeature feature,
-			boolean firstFeature) {
-		if (firstFeature) {
-			try {
-				ILayer editLayer = parameters.handler.getEditLayer();
-				FeatureCollection<SimpleFeatureType, SimpleFeature> features = getFeatureIterator(
-						monitor, editLayer, feature.getBounds());
-						
-				final EditBlackboard blackboard = parameters.handler.getEditBlackboard(editLayer);        
-				features.accepts( new FeatureVisitor(){
-                    public void visit( Feature feature ) {
-                        SimpleFeature next = (SimpleFeature) feature;
-                        SelectFeatureCommand selectFeatureCommand = new SelectFeatureCommand(
-                                blackboard, next);
-                        commands.addCommand(selectFeatureCommand);                        
-                    }				    
-				}, null );
-			} catch (Exception e) {
-				// this is a tutorial so we're just ignoring this issue :)
-			}
-		}
-	}
-
-@SuppressWarnings("unchecked")
-private FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatureIterator( IProgressMonitor monitor, ILayer editLayer, BoundingBox bounds ) throws IOException {
-    FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2(null);
-    
-    SimpleFeatureType featureType = editLayer.getSchema();    
-    String geomName = featureType.getGeometryDescriptor().getLocalName();
-    
-    PropertyName attributeExpr = ff.property(geomName);
-    BBOX filter = ff.bbox(attributeExpr, bounds);
-    
-    FeatureSource<SimpleFeatureType, SimpleFeature> source = editLayer.getResource(FeatureSource.class, monitor);    
-    return source.getFeatures(filter);
+public void run( IProgressMonitor monitor, UndoableComposite commands,
+        SelectionParameter parameters, Feature feature, boolean firstFeature ) {
+    if( firstFeature ){
+        try {
+            ILayer editLayer = parameters.handler.getEditLayer();
+            FeatureIterator iterator = getFeatureIterator(monitor, editLayer, feature.getBounds());
+            while( iterator.hasNext() ){
+                EditBlackboard blackboard = parameters.handler.getEditBlackboard(editLayer);
+                SelectFeatureCommand selectFeatureCommand = new SelectFeatureCommand(blackboard , iterator.next());
+                commands.addCommand(selectFeatureCommand);
+            }
+        } catch (Exception e){
+            // this is a tutorial so we're just ignoring this issue :)
+        }
+    }
 }
 
+private FeatureIterator getFeatureIterator( IProgressMonitor monitor, ILayer editLayer, Envelope bounds ) throws IOException, IllegalFilterException {
+    FilterFactory factory = FilterFactoryFinder.createFilterFactory();
+
+    BBoxExpression bboxExpr = factory.createBBoxExpression(bounds);
+    FeatureType featureType = editLayer.getSchema();
+    String geomName = featureType.getDefaultGeometry().getName();
+    AttributeExpression attributeExpr = factory.createAttributeExpression(geomName);
+
+    GeometryFilter filter = factory.createGeometryFilter(FilterType.GEOMETRY_BBOX);
+    filter.addRightGeometry(bboxExpr);
+    filter.addLeftGeometry(attributeExpr);
+
+    FeatureSource source = editLayer.getResource(FeatureSource.class, monitor);
+
+    FeatureCollection features = source.getFeatures(filter);
+
+    return features.features();
+}
 
 }

@@ -27,7 +27,7 @@ public class EventJobTest extends TestCase {
      * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventJob.fire(int, Object)'
      */
     public void testFire() throws Exception {
-        
+
         job.fire(EventJob.PRESSED, null);
         job.fire(EventJob.RELEASED, null);
         job.fire(EventJob.ENTERED, null);
@@ -36,7 +36,7 @@ public class EventJobTest extends TestCase {
         job.fire(EventJob.MOVED, null);
         job.fire(EventJob.DRAGGED, null);
         job.fire(EventJob.WHEEL, null);
-        
+
         assertEquals(EventType.PRESSED, l.type.get(0));
         assertEquals(EventType.RELEASED, l.type.get(1));
         assertEquals(EventType.ENTERED, l.type.get(2));
@@ -45,20 +45,20 @@ public class EventJobTest extends TestCase {
         assertEquals(EventType.MOVED, l.type.get(5));
         assertEquals(EventType.DRAGGED, l.type.get(6));
         assertEquals(EventType.WHEEL, l.type.get(7));
-        
+
         l.events.clear();
         l.type.clear();
     }
-    
+
     public void testClickTest1() throws Exception {
         job.fire(EventJob.PRESSED, null);
         job.fire(EventJob.MOVED, null);
-        
+
         assertEquals(2, l.type.size());
         assertEquals(EventType.PRESSED, l.type.get(0));
         assertEquals(EventType.MOVED, l.type.get(1));
     }
-    
+
     public void testDoubleClick() throws Exception {
         job.fire(EventJob.PRESSED, null);
         job.fire(EventJob.RELEASED, null);
@@ -67,10 +67,10 @@ public class EventJobTest extends TestCase {
 
         assertEquals(1, l.type.size());
         assertEquals(EventType.DOUBLE_CLICK, l.type.get(0));
-        
+
         l.events.clear();
         l.type.clear();
-        
+
         job.fire(EventJob.PRESSED, null);
         job.fire(EventJob.PRESSED, null);
         job.fire(EventJob.RELEASED, null);
@@ -81,10 +81,10 @@ public class EventJobTest extends TestCase {
         assertEquals(EventType.PRESSED, l.type.get(1));
         assertEquals(EventType.RELEASED, l.type.get(2));
         assertEquals(EventType.RELEASED, l.type.get(3));
-        
+
         l.events.clear();
         l.type.clear();
-        
+
         job.fire(EventJob.PRESSED, null);
         job.fire(EventJob.RELEASED, null);
         job.fire(EventJob.PRESSED, null);
@@ -92,10 +92,10 @@ public class EventJobTest extends TestCase {
 
         assertEquals(1, l.type.size());
         assertEquals(EventType.DOUBLE_CLICK, l.type.get(0));
-        
+
         l.events.clear();
         l.type.clear();
-        
+
         job.fire(EventJob.PRESSED, null);
         job.fire(EventJob.RELEASED, null);
         job.fire(EventJob.PRESSED, null);
@@ -104,7 +104,7 @@ public class EventJobTest extends TestCase {
 
         assertEquals(2, l.type.size());
         assertEquals(EventType.DOUBLE_CLICK, l.type.get(0));
-        
+
         l.events.clear();
         l.type.clear();
 
@@ -116,10 +116,10 @@ public class EventJobTest extends TestCase {
         job.fire(EventJob.ENTERED, null);
 
         assertEquals(6, l.type.size());
-        
+
         l.events.clear();
         l.type.clear();
-                
+
         job.fire(EventJob.PRESSED, null);
         Thread.sleep(ProjectUIPlugin.getDefault().getDoubleClickSpeed()+100);
         job.fire(EventJob.RELEASED, null);
@@ -127,16 +127,16 @@ public class EventJobTest extends TestCase {
         job.fire(EventJob.DOUBLE_CLICK, null);
 
         assertEquals(4, l.type.size());
-        
+
     }
-    
+
     public void testConcurrency() throws Exception {
         EventJob job=new EventJob();
         TestListener l=new TestListener();
         job.addMouseListener(l);
         job.addMouseMotionListener(l);
         job.addMouseWheelListener(l);
-        
+
         job.fire(EventJob.PRESSED, null);
         job.fire(EventJob.RELEASED, null);
         job.fire(EventJob.ENTERED, null);
@@ -145,7 +145,7 @@ public class EventJobTest extends TestCase {
         job.fire(EventJob.MOVED, null);
         job.fire(EventJob.DRAGGED, null);
         job.fire(EventJob.WHEEL, null);
-        
+
         assertEquals(EventType.PRESSED, l.type.get(0));
         assertEquals(EventType.RELEASED, l.type.get(1));
         assertEquals(EventType.ENTERED, l.type.get(2));
@@ -154,10 +154,10 @@ public class EventJobTest extends TestCase {
         assertEquals(EventType.MOVED, l.type.get(5));
         assertEquals(EventType.DRAGGED, l.type.get(6));
         assertEquals(EventType.WHEEL, l.type.get(7));
-        
+
         l.type.clear();
         l.events.clear();
-        
+
         for( int i=0; i<700; i++){
             MapMouseEvent event=new MapMouseEvent(null, i,0,MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
             job.fire(EventJob.PRESSED, event);
@@ -167,11 +167,11 @@ public class EventJobTest extends TestCase {
 
         assertTrue("number of events="+l.type.size(), 200<l.type.size());    //$NON-NLS-1$
     }
-    
+
     enum EventType{
         PRESSED, RELEASED, ENTERED, EXITED, DOUBLE_CLICK, MOVED, DRAGGED, WHEEL, HOVERED
     }
-    
+
     class TestListener implements MapMouseListener, MapMouseMotionListener, MapMouseWheelListener{
         List<EventType> type=new ArrayList<EventType>();
         List<MapMouseEvent> events=new ArrayList<MapMouseEvent>();
@@ -201,12 +201,12 @@ public class EventJobTest extends TestCase {
         }
 
         public void mouseMoved( MapMouseEvent event ) {
-            type.add(EventType.MOVED);        
+            type.add(EventType.MOVED);
             events.add(event);
         }
 
         public void mouseDragged( MapMouseEvent event ) {
-            type.add(EventType.DRAGGED);        
+            type.add(EventType.DRAGGED);
             events.add(event);
         }
 
@@ -217,8 +217,8 @@ public class EventJobTest extends TestCase {
         public void mouseHovered( MapMouseEvent event ) {
             type.add(EventType.HOVERED);
         }
-        
+
     }
-    
-    
+
+
 }

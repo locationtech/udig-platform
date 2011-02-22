@@ -26,15 +26,13 @@ import net.refractions.udig.issues.internal.IssuesActivator;
 import net.refractions.udig.issues.internal.Messages;
 
 import org.eclipse.ui.XMLMemento;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.collection.AdaptorFeatureCollection;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.feature.collection.AbstractFeatureCollection;
+import org.geotools.feature.type.GeometricAttributeType;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -49,55 +47,55 @@ import com.vividsolutions.jts.geom.Polygon;
  * @author Jesse
  * @since 1.1.0
  */
-public class IssuesCollectionToFeatureCollection extends AdaptorFeatureCollection
+public class IssuesCollectionToFeatureCollection extends AbstractFeatureCollection
         implements
-        FeatureCollection<SimpleFeatureType, SimpleFeature> {
+            FeatureCollection {
     private final ReferencedEnvelope DEFAULT_BOUNDS=new ReferencedEnvelope(-180,180,-90,90, DefaultGeographicCRS.WGS84);
     private Collection<? extends IIssue> issues;
     private FeatureTypeAttributeMapper mapper;
-    
+
     public IssuesCollectionToFeatureCollection(Collection<? extends IIssue> issues, FeatureTypeAttributeMapper mapper){
-        super("Issues To Issues FeatureCollection", mapper.getSchema());
+        super(mapper.getSchema());
         this.issues=issues;
         this.mapper=mapper;
     }
-    
+
     @Override
     protected void closeIterator( Iterator close ) {
     }
 
     @Override
     protected Iterator openIterator() {
-        return new Iterator<SimpleFeature>(){
+        return new Iterator<Feature>(){
             Iterator<? extends IIssue> iter=issues.iterator();
             public boolean hasNext() {
                 return iter.hasNext();
             }
 
-            public SimpleFeature next() {
+            public Feature next() {
                 IIssue issue = iter.next();
                 String extId=issue.getExtensionID();
                 String groupId=issue.getGroupId();
-                
+
                 String id=issue.getId();
-                
+
                 String resolution=issue.getResolution().name();
                 String priority=issue.getPriority().name();
                 String description=issue.getDescription();
-                
+
                 String viewMemento=createViewMemento(issue);
 
                 String issueMemento=createIssueMemento(issue);
                 Geometry bounds=createBounds(issue);
                 Object[] attributes=new Object[getSchema().getAttributeCount()];
                 try{
-                    SimpleFeature feature = SimpleFeatureBuilder.build(getSchema(),attributes, id);
+                    Feature feature = getSchema().create(attributes);
                     feature.setAttribute(mapper.getExtensionId(), extId);
                     if( bounds==null )
                         bounds=toMultiPolygon(DEFAULT_BOUNDS);
                     feature.setAttribute(mapper.getBounds(), bounds);
                     if( groupId==null )
-                        groupId=Messages.IssuesCollectionToFeatureCollection_defaultGroup; 
+                        groupId=Messages.IssuesCollectionToFeatureCollection_defaultGroup;
                     feature.setAttribute(mapper.getGroupId(), groupId);
                     feature.setAttribute(mapper.getId(), id);
                     if( resolution==null )
@@ -122,37 +120,37 @@ public class IssuesCollectionToFeatureCollection extends AdaptorFeatureCollectio
             public void remove() {
                 iter.remove();
             }
-            
+
         };
     }
 
     protected Geometry createBounds( IIssue issue ) {
-        AttributeDescriptor att=mapper.getSchema().getDescriptor(mapper.getBounds());
-        if( MultiPolygon.class.isAssignableFrom(att.getType().getBinding()) )
+        AttributeType att=mapper.getSchema().getAttributeType(mapper.getBounds());
+        if( MultiPolygon.class.isAssignableFrom(att.getType()) )
             return toMultiPolygon(issue.getBounds());
 
         return toPolygon(issue.getBounds());
     }
-    
+
     protected MultiPolygon toMultiPolygon(ReferencedEnvelope env2){
         GeometryFactory factory=new GeometryFactory();
         return factory.createMultiPolygon(new Polygon[]{ toPolygon(env2)} );
     }
-    
+
     protected Polygon toPolygon(ReferencedEnvelope env2){
         ReferencedEnvelope env=env2;
         if( env==null )
             env=new ReferencedEnvelope(-180,180,-90,90,DefaultGeographicCRS.WGS84);
 
-        AttributeDescriptor att=mapper.getSchema().getDescriptor(mapper.getBounds());
+        AttributeType att=mapper.getSchema().getAttributeType(mapper.getBounds());
         CoordinateReferenceSystem crs=null;
-        
-        if( att instanceof GeometryDescriptor )
-            crs=((GeometryDescriptor)att).getCoordinateReferenceSystem();
-        
+
+        if( att instanceof GeometricAttributeType )
+            crs=((GeometricAttributeType)att).getCoordinateSystem();
+
         if( crs==null )
             crs=DefaultGeographicCRS.WGS84;
-        
+
         GeometryFactory factory=new GeometryFactory();
         try{
             env=env.transform(crs, true);
@@ -166,10 +164,10 @@ public class IssuesCollectionToFeatureCollection extends AdaptorFeatureCollectio
                 new Coordinate(env.getMaxX(), env.getMaxY()),
                 new Coordinate(env.getMinX(), env.getMaxY()),
                 new Coordinate(env.getMinX(), env.getMinY()),
-                
+
         }), new LinearRing[0]);
     }
-    
+
 
     protected String createIssueMemento( IIssue issue ) {
         StringWriter out;

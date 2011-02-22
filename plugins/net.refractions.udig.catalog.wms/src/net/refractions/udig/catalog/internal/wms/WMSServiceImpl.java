@@ -13,7 +13,6 @@ import static net.refractions.udig.catalog.internal.wms.Trace.REQUEST;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -33,6 +32,7 @@ import net.refractions.udig.ui.UDIGDisplaySafeLock;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.ows.GetCapabilitiesRequest;
 import org.geotools.data.ows.GetCapabilitiesResponse;
@@ -53,14 +53,15 @@ import org.xml.sax.SAXException;
 
 /**
  * Connect to a WMS.
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
 public class WMSServiceImpl extends IService {
 
     /**
-     * <code>WMS_URL_KEY</code> field Magic param key for Catalog WMS persistence.
+     * <code>WMS_URL_KEY</code> field
+     * Magic param key for Catalog WMS persistence.
      */
     public static final String WMS_URL_KEY = "net.refractions.udig.catalog.internal.wms.WMSServiceImpl.WMS_URL_KEY"; //$NON-NLS-1$
     public static final String WMS_WMS_KEY = "net.refractions.udig.catalog.internal.wms.WMSServiceImpl.WMS_WMS_KEY"; //$NON-NLS-1$
@@ -71,31 +72,32 @@ public class WMSServiceImpl extends IService {
     private URL url;
 
     private volatile WebMapServer wms = null;
-    protected final Lock rLock = new UDIGDisplaySafeLock();
+    private volatile WMSServiceInfo info;
+    protected final Lock rLock=new UDIGDisplaySafeLock();
     private volatile List<IResolve> members;
     private int currentFolderID = 0;
 
     /**
      * Construct <code>WMSServiceImpl</code>.
-     * 
+     *
      * @param url
      * @param params
      */
-    public WMSServiceImpl( URL url, Map<String, Serializable> params ) {
+    public WMSServiceImpl(URL url, Map<String,Serializable> params) {
         this.params = params;
         this.url = url;
-        // System.out.println("WMS "+url);
+//System.out.println("WMS "+url);
         if (params.containsKey(WMS_WMS_KEY)) {
-            Object obj = params.get(WMS_WMS_KEY);
+        	Object obj = params.get(WMS_WMS_KEY);
 
-            if (obj instanceof WebMapServer) {
-                this.wms = (WebMapServer) obj;
-            }
+        	if (obj instanceof WebMapServer) {
+        		this.wms = (WebMapServer) obj;
+        	}
         }
     }
 
     public Status getStatus() {
-        return error != null ? Status.BROKEN : wms == null ? Status.NOTCONNECTED : Status.CONNECTED;
+        return error != null? Status.BROKEN : wms == null? Status.NOTCONNECTED : Status.CONNECTED;
     }
     private static final Lock dsLock = new UDIGDisplaySafeLock();
 
@@ -104,69 +106,65 @@ public class WMSServiceImpl extends IService {
      * <p>
      * Note this method is blocking and throws an IOException to indicate such.
      * </p>
-     * 
      * @param theUserIsWatching
      * @return WebMapServer instance
      * @throws IOException
      */
-    protected WebMapServer getWMS( IProgressMonitor theUserIsWatching ) throws IOException {
+    protected WebMapServer getWMS(IProgressMonitor theUserIsWatching) throws IOException {
         if (wms == null) {
             dsLock.lock();
-            try {
+            try{
                 if (wms == null) {
                     try {
-                        if (theUserIsWatching != null) {
-                            String message = MessageFormat.format(
-                                    Messages.WMSServiceImpl_connecting_to, new Object[]{url});
-                            theUserIsWatching.beginTask(message, 100);
+                        if( theUserIsWatching != null ) {
+                        	String message = MessageFormat.format(Messages.WMSServiceImpl_connecting_to, new Object[] { url });
+                            theUserIsWatching.beginTask(message, 100 );
                         }
                         URL url1 = (URL) getConnectionParams().get(WMS_URL_KEY);
-                        if (theUserIsWatching != null)
-                            theUserIsWatching.worked(5);
-                        wms = new CustomWMS(url1);
-                        if (theUserIsWatching != null)
+                        if( theUserIsWatching != null )
+                            theUserIsWatching.worked( 5 );
+                        wms = new CustomWMS( url1 );
+                        if( theUserIsWatching != null )
                             theUserIsWatching.done();
-                    } catch (IOException persived) {
+                    }
+                    catch( IOException persived){
                         error = persived;
                         throw persived;
-                    } catch (Throwable nak) {
+                    }
+                    catch( Throwable nak ){
 
-                        IOException broken = new IOException(MessageFormat.format(
-                                Messages.WMSServiceImpl_could_not_connect, new Object[]{nak
-                                        .getLocalizedMessage()}));
-                        broken.initCause(nak);
+                        IOException broken = new IOException(
+                                MessageFormat.format(Messages.WMSServiceImpl_could_not_connect,
+                                new Object[] { nak.getLocalizedMessage() }));
+                        broken.initCause( nak );
                         error = broken;
                         throw broken;
                     }
                 }
-            } finally {
+            }finally{
                 dsLock.unlock();
             }
         }
         return wms;
     }
 
-    @Override
-    public WMSServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
-        return (WMSServiceInfo) super.getInfo(monitor);
-    }
-    protected WMSServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        WebMapServer webMapServer = getWMS(monitor);
-        if (webMapServer == null) {
-            return null; // could not connect
+    public IServiceInfo getInfo(IProgressMonitor monitor) throws IOException {
+        if (info == null){
+            getWMS( monitor );
+            rLock.lock();
+            try{
+                if(info == null){
+                	info = new WMSServiceInfo( monitor );
+                }
+            }finally{
+                rLock.unlock();
+            }
         }
-        rLock.lock();
-        try {
-            return new WMSServiceInfo(monitor);
-
-        } finally {
-            rLock.unlock();
-        }
+        return info;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IService#resolve(java.lang.Class,
-     * org.eclipse.core.runtime.IProgressMonitor)
+     * @see net.refractions.udig.catalog.IService#resolve(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
         if (adaptee == null) {
@@ -174,15 +172,15 @@ public class WMSServiceImpl extends IService {
         }
 
         if (adaptee.isAssignableFrom(IServiceInfo.class)) {
-            return adaptee.cast(createInfo(monitor));
+            return adaptee.cast( getInfo(monitor));
         }
 
         if (adaptee.isAssignableFrom(List.class)) {
-            return adaptee.cast(members(monitor));
+            return adaptee.cast( members(monitor));
         }
 
         if (adaptee.isAssignableFrom(WebMapServer.class)) {
-            return adaptee.cast(getWMS(monitor));
+            return adaptee.cast( getWMS( monitor ));
         }
 
         return super.resolve(adaptee, monitor);
@@ -191,7 +189,7 @@ public class WMSServiceImpl extends IService {
     /**
      * @see net.refractions.udig.catalog.IService#getConnectionParams()
      */
-    public Map<String, Serializable> getConnectionParams() {
+    public Map<String,Serializable> getConnectionParams() {
         return params;
     }
 
@@ -205,7 +203,7 @@ public class WMSServiceImpl extends IService {
         return adaptee.isAssignableFrom(WebMapServer.class) || super.canResolve(adaptee);
     }
     public void dispose( IProgressMonitor monitor ) {
-        if (members == null)
+        if( members==null)
             return;
 
         int steps = (int) ((double) 99 / (double) members.size());
@@ -243,33 +241,34 @@ public class WMSServiceImpl extends IService {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public List<IResolve> members( IProgressMonitor monitor ) throws IOException {
 
-        if (members == null) {
-            getWMS(monitor);
+        if(members == null){
+            getWMS( monitor );
             rLock.lock();
-            try {
-                if (members == null) {
-                    getWMS(monitor); // load ds
+            try{
+                if(members == null){
+                    getWMS( monitor ); // load ds
                     members = new LinkedList<IResolve>();
-                    List<Layer> layers = getWMS(monitor).getCapabilities().getLayerList();
+                    List<Layer> layers = getWMS( monitor ).getCapabilities().getLayerList();
                     /*
-                     * Retrieved no layers from the WMS - something is wrong, either the WMS doesn't
-                     * work, or it has no named layers.
+                     * Retrieved no layers from the WMS - something is wrong,
+                     * either the WMS doesn't work, or it has no named layers.
                      */
                     if (layers != null) {
                         for( Layer layer : layers ) {
-                            if (layer.getParent() == null) {
-                                if (layer.getName() == null) {
-                                    members.add(new WMSFolder(this, null, layer));
-                                } else {
-                                    members.add(new WMSGeoResourceImpl(this, null, layer));
+                            if( layer.getParent()==null){
+                                if( layer.getName()==null ){
+                                    members.add(new WMSFolder(this,null, layer));
+                                }else{
+                                    members.add(new WMSGeoResourceImpl(this,null, layer));
                                 }
                             }
                         }
                     }
                 }
-            } finally {
+            }finally{
                 rLock.unlock();
             }
         }
@@ -291,16 +290,17 @@ public class WMSServiceImpl extends IService {
     }
 
     class WMSServiceInfo extends IServiceInfo {
-        WMSServiceInfo( IProgressMonitor monitor ) {
+        WMSServiceInfo( IProgressMonitor monitor) {
             try {
-                caps = getWMS(monitor).getCapabilities();
+                caps = getWMS( monitor ).getCapabilities();
             } catch (Throwable t) {
                 t.printStackTrace();
                 caps = null;
             }
 
-            keywords = caps == null ? null : caps.getService() == null ? null : caps.getService()
-                    .getKeywordList();
+
+            keywords = caps == null ? null : caps.getService() == null ? null : caps
+                    .getService().getKeywordList();
 
             String[] t;
             if (keywords == null) {
@@ -312,16 +312,20 @@ public class WMSServiceImpl extends IService {
             t[0] = "WMS"; //$NON-NLS-1$
             t[1] = getIdentifier().toString();
             keywords = t;
-            icon = AbstractUIPlugin.imageDescriptorFromPlugin(WmsPlugin.ID,
-                    "icons/obj16/wms_obj.gif"); //$NON-NLS-1$
         }
         private WMSCapabilities caps = null;
 
         public String getAbstract() {
-            return caps == null ? null : caps.getService() == null ? null : caps.getService()
-                    .get_abstract();
+            return caps == null ? null : caps.getService() == null ? null : caps
+                    .getService().get_abstract();
         }
-
+        /*
+         * @see net.refractions.udig.catalog.IServiceInfo#getIcon()
+         */
+        public ImageDescriptor getIcon() {
+            //return CatalogUIPlugin.getDefault().getImages().getImageDescriptor( ISharedImages.WMS_OBJ );
+            return AbstractUIPlugin.imageDescriptorFromPlugin( WmsPlugin.ID, "icons/obj16/wms_obj.gif" ); //$NON-NLS-1$
+        }
         public String getDescription() {
             return getIdentifier().toString();
         }
@@ -330,13 +334,8 @@ public class WMSServiceImpl extends IService {
             return WMSSchema.NAMESPACE;
         }
 
-        public URI getSource() {
-            try {
-                return getIdentifier().toURI();
-            } catch (URISyntaxException e) {
-                // This would be bad
-                throw (RuntimeException) new RuntimeException().initCause(e);
-            }
+        public URL getSource() {
+            return getIdentifier();
         }
 
         public String getTitle() {
@@ -346,51 +345,45 @@ public class WMSServiceImpl extends IService {
         }
     }
 
-    /**
-     * Custom WebMapServer hooked up to tracing events.
-     */
-    public static class CustomWMS extends WebMapServer {
-        /**
-         * @throws SAXException
-         * @throws ServiceException
-         * @param serverURL
-         * @throws IOException
-         */
-        public CustomWMS( URL serverURL ) throws IOException, ServiceException, SAXException {
-            super(serverURL);
-            if (WmsPlugin.isDebugging(REQUEST)) {
-                System.out.println("Connection to WMS located at: " + serverURL); //$NON-NLS-1$
-            }
+	public static class CustomWMS extends WebMapServer {
+
+		/**
+		 * @throws SAXException
+		 * @throws ServiceException
+		 * @param serverURL
+		 * @throws IOException
+		 */
+		public CustomWMS(URL serverURL) throws IOException, ServiceException, SAXException {
+			super(serverURL);
+            if( WmsPlugin.isDebugging( REQUEST ) )
+                    System.out.println("Connection to WMS located at: "+serverURL); //$NON-NLS-1$
             if (getCapabilities() == null) {
                 throw new IOException("Unable to parse capabilities document."); //$NON-NLS-1$
             }
-        }
+		}
 
-        public GetCapabilitiesResponse issueRequest( GetCapabilitiesRequest arg0 )
-                throws IOException, ServiceException {
-            WmsPlugin.trace("GetCapabilities: " + arg0.getFinalURL(), null); //$NON-NLS-1$
+		public GetCapabilitiesResponse issueRequest( GetCapabilitiesRequest arg0 ) throws IOException, ServiceException {
+			WmsPlugin.log("GetCapabilities: "+arg0.getFinalURL(), null); //$NON-NLS-1$
             return super.issueRequest(arg0);
         }
 
-        public GetFeatureInfoResponse issueRequest( GetFeatureInfoRequest arg0 )
-                throws IOException, ServiceException {
-            WmsPlugin.trace("GetFeatureInfo: " + arg0.getFinalURL(), null); //$NON-NLS-1$
+        public GetFeatureInfoResponse issueRequest( GetFeatureInfoRequest arg0 ) throws IOException, ServiceException {
+        	WmsPlugin.log("GetFeatureInfo: "+arg0.getFinalURL(), null); //$NON-NLS-1$
             return super.issueRequest(arg0);
         }
 
-        public GetMapResponse issueRequest( GetMapRequest arg0 ) throws IOException,
-                ServiceException {
-            WmsPlugin.log("GetMap: " + arg0.getFinalURL(), null); //$NON-NLS-1$
+        public GetMapResponse issueRequest( GetMapRequest arg0 ) throws IOException, ServiceException {
+        	WmsPlugin.log("GetMap: "+arg0.getFinalURL(), null); //$NON-NLS-1$
             return super.issueRequest(arg0);
         }
 
         protected void setupSpecifications() {
-            specs = new Specification[3];
-            specs[0] = new WMS1_0_0();
-            specs[1] = new WMS1_1_0();
-            specs[2] = new WMS1_1_1();
-        }
-    }
+	        specs = new Specification[3];
+	        specs[0] = new WMS1_0_0();
+	        specs[1] = new WMS1_1_0();
+	        specs[2] = new WMS1_1_1();
+		}
+	}
 
     public int nextFolderID() {
         return currentFolderID++;

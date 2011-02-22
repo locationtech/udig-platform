@@ -18,14 +18,14 @@ import java.lang.reflect.Constructor;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 
 /**
  * Returns a unique {@link WorkflowWizardPage} for each state.  Uses the class passed to the constructor
  * as a template.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -35,13 +35,13 @@ public class ReflectionWorkflowWizardPageProvider implements WorkflowWizardPageP
     private final Constructor< ? extends WorkflowWizardPage> constructor;
 
     /**
-     * 
+     *
      * @param template
      */
     public ReflectionWorkflowWizardPageProvider( Class< ? extends WorkflowWizardPage> template ) {
         try {
             this.constructor = template.getConstructor();
-            
+
             // make sure that the contructor works.
             constructor.newInstance();
         } catch (Exception e) {

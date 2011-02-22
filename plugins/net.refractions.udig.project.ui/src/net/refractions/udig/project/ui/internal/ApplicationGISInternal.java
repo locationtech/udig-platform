@@ -35,11 +35,11 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 /**
  * Allows access to the internal types such as Map.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -50,7 +50,7 @@ public class ApplicationGISInternal {
     }
     /**
      * May return null of no project is active.
-     * 
+     *
      * @return The current active project, or null if no such project exists.
      */
     public static Project getActiveProject() {
@@ -59,7 +59,7 @@ public class ApplicationGISInternal {
 
     /**
      * Return all Projects. The list is unmodifiable.
-     * 
+     *
      * @return all Projects.
      */
     public static List< ? extends Project> getProjects() {
@@ -69,7 +69,7 @@ public class ApplicationGISInternal {
 
     /**
      * May return null if the active editor is not a Map Editor.
-     * 
+     *
      * @return the map contained by the current MapEditor or null if the active editor is not a map
      *         editor.
      */
@@ -80,7 +80,7 @@ public class ApplicationGISInternal {
 
     /**
      * Returns all open maps. May return null if no Map Editors exist.
-     * 
+     *
      * @return a list of maps contained or null if no Map Editors exist.
      */
     @SuppressWarnings("unchecked")
@@ -90,10 +90,10 @@ public class ApplicationGISInternal {
 
     /**
      * Return a feature editor for the provided feature
-     * 
+     *
      * @return a feature editor for the provided feature
      */
-    public static FeatureEditorLoader getFeatureEditorLoader( SimpleFeature feature ) {
+    public static FeatureEditorLoader getFeatureEditorLoader( Feature feature ) {
         if (feature == null)
             return null;
         return ProjectUIPlugin.getDefault().getFeatureEditProcessor().getClosestMatch(

@@ -1,32 +1,59 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Version: 2.1.7
-Export-Package: 
- com.lowagie.text,
- com.lowagie.text.exceptions,
- com.lowagie.text.factories,
- com.lowagie.text.html,
- com.lowagie.text.html.simpleparser,
- com.lowagie.text.pdf,
- com.lowagie.text.pdf.codec,
- com.lowagie.text.pdf.codec.wmf,
- com.lowagie.text.pdf.collection,
- com.lowagie.text.pdf.crypto,
- com.lowagie.text.pdf.draw,
- com.lowagie.text.pdf.events,
- com.lowagie.text.pdf.fonts.cmaps,
- com.lowagie.text.pdf.hyphenation,
- com.lowagie.text.pdf.interfaces,
- com.lowagie.text.pdf.internal,
- com.lowagie.text.pdf.parser,
- com.lowagie.text.xml,
- com.lowagie.text.xml.simpleparser,
- com.lowagie.text.xml.xmp,
- com.lowagie.tools
+Bundle-Version: 1.1.2
+Export-Package: com.lowagie.bc.asn1,com.lowagie.text,com.lowagie.text.
+ html,com.lowagie.text.html.simpleparser,com.lowagie.text.markup,com.l
+ owagie.text.pdf,com.lowagie.text.pdf.codec,com.lowagie.text.pdf.codec
+ .wmf,com.lowagie.text.pdf.crypto,com.lowagie.text.pdf.events,com.lowa
+ gie.text.pdf.fonts,com.lowagie.text.pdf.hyphenation,com.lowagie.text.
+ rtf,com.lowagie.text.rtf.direct,com.lowagie.text.rtf.document,com.low
+ agie.text.rtf.document.output,com.lowagie.text.rtf.field,com.lowagie.
+ text.rtf.graphic,com.lowagie.text.rtf.headerfooter,com.lowagie.text.r
+ tf.list,com.lowagie.text.rtf.style,com.lowagie.text.rtf.table,com.low
+ agie.text.rtf.text,com.lowagie.text.xml,com.lowagie.text.xml.xmp,com.
+ lowagie.tools
 Bundle-SymbolicName: com.lowagie.itext
 Bundle-Name: Lowagie Itext
-Bundle-RequiredExecutionEnvironment: J2SE-1.4
-Bundle-Vendor: itext.lowagie.com
-Bundle-ClassPath: lib/iText-2.1.7.jar,
- lib/itextasian-1.5.2.jar
+Bundle-Localization: plugin
+Bundle-Vendor: Eclipse.org
+Bundle-ClassPath: lib/itext-1.5.2.jar,lib/itextasian-1.5.2.jar
+
+Name: about_files/NOTICE-xerces.txt
+SHA1-Digest: rg63D4ZieDMyEchu20aOfye4/mo=
+
+Name: about.properties
+SHA1-Digest: pXc7jhgQLl0+LD+iGuzQjQdPW54=
+
+Name: lib/itextasian-1.5.2.jar
+SHA1-Digest: iLKtYw2WfqiahZ3yoU9ciQmLTEw=
+
+Name: about.html
+SHA1-Digest: 42IkGGzBg7RTcgV7xXRs0u5FmSI=
+
+Name: about_files/LICENSE-asl-20.txt
+SHA1-Digest: K4uBUimqimHkg/tLoFiLi2xJGJA=
+
+Name: about_files/MPL-1.1.txt
+SHA1-Digest: q6jXbQr2fVfaPDwyHKpZ89JCOGs=
+
+Name: lib/itext-1.5.2.jar
+SHA1-Digest: ktih2FVqO3MUhcZqH+ODBWHg9JA=
+
+Name: about.mappings
+SHA1-Digest: Ms3cI30FpYZo5xzggwXQO6q9IdQ=
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: 09gN05tobgS/MdtqyTNQhOhB73M=
+
+Name: about.ini
+SHA1-Digest: 2w8BfdBzQbbWHJNbazxzu9YMYwo=
+
+Name: about_files/bouncycastle_license.txt
+SHA1-Digest: c2+FXGr4NqQecSfu0fWsHRAHfmg=
+
+Name: eclipse32.png
+SHA1-Digest: eCk/A3/COXL3S6qAVDOSrlsqmLw=
+
+Name: about_files/NOTICE-commons-lang.txt
+SHA1-Digest: yxqsyHYuXWcGuS5lTBUlpd4qNQw=
 

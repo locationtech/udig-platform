@@ -27,7 +27,7 @@ public class EditToolHandlerTest extends TestCase {
         }
 
     };
-    
+
     /*
      * Test method for 'net.refractions.udig.tools.edit.latest.EditToolHandler.setActive(boolean)'
      */
@@ -215,7 +215,7 @@ public class EditToolHandlerTest extends TestCase {
         assertFalse(handler.isLockOwner(object));
 
         handler.lock(locker);
-        
+
         locked[0]=true;
         assertTrue(handler.isLocked());
         assertTrue(handler.isLockOwner(locker));
@@ -272,7 +272,7 @@ public class EditToolHandlerTest extends TestCase {
 
                 public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
                 }
-                
+
             });
             fail("Null is not a legal key"); //$NON-NLS-1$
         }catch (Exception e) {

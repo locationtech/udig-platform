@@ -1,0 +1,101 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 4 Edit Tool Tutorial</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 4 Edit Tool Tutorial -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="4EditToolTutorial-UNDERCONSTRUCTION"><b>UNDER CONSTRUCTION</b></a></h1>
+<h1><a name="4EditToolTutorial-CreatingaCustomEditTool">Creating a Custom Edit Tool  </a></h1>
+
+<h3><a name="4EditToolTutorial-OverviewofTutorial">Overview of Tutorial</a></h3>
+
+<p>This tutorial demonstrates how to make a simple custom edit tool.  The tool will select features and change the geometry of the feature into a star.</p>
+
+<h3><a name="4EditToolTutorial-Requirementsfortutorial">Requirements for tutorial</a></h3>
+<p>Installed eclipse and uDig SDK 1.1 - <a href="0 SDK Quickstart.html" title="0 SDK Quickstart">SDK Quickstart</a><br/>
+Completion of the Plugin tutorial - <a href="3 Plugin Tutorial.html" title="3 Plugin Tutorial">3 Plugin Tutorial</a></p>
+
+<h3><a name="4EditToolTutorial-WhatisaEditTool%3F">What is a Edit Tool?</a></h3>
+<p>Edit tools are another sub-type of tools, however they do not (yet) have their own extension point.  Instead they are extensions of the net.refractions.udig.project.ui.tool extension point.  Because there are a large number of editing tools that can be created an many of them have similar functionality there is a little framework associated with edit tools development.  The design and more detailed discussion of the edit tool framework can be found at <a href="Edit Tools.html" title="Edit Tools">Edit Tools</a></p>
+
+<h3><a name="4EditToolTutorial-Tutorial">Tutorial</a></h3>
+<p>1. Create a new Plugin called: <b>net.refractions.udig.tutorials.tool.star</b><br/>
+2. Configure your new created plugin</p>
+<ol>
+	<li>Open the Plug-in Development perspective.</li>
+	<li>In the Package Explorer navigate to the plug-in created in the previous section. Open the plug-in manifest by navigating to the META-INF/MANIFEST.MF file under the root of the feature editor plug-in. Double click on the file to open the plug-in manifest editor.</li>
+	<li>Open the plug-in dependencies by clicking on the Dependencies tab located at the bottom of the editor area.</li>
+	<li>Click the Addâ?¦ button in the Required plugins column and add the following plugin:</li>
+</ol>
+<ul>
+	<li>net.refractions.udig.project.ui,</li>
+	<li>net.refractions.udig.ui</li>
+</ul>
+<ol>
+	<li>At this point it is critical that you <b>Save</b> your work as the dependencies need to propagate into the project.</li>
+</ol>
+
+
+<p>Import Resources Into Project</p>
+
+<p>Define a New Extension</p>
+
+<ol>
+	<li>Open the extensions page by clicking on the <b>Extensions</b> tab</li>
+	<li>Click the Addâ?¦ button</li>
+	<li>Select the <b>net.refractions.udig.project.ui.tool</b> extension point from the list.</li>
+	<li>Click the <b>Finish</b> button.</li>
+	<li>Enter the following Extention Details:
+	<ul>
+		<li>ID: <em>net.refractions.udig.tutorials.tool.star</em></li>
+		<li>Name: <em>Star Geometry Tool Example</em></li>
+	</ul>
+	</li>
+</ol>
+
+
+
+<p>Create a New Tool</p>
+
+<ol>
+	<li>Right click on newly added extension, <b>net.refractions.udig.project.ui.tool</b>, and select <b>New &gt; modalTool</b></li>
+	<li>Replace the default data in the id field with <b>net.refractions.udig.tutorials.tool.star</b>.</li>
+	<li>Enter a tool tip message into the tooltip field: <b>Changes Geometry to Star</b></li>
+	<li>Enter <b>net.refractions.udig.tutorials.tool.move.StarTool</b> into the class field.</li>
+	<li>Enter <b>icons/etool16/</b> into the icon field. <br clear="all" /> (Or press the Browse button and locate the icon)</li>
+	<li>Enter <b>Move</b> into the name field.</li>
+	<li>Set onToolbar to <b>true</b>.</li>
+	<li>Enter <b>net.refractions.udig.tool.edit.create</b> into the categoryId field.  This ensures that the tool will be created in the create Tool category.</li>
+</ol>
+
+
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=7889">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=7889">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

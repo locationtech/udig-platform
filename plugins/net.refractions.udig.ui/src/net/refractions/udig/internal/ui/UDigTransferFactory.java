@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.internal.ui;
 
@@ -9,38 +9,22 @@ import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.HTMLTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.dnd.URLTransfer;
 
 /**
- * Registers Transfer instances we are interested in processing.
- * <p>
- * The set of transfers contributed by this instance is:
- * <ul>
- * <li>URLTransfer - used to accept URL instances from a browser</li>
- * <li>UDigByteAndLocalTransfer - used to throw objects around</li>
- * <li>FeatureTextTransfer</li>
- * <li>GeometryTextTransfer</li>
- * <li>FilterTextTransfer</li>
- * <li>TextTransfer</li>
- * <li>FileTransfer</li>
- * <li>HTMLTransfer</li>
- * </ui>
+ * Creates the transferObjects used by
+ *
  * @author jones
+ *
  */
 public class UDigTransferFactory implements TransferFactory {
 
-    /**
-     * @see net.refractions.udig.ui.TransferFactory#getTransfers()
-     */
-    public Transfer[] getTransfers() {
-        return new Transfer[]{
-                URLTransfer.getInstance(),
-                UDigByteAndLocalTransfer.getInstance(),
-                FeatureTextTransfer.getInstance(),
-                GeometryTextTransfer.getInstance(),
+	/**
+	 * @see net.refractions.udig.ui.TransferFactory#getTransfers()
+	 */
+	public Transfer[] getTransfers() {
+	    return new Transfer[] { UDigByteAndLocalTransfer.getInstance(),
+                FeatureTextTransfer.getInstance(), GeometryTextTransfer.getInstance(),
                 FilterTextTransfer.getInstance(),
-                TextTransfer.getInstance(),
-                FileTransfer.getInstance(),
-                HTMLTransfer.getInstance()};
-    }
+				TextTransfer.getInstance(), FileTransfer.getInstance(), HTMLTransfer.getInstance() };
+	}
 }

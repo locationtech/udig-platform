@@ -1,8 +1,9 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.issues.internal.view;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import net.refractions.udig.issues.IIssue;
@@ -18,7 +19,7 @@ import org.eclipse.jface.viewers.Viewer;
 public class IssuesContentProvider implements IIssuesContentProvider {
 	private boolean showGroup=false;
 	private IIssuesList list;
-	
+
 	/**
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(java.lang.Object)
 	 */
@@ -41,7 +42,7 @@ public class IssuesContentProvider implements IIssuesContentProvider {
 				return list.getIssues(null).toArray();
 			}
 			return list.getIssues(groupId).toArray();
-			
+
 		}
 		return null;
 	}
@@ -108,5 +109,5 @@ public class IssuesContentProvider implements IIssuesContentProvider {
     public String getExtensionID() {
         return ""; //$NON-NLS-1$
     }
-	
+
 }

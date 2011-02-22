@@ -8,11 +8,11 @@ Toolbar
     Toolbar icons are found on the main toolbar across the top of the
 workbench. These icons invoke an command, either globally or within the editor.
 
-Toolbar Wizard 
+Toolbar Wizard
 --------------
     Toolbar wizard icons are found on the main toolbar across the top of the
 workbench. They are easily recognized by their wand and sparkle. Selecting one
-of these icons will launch a wizard. 
+of these icons will launch a wizard.
 
 Toolbar Icon Size & Placement
 -----------------------------

@@ -27,21 +27,21 @@
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -121,7 +121,7 @@
          <attribute name="defaultAction" type="string">
             <annotation>
                <documentation>
-                  The id of the &quot;Default&quot; action.  In practice this is the action that will be executed on a double click.  
+                  The id of the &quot;Default&quot; action.  In practice this is the action that will be executed on a double click.
 &lt;br&gt;&lt;br&gt;
 &lt;i&gt;IMPORTANT:&lt;/i&gt; The id defined in the extension&apos;s id field must be specified AND the id of the plugin it is defined int.
 &lt;br&gt;
@@ -204,7 +204,7 @@ See the net.refractions.udig.editAction extension point. It is the id of the edi
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
@@ -252,7 +252,7 @@ See the net.refractions.udig.editAction extension point. It is the id of the edi
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         
+
       </documentation>
    </annotation>
 

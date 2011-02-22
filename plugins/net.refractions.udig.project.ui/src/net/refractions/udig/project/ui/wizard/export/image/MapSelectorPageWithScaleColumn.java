@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.ui.wizard.export.image;
 
@@ -39,11 +39,11 @@ import org.eclipse.swt.widgets.TableItem;
 
 /**
  * Adds a column where the user can set the scale at which to export the map
- * 
+ *
  * @author Jesse
  */
 public class MapSelectorPageWithScaleColumn extends MapSelectorPage {
-    
+
     private static final String SCALE = "EXPORT_SCALE"; //$NON-NLS-1$
 
     public MapSelectorPageWithScaleColumn( String page, String title, ImageDescriptor banner ) {
@@ -60,18 +60,18 @@ public class MapSelectorPageWithScaleColumn extends MapSelectorPage {
         gridData.verticalAlignment = SWT.BOTTOM;
         gridData.horizontalAlignment = SWT.FILL;
         scale.setLayoutData(gridData);
-        
+
         scale.addListener(SWT.Selection, new Listener(){
             public void handleEvent( Event event ) {
                 Collection<IMap> maps = getMaps();
                 for( IMap map : maps ) {
                     map.getBlackboard().put(SCALE, null);
                 }
-                viewer.update(maps.toArray(), new String[]{SCALE});                
-            }            
+                viewer.update(maps.toArray(), new String[]{SCALE});
+            }
         });
     }
-    
+
     @Override
     protected void createColumns( Table table, TableLayout tableLayout ) {
         super.createColumns(table, tableLayout);
@@ -107,12 +107,12 @@ public class MapSelectorPageWithScaleColumn extends MapSelectorPage {
             }
                 return null;
             }
-            
+
         };
         textCellEditor.setValidator(validator );
         viewer2.setCellEditors(new CellEditor[] { null, textCellEditor });
         final String scaleColumn = "scaleColumn"; //$NON-NLS-1$
-        
+
         viewer2.setCellModifier(new ICellModifier() {
 
             public boolean canModify(Object element, String property) {
@@ -133,28 +133,28 @@ public class MapSelectorPageWithScaleColumn extends MapSelectorPage {
                         setErrorMessage(message);
                     }
                     map.getBlackboard().putInteger(SCALE, parseInt);
-                    viewer2.update(map, new String[]{SCALE});                
+                    viewer2.update(map, new String[]{SCALE});
                     setErrorMessage(null);
                 }catch (NumberFormatException e) {
                     setErrorMessage(message);
                     return ;
                 }
             }
-            
+
         });
-        
+
         viewer2.setColumnProperties(new String[] {"1",scaleColumn}); //$NON-NLS-1$
         ColumnViewerEditorActivationStrategy editorActivationStrategy = new ColumnViewerEditorActivationStrategy(viewer2);
         TableViewerEditor.create(viewer2, editorActivationStrategy, ColumnViewerEditor.TABBING_VERTICAL);
     }
-    
+
     @Override
     protected IBaseLabelProvider createLabelProvider(StructuredViewer viewer) {
         return new TableLabelProvider(new AdapterFactoryLabelProviderDecorator(ProjectExplorer.getProjectExplorer()
                 .getAdapterFactory(), viewer));
     }
-    
-    public static int getScaleDenom( IMap map ) {
+
+    static int getScaleDenom( IMap map ) {
         Object scaleObject = map.getBlackboard().get(SCALE);
         int scale;
         if( scaleObject == null ){
@@ -164,13 +164,13 @@ public class MapSelectorPageWithScaleColumn extends MapSelectorPage {
         }
         return scale;
     }
-    
-    
+
+
     private static class TableLabelProvider extends LabelProvider implements ITableLabelProvider{
 
         private final AdapterFactoryLabelProviderDecorator wrapped;
-        
-        
+
+
         public TableLabelProvider( AdapterFactoryLabelProviderDecorator wrapped ) {
             this.wrapped = wrapped;
         }
@@ -190,10 +190,10 @@ public class MapSelectorPageWithScaleColumn extends MapSelectorPage {
             int scale = getScaleDenom(map);
             if( scale==-1 ){
                 return Messages.MapSelectorPageWithScaleColumn_defaultScale;
-            } 
+            }
             return "1:"+scale; //$NON-NLS-1$
         }
-        
+
         @Override
         public boolean isLabelProperty( Object element, String property ) {
             return property.equals(SCALE);
@@ -203,6 +203,6 @@ public class MapSelectorPageWithScaleColumn extends MapSelectorPage {
         public void dispose() {
             wrapped.dispose();
         }
-        
+
     }
 }

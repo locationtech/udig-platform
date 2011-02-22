@@ -29,7 +29,7 @@ import net.refractions.udig.tools.edit.support.SnapBehaviour;
 
 /**
  * Shows the snap area around the cursor if snapping is on.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -42,9 +42,9 @@ public class DrawCreateVertexSnapAreaBehaviour implements EventBehaviour {
         public Point get(Object... params) {
             return Point.valueOf(e.x, e.y);
         }
-        
+
     }
-    
+
     public UndoableMapCommand getCommand( EditToolHandler handler, final MapMouseEvent e,
             EventType eventType ) {
         provider.e=e;

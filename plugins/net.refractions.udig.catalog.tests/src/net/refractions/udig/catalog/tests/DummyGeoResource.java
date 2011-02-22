@@ -6,15 +6,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IService;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 
 import com.vividsolutions.jts.geom.Envelope;
+
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.IGeoResourceInfo;
+import net.refractions.udig.catalog.IService;
 /**
  *  Simple IGeoResource for testing purposes.
  * <p>
@@ -28,14 +28,13 @@ public class DummyGeoResource extends IGeoResource {
 
 	IService parent;
 	String name;
-    
-	
+
+
 	public DummyGeoResource(IService parent, String name) {
-	    this.service = parent;
 		this.parent = parent;
 		this.name = name;
 	}
-    public List<Object> resolveTos=new ArrayList<Object>(); 
+    public List<Object> resolveTos=new ArrayList<Object>();
     /**
      * Add an obect that this resource will resolve to.
      *
@@ -60,19 +59,24 @@ public class DummyGeoResource extends IGeoResource {
 //           if( IService.class.isAssignableFrom(adaptee) )
 //                return adaptee.cast(parent);
            if( IGeoResourceInfo.class.isAssignableFrom(adaptee) )
-               return adaptee.cast(createInfo(monitor));
+               return adaptee.cast(getInfo(monitor));
            if( List.class.isAssignableFrom(adaptee) )
                return adaptee.cast(resolveTos);
-               
+
 		return super.resolve(adaptee, monitor);
 	}
-    public <T> boolean canResolve(Class<T> adaptee) {
+    @Override
+    public IService service( IProgressMonitor monitor ) throws IOException {
+        return parent;
+    }
+
+	public <T> boolean canResolve(Class<T> adaptee) {
         for( Object resolveObject : resolveTos ) {
             if( adaptee.isAssignableFrom(resolveObject.getClass()))
                 return true;
         }
 
-		return adaptee.isAssignableFrom(IService.class) || 
+		return adaptee.isAssignableFrom(IService.class) ||
 			adaptee.isAssignableFrom(IGeoResourceInfo.class)||
             adaptee.isAssignableFrom(List.class) ||
 			super.canResolve(adaptee);
@@ -92,21 +96,21 @@ public class DummyGeoResource extends IGeoResource {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
+
 	@Override
-	protected IGeoResourceInfo createInfo(IProgressMonitor monitor) throws IOException {
+	public IGeoResourceInfo getInfo(IProgressMonitor monitor) throws IOException {
 		return new DummyGeoResourceInfo();
 	}
-	
+
 	public class DummyGeoResourceInfo extends IGeoResourceInfo {
 		@Override
 		public String getName() {
 			return DummyGeoResource.this.getIdentifier().toExternalForm();
 		}
-		
+
 		@Override
 		public String getTitle() {
 			return DummyGeoResource.this.getIdentifier().toExternalForm();

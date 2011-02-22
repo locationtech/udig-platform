@@ -18,12 +18,12 @@ import org.geotools.styling.Symbolizer;
 
 /**
  * Seems to be a mess of defaults?
- * 
+ *
  * @author jgarnett
  * @since 0.6.0
  */
 public class SymbolizerContent {
-    //   
+    //
     /** <code>ID</code> field */
     public static final String ID = "net.refractions.udig.style.sld.symbolizer"; //$NON-NLS-1$
 
@@ -90,7 +90,7 @@ public class SymbolizerContent {
     }
     /**
      * Can we save this symbolizer?
-     * 
+     *
      * @param sym
      * @return true if this TYPE manages the provided symbolizer
      */
@@ -103,7 +103,7 @@ public class SymbolizerContent {
      * <p>
      * This delegates the actual saving to various content managers like SldPolygonContentManager.
      * </p>
-     * 
+     *
      * @param momento
      * @param sym
      */
@@ -115,7 +115,7 @@ public class SymbolizerContent {
      * <p>
      * This delegates the actual load to various content managers like SldPolygonContentManager.
      * </p>
-     * 
+     *
      * @param momento
      * @return Symbolizer
      */
@@ -125,7 +125,7 @@ public class SymbolizerContent {
 
     /**
      * Create the default Style (w/ Symbolizer for this thing)
-     * 
+     *
      * @return a style with some defaults set
      */
     public Style defaultStyle() {

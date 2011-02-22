@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.TreeItem;
 
 /**
  * CellModifier to allow editting the issues in the issues list.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -57,9 +57,9 @@ public class IssuesCellModifier implements ICellModifier {
 
     public void modify( Object element, String property, Object value ) {
     	TreeItem item = (TreeItem) element;
-    	if ( !(item.getData() instanceof IIssue) ) return ; 
-			
-		
+    	if ( !(item.getData() instanceof IIssue) ) return ;
+
+
         IIssue issue = (IIssue) item.getData();
         switch( Integer.parseInt(property) ) {
         case IssuesView.RESOLUTION_COLUMN:

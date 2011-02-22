@@ -20,7 +20,7 @@ import org.eclipse.swt.dnd.DropTargetListener;
 
 /**
  * The interface for uDig drop target listeners.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

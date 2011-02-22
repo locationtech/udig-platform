@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: BlackboardEntryImpl.java 16525 2005-10-27 01:38:05Z jeichar $
  */
 package net.refractions.udig.project.internal.impl;
 
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * TODO Purpose of net.refractions.udig.project.internal.impl
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -54,7 +54,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
     /**
      * The default value of the '{@link #getMemento() <em>Memento</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMemento()
      * @generated
      * @ordered
@@ -64,7 +64,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
     /**
      * The cached value of the '{@link #getMemento() <em>Memento</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMemento()
      * @generated
      * @ordered
@@ -74,7 +74,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
     /**
      * The default value of the '{@link #getObjectClass() <em>Object Class</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getObjectClass()
      * @generated
      * @ordered
@@ -84,7 +84,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
     /**
      * The default value of the '{@link #getObject() <em>Object</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getObject()
      * @generated
      * @ordered
@@ -155,7 +155,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="objectClass"
      * @generated NOT
      */
@@ -165,7 +165,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="objectClass"
      * @generated NOT
      */
@@ -175,7 +175,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Object getObject() {
@@ -184,7 +184,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void setObject( Object newObject ) {

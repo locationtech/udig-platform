@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.catalog.internal.db2.ui;
 
@@ -14,8 +14,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 /**
- * Preference page for DB2; allows people to install the correct drivers.
- * 
  * @author jones
  */
 public class DB2Preferences extends AbstractProprietaryJarPreferencePage
@@ -39,7 +37,7 @@ public class DB2Preferences extends AbstractProprietaryJarPreferencePage
     public DB2Preferences( String file, ImageDescriptor desc ) {
         super(file, desc);
     }
-   
+
     public static boolean isInstalled() {
         return DB2ServiceExtension.getFactory().isAvailable();
     }

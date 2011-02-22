@@ -53,7 +53,7 @@ public abstract class AbstractGeoResourceTest extends AbstractResolveTest {
         if (!isLeaf())
             assertTrue("May not have null info", info != null); //$NON-NLS-1$
     }
-    
+
     public void testGetId(){
         long start = System.currentTimeMillis();
     	assertNotNull( getResolve().getIdentifier() );

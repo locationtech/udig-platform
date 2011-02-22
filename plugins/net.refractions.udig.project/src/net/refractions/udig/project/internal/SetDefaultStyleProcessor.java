@@ -39,7 +39,7 @@ public final class SetDefaultStyleProcessor implements ExtensionPointProcessor {
             theLayer.getStyleBlackboard().put(styleContent.getId(), style);
         }
     }
-    
+
     public void run(){
         ExtensionPointUtil.process(ProjectPlugin.getPlugin(), StyleContent.XPID, this);
     }

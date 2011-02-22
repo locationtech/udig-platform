@@ -134,7 +134,7 @@ public class SelectionBoxBehaviourTest extends TestCase {
      */
     public void testGetCommand() {
         handler.getBehaviours().add( new SelectVerticesWithBoxBehaviour() );
-        
+
         handler.setCurrentShape(shell);
 
         // should selct 1 point
@@ -145,11 +145,11 @@ public class SelectionBoxBehaviourTest extends TestCase {
         event = new MapMouseEvent(null, 11, 11, MapMouseEvent.NONE, MapMouseEvent.NONE,
                 MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         assertEquals(1, handler.getEditBlackboard().getSelection().size());
         assertEquals(Point.valueOf(0,10), handler.getEditBlackboard().getSelection().iterator().next());
 
-        // should replace old selection of (0,10) with 20,20 
+        // should replace old selection of (0,10) with 20,20
         handler.getMouseTracker().setDragStarted(Point.valueOf(30,30));
         event = new MapMouseEvent(null, 19, 19, MapMouseEvent.NONE, MapMouseEvent.BUTTON1,
                 MapMouseEvent.BUTTON1);
@@ -157,11 +157,11 @@ public class SelectionBoxBehaviourTest extends TestCase {
         event = new MapMouseEvent(null, 19, 19, MapMouseEvent.NONE, MapMouseEvent.NONE,
                 MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         assertEquals(1, handler.getEditBlackboard().getSelection().size());
         assertEquals(Point.valueOf(20,20), handler.getEditBlackboard().getSelection().iterator().next());
 
-        // should add (0,10) to selection 
+        // should add (0,10) to selection
         handler.getMouseTracker().setDragStarted(Point.valueOf(0,0));
         event = new MapMouseEvent(null, 11, 11, MapMouseEvent.SHIFT_DOWN_MASK, MapMouseEvent.BUTTON1,
                 MapMouseEvent.BUTTON1);
@@ -169,11 +169,11 @@ public class SelectionBoxBehaviourTest extends TestCase {
         event = new MapMouseEvent(null, 11, 11, MapMouseEvent.SHIFT_DOWN_MASK, MapMouseEvent.NONE,
                 MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         assertEquals(2, handler.getEditBlackboard().getSelection().size());
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(20,20)));
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(0,10)));
-        
+
         // should add all points to selection
         handler.getMouseTracker().setDragStarted(Point.valueOf(0,0));
         event = new MapMouseEvent(null, 30, 30, MapMouseEvent.SHIFT_DOWN_MASK, MapMouseEvent.BUTTON1,
@@ -182,13 +182,13 @@ public class SelectionBoxBehaviourTest extends TestCase {
         event = new MapMouseEvent(null, 30,30, MapMouseEvent.SHIFT_DOWN_MASK, MapMouseEvent.NONE,
                 MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         assertEquals(4, handler.getEditBlackboard().getSelection().size());
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(0,10)));
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(20,10)));
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(20,20)));
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(10,20)));
-     
+
         // should make no change
         handler.getMouseTracker().setDragStarted(Point.valueOf(0,0));
         event = new MapMouseEvent(null, 1, 1, MapMouseEvent.SHIFT_DOWN_MASK, MapMouseEvent.BUTTON1,
@@ -197,13 +197,13 @@ public class SelectionBoxBehaviourTest extends TestCase {
         event = new MapMouseEvent(null, 1,1, MapMouseEvent.SHIFT_DOWN_MASK, MapMouseEvent.NONE,
                 MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         assertEquals(4, handler.getEditBlackboard().getSelection().size());
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(0,10)));
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(20,10)));
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(20,20)));
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(10,20)));
-     
+
         // should clear selection
         handler.getMouseTracker().setDragStarted(Point.valueOf(0,0));
         event = new MapMouseEvent(null, 1, 1, MapMouseEvent.NONE, MapMouseEvent.BUTTON1,
@@ -212,7 +212,7 @@ public class SelectionBoxBehaviourTest extends TestCase {
         event = new MapMouseEvent(null, 1,1, MapMouseEvent.NONE, MapMouseEvent.NONE,
                 MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         assertEquals(0, handler.getEditBlackboard().getSelection().size());
     }
 
@@ -223,7 +223,7 @@ public class SelectionBoxBehaviourTest extends TestCase {
         bb.addPoint(100,10,geom2.getShell());
 
         handler.getBehaviours().add( new SelectVerticesWithBoxBehaviour() );
-        
+
         handler.setCurrentShape(shell);
 
         // should selct 1 point
@@ -234,12 +234,12 @@ public class SelectionBoxBehaviourTest extends TestCase {
         event = new MapMouseEvent(null, 110, 40, MapMouseEvent.NONE, MapMouseEvent.NONE,
                 MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         assertEquals(4, handler.getEditBlackboard().getSelection().size());
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(0,10)));
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(20,10)));
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(20,20)));
         assertTrue(handler.getEditBlackboard().getSelection().contains(Point.valueOf(10,20)));
-        
+
     }
 }

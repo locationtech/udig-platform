@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.ui.internal.render.displayAdapter.impl;
 
@@ -11,7 +11,7 @@ import java.awt.event.MouseWheelListener;
 
 /**
  * This class turns AWT events into SWT events
- * 
+ *
  * @author Jesse
  */
 public class EventAdapter implements MouseListener, MouseMotionListener,

@@ -4,14 +4,14 @@
   <context id="general_context">
     <description>This is the Map editor.</description>
     <topic label="Map editor" href="html/Map editor.html"/>
-    <topic label="Map" href="html/Map.html"/>    
+    <topic label="Map" href="html/Map.html"/>
     <topic label="Printing the current Map" href="udig/Printing the current Map.html"/>
   </context>
   <context id="zoom_context">
     <description>Use this tool to draw a rectangle indicating where you wish
     the Map view port moved to. You can zoom out using the second mouse button,
     the scroll wheel offers immediate change of scale.</description>
-    <topic label="Zoom Tool" href="html/Map Editor.html#zoom"/>    
+    <topic label="Zoom Tool" href="html/Map Editor.html#zoom"/>
     <topic label="Viewport" href="html/Viewport.html"/>
   </context>
-</contexts>    
+</contexts>

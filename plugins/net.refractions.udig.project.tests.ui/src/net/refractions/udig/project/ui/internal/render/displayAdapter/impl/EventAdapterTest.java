@@ -18,16 +18,16 @@ public class EventAdapterTest extends TestCase {
 		mockEventJob = context.mock(EventJob.class);
 		this.handler = new EventHandlerJava(mockEventJob);
 	}
-	
+
 	public void testMouseClicked() {
 		MouseEvent e=new MouseEvent(null, 0, 0L, 0, 0,0,1,false);
-		
+
 //		context.checking(new Expectations(){{
 //			MapMouseEvent mapMouseEvent;
 //			mockEventJob.fire(EventJob.PRESSED, mapMouseEvent);
 //		}}
 //		);  
-		
+
 //		adapter.mouseClicked(e);
 	}
 

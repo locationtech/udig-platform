@@ -6,7 +6,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.InvocationTargetException;
 
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.ProjectPlugin;
@@ -26,7 +25,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -60,8 +58,8 @@ public class TilingRenderer implements Renderer, RendererDecorator {
 
     public void render( IProgressMonitor monitor ) throws RenderException {
         IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-        boolean useTiling = store.getBoolean(PreferenceConstants.P_TILING_RENDERER); 
-        
+        boolean useTiling = store.getBoolean(PreferenceConstants.P_TILING_RENDERER);
+
         if (getContext().getGeoResource().canResolve(FeatureStore.class) || !useTiling) {
             Envelope renderBounds = getRenderBounds();
             if (renderBounds == null) {
@@ -98,7 +96,7 @@ public class TilingRenderer implements Renderer, RendererDecorator {
 
     /**
      * Draw the non-cached tiles
-     * 
+     *
      * @param monitor
      * @throws RenderException
      */
@@ -152,27 +150,27 @@ public class TilingRenderer implements Renderer, RendererDecorator {
                 miny = currentBounds.getMinY();
                 maxy = paintedAreaInWorld.getMinY();
             }
-            
+
             Envelope envelope = new Envelope(minx, maxx, miny, maxy);
             if (validEnvelope(envelope)) {
                 child.setRenderBounds(envelope);
             	child.render(monitor);
-            }            
+            }
         }
     }
-    
+
     /**
      * Checks that the given envelope is actually valid. That is, it returns
      * false if the envelope has duplicate x or y coordinates (and thus is a
      * rectangle with width 0).
-     * 
+     *
      * @param envelope
      * @return
      */
     protected boolean validEnvelope(Envelope envelope) {
     	Point lower = getContext().worldToPixel(new Coordinate(envelope.getMinX(), envelope.getMinY()));
     	Point upper = getContext().worldToPixel(new Coordinate(envelope.getMaxX(), envelope.getMaxY()));
-    	
+
     	if (lower.x == upper.x || lower.y == upper.y) {
     		return false;
     	}
@@ -222,7 +220,7 @@ public class TilingRenderer implements Renderer, RendererDecorator {
 
         if( old.equals(current) )
             return;
-        
+
         double worldPaintedMinX = old.getMinX();
         double worldPaintedMinY = old.getMinY();
         double worldPaintedMaxX = current.getMaxX();
@@ -292,7 +290,7 @@ public class TilingRenderer implements Renderer, RendererDecorator {
      */
     private void checkState() {
         if (getState() == IRenderer.DISPOSED)
-            throw new IllegalStateException(Messages.TilingRenderer_disposedError); 
+            throw new IllegalStateException(Messages.TilingRenderer_disposedError);
     }
 
     public void render( Graphics2D graphics, IProgressMonitor monitor ) throws RenderException {
@@ -414,11 +412,6 @@ public class TilingRenderer implements Renderer, RendererDecorator {
         return child.eCrossReferences();
     }
 
-    public Object eInvoke( EOperation operation, EList< ? > arguments )
-            throws InvocationTargetException {
-        return child.eInvoke(operation, arguments);
-    }
-    
     public Object eGet( EStructuralFeature feature ) {
         return child.eGet(feature);
     }

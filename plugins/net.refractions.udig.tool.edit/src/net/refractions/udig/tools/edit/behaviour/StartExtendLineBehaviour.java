@@ -37,13 +37,18 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Edit Mode is set to CREATING or CREATING_BACKWARD
- * <p>Requirements: * <ul> * <li>EventType==Released</li>
+ * <p>Requirements:
+ * <ul>
+ * <li>EventType==Released</li>
  * <li>CurrentShape != null</li>
  * <li>mouse is over end vertex</li>
  * <li>button1 was released</li>
  * <li>no buttons or modifiers down</li>
- * <li>mode == MODIFYING or NONE</li> * </ul> * </p> * </p>
- * 
+ * <li>mode == MODIFYING or NONE</li>
+ * </ul>
+ * </p>
+ * </p>
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -51,20 +56,20 @@ public class StartExtendLineBehaviour implements EventBehaviour {
 
     public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
         boolean legalEventType=eventType==EventType.RELEASED;
-        boolean legalState=handler.getCurrentState()==EditState.MODIFYING ||handler.getCurrentState()==EditState.NONE; 
+        boolean legalState=handler.getCurrentState()==EditState.MODIFYING ||handler.getCurrentState()==EditState.NONE;
         boolean shapeAndGeomNotNull=handler.getCurrentShape()!=null;
         boolean button1Released=e.button==MapMouseEvent.BUTTON1;
-        
-        if( !legalState || !legalEventType || !shapeAndGeomNotNull || !button1Released 
+
+        if( !legalState || !legalEventType || !shapeAndGeomNotNull || !button1Released
         || e.buttonsDown() || e.modifiersDown() )
             return false;
-        
+
         PrimitiveShape currentShape = handler.getCurrentShape();
         Point point=currentShape.getEditBlackboard().overVertex(Point.valueOf(e.x, e.y),
                 PreferenceUtil.instance().getVertexRadius());
         if( currentShape.getPoint(0).equals(point) || currentShape.getPoint(currentShape.getNumPoints()-1).equals(point))
             return true;
-        
+
         return false;
     }
 
@@ -91,7 +96,7 @@ public class StartExtendLineBehaviour implements EventBehaviour {
         ReversePointsInShapeCommand(EditToolHandler handler, PrimitiveShape shape){
             this.shape=shape;
         }
-        
+
         public void run( IProgressMonitor monitor ) throws Exception {
                 EditUtils.instance.reverseOrder(shape);
         }
@@ -103,6 +108,6 @@ public class StartExtendLineBehaviour implements EventBehaviour {
         public void rollback( IProgressMonitor monitor ) throws Exception {
             run(monitor);
         }
-        
+
     }
 }

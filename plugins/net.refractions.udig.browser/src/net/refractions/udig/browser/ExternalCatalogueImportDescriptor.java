@@ -36,10 +36,10 @@ public interface ExternalCatalogueImportDescriptor {
      *
      * @return descriptor of banner image
      */
-    public ImageDescriptor getDescriptionImage(); 
+    public ImageDescriptor getDescriptionImage();
     /**
      * @return LocationListener
-     * 
+     *
      */
     public LocationListener getListener();
     /**

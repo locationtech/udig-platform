@@ -39,7 +39,7 @@ import net.refractions.udig.tools.edit.support.Selection;
  * <li>Locks the EditTool handler until mouse is released so other behaviours won't interfere</li>
  * </ul>
  * </p>
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -58,7 +58,7 @@ public class MoveGeometryBehaviour extends MoveVertexBehaviour {
                 && currentGeomNotNull) ) return false;
 
         boolean altDown = e.isAltDown() && e.isModifierDown(MapMouseEvent.MOD1_DOWN_MASK) || allVerticesSelectedAndWithinGeom(handler) ||  handler.isLockOwner(this);
-        
+
         return  altDown && ( handler.isLockOwner(this) ||
                 handler.getCurrentShape().contains(Point.valueOf(e.x, e.y), true) );
     }
@@ -74,15 +74,15 @@ public class MoveGeometryBehaviour extends MoveVertexBehaviour {
             if( ! selection.contains(point) )
                 return false;
         }
-        
+
         return currentShape.contains(dragStarted, true);
-        
+
     }
     @Override
     protected Selection getPointsToMove( EditToolHandler handler, EditBlackboard blackboard ) {
         return handler.getCurrentGeom().createSelection();
     }
-    
+
     @Override
     protected boolean isSnappingValid() {
         return false;

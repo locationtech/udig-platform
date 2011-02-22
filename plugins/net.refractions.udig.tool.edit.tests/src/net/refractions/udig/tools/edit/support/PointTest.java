@@ -16,7 +16,7 @@ public class PointTest extends TestCase {
         List<Integer> xs=new ArrayList<Integer>();
         List<Integer> ys=new ArrayList<Integer>();
         Random random=new Random();
-        
+
         int trials=10000;
         for( int i=0; i<trials; i++ ){
             int x=random.nextInt(30000);
@@ -28,7 +28,7 @@ public class PointTest extends TestCase {
             assertEquals(x,point.getX());
             assertEquals(y,point.getY());
         }
-        
+
         for( int i=0; i<trials; i++ ){
             int x=xs.get(i);
             int y=ys.get(i);
@@ -36,7 +36,7 @@ public class PointTest extends TestCase {
             assertEquals(x,point.getX());
             assertEquals(y,point.getY());
         }
-        
+
     }
 
 }

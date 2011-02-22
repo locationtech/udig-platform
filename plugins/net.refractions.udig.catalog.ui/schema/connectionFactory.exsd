@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="net.refractions.udig.catalog.ui">
 <annotation>
       <appInfo>
          <meta.schema plugin="net.refractions.udig.catalog.ui" id="connectionFactory" name="Connection Factory"/>
@@ -12,9 +12,6 @@
 
    <element name="extension">
       <annotation>
-         <appInfo>
-            <meta.element />
-         </appInfo>
          <documentation>
             This extension point provides a factory which is used to provide connection information for a specific service based on context.
          </documentation>
@@ -27,21 +24,21 @@
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -58,21 +55,21 @@
          </documentation>
       </annotation>
       <complexType>
-         <attribute name="id" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.ui.UDIGConnectionFactory"/>
                </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+
+               </documentation>
             </annotation>
          </attribute>
       </complexType>
@@ -83,31 +80,31 @@
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="name" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
+
                </documentation>
                <appInfo>
-                  <meta.attribute translatable="true"/>
+                  <meta.attribute deprecated="true"/>
                </appInfo>
             </annotation>
          </attribute>
          <attribute name="helpHref" type="string">
             <annotation>
                <documentation>
-                  
+
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="icon" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appInfo>
                   <meta.attribute kind="resource"/>
@@ -117,7 +114,7 @@
          <attribute name="banner" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appInfo>
                   <meta.attribute kind="resource"/>
@@ -127,17 +124,14 @@
          <attribute name="description" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
-               <appInfo>
-                  <meta.attribute translatable="true"/>
-               </appInfo>
             </annotation>
          </attribute>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.ui.AbstractUDIGImportPage:net.refractions.udig.catalog.ui.UDIGConnectionPage"/>
@@ -152,18 +146,34 @@
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         UDIG 1.1
+         [Enter the first release in which this extension point appears.]
       </documentation>
    </annotation>
 
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
 
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
 
    <annotation>
       <appInfo>
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         Day 4 training materials covering disk to screen.
+         [Enter information about supplied implementation of this extension point.]
       </documentation>
    </annotation>
 
@@ -172,7 +182,7 @@
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         http://udig.refractions.net/
+
       </documentation>
    </annotation>
 

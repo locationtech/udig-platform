@@ -6,7 +6,7 @@ import org.eclipse.emf.common.util.URI;
  * Container for a reference to a map
  * <p>
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */

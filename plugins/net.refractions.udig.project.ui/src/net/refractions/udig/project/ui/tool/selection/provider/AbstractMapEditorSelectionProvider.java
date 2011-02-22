@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * Implements the basic functionality of a MapEditorSelectionProvider.
- *  
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -40,7 +40,7 @@ public abstract class AbstractMapEditorSelectionProvider implements IMapEditorSe
     public Set<ISelectionChangedListener> getListeners(){
         return listeners;
     }
-    
+
     protected void notifyListeners() {
         if( Display.getCurrent()==null ){
             final ISelectionProvider p=this;

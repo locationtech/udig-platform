@@ -22,13 +22,12 @@ import net.refractions.udig.location.AddressSeeker;
 import net.refractions.udig.location.USGLocation;
 
 import org.apache.xmlrpc.XmlRpcException;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
-import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
 
 /**
- * TODO Purpose of 
+ * TODO Purpose of
  * <p>
  *
  * </p>
@@ -41,7 +40,7 @@ public class USGCatalogTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        usg = new USGLocation();        
+        usg = new USGLocation();
         seeker = new AddressSeeker();
     }
     public void testWhere() {
@@ -60,7 +59,7 @@ public class USGCatalogTest extends TestCase {
         assertEquals( 29.951663, location.getY() );
     }
     public void testGeocode() {
-        List<SimpleFeature> features = null;
+        List<Feature> features = null;
         try {
             features = seeker.geocode("1500 Poydras St, New Orleans, LA");
         } catch (IOException e) {
@@ -72,15 +71,15 @@ public class USGCatalogTest extends TestCase {
         }
         assertNotNull( features );
         assertEquals( 1, features.size() );
-        SimpleFeature feature = features.get(0);
-        Point location = ((Geometry)feature.getDefaultGeometry()).getCentroid();
+        Feature feature = features.get(0);
+        Point location = feature.getDefaultGeometry().getCentroid();
         assertEquals( -90.078377, location.getX() );
         assertEquals( 29.951663, location.getY() );
     }
-    
-    private void printFeats(List<SimpleFeature> list) {
+
+    private void printFeats(List<Feature> list) {
         System.out.println(list);
-        for(SimpleFeature feat : list) {
+        for(Feature feat : list) {
             System.out.println(feat);
         }
     }

@@ -12,10 +12,10 @@ public class TestZoomDialogAction extends ActionDelegate implements IWorkbenchWi
 
     public void init( IWorkbenchWindow window ) {
     }
-    
+
     @Override
     public void run( IAction action ) {
-        MessageDialog d=new MessageDialog(Display.getDefault().getActiveShell(), 
+        MessageDialog d=new MessageDialog(Display.getDefault().getActiveShell(),
                 "Test", null, "Test zoom dialog", MessageDialog.INFORMATION,
                 new String[]{"OK"}, 1);
         ZoomingDialog zd=new ZoomingDialog(Display.getDefault().getActiveShell(), d, new Rectangle(0,0,10,10));

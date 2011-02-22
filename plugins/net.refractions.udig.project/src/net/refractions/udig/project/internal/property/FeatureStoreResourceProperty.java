@@ -35,7 +35,7 @@ import org.geotools.data.FeatureStore;
 
 /**
  * returns true if the layer has a FeatureStore as a resource.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -57,13 +57,16 @@ public class FeatureStoreResourceProperty extends AbstractPropertyValue<ILayer>
     public boolean isTrue( final ILayer object, String value ) {
         isEvaluating.set(true);
         try {
-             
+            final FeatureStore store = object.getResource(FeatureStore.class, ProgressManager
+                    .instance().get());
             object.getBlackboard().addListener(new IBlackboardListener(){
+
                 public void blackBoardChanged( BlackboardEvent event ) {
                     if (event.getKey().equals(ProjectBlackboardConstants.LAYER__DATA_QUERY)) {
                         notifyListeners(object);
                     }
                 }
+
                 public void blackBoardCleared( IBlackboard source ) {
                     notifyListeners(object);
                 }
@@ -75,12 +78,7 @@ public class FeatureStoreResourceProperty extends AbstractPropertyValue<ILayer>
                 CatalogPlugin.getDefault().getLocalCatalog().addCatalogListener(
                         new ObjectPropertyCatalogListener(object, resource, isEvaluating, this));
             }
-            
-//TODO codereview: This resolves http://jira.codehaus.org/browse/UDIG-1686
-//            final FeatureStore<?,?> store  = object.getResource(FeatureStore.class, ProgressManager.instance().get());
-//            return store != null;
-            boolean canResolve = resource.canResolve(FeatureStore.class);
-            return canResolve;
+            return store != null;
         } catch (Exception e) {
             return false;
         } finally {

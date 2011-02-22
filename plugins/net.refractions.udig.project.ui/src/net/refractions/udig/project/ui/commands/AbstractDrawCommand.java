@@ -27,7 +27,7 @@ import net.refractions.udig.ui.graphics.ViewportGraphics;
  * graphics object will be set just prior to the execution of the command and is used to execute
  * draw commands. Subclasses do not need to be concerned about resetting the graphics2D because the
  * RenderManager, which executes the command will handle the issue.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -65,9 +65,9 @@ public abstract class AbstractDrawCommand extends AbstractCommand implements IDr
     }
 
     public String getName() {
-        return Messages.AbstractDrawCommand_name; 
+        return Messages.AbstractDrawCommand_name;
     }
-    
+
     public void dispose(){
         valid = false;
         // do nothing by default

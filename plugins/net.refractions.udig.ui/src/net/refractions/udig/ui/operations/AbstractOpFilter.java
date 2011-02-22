@@ -19,14 +19,14 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * Abstract implementation that can be extended by OpFilter implementers.  Manages listeners primarily.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public abstract class AbstractOpFilter implements OpFilter {
 
     protected Set<IOpFilterListener> listeners=new CopyOnWriteArraySet<IOpFilterListener>();
-    
+
     public void addListener( IOpFilterListener listener ) {
         listeners.add(listener);
     }
@@ -35,7 +35,7 @@ public abstract class AbstractOpFilter implements OpFilter {
     public void removeListener( IOpFilterListener listener ) {
         listeners.add(listener);
     }
-    
+
     /**
      * Notifies listener that the value of the filter has changed.
      */

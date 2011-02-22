@@ -12,7 +12,7 @@ package net.refractions.udig.project.render;
  * TODO Purpose of net.refractions.udig.project.render
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -23,7 +23,7 @@ public class DeltaEvent<T> {
 
     /**
      * Creates an new instance of DeltaEvent
-     * 
+     *
      * @param legacy a copy of the state of the changed object before the change occured
      * @param current a copy of the state of the changed object after the change occured
      */
@@ -34,7 +34,7 @@ public class DeltaEvent<T> {
 
     /**
      * Returns a copy of the state of the changed object before the change occured
-     * 
+     *
      * @return a copy of the state of the changed object before the change occured
      * @uml.property name="legacy"
      */
@@ -44,7 +44,7 @@ public class DeltaEvent<T> {
 
     /**
      * Returns a copy of the state of the changed object after the change occured
-     * 
+     *
      * @return a copy of the state of the changed object after the change occured
      * @uml.property name="current"
      */

@@ -26,7 +26,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 /**
  * Sets the center of the viewport. The Coordinate must be in world coordinates. The
  * {@linkplain ViewportModel#pixelToWorld(int, int)}methods can be used to calculate the value.
- * 
+ *
  * @author jeichar
  * @since TODO provide version
  */
@@ -36,7 +36,7 @@ public class SetViewportCenterCommand extends AbstractNavCommand implements NavC
     private CoordinateReferenceSystem crs;
     /**
      * Creates a new instance of SetViewportCenterCommand
-     * 
+     *
      * @param center Sets the center of the viewport. The Coordinate must be in world coordinates.
      */
     public SetViewportCenterCommand( Coordinate center ) {
@@ -60,11 +60,11 @@ public class SetViewportCenterCommand extends AbstractNavCommand implements NavC
 
     private Coordinate transform() {
         try {
-            return JTS.transform(center, new Coordinate(), CRS.findMathTransform(crs, model.getCRS(), true));
+            return JTS.transform(center, new Coordinate(), CRS.transform(crs, model.getCRS(), true));
         } catch (Exception e) {
             ProjectPlugin.log("", e); //$NON-NLS-1$
             return null;
-        } 
+        }
     }
 
     /**
@@ -79,7 +79,7 @@ public class SetViewportCenterCommand extends AbstractNavCommand implements NavC
      */
     public String getName() {
         return MessageFormat.format(
-                Messages.SetViewportCenterCommand_setViewCenter, new Object[]{center}); 
+                Messages.SetViewportCenterCommand_setViewCenter, new Object[]{center});
     }
 
 }

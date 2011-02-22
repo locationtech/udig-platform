@@ -27,8 +27,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewPart;
 import org.geotools.data.DataStore;
+import org.geotools.feature.FeatureType;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 public class IssuesManagerTest extends AbstractProjectUITestCase {
 
@@ -36,7 +36,7 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
     protected void setUp() throws Exception {
         FeatureIssue.setTesting(true);
     }
-    
+
     @Override
     protected void tearDown() throws Exception {
         FeatureIssue.setTesting(false);
@@ -191,7 +191,7 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
         assertFalse(m.save(new NullProgressMonitor()));
 
         DataStore[] store = new DataStore[1];
-        SimpleFeatureType[] featureType = new SimpleFeatureType[1];
+        FeatureType[] featureType = new FeatureType[1];
         issuesList = IssuesListTestHelper.createInMemoryDatastoreIssuesList(store, featureType);
         m.setIssuesList(issuesList);
 
@@ -243,19 +243,19 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
 
             public void save( IMemento memento ) {
             }
-            
+
         });
-        
+
         UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition(){
 
             public boolean isTrue()  {
                 return list.isEmpty();
             }
-            
+
         }, true);
 
         assertTrue(list.isEmpty());
-        
+
     }
-    
+
 }

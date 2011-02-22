@@ -12,7 +12,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * TODO Purpose of 
+ * TODO Purpose of
  * <p>
  *
  * </p>
@@ -25,7 +25,7 @@ public class EditorPlaceholder implements IEditorPart {
         return PlatformUI.getWorkbench().getActiveWorkbenchWindow()
             .getActivePage().getActiveEditor();
     }
-    
+
     public IEditorInput getEditorInput() {
         return getEditorPart() != null ? getEditorPart().getEditorInput()
             : null;
@@ -36,15 +36,15 @@ public class EditorPlaceholder implements IEditorPart {
             : null;
     }
 
-    public void init(IEditorSite site, IEditorInput input) 
+    public void init(IEditorSite site, IEditorInput input)
         throws PartInitException {
-        
-        if (getEditorPart() != null) 
+
+        if (getEditorPart() != null)
                 getEditorPart().init(site, input);
     }
 
     public void addPropertyListener(IPropertyListener listener) {
-        if (getEditorPart() != null) 
+        if (getEditorPart() != null)
             getEditorPart().addPropertyListener(listener);
     }
 
@@ -59,22 +59,22 @@ public class EditorPlaceholder implements IEditorPart {
     }
 
     public IWorkbenchPartSite getSite() {
-        return getEditorPart() != null ? getEditorPart().getSite() 
+        return getEditorPart() != null ? getEditorPart().getSite()
                 : null;
     }
 
     public String getTitle() {
-        return getEditorPart() != null ? getEditorPart().getTitle() 
+        return getEditorPart() != null ? getEditorPart().getTitle()
                 : null;
     }
 
     public Image getTitleImage() {
-        return getEditorPart() != null ? getEditorPart().getTitleImage() 
+        return getEditorPart() != null ? getEditorPart().getTitleImage()
                 : null;
     }
 
     public String getTitleToolTip() {
-        return getEditorPart() != null ? getEditorPart().getTitleToolTip() 
+        return getEditorPart() != null ? getEditorPart().getTitleToolTip()
                 : null;
     }
 
@@ -89,7 +89,7 @@ public class EditorPlaceholder implements IEditorPart {
     }
 
     public Object getAdapter(Class adapter) {
-        return getEditorPart() != null 
+        return getEditorPart() != null
             ? getEditorPart().getAdapter(adapter)
             : null;
     }
@@ -115,9 +115,9 @@ public class EditorPlaceholder implements IEditorPart {
     }
 
     public boolean isSaveOnCloseNeeded() {
-        return getEditorPart() != null 
+        return getEditorPart() != null
             ? getEditorPart().isSaveOnCloseNeeded()
             : false;
     }
-    
+
 }

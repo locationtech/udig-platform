@@ -1,23 +1,13 @@
-/* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2010, Refractions Research Inc.
- * (C) 2005 IBM Corporation and others
- * ------
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation;
- * version 2.1 of the License.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * --------
+/*******************************************************************************
+ * Copyright (c) 2005 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- */
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
 package net.refractions.udig.style.sld.editor.internal;
 
 import java.util.Collection;
@@ -56,7 +46,7 @@ public class EditorNodeFilter extends ViewerFilter {
     }
 
     /**
-     * Check to see if the node or any of its children 
+     * Check to see if the node or any of its children
      * have an id in the ids.
      * @param node WorkbenchPreferenceNode
      * @return boolean <code>true</code> if node or oe of its children
@@ -65,12 +55,12 @@ public class EditorNodeFilter extends ViewerFilter {
     private boolean checkNodeAndChildren(IPreferenceNode node) {
         if(ids.contains(node.getId()))
             return true;
-        
+
         IPreferenceNode[] subNodes = node.getSubNodes();
         for (int i = 0; i < subNodes.length; i++) {
             if(checkNodeAndChildren(subNodes[i]))
                 return true;
-            
+
         }
         return false;
     }

@@ -36,14 +36,22 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * Creates a new Geometry and feature
- * <p>Requirements: * <ul> * <li>current state is NONE</li>
+ * <p>Requirements:
+ * <ul>
+ * <li>current state is NONE</li>
  * <li>eventType is RELEASED</li>
  * <li>no modifiers</li>
  * <li>button1 released</li>
  * <li>no buttons down</li>
- * </ul> * </p> * <p>Action: * <ul> * <li>Sets the currentGeom to be the default geom on the black board</li> * <li>Sets the state to CREATING</li>
+ * </ul>
+ * </p>
+ * <p>Action:
+ * <ul>
+ * <li>Sets the currentGeom to be the default geom on the black board</li>
+ * <li>Sets the state to CREATING</li>
  * <li>Adds a point to the geom</li>
- * </ul> * </p>
+ * </ul>
+ * </p>
  * @author jones
  * @since 1.1.0
  */
@@ -54,9 +62,9 @@ public class StartEditingBehaviour implements EventBehaviour {
     public StartEditingBehaviour(ShapeType type){
         this.type=type;
     }
-    
+
     public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
-        boolean goodState = handler.getCurrentState()!=EditState.NONE && handler.getCurrentState()==EditState.MODIFYING 
+        boolean goodState = handler.getCurrentState()!=EditState.NONE && handler.getCurrentState()==EditState.MODIFYING
             || handler.getCurrentState()==EditState.NONE && handler.getCurrentState()!=EditState.MODIFYING;
         boolean releasedEvent = eventType==EventType.RELEASED;
         boolean noModifiers =  !(e.modifiersDown());
@@ -72,9 +80,9 @@ public class StartEditingBehaviour implements EventBehaviour {
         commands.add(handler.getContext().getEditFactory().createNullEditFeatureCommand());
         ILayer editLayer = handler.getEditLayer();
         EditBlackboard bb = handler.getEditBlackboard(editLayer);
-        commands.add(new DeselectEditGeomCommand(handler, bb.getGeoms())); 
+        commands.add(new DeselectEditGeomCommand(handler, bb.getGeoms()));
         commands.add(new StartEditingCommand(handler, e, type));
-        
+
         UndoableComposite undoableComposite = new UndoableComposite(commands);
         undoableComposite.setMap(handler.getContext().getMap());
         try {

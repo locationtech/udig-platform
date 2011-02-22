@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Listens to a blackboard for events such as geometries being added or set and coordinates being moved, deleted,
  * added, etc...
- * 
+ *
  * @author jones
  * @since 1.1.0
  */

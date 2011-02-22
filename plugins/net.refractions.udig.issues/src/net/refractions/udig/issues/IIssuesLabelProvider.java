@@ -19,7 +19,7 @@ import org.eclipse.jface.viewers.ILabelProvider;
 /**
  * A Label provider for configuring how the issues view displays is issues.  This is of course
  * closely related to/dependent on the IIssuesContentProvider.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -32,11 +32,11 @@ public interface IIssuesLabelProvider extends ILabelProvider {
      * @return the header text for the column
      */
     String getHeaderText(Column column);
-    
+
     /**
-     * Returns the extension id so that the system can instantiate the 
+     * Returns the extension id so that the system can instantiate the
      * sorter again in the future after the workbench has been shutdown.
-     * 
+     *
      * @return pluginID.extensionid.
      */
     String getExtensionID();

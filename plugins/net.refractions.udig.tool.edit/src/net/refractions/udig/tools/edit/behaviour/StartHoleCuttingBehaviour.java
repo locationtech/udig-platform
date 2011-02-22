@@ -33,14 +33,22 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.ShapeType;
 
 /**
- * <p>Requirements: * <ul>
+ * <p>Requirements:
+ * <ul>
  * <li>EventType==RELEASED</li>
  * <li>Current State == Creating</li>
  * <li>Current Shape != null</li>
  * <li>Button1 is released</li>
  * <li>no buttons are down</li>
  * <li>no modifiers are down</li>
- * <li>current geom is a polygon or unknown</li> * </ul> * </p> * <p>Action: * <ul> * <li></li> * </ul> * </p>
+ * <li>current geom is a polygon or unknown</li>
+ * </ul>
+ * </p>
+ * <p>Action:
+ * <ul>
+ * <li></li>
+ * </ul>
+ * </p>
  * @author jones
  * @since 1.1.0
  */
@@ -56,28 +64,28 @@ public class StartHoleCuttingBehaviour implements EventBehaviour {
         EditGeom currentGeom = handler.getCurrentGeom();
         boolean selectedShapeIsPolygon=currentGeom.getShapeType()==ShapeType.POLYGON
             || currentGeom.getShapeType()==ShapeType.UNKNOWN;
-        
-        if ( !( legalState && legalEventType && shapeAndGeomNotNull && button1Released 
+
+        if ( !( legalState && legalEventType && shapeAndGeomNotNull && button1Released
         && !e.buttonsDown() && !e.modifiersDown() && selectedShapeIsPolygon) )
             return false;
-        
+
         Point point=Point.valueOf(e.x, e.y);
-        
+
         if( !currentGeom.getShell().contains(point, true) )
             return false;
-        
+
         for( PrimitiveShape shape : currentGeom.getHoles() ) {
             if( shape.contains(point, true) )
                 return false;
              }
         return true;
     }
-    
+
     public UndoableMapCommand getCommand( EditToolHandler handler, MapMouseEvent e,
             EventType eventType ) {
         if( !isValid(handler, e, eventType))
             throw new IllegalStateException("Current state is illegal this method should not be called"); //$NON-NLS-1$
-        
+
         List<UndoableMapCommand> commands=new ArrayList<UndoableMapCommand>();
         commands.add(new SetEditStateCommand(handler, EditState.CREATING));
         commands.add(new CreateAndSelectHoleCommand(handler));

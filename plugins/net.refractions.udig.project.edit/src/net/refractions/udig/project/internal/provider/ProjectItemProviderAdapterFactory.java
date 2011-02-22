@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: ProjectItemProviderAdapterFactory.java 30936 2008-10-29 12:21:56Z jeichar $
  */
 package net.refractions.udig.project.internal.provider;
 
@@ -49,7 +49,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This keeps track of the root adapter factory that delegates to this adapter factory. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected ComposedAdapterFactory parentAdapterFactory;
@@ -57,7 +57,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected IChangeNotifier        changeNotifier = new ChangeNotifier();
@@ -106,7 +106,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This creates an adapter for a {@link net.refractions.udig.project.internal.Layer}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Adapter createLayerAdapter() {
@@ -116,7 +116,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This creates an adapter for a {@link net.refractions.udig.project.internal.Map}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Adapter createMapAdapter() {
@@ -126,7 +126,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This creates an adapter for a {@link net.refractions.udig.project.internal.Project}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Adapter createProjectAdapter() {
@@ -186,7 +186,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This creates an adapter for a {@link net.refractions.udig.project.internal.StyleEntry}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Adapter createStyleEntryAdapter() {
@@ -229,7 +229,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This creates an adapter for a {@link net.refractions.udig.project.internal.Blackboard}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Adapter createBlackboardAdapter() {
@@ -313,7 +313,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This implementation substitutes the factory itself as the key for the adapter. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Adapter adapt( Notifier notifier, Object type ) {
@@ -369,7 +369,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void fireNotifyChanged( Notification notification ) {

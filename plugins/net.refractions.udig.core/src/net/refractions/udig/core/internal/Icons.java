@@ -20,15 +20,15 @@ package net.refractions.udig.core.internal;
  * Image Directory constants used for making Images, ISharedImages and so on.
  * <p>
  * Example use when defining Constants (ISharedImages or ImageConstants):
- * 
+ *
  * <pre><code>
  * interface ISharedImages extends ImagePathConstants {
  *     public final static String ADD_CO = PATH_ELOCALTOOL + &quot;add_co.gif&quot;;
  * }
  * </code></pre>
- * 
+ *
  * </p>
- * 
+ *
  * @author Jody Garnett, Refractions Research
  */
 public interface Icons {

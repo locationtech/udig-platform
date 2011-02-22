@@ -20,7 +20,7 @@ import net.refractions.udig.tools.edit.EditToolHandler;
 
 /**
  * Resets the state of the EditToolHandler.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

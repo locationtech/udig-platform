@@ -34,7 +34,7 @@ import org.eclipse.jface.viewers.LabelProviderChangedEvent;
  * <p>
  * This would be better handled as a series of lightweight decorators if such things can be aranged.
  * </p>
- * 
+ *
  * @author jgarnett
  * @since 0.7.0
  */
@@ -103,7 +103,7 @@ public class LayerStateDecorator implements ILightweightLabelDecorator {
      *      java.lang.String)
      */
     public boolean isLabelProperty( Object element, String property ) {
-        return true; // "state".equals( property ); 
+        return true; // "state".equals( property );
     }
 
     /**

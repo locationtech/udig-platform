@@ -17,26 +17,23 @@ package net.refractions.udig.ui;
 import java.util.Iterator;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.collection.AdaptorFeatureCollection;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.feature.collection.AbstractFeatureCollection;
 
 /**
  * This is a single use collection because the monitor is used by the iterators and
  * since iterator doesn't take one then it can only be used once.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
-public class ProgressFeatureCollection extends AdaptorFeatureCollection {
+public class ProgressFeatureCollection extends AbstractFeatureCollection implements FeatureCollection {
 
-    protected FeatureCollection<SimpleFeatureType, SimpleFeature> delegate;
+    protected FeatureCollection delegate;
     protected IProgressMonitor monitor;
-    
-    public ProgressFeatureCollection( FeatureCollection<SimpleFeatureType, SimpleFeature> delegate, IProgressMonitor monitor ) {
-    	super("Progress Listener", delegate.getSchema());
+
+    public ProgressFeatureCollection( FeatureCollection delegate, IProgressMonitor monitor ) {
+        super(delegate.getSchema());
         this.delegate = delegate;
         this.monitor = monitor;
     }
@@ -63,7 +60,7 @@ public class ProgressFeatureCollection extends AdaptorFeatureCollection {
             public void remove() {
                 iterator.next();
             }
-            
+
         };
     }
 

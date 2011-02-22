@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * Opens a dialog for adding maps to the set of maps to export.
- * 
+ *
  * @author Jesse
  */
 final class AddMapsSelectionListener implements SelectionListener {
@@ -33,7 +33,7 @@ final class AddMapsSelectionListener implements SelectionListener {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
 	 */
 	public void widgetDefaultSelected(SelectionEvent e) {
@@ -42,7 +42,7 @@ final class AddMapsSelectionListener implements SelectionListener {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
 	 */
 	public void widgetSelected(SelectionEvent e) {

@@ -14,37 +14,36 @@ import net.refractions.udig.tools.edit.support.Point;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
-import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Adds the feature's geometry to the edit blackboard (effectively selecting it).
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class SelectFeatureCommand extends AbstractCommand implements UndoableMapCommand {
 
     private Collection<EditGeom> added;
-    private SimpleFeature feature;
+    private Feature feature;
     private EditBlackboard blackboard;
     private Layer editLayer;
-    private ReferencedEnvelope refreshBounds;
+    private Envelope refreshBounds;
     private EditToolHandler handler;
     private Point mouseLocation;
     private SetEditFeatureCommand setEditFeatureCommand;
-    
+
     /**
      * new instance
      * @param handler used to obtain the blackboard for the currently selected layer.
      * @param feature the feature to add.
      * @param mouseLocation If not null it will set the current shape to be the Geom that intersects the mouseLocation
      */
-    public SelectFeatureCommand( EditToolHandler handler, SimpleFeature feature, Point mouseLocation) {
+    public SelectFeatureCommand( EditToolHandler handler, Feature feature, Point mouseLocation) {
         this.feature=feature;
         editLayer = (Layer) handler.getEditLayer();
         this.blackboard=handler.getEditBlackboard(editLayer);
@@ -57,31 +56,32 @@ public class SelectFeatureCommand extends AbstractCommand implements UndoableMap
      * @param blackboard blackboard to add features to.
      * @param feature2 the feature to add
      */
-    public SelectFeatureCommand( EditBlackboard blackboard2, SimpleFeature feature2 ) {
+    public SelectFeatureCommand( EditBlackboard blackboard2, Feature feature2 ) {
         this.feature=feature2;
         this.blackboard=blackboard2;
     }
-    
+
 
     public void run( IProgressMonitor monitor ) throws Exception {
         if (editLayer==null)
             editLayer=(Layer) getMap().getEditManager().getSelectedLayer();
-        this.added=blackboard.addGeometry((Geometry) feature.getDefaultGeometry(), feature.getID()).values();
+        this.added=blackboard.addGeometry(feature.getDefaultGeometry(), feature.getID()).values();
         if( !added.isEmpty() && mouseLocation!=null ){
-            Class<?> type = editLayer.getSchema().getGeometryDescriptor().getType().getBinding();
+            Class<?> type = editLayer.getSchema().getDefaultGeometry().getType();
             boolean polygonLayer=Polygon.class.isAssignableFrom(type) || MultiPolygon.class.isAssignableFrom(type);
             EditGeom geom = EditUtils.instance.getGeomWithMouseOver(added, mouseLocation, polygonLayer);
             handler.setCurrentShape(geom.getShell());
             setEditFeatureCommand = new SetEditFeatureCommand(handler, mouseLocation, geom.getShell());
             setEditFeatureCommand.setMap(getMap());
             setEditFeatureCommand.run(SubMonitor.convert(monitor));
+
         }
-        
+
         //make sure the display refreshes
-        this.refreshBounds=new ReferencedEnvelope(feature.getBounds());
+        this.refreshBounds=feature.getBounds();
         EditUtils.instance.refreshLayer(editLayer, feature, refreshBounds, false, true);
     }
-    
+
     public String getName() {
         return Messages.AddGeomCommand_name;
     }
@@ -92,7 +92,7 @@ public class SelectFeatureCommand extends AbstractCommand implements UndoableMap
         }
         blackboard.removeGeometries(added);
 
-        refreshBounds.expandToInclude(new ReferencedEnvelope(feature.getBounds()));
+        refreshBounds.expandToInclude(feature.getBounds());
         EditUtils.instance.refreshLayer(editLayer, feature, refreshBounds, true, false);
     }
 

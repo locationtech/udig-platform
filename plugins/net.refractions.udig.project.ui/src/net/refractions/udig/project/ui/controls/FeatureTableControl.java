@@ -1,5 +1,6 @@
 package net.refractions.udig.project.ui.controls;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,17 +19,17 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.part.PageBook;
 import org.geotools.data.DataUtilities;
+import org.geotools.data.FeatureReader;
+import org.geotools.data.FeatureResults;
+import org.geotools.feature.AttributeType;
 import org.geotools.feature.DefaultFeatureCollection;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
+import org.geotools.feature.Feature;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.GeometryAttributeType;
 import org.geotools.feature.SchemaException;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.GeometryDescriptor;
 
 /**
- * A TreeViewer control for viewing a table of SimpleFeature attributes.
+ * A TreeViewer control for viewing a table of Feature attributes.
  * <p>
  * This object can be created in two ways. The first is using a FeatureReader. This method reads in
  * Features a page at a time and populates the table entries. The page size can be set by calling
@@ -40,7 +41,7 @@ import org.opengis.feature.type.GeometryDescriptor;
  * method results in a single page containing all features.
  * </p>
  * TODO: Create next and first action
- * 
+ *
  * @author jdeolive
  * @since 0.3
  */
@@ -50,17 +51,17 @@ public class FeatureTableControl {
     private int pageSize = 10; // XXX: actual put this as a user pref
 
     /** feature types and reader to get the actual feature data * */
-    private FeatureIterator<SimpleFeature> fReader;
-    SimpleFeatureType fType;
+    private FeatureReader fReader;
+    FeatureType fType;
 
     /** feature collection for holding features in memory * */
-    private List<SimpleFeature> features;
+    private List<Feature> features;
 
     /** table viewer control * */
     private TableViewer tableViewer;
     private Table table;
 
-    private FeatureCollection<SimpleFeatureType, SimpleFeature> results;
+    private FeatureResults results;
 
     private PageBook control;
 
@@ -75,7 +76,7 @@ public class FeatureTableControl {
     }
     /**
      * Construct <code>FeatureTableControl</code>.
-     * 
+     *
      * @param features The DefaultFeatureCollection containing the features to be displayed.
      */
     public FeatureTableControl( DefaultFeatureCollection features ) {
@@ -84,25 +85,25 @@ public class FeatureTableControl {
 
     /**
      * Construct a <code>FeatureTableControl</code>.
-     * 
+     *
      * @param fReader The FeatureReader that returns the actual features.
      */
-    public FeatureTableControl( FeatureIterator<SimpleFeature> fReader ) {
+    public FeatureTableControl( FeatureReader fReader ) {
         this(fReader, 10);
     }
 
     /**
      * Construct a <code>FeatureTableControl</code>.
-     * 
+     *
      * @param fReader The FeatureReader that returns the actual features.
      * @param resPerPage Results per page to be shown in the table.
      */
-    public FeatureTableControl( FeatureIterator<SimpleFeature> fReader, int resPerPage ) {
-        this.fType = null; //fReader.getFeatureType();
+    public FeatureTableControl( FeatureReader fReader, int resPerPage ) {
+        this.fType = fReader.getFeatureType();
         this.fReader = fReader;
         this.pageSize = resPerPage;
 
-        features = new ArrayList<SimpleFeature>();
+        features = new ArrayList<Feature>();
 
         // /features = (DefaultFeatureCollection) DefaultFeatureCollections.newCollection();
 
@@ -112,7 +113,7 @@ public class FeatureTableControl {
 
     /**
      * Sets the number of features viewed in the table per page.
-     * 
+     *
      * @param resPerPage positive integer.
      */
     public void setPageSize( int resPerPage ) {
@@ -121,7 +122,7 @@ public class FeatureTableControl {
 
     /**
      * Returns the number of features viewed in the table per page.
-     * 
+     *
      * @return positive integer.
      */
     public int getPageSize() {
@@ -130,7 +131,7 @@ public class FeatureTableControl {
 
     /**
      * Returns the control representing the table control.
-     * 
+     *
      * @return The internal table viewer control.
      * @see Control
      */
@@ -140,7 +141,7 @@ public class FeatureTableControl {
 
     /**
      * Creates the table control.
-     * 
+     *
      * @param parent The to be parent of the control.
      * @see Composite
      */
@@ -213,15 +214,14 @@ public class FeatureTableControl {
 
         if (fType != null) {
             for( int i = 0; i < fType.getAttributeCount(); i++ ) {
-                AttributeDescriptor aType = fType.getDescriptor(i);
+                AttributeType aType = fType.getAttributeType(i);
                 if (table.getColumnCount() > i + 1) {
                     tableColumn = table.getColumn(i + 1);
                 } else {
                     tableColumn = new TableColumn(table, SWT.CENTER | SWT.BORDER);
                 }
 
-                tableColumn.setText(aType.getLocalName());
-
+                tableColumn.setText(aType.getName());
                 tableColumn.setWidth(100);
             }
             for( int i = fType.getAttributeCount() + 1; i < table.getColumnCount(); i++ ) {
@@ -233,7 +233,7 @@ public class FeatureTableControl {
 
     /**
      * Creates the table control itself.
-     * 
+     *
      * @param parent Makes A TableViewer which diplays the features.
      * @see Composite
      */
@@ -245,7 +245,7 @@ public class FeatureTableControl {
         // tableColumn.setWidth(100);
         //
         // for( int i = 0; i < fType.getAttributeCount(); i++ ) {
-        // AttributeDescriptor aType = fType.getAttribute(i);
+        // AttributeType aType = fType.getAttributeType(i);
         // tableColumn = new TableColumn(table, SWT.CENTER | SWT.BORDER);
         // if (aType.isGeometry()) {
         // // jg: wot is this maddness? jd: paul said so
@@ -273,7 +273,7 @@ public class FeatureTableControl {
     /**
      * The TableViewer used is returned... would be used for adding listeners and various other
      * things to the tableViewer
-     * 
+     *
      * @return TableViewer
      */
     public TableViewer getTableViewer() {
@@ -282,7 +282,7 @@ public class FeatureTableControl {
 
     /**
      * API use?
-     * 
+     *
      * @author jdeolive
      * @see LabelProvider
      * @see ITableLabelProvider
@@ -296,21 +296,21 @@ public class FeatureTableControl {
         /**
          * Returns the elemetns for the viewer. Input to this method should be at type of
          * <code>org.geotools.feature.DefaultFeatureCollection</code>
-         * 
+         *
          * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
          * @param inputElement A <code>org.geotools.feature.DefaultFeatureCollection.</code>
-         * @return An array of <code>org.geotools.feature.SimpleFeature</code>
+         * @return An array of <code>org.geotools.feature.Feature</code>
          * @throws ClassCastException when inputElement not DefaultFeatureCollection
          */
         public Object[] getElements( Object inputElement ) throws ClassCastException {
             @SuppressWarnings("unchecked")
-            List<SimpleFeature> features = (List<SimpleFeature>) inputElement;
+            List<Feature> features = (List<Feature>) inputElement;
             return features.toArray();
         }
 
         /**
          * Does nothing.
-         * 
+         *
          * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer,
          *      java.lang.Object, java.lang.Object)
          * @param viewer
@@ -324,7 +324,7 @@ public class FeatureTableControl {
 
         /**
          * Does nothing.
-         * 
+         *
          * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang.Object, int)
          * @param element
          * @param columnIndex
@@ -336,18 +336,18 @@ public class FeatureTableControl {
 
         /**
          * Returns the value of the column / feature attribute.
-         * 
+         *
          * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang.Object, int)
          * @param element the array of feature attributes.
          * @param columnIndex the column index / feature attribute.
          * @return the string representation of the feature attribute, except for attributes of type
          *         Geometry in which a string representing the type of Geometry is returned.
-         * @throws ClassCastException when element not SimpleFeature
+         * @throws ClassCastException when element not Feature
          */
         public String getColumnText( Object element, int columnIndex ) throws ClassCastException {
-            SimpleFeature f = (SimpleFeature) element;
+            Feature f = (Feature) element;
             if (f == null) {
-                ProjectUIPlugin.trace(getClass(), "SimpleFeature was null in FeatureTableControl", (Exception)null); //$NON-NLS-1$
+                ProjectUIPlugin.trace(getClass(), "Feature was null in FeatureTableControl", (Exception)null); //$NON-NLS-1$
                 return null;
             }
             if (columnIndex == 0)
@@ -356,10 +356,10 @@ public class FeatureTableControl {
             if (columnIndex >= fType.getAttributeCount()) {
                 return null;
             }
-            AttributeDescriptor at = fType.getDescriptor(columnIndex - 1);
+            AttributeType at = fType.getAttributeType(columnIndex - 1);
             if (at == null)
                 return null;
-            if ( at instanceof GeometryDescriptor ) {
+            if ( at instanceof GeometryAttributeType ) {
                 String s = f.getAttribute(columnIndex - 1).getClass().getName();
                 return s.substring(s.lastIndexOf('.') + 1);
             }
@@ -372,7 +372,7 @@ public class FeatureTableControl {
 
     /**
      * Does nothing.
-     * 
+     *
      * @see org.eclipse.ui.IWorkbenchPart#setFocus()
      */
     public void setFocus() {
@@ -380,34 +380,34 @@ public class FeatureTableControl {
     }
     /**
      * Contents of the current page of features
-     * 
+     *
      * @return DefaultFeatureCollection
      * @see DefaultFeatureCollection
      */
-    public List<SimpleFeature> getFeatures() {
+    public List<Feature> getFeatures() {
         return features;
     }
     /**
      * Set up for a one time only paged access
-     * 
+     *
      * @param reader
      * @see Featurereader API should this throw exceptions? the answer also potentially propagates
      *      the issue and the question ... API is there a memory issue here?
      */
-    public void setFeatures( FeatureIterator<SimpleFeature> reader ) {
+    public void setFeatures( FeatureReader reader ) {
         this.fReader = reader;
-        this.fType = null; //reader.getFeatureType();
-        features = new ArrayList<SimpleFeature>();
+        this.fType = reader.getFeatureType();
+        features = new ArrayList<Feature>();
         next(); // load the first page into the collection
         update();
     }
     /**
      * Set up for a single page of content
-     * 
+     *
      * @param features
      * @see DefaultFeatureCollection
      */
-    public void setFeatures( List<SimpleFeature> features ) {
+    public void setFeatures( List<Feature> features ) {
         this.features = features;
         if (features.size() != 0) {
             this.fType = features.get(0).getFeatureType();
@@ -422,11 +422,11 @@ public class FeatureTableControl {
      * Set up for pages access with a next and a reset button. API should this throw exceptions? the
      * answer also potentially propagates the issue and the question ... API is there a memory issue
      * here?
-     * 
+     *
      * @param results
      * @see FeatureResults
      */
-    public void setFeatures( FeatureCollection<SimpleFeatureType, SimpleFeature> results ) {
+    public void setFeatures( FeatureResults results ) {
         this.results = results;
         reset();
         update();
@@ -434,19 +434,37 @@ public class FeatureTableControl {
     /** Reset to start of FeatureResutls */
     public void reset() {
         int count = pageSize + 1;
-        count = results.size();        
+        try {
+            count = results.getCount();
+            // System.out.println("results count " + count );
+        } catch (IOException e) {
+            // System.out.println("results count " + e );
+            e.printStackTrace();
+        }
+
         if (count < this.pageSize) {
-            List<SimpleFeature> list = DataUtilities.list(results);
-            setFeatures(list);            
+            ArrayList<Feature> list = new ArrayList<Feature>(count);
+            try {
+                list.addAll(results.collection());
+                setFeatures(list);
+            } catch (IOException e) {
+                e.printStackTrace();
+                clear();
+            }
         } else {
-            setFeatures(results.features());            
+            try {
+                setFeatures(results.reader());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+                clear();
+            }
         }
     }
     /**
      * Don't display nothing :-)
      */
     public void clear() {
-        features = new ArrayList<SimpleFeature>();
+        features = new ArrayList<Feature>();
         try {
             fType = DataUtilities.createType("empty", "message:String"); //$NON-NLS-1$ //$NON-NLS-2$
         } catch (SchemaException e) {

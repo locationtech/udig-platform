@@ -9,34 +9,43 @@
 
 package net.refractions.udig.tool.select;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.refractions.udig.project.command.MapCommand;
+import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.commands.selection.BBoxSelectionCommand;
+import net.refractions.udig.project.preferences.PreferenceConstants;
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
+import net.refractions.udig.project.ui.internal.commands.draw.DrawShapeCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.tool.SimpleTool;
+import net.refractions.udig.ui.graphics.ViewportGraphics;
+
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceConverter;
+import org.eclipse.swt.graphics.RGB;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * A tool that puts a BBOX Filter on the layer's Filter
- * 
+ * TODO provide type description
+ *
  * @author jeichar
- * @since 1.0
+ * @since TODO provide version
  */
 public class BBoxSelection extends SimpleTool implements ModalTool {
-    
+
     /**
      * Comment for <code>ID</code>
      */
     public static final String ID = "net.refractions.udig.tools.BBoxSelect"; //$NON-NLS-1$
-    
+
     private Point start;
 
 	private boolean selecting;
@@ -44,20 +53,19 @@ public class BBoxSelection extends SimpleTool implements ModalTool {
 	net.refractions.udig.project.ui.commands.SelectionBoxCommand shapeCommand;
 
     Set<String> selectedFids = new HashSet<String>();
-    
+
 	/**
 	 * Creates a new instance of BBoxSelection
 	 */
 	public BBoxSelection() {
 		super(MOUSE | MOTION);
 	}
-    
+
 	/**
 	 * @see net.refractions.udig.project.ui.tool.SimpleTool#onMouseDragged(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
 	 */
 	protected void onMouseDragged(MapMouseEvent e) {
 		Point end = e.getPoint();
-		if(start == null) return; 
 		shapeCommand.setShape(new Rectangle(Math.min(start.x, end.x), Math.min(
 				start.y, end.y), Math.abs(start.x - end.x), Math.abs(start.y
 				- end.y)));
@@ -102,7 +110,7 @@ public class BBoxSelection extends SimpleTool implements ModalTool {
 			}
 		}
 	}
-    
+
     /**
 	 * @param e
 	 * @param bounds
@@ -110,14 +118,17 @@ public class BBoxSelection extends SimpleTool implements ModalTool {
 	protected void sendSelectionCommand(MapMouseEvent e, Envelope bounds) {
 		MapCommand command;
 		if( e.isModifierDown(MapMouseEvent.MOD2_DOWN_MASK) ) {
-            command = new BBoxSelectionCommand(bounds, BBoxSelectionCommand.ADD);
+            command = getContext().getSelectionFactory()
+                     .createBBoxSelectionCommand(bounds, BBoxSelectionCommand.ADD);
         }else if( e.isModifierDown(MapMouseEvent.MOD1_DOWN_MASK) ){
-            command = new BBoxSelectionCommand(bounds, BBoxSelectionCommand.SUBTRACT);
+            command = getContext().getSelectionFactory()
+            .createBBoxSelectionCommand(bounds, BBoxSelectionCommand.SUBTRACT);
         }else{
-        	command = new BBoxSelectionCommand(bounds, BBoxSelectionCommand.NONE);
+        	command = getContext().getSelectionFactory()
+            .createBBoxSelectionCommand(bounds, BBoxSelectionCommand.NONE);
         }
-        	
-        
+
+
         getContext().sendASyncCommand(command);
 		selecting = false;
 		shapeCommand.setValid(false);

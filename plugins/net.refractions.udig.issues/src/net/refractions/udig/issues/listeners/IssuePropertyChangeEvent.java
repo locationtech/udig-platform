@@ -27,7 +27,7 @@ public class IssuePropertyChangeEvent extends AbstractIssueEvent {
 
     /**
      * New Instance
-     * 
+     *
      * @param propertyKey the property that has changed
      */
     public IssuePropertyChangeEvent( IIssue source, String propertyKey, Object newValue, Object oldValue ) {

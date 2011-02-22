@@ -1,9 +1,9 @@
 package net.refractions.udig.issues.test;
 
-import net.refractions.udig.issues.IIssuesExpansionProvider;
-
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.TreeItem;
+
+import net.refractions.udig.issues.IIssuesExpansionProvider;
 
 public class TestExpansionProvider {
 
@@ -20,7 +20,7 @@ public class TestExpansionProvider {
         public int getAutoExpandLevel() {
             return 0;
         }
-    
+
     }
 
     public static class Provider2 implements IIssuesExpansionProvider{
@@ -36,7 +36,7 @@ public class TestExpansionProvider {
         public int getAutoExpandLevel() {
             return 0;
         }
-    
+
     }
 
 }

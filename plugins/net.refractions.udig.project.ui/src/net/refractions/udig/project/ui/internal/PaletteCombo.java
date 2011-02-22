@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * @author ptozer TODO To change the template for this generated type comment go to Window -
- *         Preferences - Java - Code Style - Code Templates 
+ *         Preferences - Java - Code Style - Code Templates
  * @author chorner
  */
 public class PaletteCombo {
@@ -44,7 +44,7 @@ public class PaletteCombo {
     Button checkbox = null;
     Layer layerReference = null;
     org.eclipse.swt.graphics.Color swtColour = null;
-    
+
     public PaletteCombo( Composite parent ) {
         composite = parent; //new Composite(parent, SWT.NONE);
         fExtent = computeImageSize(composite);
@@ -62,15 +62,15 @@ public class PaletteCombo {
         String layerName = layer.getName();
         ColourScheme layerScheme = layer.getColourScheme();
         ColourScheme mapScheme = layer.getMapInternal().getColourScheme();
-        
-        final ColourScheme currentScheme;
+
+        ColourScheme currentScheme;
         if (layerScheme != null && !(layerScheme.equals(mapScheme))) { //TODO: check logic
             currentScheme = layerScheme;
         } else {
             currentScheme = mapScheme;
         }
         String[] colourLetters = getColourLetters(currentScheme);
-        
+
         int currentColourIndex = layer.getMapInternal().getMapLayers().indexOf(layer);
         layerReference = layer;
 
@@ -87,7 +87,7 @@ public class PaletteCombo {
         layerLabel.setLayoutData(data);
 
         colourIndicatorButton = new Button(composite, SWT.FLAT | SWT.TRAIL);
-        updateButtonColourDisplay(currentScheme, currentColourIndex);
+        updateButtonColourDisplay(currentColourIndex);
 
         data = new GridData();
         colourIndicatorButton.setLayoutData(data);
@@ -98,7 +98,7 @@ public class PaletteCombo {
         colourLetterCombo.addSelectionListener(new SelectionListener(){
             public void widgetSelected( SelectionEvent e ) {
                 int selectIndex = colourLetterCombo.getSelectionIndex();
-                updateButtonColourDisplay(currentScheme, selectIndex);
+                updateButtonColourDisplay(selectIndex);
             }
 
             public void widgetDefaultSelected( SelectionEvent e ) {
@@ -119,7 +119,7 @@ public class PaletteCombo {
     }
 
     /**
-     * 
+     *
      */
     public void dispose() {
         // clean up the colours and images
@@ -155,20 +155,20 @@ public class PaletteCombo {
             index = colourLetters.length-1;
         }
         colourLetterCombo.select(index);
-        updateButtonColourDisplay(scheme, index);
+        updateButtonColourDisplay(index);
     }
-    
+
     /**
      * @param index
      */
-    protected void updateButtonColourDisplay( ColourScheme scheme, int index ) {
+    protected void updateButtonColourDisplay( int index ) {
         GC gc = new GC(image);
         gc.drawRectangle(0, 2, fExtent.x, fExtent.y);
-        
+
         if (swtColour != null)
             swtColour.dispose();
 
-        Color clr = scheme.getColour(index);
+        Color clr = layerReference.getMapInternal().getColourScheme().getColour(index);
         swtColour = new org.eclipse.swt.graphics.Color(composite.getDisplay(), new RGB(clr.getRed(),
                 clr.getGreen(), clr.getBlue()));
         gc.setBackground(swtColour);
@@ -204,7 +204,7 @@ public class PaletteCombo {
     public Button getCheckbox() {
         return checkbox;
     }
-    
+
     private String[] getColourLetters(ColourScheme scheme) {
         int size = scheme.getSizePalette();
         String[] allColourLetters = new String[] {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$

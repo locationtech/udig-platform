@@ -3,27 +3,27 @@ package net.refractions.udig.project.internal.render.impl;
 import java.io.IOException;
 import java.util.Set;
 
+import javax.media.jai.util.Range;
+
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IStyleBlackboard;
 import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
 import net.refractions.udig.project.render.IRenderContext;
+import net.refractions.udig.project.render.IRenderMetrics;
 import net.refractions.udig.project.render.IRenderMetricsFactory;
 import net.refractions.udig.project.render.IRenderer;
 
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.geotools.util.Range;
 
 /**
  * Used by Renderer creator for storing extra information about the RenderMetrics, such as the name and id provided by the Extension point.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class InternalRenderMetricsFactory implements IRenderMetricsFactory{
     final IRenderMetricsFactory delegate;
     private IConfigurationElement element;
-    
+
     public InternalRenderMetricsFactory( IRenderMetricsFactory delegate, IConfigurationElement element) {
         this.delegate = delegate;
         this.element=element;
@@ -40,16 +40,16 @@ public class InternalRenderMetricsFactory implements IRenderMetricsFactory{
     public Class< ? extends IRenderer> getRendererType() {
         return delegate.getRendererType();
     }
-    
 
-    public static class InternalRenderMetrics extends AbstractRenderMetrics {
-        final AbstractRenderMetrics delegate;
+
+    public static class InternalRenderMetrics implements IRenderMetrics{
+        final IRenderMetrics delegate;
         private String name;
         private String description;
         private String id;
 
-        public InternalRenderMetrics( final AbstractRenderMetrics delegate, IConfigurationElement element) {
-            super(delegate.getRenderContext(), delegate.getRenderMetricsFactory(), delegate.getExpectedStyles());
+        public InternalRenderMetrics( final IRenderMetrics delegate, IConfigurationElement element) {
+            super();
             this.delegate = delegate;
             name=element.getAttribute("name"); //$NON-NLS-1$
             id=element.getNamespaceIdentifier()+"."+element.getAttribute("id"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -59,29 +59,28 @@ public class InternalRenderMetricsFactory implements IRenderMetricsFactory{
             }
         }
 
-        @Override
         public boolean canAddLayer( ILayer layer ) {
             return delegate.canAddLayer(layer);
         }
 
-        @Override
         public boolean canStyle( String styleID, Object value ) {
             return delegate.canStyle(styleID, value);
         }
 
-        @Override
         public Renderer createRenderer() {
             return delegate.createRenderer();
         }
 
-        @Override
         public IRenderContext getRenderContext() {
             return delegate.getRenderContext().copy();
         }
 
-        @Override
         public IRenderMetricsFactory getRenderMetricsFactory() {
             return delegate.getRenderMetricsFactory();
+        }
+
+        public boolean isOptimized() {
+            return delegate.isOptimized();
         }
 
         public String getDescription() {
@@ -99,35 +98,8 @@ public class InternalRenderMetricsFactory implements IRenderMetricsFactory{
             return delegate.toString();
         }
 
-        @Override
-        public Set<Range<Double>> getValidScaleRanges() {
+        public Set<Range> getValidScaleRanges() {
             return delegate.getValidScaleRanges();
         }
-        
-        @Override
-        public long getDrawingTimeMetric(){
-            return delegate.getDrawingTimeMetric();
-        }
-        
-        @Override
-        public long getLatencyMetric(){    
-            return delegate.getLatencyMetric();
-        }
-        
-        @Override
-        public double getResolutionMetric(){
-            return delegate.getResolutionMetric();
-        }
-        
-        @Override
-        public double getRenderAppearanceMetric(IStyleBlackboard blackboard){
-            return delegate.getRenderAppearanceMetric(blackboard);
-        }
-        
-        @Override
-        public double getUserAppearanceMetric(IStyleBlackboard blackboard){
-            return delegate.getUserAppearanceMetric(blackboard);
-        }
-        
     }
 }

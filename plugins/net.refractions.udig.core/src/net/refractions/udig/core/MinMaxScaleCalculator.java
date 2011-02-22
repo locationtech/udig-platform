@@ -17,11 +17,11 @@ package net.refractions.udig.core;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.media.jai.util.Range;
+
 import org.geotools.styling.AnchorPoint;
-import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntry;
-import org.geotools.styling.ContrastEnhancement;
 import org.geotools.styling.Displacement;
 import org.geotools.styling.ExternalGraphic;
 import org.geotools.styling.FeatureTypeConstraint;
@@ -29,19 +29,15 @@ import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.Halo;
-import org.geotools.styling.ImageOutline;
 import org.geotools.styling.LinePlacement;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.Mark;
 import org.geotools.styling.NamedLayer;
-import org.geotools.styling.OverlapBehavior;
 import org.geotools.styling.PointPlacement;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
-import org.geotools.styling.SelectedChannelType;
-import org.geotools.styling.ShadedRelief;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleVisitor;
@@ -50,21 +46,19 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.UserLayer;
-import org.geotools.util.Range;
 
 /**
- * 
+ *
  * Traverses a Style and determines the min and max scale that the style is valid for.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
-@SuppressWarnings("deprecation")
 public class MinMaxScaleCalculator implements StyleVisitor {
-    
-    private Set<Range<Double>> ranges = new HashSet<Range<Double>>();
+
+    private Set<Range> ranges = new HashSet<Range>();
     private double max;
-    private double min; 
+    private double min;
 
     public void visit( StyledLayerDescriptor sld ) {
         StyledLayer[] layers = sld.getStyledLayers();
@@ -106,7 +100,7 @@ public class MinMaxScaleCalculator implements StyleVisitor {
         double max = rule.getMaxScaleDenominator();
         this.min = Math.min(min, this.min);
         this.max = Math.max(max, this.max);
-        ranges.add(new Range<Double>(Double.class, min,max));
+        ranges.add(new Range(Double.class, min,max));
     }
 
     public void visit( FeatureTypeStyle fts ) {
@@ -170,7 +164,7 @@ public class MinMaxScaleCalculator implements StyleVisitor {
     public void visit( ColorMapEntry colorMapEntry ) {
     }
 
-    public Set<Range<Double>> getRanges() {
+    public Set<Range> getRanges() {
         return ranges;
     }
 
@@ -180,34 +174,6 @@ public class MinMaxScaleCalculator implements StyleVisitor {
 
     public double getMin() {
         return min;
-    }
-
-    public void visit( ContrastEnhancement arg0 ) {
-    }
-
-    public void visit( ImageOutline arg0 ) {
-    }
-
-    public void visit( ChannelSelection arg0 ) {
-    }
-
-    public void visit( OverlapBehavior arg0 ) {
-    }
-
-    public void visit( SelectedChannelType arg0 ) {
-    }
-
-    public void visit( ShadedRelief arg0 ) {
-    }
-    
-    // UTILITY FUNCTIONS
-    public static Set<Range<Double>> getValidScaleRanges(Style style) {
-        if( style == null ) {
-            return new HashSet<Range<Double>>();
-        }
-        MinMaxScaleCalculator minMaxScaleCalculator = new MinMaxScaleCalculator();
-        style.accept(minMaxScaleCalculator);
-        return minMaxScaleCalculator.getRanges();
     }
 
 }

@@ -1,0 +1,212 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 5 Image Cache and Images</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 5 Image Cache and Images -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>A Plugin is responsible for any resource used, including management of <a href="Icons and Imagery.html" title="Icons and Imagery">Icons and Imagery</a>. SWT wants us to manually manage our images, this includes creation and disposal.</p>
+
+<table class='confluenceTable'>
+<tr>
+<td class='confluenceTd'> Image </td>
+<td class='confluenceTd'> a real image from the operating system, i.e. a limited resource </td>
+</tr>
+<tr>
+<td class='confluenceTd'> ImageDescriptor </td>
+<td class='confluenceTd'> a placeholder that allows the image to be used as needed </td>
+</tr>
+</table>
+
+<p>Icons fall under the category of Images that are "used very frequently or must be shared among several widgets for unknown lengths of time". This makes them a pain to manage on a per use basis. The solution is to create a class to manage these resources and clean up after them.</p>
+
+<p>This means we are allowed to keep an ImageRegistry of icons....</p>
+
+<h4><a name="5ImageCacheandImages-Background%3AJFace%26ImageRegistry">Background:JFace &amp; ImageRegistry</a></h4>
+<p>JFace provides an ImageRegistry yourself (it works like a Map that will dispose of the Images when an associated Display is cleaned up).</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">String</span> ICON = <span class="code-quote">"obj16/icon.gif"</span>
+ImageRegistry registry = <span class="code-keyword">new</span> ImageRegistry();
+
+ImageDescriptor desc = ImageDescriptor.createFromURL( );
+registry.put( ICON, desc);</pre>
+</div></div>
+
+<p>JFace also offers a global JFaceResources class that provides a shared ImageRegistry.</p>
+
+<div class="panel"><div class="panelHeader"><b>The Party Line</b></div><div class="panelContent">
+<p>There is a bit of a difference between the formal party line provided by the EclipseFAQ, and what everyone is really doing.</p>
+
+<p>Lets work through what is supposed to happen.</p>
+
+<h4><a name="5ImageCacheandImages-UseofAbstractUIPlugin%26ImageRegistry">Use of AbstractUIPlugin &amp; ImageRegistry</a></h4>
+
+<p>Chances are your plugin extends AbstractUIPlugIn - this means there is a ImageRegistry already to go.</p>
+
+<p>We simply need to supply the icons using the provided callback:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class MyPlugin <span class="code-keyword">extends</span> AbstractUIPlugin {
+       <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">String</span> ID = <span class="code-quote">"example.<span class="code-keyword">package</span>.my"</span>; <span class="code-comment">//$NON-NLS-1$
+</span>       <span class="code-keyword">public</span> <span class="code-keyword">final</span> <span class="code-keyword">static</span> <span class="code-object">String</span> ICONS_PATH = <span class="code-quote">"icons/"</span>;<span class="code-comment">//$NON-NLS-1$
+</span>       <span class="code-keyword">public</span> <span class="code-keyword">final</span> <span class="code-keyword">static</span> <span class="code-object">String</span> PATH_ELOCALTOOL = ICONS_PATH+<span class="code-quote">"elcl16/"</span>;
+       <span class="code-keyword">public</span> <span class="code-keyword">final</span> <span class="code-keyword">static</span> <span class="code-object">String</span> ADD_CO = PATH_ELOCALTOOL + <span class="code-quote">"add_co.gif"</span>;
+
+       <span class="code-keyword">protected</span> void initializeImageRegistry(
+	            ImageRegistry registry) {
+
+		Bundle bundle = Platform.getBundle(ID);
+		IPath path = <span class="code-keyword">new</span> Path( ImageConstants.ADD_CO );
+		URL url = Platform.find(bundle, path);
+		ImageDescriptor desc = ImageDescriptor.createFromURL(url);
+		registry.put( ImageConstants.ADD_CO, desc);
+	}</pre>
+</div></div>
+<p>initializeImageRegistry is called during Plugin startup. An interesting thing to note is the use of Platform.getBundle( ID ) to locate the correct url to start searching from.</p>
+
+<p>Images are then available via:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">MyPlugIn.getDefault().getImageRegistry().getDescriptor( ImageConstants.ADD_CO )</pre>
+</div></div>
+
+<h4><a name="5ImageCacheandImages-ISharedImages">ISharedImages</a></h4>
+
+<p>If your icons need to be accessed from outside of your Plug-In a convention exists - provide the the constants in a ISharedImages file.</p>
+
+<p>The ISharedImage file need to be in a public directory:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> ISharedImages {
+    <span class="code-keyword">public</span> <span class="code-keyword">final</span> <span class="code-keyword">static</span> <span class="code-object">String</span> ICONS_PATH = <span class="code-quote">"icons/"</span>;<span class="code-comment">//$NON-NLS-1$
+</span>    <span class="code-keyword">public</span> <span class="code-keyword">final</span> <span class="code-keyword">static</span> <span class="code-object">String</span> PATH_ELOCALTOOL = ICONS_PATH+<span class="code-quote">"elcl16/"</span>;
+    <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">String</span> IMG_ADD_COMMAND = PATH_ELOCALTOOL + <span class="code-quote">"add_co.gif"</span>;
+}</pre>
+</div></div>
+
+<p>External code can now make use of your Images:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">ImageRegistry images = MyPlugIn.getDefault().getImageRegistry();
+ImageDescriptor image = images.getDescriptor( ISharedImages.IMG_DATASTORE_OBJ );</pre>
+</div></div>
+</div></div>
+<h3><a name="5ImageCacheandImages-Pragmatism">Pragmatism</a></h3>
+
+<p>The above is a lot of work, forces a lot of complexity on your PlugIn class. And is not actually what several popular implementations are doing.</p>
+
+<p>Here are some of the forces that are effecting real world implementations:</p>
+<ul class="alternate" type="square">
+	<li>For images in very common use an shared Image, rather than a ImageDescriptor is made available via ISharedImage. This improves performance</li>
+	<li>The size of resource keys has started to be a problem in the broader Eclipse project. Allowing the use of shorter strings apparently is worthwhile</li>
+	<li>The need to publish Images for reuse with in a plug-in</li>
+	<li>Separation of concerns, taking image resource code out of the plug-in class</li>
+</ul>
+
+
+<h4><a name="5ImageCacheandImages-ImageConstants">ImageConstants</a></h4>
+
+<p>To ease access to your icons create a ImageConstants based on the path to the resource in your icons directory.</p>
+
+<p>This class should be located in an internal package.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> ImageConstants {
+	<span class="code-keyword">public</span> <span class="code-keyword">final</span> <span class="code-keyword">static</span> <span class="code-object">String</span> PATH_ELOCALTOOL = <span class="code-quote">"elcl16/"</span>;
+	<span class="code-keyword">public</span> <span class="code-keyword">final</span> <span class="code-keyword">static</span> <span class="code-object">String</span> ADD_CO = PATH_ELOCALTOOL + <span class="code-quote">"add_co.gif"</span>;
+}</pre>
+</div></div>
+
+<p>We have removed the leading ICONS_PATH in order to shorten key names.</p>
+
+<h4><a name="5ImageCacheandImages-ISharedImage">ISharedImage</a></h4>
+
+<p>ISharedImage works just like before - only this time we can refer to some well know keys from ImageConstants.</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> ISharedImages {
+    <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">String</span> IMG_ADD_COMMAND = ImageConstants.ADD_CO;
+}</pre>
+</div></div>
+
+<p>Two out of three ISharedImage have defined methods:</p>
+<ul class="alternate" type="square">
+	<li>getImageDescriptor( String key ) - allows access to a shared ImageDescriptor (any created Image must be disposed)</li>
+	<li>getImage( String key ) - allows access to a real shared Image that must not be disposed</li>
+</ul>
+
+
+<p>We need something to implement ISharedImage, the PlugIn is responsible for keeping providing a class implementing this interface.</p>
+
+<h4><a name="5ImageCacheandImages-Images%28autilityclass%29">Images (a utility class )</a></h4>
+
+<p>A utility class, created on PlugIn startup takes over the management of common images.</p>
+
+<h3><a name="5ImageCacheandImages-UsingImages">Using Images</a></h3>
+
+<p>Usually when it comes time to actually use an Image you are working in a View.</p>
+
+<p>Keeping track of your Images (in a cache) is a easy way to go:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">private</span> Map imageCache = <span class="code-keyword">new</span> HashMap();
+        <span class="code-keyword">private</span> Image getIcon(<span class="code-object">String</span> icon) {
+            <span class="code-comment">//obtain the cached image corresponding to the descriptor
+</span>            Image image = (Image) imageCache.get(icon);
+            <span class="code-keyword">if</span> (image == <span class="code-keyword">null</span>) {
+                ImageDescriptor id = Images.image( icon );
+                image = id.createImage();
+                imageCache.put(icon, image);
+            }
+            <span class="code-keyword">return</span> image;
+        }</pre>
+</div></div>
+
+<p>The only trick being that you need to clean up the cache in your dispose method:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> void dispose() {
+		<span class="code-keyword">for</span> (Iterator i = imageCache.values().iterator(); i.hasNext(); ) {
+		    ((Image) i.next()).dispose();
+		}
+		imageCache.clear();
+	}</pre>
+</div></div>
+
+<p>An alternative is using ImageRegistry instead of HashMap:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">private</span> ImageRegistry imageCache;
+<span class="code-keyword">public</span> void createPartControl(Composite parent) {
+        imageCache = <span class="code-keyword">new</span> ImageRegistry( parent.getDisplay() );
+        ....
+}</pre>
+</div></div>
+
+<div class="panel"><div class="panelHeader"><b>links</b></div><div class="panelContent">
+<ul>
+	<li><a href="http://www.eclipsefaq.org/chris/faq/html/faq154.html" title="Visit page outside Confluence">Eclipse FAQs:How do I use image and font registries?</a></li>
+</ul>
+</div></div>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=75">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=75">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

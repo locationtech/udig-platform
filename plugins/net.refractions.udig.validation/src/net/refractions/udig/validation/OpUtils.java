@@ -1,28 +1,25 @@
 package net.refractions.udig.validation;
 
 import java.text.MessageFormat;
-import java.util.HashSet;
-import java.util.Set;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.factory.SelectionCommandFactory;
+import net.refractions.udig.project.command.SelectionCommandFactory;
 import net.refractions.udig.validation.internal.Messages;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.identity.Identifier;
+import org.geotools.factory.FactoryConfigurationError;
+import org.geotools.feature.Feature;
+import org.geotools.filter.FidFilter;
+import org.geotools.filter.FilterFactoryFinder;
 
 /**
  * A utility class which provides a method to notify the user of the validation results, and a
  * method selection features which failed the validation on the current layer.
  * <p>
  * </p>
- * 
+ *
  * @author chorner
  * @since 1.0.1
  */
@@ -31,7 +28,7 @@ public class OpUtils {
     /**
      * Notifies the user of the result of the validation. Currently, this method displays a crude
      * pop-up window, but one day... it will populate the analysis window
-     * 
+     *
      * @param display
      * @param evaluationObject
      * @param results
@@ -50,7 +47,7 @@ public class OpUtils {
         }
         display.asyncExec(new Runnable(){
             public void run() {
-                MessageDialog.openInformation(display.getActiveShell(), Messages.OpUtils_results, buffer.toString());  
+                MessageDialog.openInformation(display.getActiveShell(), Messages.OpUtils_results, buffer.toString());
             }
         });
     }
@@ -58,21 +55,20 @@ public class OpUtils {
     /**
      * Given a layer and validation result, this method creates a fid filter and selects the
      * features in the current layer which failed the validation.
-     * 
+     *
      * @param layer
      * @param results
      * @throws FactoryConfigurationError
-     */public static void setSelection( final ILayer layer, GenericValidationResults results ) {
-    	 FilterFactory ff = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-    	 
-    	 Set<Identifier> fid = new HashSet<Identifier>();
+     */public static void setSelection( final ILayer layer, GenericValidationResults results )
+            throws FactoryConfigurationError {
         // generate a fid filter out of the invalid features
-        for( SimpleFeature feature : results ) {
-            fid.add(ff.featureId(feature.getID()));
+        FidFilter fid = FilterFactoryFinder.createFilterFactory().createFidFilter();
+        for( Feature feature : results ) {
+            fid.addFid(feature.getID());
         }
         // select the invalid features on the current layer
         MapCommand selectionCommand = SelectionCommandFactory.getInstance().createSelectCommand(
-                layer, ff.id(fid));
+                layer, fid);
         layer.getMap().sendCommandASync(selectionCommand);
     }
 

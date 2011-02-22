@@ -6,14 +6,18 @@
 package net.refractions.udig.project.element.util;
 
 import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.element.ElementPackage;
-import net.refractions.udig.project.element.ProjectElementAdapter;
+
+import net.refractions.udig.project.element.*;
+
 import net.refractions.udig.project.internal.ProjectElement;
 
 import org.eclipse.core.runtime.IAdaptable;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**

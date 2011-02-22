@@ -33,7 +33,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * Test the LayerDropAction
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -51,7 +51,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
                 MapTests.createGeoResource("DropActionTestFeatures2", 4, true), //$NON-NLS-1$
                 MapTests.createGeoResource("DropActionTestFeatures2", 5, true), //$NON-NLS-1$
                 MapTests.createGeoResource("DropActionTestFeatures2", 6, true) //$NON-NLS-1$
-                
+
         };
         ApplicationGIS.addLayersToMap(map, Arrays.asList(resources),0,null, true);
         action = new LayerDropAction();
@@ -67,7 +67,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         //      layer dropped after another layer in same map.
         action.init(null, null, ViewerDropLocation.AFTER, map.getLayersInternal().get(0), map.getLayersInternal().get(1));
         assertTrue(action.accept());
-        
+
         // layer dropped on itself
         action.init(null, null, ViewerDropLocation.ON, map.getLayersInternal().get(0), map.getLayersInternal().get(0));
         assertFalse(action.accept());
@@ -80,11 +80,11 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         //      layer dropped not on any layer (target ends up being itself)
         action.init(null, null, ViewerDropLocation.NONE, map.getLayersInternal().get(0), map.getLayersInternal().get(0));
         assertTrue(action.accept());
-        
+
         //      layer dropped on a layer in another map.
         action.init(null, null, ViewerDropLocation.AFTER, ProjectFactory.eINSTANCE.createLayer(), map.getLayersInternal().get(0));
         assertFalse(action.accept());
-        
+
     }
 
 //  if dropped on previous or next layer it should ALWAY swap
@@ -93,7 +93,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         Layer destination = map.getLayersInternal().get(1);
         action.init(null, null, ViewerDropLocation.ON, destination, data);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals( 1, data.getZorder());
         assertEquals( 0, destination.getZorder());
 
@@ -101,7 +101,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         destination = map.getLayersInternal().get(1);
         action.init(null, null, ViewerDropLocation.BEFORE, destination, data);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals( 1, data.getZorder());
         assertEquals( 0, destination.getZorder());
 
@@ -109,18 +109,18 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         destination = map.getLayersInternal().get(1);
         action.init(null, null, ViewerDropLocation.AFTER, destination, data);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals( 1, data.getZorder());
         assertEquals( 0, destination.getZorder());
     }
-    
+
 //  if dropped on previous or next layer it should ALWAY swap
     public void testDropOnPreviousLayer() throws Exception {
         Layer data = map.getLayersInternal().get(1);
         Layer destination = map.getLayersInternal().get(0);
         action.init(null, null, ViewerDropLocation.ON, destination, data);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals( 0, data.getZorder());
         assertEquals( 1, destination.getZorder());
 
@@ -128,7 +128,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         destination = map.getLayersInternal().get(0);
         action.init(null, null, ViewerDropLocation.BEFORE, destination, data);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals( 0, data.getZorder());
         assertEquals( 1, destination.getZorder());
 
@@ -136,29 +136,29 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         destination = map.getLayersInternal().get(0);
         action.init(null, null, ViewerDropLocation.AFTER, destination, data);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals( 0, data.getZorder());
         assertEquals( 1, destination.getZorder());
     }
-    
+
     public void testDropBeforeOtherLayer() throws Exception {
         Layer data = map.getLayersInternal().get(0);
         Layer destination = map.getLayersInternal().get(2);
         action.init(null, null, ViewerDropLocation.BEFORE, destination, data);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals( 2, data.getZorder());
         assertEquals( 1, destination.getZorder());
-        
+
         data = map.getLayersInternal().get(2);
         destination = map.getLayersInternal().get(0);
         action.init(null, null, ViewerDropLocation.BEFORE, destination, data);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals( 1, data.getZorder());
         assertEquals( 0, destination.getZorder());
-        
-        
+
+
     }
 
     public void testDropOnOtherLayer() throws Exception {
@@ -166,15 +166,15 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         Layer destination = map.getLayersInternal().get(2);
         action.init(null, null, ViewerDropLocation.ON, destination, data);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals( 2, data.getZorder());
         assertEquals( 1, destination.getZorder());
-        
+
         data = map.getLayersInternal().get(2);
         destination = map.getLayersInternal().get(0);
         action.init(null, null, ViewerDropLocation.ON, destination, data);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals( 0, data.getZorder());
         assertEquals( 1, destination.getZorder());
     }
@@ -184,7 +184,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         Layer destination = map.getLayersInternal().get(2);
         action.init(null, null, ViewerDropLocation.AFTER, destination, data);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals( 1, data.getZorder());
         assertEquals( 2, destination.getZorder());
 
@@ -192,7 +192,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         destination = map.getLayersInternal().get(0);
         action.init(null, null, ViewerDropLocation.AFTER, destination, data);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals( 0, data.getZorder());
         assertEquals( 1, destination.getZorder());
     }
@@ -202,17 +202,17 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         Layer destination = map.getLayersInternal().get(1);
         action.init(null, null, ViewerDropLocation.NONE, destination, data);
         action.perform(new NullProgressMonitor());
-        
+
         assertEquals( 0, data.getZorder());
         assertEquals( 2, destination.getZorder());
     }
 
-    
+
     public void testIntegrationTest() throws Exception {
         UDIGDropHandler handler = new UDIGDropHandler();
         final Layer data = map.getLayersInternal().get(0);
         Object destination = map.getLayersInternal().get(2);
-        
+
         handler.setTarget(destination);
         handler.setViewerLocation(ViewerDropLocation.BEFORE);
         handler.performDrop(data, null);
@@ -222,12 +222,12 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
             public boolean isTrue() {
                 return data.getZorder()==2 && ((Layer) finalDest).getZorder()==1;
             }
-            
+
         }, false);
-        
+
         assertEquals(2, data.getZorder());
         assertEquals(1, ((Layer) destination).getZorder());
         assertEquals(5, map.getLayersInternal().size());
-        
+
     }
 }

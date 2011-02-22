@@ -33,19 +33,18 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 
 /**
- * An implementation that uses a strategy object to communicate with 
- * the storage device.  This object takes care of notification listening
+ * An implementation that uses a strategy object to communicate with the storage device.  This object takes care of notification listening
  * and saving.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class StrategizedIssuesList implements IRemoteIssuesList {
-    
+
     private final IssuesList wrapped;
     private IListStrategy dsStrategy;
     private IIssuesListListener listener = new IIssuesListListener(){
-        
+
         public void notifyChange( IssuesListEvent event ) {
 
             final IssuesListEventType type = event.getType();
@@ -70,18 +69,18 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
                 break;
             }
         }
-        
+
     };
-    
+
     public StrategizedIssuesList() {
         wrapped=new IssuesList();
     }
-    
+
     public void init(IListStrategy strategy) throws IOException{
         this.dsStrategy=strategy;
         refresh();
     }
-    
+
 
     @SuppressWarnings("unchecked")
     public void refresh() throws IOException {
@@ -91,7 +90,7 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
                 public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
 
                     wrapped.removeListener(listener);
-                    
+
                     List<IIssue> issues = new ArrayList<IIssue>();
                     Collection< ? extends IIssue> remoteList;
                     try {
@@ -102,7 +101,7 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
                     for( IIssue issue : remoteList ) {
                         issues.add(issue);
                     }
-                    
+
                     for ( Iterator<IIssue> iter=wrapped.iterator(); iter.hasNext(); ){
                         IIssue issue=iter.next();
                         IIssue newVersion =find(issue, issues);
@@ -113,17 +112,17 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
                         }
                     }
                     wrapped.addAll(issues);
-                    
+
                     wrapped.notify(issues, IssuesListEventType.REFRESH);
-                    
+
                     wrapped.addListener(listener);
                 }
-                
+
             }, ProgressManager.instance().get());
         } catch (Exception e) {
             throw (IOException) new IOException( ).initCause( e );
-        } 
-        
+        }
+
     }
 
     private IIssue find( IIssue issue, Collection< ? extends IIssue> issues ) {

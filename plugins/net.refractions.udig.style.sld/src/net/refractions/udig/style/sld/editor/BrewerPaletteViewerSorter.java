@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.style.sld.editor;
 

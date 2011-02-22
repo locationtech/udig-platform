@@ -20,17 +20,16 @@ import net.refractions.udig.tool.edit.internal.Messages;
 import net.refractions.udig.tools.edit.EditPlugin;
 
 import org.eclipse.jface.action.IStatusLineManager;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Deletes a feature from the currently selected layer or the top layer.
- * 
+ *
  * @author Jesse
  * @since 0.8.1
  */
@@ -44,7 +43,7 @@ public class DeleteTool extends AbstractModalTool implements ModalTool {
         super(MOUSE|MOTION);
     }
 
-    
+
     @Override
     public void setActive(final boolean active) {
     	super.setActive(active);
@@ -68,40 +67,40 @@ public class DeleteTool extends AbstractModalTool implements ModalTool {
 			}
 		});
 	}
-	
-    
+
+
     @Override
     public void mousePressed( MapMouseEvent e ) {
-        draw.setValid( true ); // make sure context.getViewportPane().repaint() knows about us        
-        context.sendASyncCommand( draw ); // should of isValided us       
+        draw.setValid( true ); // make sure context.getViewportPane().repaint() knows about us
+        context.sendASyncCommand( draw ); // should of isValided us
         feedback( e );
-                
+
     }
     @Override
     public void mouseDragged( MapMouseEvent e ) {
         feedback( e );
-        
+
     }
-    
+
     DrawShapeCommand draw = new DrawShapeCommand();
-    
+
     /**
      * Provides user feedback
-     * @param e 
+     * @param e
      */
-    public void feedback( MapMouseEvent e ) {        
+    public void feedback( MapMouseEvent e ) {
         ReferencedEnvelope box = context.getBoundingBox( new Point(e.x-3, e.y-3), 7 );
-        draw.setShape( context.toShape( box ) );        
+        draw.setShape( context.toShape( box ) );
         context.getViewportPane().repaint();
-        
+
         super.mouseDragged(e);
     }
-    
-	
+
+
     public void mouseReleased( MapMouseEvent e ) {
     	if( getContext().getMapLayers().size()==0 )
     		return;
-        FeatureIterator<SimpleFeature> reader = null;
+        FeatureIterator reader = null;
         try {
 
             ILayer layer = getContext().getEditManager().getSelectedLayer();
@@ -112,12 +111,12 @@ public class DeleteTool extends AbstractModalTool implements ModalTool {
                 throw new Exception("No layers in map"); //$NON-NLS-1$
 
             Envelope env = getContext().getBoundingBox(e.getPoint(), 6);
-            FeatureCollection<SimpleFeatureType, SimpleFeature>  results = getContext().getFeaturesInBbox(
+            FeatureCollection results = getContext().getFeaturesInBbox(
                     layer,
                     env);
 
             reader = results.features();
-            
+
             final boolean found=!reader.hasNext() ;
         	getContext().updateUI(new Runnable() {
 				public void run() {
@@ -136,11 +135,11 @@ public class DeleteTool extends AbstractModalTool implements ModalTool {
             if (found)
                 return;
 
-            SimpleFeature feature=reader.next();
+            Feature feature=reader.next();
 
             MapCommand deleteFeatureCommand = getContext().getEditFactory().createDeleteFeature(feature, layer);
             getContext().sendASyncCommand(deleteFeatureCommand);
-    
+
             getContext().getViewportPane().repaint();
         } catch (Exception e1) {
         	EditPlugin.log( null, e1);

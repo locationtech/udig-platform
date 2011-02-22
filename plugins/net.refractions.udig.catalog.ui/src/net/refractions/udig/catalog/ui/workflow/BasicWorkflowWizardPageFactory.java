@@ -16,11 +16,12 @@ package net.refractions.udig.catalog.ui.workflow;
 
 import java.util.Map;
 
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 
 /**
- * Simply returns the page that the factory is constructed with.  Or if the map constructor is used returns the 
+ * Simply returns the page that the factory is constructed with.  Or if the map constructor is used returns the
  * page associated with the state.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -28,17 +29,17 @@ public class BasicWorkflowWizardPageFactory implements WorkflowWizardPageProvide
 
     private final WorkflowWizardPage page;
     private final Map<State, WorkflowWizardPage> mapping;
-    
+
     public BasicWorkflowWizardPageFactory(WorkflowWizardPage page) {
         this.page = page;
         this.mapping = null;
     }
-    
+
     public BasicWorkflowWizardPageFactory(Map<State, WorkflowWizardPage> mapping) {
         this.mapping = mapping;
         this.page = null;
     }
-    
+
     public WorkflowWizardPage getWorkflowWizardPage( State state ) {
         if( page !=null ){
             return page;

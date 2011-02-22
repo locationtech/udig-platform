@@ -44,7 +44,6 @@ public class Messages extends NLS {
     public static String FeatureTableContentProvider_outOfMemory;
     public static String FeatureTableContentProvider_sortTable;
     public static String FeatureTableContentProvider_unexpectedErro;
-    public static String FeatureTableContentProvider_probablecharseterror;
     public static String FeatureTableContentProvider_updateTaskName;
     public static String FeatureTableContentProvider_updatingFeatures;
     public static String FeatureTableControl_1;
@@ -72,13 +71,6 @@ public class Messages extends NLS {
 	public static String OperationLabelProvider_unknown;
     public static String PlatformGIS_background;
 	public static String RunOperationDialog_run_operation;
-	public static String RuntimeFieldEditor_error;
-    public static String RuntimeFieldEditor_locale;
-    public static String RuntimeFieldEditor_maxheap;
-    public static String RuntimeFieldEditor_memory_positive;
-    public static String RuntimeFieldEditor_path_not_existing;
-    public static String RuntimeFieldEditor_restart;
-    public static String RuntimeFieldEditor_workspace_path;
     public static String SendLogDialog_contact;
     public static String SendLogDialog_contact_message;
     public static String SendLogDialog_description;
@@ -89,8 +81,6 @@ public class Messages extends NLS {
     public static String SendLogDialog_reading;
     public static String SendLogDialog_submit;
     public static String SendLogDialog_title;
-    public static String SubmitIssueDialog_instructions;
-    public static String SubmitIssueDialog_copy;
     public static String ShutdownTaskList_shutDown;
     public static String TransferPreference_transfer_preference_description;
 	public static String FeatureTextTransfer_transfer_name;
@@ -155,17 +145,11 @@ public class Messages extends NLS {
 	public static String UDIGWorkbenchAdvisor_file;
 	public static String UDIGApplication_error_jai_warning_text;
 	public static String UDIGApplication_error_jai_warning_title;
-    public static String UDIGApplication_helpstring;
     public static String UDIGWorkbenchWindowAdvisor_classNotFound;
     public static String UDIGWorkbenchWindowAdvisor_specifiedButNotFound;
-	public static String RuntimePreferences_desc;
 	public static String UiPreferences_advancedGraphics_label;
     public static String UiPreferences_charset;
 	public static String UiPreferences_description;
-    public static String UiPreferences_ImperialUnits;
-    public static String UiPreferences_MetricUnits;
-    public static String UiPreferences_AutoUnits;
-    public static String UiPreferences_UnitsLabel;
     public static String CRSChooser_tooltip;
     public static String CRSChooser_unnamed;
     public static String CRSChooser_keywordsLabel;
@@ -173,36 +157,33 @@ public class Messages extends NLS {
     public static String CRSChooser_tab_standardCRS;
     public static String CRSChooser_label_crs;
     public static String CRSChooser_label_crsWKT;
-    
+
     public static String cancel_label;
     public static String cancel_image;
     public static String cancel_description;
     public static String cancel_tooltip;
-    
+
     public static String orientation_horizontal_label;
     public static String orientation_horizontal_image;
     public static String orientation_horizontal_description;
     public static String orientation_horizontal_tooltip;
-    
+
     public static String orientation_vertical_label;
     public static String orientation_vertical_image;
     public static String orientation_vertical_description;
     public static String orientation_vertical_tooltip;
-    
+
     public static String orientation_single_label;
     public static String orientation_single_image;
     public static String orientation_single_description;
     public static String orientation_single_tooltip;
-    
+
     public static String orientation_automatic_label;
     public static String orientation_automatic_image;
     public static String orientation_automatic_description;
     public static String orientation_automatic_tooltip;
-    
-    public static String addAttributeAction_label;
 
-    public static String ExceptionDetailsEditorMessage;
-    
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
@@ -210,7 +191,7 @@ public class Messages extends NLS {
 
 	private Messages() {
 	}
-	
+
 	/**
      * Initialize the given Action from a ResourceBundle.
      * <p>
@@ -225,7 +206,7 @@ public class Messages extends NLS {
      * Note: The use of a single image value is mapped to images for both the enabled and distabled
      * state of the IAction. the Local toolbar (elcl16/ and dlcl16/) is assumed if a path has not
      * been provided.
-     * 
+     *
      * <pre><code>
      *  add_co.gif              (prefix.image)
      *     enabled: elcl16/add_co.gif
@@ -234,10 +215,10 @@ public class Messages extends NLS {
      *     enabled: etool16/discovery_wiz.16
      *    disabled: etool16/discovery_wiz.16
      * </code></pre>
-     * 
+     *
      * </p>
-     * 
-     * @param a action 
+     *
+     * @param a action
      * @param id used for binding (id.label, id.tooltip, ...)
      * @deprecated not safe, using this will cause bugs.  jeichar
      */

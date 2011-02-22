@@ -19,30 +19,19 @@ package net.refractions.udig.catalog.arcsde.internal;
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "net.refractions.udig.catalog.arcsde.internal.messages"; //$NON-NLS-1$
-
-    public static String ArcGeoResource_error_layer_bounds;
-
-    public static String ArcSDEPreferences_jar_Drivers;
-
-    public static String ArcSDEPreferences_jar_projectionEngine;
-
-    public static String ArcSDEPreferences_jar_icu4j;
-
+	private static final String BUNDLE_NAME = "net.refractions.udig.catalog.arcsde.internal.messages"; //$NON-NLS-1$
+	public static String ArcGeoResource_error_layer_bounds;
+    public static String ArcSDEPreferences_jdbc_drivers;
     public static String ArcSDEWizardPage_MissingDrivers;
-
     public static String ArcSDEWizardPage_restartApp;
-
-    public static String ArcSDEWizardPage_title;
-
+	public static String ArcSDEWizardPage_title;
     public static String ArcServiceExtension_notSDEURL;
-
     public static String ArcServiceExtension_urlNull;
-    static {
-        // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-    }
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
 
-    private Messages() {
-    }
+	private Messages() {
+	}
 }

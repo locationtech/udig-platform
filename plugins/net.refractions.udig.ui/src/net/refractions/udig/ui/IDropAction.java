@@ -7,31 +7,31 @@ import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 
 /**
- * 
+ *
  * Defines the behaviour when a drag and drop event occurs.  The extension declaration combined with the accepts method
  * determines whether the Action will be ran for a given drag/drop event.
- * 
+ *
  * <p>If the enablesFor is a anything other than null or 1 then an array of objects (all the same type)
  * will be the data returned by getData, otherwise the data be a single object (not an array).
- * 
+ *
  * @author jdeolive
  * @since 1.0.0
  */
 public abstract class IDropAction {
-	
+
 	public static final String XPID = "net.refractions.udig.ui.dropAction"; //$NON-NLS-1$
-	
+
 	/** the extension info **/
 	IConfigurationElement element;
-	
+
     private Object destination;
 
     private Object data;
 
     private DropTargetEvent event;
 
-    private ViewerDropLocation location; 
-	
+    private ViewerDropLocation location;
+
     /**
      * Returns the Configuration element that definates the action in the extension declaration.
      *
@@ -40,7 +40,7 @@ public abstract class IDropAction {
 	public IConfigurationElement getElement() {
 		return element;
 	}
-	
+
     /**
      * Returns the name of the action.
      *
@@ -51,10 +51,10 @@ public abstract class IDropAction {
 			return ""; //$NON-NLS-1$
 		return element.getAttribute("name"); //$NON-NLS-1$
 	}
-	
+
     /**
-     * Called if the action seems to be a good candidate for handling the drop event.  
-     * 
+     * Called if the action seems to be a good candidate for handling the drop event.
+     *
      * @see #getData();
      * @see #getData()
      * @see #getEvent()
@@ -62,7 +62,7 @@ public abstract class IDropAction {
      * @return true if the action this it should handle the drop event.
      */
     public abstract boolean accept();
-	
+
     /**
      * Performs the drop action.
      *
@@ -94,7 +94,7 @@ public abstract class IDropAction {
      *
      * @param element2 the extension configuration element
      * @param event2 the drop event.
-     * @param location wrt the destination.    
+     * @param location wrt the destination.
      * @param destination2 the object that the data was dropped on.
      * @param data2 the data that was dropped.
      */
@@ -120,9 +120,9 @@ public abstract class IDropAction {
      * location where the drop is taking place (before, on or after the destination object).
      *
      * @see ViewerDropAdapter#getCurrentLocation()
-     * 
-     * @return If the component is not a viewer this will always return {@link ViewerDropAdapter#LOCATION_ON} otherwise it will be one of the LOCATION_* 
-     * values. 
+     *
+     * @return If the component is not a viewer this will always return {@link ViewerDropAdapter#LOCATION_ON} otherwise it will be one of the LOCATION_*
+     * values.
      */
     public ViewerDropLocation getViewerLocation() {
         return location;

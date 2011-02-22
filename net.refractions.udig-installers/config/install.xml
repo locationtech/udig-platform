@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<!--
+    The IZPack uDig installer configuration.
+-->
+
+<installation version="1.0">
+
+    <properties>
+        <property name="launchername" value="udig" />
+    </properties>
+
+    <!--
+        The info section.
+        The meaning of the tags should be natural ...
+    -->
+    <info>
+        <appname>uDig</appname>
+        <appversion>1.1-RC15</appversion>
+        <authors>
+            <author name="Jesse Eichar" email="jeichar.w@gmail.com" />
+            <author name="Jody Garnett"
+                email="jgarnett@refractions.net" />
+            <author name="Richard Gould" email=""/>
+            <author name="Cory Horner" email="" />
+            <author name="Many more" email=""/>
+        </authors>
+        <url>http://udig.refractions.net</url>
+    </info>
+
+    <!--
+        The gui preferences indication.
+        Sets the installer window to 640x480. It will not be able to change the size.
+    -->
+    <guiprefs width="600" height="480" resizable="no">
+        <modifier key="useButtonIcons" value="no" />
+        <modifier key="useLabelIcons" value="no" />
+        <modifier key="labelGap" value="2" />
+        <modifier key="layoutAnchor" value="NORTHWEST" />
+        <modifier key="useHeadingPanel" value="yes" />
+        <modifier key="headingLineCount" value="1" />
+        <modifier key="headingFontSize" value="1.5" />
+<!--        <modifier key="headingBackgroundColor" value="0x00dcdee0" />-->
+    </guiprefs>
+
+
+    <!--
+        The locale section.
+        Asks here to include the English and French langpacks.
+    -->
+    <locale langDisplayType="native">
+        <langpack iso3="eng" />
+        <langpack iso3="fra" />
+        <langpack iso3="deu" />
+        <langpack iso3="ita" />
+        <langpack iso3="spa" />
+    </locale>
+
+    <!--
+        The resources section.
+        The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
+    -->
+    <resources>
+        <res id="LicencePanel.licence"
+            src="installer-resources/LICENSE.txt" />
+        <res id="HTMLInfoPanel.info"
+            src="installer-resources/README.html" />
+        <res id="TargetPanel.dir.macosx" src="TargetPanel.dir.macosx"
+            parse="yes" />
+        <res id="Heading.image"
+            src="installer-resources/installer-image.png" />
+        <res id="CustomLangpack.xml_eng"
+            src="installer-resources/language_pack_eng.xml" />
+    </resources>
+
+    <!--
+        The panels section.
+        We indicate here which panels we want to use. The order will be respected.
+    -->
+    <panels>
+        <panel classname="CheckedHelloPanel" />
+        <panel classname="HTMLInfoPanel" name="Application Information"/>
+        <panel classname="LicencePanel" />
+        <panel classname="TargetPanel" />
+        <panel classname="PacksPanel" />
+        <panel classname="InstallPanel" />
+        <!-- panel classname="ShortcutPanel" /-->
+        <panel classname="SimpleFinishPanel" />
+    </panels>
+
+    <!--
+        The packs section.
+        We specify here our packs.
+    -->
+    <packs>
+        <!-- The following line will be replaced by the script -->
+        <!--@OS_DEPENDENT_PACKS@-->
+    </packs>
+
+</installation>

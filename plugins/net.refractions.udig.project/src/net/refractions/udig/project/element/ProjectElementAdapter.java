@@ -13,10 +13,10 @@ import net.refractions.udig.project.internal.ProjectElement;
 /**
  * Adapts a {@link IGenericProjectElement} to the ProjectElement interface.  This is
  * to provide a way to easily add objects to a project.
- * 
+ *
  * @see IGenericProjectElement
  * @see net.refractions.udig.project.element extension point
- * 
+ *
  * @author jesse
  * @model
  */
@@ -30,7 +30,7 @@ public interface ProjectElementAdapter extends ProjectElement {
 
     /**
      * Returns the object that is persisted and wrapped by this class
-     * 
+     *
      * @return the object that is persisted and wrapped by this class
      * @model
      */

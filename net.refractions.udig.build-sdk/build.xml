@@ -1,0 +1,177 @@
+<!--
+	This program and the accompanying materials are made available
+	under the terms of the Eclipse Public License v1.0 which
+	accompanies this distribution, and is available at
+  	http://www.eclipse.org/legal/epl-v10.html
+
+	This build script creates a build directory containing the plugins
+	and features to be built, and then kicks off the PDE build process.
+	You could just as easily do this from a shell script or cron job.
+
+	Also, the script can be run inside the Eclipse IDE by choosing
+	Run As -> Ant Build from the context menu. It could obviously be
+	run outside of the IDE if you have ANT installed on your path.
+
+	If you have any questions about this build, feel free to contact me
+	at patrick@rcpquickstart.com.
+-->
+<project name="net.refractions.udig.build" default="build">
+	<property file="build.properties" />
+
+
+	<!--
+		PDE Build expects that the build directory contains a "plugins"
+		directory and a "features" directory. These directories should contain
+		the various plug-ins and features to be built.
+
+		It's possible to use the CVS checkout process that is built into
+		PDE Build. This is done with map files and is beyond the scope of
+		this tutorial.
+
+		This tutorial simply copies the projects directly from your workspace
+		into the appropriate build directory folders.
+	-->
+	<target name="init">
+		<mkdir dir="${buildDirectory}" />
+		<mkdir dir="${buildDirectory}/plugins" />
+		<mkdir dir="${buildDirectory}/features" />
+		<copy todir="${buildDirectory}/plugins">
+			<fileset dir="../plugins/">
+				<exclude name="**/.svn/" />
+				<exclude name="**/bin/" />
+				<exclude name="net.refractions.udig.libs/libs/" />
+				<exclude name="net.refractions.udig.libs.source/**/*.zip" />
+			</fileset>
+			<fileset dir="../tutorials/">
+				<exclude name="**/.svn" />
+				<exclude name="**/bin/" />
+			</fileset>
+			<fileset dir="../fragments/">
+				<exclude name="**/.svn" />
+				<exclude name="**/bin/" />
+			</fileset>
+		</copy>
+		<copy todir="${buildDirectory}/features">
+			<fileset dir="../features">
+				<exclude name="**/.svn/**" />
+				<exclude name="**/bin/" />
+			</fileset>
+		</copy>
+
+		<ant dir="${buildDirectory}/plugins/net.refractions.udig.libs/" antfile="copy.xml" target="clean" />
+		<ant dir="${buildDirectory}/plugins/net.refractions.udig.libs.source/" antfile="jars.xml" target="update.jars" />
+
+	</target>
+
+	<!--
+		This target actually executes the PDE Build process by launching the
+		Eclipse antRunner application.
+
+		NOTE: If you are using Eclipse 3.2, switch out the pathelement below
+		with the one that is commented out.
+	-->
+	<target name="pde-build">
+		<property name="builderFile" value="${eclipseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/productBuild/productBuild.xml" />
+		<property name="launcherPlugin" value="${eclipseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
+		<echo message="${product}" />
+		<echo message="${builderFile}" />
+		<echo message="${launcherPlugin}" />
+		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
+			<arg value="-application" />
+			<arg value="org.eclipse.ant.core.antRunner" />
+			<arg value="-buildfile" />
+			<arg value="${builderFile}" />
+			<arg value="-Dtimestamp=${timestamp}" />
+			<classpath>
+				<pathelement location="${launcherPlugin}" />
+			</classpath>
+		</java>
+	</target>
+
+	<target name="delta">
+		<echo>Adding Delta pack to SDK</echo>
+		<property name="archive" location="${buildDirectory}/${buildType}.${buildId}/${archiveNamePrefix}.zip" />
+		<property name="deltapack.dir" value="${buildDirectory}/deltapack" />
+
+		<copy todir="${deltapack.dir}/${archivePrefix}">
+			<fileset dir="${eclipseLocation}" defaultexcludes="no">
+				<include name="features/org.eclipse.equinox.executable*/" />
+				<include name="plugins/org.eclipse.core.filesystem.*" />
+				<include name="plugins/org.eclipse.core.filesystem.*/**" />
+				<include name="plugins/org.eclipse.core.resources.*" />
+				<include name="plugins/org.eclipse.core.resources.*/**" />
+				<include name="plugins/org.eclipse.equinox.launcher.*" />
+				<include name="plugins/org.eclipse.equinox.launcher.*/**" />
+				<include name="plugins/org.eclipse.jdt.launching.*" />
+				<include name="plugins/org.eclipse.jdt.launching.*/**" />
+				<include name="plugins/org.eclipse.jdt.source.*" />
+				<include name="plugins/org.eclipse.jdt.source.*/**" />
+				<include name="plugins/org.eclipse.platform.source.*" />
+				<include name="plugins/org.eclipse.platform.source.*/**" />
+				<include name="plugins/org.eclipse.rcp.source.*" />
+				<include name="plugins/org.eclipse.rcp.source.*/**" />
+				<include name="plugins/org.eclipse.swt.*" />
+				<include name="plugins/org.eclipse.swt.*/**" />
+				<include name="plugins/org.eclipse.ui.carbon*" />
+				<include name="plugins/org.eclipse.ui.carbon*/**" />
+				<include name="plugins/org.eclipse.ui.win32*" />
+				<include name="plugins/org.eclipse.ui.win32*/**" />
+				<include name="plugins/org.eclipse.update.core.linux*" />
+				<include name="plugins/org.eclipse.update.core.linux*/**" />
+				<include name="plugins/org.eclipse.update.core.win32*" />
+				<include name="plugins/org.eclipse.update.core.win32*/**" />
+			</fileset>
+		</copy>
+
+		<zip destfile="${archive}" update="true" duplicate="preserve" basedir="${deltapack.dir}">
+			<zipfileset dir="${deltapack.dir}" />
+		</zip>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - -
+          target: init-deploy
+         - - - - - - - - - - - - - - - - - -->
+    <target name="init-deploy">
+    	<description>Timestamp the latest SDK build</description>
+		<echo>deploying the build to www.refractions.net</echo>
+		<property name="archive" location="${buildDirectory}/${buildType}.${buildId}/${archiveNamePrefix}.zip" />
+
+		<tstamp />
+		<property name="stampedArchive" value="${buildDirectory}/${buildType}.${buildId}/${archiveNamePrefix}-${DSTAMP}.${TSTAMP}.zip" />
+
+		<copy file="${archive}" tofile="${stampedArchive}" />
+		<property environment="env" />
+    </target>
+
+
+	<target name="deploy-scp" depends="init-deploy">
+		<description>Deploy the SDK to DEPLOY_URL using SCP.  The url must be a legal SCP URL</description>
+		<echo>Deploying timestamped SDK to ${env.DEPLOY_URL}</echo>
+
+		<scp trust="true" file="${stampedArchive}" todir="${env.DEPLOY_URL}">
+		</scp>
+	</target>
+
+	<target name="deploy-locally" depends="init-deploy">
+		<description>Depoloy the SDK to DEPLOY_DIR.  DEPLOY_DIR must be the absolute path to a local directory</description>
+		<echo>Deploying timestamped SDK to ${env.DEPLOY_DIR}</echo>
+		<mkdir dir="${env.DEPLOY_DIR}"/>
+		<copy file="${stampedArchive}" todir="${env.DEPLOY_DIR}">
+		</copy>
+	</target>
+
+	<target name="clean">
+		<delete dir="${buildDirectory}" />
+	</target>
+
+	<target name="build" depends="clean, init, pde-build, delta" />
+	<target name="build-deploy-scp" depends="build,deploy-scp">
+		<description>Build the SDK and deploy it using SCP.  The destination is the URL specified by the environment variable DEPLOY_URL
+		and is in the form: username[:password]@host:path.
+			For example: username:password@somefolder:/home/www/udig
+		</description>
+	</target>
+	<target name="build-deploy-locally" depends="build,deploy-locally">
+		<description>Build the SDK and deploy it to a local file.  The destination is the absolute path to the directory</description>
+	</target>
+</project>

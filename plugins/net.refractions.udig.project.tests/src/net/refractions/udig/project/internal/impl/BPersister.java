@@ -7,7 +7,7 @@ import org.eclipse.ui.IMemento;
 public class BPersister extends IPersister<B> {
 
 	public static boolean enabled = true;
-	
+
 	@Override
 	public Class<B> getPersistee() {
 		if (enabled) return B.class;
@@ -23,5 +23,5 @@ public class BPersister extends IPersister<B> {
 	public void save(B object, IMemento memento) {
 		memento.putString("message", object.getMessage()); //$NON-NLS-1$
 	}
-	
+
 }

@@ -7,7 +7,6 @@ import junit.framework.TestCase;
 import net.refractions.udig.ui.graphics.SWTGraphics;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
@@ -37,7 +36,7 @@ public class DrawingTest extends TestCase {
         image = new Image(display, 16, 16);
 
         SWTGraphics graphics = new SWTGraphics(image, display);
-        graphics.getGraphics(GC.class).setAntialias(SWT.OFF);
+        graphics.getGC().setAntialias(SWT.OFF);
         graphics.setBackground(Color.WHITE);
         graphics.clearRect(0, 0, 16, 16);
         d.drawFeature(graphics, d.feature(d.polygon(new int[]{2, 2, 2, 14, 14, 14, 14, 2, 2, 2})),
@@ -72,7 +71,7 @@ public class DrawingTest extends TestCase {
         image = new Image(display, 16, 16);
 
         SWTGraphics graphics = new SWTGraphics(image, display);
-        graphics.getGraphics(GC.class).setAntialias(SWT.OFF);
+        graphics.getGC().setAntialias(SWT.OFF);
         graphics.setBackground(Color.WHITE);
         graphics.clearRect(0, 0, 16, 16);
         d.drawFeature(graphics, d.feature(line), style, new AffineTransform());
@@ -102,14 +101,14 @@ public class DrawingTest extends TestCase {
         Mark mark = builder.createMark(StyleBuilder.MARK_SQUARE);
         mark.setStroke(builder.createStroke(Color.BLUE));
         mark.setFill(builder.createFill(Color.BLUE));
-        mark.setSize(builder.getFilterFactory().literal(5));
+        mark.setSize(builder.getFilterFactory().createLiteralExpression(5));
         Style style = builder.createStyle(builder.createPointSymbolizer(builder.createGraphic(null,
                 mark, null)));
 
         image = new Image(display, 16, 16);
 
         SWTGraphics graphics = new SWTGraphics(image, display);
-        graphics.getGraphics(GC.class).setAntialias(SWT.OFF);
+        graphics.getGC().setAntialias(SWT.OFF);
         graphics.setBackground(Color.WHITE);
         graphics.clearRect(0, 0, 16, 16);
         d.drawFeature(graphics, d.feature(point), style, new AffineTransform());

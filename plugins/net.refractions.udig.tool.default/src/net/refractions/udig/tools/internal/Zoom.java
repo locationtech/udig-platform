@@ -18,12 +18,9 @@ package net.refractions.udig.tools.internal;
 
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.Arrays;
 
 import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.internal.command.navigation.NavComposite;
-import net.refractions.udig.project.internal.command.navigation.SetViewportCenterCommand;
-import net.refractions.udig.project.internal.command.navigation.ZoomCommand;
+import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.ui.commands.DrawCommandFactory;
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
@@ -33,7 +30,7 @@ import net.refractions.udig.project.ui.tool.ModalTool;
 
 /**
  * This class Provides zoom box and click functionality.
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -42,7 +39,7 @@ public class Zoom extends AbstractModalTool implements ModalTool {
     public static final double ZOOMFACTOR = 2;
     private boolean zooming;
     private Point start;
-    //NavigationCommandFactory factory = NavigationCommandFactory.getInstance();
+    NavigationCommandFactory factory = NavigationCommandFactory.getInstance();
     DrawCommandFactory dfactory = DrawCommandFactory.getInstance();
     SelectionBoxCommand shapeCommand = new SelectionBoxCommand();
 
@@ -52,7 +49,7 @@ public class Zoom extends AbstractModalTool implements ModalTool {
     public Zoom() {
         super(MOUSE | MOTION);
     }
-    
+
     public void mouseDragged(MapMouseEvent e) {
         if( start==null ){
             mousePressed(e);
@@ -76,13 +73,13 @@ public class Zoom extends AbstractModalTool implements ModalTool {
         width1 = (int) (height1 * context.getViewportModel().getAspectRatio());
         width2 = Math.abs(x2 - x1);
         height2 = (int) (width2 / context.getViewportModel().getAspectRatio());
-        // choose heights and widths based on which axis is the longest 
+        // choose heights and widths based on which axis is the longest
         if( height1 > height2){
             width=width1;
             height=height1;
         }else{
             width=width2;
-            height=height2;            
+            height=height2;
         }
 
         //center user selected area in center of new box.
@@ -97,17 +94,17 @@ public class Zoom extends AbstractModalTool implements ModalTool {
         }else{
             y=y-(height-Math.abs(y2-y1))/2;
         }
-        
+
         return new Rectangle(x, y, width, height);
     }
 
-    
+
     /**
      * @see net.refractions.udig.project.tool.AbstractTool#mousePressed(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mousePressed(MapMouseEvent e) {
-        if ( !e.isAltDown() && !e.isShiftDown() && 
-                (e.button == MapMouseEvent.BUTTON1 
+        if ( !e.isAltDown() && !e.isShiftDown() &&
+                (e.button == MapMouseEvent.BUTTON1
                         || e.button == MapMouseEvent.BUTTON3
                         || (e.button == MapMouseEvent.BUTTON1 && e.isControlDown())) ){
             zooming = true;
@@ -165,18 +162,19 @@ public class Zoom extends AbstractModalTool implements ModalTool {
         }
     }
 
-	private void zoomout( IViewportModel m ) {
-        NavCommand[] commands = new NavCommand[]{
-                new SetViewportCenterCommand(m.pixelToWorld(start.x, start.y)),
-                new ZoomCommand((1 / ZOOMFACTOR))};
-        getContext().sendASyncCommand(new NavComposite(Arrays.asList(commands)));
-    }
+	private void zoomout(IViewportModel m) {
+		NavCommand[] commands = new NavCommand[] {
+		        factory.createSetViewportCenterCommand(m.pixelToWorld(start.x,
+		                        start.y)),
+		        factory.createZoomCommand(1 / ZOOMFACTOR) };
+		getContext().sendASyncCommand(factory.createCompositeCommand(commands));
+	}
 
 	private void zoomIn(IViewportModel m) {
 		NavCommand[] commands = new NavCommand[] {
-		        new SetViewportCenterCommand(m.pixelToWorld(start.x,
-                start.y)), new ZoomCommand(ZOOMFACTOR) };
-		getContext().sendASyncCommand(new NavComposite(Arrays.asList(commands)));
+		        factory.createSetViewportCenterCommand(m.pixelToWorld(start.x,
+		                        start.y)), factory.createZoomCommand(ZOOMFACTOR) };
+		getContext().sendASyncCommand(factory.createCompositeCommand(commands));
 	}
 
     /**
@@ -185,10 +183,11 @@ public class Zoom extends AbstractModalTool implements ModalTool {
      * @param r
      */
     private void zoomin( IViewportModel m, Rectangle r ) {
-        NavCommand[] commands = new NavCommand[]{
-                new SetViewportCenterCommand(m.pixelToWorld(r.x + r.width / 2, r.y + r.height / 2)),
-                new ZoomCommand(getContext().getMapDisplay().getDisplaySize().getWidth() / r.width)};
-        getContext().sendASyncCommand(new NavComposite(Arrays.asList(commands)));
+        NavCommand[] commands = new NavCommand[] {
+                factory.createSetViewportCenterCommand(m.pixelToWorld(
+                                r.x + r.width / 2, r.y + r.height / 2)),
+                factory.createZoomCommand(getContext().getMapDisplay().getDisplaySize().getWidth()/r.width ) };
+        getContext().sendASyncCommand(factory.createCompositeCommand(commands));
     }
 
     /**
@@ -198,10 +197,10 @@ public class Zoom extends AbstractModalTool implements ModalTool {
      */
     private void zoomout( IViewportModel m, Rectangle r ) {
         NavCommand[] commands = new NavCommand[] {
-                new SetViewportCenterCommand(m.pixelToWorld(
-                r.x + r.width / 2, r.y + r.height / 2)),
-                new ZoomCommand((r.width / getContext().getMapDisplay().getDisplaySize().getWidth())) };
-        getContext().sendASyncCommand(new NavComposite(Arrays.asList(commands)));
+                factory.createSetViewportCenterCommand(m.pixelToWorld(
+                                r.x + r.width / 2, r.y + r.height / 2)),
+                factory.createZoomCommand(r.width / getContext().getMapDisplay().getDisplaySize().getWidth()) };
+        getContext().sendASyncCommand(factory.createCompositeCommand(commands));
     }
     /**
      * @see net.refractions.udig.project.tool.Tool#dispose()

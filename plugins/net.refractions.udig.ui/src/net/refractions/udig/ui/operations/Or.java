@@ -11,7 +11,7 @@ import java.util.List;
 public class Or implements OpFilter{
 
     private List<OpFilter> filters=new ArrayList<OpFilter>();
-    
+
     /**
      * @return Returns the filters.
      */

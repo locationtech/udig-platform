@@ -17,7 +17,7 @@ package net.refractions.udig.ui.operations;
 
 /**
  * A listener that is notified when the value of the OpFilter may have changed.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: ToolContextImpl.java 27844 2007-11-12 02:57:24Z jeichar $
  */
 package net.refractions.udig.project.ui.internal.tool.impl;
 
@@ -21,8 +21,8 @@ import net.refractions.udig.project.internal.render.RenderManager;
 import net.refractions.udig.project.ui.commands.DrawCommandFactory;
 import net.refractions.udig.project.ui.commands.IDrawCommand;
 import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
 import net.refractions.udig.project.ui.internal.MapEditorSite;
+import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.internal.tool.ToolContext;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 
@@ -57,20 +57,20 @@ import org.eclipse.ui.PlatformUI;
  * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getSelectionFactory <em>Selection Factory</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  */
 public class ToolContextImpl extends AbstractContextImpl implements ToolContext {
 
     /**
-     * The cached value of the '{@link #getDrawFactory() <em>Draw Factory</em>}' attribute. 
-     * 
+     * The cached value of the '{@link #getDrawFactory() <em>Draw Factory</em>}' attribute.
+     *
      * @see #getDrawFactory()
      */
     private final DrawCommandFactory drawFactory = DrawCommandFactory.getInstance();
 
     /**
-     * The cached value of the '{@link #getEditFactory() <em>Edit Factory</em>}' attribute. 
-     * 
+     * The cached value of the '{@link #getEditFactory() <em>Edit Factory</em>}' attribute.
+     *
      * @see #getEditFactory()
      */
     private final EditCommandFactory editFactory = EditCommandFactory
@@ -79,7 +79,7 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
     /**
      * The cached value of the '{@link #getNavigationFactory() <em>Navigation Factory</em>}'
      * attribute.
-     * 
+     *
      * @see #getNavigationFactory()
      */
     private final NavigationCommandFactory navigationFactory = NavigationCommandFactory
@@ -87,8 +87,8 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
 
     /**
      * The cached value of the '{@link #getSelectionFactory() <em>Selection Factory</em>}'
-     * attribute. 
-     * 
+     * attribute.
+     *
      * @see #getSelectionFactory()
      */
     private final SelectionCommandFactory selectionFactory = SelectionCommandFactory
@@ -180,7 +180,7 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
             return null;
         return site.getActionBars().getStatusLineManager();
     }
-    
+
     public IActionBars2 getActionBars() {
         IEditorSite site = getEditorSite();
         if (site == null)
@@ -198,7 +198,7 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
         IEditorPart part = page.getActiveEditor();
         if (part == null || !(part instanceof MapEditor) )
             return null;
-        return ((MapEditorPart)part).getMapEditorSite();
+        return ((MapPart)part).getMapEditorSite();
     }
 
     private IWorkbenchWindow getWindow() {

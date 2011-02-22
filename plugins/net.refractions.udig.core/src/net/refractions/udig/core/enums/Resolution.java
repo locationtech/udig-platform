@@ -16,7 +16,7 @@ package net.refractions.udig.core.enums;
 
 /**
  * Indicates whether a situation is resolved(fixed), unresolved or unknown.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */

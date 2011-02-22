@@ -11,7 +11,7 @@ public class TestsPlugin extends AbstractUIPlugin {
 
 	//The shared instance.
 	private static TestsPlugin plugin;
-	
+
 	/**
 	 * The constructor.
 	 */

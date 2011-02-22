@@ -12,19 +12,10 @@ import org.eclipse.swt.dnd.ByteArrayTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
 
-/**
- * Appears to be a transfer for passing an object around
- * the uDig application.
- * <p>
- * The internals of this class appear to duplicate URLTransfer; so this may
- * be a cut and paste of the URLTransfer type prior to it being added to
- * Eclipse 3.4?
- * </p>
- */
 public class UDigByteAndLocalTransfer extends ByteArrayTransfer implements UDIGTransfer{
 	private static UDigByteAndLocalTransfer _instance = new UDigByteAndLocalTransfer();
 
-	static final String CFSTR_INETURL = "InternalObject"; //$NON-NLS-1$
+	static final String CFSTR_INETURL = "UniformResourceLocator"; //$NON-NLS-1$
 
 	private static final int CFSTR_INETURLID = Transfer
 			.registerType(CFSTR_INETURL);
@@ -62,8 +53,8 @@ public class UDigByteAndLocalTransfer extends ByteArrayTransfer implements UDIGT
 	public TransferData[] getSupportedTypes() {
 		return super.getSupportedTypes();
 	}
-	
-	@SuppressWarnings("unchecked") 
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public void javaToNative(Object object, TransferData transferData) {
 
@@ -88,7 +79,7 @@ public class UDigByteAndLocalTransfer extends ByteArrayTransfer implements UDIGT
 	 * specific representation of a URL and optionally, a title to a java
 	 * <code>String[]</code>. For additional information see
 	 * <code>Transfer#nativeToJava</code>.
-	 * 
+	 *
 	 * @param transferData
 	 *            the platform specific representation of the data to be been
 	 *            converted
@@ -96,10 +87,10 @@ public class UDigByteAndLocalTransfer extends ByteArrayTransfer implements UDIGT
 	 *         title if the conversion was successful; otherwise null
 	 */
     public Object nativeToJava(TransferData transferData) {
-        
-        byte[] bytes = (byte[])super.nativeToJava(transferData); 
+
+        byte[] bytes = (byte[])super.nativeToJava(transferData);
         if (bytes == null) return null;
-        
+
         try
         {
           long startTime = Long.valueOf(new String(bytes)).longValue();
@@ -121,7 +112,7 @@ public class UDigByteAndLocalTransfer extends ByteArrayTransfer implements UDIGT
             return buf.toString().trim();
         }
 
-		
+
 	}
 
 	public boolean validate(Object object) {

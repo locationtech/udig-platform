@@ -8,29 +8,20 @@ import net.refractions.udig.catalog.ui.ConnectionFactoryManager;
 import net.refractions.udig.catalog.ui.UDIGConnectionFactory;
 import net.refractions.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
 import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.core.Pair;
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * First state in the data import worklow.
- * <p>
- * This state chooses a data source based on the context of
+ * First state in the data import worklow. This state chooses a data source based on the context of
  * the workflow.
- * 
+ *
  * @author Justin Deoliveira,Refractions Research Inc.,jdeolive@refractions.net
  */
-public class DataSourceSelectionState extends State {
+public class DataSourceSelectionState extends Workflow.State {
 
-    /**
-     * This chosen import page - there should only be one; or we will need
-     * to ask the user to choose.
-     */
+    /** the chosen import page * */
     UDIGConnectionFactoryDescriptor descriptor;
-    
-    /**
-     * Flag used to check that the service connects; by listing members
-     */
     private boolean validateService;
 
     /**
@@ -40,20 +31,19 @@ public class DataSourceSelectionState extends State {
     public DataSourceSelectionState(boolean validateServices ){
         this.validateService=validateServices;
     }
-    
+
     @Override
     public void init( IProgressMonitor monitor ) throws IOException {
         super.init(monitor);
 
-        descriptor=null;
         // based on context, try to choose a single data source
         Object context = getWorkflow().getContext();
-        if (context == null){
-            return; // we got a single page
-        }
+        if (context == null)
+            return;
+
         Collection<UDIGConnectionFactoryDescriptor> descriptors = ConnectionFactoryManager.instance().getConnectionFactoryDescriptors();
-        
-        // determine if any connection factory can process the context object
+
+        // determine if any conntection factory can process the context object
         descriptor = null;
         for( UDIGConnectionFactoryDescriptor d : descriptors ) {
             UDIGConnectionFactory factory = d.getConnectionFactory();
@@ -64,23 +54,17 @@ public class DataSourceSelectionState extends State {
                         descriptor = null;
                         return;
                     }
-                    descriptor = d; // record the fact we can connect to this page
+
+                    descriptor = d;
                 }
             } catch (Throwable t) {
                 // log and keep going
                 CatalogPlugin.log(t.getLocalizedMessage(), t);
             }
-        }
-        if( descriptor != null ){
-            CatalogPlugin.log("Drag and Drop of "+descriptor.getId() + " from "+context, null );
+
         }
     }
 
-    @Override
-    public Pair<Boolean, State> dryRun() {
-        return new Pair<Boolean, State>(descriptor!=null, null);
-    }
-    
     @Override
     public boolean run( IProgressMonitor monitor ) throws IOException {
     	monitor.beginTask(getName(),1);
@@ -114,6 +98,6 @@ public class DataSourceSelectionState extends State {
 
 	@Override
 	public String getName() {
-		return Messages.DataSourceSelectionState_name; 
+		return Messages.DataSourceSelectionState_name;
 	}
 }

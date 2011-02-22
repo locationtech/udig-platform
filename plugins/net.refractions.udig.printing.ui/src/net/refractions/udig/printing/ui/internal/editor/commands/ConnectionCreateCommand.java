@@ -18,11 +18,11 @@ public class ConnectionCreateCommand extends Command {
 	public ConnectionCreateCommand(Box source) {
 		super();
 		if (source == null) {
-			throw new IllegalArgumentException(Messages.ConnectionCreateCommand_error_sourceNull); 
+			throw new IllegalArgumentException(Messages.ConnectionCreateCommand_error_sourceNull);
 		}
 		this.source = source;
 	}
-	
+
 	public boolean canExecute() {
 		if (source.equals(target)) {
 			return false;
@@ -30,7 +30,7 @@ public class ConnectionCreateCommand extends Command {
 		Iterator iter = source.getSourceConnections().iterator();
 		while(iter.hasNext()) {
 			Connection connection = (Connection) iter.next();
-			
+
 			if (connection.getTarget().equals(target)) {
 				return false;
 			}
@@ -47,11 +47,11 @@ public class ConnectionCreateCommand extends Command {
 	}
 	public void setTarget(Box target) {
 		if (target == null) {
-			throw new IllegalArgumentException(Messages.ConnectionCreateCommand_error_targetNull); 
+			throw new IllegalArgumentException(Messages.ConnectionCreateCommand_error_targetNull);
 		}
 		this.target = target;
 	}
-		
+
 	public void undo() {
 		connection.disconnect();
 	}

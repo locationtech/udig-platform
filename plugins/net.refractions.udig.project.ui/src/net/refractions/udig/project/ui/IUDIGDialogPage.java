@@ -21,13 +21,13 @@ import net.refractions.udig.project.ui.tool.IToolContext;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 /**
  * A "Page" that will have a ToolContext object set each time an the active MapEditor changes. If
  * the current editor is not a map editor the the context will be null otherwise it will be a
  * context that will operate against the map contained by the map editor.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
@@ -39,7 +39,7 @@ public interface IUDIGDialogPage {
 
     /**
      * Returns the current context object
-     * 
+     *
      * @return the current context object
      */
     IToolContext getContext();
@@ -62,8 +62,8 @@ public interface IUDIGDialogPage {
 
     /**
      * Called before createControl is called.
-     * 
+     *
      * @param feature
      */
-    void setFeature( SimpleFeature feature );
+    void setFeature( Feature feature );
 }

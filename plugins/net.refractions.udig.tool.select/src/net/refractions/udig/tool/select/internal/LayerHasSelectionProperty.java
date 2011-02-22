@@ -19,7 +19,7 @@ import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.ui.operations.AbstractPropertyValue;
 
-import org.opengis.filter.Filter;
+import org.geotools.filter.Filter;
 
 /**
  * Returns true if the layer has a selection.  (layer's filter!=Filter.all)
@@ -35,7 +35,7 @@ public class LayerHasSelectionProperty extends AbstractPropertyValue<ILayer>{
                 notifyListeners(event.getSource());
             }
         }
-        
+
     };
 
     public boolean canCacheResult() {
@@ -48,7 +48,7 @@ public class LayerHasSelectionProperty extends AbstractPropertyValue<ILayer>{
 
     public boolean isTrue( ILayer layer, String value ) {
         layer.addListener(listener);
-        return layer.getFilter()!=Filter.EXCLUDE;
+        return layer.getFilter()!=Filter.ALL;
     }
 
 

@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.refractions.udig.internal.ui.ImageConstants;
 import net.refractions.udig.internal.ui.Images;
 import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.ui.internal.Messages;
@@ -31,7 +32,6 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
@@ -62,19 +62,17 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
-import org.geotools.feature.AttributeTypeBuilder;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.AttributeTypeFactory;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.FeatureTypeBuilder;
+import org.geotools.feature.GeometryAttributeType;
+import org.geotools.feature.SchemaException;
+import org.geotools.feature.type.GeometricAttributeType;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.FeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.metadata.Identifier;
-import org.opengis.referencing.ReferenceIdentifier;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -87,14 +85,13 @@ import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * A composite editor based on a JFace TreeViewer for creating and editing feature types.
- * 
+ *
  * @author jones
- * @author Andrea Antonello (www.hydrologis.com)
  * @since 1.1.0
  */
 public class FeatureTypeEditor {
 
-    private static final int MAX_ATTRIBUTE_LENGTH = 10485759;  //Maximum allows by postgis and is "big enough" 
+    private static final int MAX_ATTRIBUTE_LENGTH = 10485759;  //Maximum allows by postgis and is "big enough"
     /**
      * The index of the name column in the viewer.
      */
@@ -113,29 +110,29 @@ public class FeatureTypeEditor {
         List<LegalAttributeTypes> types = new ArrayList<LegalAttributeTypes>();
         types
         .add(new LegalAttributeTypes(
-                Messages.FeatureTypeEditor_stringType, String.class)); 
+                Messages.FeatureTypeEditor_stringType, String.class));
         types
-        .add(new LegalAttributeTypes(Messages.FeatureTypeEditor_booleanType, Boolean.class)); 
-        types.add(new LegalAttributeTypes(Messages.FeatureTypeEditor_dateType, Date.class)); 
+        .add(new LegalAttributeTypes(Messages.FeatureTypeEditor_booleanType, Boolean.class));
+        types.add(new LegalAttributeTypes(Messages.FeatureTypeEditor_dateType, Date.class));
         types.add(new LegalAttributeTypes(
-                Messages.FeatureTypeEditor_integerType, Integer.class)); 
+                Messages.FeatureTypeEditor_integerType, Integer.class));
         types.add(new LegalAttributeTypes(
-                Messages.FeatureTypeEditor_longType, Long.class)); 
-        types.add(new LegalAttributeTypes(Messages.FeatureTypeEditor_floatType, Float.class)); 
-        types.add(new LegalAttributeTypes(Messages.FeatureTypeEditor_doubleType, Double.class)); 
-        types.add(new LegalAttributeTypes(Messages.FeatureTypeEditor_pointType, Point.class)); 
+                Messages.FeatureTypeEditor_longType, Long.class));
+        types.add(new LegalAttributeTypes(Messages.FeatureTypeEditor_floatType, Float.class));
+        types.add(new LegalAttributeTypes(Messages.FeatureTypeEditor_doubleType, Double.class));
+        types.add(new LegalAttributeTypes(Messages.FeatureTypeEditor_pointType, Point.class));
         types.add(new LegalAttributeTypes(
-                Messages.FeatureTypeEditor_lineStringType, LineString.class)); 
+                Messages.FeatureTypeEditor_lineStringType, LineString.class));
         types.add(new LegalAttributeTypes(
-                Messages.FeatureTypeEditor_polygonType, Polygon.class)); 
+                Messages.FeatureTypeEditor_polygonType, Polygon.class));
         types.add(new LegalAttributeTypes(
-                Messages.FeatureTypeEditor_geometryType, Geometry.class)); 
+                Messages.FeatureTypeEditor_geometryType, Geometry.class));
         types.add(new LegalAttributeTypes(
-                Messages.FeatureTypeEditor_multiPointType, MultiPoint.class)); 
+                Messages.FeatureTypeEditor_multiPointType, MultiPoint.class));
         types.add(new LegalAttributeTypes(
-                Messages.FeatureTypeEditor_multiLineStringType, MultiLineString.class)); 
+                Messages.FeatureTypeEditor_multiLineStringType, MultiLineString.class));
         types.add(new LegalAttributeTypes(
-                Messages.FeatureTypeEditor_multiPolygonType, MultiPolygon.class)); 
+                Messages.FeatureTypeEditor_multiPolygonType, MultiPolygon.class));
 
         TYPES = Collections.unmodifiableList(types);
     }
@@ -145,42 +142,38 @@ public class FeatureTypeEditor {
     private IAction deleteAttributeAction;
     private Text nameText;
     private List<LegalAttributeTypes> legalTypes=TYPES;
-	private SimpleFeatureType featureType;
-    private ControlDecoration errorDecorator;
+	private FeatureTypeBuilder builder;
 
     /**
      * Create the table control and set the input.
-     * 
+     *
      * @param parent the composite that will be used as the TreeViewer's parent.
      * @param layoutData the layout data to use to layout the editor. If null GridData(Fill_Both)
      */
     public void createTable( Composite parent, Object layoutData ) {
-        createTable(parent, layoutData, featureType, true);
+        createTable(parent, layoutData, builder, true);
     }
     /**
      * Create the table control and set the input.
-     * 
+     *
      * @param parent the composite that will be used as the TreeViewer's parent.
      * @param layoutData the layout data to use to layout the editor. If null GridData(Fill_Both)
      */
-    public void createTable( Composite parent, Object layoutData, SimpleFeatureType type ) {
-    	SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
-    	builder.setName(type.getName());
-        builder.init(type);
-        createTable(parent, layoutData, builder.buildFeatureType(), true);
+    public void createTable( Composite parent, Object layoutData, FeatureType type ) {
+        FeatureTypeBuilder builder = FeatureTypeBuilder.newInstance(type.getTypeName());
+        builder.importType(type, false);
+        createTable(parent, layoutData, builder, true);
     }
     /**
      * Create the table control and set the input.
-     * 
+     *
      * @param parent the composite that will be used as the TreeViewer's parent.
-     * @param layoutData the layout data to use to layout the editor. If null GridData(Fill_Both).
-     * @param featureType the {@link FeatureType} to use to populate the table.
-     * @param editable the editable flag of the table
+     * @param layoutData the layout data to use to layout the editor. If null GridData(Fill_Both)
      */
-    public void createTable( Composite parent, Object layoutData, SimpleFeatureType featureType,
+    public void createTable( Composite parent, Object layoutData, FeatureTypeBuilder builder,
             boolean editable ) {
 
-        viewer = new TreeViewer(parent, SWT.FULL_SELECTION);
+        viewer = new TreeViewer(parent, SWT.MULTI|SWT.FULL_SELECTION);
 
         Tree tree = viewer.getTree();
         if (layoutData == null)
@@ -198,15 +191,15 @@ public class FeatureTypeEditor {
 
         TreeColumn column = new TreeColumn(tree, SWT.CENTER);
         column.setResizable(true);
-        column.setText(Messages.FeatureTypeEditor_nameColumnName); 
+        column.setText(Messages.FeatureTypeEditor_nameColumnName);
 
         column = new TreeColumn(tree, SWT.CENTER);
         column.setResizable(true);
-        column.setText(Messages.FeatureTypeEditor_typeColumnName); 
+        column.setText(Messages.FeatureTypeEditor_typeColumnName);
 
         column = new TreeColumn(tree, SWT.CENTER);
         column.setResizable(true);
-        
+
         viewer.setContentProvider(new FeatureTypeContentProvider(viewer));
         viewer.setLabelProvider(new FeatureTypeLabelProvider());
         viewer.setColumnProperties(new String[]{String.valueOf(NAME_COLUMN),
@@ -215,7 +208,7 @@ public class FeatureTypeEditor {
                 });
 
         setEditable(editable);
-        setFeatureType(featureType);
+        setFeatureTypeBuilder(builder);
     }
 
     /**
@@ -227,17 +220,17 @@ public class FeatureTypeEditor {
     public void setLegalTypes(List<LegalAttributeTypes> legalTypes){
         this.legalTypes=Collections.unmodifiableList(legalTypes);
     }
-    
+
     /**
      * @return Returns the list of types that this editor will allow the use to select
      */
     public List<LegalAttributeTypes> getLegalTypes(){
         return Collections.unmodifiableList(legalTypes);
     }
-    
+
     /**
      * Sets whether the table is editable or just a viewer.
-     * 
+     *
      * @param editable if true then the table can be edited
      */
     public void setEditable( boolean editable ) {
@@ -264,14 +257,6 @@ public class FeatureTypeEditor {
     private DialogCellEditor createCRSEditor( Tree tree ) {
         return new CRSDialogCellEditor(tree);
     }
-    
-    public SimpleFeatureTypeBuilder builderFromFeatureType( SimpleFeatureType ft ) {
-        SimpleFeatureTypeBuilder ftB;
-        ftB = new SimpleFeatureTypeBuilder();
-        ftB.init(ft);
-        ftB.setName(ft.getName());
-        return ftB;
-    }
 
     /**
      * Creates a ContextMenu (the menu is created using the Table's composite as a parent) and returns
@@ -293,7 +278,7 @@ public class FeatureTypeEditor {
 
         Menu menu = contextMenu.createContextMenu(viewer.getTree());
         viewer.getControl().setMenu(menu);
-        
+
         return contextMenu;
     }
 
@@ -305,68 +290,52 @@ public class FeatureTypeEditor {
     public void setGlobalActions( IActionBars actionBars){
         actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), getDeleteAction());
     }
-    
+
     /**
-     * Sets the {@link SimpleFeatureType} being edited.
-     * 
-     * <p>If type is null then a new featureType is created. Must be
-     * called in the display thread.</p>
-     * 
-     * @param type then new SimpleFeatureType to be edited, or null to create a new type.
+     * Sets the FeatureType being edited. If type is null then a new featureType is created. Must be
+     * called in the display thread.
+     *
+     * @param type then new FeatureType to be edited, or null to create a new type.
      */
-    public void setFeatureType( SimpleFeatureType type ) {
-        SimpleFeatureTypeBuilder builder = null;
+    public void setFeatureType( FeatureType type ) {
+        FeatureTypeBuilder builder = null;
         if (type != null) {
-            builder = new SimpleFeatureTypeBuilder();
-            builder.init(type);
-            builder.setName(type.getName());
-            featureType = builder.buildFeatureType();
-        }else{
-            featureType = createDefaultFeatureType();
+            builder = FeatureTypeBuilder.newInstance(type.getTypeName());
+            builder.importType(type, false);
         }
-        if (viewer != null) {
-            setInput(featureType);
-        }
-        
+        setFeatureTypeBuilder(builder);
     }
 
-     /**
-    * Sets the FeatureTypeBuilder used for creating the feature type.
-    *
-    * @param builder
-    * @deprecated with the new {@link SimpleFeatureTypeBuilder} this is no 
-    *             more possible, therefore deprecating.
-    */
-    public final void setFeatureTypeBuilder( SimpleFeatureTypeBuilder newBuilder ) {
-        // if (newBuilder == null) {
-        // featureType = createDefaultFeatureType();
-        // } else
-        // featureType = newBuilder;
-        //
-        // if (viewer != null) {
-        // setInput(featureType);
-        // }
-    }
-    
     /**
-     * Creates a default {@link FeatureType}.
-     * 
-     * <p>
-     * The default type has a {@link Geometry} attribute and a name 
-     * attribute.
-     * The geometry attribute is a {@link LineString}.
-     * </p>
-     * 
-     * @return a default FeatureType.
+     * Sets the FeatureTypeBuilder used for creating the feature type.
+     *
+     * @param builder
      */
-    public SimpleFeatureType createDefaultFeatureType() {
-        SimpleFeatureTypeBuilder builder;
-        builder = new SimpleFeatureTypeBuilder();
-        builder.setName(Messages.FeatureTypeEditor_newFeatureTypeName); 
-        builder.setCRS(getDefaultCRS());
-        builder.length(MAX_ATTRIBUTE_LENGTH).add(Messages.FeatureTypeEditor_defaultNameAttributeName, String.class); 
-        builder.add(Messages.FeatureTypeEditor_defaultGeometryName, LineString.class); 
-        return builder.buildFeatureType();
+    public final void setFeatureTypeBuilder( FeatureTypeBuilder newBuilder ) {
+        if (newBuilder == null) {
+            builder = createDefaultFeatureType();
+        } else
+            builder = newBuilder;
+
+        if( viewer!=null ){
+        	setInput(builder);
+        }
+    }
+    /**
+     * Creates a default FeatureTypeBuilder.  The default builder has a geometry attribute and a name attribute.
+     * The geometry attribute is a linestring.
+     *
+     * @return a default FeatureTypeBuilder.
+     */
+    public FeatureTypeBuilder createDefaultFeatureType() {
+        FeatureTypeBuilder builder;
+        builder = FeatureTypeBuilder.newInstance(
+        		Messages.FeatureTypeEditor_newFeatureTypeName);
+        builder.addType(AttributeTypeFactory.newAttributeType(
+        		Messages.FeatureTypeEditor_defaultNameAttributeName, String.class, true, MAX_ATTRIBUTE_LENGTH));
+        builder.setDefaultGeometry((GeometryAttributeType) AttributeTypeFactory.newAttributeType(
+        		Messages.FeatureTypeEditor_defaultGeometryName, LineString.class,true, MAX_ATTRIBUTE_LENGTH, null, getDefaultCRS()));
+        return builder;
     }
 
     private CoordinateReferenceSystem getDefaultCRS() {
@@ -384,95 +353,82 @@ public class FeatureTypeEditor {
         }
         return DefaultGeographicCRS.WGS84;
     }
-    
+
     public void setDefaultCRS(CoordinateReferenceSystem crs ){
         String crsInfo=null;
-        
-        Set<ReferenceIdentifier> identifiers = crs.getIdentifiers();
+
+        Set<Identifier> identifiers = crs.getIdentifiers();
         for( Identifier identifier : identifiers ) {
             if( identifier.toString().startsWith("EPSG") ){ //$NON-NLS-1$
                 crsInfo=identifier.toString();
                 break;
             }
         }
-        
+
         if( crsInfo==null )
             crsInfo=crs.toWKT();
-         
+
         UiPlugin.getDefault().getPreferenceStore().setValue(PreferenceConstants.P_DEFAULT_GEOMEMTRY_CRS, crsInfo);
-        
-        SimpleFeatureTypeBuilder tmpBuilder = new SimpleFeatureTypeBuilder();
-        tmpBuilder.init(featureType);
-        tmpBuilder.setName(featureType.getTypeName());
-        tmpBuilder.setCRS(crs);
-        featureType = tmpBuilder.buildFeatureType();
-        
     }
-    
-    private void setInput( SimpleFeatureType featureType ) {
-        viewer.setInput(featureType);
+
+    private void setInput( FeatureTypeBuilder builder ) {
+        viewer.setInput(builder);
         if (nameText != null && !nameText.isDisposed()) {
-            nameText.setText(featureType.getTypeName());
+            nameText.setText(builder.getName());
         }
     }
 
     /**
-     * Returns an action that will add a new attribute to the SimpleFeatureType.
-     * 
-     * @return an action that will add a new attribute to the SimpleFeatureType.
+     * Returns an action that will add a new attribute to the FeatureType.
+     *
+     * @return an action that will add a new attribute to the FeatureType.
      */
     public synchronized IAction getCreateAttributeAction() {
         if (createAttributeAction == null) {
             createAttributeAction = new Action(){
                 @Override
                 public void runWithEvent( Event event ) {
-                    SimpleFeatureType ft = (SimpleFeatureType) viewer.getInput();
-                    SimpleFeatureTypeBuilder ftB = builderFromFeatureType(ft);
+                    FeatureTypeBuilder ft = (FeatureTypeBuilder) viewer.getInput();
                     int index = 0;
                     while( true ) {
                         try {
-                            ftB.add(Messages.FeatureTypeEditor_newAttributeTypeDefaultName + index, String.class); 
+                            ft.addType(AttributeTypeFactory
+                                            .newAttributeType(
+                                                    Messages.FeatureTypeEditor_newAttributeTypeDefaultName + index, String.class));
                             break;
                         } catch (IllegalArgumentException e) {
                             index++;
                         }
                     }
-                    featureType = ftB.buildFeatureType();
-                    viewer.setInput(featureType);
-                    // TODO check if it is better to do something and then: viewer.refresh(false);
+                    viewer.refresh(false);
                 }
-
-
             };
             createAttributeAction.setId("net.refractions.udig.ui.FeatureTypeEditor.createAttributeAction"); //$NON-NLS-1$
-            createAttributeAction.setText(Messages.addAttributeAction_label); 
-            createAttributeAction.setToolTipText(Messages.addAttributeAction_label); 
+            createAttributeAction.setToolTipText("Add Attribute");
             createAttributeAction.setImageDescriptor(Images.getDescriptor("elcl16/new_attribute.gif")); //$NON-NLS-1$
         }
         return createAttributeAction;
     }
 
     /**
-     * Returns an action that will delete the selected attributes from the SimpleFeatureType.
-     * 
-     * @return an action that will delete the selected attributes from the SimpleFeatureType.
+     * Returns an action that will delete the selected attributes from the FeatureType.
+     *
+     * @return an action that will delete the selected attributes from the FeatureType.
      */
     public synchronized IAction getDeleteAction() {
         if (deleteAttributeAction == null) {
             deleteAttributeAction = new Action(){
 
-                @SuppressWarnings("unchecked") 
+                @SuppressWarnings("unchecked")
                 @Override
                 public void runWithEvent( Event event ) {
-                    SimpleFeatureType ft = (SimpleFeatureType) viewer.getInput();
-                    SimpleFeatureTypeBuilder ftB = builderFromFeatureType(ft);
+                    FeatureTypeBuilder ft = (FeatureTypeBuilder) viewer.getInput();
                     IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-                    for( Iterator<AttributeDescriptor> iter = selection.iterator(); iter.hasNext(); ) {
-                        AttributeDescriptor element = iter.next();
-                        ftB.remove(element.getLocalName());
+                    for( Iterator<AttributeType> iter = selection.iterator(); iter.hasNext(); ) {
+                        AttributeType element = iter.next();
+                        ft.removeType(element);
                     }
-                    featureType = ftB.buildFeatureType();
-                    viewer.setInput(featureType);
+                    viewer.refresh(false);
                 }
             };
             deleteAttributeAction.setText(Messages.deleteAttributeAction_label);
@@ -486,53 +442,38 @@ public class FeatureTypeEditor {
 
     /**
      * Creates a Text input object that for modify the feature type name.
-     * 
+     *
      * @param parent the parent of the text object
      * @return
      */
     public void createFeatureTypeNameText( Composite parent, Object layoutData ) {
-        
+
         nameText = new Text(parent, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
-        errorDecorator = new ControlDecoration(nameText, SWT.TOP|SWT.LEFT);
-        Image image = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_DEC_FIELD_ERROR);
-        errorDecorator.setImage(image);
-        
         if (viewer != null) {
-            SimpleFeatureType input = ((SimpleFeatureType) viewer.getInput());
+            FeatureTypeBuilder input = ((FeatureTypeBuilder) viewer.getInput());
             if( input!=null )
-            nameText.setText(input.getTypeName());
+            nameText.setText(input.getName());
         }
         if (layoutData != null)
             nameText.setLayoutData(layoutData);
         else {
             nameText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         }
-        
         class NameListener implements KeyListener, FocusListener {
 
             public void keyPressed( KeyEvent e ) {
-                SimpleFeatureType ft = (SimpleFeatureType) viewer.getInput();
+                FeatureTypeBuilder builder = (FeatureTypeBuilder) viewer.getInput();
                 if (e.character == SWT.ESC) {
-                    nameText.setText(ft.getTypeName());
-                } else 
+                    nameText.setText(builder.getName());
+                }
                 if (e.character == SWT.Selection) {
-                    SimpleFeatureTypeBuilder ftB = new SimpleFeatureTypeBuilder();
-                    ftB.init(ft);
-                    ftB.setName(nameText.getText());
-                    featureType = ftB.buildFeatureType();
-                    viewer.setInput(featureType);
-                } else {
-                    errorDecorator.hide();
+                    builder.setName(nameText.getText());
                 }
             }
 
             public void keyReleased( KeyEvent e ) {
-                SimpleFeatureType ft = (SimpleFeatureType) viewer.getInput();
-                SimpleFeatureTypeBuilder ftB = new SimpleFeatureTypeBuilder();
-                ftB.init(ft);
-                ftB.setName(nameText.getText());
-                featureType = ftB.buildFeatureType();
-                viewer.setInput(featureType);
+                FeatureTypeBuilder builder = (FeatureTypeBuilder) viewer.getInput();
+                builder.setName(nameText.getText());
             }
 
             public void focusGained( FocusEvent e ) {
@@ -541,12 +482,8 @@ public class FeatureTypeEditor {
             }
 
             public void focusLost( FocusEvent e ) {
-                SimpleFeatureType ft = (SimpleFeatureType) viewer.getInput();
-                SimpleFeatureTypeBuilder ftB = new SimpleFeatureTypeBuilder();
-                ftB.init(ft);
-                ftB.setName(nameText.getText());
-                featureType = ftB.buildFeatureType();
-                viewer.setInput(featureType);
+                FeatureTypeBuilder builder = (FeatureTypeBuilder) viewer.getInput();
+                builder.setName(nameText.getText());
             }
 
         }
@@ -555,45 +492,45 @@ public class FeatureTypeEditor {
         NameListener listener = new NameListener();
         nameText.addKeyListener(listener);
         nameText.addFocusListener(listener);
-        
+
 
     }
 
     /**
-     * Retrieves the new SimpleFeatureType. Must be called in the display thread. May return null.
-     * 
-     * @return the new SimpleFeatureType.
+     * Retrieves the new FeatureType. Must be called in the display thread. May return null.
+     *
+     * @return the new FeatureType.
+     * @throws SchemaException
      */
-    public SimpleFeatureType getFeatureType() {
+    public FeatureType getFeatureType() throws SchemaException {
         if( viewer==null )
             return null;
-        return (SimpleFeatureType) viewer.getInput();
+        return ((FeatureTypeBuilder) viewer.getInput()).getFeatureType();
     }
 
     /**
      * Returns the FeatureTypeBuilder that is used for editing the feature type.
-     * 
+     *
      * @return the FeatureTypeBuilder that is used for editing the feature type.
      */
-    public SimpleFeatureTypeBuilder getFeatureTypeBuilder() {
+    public FeatureTypeBuilder getFeatureTypeBuilder() {
         if( viewer==null )
             return null;
-        
-        return builderFromFeatureType((SimpleFeatureType) viewer.getInput());
+        return (FeatureTypeBuilder) viewer.getInput();
     }
 
     /**
-     * Returns the control that is the FeatureTypeEditor.
-     * 
-     * @return the control that is the FeatureTypeEditor.
+     * Returns the control that is the FeatureTypeEditor
+     *
+     * @return the control that is the FeatureTypeEditor
      */
     public Control getControl() {
         return viewer.getControl();
     }
 
     /**
-     * Label provider for labeling AttributeTypes.
-     * 
+     * Label provider for labelling AttributeTypes
+     *
      * @author jones
      * @since 1.1.0
      */
@@ -607,17 +544,17 @@ public class FeatureTypeEditor {
         }
 
         public String getColumnText( Object element, int columnIndex ) {
-            AttributeDescriptor attribute = (AttributeDescriptor) element;
+            AttributeType attribute = (AttributeType) element;
             switch( columnIndex ) {
             case 0: // Attribute Name element
-                return attribute.getLocalName();
+                return attribute.getName();
             case 1: // Attribute Type element
-                return attribute.getType().getBinding().getSimpleName();
+                return attribute.getType().getSimpleName();
             case 2: // Attribute Type element
-			if (attribute instanceof GeometryDescriptor) {
-                    CoordinateReferenceSystem crs = ((GeometryDescriptor)attribute).getCoordinateReferenceSystem();
-                    if(crs!=null){
-                        return crs.getName().toString();
+                if (attribute instanceof GeometricAttributeType) {
+                    CoordinateReferenceSystem coordinateSystem = ((GeometricAttributeType)attribute).getCoordinateSystem();
+                    if(coordinateSystem!=null){
+                        return coordinateSystem.getName().toString();
                     }else {
                         return "Unspecified";
                     }
@@ -632,8 +569,8 @@ public class FeatureTypeEditor {
     }
 
     /**
-     * A Tree Content Provider that serves up attributeTypes from a SimpleFeatureType as a parent.
-     * 
+     * A Tree Content Provider that serves up attributeTypes from a FeatureType as a parent.
+     *
      * @author jones
      * @since 1.1.0
      */
@@ -652,11 +589,11 @@ public class FeatureTypeEditor {
         }
 
         public Object[] getChildren( Object parentElement ) {
-            if (parentElement instanceof SimpleFeatureType) {
-                SimpleFeatureType featureType = (SimpleFeatureType) parentElement;
-				Object[] attributes = new Object[featureType.getAttributeCount()];
+            if (parentElement instanceof FeatureTypeBuilder) {
+                FeatureTypeBuilder builder = (FeatureTypeBuilder) parentElement;
+                Object[] attributes = new Object[builder.getAttributeCount()];
                 for( int i = 0; i < attributes.length; i++ ) {
-                    attributes[i] = featureType.getDescriptor(i);
+                    attributes[i] = builder.get(i);
                 }
                 return attributes;
             }
@@ -664,14 +601,14 @@ public class FeatureTypeEditor {
         }
 
         public Object getParent( Object element ) {
-            if (element instanceof AttributeDescriptor) {
+            if (element instanceof AttributeType) {
                 return viewer.getInput();
             }
             return null;
         }
 
         public boolean hasChildren( Object element ) {
-            if (element instanceof SimpleFeatureType)
+            if (element instanceof FeatureTypeBuilder)
                 return true;
             return false;
         }
@@ -687,27 +624,27 @@ public class FeatureTypeEditor {
         private Object lastCRS=getDefaultCRS();
 
         public boolean canModify( Object element, String property ) {
-            if (String.valueOf(OTHER_COLUMN).equals(property) && !(element instanceof GeometryDescriptor))
+            if (String.valueOf(OTHER_COLUMN).equals(property) && !(element instanceof GeometricAttributeType))
                 return false;
             return true;
         }
 
         public Object getValue( Object element, String property ) {
-            AttributeDescriptor editElement = (AttributeDescriptor) element;
+            AttributeType editElement = (AttributeType) element;
             switch( Integer.parseInt(property) ) {
             case NAME_COLUMN:
-                return editElement.getName().toString();
+                return editElement.getName();
 
             case TYPE_COLUMN:
                 for( int i = 0; i < legalTypes.size(); i++ ) {
-                    if (legalTypes.get(i).getType() == editElement.getType().getBinding())
+                    if (legalTypes.get(i).getType() == editElement.getType())
                         return i;
                 }
                 return -1;
             case OTHER_COLUMN:
-                return ((GeometryDescriptor)element).getCoordinateReferenceSystem();
+                return ((GeometricAttributeType)element).getCoordinateSystem();
             }
-            
+
             return null;
         }
 
@@ -715,62 +652,64 @@ public class FeatureTypeEditor {
             if( element==null || property==null || value==null ){
                 return;
             }
-            
-            AttributeDescriptor editElement = (AttributeDescriptor) ((TreeItem) element).getData();
-            SimpleFeatureType ft = (SimpleFeatureType) viewer.getInput();
-            AttributeDescriptor newAttr = createNewAttributeType(editElement, property, value );
-            
+            AttributeType editElement = (AttributeType) ((TreeItem) element).getData();
+            FeatureTypeBuilder builder = (FeatureTypeBuilder) viewer.getInput();
+            AttributeType newAttr = createNewAttributeType(editElement, property, value);
             if (newAttr == null)
                 return;
             int index = 0;
-            for( ; index < ft.getAttributeCount(); index++ ) {
-                if (ft.getDescriptor(index) == editElement)
+            for( ; index < builder.getAttributeCount(); index++ ) {
+                if (builder.get(index) == editElement)
                     break;
             }
-            if (index == ft.getAttributeCount())
+            if (index == builder.getAttributeCount())
                 return;
-            SimpleFeatureTypeBuilder builder = builderFromFeatureType(ft);
-            builder.remove(ft.getDescriptor(index).getLocalName());
-            builder.add(index, newAttr);
-            featureType = builder.buildFeatureType();
-            viewer.setInput(featureType);
+            builder.removeType(index);
+            builder.addType(index, newAttr);
+            viewer.refresh(true);
         }
 
-        private AttributeDescriptor createNewAttributeType( AttributeDescriptor editElement, String property,
+        private AttributeType createNewAttributeType( AttributeType editElement, String property,
                 Object value ) {
-        	AttributeTypeBuilder builder = new AttributeTypeBuilder();
-        	builder.init(editElement);
-        	//builder.setName((String)property);
-        	
             switch( Integer.parseInt(property) ) {
             case NAME_COLUMN:
-                return builder.buildDescriptor((String)value);
+                if (editElement instanceof GeometricAttributeType) {
+                    return AttributeTypeFactory.newAttributeType((String) value, editElement
+                            .getType(), editElement.isNillable(), editElement.getRestriction(),
+                            editElement.createDefaultValue(),
+                            ((GeometricAttributeType) editElement).getCoordinateSystem());
+                } else {
+                    return AttributeTypeFactory.newAttributeType((String) value, editElement
+                            .getType(), editElement.isNillable(), editElement.getRestriction(),
+                            editElement.createDefaultValue(), null);
+                }
             case TYPE_COLUMN:
-                int choice = -1;
-                if( value instanceof Integer) {
-                    choice = (Integer) value;
-                }
-                else if( value instanceof String) {
-                    choice = Integer.parseInt( (String) value );
-                }
-                
+                int choice = (Integer) value;
+
                 if (choice == -1)
                     return null;
                 else {
                     Class type = legalTypes.get(choice).getType();
-                    builder.setBinding(type);
-                    return builder.buildDescriptor( editElement.getLocalName());
+                    Object metadata=null;
+                    if( Geometry.class.isAssignableFrom(type))
+                        metadata=lastCRS;
+                    return AttributeTypeFactory.newAttributeType(editElement.getName(), type, editElement.isNillable(), editElement.getRestriction(), editElement.createDefaultValue(), metadata);
                 }
             case OTHER_COLUMN:
                 lastCRS=value;
-                
-                CoordinateReferenceSystem crs = (CoordinateReferenceSystem) value;
-                if( FeatureTypeEditor.this.featureType.getGeometryDescriptor()==editElement ){
-					setDefaultCRS(crs);
-                }
 
-                builder.setCRS(crs);
-                return builder.buildDescriptor( editElement.getLocalName());
+                setDefaultCRS((CoordinateReferenceSystem) value);
+
+                if (editElement instanceof GeometricAttributeType) {
+                    return AttributeTypeFactory.newAttributeType(editElement.getName(), editElement
+                            .getType(), editElement.isNillable(), editElement.getRestriction(),
+                            editElement.createDefaultValue(),
+                            value);
+                } else {
+                    return AttributeTypeFactory.newAttributeType((String) value, editElement
+                            .getType(), editElement.isNillable(), editElement.getRestriction(),
+                            editElement.createDefaultValue(), null);
+                }
             default:
                 return null;
             }
@@ -801,16 +740,9 @@ public class FeatureTypeEditor {
     public void builderChanged() {
         viewer.refresh();
         if (nameText != null && !nameText.isDisposed()) {
-            if( viewer.getInput()!=null){
-                String typeName = ((SimpleFeatureType) viewer.getInput()).getTypeName();
-                nameText.setText(typeName);
-            }
+            if( viewer.getInput()!=null)
+                nameText.setText(((FeatureTypeBuilder) viewer.getInput()).getName());
         }
-    }
-    public void setErrorMessage( String errorMessage ) {
-        errorDecorator.setDescriptionText(errorMessage);
-        errorDecorator.show();
-        errorDecorator.showHoverText(errorMessage);
     }
 
 }

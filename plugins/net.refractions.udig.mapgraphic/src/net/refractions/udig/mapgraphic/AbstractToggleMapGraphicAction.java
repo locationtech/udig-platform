@@ -28,9 +28,9 @@ import net.refractions.udig.mapgraphic.internal.MapGraphicService;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.UndoableComposite;
 import net.refractions.udig.project.command.factory.BasicCommandFactory;
+import net.refractions.udig.project.command.factory.EditCommandFactory;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.commands.DeleteLayerCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
 import net.refractions.udig.ui.ProgressManager;
@@ -45,8 +45,8 @@ import org.eclipse.ui.actions.ActionDelegate;
  * This is a helper class for MapGraphics that should be toggled on and off. Some good candidates
  * are: Scalebar and legend.
  * <p>
- * This Example is the adding a Toggle action for LegendGraphic. 
- * 
+ * This Example is the adding a Toggle action for LegendGraphic.
+ *
  * <p> The following xml snippet must be added to the plugin.xml</p>
  * <p>
  * <pre>
@@ -66,7 +66,7 @@ import org.eclipse.ui.actions.ActionDelegate;
  *  &lt;/extension&gt;
  * </pre>
  * </p>
- * <p>The following class must be referred to by the xml snippet above(the class attribute)</p>
+ * <p>The following class must be refered to by the xml snippet above(the class attribute)</p>
  * <p>
  * <pre>
  * public class LegendAction extends ActionDelegate implements IWorkbenchWindowActionDelegate {
@@ -78,10 +78,10 @@ import org.eclipse.ui.actions.ActionDelegate;
  *   protected String getExtensionID() {
  *       return "legend"; //$NON-NLS-1$
  *   }
- *   
+ *
  *   public void init( IWorkbenchWindow window ) {
  *   }
- * 
+ *
  * }
  * </pre>
  * </p>
@@ -127,7 +127,7 @@ public abstract class AbstractToggleMapGraphicAction extends ActionDelegate
 
         UndoableComposite composite = new UndoableComposite();
         for( ILayer layer : toRemove ) {
-            composite.getCommands().add( new DeleteLayerCommand((Layer)layer) );
+            composite.getCommands().add(EditCommandFactory.getInstance().createDeleteLayer((Layer)layer));
         }
 
         map.sendCommandASync(composite);

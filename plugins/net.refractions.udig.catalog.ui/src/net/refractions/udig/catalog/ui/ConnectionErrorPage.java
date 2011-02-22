@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Text;
  * A wizard page which displays a set of IConnectionErrorHandler objects.
  * <p>
  * This page is intended for use in a wizard extending
- * 
+ *
  * @see net.refractions.udig.catalog.ui.UDIGImportPage to connect to a service.
  *      </p>
  * @author Justin Deoliveira
@@ -41,10 +41,10 @@ public class ConnectionErrorPage extends WorkflowWizardPage {
     IConnectionErrorHandler handler;
 
     public ConnectionErrorPage() {
-        super(Messages.ConnectionErrorPage_pageName); 
+        super(Messages.ConnectionErrorPage_pageName);
 
-        setDescription(Messages.ConnectionErrorPage_pageDescription); 
-        setTitle(Messages.ConnectionErrorPage_pageTitle); 
+        setDescription(Messages.ConnectionErrorPage_pageDescription);
+        setTitle(Messages.ConnectionErrorPage_pageTitle);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class ConnectionErrorPage extends WorkflowWizardPage {
             root.setLayout(new FormLayout());
 
             Label label = new Label(root, SWT.LEFT);
-            label.setText(Messages.ConnectionErrorPage_message); 
+            label.setText(Messages.ConnectionErrorPage_message);
 
             ListViewer listViewer = new ListViewer(root);
             listViewer.setLabelProvider(new LabelProvider(){

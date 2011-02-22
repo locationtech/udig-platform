@@ -31,7 +31,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 /**
  * Initialize preferences
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -44,9 +44,9 @@ public class IssuesPreferenceInitializer extends AbstractPreferenceInitializer {
         preferenceStore.setDefault(KEY_VIEW_CONTENT_PROVIDER, ""); //$NON-NLS-1$
         preferenceStore.setDefault(KEY_VIEW_EXPANSION_PROVIDER, ""); //$NON-NLS-1$
         preferenceStore.setDefault(KEY_VIEW_SORTER, ""); //$NON-NLS-1$
-        
+
         URL url=IssuesActivator.getDefault().getBundle().getEntry(".config"); //$NON-NLS-1$
-        
+
         InputStream in = null;
         InputStreamReader reader = null;
         try {
@@ -64,7 +64,7 @@ public class IssuesPreferenceInitializer extends AbstractPreferenceInitializer {
             preferenceStore.setDefault(KEY_ACTIVE_LIST, substring);
         } catch (IOException e) {
             IssuesActivator.log("", e); //$NON-NLS-1$
-            preferenceStore.setDefault(KEY_ACTIVE_LIST, VALUE_MEMORY_LIST); 
+            preferenceStore.setDefault(KEY_ACTIVE_LIST, VALUE_MEMORY_LIST);
         }finally{
             try {
                 if( in!=null )

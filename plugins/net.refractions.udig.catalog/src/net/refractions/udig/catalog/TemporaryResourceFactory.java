@@ -31,7 +31,7 @@ public interface TemporaryResourceFactory {
     /**
      * Creates an IGeoResource that the implements the {@link ITransientResolve} interface or resolve to that interface.
      *
-     * @param param A object of the type that is defined in the temporaryResource extension point.  
+     * @param param A object of the type that is defined in the temporaryResource extension point.
      * @return Creates an IGeoResource that the implements the {@link ITransientResolve} interface.
      */
     IGeoResource createResource( Object param ) throws IOException;

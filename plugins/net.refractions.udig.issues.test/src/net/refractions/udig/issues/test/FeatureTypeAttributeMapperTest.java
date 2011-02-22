@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import net.refractions.udig.issues.internal.datastore.FeatureTypeAttributeMapper;
 
 import org.geotools.data.DataUtilities;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.feature.FeatureType;
 
 public class FeatureTypeAttributeMapperTest extends TestCase {
 
@@ -13,8 +13,8 @@ public class FeatureTypeAttributeMapperTest extends TestCase {
     }
 
     public void testStraightMappingWithExtraAtts() throws Exception {
-        SimpleFeatureType featureType = DataUtilities.createType("IssuesFeatureType", //$NON-NLS-1$
-                "bounds:MultiPolygon," + //$NON-NLS-1$ 
+        FeatureType featureType = DataUtilities.createType("IssuesFeatureType", //$NON-NLS-1$
+                "bounds:MultiPolygon," + //$NON-NLS-1$
                         "extension:int," + //$NON-NLS-1$
                         "ext:String," + //$NON-NLS-1$
                         "id:Integer," + //$NON-NLS-1$
@@ -36,12 +36,12 @@ public class FeatureTypeAttributeMapperTest extends TestCase {
         assertEquals("desc", mapper.getDescription()); //$NON-NLS-1$
         assertEquals("mem", mapper.getMemento()); //$NON-NLS-1$
         assertEquals("view", mapper.getViewMemento()); //$NON-NLS-1$
-        
+
     }
 
     public void testDifficultMapping() throws Exception {
-        SimpleFeatureType featureType = DataUtilities.createType("IssuesFeatureType", //$NON-NLS-1$
-                "b:MultiPolygon," + //$NON-NLS-1$ 
+        FeatureType featureType = DataUtilities.createType("IssuesFeatureType", //$NON-NLS-1$
+                "b:MultiPolygon," + //$NON-NLS-1$
                         "extension:int," + //$NON-NLS-1$
                         "ee:String," + //$NON-NLS-1$
                         "id:Integer," + //$NON-NLS-1$

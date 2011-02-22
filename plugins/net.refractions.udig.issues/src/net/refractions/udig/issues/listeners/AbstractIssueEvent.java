@@ -9,7 +9,7 @@ public class AbstractIssueEvent {
     protected final Object oldValue;
 
     /**
-     * 
+     *
      * @param source the issue has changed
      * @param newValue the new value after the change
      * @param oldValue the value before the change

@@ -12,17 +12,17 @@ import org.eclipse.ui.XMLMemento;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.AttributeType;
 import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureType;
 import org.geotools.feature.SchemaException;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.PropertyIsEqualTo;
-import org.opengis.filter.expression.Expression;
+import org.geotools.filter.AttributeExpression;
+import org.geotools.filter.CompareFilter;
+import org.geotools.filter.Filter;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.filter.FilterType;
+import org.geotools.filter.IllegalFilterException;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -38,44 +38,44 @@ public abstract class AbstractDatastoreStrategy implements IListStrategy{
      */
     protected String url;
     /**
-     * the FeatureTypeName of the SimpleFeatureType to be used
+     * the FeatureTypeName of the FeatureType to be used
      */
     protected String layer;
-    protected FeatureStore<SimpleFeatureType, SimpleFeature> featureStore;
+    protected FeatureStore featureStore;
 
     public AbstractDatastoreStrategy() {
         super();
     }
 
     /**
-     * Tests that the datstore and its feature source exist and are 
+     * Tests that the datstore and its feature source exist and are
      * correctly configured for the list to use.
      *
      * @return true if the list is ready to use.
      * @throws IOException
      */
     protected boolean testConnection() throws IOException {
-    	FeatureStore<SimpleFeatureType, SimpleFeature> featureStore2 = getFeatureStore();
+        FeatureStore featureStore2 = getFeatureStore();
         if( featureStore2==null )
             return false;
-        
-    
+
+
         return getAttributeMapper().isValid();
     }
-    
+
     /**
-     * Creates the SimpleFeatureType if it doesn't exist. Returns an error if the connection can't be
+     * Creates the FeatureType if it doesn't exist. Returns an error if the connection can't be
      * made.
-     * 
+     *
      * @return an error if the connection can't be made or null if the process worked
      */
     protected String createConnection() {
             try {
                 mapper = new FeatureTypeAttributeMapper(layer);
             } catch (SchemaException e) {
-                throw new RuntimeException("Error creating the SimpleFeatureType schema, this is a bug", e);
+                throw new RuntimeException("Error creating the FeatureType schema, this is a bug", e);
             }
-            
+
             assert mapper.isValid();
 
             DataStore dataStore;
@@ -84,7 +84,7 @@ public abstract class AbstractDatastoreStrategy implements IListStrategy{
             } catch (IOException e) {
                 return "Unable to connect to the datastore, check connection parameters";
             }
-            
+
             try {
                 if( Arrays.asList(dataStore.getTypeNames()).contains(layer)){
                     return "Type exists choose a new name";
@@ -92,32 +92,32 @@ public abstract class AbstractDatastoreStrategy implements IListStrategy{
             } catch (IOException e) {
                 return "Error communicating with datastore, check connection and availability of service";
             }
-            
+
             try {
                 dataStore.createSchema(mapper.getSchema());
             } catch (IOException e) {
-                return "Error creating SimpleFeatureType verify that you have write access";
+                return "Error creating FeatureType verify that you have write access";
             }
-            
+
             return null;
     }
-    
+
     protected abstract DataStore getDataStore() throws IOException;
 
-    protected synchronized FeatureStore<SimpleFeatureType, SimpleFeature> getFeatureStore() throws IOException {
+    protected synchronized FeatureStore getFeatureStore() throws IOException {
         DataStore ds=getDataStore();
         if ( ds==null )
             return null;
         if( featureStore!=null )
             return featureStore;
-        
+
         List<String> typeNames = Arrays.asList(ds.getTypeNames());
         if( !typeNames.contains(layer) )
             return null;
-        FeatureSource<SimpleFeatureType, SimpleFeature> fs = ds.getFeatureSource(layer);
+        FeatureSource fs = ds.getFeatureSource(layer);
         if( fs instanceof FeatureStore )
-            featureStore=(FeatureStore<SimpleFeatureType, SimpleFeature>) fs;
-        
+            featureStore=(FeatureStore) fs;
+
         return featureStore;
     }
 
@@ -132,42 +132,42 @@ public abstract class AbstractDatastoreStrategy implements IListStrategy{
         return new FeatureCollectionToIssueCollectionAdapter(getFeatures(), getAttributeMapper());
     }
 
-    protected FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures() throws IOException {
+    protected FeatureCollection getFeatures() throws IOException {
         return getFeatureStore().getFeatures();
     }
 
     public void modifyIssue( final IIssue issue ) throws IOException {
-          SimpleFeatureType schema = getFeatureStore().getSchema();
-          AttributeDescriptor[] attributeType=new AttributeDescriptor[9];
+          FeatureType schema = getFeatureStore().getSchema();
+          AttributeType[] attributeType=new AttributeType[9];
           Object[] newValues=new Object[9];
-          
-          attributeType[0]=schema.getDescriptor(getAttributeMapper().getBounds());
-          attributeType[1]=schema.getDescriptor(getAttributeMapper().getDescription());
-          attributeType[2]=schema.getDescriptor(getAttributeMapper().getExtensionId());
-          attributeType[3]=schema.getDescriptor(getAttributeMapper().getGroupId());
-          attributeType[4]=schema.getDescriptor(getAttributeMapper().getId());
-          attributeType[5]=schema.getDescriptor(getAttributeMapper().getMemento());
-          attributeType[6]=schema.getDescriptor(getAttributeMapper().getPriority());
-          attributeType[7]=schema.getDescriptor(getAttributeMapper().getResolution());
-          attributeType[8]=schema.getDescriptor(getAttributeMapper().getViewMemento());
-          
+
+          attributeType[0]=schema.getAttributeType(getAttributeMapper().getBounds());
+          attributeType[1]=schema.getAttributeType(getAttributeMapper().getDescription());
+          attributeType[2]=schema.getAttributeType(getAttributeMapper().getExtensionId());
+          attributeType[3]=schema.getAttributeType(getAttributeMapper().getGroupId());
+          attributeType[4]=schema.getAttributeType(getAttributeMapper().getId());
+          attributeType[5]=schema.getAttributeType(getAttributeMapper().getMemento());
+          attributeType[6]=schema.getAttributeType(getAttributeMapper().getPriority());
+          attributeType[7]=schema.getAttributeType(getAttributeMapper().getResolution());
+          attributeType[8]=schema.getAttributeType(getAttributeMapper().getViewMemento());
+
           XMLMemento memento=XMLMemento.createWriteRoot("memento"); //$NON-NLS-1$
           XMLMemento viewMemento=XMLMemento.createWriteRoot("viewMemento"); //$NON-NLS-1$
-          
+
           issue.save(memento);
           issue.getViewMemento(viewMemento);
-          
+
           GeometryFactory geometryFactory = new GeometryFactory();
           Geometry bounds=null;
           if( issue.getBounds()!=null )
           bounds = geometryFactory.toGeometry(issue.getBounds());
-          if( bounds instanceof Polygon && MultiPolygon.class.isAssignableFrom(attributeType[0].getType().getBinding()) ){
+          if( bounds instanceof Polygon && MultiPolygon.class.isAssignableFrom(attributeType[0].getType()) ){
               bounds=geometryFactory.createMultiPolygon(new Polygon[]{ (Polygon)bounds});
           }
-          if( bounds instanceof MultiPolygon && Polygon.class.isAssignableFrom(attributeType[0].getType().getBinding()) ){
+          if( bounds instanceof MultiPolygon && Polygon.class.isAssignableFrom(attributeType[0].getType()) ){
               bounds=((MultiPolygon)bounds).getGeometryN(0);
           }
-          
+
           newValues[0]=bounds;
           newValues[1]=issue.getDescription();
           newValues[2]=issue.getExtensionID();
@@ -177,33 +177,61 @@ public abstract class AbstractDatastoreStrategy implements IListStrategy{
           newValues[6]=issue.getPriority();
           newValues[7]=issue.getResolution();
           newValues[8]=viewMemento;
-          
-          FilterFactory factory = CommonFactoryFinder.getFilterFactory(GeoTools
-				.getDefaultHints());
-		Expression expr1 = factory.property(getAttributeMapper().getId());
-		Expression expr2 = factory.literal(issue.getId());
-		PropertyIsEqualTo filter = factory.equals(expr1, expr2);
-		getFeatureStore().modifyFeatures(attributeType, newValues, filter);
-	}
 
+          FilterFactory factory=FilterFactoryFinder.createFilterFactory();
+          try {
+              CompareFilter filter = factory.createCompareFilter(FilterType.COMPARE_EQUALS);
+              filter.addLeftValue( factory.createAttributeExpression(getAttributeMapper().getId()) );
+              filter.addRightValue( factory.createLiteralExpression(issue.getId()) );
+              // TODO this is a hack to accomadate the geotools bug.  should be
+//              filter.addRightValue(new LiteralExpression(){
+//
+//                  public Object getLiteral() {
+//                      return issue.getId();
+//                  }
+//
+//                  public short getType() {
+//                      return ExpressionType.LITERAL_STRING;
+//                  }
+//
+//                  public Object getValue( Feature feature ) {
+//                      return issue.getId();
+//                  }
+//
+//                  public void setLiteral( Object literal ) throws IllegalFilterException {
+//                  }
+//
+//                  public void accept( FilterVisitor visitor ) {
+//                      visitor.visit((LiteralExpression)this);
+//                  }
+//
+//              });
+              getFeatureStore().modifyFeatures(attributeType, newValues, filter);
+          } catch (IllegalFilterException e) {
+              throw (IOException) new IOException( ).initCause( e );
+          }
+        }
 
     public void removeIssues( Collection< ? extends IIssue> changed ) throws IOException {
-        FilterFactory factory=CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-
-		Expression expr1 = factory.property(getAttributeMapper().getId());
-		
-		Filter filter = null;
-		
+        FilterFactory factory=FilterFactoryFinder.createFilterFactory();
+        AttributeExpression attrExpr = factory.createAttributeExpression(getAttributeMapper().getId());
+        Filter filter=null;
         for( IIssue issue : changed ) {
             String id=issue.getId();
-            Expression expr2 = factory.literal(id);
-            PropertyIsEqualTo tmp = factory.equals(expr1, expr2);
-            
+            CompareFilter tmp;
+            try {
+                tmp = factory.createCompareFilter(FilterType.COMPARE_EQUALS);
+                tmp.addLeftValue(attrExpr);
+                tmp.addRightValue(factory.createLiteralExpression(id));
+            } catch (IllegalFilterException e) {
+                throw (IOException) new IOException( ).initCause( e );
+            }
+
             if( filter==null )
                 filter=tmp;
             else
-                filter=factory.or(filter, tmp);
-            
+                filter=filter.or(tmp);
+
         }
         if( filter!=null ){
             getFeatureStore().removeFeatures(filter);

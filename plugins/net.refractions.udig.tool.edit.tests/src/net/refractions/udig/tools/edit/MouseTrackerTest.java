@@ -25,13 +25,13 @@ public class MouseTrackerTest extends TestCase {
 
         MapMouseEvent event=new MapMouseEvent( DISPLAY, 10,15,NONE,BUTTON1, BUTTON1 );
         tracker.updateState(event, EventType.MOVED);
-        
+
         assertEquals(Point.valueOf(10,15), tracker.getDragStarted());
-        
+
         event=new MapMouseEvent( DISPLAY, 10,10,NONE,BUTTON1, BUTTON1 );
         tracker.updateState(event, EventType.DRAGGED);
         assertEquals(Point.valueOf(10,15), tracker.getDragStarted());
-        
+
     }
 
 }

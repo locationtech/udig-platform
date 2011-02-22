@@ -3,6 +3,7 @@ package net.refractions.udig.catalog.internal.wms;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -18,8 +19,8 @@ public class WmsPlugin extends AbstractUIPlugin {
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
 	public static final String ID = "net.refractions.udig.catalog.internal.wms"; //$NON-NLS-1$
-    
-	
+
+
 	/**
 	 * The constructor.
 	 */
@@ -53,7 +54,7 @@ public class WmsPlugin extends AbstractUIPlugin {
 	}
 
 	/**
-	 * @param key 
+	 * @param key
 	 * @return x
 	 * Returns the string from the plugin's resource bundle,
 	 * or 'key' if not found.
@@ -80,7 +81,7 @@ public class WmsPlugin extends AbstractUIPlugin {
 		}
 		return resourceBundle;
 	}
-    
+
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
@@ -89,8 +90,8 @@ public class WmsPlugin extends AbstractUIPlugin {
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      * </ul>
      * </p>
-     * @param message 
-     * @param t 
+     * @param message
+     * @param t
      */
     public static void log( String message, Throwable t ) {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
@@ -106,8 +107,8 @@ public class WmsPlugin extends AbstractUIPlugin {
      * }
      * </code></pre>
      * </p>
-     * @param message 
-     * @param e 
+     * @param message
+     * @param e
      */
     public static void trace( String message, Throwable e) {
         if( getDefault().isDebugging() ) {
@@ -122,12 +123,12 @@ public class WmsPlugin extends AbstractUIPlugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
-     * @return true if -debug is on for this plugin 
+     * @return true if -debug is on for this plugin
      */
     public static boolean isDebugging( final String trace ){
         return getDefault().isDebugging() &&
-            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
-    }        
+            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
+    }
 }

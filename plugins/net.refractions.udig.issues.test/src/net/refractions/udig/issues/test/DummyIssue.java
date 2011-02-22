@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.issues.test;
 
@@ -21,9 +21,9 @@ class DummyIssue extends AbstractIssue {
     public DummyIssue( int problemObject ) {
         obj=String.valueOf(problemObject);
     }
-    
+
     /**
-     * 
+     *
      * @param problemObject will be returned by {@link #getProblemObject()}
      * @param groupId will be returned by {@link #getGroupId()}
      */
@@ -53,6 +53,6 @@ class DummyIssue extends AbstractIssue {
 
     public void save( IMemento memento ) {
     }
-	
-    
+
+
 }

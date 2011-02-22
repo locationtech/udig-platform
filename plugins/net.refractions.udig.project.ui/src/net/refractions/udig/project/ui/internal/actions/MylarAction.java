@@ -19,7 +19,14 @@ import net.refractions.udig.project.IEditManagerListener;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.render.RenderManager;
+import net.refractions.udig.project.internal.render.impl.CompositeRendererImpl;
+import net.refractions.udig.project.internal.render.impl.RenderExecutorComposite;
+import net.refractions.udig.project.internal.render.impl.RenderExecutorImpl;
+import net.refractions.udig.project.render.IRenderer;
+import net.refractions.udig.project.render.RenderException;
 import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -32,7 +39,7 @@ import org.eclipse.ui.actions.ActionDelegate;
 
 /**
  * Turns on/off the Mylar effect
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -40,23 +47,26 @@ public class MylarAction extends ActionDelegate implements IViewActionDelegate, 
 
     public static final String KEY = "MYLAR"; //$NON-NLS-1$
 
-    
+
     IEditManagerListener selectedLayerListener = new IEditManagerListener(){
-        
+
         public void changed( EditManagerEvent event ) {
             IMap map = event.getSource().getMap();
             if( map!=currentMap){
                 map.getEditManager().removeListener(this);
             }
             if (event.getOldValue() != event.getNewValue()) {
-                //update image
-                ((RenderManager)map.getRenderManager()).refreshImage();
+                RenderManager renderManager = (RenderManager) map
+                        .getRenderManager();
+                RenderExecutorComposite compositeRendererImpl = ((RenderExecutorComposite) renderManager.getRenderExecutor());
+                compositeRendererImpl.refresh();
+//                compositeRendererImpl.setState(IRenderer.DONE);
             }
         }
 
     };
     private Map currentMap;
-    
+
     @Override
     public void runWithEvent( IAction action, Event event ) {
         currentMap = (Map) ApplicationGIS.getActiveMap();
@@ -71,13 +81,20 @@ public class MylarAction extends ActionDelegate implements IViewActionDelegate, 
         }
         currentMap.getBlackboard().put(KEY, !currentStatus);
         action.setChecked(!currentStatus);
-        //update image
-        currentMap.getRenderManagerInternal().refreshImage();
+        try {
+            CompositeRendererImpl compositeRendererImpl = ((CompositeRendererImpl) currentMap
+                    .getRenderManagerInternal().getRenderExecutor().getRenderer());
+            compositeRendererImpl.refreshImage();
+            compositeRendererImpl.setState(IRenderer.DONE);
+
+        } catch (RenderException e) {
+            ProjectUIPlugin.log("", e); //$NON-NLS-1$
+        }
     }
 
     public void init( IWorkbenchWindow window ) {
     }
-    
+
     @Override
     public void selectionChanged( IAction action, ISelection selection ) {
         currentMap = (Map) ApplicationGIS.getActiveMap();
@@ -86,7 +103,7 @@ public class MylarAction extends ActionDelegate implements IViewActionDelegate, 
         Boolean temp = (Boolean)currentMap.getBlackboard().get(KEY);
 
         action.setChecked(temp==null?false:temp);
-        
+
     }
 
     public void init( IViewPart view ) {

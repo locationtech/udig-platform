@@ -21,9 +21,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 
 import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.PropertyListener;
 import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import net.refractions.udig.ui.graphics.SWTGraphics;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -45,7 +44,7 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * Draws LabelBoxes
- * 
+ *
  * @author Richard Gould
  * @since 0.3
  */
@@ -76,12 +75,10 @@ public class BoxFigure extends Figure {
         this.repaint();
     }
 
-    public void setBox( Box newBox ) {
-        this.box = newBox;
-
+    public void setBox( Box box ) {
+        this.box = box;
         this.repaint();
     }
-    
     public void setBounds( Rectangle rect ) {
         super.setBounds(rect);
         this.rectangleFigure.setBounds(rect);
@@ -101,12 +98,12 @@ public class BoxFigure extends Figure {
         public void scheduled( IJobChangeEvent event ) {
             rendering=true;
         }
-        
+
         public void done( IJobChangeEvent event ) {
             rendering=false;
             if( PlatformUI.getWorkbench().isClosing())
                 return;
-            
+
             Display.getDefault().asyncExec(new Runnable(){
                 public void run() {
                     repaint();
@@ -114,15 +111,15 @@ public class BoxFigure extends Figure {
             });
         }
     };
-    
+
 
     protected void paintClientArea( Graphics graphics ) {
         if( box.getSize().width<1 || box.getSize().height<1)
             return;
-        
+
         drawJob.addJobChangeListener(listener);
         graphics.translate(this.getLocation().x, this.getLocation().y);
-        
+
         if(box.getBoxPrinter() == null)
         	return;
 
@@ -182,38 +179,38 @@ public class BoxFigure extends Figure {
             return cacheImage;
         }
 
-        
-        
+
+
         protected IStatus run( IProgressMonitor monitor ) {
             int width = box.getSize().width;
             int height = box.getSize().height;
             BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-            
+
             // does the Java 2D painting
             Graphics2D createGraphics = image.createGraphics();
             box.getBoxPrinter().createPreview(createGraphics, monitor);
 
             ImageRunnable runnable = new ImageRunnable();
             runnable.image = image;
-            
+
             PlatformGIS.syncInDisplayThread (runnable);
-            
+
             synchronized (this) {
                 this.cacheImage = runnable.swtImage;
                 draws++;
             }
             return Status.OK_STATUS;
         }
-        
+
         private class ImageRunnable implements Runnable {
 
         	Image swtImage;
 			private RenderedImage image;
-			
+
 			public void run() {
-				swtImage = AWTSWTImageUtils.createSWTImage(image, true);
+				swtImage = SWTGraphics.createSWTImage(image, true);
 			}
-        	
+
         }
 
         /**
@@ -231,5 +228,5 @@ public class BoxFigure extends Figure {
         }
 
     }
-    
+
 }

@@ -19,11 +19,11 @@ import java.util.List;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.internal.impl.LayerImpl;
 
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.feature.FeatureType;
 
 /**
  * Provides some setter methods that otherwise are not available.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -36,17 +36,17 @@ public class TestLayer extends LayerImpl {
 
     /**
      * Sets the resources of the layer to be resources.  If called then a list that does not have events will be returned.
-     *   
+     *
      * @param resources resources of layer.
      */
     public TestLayer( List<IGeoResource> resources) {
         this.resources=resources;
     }
 
-    SimpleFeatureType schema=null;
-    
+    FeatureType schema=null;
+
     @Override
-    public SimpleFeatureType getSchema() {
+    public FeatureType getSchema() {
         if(schema == null  )
             return super.getSchema();
         return schema;
@@ -55,21 +55,21 @@ public class TestLayer extends LayerImpl {
     /**
      * @param schema The schema to set.
      */
-    public void setSchema( SimpleFeatureType schema ) {
+    public void setSchema( FeatureType schema ) {
         this.schema = schema;
     }
-    
+
     @Override
     public List<IGeoResource> getGeoResources() {
         if( resources==null )
             return super.getGeoResources();
-        
+
         return resources;
     }
-    
+
     @Override
     public String toString() {
         return "Name: "+getName(); //$NON-NLS-1$
     }
-    
+
 }

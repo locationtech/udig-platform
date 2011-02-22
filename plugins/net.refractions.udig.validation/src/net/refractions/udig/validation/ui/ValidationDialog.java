@@ -84,6 +84,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchViewerSorter;
+import org.geotools.feature.FeatureType;
 import org.geotools.validation.Validation;
 import org.geotools.validation.dto.ArgumentDTO;
 import org.geotools.validation.dto.PlugInDTO;
@@ -92,16 +93,15 @@ import org.geotools.validation.dto.TestSuiteDTO;
 import org.geotools.validation.xml.ValidationException;
 import org.geotools.validation.xml.XMLReader;
 import org.geotools.validation.xml.XMLWriter;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 public class ValidationDialog extends TitleAreaDialog {
-    
+
     /**
      * Constant to use as the key for storing the validation processor on the
      * blackboard (for saving the state of the validation dialog box)
      */
     public static final String BLACKBOARD_KEY = "net.refractions.udig.validation"; //$NON-NLS-1$
-    
+
     private Button newButton;
     private Button deleteButton;
     private Button exportButton;
@@ -117,7 +117,7 @@ public class ValidationDialog extends TitleAreaDialog {
     private TableSettings tableSettings;
     private CheckboxTreeViewer treeViewer;
     private ValidationTreeContentProvider contentProvider = null;
-    
+
     private ProgressMonitorPart progressMonitorPart;
     private Object selectedTreeItem;
     private ValidationProcessor processor;
@@ -125,12 +125,12 @@ public class ValidationDialog extends TitleAreaDialog {
     /** The key (name) of the testSuite in use (usually there will only be a
      *  single testSuite, and this is its name). */
     private String defaultTestSuite;
-    
-    /** If a layer was selected to get to this dialog, it is the default testSuite. 
+
+    /** If a layer was selected to get to this dialog, it is the default testSuite.
      *  Otherwise the value is "" or even "*". */
     private String defaultTypeRef = ""; //$NON-NLS-1$
     private Display display;
-    
+
     private static String[] typeRefs;
     private static String[] layerNames;
     //private ILayer[] layers;
@@ -138,12 +138,12 @@ public class ValidationDialog extends TitleAreaDialog {
     public ValidationDialog(Shell parentShell, ILayer[] layers) {
         this(parentShell);
         // determine the defaultTypeRef (from the first selected layer)
-        String dsID = layers[0].getSchema().getName().getNamespaceURI();
+        String dsID = layers[0].getSchema().getNamespace().toString();
         String typeName = layers[0].getName();
         defaultTypeRef = dsID+":"+typeName; //$NON-NLS-1$
         //this.layers = layers;
         display = parentShell.getDisplay();
-        
+
         cancelListener = new SelectionListener() {
 
             public void widgetSelected( SelectionEvent e ) {
@@ -156,24 +156,24 @@ public class ValidationDialog extends TitleAreaDialog {
             public void widgetDefaultSelected( SelectionEvent e ) {
                 widgetSelected(e);
             }
-            
+
         };
     }
-    
+
     protected ValidationDialog(Shell parentShell) {
         super(parentShell);
         setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL | getDefaultOrientation());
         setBlockOnOpen(true);
     }
-    
+
     public ValidationDialog getDialog() {
-        return this;   
+        return this;
     }
-    
+
     public Button getCancelButton() {
         return cancelButton;
     }
-    
+
     @Override
     protected Control createButtonBar(Composite parent) {
         Composite composite = new Composite(parent, SWT.FILL);
@@ -188,7 +188,7 @@ public class ValidationDialog extends TitleAreaDialog {
         GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
         composite.setLayoutData(data);
         composite.setFont(parent.getFont());
-        
+
         // create 2 composites in the composite with left and right aligns
         Composite leftComp = new Composite(composite, SWT.LEFT);
         layout = new GridLayout();
@@ -215,29 +215,29 @@ public class ValidationDialog extends TitleAreaDialog {
         data = new GridData(SWT.RIGHT, SWT.NONE, true, false);
         rightComp.setLayoutData(data);
         rightComp.setFont(parent.getFont());
-        
+
         // Add the buttons
         importButton = new Button(leftComp, SWT.PUSH);
         importButton.setFont(parent.getFont());
-        importButton.setText(Messages.ValidationDialog_import); 
+        importButton.setText(Messages.ValidationDialog_import);
         importButton.setEnabled(true);
         importButton.addSelectionListener(new ImportSuiteListener());
         setButtonLayoutData(importButton);
 
         exportButton = new Button(leftComp, SWT.PUSH);
         exportButton.setFont(parent.getFont());
-        exportButton.setText(Messages.ValidationDialog_export); 
+        exportButton.setText(Messages.ValidationDialog_export);
         exportButton.setEnabled(false);
         exportButton.addSelectionListener(new ExportSuiteListener());
         setButtonLayoutData(exportButton);
-        
+
         runButton = new Button(rightComp, SWT.PUSH);
         runButton.setFont(parent.getFont());
-        runButton.setText(Messages.ValidationDialog_run); 
+        runButton.setText(Messages.ValidationDialog_run);
         runButton.setEnabled(false);
         runButton.addSelectionListener(new RunTestsListener());
         setButtonLayoutData(runButton);
-        
+
         cancelButton = new Button(rightComp, SWT.PUSH);
         cancelButton.setText(IDialogConstants.CLOSE_LABEL);
         cancelButton.setFont(parent.getFont());
@@ -260,11 +260,11 @@ public class ValidationDialog extends TitleAreaDialog {
 //            public void widgetDefaultSelected( SelectionEvent e ) {
 //                widgetSelected(e);
 //            }
-//            
+//
 //        };
         cancelButton.addSelectionListener(closeListener);
         setButtonLayoutData(cancelButton);
-        
+
         return composite;
     }
 
@@ -275,7 +275,7 @@ public class ValidationDialog extends TitleAreaDialog {
     @Override
     protected Control createDialogArea( Composite parent ) {
         Composite composite = new Composite(parent, SWT.NONE);
-        setTitle(Messages.ValidationDialog_title); 
+        setTitle(Messages.ValidationDialog_title);
         setMessage(""); //$NON-NLS-1$
         ImageDescriptor image = Images.getDescriptor(ImageConstants.IMAGE_WIZBAN);
         if (image != null) setTitleImage(image.createImage());
@@ -287,7 +287,7 @@ public class ValidationDialog extends TitleAreaDialog {
         topLayout.marginHeight = 0;
         topLayout.marginWidth = 0;
         composite.setLayout(topLayout);
-        
+
         // Create the SashForm that contains the selection area on the left,
         // and the edit area on the right
         SashForm sashForm = new SashForm(composite, SWT.FILL);
@@ -295,7 +295,7 @@ public class ValidationDialog extends TitleAreaDialog {
         gd = new GridData(SWT.FILL, SWT.FILL, true, true);
         sashForm.setLayoutData(gd);
         sashForm.setFont(parent.getFont());
-        
+
         // Build the validation selection area and put it into the composite.
         Composite validationSelectionArea;
         try {
@@ -306,7 +306,7 @@ public class ValidationDialog extends TitleAreaDialog {
         }
         gd = new GridData(SWT.FILL, SWT.FILL, true, true);
         validationSelectionArea.setLayoutData(gd);
-        
+
         // Build the validation edit area and put it into the composite.
         Composite editAreaComp = createValidationEditArea(sashForm);
         gd = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -325,10 +325,10 @@ public class ValidationDialog extends TitleAreaDialog {
         gd = new GridData(SWT.FILL, SWT.NONE, true, false);
         // gd.horizontalSpan = 2;
         separator.setLayoutData(gd);
-        
+
         parent.layout(true);
         applyDialogFont(parent);
-        
+
         // create a resize listener
         composite.addListener(SWT.Resize, new Listener() {
 
@@ -336,9 +336,9 @@ public class ValidationDialog extends TitleAreaDialog {
                 resizeTable();
                 // FIXME: possibly move this listener to the table.resize event
             }
-            
+
         });
-        
+
         composite.addDisposeListener(new DisposeListener() {
 
             public void widgetDisposed(DisposeEvent e) {
@@ -346,9 +346,9 @@ public class ValidationDialog extends TitleAreaDialog {
                 IMap map = ApplicationGIS.getActiveMap();
                 saveDialogState(processor, map);
             }
-            
+
         });
-        
+
         return composite;
     }
 
@@ -356,10 +356,10 @@ public class ValidationDialog extends TitleAreaDialog {
      * Creates the validation test suite selection area of the dialog. This area displays a tree of
      * validations that the user may select and modify. The first tier of the tree contains the
      * available validation plugins, and the second tier contains instances of the test.
-     * 
+     *
      * @return the composite used for the validations selection area
      * @throws Exception
-     */ 
+     */
     protected Composite createValidationSelectionArea(Composite parent) throws Exception {
         Font font = parent.getFont();
         Composite comp = new Composite(parent, SWT.NONE);
@@ -368,14 +368,14 @@ public class ValidationDialog extends TitleAreaDialog {
         layout.marginWidth = 5;
         comp.setLayout(layout);
         comp.setFont(font);
-        
+
         Label treeLabel = new Label(comp, SWT.NONE);
         treeLabel.setFont(font);
-        treeLabel.setText(Messages.ValidationDialog_validations); 
+        treeLabel.setText(Messages.ValidationDialog_validations);
         GridData labelData = new GridData();
         treeLabel.setLayoutData(labelData);
-        
-        ValidationProcessor tempProcessor = loadDialogState(ApplicationGIS.getActiveMap()); 
+
+        ValidationProcessor tempProcessor = loadDialogState(ApplicationGIS.getActiveMap());
         if (tempProcessor == null) {
             processor = createProcessor(null, null);
             defaultTestSuite = "testSuite1"; //$NON-NLS-1$
@@ -403,12 +403,12 @@ public class ValidationDialog extends TitleAreaDialog {
                 defaultTestSuite = thisTestSuite;
             }
         }
-    
+
         // create the treeViewer (list of possible validations (plugins) + prepared tests)
         treeViewer = new CheckboxTreeViewer(comp);
         treeViewer.setLabelProvider(new ValidationTreeLabelProvider());
         treeViewer.setSorter(new WorkbenchViewerSorter());
-        contentProvider = new ValidationTreeContentProvider(); 
+        contentProvider = new ValidationTreeContentProvider();
         treeViewer.setContentProvider(contentProvider);
         treeViewer.addCheckStateListener(new ICheckStateListener(){
             public void checkStateChanged( CheckStateChangedEvent event ) {
@@ -420,9 +420,9 @@ public class ValidationDialog extends TitleAreaDialog {
                         treeViewer.setChecked(children[i], event.getChecked());
                     }
                     // all children are in the same state, therefore the parent is not grayed
-                    treeViewer.setGrayed(element, false); 
+                    treeViewer.setGrayed(element, false);
                 }
-    
+
                 Object parent = contentProvider.getParent(element);
                 if (parent != null) {
                     // child element was modified
@@ -439,54 +439,54 @@ public class ValidationDialog extends TitleAreaDialog {
                     if (allSiblingsChecked) { // mark parent checked and NOT grayed out
                         treeViewer.setGrayed(parent, false);
                         treeViewer.setChecked(parent, true);
-                    } else { 
+                    } else {
                         if (oneSiblingChecked) { // mark parent checked and grayed out
                             treeViewer.setGrayChecked(parent, true);
                         } else { // mark parent NOT checked
                             treeViewer.setGrayChecked(parent, false);
                         }
                     }
-                }                        
+                }
             }
         });
-    
+
         // populate the tree
         treeViewer.setInput(processor);
         treeViewer.expandAll();
-    
+
         Control control = treeViewer.getControl();
         GridData gd = new GridData(GridData.FILL_BOTH);
         gd.heightHint = 250; // initial height of treeViewer (in pixels?)
         gd.verticalSpan = 3;
         control.setLayoutData(gd);
         control.setFont(font);
-        
+
         // composite to hold the new/delete/save/... buttons
         buttonComposite = new Composite(comp, SWT.NONE);
         gd = new GridData(GridData.FILL_HORIZONTAL);
         gd.widthHint = 200;
         buttonComposite.setLayoutData(gd);
         buttonComposite.setFont(comp.getFont());
-        
+
         GridLayout buttonLayout = new GridLayout(2, false);
         buttonComposite.setLayout(buttonLayout);
-        
+
         // construct the new validation test button
         newButton = new Button(buttonComposite, SWT.PUSH);
         newButton.setFont(parent.getFont());
-        newButton.setText(Messages.ValidationDialog_new); 
+        newButton.setText(Messages.ValidationDialog_new);
         newButton.setEnabled(false);
         newButton.addSelectionListener(new NewTestListener());
         setButtonLayoutData(newButton);
-    
+
         // construct the delete validation test button
         deleteButton = new Button(buttonComposite, SWT.PUSH);
         deleteButton.setFont(parent.getFont());
-        deleteButton.setText(Messages.ValidationDialog_delete); 
+        deleteButton.setText(Messages.ValidationDialog_delete);
         deleteButton.setEnabled(false);
         deleteButton.addSelectionListener(new DeleteTestListener());
         setButtonLayoutData(deleteButton);
-    
+
         // construct treeViewer listener
         treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -525,7 +525,7 @@ public class ValidationDialog extends TitleAreaDialog {
                             tableViewer.setInput(null); //hide arguments
                             tableViewer.getControl().setEnabled(false);
                         }
-                        
+
                     } else { //more than one selection was made
                         selectedTreeItem = null;
                         newButton.setEnabled(false);
@@ -545,7 +545,7 @@ public class ValidationDialog extends TitleAreaDialog {
 
             public void checkStateChanged( CheckStateChangedEvent event ) {
                 updateButtons();
-                
+
                 if (event.getElement() instanceof PlugInDTO) {
                     if (event.getChecked()) {
                         //select the parent if is not already
@@ -563,9 +563,9 @@ public class ValidationDialog extends TitleAreaDialog {
                     }
                 }
             }
-            
+
         });
-        
+
         return comp;
     }
 
@@ -573,9 +573,9 @@ public class ValidationDialog extends TitleAreaDialog {
      * Creates the validations edit area of the dialog. This area displays the name and description
      * of the validation test currently selected. Instances of plugins may only be viewed, while
      * instances of validation tests (within the testSuite) may be modified.
-     * 
+     *
      * @return the composite used for launch configuration editing
-     */ 
+     */
     protected Composite createValidationEditArea(Composite parent) {
         // create a composite to place our form objects into
         Font font = parent.getFont();
@@ -586,119 +586,119 @@ public class ValidationDialog extends TitleAreaDialog {
         layout.marginWidth = 5;
         comp.setLayout(layout);
         comp.setFont(font);
-        
+
         // create the "name" label
         Label nameLabel = new Label(comp, SWT.TOP | SWT.LEFT);
         nameLabel.setFont(font);
-        nameLabel.setText(Messages.ValidationDialog_name); 
+        nameLabel.setText(Messages.ValidationDialog_name);
         GridData gd = new GridData();
         nameLabel.setLayoutData(gd);
-        
+
         // create the "name" text box
         nameText = new Text(comp, SWT.BORDER | SWT.SINGLE | SWT.FILL);
         gd = new GridData( SWT.FILL, SWT.TOP , true, false);
         nameText.setLayoutData(gd);
         nameText.addModifyListener(new NameModifiedListener());
-        
+
         // create the "description" label
         Label descLabel = new Label(comp, SWT.TOP | SWT.LEFT);
         descLabel.setFont(font);
-        descLabel.setText(Messages.ValidationDialog_description); 
+        descLabel.setText(Messages.ValidationDialog_description);
         gd = new GridData();
         nameLabel.setLayoutData(gd);
-        
+
         // create the "description" text box
         descText = new Text(comp, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         gd = new GridData(SWT.FILL, SWT.TOP, true, false);
         gd.heightHint = 60;
         descText.setLayoutData(gd);
         descText.addModifyListener(new DescModifiedListener());
-        
+
         // create a new table object
         Table table = new Table(comp, SWT.BORDER | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.RESIZE);
-        
+
         // create a tableViewer containing the table
         tableViewer = createTable(table);
         tableViewer.setContentProvider(new ValidationTableContentProvider());
         tableViewer.setLabelProvider(new ValidationTableLabelProvider());
         tableViewer.setInput(null);
-        
+
         Control control = tableViewer.getControl();
         gd = new GridData(GridData.FILL_BOTH);
         gd.heightHint = 200; // initial height of treeViewer (in pixels?)
         control.setLayoutData(gd);
         control.setFont(font);
-    
+
         tableViewer.setCellModifier(new CellModifiedListener());
-    
+
         CellEditor[] editors = new CellEditor[2];
         editors[0] = null;
         Object[] allLayers = ApplicationGIS.getActiveMap().getMapLayers().toArray();
-        
+
         ArrayList<String> typeRefsList = new ArrayList<String>();
         ArrayList<String> layerNamesList = new ArrayList<String>();
-        
+
         typeRefsList.add(""); //$NON-NLS-1$
         layerNamesList.add(""); //$NON-NLS-1$
         typeRefsList.add("*"); //$NON-NLS-1$
         layerNamesList.add("*"); //$NON-NLS-1$
-        
+
         for (int i = 0; i < allLayers.length; i++) {
-            ILayer thisLayer = (ILayer) allLayers[i]; 
-            SimpleFeatureType schema = thisLayer.getSchema();
+            ILayer thisLayer = (ILayer) allLayers[i];
+            FeatureType schema = thisLayer.getSchema();
             if( schema==null )
                 continue;
-            
-            String dsID = schema.getName().getNamespaceURI();
+
+            String dsID = schema.getNamespace().toString();
             String typeName = thisLayer.getName();
-            
+
             if(dsID == null || typeName == null)
             	continue;
-            
+
             typeRefsList.add(dsID+":"+typeName); //$NON-NLS-1$
             layerNamesList.add(typeName);
         }
-        
+
         typeRefs = typeRefsList.toArray(new String[typeRefsList.size()]);
         layerNames = layerNamesList.toArray(new String[layerNamesList.size()]);
-        
+
         // create the text/combo cell editor
-        editors[1] = new AmbiguousCellEditor((Composite)table, table, layerNamesList, typeRefsList); 
+        editors[1] = new AmbiguousCellEditor((Composite)table, table, layerNamesList, typeRefsList);
         // only the layer names will show up in the combo, but typeRef is the real value
-                
+
         tableViewer.setCellEditors(editors);
         // note: Argument and Value below are internal tags, not labels
         tableViewer.setColumnProperties(new String[] { "Argument", "Value"});  //$NON-NLS-1$//$NON-NLS-2$
-        
+
         // create a table settings object and configure it
         tableSettings = new TableSettings(table);
         tableSettings.setColumnMin(0, 65);
-        
+
         return comp;
     }
 
     protected TableViewer createTable(Table table) {
         TableViewer tableViewer = new TableViewer(table);
-    
+
         TableLayout layout = new TableLayout();
         layout.addColumnData(new ColumnWeightData(50, 65, true));
         TableColumn nameColumn = new TableColumn(table, SWT.LEFT);
-        nameColumn.setText(Messages.ValidationDialog_argument); 
+        nameColumn.setText(Messages.ValidationDialog_argument);
         nameColumn.setWidth(65);
         layout.addColumnData(new ColumnWeightData(50, 75, true));
         table.setLayout(layout);
         TableColumn valColumn = new TableColumn(table, SWT.LEFT);
-        valColumn.setText(Messages.ValidationDialog_value); 
+        valColumn.setText(Messages.ValidationDialog_value);
         valColumn.setWidth(75);
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
-    
+
         return tableViewer;
     }
-    
+
     /**
      * Create the progress monitor part in the receiver.
-     * 
+     *
      * @param composite
      * @param pmlayout
      * @return ProgressMonitorPart
@@ -708,10 +708,10 @@ public class ValidationDialog extends TitleAreaDialog {
         return new ProgressMonitorPart(composite, pmlayout, SWT.DEFAULT) {
             String currentTask = null;
             boolean lockedUI = false;
-            
+
             /*
              * (non-Javadoc)
-             * 
+             *
              * @see org.eclipse.jface.wizard.ProgressMonitorPart#setBlocked(org.eclipse.core.runtime.IStatus)
              */
             public void setBlocked(IStatus reason) {
@@ -723,7 +723,7 @@ public class ValidationDialog extends TitleAreaDialog {
 
             /*
              * (non-Javadoc)
-             * 
+             *
              * @see org.eclipse.jface.wizard.ProgressMonitorPart#clearBlocked()
              */
             public void clearBlocked() {
@@ -734,7 +734,7 @@ public class ValidationDialog extends TitleAreaDialog {
 
             /*
              * (non-Javadoc)
-             * 
+             *
              * @see org.eclipse.jface.wizard.ProgressMonitorPart#beginTask(java.lang.String, int)
              */
             public void beginTask(String name, int totalWork) {
@@ -744,7 +744,7 @@ public class ValidationDialog extends TitleAreaDialog {
 
             /*
              * (non-Javadoc)
-             * 
+             *
              * @see org.eclipse.jface.wizard.ProgressMonitorPart#setTaskName(java.lang.String)
              */
             public void setTaskName(String name) {
@@ -754,7 +754,7 @@ public class ValidationDialog extends TitleAreaDialog {
 
             /*
              * (non-Javadoc)
-             * 
+             *
              * @see org.eclipse.jface.wizard.ProgressMonitorPart#subTask(java.lang.String)
              */
             public void subTask(String name) {
@@ -765,9 +765,9 @@ public class ValidationDialog extends TitleAreaDialog {
             }
         };
     }
-    
+
     //TODO: implement runValidationTestsOptimized
-    
+
     private GenericValidationResults[] runValidationTestsUnOptimized(IProgressMonitor monitor, Object[] element) throws Exception {
         //wander through the tree and run each enabled test in the processor individually
         //filter out the pluginDTOs, leaving only the TestDTOs
@@ -777,16 +777,16 @@ public class ValidationDialog extends TitleAreaDialog {
                 tests.add((TestDTO) element[i]);
             }
         }
-        
+
         if (monitor == null) monitor = new NullProgressMonitor();
-        monitor.beginTask(Messages.ValidationDialog_validating + 
-                          Messages.ValidationDialog_ellipsis, (tests.size() * 11) + 2); 
+        monitor.beginTask(Messages.ValidationDialog_validating +
+                          Messages.ValidationDialog_ellipsis, (tests.size() * 11) + 2);
         //update the Lookup Maps
         processor.updateFVLookup();
         //processor.updateIVLookup();
         monitor.worked(1);
 
-        //TODO: ensure typeRefs are copied 
+        //TODO: ensure typeRefs are copied
 
         //monitor.beginTask("Running Tests", tests.size());
 
@@ -795,7 +795,7 @@ public class ValidationDialog extends TitleAreaDialog {
 
         //perform feature tests
         GenericValidationResults[] results = new GenericValidationResults[tests.size()];
-        
+
         //open the issues list
         openIssuesList();
         monitor.worked(1);
@@ -810,8 +810,8 @@ public class ValidationDialog extends TitleAreaDialog {
             String testName = tests.get(i).getName();
             //TODO: run as either feature or integrity test
             monitor.subTask(""); //$NON-NLS-1$
-            monitor.setTaskName(Messages.ValidationDialog_validating + " " + testName  
-                    + Messages.ValidationDialog_ellipsis); 
+            monitor.setTaskName(Messages.ValidationDialog_validating + " " + testName
+                    + Messages.ValidationDialog_ellipsis);
             SubProgressMonitor subMonitor = new SubProgressMonitor(monitor, 10);
             processor.runFeatureTest(testName, layers, results[i], subMonitor);
             //processor.runIntegrityTest(test.getName(), layers, results[i], monitor);
@@ -824,7 +824,7 @@ public class ValidationDialog extends TitleAreaDialog {
                 break;
             }
             //add to issues list
-            monitor.subTask(MessageFormat.format(Messages.ValidationDialog_populating, testName)); 
+            monitor.subTask(MessageFormat.format(Messages.ValidationDialog_populating, testName));
             IIssuesManager.defaultInstance.getIssuesList().addAll(results[i].issues);
             monitor.worked(1);
         }
@@ -835,7 +835,7 @@ public class ValidationDialog extends TitleAreaDialog {
     /**
      * Based on the name of the argument, this function determines if it is a
      * typeRef or not.
-     * 
+     *
      * @param argName
      * @return
      */
@@ -843,7 +843,7 @@ public class ValidationDialog extends TitleAreaDialog {
         if (argName.toLowerCase().contains("typeref")) return true; //$NON-NLS-1$
         else return false;
     }
-    
+
     public static String getTypeRefLayer(String typeRef) {
         for (int i = 0; i < typeRefs.length; i++) {
             if (typeRefs[i].equals(typeRef)) {
@@ -852,14 +852,14 @@ public class ValidationDialog extends TitleAreaDialog {
         }
         return null;
     }
-    
+
     /**
      * Creates a validation processor. Both parameters may be null.
      *
      * @param pluginsDir
      * @param testSuiteFile
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     private ValidationProcessor createProcessor(File pluginsDir, File testSuiteFile) throws Exception {
         if (pluginsDir == null) {
@@ -873,7 +873,7 @@ public class ValidationDialog extends TitleAreaDialog {
 
     /**
      * Resizes the table columns to behave better.
-     * 
+     *
      * @param table
      */
     private void resizeTable() {
@@ -937,12 +937,12 @@ public class ValidationDialog extends TitleAreaDialog {
                 }
             });
         }
-            
+
     }
 
     private class DescModifiedListener implements ModifyListener {
         /**
-         * Saves changes made to the description field 
+         * Saves changes made to the description field
          */
         public void modifyText(ModifyEvent e) {
             //ensure this is a validation test description (plugin descriptions cannot be modified)
@@ -953,7 +953,7 @@ public class ValidationDialog extends TitleAreaDialog {
             }
         }
     }
-    
+
     private class CellModifiedListener implements ICellModifier {
         public boolean canModify(Object element, String property) {
             return true;
@@ -1005,7 +1005,7 @@ public class ValidationDialog extends TitleAreaDialog {
 
     private class NameModifiedListener implements ModifyListener {
         /**
-         * Saves changes made to the name field 
+         * Saves changes made to the name field
          */
         public void modifyText(ModifyEvent e) {
             //ensure this is a validation test description (plugin descriptions cannot be modified)
@@ -1018,7 +1018,7 @@ public class ValidationDialog extends TitleAreaDialog {
                     getDialog().setErrorMessage(null);
                 } else {
                     //user tried to create 2 identical test names -- complain.
-                    getDialog().setErrorMessage(Messages.ValidationDialog_nonUniqueTest); 
+                    getDialog().setErrorMessage(Messages.ValidationDialog_nonUniqueTest);
                 }
             }
         }
@@ -1058,7 +1058,7 @@ public class ValidationDialog extends TitleAreaDialog {
                     ArgumentDTO arg = (ArgumentDTO) args.get(i.next());
                     String argName = arg.getName();
                     //is it a typeRef?
-                    if (isTypeRef(argName)) { 
+                    if (isTypeRef(argName)) {
                         //is it empty?
                         if (arg.getValue() == null || arg.getValue().toString().length() == 0) {
                             arg.setValue(defaultTypeRef);
@@ -1080,7 +1080,7 @@ public class ValidationDialog extends TitleAreaDialog {
         }
         return thisTest;
     }
-    
+
     private class NewTestListener implements SelectionListener {
         public void widgetSelected(SelectionEvent e) {
             addTest();
@@ -1110,11 +1110,11 @@ public class ValidationDialog extends TitleAreaDialog {
             widgetSelected(e);
         }
     }
-    
+
     private class RunTestsListener implements SelectionListener {
 
         GenericValidationResults[] results = new GenericValidationResults[0];
-        
+
         public void widgetSelected( final SelectionEvent e ) {
             final Object[] element = treeViewer.getCheckedElements();
 
@@ -1129,7 +1129,7 @@ public class ValidationDialog extends TitleAreaDialog {
                     }
                 }
             };
-            
+
             Control focusControl = null;
             Cursor arrowCursor = null;
             Cursor waitCursor = null;
@@ -1181,9 +1181,9 @@ public class ValidationDialog extends TitleAreaDialog {
                         for( int i = 0; i < results.length; i++ ) {
                             if (results[i] != null) {
                                 failures += results[i].failedFeatures.size();
-                                warnings += results[i].warningFeatures.size(); 
+                                warnings += results[i].warningFeatures.size();
                             }
-                        }                        
+                        }
                     }
                     setMessage("Validation complete, " + failures + " failures and " + warnings + " warnings found.");
                 }
@@ -1194,7 +1194,7 @@ public class ValidationDialog extends TitleAreaDialog {
         public void widgetDefaultSelected( SelectionEvent e ) {
             widgetSelected(e);
         }
-        
+
     }
 
     private class ImportSuiteListener implements SelectionListener {
@@ -1210,7 +1210,7 @@ public class ValidationDialog extends TitleAreaDialog {
 
             //final IPath homepath = Platform.getLocation();
             //exportDialog.setFilterPath(homepath.toOSString());
-            importDialog.setFilterNames (new String [] {Messages.ValidationDialog_filesXML, Messages.ValidationDialog_filesAll});  
+            importDialog.setFilterNames (new String [] {Messages.ValidationDialog_filesXML, Messages.ValidationDialog_filesAll});
             importDialog.setFilterExtensions (new String [] {"*.xml", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
 
             boolean done = false;
@@ -1225,7 +1225,7 @@ public class ValidationDialog extends TitleAreaDialog {
                     if (!file.exists()) {
                         // The file does not exist; yell at the user and try again
                         MessageBox mb = new MessageBox(importDialog.getParent(), SWT.ICON_ERROR | SWT.OK);
-                        mb.setMessage(fileName + Messages.ValidationDialog_fileNotExist); 
+                        mb.setMessage(fileName + Messages.ValidationDialog_fileNotExist);
                         mb.open();
                     } else {
                         // File exists, so we're good to go
@@ -1239,7 +1239,7 @@ public class ValidationDialog extends TitleAreaDialog {
             try {
                 reader = new FileReader(fileName);
             } catch (FileNotFoundException e3) {
-                MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),Messages.ValidationDialog_fileNotFound, e3.toString()); 
+                MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),Messages.ValidationDialog_fileNotFound, e3.toString());
                 ValidationPlugin.log(e3.toString()); //log the error, but don't throw the exception
                 return;
             }
@@ -1268,7 +1268,7 @@ public class ValidationDialog extends TitleAreaDialog {
             }
             //if no testSuites exist, just copy the new one directly in
             if (suites.size() == 0) {
-                suites.put(newDTO.getName(), newDTO);                        
+                suites.put(newDTO.getName(), newDTO);
                 defaultTestSuite = newDTO.getName();
             //does the testSuite exist? if so, add the new tests to the existing one
             } else if (suites.containsKey(newDTO.getName())) {
@@ -1280,7 +1280,7 @@ public class ValidationDialog extends TitleAreaDialog {
                 testSuite = processor.moveTests(testSuite, newDTO.getTests(), false);
                 suites.put(defaultTestSuite, testSuite); //overwrite the suite
             //a test Suite exists, but it isn't this one; put the new tests into the existing testSuite
-            } else { 
+            } else {
                 TestSuiteDTO testSuite = (TestSuiteDTO) suites.get(defaultTestSuite);
                 Map<String, TestDTO> tests = newDTO.getTests();
                 testSuite = processor.moveTests(testSuite, tests, false);
@@ -1310,12 +1310,12 @@ public class ValidationDialog extends TitleAreaDialog {
             treeViewer.refresh();
             updateButtons();
         }
- 
+
         public void widgetDefaultSelected(SelectionEvent e) {
             widgetSelected(e);
         }
     }
-    
+
     private class ExportSuiteListener implements SelectionListener {
         public void widgetSelected(SelectionEvent e) {
             Display display = Display.getCurrent();
@@ -1327,7 +1327,7 @@ public class ValidationDialog extends TitleAreaDialog {
             //testSuite is empty?
             if (testSuite.getTests().size() == 0) {
                 MessageBox mb = new MessageBox( display.getActiveShell(), SWT.ICON_ERROR  | SWT.OK);
-                mb.setMessage(Messages.ValidationDialog_noSuitePre+defaultTestSuite+Messages.ValidationDialog_noSuiteSuf);  
+                mb.setMessage(Messages.ValidationDialog_noSuitePre+defaultTestSuite+Messages.ValidationDialog_noSuiteSuf);
                 mb.open();
                 return;
             }
@@ -1340,7 +1340,7 @@ public class ValidationDialog extends TitleAreaDialog {
 
             //final IPath homepath = Platform.getLocation();
             //exportDialog.setFilterPath(homepath.toOSString());
-            exportDialog.setFilterNames (new String [] {Messages.ValidationDialog_filesXML, Messages.ValidationDialog_filesAll});  
+            exportDialog.setFilterNames (new String [] {Messages.ValidationDialog_filesXML, Messages.ValidationDialog_filesAll});
             exportDialog.setFilterExtensions (new String [] {"*.xml", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
 
             boolean done = false;
@@ -1356,9 +1356,9 @@ public class ValidationDialog extends TitleAreaDialog {
                     // The file already exists; asks for confirmation
                     MessageBox mb = new MessageBox(exportDialog.getParent(), SWT.ICON_WARNING
                         | SWT.YES | SWT.NO);
-    
-                    mb.setMessage(fileName + Messages.ValidationDialog_fileExists); 
-    
+
+                    mb.setMessage(fileName + Messages.ValidationDialog_fileExists);
+
                     // If they click Yes, we're done and we drop out. If
                     // they click No, we redisplay the File Dialog
                     done = mb.open() == SWT.YES;
@@ -1368,7 +1368,7 @@ public class ValidationDialog extends TitleAreaDialog {
                   }
                 }
             }
-            
+
             //construct a writer
             Writer writer;
             try {
@@ -1380,31 +1380,31 @@ public class ValidationDialog extends TitleAreaDialog {
             //write the file
             XMLWriter.writeTestSuite(testSuite, writer);
         }
-    
+
         public void widgetDefaultSelected(SelectionEvent e) {
             widgetSelected(e);
         }
     }
 
     /**
-     * Retrieves the ValidationProcessor object from the blackboard, or null if one does not exist. 
+     * Retrieves the ValidationProcessor object from the blackboard, or null if one does not exist.
      *
      * @param map
      * @return
      */
     private ValidationProcessor loadDialogState(IMap map) {
         Object currentState = map.getBlackboard().get(BLACKBOARD_KEY);
-        if (currentState instanceof ValidationProcessor) 
+        if (currentState instanceof ValidationProcessor)
             return (ValidationProcessor) currentState;
         else
             return null;
     }
-    
+
     /**
      * Saves the ValidationProcessor object on the blackboard, so we can restore
      * the state of the validation dialog the next time the dialog is opened.
-     * 
-     * @param validationProcessor 
+     *
+     * @param validationProcessor
      * @param map
      */
     private void saveDialogState(ValidationProcessor validationProcessor, IMap map) {

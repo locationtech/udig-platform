@@ -32,21 +32,21 @@
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
@@ -205,7 +205,7 @@ See the command extension point.
          <attribute name="toolCursorId" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
@@ -222,7 +222,7 @@ See the command extension point.
          <attribute name="selectionProvider" type="string">
             <annotation>
                <documentation>
-                  Tools are responsible for declaring the selection provider used by the MapEditor.  This attribute declares the IMapEditorSelectionProvider used.  
+                  Tools are responsible for declaring the selection provider used by the MapEditor.  This attribute declares the IMapEditorSelectionProvider used.
 If this attribute is not used then the selectionProvider attribute in the category declaration is used.  If that is null then the default is used (MapEditorSelectionProvider)
                </documentation>
                <appInfo>
@@ -414,9 +414,7 @@ See the command extension point
          <attribute name="image" type="string">
             <annotation>
                <documentation>
-                  The cursor image. The background of the image must be blank (Alpha value of 0).
-
-In previous versions of eclipse there were some problems showing color PNG cursors on linux and OS-X.
+                  The cursor image.   The background of the image must be blank (Alpha value of 0).  There are some problems showing color PNG cursors on linux and OS-X, you may wish to stick with black and white, or make a platform specific fragment as a workaroung.
                </documentation>
                <appInfo>
                   <meta.attribute kind="resource"/>
@@ -440,9 +438,7 @@ In previous versions of eclipse there were some problems showing color PNG curso
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-                  The system cursor or toolCuror id to use if image is null.
-
-The system cursors can be accessed using one of the following constants: default, crosshair, text, wait, sw_resize, se_resize, nw_resize, ne_resize, n_resize, s_resize, w_resize, e_resize, hand, move, no
+                  If the id is one of ModalTool&apos;s constants and image is null then the system cursor of that type will be used.  All of ModalTool&apos;s constants map to system cursors.
                </documentation>
             </annotation>
          </attribute>
@@ -600,30 +596,19 @@ It is the id of the property element which is a grandchild of the ObjectProperty
          <appInfo>
             <meta.element labelAttribute="id" icon="image"/>
          </appInfo>
-         <documentation>
-            Defines a cursor that can be reused by several tools, tools will refer to this cursor via the id listed here.
-
-Ids are already defined for the system cursors and are listed as constants in the ModalTool interface: default, crosshair, text, wait, sw_resize, se_resize, nw_resize, ne_resize, n_resize, s_resize, w_resize, e_resize, hand, move, no
-
-It is undefined what happens when two tool cursors are defined with the same id; or define with any of the system cursor ids mentioned above.
-         </documentation>
       </annotation>
       <complexType>
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  id used by a tool to refer to this cursor.
 
-Ids are already defined for the system cursors and are listed as constants in the ModalTool interface: default, crosshair, text, wait, sw_resize, se_resize, nw_resize, ne_resize, n_resize, s_resize, w_resize, e_resize, hand, move, no
-
-It is undefined what happens when two tool cursors are defined with the same id; or define with any of the system cursor ids mentioned above.
                </documentation>
             </annotation>
          </attribute>
          <attribute name="image" type="string" use="required">
             <annotation>
                <documentation>
-                  The cursor image. The background of the image must be blank (Alpha value of 0).
+
                </documentation>
                <appInfo>
                   <meta.attribute kind="resource"/>
@@ -633,14 +618,14 @@ It is undefined what happens when two tool cursors are defined with the same id;
          <attribute name="hotspotX" type="string">
             <annotation>
                <documentation>
-                  The x coordinate of the cursor&apos;s hotspot.  Default is 0.
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="hotspotY" type="string">
             <annotation>
                <documentation>
-                  The y coordinate of the cursor&apos;s hotspot.  Default is 0.
+
                </documentation>
             </annotation>
          </attribute>

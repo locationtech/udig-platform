@@ -22,7 +22,7 @@ import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
 
 /**
  * Behaviour is valid only when the advanced preference is set.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -40,9 +40,9 @@ public class AdvancedFeaturesEventBehavior implements EventBehaviour, LockingBeh
         if (!PreferenceUtil.instance().isAdvancedEditingActive() ){
             return elseList!=null && elseList.isValid(handler, e, eventType);
         }
-        
+
         return composite.isValid(handler, e,eventType);
-        
+
     }
 
     public UndoableMapCommand getCommand( EditToolHandler handler, MapMouseEvent e,

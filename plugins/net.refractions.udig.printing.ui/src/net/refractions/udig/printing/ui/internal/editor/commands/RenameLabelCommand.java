@@ -44,28 +44,28 @@ public class RenameLabelCommand extends Command{
     private LabelBoxPrinter labelBox;
     private String newName;
     private String oldName;
-    
+
     public void setName(String name) {
         this.newName = name;
     }
-    
+
     public void setNode(LabelBoxPrinter node) {
         this.labelBox = node;
     }
-    
+
     public void execute() {
         oldName = this.labelBox.getText();
         this.labelBox.setText(newName);
     }
-    
+
     public String getLabel() {
-        return Messages.RenameLabelCommand_label; 
+        return Messages.RenameLabelCommand_label;
     }
-    
+
     public void redo() {
         this.labelBox.setText(newName);
     }
-    
+
     public void undo() {
         this.labelBox.setText(oldName);
     }

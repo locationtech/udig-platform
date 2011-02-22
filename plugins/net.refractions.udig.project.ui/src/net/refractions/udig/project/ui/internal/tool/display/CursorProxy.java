@@ -13,13 +13,13 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 /**
  * The cursor proxy allows for tool cursor images  to be loaded lazily. It acts as a proxy
  * for cursor image of the tool until the image is really needed to be displayed.
- * 
+ *
  * @author Vitalus
  * @since UDIG 1.1
  *
  */
 public class CursorProxy {
-	
+
     private volatile Cursor cursor;
     private String imagePath;
     private String hotspotX;
@@ -30,7 +30,7 @@ public class CursorProxy {
 
     /**
      * The constructor to create custom cursor proxy from extention.
-     * 
+     *
      * @param configuration
      */
     public CursorProxy( IConfigurationElement configuration ) {
@@ -44,11 +44,11 @@ public class CursorProxy {
             cursorID = ModalTool.DEFAULT_CURSOR;
         }
     }
-    
+
     /**
-     * Returns cursor ID declared in extention point. 
+     * Returns cursor ID declared in extention point.
      * ID is unique in extention registry.
-     * 
+     *
      * @return
      */
     public String getID(){
@@ -95,7 +95,7 @@ public class CursorProxy {
     /**
      * Returns system cursor object based on constants from <code>ModalTool</code>
      * interface. These constants are mapped to SWT cursor constants.
-     * 
+     *
      * @param systemCursorID
      * @return
      */
@@ -103,7 +103,7 @@ public class CursorProxy {
     	Display display = PlatformUI.getWorkbench().getDisplay();
         if (systemCursorID == null)
             return display.getSystemCursor(SWT.CURSOR_ARROW);
-        
+
         if (systemCursorID.equals(ModalTool.CROSSHAIR_CURSOR))
             return display.getSystemCursor(SWT.CURSOR_CROSS);
         if (systemCursorID.equals(ModalTool.E_RESIZE_CURSOR))
@@ -130,10 +130,10 @@ public class CursorProxy {
             return display.getSystemCursor(SWT.CURSOR_SIZESW);
         if (systemCursorID.equals(ModalTool.WAIT_CURSOR))
             return display.getSystemCursor(SWT.CURSOR_WAIT);
-        
+
         if(systemCursorID.equals(ModalTool.NO_CURSOR))
         	return display.getSystemCursor(SWT.CURSOR_NO);
-        
+
         return display.getSystemCursor(SWT.CURSOR_ARROW);
     }
 

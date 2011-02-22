@@ -22,17 +22,17 @@ package net.refractions.udig.project.command;
  * </p>
  * <p>
  * Example Use:
- * 
+ *
  * <pre><code>
- *  
+ *
  *   NavCommandStack x = new NavCommandStack( ... );
  *   TODO code example
- *   
+ *
  * </code></pre>
- * 
+ *
  * </p>
  * API access the stack elements?
- * 
+ *
  * @author Jesse
  * @since 0.3
  */

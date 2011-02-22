@@ -15,33 +15,33 @@ import net.refractions.udig.tools.edit.behaviour.SelectFeatureBehaviour;
 import net.refractions.udig.tools.edit.behaviour.SelectVertexBehaviour;
 import net.refractions.udig.tools.edit.behaviour.SelectVertexOnMouseDownBehaviour;
 
-import org.opengis.filter.spatial.Intersects;
+import org.geotools.filter.FilterType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
 public class CoverageTool extends AbstractEditTool {
-    
+
     @Override
     protected void initAcceptBehaviours( List<Behaviour> acceptBehaviours ) {
         List<Behaviour> defaults = DefaultEditToolBehaviour.createAcceptAllChanges();
         acceptBehaviours.addAll(defaults);
     }
-    
+
     @Override
     protected void initActivators( Set<Activator> activators ) {
         DrawType geometryType=DrawType.POLYGON;
-        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultCreateActivators(geometryType);
+        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultActivators(geometryType);
         activators.addAll(defaults);
     }
-    
+
     @Override
     protected void initCancelBehaviours( List<Behaviour> cancelBehaviours ) {
         List<Behaviour> defaults = DefaultEditToolBehaviour.createDefaultCancelBehaviours();
         cancelBehaviours.addAll(defaults);
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     protected void initEnablementBehaviours( List<EnablementBehaviour> enablementBehaviours ) {
@@ -51,22 +51,21 @@ public class CoverageTool extends AbstractEditTool {
         List<EnablementBehaviour> defaults = DefaultEditToolBehaviour.createValidToolEnablementBehaviour(classes );
         enablementBehaviours.addAll(defaults);
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     protected void initEventBehaviours( EditToolConfigurationHelper helper ) {
         helper.startMutualExclusiveList();
         helper.add(new SelectVertexOnMouseDownBehaviour());
         helper.add(new SelectVertexBehaviour());
-        SelectFeatureBehaviour selectFeatureBehaviour =
-        	new SelectFeatureBehaviour(new Class[]{Geometry.class}, Intersects.class );
+        SelectFeatureBehaviour selectFeatureBehaviour = new SelectFeatureBehaviour(new Class[]{Geometry.class}, FilterType.GEOMETRY_INTERSECTS);
+        selectFeatureBehaviour.initDefaultStrategies(null);
         selectFeatureBehaviour.addSelectionStrategy(new SelectNeightborsStrategy());
-        
         helper.add(selectFeatureBehaviour);
         helper.stopMutualExclusiveList();
-    
+
         helper.add( new MoveVertexBehaviour() );
-        
+
         helper.done();
     }
 

@@ -22,13 +22,13 @@ import java.util.WeakHashMap;
 
 /**
  * A set backed onto a WeakHashMap.  Will not allow nulls
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class WeakHashSet<T> extends AbstractSet<T> implements Set<T> {
     WeakHashMap<T, T> set=new WeakHashMap<T,T>();
-    
+
     public int size() {
         return set.keySet().size();
     }

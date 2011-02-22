@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.ui.internal;
 
@@ -21,7 +21,16 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.part.EditorActionBarContributor;
 
 /**
- * Adds {@link net.refractions.udig.project.ui.tool.Tool}s to the actions bars.
+ * Used by MapEditor to contribute to the actions bars.
+ * <p>
+ * For more information please see <b>net.refractions.udig.project.ui.mapEditor</b>.
+ * <p>
+ * Specifically this class has the responsibility to:
+ * <ul>
+ * <li>adds {@link net.refractions.udig.project.ui.tool.Tool}s to the actions bars.
+ * </ul>
+ * This scope may expand to include context specific operations.
+ *
  * @author jeichar
  */
 public class MapEditorActionBarContributor extends EditorActionBarContributor {
@@ -31,15 +40,15 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
     public void init( IActionBars bars, IWorkbenchPage page ) {
         super.init(bars, page);
     }
-    
-    
+
+
 	@Override
 	public void contributeToCoolBar(ICoolBarManager coolBarManager) {
 		if (coolBarManager instanceof SubCoolBarManager) {
 			subManager = (SubCoolBarManager) coolBarManager;
 		}else
 			subManager=new SubCoolBarManager(coolBarManager);
-        
+
       /*
       * Vitalus:
       * For correct toolbar management by Eclipse platform we MUST
@@ -48,12 +57,12 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
       * items right after starting, so the solution is just to create fresh set of contribution items when
       * the toolbar is created - placeholders are needed for correct toolbars management by the Eclipse
       * with the same IDs.
-      * 
+      *
       * If not to do these steps it causes problems during resetting perspective because
       * of some "features" of Eclispe JFace implementation.
       */
         subManager.setVisible(true);
-        
+
         /*
          * Contribute action tools to the toolbar.
          */
@@ -67,7 +76,7 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
             ToolBarContributionItem toolBarContributionItem = new ToolBarContributionItem(actionToolBarManager, ToolConstants.ACTION_TOOLBAR_ID);
             subManager.add(toolBarContributionItem);
         }
-        
+
         /*
          * Contribute modal tools to the toolbar.
          */
@@ -81,7 +90,7 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
             ToolBarContributionItem toolBarContributionItem = new ToolBarContributionItem(modalToolBarManager, ToolConstants.MODAL_TOOLBAR_ID);
             subManager.add(toolBarContributionItem);
         }
-        
+
 		super.contributeToCoolBar(coolBarManager);
 	}
 
@@ -90,7 +99,7 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
 	    ApplicationGIS.getToolManager().contributeToMenu(menuManager);
 		super.contributeToMenu(menuManager);
 	}
-	
+
 	@Override
 	public void dispose() {
 	    subManager.setVisible(false);

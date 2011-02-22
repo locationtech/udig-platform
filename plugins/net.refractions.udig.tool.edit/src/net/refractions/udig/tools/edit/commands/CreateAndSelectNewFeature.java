@@ -17,7 +17,6 @@ package net.refractions.udig.tools.edit.commands;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
@@ -33,21 +32,22 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.data.FeatureEvent;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.filter.Filter;
+import org.geotools.feature.Feature;
+import org.geotools.filter.Filter;
+import org.geotools.filter.FilterFactoryFinder;
 
 /**
  * Creates a new feature and sets it as the EditFeature
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class CreateAndSelectNewFeature extends AbstractCommand implements UndoableMapCommand {
 
     private Layer layer;
-    private SimpleFeature feature;
+    private Feature feature;
     private AddFeatureCommand addFeatureCommand;
-    private SimpleFeature oldFeature;
+    private Feature oldFeature;
     private ILayer oldLayer;
     private EditGeom geom;
     private String oldID;
@@ -56,7 +56,7 @@ public class CreateAndSelectNewFeature extends AbstractCommand implements Undoab
 
     /**
      * New instance
-     * 
+     *
      * @param geom the EditGeom to update with the new feature's fid (after the fid has been added)
      * @param feature the feature created from the geom and that will be added to to the layer.
      * @param layer the layer to add the feature from. It must have a FeatureStore resource
@@ -64,7 +64,7 @@ public class CreateAndSelectNewFeature extends AbstractCommand implements Undoab
      *        If false the layer will be notified that the feature is selected an it should not be
      *        rendered.
      */
-    public CreateAndSelectNewFeature( EditGeom geom, SimpleFeature feature, ILayer layer,
+    public CreateAndSelectNewFeature( EditGeom geom, Feature feature, ILayer layer,
             boolean deselectCreatedFeature ) {
         this.layer = (Layer) layer;
         this.feature = feature;
@@ -81,28 +81,19 @@ public class CreateAndSelectNewFeature extends AbstractCommand implements Undoab
             addFeatureCommand = new AddFeatureCommand(feature, layer);
             addFeatureCommand.setMap(getMap());
             SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, 10);
-            
-            // run the addFeature command (should result in a featureId we can use for selection)
             addFeatureCommand.run(subProgressMonitor);
             subProgressMonitor.done();
 
             this.oldFeature = getMap().getEditManager().getEditFeature();
             this.oldLayer = getMap().getEditManager().getEditLayer();
             this.oldID = geom.getFeatureIDRef().get();
-            
-            String fid = addFeatureCommand.getFid();
-            if( fid != null ){
-                System.out.println("Create and select feature:"+fid );
-            }
-            else {
-                System.out.println("Create and select feature did not produce a feature id to select" );
-            }
-            geom.getFeatureIDRef().set(fid);
+            geom.getFeatureIDRef().set(addFeatureCommand.getFid());
 
-            SimpleFeature newFeature = addFeatureCommand.getNewFeature();
-            getMap().getEditManagerInternal().setEditFeature(newFeature,layer);
+            getMap().getEditManagerInternal().setEditFeature(addFeatureCommand.getNewFeature(),
+                    layer);
             oldSelection = layer.getFilter();
-            Filter filter = fid == null ? null : FeatureUtils.id(fid);
+            Filter filter = FilterFactoryFinder.createFilterFactory().createFidFilter(
+                    addFeatureCommand.getFid());
 
             if (deselectCreatedFeature) {
                 geom.getEditBlackboard().removeGeometries(Collections.singleton(geom));
@@ -110,17 +101,14 @@ public class CreateAndSelectNewFeature extends AbstractCommand implements Undoab
                 // this is not needed in the other case because the feature will not be rendered
                 layer.eSetDeliver(prev);
             } else {
-                EditUtils.instance.refreshLayer(layer, Collections.singleton(fid), null, false, true);
+                EditUtils.instance.refreshLayer(layer, Collections.singleton(addFeatureCommand
+                        .getFid()), null, false, true);
+
             }
             // since the layer didn't send an event (see eSetDeliver() above) we need to send the
-            // command - I'm just smacking it not making any real changes
-            if( filter != null ){
-                // filter selecting the new feature
-                layer.setFilter(filter);
-            }
-            else {
-                System.out.println("New feature did not have a feature id to select");
-            }
+            // command
+            // I'm just smacking it not making any real changes
+            layer.setFilter(filter);
             fireFeatureEvent(prev);
 
         } finally {
@@ -135,10 +123,8 @@ public class CreateAndSelectNewFeature extends AbstractCommand implements Undoab
 
         layer.eSetDeliver(prev);
         int index = featureChanges.size() - 1;
-        if( index != -1 ){
-            FeatureEvent featureEvent = featureChanges.get(index);
-            featureChanges.set(index, featureEvent);
-        }
+        FeatureEvent featureEvent = featureChanges.get(index);
+        featureChanges.set(index, featureEvent);
     }
 
     public String getName() {

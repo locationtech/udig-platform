@@ -14,8 +14,6 @@
  */
 package net.refractions.udig.mapgraphic.grid;
 
-import net.refractions.udig.mapgraphic.internal.Messages;
-
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Label;
@@ -25,7 +23,7 @@ import org.eclipse.swt.widgets.Spinner;
  * Verifies that the unit chosen is compatible with the other Unit Combo. The idea is that is that
  * both units must be compatible. You can't have one be minutes and the other be pixels. This
  * listener will update the other combo and set the message to explain why.
- * 
+ *
  * @see GridStyleConfigurator
  * @author Jesse
  * @since 1.1.0
@@ -47,13 +45,13 @@ public class UnitListener implements ModifyListener {
             if( thisSpacer.validatePixels(otherSpacer) ){
                 warningMessage();
             }else{
-                message.setText(""); //$NON-NLS-1$
+                message.setText("");
             }
         }else{
             if( thisSpacer.validateWorld(otherSpacer) ){
                 warningMessage();
             }else{
-                message.setText(""); //$NON-NLS-1$
+                message.setText("");
             }
         }
 
@@ -62,7 +60,7 @@ public class UnitListener implements ModifyListener {
     }
 
     private void warningMessage() {
-        message.setText(Messages.UnitListener_MixedUnits);
+        message.setText("Both units must be in pixel space or in world space, not a mix.  The other unit chooser has been updated.");
     }
 
     /**
@@ -79,7 +77,7 @@ public class UnitListener implements ModifyListener {
         }else if( GridStyleConfigurator.selectedString(thisSpacer.getUnit()).equals(SpacerController.DEGREES)){
             convertSpinner(oldValue, 1, 1/(double)60, 1/(double)3600, 6);
         }
-        
+
         thisSpacer.getUnit().setData(GridStyleConfigurator.selectedString(thisSpacer.getUnit()));
     }
 
@@ -91,7 +89,7 @@ public class UnitListener implements ModifyListener {
         double selection = spinner .getSelection();
         if(oldUnit==null )
             oldUnit=SpacerController.PIXELS;
-        
+
         if ( oldUnit.equals(SpacerController.DEGREES )){
             double power = SpacerController.spinnerUnit(digits-6);
             int newValue = (int) (selection*power * fromDegree);
@@ -102,7 +100,7 @@ public class UnitListener implements ModifyListener {
             spinner.setSelection(newValue);
         }else if (oldUnit.equals(SpacerController.MINUTES)){
             double power = SpacerController.spinnerUnit(digits-4);
-            
+
             int newValue = (int) (selection*power*fromMinute);
             spinner.setSelection(newValue);
         }else if (oldUnit.equals(SpacerController.PIXELS)){
@@ -114,5 +112,5 @@ public class UnitListener implements ModifyListener {
             }
         }
     }
-    
+
 }

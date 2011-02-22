@@ -4,7 +4,7 @@ import org.eclipse.swt.graphics.Image;
 
 /**
  * Placeholder that will show up in viewers while the contentProvider is loading the data.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

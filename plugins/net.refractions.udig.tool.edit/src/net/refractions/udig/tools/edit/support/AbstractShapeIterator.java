@@ -35,18 +35,18 @@ public abstract class AbstractShapeIterator implements PathIterator{
     protected Point currentPoint, nextPoint;
 
     private PrimitiveShape trueShape;
-    
+
     protected AbstractShapeIterator( PrimitiveShape shape ) {
         this.trueShape=shape;
     }
-    
+
     public synchronized Shape toShape(){
         reset();
         GeneralPath path=new GeneralPath();
         path.append( this, false );
         return path;
     }
-    
+
     public synchronized void reset(){
         currentPoint=null;
         if( trueShape.getNumPoints()==1 )
@@ -56,7 +56,7 @@ public abstract class AbstractShapeIterator implements PathIterator{
         points=shape.iterator();
         nextPoint=null;
     }
-    
+
     private synchronized PrimitiveShape getPointShape() {
         if( pointShape==null ){
             pointShape = new PrimitiveShape(trueShape.getEditGeom());
@@ -74,7 +74,7 @@ public abstract class AbstractShapeIterator implements PathIterator{
             pointShape.getMutator().addPoint(valueOf, null);
             pointShape.getEditGeom().initializing=false;
         }
-        
+
         return pointShape;
     }
 
@@ -86,16 +86,16 @@ public abstract class AbstractShapeIterator implements PathIterator{
     public boolean isDone() {
         return isDoneInternal();
     }
-    
+
     private boolean isDoneInternal() {
         if( nextPoint!=null )
             return false;
-        
+
         if( points.hasNext() ){
             nextPoint=points.next();
             return false;
         }
-        
+
         return true;
     }
 
@@ -126,7 +126,7 @@ public abstract class AbstractShapeIterator implements PathIterator{
             coords[1] = nextPoint.getY();
             return SEG_MOVETO;
         }
-        
+
         coords[0] = currentPoint.getX();
         coords[1] = currentPoint.getY();
 
@@ -141,7 +141,7 @@ public abstract class AbstractShapeIterator implements PathIterator{
             coords[1] = nextPoint.getY();
             return SEG_MOVETO;
         }
-        
+
         coords[0] = currentPoint.getX();
         coords[1] = currentPoint.getY();
 

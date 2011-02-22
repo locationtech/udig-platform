@@ -10,17 +10,17 @@ package net.refractions.udig.project.ui.render.displayAdapter;
 
 import java.awt.Point;
 
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-
 import org.eclipse.swt.SWT;
+
+import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 
 /**
  * Encapsulates a mouse event. MapMouseListeners receive MapMouse events.
- * 
+ *
  * @author jeichar
  */
 public class MapMouseEvent {
-    
+
     /** Indicates no modifiers or no buttons. */
     public static final int NONE = 0;
     /** Indicates that the alt key is down */
@@ -31,16 +31,16 @@ public class MapMouseEvent {
 
     /** Indicates that the shift key is down */
     public static final int SHIFT_DOWN_MASK = SWT.SHIFT;
-    
+
     /** Indicates that the mod1 key is down */
     public static final int MOD1_DOWN_MASK = SWT.MOD1;
-    
+
     /** Indicates that the mod2 key is down */
     public static final int MOD2_DOWN_MASK = SWT.MOD2;
-    
+
     /** Indicates that the mod3 key is down */
     public static final int MOD3_DOWN_MASK = SWT.MOD3;
-    
+
     /** Indicates that the mod3 key is down */
     public static final int MOD4_DOWN_MASK = SWT.MOD4;
 
@@ -56,12 +56,12 @@ public class MapMouseEvent {
     /** The Viewport pane that raised the event. */
     public final IMapDisplay source;
 
-    /** 
+    /**
      * The state consists buttons|modifiers
      * @deprecated user modifiers and buttons
      */
     public final int state;
-    
+
     /**
      * All the buttons that are currently down ORed together
      */
@@ -80,13 +80,13 @@ public class MapMouseEvent {
 
     /** indicates the y position of the event */
     public final int y;
-    
+
     /** the time the event occurred */
     public final long timestamp;
 
     /**
      * Construct <code>MapMouseEvent</code>.
-     * 
+     *
      * @param source The object that raised the event
      * @param x the x position of the event
      * @param y the y position of the event
@@ -107,7 +107,7 @@ public class MapMouseEvent {
 
     /**
      * Returns the location of the event.
-     * 
+     *
      * @return the location of the event.
      * @see Point
      */
@@ -117,7 +117,7 @@ public class MapMouseEvent {
 
     /**
      * Returns true if shift key is down.
-     * 
+     *
      * @return true if shift key is down.
      */
     public boolean isShiftDown() {
@@ -126,7 +126,7 @@ public class MapMouseEvent {
 
     /**
      * Returns true if control key is down.
-     * 
+     *
      * @return true if control key is down.
      */
     public boolean isControlDown() {
@@ -135,7 +135,7 @@ public class MapMouseEvent {
 
     /**
      * Returns true if alt key is down.
-     * 
+     *
      * @return true if alt key is down.
      */
     public boolean isAltDown() {
@@ -143,8 +143,8 @@ public class MapMouseEvent {
     }
 
     /**
-     * Returns true if the modifier is down 
-     * 
+     * Returns true if the modifier is down
+     *
      * @see #CTRL_DOWN_MASK
      * @see #ALT_DOWN_MASK
      * @see #SHIFT_DOWN_MASK
@@ -159,12 +159,12 @@ public class MapMouseEvent {
     public boolean isModifierDown(int mask){
         return (modifiers & mask) != 0;
     }
-    
+
     /**
      * @return Returns true if a keyboard modifier is down.
      */
     public boolean modifiersDown() {
-        return isModifierDown(MOD1_DOWN_MASK) 
+        return isModifierDown(MOD1_DOWN_MASK)
                 || isModifierDown(MOD2_DOWN_MASK)
                 || isModifierDown(MOD3_DOWN_MASK)
                 || isModifierDown(MOD4_DOWN_MASK)
@@ -179,5 +179,5 @@ public class MapMouseEvent {
     public boolean buttonsDown(){
         return buttons!=0;
     }
-    
+
 }

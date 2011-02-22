@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.style.sld.editor;
 
@@ -8,10 +8,13 @@ import java.io.IOException;
 import java.net.URL;
 
 import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.project.IBlackboard;
+import net.refractions.udig.project.IBlackboardListener;
 import net.refractions.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
+import org.eclipse.ui.XMLMemento;
 
 /**
  * Persist an IMemento onto the style blackboard to save Style Dilog Settings between runs.

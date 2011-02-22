@@ -20,7 +20,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         store.setDefault(PreferenceConstants.P_ADVANCED_GRAPHICS, true);
         store.setDefault(PreferenceConstants.P_DEFAULT_PERSPECTIVE, MapPerspective.ID_PERSPECTIVE);
         store.setDefault(PreferenceConstants.P_SHOW_TIPS, true);
-        store.setDefault(PreferenceConstants.P_DEFAULT_CHARSET, Charset.defaultCharset().name()); 
+        store.setDefault(PreferenceConstants.P_DEFAULT_CHARSET, Charset.defaultCharset().name());
 	}
 
 }

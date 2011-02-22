@@ -25,13 +25,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
 
 public class CommandManagerTest extends AbstractProjectTestCase {
-	
+
     public void testExecuteASync() {
         CommandManager manager=new CommandManager("test", new DefaultErrorHandler(), new CommandListener(){ //$NON-NLS-1$
 
             public void commandExecuted( int commandType ) {
             }
-            
+
         });
         final Result result=new Result();
         manager.aSyncExecute(new Command(){
@@ -47,10 +47,10 @@ public class CommandManagerTest extends AbstractProjectTestCase {
             public String getName() {
                 return null;
             }
-            
+
         });
         synchronized (this) {
-            
+
             try {
                 for (int i=0; i<3 && !result.ran; i++)
                     wait(1000);
@@ -66,7 +66,7 @@ public class CommandManagerTest extends AbstractProjectTestCase {
 
             public void commandExecuted( int commandType ) {
             }
-            
+
         });
         final Result result=new Result();
         manager.syncExecute(new Command(){
@@ -82,9 +82,9 @@ public class CommandManagerTest extends AbstractProjectTestCase {
             public String getName() {
                 return null;
             }
-            
+
         });
-        
+
         assertTrue( result.ran );
     }
 
@@ -93,7 +93,7 @@ public class CommandManagerTest extends AbstractProjectTestCase {
 
             public void commandExecuted( int commandType ) {
             }
-            
+
         }, 2000);
         final Result result=new Result();
         final Result resultInner=new Result();
@@ -113,7 +113,7 @@ public class CommandManagerTest extends AbstractProjectTestCase {
                     public String getName() {
                         return null;
                     }
-                    
+
                 });
                 result.ran=true;
             }
@@ -125,24 +125,24 @@ public class CommandManagerTest extends AbstractProjectTestCase {
             public String getName() {
                 return null;
             }
-            
+
         });
         Thread.yield();
         assertTrue( result.ran );
         assertTrue( resultInner.ran );
     }
-    
+
 
     public void testExecuteSyncInDisplayThread() {
         final CommandManager manager=new CommandManager("test", new DefaultErrorHandler(), new CommandListener(){ //$NON-NLS-1$
 
             public void commandExecuted( int commandType ) {
             }
-            
+
         }, -1);
         final Result result=new Result();
         final Result resultInner=new Result();
-         
+
         manager.syncExecute(new Command(){
 
             public void run( IProgressMonitor monitor ) throws Exception {
@@ -154,9 +154,9 @@ public class CommandManagerTest extends AbstractProjectTestCase {
 		                    	Display.getDefault().syncExec(new Runnable(){
 
 									public void run() {
-				                        resultInner.ran=true;										
+				                        resultInner.ran=true;
 									}
-		                    		
+
 		                    	});
 		                    }
 
@@ -167,9 +167,9 @@ public class CommandManagerTest extends AbstractProjectTestCase {
 		                    public String getName() {
 		                        return null;
 		                    }
-		                    
+
 		                });
-						
+
 					}
 				});
                 result.ran=true;
@@ -182,7 +182,7 @@ public class CommandManagerTest extends AbstractProjectTestCase {
             public String getName() {
                 return null;
             }
-            
+
         });
         Thread.yield();
         assertTrue( result.ran );
@@ -195,7 +195,7 @@ public class CommandManagerTest extends AbstractProjectTestCase {
 
             public void commandExecuted( int commandType ) {
             }
-            
+
         }, -2);
 
         final Result result=new Result();
@@ -213,20 +213,20 @@ public class CommandManagerTest extends AbstractProjectTestCase {
             public String getName() {
                 return null;
             }
-            
+
         });
     	assertFalse(completed);
     	assertFalse(result.ran);
-    	
+
 	}
-    
+
     public void testTimeoutOff() throws Exception {
 //    	test no timeout
     	CommandManager manager = new CommandManager("test", new DefaultErrorHandler(), new CommandListener(){ //$NON-NLS-1$
 
             public void commandExecuted( int commandType ) {
             }
-            
+
         }, -1);
 
         final Result result=new Result();
@@ -244,25 +244,25 @@ public class CommandManagerTest extends AbstractProjectTestCase {
 			public String getName() {
 				return null;
 			}
-    		
+
     	});
-    	
+
     	assertTrue(completed);
     	assertTrue(result.ran);
-    	 
+
 	}
-    
+
     public void testTimeoutWithIO() throws Exception {
     	//TODO test IO blocking.  Command should still have been removed
     	// and second command should be executed.
 	}
-    
+
     public void testPostDeterminedEffectCommandExecution() throws Exception {
         CommandManager manager=new CommandManager("test", new DefaultErrorHandler(), new CommandListener(){ //$NON-NLS-1$
 
             public void commandExecuted( int commandType ) {
             }
-            
+
         });
         final Result result=new Result();
         manager.syncExecute(new PostDeterminedEffectCommand(){
@@ -281,7 +281,7 @@ public class CommandManagerTest extends AbstractProjectTestCase {
 
             public boolean execute( IProgressMonitor monitor ) throws Exception {
                 if( result.ran )
-                    fail();                
+                    fail();
                 result.ran=true;
                 return true;
             }
@@ -298,23 +298,23 @@ public class CommandManagerTest extends AbstractProjectTestCase {
                     fail();
                 result.ran=false;
             }
-            
+
         });
-        
+
         assertTrue( result.ran );
-        
+
         manager.undo(false);
-        
+
         assertFalse( result.ran );
-        
+
         manager.redo(false);
-        
+
         assertTrue( result.ran );
-        
+
         manager.undo(false);
-        
+
         assertFalse( result.ran );
-        
+
         manager.syncExecute(new PostDeterminedEffectCommand(){
 
             public void run( IProgressMonitor monitor ) throws Exception {
@@ -331,7 +331,7 @@ public class CommandManagerTest extends AbstractProjectTestCase {
 
             public boolean execute( IProgressMonitor monitor ) throws Exception {
                 if( result.ran )
-                    fail();                
+                    fail();
                 result.ran=true;
                 return false;
             }
@@ -346,14 +346,14 @@ public class CommandManagerTest extends AbstractProjectTestCase {
             public void rollback( IProgressMonitor monitor ) throws Exception {
                 fail();
             }
-            
+
         });
 
         assertTrue( result.ran );
-        
+
         assertFalse(manager.canUndo());
     }
-    
+
     public void testRedo() {
     }
 
@@ -363,5 +363,5 @@ public class CommandManagerTest extends AbstractProjectTestCase {
     private class Result{
         volatile boolean ran=false;
     }
-    
+
 }

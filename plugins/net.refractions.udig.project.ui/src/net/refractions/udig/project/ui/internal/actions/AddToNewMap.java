@@ -21,11 +21,11 @@ import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.internal.ui.ResourceSelectionPage;
 import net.refractions.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
 import net.refractions.udig.catalog.ui.workflow.ResourceSelectionState;
-import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardDialog;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.Messages;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
@@ -48,7 +48,7 @@ import org.eclipse.ui.IWorkbenchWindowPulldownDelegate;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * 
+ *
  */
 public class AddToNewMap
         implements
@@ -92,7 +92,7 @@ public class AddToNewMap
      * service has more than 1 child the user is queried to determine which services should be added
      * to the returned collection. Services with only a single child are added to result
      * automatically.
-     * 
+     *
      * @param collection the collection of {@link IService}s and {@link IGeoResource}s to process.
      * @return the chosen resources.
      */
@@ -118,13 +118,13 @@ public class AddToNewMap
                         resources.add(members.get(0));
                     else{
                         needsUserInput=true;
-                    }   
+                    }
                 }
             } catch (IOException e) {
                 ProjectUIPlugin.log("", e); //$NON-NLS-1$
             }
         }
-        
+
         if( needsUserInput ){
             PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().setActive();
             Map<Class< ? extends State>, WorkflowWizardPageProvider> pageMapping=new HashMap<Class<? extends State>, WorkflowWizardPageProvider>();

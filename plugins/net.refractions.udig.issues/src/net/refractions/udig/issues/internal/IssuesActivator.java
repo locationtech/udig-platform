@@ -1,6 +1,9 @@
 package net.refractions.udig.issues.internal;
 
+import java.net.URL;
+
 import net.refractions.udig.issues.IIssuesManager;
+import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IStatus;
@@ -27,7 +30,7 @@ public class IssuesActivator extends AbstractUIPlugin {
 	private static IssuesActivator plugin;
 
     private Images images=new Images();
-	
+
 	/**
 	 * The constructor
 	 */
@@ -51,14 +54,14 @@ public class IssuesActivator extends AbstractUIPlugin {
                 IIssuesManager.defaultInstance.save(ProgressManager.instance().get());
                 }catch (Exception e) {
                     log("Error saving issues", e); //$NON-NLS-1$
-                    boolean result = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), Messages.IssuesActivator_errorTitle,  
-                            Messages.IssuesActivator_errorMessage); 
+                    boolean result = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), Messages.IssuesActivator_errorTitle,
+                            Messages.IssuesActivator_errorMessage);
                     return result;
-                    
+
                 }
                 return true;
             }
-            
+
         });
 	}
 
@@ -80,7 +83,7 @@ public class IssuesActivator extends AbstractUIPlugin {
 	public static IssuesActivator getDefault() {
 		return plugin;
 	}
-    
+
     /**
      * Writes an info log in the plugin's log.
      * <p>

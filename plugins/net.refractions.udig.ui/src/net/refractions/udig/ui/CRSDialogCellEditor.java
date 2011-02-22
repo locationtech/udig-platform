@@ -21,7 +21,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * A dialog cell editor that opens a CRSChooser dialog.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -37,10 +37,10 @@ public class CRSDialogCellEditor extends DialogCellEditor {
 				super.updateContents(crs.getName());
 			}
 		}
-		
+
         @Override
         protected Object openDialogBox( Control cellEditorWindow ) {
-            
+
             final CRSChooserDialog d = new CRSChooserDialog(cellEditorWindow
 				.getDisplay().getActiveShell(),
 				(CoordinateReferenceSystem) getValue());

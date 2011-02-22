@@ -25,7 +25,7 @@ import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Enumerates the different types of Geometry types that a EditGeom can be.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -39,7 +39,7 @@ public enum ShapeType {
             return LINE;
         if( geom instanceof Polygon || geom instanceof MultiPolygon)
             return POLYGON;
-        
+
         return UNKNOWN;
     }
 
@@ -51,7 +51,7 @@ public enum ShapeType {
             return LINE;
         if( Polygon.class.isAssignableFrom(type) || MultiPolygon.class.isAssignableFrom(type) )
             return POLYGON;
-        
+
         return UNKNOWN;
     }
 }

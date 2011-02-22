@@ -16,8 +16,8 @@ package net.refractions.udig.project;
 
 
 /**
- * Represents a change on a IBlackboard. 
- * 
+ * Represents a change on a IBlackboard.
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -26,7 +26,7 @@ public class BlackboardEvent {
     private final Object oldValue;
     private final Object key;
     private final Object newValue;
-    
+
     public BlackboardEvent(IBlackboard source2, Object key2, Object oldValue2, Object newValue2){
         this.source=source2;
         this.oldValue=oldValue2;
@@ -61,6 +61,6 @@ public class BlackboardEvent {
     public IBlackboard getSource() {
         return this.source;
     }
-    
-    
+
+
 }

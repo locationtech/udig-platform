@@ -44,26 +44,33 @@ import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiLineString;
 
 /**
- * <p>Requirements: * <ul> * <li>Mouse Dragged</li>
+ * <p>Requirements:
+ * <ul>
+ * <li>Mouse Dragged</li>
  * <li>CurrentState == NONE</li>
  * <li>Mouse button 1 down</li>
- * </ul> * </p> * <p>Action: * <ul> * <li>draws a shape as the mouse is dragged</li>
+ * </ul>
+ * </p>
+ * <p>Action:
+ * <ul>
+ * <li>draws a shape as the mouse is dragged</li>
  * <li>creates a feature on the current layer when mouse is released</li>
- * </ul> * </p>
+ * </ul>
+ * </p>
  * @author jones
  * @since 1.1.0
  */
 public class CreateShapeBehaviour implements EventBehaviour, LockingBehaviour {
 
     /**
-     * creates a shape upon request.  
-     * 
+     * creates a shape upon request.
+     *
      * @author jones
      * @since 1.1.0
      */
     public static abstract class ShapeFactory {
         protected boolean middleAsOrigin = false;
-        
+
         /**
          * Creates a GeneralPath with the top left corner at 0,0 and
          * a total width and height as indicated
@@ -74,7 +81,7 @@ public class CreateShapeBehaviour implements EventBehaviour, LockingBehaviour {
          * a total width and height as indicated
          */
         public abstract GeneralPath create(int width, int height);
-        
+
         public boolean useMiddleAsOrigin() {
             return middleAsOrigin;
         }
@@ -96,12 +103,12 @@ public class CreateShapeBehaviour implements EventBehaviour, LockingBehaviour {
     }
 
     public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
-        if( handler.isLocked() && handler.isLockOwner(this) 
+        if( handler.isLocked() && handler.isLockOwner(this)
                 && eventType==EventType.DRAGGED)
             return true;
-        
+
         boolean legalState=handler.getCurrentState()==EditState.NONE;
-        
+
         return !e.modifiersDown() && legalState && e.buttons==MapMouseEvent.BUTTON1 && eventType==EventType.DRAGGED;
     }
 
@@ -129,7 +136,7 @@ public class CreateShapeBehaviour implements EventBehaviour, LockingBehaviour {
         int scaleX=Math.abs(tracker.getDragStarted().getX()-e.x);
         int scaleY=Math.abs(tracker.getDragStarted().getY()-e.y);
       //force square/circle if shift is activated
-        if (e.isShiftDown()) 
+        if (e.isShiftDown())
         {
            if (scaleX > scaleY)
            {
@@ -140,7 +147,7 @@ public class CreateShapeBehaviour implements EventBehaviour, LockingBehaviour {
                scaleX = scaleY;
            }
         }
-        
+
 
         AffineTransform transform=AffineTransform.getTranslateInstance(translationX, translationY);
         transform.scale(scaleX, scaleY);
@@ -152,7 +159,7 @@ public class CreateShapeBehaviour implements EventBehaviour, LockingBehaviour {
         }
         drawCommand.setShape(transformedShape);
         handler.repaint();
-        
+
         return null;
     }
 
@@ -180,16 +187,16 @@ public class CreateShapeBehaviour implements EventBehaviour, LockingBehaviour {
                 UndoableComposite commands=new UndoableComposite();
                 commands.getCommands().add(handler.getContext().getEditFactory().createNullEditFeatureCommand());
                 EditBlackboard bb = handler.getEditBlackboard(handler.getEditLayer());
-                commands.getCommands().add(new DeselectEditGeomCommand(handler, bb.getGeoms())); 
+                commands.getCommands().add(new DeselectEditGeomCommand(handler, bb.getGeoms()));
                 ShapeType shapeType = determineLayerType(handler);
-                
-                
+
+
                 CreateEditGeomCommand createEditGeomCommand = new CreateEditGeomCommand(bb, "newShape", shapeType); //$NON-NLS-1$
-                commands.getCommands().add(createEditGeomCommand); 
+                commands.getCommands().add(createEditGeomCommand);
                 commands.getCommands().add(EditUtils.instance.appendPathToShape(iter, shapeType, handler, bb, createEditGeomCommand.getShapeProvider()));
                 commands.getCommands().add( new SetCurrentGeomCommand(handler, createEditGeomCommand.getShapeProvider()));
                 commands.getCommands().add(handler.getCommand(handler.getAcceptBehaviours()));
-                
+
                 commands.getFinalizerCommands().add( new SetEditStateCommand(handler, EditState.NONE));
                 return commands;
             }finally{
@@ -201,19 +208,19 @@ public class CreateShapeBehaviour implements EventBehaviour, LockingBehaviour {
         }
 
         private ShapeType determineLayerType( EditToolHandler handler ) {
-            Class<?> type = handler.getEditLayer().getSchema().getGeometryDescriptor().getType().getBinding();
-            
-            if( LineString.class.isAssignableFrom(type) || LinearRing.class.isAssignableFrom(type) 
+            Class<?> type = handler.getEditLayer().getSchema().getDefaultGeometry().getType();
+
+            if( LineString.class.isAssignableFrom(type) || LinearRing.class.isAssignableFrom(type)
                     || MultiLineString.class.isAssignableFrom(type))
                 return ShapeType.LINE;
-            
+
             return ShapeType.POLYGON;
         }
 
         public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
             EditPlugin.log("", error); //$NON-NLS-1$
         }
-        
+
     }
-    
+
 }

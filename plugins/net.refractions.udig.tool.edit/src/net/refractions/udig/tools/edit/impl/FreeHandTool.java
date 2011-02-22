@@ -24,13 +24,12 @@ import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
 import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.EnablementBehaviour;
 import net.refractions.udig.tools.edit.MutualExclusiveBehavior;
-import net.refractions.udig.tools.edit.activator.ClearCurrentSelectionActivator;
 import net.refractions.udig.tools.edit.activator.DrawEndPointsActivator;
 import net.refractions.udig.tools.edit.activator.DrawGeomsActivator;
 import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
 import net.refractions.udig.tools.edit.activator.SetRenderingFilter;
-import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
 import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
+import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
 import net.refractions.udig.tools.edit.behaviour.FreeHandPolygonDrawBehaviour;
 import net.refractions.udig.tools.edit.behaviour.SelectFeatureBehaviour;
 import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
@@ -39,7 +38,7 @@ import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
 import net.refractions.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviour;
 import net.refractions.udig.tools.edit.support.ShapeType;
 
-import org.opengis.filter.spatial.BBOX;
+import org.geotools.filter.FilterType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
@@ -49,7 +48,7 @@ import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Create shapes by drawing free hand.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -72,27 +71,26 @@ public class FreeHandTool extends AbstractEditTool {
         activators.add(drawGeomsActivator);
         activators.add(new DrawEndPointsActivator());
         activators.add(new SetRenderingFilter());
-        activators.add(new ClearCurrentSelectionActivator());
     }
 
     @Override
     protected void initAcceptBehaviours( List<Behaviour> acceptBehaviours ) {
         MutualExclusiveBehavior mutualExclusive=new MutualExclusiveBehavior();
         acceptBehaviours.add(mutualExclusive);
-        
+
         mutualExclusive.getBehaviours().add( new AcceptChangesBehaviour(Polygon.class, false){
             @Override
             public boolean isValid( EditToolHandler handler ) {
-                
-                return super.isValid(handler) && handler.getCurrentGeom()!=null && 
+
+                return super.isValid(handler) && handler.getCurrentGeom()!=null &&
                     handler.getCurrentGeom().getShapeType()==ShapeType.POLYGON;
             }
         });
-        
+
         mutualExclusive.getBehaviours().add( new AcceptChangesBehaviour(LineString.class, false){
             @Override
             public boolean isValid( EditToolHandler handler ) {
-                return super.isValid(handler)  && handler.getCurrentGeom()!=null && 
+                return super.isValid(handler)  && handler.getCurrentGeom()!=null &&
                 handler.getCurrentGeom().getShapeType()==ShapeType.LINE;
             }
         });
@@ -109,10 +107,10 @@ public class FreeHandTool extends AbstractEditTool {
     @SuppressWarnings("unchecked")
     @Override
     protected void initEventBehaviours( EditToolConfigurationHelper helper ) {
-        helper.add( new SelectFeatureBehaviour(new Class[]{Polygon.class, MultiPolygon.class}, BBOX.class));
+        helper.add( new SelectFeatureBehaviour(new Class[]{Polygon.class, MultiPolygon.class}, FilterType.GEOMETRY_BBOX));
         helper.add( new FreeHandPolygonDrawBehaviour() );
         AcceptOnDoubleClickBehaviour doubleClickRunAcceptBehaviour = new AcceptOnDoubleClickBehaviour();
-        //doubleClickRunAcceptBehaviour.setAddPoint(false);
+        doubleClickRunAcceptBehaviour.setAddPoint(false);
         helper.add( doubleClickRunAcceptBehaviour );
         helper.done();
     }

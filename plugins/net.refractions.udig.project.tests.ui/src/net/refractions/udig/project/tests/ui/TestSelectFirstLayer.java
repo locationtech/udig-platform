@@ -40,13 +40,13 @@ public class TestSelectFirstLayer extends ActionDelegate implements IWorkbenchWi
     @Override
     public void run( IAction action ) {
         IMap map = ApplicationGIS.getActiveMap();
-        
+
         List<ILayer> layers = map.getMapLayers();
         IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         activePage.activate(activePage.findView(LayersView.ID));
         ((EditManager)map.getEditManager()).setSelectedLayer((Layer) layers.get(layers.size()-1));
     }
-    
+
     public void init( IWorkbenchWindow window ) {
     }
 

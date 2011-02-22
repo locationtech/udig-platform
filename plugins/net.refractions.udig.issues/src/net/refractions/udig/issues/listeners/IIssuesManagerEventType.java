@@ -15,7 +15,7 @@
 package net.refractions.udig.issues.listeners;
 
 /**
- * TODO Purpose of 
+ * TODO Purpose of
  * <p>
  *
  * </p>

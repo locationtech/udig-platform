@@ -9,11 +9,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.views.properties.PropertySheetEntry;
 import org.eclipse.ui.views.properties.PropertySheetPage;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 /**
  * A basic, default example of a Dialog feature Editor.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
@@ -44,7 +44,7 @@ public class DialogEditor implements IUDIGDialogPage {
 	}
 
 	public void createControl(Composite parent) {
-		featureDisplay.createControl(parent);	
+		featureDisplay.createControl(parent);
 	}
 
 	public Point getPreferredSize() {
@@ -55,7 +55,7 @@ public class DialogEditor implements IUDIGDialogPage {
 		return featureDisplay.getControl();
 	}
 
-	public void setFeature(SimpleFeature feature) {
+	public void setFeature(Feature feature) {
 		entry.setValues(new Object[]{feature});
 	}
 

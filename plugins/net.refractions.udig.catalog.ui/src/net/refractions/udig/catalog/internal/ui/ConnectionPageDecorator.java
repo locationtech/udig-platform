@@ -1,9 +1,8 @@
 package net.refractions.udig.catalog.internal.ui;
 
 import java.io.Serializable;
-import java.net.URL;
+import java.lang.reflect.InvocationTargetException;
 import java.net.UnknownHostException;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,12 +13,14 @@ import net.refractions.udig.catalog.ui.UDIGConnectionPage;
 import net.refractions.udig.catalog.ui.internal.Messages;
 import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
 import net.refractions.udig.catalog.ui.workflow.IntermediateState;
-import net.refractions.udig.catalog.ui.workflow.Listener;
-import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardDialog;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
+import net.refractions.udig.catalog.ui.workflow.Workflow.Listener;
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 import net.refractions.udig.ui.PlatformGIS;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.graphics.Image;
@@ -28,16 +29,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.DataSourceException;
 
-/**
- * Wraps around a UDIGConnectionPage providing a list of services or resources
- * selected.
- * <p>
- * This is used to smoothly transition to adding layers to a map when
- * the page is used as part of the Add Layer wizard.
- * 
- * @see UDIGConnectionPage
- * @since 1.0
- */
 public class ConnectionPageDecorator extends WorkflowWizardPage
         implements
             UDIGConnectionPage,
@@ -57,7 +48,7 @@ public class ConnectionPageDecorator extends WorkflowWizardPage
     @Override
     public void setState( State state ) {
         super.setState(state);
-        
+
 
         UDIGConnectionPage tmp;
 
@@ -74,15 +65,15 @@ public class ConnectionPageDecorator extends WorkflowWizardPage
             tmp = (endConnectionState).getConnectionFactory().createConnectionPage(
                     endConnectionState.getDescriptor().getWizardPageCount() - 1);
         }
-        
+
         this.page = tmp;
-        
+
         // we do the instance check to allow the connection page to
         // optionally extend DataPipelinePage.
         if (tmp instanceof WorkflowWizardPage) {
             ((WorkflowWizardPage) tmp).setState(state);
         }
-        
+
         if( tmp.getWizard()!=getWizard() ){
             tmp.setWizard(getWizard());
         }
@@ -101,12 +92,11 @@ public class ConnectionPageDecorator extends WorkflowWizardPage
         if (page instanceof WorkflowWizardPage) {
             ((WorkflowWizardPage) page).shown();
         }
-
     }
 
-    public void createControl( Composite parent ) { 
+    public void createControl( Composite parent ) {
         page.createControl(parent);
-        
+
         setControl(page.getControl());
     }
 
@@ -118,46 +108,14 @@ public class ConnectionPageDecorator extends WorkflowWizardPage
 
       @Override
     public boolean isPageComplete() {
-          if( page == null ){
-              return false; // not ready yet
-          }
-          boolean complete = page.isPageComplete();
-          if (complete && getState() instanceof EndConnectionState) {
-              // set some context for the connection state
-              EndConnectionState state = (EndConnectionState) getState();
-              state.setServices(page.getServices());
-              if (page instanceof AbstractUDIGImportPage) {
-                  AbstractUDIGImportPage importPage = (AbstractUDIGImportPage) page;
-                  state.setSelectedResources(importPage.getResourceIDs());
-              }
-          }
+        boolean complete = page.isPageComplete();
+        if (complete && getState() instanceof EndConnectionState) {
+            // set some context for the connection state
+            EndConnectionState state = (EndConnectionState) getState();
+            state.setParams(page.getParams());
+        }
+
         return complete;
-    }
-      
-     @Override
-    public boolean leavingPage() {
-         if (getState() instanceof EndConnectionState) {
-             // set some context for the connection state
-             EndConnectionState state = (EndConnectionState) getState();
-             Collection<IService> services = page.getServices();
-			 state.setServices(services);
-			 
-             if (page instanceof AbstractUDIGImportPage) {
-                 AbstractUDIGImportPage importPage = (AbstractUDIGImportPage) page;
-                 Collection<URL> resourceIDs = importPage.getResourceIDs();
-                 
-				 state.setSelectedResources(resourceIDs);
-             }
-         }
-         
-         if (page instanceof AbstractUDIGImportPage) {
-             AbstractUDIGImportPage importPage = (AbstractUDIGImportPage) page;
-             if (!importPage.leavingPage()) {
-                 return false;
-             }
-         }
-         
-         return true;
     }
 
     @Override
@@ -219,9 +177,8 @@ public class ConnectionPageDecorator extends WorkflowWizardPage
                             page.setErrorMessage(message);
                         }
                     });
-                } else {
+                } else
                     page.setErrorMessage(message);
-                }
             }
         }
     }
@@ -256,6 +213,20 @@ public class ConnectionPageDecorator extends WorkflowWizardPage
      */
     @Override
     public IWizardPage getNextPage() {
+        if (page instanceof AbstractUDIGImportPage) {
+            AbstractUDIGImportPage importPage = (AbstractUDIGImportPage) page;
+            if (!importPage.leavingPage()) {
+                PlatformGIS.run(new IRunnableWithProgress(){
+
+                    public void run( IProgressMonitor monitor ) throws InvocationTargetException,
+                            InterruptedException {
+                        getWizard().getWorkflow().previous(monitor);
+                    }
+
+                });
+                return this;
+            }
+        }
         if (!getState().hasNext()) {
             return super.getNextPage();
         }
@@ -266,7 +237,7 @@ public class ConnectionPageDecorator extends WorkflowWizardPage
     public Control getControl() {
         return super.getControl();
     }
-        
+
     public void setPreviousPage( IWizardPage page ) {
         super.setPreviousPage(page);
         IWizardPage previousPage = page;
@@ -274,19 +245,6 @@ public class ConnectionPageDecorator extends WorkflowWizardPage
             previousPage = ((ConnectionPageDecorator) page).page;
         }
         this.page.setPreviousPage(previousPage);
-    }
-
-    public Collection<URL> getResourceIDs() {
-        return page.getResourceIDs();
-    }
-
-    public Collection<IService> getServices() {
-        return page.getServices();
-    }
-    
-    @Override
-    public State getState() {
-        return super.getState();
     }
 
 }

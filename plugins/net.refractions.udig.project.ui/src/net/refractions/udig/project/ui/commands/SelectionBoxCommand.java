@@ -20,27 +20,27 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.Shape;
 
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.graphics.RGB;
 
+import net.refractions.udig.project.internal.ProjectPlugin;
+import net.refractions.udig.project.preferences.PreferenceConstants;
+import net.refractions.udig.ui.graphics.ViewportGraphics;
+
 /**
- * A command that draws the indicated shape onto the viewport in the correct "selection" style.  The default Shape is 
+ * A command that draws the indicated shape onto the viewport in the correct "selection" style.  The default Shape is
  * a rectangle.
- * 
+ *
  * @author Jesse
  */
 public class SelectionBoxCommand extends AbstractDrawCommand implements
 		IDrawCommand {
 
 	private Shape shape;
-	
-	
+
+
 	/* (non-Javadoc)
 	 * @see net.refractions.udig.project.ui.commands.IDrawCommand#getValidArea()
 	 */

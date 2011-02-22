@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.catalog.shp; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Localization: plugin
 Bundle-Activator: net.refractions.udig.catalog.internal.shp.ShpPlugin
 Eclipse-ExtensibleAPI: true
@@ -13,5 +13,4 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.libs,
  net.refractions.udig.catalog.ui
 Export-Package: net.refractions.udig.catalog.internal.shp;x-friends:="net.refractions.udig.project.tests.ui"
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-LazyStart: true

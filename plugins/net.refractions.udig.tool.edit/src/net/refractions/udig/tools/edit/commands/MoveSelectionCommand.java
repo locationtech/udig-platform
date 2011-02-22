@@ -24,8 +24,8 @@ import net.refractions.udig.tools.edit.support.Selection;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * Moves a selection on the edit blackboard. 
- * 
+ * Moves a selection on the edit blackboard.
+ *
  * @author Jesse
  * @since 1.1.0
  */

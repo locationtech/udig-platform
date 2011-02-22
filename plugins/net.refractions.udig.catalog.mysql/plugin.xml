@@ -2,32 +2,46 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="net.refractions.udig.catalog.ServiceExtension">
-      <service
-            class="net.refractions.udig.catalog.MySQLServiceExtension"
-            id="mysql"
-            name="Mysql">
-      </service>
-   </extension>
-   <extension
          point="net.refractions.udig.catalog.ui.connectionFactory">
       <factory
             class="net.refractions.udig.catalog.internal.mysql.ui.MySQLuDigConnectionFactory"
-            id="com.iai.udig.catalog.mysql.factory">
+            id="com.iai.udig.catalog.ui.mysql.confac">
+      </factory>
+      <wizardPage
+            banner="icons/wizban/mysql_wiz.png"
+            class="net.refractions.udig.catalog.internal.mysql.ui.MySQLWizardPage"
+            description="%wizard.description"
+            icon="icons/etool16/mysql_wiz.png"
+            name="MySQL ">
+      </wizardPage>
+   </extension>
+   <extension
+         point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.refractions.udig.catalog.MySQLServiceExtension"
+            id="com.iai.udig.catalog.mysq.ServiceExtension"
+            name="mysql">
+      </service>
+   </extension>
+   <!--extension
+         point="net.refractions.udig.catalog.ui.connectionFactory">
+      <factory
+            class="net.refractions.udig.catalog.internal.mysql.ui.MySQLuDigConnectionFactory"
+            id="com.iai.udig.catalog.mysql.factory.exmeriment">
       </factory>
       <wizardPage
             class="net.refractions.udig.catalog.internal.mysql.ui.MySQLUserHostPage"
             description="%wizard.description"
             icon="icons/etool16/mysql_wiz.png"
-            name="MySQL host">
+            name="MySQL host Expriment">
       </wizardPage>
       <wizardPage
             banner="icons/wizban/mysql_wiz.png"
-            class="net.refractions.udig.catalog.service.database.DataConnectionPage"
+            class="net.refractions.udig.catalog.internal.mysql.ui.MySQLConnectionPage"
             description="%wizard.description"
             icon="icons/etool16/mysql_wiz.png"
-            name="MySQL connection ">
+            name="MysQL connection page">
       </wizardPage>
-   </extension>
+   </extension-->
 
 </plugin>

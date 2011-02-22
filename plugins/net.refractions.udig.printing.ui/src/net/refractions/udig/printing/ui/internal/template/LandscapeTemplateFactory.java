@@ -19,14 +19,14 @@ import net.refractions.udig.printing.ui.TemplateFactory;
 
 /**
  * Creates a Landscape LegalSized template
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
 public class LandscapeTemplateFactory implements TemplateFactory {
 
     public Template createTemplate() {
-        return new A4LandscapeTemplate();
+        return new LandScaleTemplate();
     }
 
     public String getName() {

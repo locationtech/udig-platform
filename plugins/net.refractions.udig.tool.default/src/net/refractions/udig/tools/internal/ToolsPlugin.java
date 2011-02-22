@@ -17,7 +17,7 @@ public class ToolsPlugin extends AbstractUIPlugin {
 	private static ToolsPlugin plugin;
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
-	
+
     static private final String ID = "net.refractions.udig.tools";  //$NON-NLS-1$
 	/**
 	 * The constructor.
@@ -81,8 +81,8 @@ public class ToolsPlugin extends AbstractUIPlugin {
      * <p>
      * This should be used for user level messages.
      * </p>
-     * @param message 
-     * @param e 
+     * @param message
+     * @param e
      */
     public static void log( String message, Throwable e) {
     	if( message==null )
@@ -97,8 +97,8 @@ public class ToolsPlugin extends AbstractUIPlugin {
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * }
-     * @param message 
-     * @param e 
+     * @param message
+     * @param e
      */
     public static void trace( String message, Throwable e) {
         if( getDefault().isDebugging() ) {
@@ -113,12 +113,12 @@ public class ToolsPlugin extends AbstractUIPlugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
-     * @return true if this plugig is in your .options file 
+     * @return true if this plugig is in your .options file
      */
     public static boolean isDebugging( final String trace ){
         return getDefault().isDebugging() &&
-            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
-    }    
+            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
+    }
 }

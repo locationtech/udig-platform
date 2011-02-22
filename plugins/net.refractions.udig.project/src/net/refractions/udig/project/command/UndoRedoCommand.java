@@ -17,10 +17,10 @@ package net.refractions.udig.project.command;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * This class will only rollback and redo the command it wraps.  
- * In the case of where commands are required to interact with the UI it is often desirable to execute the command and then put it on the 
+ * This class will only rollback and redo the command it wraps.
+ * In the case of where commands are required to interact with the UI it is often desirable to execute the command and then put it on the
  * command stack so that it can be undone.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -28,7 +28,7 @@ public class UndoRedoCommand extends AbstractCommand implements UndoableMapComma
 
     UndoableMapCommand wrapped;
     boolean undone=false;
-    
+
     public UndoRedoCommand( UndoableMapCommand addVertexCommand ) {
         this.wrapped=addVertexCommand;
     }
@@ -37,7 +37,7 @@ public class UndoRedoCommand extends AbstractCommand implements UndoableMapComma
         return null;
     }
 
-    public void run( IProgressMonitor monitor ) throws Exception { 
+    public void run( IProgressMonitor monitor ) throws Exception {
         if( undone )
             wrapped.run(monitor);
     }

@@ -20,13 +20,13 @@ import org.osgi.framework.BundleContext;
  * <p>
  * Programatic access to the current information is not currently provided as part
  * of the public API. If you are interested in this please let us know and it can
- * be moved over. 
+ * be moved over.
  * </p>
  */
 public class InfoPlugin extends AbstractUIPlugin {
 	//The shared instance.
 	private static InfoPlugin plugin;
-	
+
     public static final String ID = "net.refractions.udig.tool.info"; //$NON-NLS-1$
 	/**
 	 * The constructor.
@@ -47,7 +47,7 @@ public class InfoPlugin extends AbstractUIPlugin {
 
 	/**
 	 * Access shared InfoPlugin instance.
-	 * 
+	 *
 	 * @return Shared Instance
 	 */
 	public static InfoPlugin getDefault() {
@@ -84,11 +84,11 @@ public class InfoPlugin extends AbstractUIPlugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ){
         return getDefault().isDebugging() &&
-            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
-    }    
+            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
+    }
 }

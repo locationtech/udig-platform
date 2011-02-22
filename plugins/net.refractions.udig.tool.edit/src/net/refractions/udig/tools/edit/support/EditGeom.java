@@ -20,16 +20,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import net.refractions.udig.tools.edit.EditPlugin;
-
 import com.vividsolutions.jts.geom.Envelope;
 
+import net.refractions.udig.tools.edit.EditPlugin;
+
 /**
- * Holds onto an geometry for editing, offering up PrimitiveShapes.
- * 
- * 
- * Models a geometry as required by the PixelCoordMap (what is PixelCoordMap?)
- * 
+ * Models a geometry as required by the PixelCoordMap.
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -46,7 +43,7 @@ public class EditGeom implements Iterable<PrimitiveShape> {
     private final AtomicReference<String> featureID = new AtomicReference<String>();
     private AtomicReference<Boolean> changed = new AtomicReference<Boolean>();
     boolean initializing;
-    
+
     /**
      * The latest up-to-date bounds of the feature in datastore.
      */
@@ -54,7 +51,7 @@ public class EditGeom implements Iterable<PrimitiveShape> {
 
     /**
      * It is recommended to use constructor with bounds.
-     * 
+     *
      * @param owner
      * @param featureId2
      */
@@ -64,10 +61,10 @@ public class EditGeom implements Iterable<PrimitiveShape> {
         this.featureID.set(featureId2);
         changed.set(false);
     }
-    
+
     /**
-     * 
-     * 
+     *
+     *
      * @param owner
      * @param featureId
      * @param featureBounds
@@ -93,7 +90,7 @@ public class EditGeom implements Iterable<PrimitiveShape> {
     }
     /**
      * User is expected to add holes as needed.
-     * 
+     *
      * @return
      */
     public List<PrimitiveShape> getHoles() {
@@ -108,7 +105,7 @@ public class EditGeom implements Iterable<PrimitiveShape> {
         buffer.append(shapeType);
         buffer.append(" "); //$NON-NLS-1$
         buffer.append(shell.toString());
-        buffer.append("{"); //$NON-NLS-1$        
+        buffer.append("{"); //$NON-NLS-1$
         for( int i = 0, numHoles = this.holes.size(); i < numHoles; i++ ) {
             buffer.append(holes.get(i).toString());
         }
@@ -139,7 +136,7 @@ public class EditGeom implements Iterable<PrimitiveShape> {
 
     /**
      * This is a thread-safe method
-     * 
+     *
      * @param type The new shape type.
      */
     public void setShapeType( ShapeType shapeType ) {
@@ -177,12 +174,12 @@ public class EditGeom implements Iterable<PrimitiveShape> {
     public EditBlackboard getEditBlackboard() {
         return owner;
     }
-    
+
     /**
      * Returns an old bounding box of the feature whose geometry is wrapped by EditGeom
      * before any editing.
-     * 
-     * @return 
+     *
+     * @return
      *      Returns an old bounding box of the feature
      */
     public Envelope getFeatureEnvelope(){
@@ -191,7 +188,7 @@ public class EditGeom implements Iterable<PrimitiveShape> {
 
     /**
      * Indicates that this geometry has been modified since it has been in the blackboard.
-     * 
+     *
      * @return true if the geometry has been modified while on the blackboard.
      */
     public boolean isChanged() {
@@ -206,9 +203,9 @@ public class EditGeom implements Iterable<PrimitiveShape> {
      *  with datastore's feature geometry.
      *  <li><code>false</code> value means that the geometry is up-to-date
      *  with datastore's feature geometry.
-     * 
-     * 
-     * 
+     *
+     *
+     *
      * @param changed
      */
     public void setChanged( boolean changed ) {
@@ -221,7 +218,7 @@ public class EditGeom implements Iterable<PrimitiveShape> {
               featureBBox = envelope;
           }
         }
-        
+
         this.changed.set(changed);
 
     }
@@ -252,15 +249,15 @@ public class EditGeom implements Iterable<PrimitiveShape> {
      * Gets the closest edge in the geometry to the point.
      *
      * @param point reference point
-     * @param treatUnknownAsPolygon declares whether to treat geometries of type UNKNOWN as a polygon 
+     * @param treatUnknownAsPolygon declares whether to treat geometries of type UNKNOWN as a polygon
      * @return
      */
     public ClosestEdge getClosestEdge( Point point, boolean treatUnknownAsPolygon ) {
         assert shapeType.get()!=ShapeType.POINT;
         ClosestEdge closest = shell.getClosestEdge(point, treatUnknownAsPolygon);
-        if( shapeType.get()==ShapeType.POLYGON  || 
+        if( shapeType.get()==ShapeType.POLYGON  ||
                 (shapeType.get()== ShapeType.UNKNOWN && treatUnknownAsPolygon) ){
-            
+
             if( shell.contains(point, treatUnknownAsPolygon) ){
                 for( PrimitiveShape shape : holes ) {
                     ClosestEdge current = shape.getClosestEdge(point, treatUnknownAsPolygon);

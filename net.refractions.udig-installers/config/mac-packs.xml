@@ -1,0 +1,37 @@
+<pack name="uDig Application" required="no">
+    <description>The uDig Application</description>
+    <file src="installer-resources/README.html"
+        targetdir="$INSTALL_PATH" />
+    <file src="installer-resources/LICENSE.txt"
+        targetdir="$INSTALL_PATH" />
+
+    <!-- Add app directory -->
+    <fileset dir="export/macosx.carbon.x86/udig/udig.app" targetdir="$INSTALL_PATH/uDig.app">
+        <exclude name="**/Info.plist" />
+    </fileset>
+    <fileset dir="export/macosx.carbon.x86/udig" targetdir="$INSTALL_PATH/uDig.app/Contents/Resources">
+        <include name="plugins/"/>
+        <include name="features/"/>
+        <include name="configuration/"/>
+    </fileset>
+    <!-- set the launcher to be executable -->
+    <executable
+        targetfile="$INSTALL_PATH/@{launchername}.app/Contents/MacOS/udig"
+        stage="never" />
+    <!-- Use our custom plist -->
+    <file targetdir="$INSTALL_PATH/@{launchername}.app/Contents"
+        src="tmp/Info.plist" />
+    <!-- copy icons for uDig file types to resources -->
+    <fileset dir="installer-resources/iconsForScript"
+        targetdir="$INSTALL_PATH/@{launchername}.app/Contents/Resources">
+        <include name="*.icns" />
+    </fileset>
+</pack>
+<pack name="Java Image IO and Advanced Imaging" required="no">
+    <description>Up-to-date version of JAI.  Required for Raster support</description>
+    <!-- Add the Mac specific plugins -->
+    <!-- copy Image IO and JAI files so that Geotiff will load correctly-->
+    <fileset dir="installer-resources/Java"
+        targetdir="$USER_HOME/Library/Java">
+    </fileset>
+</pack>

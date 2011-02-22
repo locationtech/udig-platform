@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : net.refractions.udig.catalog.grid</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : net.refractions.udig.catalog.grid -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>The raster pipeline takes a GridCoverage and turns it into a Graphics2D object.<br/>
+see <a href="net.refractions.udig.render.features.html" title="net.refractions.udig.render.features">net.refractions.udig.render.features</a></p>
+
+<h5><a name="net.refractions.udig.catalog.grid-FunctionalRequirements">Functional Requirements</a></h5>
+<ul>
+	<li>Accept a GridCoverage as input</li>
+	<li>Style the input</li>
+	<li>Reproject the input</li>
+	<li>Output a Graphics2D object</li>
+</ul>
+
+
+<h5><a name="net.refractions.udig.catalog.grid-NonFunctionalRequirements">Non-Functional Requirements</a></h5>
+<ul>
+	<li>Perform deformations on the input</li>
+	<li>Give output within two seconds</li>
+</ul>
+
+
+<h5><a name="net.refractions.udig.catalog.grid-DesignNotes">Design Notes</a></h5>
+<ul>
+	<li>When zooming in, the raster pipeline will attempt to give immediate feedback by performing a manual zoom on the selected area (within one second). It will then go and get the actual requested object (within three to five seconds).</li>
+	<li>When zooming out, it will return the image used before the zoom-in was performed, if one is available.</li>
+</ul>
+
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=245">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=245">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

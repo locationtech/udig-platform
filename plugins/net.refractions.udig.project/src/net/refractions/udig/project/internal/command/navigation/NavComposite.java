@@ -25,7 +25,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
  * TODO Purpose of net.refractions.udig.project.internal.command.navigation
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -35,7 +35,7 @@ public class NavComposite extends UndoableComposite implements NavCommand {
 
 	/**
 	 * Creates a new instance of NavComposite
-	 * 
+	 *
 	 * @param navCommands
 	 *            an ordered list of Nav commands
 	 */
@@ -72,11 +72,11 @@ public class NavComposite extends UndoableComposite implements NavCommand {
 				// reset the eSetDeliverState so that the last change will trigger a re-render
 				if (!iter.hasNext())
 					model.eSetDeliver(previousDeliver);
-				
+
                 // initialize command
                 command.setMap(getMap());
                 command.setViewportModel(model);
-               
+
                 changedState |= runCommand(command, monitor);
 			}
 			monitor.done();
@@ -87,7 +87,7 @@ public class NavComposite extends UndoableComposite implements NavCommand {
 		return changedState;
 	}
 
-	
+
 	private boolean runCommand( NavCommand command, IProgressMonitor monitor ) throws Exception {
 
         SubProgressMonitor subProgressMonitor = new SubProgressMonitor(
@@ -121,8 +121,8 @@ public class NavComposite extends UndoableComposite implements NavCommand {
             }
             UndoableCommand command = (UndoableCommand) commands.get(i);
             command.rollback(monitor);
-        }	
-        
+        }
+
         }finally{
             model.eSetDeliver(previousDeliver);
         }

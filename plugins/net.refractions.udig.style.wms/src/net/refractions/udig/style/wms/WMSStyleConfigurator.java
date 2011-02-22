@@ -30,17 +30,18 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.data.ows.StyleImpl;
 import org.geotools.data.wms.WebMapServer;
-import org.geotools.styling.FeatureTypeStyle;
+import org.opengis.layer.Style;
+import org.opengis.sld.FeatureStyle;
 
 public class WMSStyleConfigurator extends IStyleConfigurator {
 
 	Combo styleCombo;
-    private List<StyleImpl> styles=new ArrayList<StyleImpl>();
+    private List<Object> styles=new ArrayList<Object>();
     private Text text;
     private SashForm sashForm;
     private Composite root;
     private Layer layer;
-	
+
 	public WMSStyleConfigurator() {
 		super();
 	}
@@ -55,22 +56,22 @@ public class WMSStyleConfigurator extends IStyleConfigurator {
         if( layer==getLayer() )
             return;
 		layer = getLayer();
-		
-		List<StyleImpl> allStyles = getStyles(layer.findGeoResource(org.geotools.data.ows.Layer.class));	
+
+		List<Object> allStyles = getStyles(layer.findGeoResource(org.geotools.data.ows.Layer.class));
         styles.clear();
         styleCombo.setItems(new String[0]);
         // Map<DisplayName,wmsStyle>
-        Map<String,StyleImpl> nameMap = new HashMap<String, StyleImpl>();
+        Map<String,org.opengis.layer.Style> nameMap = new HashMap<String, org.opengis.layer.Style>();
 
         // calculate display names for all styles
         // If there are duplicate titles then a combo title(name) is displayed
         for (Object s : allStyles) {
-            StyleImpl wmsStyle = 
-                (StyleImpl) s;
+            org.opengis.layer.Style wmsStyle =
+                (org.opengis.layer.Style) s;
             String name = getDisplayName(wmsStyle);
             if( nameMap.containsKey(name) ){
                 // rename the old one and mark it as deleted
-                StyleImpl oldStyle = nameMap.get(name);
+                Style oldStyle = nameMap.get(name);
                 if( oldStyle!=null){
                     nameMap.put(name, null);
                     String oldStyleName = name + " ("+oldStyle.getName()+")"; //$NON-NLS-1$ //$NON-NLS-2$
@@ -85,20 +86,21 @@ public class WMSStyleConfigurator extends IStyleConfigurator {
                 nameMap.put(name, wmsStyle);
             }
         }
-        
-        for( Entry<String, StyleImpl> entry : nameMap.entrySet() ) {
+
+        for( Entry<String, Style> entry : nameMap.entrySet() ) {
             if( entry.getValue()!=null) {
                 styleCombo.add(entry.getKey());
                 styles.add(entry.getValue());
             }
         }
 		//look for a value to set the combo to on the blackboard
-		StyleImpl style = 
+		StyleImpl style =
 			(StyleImpl) layer.getStyleBlackboard().get(WMSStyleContent.WMSSTYLE);
 		boolean set=false;
         if (style != null) {
             for( int i=0; i<styles.size(); i++) {
-                StyleImpl wmsStyle = (StyleImpl) styles.get(i);
+                org.opengis.layer.Style wmsStyle =
+                    (org.opengis.layer.Style) styles.get(i);
                 if( style.equals(wmsStyle) ){
                     set=true;
                     styleCombo.select(i);
@@ -109,9 +111,9 @@ public class WMSStyleConfigurator extends IStyleConfigurator {
 		}
         if(!set && styles.size()>0){
             styleCombo.select(0);
-            setDetails((StyleImpl) styles.get(0));
+            setDetails((Style) styles.get(0));
         }
-        
+
 	}
 
     /**
@@ -121,24 +123,24 @@ public class WMSStyleConfigurator extends IStyleConfigurator {
      * @return all named styles.
      */
     @SuppressWarnings("unchecked")
-    static List<StyleImpl> getStyles(IGeoResource wmsResource) {
+    static List<Object> getStyles(IGeoResource wmsResource) {
         org.geotools.data.ows.Layer wmsLayer = null;
 		try {
 			wmsLayer = wmsResource.resolve(org.geotools.data.ows.Layer.class, null);
-		} 
+		}
 		catch (IOException e) {
-			IStatus status = 
+			IStatus status =
 				new Status(IStatus.ERROR, WMSStylePlugin.ID, -1, e.getLocalizedMessage(), e);
 			WMSStylePlugin.getDefault().getLog().log(status);
 		}
-		
+
 		if (wmsLayer != null) {
 		    return wmsLayer.getStyles();
 		}
         return Collections.emptyList();
     }
 
-	private String getDisplayName( StyleImpl wmsStyle ) {
+	private String getDisplayName( Style wmsStyle ) {
         String name=wmsStyle.getName();
         if( wmsStyle.getTitle()!=null )
             name=wmsStyle.getTitle().toString(Locale.getDefault());
@@ -171,10 +173,10 @@ public class WMSStyleConfigurator extends IStyleConfigurator {
         Composite chooserComposite = new Composite(sashForm, SWT.NONE);
 		chooserComposite.setLayout(new GridLayout(2,false));
         chooserComposite.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
-        
+
 		Label styleLabel = new Label(chooserComposite, SWT.HORIZONTAL);
 		styleLabel.setText(Messages.WMSStyleConfigurator_style_label);
-        
+
 		styleCombo = new Combo(chooserComposite, SWT.DROP_DOWN|SWT.BORDER|SWT.READ_ONLY);
 		styleCombo.addSelectionListener(
 			new SelectionListener() {
@@ -182,8 +184,8 @@ public class WMSStyleConfigurator extends IStyleConfigurator {
 				public void widgetSelected(SelectionEvent e) {
 					int i = styleCombo.getSelectionIndex();
 					if (i > -1) {
-                        StyleImpl wmsStyle = 
-                            (StyleImpl) styles.get(i);
+                        org.opengis.layer.Style wmsStyle =
+                            (org.opengis.layer.Style) styles.get(i);
 						StyleBlackboard bb = getLayer().getStyleBlackboard();
 						bb.put(WMSStyleContent.WMSSTYLE, wmsStyle);
                         bb.setSelected(new String[]{WMSStyleContent.WMSSTYLE});
@@ -193,10 +195,10 @@ public class WMSStyleConfigurator extends IStyleConfigurator {
 
 				public void widgetDefaultSelected(SelectionEvent e) {
 					widgetDefaultSelected(e);
-				}	
+				}
 			}
 		);
-		
+
 		GridData gridData = new GridData();
         gridData.verticalAlignment=SWT.BEGINNING;
         styleLabel.setLayoutData(gridData);
@@ -205,7 +207,7 @@ public class WMSStyleConfigurator extends IStyleConfigurator {
         styleCombo.setLayoutData(gridData);
     }
 
-    protected void setDetails( StyleImpl wmsStyle ) {
+    protected void setDetails( Style wmsStyle ) {
         boolean detailsSet=false;
         if( wmsStyle.getAbstract()!=null ){
             text.setText(MessageFormat.format(Messages.WMSStyleConfigurator_abstract_format, new Object[] {
@@ -213,21 +215,31 @@ public class WMSStyleConfigurator extends IStyleConfigurator {
             }));
             detailsSet=true;
         }
-        if( wmsStyle.getFeatureStyles() !=null ){
+        if( wmsStyle.getStyleURL()!=null ){
+            String styleURL = wmsStyle.getStyleURL().toString();
+            text.setText(MessageFormat.format(Messages.WMSStyleConfigurator_styleURL_format, new Object[] { styleURL}));
+            detailsSet=true;
+        }
+        if( wmsStyle.getStyleSheetURL()!=null ){
+            String styleURL = wmsStyle.getStyleURL().toString();
+            text.setText(MessageFormat.format(Messages.WMSStyleConfigurator_styleURL_format, new Object[] { styleURL}));
+            detailsSet=true;
+        }
+        if( wmsStyle.getFeatureStyles()!=null ){
         	StringBuffer buff = new StringBuffer();
-        	List<FeatureTypeStyle > fts = wmsStyle.getFeatureStyles();
-            for( FeatureTypeStyle style : fts ) {
+            List<FeatureStyle> fts = wmsStyle.getFeatureStyles();
+            for( FeatureStyle style : fts ) {
                 String name = style.getName();
                 if( style.getTitle()!=null )
-                    name = style.getTitle();                    
+                    name=style.getTitle().toString(Locale.getDefault());
                 buff.append( name );
                 buff.append("\n"); //$NON-NLS-1$
             }
-            
+
             text.setText(MessageFormat.format(Messages.WMSStyleConfigurator_featureStyles_format, new Object[] {buff}));
             detailsSet=true;
         }
-        
+
         if (!detailsSet ){
             text.setText(Messages.WMSStyleConfigurator_no_info);
         }

@@ -5,7 +5,7 @@ import org.eclipse.ui.IMemento;
 
 /**
  * Allows blackboard to persist objects on the blackboard.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -20,7 +20,7 @@ public abstract class IPersister<T> {
     /**
      * Sets the extension that persister originated from. This method should not be called by client
      * code.
-     * 
+     *
      * @param extension The extension in which the persister was instantiated.
      * @uml.property name="extension"
      */
@@ -39,14 +39,14 @@ public abstract class IPersister<T> {
     /**
      * Returns the class of the object being persisted. How this class relates to the class of
      * objects being persisted (via inheritance) is up to the client of the persister.
-     * 
+     *
      * @return The type of the object being persisted (the persistee).
      */
     public abstract Class<T> getPersistee();
 
     /**
      * Loads an object from a memento containing the objects internaObjectl state.
-     * 
+     *
      * @param memento A memento.
      * @return The object with state restored.
      */
@@ -54,7 +54,7 @@ public abstract class IPersister<T> {
 
     /**
      * Saves the internal state of an object instance to a memento.
-     * 
+     *
      * @param object The object being persisted (the persistee).
      * @param memento The memento in which to save object state.
      */

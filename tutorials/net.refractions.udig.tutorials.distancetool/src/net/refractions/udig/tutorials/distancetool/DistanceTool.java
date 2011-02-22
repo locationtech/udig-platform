@@ -36,18 +36,13 @@ public class DistanceTool extends SimpleTool {
 
 		if( statusBar==null )
 			return; // shouldn't happen if the tool is being used.
-		
+
 		getContext().updateUI(new Runnable() {
 			public void run() {
 				statusBar.setErrorMessage("Unable to calculate the distance");
 		        }
 		});
 	  }
-	
-	/**
-	 * 
-	 * @param distance is in meters
-	 */
 	private void displayOnStatusBar(double distance) {
 	    final IStatusLineManager statusBar =
 	        getContext().getActionBars().getStatusLineManager ();
@@ -64,7 +59,7 @@ public class DistanceTool extends SimpleTool {
 	                public void run() {
                         statusBar.setErrorMessage(null);
 				statusBar.setMessage("Distance =  "+km+","+meters+"m "+finalcm+"cm");
-			}		
+			}
 		});
 	}
 }

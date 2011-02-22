@@ -1,0 +1,132 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 5 Custom Application Tutorial</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 5 Custom Application Tutorial -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>This page is a work in progress, currently just the same outline that has been mentioned else where...</p>
+
+<p>So you just picked up uDig, and you made it through the first plug-in tutorial - but a little ruler is not going to make that great a demo for your boss? Do we have a tutorial for you ... in a matter of (several) minuets you can whip up a custom application - with your name on it!</p>
+
+<p>Normally there are two ways to do this:</p>
+<ul>
+	<li>create a new RCP Application, using your own plug-ins and uDig plug-ins</li>
+	<li>drop the uDig plug-ins into an already existing RCP application (if you are in this situation you are an expert go ahead and start hacking, uDig is set up for what you need)</li>
+</ul>
+
+
+<p>There are lots of tutorials out there on the web about creating Eclipse RCP Applications. The mechanics are going to be exactly the same here, we are just going to be using uDig components for the example.</p>
+
+<h3><a name="5CustomApplicationTutorial-PackagingyourContent">Packaging your Content</a></h3>
+
+<p>There are two ways to organize an RCP application, as a pile of plugins, or organized into "features". An RCP "feature" is a collection of plug-ins that are designed to work together.</p>
+
+<p>The uDig SDK is comprised of several features:</p>
+<ul>
+	<li>gisplatform</li>
+	<li>gisapplication</li>
+	<li>...</li>
+</ul>
+
+
+<p>Let's set up a feature for our distance tool created in the earlier tutorial.</p>
+<ul>
+	<li>create feature: net.refractions.udig.example-feature</li>
+	<li>list distance tool plugin as contents</li>
+</ul>
+
+
+<p>tip: You can set up features like this as part of the uDig community svn, features are available for others to try out and serve as a great way to get involved with the uDig project.</p>
+
+<h3><a name="5CustomApplicationTutorial-CreatingaProduct">Creating a Product</a></h3>
+
+<p>The next step is to define a "product" configuration that can be bundled up for execution (and distribution).</p>
+<ol>
+	<li>create a plugin: net.refractions.udig.example.ui</li>
+	<li>create a product: net.refractions.udig.example.ui/example.product</li>
+	<li>open up example.product</li>
+	<li>add your feature</li>
+	<li>add the uDig features ...</li>
+	<li>choose uDig application from the list</li>
+	<li>Run ....</li>
+</ol>
+
+
+<p>There we have it your own custom application <img class="emoticon" src="./icons/emoticons/smile.gif" height="20" width="20" align="absmiddle" alt="" border="0"/> But wait there is more ...</p>
+
+<h3><a name="5CustomApplicationTutorial-CreatingacustomApplication">Creating a custom Application</a></h3>
+
+<p>Previously we just choose the uDig application from this list, lets define our won application.</p>
+<ol>
+	<li>Do the application extention point thing ...</li>
+	<li>When it comes time to creating a class, lets subclass uDigApplication</li>
+	<li>Override the Title</li>
+	<li>Override the Default Perspective</li>
+	<li>Change the product to use you new application</li>
+	<li>Run ...</li>
+</ol>
+
+
+<h3><a name="5CustomApplicationTutorial-CreatingaBrandingPlugin">Creating a Branding Plugin</a></h3>
+
+<p>You probably did not notice, but in the help menu your feature is not sorted into the right spot.  By creating a branding plugin we are going to be able to fix that, and also do something you care about - adding a splash screen.</p>
+
+<ul>
+	<li>create a plugin: net.refractions.udig.example</li>
+	<li>fill in the blanks</li>
+	<li>add a splash screen</li>
+</ul>
+
+
+<h3><a name="5CustomApplicationTutorial-CreatinganDistrbution">Creating an Distrbution</a></h3>
+
+<p>For example.product you can also create a distribution.</p>
+<ol>
+	<li>open up example.product</li>
+	<li>hook it up with a custom icon</li>
+	<li>click the button</li>
+</ol>
+
+
+<p>(Please not to create a cross platform release you will need to download a few RCP extras)</p>
+
+<h3><a name="5CustomApplicationTutorial-Wheretogofromhere%3F">Where to go from here?</a></h3>
+
+<p>You now know how to create a plugin, bundle it up into a feature, and create an application out of only the features you need.</p>
+
+<p>What is next?</p>
+<ul>
+	<li>An update site is used to publish features for easy download, you can walk through the instructions in the Eclipse help to create an update site for our example.feature.</li>
+	<li>Our example application was rather minimal, why not add in an additional uDig feature like printing? You may also be able to find some interesting community features to try out.</li>
+</ul>
+
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=9188">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=9188">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

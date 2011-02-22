@@ -4,20 +4,45 @@
    <extension
          point="net.refractions.udig.project.ui.tool">
       <modalTool
-            class="net.refractions.udig.tutorials.examples.PickTool"
+            class="net.refractions.udig.code.examples.PickTool"
             icon="icons/etool16/pick_mode.gif"
             id="net.refractions.udig.code.examples.pick"
             name="Pick Features"
             onToolbar="true"
             toolCursorId="crosshair"
             tooltip="Pick Features"/>
+      <actionTool
+            class="net.refractions.udig.tutorials.examples.GoHomeActionTool"
+            id="net.refractions.udig.tutorials.examples.actionTool1"
+            menuPath="navigate/gohome"
+            name="Home"
+            onToolbar="false"
+            tooltip="Go Home">
+         <enablement></enablement>
+      </actionTool>
    </extension>
    <extension
          point="net.refractions.udig.mapgraphic.mapgraphic">
       <mapGraphic
             class="net.refractions.udig.tutorials.examples.AnimationMapGraphic"
-            id="net.refractions.udig.code.examples.runAnimationMapGraphic">
+            id="net.refractions.udig.code.examples.runAnimationMapGraphic"
+            name="Animation Example">
       </mapGraphic>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.operation">
+      <operation
+            class="net.refractions.udig.tutorials.examples.CountFeaturesOnScreenOp"
+            id="net.refractions.udig.tutorials.examples.operation.count"
+            name="Count Features on Screen"
+            targetClass="net.refractions.udig.project.ILayer">
+      </operation>
+      <operation
+            class="net.refractions.udig.tutorials.examples.Op1"
+            id="net.refractions.udig.tutorials.examples.operation1"
+            name="name"
+            targetClass="net.refractions.udig.project.IMap">
+      </operation>
    </extension>
 
 </plugin>

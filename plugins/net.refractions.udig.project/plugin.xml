@@ -4,15 +4,15 @@
 <plugin>
 
     <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "http:///net/refractions/udig/project/internal/render.ecore" 
+    <package
+       uri = "http:///net/refractions/udig/project/internal/render.ecore"
        class = "net.refractions.udig.project.internal.render.RenderPackage" />
   </extension>
 
 
   <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "http:///net/refractions/udig/project/internal.ecore" 
+    <package
+       uri = "http:///net/refractions/udig/project/internal.ecore"
        class = "net.refractions.udig.project.internal.ProjectPackage" />
   </extension>
 
@@ -28,7 +28,6 @@
    <extension-point id="resourceInterceptor" name="resourceInterceptor" schema="schema/resourceInterceptor.exsd"/>
    <extension-point id="layerInterceptor" name="layerInterceptor" schema="schema/layerInterceptor.exsd"/>
    <extension-point id="element" name="element" schema="schema/element.exsd"/>
-   <extension-point id="featureInterceptor" name="Feature Interceptor" schema="schema/featureInterceptor.exsd"/>
    <extension
          point="net.refractions.udig.project.projectElementFactories">
       <projectElementFactory
@@ -42,7 +41,7 @@
             name="%selectionStyle.name"
             id="net.refractions.udig.project.selectionStyle"/>
       <style
-            class="net.refractions.udig.project.internal.interceptor.ShowViewInterceptor$ViewStyleContent"
+            class="net.refractions.udig.project.interceptor.ShowViewInterceptor$ViewStyleContent"
             id="net.refractions.udig.project.view"
             name="net.refractions.udig.project.View">
       </style>
@@ -94,26 +93,15 @@
             order="PRE"
             target="org.geotools.data.FeatureStore"/>
       <interceptor
-            class="net.refractions.udig.project.internal.interceptor.WrapSimpleFeatureStore"
-            id="net.refractions.udig.project.wrap.simplefeaturestore"
-            order="PRE"
-            target="org.geotools.data.SimpleFeatureStore"/>
-      <interceptor
             class="net.refractions.udig.project.internal.impl.ListenerAddingInterceptor"
             id="net.refractions.udig.project.AddEditingListener"
             order="PRE"
             target="org.geotools.data.FeatureSource"/>
       <interceptor
-            class="net.refractions.udig.project.internal.interceptor.ShowViewInterceptor"
+            class="net.refractions.udig.project.interceptor.ShowViewInterceptor"
             id="net.refractions.udig.project.showViewInterceptor"
             order="POST"
             target="org.geotools.data.FeatureSource"/>
-      <interceptor
-            class="net.refractions.udig.project.internal.interceptor.CacheInterceptor"
-            id="net.refractions.udig.project.cacheFeatureSourceInterceptor"
-            order="POST"
-            target="org.geotools.data.FeatureSource">
-      </interceptor>
       <interceptor
             class="net.refractions.udig.project.internal.impl.GeoResourceInfoInterceptor"
             id="net.refractions.udig.project.interceptor.info"
@@ -149,14 +137,6 @@
                class="net.refractions.udig.project.internal.property.FeatureStoreResourceProperty"
                id="FeatureStoreResourceProperty"/>
       </object>
-   </extension>
-   <extension
-         point="net.refractions.udig.project.featureInterceptor">
-      <featureCreated
-            class="net.refractions.udig.project.internal.interceptor.DefaultValueFeatureInterceptor"
-            id="net.refractions.udig.project.setDefaultValuesInterceptor"
-            name="Default Values">
-      </featureCreated>
    </extension>
 </plugin>
 

@@ -18,7 +18,6 @@ package net.refractions.udig.ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -54,11 +53,10 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.referencing.CRS;
-import org.geotools.referencing.ReferencingFactoryFinder;
+import org.geotools.referencing.FactoryFinder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.metadata.Identifier;
 import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.ReferenceIdentifier;
 import org.opengis.referencing.crs.CRSAuthorityFactory;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.osgi.service.prefs.BackingStoreException;
@@ -66,7 +64,7 @@ import org.osgi.service.prefs.Preferences;
 
 /**
  * Creates a Control for choosing a Coordinate Reference System.
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
@@ -84,7 +82,7 @@ public class CRSChooser {
 
         public void handleOk() {
         }
-        
+
     };
 
     ListViewer codesList;
@@ -95,8 +93,6 @@ public class CRSChooser {
     Matcher matcher;
     private TabFolder folder;
     private Controller parentPage;
-    private HashMap<String, String> crsCodeMap;
-    private CoordinateReferenceSystem sourceCRS;
 
     public CRSChooser( Controller parentPage ) {
         matcher = Pattern.compile(".*?\\(([^(]*)\\)$").matcher(""); //$NON-NLS-1$ //$NON-NLS-2$
@@ -106,7 +102,7 @@ public class CRSChooser {
     public CRSChooser() {
         this(DEFAULT);
     }
-    
+
     private Control createCustomCRSControl( Composite parent ) {
         Composite composite = new Composite(parent, SWT.NONE);
 
@@ -115,19 +111,19 @@ public class CRSChooser {
 
         GridData gridData = new GridData();
         Label keywordsLabel = new Label(composite, SWT.NONE);
-        keywordsLabel.setText(Messages.CRSChooser_keywordsLabel); 
+        keywordsLabel.setText(Messages.CRSChooser_keywordsLabel);
         keywordsLabel.setLayoutData(gridData);
-        keywordsLabel.setToolTipText(Messages.CRSChooser_tooltip); 
+        keywordsLabel.setToolTipText(Messages.CRSChooser_tooltip);
 
         gridData = new GridData(SWT.FILL, SWT.NONE, true, false);
         keywordsText = new Text(composite, SWT.SINGLE | SWT.BORDER);
         keywordsText.setLayoutData(gridData);
-        keywordsText.setToolTipText(Messages.CRSChooser_tooltip); 
+        keywordsText.setToolTipText(Messages.CRSChooser_tooltip);
 
         gridData = new GridData(SWT.FILL, SWT.NONE, true, false);
         gridData.horizontalSpan = 2;
         Label editorLabel = new Label(composite, SWT.NONE);
-        editorLabel.setText(Messages.CRSChooser_label_crsWKT); 
+        editorLabel.setText(Messages.CRSChooser_label_crsWKT);
         editorLabel.setLayoutData(gridData);
 
         gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -144,7 +140,7 @@ public class CRSChooser {
             }
 
         });
-        
+
         searchText.setFocus();
         return composite;
     }
@@ -156,7 +152,7 @@ public class CRSChooser {
 
         GridData gridData = new GridData();
         Label codesLabel = new Label(composite, SWT.NONE);
-        codesLabel.setText(Messages.CRSChooser_label_crs); 
+        codesLabel.setText(Messages.CRSChooser_label_crs);
         codesLabel.setLayoutData(gridData);
 
         gridData = new GridData(SWT.FILL, SWT.FILL, false, false);
@@ -174,7 +170,7 @@ public class CRSChooser {
 					codesList.getControl().setFocus();
 				}
 			}
-        	
+
         });
         gridData = new GridData(400, 300);
         codesList = new ListViewer(composite);
@@ -192,19 +188,7 @@ public class CRSChooser {
                 if (matcher.matches()) {
                     selectedCRS = createCRS(matcher.group(1));
                     if (selectedCRS != null && wktText != null) {
-                        wktText.setEditable(true);
-                        String wkt = null;
-                        try{
-                            wkt = selectedCRS.toWKT();
-                        }catch (Exception e) {
-                            /*
-                             *  if unable to generate WKT, just return the 
-                             *  string and make the text area non editable. 
-                             */
-                            wkt = selectedCRS.toString();
-                            wktText.setEditable(false);
-                        }
-                        wktText.setText(wkt);
+                        wktText.setText(selectedCRS.toWKT());
                         Preferences node = findNode(matcher.group(1));
                         if( node!=null ){
                             Preferences kn = node.node(ALIASES_ID);
@@ -222,7 +206,7 @@ public class CRSChooser {
                             } catch (BackingStoreException e) {
                                 UiPlugin.log("", e); //$NON-NLS-1$
                             }
-                            
+
                         }else{
                             keywordsText.setText(""); //$NON-NLS-1$
                         }
@@ -238,7 +222,7 @@ public class CRSChooser {
             public void doubleClick( DoubleClickEvent event ) {
                 parentPage.handleOk();
                 parentPage.handleClose();
-                
+
             }
 
         });
@@ -249,19 +233,17 @@ public class CRSChooser {
          * flickers the window
          */
         fillCodesList();
-        
-        searchText.setFocus();
-        
+
         return composite;
     }
 
     public void setFocus(){
     	searchText.setFocus();
     }
-    
+
     /**
      * Creates the CRS PreferencePage root control with a CRS already selected
-     * 
+     *
      * @param parent PreferencePage for this chooser
      * @param crs current CRS for the associated map
      * @return control for the PreferencePage
@@ -279,7 +261,7 @@ public class CRSChooser {
 
     /**
      * Takes in a CRS, finds it in the list and highlights it
-     * 
+     *
      * @param crs
      */
     @SuppressWarnings("unchecked")
@@ -287,9 +269,10 @@ public class CRSChooser {
         if (crs != null) {
             final List list = codesList.getList();
             Set<Identifier> identifiers = new HashSet<Identifier>(crs.getIdentifiers());
-            
+            identifiers.add(crs.getName());
+
             final Set<Integer> candidates=new HashSet<Integer>();
-            
+
             for( int i = 0; i < list.getItemCount(); i++ ) {
                 for( Identifier identifier : identifiers ) {
                     final String item = list.getItem(i);
@@ -305,11 +288,9 @@ public class CRSChooser {
             }
             if( candidates.isEmpty() ){
                 java.util.List<String> input=(java.util.List<String>) codesList.getInput();
-                String sourceCRSName = crs.getName().toString();
-                sourceCRS = crs;
-                input.add(0, sourceCRSName);
+                input.add(0, crs.getName().toString());
                 codesList.setInput(input);
-                codesList.setSelection(new StructuredSelection(sourceCRSName), false);
+                codesList.setSelection(new StructuredSelection(crs.getName().toString()), false);
                 list.setTopIndex(0);
                 try{
                     String toWKT = crs.toWKT();
@@ -322,21 +303,15 @@ public class CRSChooser {
                 Integer next = candidates.iterator().next();
                 codesList.setSelection(new StructuredSelection(list.getItem(next)), false);
                 list.setTopIndex(next);
-                
+
             }
+
+
         }
     }
 
     private boolean exactMatch( CoordinateReferenceSystem crs, Identifier identifier, String item ) {
-        return (crs==DefaultGeographicCRS.WGS84 && item.equals("WGS 84 (4326)")) ||  //$NON-NLS-1$
-            item.equalsIgnoreCase(identifier.toString()) || isInCodeMap(identifier, item);
-    }
-
-    private boolean isInCodeMap( Identifier identifier, String item ) {
-    	
-        String name = crsCodeMap.get(identifier.getCode());
-        if(name==null ) return false;
-        else return name.equals(item);
+        return (crs==DefaultGeographicCRS.WGS84 && item.contains("EPSG:4326")) || item.equalsIgnoreCase(identifier.toString()); //$NON-NLS-1$
     }
 
     private boolean sameEPSG( CoordinateReferenceSystem crs, Identifier identifier, String item ) {
@@ -350,7 +325,7 @@ public class CRSChooser {
 
     /**
      * Creates the CRS PreferencePage root control with no CRS selected
-     * 
+     *
      * @param parent PreferencePage for this chooser
      * @return control for the PreferencePage
      */
@@ -362,12 +337,12 @@ public class CRSChooser {
         folder.setLayoutData(gridData);
 
         TabItem standard = new TabItem(folder, SWT.NONE);
-        standard.setText(Messages.CRSChooser_tab_standardCRS); 
+        standard.setText(Messages.CRSChooser_tab_standardCRS);
         Control stdCRS = createStandardCRSControl(folder);
         standard.setControl(stdCRS);
 
         TabItem custom = new TabItem(folder, SWT.NONE);
-        custom.setText(Messages.CRSChooser_tab_customCRS); 
+        custom.setText(Messages.CRSChooser_tab_customCRS);
         Control cstCRS = createCustomCRSControl(folder);
         custom.setControl(cstCRS);
 
@@ -376,7 +351,7 @@ public class CRSChooser {
 
     /**
      * checks if all keywords in filter array are in input
-     * 
+     *
      * @param input test string
      * @param filter array of keywords
      * @return true, if all keywords in filter are in the input, false otherwise
@@ -391,15 +366,15 @@ public class CRSChooser {
 
     /**
      * filters all CRS Names from all available CRS authorities
-     * 
+     *
      * @param filter array of keywords
      * @return Set of CRS Names which contain all the filter keywords
      */
     protected Set<String> filterCRSNames( String[] filter ) {
-        crsCodeMap = new HashMap<String, String>();
         Set<String> descriptions = new TreeSet<String>();
-        for( Object object : ReferencingFactoryFinder.getCRSAuthorityFactories(null) ) {
+        for( Object object : FactoryFinder.getCRSAuthorityFactories() ) {
             CRSAuthorityFactory factory = (CRSAuthorityFactory) object;
+
             try {
                 Set<String> codes = factory.getAuthorityCodes(CoordinateReferenceSystem.class);
                 for( Object codeObj : codes ) {
@@ -408,16 +383,14 @@ public class CRSChooser {
                     try {
                         description = factory.getDescriptionText(code).toString();
                     } catch (Exception e1) {
-                        description = Messages.CRSChooser_unnamed; 
+                        description = Messages.CRSChooser_unnamed;
                     }
                     description += " (" + code + ")"; //$NON-NLS-1$ //$NON-NLS-2$
-                    crsCodeMap.put(code, description);
-                    if (matchesFilter(description.toUpperCase(), filter)){
+                    if (matchesFilter(description.toUpperCase(), filter))
                         descriptions.add(description);
-                    }
                 }
             } catch (FactoryException e) {
-            	UiPlugin.trace( CRSChooser.class, "CRS Authority:"+e.getMessage(), e );
+                // list = null;
             }
         }
         return descriptions;
@@ -443,7 +416,7 @@ public class CRSChooser {
     private Set<String> filterCustomCRSs( Set<String> descriptions, String[] searchParms ) {
         try {
             Preferences root = UiPlugin.getUserPreferences();
-            Preferences node = root.node(InstanceScope.SCOPE).node(CUSTOM_ID); 
+            Preferences node = root.node(InstanceScope.SCOPE).node(CUSTOM_ID);
 
             for( String id : node.childrenNames() ) {
                 Preferences child = node.node(id);
@@ -469,7 +442,7 @@ public class CRSChooser {
 
     /**
      * creates a CRS from a code when the appropriate CRSAuthorityFactory is unknown
-     * 
+     *
      * @param code CRS code
      * @return CRS object from appropriate authority, or null if the appropriate factory cannot be
      *         determined
@@ -477,26 +450,24 @@ public class CRSChooser {
     protected CoordinateReferenceSystem createCRS( String code ) {
         if (code == null)
             return null;
-        for( Object object : ReferencingFactoryFinder.getCRSAuthorityFactories(null) ) {
+        for( Object object : FactoryFinder.getCRSAuthorityFactories() ) {
             CRSAuthorityFactory factory = (CRSAuthorityFactory) object;
             try {
                 return (CoordinateReferenceSystem) factory.createObject(code);
             } catch (FactoryException e2) {
                 // then we have the wrong factory
                 // is there a better way to do this?
-            }catch (Exception e) {
-                UiPlugin.log("Error creating CRS object, trying more...", e);
             }
         }
         try {
             Preferences child = findNode(code);
             if (child != null) {
-                String wkt = child.get(WKT_ID, null); 
+                String wkt = child.get(WKT_ID, null);
                 if (wkt != null) {
                     try {
-                        return ReferencingFactoryFinder.getCRSFactory(null).createFromWKT(wkt);
+                        return FactoryFinder.getCRSFactory(null).createFromWKT(wkt);
                     } catch (Exception e) {
-                        UiPlugin.log(wkt, e); 
+                        UiPlugin.log(wkt, e);
                         child.removeNode();
                     }
                 }
@@ -511,7 +482,7 @@ public class CRSChooser {
     private Preferences findNode( String code ) {
         try {
             Preferences root = UiPlugin.getUserPreferences();
-            Preferences node = root.node(InstanceScope.SCOPE).node(CUSTOM_ID); 
+            Preferences node = root.node(InstanceScope.SCOPE).node(CUSTOM_ID);
 
             if (node.nodeExists(code)) {
                 return node.node(code);
@@ -519,7 +490,7 @@ public class CRSChooser {
 
             for( String id : node.childrenNames() ) {
                 Preferences child = node.node(id);
-                String name = child.get(NAME_ID, null); 
+                String name = child.get(NAME_ID, null);
                 if (name != null && matchesFilter(name, new String[]{code})) {
                     return child;
                 }
@@ -533,7 +504,7 @@ public class CRSChooser {
 
     /**
      * returns the selected CRS
-     * 
+     *
      * @return selected CRS
      */
     public CoordinateReferenceSystem getCRS() {
@@ -542,7 +513,7 @@ public class CRSChooser {
         if (folder.getSelectionIndex() == 1) {
             try {
                 String text = wktText.getText();
-                CoordinateReferenceSystem createdCRS = ReferencingFactoryFinder.getCRSFactory(null)
+                CoordinateReferenceSystem createdCRS = FactoryFinder.getCRSFactory(null)
                         .createFromWKT(text);
 
                 if (keywordsText.getText().trim().length() > 0) {
@@ -575,18 +546,13 @@ public class CRSChooser {
                         return saveCustomizedCRS(text, true, createdCRS);
                     }
                 }
-                
+
                 return createdCRS;
             } catch (Exception e) {
                 UiPlugin.log("", e); //$NON-NLS-1$
             }
         }
         if (selectedCRS == null) {
-            String crsCode = (String) ((IStructuredSelection) codesList.getSelection()).getFirstElement();
-            if(sourceCRS != null && crsCode.equals(sourceCRS.getName().toString())){
-                System.out.println("source crs: " + sourceCRS.getName().toString());
-                return sourceCRS;
-            }
             return createCRS(searchText.getText());
         }
         return selectedCRS;
@@ -630,20 +596,20 @@ public class CRSChooser {
     private CoordinateReferenceSystem saveCustomizedCRS( String text, boolean processWKT, CoordinateReferenceSystem createdCRS )
             throws CoreException, IOException, BackingStoreException {
         Preferences root = UiPlugin.getUserPreferences();
-        Preferences node = root.node(InstanceScope.SCOPE).node(CUSTOM_ID); 
+        Preferences node = root.node(InstanceScope.SCOPE).node(CUSTOM_ID);
         int lastID;
         String code;
-        String name; 
+        String name;
         String newWKT;
         if( processWKT ){
             lastID = Integer.parseInt(node.get(LAST_ID, "0")); //$NON-NLS-1$
             code = "UDIG:" + lastID; //$NON-NLS-1$
             name = createdCRS.getName().toString() + "(" + code + ")";//$NON-NLS-1$ //$NON-NLS-2$
             lastID++;
-            node.putInt(LAST_ID, lastID); 
+            node.putInt(LAST_ID, lastID);
             newWKT = processingWKT(text, lastID);
         }else{
-            Set<ReferenceIdentifier> ids = createdCRS.getIdentifiers();
+            Set<Identifier> ids = createdCRS.getIdentifiers();
             if( !ids.isEmpty() ){
                 Identifier id = ids.iterator().next();
                 code=id.toString();
@@ -651,12 +617,12 @@ public class CRSChooser {
             }else{
                 name=code=createdCRS.getName().getCode();
             }
-            
+
             newWKT=text;
         }
-        
+
         Preferences child = node.node(code);
-        child.put(NAME_ID, name); 
+        child.put(NAME_ID, name);
         child.put(WKT_ID, newWKT);
         String[] keywords = keywordsText.getText().split(","); //$NON-NLS-1$
         if (keywords.length > 0) {
@@ -667,7 +633,7 @@ public class CRSChooser {
             }
         }
         node.flush();
-        
+
         return createdCRS;
     }
 
@@ -685,7 +651,7 @@ public class CRSChooser {
             newWKT = text.substring(0, text.lastIndexOf(']'))
                     + ", AUTHORITY[\"UDIG\",\"" + (lastID - 1) + "\"]]"; //$NON-NLS-1$ //$NON-NLS-2$
         }
-        wktText.setText(newWKT);  
+        wktText.setText(newWKT);
         return newWKT;
     }
 

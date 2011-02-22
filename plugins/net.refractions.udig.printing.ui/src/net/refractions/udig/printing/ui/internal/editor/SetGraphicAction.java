@@ -41,13 +41,13 @@ public class SetGraphicAction implements IBoxEditAction {
         graphic = null;
         final MapGraphicBoxPrinter boxPrinter = getBoxPrinter();
         final MapGraphicResource old = boxPrinter.getMapGraphic();
-        
+
         return new Command(){
             @Override
             public void execute() {
                 boxPrinter.setMapGraphic(newGraphic);
             }
-            
+
             @Override
             public void undo() {
                 boxPrinter.setMapGraphic(old);
@@ -67,9 +67,9 @@ public class SetGraphicAction implements IBoxEditAction {
         graphic = null;
         MapGraphicChooserDialog dialog = new MapGraphicChooserDialog(Display.getCurrent().getActiveShell(), false);
         dialog.setBlockOnOpen(true);
-        
+
         dialog.open();
-        
+
         if( dialog.getReturnCode() == Window.OK ){
             List<MapGraphicResource> selectedResources = dialog.getSelectedResources();
             if( selectedResources!=null && !selectedResources.isEmpty()){
@@ -77,7 +77,7 @@ public class SetGraphicAction implements IBoxEditAction {
             }
         }
     }
-    
+
     private MapGraphicBoxPrinter getBoxPrinter(){
         return (MapGraphicBoxPrinter) owner.getBoxPrinter();
     }

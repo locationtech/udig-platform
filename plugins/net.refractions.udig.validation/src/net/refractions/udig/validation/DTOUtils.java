@@ -27,7 +27,7 @@ import org.geotools.validation.dto.TestDTO;
 import org.geotools.validation.dto.TestSuiteDTO;
 
 /**
- * TODO Purpose of 
+ * TODO Purpose of
  * <p>
  *
  * </p>
@@ -54,7 +54,7 @@ public class DTOUtils {
 	 * Ensures that each test in the testSuite does not contain any null
 	 * arguments. Tests that contain "errors" are selected in red and a dialog
 	 * complains to the user.
-	 * 
+	 *
 	 * @param testSuite
 	 * @return
 	 */
@@ -72,7 +72,7 @@ public class DTOUtils {
 		if (badTests) {
 			//yell at the user
 	        MessageBox mb = new MessageBox(Display.getCurrent().getActiveShell(), SWT.ICON_ERROR  | SWT.OK);
-	        mb.setMessage(Messages.DTOUtils_nullArg); 
+	        mb.setMessage(Messages.DTOUtils_nullArg);
 	        mb.open();
 			return false;
 		}

@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +30,6 @@ import java.util.concurrent.locks.Lock;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveChangeEvent;
 import net.refractions.udig.catalog.IResolveDelta;
@@ -52,92 +53,87 @@ import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureReader;
 import org.geotools.data.Transaction;
 import org.geotools.data.shapefile.ShapefileDataStore;
-import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
+import org.geotools.data.shapefile.indexed.IndexedShapefileDataStoreFactory;
+import org.geotools.filter.Filter;
 
 /**
  * Connect to a shapefile
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
 public class ShpServiceImpl extends IService {
 
-    private URL url;
-    private ID id;
-    private Map<String, Serializable> params = null;
 
-    /**
-     * Construct <code>ShpServiceImpl</code>.
-     * 
-     * @param arg1
-     * @param arg2
-     */
-    public ShpServiceImpl( URL url, Map<String, Serializable> params ) {
-        this.url = url;
-        try {
-            id = new ID(url);
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-        this.params = params;
-        Serializable memorymapped = params.get("memory mapped buffer"); //$NON-NLS-1$
-        if (memorymapped == null) {
-            memorymapped = false;
-            try {
-                File file = URLUtils.urlToFile(url);
-                final int maxsize = 1024 * 2048;
-                if (file.length() > maxsize) {
-                    memorymapped = false;
-                }
-            } catch (Exception e) {
-                memorymapped = false;
-            }
-        }
-        if (!params.containsKey(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key)) {
-            params.put(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key, ShpPlugin.getDefault()
-                    .isUseSpatialIndex());
-        }
-        if (!params.containsKey(ShapefileDataStoreFactory.DBFCHARSET.key)) {
-            params.put(ShapefileDataStoreFactory.DBFCHARSET.key, ShpPlugin.getDefault()
-                    .defaultCharset());
-        }
-    }
+	private URL url = null;
 
-    /*
-     * Required adaptions: <ul> <li>IServiceInfo.class <li>List.class <IGeoResource> </ul>
-     * @see net.refractions.udig.catalog.IService#resolve(java.lang.Class,
-     * org.eclipse.core.runtime.IProgressMonitor)
-     */
-    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
+	private Map<String, Serializable> params = null;
 
+	/**
+	 * Construct <code>ShpServiceImpl</code>.
+	 *
+	 * @param arg1
+	 * @param arg2
+	 */
+	public ShpServiceImpl(URL arg1, Map<String, Serializable> arg2) {
+		url = arg1;
+		params = arg2;
+		Serializable memorymapped = params.get("memory mapped buffer"); //$NON-NLS-1$
+		if (memorymapped == null) {
+			memorymapped = false;
+			try {
+				File file = URLUtils.urlToFile(url);
+				final int maxsize = 1024 * 2048;
+				if (file.length() > maxsize) {
+					memorymapped = false;
+				}
+			} catch (Exception e) {
+				memorymapped = false;
+			}
+		}
+        if( !params.containsKey(IndexedShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key)){
+            params.put(IndexedShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key,
+                    ShpPlugin.getDefault().isUseSpatialIndex());
+        }
+        if( !params.containsKey(IndexedShapefileDataStoreFactory.CHARSET.key)){
+            params.put(IndexedShapefileDataStoreFactory.CHARSET.key,
+                    ShpPlugin.getDefault().defaultCharset());
+        }
+	}
+
+	/*
+	 * Required adaptions: <ul> <li>IServiceInfo.class <li>List.class
+	 * <IGeoResource> </ul>
+	 *
+	 * @see net.refractions.udig.catalog.IService#resolve(java.lang.Class,
+	 *      org.eclipse.core.runtime.IProgressMonitor)
+	 */
+	public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor)
+			throws IOException {
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
         if (adaptee == null) {
             throw new NullPointerException("No adaptor specified"); //$NON-NLS-1$
         }
-        if (adaptee.isAssignableFrom(ShapefileDataStore.class))
-            return adaptee.cast(getDS(monitor));
-        if (adaptee.isAssignableFrom(File.class))
-            return adaptee.cast(toFile());
-        return super.resolve(adaptee, monitor);
-    }
+		if (adaptee.isAssignableFrom(ShapefileDataStore.class))
+			return adaptee.cast(getDS(monitor));
+		return super.resolve(adaptee, monitor);
+	}
 
-    /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
-     */
-    public <T> boolean canResolve( Class<T> adaptee ) {
-        if (adaptee == null)
-            return false;
-        return adaptee.isAssignableFrom(ShapefileDataStore.class) || super.canResolve(adaptee);
-    }
+	/*
+	 * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+	 */
+	public <T> boolean canResolve(Class<T> adaptee) {
+		if (adaptee == null)
+			return false;
+		return adaptee.isAssignableFrom(ShapefileDataStore.class)||
+                super.canResolve(adaptee);
+	}
 
     public void dispose( IProgressMonitor monitor ) {
-        if (members == null)
+        if( members==null)
             return;
 
         int steps = (int) ((double) 99 / (double) members.size());
@@ -153,124 +149,128 @@ public class ShpServiceImpl extends IService {
         }
     }
 
-    /*
-     * @see net.refractions.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
-     */
-    public List<ShpGeoResourceImpl> resources( IProgressMonitor monitor ) throws IOException {
+	/*
+	 * @see net.refractions.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
+	 */
+	public List<ShpGeoResourceImpl> resources(IProgressMonitor monitor)
+			throws IOException {
 
-        if (members == null) {
+		if (members == null) {
             getDS(monitor); // slap it to load datastore
-            rLock.lock();
-            try {
-                if (members == null) {
-                    members = new LinkedList<ShpGeoResourceImpl>();
-                    String[] typenames = ds.getTypeNames();
-                    if (typenames != null)
-                        for( int i = 0; i < typenames.length; i++ ) {
-                            members.add(new ShpGeoResourceImpl(this, typenames[i]));
-                        }
-                }
-            } finally {
-                rLock.unlock();
+			rLock.lock();
+            try{
+				if (members == null) {
+					members = new LinkedList<ShpGeoResourceImpl>();
+					String[] typenames = ds.getTypeNames();
+					if (typenames != null)
+						for (int i = 0; i < typenames.length; i++) {
+							members.add(new ShpGeoResourceImpl(this,
+									typenames[i]));
+						}
+				}
+			}finally{
+			    rLock.unlock();
             }
-        }
-        return members;
-    }
+		}
+		return members;
+	}
 
-    private volatile List<ShpGeoResourceImpl> members = null;
+	private volatile List<ShpGeoResourceImpl> members = null;
 
-    @Override
-    public ShpServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
-        return (ShpServiceInfo) super.getInfo(monitor);
-    }
+	/*
+	 * @see net.refractions.udig.catalog.IService#getInfo(org.eclipse.core.runtime.IProgressMonitor)
+	 */
+	public IServiceInfo getInfo(IProgressMonitor monitor) throws IOException {
+		getDS(monitor); // load ds
+		if (info == null && ds != null) {
+			rLock.lock();
+            try{
+				if (info == null) {
+					info = new IServiceShpInfo();
+				}
+			}finally{
+			    rLock.unlock();
+            }
+		}
+		return info;
+	}
 
-    /*
-     * @see net.refractions.udig.catalog.IService#getInfo(org.eclipse.core.runtime.IProgressMonitor)
-     */
-    protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        ShapefileDataStore dataStore = getDS(monitor); // load ds
-        if (dataStore == null) {
-            return null; // could not connect
-        }
-        rLock.lock();
-        try {
-            return new ShpServiceInfo(this);
-        } finally {
-            rLock.unlock();
-        }
-    }
+	private volatile IServiceInfo info = null;
 
-    /*
-     * @see net.refractions.udig.catalog.IService#getConnectionParams()
-     */
-    public Map<String, Serializable> getConnectionParams() {
-        return params;
-    }
+	/*
+	 * @see net.refractions.udig.catalog.IService#getConnectionParams()
+	 */
+	public Map<String, Serializable> getConnectionParams() {
+		return params;
+	}
 
-    private Throwable msg = null;
+	private Throwable msg = null;
 
-    /**
-     * Volatile cache of dataStore if created.
-     */
-    volatile ShapefileDataStore ds = null;
+	private volatile ShapefileDataStore ds = null;
 
-    protected final Lock rLock = new UDIGDisplaySafeLock();
+    protected final Lock rLock=new UDIGDisplaySafeLock();
 
-    private final static Lock dsInstantiationLock = new UDIGDisplaySafeLock();
+    private final static Lock dsInstantiationLock=new UDIGDisplaySafeLock();
 
-    ShapefileDataStore getDS( IProgressMonitor monitor ) throws IOException {
-        if (ds == null) {
-            dsInstantiationLock.lock();
-            try {
-                if (ds == null) {
-                    ShapefileDataStoreFactory dsf = new ShapefileDataStoreFactory();
-                    if (dsf.canProcess(params)) {
+	ShapefileDataStore getDS(IProgressMonitor monitor) throws IOException {
+		if (ds == null) {
+			dsInstantiationLock.lock();
+            try{
+				if (ds == null) {
+					IndexedShapefileDataStoreFactory dsf = new IndexedShapefileDataStoreFactory();
+					if (dsf.canProcess(params)) {
+
 
                         try {
-                            ds = (ShapefileDataStore) dsf.createDataStore(params);
-                            openIndexGenerationDialog(ds);
+							ds = (ShapefileDataStore) dsf
+									.createDataStore(params);
+							openIndexGenerationDialog(ds);
                             // hit it lightly to make sure it exists.
                             ds.getFeatureSource();
 
-                        } catch (IOException e) {
-                            msg = e;
-                            try {
-                                params.remove(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key);
-                                ds = (ShapefileDataStore) dsf.createDataStore(params);
+						} catch (IOException e) {
+							msg = e;
+							try {
+								params
+										.remove(IndexedShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key);
+								ds = (ShapefileDataStore) dsf
+										.createDataStore(params);
                                 // hit it lightly to make sure it exists.
                                 ds.getFeatureSource();
 
-                            } catch (Exception e2) {
-                                msg = e2;
-                                throw (IOException) new IOException().initCause(e2);
-                            }
+							} catch (Exception  e2) {
+								msg = e2;
+								throw (IOException) new IOException().initCause(e2);
+							}
                         }
-                    }
-                }
-            } finally {
+					}
+				}
+			}finally{
                 dsInstantiationLock.unlock();
             }
-            IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
-            ResolveChangeEvent event = new ResolveChangeEvent(this,
-                    IResolveChangeEvent.Type.POST_CHANGE, delta);
-            fire(event);
-        }
-        return ds;
-    }
+			IResolveDelta delta = new ResolveDelta(this,
+					IResolveDelta.Kind.CHANGED);
+			ResolveChangeEvent event = new ResolveChangeEvent(this,
+					IResolveChangeEvent.Type.POST_CHANGE, delta);
+			fire(event);
+		}
+		return ds;
+	}
 
-    private void fire( ResolveChangeEvent event ) {
-        ICatalog catalog = parent(new NullProgressMonitor());
-        if (catalog instanceof CatalogImpl) {
-            ((CatalogImpl) catalog).fire(event);
-        }
-    }
+	private void fire(ResolveChangeEvent event) {
+		ICatalog catalog = parent(new NullProgressMonitor());
+		if( catalog instanceof CatalogImpl){
+			((CatalogImpl)catalog)
+					.fire(event);
+		}
+	}
 
-    private void openIndexGenerationDialog( final ShapefileDataStore ds ) {
+	private void openIndexGenerationDialog(final ShapefileDataStore ds) {
         rLock.lock();
-        try {
+        try{
             if (ds instanceof IndexedShapefileDataStore) {
                 IndexedShapefileDataStore ids = (IndexedShapefileDataStore) ds;
-                if (ids.isIndexed())
+                if( ids.isIndexed() )
                     return;
                 String name = getIdentifier().getFile();
                 int lastIndexOf = name.lastIndexOf(File.separator);
@@ -302,18 +302,18 @@ public class ShpServiceImpl extends IService {
                             + " " + finalName, true, runnable, false); //$NON-NLS-1$
                 }
             }
-        } finally {
+        }finally{
             rLock.unlock();
         }
 
     }
 
     private void index( final ShapefileDataStore ds, final String typename ) {
-        FeatureReader<SimpleFeatureType, SimpleFeature> reader = null;
+        FeatureReader reader = null;
         try {
             // smack Datastore to generate indices
-            reader = ds.getFeatureReader(new DefaultQuery(typename, Filter.INCLUDE, new String[0]),
-                    Transaction.AUTO_COMMIT);
+            reader = ds.getFeatureReader(new DefaultQuery(typename, Filter.NONE,
+                    new String[0]), Transaction.AUTO_COMMIT);
         } catch (Exception e) {
             ShpPlugin.log("", e); //$NON-NLS-1$
         } finally {
@@ -329,37 +329,46 @@ public class ShpServiceImpl extends IService {
     /*
      * @see net.refractions.udig.catalog.IResolve#getStatus()
      */
-    public Status getStatus() {
-        return msg != null ? Status.BROKEN : ds == null ? Status.NOTCONNECTED : Status.CONNECTED;
-    }
+	public Status getStatus() {
+		return msg != null ? Status.BROKEN : ds == null ? Status.NOTCONNECTED
+				: Status.CONNECTED;
+	}
 
-    /*
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
-     */
-    public Throwable getMessage() {
-        return msg;
-    }
+	/*
+	 * @see net.refractions.udig.catalog.IResolve#getMessage()
+	 */
+	public Throwable getMessage() {
+		return msg;
+	}
 
-    /*
-     * @see net.refractions.udig.catalog.IResolve#getIdentifier()
-     */
-    public URL getIdentifier() {
-        return url;
-    }
-    @Override
-    public ID getID() {
-        return id;
-    }
-    /**
-     * The File as indicated in the connection parameters, may be null if we are representing a web
-     * resource.
-     * 
-     * @return file as indicated in the connection parameters, may be null if we are reprsenting a
-     *         web resource
-     */
-    public File toFile() {
-        Map<String, Serializable> parametersMap = getConnectionParams();
-        URL url = (URL) parametersMap.get(ShapefileDataStoreFactory.URLP.key);
-        return URLUtils.urlToFile(url);
-    }
+	/*
+	 * @see net.refractions.udig.catalog.IResolve#getIdentifier()
+	 */
+	public URL getIdentifier() {
+		return url;
+	}
+
+	private class IServiceShpInfo extends IServiceInfo {
+
+		IServiceShpInfo() {
+			super();
+			keywords = new String[] { ".shp", "Shapefile", //$NON-NLS-1$ //$NON-NLS-2$
+					ds.getTypeNames()[0] };
+
+			try {
+				schema = new URI("shp://www.opengis.net/gml"); //$NON-NLS-1$
+			} catch (URISyntaxException e) {
+				ShpPlugin.log(null, e);
+				schema = null;
+			}
+		}
+
+		public String getDescription() {
+			return getIdentifier().toString();
+		}
+
+		public String getTitle() {
+			return getIdentifier().getFile();
+		}
+	}
 }

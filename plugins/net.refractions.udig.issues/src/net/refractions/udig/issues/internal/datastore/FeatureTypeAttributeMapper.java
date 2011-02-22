@@ -18,18 +18,18 @@ import java.util.ArrayList;
 
 import net.refractions.udig.issues.internal.Messages;
 
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.AttributeTypeFactory;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.FeatureTypeBuilder;
 import org.geotools.feature.SchemaException;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.Name;
 
 import com.vividsolutions.jts.geom.MultiPolygon;
 
 /**
- * Returns the names of attributes given a SimpleFeatureType that map to the different issue properties.
- *  
+ * Returns the names of attributes given a FeatureType that map to the different issue properties.
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -43,7 +43,7 @@ public class FeatureTypeAttributeMapper {
     private String priority;
     private String description;
     private String bounds;
-    private final SimpleFeatureType schema;
+    private final FeatureType schema;
 
     /**
      * Creates a new instance with the "prefered" feature type
@@ -55,154 +55,153 @@ public class FeatureTypeAttributeMapper {
     /**
      * Creates a new instance.  Maps the required fields as good as possible to the fields present in the
      * schema.
-     * 
+     *
      * @param schema the schema to map to
      */
     @SuppressWarnings("unchecked")
-    public FeatureTypeAttributeMapper( SimpleFeatureType schema ) {
+    public FeatureTypeAttributeMapper( FeatureType schema ) {
         this.schema=schema;
-        ArrayList<AttributeDescriptor> notMapped = new ArrayList<AttributeDescriptor>();
-        if( schema.getGeometryDescriptor()!=null )
-        bounds=schema.getGeometryDescriptor().getName().getLocalPart();
+        ArrayList<AttributeType> notMapped = new ArrayList<AttributeType>();
+        if( schema.getDefaultGeometry()!=null )
+        bounds=schema.getDefaultGeometry().getName();
         for( int i=0; i<schema.getAttributeCount();i++ ){
-            AttributeDescriptor att = schema.getDescriptor(i);
-            if( att==schema.getGeometryDescriptor() )
+            AttributeType att = schema.getAttributeType(i);
+            if( att==schema.getDefaultGeometry() )
                 continue;
-            if( bounds==null && att.getType().getBinding().isAssignableFrom(MultiPolygon.class) ){
-                bounds=att.getName().getLocalPart();
+            if( bounds==null && att.getType().isAssignableFrom(MultiPolygon.class) ){
+                bounds=att.getName();
                 continue;
             }
             if( isExtensionID(att) && extensionId==null ){
-                extensionId=att.getName().getLocalPart();
+                extensionId=att.getName();
                 continue;
             }
             if( isViewMemento(att) && viewMemento==null){
-                viewMemento=att.getName().getLocalPart();
+                viewMemento=att.getName();
                 continue;
             }
             if( isMemento(att) && memento==null){
-                memento=att.getName().getLocalPart();
+                memento=att.getName();
                 continue;
             }
             if( isGroupId(att) && groupId==null){
-                groupId=att.getName().getLocalPart();
+                groupId=att.getName();
                 continue;
             }
             if( isId(att) && id==null){
-                id=att.getName().getLocalPart();
+                id=att.getName();
                 continue;
             }
             if( isResolution(att) && resolution==null){
-                resolution=att.getName().getLocalPart();
+                resolution=att.getName();
                 continue;
             }
             if( isPriority(att) && priority==null){
-                priority=att.getName().getLocalPart();
+                priority=att.getName();
                 continue;
             }
             if( isDescription(att) && description==null){
-                description=att.getName().getLocalPart();
+                description=att.getName();
                 continue;
             }
             notMapped.add(att);
         }
-        
-        for( AttributeDescriptor type : notMapped ) {
+
+        for( AttributeType type : notMapped ) {
             if( extensionId==null && isStringType(type) ){
-                extensionId=type.getName().getLocalPart();
+                extensionId=type.getName();
                 continue;
             }
             if( id==null && isStringType(type) ){
-                id=type.getName().getLocalPart();
+                id=type.getName();
                 continue;
             }
             if( groupId==null && isStringType(type) ){
-                groupId=type.getName().getLocalPart();
+                groupId=type.getName();
                 continue;
             }
             if( resolution==null && isStringType(type) ){
-                resolution=type.getName().getLocalPart();
+                resolution=type.getName();
                 continue;
             }
             if( priority==null && isStringType(type) ){
-                priority=type.getName().getLocalPart();
+                priority=type.getName();
                 continue;
             }
             if( description==null && isStringType(type) ){
-                description=type.getName().getLocalPart();
+                description=type.getName();
                 continue;
             }
             if( viewMemento==null && isStringType(type) ){
-                viewMemento=type.getName().getLocalPart();
+                viewMemento=type.getName();
                 continue;
             }
             if( memento==null && isStringType(type) ){
-                memento=type.getName().getLocalPart();
+                memento=type.getName();
                 continue;
             }
-                
+
         }
     }
-    
-    private static SimpleFeatureType createOptimalSchema(String featureTypeName) throws SchemaException {
-    	SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
-    	builder.setName(featureTypeName);
-        builder.crs(DefaultGeographicCRS.WGS84).add("bounds", MultiPolygon.class);
-        builder.length(128).nillable(true).add("description", String.class);
-        builder.length(80).nillable(false).defaultValue("").add("extensionId", String.class);
-        builder.length(80).nillable(true).add("groupId", String.class);
-        builder.length(80).nillable(false).add("id", String.class);
-        builder.length(1024).nillable(false).defaultValue("").add("memento", String.class);
-        builder.length(20).nillable(true).add("priority", String.class);
-        builder.length(20).nillable(true).add("resolution", String.class);
-        builder.length(1024).nillable(true).add("viewMemento", String.class);
-        return builder.buildFeatureType();
+
+    private static FeatureType createOptimalSchema(String featureTypeName) throws SchemaException {
+        FeatureTypeBuilder builder = FeatureTypeBuilder.newInstance(featureTypeName);
+        builder.addType(AttributeTypeFactory.newAttributeType("bounds", MultiPolygon.class, false, -1, null, DefaultGeographicCRS.WGS84));
+        builder.addType(AttributeTypeFactory.newAttributeType("description", String.class, true, 128, "", null));
+        builder.addType(AttributeTypeFactory.newAttributeType("extensionId", String.class, false, 80, "", null));
+        builder.addType(AttributeTypeFactory.newAttributeType("groupId", String.class, true, 80, "", null));
+        builder.addType(AttributeTypeFactory.newAttributeType("id", String.class, false, 80, "", null));
+        builder.addType(AttributeTypeFactory.newAttributeType("memento", String.class, false, 1024, "", null));
+        builder.addType(AttributeTypeFactory.newAttributeType("priority", String.class, true, 20, "", null));
+        builder.addType(AttributeTypeFactory.newAttributeType("resolution", String.class, true, 20, "", null));
+        builder.addType(AttributeTypeFactory.newAttributeType("viewMemento", String.class, true, 1024, "", null));
+        return builder.getFeatureType();
     }
 
 
     @SuppressWarnings("unchecked")
-    private boolean isStringType( AttributeDescriptor att ) {
-        return att.getType().getBinding().isAssignableFrom(String.class);
+    private boolean isStringType( AttributeType att ) {
+        return att.getType().isAssignableFrom(String.class);
     }
-    
-    private boolean isDescription( AttributeDescriptor att ) {
-        return compare(att.getName(), Messages.FeatureTypeAttributeMapper_description)&&isStringType(att); 
+
+    private boolean isDescription( AttributeType att ) {
+        return compare(att.getName(), Messages.FeatureTypeAttributeMapper_description)&&isStringType(att);
     }
 
 
-    private boolean isPriority( AttributeDescriptor att ) {
-        return compare(att.getName(),Messages.FeatureTypeAttributeMapper_priority)&&isStringType(att);  
+    private boolean isPriority( AttributeType att ) {
+        return compare(att.getName(),Messages.FeatureTypeAttributeMapper_priority)&&isStringType(att);
     }
 
-    private boolean isResolution( AttributeDescriptor att ) {
-        return compare(att.getName(),Messages.FeatureTypeAttributeMapper_resolution)&&isStringType(att);  
+    private boolean isResolution( AttributeType att ) {
+        return compare(att.getName(),Messages.FeatureTypeAttributeMapper_resolution)&&isStringType(att);
     }
 
-    private boolean isId( AttributeDescriptor att ) {
-        return ((compare(att.getName(),Messages.FeatureTypeAttributeMapper_id)) || compare(att.getName(), Messages.FeatureTypeAttributeMapper_issue))&&isStringType(att);  
+    private boolean isId( AttributeType att ) {
+        return ((compare(att.getName(),Messages.FeatureTypeAttributeMapper_id)) || compare(att.getName(), Messages.FeatureTypeAttributeMapper_issue))&&isStringType(att);
     }
 
-    private boolean isGroupId( AttributeDescriptor att ) {
-        return compare(att.getName(),Messages.FeatureTypeAttributeMapper_group)&&isStringType(att);  
+    private boolean isGroupId( AttributeType att ) {
+        return compare(att.getName(),Messages.FeatureTypeAttributeMapper_group)&&isStringType(att);
     }
 
-    private boolean isMemento( AttributeDescriptor att ) {
-        return compare(att.getName(),Messages.FeatureTypeAttributeMapper_memento)&&isStringType(att); 
+    private boolean isMemento( AttributeType att ) {
+        return compare(att.getName(),Messages.FeatureTypeAttributeMapper_memento)&&isStringType(att);
     }
 
-    private boolean isViewMemento( AttributeDescriptor att ) {
-        return compare(att.getName(),Messages.FeatureTypeAttributeMapper_viewmemento)&&isStringType(att); 
+    private boolean isViewMemento( AttributeType att ) {
+        return compare(att.getName(),Messages.FeatureTypeAttributeMapper_viewmemento)&&isStringType(att);
     }
 
-    private boolean isExtensionID( AttributeDescriptor att ) {
-        return compare(att.getName(),Messages.FeatureTypeAttributeMapper_extensionPoint)&&isStringType(att); 
-    }
-    
-    private boolean compare( Name name, String arg2){
-        return name.getLocalPart().toUpperCase().contains(arg2.toUpperCase());
+    private boolean isExtensionID( AttributeType att ) {
+        return compare(att.getName(),Messages.FeatureTypeAttributeMapper_extensionPoint)&&isStringType(att);
     }
 
-    public SimpleFeatureType getSchema() {
+    private boolean compare( String arg1, String arg2){
+        return arg1.toUpperCase().contains(arg2.toUpperCase());
+    }
+
+    public FeatureType getSchema() {
         return schema;
     }
 

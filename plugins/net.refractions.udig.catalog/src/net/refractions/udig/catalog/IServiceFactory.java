@@ -21,8 +21,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-
 /**
  * Builds *new* IService handle by using ServiceExtention to process provided connection parameters.
  * <p>
@@ -38,18 +36,18 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * </ul>
  * We hope that for most uses client code will be able to store an ID directly and use it to look up
  * a live resources in the Catalog. The use of IServiceFactory should be rare and unusual.
- * <h2>Using Connection Parameters to connect to an IService</h2> If you are working with client
- * code (such as a project file) that stores connection information directly please use
- * IServiceFactory to create a IService handle and use the service.getID() to look up the live
- * resource in the local catalog.
+ * <h2>Using Connection Parameters to connect to an IService</h2>
+ * If you are working with client code (such as a project file) that stores connection information
+ * directly please use IServiceFactory to create a IService handle and use the service.getID() to
+ * look up the live resource in the local catalog.
  * <ol>
  * <li>User supplied connection parameters
  * <li>IServiceFactory.createService( parameters )
  * <li>Process list of candidate services; allowing the user to choose if needed
  * <li>Catalog findById( service.getIdentifier() )
  * <ul>
- * <li>if non null the service is already known (the returned service may not be in the location you
- * expect; for example if the file has been moved and the catalog knows about it)
+ * <li>if non null the service is already known (the returned service may not be in the location
+ * you expect; for example if the file has been moved and the catalog knows about it)
  * <li>if null the catalog has never met this service before; use add( service ) to register it
  * </ul>
  * <li>service.getInfo( monitor ) to ensure the service can connect
@@ -58,19 +56,20 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * <li>If service.getStatus() == Status.CONNECTED everything is good
  * </ul>
  * </ol>
- * <h2>Use Drag and Drop URLs to connect to an IService</h2> Handling a drag and drop URL works in a
- * similar manner; this time we have even less information to work with and it is much more likely
- * that the user will need to choose between the available IService alternatives.
+ * <h2>Use Drag and Drop URLs to connect to an IService</h2>
+ * Handling a drag and drop URL works in a similar manner; this time we have even less information
+ * to work with and it is much more likely that the user will need to choose between the available
+ * IService alternatives.
  * <p>
  * Also not that the IService handles returned may not have enough information to connect; a classic
  * case is a security enabled WFS capabilities document. User involvement will be required.
- * 
+ *
  * @since 1.0 Initial version caused some confusion over use of acquire
- * @version 1.1 Explicitly broke generation of default parameters and creating a IService into
+ * @version 1.1 Explicitly broke generation of default parameter and creating a IService in two
  *          separate steps
- * @author Jody Garnett (Refractions Research)
+ * @author Jody Garnett (Refracitons Research)
  */
-public abstract class IServiceFactory {
+public interface IServiceFactory {
 
     /**
      * Generate a list of candidate services each with their own connection parameters.
@@ -80,11 +79,11 @@ public abstract class IServiceFactory {
      * <p>
      * Please be advised that the services handles returned may already be noted in the local
      * catalog; please use findById to check before blinding throwing in a new service handle.
-     * 
+     *
      * @param connectionParameters
      * @return List of candidate IService handles, list may be empty but is never null
      */
-    public abstract List<IService> createService( Map<String, Serializable> connectionParameters );
+    List<IService> createService( Map<String, Serializable> connectionParameters );
 
     /**
      * Will generate a list of candidate services; each with their own default parameters based on
@@ -93,32 +92,12 @@ public abstract class IServiceFactory {
      * This code is used to guess what a URL means when it is provided to the application as part of
      * a drag and drop action. A list of IService options is returned allowing the user to choose
      * when more than one option is available.
-     * 
+     *
      * @param dragNdrop Target url provided by a drag and drop operation
      * @return List of candidate IService handles, list may be empty but is never null
      */
-    public abstract List<IService> createService( URL dragNdrop );
+    List<IService> createService( URL dragNdrop );
 
-    /**
-     * Helper method used to clean up "unused" services in a list returned by createService.
-     * <p>
-     * <pre><code>
-     * List<IService> possible = serviceFactory.createService( url );
-     * try {
-     *     // usually you process the possible services seeing which one will connect
-     *     return possible.remove(0); // remove the first service
-     * }
-     * finally {
-     *    serviceFactory.dispose( possible ); // dispose any remaining services in the possible list
-     * }
-     * </code></pre>
-     * This is just a simple method that closes each service in the list; nothing fancy.
-     * 
-     * @param List of services to be disposed, each in turn
-     * @param monitor Used to track what is going on
-     */
-    public abstract void dispose( List<IService> list, IProgressMonitor monitor );
-    
     /**
      * Generate a list of candidate services each with their own connection parameters.
      * <p>
@@ -127,22 +106,22 @@ public abstract class IServiceFactory {
      * <p>
      * Please be advised that the services handles returned may already be noted in the local
      * catalog; please use findById to check before blinding throwing in a new service handle.
-     * 
+     *
      * @param params
      * @return List of candidate IService handles, list may be empty but is never null
      * @deprecated Use createService( Map )
      */
-    public abstract List<IService> acquire( Map<String, Serializable> connectionParameter );
+    List<IService> acquire( Map<String, Serializable> connectionParameter );
 
     /**
      * Will generate a list of candidate services; each with their own default parameters based on
      * the provided dragNdrop url.
-     * 
+     *
      * @param dragNdrop Url provided by a drag and drop operation
      * @return List of candidate services
      * @deprecated Use createService( URL )
      */
-    public abstract List<IService> acquire( URL dragNdrop ); // creates a map, may look up authentication
+    List<IService> acquire( URL dragNdrop ); // creates a map, may look up authentication
 
     /**
      * Will generate a list of candidate services; each with their own default parameters.
@@ -151,23 +130,23 @@ public abstract class IServiceFactory {
      * not assume that all (or even any) of the returned services will match match the provided id.
      * The resource may of moved on disk; or the service may not be available in this environment
      * (if you are opening up a project on a different machine).
-     * 
+     *
      * @param id This is the original id, please replace with service.getIdentifier
      * @param params Connection Parameters
      * @deprecated Use createService( Map )
      * @return List of candidate services
      */
-    public abstract List<IService> acquire( URL id, Map<String, Serializable> params );
+    List<IService> acquire( URL id, Map<String, Serializable> params );
     /**
      * @deprecated use {@link #acquire(Map)}
      */
-    public abstract List<IService> aquire( Map<String, Serializable> params ); // may look up authentication
+    List<IService> aquire( Map<String, Serializable> params ); // may look up authentication
     /**
      * @deprecated use {@link #acquire(URL)}
      */
-    public abstract List<IService> aquire( URL target ); // creates a map, may look up authentication
+    List<IService> aquire( URL target ); // creates a map, may look up authentication
     /**
      * @deprecated use {@link #acquire(URL, Map)}
      */
-    public abstract List<IService> aquire( URL id, Map<String, Serializable> params ); // may not look up
+    List<IService> aquire( URL id, Map<String, Serializable> params ); // may not look up
 }

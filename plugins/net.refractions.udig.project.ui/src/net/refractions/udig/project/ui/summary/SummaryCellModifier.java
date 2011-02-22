@@ -18,11 +18,12 @@ import java.util.Collection;
 
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.TreeItem;
 
 /**
  * Delegates to the {@link ICellModifier} object responsible for the modifying the
  * {@link SummaryData} object. (It is obtained from the {@link SummaryData})
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

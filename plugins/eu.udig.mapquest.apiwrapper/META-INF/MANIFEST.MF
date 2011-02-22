@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Apiwrapper
-Bundle-SymbolicName: eu.udig.mapquest.apiwrapper
-Bundle-Version: 1.0.0.qualifier
-Export-Package: eu.udig.mapquest.apiwrapper
-Require-Bundle: com.mapquest;bundle-version="1.0.0";visibility:=reexport

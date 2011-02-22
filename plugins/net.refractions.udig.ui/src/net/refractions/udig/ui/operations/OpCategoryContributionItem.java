@@ -17,7 +17,7 @@ import org.eclipse.ui.actions.CompoundContributionItem;
  * Used to fold an operation category into a menu or tool action bar.
  * <p>
  * This is performed with the following menu:
- * 
+ *
  * <pre>
  * &lt;extension
  *    point=&quot;org.eclipse.ui.menus&quot;&gt;
@@ -35,10 +35,10 @@ import org.eclipse.ui.actions.CompoundContributionItem;
  *        &lt;/visibleWhen&gt;
  *      &lt;/dynamic&gt;
  *     ...
- *    &lt;.menuContribution&gt;   
+ *    &lt;.menuContribution&gt;
  *  &lt;/extension&gt;
  * </pre>
- * 
+ *
  * After the ActionBarAdvisor (example UDIGActionBarAdvisor) for your RCP application has been
  * called; the *org.eclipse.ui.menu* extension point is processed.
  * <p>
@@ -54,13 +54,13 @@ import org.eclipse.ui.actions.CompoundContributionItem;
  * <li>Display a sub menu containing several OpActions
  * <li>pending: Display a sub menu containing several OPActions and an "OpCategoryOtherAction"
  * </ul>
- * 
+ *
  * @author Jody Garnett
  */
 public class OpCategoryContributionItem extends CompoundContributionItem implements IExecutableExtension {
     private IContributionItem[] items;
     private String categoryId;
-    
+
     /**
      * Default constructor - called by org.eclipse.ui.menus extention point.
      */
@@ -71,7 +71,7 @@ public class OpCategoryContributionItem extends CompoundContributionItem impleme
      * I would love to know how or when this is called; my best guess
      * is an IExecutableExtention wrapper is supposed to call this one
      * but I cannot get it to work properly.
-     * 
+     *
      * @param id I would love this to be the id of the operation category
      */
     public OpCategoryContributionItem( String id ) {
@@ -79,7 +79,7 @@ public class OpCategoryContributionItem extends CompoundContributionItem impleme
         this.categoryId = id;
     }
 
-    
+
     /**
      * Generate an array of contribution items; these items
      * are cached (so visibility is the key to controlling this
@@ -90,12 +90,12 @@ public class OpCategoryContributionItem extends CompoundContributionItem impleme
      * <li>1: single operation
      * <li>2-5: sub menu list operations
      * <li>pending:<br>5+: sub menu with operations selected by perspective; along with "Other" dialog
-     * </ul> 
+     * </ul>
      */
     @Override
     protected IContributionItem[] getContributionItems() {
         if( items == null ){
-            OperationMenuFactory factory = UiPlugin.getDefault().getOperationMenuFactory();            
+            OperationMenuFactory factory = UiPlugin.getDefault().getOperationMenuFactory();
             List<IContributionItem> list = factory.createContributionItems( categoryId );
             if( list.size() == 0 ){
                 items = new IContributionItem[0];
@@ -112,7 +112,7 @@ public class OpCategoryContributionItem extends CompoundContributionItem impleme
                 items = new IContributionItem[]{ subMenu, };
             }
         }
-        return items;        
+        return items;
     }
 
     public void setInitializationData( IConfigurationElement config, String propertyName,

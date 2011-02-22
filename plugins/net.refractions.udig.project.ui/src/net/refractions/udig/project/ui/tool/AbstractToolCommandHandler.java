@@ -17,8 +17,8 @@ package net.refractions.udig.project.ui.tool;
 import org.eclipse.core.commands.AbstractHandler;
 
 /**
- * A convenience class. 
- * 
+ * A convenience class.
+ *
  * @author Jesse
  * @since 1.1.0
  */

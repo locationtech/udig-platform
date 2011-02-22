@@ -17,6 +17,8 @@ package net.refractions.udig.tools.edit;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
+import org.geotools.filter.Filter;
+
 import net.refractions.udig.project.EditManagerEvent;
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.IEditManager;
@@ -29,9 +31,7 @@ import net.refractions.udig.project.ui.tool.Tool;
 import net.refractions.udig.tools.edit.support.EditUtils;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
 
-import org.opengis.filter.Filter;
-
-/** 
+/**
  * If a commit occurs it:
  * <ul>
  * <li>Pre Commit:
@@ -64,7 +64,7 @@ import org.opengis.filter.Filter;
  * <li>This is handled by {@link EditToolHandler} in the listenToSelectedLayer method.</li>
  * </ul>
  * </li<
- * </ul> 
+ * </ul>
  */
 class EditManagerListener implements IEditManagerListener {
 
@@ -82,7 +82,7 @@ class EditManagerListener implements IEditManagerListener {
      */
     static synchronized void enableEditManagerListener( EditToolHandler handler ) {
         IEditManager editManager=handler.getContext().getEditManager();
-        
+
         // add listener if editManager is not null and map blackboard indicates that a listener has not be previously added
         if ( getRegisteredListener(editManager)==null ) {
             EditManagerListener editManagerListener = new EditManagerListener(editManager,handler);
@@ -145,7 +145,7 @@ class EditManagerListener implements IEditManagerListener {
         case EditManagerEvent.SELECTED_LAYER:
             ILayer oldValue = (ILayer) event.getOldValue();
             ILayer newValue = (ILayer)event.getNewValue();
-            
+
             Lock lock2 = handler.getLock();
             lock2.lock();
             try {
@@ -153,9 +153,9 @@ class EditManagerListener implements IEditManagerListener {
                     // TODO what to do when busy?  Should probably wait until not busy?
                 }
                 if( handler.getCurrentState()!=EditState.ILLEGAL ){
-                    storeCurrentState(oldValue);  
+                    storeCurrentState(oldValue);
                     getPreviousStateFromLayer(newValue);
-                    
+
                     storeCurrentShape(oldValue);
                     setCurrentShape(newValue);
                 }
@@ -175,7 +175,7 @@ class EditManagerListener implements IEditManagerListener {
 //                    handler.basicDisablement();
 //                    handler.basicEnablement();
 //                }
-//                
+//
 //            });
             break;
 
@@ -190,7 +190,7 @@ class EditManagerListener implements IEditManagerListener {
     private void setCurrentShape( ILayer layer ) {
     	PrimitiveShape shapeToRestoreToCurrent;
     	if( layer==null ){
-    		// Can't edit this layer but we don't want a shape from another layer to show up so 
+    		// Can't edit this layer but we don't want a shape from another layer to show up so
     		// set the current shape to null;
     		shapeToRestoreToCurrent = null;
     	}else{
@@ -233,7 +233,7 @@ class EditManagerListener implements IEditManagerListener {
     	handler.setCurrentState(stateToRestore);
     }
 
-    
+
     private synchronized void stopListening() {
         if( !active() ){
             editManager.removeListener(this);
@@ -241,7 +241,7 @@ class EditManagerListener implements IEditManagerListener {
         }
     }
     /**
-     * Clears current state and shape.  Clears layer caches of old states and shapes.  
+     * Clears current state and shape.  Clears layer caches of old states and shapes.
      * Clears edit blackboards
      *
      * @param selectedLayer
@@ -254,7 +254,7 @@ class EditManagerListener implements IEditManagerListener {
         EditUtils.instance.cancelHideSelection(selectedLayer);
         List<ILayer> mapLayers = editManager.getMap().getMapLayers();
         for( ILayer layer : mapLayers ) {
-            ((Layer)layer).setFilter(Filter.EXCLUDE);
+            ((Layer)layer).setFilter(Filter.ALL);
         }
         EditUtils.instance.clearLayerStateShapeCache(mapLayers);
     }

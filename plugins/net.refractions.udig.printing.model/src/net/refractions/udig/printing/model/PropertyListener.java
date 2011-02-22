@@ -23,7 +23,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
  * Provides easy access for listening to printing events.
  * Developers wishing to use this should extend it and override the *Changed()
  * methods that they are interested in.
- * 
+ *
  * @see PropertyListener#boxesChanged()
  * @see PropertyListener#locationChanged()
  * @see PropertyListener#mapChanged()
@@ -31,8 +31,8 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
  * @see PropertyListener#sourceConnectionsChanged()
  * @see PropertyListener#targetConnectionsChanged()
  * @see PropertyListener#textChanged()
- * 
- * 
+ *
+ *
  * @author Richard Gould
  * @since 0.3
  */
@@ -75,8 +75,8 @@ public class PropertyListener extends AdapterImpl {
     }
 
     /**
-     * Indicates that the Size property has been changed 
-     * 
+     * Indicates that the Size property has been changed
+     *
      * Override me to perform an action when Size is changed
      */
     protected void sizeChanged() {
@@ -84,27 +84,27 @@ public class PropertyListener extends AdapterImpl {
     }
 
     /**
-     * Indicates that the Location property has been changed 
-     * 
+     * Indicates that the Location property has been changed
+     *
      * Override me to perform an action when Location is changed
      */
     protected void locationChanged() {
         //do nothing
     }
-    
-    
+
+
     /**
      * Indicates that the Target Connections property has been changed
-     * 
+     *
      * Override me to perform an action when TargetConnections are changed
      */
     protected void targetConnectionsChanged() {
         //do nothing
     }
-    
+
     /**
-     * Indicates that the Source Connections property has been changed 
-     * 
+     * Indicates that the Source Connections property has been changed
+     *
      * Override me to perform an action when SourceConnections are changed
      */
     protected void sourceConnectionsChanged() {

@@ -22,22 +22,21 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Adapt a feature collection as a Selection so it can be used with StructedViewers.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class FeatureCollectionSelection implements IStructuredSelection, IBlockingSelection {
-    Collection<Iterator> openIterators=new ArrayList<Iterator>(); 
-    FeatureCollection<SimpleFeatureType, SimpleFeature> wrapped;
-    private volatile SimpleFeature firstElement;
-    public FeatureCollectionSelection( FeatureCollection<SimpleFeatureType, SimpleFeature> selectedFeatures ) {
+    Collection<Iterator> openIterators=new ArrayList<Iterator>();
+    FeatureCollection wrapped;
+    private volatile Feature firstElement;
+    public FeatureCollectionSelection( FeatureCollection selectedFeatures ) {
         this.wrapped=selectedFeatures;
     }
     @Override
@@ -49,11 +48,11 @@ public class FeatureCollectionSelection implements IStructuredSelection, IBlocki
     }
     public Object getFirstElement() {
         if( isEmpty() )
-            throw new NoSuchElementException("SimpleFeature Collection is empty, there is no first element"); //$NON-NLS-1$
+            throw new NoSuchElementException("Feature Collection is empty, there is no first element"); //$NON-NLS-1$
         if( firstElement==null ){
             synchronized (this) {
                 if( firstElement==null ){
-                    FeatureIterator<SimpleFeature> iter = wrapped.features();
+                    FeatureIterator iter = wrapped.features();
                     try{
                         firstElement=iter.next();
                     }finally{

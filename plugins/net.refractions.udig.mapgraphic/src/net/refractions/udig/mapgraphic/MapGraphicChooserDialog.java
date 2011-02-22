@@ -37,7 +37,7 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * A dialog for selecting Map Graphic IGeoResources.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -84,7 +84,7 @@ public final class MapGraphicChooserDialog extends TitleAreaDialog {
 
     /**
      * Create instance
-     * 
+     *
      * @param permitMultipleSelection if true then multiple resources can be selected
      */
     public MapGraphicChooserDialog( Shell parentShell, boolean permitMultipleSelection ) {
@@ -143,11 +143,7 @@ public final class MapGraphicChooserDialog extends TitleAreaDialog {
 
                 String title = null;
                 try {
-                    IGeoResource resource = (IGeoResource) s.getFirstElement();
-                    title = resource.getTitle();
-                    if( title == null ){
-                        title = resource.getInfo(null).getTitle();
-                    }
+                    title = ((IGeoResource) s.getFirstElement()).getInfo(null).getTitle();
                 } catch (IOException e) {
                     MapGraphicPlugin.log("", e); //$NON-NLS-1$
                 }
@@ -191,7 +187,7 @@ public final class MapGraphicChooserDialog extends TitleAreaDialog {
 
     /**
      * Returns the IGeoResource for the provided graphic class
-     * 
+     *
      * @param graphic the MapGraphic to use as a search parameter
      * @return the IGeoResource for the provided graphic class
      */
@@ -214,12 +210,12 @@ public final class MapGraphicChooserDialog extends TitleAreaDialog {
     }
     /**
      * Returns the MapGraphic IService
-     * 
+     *
      * @return the MapGraphic IService
      */
     public static MapGraphicService getMapGraphicService() {
         return CatalogPlugin.getDefault().getLocalCatalog().getById(MapGraphicService.class,
-                MapGraphicService.SERVICE_ID, ProgressManager.instance().get());
+                MapGraphicService.SERVICE_URL, ProgressManager.instance().get());
     }
 
 }

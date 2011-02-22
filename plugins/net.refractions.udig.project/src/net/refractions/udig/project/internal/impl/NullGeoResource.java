@@ -1,10 +1,12 @@
 package net.refractions.udig.project.internal.impl;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
+import net.refractions.udig.catalog.IService;
 import net.refractions.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -14,10 +16,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * Placeholder indicating that GeoResources was found.
- * <p>
- * This is often used by a Layer when there was no resource found for the layer.
- * 
+ * Indicates that no georesources were found for the layer
+ *
  * @author Jesse
  */
 public class NullGeoResource extends IGeoResource {
@@ -25,6 +25,9 @@ public class NullGeoResource extends IGeoResource {
     @Override
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) {
         return null;
+    }
+    public IService service( IProgressMonitor monitor ) throws IOException {
+        return null; // where is NullService ?
     }
     public <T> boolean canResolve( Class<T> adaptee ) {
         return false;
@@ -35,7 +38,7 @@ public class NullGeoResource extends IGeoResource {
     }
 
     public Throwable getMessage() {
-        return new Exception(Messages.NullGeoResource_0); 
+        return new Exception(Messages.NullGeoResource_0);
     }
 
     public URL getIdentifier() {
@@ -49,7 +52,7 @@ public class NullGeoResource extends IGeoResource {
     }
 
     @Override
-	protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) {
+    public IGeoResourceInfo getInfo( IProgressMonitor monitor ) {
         // TODO Auto-generated method stub
         return new IGeoResourceInfo(){
             @Override

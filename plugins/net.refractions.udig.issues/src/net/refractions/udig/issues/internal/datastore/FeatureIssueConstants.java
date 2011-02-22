@@ -23,5 +23,5 @@ import net.refractions.udig.issues.IssueConstants;
  */
 interface FeatureIssueConstants extends IssueConstants {
 
-   
+
 }

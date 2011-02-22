@@ -16,7 +16,7 @@ package net.refractions.udig.issues;
 
 /**
  * Indicates a column in the issues view
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

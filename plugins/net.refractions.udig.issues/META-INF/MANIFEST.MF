@@ -2,20 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.issues;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.issues.internal.IssuesActivator
-Bundle-Vendor: udig.refractions.net
+Bundle-Vendor: Refractions Research Inc.
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.project.ui;visibility:=reexport,
  net.refractions.udig.catalog.postgis,
- org.eclipse.ui.cheatsheets,
- net.refractions.udig.libs
-Bundle-ActivationPolicy: lazy
+ org.eclipse.ui.cheatsheets
+Eclipse-LazyStart: true
 Export-Package: net.refractions.udig.issues,
  net.refractions.udig.issues.internal;x-friends:="net.refractions.udig.issues.test",
  net.refractions.udig.issues.internal.datastore;x-friends:="net.refractions.udig.issues.test",
  net.refractions.udig.issues.internal.view;x-friends:="net.refractions.udig.issues.test",
  net.refractions.udig.issues.listeners
-Bundle-RequiredExecutionEnvironment: J2SE-1.5

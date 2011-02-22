@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * Sets the width of the Viewport bounding box. Because the aspect ratio of the viewport bounding
  * box is tied to the bounding box of the viewport, the height is also set to maintain the correct
  * aspect ratio.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -30,7 +30,7 @@ public class SetViewportWidth extends AbstractNavCommand implements NavCommand {
 
     /**
      * Creates a new instance of SetViewportWidth
-     * 
+     *
      * @param width the new viewport width
      */
     public SetViewportWidth( double width ) {
@@ -56,7 +56,7 @@ public class SetViewportWidth extends AbstractNavCommand implements NavCommand {
      */
     public String getName() {
         return MessageFormat.format(
-                Messages.SetViewportWidth_setViewWidth, new Object[]{width}); 
+                Messages.SetViewportWidth_setViewWidth, new Object[]{width});
     }
 
 }

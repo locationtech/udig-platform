@@ -28,7 +28,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * Sets the viewport's bounding box. The bbox have a positive width and height
  * and must have a aspect ratio within 0.0000001 units of the value returned by
  * {@linkplain ViewportModel#getViewportAspectRatio()}.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -40,13 +40,13 @@ public class SetViewportBBoxCommand extends AbstractNavCommand {
 
     /**
      * Creates a new instance of SetViewportBBoxCommand.  The bbox is expected to be the same as the viewport model.
-     * 
+     *
      * @param bbox
      *            the new bounding box. The new bbox must have a positive width
      *            and height and must have a aspect ratio within 0.0000001 units
      *            of the value returned by
      *            {@linkplain ViewportModel#getViewportAspectRatio()}.
-     * @deprecated Please use a ReferencedEnvelope
+     * @deprecated
      */
     public SetViewportBBoxCommand(Envelope bbox) {
         this.newbbox = bbox;
@@ -56,7 +56,7 @@ public class SetViewportBBoxCommand extends AbstractNavCommand {
 
     /**
      * Creates a new instance of SetViewportBBoxCommand.  The bbox is expected to be the same as the viewport model.
-     * 
+     *
      * @param bbox
      *            the new bounding box. The new bbox must have a positive width
      *            and height and must have a aspect ratio within 0.0000001 units
@@ -69,9 +69,9 @@ public class SetViewportBBoxCommand extends AbstractNavCommand {
     }
 
     /**
-     * Sets the bounds of the viewport model to the bounds.  The crs parameter indications the crs of 
+     * Sets the bounds of the viewport model to the bounds.  The crs parameter indications the crs of
      * the provided bounds.  The appropriate transformation will take place.
-     * 
+     *
      * @param bounds the bounds to apply to the viewport model
      * @param crs The crs of the provided bounds.
      */
@@ -118,7 +118,7 @@ public class SetViewportBBoxCommand extends AbstractNavCommand {
 	public String getName() {
 		return MessageFormat
 				.format(
-						Messages.SetViewportBBoxCommand_setViewArea, new Object[] { newbbox }); 
+						Messages.SetViewportBBoxCommand_setViewArea, new Object[] { newbbox });
 	}
 
 }

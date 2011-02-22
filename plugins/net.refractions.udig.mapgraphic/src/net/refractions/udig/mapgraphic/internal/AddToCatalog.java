@@ -16,18 +16,16 @@ package net.refractions.udig.mapgraphic.internal;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.ui.ProgressManager;
 
 import org.eclipse.ui.IStartup;
 
 /**
- * Adds the MapGraphic Service to the LocalCatalog.
- * <p>
- * Currently implemented as a workbench startup; this may be considered 
- * as an extension point defined by the catalog.
- * 
+ * Adds the MapGraphic Service to the LocalCatalog...
+ *
+ * TODO this should be an extension point that is part of catalog
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -35,14 +33,13 @@ public class AddToCatalog implements IStartup {
 
     public void earlyStartup() {
         ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
-        ID serviceUrl = new ID(MapGraphicService.SERVICE_URL);
-        IService service = localCatalog.getById(IService.class, serviceUrl, ProgressManager.instance().get());
+        IService service = localCatalog.getById(IService.class, MapGraphicService.SERVICE_URL, ProgressManager.instance().get());
         if( service !=null )
             return;
-        
+
         service=new MapGraphicService();
         localCatalog.add(service);
-        
+
     }
 
 }

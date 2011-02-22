@@ -12,7 +12,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.catalog.ID;
+import javax.media.jai.util.Range;
+
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolveChangeListener;
 import net.refractions.udig.core.IBlockingAdaptable;
@@ -26,9 +27,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.Query;
+import org.geotools.filter.Filter;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.util.Range;
-import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
@@ -53,7 +53,7 @@ public interface Layer
 
     /**
      * Returns the owning ContextModel object
-     * 
+     *
      * @return the owning ContextModel object
      * @model many="false" opposite="layers"
      */
@@ -76,16 +76,16 @@ public interface Layer
      * filter during user edit opperations.
      * </p>
      * <p>
-     * Note: Filter.EXCLUDE indicates no selected Features. (All features are filtered out)
+     * Note: Filter.ALL indicates no selected Features. (All features are filtered out)
      * </p>
      * <p>
      * A tool may wish to record the previous Filter, before replacing (or adding to) this value.
      * </p>
      * XXX: Consider making use of the General Purpose Blackboard
-     * 
-     * @return Filter indicating the selected features. Filter.EXCLUDE indicates no selected Features.
+     *
+     * @return Filter indicating the selected features. Filter.ALL indicates no selected Features.
      * @uml.property name="filter"
-     * @model transient="true" dataType="org.opengis.filter.Filter"
+     * @model transient="true" dataType="org.geotools.filter.Filter"
      */
     Filter getFilter();
 
@@ -97,7 +97,7 @@ public interface Layer
      * @generated
      */
     void setFilter( Filter value );
-        
+
     /**
      * Sets the spatial bounds of this layer. This property is normally
      * derived from the IGeoResourceInfos, but this provides an override. This
@@ -114,7 +114,7 @@ public interface Layer
      * style() method allows access the StyleBlackboard without being troubled by all the model
      * methods.
      * </p>
-     * 
+     *
      * @see style();
      * @model many="false" containment="true"
      */
@@ -125,7 +125,7 @@ public interface Layer
      * containment reference. <!-- begin-user-doc --> Note: The Rendering Process will be restarted
      * as appearance information changes, this is usual limited to a single Layer. <!-- end-user-doc
      * -->
-     * 
+     *
      * @param value the new value of the '<em>Style Blackboard</em>' containment reference.
      * @see #getStyleBlackboard()
      * @generated
@@ -134,7 +134,7 @@ public interface Layer
 
     /**
      * Returns the zorder of the layer
-     * 
+     *
      * @model
      */
     public int getZorder();
@@ -153,7 +153,7 @@ public interface Layer
      * <p>
      * This is used to provide feedback for a Layers rendering status.
      * </p>
-     * 
+     *
      * @return
      * @uml.property name="status"
      * @model transient='true' default='0'
@@ -166,7 +166,7 @@ public interface Layer
      * <p>
      * This is used to provide feedback for a Layers rendering status.
      * </p>
-     * 
+     *
      * @see ILayer#DONE
      * @see ILayer#ERROR
      * @see ILayer#MISSING
@@ -183,13 +183,13 @@ public interface Layer
 
     /**
      * Sets the current rendering status message
-     * 
+     *
      * @param message the status message
      */
     void setStatusMessage( String message );
     /**
      * Set toolset applicability.
-     * 
+     *
      * @param toolCategoryId ID of toolset being considered
      * @param isApplicable true if layer is to be used with indicated toolset
      */
@@ -208,7 +208,7 @@ public interface Layer
      * extension will declare a color, which will be an underlay for the layer decorator, and an
      * optional validator class, to determine whether the capability for the layer can be set.
      * Indicates this layer is selectable.
-     * 
+     *
      * @return <code>true</code> if layer is selectable, <code>false</code> otherwise.
      * @uml.property name="selectable"
      * @model default="true"
@@ -227,7 +227,7 @@ public interface Layer
 
     /**
      * Gets the name from the associated metadata.
-     * 
+     *
      * @return the name from the associated metadata
      * @uml.property name="name"
      * @model
@@ -245,7 +245,7 @@ public interface Layer
 
     /**
      * Returns the layer reference information..
-     * 
+     *
      * @model type="net.refractions.udig.project.internal.CatalogRef"
      */
     CatalogRef getCatalogRef();
@@ -260,8 +260,8 @@ public interface Layer
     void setCatalogRef( CatalogRef value );
 
     /**
-     * Gets the id of the IGeoResource that the layer uses as its data source.  
-     * 
+     * Gets the id of the IGeoResource that the layer uses as its data source.
+     *
      * @return the id of the layerRef
      * @uml.property name="iD"
      * @model id="true"
@@ -279,7 +279,7 @@ public interface Layer
 
     /**
      * Returns whether this layer is currently visible
-     * 
+     *
      * @return whether this layer is currently visible
      * @uml.property name="visible"
      * @model
@@ -297,7 +297,7 @@ public interface Layer
 
     /**
      * Returns the currently preferred.
-     * 
+     *
      * @model transient="true" changeable="true"
      */
     public IGeoResource getGeoResource();
@@ -313,7 +313,7 @@ public interface Layer
 
     /**
      * Access to resources that hold data for this layer.
-     * 
+     *
      * @see resources() for type safe access
      * @return IGeoResources that can used to obtain layer data
      * @model transient="true" changeable="false"
@@ -324,7 +324,7 @@ public interface Layer
      * ImageDescriptor for this Layer.
      * <p>
      * Note we need to do the decorator exention on Layer to reflect status.
-     * 
+     *
      * @return Custom glyph - or null if none available.
      * @uml.property name="glyph"
      * @model transient="true"
@@ -349,7 +349,7 @@ public interface Layer
      * <li><b>true </b>: Query for the layer's selected features
      * </ul>
      * </p>
-     * 
+     *
      * @param layer The layer the Query is associated with.
      * @param selection true will return a query for the selected features.
      * @return If selection if false then the features that are not selected are returned, otherwise
@@ -360,7 +360,7 @@ public interface Layer
 
     /**
      * Gets the CRS for the layer. NOTE: THIS METHOD MAY BLOCK!!!
-     * 
+     *
      * @param monitor may be null.
      * @return the CoordinateReferenceSystem of the layer or if the CRS cannot be determined. the
      *         current map's CRS will be returned, or if this fails the CRS will be WGS84.
@@ -374,7 +374,7 @@ public interface Layer
      * This method also allows the CRS to be viewed as an attribute by EMF so ui components and
      * events can be raised. This method may block.
      * </p>
-     * 
+     *
      * @return the CoordinateReferenceSystem of the layer or if the CRS cannot be determined.
      * @model transient="true" changeable="true"
      */
@@ -402,7 +402,7 @@ public interface Layer
      * Note: Please don't use this to work around limitations of our object model, instead send
      * email and we can set up a long term solution.
      * </p>
-     * 
+     *
      * @return Blackboard used for lightweight collaboration.
      * @model changeable="false" transient="true" resolveProxies="false"
      */
@@ -410,7 +410,7 @@ public interface Layer
 
     /**
      * Gets Containing Map.
-     * 
+     *
      * @return
      */
     Map getMapInternal();
@@ -429,7 +429,7 @@ public interface Layer
      * @generated
      */
     void setColourScheme( ColourScheme value );
-    
+
     /**
      * @return
      * @uml.property name="defaultColor"
@@ -448,12 +448,12 @@ public interface Layer
 
     /**
      * Returns a list of all the FeatureEvents since the last commit.
-     * 
+     *
      * @return a list of all the FeatureEvents since the last commit.
      * @model transient='true' type='org.geotools.data.FeatureEvent'
      */
     List<FeatureEvent> getFeatureChanges();
-    
+
 
     /**
      * Returns the ranges at which the layer is visible
@@ -474,7 +474,7 @@ public interface Layer
     /**
      * Sets the min scale.  If <= 0 or Double.NaN then it indicates that the scale calculated from the style or IGeoResource (such as WMS)
      * should be returned.
-     * 
+     *
      * @param value the new value of the '<em>Min Scale Denominator</em>' attribute.
      * @see #getMinScaleDenominator()
      */
@@ -494,5 +494,4 @@ public interface Layer
      * @see #getMaxScaleDenominator()
      */
     public void setMaxScaleDenominator( double value );
-
 }

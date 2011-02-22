@@ -29,7 +29,7 @@ import org.tcat.citd.sim.udig.bookmarks.internal.command.GotoBookmarkCommand;
 public class BookmarkCommandFactory {
     /**
      * Creates a new BookmarkCommandFactory object
-     * 
+     *
      * @return a new BookmarkCommandFactory object
      */
     public static BookmarkCommandFactory getInstance() {
@@ -42,7 +42,7 @@ public class BookmarkCommandFactory {
 
     /**
      * Creates a new {@linkplain GotoBookmarkCommand}
-     * 
+     *
      * @param target The target bookmark for the new command
      * @return a new GotoBookmarkCommand object
      * @see NavCommand

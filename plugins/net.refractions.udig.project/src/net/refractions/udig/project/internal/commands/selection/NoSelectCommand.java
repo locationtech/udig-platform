@@ -20,11 +20,11 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.opengis.filter.Filter;
+import org.geotools.filter.Filter;
 
 /**
  * A command that removes all selection.
- * 
+ *
  * @author jeichar
  * @since 0.2
  */
@@ -39,7 +39,7 @@ public class NoSelectCommand extends AbstractCommand implements UndoableMapComma
         for( Layer layer : layers ) {
             undoState.put(layer, layer.getFilter());
         }
-        getMap().select(Filter.EXCLUDE);
+        getMap().select(Filter.ALL);
     }
 
     /**
@@ -56,7 +56,7 @@ public class NoSelectCommand extends AbstractCommand implements UndoableMapComma
      * @see net.refractions.udig.project.command.MapCommand#getName()
      */
     public String getName() {
-        return Messages.NoSelectCommand_cancelSelections; 
+        return Messages.NoSelectCommand_cancelSelections;
     }
 
 }

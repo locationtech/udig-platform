@@ -13,6 +13,7 @@ import net.refractions.udig.project.element.util.ElementAdapterFactory;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -196,7 +197,7 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
     }
 
     /**
-     * This disposes all of the item providers created by this factory. 
+     * This disposes all of the item providers created by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

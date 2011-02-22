@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: WMS Renderer Test Plug-in
 Bundle-SymbolicName: net.refractions.udig.render.wms.basic.test
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.0.0
 Bundle-Activator: net.refractions.udig.render.wms.basic.test.Activator
-Bundle-Vendor: udig.refractions.net
+Bundle-Vendor: Refractions Research Inc
+Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  net.refractions.udig.render.wms.basic,
  net.refractions.udig.project.ui,
  net.refractions.udig.project.tests.ui,
  net.refractions.udig.catalog.wms
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-LazyStart: true

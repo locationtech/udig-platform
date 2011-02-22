@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 1 Hacking Guidelines</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 1 Hacking Guidelines -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>The uDig application is guided by a small number of general principles. We have also highlighted common mistakes that you should be aware of.</p>
+
+<p>Finally we have gather the <a href="Eclipse House Rules.html" title="Eclipse House Rules">Eclipse House Rules</a> into one location. These are actual rules that must be followed for the application to function as intended Eclipse plug-in.</p>
+
+<h2><a name="1HackingGuidelines-UDIGGuidelines">UDIG Guidelines</a></h2>
+
+<p>These are simply guidelines and are not required, any plug-in that becomes part of the core eclipse project will have considered the following points:</p>
+
+<h3><a name="1HackingGuidelines-SensibleDefaults">Sensible Defaults</a></h3>
+
+<ul>
+	<li>application is "user friendly", make the right choices rather than complicate matters</li>
+</ul>
+
+
+<h3><a name="1HackingGuidelines-CodeforConvenience">Code for Convenience</a></h3>
+
+<ul>
+	<li>this system is designed to be extended by others.</li>
+	<li>principle of "least surprise" applies to developers as well as users</li>
+</ul>
+
+
+<h3><a name="1HackingGuidelines-Codelikeyoumeanit">Code like you mean it</a></h3>
+
+<ul>
+	<li>this project is on a short timeline, don't waste time in "Analysis Paralysis". We are developers if we change our mind we can change our code.</li>
+	<li>There is time enough for the code base to be entrenched later</li>
+</ul>
+
+
+<p>Other things that you would normally expect to see in this list are covered by Eclipse Configuration, using the code formatter to supply file headers and that sort of thing. We don't want to waste your time, or ours, deciding where spaces should go.</p>
+
+<h2><a name="1HackingGuidelines-CommonMistakes">Common Mistakes</a></h2>
+
+<p>The following is a persistent problem, in the sense that it keeps following us around.</p>
+
+<h3><a name="1HackingGuidelines-EclipseRCPGuideline">Eclipse RCP Guideline</a></h3>
+
+<ul>
+	<li>Anything that references a resource is not intended for RCP developers because of the extra code and dependencies on workspaces it pulls in. So if you see the org.eclipse.core.resources plug-in in your dependency list, or see an import for some class from that package, you're probably doing something wrong.</li>
+</ul>
+
+
+<p><em>Recently the 3.1 M5 release has improved class discovery to the level where only classes which are visiable from your work area can be found.</em></p>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=3490">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=3490">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

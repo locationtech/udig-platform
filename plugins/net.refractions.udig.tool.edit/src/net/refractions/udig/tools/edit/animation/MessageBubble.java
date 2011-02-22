@@ -15,7 +15,6 @@
 package net.refractions.udig.tools.edit.animation;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
@@ -35,7 +34,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 /**
  * Creates a semi transparent bubble (OSX like) that show a message to the user and disappears after
  * a few seconds.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -52,11 +51,11 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
     private int horizontalCornerArc=15;
     private Color bubbleColor = new Color(0,0,0,167);
     private Color textColor = new Color( 200,200,200,167);
-    private Font myFont = null;
-    
-    
+
+
+
     /**
-     * 
+     *
      * @param x upperLeft of message
      * @param y upperLeft of message
      * @param message message to display
@@ -88,18 +87,15 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
     }
 
     public void run( IProgressMonitor monitor ) throws Exception {
-        if (myFont != null){
-            graphics.setFont(myFont);
-        }
-        
+
         display.addMouseListener(mouseListener);
         display.addMouseWheelListener(wheelListener);
-        
+
         Rectangle2D messageBounds=new Rectangle(0,0);
-        
+
         for( String part : message ) {
             Rectangle2D size = graphics.getStringBounds(part);
-            messageBounds=new Rectangle((int)(Math.max(size.getWidth(),messageBounds.getWidth())), 
+            messageBounds=new Rectangle((int)(Math.max(size.getWidth(),messageBounds.getWidth())),
                     (int)(size.getHeight()+messageBounds.getHeight()));
         }
 
@@ -109,13 +105,13 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
         if( y+messageBounds.getHeight()>display.getHeight()+verticalBorder ){
             y=(int) (display.getHeight()-verticalBorder-messageBounds.getHeight());
         }
-        
+
         validArea=new Rectangle(x,y,(int)messageBounds.getWidth()+horizontalBorder, (int)messageBounds.getHeight()+verticalBorder);
-        
+
         graphics.setColor(bubbleColor);
-        graphics.fillRoundRect(x,y, (int)messageBounds.getWidth()+horizontalBorder, (int)messageBounds.getHeight()+verticalBorder, 
+        graphics.fillRoundRect(x,y, (int)messageBounds.getWidth()+horizontalBorder, (int)messageBounds.getHeight()+verticalBorder,
                 horizontalCornerArc, verticalCornerArc);
-        
+
         // color for the message
         graphics.setColor(textColor );
         int height = graphics.getFontHeight();
@@ -123,7 +119,7 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
         int verticalOffset=verticalBorder/2;
         int horizontalOffset=horizontalBorder/2;
         for( String part : message ) {
-            graphics.drawString(part, x+horizontalOffset, y+verticalOffset+(height*i), 
+            graphics.drawString(part, x+horizontalOffset, y+verticalOffset+(height*i),
                     ViewportGraphics.ALIGN_LEFT, ViewportGraphics.ALIGN_BOTTOM);
             i++;
         }
@@ -150,7 +146,7 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
     public void setVerticalBorder( int verticalBorder ) {
         this.verticalBorder = verticalBorder;
     }
-    
+
     /**
      * Sets the horizontal Arc of the bubble corners for the four edges. Default is 15 pixels.
      *
@@ -188,24 +184,6 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
     }
 
     /**
-     * Sets the font used to draw the message.
-     *
-     * @param font the fond to use
-     */
-    public void setFont(Font font){
-        this.myFont = font;
-    }
-    
-    /**
-     * Gets the current font.
-     *
-     * @return null if no font set; otherwise the font being used to draw the message
-     */
-    public Font getFont(){
-        return this.myFont;
-    }
-    
-    /**
      * Returns the color used to draw the Message
      *
      * @return the color used to draw the Message
@@ -229,7 +207,7 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
         display.removeMouseListener(mouseListener);
         display.removeMouseWheelListener(wheelListener);
     }
-    
+
     private MapMouseListener mouseListener=new MapMouseListener(){
 
         public void mouseDoubleClicked( MapMouseEvent event ) {
@@ -251,19 +229,19 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
         public void mouseReleased( MapMouseEvent event ) {
             disable((ViewportPane) event.source, this);
         }
-        
+
     };
-    
+
     private MapMouseWheelListener wheelListener=new MapMouseWheelListener(){
 
         public void mouseWheelMoved( MapMouseWheelEvent e ) {
             disable(display, this);
         }
-        
+
     };
-    
-    
-    
+
+
+
     void disable(ViewportPane pane, Object listener){
         if( !isValid(pane) ){
             if( listener instanceof MapMouseMotionListener )
@@ -273,7 +251,7 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
             }else if( listener instanceof MapMouseWheelListener ){
                 pane.removeMouseWheelListener((MapMouseWheelListener) listener);
             }
-                
+
             return;
         }
 
@@ -285,7 +263,7 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
             pane.repaint(bounds.x, bounds.y, bounds.width, bounds.height);
         }
     }
-    
+
     private boolean isValid(IMapDisplay source){
         if( !MessageBubble.this.isValid() )
             return false;

@@ -42,7 +42,7 @@ public class ExtendLineBehaviourTest extends TestCase {
     public void testIsValid() throws Exception {
         TestHandler handler=new TestHandler();
         handler.getTestEditBlackboard().util.setVertexRadius(4);
-        
+
         StartExtendLineBehaviour behavior=new StartExtendLineBehaviour();
 
         handler.setCurrentState(EditState.MODIFYING);
@@ -50,15 +50,15 @@ public class ExtendLineBehaviourTest extends TestCase {
         //Current Shape must be set
         MapMouseEvent event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         EditGeom editGeom = handler.getEditBlackboard().getGeoms().get(0);
         handler.setCurrentShape(editGeom.getShell());
         handler.getEditBlackboard().addPoint(0,0, handler.getCurrentShape());
         handler.getEditBlackboard().addPoint(11,11, handler.getCurrentShape());
-        
+
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertTrue(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // no buttons should be down
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.BUTTON2, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
@@ -74,28 +74,28 @@ public class ExtendLineBehaviourTest extends TestCase {
         handler.setCurrentState(EditState.BUSY);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // doesn't work with CREATING
         handler.setCurrentState(EditState.CREATING);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // should work, just checking state is still good;
         handler.setCurrentState(EditState.NONE);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertTrue(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // doesn't work with event pressed
         assertFalse(behavior.isValid(handler, event, EventType.PRESSED));
 
         // not valid if not over end point
         event = new MapMouseEvent(null, 20,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-       
+
         // valid over first point
         event = new MapMouseEvent(null, 0,0, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertTrue(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
     }
 
     /*
@@ -104,7 +104,7 @@ public class ExtendLineBehaviourTest extends TestCase {
     public void testGetCommand() throws Exception {
         TestHandler handler=new TestHandler();
         handler.getTestEditBlackboard().util.setVertexRadius(4);
-        
+
         StartExtendLineBehaviour behavior=new StartExtendLineBehaviour();
         handler.getBehaviours().add(behavior);
         handler.setCurrentState(EditState.MODIFYING);
@@ -113,26 +113,26 @@ public class ExtendLineBehaviourTest extends TestCase {
         handler.setCurrentShape(editGeom.getShell());
         handler.getEditBlackboard().addPoint(0,0, handler.getCurrentShape());
         handler.getEditBlackboard().addPoint(11,11, handler.getCurrentShape());
-        
+
 
         MapMouseEvent event = new MapMouseEvent(null, 0,0, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertTrue(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         assertEquals(Point.valueOf(11,11), handler.getCurrentShape().getPoint(0));
         assertEquals(EditState.CREATING, handler.getCurrentState());
 
         handler.setCurrentState(EditState.NONE);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertTrue(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         handler.handleEvent(event, EventType.RELEASED);
         assertEquals(Point.valueOf(0,0), handler.getCurrentShape().getPoint(0));
         assertEquals(EditState.CREATING, handler.getCurrentState());
-        
+
         handler.setCurrentState(EditState.NONE);
-        
+
         handler.handleEvent(event, EventType.RELEASED);
         assertEquals(Point.valueOf(0,0), handler.getCurrentShape().getPoint(0));
         assertEquals(EditState.CREATING, handler.getCurrentState());

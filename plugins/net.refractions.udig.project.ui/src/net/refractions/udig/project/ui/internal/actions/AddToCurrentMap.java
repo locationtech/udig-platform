@@ -23,7 +23,7 @@ import org.eclipse.ui.IWorkbenchPart;
  * This class is a ActionDelegate for AbstractContext menus with RegistryEntry objects When the
  * runWithEvent call is made (by eclipse) wizards should open and allow the use to add the selected
  * items to the Currently selected map.
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -57,5 +57,5 @@ public class AddToCurrentMap implements IObjectActionDelegate {
      */
     public void setActivePart( IAction action, IWorkbenchPart targetPart ) {
     }
-    
+
 }

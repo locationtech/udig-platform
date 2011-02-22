@@ -9,11 +9,8 @@
 package net.refractions.udig.tools.internal;
 
 import java.awt.Point;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.internal.command.navigation.SetViewportCenterCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.project.ui.tool.AbstractTool;
 import net.refractions.udig.project.ui.tool.IToolContext;
@@ -46,7 +43,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 /**
  * A CursorPosition tool displays the current Cursor position in map coordinates
  * on the Statusbar
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -63,6 +60,8 @@ public class CursorPosition extends AbstractTool {
 	@Override
 	public void setContext(IToolContext tools) {
 		super.setContext(tools);
+		Display d = Display.getDefault();
+
 		PlatformGIS.syncInDisplayThread(new Runnable() {
 			/**
 			 * @see java.lang.Runnable#run()
@@ -124,43 +123,51 @@ public class CursorPosition extends AbstractTool {
 		public boolean isDynamic() {
 			return true;
 		}
+
 		public void setPosition(Coordinate coord){
-			if( position!=null && Math.abs(position.x-coord.x)<ACCURACY 
+			if( position!=null && Math.abs(position.x-coord.x)<ACCURACY
               && Math.abs(position.y-coord.y)<ACCURACY){
 				return;
             }
 			position=coord;
-			
+
 			if (textArea!=null && !textArea.isDisposed()) {
 				textArea.setText(getString(coord));
 			}
 		}
-		
+
 		private String getString(Coordinate coord) {
 			String value=getString(coord.x)+", "+getString(coord.y); //$NON-NLS-1$
 			return value;
 		}
-		private String getString( double value ) {
-            if (Double.isNaN(value)) {
+
+		private String getString(double value) {
+            if (Double.isNaN(value) ){
                 return Messages.CursorPosition_not_a_number;
             }
 
-            if (Double.isInfinite(value)) {
+            if( Double.isInfinite(value) ){
                 return Messages.CursorPosition_infinity;
             }
-            
-            DecimalFormat format = (DecimalFormat) NumberFormat.getNumberInstance();
-            format.setMaximumFractionDigits(4);
-            format.setMinimumIntegerDigits(1);
-            format.setGroupingUsed(false);
-            String string = format.format(value);
 
-            String[] parts = string.split("\\.");
-            if(parts[0].length()>3){
-            	string = parts[0];
+			String string = String.valueOf(value);
+			string+="00"; //$NON-NLS-1$
+
+//          calculate number of digits to display based on zoom level
+            Coordinate coordFactor = getContext().getPixelSize();
+            double inverse = (double)1 / coordFactor.x;
+            String strFactor = String.valueOf(inverse);
+            int factor = strFactor.lastIndexOf('.');
+
+            int end=Math.max(1, Math.min(string.lastIndexOf('.') + factor, string.length() - 1));
+            string = string.substring(0, end);
+
+            if( string.endsWith(".") ){ //$NON-NLS-1$
+                string=string.substring(0,string.length()-1);
             }
-            return string;
-        }
+
+			return string;
+		}
 
 		@Override
 		public void fill(Composite parent) {
@@ -174,11 +181,10 @@ public class CursorPosition extends AbstractTool {
 			textArea.addFocusListener(this);
 			if( position!=null )
 				textArea.setText(getString(position));
-			textArea.setToolTipText(Messages.CursorPosition_tooltip); 
+			textArea.setToolTipText(Messages.CursorPosition_tooltip);
             setFont(textArea);
 			data=new StatusLineLayoutData();
-			
-			data.widthHint = 200;
+			data.widthHint = 150;
 			data.heightHint = 15;
 			textArea.setLayoutData(data);
 		}
@@ -202,20 +208,23 @@ public class CursorPosition extends AbstractTool {
 			// do nothing
 		}
 
+		Coordinate current;
+
 		public void keyReleased(KeyEvent e) {
 			if (e.character == SWT.Selection) {
 				go();
 			} else if (e.character == SWT.ESC) {
 				textArea.setText(getString(position));
 			}
-			
+
 		}
 
 		private void go() {
 			Coordinate newpos = parse(textArea.getText(),getContext().getCRS());
 			if (Math.abs(newpos.x - position.x) > ACCURACY || Math.abs(newpos.y - position.y) > ACCURACY) {
 				setPosition(newpos);
-				Command c = new SetViewportCenterCommand(newpos);
+				Command c = getContext().getNavigationFactory()
+						.createSetViewportCenterCommand(newpos);
 				getContext().sendASyncCommand(c);
 			}
 		}
@@ -258,10 +267,10 @@ public class CursorPosition extends AbstractTool {
 			Coordinate coord = new Coordinate(arg1, arg0);
 			if (latlong && crs!=null) {
 				try {
-					JTS.transform(coord, coord, CRS.findMathTransform(
+					JTS.transform(coord, coord, CRS.transform(
 							DefaultGeographicCRS.WGS84, crs, true));
 				} catch (Exception e) {
-					ToolsPlugin.log(Messages.CursorPosition_transformError, e); 
+					ToolsPlugin.log(Messages.CursorPosition_transformError, e);
 				}
 			}
 			return coord;

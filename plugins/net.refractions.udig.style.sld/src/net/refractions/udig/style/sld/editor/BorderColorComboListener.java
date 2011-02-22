@@ -16,6 +16,8 @@ package net.refractions.udig.style.sld.editor;
 
 import java.awt.Color;
 
+import net.refractions.udig.style.sld.internal.Messages;
+
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.RGB;
@@ -27,7 +29,7 @@ import org.geotools.styling.StyleBuilder;
 
 /**
  * Listens to the BorderColor Listener and lets the user choose the outline color of the theme's polygons.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -46,7 +48,7 @@ public class BorderColorComboListener implements SelectionListener {
 
     public void widgetSelected( SelectionEvent e ) {
         Combo combo = (Combo) e.widget;
-        
+
         if( Outline.values()[combo.getSelectionIndex()] == Outline.CUSTOM ){
             ColorDialog dialog = new ColorDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
             dialog.open();
@@ -55,40 +57,44 @@ public class BorderColorComboListener implements SelectionListener {
         page.generateTheme();
     }
 
-    public static Color getBorder( Combo combo ) {
+    public static void setBorder( Combo combo, StyleGenerator sg ) {
         Outline outline = Outline.values()[combo.getSelectionIndex()];
-        
+        StyleBuilder builder = new StyleBuilder();
+
         switch( outline ) {
         case NONE:
-            return null;
+            sg.setDefaultStroke(null);
+            // we're good.  There is no default border/outline
+            break;
         case BLACK:
-            return Color.BLACK;
+            sg.setDefaultStroke(builder.createStroke(Color.BLACK));
+            break;
         case WHITE:
-            return Color.WHITE;
+            sg.setDefaultStroke(builder.createStroke(Color.WHITE));
+            break;
         case CUSTOM:
             RGB rgb = (RGB) combo.getData();
-            if (rgb ==  null) {
-                return Color.BLACK;
-            }
             Color color = new Color( rgb.red, rgb.green, rgb.blue);
-            return color;
+            sg.setDefaultStroke(builder.createStroke(color));
+            break;
+
         default:
-            throw new IllegalArgumentException("This method needs to be updated since outline has been modified");
+            throw new IllegalArgumentException("This method needs to be updated since outline has been modified"); //$NON-NLS-1$
         }
     }
-    
+
     public enum Outline {
-        NONE("None"),
-        BLACK("Black"),
-        WHITE("White"),
-        CUSTOM("Custom");
-        
+        NONE(Messages.BorderColorComboListener_None),
+        BLACK(Messages.BorderColorComboListener_Black),
+        WHITE(Messages.BorderColorComboListener_White),
+        CUSTOM(Messages.BorderColorComboListener_Custom);
+
         public final String label;
 
         private Outline(String label){
             this.label = label;
         }
-        
+
         public static String[] labels(){
             Outline[] values = values();
             String[] labels = new String[values.length];
@@ -97,7 +103,7 @@ public class BorderColorComboListener implements SelectionListener {
             }
             return labels;
         }
-        
+
     }
 
 }

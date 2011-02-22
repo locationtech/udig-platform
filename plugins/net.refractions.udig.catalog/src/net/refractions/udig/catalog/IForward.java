@@ -10,7 +10,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * IForward is a place holder stored in the catalog after a
  * service has been moved.
  * <p>
- * The catalog will issue a REPLACE event as a service is moved. 
+ * The catalog will issue a REPLACE event as a service is moved.
  * IForward is used as a place holder in the catalog to help client
  * code that was not around to listen to the event during the moved.
  * <p>
@@ -31,20 +31,20 @@ public interface IForward extends IResolve {
      * IForward does not maintain any resources.
      */
     public void dispose( IProgressMonitor monitor );
-    
+
     /**
      * This is the original ID of the resource before it was moved.
-     * @return ID for this IResolve, should not be null. 
+     * @return ID for this IResolve, should not be null.
      */
     public URL getIdentifier();
-    
+
     /**
      * This is the ID of the replacement resource.
      * @return ID of the replacement resource
      */
-    public ID getForward();
-    
-    /** 
+    public URL getForward();
+
+    /**
      * IForward cannot connect; ever.
      * @return Status.NOTCONNECTED
      */

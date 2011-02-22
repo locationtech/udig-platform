@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="net/**" kind="src" path="config"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="IZPACK_HOME/lib/compiler.jar" sourcepath="/IZPACK_HOME/src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

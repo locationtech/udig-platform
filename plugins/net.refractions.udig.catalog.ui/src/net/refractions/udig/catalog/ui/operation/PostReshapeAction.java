@@ -18,7 +18,7 @@ import net.refractions.udig.catalog.IGeoResource;
 
 /**
  * A strategy for performing an action after a reshape operation has taken place.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */

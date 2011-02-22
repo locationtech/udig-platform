@@ -9,11 +9,9 @@ import net.refractions.udig.project.tests.support.MapTests;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Transaction;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 public class LayerResourceTest extends AbstractProjectTestCase {
-   
+
     private Map map;
     private Layer layer;
     private IGeoResource resource;
@@ -25,12 +23,12 @@ public class LayerResourceTest extends AbstractProjectTestCase {
         map = MapTests.createNonDynamicMapAndRenderer(resource, null);
         layer=map.getLayersInternal().get(0);
     }
-    
+
     public void testFrameworkTransactionProtection() throws Exception{
-  
-        FeatureSource<SimpleFeatureType, SimpleFeature> source =layer.getResource(FeatureSource.class, null);
+
+        FeatureSource source=layer.getResource(FeatureSource.class, null);
         assert(source!=null);
-        FeatureStore<SimpleFeatureType, SimpleFeature> store=(FeatureStore<SimpleFeatureType, SimpleFeature>) source;
+        FeatureStore store=(FeatureStore) source;
         try{
             store.setTransaction(Transaction.AUTO_COMMIT);
             assertFalse("Should not be permitted to change the transaction", true); //$NON-NLS-1$

@@ -15,8 +15,6 @@
 package net.refractions.udig.project.tests.support;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import org.geotools.data.DataStore;
@@ -24,39 +22,27 @@ import org.geotools.data.FeatureListener;
 import org.geotools.data.FeatureReader;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
-import org.geotools.data.QueryCapabilities;
-import org.geotools.data.ResourceInfo;
 import org.geotools.data.Transaction;
-import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.data.simple.SimpleFeatureStore;
+import org.geotools.feature.AttributeType;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.Name;
-import org.opengis.filter.Filter;
-import org.opengis.filter.identity.FeatureId;
+import org.geotools.feature.FeatureType;
+import org.geotools.filter.Filter;
+
+import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * For testing.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
-public class TestFeatureStore implements SimpleFeatureStore {
+public class TestFeatureStore implements FeatureStore {
 
-    public Name getName() {
+    public Set addFeatures( FeatureReader reader ) throws IOException {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
-    public List<FeatureId> addFeatures( FeatureReader<SimpleFeatureType, SimpleFeature> reader )
-            throws IOException {
-        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-    }
-
-    public List<FeatureId> addFeatures(
-            FeatureCollection<SimpleFeatureType, SimpleFeature> collection ) throws IOException {
+    public Set addFeatures( FeatureCollection collection ) throws IOException {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
@@ -64,35 +50,21 @@ public class TestFeatureStore implements SimpleFeatureStore {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
-    public void modifyFeatures( AttributeDescriptor[] type, Object[] value, Filter filter )
+    public void modifyFeatures( AttributeType[] type, Object[] value, Filter filter )
             throws IOException {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
-    public void modifyFeatures( AttributeDescriptor type, Object value, Filter filter )
+    public void modifyFeatures( AttributeType type, Object value, Filter filter )
             throws IOException {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
-    public void modifyFeatures( String type, Object value, Filter filter ) throws IOException {
-        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-    }
-    public void modifyFeatures( Name type, Object value, Filter filter ) throws IOException {
-        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-    }
 
-    public void modifyFeatures( String[] type, Object value[], Filter filter ) throws IOException {
-        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-    }
-
-    public void modifyFeatures( Name[] type, Object value[], Filter filter ) throws IOException {
-        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-    }
     public void removeFeatures( Filter filter ) throws IOException {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
-    public void setFeatures( FeatureReader<SimpleFeatureType, SimpleFeature> reader )
-            throws IOException {
+    public void setFeatures( FeatureReader reader ) throws IOException {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
@@ -104,11 +76,11 @@ public class TestFeatureStore implements SimpleFeatureStore {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
-    public ReferencedEnvelope getBounds() throws IOException {
+    public Envelope getBounds() throws IOException {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
-    public org.geotools.geometry.jts.ReferencedEnvelope getBounds( Query query ) throws IOException {
+    public Envelope getBounds( Query query ) throws IOException {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
@@ -120,19 +92,19 @@ public class TestFeatureStore implements SimpleFeatureStore {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
-    public SimpleFeatureCollection getFeatures() throws IOException {
+    public FeatureCollection getFeatures() throws IOException {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
-    public SimpleFeatureCollection getFeatures( Query query ) throws IOException {
+    public FeatureCollection getFeatures( Query query ) throws IOException {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
-    public SimpleFeatureCollection getFeatures( Filter filter ) throws IOException {
+    public FeatureCollection getFeatures( Filter filter ) throws IOException {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
-    public SimpleFeatureType getSchema() {
+    public FeatureType getSchema() {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
@@ -140,15 +112,4 @@ public class TestFeatureStore implements SimpleFeatureStore {
         throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
     }
 
-    public Set getSupportedHints() {
-        return Collections.EMPTY_SET;
-    }
-
-    public ResourceInfo getInfo() {
-        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-    }
-
-    public QueryCapabilities getQueryCapabilities() {
-        throw new IllegalStateException("This should not be called"); //$NON-NLS-1$
-    }
 }

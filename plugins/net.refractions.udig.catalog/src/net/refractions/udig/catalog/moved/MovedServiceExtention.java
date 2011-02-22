@@ -6,13 +6,13 @@ import java.util.Map;
 
 import net.refractions.udig.catalog.AbstractServiceExtention;
 import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IService;
+import net.refractions.udig.catalog.ServiceExtension;
 
 /**
- * Create a MovedService handle recording where a service was moved to 
+ * Create a MovedService handle recording where a service was moved to
  * in the catalog.
- * 
+ *
  * @author Jody Garnett (Refractions Research Inc)
  */
 public class MovedServiceExtention extends AbstractServiceExtention {
@@ -24,26 +24,26 @@ public class MovedServiceExtention extends AbstractServiceExtention {
      * was moved.
      */
     public static String ID_KEY = "id"; //$NON-NLS-1$
-    
+
     /**
      * Key used to look up the connection parameter for the identifier
      * of the service where it exists now in the catalog.
      */
     public static String FORWARD_KEY = "forward"; //$NON-NLS-1$
-        
+
     /**
      * Create the MovedService handle based on the provided parameters.
      */
     public IService createService( URL id, Map<String, Serializable> params ) {
         if ( id != null ){
-            CatalogPlugin.trace("Ignoring requested id="+id+" for moved service", null ); //$NON-NLS-1$ //$NON-NLS-2$
+            CatalogPlugin.trace("Ignoring requested id="+id+" for moved service", null );
         }
         URL identifier = (URL) params.get( ID_KEY );
         URL forward = (URL) params.get( FORWARD_KEY );
         if( identifier == null || forward == null ){
             return null;
         }
-        return new MovedService(new ID(id),new ID(forward));
+        return new MovedService(id,forward);
     }
 
     public String reasonForFailure( Map<String, Serializable> params ) {

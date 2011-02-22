@@ -1,13 +1,17 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.ui;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedMap;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.TreeMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -22,7 +26,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * Responsible for updating the viewport when animations need their next animation frame to be displayed.
- * 
+ *
  * @author jeichar
  */
 public class AnimationUpdater {
@@ -36,7 +40,7 @@ public class AnimationUpdater {
         this.display = display;
         this.frameInterval=frameInterval;
     }
-    
+
     public void run() {
         List<IAnimation> toRemove = new LinkedList<IAnimation>();
         for ( Iterator<IAnimation> iter=animations.iterator(); iter.hasNext(); ){
@@ -48,7 +52,7 @@ public class AnimationUpdater {
                 anim.dispose();
                 toRemove.add(anim);
             }
-            
+
             animations.removeAll(toRemove);
             if( isTesting() ){
                 try {
@@ -60,7 +64,7 @@ public class AnimationUpdater {
         }
         if( !isTesting() )
             display.repaint();
-            
+
         if( animations.size()==0 ){
             remove(this);
         }else{
@@ -106,16 +110,16 @@ public class AnimationUpdater {
             display.timerExec(frameInterval, next);
         }
 
-        
+
 //        TimerTask task = new TimerTask(){
 //
 //            @Override
 //            public void run() {
 //                display.asyncExec(next);
 //            }
-//            
+//
 //        };
-//        
+//
 //        new Timer().schedule(task, frameInterval);
     }
 
@@ -127,13 +131,13 @@ public class AnimationUpdater {
                     return new RunUpdaters( displayToTaskMap.firstKey() );
                 return new RunUpdaters(frameInterval);
             }
-            
+
             return new RunUpdaters(tailMap.keySet().iterator().next());
         }
     }
-    
+
     private static class RunUpdaters implements Runnable{
-        
+
         private short frameinterval;
 
         public RunUpdaters( short frameInterval ) {
@@ -171,20 +175,20 @@ public class AnimationUpdater {
         if(  !ProjectPlugin.getPlugin().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_ANIMATIONS)){
             return;
         }
-        
+
         if (!(mapDisplay instanceof ViewportPane)) {
             ProjectUIPlugin.log("Map Display provided is not a ViewportPane and therefore does not" //$NON-NLS-1$
                     + " support animation", new RuntimeException()); //$NON-NLS-1$
             return;
         }
-        
+
         short frameInterval = calculateFrameInterval(animation);
         ViewportPane viewport=(ViewportPane) mapDisplay;
-        
+
         // Try to get the map from animationInterval to the AnimationUpdater for that interval
         List<AnimationUpdater> tasks=displayToTaskMap.get(frameInterval);
         boolean requiresRun=false;
-        
+
         if (tasks == null) {
             requiresRun=true;
             tasks = new CopyOnWriteArrayList<AnimationUpdater>();
@@ -204,7 +208,7 @@ public class AnimationUpdater {
                 runTimer(frameInterval, new RunUpdaters(frameInterval));
             }
         }
-        
+
         Rectangle bounds = animation.getValidArea();
         if( bounds==null ){
             viewport.repaint();

@@ -1,8 +1,6 @@
 package net.refractions.udig.project.tests;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Set;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IResourceInterceptor;
@@ -11,14 +9,11 @@ import org.geotools.data.DataStore;
 import org.geotools.data.FeatureListener;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
-import org.geotools.data.QueryCapabilities;
-import org.geotools.data.ResourceInfo;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.Name;
-import org.opengis.filter.Filter;
+import org.geotools.feature.FeatureType;
+import org.geotools.filter.Filter;
+
+import com.vividsolutions.jts.geom.Envelope;
 
 public class TestInterceptorPost implements IResourceInterceptor<Object> {
     public static volatile int runs=0;
@@ -26,16 +21,16 @@ public class TestInterceptorPost implements IResourceInterceptor<Object> {
     public Object run( ILayer layer, Object resource,Class<? super Object> requestedType ) {
         runs++;
         if( changeType)
-            return new FeatureSource<SimpleFeatureType, SimpleFeature>(){
+            return new FeatureSource(){
 
                 public void addFeatureListener( FeatureListener arg0 ) {
                 }
 
-                public ReferencedEnvelope getBounds() throws IOException {
+                public Envelope getBounds() throws IOException {
                     return null;
                 }
 
-                public ReferencedEnvelope getBounds( Query arg0 ) throws IOException {
+                public Envelope getBounds( Query arg0 ) throws IOException {
                     return null;
                 }
 
@@ -47,40 +42,25 @@ public class TestInterceptorPost implements IResourceInterceptor<Object> {
                     return null;
                 }
 
-                public FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures() throws IOException {
+                public FeatureCollection getFeatures() throws IOException {
                     return null;
                 }
 
-                public FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures( Query arg0 ) throws IOException {
+                public FeatureCollection getFeatures( Query arg0 ) throws IOException {
                     return null;
                 }
 
-                public FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures( Filter arg0 ) throws IOException {
+                public FeatureCollection getFeatures( Filter arg0 ) throws IOException {
                     return null;
                 }
 
-                public SimpleFeatureType getSchema() {
+                public FeatureType getSchema() {
                     return null;
                 }
 
                 public void removeFeatureListener( FeatureListener arg0 ) {
                 }
-            
-            	public Set getSupportedHints() {
-            		return Collections.EMPTY_SET;
-            	}
 
-                public ResourceInfo getInfo() {
-                    return null;
-                }
-
-				public Name getName() {
-					return null;
-				}
-
-                public QueryCapabilities getQueryCapabilities() {
-                    return null;
-                }
         };
         return resource;
     }

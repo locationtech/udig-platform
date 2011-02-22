@@ -17,11 +17,11 @@
 package net.refractions.udig.project.ui.tool;
 
 /**
- * The general interface for tools interacting with the Map Editor.
+ * The general interface for editing tools. Standard tools are the Zoom and Pan tools.
  * <p>
- * Must have a public default constructor so that the plug-in frame work can instantiate the class.
+ * Must have a public default constructor so that the plugin frame work can instantiate the class.
  * </p>
- * 
+ *
  * @see net.refractions.udig.project.ui.tool.AbstractTool
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
@@ -30,7 +30,7 @@ public interface Tool {
 
     /** Tool category for tools that do not modify. Examples are Pan and Zoom */
     public final static String VIEW = "view"; //$NON-NLS-1$
-    /** Tool category for tools that modify. Examples are Add Vertex and Add SimpleFeature */
+    /** Tool category for tools that modify. Examples are Add Vertex and Add Feature */
     public final static String EDIT = "edit"; //$NON-NLS-1$
     /** The extension point id for tools */
     public static final String EXTENSION_ID = "net.refractions.udig.project.ui.tool"; //$NON-NLS-1$
@@ -45,7 +45,7 @@ public interface Tool {
      * that are associated with the newly actived Eclipse view. Intended to be used if something
      * other just changing the current state happens. if false the tool is set as inactive and
      * deregistered with the component.
-     * 
+     *
      * @param tools The tools that the tool can use in its operations
      * @see IToolContext
      */
@@ -53,59 +53,59 @@ public interface Tool {
 
     /**
      * Returns the AbstractContext that a tool can use in its operations.
-     * 
+     *
      * @return the AbstractContext that a tool can use in its operations.
      * @see IToolContext
      */
     public IToolContext getContext();
-    
-    
+
+
     /**
-     * Returns the property of the particular tool implementation. 
+     * Returns the property of the particular tool implementation.
      * <p>
-     * 
+     *
      * @param key the property key.
      * @return
      */
     public Object getProperty(String key);
-    
-    
+
+
     /**
      * Sets the tool's property value by key.
-     * 
+     *
      * @param key
      * @param value
      */
     public void setProperty(String key, Object value);
 
-    
+
     /**
      * Returns enablement statement of the tool.
-     * 
+     *
      * @return
      */
     public boolean isEnabled();
-    
+
     /**
      * Sets enablement of the tool.
-     * 
+     *
      * @param enable
      */
     public void setEnabled(boolean enable);
-    
+
     /**
      * Adds listener of tool's lifecycle.
-     * 
+     *
      * @param listener
      */
     public void addListener(ToolLifecycleListener listener);
-    
+
     /**
      * Removes a listener of tool's lifecycle.
-     * 
+     *
      * @param listener
      */
     public void removeListener(ToolLifecycleListener listener);
-    
-    
+
+
 }

@@ -1,14 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="net.refractions.udig.project">
 <annotation>
       <appInfo>
          <meta.schema plugin="net.refractions.udig.project" id="mapInterceptor" name="mapInterceptor"/>
       </appInfo>
       <documentation>
-         This extension point allows interceptor actions to be run at various points during the lifecycle of a Map.
-&lt;ul&gt;
-&lt;li&gt;When a map is created&lt;/li&gt;
+         This extension point allows interceptor actions to be ran:
+&lt;ul&gt;&lt;li&gt;When a map is created&lt;/li&gt;
 &lt;li&gt;Before a map is opened&lt;/li&gt;
 &lt;li&gt;After a map is closed&lt;/li&gt;
 &lt;li&gt;When a layer is added&lt;/li&gt;
@@ -18,37 +17,32 @@
    </annotation>
 
    <element name="extension">
-      <annotation>
-         <appInfo>
-            <meta.element />
-         </appInfo>
-      </annotation>
       <complexType>
-         <choice minOccurs="0" maxOccurs="unbounded">
-            <element ref="mapCreation"/>
-            <element ref="mapOpening"/>
-            <element ref="mapClosing"/>
-            <element ref="layerAdded"/>
-            <element ref="layerRemoved"/>
-         </choice>
+         <sequence>
+            <element ref="mapCreation" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="mapOpening" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="mapClosing" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="layerAdded" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="layerRemoved" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -88,10 +82,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The interceptor that will be ran when the map is being created.
+                  The interceptor that will be ran
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.MapInterceptor"/>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.MapInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -128,10 +122,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The interceptor that will be ran when the map is opening.
+                  The interceptor that will be ran
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.MapInterceptor"/>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.MapInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -168,10 +162,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The interceptor that will be ran when the map is closing.
+                  The interceptor that will be ran
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.MapInterceptor"/>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.MapInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -263,7 +257,7 @@
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         1.1
+         [Enter the first release in which this extension point appears.]
       </documentation>
    </annotation>
 
@@ -272,9 +266,7 @@
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         Example: Used to add a fixed set of default layers to every new map
-&lt;p&gt;
-Example: Used to configure layer with a default style
+         [Enter extension point usage example here.]
       </documentation>
    </annotation>
 
@@ -283,9 +275,7 @@ Example: Used to configure layer with a default style
          <meta.section type="apiInfo"/>
       </appInfo>
       <documentation>
-         MapInterceptor is used to apply actions against a Map.
-
-LayerInterceptor is used to apply actions against a Layer.
+         [Enter API information here.]
       </documentation>
    </annotation>
 
@@ -294,7 +284,7 @@ LayerInterceptor is used to apply actions against a Layer.
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         &lt;a href=&quot;http://udig.refractions.net/confluence/display/DEV/MapInterceptor+and+LayerInterceptor&quot;&gt;Developers Guide entry on MapInterceptor and LayerInterceptor&lt;/a&gt;
+         [Enter information about supplied implementation of this extension point.]
       </documentation>
    </annotation>
 
@@ -303,7 +293,7 @@ LayerInterceptor is used to apply actions against a Layer.
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         (c) 2006 udig.refractions.net
+
       </documentation>
    </annotation>
 

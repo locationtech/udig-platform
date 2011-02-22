@@ -20,14 +20,14 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.browser.LocationListener;
 
 /**
- * TODO Purpose of 
+ * TODO Purpose of
  * <p>
  *
  * </p>
  * @author mleslie
  * @since 1.0.0
  */
-public class ExternalCatalogueImportURLDescriptor 
+public class ExternalCatalogueImportURLDescriptor
         implements ExternalCatalogueImportDescriptor {
     private URL url;
     private String description;
@@ -37,16 +37,16 @@ public class ExternalCatalogueImportURLDescriptor
     private String id;
     private LocationListener listener;
     private String viewName;
-    
+
     /**
-     * @param url1 
-     * 
+     * @param url1
+     *
      */
     public ExternalCatalogueImportURLDescriptor(URL url1) {
         super();
         this.url = url1;
     }
-    
+
     /**
      *
      * @return URL of the catalog
@@ -54,11 +54,11 @@ public class ExternalCatalogueImportURLDescriptor
     public URL getUrl() {
         return this.url;
     }
-    
+
     public String getID() {
         return this.id;
     }
-    
+
     /**
      *
      * @param id
@@ -66,11 +66,11 @@ public class ExternalCatalogueImportURLDescriptor
     public void setID(String id) {
         this.id = id;
     }
-    
+
     public String getLabel() {
         return (this.label == null) ? "" : this.label; //$NON-NLS-1$
     }
-    
+
     /**
      *
      * @param label
@@ -78,7 +78,7 @@ public class ExternalCatalogueImportURLDescriptor
     public void setLabel(String label) {
         this.label = label;
     }
-    
+
     public ImageDescriptor getIcon() {
         return icon;
     }
@@ -114,7 +114,7 @@ public class ExternalCatalogueImportURLDescriptor
     public void setIcon( ImageDescriptor descriptor ) {
         this.icon = descriptor;
     }
-    
+
     /**
      *
      * @param name
@@ -134,7 +134,7 @@ public class ExternalCatalogueImportURLDescriptor
         }
         this.listener = blah;
     }
-    
+
     /**
      *
      * @param listener
@@ -142,11 +142,11 @@ public class ExternalCatalogueImportURLDescriptor
     public void setListener(LocationListener listener) {
         this.listener = listener;
     }
-    
+
     public LocationListener getListener() {
         return this.listener;
    }
-    
+
     public void setViewName(String viewName) {
         this.viewName = viewName;
     }

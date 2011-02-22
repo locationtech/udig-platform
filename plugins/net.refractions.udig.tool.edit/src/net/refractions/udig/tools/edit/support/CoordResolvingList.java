@@ -22,7 +22,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 /**
  * A list that will wraps a List<LazyCoord> and resolves the LazyCoords into coordinate when
  * requested.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -44,6 +44,6 @@ public class CoordResolvingList extends AbstractList<Coordinate> {
     public int size() {
         return this.wrapped.size();
     }
-    
-    
+
+
 }

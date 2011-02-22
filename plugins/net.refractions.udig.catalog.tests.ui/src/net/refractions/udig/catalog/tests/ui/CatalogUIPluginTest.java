@@ -16,12 +16,12 @@ public class CatalogUIPluginTest extends TestCase {
         super.setUp();
         ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
         List< ? extends IResolve> members = localCatalog.members(new NullProgressMonitor());
-        
+
         for( IResolve resolve : members ) {
             localCatalog.remove((IService) resolve);
         }
-        
-        
+
+
     }
 //
 //    public void testHasCachedTitle() {

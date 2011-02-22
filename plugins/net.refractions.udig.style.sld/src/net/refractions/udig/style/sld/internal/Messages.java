@@ -20,15 +20,15 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "net.refractions.udig.style.sld.internal.messages"; //$NON-NLS-1$
-	public static String ChannelViewer_BandLabel;
-    public static String ChannelViewer_GammaLabel;
-    public static String ChannelViewer_HistogramLabel;
+	public static String BorderColorComboListener_Black;
+    public static String BorderColorComboListener_Custom;
+    public static String BorderColorComboListener_None;
+    public static String BorderColorComboListener_White;
     public static String FilteredEditorDialog_save_failed;
 	public static String FilteredEditorDialog_type_filter_text_here;
 	public static String FilteredEditorDialog_very_informative_error;
 	public static String FilteredTree_clear;
 	public static String FilteredTree_type_filter_text_here;
-	public static String FontEditor_SetFont;
 	public static String ImportSLD_title;
 	public static String ImportFrom_finished;
 	public static String ImportFrom_reading;
@@ -42,12 +42,10 @@ public class Messages extends NLS {
 	public static String ImportExport_selected;
 	public static String ImportExport_all_files;
 	public static String ImportExport_new;
-    public static String RGBChannelViewer_RBGChannelSelectionLabel;
-    public static String SimpleRasterConfigurator_BandDelimiter;
-    public static String SimpleRasterConfigurator_BlueChannelLabel;
-    public static String SimpleRasterConfigurator_GreenChannelLabel;
-    public static String SimpleRasterConfigurator_RedChannelLabel;
-    public static String SimpleRasterConfigurator_ScaleGroup;
+    public static String SimpleStyleConfigurator_line;
+    public static String SimpleStyleConfigurator_mode;
+    public static String SimpleStyleConfigurator_point;
+    public static String SimpleStyleConfigurator_polygon;
     public static String SimpleStyleConfigurator_replaceButton;
 	public static String StyleEditor_error ;
 	public static String StyleEditor_import_failed ;
@@ -91,7 +89,6 @@ public class Messages extends NLS {
 	public static String StyleEditor_theme_palette_all            ;
 	public static String StyleEditor_theme_palette                ;
 	public static String StyleEditor_theme_opacity                ;
-	public static String StyleEditor_theme_normalize_tip          ;
 	public static String StyleEditor_theme_normalize              ;
 	public static String StyleEditor_theme_none                   ;
 	public static String StyleEditor_theme_failure                ;
@@ -123,11 +120,6 @@ public class Messages extends NLS {
 	public static String SimpleStyleConfigurator_line_label        ;
 	public static String SimpleStyleConfigurator_label_label       ;
 	public static String SimpleStyleConfigurator_fill_label        ;
-    public static String SimpleStyleConfigurator_GeometryLabel;
-    public static String SimpleStyleConfigurator_LineMode;
-    public static String SimpleStyleConfigurator_ModeLabel;
-    public static String SimpleStyleConfigurator_PointMode;
-    public static String SimpleStyleConfigurator_PolygonMode;
 	public static String ScaleViewer_minscaleden_tooltip ;
 	public static String ScaleViewer_maxscaleden_tooltip ;
 	public static String SLDTextEditorPart_label_label ;
@@ -175,18 +167,6 @@ public class Messages extends NLS {
 	public static String SLDLineEditorPart_border_opacity_tooltip;
     public static String StyleEditorDialog_defaults;
     public static String StyleThemePage_13;
-    public static String PointEditorPage_fancyCombo_default;
-    public static String PointEditorPage_fancyCombo_unselected;
-    public static String StylingConstants_label_opacity;
-    public static String StylingConstants_tooltip_opacity;
-    public static String StylingConstants_label_size;
-    public static String StylingConstants_tooltip_size;
-    public static String StylingConstants_label_rotation;
-    public static String StylingConstants_tooltip_rotation;
-    public static String StylingConstants_label_anchor;
-    public static String StylingConstants_tooltip_anchor;
-    public static String StylingConstants_label_displacement;
-    public static String StylingConstants_tooltip_displacement;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

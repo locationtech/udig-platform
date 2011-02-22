@@ -22,9 +22,10 @@ import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryJarPrefere
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.geotools.arcsde.ArcSDEDataStoreFactory;
+import org.geotools.data.arcsde.ArcSDEDataStoreFactory;
 
 /**
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -32,14 +33,8 @@ public class ArcSDEPreferences extends AbstractProprietaryJarPreferencePage
         implements
             IWorkbenchPreferencePage {
 
-    private static final String[] requiredJars = {"jsde_sdk-9.2+.jar", "jpe_sdk-9.2+.jar",
-            "icu4j-3.2+.jar"};
-
-    private static final String[] requiredJarDescs = {Messages.ArcSDEPreferences_jar_Drivers,
-            Messages.ArcSDEPreferences_jar_projectionEngine, Messages.ArcSDEPreferences_jar_icu4j};
-
     /**
-     * 
+     *
      */
     public ArcSDEPreferences() {
     }
@@ -61,17 +56,25 @@ public class ArcSDEPreferences extends AbstractProprietaryJarPreferencePage
 
     @Override
     protected String getDefaultJarName( int jarIndex ) {
-        return requiredJars[jarIndex];
+        if( jarIndex==0 ){
+            return "jsde_sdk-XX.jar"; //$NON-NLS-1$
+        }else{
+            return "jsde-jpe-XX.jar"; //$NON-NLS-1$
+        }
     }
 
     @Override
     protected String getDriverLabel( int jarIndex ) {
-        return requiredJarDescs[jarIndex];
+        if( jarIndex==0 ){
+            return Messages.ArcSDEPreferences_jdbc_drivers;
+        }else{
+            return "Projection Engine"; //$NON-NLS-1$
+        }
     }
 
     @Override
     protected int getRequiredJarsCount() {
-        return requiredJars.length;
+        return 2;
     }
 
     @Override
@@ -88,5 +91,6 @@ public class ArcSDEPreferences extends AbstractProprietaryJarPreferencePage
     protected URL getLibsURL() {
         return Platform.getBundle("net.refractions.udig.catalog.arcsde").getEntry("/lib"); //$NON-NLS-1$ //$NON-NLS-2$;
     }
+
 
 }

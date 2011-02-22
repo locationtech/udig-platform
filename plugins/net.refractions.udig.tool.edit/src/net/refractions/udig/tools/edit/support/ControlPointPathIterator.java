@@ -18,9 +18,9 @@ import java.awt.geom.PathIterator;
 import java.util.Iterator;
 
 /**
- * Draws all the Control handles for a {@link EditGeom}.  This may not be possible to implement because if two vertices are 
+ * Draws all the Control handles for a {@link EditGeom}.  This may not be possible to implement because if two vertices are
  * overlapping there will be a hole where the overlap but try it out it may be acceptable.
- * 
+ *
  * <p><b>Warning.  this class is not fully tested yet so use with care</b></p>
  * @author Jesse
  * @since 1.1.0
@@ -34,17 +34,17 @@ public class ControlPointPathIterator implements PathIterator {
 
     public ControlPointPathIterator(final EditGeom geom, boolean selection, int width, int height ) {
         final Selection selectionCollection = geom.createSelection();
-        
+
         int xRadius=width/2;
         int yRadius=height/2;
         if( xRadius<1 )
             xRadius=1;
         if( yRadius<1 )
             yRadius=1;
-        
+
         this.xRadius=xRadius;
         this.yRadius=yRadius;
-        
+
         if( selection ){
             points=selectionCollection.iterator();
         }else{
@@ -56,10 +56,10 @@ public class ControlPointPathIterator implements PathIterator {
             x=next.getX();
             y=next.getY();
         }else{
-            rectPos=6;
+            rectPos=5;
         }
     }
-    
+
     public int currentSegment( float[] coords ) {
         double[] c=new double[2];
         int result = currentSegment(c);
@@ -93,9 +93,9 @@ public class ControlPointPathIterator implements PathIterator {
         case 5:
             return PathIterator.SEG_CLOSE;
         default:
-        	return PathIterator.SEG_MOVETO;
+            break;
         }
-        
+
         if( rectPos==0 ){
             return PathIterator.SEG_MOVETO;
         }
@@ -115,7 +115,7 @@ public class ControlPointPathIterator implements PathIterator {
         if( rectPos==5 && points.hasNext() ){
             rectPos=0;
             count++;
-            
+
             Point next=points.next();
             x=next.getX();
             y=next.getY();

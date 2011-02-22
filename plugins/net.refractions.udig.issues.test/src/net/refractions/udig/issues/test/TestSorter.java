@@ -1,12 +1,12 @@
 package net.refractions.udig.issues.test;
 
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerSorter;
+
 import net.refractions.udig.core.enums.Priority;
 import net.refractions.udig.issues.Column;
 import net.refractions.udig.issues.IIssue;
 import net.refractions.udig.issues.IIssuesViewSorter;
-
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
 
 public class TestSorter {
 

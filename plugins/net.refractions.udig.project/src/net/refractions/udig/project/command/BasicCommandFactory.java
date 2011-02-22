@@ -21,7 +21,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 /**
  * Creates Edit commands which must be used to modify editable feature data. API internal classes
  * are in the returned API
- * 
+ *
  * @author jeichar
  * @deprecated
  * @since 0.3
@@ -29,7 +29,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 public class BasicCommandFactory {
     /**
      * Creates a new EditCommandFactory object
-     * 
+     *
      * @return a new EditCommandFactory object
      */
     public static BasicCommandFactory getInstance() {
@@ -43,7 +43,7 @@ public class BasicCommandFactory {
 
     /**
      * Create a delete layer command
-     * 
+     *
      * @param map the map containing the layer
      * @param layer the layer to delete
      * @return a new {@linkplain DeleteLayerCommand}object that deletes the layer.
@@ -55,7 +55,7 @@ public class BasicCommandFactory {
 
     /**
      * Create an Add Layer command
-     * 
+     *
      * @param layer the layer to add to the map.
      * @return a new {@linkplain AddLayerCommand}object that deletes the feature.
      * @see AddLayerCommand
@@ -66,7 +66,7 @@ public class BasicCommandFactory {
 
     /**
      * Create an Add Layer command
-     * 
+     *
      * @param layer the layer to add to the map.
      * @param index the zorder where the layer will be added.
      * @return a new {@linkplain AddLayerCommand}object that deletes the feature.
@@ -78,7 +78,7 @@ public class BasicCommandFactory {
 
     /**
      * Create a Change CRS command
-     * 
+     *
      * @param map the map for which the CRS is going to change.
      * @return a new {@linkplain ChangeCRSCommand}object that changes the CRS.
      * @see ChangeCRSCommand

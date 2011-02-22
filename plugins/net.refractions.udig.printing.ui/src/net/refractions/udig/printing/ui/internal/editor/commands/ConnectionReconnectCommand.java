@@ -19,7 +19,7 @@ public class ConnectionReconnectCommand extends Command {
 	public ConnectionReconnectCommand(Connection connection) {
 		super();
 		if (connection == null) {
-			throw new IllegalArgumentException(Messages.ConnectionReconnectCommand_error_nullConnection); 
+			throw new IllegalArgumentException(Messages.ConnectionReconnectCommand_error_nullConnection);
 		}
 		this.connection = connection;
 		this.oldSource = connection.getSource();
@@ -50,7 +50,7 @@ public class ConnectionReconnectCommand extends Command {
 		}
 		return true;
 	}
-	
+
 	private boolean checkTargetReconnection() {
 		// connection endpoints must be different Shapes
 		if (newTarget.equals(oldSource)) {
@@ -67,7 +67,7 @@ public class ConnectionReconnectCommand extends Command {
 		}
 		return true;
 	}
-	
+
 	public void execute() {
 		if (newSource != null) {
 			connection.reconnect(newSource, oldTarget);
@@ -76,28 +76,28 @@ public class ConnectionReconnectCommand extends Command {
 			connection.reconnect(oldSource, newTarget);
 		}
 		else {
-			throw new IllegalStateException(Messages.ConnectionReconnectCommand_error_unreacheable); 
+			throw new IllegalStateException(Messages.ConnectionReconnectCommand_error_unreacheable);
 		}
 	}
-	
+
 	public void setNewSource(Box connectionSource) {
 		if (connectionSource == null) {
 			throw new IllegalArgumentException();
 		}
-		setLabel(Messages.ConnectionReconnectCommand_label_startpoint); 
+		setLabel(Messages.ConnectionReconnectCommand_label_startpoint);
 		newSource = connectionSource;
 		newTarget = null;
 	}
-	
+
 	public void setNewTarget(Box connectionTarget) {
 		if (connectionTarget == null) {
 			throw new IllegalArgumentException();
 		}
-		setLabel(Messages.ConnectionReconnectCommand_label_endpoint); 
+		setLabel(Messages.ConnectionReconnectCommand_label_endpoint);
 		newSource = null;
 		newTarget = connectionTarget;
 	}
-	
+
 	public void undo() {
 		connection.reconnect(oldSource, oldTarget);
 	}

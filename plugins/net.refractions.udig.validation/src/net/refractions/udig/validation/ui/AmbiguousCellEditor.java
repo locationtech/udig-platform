@@ -15,16 +15,16 @@ import org.geotools.validation.dto.ArgumentDTO;
 public class AmbiguousCellEditor extends CellEditor {
 
 	private static final int defaultStyle = SWT.SINGLE;
-	
+
 	TextCellEditor textCellEditor;
 	ComboBoxCellEditor comboBoxCellEditor;
 	CellEditor cellEditor;
 	Composite parent; //store the parent for "lazy loading"
-	
+
 	Table table; //we'll save a table reference for future use
 	String[] layers; //list of layers to offer (comboBox labels)
 	String[] typeRefs; //list of actual values to store (comboBox values)
-	
+
     public AmbiguousCellEditor(Composite parent, Table table, ArrayList<String> layersList, ArrayList<String> typeRefsList) {
         this(parent, defaultStyle);
         this.table = table;
@@ -32,23 +32,23 @@ public class AmbiguousCellEditor extends CellEditor {
         this.layers = layersList.toArray(new String[layersList.size()]);
 
     }
-    
+
     public AmbiguousCellEditor(Composite parent, int style) {
         super(parent, style);
     }
-	
+
 	@Override
 	protected Control createControl(Composite parent) {
 		// normally one would create a control here, but instead we'll create
 		// the controls the first time getControl() is called
 		this.parent = parent;
 		//return cellEditor.getControl();
-		return null; 
+		return null;
 	}
 
-	@Override 
+	@Override
     public Control getControl() {
-		if (textCellEditor == null) createAmbiguousControls(); 
+		if (textCellEditor == null) createAmbiguousControls();
 		selectAmbiguousControl();
 		return cellEditor.getControl();
     }
@@ -98,12 +98,12 @@ public class AmbiguousCellEditor extends CellEditor {
 			cellEditor.setValue(value);
 		}
 	}
-	
+
 	private void createAmbiguousControls() {
 		textCellEditor = new TextCellEditor(parent);
 		comboBoxCellEditor = new ComboBoxCellEditor(parent, layers);
 	}
-	
+
 	private void selectAmbiguousControl() {
 		TableItem item = table.getItem(table.getSelectionIndex());
 		ArgumentDTO argDTO = (ArgumentDTO) item.getData();

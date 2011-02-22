@@ -39,8 +39,8 @@ import org.geotools.styling.StyleBuilder;
  * Allows editing/viewing of a Style Layer Descriptor "Stroke".
  * <p>
  * Here is the pretty picture: <pre><code>
- *          +-+ +-------+ +------+             
- *    Fill: |x| | color | | 90%\/| 
+ *          +-+ +-------+ +------+
+ *    Fill: |x| | color | | 90%\/|
  *          +-+ +-------+ +------+
  * </code></pre>
  * </p>
@@ -59,7 +59,7 @@ import org.geotools.styling.StyleBuilder;
  * <li>fire( SelectionSevent ) - notify SimpleStyleConfigurator of change
  * <li>getFill( StyleBuilder ) - construct a Fill based on fields
  * </ul>
- * </p>  
+ * </p>
  * @author Jody Garnett
  * @since 1.0.0
  */
@@ -67,17 +67,17 @@ public class FillViewer {
     boolean enabled;
     Color color;
     double opacity;
-    
+
     Button on;
     StolenColorEditor chooser;
     Combo percent;
-    
+
     private class Listener implements SelectionListener,ModifyListener {
-        public void widgetSelected( SelectionEvent e ) { sync( e ); };            
+        public void widgetSelected( SelectionEvent e ) { sync( e ); };
         public void widgetDefaultSelected( SelectionEvent e ) { sync( e ); };
         public void modifyText( ModifyEvent e ) {
             sync(AbstractSimpleConfigurator.selectionEvent(e));
-        };            
+        };
         private void sync(SelectionEvent selectionEvent ){
             try {
                 FillViewer.this.enabled = FillViewer.this.on.getSelection();
@@ -104,19 +104,19 @@ public class FillViewer {
             catch( Throwable t ){
                 SLDPlugin.trace( "Fill sync failure", t ); //$NON-NLS-1$
             }
-            finally {                    
+            finally {
                 FillViewer.this.chooser.setEnabled( FillViewer.this.enabled );
-                FillViewer.this.percent.setEnabled( FillViewer.this.enabled );                                
+                FillViewer.this.percent.setEnabled( FillViewer.this.enabled );
             }
         }
-        
+
     };
     Listener sync = new Listener();
-    private SelectionListener listener; 
-    
+    private SelectionListener listener;
+
     /**
      * Accepts a listener that will be notified when content changes.
-     * @param listener1 
+     * @param listener1
      */
     public void addListener( SelectionListener listener1 ) {
         this.listener = listener1;
@@ -124,7 +124,7 @@ public class FillViewer {
 
     /**
      * Remove listener.
-     * @param listener1 
+     * @param listener1
      */
     public void removeListener( SelectionListener listener1 ) {
         if (this.listener == listener1)
@@ -133,7 +133,7 @@ public class FillViewer {
 
     /**
      * TODO summary sentence for fire ...
-     * 
+     *
      * @param event
      */
     protected void fire( SelectionEvent event ) {
@@ -143,31 +143,31 @@ public class FillViewer {
     }
     /**
      * TODO summary sentence for createControl ...
-     * 
+     *
      * @param parent
-     * @param kListener 
+     * @param kListener
      * @return Generated composite
      */
     public Composite createControl(Composite parent, KeyListener kListener) {
         Composite part = AbstractSimpleConfigurator.subpart( parent, Messages.SimpleStyleConfigurator_fill_label );
-        
+
         this.on = new Button( part, SWT.CHECK );
-        this.on.addSelectionListener( this.sync );                
-        
+        this.on.addSelectionListener( this.sync );
+
         this.chooser = new StolenColorEditor( part, this.sync );
-        
+
         this.percent = new Combo( part, SWT.DROP_DOWN );
         this.percent.setItems( new String[]{ "0%","25%","50%","75%","100%"} );  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
         this.percent.setTextLimit( 4 );
         this.percent.addKeyListener(kListener);
-        this.percent.setToolTipText(Messages.FillViewer_percent_tooltip); 
-        return part; 
+        this.percent.setToolTipText(Messages.FillViewer_percent_tooltip);
+        return part;
     }
-    
+
     /**
      * TODO summary sentence for getFill ...
-     * @param build 
-     * 
+     * @param build
+     *
      * @return Fill defined by this model
      */
     public Fill getFill( StyleBuilder build ) {
@@ -177,56 +177,56 @@ public class FillViewer {
         }
         return build.createFill(this.color);
     }
-    
+
     void listen(boolean listen) {
         if( listen ){
             this.on.addSelectionListener(this.sync);
-            this.chooser.setListener( this.sync );                
+            this.chooser.setListener( this.sync );
             this.percent.addSelectionListener( this.sync );
             this.percent.addModifyListener( this.sync );
         }
         else {
             this.on.removeSelectionListener(this.sync);
-            this.chooser.setListener( null );                
+            this.chooser.setListener( null );
             this.percent.removeSelectionListener( this.sync );
             this.percent.removeModifyListener( this.sync );
         }
     }
-    
+
     /**
      * TODO summary sentence for setFill ...
-     * 
+     *
      * @param fill
-     * @param mode 
-     * @param enabled 
+     * @param mode
+     * @param enabled
      */
     public void setFill(Fill fill2, Mode mode, Color defaultColor ) {
         listen( false );
         try {
-            
+
             boolean enabled=true;
             Fill fill=fill2;
             if(fill==null ){
-                StyleBuilder builder=new StyleBuilder(); 
+                StyleBuilder builder=new StyleBuilder();
                 fill=builder.createFill(defaultColor, 0.5);
                 enabled=false;
             }
-            
+
             this.enabled = enabled && ((mode != Mode.NONE && mode != Mode.LINE) && fill != null);
             this.color = SLDs.color(fill);
             this.opacity = SLDs.opacity(fill);
-            
+
             // Fill is used in point and polygon
             this.on.setEnabled(mode != Mode.NONE && mode != Mode.LINE);
             this.chooser.setColor(this.color);
-            
+
             String text = MessageFormat.format( "{0,number,#0%}", this.opacity); //$NON-NLS-1$
             this.percent.setText(text);
             this.percent.select(this.percent.indexOf(text));
-    
+
             this.on.setSelection( this.enabled );
             this.chooser.setEnabled( this.enabled );
-            this.percent.setEnabled( this.enabled );            
+            this.percent.setEnabled( this.enabled );
         }
         finally {
             listen( true );

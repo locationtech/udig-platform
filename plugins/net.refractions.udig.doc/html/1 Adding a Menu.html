@@ -1,0 +1,114 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 1 Adding a Menu</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 1 Adding a Menu -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>One of the first things people are interested in doing is adding a menu to the uDig Application. This topic is covered in the Rich Client Platform section of the programmer's guide because there is nothing <em>special</em> about adding an Menu to uDig.</p>
+
+<p>However, these notes should help prevent everyone rushing out to buy the same book, or help people struggling through the same pages of online help.</p>
+
+<p>A bit of background information before we get going:</p>
+<ol>
+	<li>Extend the "Action sets" extension point (this is an Eclipse extension point)</li>
+	<li>Your extensions will be inserted in a "group marker" called something like "additions". The actual group marker is specific to the menu. We will have an example in a bit.</li>
+</ol>
+
+
+<h3><a name="1AddingaMenu-ToAddanewMenu">To Add a new Menu</a></h3>
+
+<p>To add the a "Data" menu to the top-level menu bar:</p>
+<ol>
+	<li>create org.eclipse.ui.ActionSets --&gt; actionset --&gt; menu</li>
+	<li>put "additions" for the path<br/>
+  Additions is located between Analysis and Window in the menubar</li>
+</ol>
+
+
+<h3><a name="1AddingaMenu-ToAddtoanexistingMenu">To Add to an existing Menu</a></h3>
+
+<p>To add the a "Data" menu to an existing menu:</p>
+<ol>
+	<li>Find out the path to the group marker (see the end of this page for examples)</li>
+	<li>create org.eclipse.ui.ActionSets --&gt; actionset --&gt; menu</li>
+	<li>put the path to your group marker: <br clear="all" />
+  layer/additions</li>
+</ol>
+
+
+<h3><a name="1AddingaMenu-Wheredoes%22Additions%22ComeFrom%3F">Where does "Additions" Come From?</a></h3>
+
+<p>Additions comes from the <a href="http://svn.geotools.org/udig/trunk/plugins/net.refractions.udig.ui/src/net/refractions/udig/internal/ui/UDIGWorkbenchAdvisor.java" title="Visit page outside Confluence">UDIGWorkbenchAdvisor</a> - the link will take you to the source code.</p>
+
+<p>Here is an example:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">private</span> void fillMenuBar( IWorkbenchWindow window, IActionBarConfigurer configurer ) {
+        IMenuManager menuBar = configurer.getMenuManager();
+        menuBar.add(createFileMenu(window));
+        menuBar.add(createEditMenu(window));
+        menuBar.add(createNavigationMenu(window));
+        menuBar.add(createLayerMenu());
+        menuBar.add(createToolMenu());
+        menuBar.add(UiPlugin.getDefault().getOperationMenuFactory().getMenu(window));
+        menuBar.add(<span class="code-keyword">new</span> GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+        menuBar.add(createWindowMenu(window));
+        menuBar.add(createHelpMenu(window));
+    }</pre>
+</div></div>
+
+<p>You can see that IWorkbenchActionConstants.MB_ADDITIONS is placed between the Tool menu and the Window menu.</p>
+
+<p>The same strategy can be used to find out where the group markers are in other menus:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">private</span> MenuManager createLayerMenu() {
+        MenuManager menu = <span class="code-keyword">new</span> MenuManager(Policy.bind(<span class="code-quote">"UDIGWorkbenchAdvisor.layerMenu"</span>), <span class="code-quote">"layer"</span>);
+        menu.add(<span class="code-keyword">new</span> GroupMarker(<span class="code-quote">"add.ext"</span>)); <span class="code-comment">//$NON-NLS-1$
+</span>        menu.add(<span class="code-keyword">new</span> Separator());
+        menu.add(<span class="code-keyword">new</span> GroupMarker(<span class="code-quote">"edit.ext"</span>)); <span class="code-comment">//$NON-NLS-1$
+</span>
+        menu.add(<span class="code-keyword">new</span> Separator());
+        menu.add(<span class="code-keyword">new</span> GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+
+        <span class="code-keyword">return</span> menu;
+    }</pre>
+</div></div>
+
+<p>So for the Layer menu there are three group markers:</p>
+<ul class="alternate" type="square">
+	<li>add.ext</li>
+	<li>edit.ext</li>
+	<li>additions</li>
+</ul>
+
+
+<p>By convention, "additions" is created in the correct spot (before Window and Help for the menu bar, or before <b>Exit</b> in the file menu, or at the end of the menu most everywhere else.</p>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=5832">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=5832">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

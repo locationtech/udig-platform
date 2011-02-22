@@ -1,0 +1,233 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 6 Plugin Help</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 6 Plugin Help -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+
+<p>The Eclipse RCP Platform provides the following:</p>
+<ul>
+	<li>Online Help</li>
+	<li>Context-Sensitive Help</li>
+	<li>Dynamicly Generated Help</li>
+</ul>
+
+
+<p>The litrature sugests the creation of separate documentation plug-ins. That is a plug-in that only consists of XML configuration files and HTML content for the help system.</p>
+
+<p>In practice many plug-ins are package with there help files.</p>
+
+<table class='confluenceTable'>
+<tr>
+<th class='confluenceTh'> File </th>
+<th class='confluenceTh'> Use </th>
+</tr>
+<tr>
+<td class='confluenceTd'> toc.xml </td>
+<td class='confluenceTd'> table of contents for the top level "book" </td>
+</tr>
+<tr>
+<td class='confluenceTd'> toc*.xml </td>
+<td class='confluenceTd'> table of contents associated with a heading </td>
+</tr>
+<tr>
+<td class='confluenceTd'> contexts*.xml </td>
+<td class='confluenceTd'> maps context Ids to context-sensitive help </td>
+</tr>
+</table>
+
+<p>The above filenames are only a suggestion - <br/>
+The help system actually makes use of extentions points allowing any file to be used.</p>
+
+<p>plugin.xml is used to extend three kinds of extention points:</p>
+<ul>
+	<li>toc - table of contents</li>
+	<li>contexts</li>
+	<li>contentProducer - allows for dynamic generation of help</li>
+</ul>
+
+
+<h3><a name="6PluginHelp-OnlineHelpFiles">Online Help Files</a></h3>
+
+<p>The first configuration file used by Online help is one that is familiar to you - plugin.xml.</p>
+
+<p>plugin.xml extention points:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;extension
+         point=<span class="code-quote">"org.eclipse.help.toc"</span>&gt;
+      <span class="code-tag">&lt;toc file=<span class="code-quote">"toc.xml"</span> primary=<span class="code-quote">"true"</span>/&gt;</span>
+      <span class="code-tag">&lt;toc file=<span class="code-quote">"tocconcepts.xml"</span>/&gt;</span>
+   <span class="code-tag">&lt;/extension&gt;</span></pre>
+</div></div>
+
+<p>The next xml file is the above mentioned toc.xml file:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;toc label=<span class="code-quote">"XYZ User's Guide"</span> topic=<span class="code-quote">"html/overview.html"</span>&gt;</span>
+   <span class="code-tag">&lt;topic label=<span class="code-quote">"Concepts"</span>&gt;</span>
+      <span class="code-tag">&lt;anchor id=<span class="code-quote">"concepts"</span>/&gt;</span>
+   <span class="code-tag">&lt;/topic&gt;</span>
+<span class="code-tag">&lt;/toc&gt;</span></pre>
+</div></div>
+
+<p>And the tocconcepts.xml file follows a similar format:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;toc label=<span class="code-quote">"Concepts"</span> link_to=<span class="code-quote">"toc.xml#concepts"</span>&gt;</span>
+	<span class="code-tag">&lt;topic label=<span class="code-quote">"Main Topic"</span>  href=<span class="code-quote">"html/concepts/maintopic.html"</span>&gt;</span>
+		<span class="code-tag">&lt;topic label=<span class="code-quote">"Sub Topic"</span> href=<span class="code-quote">"html/concepts/subtopic.html"</span> /&gt;</span>
+	<span class="code-tag">&lt;/topic&gt;</span>
+	<span class="code-tag">&lt;topic label=<span class="code-quote">"Main Topic 2"</span>&gt;</span>
+		<span class="code-tag">&lt;topic label=<span class="code-quote">"Sub Topic 2"</span> href=<span class="code-quote">"html/concepts/subtopic2.html"</span> /&gt;</span>
+	<span class="code-tag">&lt;/topic&gt;</span>
+<span class="code-tag">&lt;/toc&gt;</span></pre>
+</div></div>
+
+<p>The configuration files refer to the following directory structure:</p>
+<div class="preformatted"><div class="preformattedContent">
+<pre>toc.xml
+tocconcepts.xml
+html/overview.html
+html/concepts/maintopic.html
+html/concepts/subtopic.html
+html/concepts/subtopic2.html
+</pre>
+</div></div>
+
+<h3><a name="6PluginHelp-HelpCategory">Help Category</a></h3>
+
+<div class="error"><span class="error">Unable to render {include}</span> Couldn't find a page to include called: Help Category</div>
+
+<h3><a name="6PluginHelp-ContextSensitiveHelp">Context Sensitive Help</a></h3>
+
+<p>Context sensitive help (or InfoPops) is available when the user presses the F1 key.</p>
+
+<p>Context sensitive help can be associated with:</p>
+<ul>
+	<li>Control</li>
+	<li>IAction - when used to generate a MenuItem (not toolbar)</li>
+	<li>Menu</li>
+	<li>MenuItem</li>
+</ul>
+
+
+<p>plugin.xml file extention point:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;extension point=<span class="code-quote">"org.eclipse.help.contexts"</span>&gt;
+       &lt;contexts file=<span class="code-quote">"contexts.xml"</span> plugin=<span class="code-quote">"an.example.plugin"</span>/&gt;
+   &lt;/extension&gt;</pre>
+</div></div>
+
+<p>Sample context.xml file:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;contexts&gt;
+  &lt;context id=<span class="code-quote">"add_action_context"</span>&gt;
+    &lt;description&gt;This command adds.&lt;/description&gt;
+    &lt;topic label=<span class="code-quote">"Add"</span> href=<span class="code-quote">"tasks/tasks-1.htm"</span>/&gt;
+    &lt;topic label=<span class="code-quote">"Concepts"</span> href=<span class="code-quote">"html/concepts/maintopic.html"</span>/&gt;
+  &lt;/context&gt;
+&lt;/contexts&gt;</pre>
+</div></div>
+
+<p>To contect everything up on the UI side of things we need to know the help contexts ids.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> IHelpContextIds {
+	<span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">String</span> PREFIX = XYZPlugin.ID + <span class="code-quote">"."</span>; <span class="code-comment">//$NON-NLS-1$
+</span>        <span class="code-comment">// Dialogs
+</span>        <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">String</span> CONNECTION = PREFIX + <span class="code-quote">"connection_context"</span>; <span class="code-comment">//$NON-NLS-1$
+</span>
+        <span class="code-comment">// View
+</span>        <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">String</span> SEARCH_VIEW = PREFIX + <span class="code-quote">"search_view_context"</span>;
+        <span class="code-comment">// Viewers
+</span>        <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">String</span> SEARCH_VIEWER = PREFIX + <span class="code-quote">"search_viewer_context"</span>; <span class="code-comment">//$NON-NLS-1$
+</span>	<span class="code-comment">// Actions
+</span>	<span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">String</span> SEARCH_ACTION = PREFIX + <span class="code-quote">"search_action_context"</span>; <span class="code-comment">//$NON-NLS-1$
+</span>}</pre>
+</div></div>
+
+<p>And finally the connection needs to be made to the control:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">WorkbenchHelp.setHelp( newAction , HelpContextIds.NEW_REGISTRY_LOCATION_ACTION);</pre>
+</div></div>
+
+<h3><a name="6PluginHelp-TODO%3ADynamicHelp">TODO: Dynamic Help</a></h3>
+
+<p>Figure out the contentProducer extention point in the hopes of generating context-sensitive help for DataStore parameter screens.</p>
+
+<h4><a name="6PluginHelp-SampleTableofContentsWizard">Sample Table of Contents Wizard</a></h4>
+
+<p>Eclipse provides a code generation template assocaiated with the toc extention point.</p>
+
+<ol>
+	<li>Start the Extention Point Selection Wizard<br/>
+<img src="6 Plugin Help_attachments/HelpTocExtentionPoint.jpg" align="absmiddle" border="0" />
+	<ol>
+		<li>Open the plugin.xml file, and switch to the extentions point tab</li>
+		<li>Press the "Add" button</li>
+	</ol>
+	</li>
+	<li>Start the "Help Content" template<br/>
+<img src="6 Plugin Help_attachments/HelpSampleTableOfContents.jpg" align="absmiddle" border="0" />
+	<ol>
+		<li>Select "org.exlipse.help.toc"</li>
+		<li>Select "Help Content" from the available templates</li>
+		<li>Next</li>
+	</ol>
+	</li>
+	<li>Chose the categories required for you plug-in
+	<ol>
+		<li>Note the Primary check box will result in a separate top level "book" in the help system</li>
+	</ol>
+	</li>
+</ol>
+
+
+<p>This is enough to get us going.</p>
+
+<div class="panel"><div class="panelHeader"><b>Links</b></div><div class="panelContent">
+<ul>
+	<li><a href="http://dev.eclipse.org/viewcvs/index.cgi/%7echeckout%7e/org.eclipse.ui.tutorials.rcp.part3/html/tutorial3.html" title="Visit page outside Confluence">Rich Client Platform Tutorial 3</a></li>
+	<li><a href="http://devresource.hp.com/drc/technical_white_papers/ecliphelp/index.jsp#contexts_xml" title="Visit page outside Confluence">Eclipse Online Help Tutorial 101</a></li>
+</ul>
+</div></div>
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="6 Plugin Help_attachments/HelpSampleTableOfContents.jpg">HelpSampleTableOfContents.jpg</a> (image/jpeg)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="6 Plugin Help_attachments/HelpTocExtentionPoint.jpg">HelpTocExtentionPoint.jpg</a> (image/jpeg)
+                                <br/>
+                                                    </div>
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=129">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=129">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

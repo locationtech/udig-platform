@@ -52,27 +52,27 @@ public class ZoomingDialog extends Dialog {
     private Rectangle end;
     private int zoomSpeed=FAST;
     private boolean shouldBlock;
-    
+
     /**
      * Creates a new instance.
-     * @param parentShell shell to use as a parent 
+     * @param parentShell shell to use as a parent
      * @param delegate The dialog to open
      * @param start the rectangle, in Display coordinates, to zoom from when opening.
      */
     public ZoomingDialog( Shell parentShell, Dialog delegate, Rectangle start){
-        super(new ZoomShellProvider(parentShell)); 
+        super(new ZoomShellProvider(parentShell));
         this.delegate=delegate;
         this.location=new Point(start.x, start.y);
         this.size=new Point(start.width, start.height);
         setShellStyle(SWT.ON_TOP|SWT.NO_FOCUS|SWT.NO_TRIM|SWT.NO_BACKGROUND|SWT.NO_REDRAW_RESIZE);
     }
-    
+
     /**
      * Create new instance.  Will zoom from the provided rectangle to the dialog location.
-     *  
-     * @param parentShell shell to use as a parent 
+     *
+     * @param parentShell shell to use as a parent
      * @param dialog dialog to open
-     * @param x 
+     * @param x
      * @param y
      * @param width
      * @param height
@@ -83,7 +83,7 @@ public class ZoomingDialog extends Dialog {
 
     /**
      * Sets how long it takes for the Dialog to open, default is {@link #FAST}.  Is one of
-     * 
+     *
      * {@link #FAST}
      * {@link #MEDIUM}
      * {@link #SLOW}
@@ -93,15 +93,15 @@ public class ZoomingDialog extends Dialog {
     public void setZoomSpeed(int speed ){
         this.zoomSpeed=speed;
     }
-    
+
     @Override
     public void setBlockOnOpen( boolean shouldBlock ) {
         this.shouldBlock=shouldBlock;
     }
 
-    
+
     public boolean close() {
-        
+
         boolean result = delegate.close();
         return result;
     }
@@ -128,29 +128,29 @@ public class ZoomingDialog extends Dialog {
     protected Point getInitialLocation( Point initialSize ) {
         return location;
     }
-    
+
     @Override
     protected Point getInitialSize() {
         return size;
     }
     /**
      * Opens the dialog.
-     * 
+     *
      * <p>
      * IMPORTANT:  Since there is no way for ZoomingDialog to determine whether setBlockOnOpen is
      * set on the wrapped/decorated Dialog setBlockOnOpen <em>MUST</em> be set on ZoomingDialog
      * </p>
-     * 
+     *
      */
     public int open() {
         if( delegate.getShell()==null )
             delegate.create();
-        
+
         end=delegate.getShell().getBounds();
 //        end=new Rectangle(300, 300, 800,600);
         super.setBlockOnOpen(false);
         super.open();
-        
+
         zoom(true);
 
         // Must add listeners after delegate is open.
@@ -193,14 +193,14 @@ public class ZoomingDialog extends Dialog {
             public void handleEvent( Event event ) {
                 closeInternal();
             }
-            
+
         });
         delegate.getShell().addListener(SWT.Dispose, new Listener(){
 
             public void handleEvent( Event event ) {
                 closeInternal();
             }
-            
+
         });
     }
 
@@ -231,7 +231,7 @@ public class ZoomingDialog extends Dialog {
                 int nextHeight = size.y+steps*ysize;
                 super.getShell().setBounds(new Rectangle(nextX, nextY,nextWidth, nextHeight));
                 steps--;
-            }            
+            }
         }
         super.getShell().setVisible(false);
 
@@ -240,12 +240,12 @@ public class ZoomingDialog extends Dialog {
     public String toString() {
         return delegate.toString();
     }
-    
+
     @Override
     protected Control createButtonBar( Composite parent ) {
         return new Composite(parent, SWT.NONE);
     }
-    
+
     /**
      * Create a message dialog. Notethat the dialog will have no visual
      * representation (no widgets) until it is told to open.
@@ -257,8 +257,8 @@ public class ZoomingDialog extends Dialog {
      * a button (ESC, etc.) then -1 is returned. Note that the <code>open</code>
      * method blocks.
      * </p>
-     * 
-     * @param start 
+     *
+     * @param start
      *            the location to zoom from.
      * @param parentShell
      *            the parent shell
@@ -286,55 +286,55 @@ public class ZoomingDialog extends Dialog {
      *            an array of labels for the buttons in the button bar
      * @param defaultIndex
      *            the index in the button label array of the default button
-     * @return 
+     * @return
      */
     public static int openMessageDialog(Rectangle start,
-            Shell parentShell, 
-            String dialogTitle, 
-            Image dialogImage, 
+            Shell parentShell,
+            String dialogTitle,
+            Image dialogImage,
             String dialogMessage,
-            int dialogImageType, 
-            String[] buttonLabels, 
+            int dialogImageType,
+            String[] buttonLabels,
             int defaultIndex){
-        
+
         MessageDialog dialog = new MessageDialog(parentShell, dialogTitle, dialogImage, dialogMessage, dialogImageType, buttonLabels, defaultIndex );
         ZoomingDialog zd=new ZoomingDialog(parentShell, dialog, start);
-        
+
         zd.open();
         return zd.getReturnCode();
     }
-    
+
     public static void openErrorMessage(Rectangle start,
             Shell parentShell,
             String dialogTitle,
             String dialogMessage ){
-        openMessageDialog(start, parentShell, dialogTitle, null, dialogMessage, MessageDialog.ERROR, 
+        openMessageDialog(start, parentShell, dialogTitle, null, dialogMessage, MessageDialog.ERROR,
                 new String[]{IDialogConstants.OK_LABEL}, 1);
     }
-    
+
     public static void openWarningMessage(Rectangle start,
             Shell parentShell,
             String dialogTitle,
             String dialogMessage ){
-        openMessageDialog(start, parentShell, dialogTitle, null, dialogMessage, MessageDialog.WARNING, 
+        openMessageDialog(start, parentShell, dialogTitle, null, dialogMessage, MessageDialog.WARNING,
                 new String[]{IDialogConstants.OK_LABEL}, 1);
     }
-    
+
     public static void openInformationMessage(Rectangle start,
             Shell parentShell,
             String dialogTitle,
             String dialogMessage ){
-        openMessageDialog(start, parentShell, dialogTitle, null, dialogMessage, MessageDialog.INFORMATION, 
+        openMessageDialog(start, parentShell, dialogTitle, null, dialogMessage, MessageDialog.INFORMATION,
                 new String[]{IDialogConstants.OK_LABEL}, 1);
     }
-    
-    
+
+
     public static boolean openQuestionMessage(Rectangle start,
             Shell parentShell,
             String dialogTitle,
             String dialogMessage ){
-        
-            int result = openMessageDialog(start, parentShell, dialogTitle, null, dialogMessage, MessageDialog.QUESTION, 
+
+            int result = openMessageDialog(start, parentShell, dialogTitle, null, dialogMessage, MessageDialog.QUESTION,
                     new String[]{IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL}, 1);
             return result==IDialogConstants.YES_ID;
     }
@@ -342,7 +342,7 @@ public class ZoomingDialog extends Dialog {
     /**
      * Calculates the bounds of the Control in Display coordinates (Required by ZoomingDialog constructor).
      *
-     * @param control control to use as the starting position 
+     * @param control control to use as the starting position
      * @return the bounds of the Control in Display coordinates
      */
     public static Rectangle calculateBounds(Control control){
@@ -351,12 +351,12 @@ public class ZoomingDialog extends Dialog {
         Rectangle start=new Rectangle(ul.x, ul.y, size2.x, size2.y);
         return start;
     }
-    
+
     /**
      * Calculates the bounds of the Control in Display coordinates (Required by ZoomingDialog constructor).
      *
      * @param item TreeItem to use as the starting position
-     * @param columnIndex the index of the column to find the bounds for.  If -1 bounds of entire item are found 
+     * @param columnIndex the index of the column to find the bounds for.  If -1 bounds of entire item are found
      * @return the bounds of the Control in Display coordinates
      */
     public static Rectangle calculateBounds( TreeItem item, int columnIndex ) {
@@ -372,7 +372,7 @@ public class ZoomingDialog extends Dialog {
             bounds.width=item.getParent().getSize().x;
             bounds.height=bounds2.height;
         }
-        
+
         return bounds;
     }
 
@@ -393,7 +393,7 @@ public class ZoomingDialog extends Dialog {
                 shell = new Shell(template.getDisplay());
             return shell;
         }
-        
+
     }
 
 }

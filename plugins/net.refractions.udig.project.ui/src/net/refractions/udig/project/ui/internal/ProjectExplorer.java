@@ -18,18 +18,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.internal.ui.IDropTargetProvider;
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.IProjectElement;
 import net.refractions.udig.project.element.ProjectElementAdapter;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectElement;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.ProjectRegistry;
-import net.refractions.udig.project.internal.impl.MapImpl;
-import net.refractions.udig.project.internal.impl.ProjectImpl;
 import net.refractions.udig.project.internal.provider.LoadingPlaceHolder;
 import net.refractions.udig.project.ui.AdapterFactoryLabelProviderDecorator;
 import net.refractions.udig.project.ui.ApplicationGIS;
@@ -40,7 +36,6 @@ import net.refractions.udig.ui.UDIGDragDropUtilities;
 import net.refractions.udig.ui.ZoomingDialog;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
@@ -62,7 +57,6 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jface.window.SameShellProvider;
 import org.eclipse.swt.SWT;
@@ -90,19 +84,13 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 
-import sun.security.krb5.internal.PAEncTSEnc;
-
 /**
  * Displays the Projects and their contents
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
-public class ProjectExplorer extends ViewPart
-        implements
-            IMenuListener,
-            ISetSelectionTarget,
-            IDropTargetProvider {
+public class ProjectExplorer extends ViewPart implements IMenuListener, ISetSelectionTarget, IDropTargetProvider{
 
     /** The Extension ID of ProjectExplorer */
     public static final String ID = "net.refractions.udig.project.ui.projectExplorer"; //$NON-NLS-1$
@@ -127,7 +115,7 @@ public class ProjectExplorer extends ViewPart
 
     private UDIGAdapterFactoryContentProvider contentProvider;
 
-    private IAction deleteAction;
+	private IAction deleteAction;
 
     private Action linkAction;
 
@@ -145,7 +133,7 @@ public class ProjectExplorer extends ViewPart
 
     /**
      * returns the list of all the selected objects of the given class.
-     * 
+     *
      * @param clazz The object types to add to the list.
      * @return the list of all the selected objects of the given class
      */
@@ -163,7 +151,7 @@ public class ProjectExplorer extends ViewPart
 
     /**
      * TODO summary sentence for init ...
-     * 
+     *
      * @see org.eclipse.ui.part.ViewPart#init(org.eclipse.ui.IViewSite)
      * @param site
      * @throws org.eclipse.ui.PartInitException
@@ -176,7 +164,7 @@ public class ProjectExplorer extends ViewPart
     /**
      * This creates a context menu for the viewer and adds a listener as well registering the menu
      * for extension. <!--
-     * 
+     *
      * @param viewer The viewer to create a contect menu for.
      */
     protected void createContextMenuFor( StructuredViewer viewer ) {
@@ -192,7 +180,7 @@ public class ProjectExplorer extends ViewPart
 
     /**
      * Returns the composite object that is the UI of the ProjectExplorer.
-     * 
+     *
      * @return the composite object that is the UI of the ProjectExplorer.
      */
     public Composite getContainer() {
@@ -220,33 +208,6 @@ public class ProjectExplorer extends ViewPart
         treeViewer.setLabelProvider(new AdapterFactoryLabelProviderDecorator(getAdapterFactory(),
                 treeViewer));
         treeViewer.setInput(projectRegistry);
-
-        // FIXME
-        ViewerFilter[] filters = new ViewerFilter[1];
-        filters[0] = new ViewerFilter(){
-            public boolean select( Viewer viewer, Object parentElement, Object element ) {
-                if (element instanceof ProjectElement && parentElement instanceof Project) {
-                    ProjectElement mapElement = (ProjectElement) element;
-                    Project projectElement = (Project) parentElement;
-
-                    List<ProjectElement> elements = projectElement
-                            .getElements(ProjectElement.class);
-                    for( ProjectElement pElem : elements ) {
-                        List<ProjectElement> projectElements = pElem
-                                .getElements(ProjectElement.class);
-                        for( ProjectElement projElem : projectElements ) {
-                            if (projElem.equals(mapElement)) {
-                                return false;
-                            }
-                        }
-                    }
-                }
-
-                return true;
-            }
-        };
-        treeViewer.setFilters(filters);
-
         // ensure our site knows our selection provider
         // so that global actions can hook into the selection
         //
@@ -263,7 +224,7 @@ public class ProjectExplorer extends ViewPart
 
     private void setTreeSorter() {
         treeViewer.setSorter(new ViewerSorter(){
-            ViewerLayerSorter layerSorter = new ViewerLayerSorter();
+            ViewerLayerSorter layerSorter=new ViewerLayerSorter();
             /**
              * @see org.eclipse.jface.viewers.ViewerSorter#compare(org.eclipse.jface.viewers.Viewer,
              *      java.lang.Object, java.lang.Object)
@@ -272,9 +233,9 @@ public class ProjectExplorer extends ViewPart
                 if (e1 instanceof Layer && e2 instanceof Layer) {
                     return layerSorter.compare(viewer, e1, e2);
                 }
-                if (e1 instanceof LoadingPlaceHolder)
+                if( e1 instanceof LoadingPlaceHolder)
                     return 1;
-                if (e2 instanceof LoadingPlaceHolder)
+                if( e2 instanceof LoadingPlaceHolder )
                     return -1;
                 return super.compare(viewer, e1, e2);
             }
@@ -294,7 +255,7 @@ public class ProjectExplorer extends ViewPart
                     Display.getDefault().asyncExec(new Runnable(){
 
                         public void run() {
-                            if (obj != null)
+                            if( obj!=null)
                                 treeViewer.setExpandedState(obj, !treeViewer.getExpandedState(obj));
                         }
                     });
@@ -321,11 +282,10 @@ public class ProjectExplorer extends ViewPart
                 if (obj instanceof ILayer)
                     getViewSite().getActionBars().getStatusLineManager().setMessage(
                             ((ILayer) obj).getStatusMessage());
-                if (preferenceStore.getBoolean(PROJECT_EXPLORER_LINKED)) {
-                    if (obj instanceof IProjectElement) {
+                if( preferenceStore.getBoolean(PROJECT_EXPLORER_LINKED) ){
+                    if( obj instanceof IProjectElement ){
                         IWorkbenchPage page = getSite().getPage();
-                        IEditorPart part = page.findEditor(ApplicationGIS
-                                .getInput((IProjectElement) obj));
+                        IEditorPart part = page.findEditor(ApplicationGIS.getInput((IProjectElement) obj));
                         page.bringToTop(part);
                     }
                 }
@@ -335,21 +295,20 @@ public class ProjectExplorer extends ViewPart
     }
 
     private void setGlobalActions() {
-        IToolManager toolManager = ApplicationGIS.getToolManager();
+        IToolManager toolManager=ApplicationGIS.getToolManager();
         IActionBars actionBars = getViewSite().getActionBars();
         toolManager.contributeGlobalActions(this, actionBars);
         toolManager.registerActionsWithPart(this);
-        actionBars
-                .setGlobalActionHandler(ActionFactory.DELETE.getId(), getDeleteAction(actionBars));
+        actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), getDeleteAction(actionBars));
 
     }
 
-    private IAction getDeleteAction( IActionBars actionBars ) {
-        if (deleteAction == null) {
-            deleteAction = ApplicationGIS.getToolManager().getDELETEAction();
-        }
-        return deleteAction;
-    }
+	private IAction getDeleteAction(IActionBars actionBars) {
+		if( deleteAction==null ){
+            deleteAction=ApplicationGIS.getToolManager().getDELETEAction();
+		}
+		return deleteAction;
+	}
 
     /**
      * @return a ComposeableAdapterFactory for all the Udig's EMF objects.
@@ -367,35 +326,34 @@ public class ProjectExplorer extends ViewPart
 
     private IAction createLinkAction() {
         final IPreferenceStore preferenceStore = ProjectUIPlugin.getDefault().getPreferenceStore();
-        linkAction = new Action(Messages.ProjectExplorer_link_name, SWT.CHECK){
+        linkAction=new Action(Messages.ProjectExplorer_link_name, SWT.CHECK){
 
-            @Override
-            public void runWithEvent( Event event ) {
+        	@Override
+			public void runWithEvent(Event event) {
                 boolean linked = isChecked();
                 preferenceStore.setValue(PROJECT_EXPLORER_LINKED, linked);
-                if (linked) {
+                if( linked ){
                     addEditorListener();
-                } else {
+                }else{
                     removeEditorListener();
                 }
-            }
+			}
         };
         boolean linked = preferenceStore.getBoolean(PROJECT_EXPLORER_LINKED);
         linkAction.setChecked(linked);
         linkAction.setImageDescriptor(Images.getDescriptor(ImageConstants.LINKED_ENABLED_CO));
-        linkAction.setDisabledImageDescriptor(Images
-                .getDescriptor(ImageConstants.LINKED_DISABLED_CO));
+        linkAction.setDisabledImageDescriptor(Images.getDescriptor(ImageConstants.LINKED_DISABLED_CO));
         linkAction.setToolTipText(Messages.ProjectExplorer_link_tooltip);
-        if (linked)
+        if( linked )
             addEditorListener();
         return linkAction;
     }
 
-    IPartListener2 editorListener = new IPartListener2(){
+    IPartListener2 editorListener=new IPartListener2(){
 
         public void partActivated( IWorkbenchPartReference partRef ) {
-            if (isLinkedWithEditor() && partRef.getPart(false) instanceof MapEditor) {
-                MapPart editor = (MapPart) partRef.getPart(false);
+            if ( isLinkedWithEditor() && partRef.getPart(false) instanceof MapEditor ){
+                MapPart editor=(MapPart) partRef.getPart(false);
                 setSelection(Collections.singleton(editor.getMap()), true);
             }
         }
@@ -431,7 +389,7 @@ public class ProjectExplorer extends ViewPart
         getSite().getPage().addPartListener(editorListener);
     }
 
-    public boolean isLinkedWithEditor() {
+    public boolean isLinkedWithEditor(){
         return linkAction.isChecked();
     }
 
@@ -452,7 +410,7 @@ public class ProjectExplorer extends ViewPart
     /**
      * This is how the framework determines which interfaces we implement. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @param key The desired class
      * @return An object of type key or null;
      */
@@ -465,7 +423,7 @@ public class ProjectExplorer extends ViewPart
     /**
      * This accesses a cached version of the property sheet. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @return An IProperty page for the selected object
      */
     public IPropertySheetPage getPropertySheetPage() {
@@ -489,7 +447,7 @@ public class ProjectExplorer extends ViewPart
 
     /**
      * Gets the site's action bars
-     * 
+     *
      * @return the site's action bars
      */
     public IActionBars getActionBars() {
@@ -517,12 +475,11 @@ public class ProjectExplorer extends ViewPart
         manager.add(getDeleteAction(getViewSite().getActionBars()));
 
         manager.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-        // LayerApplicabilityMenuCreator creator = getApplicabilityMenu();
-        // if (creator != null)
-        // manager.add(creator.getMenuManager());
+//        LayerApplicabilityMenuCreator creator = getApplicabilityMenu();
+//        if (creator != null)
+//            manager.add(creator.getMenuManager());
 
-        manager.add(ApplicationGIS.getToolManager().createOperationsContextMenu(
-                treeViewer.getSelection()));
+        manager.add(ApplicationGIS.getToolManager().createOperationsContextMenu(treeViewer.getSelection()));
         manager.add(new Separator());
         manager.add(ActionFactory.EXPORT.create(getSite().getWorkbenchWindow()));
         if (!treeViewer.getSelection().isEmpty()
@@ -550,7 +507,7 @@ public class ProjectExplorer extends ViewPart
     }
     /**
      * TODO summary sentence for getOpenProjectAction ...
-     * 
+     *
      * @param manager
      * @return
      */
@@ -581,15 +538,14 @@ public class ProjectExplorer extends ViewPart
             // propertiesAction=ActionFactory.PROPERTIES.create(getSite().getWorkbenchWindow());
             // propertiesAction.setEnabled(true);
 
-            final PropertyDialogAction tmp = new PropertyDialogAction(new SameShellProvider(shell),
+            final PropertyDialogAction tmp = new PropertyDialogAction(
+                    new SameShellProvider(shell),
                     treeViewer);
 
-            propertiesAction = new Action(){
+            propertiesAction=new Action(){
                 @Override
                 public void runWithEvent( Event event ) {
-                    ZoomingDialog dialog = new ZoomingDialog(shell, tmp.createDialog(),
-                            ZoomingDialog.calculateBounds(treeViewer.getTree().getSelection()[0],
-                                    -1));
+                    ZoomingDialog dialog=new ZoomingDialog(shell, tmp.createDialog(), ZoomingDialog.calculateBounds(treeViewer.getTree().getSelection()[0], -1) );
                     dialog.open();
                 }
             };
@@ -628,7 +584,7 @@ public class ProjectExplorer extends ViewPart
 
         /**
          * Construct <code>ProjectExplorer.OpenWithActions</code>.
-         * 
+         *
          * @param input the editor input that
          */
         public OpenWithActions( UDIGEditorInputDescriptor input ) {
@@ -648,14 +604,13 @@ public class ProjectExplorer extends ViewPart
         }
     }
 
-    @SuppressWarnings("unchecked")
-    List getOpenWithActions( IProjectElement element ) {
-        Class< ? > type;
-        if (element instanceof ProjectElementAdapter) {
-            type = ((ProjectElementAdapter) element).getBackingObject().getClass();
-        } else {
-            type = element.getClass();
-        }
+    @SuppressWarnings("unchecked") List getOpenWithActions( IProjectElement element ) {
+    	Class<?> type;
+		if( element instanceof ProjectElementAdapter ){
+    		type = ((ProjectElementAdapter)element).getBackingObject().getClass();
+    	}else{
+    		type = element.getClass();
+    	}
         List actions = (List) editorInputsMap.get(type);
         if (actions == null) {
             actions = new ArrayList();
@@ -682,19 +637,20 @@ public class ProjectExplorer extends ViewPart
      */
     java.util.Map defaultEditorMap = new HashMap();
 
+
     /**
      * Opens a map or page in the editor.
-     *  
+     *
      * @param obj the object to open
      */
     public void open( final IProjectElement obj ) {
-        open(obj, false);
+        open( obj, false);
     }
     /**
      * Opens a map or page in the editor.
-     * 
+     *
      * @param obj the object to open
-     * @param wait indicates whether to block until the maps opens. 
+     * @param wait indicates whether to block until the maps opens.
      */
     public void open( final IProjectElement obj, boolean wait ) {
         ApplicationGIS.openProjectElement(obj, wait);
@@ -702,17 +658,17 @@ public class ProjectExplorer extends ViewPart
 
     /**
      * Returns an UDIGEditorInputDescriptor for the provided object.
-     * 
+     *
      * @return an UDIGEditorInputDescriptor for the provided object.
      */
     public UDIGEditorInputDescriptor getEditorInput( final IProjectElement obj ) {
         List inputs = getOpenWithActions(obj);
-        Class< ? > type;
-        if (obj instanceof ProjectElementAdapter) {
-            type = ((ProjectElementAdapter) obj).getBackingObject().getClass();
-        } else {
-            type = obj.getClass();
-        }
+    	Class<?> type;
+		if( obj instanceof ProjectElementAdapter ){
+    		type = ((ProjectElementAdapter)obj).getBackingObject().getClass();
+    	}else{
+    		type = obj.getClass();
+    	}
         String defaultEditor = (String) defaultEditorMap.get(type);
 
         OpenWithActions action = null;
@@ -729,12 +685,11 @@ public class ProjectExplorer extends ViewPart
         }
 
         OpenWithActions finalAction = action;
-        if (finalAction != null) {
+        if( finalAction!=null ){
             final UDIGEditorInputDescriptor input = finalAction.input;
             return input;
         }
-        throw new Error(
-                "Unable to create a input descriptor for this object.  A plugin may not be installed correctly"); //$NON-NLS-1$
+        throw new Error("Unable to create a input descriptor for this object.  A plugin may not be installed correctly"); //$NON-NLS-1$
     }
 
     /*
@@ -747,7 +702,7 @@ public class ProjectExplorer extends ViewPart
     /**
      * Returns the ProjectExplorer view if it has been created, otherwise an object is created and
      * returned.
-     * 
+     *
      * @return the ProjectExplorer view if it has been created, otherwise an object is created and
      *         returned.
      */
@@ -768,7 +723,7 @@ public class ProjectExplorer extends ViewPart
         super.dispose();
     }
 
-    public Object getTarget( DropTargetEvent event ) {
+    public Object getTarget(DropTargetEvent event) {
         return this;
     }
 
@@ -782,15 +737,15 @@ public class ProjectExplorer extends ViewPart
      * @param p sets the selection in the project explorer
      * @param reveal TODO
      */
-    public void setSelection( final IProject p, final boolean reveal ) {
-        Display d = Display.getCurrent();
-        if (d == null) {
+    public void setSelection(final IProject p, final boolean reveal){
+        Display d=Display.getCurrent();
+        if( d==null ){
             Display.getDefault().asyncExec(new Runnable(){
                 public void run() {
                     treeViewer.setSelection(new StructuredSelection(new Object[]{p}), reveal);
                 }
             });
-        } else
+        }else
             treeViewer.setSelection(new StructuredSelection(new Object[]{p}), reveal);
 
     }
@@ -800,36 +755,35 @@ public class ProjectExplorer extends ViewPart
      *
      * @param element elements to select select
      */
-    public void setSelection( final Collection< ? extends IProjectElement> element,
-            final boolean reveal ) {
-        if (treeViewer == null)
+    public void setSelection(final Collection<? extends IProjectElement> element, final boolean reveal){
+        if ( treeViewer==null )
             return;
-        Display d = Display.getCurrent();
+        Display d=Display.getCurrent();
         Runnable runnable = new Runnable(){
             public void run() {
                 inDisplaySelect(element, reveal);
             }
         };
-        if (d == null) {
+        if( d==null ){
             Display.getDefault().asyncExec(runnable);
-        } else {
+        }else{
             d.asyncExec(runnable);
         }
 
     }
-    AtomicReference<SetSelectionListener> inputChangedListener = new AtomicReference<SetSelectionListener>();
+    AtomicReference<SetSelectionListener> inputChangedListener=
+        new AtomicReference<SetSelectionListener>();
 
-    private void inDisplaySelect( Collection< ? extends IProjectElement> element, boolean reveal ) {
-        if (treeViewer == null)
+    private void inDisplaySelect( Collection<? extends IProjectElement> element, boolean reveal) {
+        if( treeViewer==null )
             return;
         List<Object> visibleElements = getLoadedElements();
-        if (visibleElements.containsAll(element)) {
+        if( visibleElements.containsAll(element) ){
             treeViewer.setSelection(new StructuredSelection(element.toArray()), reveal);
             return;
-        } else {
-            synchronized (contentProvider) {
-                SetSelectionListener old = inputChangedListener.getAndSet(new SetSelectionListener(
-                        element, reveal));
+        }else{
+            synchronized ( contentProvider ){
+                SetSelectionListener old = inputChangedListener.getAndSet(new SetSelectionListener(element, reveal));
                 contentProvider.removeListener(old);
                 contentProvider.addListener(inputChangedListener.get());
             }
@@ -841,21 +795,21 @@ public class ProjectExplorer extends ViewPart
     }
 
     private List<Object> getLoadedElements() {
-        if (treeViewer == null)
+        if( treeViewer==null )
             return Collections.emptyList();
-        Tree tree = (Tree) treeViewer.getControl();
+        Tree tree=(Tree) treeViewer.getControl();
         TreeItem[] items = tree.getItems();
-        List<Object> data = new ArrayList<Object>();
+        List<Object> data=new ArrayList<Object>();
         collectData(items, data);
         return data;
     }
 
     private void collectData( TreeItem[] items, List<Object> data ) {
-        if (items.length == 0)
+        if( items.length==0 )
             return;
         for( TreeItem item : items ) {
             Object data2 = item.getData();
-            if (data == null)
+            if( data==null )
                 continue;
             data.add(data2);
             collectData(item.getItems(), data);
@@ -868,23 +822,23 @@ public class ProjectExplorer extends ViewPart
      * @param element An ancestor of elementChild.
      * @param elementChild the element to select.
      */
-    public void setSelection( IProjectElement element, Object elementChild ) {
+    public void setSelection( IProjectElement element, Object elementChild ){
         throw new UnsupportedOperationException("This method has not been implemented yet");
     }
 
-    private class SetSelectionListener implements InputChangedListener {
+    private class SetSelectionListener implements InputChangedListener{
 
         private Collection< ? extends IProjectElement> elements;
         private boolean reveal;
 
         public SetSelectionListener( Collection< ? extends IProjectElement> element, boolean reveal ) {
-            this.reveal = reveal;
-            this.elements = element;
+            this.reveal=reveal;
+            this.elements=element;
         }
 
-        private boolean isValid() {
-            synchronized (contentProvider) {
-                if (inputChangedListener.get() != this) {
+        private boolean isValid(){
+            synchronized ( contentProvider ){
+                if( inputChangedListener.get()!=this ){
                     contentProvider.removeListener(this);
                     return false;
                 }
@@ -893,25 +847,25 @@ public class ProjectExplorer extends ViewPart
         }
 
         private void trySetSelection() {
-            List<Object> expandedElements = getLoadedElements();
-            if (expandedElements.containsAll(elements)) {
-                treeViewer.setSelection(new StructuredSelection(elements.toArray()), reveal);
-                synchronized (contentProvider) {
-                    contentProvider.removeListener(this);
-                    inputChangedListener.set(null);
+                List<Object> expandedElements = getLoadedElements();
+                if( expandedElements.containsAll(elements) ){
+                    treeViewer.setSelection(new StructuredSelection(elements.toArray()), reveal);
+                    synchronized ( contentProvider ){
+                        contentProvider.removeListener(this);
+                        inputChangedListener.set(null);
+                    }
                 }
-            }
         }
 
         public void changed() {
-            if (isValid()) {
-                if (Display.getCurrent() == null) {
+            if( isValid() ){
+                if( Display.getCurrent()==null ){
                     Display.getDefault().asyncExec(new Runnable(){
                         public void run() {
                             trySetSelection();
                         }
                     });
-                } else
+                }else
                     trySetSelection();
             }
         }

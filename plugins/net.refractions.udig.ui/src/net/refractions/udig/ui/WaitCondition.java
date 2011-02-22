@@ -16,24 +16,24 @@ package net.refractions.udig.ui;
 
 /**
  * Condition to wait for to become true;
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public interface WaitCondition {
     public static final WaitCondition FALSE_CONDITION = new WaitCondition() {
-        
+
         public boolean isTrue()  {
             return false;
         }
-    
+
     };
     public static final WaitCondition TRUE_CONDITION = new WaitCondition() {
-        
+
         public boolean isTrue() {
             return true;
         }
-    
+
     };
 
     /**

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %printing.ui.plugin.name
 Bundle-SymbolicName: net.refractions.udig.printing.ui; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.printing.ui.internal.PrintingPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
@@ -13,12 +13,11 @@ Export-Package: net.refractions.udig.printing.ui,
  net.refractions.udig.printing.ui.internal.editor.commands,
  net.refractions.udig.printing.ui.internal.editor.figures,
  net.refractions.udig.printing.ui.internal.editor.parts,
- net.refractions.udig.printing.ui.internal.editor.policies,
- net.refractions.udig.printing.ui.internal.template
+ net.refractions.udig.printing.ui.internal.editor.policies
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.gef;visibility:=reexport,
- net.refractions.udig.project;visibility:=reexport,
+ net.refractions.udig.project,
+ org.eclipse.gef,
  org.eclipse.ui.views,
  net.refractions.udig.printing.model;visibility:=reexport,
  org.eclipse.emf.edit,
@@ -29,7 +28,5 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.ui,
  net.refractions.udig.mapgraphic,
  net.refractions.udig.legend,
- net.refractions.udig.style.sld,
- com.lowagie.itext
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+ net.refractions.udig.style.sld
+Eclipse-LazyStart: true

@@ -1,5 +1,5 @@
 /**
- * <copyright></copyright> $Id$
+ * <copyright></copyright> $Id: AbstractContextImpl.java 27016 2007-09-17 19:09:19Z jeichar $
  */
 package net.refractions.udig.project.internal.impl;
 
@@ -29,15 +29,13 @@ import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.geometry.jts.Decimator;
 import org.geotools.geometry.jts.JTS;
-import org.geotools.geometry.jts.LiteShape2;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
-import org.geotools.referencing.ReferencingFactoryFinder;
+import org.geotools.referencing.FactoryFinder;
 import org.geotools.referencing.operation.matrix.GeneralMatrix;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.renderer.lite.Decimator;
+import org.geotools.renderer.lite.LiteShape2;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
@@ -51,24 +49,24 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
 /**
- * Default implementation 
- * 
+ * Default implementation
+ *
  * @author Jesse
  * @since 1.0.0
  */
 public abstract class AbstractContextImpl implements AbstractContext {
-  
+
     /**
      * The cached value of the '
-     * {@link #getRenderManagerInternal() <em>Render Manager Internal</em>}' reference. 
-     * 
+     * {@link #getRenderManagerInternal() <em>Render Manager Internal</em>}' reference.
+     *
      * @see #getRenderManagerInternal()
      */
     protected RenderManager renderManagerInternal = null;
 
     /**
-     * The cached value of the '{@link #getMapInternal() <em>Map Internal</em>}' reference. 
-     * 
+     * The cached value of the '{@link #getMapInternal() <em>Map Internal</em>}' reference.
+     *
      * @see #getMapInternal()
      */
     protected Map mapInternal = null;
@@ -94,10 +92,7 @@ public abstract class AbstractContextImpl implements AbstractContext {
     }
 
     public IEditManager getEditManager() {
-        if( getMapInternal() != null){
-            return getMapInternal().getEditManager();
-        }
-        return null;
+        return getMapInternal().getEditManager();
     }
 
     public Coordinate getPixelSize() {
@@ -121,9 +116,9 @@ public abstract class AbstractContextImpl implements AbstractContext {
     }
 
     public IMapDisplay getMapDisplay() {
-        if (getRenderManager() == null || getRenderManagerInternal().isDisposed() ){
+        if (getRenderManager() == null || getRenderManagerInternal().isDisposed() )
             return null;
-        }        
+
         return getRenderManager().getMapDisplay();
     }
 
@@ -159,7 +154,7 @@ public abstract class AbstractContextImpl implements AbstractContext {
         GeneralMatrix matrix = new GeneralMatrix(getViewportModelInternal()
                 .worldToScreenTransform());
         try {
-            return (MathTransform2D) ReferencingFactoryFinder.getMathTransformFactory(null)
+            return (MathTransform2D) FactoryFinder.getMathTransformFactory(null)
                     .createAffineTransform(matrix);
         } catch (Exception e) {
             return null;
@@ -207,7 +202,7 @@ public abstract class AbstractContextImpl implements AbstractContext {
     public Shape toShape( Geometry geometry, CoordinateReferenceSystem crs ) {
         try {
             MathTransform transform = CRS.findMathTransform(crs, getCRS(), true);
-            MathTransformFactory factory = ReferencingFactoryFinder.getMathTransformFactory(null);
+            MathTransformFactory factory = FactoryFinder.getMathTransformFactory(null);
             MathTransform toScreen = factory.createAffineTransform(new GeneralMatrix(
                     worldToScreenTransform()));
             transform = factory.createConcatenatedTransform(transform, toScreen);
@@ -223,7 +218,7 @@ public abstract class AbstractContextImpl implements AbstractContext {
         return layer.getQuery(selection);
     }
 
-    public FeatureCollection<SimpleFeatureType, SimpleFeature>  getFeaturesInBbox( ILayer layer, Envelope bbox ) throws IOException {
+    public FeatureCollection getFeaturesInBbox( ILayer layer, Envelope bbox ) throws IOException {
         return layer.getResource(FeatureSource.class, null).getFeatures(
                 layer.createBBoxFilter(bbox, null));
     }
@@ -267,7 +262,7 @@ public abstract class AbstractContextImpl implements AbstractContext {
             return false;
         return true;
     }
-    
+
     public Point tranformCoordinate( Envelope bbox, Dimension displaySize, Coordinate coordinate ) {
         AffineTransform at = getViewportModelInternal().worldToScreenTransform(bbox, displaySize);
         Point2D w = new Point2D.Double(coordinate.x, coordinate.y);

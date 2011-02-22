@@ -43,7 +43,7 @@ import org.eclipse.swt.graphics.Image;
  * ModalItem is active. </li>
  * <li> Contains a set of contributions. </li>
  * </ul>
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
@@ -53,9 +53,9 @@ public abstract class ModalItem implements ILazyOpListener {
 
 //    protected static final Cursor defaultCursor = PlatformUI.getWorkbench().getDisplay()
 //            .getSystemCursor(SWT.CURSOR_ARROW);
-    
+
     private List<CurrentContributionItem> contributions = new ArrayList<CurrentContributionItem>();
-    
+
     protected String[] commandIds;
     protected String handlerType;
     protected ImageDescriptor imageDescriptor;
@@ -68,7 +68,7 @@ public abstract class ModalItem implements ILazyOpListener {
 
     /**
      * Gets the image descriptor of the item.
-     * 
+     *
      * @return the image descripor of the item.
      */
     public ImageDescriptor getImageDescriptor() {
@@ -77,7 +77,7 @@ public abstract class ModalItem implements ILazyOpListener {
 
     /**
      * Marks each contribution item as selected.
-     * 
+     *
      * @param checked the selected value of each contribution.
      */
     public void setChecked( boolean checked ) {
@@ -94,14 +94,14 @@ public abstract class ModalItem implements ILazyOpListener {
     /**
      * @see net.refractions.udig.project.ui.tool.ActionTool#run()
      */
-    public void run() {        
+    public void run() {
         if (runModeless() && isEnabled )
             return;
-        
+
         ModalItem activeModalItem = getActiveItem();
         if (activeModalItem != null)
         	activeModalItem.setActive(false);
-        
+
         setActive(true);
         setActiveItem(this);
 
@@ -109,14 +109,14 @@ public abstract class ModalItem implements ILazyOpListener {
 
     /**
      * Gets the default item.
-     * 
+     *
      * @return the default item.
      */
     protected abstract ModalItem getDefaultItem();
 
     /**
      * Returns the currently active item or null if no currently active tool.
-     * 
+     *
      * @return the currently active item or null if no currently active tool.
      */
     protected abstract ModalItem getActiveItem();
@@ -127,7 +127,7 @@ public abstract class ModalItem implements ILazyOpListener {
 
     /**
      * If the current Item is modeless then runModelss runs the item and return true.
-     * 
+     *
      * @return true if the item is modeless.
      */
     protected abstract boolean runModeless();
@@ -155,27 +155,27 @@ public abstract class ModalItem implements ILazyOpListener {
     public List<CurrentContributionItem> getContributions() {
         return Collections.unmodifiableList(contributions);
     }
-    
+
     public boolean addContribution(CurrentContributionItem contribution) {
         contribution.setEnabled(isEnabled());
         return contributions.add(contribution);
     }
-    
+
     public CurrentContributionItem removeContribution(int index) {
         return contributions.remove(index);
     }
-    
+
     public boolean removeContribution(CurrentContributionItem contribution) {
         return contributions.remove(contribution);
     }
-    
+
     public void clearContributions() {
         contributions.clear();
     }
 
     /**
      * Returns an instance of a command handler for the current item.
-     * 
+     *
      * @param commandId the id of the command to get a handler for.
      * @return an instance of a command handler for the current item.
      */
@@ -183,7 +183,7 @@ public abstract class ModalItem implements ILazyOpListener {
 
     /**
      * Returns the list desired commands
-     * 
+     *
      * @return the list of desired commands
      */
     public String[] getCommandIds() {
@@ -195,7 +195,7 @@ public abstract class ModalItem implements ILazyOpListener {
 
     /**
      * ID of item
-     * 
+     *
      * @return the id
      */
     public String getId() {
@@ -203,7 +203,7 @@ public abstract class ModalItem implements ILazyOpListener {
     }
     /**
      * sets the id of the item
-     * 
+     *
      * @param id the new id.
      */
     public void setId( String id ) {
@@ -211,7 +211,7 @@ public abstract class ModalItem implements ILazyOpListener {
     }
     /**
      * gets the name of the item.
-     * 
+     *
      * @return the name of the item.
      */
     public String getName() {
@@ -219,7 +219,7 @@ public abstract class ModalItem implements ILazyOpListener {
     }
     /**
      * Sets the name of the item
-     * 
+     *
      * @param name the new name
      */
     public void setName( String name ) {
@@ -227,7 +227,7 @@ public abstract class ModalItem implements ILazyOpListener {
     }
     /**
      * Gets the tooltip of the item
-     * 
+     *
      * @return the tooltip of the item.
      */
     public String getToolTipText() {
@@ -235,7 +235,7 @@ public abstract class ModalItem implements ILazyOpListener {
     }
     /**
      * sets the tooltip of the item
-     * 
+     *
      * @param toolTipText the new tooltip
      */
     public void setToolTipText( String toolTipText ) {
@@ -244,7 +244,7 @@ public abstract class ModalItem implements ILazyOpListener {
 
     /**
      * Sets the images descriptor of the item.
-     * 
+     *
      * @param imageDescriptor the new image descriptor.
      */
     public void setImageDescriptor( ImageDescriptor imageDescriptor ) {
@@ -254,7 +254,7 @@ public abstract class ModalItem implements ILazyOpListener {
 
     /**
      * Gets the icon image of the tool
-     * 
+     *
      * @return the icon image of the tool.
      */
     public Image getImage() {
@@ -268,7 +268,7 @@ public abstract class ModalItem implements ILazyOpListener {
 
     /**
      * Returns the "pushed" look of an active icon.
-     * 
+     *
      * @return the "pushed" look of an active icon.
      */
     public Image getActiveImage() {
@@ -281,7 +281,7 @@ public abstract class ModalItem implements ILazyOpListener {
 
         return IMAGES.get(getId() + "pushed"); //$NON-NLS-1$
     }
-    
+
 
     public OpFilter getEnablesFor() {
         if( enablement==null )
@@ -291,7 +291,7 @@ public abstract class ModalItem implements ILazyOpListener {
 
     /**
      * Returns whether the item is enabled.
-     * 
+     *
      * @return
      */
     public boolean isEnabled() {

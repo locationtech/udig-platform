@@ -15,7 +15,7 @@ public class ShapefileCatalogImportTest extends CatalogImportTest {
 			.getEntry("data/streams.shp"); //$NON-NLS-1$
 		return FileLocator.toFileURL(url);
 	}
-	
+
 	@Override
 	void assertServiceType(IService service) {
 		assertTrue(service instanceof ShpServiceImpl);

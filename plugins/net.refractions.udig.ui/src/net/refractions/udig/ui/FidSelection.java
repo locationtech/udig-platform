@@ -25,7 +25,7 @@ import java.util.Set;
 import net.refractions.udig.core.IProvider;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 /**
  * A selection that uses a set of fids to indicate the selection in the collection of features.  The actual selection
@@ -36,17 +36,17 @@ import org.opengis.feature.simple.SimpleFeature;
 public class FidSelection implements IStructuredSelection {
 
     private final Set<String> fids;
-    private final IProvider<Collection<SimpleFeature>> provider;
-    private volatile SimpleFeature firstElement;
-    private volatile LinkedList<SimpleFeature> list;
+    private final IProvider<Collection<Feature>> provider;
+    private volatile Feature firstElement;
+    private volatile LinkedList<Feature> list;
     private volatile Object[] array;
 
     /**
-     * New Instance.  
+     * New Instance.
      * @param fids
      * @param provider
      */
-    public FidSelection( Set<String> fids, IProvider<Collection<SimpleFeature>> provider ) {
+    public FidSelection( Set<String> fids, IProvider<Collection<Feature>> provider ) {
         this.fids=new HashSet<String>(fids);
         this.provider=provider;
     }
@@ -54,7 +54,7 @@ public class FidSelection implements IStructuredSelection {
     public Object getFirstElement() {
         if( isEmpty() )
             throw new NoSuchElementException("Selection is empty."); //$NON-NLS-1$
-        
+
         return doFirstElement();
     }
 
@@ -62,14 +62,14 @@ public class FidSelection implements IStructuredSelection {
         if( firstElement==null ){
             synchronized (this) {
                 if( firstElement==null ){
-                    for( SimpleFeature feature : provider.get() ) {
+                    for( Feature feature : provider.get() ) {
                         if( fids.contains(feature.getID() )){
                             firstElement=feature;
                             break;
                         }
                     }
                 }
-                
+
             }
         }
         return firstElement;
@@ -77,23 +77,23 @@ public class FidSelection implements IStructuredSelection {
 
     public Iterator iterator() {
         final HashSet<String> fids=new HashSet<String>(this.fids);
-        final Iterator<SimpleFeature> featureIter=this.provider.get().iterator();
-        
+        final Iterator<Feature> featureIter=this.provider.get().iterator();
+
         return new Iterator(){
-            private SimpleFeature next;
-            private SimpleFeature live;
-            
+            private Feature next;
+            private Feature live;
+
             public boolean hasNext() {
                 if( next!=null )
                     return true;
-                
+
                 while( featureIter.hasNext() && !fids.isEmpty() && next==null ){
-                    SimpleFeature current=featureIter.next();
+                    Feature current=featureIter.next();
                     if( fids.remove(current.getID()) ){
                         next=current;
                     }
                 }
-                
+
                 return next!=null;
             }
 
@@ -109,7 +109,7 @@ public class FidSelection implements IStructuredSelection {
             public void remove() {
                 FidSelection.this.fids.remove(live.getID());
             }
-            
+
         };
     }
 
@@ -132,10 +132,10 @@ public class FidSelection implements IStructuredSelection {
         if( list==null ){
             synchronized (this) {
                 if( list==null ){
-                    list=new LinkedList<SimpleFeature>();
+                    list=new LinkedList<Feature>();
                     Iterator iter=iterator();
                     while( iter.hasNext() ){
-                        list.add((SimpleFeature) iter.next());
+                        list.add((Feature) iter.next());
                     }
                 }
             }

@@ -19,4 +19,4 @@ Wizard Banner Size & Placement
 
     Within the wizard banner space allocation, there is no firm rule for where
 to place the wizard banner graphic. Generally, the graphic is centered
-vertically, and off-center to the left horizontally. 
+vertically, and off-center to the left horizontally.

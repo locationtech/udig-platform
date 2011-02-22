@@ -83,6 +83,17 @@
          <viewShortcut id="net.refractions.udig.tool.select.TableView"/>
       </perspectiveExtension>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="net.refractions.udig.ui.alternateMapPerspective">
+         <view
+               id="net.refractions.udig.tool.select.TableView"
+               relationship="stack"
+               relative="net.refractions.udig.catalog.ui.CatalogView"
+               visible="true"/>
+         <viewShortcut id="net.refractions.udig.tool.select.TableView"/>
+      </perspectiveExtension>
+   </extension>
       <extension
             point="net.refractions.udig.ui.objectProperty">
          <object targetClass="net.refractions.udig.project.ILayer">

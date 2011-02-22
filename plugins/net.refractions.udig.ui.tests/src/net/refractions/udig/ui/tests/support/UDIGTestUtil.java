@@ -1,18 +1,17 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.ui.tests.support;
 
 import net.refractions.udig.ui.WaitCondition;
 
 import org.eclipse.swt.widgets.Display;
+import org.geotools.data.DataUtilities;
+import org.geotools.feature.Feature;
+import org.geotools.feature.FeatureType;
 import org.geotools.feature.IllegalAttributeException;
 import org.geotools.feature.SchemaException;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -23,12 +22,12 @@ import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Utility class with a number of static convenience methods
- * 
+ *
  * @author jeichar
  */
 public class UDIGTestUtil {
 	/**
-	 * The features created have a polygon geometry and have the SimpleFeatureType:
+	 * The features created have a polygon geometry and have the FeatureType:
 	 * "*geom:Geometry,name:String".
 	 * <p>
 	 * <ul>
@@ -36,14 +35,14 @@ public class UDIGTestUtil {
 	 * <li>The geometries are polygons and are squares going diagonal down the
 	 * screen. They will overlap</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param numFeatures
 	 *            number of features to create
 	 * @return array of features as described above.
 	 */
-	public static SimpleFeature[] createDefaultTestFeatures(String typename,
+	public static Feature[] createDefaultTestFeatures(String typename,
 			int numFeatures) throws SchemaException, IllegalAttributeException {
-        
+
 		GeometryFactory factory = new GeometryFactory();
 		Polygon[] polys = new Polygon[numFeatures];
 		String[] attrValues = new String[numFeatures];
@@ -60,7 +59,7 @@ public class UDIGTestUtil {
 			polys[i] = factory.createPolygon(ring1, new LinearRing[] {});
 			attrValues[i] = "value" + i; //$NON-NLS-1$
 		}
-		SimpleFeature[] features = createTestFeatures(typename, polys, attrValues,
+		Feature[] features = createTestFeatures(typename, polys, attrValues,
 				DefaultEngineeringCRS.GENERIC_2D);
 
 		return features;
@@ -73,7 +72,7 @@ public class UDIGTestUtil {
 	 * <p>
 	 * If crs is null WGS84 will be used.
 	 */
-	public static SimpleFeature[] createTestFeatures(String typename,
+	public static Feature[] createTestFeatures(String typename,
 			Geometry[] geom, String[] attributeValue) throws SchemaException,
 			IllegalAttributeException {
 		return createTestFeatures(typename, geom, attributeValue, null);
@@ -86,8 +85,8 @@ public class UDIGTestUtil {
 	 * <p>
 	 * If crs is null WGS84 will be used.
 	 */
-	@SuppressWarnings("deprecation") 
-    public static SimpleFeature[] createTestFeatures(String typename,
+	@SuppressWarnings("deprecation")
+    public static Feature[] createTestFeatures(String typename,
 			Geometry[] geom2, String[] attributeValue2,
 			CoordinateReferenceSystem crs) throws SchemaException,
 			IllegalAttributeException {
@@ -99,14 +98,11 @@ public class UDIGTestUtil {
 		if (attributeValue == null || attributeValue.length == 0) {
 			attributeValue = new String[1];
 		}
-		SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
-		builder.setName("test");
-		builder.crs(crs).add("geom", Geometry.class);
-		builder.setCRS(crs);
-		builder.add("name", String.class);
-		SimpleFeatureType ft = builder.buildFeatureType();
+		FeatureType ft = DataUtilities.createType(typename,
+				"*geom:Geometry,name:String"); //$NON-NLS-1$
+		ft = DataUtilities.createSubType(ft, null, crs);
 		int size = Math.max(geom.length, attributeValue.length);
-		SimpleFeature[] features = new SimpleFeature[size];
+		Feature[] features = new Feature[size];
 		for (int i = 0; i < size; i++) {
 			Geometry geometry;
 			if (i >= geom.length)
@@ -118,7 +114,7 @@ public class UDIGTestUtil {
 				value = attributeValue[attributeValue.length - 1];
 			else
 				value = attributeValue[i];
-			features[i] = SimpleFeatureBuilder.build(ft, new Object[] { geometry, value }, typename+ "."+Integer //$NON-NLS-1$
+			features[i] = ft.create(new Object[] { geometry, value }, typename+ "."+Integer //$NON-NLS-1$
 					.toString(i + 1));
 		}
 		return features;
@@ -127,14 +123,14 @@ public class UDIGTestUtil {
 	/**
 	 * The method will throw an exception if the current thread is not in the
 	 * display thread.
-	 * 
+	 *
 	 * @param maxWait
 	 *            The maximum time to wait
 	 * @param condition
 	 *            the condition that will cause the method to return early.
-     * @param throwExceptionOnTimeout if true an exception will be thrown if a 
-     *                                  timeout occurs before condition is true. 
-	 * @throws Exception 
+     * @param throwExceptionOnTimeout if true an exception will be thrown if a
+     *                                  timeout occurs before condition is true.
+	 * @throws Exception
 	 * @throws Exception
 	 */
 	public static void inDisplayThreadWait(long maxWait,
@@ -151,7 +147,7 @@ public class UDIGTestUtil {
 					//don't worry about it
 				}
             }
-                
+
             lastTime=System.currentTimeMillis();
 		}
 		while(Display.getCurrent().readAndDispatch());

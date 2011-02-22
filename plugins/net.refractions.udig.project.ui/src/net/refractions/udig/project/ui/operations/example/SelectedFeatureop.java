@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.ui.operations.example;
 
@@ -15,12 +15,10 @@ import org.eclipse.swt.widgets.Display;
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Counts the selected features on the layer
- * 
+ *
  * @author jesse
  */
 public class SelectedFeatureop implements IOp {
@@ -29,13 +27,13 @@ public class SelectedFeatureop implements IOp {
 			throws Exception {
 		monitor.beginTask("Counting selected features", 30);
 		monitor.worked(1);
-		
+
 		final ILayer layer = (ILayer) target;
-		FeatureSource<SimpleFeatureType, SimpleFeature> source = layer.getResource(FeatureSource.class, new NullProgressMonitor());
-		FeatureCollection<SimpleFeatureType, SimpleFeature> collection = source.getFeatures(layer.getFilter());
-		
-		FeatureIterator<SimpleFeature> features = collection.features();
-		
+		FeatureSource source = layer.getResource(FeatureSource.class, new NullProgressMonitor());
+		FeatureCollection collection = source.getFeatures(layer.getFilter());
+
+		FeatureIterator features = collection.features();
+
 		try{
 			int count = 0;
 			while(features.hasNext()){

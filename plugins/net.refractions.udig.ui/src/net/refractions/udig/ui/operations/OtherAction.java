@@ -22,7 +22,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
 /**
  * Opens a dialog with all the Operations
- * 
+ *
  * @author Jody Garnett
  * @since 1.1.0
  */
@@ -34,9 +34,9 @@ public class OtherAction implements IWorkbenchWindowActionDelegate {
         this.window = window;
     }
 
-    public void run( IAction action ) {        
+    public void run( IAction action ) {
         OperationDialog opDialog = new OperationDialog( window.getShell(), selection);
-        
+
         // We can make the operation dialog display a single OperationCategory
         // if you change the input
         opDialog.open();
@@ -46,9 +46,9 @@ public class OtherAction implements IWorkbenchWindowActionDelegate {
         window = null;
         selection = null;
     }
-    
+
     public void selectionChanged( IAction action, ISelection selection ) {
-        this.selection = selection;        
+        this.selection = selection;
     }
 
 }

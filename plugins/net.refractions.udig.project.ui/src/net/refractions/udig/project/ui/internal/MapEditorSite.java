@@ -35,9 +35,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.services.IServiceLocator;
 
 /**
- * Primarily used so the action bars returned by this is 
+ * Primarily used so the action bars returned by this is
  * a MapEditorActionBars
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -45,12 +45,12 @@ public class MapEditorSite implements IEditorSite, IViewSite {
 
     IWorkbenchPartSite delegate;
     private MapEditor editor;
-    
+
     public MapEditorSite(IWorkbenchPartSite original, MapEditor editor) {
         delegate=original;
         this.editor=editor;
     }
-    
+
     public IEditorActionBarContributor getActionBarContributor() {
         if( delegate instanceof IEditorSite ){
             return ((IEditorSite)delegate).getActionBarContributor();

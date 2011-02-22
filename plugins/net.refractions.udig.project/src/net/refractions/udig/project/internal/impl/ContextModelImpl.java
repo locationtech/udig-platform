@@ -1,5 +1,5 @@
 /**
- * <copyright></copyright> $Id$
+ * <copyright></copyright> $Id: ContextModelImpl.java 28234 2007-12-03 05:02:48Z jeichar $
  */
 package net.refractions.udig.project.internal.impl;
 
@@ -23,16 +23,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.opengis.filter.Filter;
+import org.geotools.filter.Filter;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * ContextModel responsible for holding on to layers for an IMap.
- * <p>
- * This class has several deprecated methods for working with the layers list
- * but they have all been moved to Map.
- * </p>
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -48,7 +43,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
         super();
     }
 
-    
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
@@ -64,12 +59,12 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
     @SuppressWarnings("unchecked")
     public List<Layer> getLayers() {
         return layers;
-        
+
     }
 
     /**
      * Typesafe Layer access as a workaround for EMF generation bug.
-     * 
+     *
      * @return
      * @deprecated
      */
@@ -115,14 +110,14 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
     public void addDeepAdapter( Adapter adapter ) {
         getMap().addDeepAdapter(adapter);
     }
-    
+
     public void removeDeepAdapter( Adapter adapter ) {
         getMap().removeDeepAdapter(adapter);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void lowerLayer( Layer layer ) {
@@ -131,7 +126,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void raiseLayer( Layer layer ) {
@@ -275,7 +270,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
 
     /**
      * Turns off emf notification
-     * 
+     *
      * @param notify true if notifications should be used.
      */
     public void setNotification( boolean notify ) {
@@ -302,7 +297,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
     }
 
     private volatile EList eAdapters;
-    
+
     @Override
     public EList eAdapters() {
         if( eAdapters==null ){

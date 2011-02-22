@@ -1,0 +1,208 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 3 Adding History to Dialogs and Wizards</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 3 Adding History to Dialogs and Wizards -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h2><a name="3AddingHistorytoDialogsandWizards-AddingHistorytoDialogsandWizards">Adding History to Dialogs and Wizards</a></h2>
+<p>by <a href="/confluence/display/~rgould" title="View profile for Richard Gould">Richard Gould</a></p>
+
+<h3><a name="3AddingHistorytoDialogsandWizards-Overview">Overview</a></h3>
+
+<p>It is often beneficial to add a 'history' to some of the widgets to increase the useability of a wizard or dialog. This article will explain how to use Eclipse's IDialogSettings interface to achieve this easily and will show how it was implemented in uDig's WMS Wizard.</p>
+
+<p>The terms wizard and dialog are interchangeable in this document.</p>
+
+<p>Here is a screenshot of the WMS Wizard, displaying the rememberance of previously-entered URLs.<br/>
+<img src="3 Adding History to Dialogs and Wizards_attachments/wizardHistory.jpg" align="absmiddle" border="0" /></p>
+
+<p>Here is what the contents of the file look like when saved out to disk:</p>
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>dialog_settings.xml</b></div><div class="codeContent">
+<pre class="code-java">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;
+&lt;section name=<span class="code-quote">"Workbench"</span>&gt;
+  &lt;section name=<span class="code-quote">"WMS_WIZARD"</span>&gt;
+    &lt;list key=<span class="code-quote">"WMS_RECENT"</span>&gt;
+      &lt;item value=<span class="code-quote">"http:<span class="code-comment">//wms.cits.rncan.gc.ca/cgi-bin/cubeserv.cgi?VERSION=1.1.0&amp;amp;REQUEST=GetCapabilities"</span>/&gt;
+</span>      &lt;item value=<span class="code-quote">"http:<span class="code-comment">//www2.dmsolutions.ca/cgi-bin/mswms_gmap?VERSION=1.1.0&amp;amp;REQUEST=GetCapabilities"</span>/&gt;
+</span>    &lt;/list&gt;
+  &lt;/section&gt;
+&lt;/section&gt;</pre>
+</div></div>
+
+<p>The overview:<br/>
+1. In the dialog's constructor, access the previously saved settings, or create them if they don't exist.<br/>
+2. When creating the widgets for the dialog, populate them with previously entered settings.<br/>
+3. When the OK button is pushed (or the wizard is finished), save the entered values.</p>
+
+<h3><a name="3AddingHistorytoDialogsandWizards-IDialogSettings">IDialogSettings</a></h3>
+
+<p>The JavaDoc for IDialogSettings can be viewed <a href="http://www.eclipse.org/documentation/html/plugins/org.eclipse.platform.doc.isv/doc/reference/api/org/eclipse/jface/dialogs/IDialogSettings.html" title="Visit page outside Confluence">here</a>.</p>
+
+<p>The interesting methods are:</p>
+<ul>
+	<li>IDialogSettings getSection(String sectionName)</li>
+	<li>IDialogSettings addNewSection(String name)</li>
+	<li>String[] getArray(String key)</li>
+	<li>void put(String key, String[] value)</li>
+</ul>
+
+
+<p>Dialog settings are used to store information about particular dialogs. The settings are stored in the plugin's runtime workspace. Because each plugin can have more than one dialog or wizard, the settings are divided up into sections designated by a string. To create a new section, call settings.addNewSection("example_id").</p>
+
+<p>Values saved into a dialog can be any primitive type, a String or array of Strings. An array of Strings is the most interesting for dialogs, as they often use combo boxes for fields with history.</p>
+
+<p>The loading and saving is handled by the plugin class.</p>
+
+<h3><a name="3AddingHistorytoDialogsandWizards-AnExample">An Example</a></h3>
+
+<p>The WMS Wizard inside uDig has been converted to use IDialogSettings to store previously entered URLs.</p>
+
+<h4><a name="3AddingHistorytoDialogsandWizards-Initializingthesettings">Initializing the settings</a></h4>
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>WMSWizardPage.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">private</span> <span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">String</span> WMS_WIZARD = <span class="code-quote">"WMS_WIZARD"</span>; <span class="code-comment">//$NON-NLS-1$
+</span>  <span class="code-keyword">private</span> IDialogSettings settings;
+
+  <span class="code-keyword">public</span> WMSWizardPage() {
+    ...
+
+    settings = WmsPlugin.getDefault().getDialogSettings().getSection(WMS_WIZARD);
+    <span class="code-keyword">if</span> (settings == <span class="code-keyword">null</span>) {
+      settings = WmsPlugin.getDefault().getDialogSettings().addNewSection(WMS_WIZARD);
+    }
+  }</pre>
+</div></div>
+
+<p>This code accesses the previously entered values stored at the section named 'WMS_WIZARD'. If they don't exist (settings == null), the section must be added.</p>
+
+<h4><a name="3AddingHistorytoDialogsandWizards-Readingthesettings">Reading the settings</a></h4>
+<p>The code in WMSWizardPage that instantiates the widgets is also responsible for populating those widgets with previously entered values.</p>
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>WMSWizardPage.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">private</span> <span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">String</span> WMS_RECENT = <span class="code-quote">"WMS_RECENT"</span>; <span class="code-comment">//$NON-NLS-1$
+</span>
+<span class="code-keyword">public</span> void createControl(Composite parent) {
+  <span class="code-object">String</span>[] recentWMSs = settings.getArray(WMS_RECENT);
+  <span class="code-keyword">if</span> (recentWMSs == <span class="code-keyword">null</span>) {
+    recentWMSs = <span class="code-keyword">new</span> <span class="code-object">String</span>[0];
+  }
+
+  ...
+
+  url = <span class="code-keyword">new</span> Combo(composite, SWT.BORDER);
+  url.setItems(recentWMSs);
+
+  ...
+}</pre>
+</div></div>
+<p>This code accesses all the values stored at the key 'WMS_RECENT'. If no values are there, it will return null. Later on, the Combo widget 'url' has its items set to those values.</p>
+
+<h4><a name="3AddingHistorytoDialogsandWizards-Savingthesettings">Saving the settings</a></h4>
+<p>Saving the settings is a little more complicated than using them. The IDialogSettings interface only allows an entire key to be saved at once, so we must add our new history item to the array and save it again. Some convienence code has been taken from the org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage class to make this job easy. </p>
+
+<p>The addToHistory methods also limit the size of the history for each widget. Simply alter the value of COMBO_HISTORY_LENGTH to change the size.</p>
+
+<p>The only one here you should have to alter is saveWidgetValues(). Simply create a key (WMS_RECENT) for each widget, retrieve the previous values, and call addToHistory, passing in the value from the widget as well. After that, just add the key and the values to the IDialogSettings.</p>
+
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>WMSWizardPage.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">private</span> <span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">int</span> COMBO_HISTORY_LENGTH = 15;
+
+/**
+  * Saves the widget values
+  */
+<span class="code-keyword">private</span> void saveWidgetValues() {
+  <span class="code-comment">// Update history
+</span>  <span class="code-keyword">if</span> (settings != <span class="code-keyword">null</span>) {
+    <span class="code-object">String</span>[] recentWMSs = settings.getArray(WMS_RECENT);
+    <span class="code-keyword">if</span> (recentWMSs == <span class="code-keyword">null</span>) {
+      recentWMSs = <span class="code-keyword">new</span> <span class="code-object">String</span>[0];
+    }
+    recentWMSs = addToHistory(recentWMSs, url.getText());
+    settings.put(WMS_RECENT, recentWMSs);
+  }
+}
+
+/**
+  * Adds an entry to a history, <span class="code-keyword">while</span> taking care of duplicate history items
+  * and excessively <span class="code-object">long</span> histories.  The assumption is made that all histories
+  * should be of length &lt;code&gt;COMBO_HISTORY_LENGTH&lt;/code&gt;.
+  *
+  * @param history the current history
+  * @param newEntry the entry to add to the history
+  * @<span class="code-keyword">return</span> the history with the <span class="code-keyword">new</span> entry appended
+  * Stolen from org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage
+  */
+<span class="code-keyword">private</span> <span class="code-object">String</span>[] addToHistory(<span class="code-object">String</span>[] history, <span class="code-object">String</span> newEntry) {
+  ArrayList&lt;<span class="code-object">String</span>&gt; l = <span class="code-keyword">new</span> ArrayList&lt;<span class="code-object">String</span>&gt;(Arrays.asList(history));
+  addToHistory(l, newEntry);
+  <span class="code-object">String</span>[] r = <span class="code-keyword">new</span> <span class="code-object">String</span>[l.size()];
+  l.toArray(r);
+  <span class="code-keyword">return</span> r;
+}
+
+/**
+  * Adds an entry to a history, <span class="code-keyword">while</span> taking care of duplicate history items
+  * and excessively <span class="code-object">long</span> histories.  The assumption is made that all histories
+  * should be of length &lt;code&gt;COMBO_HISTORY_LENGTH&lt;/code&gt;.
+  *
+  * @param history the current history
+  * @param newEntry the entry to add to the history
+  * Stolen from org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage
+  */
+<span class="code-keyword">private</span> void addToHistory(List&lt;<span class="code-object">String</span>&gt; history, <span class="code-object">String</span> newEntry) {
+  history.remove(newEntry);
+  history.add(0,newEntry);
+
+  <span class="code-comment">// since only one <span class="code-keyword">new</span> item was added, we can be over the limit
+</span>  <span class="code-comment">// by at most one item
+</span>  <span class="code-keyword">if</span> (history.size() &gt; COMBO_HISTORY_LENGTH) {
+    history.remove(COMBO_HISTORY_LENGTH);
+  }
+}</pre>
+</div></div>
+
+<p>Once saveWidgetValues() is configured, you simply need to call it when your dialog or wizard is done.</p>
+<div class="code" style="border-style: dashed; "><div class="codeContent">
+<pre class="code-java">/*
+ * Success! Store the URL in history.
+ */
+saveWidgetValues();</pre>
+</div></div>
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="3 Adding History to Dialogs and Wizards_attachments/wizardhistory.jpg">wizardhistory.jpg</a> (image/jpeg)
+                                <br/>
+                                                    </div>
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=4708">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=4708">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

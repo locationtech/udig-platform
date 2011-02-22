@@ -34,15 +34,15 @@ public class PropertyParser implements FilterParser {
         if( desiredPropertyId==null || desiredPropertyId.trim().length()==0 )
             desiredPropertyId = element.getAttribute("name"); //$NON-NLS-1$
         String expectedValue = element.getAttribute("expectedValue");       //$NON-NLS-1$
-        
+
         if (desiredPropertyId == null || desiredPropertyId.length() == 0 ) {
             UiPlugin.log("EnablesFor element is not valid. PropertyId must be supplied.", null); //$NON-NLS-1$
             return OpFilter.TRUE;
         }
-        
+
         IConfigurationElement[] configuration = Platform.getExtensionRegistry().getConfigurationElementsFor("net.refractions.udig.ui.objectProperty"); //$NON-NLS-1$
         IConfigurationElement propertyElement=null;
-        String targetClass = null; 
+        String targetClass = null;
         for( IConfigurationElement configurationElement : configuration ) {
             if( propertyElement!=null )
                 break;
@@ -60,25 +60,25 @@ public class PropertyParser implements FilterParser {
                 }
             }
         }
-        
+
         if ( propertyElement==null ){
             UiPlugin.log("PropertyParser: Parsing PropertyValue, desired Propert: "+desiredPropertyId+" not found.  Referenced in plugin: "+element.getNamespaceIdentifier(), null); //$NON-NLS-1$ //$NON-NLS-2$
             return OpFilter.TRUE;
         }
-        
+
         if (targetClass==null ){
             UiPlugin.log("PropertyParser: Parsing PropertyValue, no target class defined in property"+desiredPropertyId, null); //$NON-NLS-1$
 
             return OpFilter.TRUE;
         }
-        
+
         OpFilterPropertyValueCondition enablesFor;
         enablesFor = new OpFilterPropertyValueCondition(propertyElement, targetClass, expectedValue);
 
-        
+
         return enablesFor;
-    }     
-    
+    }
+
     public String getElementName() {
         return "property"; //$NON-NLS-1$
     }

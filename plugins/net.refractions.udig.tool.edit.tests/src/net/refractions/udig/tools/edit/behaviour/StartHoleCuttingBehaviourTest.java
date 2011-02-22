@@ -27,7 +27,7 @@ public class StartHoleCuttingBehaviourTest extends TestCase {
     public void testIsValid() throws Exception {
         TestHandler handler=new TestHandler();
         handler.getTestEditBlackboard().util.setVertexRadius(4);
-        
+
         StartHoleCuttingBehaviour behavior=new StartHoleCuttingBehaviour();
 
         handler.setCurrentState(EditState.MODIFYING);
@@ -35,12 +35,12 @@ public class StartHoleCuttingBehaviourTest extends TestCase {
         //Current Shape must be set
         MapMouseEvent event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         EditGeom editGeom = handler.getEditBlackboard().getGeoms().get(0);
-        
+
         handler.setCurrentShape(editGeom.getShell());
         handler.getEditBlackboard().addPoint(0,0, handler.getCurrentShape());
-        
+
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         // mouse must be within a shell
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
@@ -49,25 +49,25 @@ public class StartHoleCuttingBehaviourTest extends TestCase {
         handler.getEditBlackboard().addPoint(100,100, handler.getCurrentShape());
         handler.getEditBlackboard().addPoint(0,100, handler.getCurrentShape());
         handler.getEditBlackboard().addPoint(0,0, handler.getCurrentShape());
-        
+
         // now we have something
         assertTrue(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         PrimitiveShape hole = handler.getCurrentGeom().newHole();
         handler.getEditBlackboard().addPoint(30,30, hole);
         handler.getEditBlackboard().addPoint(60,30, hole);
         handler.getEditBlackboard().addPoint(60,60, hole);
         handler.getEditBlackboard().addPoint(30,60, hole);
         handler.getEditBlackboard().addPoint(30,30, hole);
-        
+
         //mouse is in another hole
         event = new MapMouseEvent(null, 40,40, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // no buttons should be down
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.BUTTON2, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // button2 isn't legal
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON2);
         assertFalse(behavior.isValid(handler, event, EventType.RELEASED));
@@ -80,7 +80,7 @@ public class StartHoleCuttingBehaviourTest extends TestCase {
         handler.setCurrentState(EditState.MODIFYING);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertTrue(behavior.isValid(handler, event, EventType.RELEASED));
-        
+
         // doesn't work with event pressed
         assertFalse(behavior.isValid(handler, event, EventType.PRESSED));
 
@@ -98,7 +98,7 @@ public class StartHoleCuttingBehaviourTest extends TestCase {
         TestHandler handler=new TestHandler();
         ((RenderManager)handler.getContext().getRenderManager()).setMapDisplay(new TestViewportPane(new Dimension(500,500)));
         handler.getTestEditBlackboard().util.setVertexRadius(4);
-        
+
         StartHoleCuttingBehaviour behavior=new StartHoleCuttingBehaviour();
         MapMouseEvent event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
 
@@ -108,7 +108,7 @@ public class StartHoleCuttingBehaviourTest extends TestCase {
         } catch (Exception e) {
             // good
         }
-        
+
         handler.setCurrentState(EditState.MODIFYING);
 
         EditGeom editGeom = handler.getEditBlackboard().getGeoms().get(0);
@@ -119,9 +119,9 @@ public class StartHoleCuttingBehaviourTest extends TestCase {
         handler.getEditBlackboard().addPoint(100,100, handler.getCurrentShape());
         handler.getEditBlackboard().addPoint(0,100, handler.getCurrentShape());
         handler.getEditBlackboard().addPoint(0,0, handler.getCurrentShape());
-        
+
         UndoableMapCommand command = behavior.getCommand(handler, event, EventType.RELEASED);
-        
+
         command.setMap((Map) handler.getContext().getMap());
         if (command instanceof PostDeterminedEffectCommand) {
             PostDeterminedEffectCommand c = (PostDeterminedEffectCommand) command;
@@ -129,18 +129,18 @@ public class StartHoleCuttingBehaviourTest extends TestCase {
         }else{
             command.run(new NullProgressMonitor());
         }
-        
+
         assertEquals("Current shape should equal new hole", editGeom.getHoles().get(0), handler.getCurrentShape()); //$NON-NLS-1$
         assertEquals("A point should have been added to hole", Point.valueOf(10,10), handler.getCurrentShape().getPoint(0)); //$NON-NLS-1$
         assertEquals( EditState.CREATING, handler.getCurrentState());
-        
+
         command.rollback(new NullProgressMonitor());
 
         assertEquals( editGeom.getShell(), handler.getCurrentShape());
         assertEquals(0, editGeom.getHoles().size());
         assertEquals( EditState.MODIFYING, handler.getCurrentState());
-        
+
     }
-    
-    
+
+
 }

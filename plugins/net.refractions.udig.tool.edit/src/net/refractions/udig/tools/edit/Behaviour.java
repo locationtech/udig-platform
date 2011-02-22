@@ -18,10 +18,10 @@ import net.refractions.udig.project.command.UndoableMapCommand;
 
 
 /**
- * This is a Stategy object for the (@link net.refractions.udig.tools.edit.latest.EditToolHandler} behaviour. 
- * Each Behaviour is valid in a particular context and will be run by the 
- * (@link net.refractions.udig.tools.edit.latest.EditToolHandler} if the isValid method returns true.  
- * 
+ * This is a Stategy object for the (@link net.refractions.udig.tools.edit.latest.EditToolHandler} behaviour.
+ * Each Behaviour is valid in a particular context and will be run by the
+ * (@link net.refractions.udig.tools.edit.latest.EditToolHandler} if the isValid method returns true.
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -39,12 +39,12 @@ public interface Behaviour {
      * perform quickly.
      *
      * @param handler handler that calls this Behaviour
-     * @return Command that will be executed in order to perform the behaviour 
+     * @return Command that will be executed in order to perform the behaviour
      */
     public UndoableMapCommand getCommand( EditToolHandler handler );
 
     /**
-     * This method is called if an exception occurs during the execution of the run method.  
+     * This method is called if an exception occurs during the execution of the run method.
      * <p>
      * This method should:
      * <ol>

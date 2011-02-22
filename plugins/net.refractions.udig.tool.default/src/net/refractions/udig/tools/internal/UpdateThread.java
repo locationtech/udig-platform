@@ -14,22 +14,17 @@
  */
 package net.refractions.udig.tools.internal;
 
-import java.awt.Point;
 import java.util.ArrayList;
-
-import com.vividsolutions.jts.geom.Coordinate;
 
 import net.refractions.udig.project.command.NavCommand;
 import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.internal.command.navigation.NavComposite;
-import net.refractions.udig.project.internal.command.navigation.PanCommand;
-import net.refractions.udig.project.internal.command.navigation.ZoomCommand;
 import net.refractions.udig.project.ui.commands.TransformDrawCommand;
 import net.refractions.udig.project.ui.tool.IToolContext;
 
 /**
  * Waits 1 second after the most recent request before running operation.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -48,10 +43,9 @@ public class UpdateThread implements Runnable {
     private int horizontal=0;
     private IToolContext context;
 	private volatile long updateDelay = 1000;
-    private Coordinate fixedPoint;
-    
+
     private UpdateThread(){}
-    
+
     /**
      * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
      */
@@ -91,20 +85,20 @@ public class UpdateThread implements Runnable {
     private synchronized long getElapsedTimeSinceLastRequest() {
         return System.currentTimeMillis() - request;
     }
-    
+
 
     public synchronized void requestStart() {
         request = System.currentTimeMillis();
         synchronized (UpdateThread.class) {
             if (thread == null) {
                 thread = new Thread(this);
-                thread.setName(Messages.ScrollZoom_scroll_zoom); 
+                thread.setName(Messages.ScrollZoom_scroll_zoom);
                 thread.start();
             }
         }
     }
 
-    
+
     public synchronized void left(IToolContext context, int updateDelay) {
         horizontal++;
         update(context, updateDelay);
@@ -121,7 +115,7 @@ public class UpdateThread implements Runnable {
         vertical--;
         update(context, updateDelay);
     }
-    
+
     private void update(IToolContext context, int updateDelay2) {
         synchronized (UpdateThread.class) {
         	this.updateDelay = updateDelay2;
@@ -138,15 +132,7 @@ public class UpdateThread implements Runnable {
         }
         requestStart();
     }
-
     public void zoom( int change, IToolContext context, int updateDelay ) {
-        zoomWithFixedPoint(change, context, updateDelay, null);
-    }
-    /**
-     * Makes zoom and keeps fixedPoint at the same place.
-     */
-    public void zoomWithFixedPoint( int change, IToolContext context, int updateDelay,
-            Point fixedPoint ) {
         amount += change;
         this.updateDelay = updateDelay;
 
@@ -155,38 +141,31 @@ public class UpdateThread implements Runnable {
         synchronized (UpdateThread.class) {
             if (command == null) {
                 TransformDrawCommand transformDrawCommand = new TransformDrawCommand();
-                command = transformDrawCommand;
-                if (fixedPoint == null) {
-                    fixedPoint = new Point(context.getViewportPane().getWidth() / 2, context
-                            .getViewportPane().getHeight() / 2);
-                }
-                transformDrawCommand.fixPoint(fixedPoint);
-                this.fixedPoint = context.pixelToWorld(fixedPoint.x, fixedPoint.y);
+                command=transformDrawCommand;
                 transformDrawCommand.zoom(zoom, zoom);
-                context.sendASyncCommand(transformDrawCommand);
+                context.sendASyncCommand(transformDrawCommand );
             } else {
                 command.zoom(zoom, zoom);
                 context.getViewportPane().repaint();
             }
         }
 
-        this.context = context;
+        this.context=context;
 
         requestStart();
     }
 
     protected synchronized void performChange() {
-        
+
         double zoom = Math.abs(Math.pow(FACTOR, amount));
         ArrayList<NavCommand> commands=new ArrayList<NavCommand>();
         if( horizontal!=0 || vertical!=0 ){
             commands.add(
-                    (NavCommand) new PanCommand((horizontal*-PAN_AMOUNT), (vertical*-PAN_AMOUNT)));
+                    factory.createPanCommandUsingScreenCoords(
+                            horizontal*-PAN_AMOUNT,vertical*-PAN_AMOUNT));
         }
         if( zoom>0.00000001 ){
-            ZoomCommand zoomCommand = new ZoomCommand(zoom);
-            zoomCommand.setFixedPoint(fixedPoint);
-            commands.add(zoomCommand);
+            commands.add(factory.createZoomCommand(zoom));
         }
         if( commands.size()>0 ){
             NavComposite composite = new NavComposite(commands);
@@ -212,7 +191,7 @@ public class UpdateThread implements Runnable {
         vertical=0;
         context.getViewportPane().repaint();
     }
-    
+
     /**
      * @return Returns the updater.
      */

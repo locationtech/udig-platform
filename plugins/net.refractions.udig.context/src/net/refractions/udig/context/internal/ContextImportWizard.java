@@ -19,7 +19,6 @@ import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
 import net.refractions.udig.context.ContextPlugin;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
@@ -28,7 +27,6 @@ import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.render.ViewportModel;
 import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -50,7 +48,7 @@ import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Import Context document as a new Map.
- * 
+ *
  * @author Jody Garnett
  * @since 1.0.0
  */
@@ -97,7 +95,7 @@ public class ContextImportWizard extends Wizard implements IImportWizard {
     }
     /**
      * Process a Context Document, a new IMap will be created if successful.
-     * 
+     *
      * @param context
      * @param monitor
      */
@@ -105,7 +103,7 @@ public class ContextImportWizard extends Wizard implements IImportWizard {
         if (monitor == null)
             monitor = new NullProgressMonitor();
         try {
-            monitor.beginTask(Messages.ContextImportWizard_task_title, 100); 
+            monitor.beginTask(Messages.ContextImportWizard_task_title, 100);
             monitor.subTask(MessageFormat.format(Messages.ContextImportWizard_task_connecting, url));
             monitor.worked(5);
             InputStream input = null;
@@ -146,7 +144,7 @@ public class ContextImportWizard extends Wizard implements IImportWizard {
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
-        monitor.beginTask(Messages.ContextImportWizard_parsingxml, 100); 
+        monitor.beginTask(Messages.ContextImportWizard_parsingxml, 100);
         monitor.worked(5);
         BufferedInputStream stream = new BufferedInputStream(input);
         Document document = new SAXBuilder().build(stream);
@@ -156,7 +154,7 @@ public class ContextImportWizard extends Wizard implements IImportWizard {
 
     /**
      * Parse XML document using JDOM.
-     * 
+     *
      * @param document
      * @param monitor
      */
@@ -194,7 +192,7 @@ public class ContextImportWizard extends Wizard implements IImportWizard {
             monitor.subTask(name);
             if ("Layer".equals(resource.getName())) { //$NON-NLS-1$
                 processLayer(resource, map);
-            } else if ("SimpleFeatureType".equals(resource.getName())) { //$NON-NLS-1$
+            } else if ("FeatureType".equals(resource.getName())) { //$NON-NLS-1$
                 processFeatureType(resource, map);
             } else {
                 System.out.println("Skip " + name); //$NON-NLS-1$
@@ -246,36 +244,27 @@ public class ContextImportWizard extends Wizard implements IImportWizard {
      * <p>
      * I would really rather the renderers dragged things into the catalog as the need them...
      * </p>
-     * 
-     * @param url URL used to start searching in the catalog
-     * @param type The returned service must resolve to this type
-     * @return URL of resulting service
+     *
+     * @param url
+     * @param type
+     * @return
      */
-    static final private URL service( URL url, Class<?> type ) {
+    static final private URL service( URL url, Class type ) {
         ICatalog local = CatalogPlugin.getDefault().getLocalCatalog();
-        List<IResolve> services = local.find(url, ProgressManager.instance().get());
-        for( IResolve service : services ) {
+        List<IService> found = local.findService(url);
+        for( IService service : found ) {
             if (service.canResolve(type)) {
                 return service.getIdentifier();
             }
         }
-        IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
-        List<IService> candidates = serviceFactory.createService(url);
-        try {
-            for( Iterator<IService> i=candidates.iterator(); i.hasNext();){
-                IService service = i.next();
-                if (service.canResolve(type)) {
-                    IService registered = local.add(service);
-                    i.remove(); // don't clean this one up
-                    return registered.getIdentifier();
-                }
+        for( IService candidate : CatalogPlugin.getDefault().getServiceFactory().createService(url) ) {
+            if (candidate.canResolve(type)) {
+                local.add(candidate);
+                return candidate.getIdentifier();
             }
         }
-        finally {
-            serviceFactory.dispose( candidates, null );
-        }
         // It is okay if we don't find anything, the user interface
-        // will let the user know - tempting to force a broken WMS
+        // will let the user know - temping to force a brokwn WMS
         // handle onto the catalog though
         return url;
     }
@@ -437,7 +426,7 @@ public class ContextImportWizard extends Wizard implements IImportWizard {
      * to create the map based on the collected parameters. Builders are paramertized by a factory -
      * in this case a ProjectFactory.
      * </p>
-     * 
+     *
      * @param title Title of Map to be created
      * @return new IMap
      */

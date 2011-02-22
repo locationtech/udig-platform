@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
@@ -54,6 +55,7 @@ import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -73,7 +75,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 /**
- * Provides a tabbed browser view using the native web browser. 
+ * Provides a tabbed browser view using the native web browser.
  * <p>
  *
  * </p>
@@ -82,36 +84,36 @@ import org.eclipse.ui.part.ViewPart;
  */
 public class BrowserContainerView extends ViewPart {
     /** BrowserContainerView ID field */
-    public final static String VIEW_ID = 
+    public final static String VIEW_ID =
             "net.refractions.udig.browser.ui.browserContainerView"; //$NON-NLS-1$
     private static String BROWSER_TYPE = "net.refractions.udig.browser.TYPE"; //$NON-NLS-1$
     private static String BROWSER_NAME = "BROWSER_NAME"; //$NON-NLS-1$
     private static String BROWSER_URL = "BROWSER_URL"; //$NON-NLS-1$
     private static String BROWSER_LISTENER = "BROWSER_LISTENER"; //$NON-NLS-1$
     private static String BROWSER_ALERT_URL = "BROWSER_ALERT_URL"; //$NON-NLS-1$
-    
+
     /** BrowserContainerView tabFolder field */
     private CTabFolder tabFolder;
     private static int count = 1;
     private LocationListener locListen;
     private URL lastAlertURL;
-    
+
     // next time use policy bind less code!
     private String forwardIconEnabled = "icons/elcl16/forward_nav.gif"; //$NON-NLS-1$
     private String forwardIconDisabled = "icons/dlcl16/forward_nav.gif"; //$NON-NLS-1$
     private String backwardIconEnabled = "icons/elcl16/backward_nav.gif"; //$NON-NLS-1$
-    private String backwardIconDisabled = "icons/dlcl16/backward_nav.gif"; //$NON-NLS-1$    
+    private String backwardIconDisabled = "icons/dlcl16/backward_nav.gif"; //$NON-NLS-1$
     private String refreshIconEnabled = "icons/elcl16/refresh_co.gif"; //$NON-NLS-1$
-        
+
     private IAction forward;
     private IAction backward;
     private ChangeListener changeListener;
-    
+
     private Map<Browser, CTabItem> tabMap = new HashMap<Browser, CTabItem>();
     private Map<Browser, String> listenerMap = new HashMap<Browser, String>();
     private List<BrowserData> browserData;
     private LocationEntry locationEntry;
-    
+
     private final class BrowserProgressListener implements ProgressListener {
         private final IProgressMonitor monitor;
         private CTabItem item;
@@ -127,16 +129,16 @@ public class BrowserContainerView extends ViewPart {
                     }
                 }
             });
-            
+
             item.addListener(SWT.Dispose, new Listener(){
 
                 public void handleEvent( Event event ) {
                     monitor.done();
                 }
-                
+
             });
         }
-        
+
         int current=-1;
         Timer timer = new Timer();
         Timeout timeout = null;
@@ -145,13 +147,14 @@ public class BrowserContainerView extends ViewPart {
             @Override
             public void run() {
                 Display.getDefault().asyncExec(new Runnable(){
+
                     public void run() {
                         monitor.done();
                     }
-                    
+
                 });
             }
-            
+
         };
         public void changed( ProgressEvent event ) {
             if( timeout!=null ){
@@ -184,18 +187,18 @@ public class BrowserContainerView extends ViewPart {
         private String name;
         private String url;
         private String listener;
-        
+
         BrowserData(String name1, String url1, String listener1) {
             this.name = name1;
             this.url = url1;
             this.listener = listener1;
         }
-        
+
         BrowserData(IMemento m) {
-            this(m.getString(BROWSER_NAME), m.getString(BROWSER_URL), 
+            this(m.getString(BROWSER_NAME), m.getString(BROWSER_URL),
                     m.getString(BROWSER_LISTENER));
         }
-        
+
         /**
          *
          * @return page name
@@ -232,7 +235,7 @@ public class BrowserContainerView extends ViewPart {
     }
 
     /**
-     * 
+     *
      */
     public BrowserContainerView() {
         super();
@@ -241,30 +244,31 @@ public class BrowserContainerView extends ViewPart {
     @Override
     public void createPartControl( Composite parent ) {
         FormLayout layout = new FormLayout();
-        parent.setLayout(layout);
+		parent.setLayout(layout);
 
         locationEntry = new LocationEntry(this);
         Control control = locationEntry.createControl(parent);
         FormData data = new FormData();
-        data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(100, 0);
+        data.left = new FormAttachment(0,0);
+        data.right = new FormAttachment(100,0);
         control.setLayoutData(data);
 
-        this.tabFolder = new CTabFolder(parent, SWT.BORDER | SWT.TOP | SWT.CLOSE);
+        this.tabFolder = new CTabFolder(parent, SWT.BORDER| SWT.TOP | SWT.CLOSE);
         this.tabFolder.addSelectionListener(getChangeListener());
         data = new FormData();
-        data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(100, 0);
-        data.top = new FormAttachment(control, 0);
-        data.bottom = new FormAttachment(100, 0);
+        data.left = new FormAttachment(0,0);
+        data.right = new FormAttachment(100,0);
+        data.top = new FormAttachment(control,0);
+        data.bottom = new FormAttachment(100,0);
         tabFolder.setLayoutData(data);
-        
+
         IViewSite site = getViewSite();
         IActionBars bars = site.getActionBars();
         IToolBarManager toolbarMgr = bars.getToolBarManager();
         toolbarMgr.add(getBackwardAction());
         toolbarMgr.add(getForwardAction());
         toolbarMgr.add(getRefreshAction());
+        toolbarMgr.add(new Separator());
         toolbarMgr.add(locationEntry.getButton());
 
         if(this.browserData != null) {
@@ -281,7 +285,7 @@ public class BrowserContainerView extends ViewPart {
     public void setFocus() {
         this.tabFolder.getSelection().getControl().setFocus();
     }
-    
+
 
     /**
      *
@@ -310,7 +314,7 @@ public class BrowserContainerView extends ViewPart {
         }
         return this.forward;
     }
-    
+
     /**
      *
      * @return Action
@@ -339,7 +343,7 @@ public class BrowserContainerView extends ViewPart {
         }
         return this.backward;
     }
-    
+
     private IAction refresh;
     public IAction getRefreshAction() {
         if(this.refresh == null) {
@@ -355,19 +359,17 @@ public class BrowserContainerView extends ViewPart {
                 }
             };
             this.refresh.setEnabled(true);
-            this.refresh.setText(Messages.BrowserContainerView_refresh); 
-            this.refresh.setImageDescriptor(
-                    BrowserPlugin.getImageDescriptor(this.refreshIconEnabled) );
+            this.refresh.setText(Messages.BrowserContainerView_refresh);
             this.refresh.setImageDescriptor(BrowserPlugin.getImageDescriptor(this.refreshIconEnabled) );
-            this.refresh.setToolTipText(Messages.BrowserContainerView_refresh); 
+            this.refresh.setToolTipText(Messages.BrowserContainerView_refresh);
         }
         return this.refresh;
     }
-    
+
     public void setName(String name) {
         this.setPartName(name);
     }
-    
+
     /**
      *
      * @return singleton LocationListener
@@ -390,12 +392,13 @@ public class BrowserContainerView extends ViewPart {
                     }
                 }
                 private boolean recognizedFile( String url ) {
+
                     if (url.toLowerCase().indexOf("file://") != -1 ){ //$NON-NLS-1$
-                        return new FileConnectionFactory().canProcess(url); 
+                        return new FileConnectionFactory().canProcess(url);
                     }
-                    final Pattern PATTERN = Pattern.compile("[^:/]+://?.+"); //$NON-NLS-1$
+                    final Pattern PATTERN = Pattern.compile("[^:/]+://?.+");
                     if( PATTERN.matcher(url).matches()){
-                       return new FileConnectionFactory().canProcess(url);
+                    	return new FileConnectionFactory().canProcess(url);
                     }
                     return false;
                 }
@@ -406,7 +409,7 @@ public class BrowserContainerView extends ViewPart {
         }
         return this.locListen;
     }
-    
+
     /**
      *
      * @return change listener
@@ -417,7 +420,7 @@ public class BrowserContainerView extends ViewPart {
         }
         return changeListener;
     }
-    
+
     IEditorPart getEditor() {
         IWorkbenchPage[] array = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages();
         IEditorPart part = null;
@@ -432,23 +435,23 @@ public class BrowserContainerView extends ViewPart {
         }
         return part;
     }
-    
+
     /**
      *
      * @param name
      * @param url
-     * @param listen 
+     * @param listen
      */
     public void addTab(String name, String url, LocationListener listen) {
         addTab(name, url, (Image)null, listen);
     }
-    
+
     /**
      *
      * @param name
      * @param url
      * @param desc
-     * @param listen 
+     * @param listen
      */
     public void addTab(String name, String url, ImageDescriptor desc, LocationListener listen) {
         if(desc != null)
@@ -456,70 +459,70 @@ public class BrowserContainerView extends ViewPart {
         else
             addTab(name, url, (Image)null, listen);
     }
-    
+
     /**
      *
      * @param name
      * @param url
      * @param desc
-     * @param listen 
+     * @param listen
      */
     public void addTab(String name, URL url, ImageDescriptor desc, LocationListener listen) {
         addTab(name, url.toString(), desc, listen);
     }
-        
+
     /**
      *
      * @param name
      * @param url
      * @param image
-     * @param listen 
+     * @param listen
      */
     public void addTab(String name, String url, Image image, LocationListener listen) {
         CTabItem item = new CTabItem(this.tabFolder, SWT.NONE);
         if(name != null) {
             item.setText(name);
         } else {
-            item.setText(MessageFormat.format(Messages.BrowserContainerView_pageCount, new Object[] { count++ })); 
+            item.setText(MessageFormat.format(Messages.BrowserContainerView_pageCount, new Object[] { count++ }));
         }
         Browser browser = createBrowser(item, listen);
         browser.setUrl(url);
-        
+
         if(image != null)
             item.setImage(image);
         this.tabFolder.setSelection(item);
         this.tabFolder.layout();
     }
-    
+
     /**
      *
      * @param url
-     * @param listen 
+     * @param listen
      */
     public void addTab(URL url, LocationListener listen) {
         addTab(null, url, listen);
     }
-    
+
     /**
      *
      * @param url
      * @param image
-     * @param listen 
+     * @param listen
      */
     public void addTab(URL url, Image image, LocationListener listen) {
         addTab(null, url.toString(), image, listen);
     }
-    
+
     /**
      *
      * @param name
      * @param url
-     * @param listen 
+     * @param listen
      */
     public void addTab(String name, URL url, LocationListener listen) {
         addTab(name, url.toString(), listen);
     }
-    
+
     public void init(IViewSite site, IMemento memento) throws PartInitException {
         super.init(site, memento);
         if(memento != null) {
@@ -538,7 +541,7 @@ public class BrowserContainerView extends ViewPart {
             }
         }
     }
-    
+
     public void saveState(IMemento memento) {
         super.saveState(memento);
         if(this.lastAlertURL != null)
@@ -560,7 +563,7 @@ public class BrowserContainerView extends ViewPart {
             }
         }
     }
-    
+
     private Browser createBrowser(CTabItem item, LocationListener listen) {
         Browser browser = new Browser(tabFolder, SWT.NONE);
         if(listen != null) {
@@ -577,7 +580,7 @@ public class BrowserContainerView extends ViewPart {
         browser.addTitleListener(getChangeListener());
         item.setControl(browser);
         tabMap.put(browser, item);
-        
+
         final IProgressMonitor monitor = getViewSite().getActionBars().getStatusLineManager().getProgressMonitor();
 
 
@@ -585,14 +588,14 @@ public class BrowserContainerView extends ViewPart {
 
         return browser;
     }
-    
+
     public void addTab(String url, LocationListener listen) {
         addTab(null, url, listen);
     }
-    
-    private class ChangeListener implements 
-            LocationListener, 
-            VisibilityWindowListener, 
+
+    private class ChangeListener implements
+            LocationListener,
+            VisibilityWindowListener,
             SelectionListener,
             OpenWindowListener,
             CloseWindowListener,

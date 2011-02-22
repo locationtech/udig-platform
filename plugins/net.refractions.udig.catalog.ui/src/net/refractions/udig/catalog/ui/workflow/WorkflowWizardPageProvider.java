@@ -14,25 +14,26 @@
  */
 package net.refractions.udig.catalog.ui.workflow;
 
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 
 /**
  * Creates a Wizard page for the provided state.
- * 
+ *
  * @author jesse
  * @since 1.1.0
- * 
- * @see 
+ *
+ * @see
  */
 public interface WorkflowWizardPageProvider {
 
     /**
-     * Returns the wizard page for the state.  
+     * Returns the wizard page for the state.
      * <p>
      * For each state instance the same page instance must be returned.
      * </p>
      *
      * @param state the state to create the wizard page for.
-     * @return the wizard page for the state.  
+     * @return the wizard page for the state.
      * <p>
      * For each state instance the same page instance must be returned.
      * </p>

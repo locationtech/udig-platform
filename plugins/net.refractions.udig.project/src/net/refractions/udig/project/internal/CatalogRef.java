@@ -26,7 +26,6 @@ import java.util.Map.Entry;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
@@ -58,7 +57,7 @@ import org.osgi.service.prefs.Preferences;
  * connection parameters again. However, they services are not loaded until load is called. This is
  * so that uDig doesn't block until it is a good time to block. (IE when getGeoResources is called).
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -69,14 +68,14 @@ public class CatalogRef {
 
     private static final String ERROR_SAVING = "Error saving"; //$NON-NLS-1$
 
-    protected Map<ID, Map<String, Serializable>> connectionParams = Collections
-            .synchronizedMap(new HashMap<ID, Map<String, Serializable>>());
+    protected Map<URL, Map<String, Serializable>> connectionParams = Collections
+            .synchronizedMap(new HashMap<URL, Map<String, Serializable>>());
 
     private volatile boolean loaded = false;
 
     /**
      * Construct <code>LayerRef</code>.
-     * 
+     *
      * @param layer
      */
     public CatalogRef( Layer layer ) {
@@ -150,9 +149,13 @@ public class CatalogRef {
     }
 
     /**
-     * Reloads the parameters for the resource's parameters from the string and stores them. Services
-     * aren't created until load() is called.
-     * 
+     * Reloads the parameters for the resource's parameters from the string and stores them.
+     * Services aren't created until load() is called.
+     * <p>
+     * This method is called by the EMF framework. In fact the entire class should be ignored by
+     * everything but EMF
+     * </p>
+     *
      * @param string
      */
     public void parseResourceParameters( String string ) {
@@ -172,16 +175,26 @@ public class CatalogRef {
             IExportedPreferences paramsNode = preferencesService.readPreferences(input);
 
             ServiceParameterPersister persister = new LayerCatalogRefPersister(connectionParams,
-                    null);
+                    null); //$NON-NLS-1$
 
             persister.restore(findParameterNode(paramsNode));
         } catch (Throwable e) {
             // ok maybe it is an from an older version of uDig so try the oldCatalogRef
-            ProjectPlugin.log("CatalogRef#parseResourceParameters, couldn't load paramters", e); //$NON-NLS-1$
+            try {
+                OldCatalogRef old = new OldCatalogRef();
+                old.parseResourceParameters(string);
+                connectionParams = old.connectionParams;
+            } catch (Throwable e2) {
+                ProjectPlugin.log("CatalogRef#parseResourceParameters, couldn't load paramters", e); //$NON-NLS-1$
+            }
         }
 
     }
 
+    /**
+     * Its stupidly difficult to get the first node of a IExportedPreferences so this method
+     * encapsulates that code.
+     */
     private Preferences findParameterNode( IExportedPreferences paramsNode )
             throws BackingStoreException {
         String[] name = paramsNode.childrenNames();
@@ -193,19 +206,41 @@ public class CatalogRef {
     }
 
     /**
-     * @return Returns the layer.
-     * @uml.property name="layer"
+     * @return Returns the layer that this object is part of.
      */
     public Layer getLayer() {
         return layer;
     }
 
     /**
-     * @param layer The layer to set.
-     * @uml.property name="layer"
+     * Should only be called by the framework.
+     *
+     * @param layer The layer that "owns" this layer.
      */
     public void setLayer( Layer layer ) {
         this.layer = layer;
+    }
+
+    /**
+     * MapGraphic has had its ID change so we need to catch layers that use the old id an update
+     * them
+     */
+    private void maintainBackwardsCompatibility( Layer layer ) {
+        String id = layer.getID().toExternalForm();
+        String path = id;
+        if (path.contains("#")) {
+            int indexOfHash = path.lastIndexOf("#");
+            path = path.substring(0, indexOfHash + 1);
+            if ("file:/localhost/mapgraphic#".equals(path)) {
+                try {
+                    URL url = new URL(null, "mapgraphic:///localhost/mapgraphic"
+                            + id.substring(indexOfHash), CorePlugin.RELAXED_HANDLER);
+                    layer.setID(url);
+                } catch (MalformedURLException e) {
+                    // should be ok
+                }
+            }
+        }
     }
 
     /**
@@ -213,10 +248,12 @@ public class CatalogRef {
      */
     public void load() {
 
+        maintainBackwardsCompatibility(getLayer());
+
         ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
         IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
         synchronized (connectionParams) {
-            for( Map.Entry<ID, Map<String, Serializable>> entry : connectionParams.entrySet() ) {
+            for( Map.Entry<URL, Map<String, Serializable>> entry : connectionParams.entrySet() ) {
                 Map<String, Serializable> params = entry.getValue();
                 boolean couldResolve = resolveURLs(params);
                 if (!couldResolve) {
@@ -224,14 +261,16 @@ public class CatalogRef {
                     // the resource
                     ProjectPlugin
                             .log(
-                                    "Warning: couldn't find the layer's resources in the catalog and can't construct it because the current map" //$NON-NLS-1$
-                                            + " does not have a Resource:" + layer.getID(), //$NON-NLS-1$
-                                    new Exception("Failure loading layer")); //$NON-NLS-1$
+                                    "Warning: couldn't find the layer's resources in the catalog and can't construct it because the current map"
+                                            + " does not have a Resource:" + layer.getID(),
+                                    new Exception("Failure loading layer"));
                     continue;
                 }
 
                 List<IService> createdServices = serviceFactory.createService(params);
+
                 updateLayerID(createdServices);
+
                 if (serviceExistsInCatalog(createdServices, catalog)) {
                     continue;
                 } else {
@@ -243,7 +282,6 @@ public class CatalogRef {
         loaded = true;
     }
 
-    
     /**
      * This is confusing so read on...
      * <p>
@@ -256,7 +294,7 @@ public class CatalogRef {
      * Because of this the ids services must be inspected and layer's id must be checked to ensure
      * it is still valid. If not it must be updated to refer to a valid service
      * </p>
-     * 
+     *
      * @param createdServices
      */
     private void updateLayerID( List<IService> createdServices ) {
@@ -276,25 +314,25 @@ public class CatalogRef {
         String serviceIdAsString = URLUtils.urlToString(id, false);
         String externalizedLayerID = layerid.toExternalForm();
 
-        String[] segments = externalizedLayerID.split("#"); //$NON-NLS-1$
+        String[] segments = externalizedLayerID.split("#");
 
         if (segments.length < 2) {
             // oh crap the service that this layer was originally created from does not obey the
             // convention where georesources must be the serviceid#subid
             ProjectPlugin
-                    .log("Some service doesn't obey the convention where georesources must be the serviceid#subid. \n\nLayer id = " //$NON-NLS-1$
-                            + layerid + "\n\nThe potential culprits are: " + createdServices); //$NON-NLS-1$
+                    .log("Some service doesn't obey the convention where georesources must be the serviceid#subid. \n\nLayer id = "
+                            + layerid + "\n\nThe potential culprits are: " + createdServices);
             return;
         }
 
         try {
-            layer.setID(new URL(serviceIdAsString + "#" + segments[1])); //$NON-NLS-1$
+            layer.setID(new URL(serviceIdAsString + "#" + segments[1]));
         } catch (MalformedURLException e) {
             throw (RuntimeException) new RuntimeException( ).initCause( e );
         }
 
     }
-    
+
     private void addServicesToCatalog( List<IService> createdServices, ICatalog catalog ) {
         for( IService service : createdServices ) {
             catalog.add(service);
@@ -304,7 +342,7 @@ public class CatalogRef {
     private boolean serviceExistsInCatalog( List<IService> createdServices, ICatalog catalog ) {
         boolean found = false;
         for( IService service : createdServices ) {
-            if (catalog.getById(IService.class, service.getID(), ProgressManager.instance()
+            if (catalog.getById(IService.class, service.getIdentifier(), ProgressManager.instance()
                     .get()) != null) {
                 found = true;
             } else {
@@ -317,7 +355,7 @@ public class CatalogRef {
     /**
      * Takes the params and tries to change them so if they are relative URLs then they are relative
      * to the map.
-     * 
+     *
      * @return Return true if the map has a resource and therefore a URI false if resolving failed.
      *         This may happen if the map was copied and no longer has a URL. In this case just
      *         search the catalog and don't load resources from the given URI.
@@ -345,7 +383,7 @@ public class CatalogRef {
 
     /**
      * Returns true if the required GeoResources have been added to the catalog.
-     * 
+     *
      * @return
      * @uml.property name="loaded"
      */
@@ -356,27 +394,27 @@ public class CatalogRef {
     /**
      * Used to store a catalog reference into a project file.
      * <p>
-     * Please note that catalog references here are stored as connectionParameters (rather than a
-     * simple ID). This allows a project file to find and locate services when loaded up in another
-     * copy of uDig.
+     * Please note that catalog references here are stored as connectionParameters
+     * (rather than a simple ID). This allows a project file to find and locate
+     * services when loaded up in another copy of uDig.
      */
-    private static class LayerCatalogRefPersister extends ServiceParameterPersister {
+    private static class LayerCatalogRefPersister extends ServiceParameterPersister{
 
-        private Map<ID, Map<String, Serializable>> allParams;
+        private Map<URL, Map<String, Serializable>> allParams;
 
-        public LayerCatalogRefPersister( Map<ID, Map<String, Serializable>> allParams, File mapFile ) {
+        public LayerCatalogRefPersister( Map<URL, Map<String, Serializable>> allParams, File mapFile ) {
             super(CatalogPlugin.getDefault().getLocalCatalog(), CatalogPlugin.getDefault()
                     .getServiceFactory(), mapFile);
             this.allParams = allParams;
         }
 
         @Override
-        protected void locateService( ID id, Map<String, Serializable> map, Map<String, Serializable> properties  ) {
-            if (allParams.containsKey(id))
+        protected void locateService( URL url, Map<String, Serializable> map ) {
+            if (allParams.containsKey(url))
                 ProjectPlugin
                         .log("LayerCatalogRefPersister#locateService: duplicate resource ids when loading paramers"); //$NON-NLS-1$
 
-            allParams.put(id, map);
+            allParams.put(url, map);
         }
 
     }

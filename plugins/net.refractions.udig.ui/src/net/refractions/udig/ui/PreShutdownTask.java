@@ -19,10 +19,10 @@ import org.eclipse.ui.IWorkbench;
 
 
 /**
- * Encapsulates a task that needs to be run at shutdown but before the workbench has been shutdown.  
+ * Encapsulates a task that needs to be run at shutdown but before the workbench has been shutdown.
  * It can be submitted to the {@link ShutdownTaskList}.
- * Methods are NOT called in the Display thread.  
- * 
+ * Methods are NOT called in the Display thread.
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -47,9 +47,9 @@ public interface PreShutdownTask {
      * @return true if shutdown is permitted or false if not.  ignored if forced==true.
      */
     boolean handlePreShutdownException( Throwable t, boolean forced );
-    
+
     /**
-     * Returns the number of steps {@link #preShutdown(IProgressMonitor, IWorkbench, boolean)} will use.  
+     * Returns the number of steps {@link #preShutdown(IProgressMonitor, IWorkbench, boolean)} will use.
      * This is called only once just before all shutdown tasks are run.
      *
      * @return the number of steps {@link #preShutdown(IProgressMonitor, IWorkbench, boolean)} will use.

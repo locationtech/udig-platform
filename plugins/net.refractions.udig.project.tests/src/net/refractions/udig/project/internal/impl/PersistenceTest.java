@@ -26,8 +26,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 public class PersistenceTest extends AbstractProjectTestCase {
 
@@ -50,7 +48,7 @@ public class PersistenceTest extends AbstractProjectTestCase {
         ProjectRegistry registry = ProjectPlugin.getPlugin().getProjectRegistry();
         List<Project> projects = registry.getProjects();
         registry.getProjects().removeAll(projects);
-        
+
         EList list=registry.eResource().getResourceSet().getResources();
         Set<Resource> toRemove=new HashSet<Resource>();
         for (Iterator iter = list.iterator(); iter.hasNext();) {
@@ -60,7 +58,7 @@ public class PersistenceTest extends AbstractProjectTestCase {
                 toRemove.add(element);
             }
         }
-        
+
         project=registry.getDefaultProject();
 		file = new File(project.eResource().getURI().toFileString());
 		if( file.exists() ){
@@ -77,18 +75,18 @@ public class PersistenceTest extends AbstractProjectTestCase {
 		}
 
         registry.eResource().getResourceSet().getResources().removeAll(toRemove);
-        
+
         project=registry.getProject(FileLocator.toFileURL(Platform.getInstanceLocation().getURL()).getFile());
 
 		resource1 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(type1Name,4),false);
 		Map map = MapTests.createNonDynamicMapAndRenderer(resource1, new Dimension(512,512));
-        map.setName(firstMapName); 
-		map.getLayersInternal().get(0).setName(firstMapLayerName); 
-		
-		resource2 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(type2Name,6),false); 
+        map.setName(firstMapName);
+		map.getLayersInternal().get(0).setName(firstMapLayerName);
+
+		resource2 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(type2Name,6),false);
 		map=MapTests.createNonDynamicMapAndRenderer(resource2, new Dimension(512,512));
-		map.setName(secondMapName); 
-		map.getLayersInternal().get(0).setName(secondMapLayerName); 
+		map.setName(secondMapName);
+		map.getLayersInternal().get(0).setName(secondMapLayerName);
 	}
 
 	protected void tearDown() throws Exception {
@@ -106,10 +104,10 @@ public class PersistenceTest extends AbstractProjectTestCase {
 			file.delete();
 		}
 	}
-	
+
 	public void testSaveAndLoad() throws Exception {
 		EList list=project.eResource().getResourceSet().getResources();
-		
+
 		for (Iterator iter = list.iterator(); iter.hasNext();) {
 			Resource element = (Resource) iter.next();
             try{
@@ -119,7 +117,7 @@ public class PersistenceTest extends AbstractProjectTestCase {
             if( !element.getContents().contains(ProjectPlugin.getPlugin().getProjectRegistry()) )
                 element.unload();
 		}
-		
+
 		ResourceSet set=new ResourceSetImpl();
 		Project project=(Project) set.getResource(URI.createURI("file://"+file.getAbsolutePath()), true).getAllContents().next(); //$NON-NLS-1$
 		assertFalse(project.eIsProxy());
@@ -127,27 +125,27 @@ public class PersistenceTest extends AbstractProjectTestCase {
 		int maps=0;
 		boolean foundFirstMap=false;
 		boolean foundSecondMap=false;
-		
+
 		List resources=project.getElements();
 		for (Iterator iter = resources.iterator(); iter.hasNext();) {
 			Map map=(Map) iter.next();
-	
+
 			assertFalse(map.eIsProxy());
 			assertEquals(1, map.getLayersInternal().size());
 			assertNotNull(map.getLayersInternal().get(0).getGeoResources().get(0));
 			assertNotNull(map.getLayersInternal().get(0).getResource(FeatureSource.class, new NullProgressMonitor()));
-	
-			if( map.getName().equals(firstMapName)){ 
+
+			if( map.getName().equals(firstMapName)){
 				foundFirstMap=true;
-				assertEquals( firstMapLayerName, map.getLayersInternal().get(0).getName()); 
-				FeatureSource<SimpleFeatureType, SimpleFeature> source=map.getLayersInternal().get(0).getResource(FeatureSource.class, null);				
+				assertEquals( firstMapLayerName, map.getLayersInternal().get(0).getName());
+				FeatureSource source=map.getLayersInternal().get(0).getResource(FeatureSource.class, null);
 				assertEquals( 4, source.getCount(Query.ALL));
-				assertEquals( firstMapLayerName, map.getLayersInternal().get(0).getName()); 
+				assertEquals( firstMapLayerName, map.getLayersInternal().get(0).getName());
 			}
-			if( map.getName().equals(secondMapName)){ 
+			if( map.getName().equals(secondMapName)){
 				foundSecondMap=true;
-				assertEquals( secondMapLayerName, map.getLayersInternal().get(0).getName()); 
-				FeatureSource<SimpleFeatureType, SimpleFeature> source=map.getLayersInternal().get(0).getResource(FeatureSource.class, null);				
+				assertEquals( secondMapLayerName, map.getLayersInternal().get(0).getName());
+				FeatureSource source=map.getLayersInternal().get(0).getResource(FeatureSource.class, null);
 				assertEquals( 6, source.getCount(Query.ALL));
 				assertEquals( secondMapLayerName, map.getLayersInternal().get(0).getName());
 			}

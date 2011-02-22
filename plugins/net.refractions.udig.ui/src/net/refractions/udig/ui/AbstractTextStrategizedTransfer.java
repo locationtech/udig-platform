@@ -23,7 +23,7 @@ import org.eclipse.swt.dnd.TransferData;
  * An abstract class for all the Types of text transfers supported by uDig.  Drag and
  * Drop is extremely platform dependent (I'm really disappointed with the SWT design)
  * so this class is handling the Linux requirements.  It depends on getTypeIds and getTypeNames
- * being implemented which to me is stupid.  
+ * being implemented which to me is stupid.
 
  * @author jones
  * @since 1.1.0
@@ -36,13 +36,13 @@ public abstract class AbstractTextStrategizedTransfer extends AbstractStrategize
     private static final String UTF8_STRING = "UTF8_STRING"; //$NON-NLS-1$
     private static final int COMPOUND_TEXT_ID = registerType(COMPOUND_TEXT);
     private static final int UTF8_STRING_ID = registerType(UTF8_STRING);
-    
+
 
     @Override
     public Object nativeToJava( TransferData transferData ) {
         return TextTransfer.getInstance().nativeToJava(transferData);
     }
-    
+
     protected int[] getTypeIds() {
         return new int[] {UTF8_STRING_ID, COMPOUND_TEXT_ID};
     }

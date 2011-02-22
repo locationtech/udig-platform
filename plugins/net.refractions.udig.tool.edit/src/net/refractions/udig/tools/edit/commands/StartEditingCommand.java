@@ -35,7 +35,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * <li>Sets the state to CREATING</li>
  * <li>Adds a point to the geom</li>
  * </ul>
- * 
+ *
  * @author jones
  * @since 1.1.0
  * @see net.refractions.udig.tools.edit.behaviour.StartEditingBehaviour
@@ -60,20 +60,20 @@ public class StartEditingCommand extends AbstractCommand implements UndoableMapC
         this.endState=endState;
         addVertexCommand=new AddVertexCommand(handler, handler.getEditBlackboard(layer), Point.valueOf(event.x, event.y));
     }
-    
+
     public void run( IProgressMonitor monitor ) throws Exception {
         monitor.beginTask(Messages.StartEditingCommand_name, 32);
         monitor.worked(2);
-        
+
         EditBlackboard editBlackboard = handler.getEditBlackboard(layer);
-        
+
         EditGeom editGeom = editBlackboard.getGeoms().get(0);
         if( editGeom.getShell().getNumPoints()>0 )
             editGeom=editBlackboard.newGeom(null, type);
         else{
             editGeom.setShapeType(type);
         }
-        
+
         this.currentState=handler.getCurrentState();
         this.currentShape=handler.getCurrentShape();
         handler.setCurrentShape(editGeom.getShell());

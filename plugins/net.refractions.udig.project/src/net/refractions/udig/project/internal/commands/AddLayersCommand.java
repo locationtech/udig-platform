@@ -28,25 +28,25 @@ public class AddLayersCommand extends AbstractCommand implements UndoableMapComm
 
     /**
      * Creates a the command from a set of
-     * 
+     *
      * @see Layer or
      * @see IGeoResource objects.
      * @param resources A list containing a combination of layers or resources.
      */
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
     public AddLayersCommand( Collection resources ) {
         this( resources, -1);
-        
+
     }
 
     /**
      * Creates a the command from a set of
-     * 
+     *
      * @see Layer or
      * @see IGeoResource objects.
      * @param resources A list containing a combination of layers or resources.
      */
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
     public AddLayersCommand( Collection resources, int i ) {
         this.resources = resources;
         index=i;
@@ -57,14 +57,14 @@ public class AddLayersCommand extends AbstractCommand implements UndoableMapComm
         if( layers==null ){
             layers=new ArrayList<Layer>();
             LayerFactory layerFactory = map.getLayerFactory();
-            
+
             selection = (Layer) map.getEditManager().getSelectedLayer();
-            
+
             for( Object o : resources ) {
                 Layer layer = null;
-                
+
                 if (o instanceof IGeoResource) {
-                    
+
                     // ensure that the service is part of the catalog so that the find method in layer
                     // turn into layer
                     layer = layerFactory.createLayer((IGeoResource) o);
@@ -73,11 +73,11 @@ public class AddLayersCommand extends AbstractCommand implements UndoableMapComm
                     // leave as is
                     layer = (Layer) o;
                 }
-    
+
                 if (layer != null) {
                     layers.add(layer);
                 }
-                
+
             }
         }
         if (!layers.isEmpty()){
@@ -85,12 +85,12 @@ public class AddLayersCommand extends AbstractCommand implements UndoableMapComm
                 index=map.getLayersInternal().size();
             }
             trace();
-            
+
             map.getLayersInternal().addAll(index, layers);
             map.getEditManagerInternal().setSelectedLayer(layers.get(0));
         }
 
-            
+
     }
 
     private void trace() {
@@ -104,7 +104,7 @@ public class AddLayersCommand extends AbstractCommand implements UndoableMapComm
     }
 
     public String getName() {
-        return Messages.AddLayersCommand_name; 
+        return Messages.AddLayersCommand_name;
     }
 
     public void rollback( IProgressMonitor monitor ) throws Exception {

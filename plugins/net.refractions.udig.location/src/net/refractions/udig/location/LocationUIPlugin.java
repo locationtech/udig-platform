@@ -18,11 +18,11 @@ public class LocationUIPlugin extends AbstractUIPlugin {
     public static String ID = "net.refractions.udig.location"; //$NON-NLS-1$
     /** Icons path (value "icons/") */
     public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
-    
+
 	//The shared instance.
 	private static LocationUIPlugin plugin;
     private Images images = new Images();
-	
+
 	/**
 	 * The constructor.
 	 */
@@ -32,7 +32,7 @@ public class LocationUIPlugin extends AbstractUIPlugin {
 
     /**
      * Set up shared images.
-     * 
+     *
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
      * @param context
      * @throws Exception
@@ -45,7 +45,7 @@ public class LocationUIPlugin extends AbstractUIPlugin {
     }
     /**
      * Cleanup after shared images.
-     * 
+     *
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
      * @param context
      * @throws Exception
@@ -68,12 +68,12 @@ public class LocationUIPlugin extends AbstractUIPlugin {
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
-     * This will be a user visible ERROR iff:
+     * This will be a user visable ERROR iff:
      * <ul>
-     * <li>t is an Exception (we are assuming it is human readable) or if a message is provided
+     * <li>t is an Exception we are assuming it is human readable or if a message is provided
      * </ul>
      * </p>
-     * 
+     *
      * @param message
      * @param t
      */
@@ -88,16 +88,16 @@ public class LocationUIPlugin extends AbstractUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:
-     * 
+     *
      * <pre><code>
      * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }
      * </code></pre>
-     * 
+     *
      * </p>
-     * 
+     *
      * @param message
      * @param e
      */
@@ -123,12 +123,12 @@ public class LocationUIPlugin extends AbstractUIPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      * @return true if -debug is on for this plugin
      */
     public static boolean isDebugging( final String trace ) {
         return getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 }

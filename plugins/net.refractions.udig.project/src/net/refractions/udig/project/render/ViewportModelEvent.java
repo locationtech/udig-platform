@@ -35,7 +35,7 @@ public class ViewportModelEvent extends UDIGEvent{
     }
 
     private final EventType type;
-    
+
     public ViewportModelEvent( Object source2, EventType type, Object newValue2, Object oldValue2 ) {
         super(source2, newValue2, oldValue2);
         this.type=type;

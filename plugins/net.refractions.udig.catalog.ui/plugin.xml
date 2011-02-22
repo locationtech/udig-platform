@@ -188,6 +188,7 @@
             </command>
          </menuContribution>
       </extension>
+   <extension-point id="FeatureExport" name="FeatureExport" schema="schema/FeatureExport.exsd"/>
    <extension-point id="reshapePostAction" name="reshapePostAction" schema="schema/reshapePostAction.exsd"/>
 
    <extension
@@ -249,21 +250,33 @@
                showTitle="true"
                relative="net.refractions.udig.catalog.ui.CatalogView"
                relationship="stack"
-               id="net.refractions.udig.catalog.ui.Search"/>               
+               id="net.refractions.udig.catalog.ui.Search"/>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="net.refractions.udig.ui.alternateMapPerspective">
+         <viewShortcut id="net.refractions.udig.catalog.ui.CatalogView"/>
+         <viewShortcut id="net.refractions.udig.catalog.ui.Search"/>
+  		 <view
+               closeable="true"
+               standalone="true"
+               moveable="true"
+               visible="true"
+               showTitle="true"
+               relative="net.refractions.udig.catalog.ui.CatalogView"
+               relationship="stack"
+               id="net.refractions.udig.catalog.ui.Search"/>
       </perspectiveExtension>
    </extension>
-   
+
 
    <extension
          point="net.refractions.udig.catalog.ui.connectionFactory">
      <factory class="net.refractions.udig.catalog.ui.FileConnectionFactory"
-            id="net.refractions.udig.catalog.ui.openFileConnection"/>
+            id="net.refractions.udig.catalog.ui.openFilePage"/>
       <wizardPage
             banner="icons/wizban/feature_file_wiz.gif"
             class="net.refractions.udig.catalog.ui.FileConnectionPage"
             description="%wizard.fileopen.description"
             icon="icons/etool16/file_wiz.gif"
-            id="net.refractions.udig.catalog.ui.openFilePage"
             name="%wizard.fileopen.name"/>
    </extension>
    <extension
@@ -277,7 +290,7 @@
    <extension
         point="org.eclipse.ui.exportWizards">
      <wizard
-           class="net.refractions.udig.catalog.ui.export.CatalogExport$CatalogExportAdapter"
+           class="net.refractions.udig.catalog.ui.export.CatalogExportDelegateWizard"
            icon="icons/etool16/exportshapefile_wiz.gif"
            id="net.refractions.udig.catalog.ui.dataExportWizard"
            name="%layerExport.name">
@@ -289,11 +302,11 @@
    <extension
          point="org.eclipse.ui.importWizards">
       <wizard
-            class="net.refractions.udig.catalog.internal.ui.CatalogImport$CatalogImportAdapter"
+            class="net.refractions.udig.catalog.internal.ui.CatalogImportDelegateWizard"
             icon="icons/obj16/repository_obj.gif"
             id="net.refractions.udig.catalog.ui.dataImportWizard"
             name="%dataImportWizard.name">
-         <description>Import a spatial data source into the catalog.</description>
+         <description>Import from a data source.</description>
       </wizard>
    </extension>
 
@@ -309,14 +322,13 @@
                label="%resetService.label"
                menubarPath="additions"
                tooltip="%resetService.tooltip"/>
-      </objectContribution>         
+      </objectContribution>
    </extension>
   <extension
         point="net.refractions.udig.ui.dropAction">
         <action
-              class="net.refractions.udig.catalog.internal.ui.actions.CatalogImportDropAction"
-              enablesFor="+"
-              name="%import.action.name">
+           class="net.refractions.udig.catalog.internal.ui.actions.CatalogImportDropAction"
+           name="%import.action.name">
 	       <acceptedType class="java.net.URL"/>
 	       <acceptedType class="java.lang.String"/>
 	       <acceptedType class="java.io.File"/>
@@ -330,14 +342,13 @@
 	    </action>
   </extension>
   <extension
-        id="net.refractions.udig.catalog.operations"
         point="net.refractions.udig.ui.operation">
      <operation
            categoryId="net.refractions.udig.ui.edit"
            class="net.refractions.udig.catalog.internal.ui.ops.NewFeatureTypeOp"
            enablesFor="1"
            id="net.refractions.udig.catalog.ui.newFeatureType"
-           menuPath="layer/new"
+           menuPath="file/new"
            name="%newFeatureType"
            targetClass="net.refractions.udig.catalog.IService">
         <enablement>
@@ -358,24 +369,12 @@
            class="net.refractions.udig.catalog.internal.ui.ops.NewFeatureTypeOp"
            enablesFor="1"
            id="net.refractions.udig.catalog.ui.addFeatureType"
-           name="%AddFeatureType"
+           name="%addFeatureType"
            targetClass="net.refractions.udig.catalog.IService">
         <enablement>
            <adaptsTo target="org.geotools.data.DataStore"/>
         </enablement>
      </operation>
-       <operation
-             categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
-             class="net.refractions.udig.catalog.ui.operation.ReshapeOperation"
-             id="net.refractions.udig.catalog.ui.operation.operationReshape"
-             name="%Reshape"
-             targetClass="net.refractions.udig.catalog.IGeoResource">
-          <enablement>
-             <adaptsTo
-                   target="org.geotools.data.FeatureSource">
-             </adaptsTo>
-          </enablement>
-       </operation>
      <category
            context="GeoResource"
            id="net.refractions.udig.catalog.ui.operation.resourceCategory"
@@ -384,7 +383,18 @@
               locationURI="menu:data?after=wbStart">
         </menuContribution>
      </category>
-     
+            <operation
+             categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
+             class="net.refractions.udig.catalog.ui.operation.ReshapeOperation"
+             id="net.refractions.udig.catalog.shp.operationReshape"
+             name="%Reshape.Category"
+             targetClass="net.refractions.udig.catalog.IGeoResource">
+          <enablement>
+             <adaptsTo
+                   target="org.geotools.data.FeatureSource">
+             </adaptsTo>
+          </enablement>
+       </operation>
   </extension>
   <extension
         point="org.eclipse.ui.preferencePages">
@@ -393,10 +403,10 @@
            id="net.refractions.udig.catalog.ui.preferences.CatalogPreferencePage"
            name="%catalog.preferences.name"/>
   </extension>
-  <extension
+      <extension
           point="net.refractions.udig.catalog.ui.connectionFactory">
        <factory class="net.refractions.udig.catalog.memory.NewServiceConnectionFactory"
        			 id = "net.refractions.udig.catalog.import.memory"/>
-  </extension>
-  
+    </extension>
+
 </plugin>

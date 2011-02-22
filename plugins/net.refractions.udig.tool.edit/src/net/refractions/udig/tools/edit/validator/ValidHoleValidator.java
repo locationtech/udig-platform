@@ -40,10 +40,10 @@ public class ValidHoleValidator implements IEditValidator {
         PrimitiveShape hole = handler.getCurrentShape();
 
         assert hole!=shell;
-        
-        // check the new edge (that will be created by event) to see if it intersect with the 
+
+        // check the new edge (that will be created by event) to see if it intersect with the
         // rest of the hole
-        
+
         Point newPoint = Point.valueOf(event.x, event.y);
         int lastPointIndex = hole.getNumPoints()-1;
         if( hole.getNumPoints()>2 && EditUtils.instance.intersection(hole.getPoint(lastPointIndex), newPoint, hole, 0, lastPointIndex) ){
@@ -51,12 +51,12 @@ public class ValidHoleValidator implements IEditValidator {
         }
         if( !shell.contains(newPoint, true) )
             return Messages.ValidHoleValidator_outsideShell;
-        
+
         for( PrimitiveShape hole2 : shell.getEditGeom().getHoles() ) {
             if( hole!=hole2 && hole2.contains(newPoint, true) )
                 return Messages.ValidHoleValidator_holeOverlap;
         }
-        
+
         return null;
     }
 

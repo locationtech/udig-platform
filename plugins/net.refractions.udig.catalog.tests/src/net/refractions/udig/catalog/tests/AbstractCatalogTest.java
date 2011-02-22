@@ -25,7 +25,7 @@ import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Sub-class me and fill in the appripriate protected methods ...
- * 
+ *
  * @author dzwiers
  */
 public abstract class AbstractCatalogTest extends AbstractResolveTest {
@@ -64,7 +64,7 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
                     return null;
                 }
 
-                protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+                public IServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
                     return null;
                 }
                 public URL getIdentifier() {
@@ -113,7 +113,7 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
                     return null;
                 }
 
-                protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+                public IServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
                     return null;
                 }
                 public Throwable getMessage() {
@@ -164,7 +164,7 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
                     return false;
                 }
 
-                protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+                public IServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
                     return null;
                 }
                 public Status getStatus() {
@@ -201,7 +201,7 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
                     return null;
                 }
 
-                protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+                public IServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
                     return null;
                 }
                 public <T> boolean canResolve( Class<T> adaptee ) {
@@ -227,7 +227,7 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
 
             };
             getResolve().add(service1);
-            getResolve().replace(service1.getID(), service2);
+            getResolve().replace(service1.getIdentifier(), service2);
             List<IResolve> services = getResolve().find(service2.getIdentifier(), null);
             assertFalse("Shouldn't contain the service", services.contains(service1)); //$NON-NLS-1$
             assertTrue("Should contain the service", services.contains(service2)); //$NON-NLS-1$
@@ -356,7 +356,7 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
             public Throwable getMessage() {
                 return null;
             }
-            protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+            public IServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
                 return null;
             }
             public URL getIdentifier() {

@@ -18,7 +18,7 @@ package net.refractions.udig.project.render;
 
 /**
  * Indicates that an exception during Rendering has occurred.
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
@@ -29,7 +29,7 @@ public class RenderException extends Exception {
 
     /**
      * Construct <code>RenderException</code>.
-     * 
+     *
      * @param msg comment about the exception
      * @param t the exception that occurred
      */
@@ -39,7 +39,7 @@ public class RenderException extends Exception {
 
     /**
      * Construct <code>RenderException</code>.
-     * 
+     *
      * @param msg comment about the exception
      */
     public RenderException( String msg ) {
@@ -48,7 +48,7 @@ public class RenderException extends Exception {
 
     /**
      * Construct <code>RenderException</code>.
-     * 
+     *
      * @param msg comment about the exception
      */
     public RenderException() {
@@ -57,7 +57,7 @@ public class RenderException extends Exception {
 
     /**
      * Construct <code>RenderException</code>.
-     * 
+     *
      * @param t the exception that occurred
      */
     public RenderException( Throwable t ) {

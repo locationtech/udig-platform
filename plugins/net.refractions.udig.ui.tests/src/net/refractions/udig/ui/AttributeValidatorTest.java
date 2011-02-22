@@ -16,12 +16,13 @@ package net.refractions.udig.ui;
 
 import junit.framework.TestCase;
 
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.PropertyIsEqualTo;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.AttributeTypeFactory;
+import org.geotools.feature.FeatureTypeBuilder;
+import org.geotools.filter.CompareFilter;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.filter.FilterType;
 
 /**
  * Test the attribute type cell editor validator
@@ -36,38 +37,35 @@ public class AttributeValidatorTest extends TestCase {
 
     /**
      * Test method for {@link net.refractions.udig.ui.AttributeValidator#isValid(java.lang.Object)}.
-     * @throws Exception 
+     * @throws Exception
      */
     public void testIsValid() throws Exception {
-        FilterFactory fac=CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-        
-        String attributeName = "string";
-		PropertyIsEqualTo filter = fac.equals(fac.property(attributeName), fac.literal("Value"));
-        
-        SimpleFeatureTypeBuilder builder=new SimpleFeatureTypeBuilder(); //$NON-NLS-1$
-        builder.setName("test");
-        builder.restriction(filter).add(attributeName, String.class);
-        
-        SimpleFeatureType featureType = builder.buildFeatureType();
-        
-        AttributeValidator validator=new AttributeValidator(featureType.getDescriptor(attributeName), featureType);
-        
-        String valid = validator.isValid("Value");
-        assertNull( valid, valid ); //$NON-NLS-1$
-        
-        assertNotNull( "Should not allow 'IllegalValue'", validator.isValid("IllegalValue") ); //$NON-NLS-1$
-        
-        assertNotNull( "Should not allow 3", validator.isValid(3) );
-        
-        builder.length(5).nillable(true).add(attributeName,String.class);
-        featureType = builder.buildFeatureType();
+        FilterFactory fac=FilterFactoryFinder.createFilterFactory();
 
-        validator=new AttributeValidator(featureType.getDescriptor(attributeName), featureType);
-        
+        CompareFilter filter = fac.createCompareFilter(FilterType.COMPARE_EQUALS);
+        filter.addLeftValue(fac.createAttributeExpression("string")); //$NON-NLS-1$
+        filter.addRightValue(fac.createLiteralExpression("Value")); //$NON-NLS-1$
+
+        FeatureTypeBuilder builder=FeatureTypeBuilder.newInstance("test"); //$NON-NLS-1$
+        AttributeType type=AttributeTypeFactory.newAttributeType("string", String.class, true, filter, null, null); //$NON-NLS-1$
+        builder.addType(type);
+
+        AttributeValidator validator=new AttributeValidator(type, builder.getFeatureType());
+
+        assertNull( validator.isValid("Value") ); //$NON-NLS-1$
+        assertNotNull( validator.isValid("IllegalValue") ); //$NON-NLS-1$
+        assertNotNull( validator.isValid(3) );
+
+        type=AttributeTypeFactory.newAttributeType("string", String.class, true, 5); //$NON-NLS-1$
+        builder=FeatureTypeBuilder.newInstance("test"); //$NON-NLS-1$
+        builder.addType(type);
+
+        validator=new AttributeValidator(type, builder.getFeatureType());
+
         assertNull( validator.isValid("name") ); //$NON-NLS-1$
         assertNotNull( validator.isValid("IllegalValue") ); //$NON-NLS-1$
         assertNotNull( validator.isValid(3) );
-        
+
     }
 
 }

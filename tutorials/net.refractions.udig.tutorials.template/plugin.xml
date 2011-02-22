@@ -5,6 +5,12 @@
          point="net.refractions.udig.printing.ui.templateFactories">
       <templateFactory
             class="net.refractions.udig.tutorials.template.ImageTemplateFactory"
+            id="net.refractions.udig.tutorials.template.templateFactory1"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.printing.ui.templateFactories">
+      <templateFactory
+            class="net.refractions.udig.tutorials.template.ImageTemplateFactory"
             id="net.refractions.udig.tutorials.template.imageTemplateFactory"/>
    </extension>
    <extension

@@ -21,27 +21,27 @@ import net.refractions.udig.project.internal.render.impl.RenderExecutorMultiLaye
 
 /**
  * A Visitor that visit the tree of RenderExecutors.
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
 public interface ExecutorVisitor {
     /**
      * Called by RenderExecutorImpl objects
-     * 
+     *
      * @param executor
      */
     void visit( RenderExecutor executor );
     /**
      * Called by RendererExecutorMultiLayer objects.
-     * 
+     *
      * @param executor
      */
     void visit( RenderExecutorMultiLayer executor );
 
     /**
      * Called by CompositeRendererImpl objects.
-     * 
+     *
      * @param executor
      */
     void visit( RenderExecutorComposite executor );

@@ -14,6 +14,7 @@
  */
 package net.refractions.udig.project.ui.internal.property.pages;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +30,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkbenchPropertyPage;
 import org.eclipse.ui.dialogs.PropertyPage;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.FeatureType;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
@@ -54,7 +54,7 @@ public class LayerSummary extends PropertyPage implements IWorkbenchPropertyPage
         final Layer layer = (Layer) getElement();
         final CoordinateReferenceSystem layerCRS = layer.getCRS();
         ReferencedEnvelope bounds = layer.getBounds(ProgressManager.instance().get(), layerCRS);
-        
+
         final List<SummaryData> data=new ArrayList<SummaryData>();
         String name = layer.getName();
         nameData=new SummaryData(Messages.LayerSummary_name, name==null?"":name); //$NON-NLS-1$
@@ -66,31 +66,26 @@ public class LayerSummary extends PropertyPage implements IWorkbenchPropertyPage
         data.add(new SummaryData(Messages.LayerSummary_selection,layer.getFilter()));
         data.add(new SummaryData(Messages.LayerSummary_status, layer.getStatusMessage()));
         if ( layer.getSchema()!=null ){
-            SimpleFeatureType schema = layer.getSchema();
-            SummaryData schemaData=new SummaryData(Messages.LayerSummary_featureType, schema.getName().getLocalPart());
+            FeatureType schema = layer.getSchema();
+            SummaryData schemaData=new SummaryData(Messages.LayerSummary_featureType, schema.getTypeName());
             SummaryData[] children=new SummaryData[schema.getAttributeCount()];
-            
-            for( int i = 0; i < children.length; i++ ) {
-                AttributeDescriptor attributeType = schema.getDescriptor(i);
-                children[i]=new SummaryData(attributeType.getLocalName(), attributeType.getType().getBinding().getSimpleName());
-                children[i].setParent(schemaData);
-                List<SummaryData> attTypeChildren=new ArrayList<SummaryData>();
-                attTypeChildren.add(new SummaryData(Messages.LayerSummary_nillable, attributeType.isNillable()));
-                attTypeChildren.get(0).setParent(children[i]);
-                List<Filter> restrictions = attributeType.getType().getRestrictions();
-                for (Filter filter : restrictions) {
-                    SummaryData summaryData = new SummaryData(Messages.LayerSummary_restriction, filter);
-                    attTypeChildren.add(summaryData);
-                    summaryData.setParent(children[i]);
-                }
-                SummaryData summaryData = new SummaryData(Messages.LayerSummary_maxOccurs, attributeType.getMaxOccurs());
-                attTypeChildren.add(summaryData);
-                summaryData.setParent(children[i]);
-                summaryData = new SummaryData(Messages.LayerSummary_minOccurs, attributeType.getMinOccurs());
-                attTypeChildren.add(summaryData);
-                summaryData.setParent(children[i]);
 
-                children[i].setChildren(attTypeChildren.toArray(new SummaryData[0]));
+            for( int i = 0; i < children.length; i++ ) {
+                AttributeType attributeType = schema.getAttributeType(i);
+                children[i]=new SummaryData(attributeType.getName(), attributeType.getType().getSimpleName());
+                children[i].setParent(schemaData);
+                SummaryData[] attTypeChildren=new SummaryData[4];
+
+                attTypeChildren[0]=new SummaryData(Messages.LayerSummary_nillable, attributeType.isNillable());
+                attTypeChildren[0].setParent(children[i]);
+                attTypeChildren[1]=new SummaryData(Messages.LayerSummary_restriction, attributeType.getRestriction());
+                attTypeChildren[1].setParent(children[i]);
+                attTypeChildren[2]=new SummaryData(Messages.LayerSummary_maxOccurs, attributeType.getMaxOccurs());
+                attTypeChildren[2].setParent(children[i]);
+                attTypeChildren[3]=new SummaryData(Messages.LayerSummary_minOccurs, attributeType.getMinOccurs());
+                attTypeChildren[3].setParent(children[i]);
+
+                children[i].setChildren(attTypeChildren);
             }
             schemaData.setChildren(children);
             data.add(schemaData);
@@ -99,7 +94,7 @@ public class LayerSummary extends PropertyPage implements IWorkbenchPropertyPage
         summaryControl = new SummaryControl(data);
         return summaryControl.createControl(parent);
     }
-    
+
     public static String parseBounds( Envelope env ){
         String minx = chopDouble( env.getMinX() );
         String maxx = chopDouble( env.getMaxX() );
@@ -107,7 +102,7 @@ public class LayerSummary extends PropertyPage implements IWorkbenchPropertyPage
         String maxy = chopDouble( env.getMaxY() );
         return "("+minx+","+miny+") ("+maxx+","+maxy+") ";     //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$//$NON-NLS-4$//$NON-NLS-5$
     }
-    
+
     private static String chopDouble( double d ){
         String s=String.valueOf(d);
         int end=s.indexOf('.')+2;
@@ -131,13 +126,13 @@ public class LayerSummary extends PropertyPage implements IWorkbenchPropertyPage
         performDefaults();
         return super.performCancel();
     }
-    
+
     @Override
     public boolean performOk() {
         performApply();
         return super.performOk();
     }
-    
+
     @Override
     protected void performDefaults() {
         summaryControl.cancelEdit();
@@ -160,7 +155,7 @@ public class LayerSummary extends PropertyPage implements IWorkbenchPropertyPage
 
         public Object getValue( Object element, String property ) {
             if( !newName.equals(oldName) ) return newName;
-            
+
             return ((SummaryData) element).getInfo();
         }
 

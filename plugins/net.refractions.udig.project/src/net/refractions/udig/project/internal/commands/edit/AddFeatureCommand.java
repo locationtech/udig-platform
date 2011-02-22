@@ -16,9 +16,7 @@ package net.refractions.udig.project.internal.commands.edit;
 
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.List;
 
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
@@ -26,83 +24,77 @@ import net.refractions.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.identity.FeatureId;
+import org.geotools.feature.collection.AbstractFeatureCollection;
+import org.geotools.filter.FilterFactoryFinder;
 
 /**
  * Adds the new feature to the
- * 
  * @author jones
  * @since 1.1.0
  */
 public class AddFeatureCommand extends AbstractCommand implements UndoableMapCommand {
 
-    private SimpleFeature feature;
+    private Feature feature;
     private ILayer layer;
-    private FeatureStore<SimpleFeatureType, SimpleFeature> resource;
+    private FeatureStore resource;
     private String fid;
 
-    public AddFeatureCommand( SimpleFeature feature, ILayer layer ) {
-        this.feature = feature;
-        this.layer = layer;
+    public AddFeatureCommand( Feature feature, ILayer layer ) {
+        this.feature=feature;
+        this.layer=layer;
     }
 
     public void run( IProgressMonitor monitor ) throws Exception {
         resource = layer.getResource(FeatureStore.class, monitor);
-        if (resource == null) {
+        if( resource == null )
             return;
-        }
-        FeatureCollection<SimpleFeatureType, SimpleFeature> c = new org.geotools.feature.collection.AdaptorFeatureCollection(
-                "addFeatureCollection", resource.getSchema()){
+        FeatureCollection c=new AbstractFeatureCollection(resource.getSchema()){
+
             @Override
             public int size() {
                 return 1;
             }
+
             @Override
             protected Iterator openIterator() {
                 return new Iterator(){
-                    SimpleFeature next = feature;
+                    Feature next=feature;
+
                     public Object next() {
-                        SimpleFeature tmp = next;
-                        next = null;
+                        Feature tmp=next;
+                        next=null;
                         return tmp;
                     }
-                    public boolean hasNext() {
-                        return next != null;
+
+                    public boolean hasNext(){
+                        return next!=null;
                     }
+
                     public void remove() {
                         throw new UnsupportedOperationException();
                     }
 
                 };
             }
+
             @Override
             protected void closeIterator( Iterator close ) {
             }
+
         };
-        List<FeatureId> added = resource.addFeatures(c);
-        for( FeatureId featureId : added){
-            fid = featureId.getID();
-            break;
-        }
+        fid=(String) resource.addFeatures(c).iterator().next();
     }
 
-    public SimpleFeature getNewFeature() throws IOException {
-        if (resource != null) {
-            FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
-                    .getDefaultHints());
-            FeatureCollection<SimpleFeatureType, SimpleFeature> features = resource
-                    .getFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory, fid)));
-            FeatureIterator<SimpleFeature> iter = features.features();
-            try {
+    public Feature getNewFeature() throws IOException{
+        if( resource!=null ){
+            FeatureCollection features = resource.getFeatures(FilterFactoryFinder.createFilterFactory().createFidFilter(fid));
+            FeatureIterator iter=features.features();
+            try{
                 return iter.next();
-            } finally {
+            }finally{
                 features.close(iter);
             }
         }
@@ -114,9 +106,7 @@ public class AddFeatureCommand extends AbstractCommand implements UndoableMapCom
     }
 
     public void rollback( IProgressMonitor monitor ) throws Exception {
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
-                .getDefaultHints());
-        resource.removeFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory, fid)));
+        resource.removeFeatures(FilterFactoryFinder.createFilterFactory().createFidFilter(fid));
     }
 
     /**

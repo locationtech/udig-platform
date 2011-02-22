@@ -1,704 +1,782 @@
-package net.refractions.udig.catalog.ui.workflow;
+package  net.refractions.udig.catalog.ui.workflow;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.core.Pair;
-import net.refractions.udig.ui.OffThreadProgressMonitor;
+import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 
-/**
- * Basically is a state machine. It has a set of states and handles the stepping through the states
- * when next, previous or run are called.
- * <p>
- * This is an active object IE it has a thread and most method calls to the object are ran in that
- * thread. The method calls are blocking and if the call is in the display thread it is blocked in a
- * "nice" manner. IE the Display.readAndDispatch method is called.
- * 
- * @author justin
- * @since 1.0
- */
 public class Workflow {
 
-    /** set of primary states */
-    private State[] states;
+	/** set of primary states **/
+	State[] states;
 
-    /** map of class to objects for states */
-    private Map<Class<State>, State> lookup;
+	/** map of class to objects for states **/
+	Map<Class<State>, State> lookup;
 
-    /** queue of primary states* */
-    private LinkedList<State> queue;
+	/** queue of primary states**/
+	LinkedList<State> queue;
 
-    /** current state * */
-    private State current;
+	/** current state **/
+	State current;
 
-    /** listeners * */
-    private Set<Listener> listeners = new CopyOnWriteArraySet<Listener>();
+	/** listeners **/
+	Set<Listener> listeners = new CopyOnWriteArraySet<Listener>();
 
-    /** flag to indicate wither the pipe is started/finished * */
-    boolean started = false;
-    private boolean finished = false;
+	/** concurrent access lock **/
+	Lock lock = new ReentrantLock();
 
-    /** context object, states use this object as a seed to perform work * */
-    private Object context;
+	/** flag to indicate wither the pipe is started/finished **/
+	boolean started = false;
+	boolean finished = false;
 
-    private ThreadingStrategy threading;
+	/** context object, states use this object as a seed to perform work **/
+	Object context;
 
-    /**
-     * Creates an empty workflow. When using this constructor the states of the workflow must be set
-     * before the workflow can be started.
-     */
-    public Workflow(ThreadingStrategy threading) {
-        threading.init();
-        this.threading = threading;
-    }
+	/**
+	 * Creates an empty workflow. When using this constructor the states of the
+	 * workflow must be set before the workflow can be started.
+	 *
+	 */
+	public Workflow() {
+		//do nothing
+	}
 
-    /**
-     * Creates a workflow from a set of workflow states.
-     * 
-     * @param states The states of the workflow.
-     */
-    public Workflow( ThreadingStrategy strategy, State[] states ) {
-        this(strategy);
-        setStates(states);
-    }
+	/**
+	 * Creates a workflow from a set of workflow states.
+	 *
+	 * @param states The states of the workflow.
+	 */
+	public Workflow(State[] states) {
+		setStates(states);
+	}
 
-    /**
-     * Creates an empty workflow. When using this constructor the states of the workflow must be set
-     * before the workflow can be started.
-     */
-    public Workflow() {
-        this(new DefaultThreading());
-    }
+	/**
+	 * Adds a listener to the workflow. The listener collection is a set which
+	 * prevents duplicates. For this reason clients may call this method
+	 * multiple times with the same object.
+	 *
+	 * @param l The listening object.
+	 */
+	public void addListener(Listener l) {
+		listeners.add(l);
+	}
 
-    /**
-     * Creates a workflow from a set of workflow states.
-     * 
-     * @param states The states of the workflow.
-     */
-    public Workflow( State[] states ) {
-        this(new DefaultThreading(), states);
-    }
+	public void removeListener(Listener l) {
+		listeners.remove(l);
+	}
 
-    /**
-     * Adds a listener to the workflow. The listener collection is a set which prevents duplicates.
-     * For this resason clients may call this method multiple times with the same object.
-     * 
-     * @param l The listening object.
-     */
-    public void addListener( Listener l ) {
-        listeners.add(l);
-    }
+	/**
+	 * Returns an object representing a context for which the states can feed
+	 * off of. The context is often provided via a workbench selection.
+	 *
+	 * @return The context object, or null if none has been set
+	 */
+	public Object getContext() {
+		return context;
+	}
 
-    public void removeListener( Listener l ) {
-        listeners.remove(l);
-    }
+	/**
+	 * Sets the object representing a context for which states can feed off of.
+	 * The context is often provided via a workbench selection.
+	 *
+	 * @param context The context object to set.
+	 */
+	public void setContext(Object context) {
+		this.context = context;
+	}
 
-    public void shutdown() {
-        threading.shutdown();
-    }
-
-    /**
-     * Returns an object representing a context for which the states can feed off of. The context is
-     * often provided via a workbench selection.
-     * 
-     * @return The context object, or null if none has been set
-     */
-    public Object getContext() {
-        return context;
-    }
-
-    /**
-     * Sets the object representing a context for which states can feed off of. The context is often
-     * provided via a workbench selection.
-     * 
-     * @param context The context object to set.
-     */
-    public void setContext( Object context ) {
-        this.context = context;
-    }
-
-    /**
-     * Sets the primary set of states of the workflow.
-     * 
-     * @param states An array of states.
-     */
-    @SuppressWarnings("unchecked")
-    public void setStates( State[] states ) {
+	/**
+	 * Sets the primary set of states of the workflow.
+	 *
+	 * @param states An array of states.
+	 */
+	@SuppressWarnings("unchecked")
+    public void setStates(State[] states) {
         int i2 = 0;
-        if (states != null)
-            i2 = states.length;
-        State[] s = new State[i2];
-        if (states != null)
+        if( states!=null )
+            i2=states.length;
+        State[] s=new State[i2];
+        if( states!=null )
             System.arraycopy(states, 0, s, 0, s.length);
 
-        this.states = s;
-        queue = new LinkedList<State>();
-        lookup = new HashMap<Class<State>, State>();
-        for( int i = 0; i < s.length; i++ ) {
-            s[i].setWorkflow(this);
-            queue.addLast(s[i]);
-            lookup.put((Class<State>) s[i].getClass(), s[i]);
-        }
-    }
+		this.states = s;
+		queue = new LinkedList<State>();
+		lookup = new HashMap<Class<State>, State>();
+		for (int i = 0; i < s.length; i++) {
+			s[i].setWorkflow(this);
+			queue.addLast(s[i]);
+			lookup.put((Class<State>)s[i].getClass(), s[i]);
+		}
+	}
 
-    /**
-     * @return the primary set of states of the workflow.
-     */
-    public State[] getStates() {
-        State[] s = new State[states.length];
+	/**
+	 * @return the primary set of states of the workflow.
+	 */
+	public State[] getStates() {
+        State[] s=new State[states.length];
         System.arraycopy(states, 0, s, 0, s.length);
-        return s;
-    }
+		return s;
+	}
 
-    /**
-     * Goes through the lookup values and find the first
-     * match for the provided c.
-     * 
-     * @param <T> The type of the state.
-     * @param c The class of the state.
-     * @return The state instance, or null if none exists.
-     */
-    public <T> T getState( Class<T> c ) {
-        
-        State state = lookup.get(c);
-        if( state == null ){
-            // see if we have a subclass of the type
-            for( State current : lookup.values() ) {
-                if( c.isAssignableFrom(current.getClass())) {
-                    state = current;
-                    break;
-                }
-            }
-        }
-        return c.cast(state);
-    }
+	/**
+	 * Returns a state of a specific class.
+	 *
+	 * @param <T> The type of the state.
+	 * @param c The class of the state.
+	 *
+	 * @return The state instance, or null if none exists.
+	 */
+	public <T> T getState(Class<T> c) {
+		return c.cast(lookup.get(c));
+	}
 
-    /**
-     * Starts the workflow by moving to the first state. This method must only be called once. This
-     * method executes asynchronously performing work in a seperate thread and does not block.
-     */
-    public void start() {
-        start(new NullProgressMonitor());
-    }
+	/**
+	 * Starts the workflow by moving to the first state. This method must only
+	 * be called once. This method executes asynchronously performing work in a
+	 * separate thread and does not block.
+	 */
+	public void start() {
 
-    /**
-     * Starts the workflow by moving to the first state. This method must only be called once. This
-     * method executes synchronously performing work in the current thread and blocks.
-     */
-    public void start( final IProgressMonitor monitor ) {
-        final IProgressMonitor progressMonitor = checkMonitor(monitor);
+		IRunnableWithProgress runnable = new IRunnableWithProgress() {
 
-        threading.init();
+			public void run(IProgressMonitor monitor)
+				throws InvocationTargetException, InterruptedException {
 
-        Runnable request = new Runnable(){
-            public void run() {
-                try {
-                    // move to first state
-                    current = queue.removeFirst();
-                    current.setPrevious(null);
-                    current.init(progressMonitor);
+				start(monitor);
+			}
+		};
 
-                    started = true;
-                    dispatchStarted(current);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+		//synchronized (mutex) {
+		//lock.acquire();
 
-            @Override
-            public String toString() {
-                return "Workflow.java start() task"; //$NON-NLS-1$
-            }
-        };
+		//try {
+			//assertNotStarted();
+			PlatformGIS.run(runnable);
+	//	}
+//		catch(IllegalStateException e) {
+//			lock.release();
+//			throw new IllegalStateException(e);
+//		}
+//		catch(Throwable t) {
+//			lock.release();
+//			CatalogUIPlugin.log(t.getLocalizedMessage(),t);
+//		}
+		//}
+	}
 
-        threading.run(request);
-    }
-
-    /**
-     * This is an estimate of whether or not the Workflow can be run to completion.
-     * 
-     * @return true if it is likely that the workflow can be run to completion.
-     */
-    public boolean dryRun() {
-        Queue<State> copiedQueue = new LinkedList<State>(queue);
-        State state = getCurrentState();
-
-        while( state != null ) {
-            Pair<Boolean, State> dryRunResult = state.dryRun();
-            if (!dryRunResult.getLeft()) {
-                // the dry run predicts failure
-                return false;
-            }
-
-            state = dryRunResult.getRight();
-            if (state == null) {
-                state = copiedQueue.poll();
-            }
+	/**
+	 * Starts the workflow by moving to the first state. This method must only
+	 * be called once. This method executes synchronously performing work in
+	 * the current thread and blocks.
+	 */
+	public void start(IProgressMonitor monitor) {
+		//synchronized (mutex) {
+		//lock.steal();
+		try {
+            lock.lockInterruptibly();
+        } catch (InterruptedException e1) {
+            return;
         }
 
-        // we finished with no failures
-        return true;
-    }
-    /**
-     * Moves the workflow to the next state. This method executes asynchronously performing work in
-     * a seperate thread and does not block.
-     */
-    public void next() {
-        next(new NullProgressMonitor());
-    }
+		try {
+			//move to first state
+			current = queue.removeFirst();
+			current.setPrevious(null);
+			current.init(monitor);
 
-    /**
-     * Moves the workflow to the next state. This method executes synchronously performing work in
-     * the current thread and blocks.
-     * 
-     * @return True if the state
-     */
-    public void next( final IProgressMonitor monitor ) {
+			started = true;
+			dispatchStarted(current);
+		}
+		catch(IOException e) {
+			throw new RuntimeException(e);
+		}
+		finally {
+			lock.unlock();
+		}
+		//}
+	}
 
-        final IProgressMonitor progressMonitor = checkMonitor(monitor);
+	/**
+	 * Moves the workflow to the next state. This method executes asynchronously
+	 * performing work in a separate thread and does not block.
+	 *
+	 */
+	public void next() {
 
-        Runnable request = new Runnable(){
-            public void run() {
-                doNextInternal(progressMonitor);
-            }
+		IRunnableWithProgress runnable = new IRunnableWithProgress() {
 
-            @Override
-            public String toString() {
-                return "Workflow.java run() task"; //$NON-NLS-1$
-            }
-        };
+			public void run(IProgressMonitor monitor)
+				throws InvocationTargetException, InterruptedException {
 
-        threading.run(request);
-    }
-    private IProgressMonitor checkMonitor( final IProgressMonitor monitor ) {
-        if (monitor == null) {
-            throw new NullPointerException("monitor is null"); //$NON-NLS-1$
+				next(monitor);
+			}
+		};
+
+		PlatformGIS.run(runnable);
+
+	}
+
+	/**
+	 * Moves the workflow to the next state. This method executes synchronously
+	 * performing work in the current thread and blocks.
+	 *
+	 * @return True if the state
+	 */
+	@SuppressWarnings("unchecked")
+    public void next (IProgressMonitor monitor) {
+        IProgressMonitor monitor2 = monitor;
+		if ( monitor2==null )
+			monitor2=new NullProgressMonitor();
+		//synchronized (mutex) {
+		//lock.steal();
+		try {
+            lock.lockInterruptibly();
+        } catch (InterruptedException e1) {
+            return;
         }
 
-        final IProgressMonitor progressMonitor;
-        if (monitor instanceof OffThreadProgressMonitor) {
-            progressMonitor = monitor;
-        } else {
-            progressMonitor = new OffThreadProgressMonitor(monitor);
-        }
-        return progressMonitor;
-    }
+		try {
+			assertStarted();
+			assertNotFinished();
 
-    @SuppressWarnings("unchecked")
-    private void doNextInternal( IProgressMonitor monitor ) {
-
-        try {
-            assertStarted();
-            assertNotFinished();
 
             String name = getCurrentState().getName();
-            String string = name != null ? name : Messages.Workflow_busy;
-            monitor.beginTask(string, 20);
-            monitor.setTaskName(string);
+            String string = name!=null?name:Messages.Workflow_busy;
+            monitor2.beginTask(string, 20);
+            monitor2.setTaskName(string);
 
-            if (queue == null) {
-                String msg = "No states"; //$NON-NLS-1$
-                throw new IllegalStateException(msg);
-            }
+			if (queue == null) {
+				String msg = "No states";  //$NON-NLS-1$
+				throw new IllegalStateException(msg);
+			}
 
-            // run it
-            boolean ok = false;
-            SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, 10);
+			//run it
+			boolean ok = false;
+			SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor2, 10);
+			try {
+				ok = current.run(subProgressMonitor) && !monitor2.isCanceled();
+			}
+			catch(Throwable t) {
+				CatalogUIPlugin.log(t.getLocalizedMessage(), t);
+			}finally{
+				subProgressMonitor.done();
+			}
+
+			if (ok) {
+				//dispatch the event
+				dispatchPassed(current);
+
+				//grab the next state, try pulling one from the current state
+				State next = current.next();
+				if (next == null) {
+					//try pulling from the queue
+					if (!queue.isEmpty())
+						next = queue.removeFirst();
+				}
+				else {
+					//add to lookup tables
+					lookup.put((Class<State>) next.getClass(), next);
+				}
+
+				if (next != null) {
+					//set the back pointer and call lifecyclmutexe events
+					next.setWorkflow(this);
+					next.setPrevious(current);
+					try{
+						subProgressMonitor=new SubProgressMonitor(monitor2,10);
+						next.init(subProgressMonitor);
+					}finally{
+						subProgressMonitor.done();
+					}
+					State prev = current;
+					current = next;
+
+					dispatchForward(current, prev);
+				}
+				else {
+					// no more states, we are finished
+					State last = current;
+					current = null;
+
+					finished = true;
+					dispatchFinished(last);
+				}
+			}
+			else {
+				//run did not succeed
+				dispatchFailed(current);
+			}
+		}
+		catch(IOException e) {
+			throw new RuntimeException(e);
+		}
+		finally {
+			lock.unlock();
+		}
+		//}
+	}
+
+	/**
+	 * Moves the workflow to the previous state. This method executes
+	 * asynchronously performing work in a separate thread and does not block.
+	 */
+	public void previous() {
+
+		IRunnableWithProgress runnable = new IRunnableWithProgress() {
+
+			public void run(IProgressMonitor monitor)
+				throws InvocationTargetException, InterruptedException {
+
+				previous(monitor);
+			}
+		};
+
+		//synchronized (mutex) {
+		try {
+            lock.lockInterruptibly();
+        } catch (InterruptedException e1) {
+            return;
+        }
+		try {
+			assertStarted();
+			assertNotFinished();
+            runnable.run(new NullProgressMonitor());
+		}
+		catch(IllegalStateException e) {
+			//lock.release();
+			throw new IllegalStateException(e);
+		}
+		catch(Throwable t) {
+			//lock.release();
+			CatalogUIPlugin.log(t.getLocalizedMessage(),t);
+		}
+		finally {
+		    lock.unlock();
+        }
+		//}
+	}
+
+	/**
+	 * Moves the workflow to the previous state. This method executes
+	 * synchronously performing work in the current thread and blocks.
+	 */
+	public void previous(IProgressMonitor monitor) {
+		//synchronized (mutex) {
+			lock.lock();
+
+		try {
+			assertStarted();
+			assertNotFinished();
+
+			if (current.getPreviousState() != null) {
+				// if this state is a "primary" state, place back in front of queue
+				if (isPrimaryState(current))
+					queue.addFirst(current);
+
+				State next = current;
+				current = current.getPreviousState();
+
+				//renitialize the state and dispatch the started event
+				current.init(monitor);
+				dispatchBackward(current, next);
+
+			}
+		}
+		catch(IOException e) {
+			throw new RuntimeException(e);
+		}
+		finally {
+			lock.unlock();
+		}
+		//}
+	}
+
+	/**
+	 * @return True if the workflow has been started with a call to #start().
+	 */
+	public boolean isStarted() {
+		return started;
+	}
+
+	/**
+	 * @return True if the workflow has been finished. The workflow is
+	 * considered finished after the call to #next(), while in the final state.
+	 */
+	public boolean isFinished() {
+		return finished;
+	}
+
+	/**
+	 * @return the current state of the workflow.
+	 */
+	public State getCurrentState() {
+		return current;
+	}
+
+	/**
+	 * Determines if the workflow has more states. It is important to note
+	 * that this method may not 100% accurate depending on the behaviour of
+	 * states dynamically creating new states.
+	 *
+	 * @return True if there are more states, otherwise false.
+	 */
+	public boolean hasMoreStates() {
+		//if the queue is not empty, we definitely have more states
+		if (!queue.isEmpty())
+			return true;
+
+		//ask the current state
+		if (current != null)
+			return current.hasNext();
+
+		return false;
+	}
+
+	/**
+	 * Runs the workflow from its current state. The workflow will continue
+	 * to walk through the states while the state is finished.
+	 *
+	 * @param monitor A progress monitor.
+	 *
+	 * @return True if the pipe was able to run to completion, otherwise false.
+	 */
+	public boolean run(IProgressMonitor monitor) {
+		Runner runner = new Runner(this);
+		return runner.run(monitor);
+	}
+
+	/**
+	 * Resets the workflow. This method may only be called if the workflow is
+	 * in a finished state. Once reset the workflow lifecycle starts again with
+	 * a call to @see DataPipeline#start().
+	 */
+	public void reset() {
+		assertFinished();
+
+		started = finished = false;
+		setStates(states);
+	}
+
+	protected void assertStarted() {
+		if (!started) {
+			String msg = "Not started"; //$NON-NLS-1$
+			throw new IllegalStateException(msg);
+		}
+	}
+
+	protected void assertNotStarted() {
+		if (started) {
+			String msg = "Already started"; //$NON-NLS-1$
+			throw new IllegalStateException(msg);
+		}
+	}
+
+	protected void assertFinished() {
+		if (!finished) {
+			String msg = "Not finished"; //$NON-NLS-1$
+			throw new IllegalStateException(msg);
+		}
+	}
+
+	protected void assertNotFinished() {
+		if (finished) {
+			String msg = "Already finished"; //$NON-NLS-1$
+			throw new IllegalStateException(msg);
+		}
+	}
+
+	protected boolean isPrimaryState(State state) {
+		for (int i = 0; i < states.length; i++) {
+			if (states[i].equals(state))
+				return true;
+		}
+
+		return false;
+	}
+
+	protected void dispatchStarted(State start) {
+		try {
+			for (Listener l : listeners) {
+				l.started(start);
+			}
+		}
+		catch(Throwable t) {
+			CatalogUIPlugin.log(t.getLocalizedMessage(), t);
+		}
+	}
+
+	protected void dispatchForward(State current, State prev) {
+		try {
+			for (Listener l : listeners) {
+				l.forward(current, prev);
+			}
+		}
+		catch(Throwable t) {
+			CatalogUIPlugin.log(t.getLocalizedMessage(), t);
+		}
+	}
+
+	protected void dispatchBackward(State current, State next) {
+		try {
+			for (Listener l : listeners) {
+				l.backward(current,next);
+			}
+		}
+		catch(Throwable t) {
+			CatalogUIPlugin.log(t.getLocalizedMessage(), t);
+		}
+	}
+
+	protected void dispatchPassed(State state) {
+		try {
+			for (Listener l : listeners) {
+				l.statePassed(state);
+			}
+		}
+		catch(Throwable t) {
+			CatalogUIPlugin.log(t.getLocalizedMessage(), t);
+		}
+	}
+
+	protected void dispatchFailed( State state ) {
+        for( Listener l : listeners ) {
             try {
-                ok = current.run(subProgressMonitor) && !monitor.isCanceled();
+                l.stateFailed(state);
             } catch (Throwable t) {
                 CatalogUIPlugin.log(t.getLocalizedMessage(), t);
-                if( Platform.inDevelopmentMode() ){
-                	System.out.println( "Could not "+current.getName()+":"+t.getLocalizedMessage() );
-                	t.printStackTrace();
-                }
-            } finally {
-                subProgressMonitor.done();
-            }
-
-            if (ok) {
-                // dispatch the event
-                dispatchPassed(current);
-
-                // grab the next state, try pulling one from the current state
-                State next = current.next();
-                if (next == null) {
-                    // try pulling from the queue
-                    if (!queue.isEmpty())
-                        next = queue.removeFirst();
-                } else {
-                    // add to lookup tables
-                    lookup.put((Class<State>) next.getClass(), next);
-                }
-
-                if (next != null) {
-                    // set the back pointer and call lifecyclmutexe events
-                    next.setWorkflow(this);
-                    next.setPrevious(current);
-                    try {
-                        subProgressMonitor = new SubProgressMonitor(monitor, 10);
-                        next.init(subProgressMonitor);
-                    } finally {
-                        subProgressMonitor.done();
-                    }
-                    State prev = current;
-                    current = next;
-
-                    dispatchForward(current, prev);
-                } else {
-                    // no more states, we are finished
-                    State last = current;
-                    current = null;
-
-                    finished = true;
-                    threading.shutdown();
-                    dispatchFinished(last);
-                }
-            } else {
-                // run did not succeed
-                dispatchFailed(current);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Moves the workflow to the previous state. This method executes asynchronously performing work
-     * in a seperate thread and does not block.
-     */
-    public void previous() {
-        previous(new NullProgressMonitor());
-    }
-
-    /**
-     * Moves the workflow to the previous state. This method executes synchronously performing work
-     * in the current thread and blocks.
-     */
-    public void previous( final IProgressMonitor monitor ) {
-        final IProgressMonitor progressMonitor = checkMonitor(monitor);
-
-        Runnable request = new Runnable(){
-            public void run() {
-                try {
-                    assertStarted();
-                    assertNotFinished();
-
-                    if (current.getPreviousState() != null) {
-                        // if this state is a "primary" state, place back in front of queue
-                        if (isPrimaryState(current))
-                            queue.addFirst(current);
-
-                        State next = current;
-                        current = current.getPreviousState();
-
-                        // renitialize the state and dispatch the started event
-                        current.init(progressMonitor);
-                        dispatchBackward(current, next);
-
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            @Override
-            public String toString() {
-                return "Workflow.java run() task"; //$NON-NLS-1$
-            }
-        };
-
-        threading.run(request);
-    }
-
-    /**
-     * @return True if the workflow has been started with a call to #start().
-     */
-    public boolean isStarted() {
-        return started;
-    }
-
-    /**
-     * @return True if the workflow has been finished. The workflow is considered finished after the
-     *         call to #next(), while in the final state.
-     */
-    public boolean isFinished() {
-        return finished;
-    }
-
-    /**
-     * @return the current state of the workflow.
-     */
-    public State getCurrentState() {
-        return current;
-    }
-
-    /**
-     * Determines if the workflow has more states. It is important to note that this method may not
-     * 100% accurate depending on the behaviour of states dynamically creating new states.
-     * 
-     * @return True if there are more states, otherwise false.
-     */
-    public boolean hasMoreStates() {
-        // if the queue is not empty, we definitely have more states
-        if (!queue.isEmpty())
-            return true;
-
-        // ask the current state
-        if (current != null)
-            return current.hasNext();
-
-        return false;
-    }
-    /**
-     * Runs the workflow from its current state. The workflow will continue to walk through the
-     * states while the state is finished.
-     * 
-     * @param monitor A progress monitor.
-     * @return True if the pipe was able to run to completion, otherwise false.
-     */
-    public boolean run( IProgressMonitor monitor ) {
-        if (monitor == null) {
-            throw new NullPointerException("monitor is null"); //$NON-NLS-1$
-        }
-
-        WorkflowRunner runner = new WorkflowRunner(this);
-        return runner.run(monitor);
-    }
-
-    /**
-     * Resets the workflow. This method may only be called if the workflow is in a finished state.
-     * Once reset the workflow lifecycle starts again with a call to
-     * 
-     * @see DataPipeline#start().
-     */
-    public void reset() {
-        assertFinished();
-
-        started = finished = false;
-        setStates(states);
-    }
-
-    protected void assertStarted() {
-        if (!started) {
-            String msg = "Not started"; //$NON-NLS-1$
-            throw new IllegalStateException(msg);
-        }
-    }
-
-    protected void assertNotStarted() {
-        if (started) {
-            String msg = "Already started"; //$NON-NLS-1$
-            throw new IllegalStateException(msg);
-        }
-    }
-
-    protected void assertFinished() {
-        if (!finished) {
-            String msg = "Not finished"; //$NON-NLS-1$
-            throw new IllegalStateException(msg);
-        }
-    }
-
-    protected void assertNotFinished() {
-        if (finished) {
-            String msg = "Already finished"; //$NON-NLS-1$
-            throw new IllegalStateException(msg);
-        }
-    }
-
-    protected boolean isPrimaryState( State state ) {
-        for( int i = 0; i < states.length; i++ ) {
-            if (states[i].equals(state))
-                return true;
-        }
-
-        return false;
-    }
-
-    protected void dispatchStarted( final State start ) {
-        for( final Listener l : listeners ) {
-            l.started(start);
-        }
-    }
-
-    protected void dispatchForward( final State current, final State prev ) {
-        for( final Listener l : listeners ) {
-            l.forward(current, prev);
-        }
-    }
-
-    protected void dispatchBackward( final State current, final State next ) {
-        for( final Listener l : listeners ) {
-            l.backward(current, next);
-        }
-    }
-
-    protected void dispatchPassed( final State state ) {
-        for( final Listener l : listeners ) {
-            l.statePassed(state);
-        }
-    }
-
-    protected void dispatchFailed( final State state ) {
-        for( final Listener l : listeners ) {
-            l.stateFailed(state);
-        }
-    }
-
-    protected void dispatchFinished( final State last ) {
-        for( final Listener l : listeners ) {
-            l.finished(last);
-        }
-    }
-    
-    @Override
-    public String toString() {
-    	StringBuffer text = new StringBuffer();
-    	text.append("Workflow: Start ");
-    	if( started ){
-    		text.append(" -> ");
-    	}
-    	else {
-    		text.append( " -- " );    		
-    	}
-    	for( State state : states ){
-    		if( state == current){
-    			text.append("[");
-    		}
-    		text.append( state.getName() );
-    		if( state == current){
-    			text.append("]");
-    		}
-    		if( this.queue.contains( state )){
-    			text.append(" -- ");
-        	}
-        	else {
-        		text.append( " -> " );    		
-        	}
-    	}
-    	if( this.finished ){
-    		text.append( "[Finish]" );
-    	}
-    	else {
-    		text.append( "Finish" );
-    	}
-    	return text.toString();
-    }
-    /**
-     * Listens to the workflow as it runs; will run each stage in turn.
-     */
-    public static class WorkflowRunner implements Listener {
-        Workflow pipe;
-        boolean stopped;
-
-        WorkflowRunner( Workflow pipe ) {
-            this.pipe = pipe;
-        }
-
-        /**
-         * Will run the workflow; and return true if the workflow if completed
-         *
-         * @param monitor
-         * @return true if completed
-         */
-        public boolean run( final IProgressMonitor monitor ) {
-            final boolean[] result = new boolean[1];
-
-            // run in the Workflow thread
-            pipe.threading.run(new Runnable(){
-                public void run() {
-                    result[0] = runInternal(monitor);
-                }
-            });
-            return result[0];
-        }
-
-        /**
-         * Carefully runs the workflow step by step until finished or stoppped.
-         *
-         * @param monitor
-         * @return true if completed; false if stopped
-         */
-        private boolean runInternal( IProgressMonitor monitor ) {
-            try {
-                monitor.beginTask(Messages.Workflow_task_name, IProgressMonitor.UNKNOWN);
-                stopped = false;
-                pipe.addListener(this);
-
-                // first check if the pipe is already finished
-                if (pipe.isFinished())
-                    return true;
-
-                // may need to start
-                if (!pipe.isStarted()) {
-                    pipe.start(monitor);
-                }
-
-                while( !stopped && !pipe.isFinished() ) {
-                    pipe.next(new SubProgressMonitor(monitor, 10,
-                            SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK));
-                }
-
-                pipe.removeListener(this);
-                return !stopped;
-            } finally {
-                monitor.done();
             }
         }
-        /**
-         * We are not interesed in the workflow moving forward
-         */
-        public void forward( State current, State prev ) {
-            // do nothing
-        }
-
-        /**
-         * We are not interested in the workflow moving backward
-         */
-        public void backward( State current, State next ) {
-            // do nothing
-        }
-
-        /**
-         * We are not interested in a state validating
-         */
-        public void statePassed( State state ) {
-            // do nothing
-        }
-
-        /**
-         * If the state has failed our workflow has stopped - and we need human intervention
-         */
-        public void stateFailed( State state ) {
-            stopped = true;
-        }
-
-        /**
-         * We are not interested in starting
-         */
-        public void started( State first ) {
-            // do nothing
-        }
-
-        /**
-         * We are not interested in the workflow finishing
-         */
-        public void finished( State last ) {
-            // do nothing
-        }
     }
+
+	protected void dispatchFinished(State last) {
+		try {
+			for (Listener l : listeners) {
+				l.finished(last);
+			}
+		}
+		catch(Throwable t) {
+			CatalogUIPlugin.log(t.getLocalizedMessage(), t);
+		}
+	}
+
+	public static class Runner implements Listener {
+		Workflow pipe;
+		boolean stopped;
+
+		Runner(Workflow pipe) {
+			this.pipe = pipe;
+		}
+
+		public boolean run(IProgressMonitor monitor) {
+			try{
+			monitor.beginTask(Messages.Workflow_task_name, IProgressMonitor.UNKNOWN);
+			stopped = false;
+			pipe.addListener(this);
+
+			//first check if the pipe is already finished
+			if (pipe.isFinished())
+				return true;
+
+			//may need to start
+			if (!pipe.isStarted()) {
+				pipe.start(monitor);
+			}
+
+			while(!stopped && !pipe.isFinished()) {
+				pipe.next(new SubProgressMonitor(monitor,10, SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK));
+			}
+
+			pipe.removeListener(this);
+			return !stopped;
+			}finally{
+				monitor.done();
+			}
+		}
+
+		public void forward(State current, State prev) {
+			// do nothing
+		}
+
+		public void backward(State current, State next) {
+			// do nothing
+		}
+
+		public void statePassed(State state) {
+			// do nothing
+		}
+
+		public void stateFailed(State state) {
+			stopped = true;
+		}
+
+		public void started(State first) {
+			// do nothing
+		}
+
+		public void finished(State last) {
+			// do nothing
+		}
+	}
+
+	public static abstract class State {
+
+		/** previous state **/
+		State previous;
+
+		/** the workflow **/
+		Workflow workflow;
+
+		/**
+		 * @param workflow The workflow containing the state.
+		 */
+		public void setWorkflow(Workflow workflow) {
+			this.workflow = workflow;
+		}
+
+		public abstract String getName();
+
+		/**
+		 * @return the workflow containing all the states.
+		 */
+		public Workflow getWorkflow() {
+			return workflow;
+		}
+
+		/**
+		 * Sets the previous state. The first method in the lifecycle of the
+		 * state which is called by the data workflow to track the states that
+		 * have been completed. Should not be called by client code.
+		 *
+		 * @param previous The previous state.
+		 */
+		public void setPrevious(State previous) {
+			this.previous = previous;
+		}
+
+		/**
+		 * Returns the previous state.
+		 *
+		 * @return The state previous to this state, or null if no such state
+		 * exists.
+		 */
+		public State getPreviousState() {
+			return previous;
+		}
+
+		/**
+		 * Initialize the state. This is the second method in the lifecycle of
+		 * the state. It is called after #setPrevious(). If the state needs to
+		 * "seed" itself with any context, that should occur here.
+		 */
+		public void init(IProgressMonitor monitor) throws IOException {
+			//do nothing
+		}
+
+		/**
+		 * Performs any "hard" work. This method is provided is provided for
+		 * states which have to block to get work done. For instance, making
+		 * a connection to a remote service. This method returns a boolean
+		 * which signals weather the state was able to get the work done.
+		 *
+		 * @param monitor A progress monitor.
+		 *
+		 * @return True if the state was able to complete its job, otherwise
+		 *  false.
+		 * @throws IOException
+		 */
+		public boolean run(IProgressMonitor monitor)
+			throws IOException {
+
+			return true;
+		}
+
+		/**
+		 * Determines if the state can dynamically create a new state to be
+		 * the next active state of the workflow. Note, in most cases this is
+		 * equivalent to <code>next() != null</code>. However some
+		 * implementations require that next() be called only once, as it is a
+		 * lifecycle event.
+		 *
+		 * @return true if the state can create a new state, otherwise false.
+		 */
+		public boolean hasNext() {
+			return false;
+		}
+
+		/**
+		 * The final method in the lifecycle of the state. This method is
+		 * used for states to dynamically link to each other. This method
+		 * returns null to indicate no state.
+		 *
+		 * @return A new state which is to become the next active state,
+		 * 	otherwise null.
+		 */
+		public State next() {
+			return null;
+		}
+	}
+
+	public static interface Listener {
+
+		/**
+		 * Event thrown when the pipe moves to a new state in the forward
+		 * direction.
+		 *
+		 * @param current The current state.
+		 * @param prev The state before the current state.
+		 */
+		void forward(State current, State prev);
+
+		/**
+		 * Event thrown when the pipe moves to a new state in a backward
+		 * direction.
+		 *
+		 * @param current The current state.
+		 * @param next The state after the current state.
+		 */
+		void backward(State current, State next);
+
+		/**
+		 * Event thrown when a state successfully completes its job.
+		 *
+		 * @param state The current state.
+		 */
+		void statePassed(State state);
+
+		/**
+		 * Event thrown when a state can not complete its job.
+		 *
+		 * @param state The current state.
+		 */
+		void stateFailed(State state);
+
+		/**
+		 * Event thrown when the workflow is started.
+		 *
+		 * @param first The first state of the pipe
+		 */
+		void started(State first);
+
+		/**
+		 * Event thrown when workflow is finished.
+		 *
+		 * @param last The last state of the pipe
+		 */
+		void finished(State last);
+	}
 
 }

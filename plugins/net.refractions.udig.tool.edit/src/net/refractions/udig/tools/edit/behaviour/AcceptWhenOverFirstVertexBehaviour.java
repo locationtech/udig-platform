@@ -35,8 +35,9 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 /**
  * Runs the accept behaviours registered with the {@link EditToolHandler} when the mouse is clicked over
  * the first vertex of a shape
- * 
- * <p>Requirements: * <ul>
+ *
+ * <p>Requirements:
+ * <ul>
  * <li>event type == RELEASE</li>
  * <li>edit state == CREATING </li>
  * <li>no modifiers down</li>
@@ -44,30 +45,27 @@ import org.eclipse.core.runtime.NullProgressMonitor;
  * <li>no buttons down</li>
  * <li>current shape and geom are set</li>
  * <li>mouse is over the first vertex of the currentShape</li>
- * <li>event type != DOUBLE_CLICK</li> *</ul> * </p> * @author jones
+ *</ul>
+ * </p>
+ * @author jones
  * @since 1.1.0
  */
 public class AcceptWhenOverFirstVertexBehaviour implements EventBehaviour {
 
     public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
         boolean legalState=handler.getCurrentState()==EditState.CREATING;
-        
-        //Aritz, Mauricio: Solution for issue: Odd effects in hole cutting mode (problem 2).
-        //This event should be launched only when mouse is released and not when doing double click.
-        //Also the class description has been modified.
-//        boolean legalEventType=eventType==EventType.RELEASED || eventType==EventType.DOUBLE_CLICK;
-        boolean legalEventType=eventType==EventType.RELEASED && !(eventType==EventType.DOUBLE_CLICK);
+        boolean legalEventType=eventType==EventType.RELEASED;
         boolean shapeAndGeomNotNull=handler.getCurrentShape()!=null;
         boolean button1Released=e.button==MapMouseEvent.BUTTON1;
-        
-        return legalState && legalEventType && shapeAndGeomNotNull && button1Released 
+
+        return legalState && legalEventType && shapeAndGeomNotNull && button1Released
         && !e.buttonsDown() && !e.modifiersDown() && overFirstVertex(handler, e);
     }
-    
+
     private boolean overFirstVertex(EditToolHandler handler, MapMouseEvent e) {
-        Point vertexOver=handler.getEditBlackboard(handler.getEditLayer()).overVertex(Point.valueOf(e.x, e.y), 
+        Point vertexOver=handler.getEditBlackboard(handler.getEditLayer()).overVertex(Point.valueOf(e.x, e.y),
                 PreferenceUtil.instance().getVertexRadius());
-        
+
         return handler.getCurrentShape().getNumPoints()>0 && handler.getCurrentShape().getPoint(0).equals(vertexOver);
     }
 
@@ -76,14 +74,11 @@ public class AcceptWhenOverFirstVertexBehaviour implements EventBehaviour {
         if( !isValid(handler, e, eventType) )
             throw new IllegalArgumentException("Current state is not legal"); //$NON-NLS-1$
         List<UndoableMapCommand> commands=new ArrayList<UndoableMapCommand>();
-                
+
         commands.add(handler.getCommand(handler.getAcceptBehaviours()));
-        //Aritz, Mauricio: Solution for issue: Odd effects in hole cutting mode (problem 2).
-        //This command isn't need because before that the AcceptChangesBehaviour is launched 
-        //and its entrust of changing the state if everything goes well.
-//        if( handler.getCurrentState()==EditState.CREATING)
-//            commands.add(new SetEditStateCommand(handler, EditState.MODIFYING));            
-        
+        if( handler.getCurrentState()==EditState.CREATING)
+            commands.add(new SetEditStateCommand(handler, EditState.MODIFYING));
+
         UndoableComposite undoableComposite = new UndoableComposite(commands);
         undoableComposite.setMap(handler.getContext().getMap());
         try {

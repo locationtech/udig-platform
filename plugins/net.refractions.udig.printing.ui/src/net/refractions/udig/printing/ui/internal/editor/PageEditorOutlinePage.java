@@ -13,7 +13,7 @@ import org.eclipse.ui.part.PageBook;
 
 /**
  * An adapter for the outline view in eclipse
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -24,7 +24,7 @@ public class PageEditorOutlinePage extends ContentOutlinePage {
 
     /**
      * Construct <code>PageEditorOutlinePage</code>.
-     * 
+     *
      * @param viewer
      */
     public PageEditorOutlinePage( PageEditor editor, EditPartViewer viewer ) {

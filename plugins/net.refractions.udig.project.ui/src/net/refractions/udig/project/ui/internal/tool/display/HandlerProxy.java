@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 
 /**
  * Proxy to allow lazy loading of ToolCommandHandlers
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
@@ -36,7 +36,7 @@ public class HandlerProxy extends AbstractHandler {
 
     /**
      * If a handler cannot be created for the Tool then this class will
-     * 
+     *
      * @author jeichar
      * @since 0.6.0
      */
@@ -73,7 +73,7 @@ public class HandlerProxy extends AbstractHandler {
 
     /**
      * Construct <code>HandlerProxy</code>.
-     * 
+     *
      * @param toolElement
      * @param tool
      */

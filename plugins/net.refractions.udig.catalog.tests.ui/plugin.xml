@@ -2,7 +2,22 @@
 <?eclipse version="3.0"?>
 <plugin>
 
-   
+     <extension
+         id="net.refractions.udig.ui.operation.index"
+         name="Indexing Operations"
+         point="net.refractions.udig.ui.operation">
+      <operation
+            class="net.refractions.udig.catalog.tests.ui.index.Quad"
+            id="net.refractions.udig.catalog.tests.ui.index.quad"
+            name="Quad Index"
+            targetClass="org.geotools.data.shapefile.ShapefileDataStore"/>
+      <operation
+            class="net.refractions.udig.catalog.tests.ui.index.RTree"
+            id="net.refractions.udig.catalog.tests.ui.index.rtree"
+            name="R-Tree Index"
+            targetClass="org.geotools.data.shapefile.ShapefileDataStore"/>
+   </extension>
+
    <extension
          point="net.refractions.udig.catalog.ui.connectionFactory">
       <factory class="net.refractions.udig.catalog.tests.ui.DummyConnectionFactory"
@@ -11,7 +26,7 @@
 		    class=""
             name="Dummy"/>
    </extension>
-      
+
    <extension
          point="net.refractions.udig.catalog.ui.connectionFactory">
       <factory class="net.refractions.udig.catalog.tests.ui.DummyMulitResourceConnectionFactory"

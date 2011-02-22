@@ -26,7 +26,7 @@ import org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView;
  * The content provider class is responsible for providing objects to the view. It can wrap existing
  * objects in adapters or simply return objects as-is. These objects may be sensitive to the current
  * input of the view, or ignore it and always show the same content (like Task List, for example).
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
@@ -63,7 +63,7 @@ public class BookmarksContentProvider
     /**
      * returns current mapping of registered viewers and input objects Usually this involves a Viewe
      * object
-     * 
+     *
      * @return a map of the viewers to input objects
      */
     protected HashMap getViewers() {
@@ -79,7 +79,7 @@ public class BookmarksContentProvider
 
     /**
      * Get the root element -- a single IMap object corresonding to the current map
-     * 
+     *
      * @return array of Objects
      */
     public Object[] getElements( Object parent ) {
@@ -120,7 +120,7 @@ public class BookmarksContentProvider
 
     /**
      * refreshes the given viewer in the UI thread
-     * 
+     *
      * @param asynch set to true for asynchronous refresh, false for synchronous
      * @param v viewer to refresh
      */
@@ -148,7 +148,7 @@ public class BookmarksContentProvider
 
     /**
      * refreshes the given collection of viewers in the UI thread
-     * 
+     *
      * @param c
      * @param asynch set to true for asynchronous refresh, false for synchronous
      */

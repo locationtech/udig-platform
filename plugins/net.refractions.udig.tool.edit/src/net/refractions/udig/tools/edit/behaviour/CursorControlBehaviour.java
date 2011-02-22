@@ -26,6 +26,7 @@ import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
 import net.refractions.udig.tools.edit.support.ClosestEdge;
 import net.refractions.udig.tools.edit.support.EditGeom;
 import net.refractions.udig.tools.edit.support.Point;
+import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.swt.graphics.Cursor;
@@ -38,9 +39,9 @@ import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Sets the cursor to indicate what action can be done.
- * 
+ *
  * Also adds tips to the status bar.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -52,13 +53,9 @@ public class CursorControlBehaviour implements EventBehaviour {
     private IProvider<Cursor> overEdgeCursor;
     private IProvider<String> overEdgeMessage;
     private IProvider<String> overVertexMessage;
-    
+
     /**
-     * Configuration describing how an AbstractEditTool provides visual feedback in
-     * the form of a cursor and message.
-     * <p>
-     * Please note that the Cursors provided to this class are not the resp
-     * @param EditToolHandler being configured
+     * new instance
      * @param defaultMessage the message display when not over a vertex or an edge.
      * @param overVertexCursor a provider that provides the cursor to show when over a vertex.  This class
      * <em>WILL NOT</em> dispose of the cursor.
@@ -66,8 +63,9 @@ public class CursorControlBehaviour implements EventBehaviour {
      * @param overEdgeCursor a provider that provides the cursor to show when over an edge.  This class
      * <em>WILL NOT</em> dispose of the cursor.
      * @param overEdgeMessage generates the message to display when over an edge
+
      */
-    public CursorControlBehaviour(EditToolHandler handler, IProvider<String> defaultMessage, IProvider<Cursor> overVertexCursor, 
+    public CursorControlBehaviour(EditToolHandler handler, IProvider<String> defaultMessage, IProvider<Cursor> overVertexCursor,
             IProvider<String> overVertexMessage, IProvider<Cursor> overEdgeCursor, IProvider<String> overEdgeMessage){
         this.defaultMessage=defaultMessage;
         if( overVertexCursor==null )
@@ -105,7 +103,7 @@ public class CursorControlBehaviour implements EventBehaviour {
 
         return null;
     }
-    
+
 
     private boolean onEdge( EditToolHandler handler, MapMouseEvent e ) {
         Point point = Point.valueOf(e.x,e.y);
@@ -114,11 +112,11 @@ public class CursorControlBehaviour implements EventBehaviour {
             return false;
 
         ILayer selectedLayer = handler.getEditLayer();
-        Class type = selectedLayer.getSchema().getGeometryDescriptor().getType().getBinding();
+        Class type = selectedLayer.getSchema().getDefaultGeometry().getType();
         boolean polygonLayer=Polygon.class.isAssignableFrom(type) || MultiPolygon.class.isAssignableFrom(type);
 
         ClosestEdge closestEdge = geom.getClosestEdge(point, polygonLayer);
-        
+
         return closestEdge!=null && closestEdge.getDistanceToEdge()<PreferenceUtil.instance().getVertexRadius();
     }
 
@@ -141,7 +139,7 @@ public class CursorControlBehaviour implements EventBehaviour {
                     bars.getStatusLineManager().setMessage(string);
                 }
                 handler.getContext().getViewportPane().setCursor(cursor);
-                
+
             }
         };
         if( Display.getCurrent()!=null )
@@ -172,7 +170,7 @@ public class CursorControlBehaviour implements EventBehaviour {
             });
             return cursor[0];
         }
-        
+
     }
 
     public static class DefaultCursorProvider implements IProvider<Cursor> {

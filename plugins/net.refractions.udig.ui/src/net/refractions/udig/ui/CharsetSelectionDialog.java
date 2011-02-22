@@ -47,17 +47,17 @@ public final class CharsetSelectionDialog extends FilteredItemsSelectionDialog {
         }
 
     }
-    
+
     public CharsetSelectionDialog( Shell shell, boolean multi ) {
         this(shell, false, "*"); //$NON-NLS-1$
     }
-    
+
     public CharsetSelectionDialog( Shell shell, boolean multi, String initialSelection ) {
         super(shell, multi);
         setTitle(Messages.CharsetSelectionDialog_title);
         setSelectionHistory(new CharsetSelectionHistory());
         setInitialPattern(initialSelection);
-        
+
     }
     @Override
     protected IStatus validateItem( Object item ) {
@@ -71,7 +71,7 @@ public final class CharsetSelectionDialog extends FilteredItemsSelectionDialog {
             public int compare( Object o1, Object o2 ) {
                 return ((Charset)o1).compareTo((Charset)o2);
             }
-            
+
         };
     }
     @Override
@@ -85,21 +85,21 @@ public final class CharsetSelectionDialog extends FilteredItemsSelectionDialog {
         if( section == null ){
             section = settings.addNewSection("CharsetChange"); //$NON-NLS-1$
         }
-        return section; 
+        return section;
     }
     @Override
     protected void fillContentProvider( AbstractContentProvider contentProvider,
-            ItemsFilter itemsFilter, IProgressMonitor progressMonitor ) throws CoreException {  
+            ItemsFilter itemsFilter, IProgressMonitor progressMonitor ) throws CoreException {
         SortedMap<String, Charset> charsets = Charset.availableCharsets();
         progressMonitor.beginTask("Searching", charsets.size()); //$NON-NLS-1$
 
-        
+
         for( Charset charset : charsets.values() ) {
             contentProvider.add(charset, itemsFilter);
             progressMonitor.worked(1);
         }
         progressMonitor.done();
-        
+
     }
     @Override
     protected ItemsFilter createFilter() {
@@ -122,10 +122,10 @@ public final class CharsetSelectionDialog extends FilteredItemsSelectionDialog {
             public boolean matchItem( final Object item ) {
                 return matches(((Charset)item).name())||matches(((Charset)item).displayName());
             }
-            
+
         };
-        
-        
+
+
         return itemsFilter;
     }
     @Override

@@ -15,14 +15,15 @@ import net.refractions.udig.catalog.URLUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class CSVService extends IService {
-    
+
     private Map<String, Serializable> params;
     private URL url;
-    
+
+    private CSVServiceInfo info;
     private Throwable msg;
     private File file;
     List<CSVGeoResource> members;
-    
+
     CSVService( Map<String, Serializable> params ){
         this.params = params;
         url = (URL) params.get(CSVServiceExtension.KEY);
@@ -30,15 +31,16 @@ public class CSVService extends IService {
     public Map<String, Serializable> getConnectionParams() {
         return params;
     }
-    
-    @Override
-    public CSVServiceInfo getInfo(IProgressMonitor monitor) throws IOException {
-    	return (CSVServiceInfo) super.getInfo(monitor);
+    public CSVServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
+        if (info == null) { //lazy creation
+            synchronized (this) { //support concurrent access
+                if (info == null) {
+                    info = new CSVServiceInfo( this );
+                }
+            }
+        }
+        return info;
     }
-    protected CSVServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-    	return new CSVServiceInfo( this );
-    }
-    
     public List<CSVGeoResource> resources( IProgressMonitor monitor ) throws IOException {
         if (members == null) { //lazy creation
             synchronized (this) { //support concurrent access
@@ -59,7 +61,7 @@ public class CSVService extends IService {
             synchronized (this) { //support concurrent access
                 if (file == null) {
                     try {
-                        file = URLUtils.urlToFile( url );                        
+                        file = URLUtils.urlToFile( url );
                     } catch (Throwable t) {
                         msg = t;
                     }
@@ -78,14 +80,14 @@ public class CSVService extends IService {
         //did an error occur
         if (msg != null)
             return Status.BROKEN;
-        
+
         //has the file been parsed yet
         if (file == null)
             return Status.NOTCONNECTED;
-        
+
         return Status.CONNECTED;
     }
-    
+
     public <T> boolean canResolve( Class<T> adaptee ) {
         return adaptee.isAssignableFrom(File.class) || super.canResolve(adaptee);
     }

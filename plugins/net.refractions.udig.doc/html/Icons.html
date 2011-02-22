@@ -1,0 +1,289 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : Icons</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : Icons -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h3><a name="Icons-Organizationoftheicons%2Fdirectory">Organization of the icons/ directory</a></h3>
+
+<table class='confluenceTable'>
+<tr>
+<th class='confluenceTh'> DIRECTORY </th>
+<th class='confluenceTh'> distabled </th>
+<th class='confluenceTh'> enabled </th>
+<th class='confluenceTh'> Other </th>
+<th class='confluenceTh'> Banner </th>
+<th class='confluenceTh'> Size </th>
+<th class='confluenceTh'> Placement </th>
+</tr>
+<tr>
+<td class='confluenceTd'> local toolbar </td>
+<td class='confluenceTd'> d<a href="lcl16.html" title="lcl16">lcl16</a>/      </td>
+<td class='confluenceTd'> e<a href="lcl16.html" title="lcl16">lcl16</a>/    </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> 16x16 </td>
+<td class='confluenceTd'> left &amp; top clear </td>
+</tr>
+<tr>
+<td class='confluenceTd'>  toolbar        </td>
+<td class='confluenceTd'> d<a href="tool16.html" title="tool16">tool16</a>/  </td>
+<td class='confluenceTd'> e<a href="tool16.html" title="tool16">tool16</a>/  </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> 16x16 </td>
+<td class='confluenceTd'>  left &amp; top clear </td>
+</tr>
+<tr>
+<td class='confluenceTd'>  view            </td>
+<td class='confluenceTd'>d<a href="view16.html" title="view16">view16</a>/</td>
+<td class='confluenceTd'> e<a href="view16.html" title="view16">view16</a>/ </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> 16x16 </td>
+<td class='confluenceTd'>  left &amp; bottom clear </td>
+</tr>
+<tr>
+<td class='confluenceTd'>  model object</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> <a href="obj16.html" title="obj16">obj16</a>/  </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> 16x16 </td>
+<td class='confluenceTd'>  centered, bottom clear </td>
+</tr>
+<tr>
+<td class='confluenceTd'>  overlay        </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> <a href="ovr16.html" title="ovr16">ovr16</a>/   </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> 7x8 </td>
+<td class='confluenceTd'> one pixel white outline </td>
+</tr>
+<tr>
+<td class='confluenceTd'>  wizard banner </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> <a href="wizban.html" title="wizban">wizban</a>/ </td>
+<td class='confluenceTd'> 55x45 </td>
+<td class='confluenceTd'> bottom left on blue gradient </td>
+</tr>
+<tr>
+<th class='confluenceTh'>&nbsp;</th>
+<th class='confluenceTh'>&nbsp;</th>
+<th class='confluenceTh'>&nbsp;</th>
+<th class='confluenceTh'>&nbsp;</th>
+<th class='confluenceTh'>&nbsp;</th>
+<th class='confluenceTh'>&nbsp;</th>
+<th class='confluenceTh'>&nbsp;</th>
+</tr>
+<tr>
+<td class='confluenceTd'> PALETTE </td>
+<td class='confluenceTd'> color </td>
+<td class='confluenceTd'> grayscale  </td>
+<td class='confluenceTd'> color </td>
+<td class='confluenceTd'> color </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+</table>
+
+<p>&#42;perspective &amp; fastview icons require the right, and bottom edges to be clear.</p>
+
+<h3><a name="Icons-IconTypes">Icon Types</a></h3>
+
+<table class='confluenceTable'>
+<tr>
+<th class='confluenceTh'> TYPE         </th>
+<th class='confluenceTh'> type  </th>
+<th class='confluenceTh'> description </th>
+</tr>
+<tr>
+<td class='confluenceTd'> local toolbar </td>
+<td class='confluenceTd'> lcl </td>
+<td class='confluenceTd'>   found on the far right of the title area of a view </td>
+</tr>
+<tr>
+<td class='confluenceTd'> toolbar       </td>
+<td class='confluenceTd'> tool </td>
+<td class='confluenceTd'>  used in cascading menus, and the global toolbar </td>
+</tr>
+<tr>
+<td class='confluenceTd'> view          </td>
+<td class='confluenceTd'> view </td>
+<td class='confluenceTd'>  found in the top, left corner of a new view </td>
+</tr>
+<tr>
+<td class='confluenceTd'> model object </td>
+<td class='confluenceTd'>  obj </td>
+<td class='confluenceTd'>   used in the tree, list, properties views, and editor tabs </td>
+</tr>
+<tr>
+<td class='confluenceTd'> overlay       </td>
+<td class='confluenceTd'> ovr </td>
+<td class='confluenceTd'>  placed on top of model object to indicate a change </td>
+</tr>
+<tr>
+<td class='confluenceTd'> wizard banner </td>
+<td class='confluenceTd'> wizban </td>
+<td class='confluenceTd'> used in wizard dialog windows </td>
+</tr>
+</table>
+
+<h3><a name="Icons-FilenameConventions">Filename Conventions</a></h3>
+
+<table class='confluenceTable'>
+<tr>
+<th class='confluenceTh'>  FILENAME SUFFIX                          </th>
+<th class='confluenceTh'> lcl   </th>
+<th class='confluenceTh'> tool  </th>
+<th class='confluenceTh'> view  </th>
+<th class='confluenceTh'> obj  </th>
+<th class='confluenceTh'> ovr  </th>
+<th class='confluenceTh'> wizban </th>
+</tr>
+<tr>
+<td class='confluenceTd'> invoke a wizard, or graphics in a wizard   </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>    _wiz </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>                 _wiz </td>
+</tr>
+<tr>
+<td class='confluenceTd'> invoke executable file                     </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>     _exec </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'> in an editor view                           </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>    _edit </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'> in a navigator view                      </td>
+<td class='confluenceTd'> _nav </td>
+<td class='confluenceTd'>  _nav </td>
+<td class='confluenceTd'> _nav </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'>  do not fit into a category               </td>
+<td class='confluenceTd'> _misc   </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>   _misc </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'>  represent tasks that user can do        </td>
+<td class='confluenceTd'> _tsk </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> _tsk </td>
+<td class='confluenceTd'>  _tsk </td>
+<td class='confluenceTd'>_tsk </td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'>  toggles the working mode of the view  </td>
+<td class='confluenceTd'>   _mode </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'>  found in a menu                         </td>
+<td class='confluenceTd'>  _menu </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'>  found in a property sheet              </td>
+<td class='confluenceTd'>  _ps </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> _ps </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'>  used in the tree, list, or property view    </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> _obj </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'>  model object icons on object palettes     </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> _pal </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'>  commands that engage the system        </td>
+<td class='confluenceTd'>  _co </td>
+<td class='confluenceTd'>  _co </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+</table>
+
+<div class="panel"><div class="panelHeader"><b>Differences from Eclipse 2.1 User Interface Guidelines</b></div><div class="panelContent">
+<p>The original 2.1 guidelines provided two additional directories clcl &amp; ctool which allowed a full color palette, the enabled and disabled icons were restricted to 8 and 2 colors respectively. This restriction seems to be relaxed in the recent eclipse 3.0 product.</p>
+</div></div>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=73">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=73">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

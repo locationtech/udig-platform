@@ -22,35 +22,35 @@ public class EventBehaviourCommandTest extends TestCase {
     public void testRun() throws Exception {
 
         TestHandler handler=new TestHandler();
-        
+
         RunBehaviour runBehaviour = new RunBehaviour();
         RunBehaviour runBehaviour2 = new RunBehaviour();
         List<EventBehaviour> list=new ArrayList<EventBehaviour>();
-        
+
         list.add( runBehaviour);
         list.add( runBehaviour2);
         list.add( new NoRunBehaviour());
-        
+
         MapMouseEvent event = new MapMouseEvent(null, 0,0,0,0,0);
-        
+
         EventBehaviourCommand command=new EventBehaviourCommand(list, handler, event, EventType.RELEASED);
         command.setMap( (Map) handler.getContext().getMap());
         assertFalse( runBehaviour.ran );
         assertFalse( runBehaviour2.ran );
-        
+
         NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
         command.execute(nullProgressMonitor);
-        
+
         assertTrue( runBehaviour.ran );
         assertTrue( runBehaviour2.ran );
-        
+
         nullProgressMonitor = new NullProgressMonitor();
         command.rollback(nullProgressMonitor);
         assertFalse( runBehaviour.ran );
         assertFalse( runBehaviour2.ran );
-        
+
     }
-    
+
     class RunBehaviour implements EventBehaviour{
         int id=0;
         boolean ran;
@@ -61,7 +61,7 @@ public class EventBehaviourCommandTest extends TestCase {
         public UndoableMapCommand getCommand( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
             return new UndoableMapCommand(){
 
-                
+
                 private Map map;
 
                 public void setMap( IMap map ) {
@@ -93,16 +93,16 @@ public class EventBehaviourCommandTest extends TestCase {
                         fail();
                     ran=false;
                 }
-                
+
             };
         }
 
         public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
             fail();
         }
-        
+
     }
-    
+
     class NoRunBehaviour implements EventBehaviour{
 
         public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
@@ -117,9 +117,9 @@ public class EventBehaviourCommandTest extends TestCase {
         public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
             fail();
         }
-        
+
     }
-    
-    
+
+
 
 }

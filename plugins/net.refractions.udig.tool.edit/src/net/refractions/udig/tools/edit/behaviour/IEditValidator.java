@@ -19,9 +19,9 @@ import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.EventType;
 
 /**
- * A very general validator strategy that essentially returns true if the current state is 
- * considered to be legal by the instance of the validator.   
- *  
+ * A very general validator strategy that essentially returns true if the current state is
+ * considered to be legal by the instance of the validator.
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -31,15 +31,15 @@ public interface IEditValidator {
         public String isValid( EditToolHandler handler, MapMouseEvent event, EventType type ) {
             return null;
         }
-        
+
     };
-    
+
     /**
      * Returns null if the validator considers the state to be "legal" for the new event or
      * a string which is the human readable message describing the problem.
      *
      * @param handler the handler to use for obtaining the state
-     * @param event the event that just occurred.  
+     * @param event the event that just occurred.
      * @param type they type of event
      * @return null if the validator considers the state to be "legal" for the new event or
      * a string which is the human readable message describing the problem.

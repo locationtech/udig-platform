@@ -6,7 +6,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * This Commands manages the timing of a short animation being drawn on the ViewportPane.
- * 
+ *
  * @author jeichar
  */
 public interface IAnimation extends IDrawCommand {
@@ -16,7 +16,7 @@ public interface IAnimation extends IDrawCommand {
      * <p>
      * The time cannot be smaller than 100 milliseconds
      * </p>
-     * 
+     *
      * @return time the interval between the frames in milliseconds.
      */
     short getFrameInterval();

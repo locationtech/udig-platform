@@ -37,16 +37,16 @@ public class ProjectPreferencePage extends FieldEditorPreferencePage
         super(GRID);
         setPreferenceStore(ProjectPlugin.getPlugin().getPreferenceStore());
     }
-    
+
     @Override
     protected void createFieldEditors() {
         BooleanFieldEditor deleteProjectFiles = new BooleanFieldEditor(
-                PreferenceConstants.P_PROJECT_DELETE_FILES, 
+                PreferenceConstants.P_PROJECT_DELETE_FILES,
                 Messages.ProjectPreferencePage_deleteFiles,
                 getFieldEditorParent());
         addField(deleteProjectFiles);
         IntegerFieldEditor maxUndo = new IntegerFieldEditor(
-                PreferenceConstants.P_MAX_UNDO, 
+                PreferenceConstants.P_MAX_UNDO,
                 Messages.ProjectPreferencePage_maxundo,
                 getFieldEditorParent());
         addField(maxUndo);

@@ -11,17 +11,17 @@
 ;Building
 ;--------
 ;First thing you'll need is NSIS, the null soft installer.  I think the site
-;is http://nsis.sourceforge.net.  You'll need a windows box to run the 
+;is http://nsis.sourceforge.net.  You'll need a windows box to run the
 ;installer.  It's easy to use, just install, and then run the 'compiler'.
 ;It compiles the fun little scripting language contained in this file
 ;to create the .exe file.  I used the modern ui stuff, as it seems to look
-;nice and, well, modern.  
+;nice and, well, modern.
 ;After installing the nsis software what I did was unzip the eclipse rcp,
 ;unzip uDig on top of that, and copy this file (uDig.nsis) to the directory
-;where I unzip eclipse, right next to the eclipse/ directory, where the 
-;eclipse dir contains everything.  Then with the NSIS compiler open this 
+;where I unzip eclipse, right next to the eclipse/ directory, where the
+;eclipse dir contains everything.  Then with the NSIS compiler open this
 ;file and it will compile the .exe in the same directory.  Hit Test Installer
-;to run it.  
+;to run it.
 
 ;You could make an ant task to do this fairly easily, I just never got around
 ;to it.  Tomcat does it by having the nsis variable, their source trees have
@@ -48,7 +48,7 @@
 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\uDig\VersionXXX"
-  
+
   ;Get installation folder from registry if available - This will check the registry to see if an install directory
   ;is present, and if so, replace the value in InstallDir with it.  If there is no value, the installer will fall
   ;back on InstallDir as the default install directory.
@@ -74,7 +74,7 @@
 
   ;Used your udig.ico.  All paths are relative to the location of _this_ file,
   ;which is why it needs to be right next to the eclipse folder. -ch
-  
+
   !define MUI_ICON "eclipse\icons\32-uDigIcon.ico"
   ;I tried to use the same windows uninstaller I did, but NSIS doesn't seem
   ;to like icons of different sizes -ch
@@ -83,9 +83,9 @@
 
   ;!define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\win-uninstall.ico"
   !define MUI_UNICON "eclipse\icons\32-uninstallIcon.ico"
-  
+
   !define MUI_ABORTWARNING
-  
+
   ;You can obviously change any of this text junk. -ch
   !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the \
       installation of uDig \r\n \r\nNote that this is the first \
@@ -99,13 +99,13 @@
 
   !insertmacro MUI_PAGE_WELCOME
   ;custom page I made to detect java.  I have it repeat the java version that
-  ;it found.  I like the functionality, unfortunately it looks ghetto, as I 
+  ;it found.  I like the functionality, unfortunately it looks ghetto, as I
   ;just did a pop up box.  See my comments on the echoJava function -ch
   ;
   ;Chris included this, but we do not require a JDK of any sort, so it is commented
   ;out for now.
   ;Page custom echoJava
-  
+
   ; ---------------------------------------------------------------------------
   ; At this point, we should also determine the location of the JRE, and what
   ; version we are dealing with.  We should also make sure that JAI and ImageIO
@@ -121,16 +121,16 @@
   ;Not sure about this stuff, some registery storing of preferences as to where
   ;you like the uDig start menu
   ;Start Menu Folder Page Configuration
-  !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU" 
-  !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\uDigVersionXXX" 
+  !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU"
+  !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\uDigVersionXXX"
   !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
-  
+
   !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
-  
+
   !insertmacro MUI_PAGE_INSTFILES
 
   !insertmacro MUI_PAGE_FINISH
-  
+
   !insertmacro MUI_UNPAGE_WELCOME
   !insertmacro MUI_UNPAGE_CONFIRM
   !insertmacro MUI_UNPAGE_INSTFILES
@@ -138,19 +138,16 @@
 
 ;--------------------------------
 ;Languages
- 
+
   !insertmacro MUI_LANGUAGE "English"
 
-  RequestExecutionLevel admin
-            
 ;--------------------------------
 ;Installer Sections
 
 Section "uDig Section" SecuDig
 
-
   SetOutPath "$INSTDIR"
-  
+
   ;This is where the files to add are.  You could change this to run in
   ;the eclipse folder, and name all the files and directories individually,
   ;which will then install them all directly in the uDig folder.  As it is
@@ -158,17 +155,17 @@ Section "uDig Section" SecuDig
   ;it seems to build a bin/ directory in the uDig folder as well. -ch
   ;ADD YOUR OWN FILES HERE...
   File /r eclipse
-    
+
   ;Store installation folderh
   WriteRegStr HKCU "Software\uDigVersionXXX" "" $INSTDIR
-  
+
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
-  
+
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-    
+
     ;Create shortcuts
-    
+
     ;You guys don't need this, as you just run the .exe.  I call geoserver with
     ;java directly, so the findJavaPath gets which one I should use.  Though
     ;actually I prefer this method because you can specify JAVA_HOME instead
@@ -183,7 +180,7 @@ Section "uDig Section" SecuDig
     ;Link for documentation
     !insertmacro CreateInternetShortcut \
         "$SMPROGRAMS\$STARTMENU_FOLDER\uDig Documentation" \
-        "http://udig.refractions.net/confluence/display/UDIG/User+Documentation" \
+        "http://udig.refractions.net/confluence/display/UDIG/Documentation" \
         "$INSTDIR\eclipse\icons\32-uDigIcon.ico" 0
 
     ;Set specific out page for uDig
@@ -193,40 +190,23 @@ Section "uDig Section" SecuDig
     ;Start-up, using the udig.exe file
     ;For some reason, uDig will NOT start if it doesn't have a parameter following -data.
     ;-noop does nothing and seems to be okay.
-
-    Call GetWindowsVersion
-    Pop $R0
-    
-
-	; I don't know the syntax well enough to
-	; do if (!Vista && $DOCUMENTS/uDig/.metadata/.log exists) then 
-	; rename $DOCUMENTS/uDig/ to %HOMEDRIVE%%HOMEPATH%/uDig/
-	;
-	; instead I'm doing a ifs inside of ifs.
-    StrCmp $R0 "Vista" DONE OTHER
-      OTHER:
-        IfFileExists $DOCUMENTS\uDig\.metadata\.log OLD_WS DONE
-    
-        OLD_WS:
-          IfFileExists %HOMEDRIVE%%HOMEPATH%\uDig\.metadata\.log DONE MOVE
-            MOVE:
-	      Rename "$DOCUMENTS\uDig" "%HOMEDRIVE%%HOMEPATH%\uDig"
-
-
-     DONE:
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\uDig.lnk" \
-                   "$INSTDIR\eclipse\udig.exe" "-data $\"%HOMEDRIVE%%HOMEPATH%\uDig\$\" -configuration $\"%APPDATA%\udig\uDigVersionXXX\$\" -vm $\"$INSTDIR\eclipse\jre\bin\javaw.exe$\"" \
+                   "$INSTDIR\eclipse\udig.exe" "-data $\"$APPDATA\..\My Documents\uDig\$\" -noop" \
                    "$INSTDIR\eclipse\icons\32-uDigIcon.ico" 0 SW_SHOWNORMAL
 
     ;Set path back to normal
     SetOutPath "$INSTDIR"
     ;Commented out the stop, but it shows how you call with java.
+    ;CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Stop uDig.lnk" \
+    ;               "$2\bin\java.exe" '-jar stop.jar'\
+    ;               "$INSTDIR\server\uDig\images\gs.ico" 0 SW_SHOWMINIMIZED
+    ;link to unintall, you guys should come up with a better icon...
 
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" \
                    "$INSTDIR\Uninstall.exe" "" \
                    "$INSTDIR\eclipse\icons\32-uninstallIcon.ico" 0 SW_SHOWNORMAL
 
-  
+
   !insertmacro MUI_STARTMENU_WRITE_END
 
 SectionEnd
@@ -254,147 +234,46 @@ FunctionEnd
 
 Section "Uninstall"
 
-  
-  ;REMOVE APPLICATION IN A FEW STEPS TO SHOW PROGRESS
-  
-  RMDIR /r "$INSTDIR\eclipse\features"
-  RMDIR /r "$INSTDIR\eclipse\jre"
-  RMDIR /r "$INSTDIR\eclipse\plugins"
+  ;ADD YOUR OWN FILES HERE...
 
-  RMDIR /r "$INSTDIR"
-  ;TRY TO REMOVE THE Program Files\uDig Directory... 
-  ;IF THERE ARE OTHER UDIG VERSION THEN THIS WILL FILE SILENTLY
-  RMDIR "$INSTDIR\.."
+  Delete "$INSTDIR\Uninstall.exe"
+  ;RMDIR /r "$INSTDIR\bin"
+  RMDIR /r "$INSTDIR\eclipse"
 
-  ;REMOVE THE CONFIGURATION DATA 
-  RMDIR /r "$APPDATA\uDig\uDigVersionXXX"
-  ;WILL REMOVE IF THERE ARE NO MORE UDIG INSTALLS
-  RMDIR "$APPDATA\uDig"
-  
-; FOR XP THE WORKSPACE IS UP ONE DIRECTORY FROM APPDATA
-; CHECK IF IT EXISTS.  IF IT DOES QUERY USER TO DELETE IT
-  IfFileExists "$APPDATA\..\uDig" 0 Removed
+  RMDIR "$INSTDIR"
+  RMDIR "$APPDATA\..\My Documents\uDig"
+
+  IfFileExists "$INSTDIR" 0 Removed
      MessageBox MB_YESNO|MB_ICONQUESTION \
-          "Delete all files in your workspace? (If you have anything you created that you want to keep, click No)" /SD IDYES IDNO Removed
-     RMDIR /r "$APPDATA\..\uDig"
+          "Remove all files in your uDig directory, including workspace? (If you have anything you created that you want to keep, click No)" /SD IDYES IDNO Removed
+     Delete "$INSTDIR\*.*" ;
+     RMDIR /r "$INSTDIR"
      Sleep 500
-     IfFileExists "$APPDATA\..\uDig" 0 Removed
+     IfFileExists "$INSTDIR" 0 Removed
         MessageBox MB_OK|MB_ICONEXCLAMATION \
-            "Note: Workspace could not be removed." /SD IDOK
-
-; FOR VISTA THE WORKSPACE IS UP TWO DIRECTORIES FROM APPDATA
-; CHECK IF IT EXISTS.  IF IT DOES QUERY USER TO DELETE IT
-  IfFileExists "$APPDATA\..\..\uDig" 0 Removed
-     MessageBox MB_YESNO|MB_ICONQUESTION \
-          "Delete all files in your workspace? (If you have anything you created that you want to keep, click No)" /SD IDYES IDNO Removed
-     RMDIR /r "$APPDATA\..\..\uDig"
-     Sleep 500
-     IfFileExists "$APPDATA\..\..\uDig" 0 Removed
-        MessageBox MB_OK|MB_ICONEXCLAMATION \
-            "Note: Workspace could not be removed." /SD IDOK
+            "Note: $INSTDIR could not be removed." /SD IDOK
 
 
   Removed:
 
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
-    
-  RMDIR /r "$SMPROGRAMS\$MUI_TEMP"
+
+  Delete "$SMPROGRAMS\$MUI_TEMP\uDig.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\Uninstall.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\uDig Documentation.url"
+
+  ;Delete empty start menu parent diretories
+  StrCpy $MUI_TEMP "$SMPROGRAMS\$MUI_TEMP"
+
+  startMenuDeleteLoop:
+    RMDir $MUI_TEMP
+    GetFullPathName $MUI_TEMP "$MUI_TEMP\.."
+
+    IfErrors startMenuDeleteLoopDone
+
+    StrCmp $MUI_TEMP $SMPROGRAMS startMenuDeleteLoopDone startMenuDeleteLoop
+  startMenuDeleteLoopDone:
 
   DeleteRegKey /ifempty HKCU "Software\uDigVersionXXX"
 
 SectionEnd
-
-; GetWindowsVersion
- ;
- ; Based on Yazno's function, http://yazno.tripod.com/powerpimpit/
- ; Updated by Joost Verburg
- ;
- ; Returns on top of stack
- ;
- ; Windows Version (95, 98, ME, NT x.x, 2000, XP, 2003, Vista)
- ; or
- ; '' (Unknown Windows Version)
- ;
- ; Usage:
- ;   Call GetWindowsVersion
- ;   Pop $R0
- ;   ; at this point $R0 is "NT 4.0" or whatnot
-
- Function GetWindowsVersion
-
-   Push $R0
-   Push $R1
-
-   ClearErrors
-
-   ReadRegStr $R0 HKLM \
-   "SOFTWARE\Microsoft\Windows NT\CurrentVersion" CurrentVersion
-
-   IfErrors 0 lbl_winnt
-
-   ; we are not NT
-   ReadRegStr $R0 HKLM \
-   "SOFTWARE\Microsoft\Windows\CurrentVersion" VersionNumber
-
-   StrCpy $R1 $R0 1
-   StrCmp $R1 '4' 0 lbl_error
-
-   StrCpy $R1 $R0 3
-
-   StrCmp $R1 '4.0' lbl_win32_95
-   StrCmp $R1 '4.9' lbl_win32_ME lbl_win32_98
-
-   lbl_win32_95:
-     StrCpy $R0 '95'
-   Goto lbl_done
-
-   lbl_win32_98:
-     StrCpy $R0 '98'
-   Goto lbl_done
-
-   lbl_win32_ME:
-     StrCpy $R0 'ME'
-   Goto lbl_done
-
-   lbl_winnt:
-
-   StrCpy $R1 $R0 1
-
-   StrCmp $R1 '3' lbl_winnt_x
-   StrCmp $R1 '4' lbl_winnt_x
-
-   StrCpy $R1 $R0 3
-
-   StrCmp $R1 '5.0' lbl_winnt_2000
-   StrCmp $R1 '5.1' lbl_winnt_XP
-   StrCmp $R1 '5.2' lbl_winnt_2003
-   StrCmp $R1 '6.0' lbl_winnt_vista lbl_error
-
-   lbl_winnt_x:
-     StrCpy $R0 "NT $R0" 6
-   Goto lbl_done
-
-   lbl_winnt_2000:
-     Strcpy $R0 '2000'
-   Goto lbl_done
-
-   lbl_winnt_XP:
-     Strcpy $R0 'XP'
-   Goto lbl_done
-
-   lbl_winnt_2003:
-     Strcpy $R0 '2003'
-   Goto lbl_done
-
-   lbl_winnt_vista:
-     Strcpy $R0 'Vista'
-   Goto lbl_done
-
-   lbl_error:
-     Strcpy $R0 ''
-   lbl_done:
-
-   Pop $R1
-   Exch $R0
-
- FunctionEnd

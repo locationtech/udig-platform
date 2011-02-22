@@ -2,15 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.catalog.postgis; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.catalog.internal.postgis.PostgisPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.catalog,
- net.refractions.udig.catalog.ui;visibility:=reexport,
+ net.refractions.udig.catalog.ui,
  net.refractions.udig.libs
-Bundle-ActivationPolicy: lazy
+Eclipse-LazyStart: true
 Export-Package: net.refractions.udig.catalog
-Bundle-RequiredExecutionEnvironment: J2SE-1.5

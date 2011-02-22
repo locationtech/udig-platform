@@ -31,12 +31,12 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * makes the associated Image part of the Plug-In API.
  * </p>
  * To use one of these images:
- * 
+ *
  * <pre><code>
  * ImageRegistry images = RegistryPlugin.getDefault().getImageRegistry();
  * ImageDescriptor image = images.getDescriptor(ISharedImages.IMG_DATASTORE_OBJ);
  * </code></pre>
- * 
+ *
  * <p>
  * This interface is not intended to be implemented by clients.
  * </p>
@@ -91,7 +91,7 @@ public interface ISharedImages {
     public static final String NEW_PROJECT = ETOOL + "newprj_wiz.gif"; //$NON-NLS-1$
     /**
      * Returns the image descriptor for the given image ID. Returns null if there is no such image.
-     * 
+     *
      * @param id Constant from ISharedImages
      * @return ImageDescriptor locating resource associated with id
      */

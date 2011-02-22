@@ -18,21 +18,21 @@
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -48,7 +48,7 @@
             <meta.element labelAttribute="acceptable"/>
          </appInfo>
          <documentation>
-            A group of edit actions that can operate on a given class.  
+            A group of edit actions that can operate on a given class.
          </documentation>
       </annotation>
       <complexType>
@@ -159,7 +159,7 @@
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         
+
       </documentation>
    </annotation>
 

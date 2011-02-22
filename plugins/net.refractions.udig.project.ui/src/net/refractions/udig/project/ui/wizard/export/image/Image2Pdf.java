@@ -22,9 +22,9 @@ import com.lowagie.text.pdf.PdfWriter;
 public class Image2Pdf {
 
 	/**
-	 * writes a buffered image to pdf at a given resolution
-	 * 
-	 * 
+	 * writes a buffered image to pdf at a resolution of 72dpi
+	 *
+	 *
 	 * @param image
 	 *            the image to write
 	 * @param pdfPath
@@ -37,12 +37,11 @@ public class Image2Pdf {
 	 *            border in pixels to use on the y-axis
 	 * @param lanscape
 	 *            true if the document should be in landscape mode
-	 * @param dpi the output dpi
 	 */
 	public static void write(BufferedImage image, String pdfPath, Paper paper,
-			int widthBorder, int heightBorder, boolean landscape, int dpi) {
+			int widthBorder, int heightBorder, boolean landscape) {
 		Dimension printPageSize = null;
-		printPageSize = new Dimension(paper.getPixelWidth(landscape, dpi), paper.getPixelHeight(landscape, dpi));
+		printPageSize = new Dimension(paper.getWidth(landscape), paper.getHeight(landscape));
 
 		// step 1: creation of a document-object
 		Document document = new Document(new Rectangle(printPageSize.width,
@@ -93,7 +92,7 @@ public class Image2Pdf {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		write(b, path + ".pdf", Paper.A1, 10, 10, false, 100); //$NON-NLS-1$
+		write(b, path + ".pdf", Paper.A1, 10, 10, false); //$NON-NLS-1$
 		System.out.println("finished"); //$NON-NLS-1$
 	}
 }

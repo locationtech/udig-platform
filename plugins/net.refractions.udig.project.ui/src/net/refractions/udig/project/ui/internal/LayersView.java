@@ -29,11 +29,10 @@ import net.refractions.udig.project.IEditManagerListener;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.command.map.LayerMoveDownCommand;
-import net.refractions.udig.project.command.map.LayerMoveUpCommand;
 import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
+import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.render.IViewportModelListener;
@@ -46,6 +45,7 @@ import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.UDIGDragDropUtilities;
 import net.refractions.udig.ui.ZoomingDialog;
+import net.refractions.udig.project.ui.internal.ProjectExplorer;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.notify.Adapter;
@@ -99,7 +99,7 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
 
 /**
  * The Layers View.
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
@@ -267,7 +267,7 @@ public class LayersView extends ViewPart
      * TODO Seems we don't really need that LayersView listens selection changing. To display layers
      * we need to listen only activating of MapEditor. Also it solves some problems and bugs with
      * listeners hell during LayersView closing and opening multiple times.
-     * 
+     *
      * @author Vitalus
      */
     private class MapEditorListener implements IPartListener, ISelectionChangedListener {
@@ -341,7 +341,7 @@ public class LayersView extends ViewPart
             // }
             currentPart = null;
             setCurrentMap(null);
-            if (part.getSite().getPage().getEditorReferences().length == 0 && part instanceof EditorPart)
+            if (part.getSite().getPage().getEditorReferences().length == 0)
                 removeApplicabilityMenu((EditorPart) part);
             viewer.refresh(true);
         }
@@ -665,7 +665,7 @@ public class LayersView extends ViewPart
 
     /**
      * Updates the viewer with new selected layer.
-     * 
+     *
      * @param newSelection
      */
     protected void updateSelection( final ILayer newSelection ) {
@@ -710,17 +710,13 @@ public class LayersView extends ViewPart
     /**
      * This is how the framework determines which interfaces we implement. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @param key The desired class
      * @return An object of type key or null;
      */
     public Object getAdapter( Class key ) {
-        if (key.equals(IPropertySheetPage.class)){
+        if (key.equals(IPropertySheetPage.class))
             return ProjectUIPlugin.getDefault().getPropertySheetPage();
-        }
-        if( key.isAssignableFrom(IMap.class)){
-            return getCurrentMap();
-        }
         return super.getAdapter(key);
     }
 
@@ -735,11 +731,15 @@ public class LayersView extends ViewPart
      */
     private LayerAction downAction() {
         downAction = new LayerAction(){
+            /**
+             * @see org.eclipse.jface.action.Action#run()
+             */
             public void run() {
-                if( selection.isEmpty() ) return;
-                IMap map = getCurrentMap();
-                // map.sendCommandSync( new LayerMoveDownCommand( selection ));
-                map.sendCommandASync( new LayerMoveDownCommand( selection ));
+                // System.out.println("down");
+                for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
+                    Layer layer = (Layer) iter.next();
+                    getCurrentMap().getContextModel().lowerLayer(layer);
+                }
             }
         };
         downAction.setEnabled(false);
@@ -757,10 +757,10 @@ public class LayersView extends ViewPart
              * @see org.eclipse.jface.action.Action#run()
              */
             public void run() {
-                if( selection.isEmpty() ) return;
-                IMap map = getCurrentMap();
-                //map.sendCommandSync( new LayerMoveUpCommand( selection ));
-                map.sendCommandASync( new LayerMoveUpCommand( selection ));
+                for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
+                    Layer layer = (Layer) iter.next();
+                    getCurrentMap().getContextModel().raiseLayer(layer);
+                }
             }
         };
         upAction.setEnabled(false);
@@ -775,7 +775,7 @@ public class LayersView extends ViewPart
 
     /**
      * Creates a context menu
-     * 
+     *
      * @param viewer2
      */
     private void createContextMenuFor( final Viewer viewer2 ) {

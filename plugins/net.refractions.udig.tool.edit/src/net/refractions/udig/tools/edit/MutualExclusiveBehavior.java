@@ -22,18 +22,18 @@ import net.refractions.udig.project.command.UndoableMapCommand;
 /**
  * A Composite Mode (See GOF Composite Pattern) where contained modes are ordered by priority and only the
  * mode with the highest priority and is valid for the current context is ran.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class MutualExclusiveBehavior implements Behaviour{
 
     private List<Behaviour> behaviours=new ArrayList<Behaviour>();
-    
+
     public MutualExclusiveBehavior(List<Behaviour> modes) {
         this.behaviours=modes;
     }
-    
+
     /**
      * @param behaviour
      */
@@ -66,7 +66,7 @@ public class MutualExclusiveBehavior implements Behaviour{
                     c=mode.getCommand(handler);
                     EditPlugin.trace(EditPlugin.BEHAVIOUR,
                             "  Running mode: " + mode.getClass().getName(), null); //$NON-NLS-1$
-                    
+
                     return c;
                 } catch (Throwable error) {
                     EditPlugin.trace(EditPlugin.BEHAVIOUR,
@@ -76,13 +76,13 @@ public class MutualExclusiveBehavior implements Behaviour{
             }
         }
         return null;
-        
+
     }
 
     public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
         EditPlugin.log("Very Strange I don't know how this happenned...", error); //$NON-NLS-1$
     }
-    
+
     @Override
     public String toString() {
         StringBuffer buffer=new StringBuffer("["); //$NON-NLS-1$

@@ -39,7 +39,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * The action delegate the provides all of the actions for working with bookmarks.
  * <p>
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
@@ -56,51 +56,51 @@ public class BookmarkAction extends Action
     /**
      * id for action to remove a bookmark
      */
-    public static final String REMOVE_MAP_ACTION_ID = 
+    public static final String REMOVE_MAP_ACTION_ID =
     	Messages.BookmarkAction_removemapaction;
 
     /**
      * id for action to remove a bookmark
      */
-    public static final String REMOVE_PROJECT_ACTION_ID = 
+    public static final String REMOVE_PROJECT_ACTION_ID =
     	Messages.BookmarkAction_removeprojectaction;
 
     /**
      * id for action to remove all bookmarks
      */
-    public static final String REMOVE_ALL_ACTION_ID = 
+    public static final String REMOVE_ALL_ACTION_ID =
     	Messages.BookmarkAction_removeallbookmarksaction;
 
     /**
      * id for action to go to a bookmark
      */
-    public static final String GOTO_BOOKMARK_ACTION_ID = 
+    public static final String GOTO_BOOKMARK_ACTION_ID =
     	Messages.BookmarkAction_gotobookmarkaction;
 
     /**
      * id for action to add a bookmark
      */
-    public static final String ADD_BOOKMARK_ACTION_ID = 
+    public static final String ADD_BOOKMARK_ACTION_ID =
     	Messages.BookmarkAction_addbookmarkaction;
 
     /**
      * id for action to rename a bookmark
      */
-    public static final String RENAME_BOOKMARK_ACTION_ID = 
+    public static final String RENAME_BOOKMARK_ACTION_ID =
     	Messages.BookmarkAction_renamebookmarkaction;
-    
+
     /**
      * id for action to save the bookmarks
      */
-    public static final String SAVE_BOOKMARKS_ACTION_ID = 
+    public static final String SAVE_BOOKMARKS_ACTION_ID =
     	Messages.BookmarkAction_savebookmarksaction;
-    
+
     /**
      * id for action to restore the bookmarks
      */
-    public static final String RESTORE_BOOKMARKS_ACTION_ID = 
+    public static final String RESTORE_BOOKMARKS_ACTION_ID =
     	Messages.BookmarkAction_restorebookmarksaction;
-    
+
 
     @SuppressWarnings("unused")
     private IViewPart view;
@@ -300,7 +300,7 @@ public class BookmarkAction extends Action
 
     /**
      * Go to the given bookmark
-     * 
+     *
      * @param bookmark The bookmark to go to
      */
     private void gotoBookmark( Bookmark bookmark ) {

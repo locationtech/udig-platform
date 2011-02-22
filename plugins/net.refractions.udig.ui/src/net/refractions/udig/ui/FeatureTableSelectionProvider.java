@@ -17,7 +17,6 @@ package net.refractions.udig.ui;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -25,7 +24,6 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import net.refractions.udig.core.IProvider;
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.internal.ui.Trace;
 import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.ui.internal.Messages;
@@ -46,21 +44,16 @@ import org.eclipse.swt.widgets.TableItem;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.geotools.filter.FilterAttributeExtractor;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory2;
-import org.opengis.filter.Id;
-import org.opengis.filter.identity.Identifier;
+import org.geotools.filter.FidFilter;
+import org.geotools.filter.Filter;
+import org.geotools.filter.FilterFactoryFinder;
 
 /**
  * Manages selection for the {@link FeatureTableControl}
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -89,7 +82,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
         checkWidget();
         if (selectionFids.isEmpty())
             return new StructuredSelection();
-        return new StructuredSelection(getId());
+        return new StructuredSelection(getFidFilter());
 
     }
 
@@ -105,7 +98,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
         checkWidget();
         if (progressMonitor != null) {
             progressMonitor.setCanceled(true);
-            UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableSelectionProvider.class, 
+            UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableSelectionProvider.class,
                     "#setSelection(): cancelled monitor", null); //$NON-NLS-1$
 
         }
@@ -115,7 +108,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
                 public boolean isTrue() {
                     return progressMonitor==null;
                 }
-                
+
             }, this);
         } catch (InterruptedException e) {
             UiPlugin.log("Interrupted", e); //$NON-NLS-1$
@@ -152,17 +145,94 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
         return selectionFids;
     }
 
-    public Id getId() {
+    public FidFilter getFidFilter() {
         checkWidget();
-        FilterFactory2 fac = CommonFactoryFinder.getFilterFactory2(GeoTools.getDefaultHints());
-        Set<Identifier> ids = FeatureUtils.stringToId(fac, selectionFids);
-        return fac.id(ids);
+        FidFilter filter = FilterFactoryFinder.createFilterFactory().createFidFilter();
+        filter.addAllFids(selectionFids);
+        return filter;
+//        return new SelectionFilter(selectionFids);
     }
 
     private void checkWidget() {
         if (Display.getCurrent() == null)
             SWT.error(SWT.ERROR_THREAD_INVALID_ACCESS);
     }
+//
+//    private static class SelectionFilter extends AbstractFilter implements FidFilter {
+//        private final static FilterFactory FACTORY = FilterFactoryFinder.createFilterFactory();
+//        final Collection<String> selectionFids;
+//        public SelectionFilter( Collection<String> fids ) {
+//            this.selectionFids = fids;
+//        }
+//
+//        public void addAllFids( Collection arg0 ) {
+//            throw new UnsupportedOperationException();
+//        }
+//
+//        public void addFid( String arg0 ) {
+//            throw new UnsupportedOperationException();
+//        }
+//
+//        public boolean contains( Feature feature ) {
+//            if( selectionFids==null )
+//                return false;
+//            return selectionFids.contains(feature.getID());
+//        }
+//
+//        public String[] getFids() {
+//            if( selectionFids==null )
+//                return new String[0];
+//            return selectionFids.toArray(new String[0]);
+//        }
+//
+//        public void removeAllFids( Collection arg0 ) {
+//            throw new UnsupportedOperationException();
+//        }
+//
+//        public void removeFid( String arg0 ) {
+//            throw new UnsupportedOperationException();
+//        }
+//
+//        public short getFilterType() {
+//            return FilterType.FID;
+//        }
+//
+//        public void accept( FilterVisitor arg0 ) {
+//            arg0.visit(this);
+//        }
+//        public Filter and( Filter arg0 ) {
+//            return createLogicFilter(arg0, FilterType.LOGIC_AND);
+//        }
+//
+//        private Filter createLogicFilter( Filter arg0, short type ) {
+//            try {
+//                LogicFilter filter = FACTORY.createLogicFilter(type);
+//                filter.addFilter(this);
+//                if (type != FilterType.LOGIC_NOT)
+//                    filter.addFilter(arg0);
+//                return filter;
+//            } catch (IllegalFilterException e) {
+//                throw (RuntimeException) new RuntimeException().initCause(e);
+//            }
+//        }
+//
+//
+//        public Filter not() {
+//            return createLogicFilter(null, FilterType.LOGIC_NOT);
+//        }
+//
+//        public Filter or( Filter arg0 ) {
+//            return createLogicFilter(arg0, FilterType.LOGIC_OR);
+//        }
+//
+//        @Override
+//        public String toString() {
+//            if( selectionFids==null )
+//                return ""; //$NON-NLS-1$
+//            return selectionFids.toString();
+//        }
+//
+//    };
 
     private class SelectionLoader implements ISafeRunnable {
 
@@ -194,7 +264,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
                             selectionFids.clear();
 
                             updateMonitor(3);
-                            
+
                             owner.getViewer().getTable().clearAll();
                             notifyListeners();
                         }
@@ -212,18 +282,14 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
 
                     FeatureTableContentProvider provider = (FeatureTableContentProvider) owner
                             .getViewer().getContentProvider();
-
-                    final List<SimpleFeature> features = provider.features;
+                    final List<Feature> features = provider.features;
                     int i = 0;
-                    synchronized( provider.features ){
-                        for( SimpleFeature feature : features ) {
-                            if (fids.contains(feature.getID())) {
-                                break;
-                            }
-                            i++;
+                    for( Feature feature : features ) {
+                        if (fids.contains(feature.getID())) {
+                            break;
                         }
+                        i++;
                     }
-                    
                     updateMonitor(1);
 
                     final int index = i;
@@ -304,7 +370,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
                 final Set<String> fids ) throws IOException, Abort {
             int usedTicks = 0;
             for( Iterator iter = structured.iterator(); iter.hasNext(); ) {
-                
+
                 if (progressMonitor.isCanceled())
                     throw new Abort();
 
@@ -312,10 +378,10 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
 
                 if (element instanceof String) {
                     fids.add((String) element);
-                } else if (element instanceof SimpleFeature) {
-                    fids.add(((SimpleFeature) element).getID());
-                } else if (element instanceof Id) {
-                    String[] fids2 = ((Id) element).getIDs().toArray(new String[0]);
+                } else if (element instanceof Feature) {
+                    fids.add(((Feature) element).getID());
+                } else if (element instanceof FidFilter) {
+                    String[] fids2 = ((FidFilter) element).getFids();
                     fids.addAll(Arrays.asList(fids2));
                 } else if (element instanceof IAdaptable) {
 
@@ -341,7 +407,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
 
         /**
          * Obtain fids from the features source if possible.
-         * 
+         *
          * @param fids the set to add fids to
          * @param adaptable the object that adapted to the filter. hopefully can adapt to a feature
          *        source as well
@@ -360,9 +426,9 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
             if (filter == null)
                 return;
 
-            FeatureSource<SimpleFeatureType, SimpleFeature> source = null;
+            FeatureSource source = null;
             if (adaptable.getAdapter(FeatureSource.class) != null) {
-                source = (FeatureSource<SimpleFeatureType, SimpleFeature>) adaptable.getAdapter(FeatureSource.class);
+                source = (FeatureSource) adaptable.getAdapter(FeatureSource.class);
             }
 
             if (source == null) {
@@ -372,25 +438,22 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
                                         " does not have any Geometries", new Exception()); //$NON-NLS-1$
 
                 if (owner.getViewer() != null && owner.getViewer().getInput() != null)
-                    for( SimpleFeature feature : ((FeatureTableContentProvider) owner.getViewer()
+                    for( Feature feature : ((FeatureTableContentProvider) owner.getViewer()
                             .getContentProvider()).features ) {
                         if (progressMonitor.isCanceled())
                             throw new Abort();
-                        if (filter.evaluate(feature))
+                        if (filter.contains(feature))
                             fids.add(feature.getID());
                     }
             } else {
-                DefaultQuery defaultQuery = new DefaultQuery(source.getSchema().getName().getLocalPart(),
+                DefaultQuery defaultQuery = new DefaultQuery(source.getSchema().getTypeName(),
                         filter, new String[0]);
-                // TODO: Remove this workaround in 2.6.1 (note this has no performance impact)
-                Set<String> required = (Set) filter.accept( new FilterAttributeExtractor(), null );                
-                defaultQuery.setPropertyNames( required.toArray(new String[0]) );
-                
                 // get features that are just fids no attributes
-                FeatureCollection<SimpleFeatureType, SimpleFeature>  features = source.getFeatures(defaultQuery);
+                FeatureCollection features = source.getFeatures(defaultQuery);
+
                 long start=System.currentTimeMillis();
-                
-                FeatureIterator<SimpleFeature> featureIterator = features.features();
+
+                FeatureIterator featureIterator = features.features();
                 try {
                     while( featureIterator.hasNext() ) {
                         if (progressMonitor.isCanceled())

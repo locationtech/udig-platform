@@ -16,45 +16,51 @@
  */
 package net.refractions.udig.printing.ui.internal;
 
-import java.io.File;
+import java.awt.print.PrinterJob;
 
 import net.refractions.udig.printing.model.Page;
 import net.refractions.udig.printing.ui.internal.editor.PageEditorInput;
-import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.UDIGEditorInput;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * 
+ * Provides ...TODO summary sentence
+ * <p>
+ * TODO Description
+ * </p><p>
+ * Responsibilities:
+ * <ul>
+ * <li>
+ * <li>
+ * </ul>
+ * </p><p>
+ * Example Use:<pre><code>
+ * PrintAction x = new PrintAction( ... );
+ * TODO code example
+ * </code></pre>
+ * </p>
  * @author Richard Gould
- * @author Andrea Antonello (www.hydrologis.com)
+ * @since 0.3
  */
 public class PrintAction extends Action implements IEditorActionDelegate {
 
-    public PrintAction() {
+    public PrintAction (){
         super();
     }
 
     public void run() {
-        Page page = null;
-        IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-        UDIGEditorInput editorInput = (UDIGEditorInput) workbenchWindow.getActivePage()
-                .getActiveEditor().getEditorInput();
+    	Page page = null;
+        UDIGEditorInput editorInput = (UDIGEditorInput) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput();
         if (editorInput instanceof PageEditorInput) {
             page = (Page) ((PageEditorInput) editorInput).getProjectElement();
         }
@@ -62,38 +68,34 @@ public class PrintAction extends Action implements IEditorActionDelegate {
             throw new RuntimeException(Messages.PrintAction_pageError);
         }
 
-        FileDialog fileDialog = new FileDialog(workbenchWindow.getShell(), SWT.SAVE);
-        String path = fileDialog.open();
+        final String jobName = page.getName();
 
-        File outFile = null;
-        if (path == null || path.length() < 1) {
-            return;
-        } else {
-            if (!path.endsWith(".pdf") && !path.endsWith(".PDF")) {
-                path = path + ".pdf";
-            }
-            outFile = new File(path);
-        }
-
-        // copy the page before hacking on it
-        final Page copy = (Page) EcoreUtil.copy((EObject) page);
-        final PdfPrintingEngine engine = new PdfPrintingEngine(copy, outFile);
+        final PrintingEngine engine = new PrintingEngine(page);
 
         Job job = new Job(Messages.PrintAction_jobTitle){
             protected IStatus run( IProgressMonitor monitor ) {
 
                 engine.setMonitor(monitor);
 
-                boolean printToPdf = engine.printToPdf();
-                if (printToPdf) {
-                    return Status.OK_STATUS;
-                } else {
-                    return Status.CANCEL_STATUS;
+                PrinterJob printerJob = PrinterJob.getPrinterJob();
+
+                engine.setPrinterJob(printerJob);
+
+                if (printerJob.printDialog()) {
+                    try {
+                    	printerJob.setPageable(engine);
+                    	printerJob.setJobName(jobName);
+                        printerJob.print();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+
+                return Status.OK_STATUS;
             }
         };
 
-        if (job.isSystem())
+        if( job.isSystem() )
             job.setSystem(false);
 
         job.schedule();
@@ -101,7 +103,7 @@ public class PrintAction extends Action implements IEditorActionDelegate {
 
     /**
      * TODO summary sentence for setActiveEditor ...
-     * 
+     *
      * @see org.eclipse.ui.IEditorActionDelegate#setActiveEditor(org.eclipse.jface.action.IAction, org.eclipse.ui.IEditorPart)
      * @param action
      * @param targetEditor
@@ -119,7 +121,7 @@ public class PrintAction extends Action implements IEditorActionDelegate {
 
     /**
      * TODO summary sentence for selectionChanged ...
-     * 
+     *
      * @see org.eclipse.ui.IActionDelegate#selectionChanged(org.eclipse.jface.action.IAction, org.eclipse.jface.viewers.ISelection)
      * @param action
      * @param selection

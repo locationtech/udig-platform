@@ -21,9 +21,8 @@ import junit.framework.TestCase;
 
 import org.eclipse.swt.SWT;
 import org.geotools.data.DataUtilities;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.feature.Feature;
+import org.geotools.feature.FeatureType;
 
 /**
  * Test the atributeComparator
@@ -38,20 +37,20 @@ public class AttributeComparatorTest extends TestCase {
 
     /**
      * Test method for
-     * {@link net.refractions.udig.ui.AttributeComparator#compare(org.geotools.feature.SimpleFeature, org.geotools.feature.SimpleFeature)}.
-     * 
+     * {@link net.refractions.udig.ui.AttributeComparator#compare(org.geotools.feature.Feature, org.geotools.feature.Feature)}.
+     *
      * @throws Throwable
      */
     public void testCompare() throws Throwable {
-       SimpleFeatureType type = DataUtilities.createType("type", "name:String,id:int"); //$NON-NLS-1$ //$NON-NLS-2$
+        FeatureType type = DataUtilities.createType("type", "name:String,id:int"); //$NON-NLS-1$ //$NON-NLS-2$
 
-        ArrayList<SimpleFeature> features = new ArrayList<SimpleFeature>(2);
+        ArrayList<Feature> features = new ArrayList<Feature>(2);
 
         final String name1 = null;
         final String name2 = "name2"; //$NON-NLS-1$
-        SimpleFeature feature1 = SimpleFeatureBuilder.build(type, new Object[]{name1, 1}, "1");
+        Feature feature1 = type.create(new Object[]{name1, 1});
 
-        SimpleFeature feature2 = SimpleFeatureBuilder.build(type, new Object[]{name2, 2},"2");
+        Feature feature2 = type.create(new Object[]{name2, 2});
 
         features.add(feature1);
         features.add(feature2);
@@ -60,7 +59,7 @@ public class AttributeComparatorTest extends TestCase {
         sort(features, feature1, feature2, "id"); //$NON-NLS-1$
     }
 
-    private void sort( ArrayList<SimpleFeature> features, SimpleFeature feature1, SimpleFeature feature2, String xpath ) {
+    private void sort( ArrayList<Feature> features, Feature feature1, Feature feature2, String xpath ) {
         Collections.sort(features, new AttributeComparator(SWT.UP, xpath));
 
         assertEquals(feature2, features.get(0));

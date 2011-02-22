@@ -28,7 +28,7 @@ import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 
 /**
  * An action/policy for opening the MapBox's map for editing
- * 
+ *
  * @author Richard Gould
  * @since 0.3
  */
@@ -42,12 +42,12 @@ public class MapEditPolicy extends ComponentEditPolicy {
         }
         return super.getCommand(request);
     }
-    
+
     static class EditMapCommand extends Command {
         private MapBoxPrinter mapBox;
 
         public EditMapCommand() {
-            super(Messages.MapEditPolicy_label); 
+            super(Messages.MapEditPolicy_label);
         }
 
 

@@ -13,22 +13,22 @@ public class AbstractStrategizedTransferTest extends TestCase {
 		super.setUp();
 		transfer=new TransferImpl();
 	}
-	
+
 	/*
 	 * Test method for 'net.refractions.udig.ui.AbstractStrategizedTransfer.javaToNative(Object, TransferData)'
 	 */
 	public void testJavaToNativeObjectTransferData() {
 		TransferData transferData = new TransferData();
 		transfer.javaToNative(true, transferData);
-		// assertEquals(1, transferData.result);
+		assertEquals(1, transferData.result);
 
 		transfer.setStrategy(transfer.getAllStrategies()[1]);
 		transfer.javaToNative(true, transferData);
-		// assertEquals(2, transferData.result);
+		assertEquals(2, transferData.result);
 
 		transfer.setStrategy(transfer.getAllStrategies()[2]);
 		transfer.javaToNative(true, transferData);
-		// assertTrue(1==transferData.result || 2==transferData.result);
+		assertTrue(1==transferData.result || 2==transferData.result);
 	}
 
 	/*
@@ -41,12 +41,12 @@ public class AbstractStrategizedTransferTest extends TestCase {
 		transfer.setStrategy(transfer.getAllStrategies()[2]);
 		assertEquals(1, transfer.nativeToJava(transferData));
 		transfer.javaToNative(true, transferData);
-		//assertTrue(1==transferData.result || 2==transferData.result);
-		
+		assertTrue(1==transferData.result || 2==transferData.result);
+
 		transfer.setStrategy(transfer.getAllStrategies()[1]);
 		transfer.javaToNative(true, transferData);
-		//assertEquals(2, transfer.nativeToJava(transferData));
-		
+		assertEquals(2, transfer.nativeToJava(transferData));
+
 	}
 
 	/*
@@ -55,13 +55,13 @@ public class AbstractStrategizedTransferTest extends TestCase {
 	public void testAddStrategy() {
 		transfer.addStrategy(new AddedStrategy());
 		TransferData transferData = new TransferData();
-		//transferData.result=3;
+		transferData.result=3;
 		assertEquals(3, transfer.nativeToJava(transferData));
-		
+
 	}
-	
+
 	class TransferImpl extends AbstractStrategizedTransfer{
-		
+
 		private TransferStrategy[] t;
         int index=0;
 
@@ -84,8 +84,8 @@ public class AbstractStrategizedTransferTest extends TestCase {
         @Override
         public TransferStrategy getCurrentStrategy() {
             return getAllStrategies()[index];
-        } 
-        
+        }
+
         @Override
         public TransferStrategy[] getAllStrategies() {
 			if( t==null){
@@ -93,11 +93,11 @@ public class AbstractStrategizedTransferTest extends TestCase {
 						new NullReturnStrategy(),
 						new NoEncodeStrategy()
 				};
-				
+
 			}
 			return t;
 		}
-		
+
 
 		@Override
 		public boolean validate(Object object) {
@@ -123,28 +123,28 @@ public class AbstractStrategizedTransferTest extends TestCase {
         public String getTransferName() {
             return ""; //$NON-NLS-1$
         }
-		
+
 	}
 
 	class ExceptionStrategy implements TransferStrategy{
 		public void javaToNative(Object object, TransferData transferData) {
-			//transferData.result=1;
+			transferData.result=1;
 		}
 
 		public Object nativeToJava(TransferData transferData) {
-			//if( transferData.result!=1 )
-			//	throw new RuntimeException("can't process!"); //$NON-NLS-1$
+			if( transferData.result!=1 )
+				throw new RuntimeException("can't process!"); //$NON-NLS-1$
 			return 1;
 		}
 	}
 	class NullReturnStrategy implements TransferStrategy{
 		public void javaToNative(Object object, TransferData transferData) {
-			//transferData.result=2;
+			transferData.result=2;
 		}
 
 		public Object nativeToJava(TransferData transferData) {
-			//if( transferData.result!=2 )
-			//	throw new RuntimeException("can't process!"); //$NON-NLS-1$
+			if( transferData.result!=2 )
+				throw new RuntimeException("can't process!"); //$NON-NLS-1$
 			return 2;
 		}
 	}
@@ -160,12 +160,12 @@ public class AbstractStrategizedTransferTest extends TestCase {
 
 	class AddedStrategy implements TransferStrategy{
 		public void javaToNative(Object object, TransferData transferData) {
-			//transferData.result=3;
+			transferData.result=3;
 		}
 
 		public Object nativeToJava(TransferData transferData) {
-			//if( transferData.result!=3 )
-			//	throw new RuntimeException("can't process!"); //$NON-NLS-1$
+			if( transferData.result!=3 )
+				throw new RuntimeException("can't process!"); //$NON-NLS-1$
 			return 3;
 		}
 	}

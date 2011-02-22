@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.internal.wfs.WFSGeoResourceImpl;
@@ -23,7 +22,7 @@ import org.geotools.data.wfs.WFSDataStoreFactory;
 
 public class WFSConnectionFactory extends UDIGConnectionFactory {
 
-	public boolean canProcess( Object data ) {        
+	public boolean canProcess( Object data ) {
         if( data instanceof IResolve ){
             IResolve resolve = (IResolve) data;
             return resolve.canResolve( WFSDataStore.class );
@@ -35,32 +34,37 @@ public class WFSConnectionFactory extends UDIGConnectionFactory {
 		if( data==null )
             return null;
         if( data instanceof WFSServiceImpl ){
-            IService wfs = (IService) data;
+            WFSServiceImpl wfs = (WFSServiceImpl) data;
             return wfs.getConnectionParams();
         }
         URL url = toCapabilitiesURL( data );
+        if( url == null ){
+            // so we are not sure it is a wms url
+            // lets guess
+            url = CatalogPlugin.locateURL(data);
+        }
         if( url != null ) {
-            // well we have a url - lets try it!            
+            // well we have a url - lets try it!
             List<IResolve> list = CatalogPlugin.getDefault().getLocalCatalog().find( url, null );
             for( IResolve resolve : list ){
                 if( resolve instanceof WFSServiceImpl) {
                     // got a hit!
-                    IService wfs = (IService) resolve;
+                    WFSServiceImpl wfs = (WFSServiceImpl) resolve;
                     return wfs.getConnectionParams();
                 }
                 else if (resolve instanceof WFSGeoResourceImpl ){
                     WFSGeoResourceImpl layer = (WFSGeoResourceImpl) resolve;
-                    IService wfs;
+                    WFSServiceImpl wfs;
                     try {
-                        wfs = (IService) layer.parent( null );
+                        wfs = (WFSServiceImpl) layer.parent( null );
                         return wfs.getConnectionParams();
                     } catch (IOException e) {
                         checkedURL( layer.getIdentifier() );
-                    }                    
+                    }
                 }
             }
-            return createParams( url );            
-        }        
+            return createParams( url );
+        }
         return Collections.emptyMap();
 	}
 
@@ -93,11 +97,8 @@ public class WFSConnectionFactory extends UDIGConnectionFactory {
         else if( data instanceof URL ){
             return toCapabilitiesURL( (URL) data );
         }
-//        else if( CatalogPlugin.locateURL(data) != null ){
-//            return toCapabilitiesURL( CatalogPlugin.locateURL(data) );
-//        }
-        else if (ID.cast(data) != null){
-        	return ID.cast(data).toURL();
+        else if( CatalogPlugin.locateURL(data) != null ){
+            return toCapabilitiesURL( CatalogPlugin.locateURL(data) );
         }
         else {
             return null; // no idea what this should be
@@ -107,36 +108,36 @@ public class WFSConnectionFactory extends UDIGConnectionFactory {
         if( resolve instanceof IService ){
             return toCapabilitiesURL( (IService) resolve );
         }
-        return toCapabilitiesURL( resolve.getIdentifier() );        
+        return toCapabilitiesURL( resolve.getIdentifier() );
     }
     protected URL toCapabilitiesURL( IService resolve ){
         if( resolve instanceof WFSServiceImpl ){
             return toCapabilitiesURL( (WFSServiceImpl) resolve );
         }
-        return toCapabilitiesURL( resolve.getIdentifier() );        
+        return toCapabilitiesURL( resolve.getIdentifier() );
     }
     protected URL toCapabilitiesURL( WFSServiceImpl wfs ){
-        return wfs.getIdentifier();                
+        return wfs.getIdentifier();
     }
     protected URL toCapabilitiesURL( URL url ){
         if (url == null) return null;
 
         String path = url.getPath();
         String query = url.getQuery();
-        String protocol = (url.getProtocol() != null ) ? url.getProtocol().toLowerCase() 
+        String protocol = (url.getProtocol() != null ) ? url.getProtocol().toLowerCase()
         		: null;
-        
-        if( !"http".equals(protocol) && !"https".equals(protocol)){ //$NON-NLS-1$ //$NON-NLS-2$ 
+
+        if( !"http".equals(protocol) && !"https".equals(protocol)){ //$NON-NLS-1$ //$NON-NLS-2$
             return null;
 
         }
-        if (query != null && query.toLowerCase().indexOf("service=wfs") != -1) { //$NON-NLS-1$
+        if (query != null && query.indexOf("service=wfs") != -1) { //$NON-NLS-1$
             return checkedURL( url );
         }
-        if (path != null && path.toLowerCase().indexOf("geoserver/wfs") != -1) { //$NON-NLS-1$
+        if (path != null && path.indexOf("geoserver/wfs") != -1) { //$NON-NLS-1$
             return checkedURL( url );
         }
-        if (url.toExternalForm().toLowerCase().indexOf("WFS") != -1) { //$NON-NLS-1$
+        if (url.toExternalForm().indexOf("WFS") != -1) { //$NON-NLS-1$
             return checkedURL( url );
         }
         return null;
@@ -146,7 +147,7 @@ public class WFSConnectionFactory extends UDIGConnectionFactory {
         String check = url.toExternalForm();
         int hash = check.indexOf('#');
         if ( hash == -1 ){
-            return url;            
+            return url;
         }
         try {
             return new URL( check.substring(0, hash ));
@@ -154,16 +155,16 @@ public class WFSConnectionFactory extends UDIGConnectionFactory {
             return null;
         }
     }
-    
+
     /** 'Create' params given the provided url, no magic occurs */
     protected Map<String,Serializable> createParams( URL url ){
         WFSServiceExtension factory = new WFSServiceExtension();
         Map<String,Serializable> params = factory.createParams( url );
         if( params != null) return params;
-        
+
         Map<String,Serializable> params2 = new HashMap<String,Serializable>();
         params2.put(WFSDataStoreFactory.URL.key,url);
-        
+
         return params2;
     }
 }

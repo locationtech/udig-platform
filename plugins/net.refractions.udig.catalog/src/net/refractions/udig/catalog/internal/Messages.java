@@ -25,9 +25,9 @@ public class Messages extends NLS {
 	public static String CatalogImpl_resolving;
 	public static String CatalogImpl_finding;
 	public static String CatalogImpl_localCatalog_title;
-    public static String CatalogPlugin__ErrorLoadingMessage;
-    public static String CatalogPlugin_ErrorLoading;
+    public static String CatalogPlugin_message;
     public static String CatalogPlugin_SavingCatalog;
+    public static String CatalogPlugin_title;
     public static String DataStoreServiceExtension_butWas;
     public static String DataStoreServiceExtension_missingKey;
     public static String DataStoreServiceExtension_nullParam;

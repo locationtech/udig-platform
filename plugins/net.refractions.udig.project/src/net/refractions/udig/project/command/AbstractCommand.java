@@ -12,33 +12,30 @@ import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Map;
 
 /**
- * TODO Purpose of net.refractions.udig.project.command
- * <p>
- * </p>
- * 
- * @author Jesse
- * @since 1.0.0
+ * TODO Purpose of net.refractions.udig.project.command <p> </p>
+ * @author   Jesse
+ * @since   1.0.0
  */
 public abstract class AbstractCommand implements MapCommand {
 
-    private Map map;
+	private Map map;
 
-    /**
+	/**
      * @see net.refractions.udig.project.command.MapCommand#setMap(IMap)
-     * @uml.property name="map"
+     * @uml.property   name="map"
      */
-    public void setMap( IMap map2 ) {
-        this.map = (Map) map2;
-    }
+	public void setMap(IMap map2) {
+		this.map = (Map) map2;
+	}
 
-    /**
+	/**
      * @see net.refractions.udig.project.command.MapCommand#getMap()
-     * @uml.property name="map"
+     * @uml.property   name="map"
      */
-    public Map getMap() {
-        return map;
-    }
-    
+	public Map getMap() {
+		return map;
+	}
+
     @Override
     public String toString() {
         return getName();
@@ -47,5 +44,6 @@ public abstract class AbstractCommand implements MapCommand {
     public Command copy() {
         return null;
     }
+
 
 }

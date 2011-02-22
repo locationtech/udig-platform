@@ -2,19 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.catalog.ui; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.catalog.ui.CatalogUIPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Export-Package: net.refractions.udig.catalog.internal.ui,
- net.refractions.udig.catalog.internal.ui.actions;x-friends:="net.refractions.udig.catalog.tests.ui",
- net.refractions.udig.catalog.internal.ui.ops;x-friends:="net.refractions.udig.catalog.tests.ui",
- net.refractions.udig.catalog.memory,
- net.refractions.udig.catalog.service,
- net.refractions.udig.catalog.service.database,
+ net.refractions.udig.catalog.internal.ui.actions,
+ net.refractions.udig.catalog.internal.ui.ops,
  net.refractions.udig.catalog.ui,
  net.refractions.udig.catalog.ui.export,
- net.refractions.udig.catalog.ui.internal;x-friends:="net.refractions.udig.catalog.tests.ui",
  net.refractions.udig.catalog.ui.operation,
  net.refractions.udig.catalog.ui.preferences,
  net.refractions.udig.catalog.ui.search,
@@ -26,6 +22,6 @@ Require-Bundle: org.eclipse.core.runtime,
  net.refractions.udig.catalog;visibility:=reexport,
  net.refractions.udig.ui;visibility:=reexport,
  net.refractions.udig.libs,
+ org.junit4;resolution:=optional,
  org.eclipse.core.expressions
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-LazyStart: true

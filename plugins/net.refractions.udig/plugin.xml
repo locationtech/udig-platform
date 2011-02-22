@@ -9,6 +9,18 @@
             application="net.refractions.udig.ui.application"
             name="%product.name">
          <property
+               name="windowImages"
+               value="icons/icon16.gif,icons/icon32.gif,icons/icon64.gif,icons/icon128.gif">
+         </property>
+         <property
+               name="aboutText"
+               value="%verboseAboutText">
+         </property>
+         <property
+               name="aboutImage"
+               value="icons/about.gif">
+         </property>
+         <property
                name="startupForegroundColor"
                value="FFFFFF">
          </property>
@@ -27,18 +39,6 @@
          <property
                name="preferenceCustomization"
                value="plugin_customization.ini">
-         </property>
-         <property
-               name="aboutImage"
-               value="icons/about.gif">
-         </property>
-         <property
-               name="aboutText"
-               value="%verboseAboutText">
-         </property>
-         <property
-               name="windowImages"
-               value="icons/icon16.gif,icons/icon32.gif,icons/icon48.gif,icons/icon64.gif,icons/icon128.gif">
          </property>
       </product>
    </extension>
@@ -95,17 +95,5 @@
             name="net.refractions.udig.browser.externalCatalogue1">
          <externalCatalogueURL url="http://udig.refractions.net"/>
       </externalCatalogue>
-   </extension>
-   <extension
-         id="sdk"
-         point="org.eclipse.core.runtime.products">
-      <product
-            application="net.refractions.udig.ui.application"
-            name="uDig SDK">
-         <property
-               name="appName"
-               value="uDig SDK">
-         </property>
-      </product>
    </extension>
 </plugin>

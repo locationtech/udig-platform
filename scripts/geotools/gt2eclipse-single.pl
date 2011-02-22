@@ -4,7 +4,7 @@ use strict;
 use File::Find;
 use Cwd;
 
-($#ARGV > -1) || die("usage: gt2eclipse.pl <gt root>\n"); 
+($#ARGV > -1) || die("usage: gt2eclipse.pl <gt root>\n");
 
 my $gt = $ARGV[0];
 my $scripts = getcwd;

@@ -25,55 +25,24 @@ import java.text.MessageFormat;
 
 import net.refractions.udig.core.internal.CorePlugin;
 
-import org.eclipse.core.runtime.IProduct;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IStartup;
 import org.eclipse.ui.PlatformUI;
 
 /**
  * This startup checks to see if the correct version of JAI and Image IO is installed and installs
  * it in ~/Library/Java/Extensions/.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
-public class InstallJaiStartup implements IRunnableWithProgress, Runnable {
+public class InstallJaiStartup implements IStartup, IRunnableWithProgress, Runnable {
 
-    private final class RunInProgressDialog implements Runnable {
-		public void run() {
-		    dialog = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell());
-
-		    try {
-		        dialog.run(false, false, InstallJaiStartup.this);
-		        
-		        IProduct product = Platform.getProduct();
-	            String productName;
-	            if( product == null ){
-	            	CorePlugin.log("there is no product so default to uDig", null);
-	            	productName = "uDig";
-	            }else{
-	            	productName = product.getName();
-	            }
-	            
-		        MessageDialog d = new MessageDialog(
-		                dialog.getShell(),
-		                Messages.InstallJaiStartup_1,
-		                null,
-		                Messages.InstallJaiStartup_2,
-		                MessageDialog.INFORMATION, new String[]{MessageFormat.format(Messages.InstallJaiStartup_3, productName)}, 0);
-		        d.open();
-		        PlatformUI.getWorkbench().restart();
-		    } catch (Exception e1) {
-		    	CorePlugin.log("Unable to copy JAI jars to user library", e1); //$NON-NLS-1$
-		    }
-		}
-	}
-
-	private ProgressMonitorDialog dialog;
+    private ProgressMonitorDialog dialog;
 
     // copy one file to another. Both must be files and not directories
     private void copy( InputStream source, File dest ) throws IOException {
@@ -95,24 +64,14 @@ public class InstallJaiStartup implements IRunnableWithProgress, Runnable {
         out.close();
     }
 
-    public void run() {
+    public void earlyStartup() {
         try {
             Class.forName("com.sun.media.jai.operator.ImageReadDescriptor"); //$NON-NLS-1$
             // JAI is installed
-		} catch (ClassNotFoundException e) {
-			RunInProgressDialog progressDialog = new RunInProgressDialog();
-			if (Display.getCurrent() != null) {
-				progressDialog.run();
-			} else {
-				Display display = Display.getCurrent();
-				if( display == null ){
-				    display = Display.getDefault();
-				}
-				if( display != null ){				    
-				    display.asyncExec(progressDialog);
-				}
-			}
-		}
+        } catch (ClassNotFoundException e) {
+            final Display display = PlatformUI.getWorkbench().getDisplay();
+            display.asyncExec(this);
+        }
     }
 
     public void run( IProgressMonitor monitor ) throws InvocationTargetException,
@@ -121,7 +80,7 @@ public class InstallJaiStartup implements IRunnableWithProgress, Runnable {
         String[] files = new String[]{"clibwrapper_jiio.jar", //$NON-NLS-1$
                 "jai_codec.jar", //$NON-NLS-1$
                 "jai_core.jar", //$NON-NLS-1$
-                "jai_imageio.jar", //$NON-NLS-1$t
+                "jai_imageio.jar", //$NON-NLS-1$
                 "mlibwrapper_jai.jar" //$NON-NLS-1$
         };
 
@@ -144,6 +103,24 @@ public class InstallJaiStartup implements IRunnableWithProgress, Runnable {
 
         } catch (IOException e1) {
             throw new RuntimeException(e1);
+        }
+    }
+
+    public void run() {
+        dialog = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell());
+
+        try {
+            dialog.run(false, false, this);
+            MessageDialog d = new MessageDialog(
+                    dialog.getShell(),
+                    Messages.InstallJaiStartup_1,
+                    null,
+                    Messages.InstallJaiStartup_2,
+                    MessageDialog.INFORMATION, new String[]{Messages.InstallJaiStartup_3}, 0);
+            d.open();
+            PlatformUI.getWorkbench().restart();
+        } catch (Exception e1) {
+            CorePlugin.log("Unable to copy JAI jars to user library", e1); //$NON-NLS-1$
         }
     }
 }

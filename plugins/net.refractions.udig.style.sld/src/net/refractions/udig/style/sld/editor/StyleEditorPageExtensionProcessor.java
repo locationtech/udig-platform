@@ -9,9 +9,9 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 
 /**
- * Processes the net.refractions.udig.style.sld.StyleEditorPage extension points and adds the 
+ * Processes the net.refractions.udig.style.sld.StyleEditorPage extension points and adds the
  * ones that work for the layer to the manager.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -24,7 +24,7 @@ final class StyleEditorPageExtensionProcessor implements ExtensionPointProcessor
     }
     public void process( IExtension extension, IConfigurationElement element ) throws Exception {
         EditorNode node = null;
-            
+
         boolean labelMissing = element.getAttribute(OpenStyleEditorAction.ATT_LABEL) == null;
         String id = element.getAttribute(OpenStyleEditorAction.ATT_ID);
         String requires = element.getAttribute(OpenStyleEditorAction.ATT_REQUIRES);
@@ -39,7 +39,7 @@ final class StyleEditorPageExtensionProcessor implements ExtensionPointProcessor
         if (requires != null && !EditorPageManager.meetsRequirement( selectedLayer, id, element, node)) {
             return;
         }
-        
+
         manager[0].registerNode(node);
         String category = node.getCategory();
         if (category == null) {

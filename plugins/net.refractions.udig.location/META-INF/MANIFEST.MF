@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Usg Plug-in
 Bundle-SymbolicName: net.refractions.udig.location; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.location.LocationUIPlugin
-Bundle-Vendor: udig.refractions.net
+Bundle-Vendor: Jody Garnett, Refractions Research, James Macgill Penn State
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  net.refractions.udig.libs,
@@ -12,7 +12,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  net.refractions.udig.project,
  net.refractions.udig.project.ui
-Bundle-ActivationPolicy: lazy
+Eclipse-LazyStart: true
 Export-Package: net.refractions.udig.location,
  net.refractions.udig.location.ui
-Bundle-RequiredExecutionEnvironment: J2SE-1.5

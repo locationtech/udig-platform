@@ -25,7 +25,7 @@ import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Path;
 
 /**
- * Extends {@link EditGeomPathIterator} so that 
+ * Extends {@link EditGeomPathIterator} so that
  * @author jones
  * @since 1.1.0
  */
@@ -40,7 +40,7 @@ public class CurrentEditGeomPathIterator extends EditGeomPathIterator {
     protected CurrentEditGeomPathIterator( EditGeom shape ) {
         super(shape);
     }
-    
+
 
     private static final Map<EditBlackboard, EditBlackboardListener> listeners=new HashMap<EditBlackboard, EditBlackboardListener>();
 
@@ -63,7 +63,7 @@ public class CurrentEditGeomPathIterator extends EditGeomPathIterator {
                             }
                         }
                     }
-                    
+
                     @Override
                     public void batchChange( List<EditBlackboardEvent> e ) {
                         for( EditBlackboardEvent event : e ) {
@@ -79,12 +79,12 @@ public class CurrentEditGeomPathIterator extends EditGeomPathIterator {
         return iter;
     }
 
-    
+
     @Override
     public boolean isDone() {
         boolean superDone = super.isDone();
-        
-        
+
+
         return superDone && (currentState==State.done);
     }
 
@@ -92,13 +92,13 @@ public class CurrentEditGeomPathIterator extends EditGeomPathIterator {
         if( location==null )
             currentState=State.done;
         else if( shape.getNumPoints()==0 ){
-           currentState=State.onlyPointInShape; 
+           currentState=State.onlyPointInShape;
         }else{
             currentState=State.waiting;
         }
     }
-    
-    
+
+
     @Override
     public Shape toShape() {
         prepareToPath();
@@ -109,21 +109,21 @@ public class CurrentEditGeomPathIterator extends EditGeomPathIterator {
         prepareToPath();
         return super.toPath(device);
     }
-    
+
     @Override
     protected Shape createPoint() {
         return null;
     }
-    
+
     @Override
     protected Path createPointPath(Device device) {
         return null;
     }
-    
+
     @Override
     public void next() {
         if ( !super.isDone() ){
-            super.next();   
+            super.next();
             return;
         }
         if ( currentState==State.waiting )
@@ -131,13 +131,13 @@ public class CurrentEditGeomPathIterator extends EditGeomPathIterator {
         else
             currentState=State.done;
     }
-    
+
     @Override
     public int currentSegment( float[] coords ) {
-        
+
         if ( !super.isDone() )
             return super.currentSegment(coords);
-        
+
         if( currentState==State.onCurrent || currentState==State.onlyPointInShape){
             coords[0]=location.getX();
             coords[1]=location.getY();
@@ -149,7 +149,7 @@ public class CurrentEditGeomPathIterator extends EditGeomPathIterator {
             return SEG_CLOSE;
 
         return SEG_LINETO;
-            
+
     }
 
     /**
@@ -161,7 +161,7 @@ public class CurrentEditGeomPathIterator extends EditGeomPathIterator {
 
     /**
      * @param location The location to set.
-     * @param shape if null then 
+     * @param shape if null then
      */
     public void setLocation( Point location, PrimitiveShape shape ) {
         if( shape!=null){

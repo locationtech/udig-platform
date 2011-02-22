@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 /**
  * Sorts the layers for display in a view.  So the first layer drawn is at the bottom.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

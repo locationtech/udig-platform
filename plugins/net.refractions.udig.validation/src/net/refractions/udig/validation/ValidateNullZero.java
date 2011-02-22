@@ -24,15 +24,15 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.geotools.feature.FeatureType;
 import org.geotools.validation.FeatureValidation;
 import org.geotools.validation.attributes.NullZeroValidation;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Overrides the FeatureValidationOp abstract class to return NullZeroValidation()
  * <p>
  * </p>
- * 
+ *
  * @author chorner
  * @since 1.0.1
  */
@@ -40,7 +40,7 @@ public class ValidateNullZero extends FeatureValidationOp {
     /**public for testing purposes only*/
     public String xPath;
     public Combo combo;
-    
+
     public FeatureValidation getValidator() {
         if (xPath == null) return null;
         NullZeroValidation nullZero = new NullZeroValidation();
@@ -49,10 +49,8 @@ public class ValidateNullZero extends FeatureValidationOp {
     }
 
     /**public for testing purposes only*/
-    public @Override Dialog getDialog( Shell shell, final SimpleFeatureType featureType ) {
-        if (featureType.getAttributeCount() == 0){
-        	return null;
-        }
+    public @Override Dialog getDialog( Shell shell, final FeatureType featureType ) {
+        if (featureType.getAttributeCount() == 0) return null;
         final Dialog dialog = new Dialog(shell){
 
             @Override
@@ -60,32 +58,32 @@ public class ValidateNullZero extends FeatureValidationOp {
                 Composite composite = (Composite) super.createDialogArea(parent);
                 combo = new Combo(composite, SWT.DEFAULT);
                 for (int i = 0; i < featureType.getAttributeCount(); i++) {
-                    combo.add(featureType.getDescriptor(i).getName().getLocalPart());
+                    combo.add(featureType.getAttributeType(i).getName());
                 }
                 combo.addModifyListener(new ModifyListener(){
 
                     public void modifyText( ModifyEvent e ) {
-                        setXpath(combo); 
-                    } 
-                    
+                        setXpath(combo);
+                    }
+
                 });
                 combo.addSelectionListener(new SelectionListener(){
 
                     public void widgetSelected( SelectionEvent e ) {
-                        setXpath(combo); 
+                        setXpath(combo);
                     }
 
                     public void widgetDefaultSelected( SelectionEvent e ) {
                         widgetSelected(e);
                         okPressed();
-                    } 
-                    
+                    }
+
                 });
                 combo.select(0);
-                xPath = featureType.getDescriptor(0).getName().getLocalPart();
+                xPath = featureType.getAttributeType(0).getName();
                 return composite;
             }
-            
+
             @Override
             protected void okPressed() {
                 super.okPressed();

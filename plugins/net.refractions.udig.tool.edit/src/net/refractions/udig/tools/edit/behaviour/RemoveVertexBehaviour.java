@@ -30,7 +30,7 @@ import net.refractions.udig.tools.edit.support.Point;
 
 /**
  * A behaviour that deletes a vertex from an editGeom.
- * 
+ *
  * <p>Requirements:
  * <ul>
  * <li>event type == RELEASE</li>
@@ -43,7 +43,7 @@ import net.refractions.udig.tools.edit.support.Point;
  * <li>mouse is over an edge </li>
  * </ul>
  * </p>
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -53,16 +53,16 @@ public class RemoveVertexBehaviour implements EventBehaviour {
         boolean legalEventType=eventType==EventType.RELEASED;
         boolean shapeAndGeomNotNull=handler.getCurrentShape()!=null;
         boolean button1Released=e.button==MapMouseEvent.BUTTON1;
-        
-        return legalEventType && shapeAndGeomNotNull && button1Released 
+
+        return legalEventType && shapeAndGeomNotNull && button1Released
         && !e.buttonsDown() && !e.modifiersDown() && overGeomVertex(handler, e);
     }
 
     private boolean overGeomVertex(EditToolHandler handler, MapMouseEvent e) {
-        
-        Point vertexOver=handler.getEditBlackboard(handler.getEditLayer()).overVertex(Point.valueOf(e.x, e.y), 
+
+        Point vertexOver=handler.getEditBlackboard(handler.getEditLayer()).overVertex(Point.valueOf(e.x, e.y),
                 PreferenceUtil.instance().getVertexRadius());
-        
+
         return handler.getCurrentGeom().hasVertex( vertexOver );
     }
 
@@ -71,14 +71,14 @@ public class RemoveVertexBehaviour implements EventBehaviour {
         if( !isValid(handler, e, eventType) )
             throw new IllegalStateException("isValid() return false"); //$NON-NLS-1$
 
-        Point vertexOver=handler.getEditBlackboard(handler.getEditLayer()).overVertex(Point.valueOf(e.x, e.y), 
+        Point vertexOver=handler.getEditBlackboard(handler.getEditLayer()).overVertex(Point.valueOf(e.x, e.y),
                 PreferenceUtil.instance().getVertexRadius());
-        
+
         UndoableComposite command=new UndoableComposite();
         EditBlackboard bb = handler.getCurrentShape().getEditBlackboard();
         command.getCommands().add(new SelectVertexCommand(bb, vertexOver, Type.SET));
         command.getCommands().add(new RemoveSelectedVerticesCommand(handler));
-        
+
         return command;
     }
 

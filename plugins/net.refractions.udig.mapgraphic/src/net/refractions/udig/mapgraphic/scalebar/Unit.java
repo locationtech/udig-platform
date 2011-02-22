@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2008, Refractions Research Inc.
+ * (C) 2004, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,21 +16,17 @@ package net.refractions.udig.mapgraphic.scalebar;
 
 /**
  * A super simple representation of the units we use in the scalebar
- * <p>
- * This should be replaced by use of the java.units.Unit package.
+ *
  * @author jesse
  * @since 1.1.0
  */
 public enum Unit {
-    KILOMETER("km", 1000), //$NON-NLS-1$
-    METER("m", 1), //$NON-NLS-1$
-    CENTIMETER("cm", .01), //$NON-NLS-1$
-    YARD("yards",0.9144), //$NON-NLS-1$
-    FOOT("feet", 0.3048), //$NON-NLS-1$
-    INCHES("in", 2.54 * 0.01), //$NON-NLS-1$
-    MILE("mile", 1.6093 * 1000); //$NON-NLS-1$
-    
-    
+    KILOMETER("km", 1000),
+    METER("m", 1),
+    CENTIMETER("cm", .01),
+    YARD("yards",0.9144),
+    FOOT("feet", 0.3048);
+
     public String display;
     private double toMeter;
 
@@ -55,7 +51,7 @@ public enum Unit {
     /**
      * Converts the value from meters to current unit.  Assumes the value is in meters
      *
-     * @param value the value in meters 
+     * @param value the value in meters
      * @return value in current unit
      */
     public double meterToUnit(double value) {

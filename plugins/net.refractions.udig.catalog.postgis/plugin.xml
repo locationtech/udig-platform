@@ -4,14 +4,26 @@
    	<extension
          point="net.refractions.udig.catalog.ServiceExtension">
       <service
-            class="net.refractions.udig.catalog.PostgisServiceExtension2"
+            class="net.refractions.udig.catalog.PostGISServiceExtension"
             id="postgis"
             name="Postgis"/>
    	</extension>
  <extension
        point="net.refractions.udig.catalog.ui.connectionFactory">
+	  <factory class="net.refractions.udig.catalog.internal.postgis.ui.PostgisUdigConnectionFactory"
+          id="net.refractions.udig.catalog.ui.postgis"/>
+    <wizardPage
+          banner="icons/wizban/postgis_wiz.gif"
+          class="net.refractions.udig.catalog.internal.postgis.ui.PostGisWizardPage"
+          description="%wizard.description"
+          icon="icons/etool16/postgis_wiz.gif"
+          name="%wizard.name"/>
+
+ </extension>
+ <!--extension
+       point="net.refractions.udig.catalog.ui.connectionFactory">
     <factory
-          class="net.refractions.udig.catalog.internal.postgis.ui.PostGisConnectionFactory"
+          class="net.refractions.udig.catalog.internal.postgis.ui.PostgisUdigConnectionFactory"
           id="net.refractions.udig.catalog.postgis.experimental">
     </factory>
     <wizardPage
@@ -19,15 +31,15 @@
           class="net.refractions.udig.catalog.internal.postgis.ui.PostgisUserHostPage"
           description="%wizard.description"
           icon="icons/etool16/postgis_wiz.gif"
-          name="PostGIS">
+          name="PostGIS Experimental">
     </wizardPage>
     <wizardPage
           banner="icons/wizban/postgis_wiz.gif"
-          class="net.refractions.udig.catalog.service.database.DataConnectionPage"
+          class="net.refractions.udig.catalog.internal.postgis.ui.PostgisConnectionPage"
           description="%wizard.description"
           icon="icons/etool16/postgis_wiz.gif"
           name="Connection">
     </wizardPage>
- </extension>
- 
+ </extension-->
+
 </plugin>

@@ -19,7 +19,7 @@ import net.refractions.udig.project.IBlackboardListener;
 
 /**
  * A simple wrapper on a Map, used for tempoary collaboration.
- * 
+ *
  * @author jgarnett
  * @since 0.6.0
  */
@@ -65,18 +65,7 @@ public class SimpleBlackboard implements IBlackboard {
             }
         }
     }
-    public Object remove( String key ) {
-        Object oldValue = map.remove(key);
-        BlackboardEvent event=new BlackboardEvent(this, key, oldValue, null);
-        for( IBlackboardListener l : listeners ) {
-            try{
-            l.blackBoardChanged(event);
-            } catch (Exception e) {
-                ProjectPlugin.log("", e); //$NON-NLS-1$
-            }
-        }
-        return oldValue;
-    }
+
     /**
      * @see net.refractions.udig.project.IBlackboard#getFloat(java.lang.String)
      */
@@ -164,11 +153,11 @@ public class SimpleBlackboard implements IBlackboard {
     }
 
 
-    CopyOnWriteArraySet<IBlackboardListener> listeners=new CopyOnWriteArraySet<IBlackboardListener>(); 
+    CopyOnWriteArraySet<IBlackboardListener> listeners=new CopyOnWriteArraySet<IBlackboardListener>();
     public boolean addListener( IBlackboardListener listener ) {
         return listeners.add(listener);
     }
-    
+
 
     public boolean removeListener( IBlackboardListener listener ) {
         return listeners.remove(listener);

@@ -16,7 +16,7 @@ import org.geotools.styling.StyleBuilder;
  * An SLD style component can be one of the following classes of object:
  * <ul>
  * <li>
- * 
+ *
  * @see org.geotools.renderer.style.Style
  *      <li>
  * @see org.geotools.styling.FeatureTypeStyle
@@ -63,7 +63,7 @@ public abstract class SLDEditorPart {
 
     /**
      * Returns the ui control. This method should not be overridden.
-     * 
+     *
      * @return The ui control.
      */
     public Composite getPage() {
@@ -72,7 +72,7 @@ public abstract class SLDEditorPart {
 
     /**
      * Signals the ui control to be created. This method should not be overidden.
-     * 
+     *
      * @param parent The parent control.
      */
     public void createControl( PageBook book ) {
@@ -172,7 +172,7 @@ public abstract class SLDEditorPart {
 
     /**
      * Style class, like TextSymbolizer, used for editing.
-     * 
+     *
      * @return the class of style component the ui is used for editing.
      */
     public abstract Class getContentType();
@@ -180,7 +180,7 @@ public abstract class SLDEditorPart {
     /**
      * The internal method for creating the ui component. The parent control passed to the method
      * must not be modified in any way.
-     * 
+     *
      * @param parent The parent control.
      * @return The newly created control.
      */

@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * The typical adapter that has empty methods for all events that can occur.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */

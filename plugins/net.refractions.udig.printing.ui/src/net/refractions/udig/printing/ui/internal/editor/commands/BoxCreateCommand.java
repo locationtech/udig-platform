@@ -18,11 +18,11 @@ public class BoxCreateCommand extends Command {
 		this.parent = parent;
 		setLabel("box creation");
 	}
-	
+
 	public boolean canExecute() {
 		return newBox != null && parent != null && bounds != null;
 	}
-	
+
 	public void execute() {
 		newBox.setLocation(bounds.getLocation());
 		Dimension size = bounds.getSize();
@@ -30,11 +30,11 @@ public class BoxCreateCommand extends Command {
 			newBox.setSize(size);
 		redo();
 	}
-	
+
 	public void redo() {
 		parent.getBoxes().add(newBox);
 	}
-	
+
 	public void undo() {
 		parent.getBoxes().remove(newBox);
 	}

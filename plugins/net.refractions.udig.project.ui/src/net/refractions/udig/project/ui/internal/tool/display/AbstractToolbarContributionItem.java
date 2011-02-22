@@ -34,25 +34,25 @@ import org.eclipse.swt.widgets.ToolItem;
 
 
 /**
- * Abstract class for contribution item that represent the current 
+ * Abstract class for contribution item that represent the current
  * item selected on the toolbar.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
 public abstract class AbstractToolbarContributionItem extends CurrentContributionItem {
 
     ToolItem toolItem;
-    
+
     /**
      * Current modal item that is represented by this contribution in UI.
      */
     protected ModalItem currentTool;
-    
-    
+
+
     private boolean checked;
-    
-    
+
+
 
     /**
      * @see org.eclipse.jface.action.ContributionItem#fill(org.eclipse.swt.widgets.ToolBar, int)
@@ -62,17 +62,15 @@ public abstract class AbstractToolbarContributionItem extends CurrentContributio
             return;
 
         toolItem = createToolItem(parent, index);
-        
-        ModalItem firstTool = getTools().get(0);
-        currentTool = null;
-        setCurrentTool(firstTool);
 
-        if (isActiveItem() || (isDefaultItem() 
+        setCurrentTool(getTools().get(0));
+
+        if (isActiveItem() || (isDefaultItem()
 //        		&& ToolProxy.activeItem == null
         		)) {
             runCurrentTool();
         }
-        
+
         toolItem.addSelectionListener(new SelectionListener(){
 
         	public void widgetSelected( SelectionEvent e ) {
@@ -87,8 +85,8 @@ public abstract class AbstractToolbarContributionItem extends CurrentContributio
                         menuItem.setImage(tool.getImage());
                         menuItem.setText(tool.getName());
                         menuItem.setEnabled(tool.isEnabled());
-                        
-                        
+
+
                         menuItem.addSelectionListener(new SelectionListener(){
 
                             public void widgetSelected( SelectionEvent e ) {
@@ -114,18 +112,18 @@ public abstract class AbstractToolbarContributionItem extends CurrentContributio
 
     /**
      * If the tool is the default tool then run that tool.
-     * 
+     *
      * @return true if the default tool is in the current category and the default category should
      *         be activated.
      */
     protected abstract boolean isDefaultItem();
-    
-    
+
+
     protected abstract boolean isActiveItem();
 
     /**
      * Creates the ToolItem to add to the toolbar
-     * 
+     *
      * @param parent
      * @param index
      */
@@ -133,14 +131,14 @@ public abstract class AbstractToolbarContributionItem extends CurrentContributio
 
     /**
      * returns the list of items for the category.
-     * 
+     *
      * @return
      */
     protected abstract List<ModalItem> getTools();
 
     /**
      * Sets the current items from the category as the current items for the tool item
-     * 
+     *
      * @param tool the new current tool. It must be one of the items in the category.
      */
     protected void setCurrentTool( final ModalItem tool ) {
@@ -174,8 +172,8 @@ public abstract class AbstractToolbarContributionItem extends CurrentContributio
     /**
      * Selects passed modal tool if the <code>toolItem</code> widget has been created
      *  and not disposed. Otherwise just ignore selection until the widget will be created.
-     *  
-     * 
+     *
+     *
      * @see net.refractions.udig.project.ui.internal.tool.display.CurrentContributionItem#setSelection(boolean,
      *      net.refractions.udig.project.ui.internal.tool.display.ModalItem)
      */
@@ -183,13 +181,12 @@ public abstract class AbstractToolbarContributionItem extends CurrentContributio
         if (toolItem !=null && !toolItem.isDisposed()) {
             setCurrentTool(tool);
             if (checked) {
-                //if this fails your image may be in the wrong format (only png/gif supported)
                 Image activeImage = tool.getActiveImage();
                 if( activeImage!=null )
                     toolItem.setImage(activeImage);
             } else {
                 Image image = tool.getImage();
-                if( image!=null )   
+                if( image!=null )
                     toolItem.setImage(image);
             }
             this.checked = checked;
@@ -221,9 +218,9 @@ public abstract class AbstractToolbarContributionItem extends CurrentContributio
             else{
             	final Display disp = Display.getDefault();
             	MessageDialog.openWarning(disp.getActiveShell(),
-    					Messages.AbstractToolbarContributionItem_warning_title, 
+    					Messages.AbstractToolbarContributionItem_warning_title,
     					MessageFormat.format(
-    							Messages.AbstractToolbarContributionItem_warning_message, new Object[] {currentTool.getName()}) 
+    							Messages.AbstractToolbarContributionItem_warning_message, new Object[] {currentTool.getName()})
     					);
             }
         }

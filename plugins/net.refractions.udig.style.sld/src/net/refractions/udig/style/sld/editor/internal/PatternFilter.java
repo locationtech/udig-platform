@@ -21,9 +21,9 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
 /**
- * A filter used in conjunction with <code>FilteredTree</code>.  This filter is 
- * inefficient - in order to see if a node should be filtered it must use the 
- * content provider of the tree to do pattern matching on its children.  This 
+ * A filter used in conjunction with <code>FilteredTree</code>.  This filter is
+ * inefficient - in order to see if a node should be filtered it must use the
+ * content provider of the tree to do pattern matching on its children.  This
  * causes the entire tree structure to be realized.
  */
 public class PatternFilter extends ViewerFilter {
@@ -66,7 +66,7 @@ public class PatternFilter extends ViewerFilter {
     }
 
     /**
-     * 
+     *
      * @param patternString
      */
     public void setPattern(String patternString) {
@@ -79,7 +79,7 @@ public class PatternFilter extends ViewerFilter {
 
     /**
      * Answers whether the given String matches the pattern.
-     * 
+     *
      * @param string the String to test
      * @return whether the string matches the pattern
      */

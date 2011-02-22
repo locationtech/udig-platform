@@ -12,6 +12,8 @@ import net.refractions.udig.ui.PlatformGIS;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.commands.IHandlerListener;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
@@ -35,11 +37,12 @@ public class ResetServiceHandler extends AbstractHandler {
      * to the service (and if successful) and replace the existing entry
      * in the catalogue.
      */
+    @Override
     public Object execute( ExecutionEvent event ) throws ExecutionException {
         Object context = event.getApplicationContext();
         Object trigger = event.getTrigger();
         Map parameters = event.getParameters();
-        
+
         if( context instanceof IStructuredSelection){
             reset( (IStructuredSelection) context );
         }
@@ -63,7 +66,7 @@ public class ResetServiceHandler extends AbstractHandler {
                     }
                 }
                 ResetService.reset(servers, null);
-            }            
+            }
         });
     }
 

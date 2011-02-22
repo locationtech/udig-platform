@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Control;
 
 /**
  * Edit the resolution column in the Issuesview
- * 
+ *
  * @author jones
  * @since 1.0.0
  */

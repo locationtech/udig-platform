@@ -26,7 +26,7 @@ import org.eclipse.ui.IMemento;
 
 /**
  * For testing. A style for SingleRenderer
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

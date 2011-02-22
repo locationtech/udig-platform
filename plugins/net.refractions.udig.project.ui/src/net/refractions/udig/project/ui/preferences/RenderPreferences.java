@@ -26,7 +26,7 @@ public class RenderPreferences extends FieldEditorPreferencePage implements
 	public RenderPreferences() {
 		super(GRID);
 		setPreferenceStore(ProjectPlugin.getPlugin().getPreferenceStore());
-		setDescription(Messages.RenderPreferences_pageDescription); 
+		setDescription(Messages.RenderPreferences_pageDescription);
 	}
 
 	/**
@@ -36,25 +36,22 @@ public class RenderPreferences extends FieldEditorPreferencePage implements
 	 */
 	public void createFieldEditors() {
 		addField(new BooleanFieldEditor(PreferenceConstants.P_ANTI_ALIASING,
-				Messages.RenderPreferences_antialiasing, 
+				Messages.RenderPreferences_antialiasing,
 				getFieldEditorParent()));
         addField(new BooleanFieldEditor(PreferenceConstants.P_TRANSPARENCY,
-                Messages.RenderPreferences_transparencies, 
+                Messages.RenderPreferences_transparencies,
                 getFieldEditorParent()));
-        addField( new BooleanFieldEditor(net.refractions.udig.project.preferences.PreferenceConstants.P_SHOW_ANIMATIONS, 
+        addField( new BooleanFieldEditor(net.refractions.udig.project.preferences.PreferenceConstants.P_SHOW_ANIMATIONS,
                 Messages.RenderPreferences_animations,
                 getFieldEditorParent()));
-        addField( new BooleanFieldEditor(net.refractions.udig.project.preferences.PreferenceConstants.P_IGNORE_LABELS_OVERLAPPING, 
+        addField( new BooleanFieldEditor(net.refractions.udig.project.preferences.PreferenceConstants.P_IGNORE_LABELS_OVERLAPPING,
                 Messages.RenderPreferences_labelOverlappings,
-                getFieldEditorParent()));
-        addField(new BooleanFieldEditor(net.refractions.udig.project.preferences.PreferenceConstants.P_TILED_RENDERING, 
-                Messages.RenderPreferences_tiledRendering,
                 getFieldEditorParent()));
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(IWorkbench workbench) {

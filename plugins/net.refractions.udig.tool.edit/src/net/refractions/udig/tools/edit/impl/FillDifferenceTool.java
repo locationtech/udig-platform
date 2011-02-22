@@ -46,11 +46,8 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
 /**
- * Creates a new SimpleFeature by calculating the difference between
- * the current shape and other shapes in the same layer.
- * <p>
- * @see DifferenceFeatureAcceptor
- * 
+ * Creates a new Feature by calculating the difference between the current shape and another selected shape.
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -59,7 +56,7 @@ public class FillDifferenceTool extends AbstractEditTool{
     @Override
     protected void initActivators( Set<Activator> activators ) {
         DrawType type = DrawGeomsActivator.DrawType.LINE;
-        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultCreateActivators(type);
+        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultActivators(type);
         activators.addAll(defaults);
 
         activators.add(new ResetAllStateActivator());
@@ -81,12 +78,12 @@ public class FillDifferenceTool extends AbstractEditTool{
     protected void initEventBehaviours( EditToolConfigurationHelper helper ) {
         helper.add( new DrawCreateVertexSnapAreaBehaviour());
         helper.startMutualExclusiveList();
-        
+
         helper.startOrderedList(false);
         helper.add( new AddVertexWhileCreatingBehaviour());
         helper.add( new AcceptWhenOverFirstVertexBehaviour());
         helper.stopOrderedList();
-        
+
         //override so that editing will not be started if there are no geometries on the blackboard.
         helper.add( new StartEditingBehaviour(ShapeType.POLYGON) );
         helper.stopMutualExclusiveList();

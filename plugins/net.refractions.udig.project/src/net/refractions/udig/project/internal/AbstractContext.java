@@ -16,7 +16,7 @@ import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 /**
  * Superclass for all context objects.  Has basic functionality.  Also provides methods to return type safe
  * access to the internal model.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -24,14 +24,14 @@ public interface AbstractContext extends IAbstractContext {
 
     /**
      * The Viewport model of the toolkit's map
-     * 
+     *
      * @return The viewport model.
      */
     ViewportModel getViewportModelInternal();
 
     /**
      * The LayerManager of the toolkit's map
-     * 
+     *
      * @return The LayerManager.
      */
     EditManager getEditManagerInternal();
@@ -43,28 +43,28 @@ public interface AbstractContext extends IAbstractContext {
 
     /**
      * Sets the value of the '{@link net.refractions.udig.project.internal.AbstractContext#getRenderManagerInternal <em>Render Manager Internal</em>}' reference.
-     * 
+     *
      * @param value the new value of the '<em>Render Manager Internal</em>' reference.
      */
     void setRenderManagerInternal( RenderManager value );
 
     /**
      * The display area of the Map.
-     * 
+     *
      * @return The display area of the Map.
      */
     public IMapDisplay getMapDisplay();
 
     /**
      * The Map object.
-     * 
+     *
      * @return The Map object
      */
     Map getMapInternal();
 
     /**
      * Sets the value of the '{@link net.refractions.udig.project.internal.AbstractContext#getMapInternal <em>Map Internal</em>}' reference.
-     * 
+     *
      * @param value the new value of the '<em>Map Internal</em>' reference.
      * @see #getMapInternal()
      */
@@ -72,10 +72,10 @@ public interface AbstractContext extends IAbstractContext {
 
     /**
      * The map's containing project
-     * 
+     *
      * @return The map's containing project
      */
     public Project getProjectInternal();
-    
-    
+
+
 }

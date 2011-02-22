@@ -27,43 +27,39 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * A wizard page to create a new project.
- * 
+ *
  * @author vitalus
- * 
+ *
  * @since 0.3
  */
 public class NewProjectWizardPage extends WizardPage {
-	
+
 	DirectoryFieldEditor projectDirectoryEditor;
-	
+
 	StringFieldEditor projectNameEditor;
-	
+
     /**
      * Construct <code>NewProjectWizardPage</code>.
      */
     public NewProjectWizardPage() {
         super(
-                Messages.NewProjectWizardPage_newProject, Messages.NewProjectWizardPage_newProject, Images.getDescriptor(ImageConstants.NEWPROJECT_WIZBAN));   
-        setDescription(Messages.NewProjectWizardPage_newProject_description); 
+                Messages.NewProjectWizardPage_newProject, Messages.NewProjectWizardPage_newProject, Images.getDescriptor(ImageConstants.NEWPROJECT_WIZBAN));
+        setDescription(Messages.NewProjectWizardPage_newProject_description);
     }
 
     /**
      * Set up this page for use.
-     * 
+     *
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      * @param parent
      */
     public void createControl( Composite parent ) {
-    	
-    	
-        Composite composite = new Composite(parent, SWT.NONE);
-    	
 
-        projectNameEditor = new StringFieldEditor("newproject.name", Messages.NewProjectWizardPage_label_projectName, composite){
-            protected boolean doCheckState() {
-                return validate();
-            }
-        };
+
+        Composite composite = new Composite(parent, SWT.NONE);
+
+
+    	projectNameEditor = new StringFieldEditor("newproject.name", Messages.NewProjectWizardPage_label_projectName, composite);   //$NON-NLS-1$
     	projectNameEditor.setPage(this);
     	projectNameEditor.setValidateStrategy(StringFieldEditor.VALIDATE_ON_KEY_STROKE);
     	Text textControl = projectNameEditor.getTextControl(composite);
@@ -71,23 +67,18 @@ public class NewProjectWizardPage extends WizardPage {
     	gd.widthHint = 100;
     	gd.horizontalSpan = 2;
     	textControl.setLayoutData(gd);
-    	
 
-    	
-    	projectDirectoryEditor = new DirectoryFieldEditor("newproject.directory", Messages.NewProjectWizardPage_label_projectDir, composite){
-            protected boolean doCheckState() {
-                return validate();
-            }
-        };
+
+
+    	projectDirectoryEditor = new DirectoryFieldEditor("newproject.directory", Messages.NewProjectWizardPage_label_projectDir, composite);   //$NON-NLS-1$
     	projectDirectoryEditor.setPage(this);
-    	projectDirectoryEditor.setValidateStrategy(StringFieldEditor.VALIDATE_ON_KEY_STROKE);
     	projectDirectoryEditor.fillIntoGrid(composite, 3);
-    	
-    	String defaultProjectName = Messages.NewProjectWizardPage_default_name; 
+
+    	String defaultProjectName = Messages.NewProjectWizardPage_default_name;
 
     	final IPath homepath = Platform.getLocation();
-    	String projectPath = new File(homepath.toString()).getAbsolutePath();
-    	
+    	String projectPath = new File(homepath.toString()).getAbsolutePath(); //$NON-NLS-1$
+
     	projectNameEditor.setStringValue(defaultProjectName);
     	projectDirectoryEditor.setStringValue(projectPath);
 
@@ -96,89 +87,78 @@ public class NewProjectWizardPage extends WizardPage {
         setControl(composite);
         setPageComplete(true);
     }
-    
-    
+
+
     /**
      * Returns specified project name.
-     * 
+     *
      * @return
      */
     public String getProjectName(){
     	return projectNameEditor.getStringValue();
     }
-    
+
     /**
      * Returns specified project path.
-     * 
+     *
      * @return
      */
     public String getProjectPath(){
     	return projectDirectoryEditor.getStringValue();
     }
 
-    
+
     /**
      * Validates the form with project name and path.
-     * 
+     *
      * @return
      * 		<code>true</code> if valid
      */
-    public boolean validate() {
+    public boolean validate(){
+
+    	if(!projectNameEditor.isValid()){
+    		setErrorMessage(Messages.NewProjectWizardPage_err_project_name);
+    		return false;
+    	}
 
         final String projectPath = getProjectPath();
         final String projectName = getProjectName();
 
-        if (projectPath == null || projectPath.length() == 0) {
-            setErrorMessage(Messages.NewProjectWizardPage_err_project_dir_valid);
-            setPageComplete(false);
-            return false;
-        }
-        
-        File f = new File(projectPath + File.separator + projectName + ".udig");
-        if(f.exists()){
-            setErrorMessage(Messages.NewProjectWizardPage_err_project_exists);
-            setPageComplete(false);
-            return false; 
+
+        if(projectPath == null || projectPath.length() == 0){
+        	setErrorMessage(Messages.NewProjectWizardPage_err_project_dir_valid);
+        	return false;
         }
 
         File projectPathFolder = null;
         try {
-            URL projectURL = new URL("file:///" + projectPath); //$NON-NLS-1$
-            projectPathFolder = new File(projectURL.getFile());
+        	URL projectURL = new URL("file:///"+projectPath); //$NON-NLS-1$
+        	projectPathFolder = new File(projectURL.getFile());
 
-            String absolutePath = projectPathFolder.getAbsolutePath();
-            if (!projectPath.equals(absolutePath)) {
-                setErrorMessage(Messages.NewProjectWizardPage_err_project_dir_absolute);
-                setPageComplete(false);
-                return false;
-            }
+        	String absolutePath = projectPathFolder.getAbsolutePath();
+        	if(!projectPath.equals(absolutePath)){
+        		setErrorMessage(Messages.NewProjectWizardPage_err_project_dir_absolute);
+        		return false;
+        	}
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            setPageComplete(false);
-            return false;
+        	e.printStackTrace();
+        	return false;
         }
 
-        if (projectPathFolder.exists()) {
-            String projectFileAbsolutePath = projectPathFolder.getAbsolutePath() + File.separatorChar + "project.uprj"; //$NON-NLS-1$;
-            File projectFile = new File(projectFileAbsolutePath);
-            if (projectFile.exists()) {
-                setErrorMessage(Messages.NewProjectWizardPage_err_project_exists);
-                setPageComplete(false);
-                return false;
-            }
-        }else{
-            setErrorMessage(Messages.NewProjectWizardPage_err_project_dir_valid);
-            setPageComplete(false);
-            return false;
+        if(projectPathFolder.exists()){
+        	String projectFileAbsolutePath = projectPathFolder.getAbsolutePath() + File.separatorChar + "project.uprj"; //$NON-NLS-1$;
+        	File projectFile = new File(projectFileAbsolutePath);
+        	if(projectFile.exists()){
+        		setErrorMessage(Messages.NewProjectWizardPage_err_project_exists);
+        		return false;
+        	}
         }
 
-        if (projectName == null || projectName.length() == 0) {
-            setErrorMessage(Messages.NewProjectWizardPage_err_project_name);
-            setPageComplete(false);
-            return false;
+        if(projectName == null || projectName.length() == 0){
+        	setErrorMessage(Messages.NewProjectWizardPage_err_project_name);
+        	return false;
         }
-        setPageComplete(true);
         return true;
     }
 

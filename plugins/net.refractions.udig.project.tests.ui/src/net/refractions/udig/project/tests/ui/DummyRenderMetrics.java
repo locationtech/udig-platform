@@ -1,23 +1,22 @@
 package net.refractions.udig.project.tests.ui;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.media.jai.util.Range;
+
+import net.refractions.udig.core.Option;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
 import net.refractions.udig.project.render.IRenderContext;
+import net.refractions.udig.project.render.IRenderMetrics;
 import net.refractions.udig.project.render.IRenderMetricsFactory;
 
-import org.geotools.util.Range;
-
-public class DummyRenderMetrics extends AbstractRenderMetrics {
+public class DummyRenderMetrics implements IRenderMetrics {
 
     private IRenderContext context;
 
     public DummyRenderMetrics( IRenderContext context ) {
-        super(context, null, new ArrayList<String>());
         this.context=context;
     }
 
@@ -46,8 +45,8 @@ public class DummyRenderMetrics extends AbstractRenderMetrics {
     }
 
     @SuppressWarnings("unchecked")
-    public Set<Range<Double>> getValidScaleRanges() {
-        return new HashSet<Range<Double>>();
+    public Set<Range> getValidScaleRanges() {
+        return new HashSet<Range>();
     }
 
 }

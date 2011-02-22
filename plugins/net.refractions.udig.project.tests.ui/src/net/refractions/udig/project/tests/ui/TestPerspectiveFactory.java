@@ -18,8 +18,8 @@ import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 
 /**
- * A perpective for tests. 
- * 
+ * A perpective for tests.
+ *
  * @see net.refractions.udig.issues.test.IssueHandlerTest
  * @author jones
  * @since 1.0.0
@@ -27,7 +27,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 public class TestPerspectiveFactory implements IPerspectiveFactory {
 
     public void createInitialLayout( IPageLayout layout ) {
-        
+
     }
 
 }

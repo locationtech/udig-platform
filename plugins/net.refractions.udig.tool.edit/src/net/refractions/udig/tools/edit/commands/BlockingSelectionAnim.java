@@ -1,4 +1,3 @@
-
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
@@ -26,7 +25,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * A simple animation that indicates that a selection is taking place.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */

@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 8 Adding Debug Tracing Support to Your Plugin</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 8 Adding Debug Tracing Support to Your Plugin -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>Debug tracing support allows you to enable debugging during execution inside Eclipse and get more information back. It allows you to pepper your code with helpful information and actions that are not normally executed except while debugging.</p>
+
+<p>The example used in this article is of a plug-in named "org.ossim.renderer" that contains some code to render images. There is a need to print out information about those images while debugging, so tracing support is desirable. </p>
+
+<h1><a name="8AddingDebugTracingSupporttoYourPlugin-Addingdebugtracinginyourplugin%3A">Adding debug tracing in your plug-in:</a></h1>
+
+<h2><a name="8AddingDebugTracingSupporttoYourPlugin-.optionsfile">.options file</a></h2>
+
+<p>Create a file named ".options" in the root directory of your plug-in. (This should be in the same directory as plugin.xml, .project and .classpath, and <b>not</b> the same directory as manifest.mf)</p>
+
+<p>So:<br/>
+plugins/org.ossim.renderer/.options</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java">org.ossim.renderer/debug=<span class="code-keyword">true</span>
+org.ossim.renderer/debug/rendering=<span class="code-keyword">true</span></pre>
+</div></div>
+
+<p>Each entry is an entry for the tracing menu that is displayed in the Run.../Debug... dialog. They are hierarchical, so the top element here is "debug" that has one child element, "rendering". If "debug" is enabled when the program is being ran, rendering will be enabled too. </p>
+
+<p>The value for each entry can be "true" or "false" and sets the default state for that tracing option. True usually works fine.</p>
+
+<p>Here you can see the debug and debug/rendering options in the Run... dialog:<br/>
+<img src="8 Adding Debug Tracing Support to Your Plugin_attachments/tracing.jpg" align="absmiddle" border="0" /></p>
+
+<p>That is really all that is required, but there are some recommendations to make using tracing easier.</p>
+
+<h3><a name="8AddingDebugTracingSupporttoYourPlugin-Pluginclass">Plugin class</a></h3>
+
+<p>Static isDebugging method:</p>
+
+<p>In your Plugin class, add this method:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">/**
+     * Performs the Platform.getDebugOption <span class="code-keyword">true</span> check on the provided trace
+     *
+     * @param trace constant, defined in the Trace class
+     * @<span class="code-keyword">return</span> <span class="code-keyword">true</span> <span class="code-keyword">if</span> -debug is on <span class="code-keyword">for</span> <span class="code-keyword">this</span> plugin
+     */
+    <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-object">boolean</span> isDebugging( <span class="code-keyword">final</span> <span class="code-object">String</span> trace ){
+        <span class="code-keyword">return</span> getDefault().isDebugging() &amp;&amp;
+            <span class="code-quote">"<span class="code-keyword">true</span>"</span>.equalsIgnoreCase(Platform.getDebugOption(trace)); <span class="code-comment">//$NON-NLS-1$
+</span>    }</pre>
+</div></div>
+
+<p>Static trace method:</p>
+
+<p>In your Plugin class, also add a method that provides a mechanism for tracing:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">/**
+     * Outputs a message or an Exception <span class="code-keyword">if</span> the current plug-in is debugging.
+     *
+     * @param message <span class="code-keyword">if</span> not <span class="code-keyword">null</span>, message will be sent to standard out
+     * @param e <span class="code-keyword">if</span> not <span class="code-keyword">null</span>, e.printStackTrace() will be called.
+     */
+    <span class="code-keyword">public</span> <span class="code-keyword">static</span> void trace( <span class="code-object">String</span> message, Throwable e) {
+        <span class="code-keyword">if</span>( getDefault().isDebugging() ) {
+            <span class="code-keyword">if</span>( message != <span class="code-keyword">null</span> ) <span class="code-object">System</span>.out.println( message );
+            <span class="code-keyword">if</span>( e != <span class="code-keyword">null</span> ) e.printStackTrace();
+        }
+    }</pre>
+</div></div>
+
+<h3><a name="8AddingDebugTracingSupporttoYourPlugin-Tracecontantsclass">Trace contants class</a></h3>
+
+<p>Create a constants class for your tracing constants. I used <br/>
+org.ossim.renderer.Trace:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.ossim.renderer;
+
+
+
+/**
+
+ * Constants <span class="code-keyword">for</span> use with Eclipse tracing API.
+
+ * Sample use:&lt;pre&gt;&lt;code&gt;
+
+ * <span class="code-keyword">import</span> <span class="code-keyword">static</span> org.ossim.renderer.Trace.RENDERING;
+
+ *
+
+ * <span class="code-keyword">if</span>( RendererPlugin.isDebugging( RENDERING ) ){
+
+ *      <span class="code-object">System</span>.out.println( <span class="code-quote">"your message here"</span> );
+
+ * }
+
+ * &lt;/code&gt;&lt;/pre&gt;
+
+ * &lt;/p&gt;
+
+ */
+
+<span class="code-keyword">public</span> <span class="code-keyword">interface</span> Trace {
+
+    /** You may set <span class="code-keyword">this</span> to <span class="code-quote">"<span class="code-keyword">true</span>"</span> in your .options file */
+
+    <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">String</span> RENDERING =
+
+        <span class="code-quote">"org.ossim.renderer/debug/rendering"</span>; <span class="code-comment">//$NON-NLS-1$
+</span>
+}</pre>
+</div></div>
+
+<h3><a name="8AddingDebugTracingSupporttoYourPlugin-Usage">Usage</a></h3>
+
+<p>That's it. Now you can use it:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-object">int</span> width = <span class="code-object">Math</span>.abs(max.x - min.x);
+      <span class="code-object">int</span> height = <span class="code-object">Math</span>.abs(max.y - min.y);
+
+      <span class="code-keyword">if</span> (RendererPlugin.isDebugging(Trace.RENDERING)) {
+          <span class="code-object">System</span>.out.println(<span class="code-quote">"Width: "</span> + width + <span class="code-quote">", height: "</span> + height);
+      }</pre>
+</div></div>
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="8 Adding Debug Tracing Support to Your Plugin_attachments/tracing.jpg">tracing.jpg</a> (image/jpeg)
+                                <br/>
+                                                    </div>
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=8635">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=8635">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

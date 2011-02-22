@@ -33,36 +33,36 @@ public class TestEditBlackboard extends EditBlackboard {
     static {
         MathTransform tmp = null;
         try {
-            tmp = CRS.findMathTransform(DefaultGeographicCRS.WGS84, DefaultGeographicCRS.WGS84);
+            tmp = CRS.transform(DefaultGeographicCRS.WGS84, DefaultGeographicCRS.WGS84);
         } catch (FactoryException e) {
             // can't happen
         }
 
         IDENTITY = tmp;
     }
-    
+
     public TestPreferenceUtil util=new TestPreferenceUtil();
-    
+
     public class TestPreferenceUtil extends PreferenceUtil{
         private int radius=0;
         {
             instance=this;
         }
-        
+
         @Override
         public int getVertexRadius() {
             return radius;
         }
-        
+
         public void setVertexRadius(int newRad) {
             radius=newRad;
         }
     };
-    
+
     public TestEditBlackboard(){
         super(500, 500, AffineTransform.getTranslateInstance(0,0), IDENTITY);
     }
-    
+
     public TestEditBlackboard( int width, int height, AffineTransform toScreen, MathTransform layerToMap ) {
         super(width, height, toScreen, layerToMap);
     }

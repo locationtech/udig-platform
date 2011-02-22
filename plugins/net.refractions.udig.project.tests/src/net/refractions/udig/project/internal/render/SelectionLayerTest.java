@@ -9,10 +9,10 @@ import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
 import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 public class SelectionLayerTest extends AbstractProjectTestCase {
-    
+
     IRenderContext context;
     SelectionLayer selectionLayer;
     Layer layer;
@@ -29,7 +29,7 @@ public class SelectionLayerTest extends AbstractProjectTestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        SimpleFeature[] features=UDIGTestUtil.createDefaultTestFeatures("testType", 3); //$NON-NLS-1$
+        Feature[] features=UDIGTestUtil.createDefaultTestFeatures("testType", 3); //$NON-NLS-1$
         Map map=MapTests.createNonDynamicMapAndRenderer(MapTests.createGeoResource(features,true), new Dimension(512,512));
         context = map.getRenderManagerInternal().getRenderExecutor().getContext();
         layer = map.getLayersInternal().get(0);

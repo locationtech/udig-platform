@@ -45,7 +45,7 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * Creates an Action that runs an operation in a background thread when triggered.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -62,12 +62,12 @@ public class OpAction extends Action implements ISelectionListener {
     private volatile NullProgressMonitor monitor=new NullProgressMonitor();
     private boolean loadingError;
     private final static Executor executor=Executors.newFixedThreadPool(1);
-    
+
     /**
      * Subclasses must have the same constructor signature as this constructor,
      * {@linkplain OperationMenuFactory} creates OpActions using this
      * constructor.
-     * 
+     *
      * Construct <code>OpAction</code>.
      *
      */
@@ -88,16 +88,22 @@ public class OpAction extends Action implements ISelectionListener {
         filter=EnablementUtil.parseEnablement(element.getNamespaceIdentifier()+"."+element.getName(), element.getChildren("enablement")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
+    /**
+     *
+     * @param icon
+     * @param element TODO
+     * @return
+     */
     private ImageDescriptor createImageDescriptor( String icon, IConfigurationElement element ) {
         URL url = Platform.getBundle(element.getNamespaceIdentifier()).getEntry(icon);
         return new URLImageDescriptor(url);
     }
-    
+
     public void run() {
         runJob.display = Display.getCurrent();
         runJob.schedule();
     }
-    
+
     public void runWithEvent( Event event ) {
     	runJob.display=event.display;
         runJob.schedule();
@@ -108,7 +114,6 @@ public class OpAction extends Action implements ISelectionListener {
             try {
                 operation = (IOp) configElem.createExecutableExtension("class"); //$NON-NLS-1$
             } catch (CoreException e) {
-                UiPlugin.log("Error loading operation implementation", e); //$NON-NLS-1$
                 final Display display = Display.getDefault();
                 Runnable runnable=new Runnable(){
                     public void run() {
@@ -140,7 +145,7 @@ public class OpAction extends Action implements ISelectionListener {
         public boolean belongsTo( Object family ) {
             return family == OpAction.class;
         }
-        
+
         protected IStatus run( IProgressMonitor monitor ) {
             try {
                 Object target;
@@ -159,8 +164,8 @@ public class OpAction extends Action implements ISelectionListener {
                     }
                 }else{
                     List<Object> targets=new LinkedList<Object>();
-                    for( Iterator<?> iter = selection.iterator(); iter.hasNext(); ) {
-                        Object entry = iter.next();
+                    for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
+                        @SuppressWarnings("unchecked") Object entry = iter.next();
                         try {
                             Object operationTarget = AdapterUtil.instance.adapt(targetClass, entry, monitor);
                             if( operationTarget==null ){
@@ -176,7 +181,7 @@ public class OpAction extends Action implements ISelectionListener {
                             return Status.OK_STATUS;
                         }
                     }
-                    Class<?> targetClass=targets.get(0).getClass();
+                    Class targetClass=targets.get(0).getClass();
                     Object[] tmp=(Object[]) Array.newInstance(targetClass, targets.size());
                     if( enablesForData.minHits==1 && enablesForData.exactMatch){
                     	target=targets.size() > 0 ? targets.get(0):null;
@@ -224,14 +229,14 @@ public class OpAction extends Action implements ISelectionListener {
      * @param executeSynchronous
      */
     public void updateEnablement( IStructuredSelection structured, boolean executeSynchronous ) {
-        if( PlatformUI.getWorkbench().isClosing() )
+        if( structured.equals(this.selection) || PlatformUI.getWorkbench().isClosing() )
             return;
 
-        
-        NullProgressMonitor lastMonitor = monitor; 
+
+        NullProgressMonitor lastMonitor = monitor;
         monitor= new NullProgressMonitor();
         lastMonitor.setCanceled(true);
-        
+
         SetEnablement enablement=new SetEnablement(structured, monitor, executeSynchronous);
         if( !executeSynchronous ){
             setEnabled(false);
@@ -247,12 +252,12 @@ public class OpAction extends Action implements ISelectionListener {
     public String getMenuPath() {
         return menuPath;
     }
-    
+
     @Override
     public String toString() {
         return getMenuPath()+"/"+getText(); //$NON-NLS-1$
     }
-    
+
     private class SetEnablement implements Runnable{
 
         private IStructuredSelection structured;
@@ -270,11 +275,11 @@ public class OpAction extends Action implements ISelectionListener {
                 return;
             boolean enabled=false;
             int hits=0;
-            
-            for (Iterator<?> iter = structured.iterator(); iter.hasNext();) {
+
+            for (Iterator iter = structured.iterator(); iter.hasNext();) {
                 if( monitor.isCanceled() )
                     return;
-                Object obj = iter.next(); 
+                @SuppressWarnings("unchecked") Object obj = iter.next();
                 if ( isValid(obj) ){
                     hits++;
                 }else{
@@ -285,22 +290,24 @@ public class OpAction extends Action implements ISelectionListener {
 
             if( monitor.isCanceled() )
                 return;
-            
+
             if(hits>=enablesForData.minHits){
                 if( enablesForData.exactMatch && hits==enablesForData.minHits )
                     enabled=true;
                 else if( !enablesForData.exactMatch && hits>=enablesForData.minHits)
                     enabled=true;
             }
-            
+
             final boolean finalEnabled=enabled;
             final boolean oldEnabledState=isEnabled();
             Runnable runnable = new Runnable(){
                 public void run() {
+                    if( structured.equals(OpAction.this.selection) )
+                        return;
                     OpAction.this.selection=structured;
-                    
+
                     setEnabled(finalEnabled);
-                    
+
                     if( category!=null && oldEnabledState!=finalEnabled)
                         category.enablementChanged();
                 }

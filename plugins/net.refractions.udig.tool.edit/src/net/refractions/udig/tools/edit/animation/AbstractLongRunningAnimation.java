@@ -21,7 +21,7 @@ import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
 /**
  * Provides framework for commands that run an unknown length of
  * time.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -34,22 +34,22 @@ public abstract class AbstractLongRunningAnimation extends AbstractDrawCommand
 
     AbstractLongRunningAnimation(int maxSize, IProvider<Boolean> isValidProvider){
         frame=maxSize;
-        
+
         this.maxSize=maxSize==0?1:maxSize;
         this.isValidProvider=isValidProvider;
     }
-    
+
     public void nextFrame() {
         if (frame == 1)
             smaller = false;
         else if (frame == maxSize - 1)
             smaller = true;
-    
+
         if (smaller)
             frame--;
         else
             frame++;
-    
+
         frame = frame % maxSize;
     }
 

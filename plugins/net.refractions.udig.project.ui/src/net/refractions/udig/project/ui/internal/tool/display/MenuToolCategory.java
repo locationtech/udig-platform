@@ -8,8 +8,6 @@
  */
 package net.refractions.udig.project.ui.internal.tool.display;
 
-import java.util.Collection;
-
 import net.refractions.udig.project.ui.internal.Messages;
 import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.ui.Constants;
@@ -17,7 +15,6 @@ import net.refractions.udig.ui.Constants;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.action.GroupMarker;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -26,13 +23,10 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.contexts.IContextService;
 
 /**
  * A category object that contributes to a menu.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
@@ -40,7 +34,7 @@ public class MenuToolCategory extends ToolCategory {
 
     /**
      * Construct <code>MenuToolCategory</code>.
-     * 
+     *
      * @param element
      * @param manager
      */
@@ -50,7 +44,7 @@ public class MenuToolCategory extends ToolCategory {
 
     /**
      * Construct <code>MenuToolCategory2</code>.
-     * 
+     *
      * @param manager
      */
     public MenuToolCategory( IToolManager manager ) {
@@ -59,35 +53,29 @@ public class MenuToolCategory extends ToolCategory {
 
     /**
      * Adds items action in the correct locations in the menu.
-     * 
+     *
      * @param manager
      */
     public void contribute( IMenuManager manager ) {
-        IWorkbench workbench = PlatformUI.getWorkbench();
-        IContextService contextService = (IContextService) workbench.getService(IContextService.class);
-        Collection<String> active = (Collection<String> )contextService.getActiveContextIds();
-        
         MenuManager actionMenu = new MenuManager(name, id);
         final String actionExt = "action.ext";
 		actionMenu.add(new GroupMarker(actionExt)); //$NON-NLS-1$
         actionMenu.add(new GroupMarker("modal.ext")); //$NON-NLS-1$
         for( ModalItem item : this ) {
             ToolProxy tool = (ToolProxy) item;
-            String categoryId = tool.getCategoryId();
-            if( contextService.getDefinedContextIds().contains(categoryId)){
-                // we have an context for this tool category
-                if( !active.contains( categoryId )){
-                    continue; // skip this category please!
-                }                
-            }
-            if (tool.getType() == ToolProxy.ACTION) {                
+            if (tool.getType() == ToolProxy.ACTION) {
                 String menuPath = tool.getMenuPath();
-                IAction action = tool.getAction();
-                
-                if (menuPath != null) {
-                    String root = menuPath.substring(0, menuPath.lastIndexOf("/")); //$NON-NLS-1$
-                    String groupName = menuPath.substring(
-                            menuPath.lastIndexOf("/") + 1, menuPath.length()); //$NON-NLS-1$
+                if (menuPath != null ) {
+                    int indexOf = menuPath.lastIndexOf("/");
+                    String root = null;
+                    String groupName = "map";
+                    if( indexOf == -1 ){
+                        groupName = "map";
+                    }
+                    else {
+                        root = menuPath.substring(0, indexOf); //$NON-NLS-1$
+                        groupName = menuPath.substring(indexOf + 1); //$NON-NLS-1$
+                    }
                     if( groupName.equals( Constants.M_TOOL)){
                         groupName = "map";
                     }
@@ -95,11 +83,10 @@ public class MenuToolCategory extends ToolCategory {
                     if (targetMenu != null) {
                         IContributionItem find = targetMenu.find(groupName);
                         if ( find!=null && find instanceof GroupMarker ){
-                            //targetMenu.appendToGroup(groupName, action); //$NON-NLS-1$
-                            targetMenu.appendToGroup(groupName, tool.getAction()); 
+                            targetMenu.appendToGroup(groupName, tool.getAction());
                             targetMenu.setVisible(true);
                         }else{
-                            targetMenu.add(action);
+                            targetMenu.add(tool.getAction());
                             targetMenu.setVisible(true);
                         }
                     } else
@@ -117,9 +104,9 @@ public class MenuToolCategory extends ToolCategory {
         if (actionMenu.getItems().length > 0) {
             // Handle left over tools! Place them in the map menu?
             String menuPath = "map"; // was Constants.M_TOOL
-            IMenuManager toolManager = manager.findMenuUsingPath( menuPath ); 
+            IMenuManager toolManager = manager.findMenuUsingPath( menuPath );
             if( toolManager==null ){
-                toolManager=new MenuManager(Messages.MenuToolCategory_menu_manager_title,"tools"); //$NON-NLS-1$
+                toolManager=new MenuManager(Messages.MenuToolCategory_menu_manager_title, menuPath); //$NON-NLS-1$
                 manager.add(toolManager);
                 toolManager.add(new GroupMarker(actionExt)); //$NON-NLS-1$
                 toolManager.add(new GroupMarker("modal.ext")); //$NON-NLS-1$

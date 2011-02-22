@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Control;
  * <li>create(Composite)
  * </ul>
  * </p>
- * 
+ *
  * @author Justin Deoliveira,Refractions Research Inc.,jdeolive@refractions.net
  */
 public abstract class IConnectionErrorHandler {
@@ -53,7 +53,7 @@ public abstract class IConnectionErrorHandler {
     /**
      * Sets the name for the handler. This name will be used to identify the handler in cases where
      * multiple handlers may wish to handle a single error.
-     * 
+     *
      * @param name The name of the handler.
      */
     public void setName( String name ) {
@@ -63,7 +63,7 @@ public abstract class IConnectionErrorHandler {
     /**
      * Return the name of the handler. This name will be used to identify the handler in cases where
      * multiple handlers may wish to handle a single error.
-     * 
+     *
      * @return The name of the handler.
      */
     public String getName() {
@@ -72,7 +72,7 @@ public abstract class IConnectionErrorHandler {
 
     /**
      * Sets the error being handled.
-     * 
+     *
      * @param t The throwable object representing the error.
      */
     public void setThrowable( Throwable t ) {
@@ -109,7 +109,7 @@ public abstract class IConnectionErrorHandler {
 
     /**
      * Creates the control used by the handler to provide feedback / recover from the error.
-     * 
+     *
      * @param parent The parent widget.
      */
     public void createControl( Composite parent ) {
@@ -124,7 +124,7 @@ public abstract class IConnectionErrorHandler {
      * Determines if the handler is done handling the error, and another connection may be
      * attempted. If the handler does not have the ability to recover from a connection error (ie.
      * canRecover() return false), this method should return false.
-     * 
+     *
      * @return true if the error has been handled, otherwise.
      */
     public boolean isComplete() {
@@ -134,7 +134,7 @@ public abstract class IConnectionErrorHandler {
     /**
      * Determines if the handler has the ability to recover from the error so that another
      * connection may be attempted.
-     * 
+     *
      * @return True if the handler will try to recover, otherwise false.
      */
     public boolean canRecover() {
@@ -144,7 +144,7 @@ public abstract class IConnectionErrorHandler {
     /**
      * This method is called in the event in which a handler can recover from a connection error.
      * This method blocks and allows the handler to make remote connections.
-     * 
+     *
      * @param monitor A progress monitor.
      * @throws IOException
      */
@@ -154,7 +154,7 @@ public abstract class IConnectionErrorHandler {
 
     /**
      * Determines if the handler can handle the error in question.
-     * 
+     *
      * @param t The error in question.
      * @return True if the handler can handle, otherwise false.
      */

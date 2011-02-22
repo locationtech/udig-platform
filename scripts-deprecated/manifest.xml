@@ -1,0 +1,72 @@
+<manifest>
+	<fragments>
+<fragment>net.refractions.udig.catalog.arcsde.nl1</fragment>
+<fragment>net.refractions.udig.catalog.cgdi.nl1</fragment>
+<fragment>net.refractions.udig.catalog.google.nl1</fragment>
+<fragment>net.refractions.udig.catalog.nl1</fragment>
+<fragment>net.refractions.udig.catalog.oracle.nl1</fragment>
+<fragment>net.refractions.udig.catalog.postgis.nl1</fragment>
+<fragment>net.refractions.udig.catalog.shp.nl1</fragment>
+<fragment>net.refractions.udig.catalog.ui.nl1</fragment>
+<fragment>net.refractions.udig.catalog.wfs.nl1</fragment>
+<fragment>net.refractions.udig.catalog.wms.nl1</fragment>
+<fragment>net.refractions.udig.core.nl1</fragment>
+<fragment>net.refractions.udig.help.nl1</fragment>
+<fragment>net.refractions.udig.libs.nl1</fragment>
+<fragment>net.refractions.udig.mapgraphic.nl1</fragment>
+<fragment>net.refractions.udig.printing.edit.nl1</fragment>
+<fragment>net.refractions.udig.printing.model.nl1</fragment>
+<fragment>net.refractions.udig.printing.ui.nl1</fragment>
+<fragment>net.refractions.udig.project.edit.nl1</fragment>
+<fragment>net.refractions.udig.project.nl1</fragment>
+<fragment>net.refractions.udig.ui.nl1</fragment>
+	</fragments>
+	<features>
+		<feature>uDigLib</feature>
+		<feature>uDigCore</feature>
+		<feature>uDigProj</feature>
+		<feature>uDigStyle</feature>
+		<feature>uDigRendering</feature>
+		<feature>uDigUI</feature>
+		<feature>uDigEclipse</feature>
+		<feature>uDigEMF</feature>
+		<feature>uDigGEF</feature>
+		<feature>uDigTools</feature>
+		<feature>uDig</feature>
+		<feature>uDigTest</feature>
+	</features>
+	<plugins>
+		<plugin>net.refractions.udig.catalog</plugin>
+		<plugin>net.refractions.udig.catalog.arcsde</plugin>
+		<plugin>net.refractions.udig.catalog.cgdi</plugin>
+		<plugin>net.refractions.udig.catalog.gml</plugin>
+		<plugin>net.refractions.udig.catalog.google</plugin>
+		<plugin>net.refractions.udig.catalog.oracle</plugin>
+		<plugin>net.refractions.udig.catalog.postgis</plugin>
+		<plugin>net.refractions.udig.catalog.shp</plugin>
+		<plugin>net.refractions.udig.catalog.ui</plugin>
+		<plugin>net.refractions.udig.catalog.wfs</plugin>
+		<plugin>net.refractions.udig.catalog.wms</plugin>
+		<plugin>net.refractions.udig.core</plugin>
+		<plugin>net.refractions.udig.feature.editor</plugin>
+		<plugin>net.refractions.udig.help</plugin>
+		<!--plugin>net.refractions.udig.libs</plugin-->
+		<plugin>net.refractions.udig.mapgraphic</plugin>
+		<plugin>net.refractions.udig.printing.edit</plugin>
+		<plugin>net.refractions.udig.printing.model</plugin>
+		<plugin>net.refractions.udig.printing.ui</plugin>
+		<plugin>net.refractions.udig.project</plugin>
+		<plugin>net.refractions.udig.project.edit</plugin>
+		<plugin>net.refractions.udig.project.ui</plugin>
+		<plugin>net.refractions.udig.render.feature.basic</plugin>
+		<plugin>net.refractions.udig.render.gridcoverage.basic</plugin>
+		<plugin>net.refractions.udig.render.wms.basic</plugin>
+		<plugin>net.refractions.udig.render.wms.tiling</plugin>
+		<plugin>net.refractions.udig.style</plugin>
+		<plugin>net.refractions.udig.style.sld</plugin>
+		<plugin>net.refractions.udig.tool.default</plugin>
+		<plugin>net.refractions.udig.tool.info</plugin>
+		<plugin>net.refractions.udig.tool.select</plugin>
+		<plugin>net.refractions.udig.ui</plugin>
+	</plugins>
+</manifest>

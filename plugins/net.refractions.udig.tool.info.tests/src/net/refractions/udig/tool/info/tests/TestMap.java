@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.tool.info.tests;
 
@@ -26,7 +26,7 @@ public class TestMap implements IMap {
 	private IRenderManager renderManager = new TestRenderManager();
 	private IViewportModel viewportModel;
 	private List<ILayer> layers;
-	
+
 	public TestMap() {
 	}
 
@@ -44,22 +44,22 @@ public class TestMap implements IMap {
 
 	public void addMapCompositionListener(IMapCompositionListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void addMapListener(IMapListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void executeASyncWithoutUndo(MapCommand command) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void executeSyncWithoutUndo(MapCommand command) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public String getAbstract() {
@@ -106,22 +106,22 @@ public class TestMap implements IMap {
 
 	public void removeMapCompositionListener(IMapCompositionListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void removeMapListener(IMapListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void sendCommandASync(MapCommand command) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void sendCommandSync(MapCommand command) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public String getName() {
@@ -132,5 +132,5 @@ public class TestMap implements IMap {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

@@ -37,15 +37,15 @@ public class OperationCategory extends MenuManager{
 	List<OpAction> actions=new ArrayList<OpAction>();
 	MenuManager manager;
     String description;
-	
+
 	/**
-	 * new instance 
+	 * new instance
 	 */
 	public OperationCategory(IConfigurationElement element) {
 		super( element.getAttribute("name"), element.getAttribute("id")); //$NON-NLS-1$ //$NON-NLS-2$
 		description = element.getAttribute("description");
 	}
-	
+
 	public MenuManager createContextMenu(){
 		manager=new MenuManager(getMenuText(), getId());
 		for( OpAction action:actions){
@@ -55,16 +55,16 @@ public class OperationCategory extends MenuManager{
 		}
 		return manager;
 	}
-	
+
 	/**
 	 * Optional description of this category.
-	 * 
+	 *
 	 * @return Description of this category, may be null.
 	 */
 	public String getDescription() {
         return description;
     }
-	
+
 	/**
 	 * All actions added must be instances of OpAction
 	 * @see org.eclipse.jface.action.ContributionManager#add(org.eclipse.jface.action.IAction)
@@ -82,9 +82,9 @@ public class OperationCategory extends MenuManager{
 	public void setSelection(ISelection selection) {
 		for(OpAction action:actions){
 			action.selectionChanged(null, selection);
-		}	
+		}
 	}
-    
+
     /**
      * Contained OpActions call this to notify the category when its enablement has changed.
      */
@@ -100,7 +100,7 @@ public class OperationCategory extends MenuManager{
             getMenu().getParentItem().setEnabled(enabled);
         }
     }
-    
+
     /**
      * gets all the Operation actions in the category.
      */

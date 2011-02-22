@@ -27,7 +27,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 /**
- * TODO Purpose of 
+ * TODO Purpose of
  * <p>
  *
  * </p>
@@ -42,7 +42,7 @@ public class TransferPreference extends FieldEditorPreferencePage
         super(GRID);
         IPreferenceStore store = UiPlugin.getDefault().getPreferenceStore();
         setPreferenceStore(store);
-        setDescription(Messages.TransferPreference_transfer_preference_description); 
+        setDescription(Messages.TransferPreference_transfer_preference_description);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class TransferPreference extends FieldEditorPreferencePage
                 String[] names=ast.getStrategyNames();
                 if( names.length<2 )
                     continue;
-                
+
                 String[][] labelsAndValues=new String[names.length][];
                 for( int i = 0; i < labelsAndValues.length; i++ ) {
                     labelsAndValues[i]=new String[]{names[i], ""+i}; //$NON-NLS-1$

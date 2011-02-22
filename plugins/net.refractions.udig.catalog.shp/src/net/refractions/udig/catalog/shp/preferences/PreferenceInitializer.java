@@ -1,9 +1,9 @@
 package net.refractions.udig.catalog.shp.preferences;
 
-import net.refractions.udig.catalog.internal.shp.ShpPlugin;
-
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
+
+import net.refractions.udig.catalog.internal.shp.ShpPlugin;
 
 /**
  * Class used to initialize default preference values.
@@ -12,7 +12,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
 	 */
 	public void initializeDefaultPreferences() {

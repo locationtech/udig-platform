@@ -3,6 +3,7 @@ package net.refractions.udig.catalog.internal.geotiff;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -14,7 +15,7 @@ public class GeoTiffPlugin extends AbstractUIPlugin {
 	private static GeoTiffPlugin plugin;
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
-	
+
 	/**
 	 * The constructor.
 	 */
@@ -25,8 +26,8 @@ public class GeoTiffPlugin extends AbstractUIPlugin {
 
 	/**
 	 * This method is called upon plug-in activation
-	 * @param context 
-	 * @throws Exception 
+	 * @param context
+	 * @throws Exception
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
@@ -34,8 +35,8 @@ public class GeoTiffPlugin extends AbstractUIPlugin {
 
 	/**
 	 * This method is called when the plug-in is stopped
-	 * @param context 
-	 * @throws Exception 
+	 * @param context
+	 * @throws Exception
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
@@ -54,7 +55,7 @@ public class GeoTiffPlugin extends AbstractUIPlugin {
 	/**
 	 * Returns the string from the plugin's resource bundle,
 	 * or 'key' if not found.
-	 * @param key 
+	 * @param key
 	 * @return String value of the requsted resource.
 	 */
 	public static String getResourceString(String key) {
@@ -70,7 +71,7 @@ public class GeoTiffPlugin extends AbstractUIPlugin {
 	 * Returns the plugin's resource bundle,
 	 * @return Default ResourceBundle for this plugin.
 	 */
-	public synchronized ResourceBundle getResourceBundle() {
+	public ResourceBundle getResourceBundle() {
 		try {
 			if (this.resourceBundle == null)
 				this.resourceBundle = ResourceBundle.getBundle(

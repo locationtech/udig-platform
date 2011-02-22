@@ -23,7 +23,7 @@ public class RemoveSelectedVerticesCommandTest extends TestCase {
         handler.getEditBlackboard().addPoint(20,20, shell);
         handler.getEditBlackboard().addPoint(10,20, shell);
         handler.getEditBlackboard().addPoint(10,10, shell);
-        
+
         handler.setCurrentShape(shell);
     }
     /*
@@ -32,9 +32,9 @@ public class RemoveSelectedVerticesCommandTest extends TestCase {
     public void testRun() throws Exception {
         handler.getEditBlackboard().selectionAdd(Point.valueOf(10,10));
         handler.getEditBlackboard().selectionAdd(Point.valueOf(10,20));
-        
+
         RemoveSelectedVerticesCommand command=new RemoveSelectedVerticesCommand(handler);
-        
+
         command.setRunAnimation(false);
         command.setMap((Map) handler.getContext().getMap());
         command.run(new NullProgressMonitor());
@@ -43,21 +43,21 @@ public class RemoveSelectedVerticesCommandTest extends TestCase {
         assertEquals(0, handler.getEditBlackboard().getCoords(10,20).size());
         assertEquals(1, handler.getEditBlackboard().getCoords(20,20).size());
         assertEquals(1, handler.getEditBlackboard().getCoords(20,10).size());
-        
+
         assertEquals(2, shell.getNumPoints());
         assertEquals(2, shell.getNumCoords());
-        
+
         command.rollback(new NullProgressMonitor());
-        
+
         assertEquals(2, handler.getEditBlackboard().getCoords(10,10).size());
         assertEquals(1, handler.getEditBlackboard().getCoords(10,20).size());
         assertEquals(1, handler.getEditBlackboard().getCoords(20,20).size());
         assertEquals(1, handler.getEditBlackboard().getCoords(20,10).size());
-        
+
         assertEquals(5, shell.getNumPoints());
         assertEquals(5, shell.getNumCoords());
-        
-    }    
+
+    }
 
     /*
      * If shape is a polygon even after deletion the geometry still be a polygon.
@@ -65,11 +65,11 @@ public class RemoveSelectedVerticesCommandTest extends TestCase {
     public void testRemoveStartVertexOnPolygon() throws Exception {
         handler.getEditBlackboard().selectionAdd(Point.valueOf(10,10));
         handler.getEditBlackboard().selectionAdd(Point.valueOf(10,20));
-        
+
         RemoveSelectedVerticesCommand command=new RemoveSelectedVerticesCommand(handler);
 
         shell.getEditGeom().setShapeType(ShapeType.POLYGON);
-        
+
         command.setMap((Map) handler.getContext().getMap());
 
         command.setRunAnimation(false);
@@ -79,17 +79,17 @@ public class RemoveSelectedVerticesCommandTest extends TestCase {
         assertEquals(0, handler.getEditBlackboard().getCoords(10,20).size());
         assertEquals(2, handler.getEditBlackboard().getCoords(20,10).size());
         assertEquals(1, handler.getEditBlackboard().getCoords(20,20).size());
-        
+
         assertEquals(3, shell.getNumPoints());
         assertEquals(3, shell.getNumCoords());
-        
+
         command.rollback(new NullProgressMonitor());
-        
+
         assertEquals(2, handler.getEditBlackboard().getCoords(10,10).size());
         assertEquals(1, handler.getEditBlackboard().getCoords(10,20).size());
         assertEquals(1, handler.getEditBlackboard().getCoords(20,20).size());
         assertEquals(1, handler.getEditBlackboard().getCoords(20,10).size());
-        
+
         assertEquals(5, shell.getNumPoints());
         assertEquals(5, shell.getNumCoords());
     }

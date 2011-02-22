@@ -17,14 +17,10 @@
 package net.refractions.udig.render.wms.basic;
 
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.geotools.data.wms.WebMapServer;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -49,26 +45,14 @@ public class WMSPlugin extends AbstractUIPlugin {
     public static WMSPlugin getDefault(){
         return plugin;
     }
-    
+
     /**
      * This method is called upon plug-in activation
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
-        ClassLoader current = Thread.currentThread().getContextClassLoader();
-        try {
-            Thread.currentThread().setContextClassLoader(WebMapServer.class.getClassLoader());
-            Logger logger = Logger.getLogger("org.geotools.data.ows");//$NON-NLS-1$
-            if (!isDebugging()) { //$NON-NLS-1$
-                logger.setLevel(Level.SEVERE);
-            } else {
-                logger.setLevel(Level.FINEST);
-            }
-        } finally {
-            Thread.currentThread().setContextClassLoader(current);
-        }
     }
-    
+
     /**
      * This method is called when the plug-in is stopped
      */
@@ -76,16 +60,16 @@ public class WMSPlugin extends AbstractUIPlugin {
         super.stop(context);
         plugin = null;
     }
-    
+
     public static void log(String message) {
         log(message, null);
     }
-    
+
     public static void log(String message, Throwable exception) {
         WMSPlugin.getDefault().getLog().log(
-                new Status(IStatus.INFO, WMSPlugin.ID, IStatus.OK, 
+                new Status(IStatus.INFO, WMSPlugin.ID, IStatus.OK,
                         message, exception));
-    }    
+    }
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
@@ -111,12 +95,12 @@ public class WMSPlugin extends AbstractUIPlugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ){
         return getDefault().isDebugging() &&
             "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
-    
+
     }
 }

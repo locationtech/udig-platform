@@ -15,25 +15,26 @@
 package net.refractions.udig.project.internal.render.impl.renderercreator;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+
+import javax.media.jai.util.Range;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.render.Renderer;
 import net.refractions.udig.project.render.AbstractRenderMetrics;
 import net.refractions.udig.project.render.IRenderContext;
+import net.refractions.udig.project.render.IRenderMetrics;
 import net.refractions.udig.project.render.IRenderMetricsFactory;
 import net.refractions.udig.project.render.IRenderer;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.util.Range;
 
 /**
  * A Rendermetrics factory that makes a RenderMetrics that behaves badly which makes a renderer that
  * behaves badly :).  For testing obviously.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -57,11 +58,11 @@ public class BadRenderMetricsFactory implements IRenderMetricsFactory {
      * if the georesource can resolve to this string then only the canAddLayerMethod will throw an exception
      */
     public final static String CAN_ADD_LAYER_EXCEPTION="CAN_ADD_LAYER_EXCEPTION"; //$NON-NLS-1$
-    
+
     private final static List<String> ALL=Arrays.asList(new String[]{
       ALWAYS_EXCEPTION, CAN_CREATE_METRICS, CAN_RENDER_NO_EXCEPTION,
       CAN_ADD_LAYER_EXCEPTION
-    
+
     });
     public boolean canRender( IRenderContext context ) throws IOException {
         String resolve=context.getGeoResource().resolve(String.class, new NullProgressMonitor());
@@ -71,7 +72,7 @@ public class BadRenderMetricsFactory implements IRenderMetricsFactory {
         throw new RuntimeException();
     }
 
-    public AbstractRenderMetrics createMetrics( IRenderContext context ) {
+    public IRenderMetrics createMetrics( IRenderContext context ) {
         String resolve;
         try {
             resolve = context.getGeoResource().resolve(String.class, new NullProgressMonitor());
@@ -100,7 +101,7 @@ public class BadRenderMetricsFactory implements IRenderMetricsFactory {
                 public IRenderContext getRenderContext() {
                     return context;
                 }
-                
+
                 @Override
                 public IRenderMetricsFactory getRenderMetricsFactory() {
                     return factory;
@@ -113,11 +114,11 @@ public class BadRenderMetricsFactory implements IRenderMetricsFactory {
     public Class< ? extends IRenderer> getRendererType() {
         return MultiLayerRenderer.class;
     }
-    
+
     class BadRenderMetrics extends AbstractRenderMetrics{
 
         public BadRenderMetrics( IRenderContext context, IRenderMetricsFactory factory ) {
-            super(context, factory, new ArrayList<String>());
+            super(context, factory);
         }
 
         public boolean canAddLayer( ILayer layer ) {
@@ -144,10 +145,10 @@ public class BadRenderMetricsFactory implements IRenderMetricsFactory {
             throw new RuntimeException();
         }
 
-        public Set<Range<Double>> getValidScaleRanges() {
+        public Set<Range> getValidScaleRanges() {
             return null;
         }
-        
+
     }
 
 }

@@ -28,17 +28,17 @@ import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 import net.refractions.udig.catalog.CatalogPlugin;
+import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.ICatalogInfo;
-import net.refractions.udig.catalog.ID;
+import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveChangeEvent;
 import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.catalog.ISearch;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.google.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.ListenerList;
+import org.eclipse.jface.util.ListenerList;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -46,17 +46,17 @@ import org.jdom.input.SAXBuilder;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-public class GoogleCatalog extends ISearch {
+public class GoogleCatalog extends ICatalog {
 
     private Throwable msg;
     URL url = null;
-    
+
     /**
      * Construct <code>GoogleCatalog</code>.
      *
      */
     public GoogleCatalog() {
-        catalogListeners = new ListenerList(org.eclipse.core.runtime.ListenerList.IDENTITY);
+        catalogListeners = new ListenerList();
         try {
             url = new URL("http://udig.refractions.net/search/google-xml.php?"); //$NON-NLS-1$
         } catch (MalformedURLException e) {
@@ -65,7 +65,7 @@ public class GoogleCatalog extends ISearch {
         }
     }
     private ListenerList catalogListeners;
-    
+
     /*
      * @see net.refractions.udig.catalog.ICatalog#add(net.refractions.udig.catalog.IService)
      */
@@ -120,88 +120,88 @@ public class GoogleCatalog extends ISearch {
 
     private class GoogleICatalogInfo extends ICatalogInfo{
         GoogleICatalogInfo(){
-            this.title = Messages.GoogleCatalog_title; 
-            this.description = Messages.GoogleCatalog_description; 
+            this.title = Messages.GoogleCatalog_title;
+            this.description = Messages.GoogleCatalog_description;
             this.source = url;
             this.keywords = new String[]{"Catalog","Google","Refractions Research","Search"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         }
     }
-    
+
     /*
      * @see net.refractions.udig.catalog.ICatalog#find(java.net.URL)
      */
-    public List<IResolve> find( ID id, IProgressMonitor monitor ) {
+    public List<IResolve> find( URL id, IProgressMonitor monitor ) {
         return new LinkedList<IResolve>();
     }
 
     /*
      * hits the server using soap ...
-     * 
+     *
      * @see net.refractions.udig.catalog.ICatalog#search(java.lang.String, com.vividsolutions.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor)
      */
     public List<IResolve> search( String pattern, Envelope bbox, IProgressMonitor monitor ) throws IOException{
-        
-        monitor.beginTask(Messages.GoogleCatalog_searchMessage+pattern, IProgressMonitor.UNKNOWN); 
-        
+
+        monitor.beginTask(Messages.GoogleCatalog_searchMessage+pattern, IProgressMonitor.UNKNOWN);
+
         List<IResolve> results = new ArrayList<IResolve>();
-        
+
         if (bbox == null || bbox.isNull()) {
             bbox = new Envelope(-180, 180, -90, 90);
         }
 
         double xmin = bbox.getMinX();
         double xmax = bbox.getMaxX();
-        
+
         double ymin = bbox.getMinY();
         double ymax = bbox.getMaxY();
-        
+
         //keywords=bird&xmin=-180&ymin=-90&xmax=180&ymax=90
         String urlString = url.toExternalForm();
-        
+
         urlString = urlString.concat("keywords="+URLEncoder.encode( pattern, "UTF-8")); //$NON-NLS-1$ //$NON-NLS-2$
         urlString = urlString.concat("&xmin="+xmin+"&ymin="+ymin+"&xmax="+xmax+"&ymax="+ymax); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        
+
         if (monitor.isCanceled()) {
             return results;
         }
-        
+
         URL finalURL = new URL(urlString);
-        
+
         URLConnection connection = finalURL.openConnection();
-        
+
         connection.addRequestProperty("Accept-Encoding", "gzip"); //$NON-NLS-1$ //$NON-NLS-2$
 
         InputStream inputStream = connection.getInputStream();
-        
+
         if (connection.getContentEncoding() != null && connection.getContentEncoding().indexOf("gzip") != -1) { //$NON-NLS-1$
             inputStream = new GZIPInputStream(inputStream);
         }
-                
+
         SAXBuilder builder = new SAXBuilder(false);
         Document document = null;
-        
+
         if (monitor.isCanceled()) {
             return results;
         }
-        
+
         try {
             document = builder.build(inputStream);
         } catch (JDOMException e) {
-            throw (IOException) new IOException(Messages.GoogleCatalog_parseError).initCause(e); 
+            throw (IOException) new IOException(Messages.GoogleCatalog_parseError).initCause(e);
         }
-        
+
         if (monitor.isCanceled()) {
             return results;
         }
-        
+
         for (Object object : document.getRootElement().getChildren("r")) { //$NON-NLS-1$
-            
+
             if (monitor.isCanceled()) {
                 return results;
             }
-            
+
             Element rElement = (Element) object;
-            
+
             String name = rElement.getChildText("name"); //$NON-NLS-1$
             String title = rElement.getChildText("title"); //$NON-NLS-1$
             String description = rElement.getChildText("description"); //$NON-NLS-1$
@@ -209,12 +209,13 @@ public class GoogleCatalog extends ISearch {
             String serverType = rElement.getChildText("servertype"); //$NON-NLS-1$
             String serverVersion = rElement.getChildText("serverversion"); //$NON-NLS-1$
             URL id = new URL(rElement.getChildText("id")); //$NON-NLS-1$
-            
+
             OGCLayer layer = new OGCLayer(name, title, description, onlineResource, serverType, serverVersion, id);
-            
+
             results.add(GoogleResource.getResource(layer));
         }
-       
+
+        System.out.println("number of search results = "+results.size());
         return results;
     }
 
@@ -252,14 +253,10 @@ public class GoogleCatalog extends ISearch {
     public URL getIdentifier() {
         return url;
     }
-    public ID getID() {
-    	return new ID( getIdentifier() );		
-    }
-    
     void fire( IResolveChangeEvent event ) {
-        Object[] listeners = catalogListeners.getListeners();        
+        Object[] listeners = catalogListeners.getListeners();
         if( listeners.length == 0 ) return;
-        
+
         for (int i = 0; i < listeners.length; ++i) {
             try {
                 ((IResolveChangeListener) listeners[i]).changed( event );
@@ -269,9 +266,9 @@ public class GoogleCatalog extends ISearch {
             }
         }
     }
-    
+
     /**
-     * 
+     *
      * @see net.refractions.udig.catalog.ICatalog#addCatalogListener(net.refractions.udig.catalog.ICatalog.ICatalogListener)
      * @param listener
      */
@@ -280,25 +277,36 @@ public class GoogleCatalog extends ISearch {
     }
 
     /**
-     * 
+     *
      * @see net.refractions.udig.catalog.ICatalog#removeCatalogListener(net.refractions.udig.catalog.ICatalog.ICatalogListener)
      * @param listener
      */
     public void removeCatalogListener( IResolveChangeListener listener ) {
         catalogListeners.remove(listener);
     }
+
 	@Override
-	public <T extends IResolve> T getById(Class<T> type, ID id, IProgressMonitor monitor) {
+	public List<IService> findService(URL query) {
+		//This is special.
+		return new ArrayList<IService>();
+	}
+	@Override
+	public <T extends IResolve> T getById(Class<T> type, URL id, IProgressMonitor monitor) {
 		return null;
 	}
-        
+    @Override
+    public IGeoResource createTemporaryResource( Object descriptor ) throws IllegalArgumentException {
+        throw new IllegalArgumentException("This catalog does not create Temporary Resources"); //$NON-NLS-1$
+    }
+
+    @Override
+    public String[] getTemporaryDescriptorClasses() {
+        return new String[0];
+    }
+
     @Override
     public void dispose( IProgressMonitor monitor ) {
         // do nothing
         catalogListeners.clear();
     }
-
-	public String getTitle() {
-		return info != null ? info.getTitle() : null;
-	}
 }

@@ -22,9 +22,7 @@ import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.support.Point;
 
-import org.opengis.feature.simple.SimpleFeature;
-
-import com.vividsolutions.jts.geom.Geometry;
+import org.geotools.feature.Feature;
 
 /**
  * Test the freehand tool
@@ -41,19 +39,19 @@ public class FreeHandToolTest extends AbstractToolTest {
         tool.setHandler(handler);
         tool.testinitAcceptBehaviours(handler.getAcceptBehaviours());
         tool.testinitEventBehaviours(new EditToolConfigurationHelper(handler.getBehaviours()));
-        
-        SimpleFeature feature = handler.getFeature(0);
-        
+
+        Feature feature = handler.getFeature(0);
+
         ((EditManagerImpl)handler.getContext().getEditManager()).setEditFeature(
                 feature, (Layer) handler.getContext().getMapLayers().get(0));
-        
-        handler.getEditBlackboard().addGeometry((Geometry) feature.getDefaultGeometry(), feature.getID());
-        
+
+        handler.getEditBlackboard().addGeometry(feature.getDefaultGeometry(), feature.getID());
+
         handler.getMouseTracker().setDragStarted(Point.valueOf(0,10));
-        
+
         MapMouseEvent event=new MapMouseEvent(null, 10,10,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.DRAGGED);
-        
+
         event=new MapMouseEvent(null, 20,10,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.DRAGGED);
 
@@ -64,11 +62,11 @@ public class FreeHandToolTest extends AbstractToolTest {
         handler.handleEvent(event, EventType.DRAGGED);
 
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         handler.handleEvent(event, EventType.DOUBLE_CLICK);
-        
+
         assertFalse(feature.getID().equals(handler.getContext().getEditManager().getEditFeature().getID()) );
-        
+
     }
 
 }

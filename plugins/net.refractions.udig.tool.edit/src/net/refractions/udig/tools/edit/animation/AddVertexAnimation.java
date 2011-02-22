@@ -23,8 +23,8 @@ import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * A simple animation to run when adding a vertex 
- * 
+ * A simple animation to run when adding a vertex
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -55,7 +55,7 @@ public class AddVertexAnimation extends AbstractDrawCommand implements IAnimatio
         int rad = 25-(frame*5);
         graphics.drawOval(x-rad,y-rad, rad*2, rad*2 );
     }
-    
+
     public Rectangle getValidArea() {
         int rad = 25-(frame*5);
         return new Rectangle( x-rad, y-rad, rad*2, rad*2);

@@ -21,7 +21,7 @@ import java.util.Set;
  * A colour palette has multiple colour schemes associated with it.
  * A colour palette is a representation of a type of colour combination
  * as named by ColorBrewer (qualitative, selective or diverging).
- * 
+ *
  * <p>
  * This has been inspired by the work of ColorBrewer, indeed this is used to capture some of the
  * information produced by that project.
@@ -32,22 +32,22 @@ import java.util.Set;
 public class ColourPalette {
 	private HashMap<String,ColourScheme> allColourSchemes; //<name of colour scheme, ColourScheme object
 	private String paletteType;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public ColourPalette( ) {
 		super();
 		allColourSchemes = new HashMap<String,ColourScheme>();
 		paletteType = null;
 	}
-	
+
 	public ColourPalette(String type ) {
 		super();
 		allColourSchemes = new HashMap<String,ColourScheme>();
 		paletteType = type;
 	}
-	
+
 	public void addColourScheme(String schemeName, ColourScheme scheme) {
 		if( !(allColourSchemes.containsKey(schemeName)) ){
 			allColourSchemes.put(schemeName, scheme);
@@ -80,7 +80,7 @@ public class ColourPalette {
 		return returnable;
 	}
 
-	
+
 	/**
 	 * @return Returns the paletteType.
 	 */
@@ -93,9 +93,9 @@ public class ColourPalette {
 	public void setPaletteType(String paletteType) {
 		this.paletteType = paletteType;
 	}
-	
+
 	public ColourScheme getColourSchemeByName(String name) {
 		return allColourSchemes.get(name);
 	}
-	
+
 }

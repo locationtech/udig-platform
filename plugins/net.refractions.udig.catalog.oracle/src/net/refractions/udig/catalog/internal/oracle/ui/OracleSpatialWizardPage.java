@@ -1,8 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004-2007, Refractions Research Inc.
- *    (C) 2007,      Adrian Custer.
+ *    (C) 2004, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -29,83 +28,43 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.sql.DataSource;
-
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.oracle.OraclePlugin;
-import net.refractions.udig.catalog.internal.oracle.OracleServiceExtension;
-import net.refractions.udig.catalog.oracle.internal.Messages;
-import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
-import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
-import net.refractions.udig.catalog.ui.wizard.DataBaseConnInfo;
-
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
-import org.geotools.data.oracle.OracleNGDataStoreFactory;
+import org.geotools.data.DataStoreFactorySpi.Param;
+import org.geotools.data.oracle.OracleConnectionFactory;
+import org.geotools.data.oracle.OracleDataStoreFactory;
+
+import net.refractions.udig.catalog.IResolve;
+import net.refractions.udig.catalog.IService;
+import net.refractions.udig.catalog.internal.oracle.OracleServiceExtension;
+import net.refractions.udig.catalog.oracle.internal.Messages;
+import net.refractions.udig.catalog.ui.UDIGConnectionPage;
+import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
+import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
+import net.refractions.udig.ui.PlatformGIS;
 
 /**
  * Enter Oracle connection parameters.
- * 
- * @author David Zwiers, dzwiers, for Refractions Research, Inc.
- * @author Jesse Eichar, jeichar, for Refractions Research, Inc.
- * @author Justin Deoliveira, jdeolive, for Refractions Research, Inc.
- * @author Amr Alam, aalam, for Refractions Research, Inc.
- * @author Richard Gould, rgould, for Refractions Research, Inc.
- * @author Cory Horner, chorner, for Refractions Research, Inc.
- * @author Adrian Custer, acuster.
+ *
+ * @author dzwiers
  * @since 0.3
  */
-public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardPage {
+public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardPage implements UDIGConnectionPage {
 
-    // TITLE IMAGE
-    public static final String IMAGE_KEY = ""; //$NON-NLS-1$
-    // STORED SETTINGS
-    private static final String ORACLE_WIZARD = "ORACLE_WIZARD"; //$NON-NLS-1$
-    private static final String ORACLE_RECENT = "ORACLE_RECENT"; //$NON-NLS-1$
-    // CONNECTION
-    private static final DataBaseConnInfo DEFAULT_ORACLE_CONN_INFO = new DataBaseConnInfo(
-            "", "1521", "", "", "", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-
-    public OracleSpatialWizardPage() {
-
-        // Call super with dialog title string
+    public OracleSpatialWizardPage( ) {
         super(Messages.OracleSpatialWizardPage_wizardTitle);
-
-        // Get any stored settings or create a new one
-        settings = OraclePlugin.getDefault().getDialogSettings().getSection(ORACLE_WIZARD);
-        if (settings == null) {
-            settings = OraclePlugin.getDefault().getDialogSettings().addNewSection(ORACLE_WIZARD);
-        }
-
-        // Add the name so the parent can store back to this same section
-        settingsArrayName = ORACLE_RECENT;
-
-        // Populate the Settings: default, current, and past list
-        defaultDBCI.setParameters(DEFAULT_ORACLE_CONN_INFO);
-        currentDBCI.setParameters(defaultDBCI);
-        String[] recent = settings.getArray(ORACLE_RECENT);
-        if (null != recent) {
-            for( String s : recent ) {
-                DataBaseConnInfo dbs = new DataBaseConnInfo(s);
-                if (!storedDBCIList.contains(dbs))
-                    storedDBCIList.add(dbs);
-            }
-        }
-
-        // Populate the db and schema exclusion lists
-        //        dbExclusionList.add("");                                                //$NON-NLS-1$
-        //        schemaExclusionList.add("");                                            //$NON-NLS-1$
-
-        // Populate the Char and CharSeq exclusion lists
-        // TODO: when we activate Verification
     }
 
     @Override
@@ -128,22 +87,20 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
     }
 
     @Override
-    protected void doCreateWizardPage( Composite parent ) {
+    protected void doCreateWizardPage(Composite parent) {
 
         // For Drag 'n Drop as well as for general selections
         // look for a url as part of the selction
-        // TODO: sync with Postgis plugin
-        ISelection tmpSelection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage().getSelection();
-        IStructuredSelection selection = null;
+        ISelection tmpSelection = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getSelection();
+        IStructuredSelection selection=null;
         if (tmpSelection == null || !(tmpSelection instanceof IStructuredSelection)) {
-            selection = new StructuredSelection();
+            selection=new StructuredSelection();
         } else {
-            selection = (IStructuredSelection) tmpSelection;
+            selection=(IStructuredSelection) tmpSelection;
         }
 
         String selectedText = null;
-        for( Iterator< ? > itr = selection.iterator(); itr.hasNext(); ) {
+        for (Iterator itr = selection.iterator(); itr.hasNext();) {
             Object o = itr.next();
             if (o instanceof URL || o instanceof String) {
                 selectedText = (String) o;
@@ -160,24 +117,24 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
             int hostEnd = selectedText.indexOf(":", startindex); //$NON-NLS-1$
             int portEnd = selectedText.indexOf(":", hostEnd); //$NON-NLS-1$
             int databaseEnd = selectedText.indexOf(":", portEnd); //$NON-NLS-1$
-
             String the_host = selectedText.substring(startindex, hostEnd);
-            String the_port = selectedText.substring(hostEnd, portEnd);
-            String the_database = selectedText.substring(portEnd, databaseEnd);
+            ((Text) host).setText(the_host);
 
-            currentDBCI.setHost(the_host);
+            String the_port = selectedText.substring(hostEnd, portEnd);
             if (!the_port.equalsIgnoreCase("")) { //$NON-NLS-1$
-                currentDBCI.setPort(the_port);
+                port.setText(the_port);
             }
-            currentDBCI.setDb(the_database);
+            String the_database = selectedText.substring(portEnd,
+                    databaseEnd);
+            ((CCombo) database).add(the_database);
         }
     }
 
-    public boolean canProcess( Object object ) {
+    public boolean canProcess(Object object) {
         return getOracleURL(object) != null;
     }
 
-    protected String getOracleURL( Object data ) {
+    protected String getOracleURL(Object data) {
         String url = null;
         if (data instanceof String) {
             String[] strings = ((String) data).split("\n"); //$NON-NLS-1$
@@ -190,36 +147,53 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
         return url;
     }
 
-    protected Group createAdvancedControl( Composite arg0 ) {
+    /**
+     * TODO summary sentence for createAdvancedControl ...
+     *
+     */
+    protected Group createAdvancedControl(Composite arg0) {
+        port.setText("1521"); //$NON-NLS-1$
         return null;
     }
 
-    protected OracleNGDataStoreFactory getDataStoreFactorySpi() {
-        return OracleServiceExtension.getFactory();
+    /*
+     * dbtype host port user passwd instance schema namespace
+     */
+
+    private static OracleDataStoreFactory factory = new OracleDataStoreFactory();
+
+    protected OracleDataStoreFactory getDataStoreFactorySpi() {
+        return factory;
     }
 
     public Map<String, Serializable> getParams() {
-        if (!OracleSpatialPreferences.isInstalled()) {
+        if (!OracleSpatialPreferences.isInstalled())
             return null;
-        }
 
-        if (!couldConnect()) {
+        if (getHostText() == null || getPortText() == null || getUserText() == null
+                || getDBText() == null || getSchemaText() == null)
             return null;
-        }
 
         Map<String, Serializable> params = new HashMap<String, Serializable>();
+        Param[] dbParams = factory.getParametersInfo();
 
-        params.put(OracleNGDataStoreFactory.DBTYPE.key, (Serializable) OracleNGDataStoreFactory.DBTYPE.sample ); //$NON-NLS-1$
-        params.put(OracleNGDataStoreFactory.HOST.key, currentDBCI.getHostString());
-        try {
-            params.put(OracleNGDataStoreFactory.PORT.key, new Integer(currentDBCI.getPortString()));
-        } catch (NumberFormatException e) {
-            // use default port
-        }
-        params.put(OracleNGDataStoreFactory.USER.key, currentDBCI.getUserString());
-        params.put(OracleNGDataStoreFactory.PASSWD.key, currentDBCI.getPassString());
-        params.put(OracleNGDataStoreFactory.DATABASE.key, currentDBCI.getDbString());
-        params.put(OracleNGDataStoreFactory.SCHEMA.key, currentDBCI.getSchemaString());
+        params.put(dbParams[0].key, "oracle"); //$NON-NLS-1$
+        params.put(dbParams[1].key, getHostText());
+
+        String port1 = getPortText();
+        params.put(dbParams[2].key, port1);
+
+        String user1 = getUserText();
+        params.put(dbParams[3].key, user1);
+
+        String pass1 = getPassText();
+        params.put(dbParams[4].key, pass1);
+
+        String db = getDBText();
+        params.put(dbParams[5].key, db);
+
+        String schema1 = getSchemaText();
+        params.put(dbParams[6].key, schema1);
 
         // not sureabout this line
         // params.put(dbParams[7].key,"MAPINFO"); //$NON-NLS-1$
@@ -228,118 +202,190 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
     }
 
     /**
-     * Grab a DataSource using the current connection parameters.
-     * 
-     * @see net.refractions.udig.catalog.internal.ui.datastore.DataBaseRegistryWizardPage#getConnection()
-     * @return DataSource, or null if could not connect
+     *
+     * @return
      */
-    protected DataSource getDataSource() {
-        final String hostText = currentDBCI.getHostString();
-        final String portText = currentDBCI.getPortString();
-        final String userText = currentDBCI.getUserString();
-        final String passText = currentDBCI.getPassString();
-        final String db = currentDBCI.getDbString();
+    protected String getPortText() {
+        return this.port.getText();
+    }
 
-        // Double check, should never trigger
-        if (!couldConnect()) {
-            return null;
-        }
-        if (dataSource == null) {
-            runInPage(new IRunnableWithProgress(){
+    /**
+     * TODO summary sentence for getConnection ...
+     *
+     * @see net.refractions.udig.catalog.internal.ui.datastore.DataBaseRegistryWizardPage#getConnection()
+     * @return
+     */
+    protected Connection getConnection() {
+        try {
+            String db1 = ((Text) database).getText();
+            db1 = "".equals(db1) ? null : db1; //$NON-NLS-1$
+            final String db=db1;
+            final String host1=((Text) host).getText();
+            final String port1=port.getText();
+            final String user1=user.getText();
+            final String pass1=pass.getText();
+            if (db == null) {
+                //don't bother
+                return null;
+            }
+            getContainer().run(true, true, new IRunnableWithProgress(){
 
                 public void run( IProgressMonitor monitor ) throws InvocationTargetException,
                         InterruptedException {
-                    if (monitor == null)
-                        monitor = new NullProgressMonitor();
+                   PlatformGIS.runBlockingOperation(new IRunnableWithProgress(){
 
-                    // may need to run in a background Job
-                    // in order to leave this thread free for the user interface?
-                    //
-                    Connection connection = null;
-                    try {
-                        monitor.beginTask(Messages.OracleSpatialWizardPage_connectionTask,
-                                IProgressMonitor.UNKNOWN);
-
-                        if (dataSource != null) {
-                            // close previous connection
+                    public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
+                        monitor.beginTask(Messages.OracleSpatialWizardPage_connectionTask, IProgressMonitor.UNKNOWN);
+                        if (OracleSpatialWizardPage.this.connection != null)
                             try {
-                                dataSource.close();
+                                OracleSpatialWizardPage.this.connection.close();
                             } catch (SQLException e1) {
                                 // it's dead anyhow
                             }
-                        }
-                        Map<String, Serializable> params = new HashMap<String, Serializable>();
-                        params.put(OracleNGDataStoreFactory.HOST.key, hostText);
-                        params.put(OracleNGDataStoreFactory.PORT.key,
-                                (Integer) OracleNGDataStoreFactory.PORT.parse(portText));
-                        params.put(OracleNGDataStoreFactory.DATABASE.key, db);
-                        params.put(OracleNGDataStoreFactory.USER.key, userText );
-                        params.put(OracleNGDataStoreFactory.PASSWD.key, passText );
-                        dataSource = OracleServiceExtension.getFactory().createDataSource(params);
 
-                        // Is this needed/useful?
-                        DriverManager.setLoginTimeout(3);
-                        monitor.worked(1);
-                        monitor.subTask("establish connection");
 
-                        if (monitor.isCanceled()) {
-                            dataSource.close();
-                            dataSource = null;
-                        }
-                        connection = dataSource.getConnection();
 
-                        monitor.subTask("connected");
-                        monitor.worked(1);
-                    } catch (Throwable shame) {
-                        if (dataSource != null) {
-                            try {
-                                dataSource.close();
-                            } catch (SQLException e1) {
-                                // we are closing already in a state of shame
+                            OracleConnectionFactory connFac = new OracleConnectionFactory(
+                                    host1, port1, db);
+                            connFac.setLogin(user1, pass1);
+                            DriverManager.setLoginTimeout(3);
+
+
+                        try {
+                            OracleSpatialWizardPage.this.connection = connFac.getConnectionPool()
+                                    .getConnection();
+                            if (OracleSpatialWizardPage.this.connection != null) {
+                                OracleSpatialWizardPage.this.database.getDisplay().asyncExec(new Runnable(){
+                                    public void run() {
+                                        OracleSpatialWizardPage.this.database.notifyListeners(SWT.FocusIn,
+                                                new Event());
+
+                                    }
+                                });
                             }
-                            dataSource = null;
-                        }
-                        // How to indicate failure? runInPage will show this to user
-                        throw new InvocationTargetException(shame, shame.getLocalizedMessage());
-                    } finally {
-                        if (connection != null) {
-                            try {
-                                connection.close();
-                            } catch (SQLException e) {
-                                // ignore since we are closing
-                            }
-                        }
-                    }
-                    /*
-                     * Postgis DB checks monitor here if( monitor.isCanceled()){ if( dataSource !=
-                     * null ){ dataSource.close(); dataSource = null; } }
-                     */
+                        } catch (SQLException e) {
+                            throw new InvocationTargetException(e, e.getLocalizedMessage());
+                        }                    }
+
+                   }, monitor);
                 }
             });
+        } catch (InvocationTargetException e2) {
+            throw new RuntimeException(e2.getLocalizedMessage(), e2);
+        } catch (InterruptedException e2) {
+            // Don't know why this exception doesn't do anything.
         }
-        return dataSource;
+
+        return connection;
+    }
+
+    public void focusGained(FocusEvent e) {
+        if (e.widget != null) {
+            if (e.widget.equals(schema)) {
+                super.focusGained(e);
+            }
+        }
+    }
+
+    /**
+     * TODO summary sentence for dispose ...
+     *
+     * @see org.eclipse.jface.dialogs.IDialogPage#dispose()
+     *
+     */
+    public void dispose() {
+        super.dispose();
+        if (connection != null)
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // it's dead anyhow
+            }
+    }
+
+    private Connection connection = null;
+
+    public void modifyText(ModifyEvent e) {
+        if (e.widget != null) {
+            if (e.widget.equals(host) || e.widget.equals(port)
+                    || e.widget.equals(user) || e.widget.equals(pass)) {
+                setErrorMessage(null);
+            }
+        }
+        super.modifyText(e);
+    }
+
+    /**
+     * TODO summary sentence for isDBCombo ...
+     *
+     * @see net.refractions.udig.catalog.internal.ui.datastore.DataBaseRegistryWizardPage#isDBCombo()
+     * @return
+     */
+    protected boolean isDBCombo() {
+        return false;
+    }
+
+    protected boolean isHostCombo() {
+        return false;
     }
 
     /**
      * TODO summary sentence for hasSchema ...
-     * 
-     * @see net.refractions.udig.catalog.internal.ui.datastore.DataBaseRegistryWizardPage#dbmsUsesSchema()
+     *
+     * @see net.refractions.udig.catalog.internal.ui.datastore.DataBaseRegistryWizardPage#hasSchema()
      * @return
      */
-    protected boolean dbmsUsesSchema() {
+    protected boolean hasSchema() {
         return true;
+    }
+
+    protected String getHostText() {
+        String text = ((Text) host).getText();
+        if( text.trim().length()==0 )
+            text=null;
+        return host == null ? null : text;
+    }
+
+    protected String getDBText() {
+        String text = ((Text) database).getText();
+        if( text.trim().length()==0 )
+            text=null;
+        return database == null ? null : text;
+    }
+
+    protected String getSchemaText() {
+        String text = schema.getText();
+        if( text.trim().length()==0 )
+            text=null;
+        return schema == null ? null : text;
+    }
+
+    protected String getUserText() {
+        String text = user.getText();
+        if( text.trim().length()==0 )
+            text=null;
+        return user == null ? null : text;
+    }
+
+    protected String getPassText() {
+        String text = pass.getText();
+        if( text.trim().length()==0 )
+            text=null;
+        return pass == null ? null : text;
     }
 
     @Override
     protected boolean doIsPageComplete() {
-        Map<String, Serializable> p = getParams();
+        Map<String,Serializable> p = getParams();
         if (p == null)
             return false;
-        boolean r = getDataStoreFactorySpi().canProcess(p);
+        boolean r = factory.canProcess(p);
         return r;
     }
 
-    public List<IResolve> getResources( IProgressMonitor monitor ) throws Exception {
+
+    public List<IResolve> getResources(IProgressMonitor monitor)
+            throws Exception {
         if (!isPageComplete())
             return null;
 

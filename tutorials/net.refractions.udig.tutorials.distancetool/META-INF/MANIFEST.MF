@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Distancetool Plug-in
 Bundle-SymbolicName: net.refractions.udig.tutorials.distanceTool; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.tutorials.distancetool.DistancetoolPlugin
-Bundle-Vendor: udig.refractions.net
+Bundle-Vendor: Refractions Research Inc
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.libs,
  net.refractions.udig.project.ui
-Eclipse-AutoStart: true
+Eclipse-LazyStart: true
 Bundle-ClassPath: library.jar

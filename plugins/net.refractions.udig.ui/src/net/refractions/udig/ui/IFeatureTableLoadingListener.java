@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * A listener that is notified when the FeatureTable begins loading features and stops loading features.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -27,7 +27,7 @@ public interface IFeatureTableLoadingListener {
      * Called when the {@link FeatureTableControl} starts loading features.  The progress monitor is only for cancelling the
      * loading any other method will throw a {@link UnsupportedOperationException}
      *
-     * @param monitor monitor that is being updated by the job loading the features.  
+     * @param monitor monitor that is being updated by the job loading the features.
      */
     public void loadingStarted(IProgressMonitor monitor);
     /**

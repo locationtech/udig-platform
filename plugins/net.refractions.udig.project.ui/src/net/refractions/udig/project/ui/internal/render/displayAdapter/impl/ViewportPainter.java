@@ -7,33 +7,22 @@
  */
 package net.refractions.udig.project.ui.internal.render.displayAdapter.impl;
 
-import java.awt.Color;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
-import java.awt.image.RenderedImage;
-import java.util.Map;
-import java.util.Set;
 
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.render.Tile;
 import net.refractions.udig.project.ui.commands.IDrawCommand;
 import net.refractions.udig.project.ui.commands.IMapTransformCommand;
 import net.refractions.udig.project.ui.commands.IPreMapDrawCommand;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.project.ui.internal.commands.draw.DrawEditFeatureCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.render.glass.GlassPane;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.swt.graphics.GC;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
-import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * Draws to the Viewport. Handles command processing.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -46,19 +35,15 @@ public class ViewportPainter {
     private static final int STARTING = 1 << 1;
     private static final int DONE = 1 << 2;
     private static final AffineTransform IDENTITY = new AffineTransform();
-    
-    private static final boolean TESTING = ProjectUIPlugin.getDefault().isDebugging();
-    
     private DrawEditFeatureCommand editfeatureCommand;
 
     /**
      * Whether to draw custom <code>IDrawCommand</code>s during painting.
      */
     private boolean enable = true;
-    
     /**
      * Construct <code>ViewportPainter</code>.
-     * 
+     *
      * @param pane owner pane
      */
     public ViewportPainter( ViewportPane pane ) {
@@ -67,7 +52,7 @@ public class ViewportPainter {
 
     /**
      * Paints the image and all the currently valid commands on the viewport.
-     * 
+     *
      * @param g The graphics to draw on.
      * @param image The image to draw.
      * @param minHeight
@@ -77,19 +62,15 @@ public class ViewportPainter {
         processCommands(g, true);
         clearPane(g, minWidth, minHeight);
         g.drawImage(image, 0, 0, minWidth, minHeight, 0, 0, minWidth, minHeight);
-        
-        //draw glass pane
-        drawGlassPane(g);
-        
         processCommands(g, false);
         runEditFeatureCommand(g);
     }
-    
+
     /**
      * Switches on/off graphics being rendered by custom <code>IDrawCommand</code>s.
-     * <br><code>IMapTransformCommand</code>s are processed always regardless 
+     * <br><code>IMapTransformCommand</code>s are processed always regardless
      * enablement.
-     * 
+     *
      * @param enable
      */
     public void switchOnOff(boolean enable){
@@ -117,7 +98,7 @@ public class ViewportPainter {
 
     /**
      * Paints the image and all the currently valid commands on the viewport.
-     * 
+     *
      * @param g The graphics to draw on.
      * @param image The image to draw.
      * @param minHeight
@@ -127,88 +108,11 @@ public class ViewportPainter {
             int minHeight ) {
         processCommands(g, true);
         clearPane(g, minWidth, minHeight);
-        if( image!=null ) {
+        if( image!=null )
             g.drawImage(image, 0, 0, minWidth, minHeight, 0, 0, minWidth, minHeight);
-        }
-        //draw glass pane
-        drawGlassPane(g);
-        
         processCommands(g, false);
         runEditFeatureCommand(g);
     }
-    
-    /**
-     * Paints the image of all the given tiles, and all the currently valid commands on 
-     * the viewport.
-     * 
-     * @param g The graphics to draw on.
-     * @param tiles the tiles to draw.
-     * @param minHeight of total area to be painted
-     * @param minWidth of total area to be painted
-     */
-    public void paint( ViewportGraphics g, Map<ReferencedEnvelope, Tile> tiles, int minWidth, int minHeight ) {
-        processCommands(g, true);
-        clearPane(g, minWidth, minHeight);
-
-        if (tiles != null) {
-        	// determine if we are drawing AWT or SWT
-        	GC gc = g.getGraphics(GC.class);
-        	if (gc != null ) {
-        		// SWT, draw all the tiles
-        		Set<ReferencedEnvelope> keySet = tiles.keySet();
-            	for (ReferencedEnvelope env : keySet) {
-            		Tile tile = tiles.get(env);
-            		//System.out.println("SWTImage: "+tile.getSWTImage());
-            		ViewportModel viewportModelInternal = tile.getRenderExecutor().getRenderer().getContext().getViewportModelInternal();
-            		java.awt.Point a = viewportModelInternal.worldToPixel(new Coordinate(env.getMinX(), env.getMinY()));
-		        	java.awt.Point b = viewportModelInternal.worldToPixel(new Coordinate(env.getMaxX(), env.getMaxY()));
-                    int width = b.x - a.x;
-                    int height = a.y - b.y;
-		        	synchronized (tile) {
-	                    //an exception can be thrown here if the image has been disposed of
-	                    //since it was retrieved or something else bad happens while drawing
-	                    //this is OK in our case because another paint event should be coming soon
-	                    //which will fix the issue; so for now we just catch the errors
-	                    //and don't worry about them.
-	                    try{
-	                        org.eclipse.swt.graphics.Image im = tile.getSWTImage();
-	                        gc.drawImage(im, 0, 0, im.getBounds().width, im.getBounds().height, a.x, b.y, width, height);
-	                    }catch (Exception ex){
-	                    }    
-                    }
-		        	if( TESTING ){
-                		g.setColor(Color.BLUE);
-    	                g.drawLine(a.x, a.y, a.x, b.y);
-    	                g.drawLine(a.x, b.y, b.x, b.y);
-    	                g.drawLine(b.x, b.y, b.x, a.y);
-    	                g.drawLine(b.x, a.y, a.x, a.y);            		
-		        	}
-            	}   
-            }
-        	else {
-        		// AWT, draw all the tiles
-        		Set<ReferencedEnvelope> keySet = tiles.keySet();
-            	for (ReferencedEnvelope env : keySet) {
-            		Tile tile = tiles.get(env);
-            		//System.out.println("BufferedImage: "+tile.getBufferedImage());
-            		ViewportModel viewportModelInternal = tile.getRenderExecutor().getRenderer().getContext().getViewportModelInternal();
-            		java.awt.Point a = viewportModelInternal.worldToPixel(new Coordinate(env.getMinX(), env.getMinY()));
-            		java.awt.Point b = viewportModelInternal.worldToPixel(new Coordinate(env.getMaxX(), env.getMaxY()));
-            		g.drawImage((RenderedImage)tile.getBufferedImage(), a.x, b.y);
-            		g.setColor(Color.BLUE);
-	                g.drawLine(a.x, a.y, a.x, b.y);
-	                g.drawLine(a.x, b.y, b.x, b.y);
-	                g.drawLine(b.x, b.y, b.x, a.y);
-	                g.drawLine(b.x, a.y, a.x, a.y);              		
-            	}
-        	}
-        	
-        }
-        //draw glass pane
-        drawGlassPane(g);
-        processCommands(g, false);
-        runEditFeatureCommand(g);
-    } 
 
     private void runEditFeatureCommand( ViewportGraphics g ) {
         if (editfeatureCommand == null
@@ -223,7 +127,6 @@ public class ViewportPainter {
     }
 
     private void processCommands( ViewportGraphics g, boolean pre ) {
-        //System.out.println("process commands");
 //    	if(enable){
 	        try {
 	            Object[] varray = null;
@@ -233,11 +136,11 @@ public class ViewportPainter {
 	                varray = commands.getPostCommands();
 	            for( int i = 0; i < varray.length; i++ ) {
 	                IDrawCommand command = (IDrawCommand) varray[i];
-	                
+
 //	                //TODO probably add other command types as  exceptions.
 //	                if(!enable && !(command instanceof IMapTransformCommand))
 //	                	continue;
-	                
+
 	                if (command.isValid()) {
 	                    command.setGraphics(g, pane);
 	                    try {
@@ -274,7 +177,7 @@ public class ViewportPainter {
 
     /**
      * Adds a draw command to the set of commands that are executed during a paint.
-     * 
+     *
      * @param command The new command.
      */
     public synchronized void addDrawCommand( IDrawCommand command ) {
@@ -314,7 +217,7 @@ public class ViewportPainter {
         }
 
         /**
-         * 
+         *
          */
         public void clearCommands() {
             for (IDrawCommand command : preTransform) {
@@ -492,33 +395,5 @@ public class ViewportPainter {
 
     void renderDone() {
         renderState = DONE;
-    }
-    
-    /**
-     * Returns the viewport pane associated with this painter.
-     *
-     * @return
-     */
-    public ViewportPane getPane(){
-        return this.pane;
-    }
-    
-    /**
-     * Draws the glass pane if the ViewportGraphics is 
-     * a SWTGraphics or NonAdvancedSWTGraphics.
-     * 
-     * Will not draw the glasspane if it is null or the
-     * Viewport Graphics is a AWT Graphics.
-     *
-     * @param g
-     */
-    private void drawGlassPane(ViewportGraphics g){
-        GC gc = g.getGraphics(GC.class);
-        if (gc != null ){
-            GlassPane glass = this.pane.getGlass();
-            if (glass != null){
-                glass.draw(gc);
-            }    
-        }    
     }
 }

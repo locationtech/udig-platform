@@ -29,13 +29,13 @@ import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Provides methods for conveniently recreating JTS geometries.
- * 
+ *
  * @author jEICHAR
  * @since 0.3
  */
 public class GeometryBuilder {
     /**
-     * 
+     *
      */
     public GeometryFactory factory = new GeometryFactory();
 
@@ -45,7 +45,7 @@ public class GeometryBuilder {
 
     /**
      * create a geometry builder object.
-     * 
+     *
      * @return GeometryBuilder
      */
     public static GeometryBuilder create() {
@@ -54,7 +54,7 @@ public class GeometryBuilder {
 
     /**
      * Creates a Geometry of type type from the coordinates in the coordinate array.
-     * 
+     *
      * @param type
      * @param coords
      * @return Geometry
@@ -68,7 +68,7 @@ public class GeometryBuilder {
         }
         return null;
     }
-    /** 
+    /**
      * Creates a Geometry (or related class) from the coordinates with a few extra
      * sanity checks (such as closing rings and so on).
      * @param <T>

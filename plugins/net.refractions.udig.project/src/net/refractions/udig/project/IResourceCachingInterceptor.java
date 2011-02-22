@@ -20,17 +20,17 @@ import net.refractions.udig.catalog.IGeoResource;
  * Controls the caching of resources returned by:
  * {@link ILayer#getResource(Class, org.eclipse.core.runtime.IProgressMonitor)}.
  * <p>
- *    Example: 
- *    If a new feature store was returned each time then every plugin that is interested in 
- *    events would need to create a resource interceptor and every request for a FeatureStore 
- *    would result in both a new FeatureStore and a new listener for every interested plugin.  
- *    Since the Datastore's Listener manager often keeps the listeners indefinately then we 
- *    would very quickly have 10s to 100s of listeners that can't be garbage collected and 
+ *    Example:
+ *    If a new feature store was returned each time then every plugin that is interested in
+ *    events would need to create a resource interceptor and every request for a FeatureStore
+ *    would result in both a new FeatureStore and a new listener for every interested plugin.
+ *    Since the Datastore's Listener manager often keeps the listeners indefinately then we
+ *    would very quickly have 10s to 100s of listeners that can't be garbage collected and
  *    possibly featurestores as well.
  * </p>
  * <p>
- * The "active" caching strategy is stored in the 
- *  ProjectPlugin.getPlugin().getPreferenceStore().getString( "P_LAYER_RESOURCE_CACHING_STRATEGY" ). 
+ * The "active" caching strategy is stored in the
+ *  ProjectPlugin.getPlugin().getPreferenceStore().getString( "P_LAYER_RESOURCE_CACHING_STRATEGY" ).
  *  </p><p>
  *  Set the preference to activate a custom Caching strategy.
  * </p>
@@ -58,7 +58,7 @@ public interface IResourceCachingInterceptor {
      */
     <T> T get( ILayer layer, Class<T> requestedType ) ;
     /**
-     * Caches the resource. 
+     * Caches the resource.
      *
      * @param <T> the type of the resource.  Can be most any type of Object
      * @param layer the layer that the resource is being obtained from
@@ -66,6 +66,6 @@ public interface IResourceCachingInterceptor {
      * @param requestedType the type of object that the caller requested
      */
     <T> void put( ILayer layer, T resource, Class<T> requestedType ) ;
-    
-    
+
+
 }

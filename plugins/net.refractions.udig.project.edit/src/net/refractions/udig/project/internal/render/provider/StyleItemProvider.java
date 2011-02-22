@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: StyleItemProvider.java 24145 2007-02-01 18:03:34Z jeichar $
  */
 package net.refractions.udig.project.internal.render.provider;
 
@@ -25,7 +25,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
  * This is the item provider adapter for a
  * {@link net.refractions.udig.project.internal.render.Style} object. <!-- begin-user-doc --> <!--
  * end-user-doc -->
- * 
+ *
  * @generated
  */
 public class StyleItemProvider extends ItemProviderAdapter
@@ -37,7 +37,7 @@ public class StyleItemProvider extends ItemProviderAdapter
             IItemPropertySource {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
@@ -45,7 +45,7 @@ public class StyleItemProvider extends ItemProviderAdapter
     /**
      * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public StyleItemProvider( AdapterFactory adapterFactory ) {
@@ -55,7 +55,7 @@ public class StyleItemProvider extends ItemProviderAdapter
     /**
      * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public List getPropertyDescriptors( Object object ) {
@@ -68,7 +68,7 @@ public class StyleItemProvider extends ItemProviderAdapter
 
     /**
      * This returns Style.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Object getImage( Object object ) {
@@ -78,7 +78,7 @@ public class StyleItemProvider extends ItemProviderAdapter
     /**
      * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated NOT
      */
     public String getText( Object object ) {
@@ -89,7 +89,7 @@ public class StyleItemProvider extends ItemProviderAdapter
      * This handles model notifications by calling {@link #updateChildren} to update any cached
      * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void notifyChanged( Notification notification ) {
@@ -101,7 +101,7 @@ public class StyleItemProvider extends ItemProviderAdapter
      * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
      * describing all of the children that can be created under this object. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void collectNewChildDescriptors( Collection newChildDescriptors, Object object ) {
@@ -111,7 +111,7 @@ public class StyleItemProvider extends ItemProviderAdapter
     /**
      * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public ResourceLocator getResourceLocator() {

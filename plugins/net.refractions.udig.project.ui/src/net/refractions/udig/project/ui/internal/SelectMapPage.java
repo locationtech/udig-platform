@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * A Wizard page for selecting a map. Part of the New Layer wizard.
- * 
+ *
  * @author Richard Gould
  */
 public class SelectMapPage extends WizardPage implements ISelectionChangedListener {
@@ -38,8 +38,8 @@ public class SelectMapPage extends WizardPage implements ISelectionChangedListen
     private IStructuredSelection selection;
 
     protected SelectMapPage() {
-        super(Messages.SelectMapPage_page_title); 
-        setDescription(Messages.SelectMapPage_page_description); 
+        super(Messages.SelectMapPage_page_title);
+        setDescription(Messages.SelectMapPage_page_description);
     }
 
     /**
@@ -53,9 +53,9 @@ public class SelectMapPage extends WizardPage implements ISelectionChangedListen
         composite.setLayout(gridLayout);
 
         Label label = new Label(composite, SWT.NONE);
-        label.setText(Messages.SelectMapPage_label_selectAMap_text); 
+        label.setText(Messages.SelectMapPage_label_selectAMap_text);
         label.setLayoutData(new GridData(SWT.END, SWT.TOP, false, false));
-        label.setToolTipText(Messages.SelectMapPage_page_description); 
+        label.setToolTipText(Messages.SelectMapPage_page_description);
 
         tree = new TreeViewer(composite, SWT.SINGLE);
 

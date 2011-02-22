@@ -13,9 +13,9 @@ import net.refractions.udig.tools.edit.support.TestHandler;
 import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
+import org.geotools.feature.Feature;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -31,19 +31,19 @@ public class WithinLegalLayerBoundsBehaviourTest extends AbstractProjectUITestCa
         map=(Map) handler.getContext().getMap();
         GeometryFactory fac=new GeometryFactory();
         Point geom=fac.createPoint(new Coordinate(-564121,-1632497));
-        SimpleFeature[] feature = UDIGTestUtil.createTestFeatures("test", new Point[]{geom}, new String[]{"name"}, CRS.decode("EPSG:2065")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        Feature[] feature = UDIGTestUtil.createTestFeatures("test", new Point[]{geom}, new String[]{"name"}, CRS.decode("EPSG:2065")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         Layer layer = map.getLayerFactory().createLayer(CatalogTests.createGeoResource(feature, true));
         map.getLayersInternal().add( layer );
         map.getViewportModelInternal().setCRS(DefaultGeographicCRS.WGS84);
         map.getViewportModelInternal().zoomToBox(layer.getBounds(null, map.getViewportModel().getCRS()));
-        
+
         ApplicationGIS.openMap(map);
         UDIGTestUtil.inDisplayThreadWait(2000, new WaitCondition(){
 
             public boolean isTrue() {
                 return ApplicationGIS.getActiveMap()!=null;
             }
-            
+
         }, false);
         map.getEditManagerInternal().setSelectedLayer(layer);
     }
@@ -52,19 +52,19 @@ public class WithinLegalLayerBoundsBehaviourTest extends AbstractProjectUITestCa
         handler.setCurrentState(EditState.ILLEGAL);
         WithinLegalLayerBoundsBehaviour behav=new WithinLegalLayerBoundsBehaviour();
         MapMouseEvent e=new MapMouseEvent(map.getRenderManager().getMapDisplay(), 0,0, 0,0,0);
-        
-        
+
+
         assertNull( behav.isEnabled(handler, e, EventType.MOVED) );
     }
     public void testIllegal() throws Exception {
         map.getViewportModelInternal().setBounds(-300, -250, -180, -140);
-        
+
         System.out.println(map.getViewportModel().getBounds());
-        
+
         WithinLegalLayerBoundsBehaviour behav=new WithinLegalLayerBoundsBehaviour();
         MapMouseEvent e=new MapMouseEvent(map.getRenderManager().getMapDisplay(), 0,0, 0,0,0);
         behav.isEnabled(handler, e, EventType.MOVED);
-        
+
         assertNotNull( behav.isEnabled(handler, e, EventType.MOVED));
     }
 

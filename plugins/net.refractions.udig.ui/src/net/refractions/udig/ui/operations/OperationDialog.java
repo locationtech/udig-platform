@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.ui.operations;
 
@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * A dialog that 
+ * A dialog that
  * @author Jody
  *
  */
@@ -49,7 +49,7 @@ public class OperationDialog extends TitleAreaDialog implements ITreeContentProv
                 return ((OperationDialog)element).getTitleImageLabel().getText();
             }
             else if (element instanceof OperationCategory) {
-                return ((OperationCategory)element).getMenuText();                    
+                return ((OperationCategory)element).getMenuText();
             }
             else if (element instanceof OpAction){
                 return ((OpAction)element).getText();
@@ -65,43 +65,43 @@ public class OperationDialog extends TitleAreaDialog implements ITreeContentProv
             if (isEnabled( element )){
                 return null; // use default color
             }
-            return Display.getCurrent().getSystemColor(SWT.COLOR_GRAY );            
+            return Display.getCurrent().getSystemColor(SWT.COLOR_GRAY );
         }
     }
-    
+
     public boolean isEnabled( Object element ){
         if (element == null ){
             return false;
         }
         if (element instanceof OperationCategory ){
             return !((OperationCategory)element).isEmpty();
-        }            
+        }
         if (element instanceof OpAction ){
             return ((OpAction)element).isEnabled();
         }
         return true;
     }
-    
+
     private TreeViewer viewer;
     private ISelection selection;
-    
+
     public OperationDialog( Shell parentShell, ISelection selection ) {
         super(parentShell);
         this.selection = selection;
     }
-    
+
     @Override
     protected int getShellStyle() {
         return SWT.RESIZE|SWT.MAX|SWT.CLOSE|SWT.MIN|SWT.APPLICATION_MODAL;
     }
 
-    public void dispose() {        
+    public void dispose() {
         selection = null;
     }
-    
+
     @Override
     protected void configureShell( Shell newShell ) {
-        newShell.setText("Operations");
+        newShell.setText(Messages.OperationDialog_Title);
         super.configureShell(newShell);
     }
     @Override
@@ -111,8 +111,8 @@ public class OperationDialog extends TitleAreaDialog implements ITreeContentProv
     @Override
     protected Control createContents( Composite parent ) {
         Control control = super.createContents(parent);
-        setTitle("Operations");
-        setMessage("What would you like to do:");
+        setTitle(Messages.OperationDialog_Title);
+        setMessage(Messages.OperationDialog_Message);
         return control;
     }
     @Override
@@ -137,13 +137,12 @@ public class OperationDialog extends TitleAreaDialog implements ITreeContentProv
             public void selectionChanged( SelectionChangedEvent event ) {
                 IStructuredSelection s=(IStructuredSelection) event.getSelection();
                 if( s.isEmpty() ){
-                    return; 
+                    return;
                 }
                 Button button = getButton( IDialogConstants.OK_ID );
                 Object selection = s.getFirstElement();
-                String title=null;
                 if( selection instanceof OperationDialog){
-                    setMessage( "What would you like to do:");
+                    setMessage( Messages.OperationDialog_Message);
                     button.setEnabled(false);
                 }
                 else if (selection instanceof OperationCategory){
@@ -152,7 +151,7 @@ public class OperationDialog extends TitleAreaDialog implements ITreeContentProv
                         setMessage( category.getDescription() );
                     }
                     else {
-                        setMessage( "Please select an operation:");
+                        setMessage( Messages.OperationDialog_PleaseSelect);
                     }
                     button.setEnabled(false);
                 }
@@ -161,9 +160,9 @@ public class OperationDialog extends TitleAreaDialog implements ITreeContentProv
                     setMessage(action.getDescription());
                     button.setEnabled( action.isEnabled() );
                 }
-            }                    
+            }
         });
-        
+
         viewer.addDoubleClickListener(new IDoubleClickListener(){
             public void doubleClick( DoubleClickEvent event ) {
                 buttonPressed(IDialogConstants.OK_ID);
@@ -193,7 +192,7 @@ public class OperationDialog extends TitleAreaDialog implements ITreeContentProv
             // is their a service that we can run operations with?
             Button button = getButton(IDialogConstants.OK_ID);
             if( button != null ){
-                
+
             }
         }
         super.buttonPressed(buttonId);

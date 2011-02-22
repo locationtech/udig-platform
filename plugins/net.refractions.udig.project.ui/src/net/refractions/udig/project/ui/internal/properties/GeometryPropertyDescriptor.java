@@ -16,8 +16,8 @@
  */
 package net.refractions.udig.project.ui.internal.properties;
 
+import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
 import net.refractions.udig.project.ui.internal.MapEditor;
 import net.refractions.udig.project.ui.internal.Messages;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
@@ -51,7 +51,7 @@ public class GeometryPropertyDescriptor extends PropertyDescriptor {
 
     /**
      * Construct <code>GeometryPropertyDescriptor</code>.
-     * 
+     *
      * @param id
      * @param displayName
      */
@@ -80,7 +80,7 @@ public class GeometryPropertyDescriptor extends PropertyDescriptor {
                 data.verticalSpan = 2;
                 label.setLayoutData(data);
                 button = new Button(parent, SWT.PUSH | SWT.FLAT);
-                button.setText(Messages.GeometryPropertyDescriptor_viewButton_text); 
+                button.setText(Messages.GeometryPropertyDescriptor_viewButton_text);
                 data = new GridData(SWT.RIGHT, SWT.TOP, false, false);
                 data.verticalSpan = 1;
                 button.setLayoutData(data);
@@ -97,7 +97,8 @@ public class GeometryPropertyDescriptor extends PropertyDescriptor {
                         } catch (Exception e1) {
                             ProjectUIPlugin.log(null, e1);
                         }
-                        map.sendCommandASync(new SetViewportBBoxCommand(env, map.getViewportModel().getCRS()));
+                        map.sendCommandASync(NavigationCommandFactory.getInstance()
+                                .createSetViewportBBoxCommand(env));
                         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
                                 .activate(editor);
                     }

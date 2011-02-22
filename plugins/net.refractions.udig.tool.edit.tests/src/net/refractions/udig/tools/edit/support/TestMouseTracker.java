@@ -30,12 +30,12 @@ public class TestMouseTracker extends MouseTracker{
     public void setDragStarted( Point dragStarted ) {
         super.setDragStarted(dragStarted);
     }
-    
+
     @Override
     public Queue<MapMouseEvent> getModifiablePreviousEvents() {
         return super.getModifiablePreviousEvents();
     }
-    
+
     @Override
     public void updateState( MapMouseEvent e, EventType type ) {
         super.updateState(e, type);

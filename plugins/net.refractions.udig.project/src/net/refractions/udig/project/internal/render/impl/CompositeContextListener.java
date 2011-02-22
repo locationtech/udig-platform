@@ -21,7 +21,7 @@ import net.refractions.udig.project.internal.render.RenderContext;
 
 /**
  * Listener listening for composition changes in the CompositeContext object.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

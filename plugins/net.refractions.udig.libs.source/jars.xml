@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="net.refractions.udig.libs.source" default="build.jars" basedir=".">
+
+	<target name="build.jars" description="Build all the jars for the plug-in: net.refractions.udig.libs.source.">
+
+		<description>
+			Acquire the jars for this plug-in. Jars are located
+			found on ibliblio, or if you are a geotools developer
+			your local maven repository.
+
+			Timestamps are compared and the jars will only be downloaded
+			if needed.
+	    </description>
+
+		<property name="lib" value="src/net.refractions.udig.libs_1.1.0/lib"/>
+		<available property="already_downloaded" type="dir" file="${lib}" />
+		<antcall target="create"/>
+		<antcall target="firstcall"/>
+
+	</target>
+
+    <target name="firstcall" unless="already_downloaded">
+		<antcall target="update.jars"/>
+	</target>
+
+    <target name="create" unless="already_downloaded">
+		<mkdir dir="${lib}"/>
+    </target>
+
+
+	<target name="update.jars" depends="create">
+		<property file="../net.refractions.udig.libs/copy.properties" />
+		<property name="sourceFolder" value="gt_source" />
+		<property name="updateURL.final" value="${updateURL}/${sourceFolder}"/>
+		<property name="repo.final" value="${repo}/${sourceFolder}"/>
+		<property environment="env"/>
+
+		<antcall target="update.gt"/>
+		<antcall target="update.libs"/>
+	</target>
+
+	<target name="update.gt">
+		<property name="targetending" value="src"/>
+		<property name="repo.version.final" value="${repo.version}-sources"/>
+		<property name="geotools.version.final" value="${geotools.version}-sources"/>
+
+		<get src="${repo.final}/gt2-api-${repo.version.final}.jar" dest="${lib}/gt2-api${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-gml-${repo.version.final}.jar" dest="${lib}/gt2-gml${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-main-${repo.version.final}.jar" dest="${lib}/gt2-main${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-render-${repo.version.final}.jar" dest="${lib}/gt2-render${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-coverage-${repo.version.final}.jar" dest="${lib}/gt2-coverage${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-referencing-${repo.version.final}.jar" dest="${lib}/gt2-referencing${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-db2-${repo.version.final}.jar" dest="${lib}/gt2-db2${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-postgis-${repo.version.final}.jar" dest="${lib}/gt2-postgis${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-mysql-${repo.version.final}.jar" dest="${lib}/gt2-mysql${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-indexed-shapefile-${repo.version.final}.jar" dest="${lib}/gt2-indexed-shapefile${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-shapefile-${repo.version.final}.jar" dest="${lib}/gt2-shapefile${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-shapefile-renderer-${repo.version.final}.jar" dest="${lib}/gt2-shapefile-renderer${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+        <get src="${repo.final}/gt2-wfs-${repo.version.final}.jar" dest="${lib}/gt2-wfs${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-wms-${repo.version.final}.jar" dest="${lib}/gt2-wms${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-epsg-wkt-${repo.version.final}.jar" dest="${lib}/gt2-epsg-wkt${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-oracle-spatial-${repo.version.final}.jar" dest="${lib}/gt2-oracle-spatial${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-arcsde-${repo.version.final}.jar" dest="${lib}/gt2-arcsde${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-gml-${repo.version.final}.jar" dest="${lib}/gt2-gml${targetending}.jar" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-image-${repo.version.final}.jar" dest="${lib}/gt2-image${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-geotiff-${repo.version.final}.jar" dest="${lib}/gt2-geotiff${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-arcgrid-${repo.version.final}.jar" dest="${lib}/gt2-arcgrid${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-shapefile-renderer-${repo.version.final}.jar" dest="${lib}/gt2-shapefile-renderer${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-db2-${${repo.final}.version}.jar" dest="${lib}/gt2-db2${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-validation-${repo.version.final}.jar" dest="${lib}/gt2-validation${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-hsql-${repo.version.final}.jar" dest="${lib}/gt2-hsql${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-brewer-${repo.version.final}.jar" dest="${lib}/gt2-brewer${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/gt2-coverage-${repo.version.final}.jar" dest="${lib}/gt2-coverage${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo}/org/geotools/gt2-wms/${repo.version}/gt2-wms-${repo.version}.jar" dest="${lib}/gt2-wms.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-epsg-hsql/${repo.version}/gt2-epsg-hsql-${repo.version}.jar" dest="${lib}/gt2-epsg-hsql.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+
+		<get src="${updateURL.final}/gt2-api-${geotools.version.final}.jar" dest="${lib}/gt2-api${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-gml-${geotools.version.final}.jar" dest="${lib}/gt2-gml${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-main-${geotools.version.final}.jar" dest="${lib}/gt2-main${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-render-${geotools.version.final}.jar" dest="${lib}/gt2-render${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-coverage-${geotools.version.final}.jar" dest="${lib}/gt2-coverage${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-referencing-${geotools.version.final}.jar" dest="${lib}/gt2-referencing${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-db2-${geotools.version.final}.jar" dest="${lib}/gt2-db2${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-postgis-${geotools.version.final}.jar" dest="${lib}/gt2-postgis${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-mysql-${geotools.version.final}.jar" dest="${lib}/gt2-mysql${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-indexed-shapefile-${geotools.version.final}.jar" dest="${lib}/gt2-indexed-shapefile${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-shapefile-${geotools.version.final}.jar" dest="${lib}/gt2-shapefile${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-shapefile-renderer-${geotools.version.final}.jar" dest="${lib}/gt2-shapefile-renderer${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+        <get src="${updateURL.final}/gt2-wfs-${geotools.version.final}.jar" dest="${lib}/gt2-wfs${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-wms-${geotools.version.final}.jar" dest="${lib}/gt2-wms${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-epsg-wkt-${geotools.version.final}.jar" dest="${lib}/gt2-epsg-wkt${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-oracle-spatial-${geotools.version.final}.jar" dest="${lib}/gt2-oracle-spatial${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-arcsde-${geotools.version.final}.jar" dest="${lib}/gt2-arcsde${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-gml-${geotools.version.final}.jar" dest="${lib}/gt2-gml${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-image-${geotools.version.final}.jar" dest="${lib}/gt2-image${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-geotiff-${geotools.version.final}.jar" dest="${lib}/gt2-geotiff${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-arcgrid-${geotools.version.final}.jar" dest="${lib}/gt2-arcgrid${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-shapefile-renderer-${geotools.version.final}.jar" dest="${lib}/gt2-shapefile-renderer${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-db2-${geotools.version.final}.jar" dest="${lib}/gt2-db2${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-validation-${geotools.version.final}.jar" dest="${lib}/gt2-validation${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-hsql-${geotools.version.final}.jar" dest="${lib}/gt2-hsql${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-brewer-${geotools.version.final}.jar" dest="${lib}/gt2-brewer${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-coverage-${geotools.version.final}.jar" dest="${lib}/gt2-coverage${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/gt2-mysql-${geotools.version.final}.jar" dest="${lib}/gt2-mysql${targetending}.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+	</target>
+
+	<target name="update.libs">
+		<get src="${repo.final}/geoapi-${geoapi.version}-sources.jar" dest="${lib}/geoapisrc.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${repo.final}/jts-${jts.version}-source.jar" dest="${lib}/jts-${jts.version}src.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+
+		<get src="${updateURL.final}/geoapi-${geoapi.version}-sources.jar" dest="${lib}/geoapisrc.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+		<get src="${updateURL.final}/jts-${jts.version}-source.jar" dest="${lib}/jts-${jts.version}src.zip" usetimestamp="true" ignoreerrors="true" verbose="true"/>
+	</target>
+
+
+	<target name="clean" description="Clean the plug-in: net.refractions.udig.libs.source of all the zips, jars and logs created.">
+		<delete dir="${temp.folder}"/>
+	</target>
+
+</project>

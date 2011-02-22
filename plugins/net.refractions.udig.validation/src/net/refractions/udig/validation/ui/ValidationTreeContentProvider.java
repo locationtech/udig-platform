@@ -1,5 +1,5 @@
 package net.refractions.udig.validation.ui;
-   
+
 import net.refractions.udig.validation.ValidationProcessor;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -9,20 +9,20 @@ import org.geotools.validation.dto.TestDTO;
 
     /**
      * Content provider for representing launch configuration types & launch configurations in a tree.
-     * 
+     *
      */
     public class ValidationTreeContentProvider implements ITreeContentProvider { //, ICheckable {
 
         /**
          * Empty Object array
          */
-        private static final Object[] EMPTY_ARRAY = new Object[0];  
-        
+        private static final Object[] EMPTY_ARRAY = new Object[0];
+
         /**
          * The Shell context
          */
 		private ValidationProcessor validationProcessor;
-        
+
         public ValidationTreeContentProvider() {
         }
 
@@ -47,7 +47,7 @@ import org.geotools.validation.dto.TestDTO;
 
         /**
          * Return the available elements.
-         * 
+         *
          * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
          */
         public Object[] getElements(Object inputElement) {
@@ -66,7 +66,7 @@ import org.geotools.validation.dto.TestDTO;
         public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
         	if( newInput == oldInput ) return;
         	ValidationProcessor newProcessor = (ValidationProcessor) newInput;
-        	validationProcessor = newProcessor;        	
+        	validationProcessor = newProcessor;
         }
 
 		public Object getParent(Object element) {

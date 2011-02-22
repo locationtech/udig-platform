@@ -29,8 +29,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * Opens the style dialog for the selected MapGraphicBox 
- * 
+ * Opens the style dialog for the selected MapGraphicBox
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -42,10 +42,10 @@ public class SetStyleAction implements IBoxEditAction {
     public Command getCommand() {
         final StyleBlackboard originalStyleBlackboard = this.original;
         this.original = null;
-        
+
         final Layer layer = getSelectedLayer();
         final StyleBlackboard newBlackboard = layer.getStyleBlackboard();
-        
+
         return new Command(){
             @Override
             public String getLabel() {
@@ -55,7 +55,7 @@ public class SetStyleAction implements IBoxEditAction {
             public void execute() {
                 layer.setStyleBlackboard(newBlackboard);
             }
-            
+
             @Override
             public void undo() {
                 layer.setStyleBlackboard(originalStyleBlackboard);
@@ -68,22 +68,22 @@ public class SetStyleAction implements IBoxEditAction {
     }
 
     public boolean isDone() {
-        return true;
+        return original!=null && original!=getSelectedLayer().getStyleBlackboard();
     }
 
     private MapGraphicBoxPrinter getBoxPrinter() {
         return (MapGraphicBoxPrinter) owner.getBoxPrinter();
     }
-    
+
     public void perform() {
         Layer selectedLayer = getSelectedLayer();
-        original = selectedLayer.getStyleBlackboard(); 
+        original = selectedLayer.getStyleBlackboard();
         EditorPageManager manager = EditorPageManager.loadManager(PrintingPlugin.getDefault(), selectedLayer );
         Shell parentShell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
         StyleEditorDialog dialog = StyleEditorDialog.createDialogOn(parentShell, null, selectedLayer, manager);
         dialog.setBlockOnOpen(true);
         int returnCode = dialog.open();
-        
+
         if( returnCode!=Window.OK ){
             selectedLayer.setStyleBlackboard(original);
             original = null;

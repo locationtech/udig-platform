@@ -21,25 +21,26 @@ import net.refractions.udig.tool.edit.internal.Messages;
 import net.refractions.udig.tools.edit.AbstractEditTool;
 import net.refractions.udig.tools.edit.Activator;
 import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.DefaultEditToolBehaviour;
 import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
 import net.refractions.udig.tools.edit.EnablementBehaviour;
 import net.refractions.udig.tools.edit.activator.AdvancedBehaviourCommandHandlerActivator;
 import net.refractions.udig.tools.edit.activator.DeleteGlobalActionSetterActivator;
+import net.refractions.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
 import net.refractions.udig.tools.edit.activator.DrawGeomsActivator;
+import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
 import net.refractions.udig.tools.edit.activator.GridActivator;
+import net.refractions.udig.tools.edit.activator.SetRenderingFilter;
 import net.refractions.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
 import net.refractions.udig.tools.edit.behaviour.AcceptBehaviour;
 import net.refractions.udig.tools.edit.behaviour.CursorControlBehaviour;
 import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
 import net.refractions.udig.tools.edit.behaviour.DrawCreateVertexSnapAreaBehaviour;
+import net.refractions.udig.tools.edit.behaviour.SelectVertexOnMouseDownBehaviour;
 import net.refractions.udig.tools.edit.behaviour.MoveVertexBehaviour;
 import net.refractions.udig.tools.edit.behaviour.SelectFeatureBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SelectVertexBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SelectVertexOnMouseDownBehaviour;
 import net.refractions.udig.tools.edit.behaviour.SetSnapSizeBehaviour;
 import net.refractions.udig.tools.edit.behaviour.StartEditingBehaviour;
+import net.refractions.udig.tools.edit.behaviour.SelectVertexBehaviour;
 import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
 import net.refractions.udig.tools.edit.behaviour.accept.DeselectEditShapeAcceptBehaviour;
 import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
@@ -47,15 +48,15 @@ import net.refractions.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviou
 import net.refractions.udig.tools.edit.support.ShapeType;
 
 import org.eclipse.swt.SWT;
-import org.opengis.filter.spatial.BBOX;
+import org.geotools.filter.FilterType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 
 /**
- * Creates and edits points. 
- * 
+ * Creates and edits points.
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -68,13 +69,13 @@ public class PointTool extends AbstractEditTool {
 
     @Override
     protected void initActivators( Set<Activator> activators ) {
-        
-        DrawType type = DrawGeomsActivator.DrawType.POINT;
-        Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultCreateActivators(type);
-        activators.addAll(defaults);
+        activators.add(new EditStateListenerActivator());
         activators.add(new DeleteGlobalActionSetterActivator());
+        activators.add(new DrawGeomsActivator(DrawGeomsActivator.DrawType.POINT));
+        activators.add(new DrawCurrentGeomVerticesActivator());
         activators.add(new SetSnapBehaviourCommandHandlerActivator());
         activators.add(new AdvancedBehaviourCommandHandlerActivator());
+        activators.add(new SetRenderingFilter());
         activators.add(new GridActivator());
     }
 
@@ -93,23 +94,10 @@ public class PointTool extends AbstractEditTool {
     @Override
     protected void initEventBehaviours( EditToolConfigurationHelper helper ) {
         helper.add( new DrawCreateVertexSnapAreaBehaviour());
-        
         helper.startAdvancedFeatures();
-        ConditionalProvider defaultMessage = new ConditionalProvider( handler, Messages.PointTool_select_or_create_feature,Messages.PointTool_add_vertex_or_finish);
-        CursorControlBehaviour.SystemCursorProvider overVertexCursor = new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_SIZEALL);
-        ConditionalProvider overVertexMessage = new ConditionalProvider( handler, Messages.PointTool_move_vertex,null );
-        CursorControlBehaviour.SystemCursorProvider overEdgeCursor = new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_CROSS);
-        ConditionalProvider overEdgeMessage = new ConditionalProvider( handler, Messages.PointTool_add_vertex, null);
-        helper.add(
-                new CursorControlBehaviour(
-                        handler,
-                        defaultMessage,
-                        overVertexCursor,
-                        overVertexMessage, 
-                        overEdgeCursor,
-                        overEdgeMessage
-                )
-        );
+        helper.add( new CursorControlBehaviour(handler, new ConditionalProvider(handler, Messages.PointTool_select_or_create_feature, Messages.PointTool_add_vertex_or_finish),
+                new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_SIZEALL),new ConditionalProvider(handler, Messages.PointTool_move_vertex,null),
+                new CursorControlBehaviour.SystemCursorProvider(SWT.CURSOR_CROSS), new ConditionalProvider(handler, Messages.PointTool_add_vertex, null)));
         helper.stopAdvancedFeatures();
 
         // vertex selection OR geometry selection should not both happen so make them a mutual exclusion behaviour
@@ -117,18 +105,17 @@ public class PointTool extends AbstractEditTool {
         helper.startAdvancedFeatures();
         helper.add(new SelectVertexOnMouseDownBehaviour());
         helper.add( new SelectVertexBehaviour());
-
-        SelectFeatureBehaviour selectGeometryBehaviour = new SelectFeatureBehaviour(new Class[]{Point.class, MultiPoint.class}, BBOX.class);
+        SelectFeatureBehaviour selectGeometryBehaviour = new SelectFeatureBehaviour(new Class[]{Point.class, MultiPoint.class}, FilterType.GEOMETRY_BBOX);
         selectGeometryBehaviour.initDefaultStrategies(ShapeType.POINT);
         helper.add(selectGeometryBehaviour);
 
         helper.startElseFeatures();
         helper.add(new StartEditingBehaviour(ShapeType.POINT));
         helper.stopElseFeatures();
-        
+
         helper.stopAdvancedFeatures();
         helper.stopMutualExclusiveList();
-        
+
         helper.startAdvancedFeatures();
         helper.add( new MoveVertexBehaviour() );
         helper.stopAdvancedFeatures();

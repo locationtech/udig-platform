@@ -1,9 +1,6 @@
 package net.refractions.udig.project.internal.element.extensible.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import static org.junit.Assert.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -20,38 +17,36 @@ public class UdigMementoTest {
     private static final String TEXT_VAL = "TEXT\nT";
     private static final float FLOAT_VAL = 1.0f;
     private static final int INT_VAL = 10;
-    private static final boolean BOOL_VAL = true;
 
     private static final String FLOAT = "float";
     private static final String INT = "int";
     private static final String STRING = "string";
-    private static final String BOOLEAN = "bool";
     private static final String EMPTY= "";
     private static final String TYPE = "type";
     private static final String ID1 = "id1";
 
     // tests
-    
+
     @Test
     public void testWrite() throws IOException {
         UdigMemento memento = createTestMemento();
-        
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         memento.write(out, 0);
-        
+
         System.out.println(new String(out.toByteArray()));
-        
+
         UdigMemento readIn = UdigMemento.read(new ByteArrayInputStream(out.toByteArray()));
-        
+
         assertMementoEquals(memento, readIn,true);
     }
-    
+
     @Test
     public void testPutMemento() throws Exception {
         UdigMemento expected = createTestMemento();
         UdigMemento actual = new UdigMemento();
         actual.putMemento(expected);
-        
+
         assertMementoEquals(expected, actual,false);
     }
 
@@ -63,7 +58,7 @@ public class UdigMementoTest {
 		mem.putString(key, value);
     	String persisted = mem.toString();
     	UdigMemento mem2 = UdigMemento.readString(persisted);
-    	
+
     	assertEquals(value, mem2.getString(key));
     }
 
@@ -73,11 +68,11 @@ public class UdigMementoTest {
         assertEquals(2, readIn.getChildren(TYPE).length);
         assertEquals(1, readIn.getChildren(null).length);
         assertEquals(0, readIn.getChildren("boog").length);
-        
+
         IMemento childNoId = readIn.findChild(TYPE, null);
         IMemento childID = readIn.findChild(TYPE, ID1);
         IMemento childNullType = readIn.findChild(null,null);
-        
+
         assertNotNull(childNoId);
         assertNotNull(childID);
         assertNotNull(childNullType);
@@ -100,11 +95,10 @@ public class UdigMementoTest {
 
     private void assertDataEquals( IMemento expected, IMemento actual, boolean textValNotNull ) {
         assertEquals(expected.getID(), actual.getID());
-        assertEquals(FLOAT_VAL, (float) actual.getFloat(FLOAT),0.0);
-        assertEquals(INT_VAL, (int) actual.getInteger(INT));
+        assertEquals(FLOAT_VAL, actual.getFloat(FLOAT));
+        assertEquals(INT_VAL, actual.getInteger(INT));
         assertEquals(STRING_VAL, actual.getString(STRING));
-        assertEquals(BOOL_VAL, actual.getBoolean(BOOLEAN));
-        assertEquals("", actual.getString(EMPTY)); //$NON-NLS-1$
+        assertEquals("", actual.getString(EMPTY));
         assertEquals(NULL_VAL, actual.getString(null));
         if(textValNotNull){
             assertEquals(TEXT_VAL, actual.getTextData());
@@ -117,9 +111,8 @@ public class UdigMementoTest {
         memento.putFloat(FLOAT, FLOAT_VAL);
         memento.putInteger(INT, INT_VAL);
         memento.putString(STRING, STRING_VAL);
-        memento.putString(EMPTY, ""); //$NON-NLS-1$
+        memento.putString(EMPTY, "");
         memento.putString(null, NULL_VAL);
-        memento.putBoolean(BOOLEAN, BOOL_VAL);
         memento.putTextData(TEXT_VAL);
     }
 }

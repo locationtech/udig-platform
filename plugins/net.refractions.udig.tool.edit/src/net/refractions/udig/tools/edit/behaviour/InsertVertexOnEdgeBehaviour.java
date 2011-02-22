@@ -33,15 +33,20 @@ import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Inserts a vertex at the location where the mouse event occurred
- * 
- * <p>Requirements: * <ul> * <li>event type == RELEASE</li>
+ *
+ * <p>Requirements:
+ * <ul>
+ * <li>event type == RELEASE</li>
  * <li>edit state == MODIFYING </li>
  * <li>no modifiers down</li>
  * <li>button 1 released</li>
  * <li>no buttons down</li>
  * <li>current shape and geom are set</li>
  * <li>mouse is not over a vertex of the current shape</li>
- * <li>mouse is over an edge </li> * </ul> * </p> * @author jones
+ * <li>mouse is over an edge </li>
+ * </ul>
+ * </p>
+ * @author jones
  * @since 1.1.0
  */
 public class InsertVertexOnEdgeBehaviour implements EventBehaviour {
@@ -49,16 +54,16 @@ public class InsertVertexOnEdgeBehaviour implements EventBehaviour {
     public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
         boolean legalEventType=eventType==EventType.RELEASED;
         boolean shapeAndGeomNotNull=handler.getCurrentShape()!=null;
-        boolean button1Released=e.button==MapMouseEvent.BUTTON1;        
+        boolean button1Released=e.button==MapMouseEvent.BUTTON1;
         boolean legalState= handler.getCurrentState()==EditState.NONE || handler.getCurrentState()==EditState.MODIFYING;
-        return legalState && legalEventType && shapeAndGeomNotNull && button1Released 
+        return legalState && legalEventType && shapeAndGeomNotNull && button1Released
         && !e.buttonsDown() && !e.modifiersDown() && !overShapeVertex(handler, e)
         && isOverEdge(handler, e);
     }
 
     private boolean isOverEdge(EditToolHandler handler, MapMouseEvent e) {
         ILayer selectedLayer = handler.getEditLayer();
-        Class<?> type = selectedLayer.getSchema().getGeometryDescriptor().getType().getBinding();
+        Class<?> type = selectedLayer.getSchema().getDefaultGeometry().getType();
         boolean polygonLayer=Polygon.class.isAssignableFrom(type) || MultiPolygon.class.isAssignableFrom(type);
 
         ClosestEdge edge=handler.getCurrentGeom().getClosestEdge(Point.valueOf(e.x,e.y), polygonLayer);
@@ -68,10 +73,10 @@ public class InsertVertexOnEdgeBehaviour implements EventBehaviour {
     }
 
     private boolean overShapeVertex(EditToolHandler handler, MapMouseEvent e) {
-        
-        Point vertexOver=handler.getEditBlackboard(handler.getEditLayer()).overVertex(Point.valueOf(e.x, e.y), 
+
+        Point vertexOver=handler.getEditBlackboard(handler.getEditLayer()).overVertex(Point.valueOf(e.x, e.y),
                 PreferenceUtil.instance().getVertexRadius());
-        
+
         return handler.getCurrentShape().hasVertex( vertexOver );
     }
 
@@ -82,13 +87,13 @@ public class InsertVertexOnEdgeBehaviour implements EventBehaviour {
         }
         ILayer editLayer = handler.getEditLayer();
 
-        EditBlackboard editBlackboard = handler.getEditBlackboard( editLayer );        
+        EditBlackboard editBlackboard = handler.getEditBlackboard( editLayer );
         Point toInsert = Point.valueOf(e.x,e.y);
-        
+
         return new InsertOnNearestEdgeCommand( handler, editBlackboard, toInsert );
 
     }
-    
+
 
     public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
         EditPlugin.log("", error); //$NON-NLS-1$

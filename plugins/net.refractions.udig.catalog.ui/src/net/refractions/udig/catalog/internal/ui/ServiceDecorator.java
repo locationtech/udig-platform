@@ -44,15 +44,15 @@ import org.eclipse.swt.graphics.Image;
  * </p>
  * <p>
  * To use this decorator as per normal:
- * 
+ *
  * <pre><code>
  *  ILabelProvider lp = ... basic label provider
  *  ILabelDecorator decorator = PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator();
  *  viewer.setLabelProvider( new DecoratingLabelProvider( lp, decorator ));
  * </code></pre>
- * 
+ *
  * </p>
- * 
+ *
  * @author jgarnett
  * @since 0.3
  */
@@ -72,7 +72,7 @@ public class ServiceDecorator implements ILabelDecorator {
      * a result of other updates within the workbench including deferred decoration by background
      * processes. Clients should handle labelProviderChangedEvents for the given element to get the
      * complete decoration.
-     * 
+     *
      * @see LabelProviderChangedEvent
      * @see IBaseLabelProvider#addListener
      * @param image the input image to decorate, or <code>null</code> if the element has no image
@@ -107,7 +107,7 @@ public class ServiceDecorator implements ILabelDecorator {
     Image baseIcon( IService service ) {
         ImageDescriptor icon = null;
         try {
-            icon = service.getInfo(null).getImageDescriptor();
+            icon = service.getInfo(null).getIcon();
         } catch (IOException e) {
             CatalogUIPlugin.log(null, e);
         }
@@ -119,7 +119,7 @@ public class ServiceDecorator implements ILabelDecorator {
 
     /**
      * TODO summary sentence for decorateText ...
-     * 
+     *
      * @see org.eclipse.jface.viewers.ILabelDecorator#decorateText(java.lang.String,
      *      java.lang.Object)
      * @param text
@@ -132,7 +132,7 @@ public class ServiceDecorator implements ILabelDecorator {
 
     /**
      * TODO summary sentence for addListener ...
-     * 
+     *
      * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.jface.viewers.ILabelProviderListener)
      * @param listener
      */
@@ -142,7 +142,7 @@ public class ServiceDecorator implements ILabelDecorator {
 
     /**
      * TODO summary sentence for dispose ...
-     * 
+     *
      * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
      */
     public void dispose() {
@@ -152,7 +152,7 @@ public class ServiceDecorator implements ILabelDecorator {
 
     /**
      * TODO summary sentence for isLabelProperty ...
-     * 
+     *
      * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang.Object,
      *      java.lang.String)
      * @param element
@@ -166,7 +166,7 @@ public class ServiceDecorator implements ILabelDecorator {
 
     /**
      * TODO summary sentence for removeListener ...
-     * 
+     *
      * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)
      * @param listener
      */

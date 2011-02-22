@@ -33,7 +33,7 @@ import org.geotools.data.FeatureStore;
 
 /**
  * This class detects and warns the user if the current tool can or can't edit the current layer.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -41,7 +41,7 @@ public class ValidToolDetectionActivator implements EnablementBehaviour {
 
     private final Class[] legalClasses;
     private ILayer lastLayer;
-    
+
     public ValidToolDetectionActivator( Class[] classes ) {
         Class[] c=new Class[0];
         if( classes!=null ){
@@ -53,7 +53,7 @@ public class ValidToolDetectionActivator implements EnablementBehaviour {
 
     @SuppressWarnings("unchecked")
     private String detectCompatibility(EditToolHandler handler, IEditManager editManager) {
-        
+
         ILayer selectedLayer = editManager.getSelectedLayer();
         if( ((EditManager)editManager).isEditLayerLocked() ){
             selectedLayer=editManager.getEditLayer();
@@ -64,7 +64,7 @@ public class ValidToolDetectionActivator implements EnablementBehaviour {
             return openQuestion(handler, Messages.ValidToolDetectionActivator_question,
                     selectedLayer);
         } else {
-            Class geomType = selectedLayer.getSchema().getGeometryDescriptor().getType().getBinding();
+            Class geomType = selectedLayer.getSchema().getDefaultGeometry().getType();
             boolean acceptable=false;
             for( Class type : legalClasses ) {
                 if (geomType.isAssignableFrom(type)) {
@@ -76,7 +76,7 @@ public class ValidToolDetectionActivator implements EnablementBehaviour {
                 return Messages.ValidToolDetectionActivator_warning2;
             }
         }
-        
+
         return null;
     }
 
@@ -85,7 +85,7 @@ public class ValidToolDetectionActivator implements EnablementBehaviour {
         final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
         PlatformGIS.syncInDisplayThread(shell.getDisplay(), new Runnable(){
             public void run() {
-                boolean decision = MessageDialog.openQuestion(shell, 
+                boolean decision = MessageDialog.openQuestion(shell,
                 		Messages.ValidToolDetectionActivator_questionTitle, string);
 
                 if (decision) {

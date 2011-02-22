@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Stops an animation on run and starts it on rollback.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -47,19 +47,19 @@ public class StartAnimationCommand extends AbstractCommand implements UndoableMa
 
     public void run( IProgressMonitor monitor ) throws Exception {
         for( IAnimation anim : animations ) {
-            anim.setValid(true);            
+            anim.setValid(true);
             AnimationUpdater.runTimer(display, anim);
         }
     }
 
     public void rollback( IProgressMonitor monitor ) throws Exception {
         for( IAnimation anim : animations ) {
-            anim.setValid(false);            
+            anim.setValid(false);
         }
     }
 
     public String getName() {
-        return Messages.StartAnimationCommand_name; 
+        return Messages.StartAnimationCommand_name;
     }
 
 }

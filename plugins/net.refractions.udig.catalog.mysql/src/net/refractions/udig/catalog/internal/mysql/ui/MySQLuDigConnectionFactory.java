@@ -11,12 +11,12 @@ import java.util.Map;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.MySQLGeoResource;
 import net.refractions.udig.catalog.MySQLServiceExtension;
-import net.refractions.udig.catalog.MySQLServiceImpl;
+import net.refractions.udig.catalog.internal.mysql.MySQLGeoResource;
 import net.refractions.udig.catalog.internal.mysql.MySQLPlugin;
+import net.refractions.udig.catalog.internal.mysql.MySQLServiceImpl;
 import net.refractions.udig.catalog.ui.UDIGConnectionFactory;
-import static org.geotools.data.mysql.MySQLDataStoreFactory.*;
+
 /**
  * The Factory class used to build connections for mysql
  * @author Harry Bullen, Intelligent Automation
@@ -41,8 +41,8 @@ public class MySQLuDigConnectionFactory extends UDIGConnectionFactory {
             // lets guess
             url = CatalogPlugin.locateURL(context);
         }
-        if( url != null && MySQLServiceExtension.isMySQL(url)) {  
-            // well we have a url - lets try it!            
+        if( url != null && MySQLServiceExtension.isMySQL(url)) {
+            // well we have a url - lets try it!
             List<IResolve> list = CatalogPlugin.getDefault().getLocalCatalog().find( url, null );
             for( IResolve resolve : list ){
                 if( resolve instanceof MySQLServiceImpl) {
@@ -58,11 +58,11 @@ public class MySQLuDigConnectionFactory extends UDIGConnectionFactory {
                         return mysql.getConnectionParams();
                     } catch (IOException e) {
                         toCapabilitiesURL( layer.getIdentifier() );
-                    }                    
+                    }
                 }
             }
-            return createParams( url );            
-        }        
+            return createParams( url );
+        }
         return null;
 	}
 
@@ -74,13 +74,13 @@ public class MySQLuDigConnectionFactory extends UDIGConnectionFactory {
         }
         if( context instanceof Map){
             Map params=(Map) context;
-            
+
             try {
                 return MySQLServiceExtension.toURL(params);
             } catch (MalformedURLException e) {
                 return null;
-            } 
-            
+            }
+
         }
         if( context instanceof String ){
             return toCapabilitiesURL((String)context);
@@ -126,17 +126,17 @@ public class MySQLuDigConnectionFactory extends UDIGConnectionFactory {
         if( resolve instanceof IService ){
             return toCapabilitiesURL( (IService) resolve );
         }
-        return toCapabilitiesURL( resolve.getIdentifier() );        
+        return toCapabilitiesURL( resolve.getIdentifier() );
     }
     protected URL toCapabilitiesURL( IService resolve ){
         if( resolve instanceof MySQLServiceImpl ){
             return toCapabilitiesURL( (MySQLServiceImpl) resolve );
         }
-        return toCapabilitiesURL( resolve.getIdentifier() );        
+        return toCapabilitiesURL( resolve.getIdentifier() );
     }
     /** No further QA checks needed - we know this one works */
     protected URL toCapabilitiesURL( MySQLServiceImpl postgis ){
-        return postgis.getIdentifier();                
+        return postgis.getIdentifier();
     }
     /** Quick sanity check to see if url is a MySQL url */
     protected URL toCapabilitiesURL( URL url ){
@@ -146,7 +146,7 @@ public class MySQLuDigConnectionFactory extends UDIGConnectionFactory {
                 : null;
 
         if (!"http".equals(protocol) //$NON-NLS-1$
-                && !"https".equals(protocol)) { //$NON-NLS-1$ 
+                && !"https".equals(protocol)) { //$NON-NLS-1$
             return null;
         }
         if (url.toExternalForm().indexOf("mysql.jdbc") != -1) { //$NON-NLS-1$
@@ -168,7 +168,7 @@ public class MySQLuDigConnectionFactory extends UDIGConnectionFactory {
         int hostEnd = string.indexOf(":", passwordEnd); //$NON-NLS-1$
         int portEnd = string.indexOf("/", hostEnd); //$NON-NLS-1$
         int databaseEnd = string.indexOf("/", portEnd+1); //$NON-NLS-1$
-        
+
         //int databaseEnd = string.indexOf(" ", databaseStart);
         String the_host = string.substring(passwordEnd+1, hostEnd);
         String the_username=string.substring(startindex, usernameEnd);
@@ -176,7 +176,7 @@ public class MySQLuDigConnectionFactory extends UDIGConnectionFactory {
         String the_port;
         String the_database;
 
-        
+
         if( portEnd < 1 ) {
             the_port = string.substring(hostEnd + 1);
             the_database = ""; //$NON-NLS-1$
@@ -185,48 +185,52 @@ public class MySQLuDigConnectionFactory extends UDIGConnectionFactory {
             the_database = string.substring( portEnd+1, databaseEnd );
         }
         Integer intPort;
-        try{
-            intPort = Integer.valueOf(the_port);
-        } catch (NumberFormatException e)
-        {
-            intPort = Integer.valueOf(3306);
+        if( !the_port.equalsIgnoreCase("") ) { //$NON-NLS-1$
+            intPort = new Integer(the_port);
+        } else {
+            intPort = new Integer(3306);
         }
 
-        
+
         //URL(String protocol, String host, int port, String file)
         URL url = null;
         try {
-            url = MySQLServiceExtension.toURL( the_username, the_password, the_host, intPort, the_database);      
+            url = MySQLServiceExtension.toURL( the_username, the_password, the_host, intPort, the_database);
+
         } catch (MalformedURLException e) {
+            // TODO Catch e
             MySQLPlugin.log("bad url", e); //$NON-NLS-1$
         }
         return url;
     }
-    
+
     /** 'Create' params given the provided url, no magic occurs */
     @SuppressWarnings("unchecked")
     protected Map<String,Serializable> createParams( URL url ){
         MySQLServiceExtension serviceFactory = new MySQLServiceExtension();
         Map params = serviceFactory.createParams( url );
         if( params != null) return params;
-        
+
         Map<String,Serializable> params2 = new HashMap<String,Serializable>();
-        
 
-        params2.put( DBTYPE.key, (Serializable) DBTYPE.sample); //$NON-NLS-1$
-        params2.put( HOST.key, url.getHost());
-        
-        params2.put(PORT.key, Integer.valueOf( url.getPort() != -1 ? url.getPort() : 3306 ));
 
+        params2.put("dbtype", "mysql"); //$NON-NLS-1$
+        params2.put("host", url.getHost());
+        String dbport = ((Integer)url.getPort()).toString();
+        try {
+            params2.put("port", new Integer(dbport));
+        } catch (NumberFormatException e) {
+            params2.put("port", new Integer(3306));
+        }
 
         String the_database = url.getPath() == null ? "" : url.getPath(); //$NON-NLS-1$
-        params2.put( DATABASE.key,the_database); // database
+        params2.put("database",the_database); // database
         String userInfo = url.getUserInfo() == null ? "" : url.getUserInfo(); //$NON-NLS-1$
-        params2.put( USER.key,userInfo); // user
-        params2.put( PASSWD.key,""); // pass //$NON-NLS-1$
-        
+        params2.put("user",userInfo); // user
+        params2.put("passwd",""); // pass //$NON-NLS-1$
+
         return params2;
     }
-    
-   
+
+
 }

@@ -29,7 +29,7 @@ import org.eclipse.ui.actions.ActionDelegate;
 /**
  * Performs the open action from the file menu of uDig. It is responseible for creating new maps
  * from selected resources.
- * 
+ *
  * @author rgould
  * @since 0.9.0
  */

@@ -28,7 +28,7 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
  */
 public class CommandRunner implements IRunnableWithProgress {
     Command command;
-    
+
     public CommandRunner( Command command ) {
         super();
         this.command = command;

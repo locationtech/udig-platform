@@ -13,11 +13,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.DataUtilities;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.feature.Feature;
+import org.geotools.feature.FeatureType;
+import org.geotools.filter.FidFilter;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Id;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -42,7 +41,7 @@ public class IntegrityValidationTest extends TestCase {
         // second test: does this validation test for self-overlaps? (it shouldn't)
         line[2] = factory.createLineString(new Coordinate[]{new Coordinate(50, 50),
                 new Coordinate(60, 50), new Coordinate(55, 50),});
-        // third test: an intersecting line; is valid?  
+        // third test: an intersecting line; is valid?
         line[3] = factory.createLineString(new Coordinate[]{new Coordinate(10, 20),
                 new Coordinate(20, 10),});
 
@@ -52,14 +51,14 @@ public class IntegrityValidationTest extends TestCase {
         attrValues[2] = "value2"; //$NON-NLS-1$
         attrValues[3] = "value3"; //$NON-NLS-1$
 
-        SimpleFeatureType ft = DataUtilities.createType("myLineType", "*geom:LineString,name:String"); //$NON-NLS-1$ //$NON-NLS-2$
+        FeatureType ft = DataUtilities.createType("myLineType", "*geom:LineString,name:String"); //$NON-NLS-1$ //$NON-NLS-2$
         ft = DataUtilities.createSubType(ft, null, DefaultEngineeringCRS.CARTESIAN_2D);
-        SimpleFeature[] features = new SimpleFeature[4];
+        Feature[] features = new Feature[4];
         // add lines
-        features[0] = SimpleFeatureBuilder.build(ft,new Object[]{line[0], attrValues[0]}, Integer.toString(0));
-        features[1] = SimpleFeatureBuilder.build(ft,new Object[]{line[1], attrValues[1]}, Integer.toString(1));
-        features[2] = SimpleFeatureBuilder.build(ft,new Object[]{line[2], attrValues[2]}, Integer.toString(2));
-        features[3] = SimpleFeatureBuilder.build(ft,new Object[]{line[3], attrValues[3]}, Integer.toString(3));
+        features[0] = ft.create(new Object[]{line[0], attrValues[0]}, Integer.toString(0));
+        features[1] = ft.create(new Object[]{line[1], attrValues[1]}, Integer.toString(1));
+        features[2] = ft.create(new Object[]{line[2], attrValues[2]}, Integer.toString(2));
+        features[3] = ft.create(new Object[]{line[3], attrValues[3]}, Integer.toString(3));
 
         IGeoResource resource = MapTests.createGeoResource(features, true);
         Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(500, 512));
@@ -78,8 +77,8 @@ public class IntegrityValidationTest extends TestCase {
 
         });//send a sync command so async doesn't give us a false junit failure
 
-        Id filter = (Id) map.getLayersInternal().get(0).getFilter();
-        String[] fids = filter.getIDs().toArray(new String[0]);
+        FidFilter filter = (FidFilter) map.getLayersInternal().get(0).getFilter();
+        String[] fids = filter.getFids();
         //System.out.println(fids[0].length()+" features in FID");
         assertEquals(1, fids[0].length()); //only 1 feature failed?
         assertEquals(features[0].getID(), fids[0]); //it was feature 0 that failed?

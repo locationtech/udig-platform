@@ -27,7 +27,7 @@ import org.opengis.util.InternationalString;
  * <li>Color Printing
  * </ul>
  * </p>
- * 
+ *
  * @see http://www.personal.psu.edu/faculty/c/a/cab38/ColorBrewer/ColorBrewer_learnMore.html
  * @author jgarnett
  * @since 0.6.0
@@ -78,7 +78,7 @@ public enum Friendly {
     /**
      * Gets a string from the resource bundle. We don't want to crash because of a missing String.
      * Returns the key if not found.
-     * 
+     *
      * @param key the id to look up
      * @return the string with the given key
      */
@@ -98,23 +98,23 @@ public enum Friendly {
             return new SimpleInternationalString("!" + key + "!"); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
-    /** 
+    /**
      * Parse text of the form: <code>colorblind, lcd, crt</code>.
-     * 
+     *
      * @param text
      * @return EnumSet (may be empty)
      */
     public static EnumSet<Friendly> parse( String text ){
-        EnumSet<Friendly> set = EnumSet.noneOf( Friendly.class );        
-        if( text == null ) return set; 
+        EnumSet<Friendly> set = EnumSet.noneOf( Friendly.class );
+        if( text == null ) return set;
         for( String symbol :  text.split("," ) ){ //$NON-NLS-1$
             symbol = symbol.trim();
             if( symbol.length() == 0 ) continue;
-            try{ 
+            try{
                 set.add( Friendly.valueOf( symbol.toUpperCase() ));
             }
             catch( IllegalArgumentException badSymbol ){
-                System.out.println( badSymbol );                
+                System.out.println( badSymbol );
             }
         }
         return set;

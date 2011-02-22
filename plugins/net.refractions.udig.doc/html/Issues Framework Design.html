@@ -1,0 +1,191 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : Issues Framework Design</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : Issues Framework Design -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="IssuesFrameworkDesign-IssuesFramework">Issues Framework</a></h1>
+
+<p>The issues framework consists of a view that displays all the issues/tasks that has been identified by uDig and its plugins that need to be resolved in some manner.  It is a generic framework that allows uDig extenders to define custom issues, methods for resolving issues and even the storage mechanism for the issues.  </p>
+
+<h1><a name="IssuesFrameworkDesign-BasicDesign">Basic Design</a></h1>
+
+
+<p>The basic framework consists of a IIssuesManager that provides broad control over a single contained IIssuesList.  An IIssuesList is basically an eventified List&lt;IIssue&gt; that has a couple additional methods.  For example a method for obtaining all issues of the provided GroupID.  IIssuesLists raise events when IIssues are added/removed/saved.  A sub-interface of IIssuesList is the IRemoveIssuesList it has the additional methods save(IIssue) and refresh().  </p>
+
+<p>An IIssue is a generic issue that represents an issue or task.  It provides accessor methods that allow information about the issue to be obtained as well as a fix method so the issue can be <em>fixed</em>.  IIssues are defined by extension points and what the fix method does is dependent on the implementation.  AbstractIssue reduces the overhead of implementing new IIssues implementations.  AbstractFixableIssue and FixableIssue also help in quickly and easily developing new IIssue implementations.</p>
+
+<h1><a name="IssuesFrameworkDesign-Existingimplementations">Existing implementations</a></h1>
+<h3><a name="IssuesFrameworkDesign-IIssuesimplementations%3A">IIssues implementations:</a></h3>
+<ul>
+	<li>FeatureIssue - An issue that indicates that a feature needs to be inspected.  Description should provide more details as to what the issue is with the feature.  The fix method opens the map and zooms to the issue with the problem.  The FeatureEditor is also opened with the feature selected.</li>
+	<li>FixableIssue - An issue that uses the net.refractions.udig.issues.issueFixer extension point to determine how to fix the issue.  An accompanying IFixer</li>
+</ul>
+
+
+<h3><a name="IssuesFrameworkDesign-IIssuesListimplementations%3A">IIssuesList implementations:</a></h3>
+<ul>
+	<li>IssuesList - An in-memory implementation of the IIssuesList interface.</li>
+	<li>PostGISIssuesList - An IRemoteIssuesList that stores its issues as features in a PostGIS database.  The PostGISIssuesList is implemented using the StrategizedIssuesList and the AbstractDatastoreStrategy.  It is the reference implementation using those support classes and can be used to determine how to develop a custom IRemoteIssuesList.  The table that the issues list uses is quite flexible but it must at minimum have:</li>
+</ul>
+<ul class="alternate" type="square">
+	<li>a Polygon or MultiPolygon or Geometry geometry column</li>
+	<li>8 text columns</li>
+	<li>at least 2 of the text columns should have an unlimited length<br/>
+Ideally the table should have the following columns (case is unimportant):
+<table class='confluenceTable'>
+<tr>
+<th class='confluenceTh'>Column</th>
+<th class='confluenceTh'>Type</th>
+<th class='confluenceTh'>Comments</th>
+</tr>
+<tr>
+<td class='confluenceTd'>ID</td>
+<td class='confluenceTd'>text</td>
+<td class='confluenceTd'>should be able to contain at least 20 characters</td>
+</tr>
+<tr>
+<td class='confluenceTd'>resolution</td>
+<td class='confluenceTd'>text</td>
+<td class='confluenceTd'>can be limited to 8 characters</td>
+</tr>
+<tr>
+<td class='confluenceTd'>priority</td>
+<td class='confluenceTd'>text</td>
+<td class='confluenceTd'>can be limited to 8 characters</td>
+</tr>
+<tr>
+<td class='confluenceTd'>description</td>
+<td class='confluenceTd'>text</td>
+<td class='confluenceTd'>should be able to contain at least 100 characters</td>
+</tr>
+<tr>
+<td class='confluenceTd'>groupID</td>
+<td class='confluenceTd'>text</td>
+<td class='confluenceTd'>should be able to contain at least 20 characters</td>
+</tr>
+<tr>
+<td class='confluenceTd'>memento</td>
+<td class='confluenceTd'>text</td>
+<td class='confluenceTd'>should be unlimited or very large</td>
+</tr>
+<tr>
+<td class='confluenceTd'>viewmemento</td>
+<td class='confluenceTd'>text</td>
+<td class='confluenceTd'>should be unlimited or very large</td>
+</tr>
+<tr>
+<td class='confluenceTd'>extensionid</td>
+<td class='confluenceTd'>text</td>
+<td class='confluenceTd'>should be able to contain at least 20 characters</td>
+</tr>
+<tr>
+<td class='confluenceTd'>bounds</td>
+<td class='confluenceTd'>polygon</td>
+</tr>
+</table>
+<p>Note:  The PostgisDatastoreStrategy is a strategy for the StrategizedIssuesList so more implementations will be forthcoming in the future.  If you desire an implementation that backs onto another datastore look at the classes: net.refractions.udig.issues.StrategizedIssuesList<br/>
+net.refractions.udig.issues.internal.datastore.PostgisDatastoreStrategy<br/>
+net.refractions.udig.issues.internal.datastore.AbstractDatastoreStrategy</p></li>
+</ul>
+
+
+<h1><a name="IssuesFrameworkDesign-Extensionpoints">Extension points</a></h1>
+<p>For developers who want to create custom issues or issue lists the following extension points will be of interest to you:</p>
+<table class='confluenceTable'>
+<tr>
+<th class='confluenceTh'>Extension point ID</th>
+<th class='confluenceTh'>Description</th>
+</tr>
+<tr>
+<td class='confluenceTd'>net.refractions.udig.issues.issue</td>
+<td class='confluenceTd'>Allows new issue types to be declared.  The getExtensionID should return the id of your extension</td>
+</tr>
+<tr>
+<td class='confluenceTd'>net.refractions.udig.issues.issuesList</td>
+<td class='confluenceTd'>Declares a new issues list implementation</td>
+</tr>
+<tr>
+<td class='confluenceTd'>net.refractions.udig.issues.issueFixer</td>
+<td class='confluenceTd'>Declares a fixer for subclasses of AbstractFixableIssue</td>
+</tr>
+</table>
+
+<h1><a name="IssuesFrameworkDesign-SupportClasses">Support Classes</a></h1>
+
+<h3><a name="IssuesFrameworkDesign-StrategizedIssuesList">StrategizedIssuesList </a></h3>
+<p>The StrategizedIssuesList is an implementation of the IRemoteIssuesList interface that delegates the reading and writing of features to an IListStrategy object.  The StrategizedIssuesList handles all of the "tricky" logic for caching of features organizing them into groups, etc... The IListStrategy is a very simple interface designed to reduce the overhead of implementing IRemoteIssuesLists.  </p>
+<h3><a name="IssuesFrameworkDesign-AbstractDatastoreStrategy">AbstractDatastoreStrategy</a></h3>
+<p>The AbstractDatastoreStrategy is an implementation of the IListStrategy interface converts features from a FeatureStore (the instance is determined by the implementation of the abstract getFeatureStore() method) into issues for use by the StrategizedIssuesList</p>
+<h3><a name="IssuesFrameworkDesign-IssueFixer">IssueFixer</a></h3>
+<p>IssuesFixer  is a framework described below that is used by the FixableIssue class to allow the workflow or method of fixing an issue to be declared as extension of the net.refractions.issues.issueFixer extension point.  See the next section for more details.</p>
+
+<h1><a name="IssuesFrameworkDesign-IssueFixer">IssueFixer</a></h1>
+
+<h2><a name="IssuesFrameworkDesign-extensionattributes">extension attributes</a></h2>
+<ul>
+	<li><b>id</b>: extension identifier</li>
+	<li><b>class</b>: the fixer class which implements net.refractions.udig.core.IFixer and provides the mechanism for resolving issues</li>
+	<li><b>targetClass</b>: the IIssue class this fixer expects to see (a subclass of AbstractFixableIssue).  If you have a specific IIssue implementation  implementation, chances are your issue fixer will be specific to that implementation.</li>
+	<li><b>requiredKey</b>: (multiple instances) requires that the saveMemento contain this attribute for fixer to be a potential candidate.</li>
+</ul>
+
+
+<p>note: the use of targetClass and requiredKey is recommended but not required; using them reduces the number of fixer classes which need to be instantiated (in order for the IFixer.canFix method to be called) each time an issue is "fixed", resulting in lower overhead.</p>
+
+<h2><a name="IssuesFrameworkDesign-Methods">Methods</a></h2>
+
+<p>The first parameter taken by each method (generic object) is expected to be an AbstractFixableIssue and should be cast as such.</p>
+
+<p><b>canFix(Object, IMemento)</b>: by looking at an AbstractFixableIssue (IIssue) and its IMemento, this method determines if the issue is suitable for (can be fixed by) the fixer.</p>
+
+<p><b>fix(Object, IMemento)</b>: starts the issue resolution process.  This method is responsible for calling the complete method in some way, directly or indirectly by initializing other classes which may do so either automatically or through some sort of workflow.</p>
+
+<p><b>complete(Object)</b>: called by fix method, or one of the classes it sets up to guide the user through the issue resolution process.</p>
+
+<h2><a name="IssuesFrameworkDesign-AbstractFixableIssueIMementocomposition">AbstractFixableIssue IMemento composition</a></h2>
+
+<p>The memento of an IIssue (not to be confused with its viewMemento &#8211; which is entirely a UI persistence construct), contains the following <em>tiered</em> elements of interest unique to an AbstractFixableIssue:</p>
+<ul>
+	<li><b>saveMemento</b>: persists the issue
+	<ul>
+		<li>other elements unique to this issue class</li>
+		<li><b>fixerMemento</b>: persists data relevant only to the fixer (this may include the state of a partially resolved issue)</li>
+	</ul>
+	</li>
+</ul>
+
+
+<h2><a name="IssuesFrameworkDesign-FixableIssuevsAbstractFixableIssue">FixableIssue vs AbstractFixableIssue</a></h2>
+
+<p>FixableIssue is a simple implementation of AbstractFixableIssue which serves as a good example of how to override the init and save methods.  It may be overridden, and subclasses should take care to override the getExtensionID method and return their own defining extension's ID.</p>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=9151">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=9151">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

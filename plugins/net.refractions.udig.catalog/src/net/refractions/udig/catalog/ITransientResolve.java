@@ -18,8 +18,8 @@ package net.refractions.udig.catalog;
  * This is a tag interface that indicates a resolve is transient.  IE it is not persisted between
  * runs.  If a Resolve resolves to this interface then it is known that what ever data is contains
  * will not be available the next run and the decision must be made to persist or not persist the
- * data.  
- * 
+ * data.
+ *
  * <p>For example a MemoryService resolves to this interface and the user should asked whether to
  * save the features in another Service.
  * </p>

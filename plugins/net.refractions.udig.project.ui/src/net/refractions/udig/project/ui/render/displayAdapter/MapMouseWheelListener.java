@@ -11,13 +11,13 @@ package net.refractions.udig.project.ui.render.displayAdapter;
 /**
  * An Listener interested int Mouse Wheel Events. Does not work with the ViewportPaneSWT class. API
  * use
- * 
+ *
  * @author jeichar
  */
 public interface MapMouseWheelListener {
     /**
      * called when the mouse wheel has moved.
-     * 
+     *
      * @param e The mouse wheel event.
      * @see MapMouseWheelEvent
      */

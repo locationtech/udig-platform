@@ -25,7 +25,7 @@ package net.refractions.udig.project.ui.tool;
  * <p>
  * Must have a public default constructor.
  * </p>
- * 
+ *
  * @see net.refractions.udig.project.ui.tool.AbstractTool
  * @author jeichar
  * @since 0.3

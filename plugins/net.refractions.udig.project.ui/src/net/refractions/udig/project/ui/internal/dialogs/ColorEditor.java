@@ -1,23 +1,13 @@
-/* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2010, Refractions Research Inc.
- * (C) 2001, 2004 IBM Corporation and others
- * ------
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation;
- * version 2.1 of the License.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * --------
+/*******************************************************************************
+ * Copyright (c) 2000, 2004 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Common Public License v1.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- */
+ * http://www.eclipse.org/legal/cpl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
 package net.refractions.udig.project.ui.internal.dialogs;
 
 import org.eclipse.jface.resource.JFaceResources;
@@ -52,7 +42,7 @@ public class ColorEditor {
 
     /**
      * Construct <code>ColorEditor</code>.
-     * 
+     *
      * @param parent
      */
     public ColorEditor( Composite parent ) {
@@ -103,7 +93,7 @@ public class ColorEditor {
 
     /**
      * TODO summary sentence for getColorValue ...
-     * 
+     *
      * @return RGB
      */
     public RGB getColorValue() {
@@ -112,7 +102,7 @@ public class ColorEditor {
 
     /**
      * TODO summary sentence for setColorValue ...
-     * 
+     *
      * @param rgb
      */
     public void setColorValue( RGB rgb ) {
@@ -122,7 +112,7 @@ public class ColorEditor {
 
     /**
      * TODO summary sentence for getButton ...
-     * 
+     *
      * @return Button
      */
     public Button getButton() {

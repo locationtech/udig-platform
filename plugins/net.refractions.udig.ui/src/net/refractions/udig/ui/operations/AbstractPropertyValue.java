@@ -18,14 +18,14 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
- * Abstract class that can be used as a superclass for PropertyValue implementations. 
- * 
+ * Abstract class that can be used as a superclass for PropertyValue implementations.
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public abstract class AbstractPropertyValue<T> implements PropertyValue<T> {
     protected Set<IOpFilterListener> listeners=new CopyOnWriteArraySet<IOpFilterListener>();
-    
+
     public void addListener( IOpFilterListener listener ) {
         listeners.add(listener);
     }
@@ -34,7 +34,7 @@ public abstract class AbstractPropertyValue<T> implements PropertyValue<T> {
     public void removeListener( IOpFilterListener listener ) {
         listeners.add(listener);
     }
-    
+
     /**
      * Notifies listener that the value of the filter has changed.
      */

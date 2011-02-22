@@ -36,20 +36,20 @@ public class PlaceholderIssue extends AbstractIssue {
     private IMemento memento;
 
     public void fixIssue( IViewPart part, IEditorPart editor ) {
-        ErrorDialog.openError(Display.getCurrent().getActiveShell(), Messages.PlaceholderIssue_shellTitle, Messages.PlaceholderIssue_messagePart1 +  
-                Messages.PlaceholderIssue_messagePart2, Status.OK_STATUS); 
+        ErrorDialog.openError(Display.getCurrent().getActiveShell(), Messages.PlaceholderIssue_shellTitle, Messages.PlaceholderIssue_messagePart1 +
+                Messages.PlaceholderIssue_messagePart2, Status.OK_STATUS);
     }
 
     public String getExtensionID() {
         return extID;
     }
-    
+
     public void setExtensionID(String id){
         extID=id;
     }
 
     public String getProblemObject() {
-        return Messages.PlaceholderIssue_problemObject; 
+        return Messages.PlaceholderIssue_problemObject;
     }
 
     public void init( IMemento memento, IMemento viewMemento, String issueId, String groupId,

@@ -3,8 +3,8 @@ package net.refractions.udig.mapgraphic.internal;
 import java.io.IOException;
 
 import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
 import net.refractions.udig.project.render.IRenderContext;
+import net.refractions.udig.project.render.IRenderMetrics;
 import net.refractions.udig.project.render.IRenderMetricsFactory;
 
 public class MapGraphicRenderMetricsFactory implements IRenderMetricsFactory {
@@ -13,7 +13,7 @@ public class MapGraphicRenderMetricsFactory implements IRenderMetricsFactory {
 		return context.getLayer().hasResource(MapGraphic.class);
 	}
 
-    public AbstractRenderMetrics createMetrics(IRenderContext context) {
+    public IRenderMetrics createMetrics(IRenderContext context) {
         return new MapGraphicRenderMetrics(context, this);
     }
 
@@ -23,5 +23,5 @@ public class MapGraphicRenderMetricsFactory implements IRenderMetricsFactory {
     public Class<MapGraphicRenderer> getRendererType() {
         return MapGraphicRenderer.class;
     }
-    
+
 }

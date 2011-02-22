@@ -19,7 +19,6 @@ import java.text.MessageFormat;
 
 import net.refractions.udig.style.sld.AbstractSimpleConfigurator;
 import net.refractions.udig.style.sld.internal.Messages;
-import net.refractions.udig.ui.graphics.SLDs;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyListener;
@@ -36,7 +35,6 @@ import org.geotools.styling.Mark;
 import org.geotools.styling.SLD;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.StyleBuilder;
-import org.opengis.style.GraphicalSymbol;
 
 /**
  * Allows editing/viewing of a Style Layer Descriptor "Graphic".
@@ -62,7 +60,7 @@ import org.opengis.style.GraphicalSymbol;
  * <li>fire( SelectionSevent ) - notify SimpleStyleConfigurator of change
  * <li>getGraphic( Fill, Stroke, StyleBuilder ) - construct a Graphic based on fields
  * </ul>
- * </p>  
+ * </p>
  * @author Jody Garnett
  * @since 1.0.0
  */
@@ -70,11 +68,11 @@ public class GraphicViewer {
     boolean enabled;
     String type;
     double width;
-    
+
     Button on;
     Combo name;
     Combo size;
-    
+
     private class Listener implements SelectionListener,ModifyListener {
         public void widgetSelected( SelectionEvent e ) {
             sync(e);
@@ -84,7 +82,7 @@ public class GraphicViewer {
         };
         public void modifyText( final ModifyEvent e ) {
             sync(AbstractSimpleConfigurator.selectionEvent(e));
-        };           
+        };
         private void sync( SelectionEvent selectionEvent ){
             try {
                 GraphicViewer.this.enabled = GraphicViewer.this.on.getSelection();
@@ -99,19 +97,19 @@ public class GraphicViewer {
             catch( Throwable t ){
                 //meh
             }
-            finally {                    
+            finally {
                 GraphicViewer.this.name.setEnabled( GraphicViewer.this.enabled );
                 GraphicViewer.this.size.setEnabled( GraphicViewer.this.enabled );
             }
         }
-        
+
     };
     Listener sync = new Listener();
-    private SelectionListener listener; 
-    
+    private SelectionListener listener;
+
     /**
      * Accepts a listener that will be notified when content changes.
-     * @param listener1 
+     * @param listener1
      */
     public void addListener( SelectionListener listener1 ) {
         this.listener = listener1;
@@ -119,7 +117,7 @@ public class GraphicViewer {
 
     /**
      * Remove listener.
-     * @param listener1 
+     * @param listener1
      */
     public void removeListener( SelectionListener listener1 ) {
         if (this.listener == listener1)
@@ -128,7 +126,7 @@ public class GraphicViewer {
 
     /**
      * TODO summary sentence for fire ...
-     * 
+     *
      * @param event
      */
     protected void fire( SelectionEvent event ) {
@@ -139,38 +137,38 @@ public class GraphicViewer {
 
     /**
      * TODO summary sentence for createControl ...
-     * 
+     *
      * @param parent
-     * @param klisten 
-     * @param build 
+     * @param klisten
+     * @param build
      * @return Generated composite
      */
     public Composite createControl(Composite parent, KeyListener klisten, StyleBuilder build ) {
         Composite part = AbstractSimpleConfigurator.subpart( parent, Messages.SimpleStyleConfigurator_point_label );
-        
+
         this.on = new Button( part, SWT.CHECK );
-        //this.on.addSelectionListener( this.sync );                
-        
+        //this.on.addSelectionListener( this.sync );
+
         this.size = new Combo( part, SWT.DROP_DOWN );
         this.size.setItems( new String[]{ "1","2","3","5","10","15"} );  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
         this.size.setTextLimit(2);
         this.size.addKeyListener(klisten);
-        this.size.setToolTipText(Messages.GraphicViewer_size_tooltip); 
-        
+        this.size.setToolTipText(Messages.GraphicViewer_size_tooltip);
+
         this.name = new Combo( part, SWT.DROP_DOWN );
         this.name.setItems(build.getWellKnownMarkNames());
         this.name.setTextLimit( 9 );
         this.name.addKeyListener(klisten);
-        this.name.setToolTipText(Messages.GraphicViewer_name_tooltip); 
-        return part;            
+        this.name.setToolTipText(Messages.GraphicViewer_name_tooltip);
+        return part;
     }
-    
+
     /**
      * TODO summary sentence for getGraphic ...
-     * 
+     *
      * @param filll
      * @param stroke
-     * @param build 
+     * @param build
      * @return Graphic defined by this model
      */
     public Graphic getGraphic(Fill filll, Stroke stroke, StyleBuilder build ) {
@@ -188,61 +186,51 @@ public class GraphicViewer {
         graphic.setSize(build.literalExpression(this.width));
         return graphic;
     }
-   
+
     /**
      * TODO summary sentence for setGraphic ...
-     * 
+     *
      * @param graphic
-     * @param mode 
-     * @param enabled 
+     * @param mode
+     * @param enabled
      */
-    public void setGraphic(Graphic graphic, Mode mode, Color defaultColor ) {
+    public void setGraphic(Graphic graphic2, Mode mode, Color defaultColor ) {
+
         boolean enabled=true;
+        Graphic graphic=graphic2;
         if( graphic==null ){
-            StyleBuilder builder=new StyleBuilder(); 
+            StyleBuilder builder=new StyleBuilder();
             graphic=builder.createGraphic(null, builder.createMark(StyleBuilder.MARK_SQUARE, defaultColor), null);
             enabled=true;
         }
-        this.width = SLDs.size(graphic);
-        String text = MessageFormat.format( "{0,number,#0}", this.width); //$NON-NLS-1$
-        if(text != null) {
-            this.size.setText(text);
-            this.size.select(this.size.indexOf(text));
-        }
-       
-        boolean marked = false;
-        if (graphic != null && graphic.graphicalSymbols() != null
-                && !graphic.graphicalSymbols().isEmpty()) {
-        
-            for( GraphicalSymbol symbol : graphic.graphicalSymbols() ) {
-                if (symbol instanceof Mark) {
-                    Mark mark = (Mark) symbol;
-                    setMark(mark, mode);
-                    marked = true;
-                    break;
-                }
-            }
-        }
-        if( !marked ){
+        if(graphic == null || graphic.getMarks() == null || graphic.getMarks().length == 0)
             setMark(null, mode );
-        }
+        else
+            setMark(graphic.getMarks()[0], mode );
         this.enabled=this.enabled&&enabled;
     }
-    
+
     private void setMark(Mark mark, Mode mode ) {
         listen(false);
         try {
             this.enabled = (mode == Mode.POINT && mark != null);
+            this.width = SLD.size(mark);
             this.type = SLD.wellKnownName(mark);
-            
+
             // Stroke is used in line, point and polygon
             this.on.setEnabled(mode == Mode.POINT || mode == Mode.ALL);
-            
+
+            String text = MessageFormat.format( "{0,number,#0}", this.width); //$NON-NLS-1$
+            if(text != null) {
+                this.size.setText(text);
+                this.size.select(this.size.indexOf(text));
+            }
+
             if(this.type != null) {
                 this.name.setText(this.type);
-                this.name.select(this.name.indexOf(this.type));
+                this.name.select(this.name.indexOf(text));
             }
-            
+
             this.on.setSelection( this.enabled );
             this.size.setEnabled( this.enabled );
             this.name.setEnabled( this.enabled );
@@ -250,7 +238,7 @@ public class GraphicViewer {
             listen( true ); // listen to user now
         }
     }
-    
+
     void listen(boolean listen) {
         if(listen) {
             this.on.addSelectionListener(this.sync);

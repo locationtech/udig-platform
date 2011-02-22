@@ -36,8 +36,10 @@ import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.FeatureType;
+import org.geotools.filter.Expression;
+import org.geotools.filter.FilterFactoryFinder;
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Font;
@@ -46,9 +48,6 @@ import org.geotools.styling.LinePlacement;
 import org.geotools.styling.PointPlacement;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.TextSymbolizer;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.filter.expression.Expression;
 
 /**
  * Allows editing/viewing of a Style Layer Descriptor "TextSymbolizer".
@@ -67,7 +66,7 @@ import org.opengis.filter.expression.Expression;
  * Workflow:
  * <ol>
  * <li>createControl( parent ) - set up controls
- * <li>set( SimpleFeatureType, TextSymbolizer, Mode ) - provide content from SimpleStyleConfigurator
+ * <li>set( FeatureType, TextSymbolizer, Mode ) - provide content from SimpleStyleConfigurator
  *    <ol>
  *    <li> Symbolizer values copied into fields based on mode
  *    <li> fields copied into controls
@@ -78,34 +77,34 @@ import org.opengis.filter.expression.Expression;
  * <li>fire( SelectionSevent ) - notify SimpleStyleConfigurator of change
  * <li>get( StyleBuilder ) - construct based on fields
  * </ul>
- * </p>  
+ * </p>
  * @author Jody Garnett
  * @since 1.0.0
  */
 public class LabelViewer {
     boolean enabled;
-    SimpleFeatureType schema;
+    FeatureType schema;
     String labelType;
     FontData[] font;
     Color colour;
-    
+
     /**
      * Use PointPlacement or LinePlacement?
      */
     boolean pointPlacement = true;
     LabelPlacement labelPlacement = null;
-    
+
     Button on;
     Combo field;
     FontEditor fonter;
     Composite part;
     KeyListener klisten;
-    
+
     //generic combos for PointPlacement/LinePlacement use
     Combo place;
     Combo place2;
     Combo place3;
-    
+
     private class Listener implements SelectionListener,ModifyListener {
         public void widgetSelected( SelectionEvent e ) {
             sync(e);
@@ -115,7 +114,7 @@ public class LabelViewer {
         };
         public void modifyText( final ModifyEvent e ) {
             sync(AbstractSimpleConfigurator.selectionEvent(e));
-        };         
+        };
         private void sync( SelectionEvent selectionEvent ) {
             try {
                 LabelViewer.this.enabled = LabelViewer.this.on.getSelection();
@@ -126,7 +125,7 @@ public class LabelViewer {
             catch( Throwable t ) {
                 // meh
             }
-            finally {                    
+            finally {
                 LabelViewer.this.field.setEnabled(LabelViewer.this.enabled);
                 LabelViewer.this.fonter.setEnabled(LabelViewer.this.enabled);
                 LabelViewer.this.place.setEnabled(LabelViewer.this.enabled);
@@ -142,15 +141,15 @@ public class LabelViewer {
                 }
             }
             fire( selectionEvent );
-        }            
-    }; 
+        }
+    };
     Listener sync = new Listener();
-    
-    private SelectionListener listener; 
-    
+
+    private SelectionListener listener;
+
     /**
      * Accepts a listener that will be notified when content changes.
-     * @param listener1 
+     * @param listener1
      */
     public void addListener( SelectionListener listener1 ) {
         this.listener = listener1;
@@ -158,7 +157,7 @@ public class LabelViewer {
 
     /**
      * Remove listener.
-     * @param listener1 
+     * @param listener1
      */
     public void removeListener( SelectionListener listener1 ) {
         if (this.listener == listener1)
@@ -167,7 +166,7 @@ public class LabelViewer {
 
     /**
      * TODO summary sentence for fire ...
-     * 
+     *
      * @param event
      */
     protected void fire( SelectionEvent event ) {
@@ -177,8 +176,8 @@ public class LabelViewer {
     }
     /**
      * Constructs a TextSymbolizer from the inputs
-     * @param build 
-     * 
+     * @param build
+     *
      * @return TextSymbolizer defined by this model
      */
     public TextSymbolizer get( StyleBuilder build ) {
@@ -199,7 +198,7 @@ public class LabelViewer {
         Font gtFont = build.createFont(
                 fontName, fontItalic, fontBold, fontSize);
         Fill fill = build.createFill(this.colour);
-        
+
         LabelPlacement placement;
         if (pointPlacement) {
             //PointPlacement
@@ -215,7 +214,7 @@ public class LabelViewer {
                 case 2:
                     horiz = SLDs.ALIGN_RIGHT;
                     break;
-                    
+
                 default:
                     horiz = SLDs.ALIGN_CENTER;
                     break;
@@ -236,7 +235,7 @@ public class LabelViewer {
                 case 2:
                     vert = SLDs.ALIGN_TOP;
                     break;
-                    
+
                 default:
                     vert = SLDs.ALIGN_MIDDLE;
                     break;
@@ -244,9 +243,9 @@ public class LabelViewer {
             } else { //custom value
                 vert = Double.parseDouble(this.place2.getText());
             }
-            
+
             double rotation = Double.parseDouble(this.place3.getText());
-            
+
             placement = build.createPointPlacement(vert, horiz, rotation);
         } else {
             //LinePlacement
@@ -254,26 +253,26 @@ public class LabelViewer {
             placement = build.createLinePlacement(offset);
         }
         this.labelPlacement = placement;
-        
-        Expression exp = (Expression) CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints()).
-                property(this.labelType);
+
+        Expression exp = FilterFactoryFinder.createFilterFactory().
+                createAttributeExpression(this.labelType);
         TextSymbolizer text = build.createTextSymbolizer(fill, new Font[] {gtFont},
                 null, exp, placement, null);
         if (SLD.isLine(this.schema)) {
             text.addToOptions("group", "yes"); //$NON-NLS-1$ //$NON-NLS-2$
         }
         text.addToOptions("spaceAround", "2"); //$NON-NLS-1$ //$NON-NLS-2$
-        return text; 
+        return text;
     }
-    
+
     /**
      * Start editing the provided symbolizer.
-     * 
+     *
      * @param schema
      * @param sym
-     * @param mode 
+     * @param mode
      */
-    public void set( SimpleFeatureType schema, TextSymbolizer sym, Mode mode ) {
+    public void set( FeatureType schema, TextSymbolizer sym, Mode mode ) {
         listen(false);
         try {
             this.schema = schema;
@@ -294,14 +293,14 @@ public class LabelViewer {
             this.fonter.setFontList(this.font);
 
             if (schema != null) {
-                AttributeDescriptor[] attrs = schema.getAttributeDescriptors().toArray(new AttributeDescriptor[0]);
+                AttributeType[] attrs = schema.getAttributeTypes();
                 List<String> list = new ArrayList<String>();
                 for( int i = 0; i < attrs.length; i++ ) {
-                    Class cls = attrs[i].getType().getBinding();
+                    Class cls = attrs[i].getType();
                     if (String.class.isAssignableFrom(cls)) {
-                        list.add(attrs[i].getName().getLocalPart());
+                        list.add(attrs[i].getName());
                     } else if (Number.class.isAssignableFrom(cls)) {
-                        list.add(attrs[i].getName().getLocalPart());
+                        list.add(attrs[i].getName());
                     }
                 }
                 this.field.removeAll();
@@ -316,7 +315,7 @@ public class LabelViewer {
             this.on.setSelection(this.enabled);
             this.field.setEnabled(this.enabled);
             this.fonter.setEnabled(this.enabled);
-            
+
             if (schema != null && (SLD.isLine(schema) == pointPlacement || this.place == null)) {
                 pointPlacement = !SLD.isLine(schema);
                 if (pointPlacement) {
@@ -337,7 +336,7 @@ public class LabelViewer {
                         this.place.select(2); //top
                         this.place2.select(2); //right
                     } else {
-                        this.place.select(1); //middle    
+                        this.place.select(1); //middle
                         this.place2.select(1); //center
                     }
                     this.place3.select(0); //0 degrees rotation
@@ -382,10 +381,10 @@ public class LabelViewer {
         }
 
     }
-    
+
     /**
      * TODO summary sentence for listen ...
-     * 
+     *
      * @param listen
      */
     public void listen(boolean listen) {
@@ -425,34 +424,34 @@ public class LabelViewer {
             }
         }
     }
-    
+
     /**
      * TODO summary sentence for createControl ...
-     * 
+     *
      * @param parent
-     * @param klisten 
+     * @param klisten
      * @return Generated composite
      */
     public Composite createControl(Composite parent, KeyListener klisten) {
         this.part = AbstractSimpleConfigurator.subpart( parent, Messages.SimpleStyleConfigurator_label_label );
         this.klisten = klisten;
-        
+
         this.on = new Button( part, SWT.CHECK );
-        
+
         this.field = new Combo(part, SWT.DROP_DOWN | SWT.READ_ONLY);
         this.field.addKeyListener(klisten);
         if(this.schema != null) {
-            List<AttributeDescriptor> types = this.schema.getAttributeDescriptors();
-            List<String> typeStrings = new ArrayList<String>();
-            for (AttributeDescriptor attributeDescriptor : types) {
-				typeStrings.add(attributeDescriptor.getLocalName());
-			}
-            this.field.setItems(typeStrings.toArray(new String[0]));
+            AttributeType[] types = this.schema.getAttributeTypes();
+            String[] typeStrings = new String[types.length];
+            for(int i = 0; i < types.length; i++) {
+                typeStrings[i] = types[i].getName();
+            }
+            this.field.setItems(typeStrings);
         }
-        this.field.setToolTipText(Messages.LabelViewer_field_tooltip); 
-        
+        this.field.setToolTipText(Messages.LabelViewer_field_tooltip);
+
         this.fonter = new FontEditor(part);
-        
+
         //determine which placement to use
         if (schema != null) {
             if (SLD.isLine(schema)) {
@@ -468,22 +467,22 @@ public class LabelViewer {
                 initPlacementContentsLine();
             }
         }
-        
+
         listen(true);
-        
-        return part;    
+
+        return part;
     }
-    
+
     private void initPlacementContentsLine() {
         if (this.place == null) {
             this.place = new Combo(part, SWT.DROP_DOWN);
             this.place.addKeyListener(klisten);
         }
-        this.place.setToolTipText(Messages.LabelViewer_offset); 
-        
+        this.place.setToolTipText(Messages.LabelViewer_offset);
+
         String[] itemsO = new String[] {"0", "5", "10", "15", "20"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
         this.place.setItems(itemsO);
-        
+
         if (this.place2 != null) {
             this.place2.setVisible(false);
         }
@@ -494,30 +493,30 @@ public class LabelViewer {
 
     private void initPlacementContentsPoint() {
         //TODO internatialize
-        String[] itemsH = new String[] {Messages.LabelViewer_left, Messages.LabelViewer_center, Messages.LabelViewer_right};   
-        String[] itemsV = new String[] {Messages.LabelViewer_bottom, Messages.LabelViewer_middle, Messages.LabelViewer_top};   
+        String[] itemsH = new String[] {Messages.LabelViewer_left, Messages.LabelViewer_center, Messages.LabelViewer_right};
+        String[] itemsV = new String[] {Messages.LabelViewer_bottom, Messages.LabelViewer_middle, Messages.LabelViewer_top};
         String[] itemsR = new String[] {"0", "45", "90", "135", "180", "225", "270", "315", "360"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
-        
+
         if (this.place == null) {
             this.place = new Combo(part, SWT.DROP_DOWN);
             this.place.addKeyListener(klisten);
         }
-        this.place.setToolTipText(Messages.LabelViewer_vertAlign); 
+        this.place.setToolTipText(Messages.LabelViewer_vertAlign);
         this.place.setItems(itemsV);
 
         if (this.place2 == null) {
             this.place2 = new Combo(part, SWT.DROP_DOWN);
             this.place2.addKeyListener(klisten);
         }
-        this.place2.setToolTipText(Messages.LabelViewer_horizAlign); 
+        this.place2.setToolTipText(Messages.LabelViewer_horizAlign);
         this.place2.setItems(itemsH);
         this.place2.setVisible(true);
-        
-        if (this.place3 == null) { 
+
+        if (this.place3 == null) {
             this.place3 = new Combo(part, SWT.DROP_DOWN);
             this.place3.addKeyListener(klisten);
         }
-        this.place3.setToolTipText(Messages.LabelViewer_rotation); 
+        this.place3.setToolTipText(Messages.LabelViewer_rotation);
         this.place3.setItems(itemsR);
         this.place3.setVisible(true);
     }

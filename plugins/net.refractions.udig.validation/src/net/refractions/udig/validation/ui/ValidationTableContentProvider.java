@@ -1,5 +1,5 @@
 package net.refractions.udig.validation.ui;
-   
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,11 +12,11 @@ import org.geotools.validation.dto.TestDTO;
 
     /**
      * Content provider for representing launch configuration types & launch configurations in a tree.
-     * 
+     *
      */
     public class ValidationTableContentProvider implements IStructuredContentProvider{
 
-    	private static final Object[] EMPTY_ARRAY = new Object[0];  
+    	private static final Object[] EMPTY_ARRAY = new Object[0];
 
 		public ValidationTableContentProvider() {
 		}

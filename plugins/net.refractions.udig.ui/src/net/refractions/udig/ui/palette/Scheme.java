@@ -25,19 +25,19 @@ import java.util.List;
 
 /**
  * A color schme from a palette.
- * 
+ *
  * @author Jody Garnett, Refractions Research
  * @since 0.6.0
  * @deprecated
  */
 public class Scheme {
-    
-    /** List of Color aranged by length */ 
+
+    /** List of Color aranged by length */
     public final List<Color> colors;
-    
+
     /** <code>good</code> field */
     public final EnumSet<Friendly> good;
-    
+
     /** <code>doubtful</code> field */
     public final EnumSet<Friendly> doubtful;
 
@@ -47,7 +47,7 @@ public class Scheme {
      * @param scheme
      */
     public Scheme( Color[] scheme ){
-        this( scheme, new Friendly[]{ Friendly.CRT, Friendly.LCD }, new Friendly[]{Friendly.COLORBLIND, Friendly.PROJECTOR} );        
+        this( scheme, new Friendly[]{ Friendly.CRT, Friendly.LCD }, new Friendly[]{Friendly.COLORBLIND, Friendly.PROJECTOR} );
     }
     /**
      * Construct <code>Scheme</code>.
@@ -56,9 +56,9 @@ public class Scheme {
      * @param good
      */
     public Scheme( Color[] scheme, Friendly good[] ){
-        this( scheme, good, new Friendly[0] );        
+        this( scheme, good, new Friendly[0] );
     }
-    
+
     /**
      * Construct <code>Scheme</code>.
      *
@@ -67,32 +67,32 @@ public class Scheme {
     public Scheme( List<Color> scheme ){
         this( scheme,
               EnumSet.of(Friendly.CRT, Friendly.LCD ),
-              EnumSet.of(Friendly.COLORBLIND, Friendly.PROJECTOR) );        
+              EnumSet.of(Friendly.COLORBLIND, Friendly.PROJECTOR) );
     }
     /**
      * Construct <code>Scheme</code>.
      *
      * @param scheme
-     * @param good 
-     * @param doubtful 
+     * @param good
+     * @param doubtful
      */
     public Scheme( List<Color> scheme, EnumSet<Friendly> good, EnumSet<Friendly> doubtful  ){
         colors = scheme;
         this.good = good;
         this.doubtful = doubtful;
     }
-    
+
     /**
      * Construct <code>Scheme</code>.
      *
      * @param scheme
-     * @param good 
-     * @param doubtful 
+     * @param good
+     * @param doubtful
      */
     public Scheme( Color[] scheme, Friendly good[], Friendly doubtful[] ){
-        this( colors( scheme ), friendly( good ), friendly( doubtful ) );        
+        this( colors( scheme ), friendly( good ), friendly( doubtful ) );
     }
-    
+
     /**
      * Construct <code>Scheme</code>.
      *
@@ -103,7 +103,7 @@ public class Scheme {
     public Scheme( int[][] scheme, int friendly[] ){
         this( colors( scheme ), good( friendly ), doubtful( friendly ) );
     }
-    
+
     /*
      * @see java.lang.Object#toString()
      */
@@ -138,9 +138,9 @@ public class Scheme {
         if( good != null ){
             return EnumSet.copyOf( Arrays.asList( good ) );
         }
-        return (EnumSet<Friendly>) Collections.unmodifiableSet( EnumSet.noneOf( Friendly.class ) );        
+        return (EnumSet<Friendly>) Collections.unmodifiableSet( EnumSet.noneOf( Friendly.class ) );
     }
-    
+
     private static List<Color> colors( Color[] scheme ){
         return Collections.unmodifiableList( Arrays.asList( scheme ));
     }
@@ -170,7 +170,7 @@ public class Scheme {
     }
     private static List<Color> colors( int [][] scheme ){
         List<Color> list = new ArrayList<Color>();
-        int R = 0, G = 1, B = 2;                
+        int R = 0, G = 1, B = 2;
         for( int rgb[] : scheme ){
             list.add( new Color( rgb[R], rgb[G], rgb[B]));
         }

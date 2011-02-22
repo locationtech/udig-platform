@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class And implements OpFilter {
     private List<OpFilter> filters=new ArrayList<OpFilter>();
-    
+
     /**
      * @return Returns the filters.
      */

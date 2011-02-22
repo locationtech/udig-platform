@@ -52,7 +52,7 @@ public class Images {
      * <p>
      * Images are from CatalogUIPlugin.getDefault().getImages()
      * </p>
-     * 
+     *
      * @param id
      * @return ImageDescriptor, or null if there is no such image.
      */
@@ -66,7 +66,7 @@ public class Images {
     }
     /**
      * Returns the image associated with the given key, or <code>null</code> if none.
-     * 
+     *
      * @param id the key
      * @return the image, or <code>null</code> if none
      */
@@ -84,8 +84,8 @@ public class Images {
     public void cleanUp() {
         imageCache = null; // Display shutdown will clear imageCache
     }
-    
-    
+
+
 
 	public synchronized void ensureReady() {
 		if( imageCache == null ){

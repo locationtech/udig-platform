@@ -3,29 +3,22 @@ package net.refractions.udig.core.internal;
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import org.geotools.data.DataUtilities;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.collection.AdaptorFeatureCollection;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.GeometryAttributeType;
+import org.geotools.feature.collection.AbstractFeatureCollection;
+import org.geotools.geometry.jts.DefaultCoordinateSequenceTransformer;
+import org.geotools.geometry.jts.GeometryCoordinateSequenceTransformer;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Id;
-import org.opengis.filter.identity.Identifier;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
@@ -43,11 +36,11 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 /**
  * A utility class for playing with features.
- * 
+ *
  * @author jeichar
  */
 public class FeatureUtils {
-    
+
     /**
      * Create a new Features from the provided coordinates and of the type indicated by geomType
      *
@@ -59,16 +52,16 @@ public class FeatureUtils {
      * @return A new features.
      * @throws Exception
      */
-    public static <T extends Geometry> SimpleFeature createFeature( CoordinateReferenceSystem coordCRS,
-            CoordinateReferenceSystem destinationCRS, SimpleFeatureType type, Coordinate[] coordinates,
+    public static <T extends Geometry> Feature createFeature( CoordinateReferenceSystem coordCRS,
+            CoordinateReferenceSystem destinationCRS, FeatureType type, Coordinate[] coordinates,
             Class<T> geomType ) throws Exception {
 
         transform(coordCRS, destinationCRS, coordinates);
         Object[] attrs = new Object[type.getAttributeCount()];
         for( int i = 0; i < attrs.length; i++ ) {
-            attrs[i] = setDefaultValue(type.getDescriptor(i));
+            attrs[i] = setDefaultValue(type.getAttributeType(i));
         }
-        final SimpleFeature newFeature = SimpleFeatureBuilder.build(type,attrs,null);
+        final Feature newFeature = type.create(attrs);
         // Class geomType = type.getDefaultGeometry().getType();
 
         T geom = GeometryBuilder.create().safeCreateGeometry(geomType, coordinates);
@@ -81,36 +74,36 @@ public class FeatureUtils {
      * @param object
      * @param object2
      */
-    private static Object setDefaultValue( AttributeDescriptor type ) {
-        if (type.getDefaultValue() != null)
-            return type.getDefaultValue();
-        if (Boolean.class.isAssignableFrom(type.getType().getBinding())
-                || boolean.class.isAssignableFrom(type.getType().getBinding()))
+    private static Object setDefaultValue( AttributeType type ) {
+        if (type.createDefaultValue() != null)
+            return type.createDefaultValue();
+        if (Boolean.class.isAssignableFrom(type.getType())
+                || boolean.class.isAssignableFrom(type.getType()))
             return Boolean.valueOf(false);
-        if (String.class.isAssignableFrom(type.getType().getBinding()))
+        if (String.class.isAssignableFrom(type.getType()))
             return ""; //$NON-NLS-1$
-        if (Integer.class.isAssignableFrom(type.getType().getBinding()))
+        if (Integer.class.isAssignableFrom(type.getType()))
             return Integer.valueOf(0);
-        if (Double.class.isAssignableFrom(type.getType().getBinding()))
+        if (Double.class.isAssignableFrom(type.getType()))
             return Double.valueOf(0);
-        if (Float.class.isAssignableFrom(type.getType().getBinding()))
+        if (Float.class.isAssignableFrom(type.getType()))
             return Float.valueOf(0);
-        if (CodeList.class.isAssignableFrom(type.getType().getBinding())) {
-            return type.getDefaultValue();
+        if (CodeList.class.isAssignableFrom(type.getType())) {
+            return type.createDefaultValue();
         }
         return null;
     }
 
     /**
      * Transforms coordinates into the layer CRS if nessecary
-     * 
+     *
      * @throws Exception
      */
     private static void transform( CoordinateReferenceSystem coordCRS,
             CoordinateReferenceSystem destinationCRS, Coordinate[] coordinates ) throws Exception {
-        if( coordCRS==null || destinationCRS==null) 
+        if( coordCRS==null || destinationCRS==null)
             return;
-        MathTransform mt = CRS.findMathTransform(coordCRS, destinationCRS, true );
+        MathTransform mt = CRS.transform(coordCRS, destinationCRS, true);
         if (mt == null || mt.isIdentity())
             return;
         double[] coords = new double[coordinates.length * 2];
@@ -128,16 +121,16 @@ public class FeatureUtils {
     /**
      * Returns 0 if the features are the same. 1 if the attributes are the same but have different
      * featureIDs and -1 if attributes are different or are of different featureTypes.
-     * 
+     *
      * @param feature1
      * @param feature2
      * @return
      */
-    public static int same( SimpleFeature feature1, SimpleFeature feature2 ) {
+    public static int same( Feature feature1, Feature feature2 ) {
         if (DataUtilities.compare(feature1.getFeatureType(), feature2.getFeatureType()) != 0) {
             return -1;
         }
-        for( int i = 0; i < feature1.getAttributeCount(); i++ ) {
+        for( int i = 0; i < feature1.getNumberOfAttributes(); i++ ) {
             if (feature1.getAttribute(i) == null) {
                 if (feature2.getAttribute(i) != null)
                     return -1;
@@ -163,7 +156,7 @@ public class FeatureUtils {
     }
 
 
-    public static Map<String,String> createAttributeMapping( SimpleFeatureType sourceSchema, SimpleFeatureType targetSchema ){
+    public static Map<String,String> createAttributeMapping( FeatureType sourceSchema, FeatureType targetSchema ){
         Map<String,String> queryAttributes=new HashMap<String, String>();
         performDirectMapping(sourceSchema, targetSchema, queryAttributes);
         mapGeometryAttributes(sourceSchema, targetSchema, queryAttributes);
@@ -174,27 +167,29 @@ public class FeatureUtils {
      * Maps the default geometry attribute regardless of whether they are the same type.
      */
     @SuppressWarnings("unchecked")
-    private static void mapGeometryAttributes( SimpleFeatureType sourceSchema, SimpleFeatureType targetSchema, Map<String, String> queryAttributes ) {
+    private static void mapGeometryAttributes( FeatureType sourceSchema, FeatureType targetSchema, Map<String, String> queryAttributes ) {
         // Now we'll match the geometry on type only. I don't care if it has the same type name.
-        GeometryDescriptor defaultGeometry = targetSchema.getGeometryDescriptor();
-        if( defaultGeometry==null ){
+        GeometryAttributeType defaultGeometry = targetSchema.getDefaultGeometry();
+        if( defaultGeometry==null )
             return;
-        }
-        else if (!queryAttributes.containsKey(defaultGeometry.getName())) {
+        if (!queryAttributes.containsKey(defaultGeometry.getName())) {
             // first check source's default geom and see if it matches
-            Class<?> binding = sourceSchema.getGeometryDescriptor().getType().getBinding();
-			if (defaultGeometry.getType().getBinding().isAssignableFrom(
-                    binding)) {
-                queryAttributes.put(defaultGeometry.getName().getLocalPart(), sourceSchema.getGeometryDescriptor()
-                        .getName().getLocalPart());
+            if (defaultGeometry.getType().isAssignableFrom(
+                    sourceSchema.getDefaultGeometry().getType())) {
+                queryAttributes.put(defaultGeometry.getName(), sourceSchema.getDefaultGeometry()
+                        .getName());
+//            } else if (sourceSchema.getDefaultGeometry().getType().isAssignableFrom(
+//                    GeometryCollection.class)
+//                    && !defaultGeometry.getType().isAssignableFrom(GeometryCollection.class)) {
+//
             } else {
                 // we have to look through all the source attributes looking for a geometry that
                 // matches.
                 boolean found = false;
                 for( int i = 0; i < sourceSchema.getAttributeCount(); i++ ) {
-                    AttributeDescriptor source = sourceSchema.getDescriptor(i);
-                    if (defaultGeometry.getType().getBinding().isAssignableFrom(source.getType().getBinding())) {
-                        queryAttributes.put(defaultGeometry.getName().getLocalPart(), source.getName().getLocalPart());
+                    AttributeType source = sourceSchema.getAttributeType(i);
+                    if (defaultGeometry.getType().isAssignableFrom(source.getType())) {
+                        queryAttributes.put(defaultGeometry.getName(), source.getName());
                         found = true;
                         break;
                     }
@@ -202,8 +197,8 @@ public class FeatureUtils {
                 // ok so we're going to have to do some transformations. Match default geometries
                 // then.
                 if (!found) {
-                    queryAttributes.put(defaultGeometry.getName().getLocalPart(), sourceSchema
-                            .getGeometryDescriptor().getName().getLocalPart());
+                    queryAttributes.put(defaultGeometry.getName(), sourceSchema
+                            .getDefaultGeometry().getName());
                 }
             }
         }
@@ -213,21 +208,21 @@ public class FeatureUtils {
      * Maps attributes with the same name and same types to each other.
      */
     @SuppressWarnings("unchecked")
-    private static void performDirectMapping( SimpleFeatureType sourceSchema, SimpleFeatureType targetSchema, Map<String, String> queryAttributes ) {
+    private static void performDirectMapping( FeatureType sourceSchema, FeatureType targetSchema, Map<String, String> queryAttributes ) {
         for( int i = 0; i < sourceSchema.getAttributeCount(); i++ ) {
-            AttributeDescriptor source = sourceSchema.getDescriptor(i);
+            AttributeType source = sourceSchema.getAttributeType(i);
             for( int j = 0; j < targetSchema.getAttributeCount(); j++ ) {
-                AttributeDescriptor target = targetSchema.getDescriptor(j);
+                AttributeType target = targetSchema.getAttributeType(j);
 
                 // don't worry about case of attribute name
-                if (target.getName().getLocalPart().equalsIgnoreCase(source.getName().getLocalPart())
-                        && target.getType().getBinding().isAssignableFrom(source.getType().getBinding())) {
-                    queryAttributes.put(target.getName().getLocalPart(), source.getName().getLocalPart());
+                if (target.getName().equalsIgnoreCase(source.getName())
+                        && target.getType().isAssignableFrom(source.getType())) {
+                    queryAttributes.put(target.getName(), source.getName());
                 }
             }
         }
     }
-    
+
     private static GeometryBuilder geomBuilder = GeometryBuilder.create();
 
     /**
@@ -236,37 +231,41 @@ public class FeatureUtils {
     * @param collection
     * @return
     */
-    public static FeatureCollection<SimpleFeatureType, SimpleFeature> toFeatureCollection( final Collection<SimpleFeature> collection, SimpleFeatureType type ) {
-        return new AdaptorFeatureCollection("collection",type){
+    public static FeatureCollection toFeatureCollection( final Collection<Feature> collection, FeatureType type ) {
+        return new AbstractFeatureCollection(type){
+
             @Override
             protected void closeIterator( Iterator arg0 ) {
             }
+
             @Override
             protected Iterator openIterator() {
                 return collection.iterator();
             }
+
             @Override
             public int size() {
                 return collection.size();
             }
+
         };
     }
 
-    public static Collection<SimpleFeature> copyFeature( final SimpleFeature source,
-            final SimpleFeatureType destinationSchema, final Map<String, String> attributeMap, final MathTransform mt ) {
+    public static Collection<Feature> copyFeature( final Feature source,
+            final FeatureType destinationSchema, final Map<String, String> attributeMap, final MathTransform mt ) {
 
-        return new AbstractCollection<SimpleFeature>(){
-            public Iterator<SimpleFeature> iterator() {
+        return new AbstractCollection<Feature>(){
+            public Iterator<Feature> iterator() {
                 final Map<String, Iterator< ? extends Geometry>> geometries = new HashMap<String, Iterator< ? extends Geometry>>();
                 final Object[] attributes = copyAttributes(destinationSchema, source,
                         geometries, attributeMap, mt);
 
-                return new Iterator<SimpleFeature>(){
-                    SimpleFeature next, template;
-                    public boolean hasNext() { 
+                return new Iterator<Feature>(){
+                    Feature next, template;
+                    public boolean hasNext() {
                         if (template == null) {
                             try {
-                                template = next = SimpleFeatureBuilder.build( destinationSchema, attributes, null);
+                                template = next = destinationSchema.create(attributes);
 
                             } catch (Exception e) {
                                 // try then next one then
@@ -279,7 +278,7 @@ public class FeatureUtils {
 
                         while( next == null && !geometries.isEmpty() ) {
                             try {
-                                next = SimpleFeatureBuilder.copy(template);
+                                next = destinationSchema.duplicate(template);
                                 Set<Map.Entry<String, Iterator< ? extends Geometry>>> entries = geometries
                                         .entrySet();
                                 for( Iterator<Map.Entry<String, Iterator< ? extends Geometry>>> iter = entries
@@ -300,10 +299,10 @@ public class FeatureUtils {
                         }
                         return false;
                     }
-                    public SimpleFeature next() {
+                    public Feature next() {
                         if (next == null)
                             throw new IndexOutOfBoundsException("No more elements in iterator."); //$NON-NLS-1$
-                        SimpleFeature result=next;
+                        Feature result=next;
                         next=null;
                         return result;
                     }
@@ -314,26 +313,26 @@ public class FeatureUtils {
             }
             public int size() {
                 int size=0;
-                for( Iterator<SimpleFeature> iter=iterator(); iter.hasNext(); iter.next()) size++;
+                for( Iterator<Feature> iter=iterator(); iter.hasNext(); iter.next()) size++;
                 return size;
             }
         };
     }
 
-    private static Object[] copyAttributes( SimpleFeatureType destSchema, SimpleFeature source,
+    private static Object[] copyAttributes( FeatureType destSchema, Feature source,
             Map<String, Iterator< ? extends Geometry>> geometries, Map<String, String> attributeMap, MathTransform mt  ) {
         Object[] attributes = new Object[destSchema.getAttributeCount()];
         for( int i = 0; i < attributes.length; i++ ) {
-            String sourceAttributeName = destSchema.getDescriptor(i).getName().getLocalPart();
+            String sourceAttributeName = destSchema.getAttributeType(i).getName();
             String name = attributeMap.get(sourceAttributeName);
             if (name != null)
                 attributes[i] = source.getAttribute(name);
             else {
-                attributes[i] = destSchema.getDescriptor(i).getDefaultValue();
+                attributes[i] = destSchema.getAttributeType(i).createDefaultValue();
             }
             if (attributes[i] instanceof Geometry) {
                 Class< ? extends Geometry> geomType = (Class< ? extends Geometry>) destSchema
-                        .getDescriptor(i).getType().getBinding();
+                        .getAttributeType(i).getType();
                 if (!geomType.isAssignableFrom(attributes[i].getClass())) {
                     Collection< ? extends Geometry> geom = createCompatibleGeometry(
                             (Geometry) attributes[i], geomType);
@@ -350,7 +349,10 @@ public class FeatureUtils {
     private static Geometry transformGeom( Geometry geom, MathTransform mt ) {
         if (mt != null) {
             try {
-                return JTS.transform(geom, mt);
+            	DefaultCoordinateSequenceTransformer csFactory = new DefaultCoordinateSequenceTransformer(geom.getFactory().getCoordinateSequenceFactory());
+                final GeometryCoordinateSequenceTransformer transformer = new GeometryCoordinateSequenceTransformer(csFactory);
+                transformer.setMathTransform(mt);
+                return transformer.transform(geom);
             } catch (TransformException e) {
                 CorePlugin.log("", e); //$NON-NLS-1$
                 return geom;
@@ -627,32 +629,5 @@ public class FeatureUtils {
         }
         return true;
     }
-
-   public static Set<Identifier> stringToId(FilterFactory fac, String fid) {
-	   return stringToId(fac, Collections.singleton(fid));
-	}
-   
-   public static Set<Identifier> stringToId(FilterFactory fac, Collection<String> fid) {
-		Set<Identifier> ids = new HashSet<Identifier>();
-		for (String string : fid) {
-			ids.add( fac.featureId(string));
-		}
-		return ids;
-	}
-
-/**
- * Convert a string to a Id filter
- *
- * @param fid the feature id
- * @return
- */
-@SuppressWarnings("unchecked")
-public static Filter id(String fid) {
-    FilterFactory factory = CommonFactoryFinder.getFilterFactory2(GeoTools
-            .getDefaultHints());
-    Set<Identifier> id = stringToId(factory , fid);
-    Id filter = factory.id(id);
-    return filter;
-}
 
 }

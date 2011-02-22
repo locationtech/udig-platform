@@ -15,7 +15,7 @@ import org.tcat.citd.sim.udig.bookmarks.internal.Messages;
  * This class provides a bookmark repository and associated management functions.
  * <p>
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
@@ -26,7 +26,7 @@ public class BookmarkManager {
     private int count = 0;
 
     /**
-     * 
+     *
      */
     public BookmarkManager() {
         projectsHash = new HashMap<URI, Vector<MapReference>>();
@@ -36,7 +36,7 @@ public class BookmarkManager {
 
     /**
      * Add the given bookmark.
-     * 
+     *
      * @param bookmark
      */
     public void addBookmark( Bookmark bookmark ) {
@@ -77,7 +77,7 @@ public class BookmarkManager {
 
     /**
      * Returns whether the list is empty
-     * 
+     *
      * @return whether this list is empty
      */
     public boolean isEmpty() {
@@ -87,7 +87,7 @@ public class BookmarkManager {
 
     /**
      * Returns the list of projects as an array of objects
-     * 
+     *
      * @return array of IProject objects
      */
     public Collection<URI> getProjects() {
@@ -97,7 +97,7 @@ public class BookmarkManager {
 
     /**
      * Returns the list of maps which are contained in the specified project
-     * 
+     *
      * @param project The project for which the maps will be returned
      * @return array of MapReference objects
      */
@@ -108,7 +108,7 @@ public class BookmarkManager {
 
     /**
      * Return the list of bookmarks associated with the specified map
-     * 
+     *
      * @param map The map for which the bookmarks will be returned
      * @return A vector of Bookmark objects
      */
@@ -122,7 +122,7 @@ public class BookmarkManager {
 
     /**
      * Get the name of this bookmark manager for display It's just a static string for now
-     * 
+     *
      * @return the name
      */
     public String getName() {
@@ -136,7 +136,7 @@ public class BookmarkManager {
 
     /**
      * Remove the given bookmark.
-     * 
+     *
      * @param bookmark
      */
     public void removeBookmark( Bookmark bookmark ) {
@@ -154,7 +154,7 @@ public class BookmarkManager {
 
     /**
      * Remove all of the bookmarks in the given list.
-     * 
+     *
      * @param elements
      */
     public void removeBookmarks( Collection elements ) {
@@ -168,7 +168,7 @@ public class BookmarkManager {
 
     /**
      * Remove the map and all it's associated bookmarks
-     * 
+     *
      * @param map
      */
     public void removeMap( MapReference map ) {
@@ -185,7 +185,7 @@ public class BookmarkManager {
 
     /**
      * Remove all of the maps in the given list and their associated bookmarks.
-     * 
+     *
      * @param elements
      */
     public void removeMaps( Collection elements ) {
@@ -199,7 +199,7 @@ public class BookmarkManager {
 
     /**
      * Remove the project and all it's associated maps and bookmarks
-     * 
+     *
      * @param project
      */
     public void removeProject( URI project ) {
@@ -212,7 +212,7 @@ public class BookmarkManager {
 
     /**
      * Remove all of the projects in the given list and their associated maps and bookmarks.
-     * 
+     *
      * @param elements
      */
     public void removeProjects( Collection elements ) {

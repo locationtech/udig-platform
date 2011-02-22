@@ -8,13 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
 import net.refractions.udig.catalog.ui.UDIGConnectionPage;
+import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-public class DummyConnectionPage extends AbstractUDIGImportPage
+public class DummyConnectionPage extends WorkflowWizardPage
 	implements UDIGConnectionPage {
 
 	public DummyConnectionPage() {
@@ -35,9 +35,9 @@ public class DummyConnectionPage extends AbstractUDIGImportPage
 		URL url = null;
 		try {
 			url = new URL("http://dummy.refractions.net"); //$NON-NLS-1$
-		} 
+		}
 		catch (MalformedURLException e) {}
-		
+
 		HashMap<String, Serializable> map = new HashMap<String, Serializable>();
 		map.put("dummy", url); //$NON-NLS-1$
 		return map;
@@ -48,7 +48,7 @@ public class DummyConnectionPage extends AbstractUDIGImportPage
 			ArrayList<URL> list = new ArrayList<URL>();
 			list.add(new URL("http://dummy.refractions.net")); //$NON-NLS-1$
 			return list;
-		} 
+		}
 		catch (MalformedURLException e) {
 			return null;
 		}

@@ -19,16 +19,16 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 /**
  * Attempts to clean up after running by clearing the project registry, maps, and projects.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class AbstractProjectTestCase extends TestCase {
-    
+
     public AbstractProjectTestCase(){
         super();
     }
-    
+
     public AbstractProjectTestCase(String name){
         super(name);
     }
@@ -49,7 +49,7 @@ public class AbstractProjectTestCase extends TestCase {
         	project.sendSync(new NullCommand());
 			project.eSetDeliver(true);
 
-            
+
 			List<IProjectElement> elements = project.getElements();
         	for (IProjectElement element : elements) {
 				if( element instanceof Map){
@@ -59,7 +59,7 @@ public class AbstractProjectTestCase extends TestCase {
 					map.eSetDeliver(true);
 				}
 			}
-            
+
             project.getElementsInternal().clear();
         	// Map commands could have put another command on the project stack so
         	// make sure there are no commands executing on the project stack
@@ -72,21 +72,21 @@ public class AbstractProjectTestCase extends TestCase {
             if( resource!=null)
                 resource.unload();
         }
-        
+
         projects.clear();
-        
+
         for( Resource r : resources ) {
             File file=new File(r.getURI().toFileString());
             deleteFile(file);
         }
-        
+
         ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
         List< ? extends IResolve> services = localCatalog.members(null);
         for( IResolve resolve : services ) {
             localCatalog.remove((IService) resolve);
         }
-        
-        
+
+
     }
 
     private void deleteFile( File file ) {
@@ -98,9 +98,9 @@ public class AbstractProjectTestCase extends TestCase {
                 deleteFile(file2);
             }
         }
-        
+
         file.delete();
     }
-    
-    
+
+
 }

@@ -39,7 +39,7 @@ import org.eclipse.ui.PlatformUI;
  *     PlatformUI.getWorkbench().getDecoratorManager()
  * )
  * </code></pre>
- * 
+ *
  * @author jones
  * @since 0.6.0
  */
@@ -79,7 +79,7 @@ public class AdapterFactoryLabelProviderDecorator extends DecoratingLabelProvide
             return super.getImage(element);
         return null;
     }
-    
+
     @Override
     public void dispose() {
         getLabelProvider().dispose();
@@ -123,9 +123,9 @@ public class AdapterFactoryLabelProviderDecorator extends DecoratingLabelProvide
             }
             return null;
         }
-        
-        
-        
+
+
+
     }
-    
+
 }

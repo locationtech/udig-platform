@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.project.ui.internal;
 
@@ -15,24 +15,25 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.EditManager;
 
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.window.Window;
 
 class SaveMapRunnable implements Runnable{
     	private final MapEditor mapEditor;
     	private final boolean[] success;
-    	
+
 
 		public SaveMapRunnable(MapEditor mapEditor, boolean[] success) {
 			super();
 			this.mapEditor = mapEditor;
 			this.success = success;
 		}
-    	
+
     	private enum Result{NO_TEMP_LAYERS, EXPORT_WIZARD_RUNNING};
             public void run() {
                 try{
-                	
-                    EditManager editManagerInternal = mapEditor.getMap().getEditManagerInternal();
-					
+
+                    EditManager editManagerInternal = mapEditor.map.getEditManagerInternal();
+
                     SaveMapRunnable.Result result = saveTemporaryLayers();
                     if( result == Result.NO_TEMP_LAYERS ){
     					editManagerInternal.commitTransaction();
@@ -49,26 +50,26 @@ class SaveMapRunnable implements Runnable{
 
             private SaveMapRunnable.Result saveTemporaryLayers( ) {
                 List<IGeoResource> resources=new ArrayList<IGeoResource>();
-                for( ILayer layer : mapEditor.getMap().getMapLayers() ) {
+                for( ILayer layer : mapEditor.map.getMapLayers() ) {
                     if( layer.hasResource(ITransientResolve.class) )
                         resources.addAll(layer.getGeoResources());
                 }
-                
+
                 if( resources.isEmpty() ){
                     return Result.NO_TEMP_LAYERS;
                 }
-                
+
                 final StructuredSelection selection = new StructuredSelection(resources);
                 final ExportResourceSelectionState layerState = new ExportResourceSelectionState(selection);
-                
+
                 CatalogExport exp = new MapSaveStrategy(layerState, mapEditor);
 
                 // open the export dialog
                 exp.open();
-                 
+
                 // Since dialog is opened after this returns return cancelled and we'll make sure the MapSaveStrategy will clear the
                 // dirty state if the export takes place.
-                
+
                 return Result.EXPORT_WIZARD_RUNNING;
             }
 

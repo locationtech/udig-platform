@@ -29,11 +29,11 @@ import org.eclipse.swt.graphics.Image;
  * The image descriptors for the plugin
  */
 public class Images {
-    
+
     /** Hashtable of ImageDescriptors */
     private ImageRegistry imageCache;
-    private URL baseURL; 
-    
+    private URL baseURL;
+
     /**
      * Creates an image descriptor for later use.
      */
@@ -44,11 +44,11 @@ public class Images {
         } catch (MalformedURLException e) {
             return null;
         }
-        ImageDescriptor image = ImageDescriptor.createFromURL(url);        
+        ImageDescriptor image = ImageDescriptor.createFromURL(url);
         imageCache.put(id, image );
         return image;
     }
-    
+
     /**
      * Returns the image descriptor for ID, or null if not found.
      * <p>
@@ -65,7 +65,7 @@ public class Images {
         }
         return images.create(id);
     }
-    
+
     /**
      * Initializes the table of images used in this plugin.
      * <p>
@@ -77,17 +77,17 @@ public class Images {
     public synchronized void initializeImages(URL url, ImageRegistry shared ) {
         imageCache = shared;
         baseURL = url;
-        
-        // objects        
+
+        // objects
         create(ImageConstants.APPLY_STYLE);
         create(ImageConstants.CANCEL_STYLE);
-    }    
+    }
 
     /**
      * Cleanup image cache.
      */
     public void cleanUp(){
-        imageCache = null; // Display shutdown will clear imageCache        
+        imageCache = null; // Display shutdown will clear imageCache
     }
 
     public ImageDescriptor getImageDescriptor( String id ) {
@@ -96,7 +96,7 @@ public class Images {
 
     /**
      * Returns the image associated with the given key, or <code>null</code> if none.
-     * 
+     *
      * @param id the key
      * @return the image, or <code>null</code> if none
      */
@@ -117,7 +117,7 @@ public class Images {
      * @see net.refractions.udig.catalog.ISharedImages#get(net.refractions.udig.catalog.IGeoResource)
      *
     public Image get( IGeoResource service ) {
-        ImageDescriptor icon = IGeoResource.getGenericIcon( service );        
+        ImageDescriptor icon = IGeoResource.getGenericIcon( service );
         return cache.getImage( icon );
     }    */
 }

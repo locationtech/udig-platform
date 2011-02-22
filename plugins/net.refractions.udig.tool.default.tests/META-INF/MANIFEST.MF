@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Default Tool Tests Plug-in
 Bundle-SymbolicName: net.refractions.udig.tool.default.tests
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.0.0
 Bundle-Activator: net.refractions.udig.tool.tests.TestsPlugin
 Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  net.refractions.udig.tool.default,
  net.refractions.udig.libs,
  net.refractions.udig.project.ui,
  org.junit
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-LazyStart: true

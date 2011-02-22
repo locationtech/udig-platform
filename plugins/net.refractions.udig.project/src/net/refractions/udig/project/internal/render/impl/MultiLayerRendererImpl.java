@@ -1,5 +1,5 @@
 /**
- * <copyright></copyright> $Id$
+ * <copyright></copyright> $Id: MultiLayerRendererImpl.java 15577 2005-09-02 17:55:00Z jeichar $
  */
 package net.refractions.udig.project.internal.render.impl;
 
@@ -15,20 +15,20 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * <em><b>Multi Layer Renderer</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class MultiLayerRendererImpl extends RendererImpl implements MultiLayerRenderer {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected MultiLayerRendererImpl() {
@@ -37,7 +37,7 @@ public abstract class MultiLayerRendererImpl extends RendererImpl implements Mul
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected EClass eStaticClass() {
@@ -46,7 +46,7 @@ public abstract class MultiLayerRendererImpl extends RendererImpl implements Mul
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void refreshImage() {
@@ -57,7 +57,7 @@ public abstract class MultiLayerRendererImpl extends RendererImpl implements Mul
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
@@ -74,7 +74,7 @@ public abstract class MultiLayerRendererImpl extends RendererImpl implements Mul
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void eSet( EStructuralFeature eFeature, Object newValue ) {
@@ -94,7 +94,7 @@ public abstract class MultiLayerRendererImpl extends RendererImpl implements Mul
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void eUnset( EStructuralFeature eFeature ) {
@@ -114,7 +114,7 @@ public abstract class MultiLayerRendererImpl extends RendererImpl implements Mul
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public boolean eIsSet( EStructuralFeature eFeature ) {

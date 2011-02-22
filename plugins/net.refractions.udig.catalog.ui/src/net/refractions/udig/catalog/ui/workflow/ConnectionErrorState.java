@@ -8,11 +8,11 @@ import java.util.Map;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ui.IConnectionErrorHandler;
 import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.core.Pair;
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class ConnectionErrorState extends State {
+public class ConnectionErrorState extends Workflow.State {
 
     Map<IService, Throwable> errors;
 
@@ -20,11 +20,6 @@ public class ConnectionErrorState extends State {
 
     public ConnectionErrorState( Map<IService, Throwable> errors ) {
         this.errors = errors;
-    }
-
-    @Override
-    public Pair<Boolean, State> dryRun() {
-        return new Pair<Boolean, State>(false, null);
     }
 
     @Override

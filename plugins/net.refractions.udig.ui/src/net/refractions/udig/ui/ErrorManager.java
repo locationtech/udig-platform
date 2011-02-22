@@ -31,17 +31,17 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * Provides a consistent way to handle error notifications.
- * 
+ *
  * @author chorner
  * @since 1.1.0
  */
 public class ErrorManager {
-    
+
     private ErrorManager() {
     }
-    
+
     private static final ErrorManager instance = new ErrorManager();
-    
+
     /**
      * Returns the singleton instance
      *
@@ -59,13 +59,13 @@ public class ErrorManager {
             }
         });
     }
-    
+
     public void displayException( final Throwable exception, final String message, final String pluginID) {
         List<Throwable> exceptions = new ArrayList<Throwable>();
         exceptions.add(exception);
         displayExceptions(exceptions, message, pluginID);
     }
-    
+
     public void displayExceptions( final List<Throwable> exceptions, String message,
             final String pluginID ) {
         final String m;
@@ -73,7 +73,7 @@ public class ErrorManager {
             m=""; //$NON-NLS-1$
         else
             m=message;
-        
+
         final MultiStatus multi = new MultiStatus(pluginID, IStatus.OK, message, null);
         for( Throwable exception : exceptions ) {
             Status status = new Status(IStatus.ERROR, pluginID, IStatus.ERROR, exception

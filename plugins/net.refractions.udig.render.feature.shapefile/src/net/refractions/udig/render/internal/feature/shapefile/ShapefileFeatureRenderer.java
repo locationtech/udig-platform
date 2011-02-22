@@ -9,22 +9,59 @@ package net.refractions.udig.render.internal.feature.shapefile;
 
 import java.awt.RenderingHints;
 import java.util.HashMap;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import net.refractions.udig.render.internal.feature.basic.BasicFeatureRenderer;
+import net.refractions.udig.render.internal.feature.basic.RendererPlugin;
+import net.refractions.udig.render.internal.feature.basic.Trace;
 
 import org.geotools.renderer.GTRenderer;
+import org.geotools.renderer.lite.StreamingRenderer;
 import org.geotools.renderer.shape.ShapefileRenderer;
 
 /**
  * The default victim renderer. Based on the Lite-Renderer from Geotools.
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
-public class ShapefileFeatureRenderer extends BasicFeatureRenderer {
+public class ShapefileFeatureRenderer extends BasicFeatureRenderer{
     ShapefileRenderer renderer;
 
     public ShapefileFeatureRenderer() {
+        ClassLoader current = Thread.currentThread().getContextClassLoader();
+        try {
+            Thread.currentThread().setContextClassLoader(ShapefileRenderer.class.getClassLoader());
+            Logger logger = Logger.getLogger("org.geotools.renderer.shape");//$NON-NLS-1$
+            if (RendererPlugin.isDebugging(Trace.FINEST)) {
+                logger.setLevel(Level.FINE);
+                logger.addHandler(new Handler(){
+
+                    @Override
+                    public void publish( LogRecord record ) {
+                        System.err.println(record.getMessage());
+                    }
+
+                    @Override
+                    public void flush() {
+                        System.err.flush();
+                    }
+
+                    @Override
+                    public void close() throws SecurityException {
+
+                    }
+
+                });
+            } else {
+                logger.setLevel(Level.SEVERE);
+            }
+        } finally {
+            Thread.currentThread().setContextClassLoader(current);
+        }
     }
 
     @Override
@@ -34,10 +71,9 @@ public class ShapefileFeatureRenderer extends BasicFeatureRenderer {
             HashMap<String, Object> rendererHints = new HashMap<String, Object>();
             rendererHints.put("optimizedDataLoadingEnabled", true); //$NON-NLS-1$
             renderer.setRendererHints(rendererHints);
-            // renderer.removeRenderListener(StreamingRenderer.DEFAULT_LISTENER);
+            renderer.removeRenderListener(StreamingRenderer.DEFAULT_LISTENER);
             renderer.addRenderListener(listener);
 
-            // JG - these may be overriden by the preferences before use?
             RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
             renderer.setJava2DHints(hints);

@@ -90,7 +90,7 @@ public class StyleGlyph {
     public static void disable( ImageDescriptor descriptor ) {
         ImageData imageData = descriptor.getImageData();
         //PaletteData paletteData = imageData.palette;
-        
+
         for( int i = 2; i < DEFAULT_WIDTH - 2; i++ ) {
             imageData.setPixel(i, i, 0);
         }
@@ -145,7 +145,7 @@ public class StyleGlyph {
 
         return descriptor(imageData, image, gc);
     }
-    
+
     public static ImageDescriptor raster( int lineColor, int fillColor, int width ) {
         Display display = PlatformUI.getWorkbench().getDisplay();
         Color line = display.getSystemColor(lineColor);

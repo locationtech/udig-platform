@@ -51,7 +51,7 @@ public class ArcsdePlugin extends AbstractUIPlugin {
 
     /**
      * Returns the shared instance.
-     * 
+     *
      * @return x
      */
     public static ArcsdePlugin getDefault() {
@@ -60,7 +60,7 @@ public class ArcsdePlugin extends AbstractUIPlugin {
 
     /**
      * Returns the string from the plugin's resource bundle, or 'key' if not found.
-     * 
+     *
      * @param key
      * @return x
      */
@@ -75,7 +75,7 @@ public class ArcsdePlugin extends AbstractUIPlugin {
 
     /**
      * Returns the plugin's resource bundle,
-     * 
+     *
      * @return x
      */
     public ResourceBundle getResourceBundle() {
@@ -88,7 +88,6 @@ public class ArcsdePlugin extends AbstractUIPlugin {
         }
         return resourceBundle;
     }
-
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
@@ -100,17 +99,17 @@ public class ArcsdePlugin extends AbstractUIPlugin {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
         getDefault().getLog().log(new Status(status, ID, IStatus.OK, message, t));
     }
-
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:
-     * 
+     *
      * <pre><code>
      * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }
+     *
      */
     public static void trace( String message, Throwable e ) {
         if (getDefault().isDebugging()) {
@@ -120,7 +119,6 @@ public class ArcsdePlugin extends AbstractUIPlugin {
                 e.printStackTrace();
         }
     }
-
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
      * <p>
@@ -129,11 +127,11 @@ public class ArcsdePlugin extends AbstractUIPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ) {
         return getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 }

@@ -24,8 +24,8 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 
 /**
  * Since a MapEditor can have a different selection provider depending on the tool that is selected, this class
- * is needed to manage the changing selection providers.  
- * 
+ * is needed to manage the changing selection providers.
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -36,7 +36,7 @@ class ReplaceableSelectionProvider implements ISelectionProvider {
         public boolean isEmpty() {
             return true;
         }
-        
+
     };
     private Set<ISelectionChangedListener> listeners=new CopyOnWriteArraySet<ISelectionChangedListener>();
     private ISelectionProvider wrapped;
@@ -48,9 +48,9 @@ class ReplaceableSelectionProvider implements ISelectionProvider {
             }
             notifyChange(event.getSelection());
         }
-        
+
     };
-    
+
     public void addSelectionChangedListener( ISelectionChangedListener listener ) {
         listeners.add(listener);
     }
@@ -69,7 +69,7 @@ class ReplaceableSelectionProvider implements ISelectionProvider {
         if( wrapped!=null )
             wrapped.setSelection(selection);
     }
-    
+
     public void setProvider( ISelectionProvider newProvider ){
         if( wrapped!=null )
         wrapped.removeSelectionChangedListener(listener);

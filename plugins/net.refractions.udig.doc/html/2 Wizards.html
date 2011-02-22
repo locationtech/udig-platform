@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 2 Wizards</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 2 Wizards -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h2><a name="2Wizards-ContributingtotheImportWizard">Contributing to the ImportWizard</a></h2>
+<p>Add a ImportWizard extension in the plugin.xml of your plugin.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;extension
+         point=<span class="code-quote">"org.eclipse.ui.importWizards"</span>&gt;
+      &lt;wizard
+            class=<span class="code-quote">"net.refractions.udig.catalog.internal.ui.CatalogImportWizard"</span>
+            icon=<span class="code-quote">"icons/obj16/repository_obj.gif"</span>
+            id=<span class="code-quote">"net.refractions.udig.catalog.ui.dataImportWizard"</span>
+            name=<span class="code-quote">"%dataImportWizard.name"</span>&gt;
+         &lt;description&gt;Import from a data source.&lt;/description&gt;
+      &lt;/wizard&gt;
+   &lt;/extension&gt;</pre>
+</div></div>
+<h2><a name="2Wizards-ContributingtothedataWizard">Contributing to the dataWizard</a></h2>
+<p>Add a dataWizard extension in the plugin.xml of your plugin.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;extension
+       point=<span class="code-quote">"net.refractions.udig.catalog.ui.dataWizards"</span>&gt;
+    &lt;wizard
+          banner=<span class="code-quote">"icons/wizban/postgis_wiz.gif"</span>
+          class=<span class="code-quote">"net.refractions.udig.catalog.internal.postgis.ui.MifWizardPage"</span>
+          description=<span class="code-quote">"%wizard.description"</span>
+          icon=<span class="code-quote">"icons/etool16/postgis_wiz.gif"</span>
+          id=<span class="code-quote">"net.refractions.udig.catalog.ui.mif"</span>
+          name=<span class="code-quote">"%wizard.name"</span>&gt;
+    &lt;/wizard&gt;
+ &lt;/extension&gt;</pre>
+</div></div>
+
+
+<div class="panel"><div class="panelHeader"><b>Links</b></div><div class="panelContent">
+<ul>
+	<li><a href="http://www.eclipse.org/articles/Article-JFace%20Wizards/wizardArticle.html" title="Visit page outside Confluence">Creating JFace Wizards</a></li>
+	<li><a href="http://dev.eclipse.org/help20/content/help:/org.eclipse.platform.doc.isv/guide/swt.htm" title="Visit page outside Confluence">Eclipse Platform Plug-in Developer Guide: Standard Widget Toolkit (SWT)</a></li>
+	<li><a href="http://dev.eclipse.org/help20/content/help:/org.eclipse.platform.doc.isv/guide/jface.htm" title="Visit page outside Confluence">Eclipse Platform Plug-in Developer Guide: JFace UI Framework</a></li>
+	<li><a href="http://www.eclipse.org/articles/Understanding%20Layouts/Understanding%20Layouts.htm" title="Visit page outside Confluence">Article: Understanding Layouts in SWT (Revised for 2.0)</a></li>
+</ul>
+</div></div>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=5031">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=5031">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

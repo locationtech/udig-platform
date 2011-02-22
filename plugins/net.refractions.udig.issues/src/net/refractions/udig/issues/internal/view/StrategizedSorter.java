@@ -22,7 +22,7 @@ import org.eclipse.jface.viewers.ViewerSorter;
 
 /**
  * Delegates sorting to a {@link IIssuesViewSorter} object
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -49,12 +49,12 @@ public class StrategizedSorter extends ViewerSorter {
     public void setStrategy( IIssuesViewSorter newStrategy ) {
         strategy=newStrategy;
     }
-    
+
     @Override
     public int compare( Viewer viewer, Object e1, Object e2 ) {
         return strategy.compare(viewer, defaultSorter, column, !reverse, e1, e2);
     }
-    
+
 
     public Column getColumn() {
         return column;
@@ -79,5 +79,5 @@ public class StrategizedSorter extends ViewerSorter {
         return strategy.isSorterProperty(defaultSorter, element, property);
     }
 
-    
+
 }

@@ -28,13 +28,14 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
 
 /**
- * A command hander for the LayerProperties command.
- * 
+ * A command hander for the MapProperties command.
+ *
  * @author jesse
  * @since 1.1.0
  */
 public class LayerPropertiesCommandHandler extends AbstractHandler implements IHandler {
 
+    @Override
     public Object execute( final ExecutionEvent arg0 ) throws ExecutionException {
 
         final IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()

@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.Composite;
 
 /**
  * A wizard page for choosing the layer's styles
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -51,19 +51,19 @@ public class MapStylePage extends WizardPage {
 
     /**
      * Construct <code>MapNewPage</code>.
-     * 
+     *
      * @param layers The selected layers
      */
     protected MapStylePage( List layers ) {
         super(
-                Messages.MapStylePage_editStyles, Messages.MapStylePage_editStyles, Images.getDescriptor(ImageConstants.NEWMAP_WIZBAN));  
-        setDescription(Messages.MapStylePage_editStyles_description); 
+                Messages.MapStylePage_editStyles, Messages.MapStylePage_editStyles, Images.getDescriptor(ImageConstants.NEWMAP_WIZBAN));
+        setDescription(Messages.MapStylePage_editStyles_description);
         this.layers = layers;
     }
 
     /**
      * TODO summary sentence for createControl ...
-     * 
+     *
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      * @param parent
      */
@@ -125,7 +125,7 @@ public class MapStylePage extends WizardPage {
         styleView.setLabelProvider(new LabelProvider(){
             /**
              * TODO summary sentence for getText ...
-             * 
+             *
              * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
              * @param element
              */

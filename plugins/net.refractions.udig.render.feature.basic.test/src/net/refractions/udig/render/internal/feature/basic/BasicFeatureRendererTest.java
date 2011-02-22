@@ -25,12 +25,11 @@ import net.refractions.udig.project.tests.support.TestMapDisplay;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.feature.Feature;
 import org.geotools.geometry.jts.JTS;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
-import org.geotools.referencing.ReferencingFactoryFinder;
+import org.geotools.referencing.FactoryFinder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.crs.CRSFactory;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -64,7 +63,7 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
     //  Accuracy for when the envelopes are being transformed.  The tests are
     //  made so that the accuracy isn't expected to be perfect.
     private static final double ACCURACY = 0.1;
-    
+
     private RenderContextImpl context;
 
     protected void setUp() throws Exception {
@@ -85,33 +84,31 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
     public void testValidateBounds() throws Exception {
         Map map = MapTests.createDefaultMap("BasicFeatureRenderer", 4, true, new Dimension(1024,1024)); //$NON-NLS-1$
         map.getViewportModelInternal().setCRS(DefaultGeographicCRS.WGS84);
-        
+
         createContext(map);
         context.getRenderManagerInternal().setMapDisplay(new TestMapDisplay(new Dimension( 1000, 200)));
 
         map.getViewportModelInternal().setBounds(0,100,0,90);
-        
-        CoordinateReferenceSystem crs = DefaultGeographicCRS.WGS84;
-        Envelope result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope(0,50,0,10, crs), new NullProgressMonitor(), context);
+
+        Envelope result = BasicFeatureRenderer.validateBounds(new Envelope(0,50,0,10), new NullProgressMonitor(), context);
         assertEquals( new Envelope( 0,50,0,10 ), result);
 
-        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( 0,170,0,10, crs), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new Envelope( 0,170,0,10 ), new NullProgressMonitor(), context);
         assertEquals( new Envelope( 0,100,0,10 ), result);
 
-        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( 0,300,0,200,crs ), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new Envelope( 0,300,0,200 ), new NullProgressMonitor(), context);
         assertEquals( new Envelope( 0,100,0,90 ), result);
 
-        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( -100,-80,-70,-50, crs ), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new Envelope( -100,-80,-70,-50 ), new NullProgressMonitor(), context);
         assertTrue( result.isNull() );
     }
 
-    @SuppressWarnings("deprecation")
     public void testBC_ALBERS_Viewport() throws Exception {
-        CRSFactory fac = (CRSFactory) ReferencingFactoryFinder.getCRSFactories(null).iterator().next();
+        CRSFactory fac = (CRSFactory) FactoryFinder.getCRSFactories().iterator().next();
         CoordinateReferenceSystem crs = fac.createFromWKT(BC_ALBERS_WKT);
-        
+
         GeometryFactory gfac = new GeometryFactory();
-        
+
         double maxx = -120;
         double maxy = 59.9;
         double minx = -125;
@@ -120,65 +117,63 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
                 new Coordinate(minx,miny),
                 new Coordinate(maxx,maxy)
         });
-        
+
         linestring=(LineString) JTS.transform(linestring, CRS.findMathTransform(DefaultGeographicCRS.WGS84, crs, true));
-        
-        SimpleFeature[] features = UDIGTestUtil.createTestFeatures("testBC_ALBERS_Viewport", new Geometry[]{ //$NON-NLS-1$
+
+        Feature[] features = UDIGTestUtil.createTestFeatures("testBC_ALBERS_Viewport", new Geometry[]{ //$NON-NLS-1$
                 linestring
         }
         , null, crs);
-        
+
         IGeoResource resource = MapTests.createGeoResource(features, false );
         Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(1024,1024));
         map.getViewportModelInternal().setCRS(DefaultGeographicCRS.WGS84);
-        
+
         createContext(map);
-        
+
         map.getViewportModelInternal().setBounds(-150,-120,45,65);
-        
-        Envelope result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny,maxy,crs ), new NullProgressMonitor(), context);
+
+        Envelope result = BasicFeatureRenderer.validateBounds(new Envelope( minx,maxx,miny,maxy ), new NullProgressMonitor(), context);
         compareEnvelopes( new Envelope( minx,maxx,miny,maxy ), result);
-        
-        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny,maxy-5, crs), new NullProgressMonitor(), context);
+
+        result = BasicFeatureRenderer.validateBounds(new Envelope( minx,maxx,miny,maxy-5 ), new NullProgressMonitor(), context);
         compareEnvelopes( new Envelope( minx,maxx,miny,maxy-5 ), result);
 
-        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny-20,maxy+20, crs ), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new Envelope( minx,maxx,miny-20,maxy+20 ), new NullProgressMonitor(), context);
         compareEnvelopes( new Envelope( minx,maxx,50,60 ), result);
-        
+
         map.getViewportModelInternal().setBounds(minx-5,minx+5,miny-5,miny+5);
 
-        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny,maxy,crs ), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new Envelope( minx,maxx,miny,maxy ), new NullProgressMonitor(), context);
         compareEnvelopes( new Envelope( minx,minx+5,miny,miny+5 ), result);
-        
+
         map.getViewportModelInternal().setBounds(minx+2,minx+4,miny+2,miny+4);
 
-        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny,maxy,crs ), new NullProgressMonitor(), context);
+        result = BasicFeatureRenderer.validateBounds(new Envelope( minx,maxx,miny,maxy ), new NullProgressMonitor(), context);
         compareEnvelopes( new Envelope( minx+2,minx+4,miny+2,miny+4 ), result);
-        
-        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( 0,20,0,20,crs ), new NullProgressMonitor(), context);
+
+        result = BasicFeatureRenderer.validateBounds(new Envelope( 0,20,0,20 ), new NullProgressMonitor(), context);
         assertTrue( result.isNull() );
     }
-    
-    @SuppressWarnings("deprecation")
+
     public void testLayerWithNoBounds() throws Exception {
-        SimpleFeature[] features = UDIGTestUtil.createTestFeatures("testNoBounds_Viewport", new Geometry[]{ //$NON-NLS-1$
+        Feature[] features = UDIGTestUtil.createTestFeatures("testNoBounds_Viewport", new Geometry[]{ //$NON-NLS-1$
         }
         , null, DefaultGeographicCRS.WGS84);
-        
+
         IGeoResource resource = MapTests.createGeoResource(features, false );
         Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(1024,1024));
         map.getViewportModelInternal().setCRS(DefaultGeographicCRS.WGS84);
-        
+
         createContext(map);
-        
+
         map.getViewportModelInternal().setBounds(-150,-120,45,65);
-        CoordinateReferenceSystem crs = DefaultGeographicCRS.WGS84;
-        
-        Envelope result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( 0,20,0,20,crs ), new NullProgressMonitor(), context);
+
+        Envelope result = BasicFeatureRenderer.validateBounds(new Envelope( 0,20,0,20 ), new NullProgressMonitor(), context);
         assertTrue( result.isNull() );
     }
-    
-    
+
+
     /**
      * Compares envelopes to verify that they are "close".  THis is because reprojection is involved so
      * they can't be perfect.  Or probably aren't perfect at any rate...
@@ -191,7 +186,7 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
     }
 
     public void testPoint() throws Exception {
-        
+
     }
-    
+
 }

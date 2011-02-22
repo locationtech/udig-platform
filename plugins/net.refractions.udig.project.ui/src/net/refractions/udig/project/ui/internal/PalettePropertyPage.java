@@ -9,22 +9,18 @@
 package net.refractions.udig.project.ui.internal;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import net.refractions.udig.project.ProjectBlackboardConstants;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.preferences.PreferenceConstants;
 import net.refractions.udig.style.sld.SLDContent;
 import net.refractions.udig.ui.graphics.SLDs;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -41,7 +37,7 @@ import org.geotools.styling.Style;
  * <p>
  * Property page for <em><b>Map</b></em> objects allows user to change default colours.
  * </p>
- * 
+ *
  * @author ptozer
  */
 public class PalettePropertyPage extends PropertyPage implements IWorkbenchPropertyPage {
@@ -50,7 +46,7 @@ public class PalettePropertyPage extends PropertyPage implements IWorkbenchPrope
     private Map map;
 
     public PalettePropertyPage() {
-        setTitle(Messages.PalettePropertyPage_Title); 
+        setTitle(Messages.PalettePropertyPage_Title);
     }
 
     @Override
@@ -65,7 +61,7 @@ public class PalettePropertyPage extends PropertyPage implements IWorkbenchPrope
     }
 
 //    public PalettePropertyPage( Map map ) {
-//        setTitle(Messages.PalettePropertyPage_Title); 
+//        setTitle(Messages.PalettePropertyPage_Title);
 //        this.map = map;
 //    }
 
@@ -92,15 +88,18 @@ public class PalettePropertyPage extends PropertyPage implements IWorkbenchPrope
         // set colour on symbolizer for the layer
 
         ArrayList<PaletteCombo> allLayerColourControls = panel.getAllLayerControls();
+        // so here we want to get all controls, check if the checkbox is selected, and update colour
+        // for the given layer if it is checked
+        // colour controls have a ref to their layer, so we can use this to make changes to the
+        // default for the layer
+
+        Iterator<PaletteCombo> iterator = allLayerColourControls.iterator();
+
         /*
          * Check all user selections-> if the check box is selected, then we replace all colour info
          * with the current default colour scheme for the Map. If not, ignore it and the song
          * remains the same.
          */
-        map.setColourScheme(panel.getCurrentColourScheme());
-        map.setColorPalette(panel.getCurrentColourScheme().getColourPalette());
-        Iterator<PaletteCombo> iterator = allLayerColourControls.iterator();
-        boolean needsrefresh = false;
         while( iterator.hasNext() ) {
             PaletteCombo combo = iterator.next();
             Layer l = combo.layerReference;
@@ -126,44 +125,13 @@ public class PalettePropertyPage extends PropertyPage implements IWorkbenchPrope
                 }
                 l.setStyleBlackboard(l.getStyleBlackboard());
                 // show the change on the Map
-                needsrefresh = true;
+                l.refresh(l.getBounds(null, l.getCRS()));
+
             }
-        }
-        
-        //set map background color
-        Color newColor = panel.getMapBackgroundColor();
-        boolean changed = updateMapBackgroundColor(newColor);
-        if (changed || needsrefresh){
-            map.getRenderManager().refresh(null);
         }
         return super.performOk();
     }
 
-    //updates the map background color if the new color
-    //differs from the old color
-    private boolean updateMapBackgroundColor(Color newColor){
-        Color oldColor = (Color)map.getBlackboard().get(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR);
-        if (!oldColor.equals(newColor)){
-            map.getBlackboard().put(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR, newColor);
-            return true;
-        }
-        return false;
-    }
-    
-    protected void performDefaults() {
-        IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-        RGB background = PreferenceConverter.getColor(store, PreferenceConstants.P_BACKGROUND); 
-        Color defaultColor = new Color(background.red, background.green, background.blue);
-        updateMapBackgroundColor(defaultColor);
-        panel.updateMapBackgroundColor(defaultColor);
-        
-        
-        String defaultPalette = ProjectPlugin.getPlugin().getPreferenceStore().getString(PreferenceConstants.P_DEFAULT_PALETTE);
-        panel.updatePalette(defaultPalette);
-        
-        super.performDefaults();
-    }
-    
     /*
      * TODO; where to call dispose() for the panel control?
      */

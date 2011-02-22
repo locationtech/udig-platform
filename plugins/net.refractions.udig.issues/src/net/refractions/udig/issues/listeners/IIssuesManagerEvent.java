@@ -17,7 +17,7 @@ package net.refractions.udig.issues.listeners;
 import net.refractions.udig.issues.IIssuesManager;
 
 /**
- * TODO Purpose of 
+ * TODO Purpose of
  * <p>
  *
  * </p>
@@ -26,6 +26,6 @@ import net.refractions.udig.issues.IIssuesManager;
  */
 public class IIssuesManagerEvent {
     public IIssuesManagerEvent( IIssuesManager source, IIssuesManagerEventType type, Object newValue, Object oldValue){
-        
+
     }
 }

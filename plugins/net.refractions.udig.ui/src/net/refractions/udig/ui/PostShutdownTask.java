@@ -18,10 +18,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbench;
 
 /**
- * Encapsulates a task that needs to be run after the workbench has shutdown.  
+ * Encapsulates a task that needs to be run after the workbench has shutdown.
  * It can be submitted to the {@link ShutdownTaskList} object .
- * Methods are NOT called in the Display thread.  
- * 
+ * Methods are NOT called in the Display thread.
+ *
  * @author Jesse
  * @since 1.1.0
  */public interface PostShutdownTask {
@@ -39,9 +39,9 @@ import org.eclipse.ui.IWorkbench;
      * @param t the exception
      */
     void handlePostShutdownException(Throwable t );
-    
+
     /**
-     * Returns the number of steps {@link #postShutdown(IProgressMonitor, IWorkbench)} will use.  
+     * Returns the number of steps {@link #postShutdown(IProgressMonitor, IWorkbench)} will use.
      * This is called only once just before all shutdown tasks are run.
      *
      * @return the number of steps {@link #postShutdown(IProgressMonitor, IWorkbench)} will use.

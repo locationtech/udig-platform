@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Sets the affine transform of the graphics to a zoom level.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -43,7 +43,7 @@ public class ZoomDrawCommand extends AbstractDrawCommand
 
     /**
      * Construct <code>TranslateCommand</code>.
-     * 
+     *
      * @param centerx the x-coord of the point the zoom centers around
      * @param centery the y-coord of the point the zoom centers around
      * @param zoom The amount of zoom
@@ -63,7 +63,7 @@ public class ZoomDrawCommand extends AbstractDrawCommand
 
     /**
      * Sets the amount of zoom and where the center of the zoom will be when this command is called.
-     * 
+     *
      * @param centerx
      * @param centery
      * @param amount
@@ -81,7 +81,7 @@ public class ZoomDrawCommand extends AbstractDrawCommand
      * <li>Sets the amount of zoom</li>
      * <li>repaints the display if the display is an instance of viewportPane</li>
      * </ul>
-     * 
+     *
      * @param amount the amount of zoom
      */
     public void setZoom( double amount ) {

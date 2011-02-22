@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.EObject;
  * TODO Purpose of net.refractions.udig.project.internal.util
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -52,7 +52,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * The cached model package.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
-     */ 
+     */
     static ProjectPackage modelPackage;
 
     /**
@@ -180,7 +180,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     /**
      * Creates an adapter for the <code>target</code>. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @param target the object to adapt.
      * @return the adapter for the <code>target</code>.
      * @generated
@@ -195,7 +195,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see net.refractions.udig.project.internal.ContextModel
      * @generated
@@ -274,7 +274,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see Cloneable
      * @generated
@@ -380,7 +380,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see net.refractions.udig.project.internal.AbstractContext
      * @generated
@@ -395,7 +395,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see net.refractions.udig.project.internal.ProjectElement
      * @generated
@@ -436,7 +436,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see net.refractions.udig.project.internal.StyleBlackboard
      * @generated
@@ -463,7 +463,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see Comparable
      * @generated

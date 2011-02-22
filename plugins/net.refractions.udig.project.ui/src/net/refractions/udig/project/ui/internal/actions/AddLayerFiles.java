@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.FileDialog;
 /**
  * Performs the open action from the file menu of uDig. It is responseible for creating new maps
  * from selected resources.
- * 
+ *
  * @author rgould
  * @since 0.6.0
  */

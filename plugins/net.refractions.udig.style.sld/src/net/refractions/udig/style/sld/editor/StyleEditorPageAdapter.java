@@ -7,19 +7,17 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.geotools.event.GTEvent;
 
-/**
- * Adapter used to place a StyleConfigurator into the StyleEditor.
- */
 public class StyleEditorPageAdapter extends StyleEditorPage {
     IStyleConfigurator configurator;
 
     public static final String XPID = "net.refractions.udig.style.styleConfigurator"; //$NON-NLS-1$
-    
+
     public StyleEditorPageAdapter(IStyleConfigurator configurator) {
         this.configurator = configurator;
     }
-    
+
     @Override
     public void createPageContent( Composite parent ) {
         Composite configHolder = new Composite(parent, SWT.NONE);
@@ -35,14 +33,14 @@ public class StyleEditorPageAdapter extends StyleEditorPage {
         layout.spacing = 0;
         configHolder.setLayout(layout);
         GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
-        gd.widthHint = 800;
+        gd.widthHint = 400;
         configHolder.setLayoutData(gd);
 
         configurator.createControl(configHolder);
-        
+
         Layer selectedLayer = getContainer().getSelectedLayer();
         if (configurator.canStyle(selectedLayer)) {
-            
+
             configurator.setAction(getContainer().getApplyAction());
             configurator.focus(selectedLayer);
         }
@@ -63,10 +61,10 @@ public class StyleEditorPageAdapter extends StyleEditorPage {
         return null;
     }
 
-    public void styleChanged(Object source ){
+    public void styleChanged( GTEvent event ) {
         //do nothing
     }
-    
+
     public void gotFocus() {
         refresh();
     };

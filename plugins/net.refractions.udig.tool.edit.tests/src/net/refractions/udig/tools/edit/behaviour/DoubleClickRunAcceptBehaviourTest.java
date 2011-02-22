@@ -12,13 +12,13 @@ public class DoubleClickRunAcceptBehaviourTest extends TestCase {
     public void testPlaceHolder() throws Exception {
         //this is just so no warning appears
     }
-    
+
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.StartEditingBehaviour.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
     public void testIsValid() throws Exception {
         TestHandler handler=new TestHandler();
-        
+
         AcceptOnDoubleClickBehaviour behavior=new AcceptOnDoubleClickBehaviour();
 
         handler.setCurrentState(EditState.CREATING);
@@ -26,7 +26,7 @@ public class DoubleClickRunAcceptBehaviourTest extends TestCase {
         //Current Shape must be set
         MapMouseEvent event = new MapMouseEvent(null, 10,10, MapMouseEvent.BUTTON1, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.DOUBLE_CLICK));
-        
+
         EditGeom editGeom = handler.getEditBlackboard().getGeoms().get(0);
         handler.setCurrentShape(editGeom.getShell());
         editGeom.setChanged(true);
@@ -47,19 +47,19 @@ public class DoubleClickRunAcceptBehaviourTest extends TestCase {
         handler.setCurrentState(EditState.MODIFYING);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         assertTrue(behavior.isValid(handler, event, EventType.DOUBLE_CLICK));
-        
+
         // not a legal state
         handler.setCurrentState(EditState.NONE);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         assertFalse(behavior.isValid(handler, event, EventType.DOUBLE_CLICK));
-        
+
         // should work, just checking state is still good;
         handler.setCurrentState(EditState.CREATING);
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         assertTrue(behavior.isValid(handler, event, EventType.DOUBLE_CLICK));
-        
+
         // doesn't work with event pressed
-        assertFalse(behavior.isValid(handler, event, EventType.PRESSED));        
+        assertFalse(behavior.isValid(handler, event, EventType.PRESSED));
     }
 
 

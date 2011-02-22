@@ -24,7 +24,7 @@ import org.eclipse.swt.graphics.Image;
  * The image descriptors for the plugin
  */
 public class Images {
-            
+
     static ImageRegistry registry() {
         return UiPlugin.getDefault().getImageRegistry();
     }
@@ -35,7 +35,7 @@ public class Images {
      * </p>
      * @return ImageDescriptor, or null if there is no such image.
      */
-    public static ImageDescriptor getDescriptor( String id ){    
+    public static ImageDescriptor getDescriptor( String id ){
         ImageDescriptor found = registry().getDescriptor( id );
         if( found != null ) {
             return found;
@@ -43,7 +43,7 @@ public class Images {
         return UiPlugin.getDefault().create( id );
     }
     /**
-     * Returns the image associated with the given key, 
+     * Returns the image associated with the given key,
      * or <code>null</code> if none.
      *
      * @param key the key
@@ -54,7 +54,7 @@ public class Images {
         if( found == null ) {
             UiPlugin.getDefault().create( id );
         }
-        return registry().get( id );        
+        return registry().get( id );
     }
-       
+
 }

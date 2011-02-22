@@ -19,7 +19,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.tools.edit.activator.ClearCurrentSelectionActivator;
 import net.refractions.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
 import net.refractions.udig.tools.edit.activator.DrawGeomsActivator;
 import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
@@ -29,7 +28,7 @@ import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
 import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
 import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
 
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
@@ -44,41 +43,19 @@ import com.vividsolutions.jts.geom.Polygon;
  * <p>
  * This is NOT a complete set of behaviours.
  * </p>
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
 public final class DefaultEditToolBehaviour {
 
-
     /**
-     * Adds the activators that almost all edit tools use.
-     * Used by the tools that creates new geometries, and not the ones that edit existent ones.
-     * 
+     * Adds the activators that almost all tools use.
+     *
      * @param geometryType the type of geometries drawn. If all types then default to POLYGON
      * @return
      */
-    public static Set<Activator> createDefaultCreateActivators( DrawType geometryType ) {
-        if (geometryType == null) {
-            throw new NullPointerException("geomType cannot be null"); //$NON-NLS-1$
-        }
-        Set<Activator> activators = new HashSet<Activator>();
-        activators.add(new EditStateListenerActivator());
-        activators.add(new DrawGeomsActivator(geometryType));
-        activators.add(new DrawCurrentGeomVerticesActivator());
-        activators.add(new SetRenderingFilter());
-        activators.add(new ClearCurrentSelectionActivator());
-        return activators;
-    }
-    
-    /**
-     * Adds the activators that almost all edit tools use.
-     * Used by the tools that edit, and not the ones that creates.
-     * 
-     * @param geometryType the type of geometries drawn. If all types then default to POLYGON
-     * @return
-     */
-    public static Set<Activator> createDefaultEditActivators( DrawType geometryType ) {
+    public static Set<Activator> createDefaultActivators( DrawType geometryType ) {
         if (geometryType == null) {
             throw new NullPointerException("geomType cannot be null"); //$NON-NLS-1$
         }
@@ -96,7 +73,7 @@ public final class DefaultEditToolBehaviour {
      * the change by either updating the affect Feature or creating a new feature. This is different
      * from {@link #createDefaultAcceptBehaviour(Class)} only in that it will work for any type of
      * geometry rather than just one. The other side is it is less efficient.
-     * 
+     *
      * @return a list of behaviours
      */
     public static List<Behaviour> createAcceptAllChanges() {
@@ -107,10 +84,10 @@ public final class DefaultEditToolBehaviour {
         mutualExclusive.getBehaviours().add(new AcceptChangesBehaviour(Polygon.class, false){
             @Override
             public boolean isValid( EditToolHandler handler ) {
-                SimpleFeature feature = handler.getContext().getEditManager().getEditFeature();
+                Feature feature = handler.getContext().getEditManager().getEditFeature();
                 if (feature == null)
                     return false;
-                Class< ? > class1 = feature.getDefaultGeometry().getClass();
+                Class< ? extends Geometry> class1 = feature.getDefaultGeometry().getClass();
                 return super.isValid(handler) && feature != null
                         && (class1 == Polygon.class || class1 == MultiPolygon.class);
             }
@@ -118,10 +95,10 @@ public final class DefaultEditToolBehaviour {
         mutualExclusive.getBehaviours().add(new AcceptChangesBehaviour(LineString.class, false){
             @Override
             public boolean isValid( EditToolHandler handler ) {
-                SimpleFeature feature = handler.getContext().getEditManager().getEditFeature();
+                Feature feature = handler.getContext().getEditManager().getEditFeature();
                 if (feature == null)
                     return false;
-                Class< ? > class1 = feature.getDefaultGeometry().getClass();
+                Class< ? extends Geometry> class1 = feature.getDefaultGeometry().getClass();
                 return super.isValid(handler) && feature != null
                         && (class1 == LineString.class || class1 == MultiLineString.class);
             }
@@ -129,10 +106,10 @@ public final class DefaultEditToolBehaviour {
         mutualExclusive.getBehaviours().add(new AcceptChangesBehaviour(Point.class, false){
             @Override
             public boolean isValid( EditToolHandler handler ) {
-                SimpleFeature feature = handler.getContext().getEditManager().getEditFeature();
+                Feature feature = handler.getContext().getEditManager().getEditFeature();
                 if (feature == null)
                     return false;
-                Class< ? > class1 = feature.getDefaultGeometry().getClass();
+                Class< ? extends Geometry> class1 = feature.getDefaultGeometry().getClass();
                 return super.isValid(handler) && feature != null
                         && (class1 == Point.class || class1 == MultiPoint.class);
             }
@@ -146,7 +123,7 @@ public final class DefaultEditToolBehaviour {
      * the change by either updating the affect Feature or creating a new feature. This is different
      * from {@link #createAcceptAllChanges()} only in that it will for only one type of geometry.
      * The other side is it is more efficient.
-     * 
+     *
      * @param type
      * @return
      */
@@ -158,7 +135,7 @@ public final class DefaultEditToolBehaviour {
 
     /**
      * Creates the default cancel behaviour
-     * 
+     *
      * @return the default cancel behaviour
      */
     public static List<Behaviour> createDefaultCancelBehaviours() {
@@ -169,10 +146,10 @@ public final class DefaultEditToolBehaviour {
     }
 
     /**
-     * Create a EnablementBehaviour that verifies that the tool is valid for the currently selected
-     * layer. The behaviour checks the GeometryType of the layer and if it is one of the classes
-     * passed in as a parameter it will permit the tool to be enabled otherwise it won't.
-     * 
+     * Create a EnablementBehaviour that verifies that the tool is valid for the currently selected layer.
+     * The behaviour checks the GeometryType of the layer and if it is one of the classes passed in as a parameter
+     * it will permit the tool to be enabled otherwise it won't.
+     *
      * @param classes the geometry types that are legal for the tool
      * @return the enablement behaviour in a list
      */
@@ -184,9 +161,8 @@ public final class DefaultEditToolBehaviour {
     }
 
     /**
-     * Calls {@link #createValidToolEnablementBehaviour(Class[])} with a array of all geometry
-     * types.
-     * 
+     * Calls {@link #createValidToolEnablementBehaviour(Class[])} with a array of all geometry types.
+     *
      * @return the enablement behaviour in a list
      */
     @SuppressWarnings("unchecked")

@@ -12,7 +12,6 @@ import java.util.Collections;
 
 import net.refractions.udig.core.IBlockingProvider;
 import net.refractions.udig.core.StaticFeatureCollection;
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.command.MapCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.command.provider.EditFeatureProvider;
@@ -23,38 +22,36 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Id;
+import org.geotools.feature.FeatureType;
+import org.geotools.filter.FidFilter;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
 
 /**
  * Compares the editFeature with the corresponding feature in the data store (The feature with the
  * same fid) and replaces the old feature with the edit feature. If the feature is a new feature
  * then the feature is added to the datastore.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
 public class WriteFeatureChangesCommand extends AbstractEditCommand implements UndoableMapCommand{
-    private IBlockingProvider<SimpleFeature> featureProvider;
-    private IBlockingProvider<FeatureStore<SimpleFeatureType, SimpleFeature>> storeProvider;
-    private FeatureStore<SimpleFeatureType, SimpleFeature> store;
-    private Id filter;
+    private IBlockingProvider<Feature> featureProvider;
+    private IBlockingProvider<FeatureStore> storeProvider;
+    private FeatureStore store;
+    private FidFilter filter;
     private boolean added=false;
     private boolean noChange=false;
-    private SimpleFeature editFeature;
+    private Feature editFeature;
 
     public WriteFeatureChangesCommand() {
         this(null, null);
     }
-    
-    public WriteFeatureChangesCommand( IBlockingProvider<SimpleFeature> feature, IBlockingProvider<FeatureStore<SimpleFeatureType, SimpleFeature>> featureStore ) {
+
+    public WriteFeatureChangesCommand( IBlockingProvider<Feature> feature, IBlockingProvider<FeatureStore> featureStore ) {
         if(feature==null){
             this.featureProvider=new EditFeatureProvider(this);
         }else{
@@ -70,9 +67,9 @@ public class WriteFeatureChangesCommand extends AbstractEditCommand implements U
     /**
      * @see net.refractions.udig.project.internal.command.MapCommand#run()
      */
-    @SuppressWarnings("deprecation") 
+    @SuppressWarnings("deprecation")
     public void run( IProgressMonitor monitor ) throws Exception {
-        monitor.beginTask(Messages.WriteFeatureChangesCommand_runTask, 3); 
+        monitor.beginTask(Messages.WriteFeatureChangesCommand_runTask, 3);
         SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor,1);
         editFeature = featureProvider.get(subProgressMonitor);
         subProgressMonitor.done();
@@ -81,21 +78,20 @@ public class WriteFeatureChangesCommand extends AbstractEditCommand implements U
             noChange=true;
             return;
         }
-            
-        SimpleFeatureType featureType = editFeature.getFeatureType();
-        FilterFactory factory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
+
+        FeatureType featureType = editFeature.getFeatureType();
+        FilterFactory factory = FilterFactoryFinder.createFilterFactory();
         subProgressMonitor = new SubProgressMonitor(monitor,1);
         subProgressMonitor.done();
-        filter = factory.id(FeatureUtils.stringToId(factory, editFeature.getID()));
-        FeatureCollection<SimpleFeatureType, SimpleFeature>  results = store.getFeatures(filter);
+        filter = factory.createFidFilter(editFeature.getID());
+        FeatureCollection results = store.getFeatures(filter);
 
-        FeatureIterator<SimpleFeature> reader = results.features();
+        FeatureIterator reader = results.features();
         try {
             if (reader.hasNext()) {
                 try {
-                    store.modifyFeatures(featureType.getAttributeDescriptors().toArray(
-							new AttributeDescriptor[0]), editFeature
-							.getAttributes().toArray(), filter);
+                    store.modifyFeatures(featureType.getAttributeTypes(), editFeature
+                            .getAttributes(new Object[featureType.getAttributeCount()]), filter);
                 } catch (Exception e) {
                     ProjectPlugin.log("", e); //$NON-NLS-1$
                     noChange=true;
@@ -122,19 +118,19 @@ public class WriteFeatureChangesCommand extends AbstractEditCommand implements U
      * @see net.refractions.udig.project.command.MapCommand#getName()
      */
     public String getName() {
-        return Messages.WriteFeatureChangesCommand_commandName;  
+        return Messages.WriteFeatureChangesCommand_commandName;
     }
 
     public void rollback( IProgressMonitor monitor ) throws Exception {
         if( noChange )
             return;
-        monitor.beginTask(Messages.WriteFeatureChangesCommand_rollbackTask, IProgressMonitor.UNKNOWN); 
+        monitor.beginTask(Messages.WriteFeatureChangesCommand_rollbackTask, IProgressMonitor.UNKNOWN);
         if( added ){
             store.removeFeatures(filter);
         }else{
-            SimpleFeatureType featureType = this.editFeature.getFeatureType();
-            store.modifyFeatures(featureType.getAttributeDescriptors().toArray(new AttributeDescriptor[0]), this.editFeature
-                    .getAttributes().toArray(), filter);            
+            FeatureType featureType = this.editFeature.getFeatureType();
+            store.modifyFeatures(featureType.getAttributeTypes(), this.editFeature
+                    .getAttributes(new Object[featureType.getAttributeCount()]), filter);
         }
     }
 

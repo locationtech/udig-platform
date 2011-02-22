@@ -29,19 +29,19 @@ import org.geotools.util.SimpleInternationalString;
  */
 public class Palette {
     /** <code>name</code> field */
-    final SimpleInternationalString name;        
+    final SimpleInternationalString name;
     /** <code>contents</code> field */
-    
+
     final public List<Scheme> contents;
-    
+
     /** <code>type</code> field */
-    final public SchemeType type;  
-    
+    final public SchemeType type;
+
     /** Friendly indicators */
     static final int GOOD = 1;
     static final int DOUBTFUL = 0;
     static final int BAD = -1;
-    
+
     /**
      * Construct <code>Palette</code>.
      */
@@ -52,18 +52,18 @@ public class Palette {
     }
     /**
      * Construct <code>Palette</code>.
-     * 
+     *
      * @param bundle
-     * @throws IOException 
+     * @throws IOException
      */
     public Palette( String pal ) throws IOException{
-        this( load( pal ) );        
+        this( load( pal ) );
     }
     static final Properties load( String pal ) throws IOException{
         URL find = Palette.class.getResource( pal );
-        Properties load = new Properties();        
+        Properties load = new Properties();
         load.load( find.openStream() );
-        
+
         return load;
     }
     /**
@@ -74,7 +74,7 @@ public class Palette {
      * example.display=Example
      * palette.min=2
      * palette.max=3
-     * palette.type=SEQUENTIAL 
+     * palette.type=SEQUENTIAL
      * example2={158, 202, 225},{ 49, 130, 189}
      * example2.good=colorBlind, photoCopy, projector, lcd, crt, print
      * example2.doubtful=projector
@@ -87,22 +87,22 @@ public class Palette {
     public Palette( Properties properties ) {
         String KEY = properties.getProperty( "palette.key" ); //$NON-NLS-1$
         name = new SimpleInternationalString( properties.getProperty( "palette.display" )); //$NON-NLS-1$
-               
+
         type = Enum.valueOf( SchemeType.class, properties.getProperty( "palette.type" ).trim() ); //$NON-NLS-1$
-        
+
         int min = Integer.parseInt( properties.getProperty("palette.min") ); //$NON-NLS-1$
         int max = Integer.parseInt( properties.getProperty("palette.max") ); //$NON-NLS-1$
-        contents = new ArrayList<Scheme>(); 
-        
+        contents = new ArrayList<Scheme>();
+
         for( int i=min; i<=max; i++ ){
-            //String key = KEY+i;            
+            //String key = KEY+i;
             String defn = properties.getProperty( KEY+i );
 //          ie. {158, 202, 225},{ 49, 130, 189}
             List<Color> colours = new ArrayList<Color>();
             //StringBuffer hack = new StringBuffer( defn );
             defn = defn.replace("},", "|" ); //$NON-NLS-1$ //$NON-NLS-2$
-            defn = defn.replace('}', ' ' );  
-            defn = defn.replace('{', ' ' );            
+            defn = defn.replace('}', ' ' );
+            defn = defn.replace('{', ' ' );
             defn = noWhitespace( defn );
             for( String c : defn.split("\\|") ){ //$NON-NLS-1$
                 if( c.length() == 0 ) continue;
@@ -114,13 +114,13 @@ public class Palette {
             }
             String goodDefn = noWhitespace( properties.getProperty( KEY+i+".good" )); //$NON-NLS-1$
             EnumSet<Friendly> good = Friendly.parse( goodDefn );
-            
+
             String doubtfulDefn = noWhitespace( properties.getProperty( KEY+i+".doubtful" )); //$NON-NLS-1$
             EnumSet<Friendly> doubtful = Friendly.parse( doubtfulDefn );
             Scheme scheme = new Scheme( colours, good, doubtful );
-            //System.out.println( i+": "+scheme );            
+            //System.out.println( i+": "+scheme );
             contents.add( scheme );
-        }       
+        }
     }
     static final String noWhitespace( String str ){
         if( str == null ) return null;
@@ -130,6 +130,6 @@ public class Palette {
             if( Character.isWhitespace( c ) ) continue;
             buf.append( c );
         }
-        return buf.toString();        
+        return buf.toString();
     }
 }

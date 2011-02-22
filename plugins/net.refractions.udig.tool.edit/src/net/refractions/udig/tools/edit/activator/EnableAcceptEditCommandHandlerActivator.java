@@ -35,14 +35,14 @@ import org.eclipse.ui.commands.ICommandService;
  * Enables the
  * {@link net.refractions.udig.tools.edit.handler.SnapBehaviourCommandHandler}
  * on the CycleSnapBehaviour command.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class EnableAcceptEditCommandHandlerActivator implements Activator {
 	/**
 	 * Runs the tool's accept behaviours when the command comes in.
-	 * 
+	 *
 	 * @author Jesse
 	 * @since 1.1.0
 	 */
@@ -50,6 +50,7 @@ public class EnableAcceptEditCommandHandlerActivator implements Activator {
 
 		EditToolHandler handler;
 
+		@Override
 		public Object execute(ExecutionEvent arg0) throws ExecutionException {
 			if (handler != null) {
 				BehaviourCommand acceptCommands = handler.getCommand(handler
@@ -69,7 +70,7 @@ public class EnableAcceptEditCommandHandlerActivator implements Activator {
 				if( part instanceof MapPart ){
 					command.setHandler(commandHandler);
 				}else{
-					command.setHandler(null);					
+					command.setHandler(null);
 				}
 			}
 		}

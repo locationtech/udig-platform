@@ -1,6 +1,7 @@
 package net.refractions.udig.project.internal;
 
 import net.refractions.udig.project.interceptor.LayerInterceptor;
+import net.refractions.udig.project.internal.Layer;
 
 public class TestLayerCreatednterceptor implements LayerInterceptor {
     public static Layer layerCreated;

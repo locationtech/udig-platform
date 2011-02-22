@@ -1,0 +1,119 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 2 NavCommand Example</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 2 NavCommand Example -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="2NavCommandExample-NavigationCommands">Navigation Commands</a></h1>
+
+<p>NavCommand is used to go places, specifically these are used to modify the Viewport, changes to the viewport are kept in their own undo/redo stack accessable with the Back/Forward navigation buttons (just like a web browser).</p>
+
+<h2><a name="2NavCommandExample-INavCommand">INavCommand</a></h2>
+
+<p>A navigation command (INavCommand) is a special type of command that changes the current area being viewed, the viewport.  Navigation commands are placed in a separate stack from normal commands and are undone and redone using the navigation arrows on the user interface as opposed to the undo/redo buttons int the edit menu.</p>
+
+<p>Navigation commands should be limited to commands that only change the view area, not changing the current CRS.</p>
+
+<p>The class AbstractNavCommand reduces the burden on the developer by implementing undo functionality.  </p>
+
+<h3><a name="2NavCommandExample-INavCommandCodeExample">INavCommand Code Example</a></h3>
+
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>PanCommand.java</b></div><div class="codeContent">
+<pre class="code-java">/**
+ * A command that pans the viewport. The command can be defined in terms of pixels on the screen or
+ * in terms of world units.
+ *
+ * @author jeichar
+ * @since 0.3
+ */
+<span class="code-keyword">public</span> class PanCommand <span class="code-keyword">extends</span> AbstractNavCommand <span class="code-keyword">implements</span> NavCommand {
+
+	<span class="code-object">double</span> worldx, worldy;
+
+	<span class="code-object">int</span> pixelx, pixely;
+
+	<span class="code-object">boolean</span> inPixel;
+
+	/**
+	 * Creates a <span class="code-keyword">new</span> instance of PanCommand
+	 *
+	 * @param pixelx The amount to pan in the x direction
+	 * @param pixely The amount to pan in the y direction
+	 */
+	<span class="code-keyword">public</span> PanCommand(<span class="code-object">int</span> pixelx, <span class="code-object">int</span> pixely) {
+		<span class="code-keyword">this</span>.pixelx = pixelx;
+		<span class="code-keyword">this</span>.pixely = pixely;
+		inPixel = <span class="code-keyword">true</span>;
+	}
+
+	/**
+	 * Creates a <span class="code-keyword">new</span> instance of PanCommand
+	 *
+	 * @param worldx The amount to pan in the x direction
+	 * @param worldy The amount to pan in the y direction
+	 */
+	<span class="code-keyword">public</span> PanCommand(<span class="code-object">double</span> worldx, <span class="code-object">double</span> worldy) {
+		<span class="code-keyword">this</span>.worldx = worldx;
+		<span class="code-keyword">this</span>.worldy = worldy;
+		inPixel = <span class="code-keyword">false</span>;
+	}
+
+	/**
+	 * @see net.refractions.udig.project.internal.command.navigation.AbstractNavCommand#runImpl()
+	 */
+	<span class="code-keyword">protected</span> void runImpl() <span class="code-keyword">throws</span> Exception {
+		<span class="code-keyword">if</span> (inPixel)
+			model.panUsingScreenCoords(pixelx, pixely);
+		<span class="code-keyword">else</span>
+			model.panUsingWorldCoords(worldx, worldy);
+	}
+
+	/**
+	 * @see net.refractions.udig.project.internal.command.Command#copy()
+	 */
+	<span class="code-keyword">public</span> Command copy() {
+		<span class="code-keyword">if</span> (inPixel)
+			<span class="code-keyword">return</span> <span class="code-keyword">new</span> PanCommand(pixelx, pixely);
+
+		<span class="code-keyword">return</span> <span class="code-keyword">new</span> PanCommand(worldx, worldy);
+	}
+
+	/**
+	 * @see net.refractions.udig.project.command.Command#getName()
+	 */
+	<span class="code-keyword">public</span> <span class="code-object">String</span> getName() {
+		<span class="code-keyword">return</span> Policy.bind(<span class="code-quote">"PanCommand.pan"</span>); <span class="code-comment">//$NON-NLS-1$
+</span>	}
+
+}</pre>
+</div></div>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=4087">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=4087">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

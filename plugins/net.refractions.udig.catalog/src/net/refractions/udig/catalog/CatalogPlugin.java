@@ -8,8 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
@@ -55,29 +54,11 @@ public class CatalogPlugin extends Plugin {
     // Resource bundle.
     private ResourceBundle resourceBundle;
 
-    /** Local catalog used as a repository to manage servies that are known the the client */
-    private CatalogImpl local;
-
-    /**
-     * Cache of catalogues (possibly remote) that may be searched for additional spatial information
-     */
-    private List<ISearch> catalogs;
-
-    /**
-     * Service factory ued to construct new IService instances allowing connection to spatial
-     * information.
-     */
+    private ICatalog[] catalogs;
     private IServiceFactory serviceFactory;
 
-    /**
-     * Plugin preferenceStore (from bundle) used to store catalog information.
-     */
     private IPreferenceStore preferenceStore;
 
-    /**
-     * ResolveManager used to allow plugins to teach new resolve targets to existing IService and
-     * IGeoResoruce implementations.
-     */
     private volatile IResolveManager resolveManager;
 
     /**
@@ -93,8 +74,8 @@ public class CatalogPlugin extends Plugin {
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
-        local = new CatalogImpl();
-        catalogs = Collections.emptyList();
+
+        catalogs = new ICatalog[]{new CatalogImpl()};
         serviceFactory = new ServiceFactoryImpl();
 
         resolveManager = new ResolveManager();
@@ -130,12 +111,12 @@ public class CatalogPlugin extends Plugin {
 
             public boolean preShutdown( IProgressMonitor monitor, IWorkbench workbench,
                     boolean forced ) throws Exception {
-                ISearch[] toDispose = getCatalogs();
+                ICatalog[] toDispose = getCatalogs();
                 monitor.beginTask(Messages.CatalogPlugin_SavingCatalog, 4 + (4 * toDispose.length));
                 SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, 4);
                 storeToPreferences(subProgressMonitor);
                 subProgressMonitor.done();
-                for( ISearch catalog : toDispose ) {
+                for( ICatalog catalog : toDispose ) {
                     subProgressMonitor = new SubProgressMonitor(monitor, 4);
                     catalog.dispose(subProgressMonitor);
                     subProgressMonitor.done();
@@ -148,7 +129,7 @@ public class CatalogPlugin extends Plugin {
 
     /**
      * Opens a dialog warning the user that an error occurred while loading the local catalog
-     * 
+     *
      * @param e the exception that occurred
      */
     private void handlerLoadingError( Exception e ) {
@@ -158,8 +139,11 @@ public class CatalogPlugin extends Plugin {
         } catch (IOException ioe) {
             log("Coulding make a back up of the corrupted local catalog", ioe); //$NON-NLS-1$
         }
-        boolean addShutdownHook = MessageDialog.openQuestion(Display.getDefault().getActiveShell(),
-                Messages.CatalogPlugin_ErrorLoading, Messages.CatalogPlugin__ErrorLoadingMessage);
+        boolean addShutdownHook = MessageDialog
+                .openQuestion(
+                        Display.getDefault().getActiveShell(),
+                        Messages.CatalogPlugin_title,
+                        Messages.CatalogPlugin_message);
         if (addShutdownHook) {
             addSaveLocalCatalogShutdownHook();
         }
@@ -179,20 +163,19 @@ public class CatalogPlugin extends Plugin {
 
     /**
      * Cleanup after shared images.
-     * <p>
-     * 
-     * @see addSaveLocalCatalogShutdownHook
+     *
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
      * @param context
      * @throws Exception
      */
     public void stop( BundleContext context ) throws Exception {
+
         super.stop(context);
+
         plugin = null;
         resourceBundle = null;
     }
 
-    /** Load the getLocalCatalogFile() into the local catalog(). */
     public void restoreFromPreferences() throws BackingStoreException, MalformedURLException {
         try {
 
@@ -203,20 +186,24 @@ public class CatalogPlugin extends Plugin {
             CatalogPlugin.log(null, new Exception(t));
         }
     }
-    /**
-     * Go through and load the "external" catalogs ... this is used to
-     * populate getCatalogs() and the result is cached.
-     */
-    private List<ISearch> loadCatalogs() {
-        final List<ISearch> availableCatalogs = new LinkedList<ISearch>();
+
+    private void loadCatalogs() {
+        final List<ICatalog> cats = new LinkedList<ICatalog>();
         ExtensionPointUtil.process(getDefault(),
                 "net.refractions.udig.catalog.ICatalog", new ExtensionPointProcessor(){ //$NON-NLS-1$
                     public void process( IExtension extension, IConfigurationElement element )
                             throws Exception {
-                        availableCatalogs.add((ISearch) element.createExecutableExtension("class")); //$NON-NLS-1$                 
+                        cats.add((ICatalog) element.createExecutableExtension("class")); //$NON-NLS-1$
                     }
                 });
-        return availableCatalogs;
+
+        ICatalog[] ctemp = new ICatalog[cats.size() + 1];
+        ctemp[0] = catalogs[0];
+        Iterator<ICatalog> ii = cats.iterator();
+        for( int i = 1; i < ctemp.length && ii.hasNext(); i++ ) {
+            ctemp[i] = ii.next();
+        }
+        catalogs = ctemp;
     }
 
     public void storeToPreferences( IProgressMonitor monitor ) throws BackingStoreException,
@@ -224,20 +211,12 @@ public class CatalogPlugin extends Plugin {
         ((CatalogImpl) getLocalCatalog()).saveToFile(getLocalCatalogFile(), getServiceFactory(),
                 monitor);
     }
-    /**
-     * File used to load/save the local catalog.
-     * 
-     * @return
-     * @throws IOException
-     */
+
     private File getLocalCatalogFile() throws IOException {
-        // working directory for the application as a file
         File userLocation = new File(FileLocator.toFileURL(Platform.getInstanceLocation().getURL())
                 .getFile());
-        // will create the file if needed
         if (!userLocation.exists())
             userLocation.mkdirs();
-        // local catalog saved in working directory/.localCatalog
         File catalogLocation = new File(userLocation, ".localCatalog"); //$NON-NLS-1$
         return catalogLocation;
     }
@@ -250,7 +229,7 @@ public class CatalogPlugin extends Plugin {
     }
     /**
      * Add a catalog listener for changed to this catalog.
-     * 
+     *
      * @param listener
      */
     public static void addListener( IResolveChangeListener listener ) {
@@ -259,7 +238,7 @@ public class CatalogPlugin extends Plugin {
 
     /**
      * Remove a catalog listener that was interested in this catalog.
-     * 
+     *
      * @param listener
      */
     public static void removeListener( IResolveChangeListener listener ) {
@@ -292,55 +271,29 @@ public class CatalogPlugin extends Plugin {
         return resourceBundle;
     }
     /**
-     * Available catalogs supporting the ISearch interface. Please note that not all of these
-     * catalogs are "local"; although the first [0] one is the same as getLocal().
-     * 
-     * @return Returns the catalogs found ... local one is slot[0].
+     * @return Returns the catalogs found ... local one is slot[0]. TODO hook the extension point
+     *         up.
      */
-    public synchronized ISearch[] getCatalogs() {
-        if (catalogs == null) {
-            // look up all catalogs and populate catalogs
-            catalogs = loadCatalogs();
-        }
-        if (catalogs == null || catalogs.isEmpty()) {
-            return new ISearch[]{local};
-        } else {
-            List<ISearch> c = new ArrayList<ISearch>();
-            c.add(local);
-            c.addAll(catalogs);
-            return c.toArray(new ISearch[c.size()]);
-        }
+    public ICatalog[] getCatalogs() {
+        if (catalogs == null)
+            loadCatalogs();
+
+        int i = 0;
+        if( catalogs!=null )
+            i=catalogs.length;
+        ICatalog[] c=new ICatalog[i];
+        if( catalogs!=null )
+            System.arraycopy(catalogs, 0, c, 0, c.length);
+        return c;
     }
 
     /**
      * @return the local catalog. Equivalent to getCatalogs()[0]
      */
     public ICatalog getLocalCatalog() {
-        return local;
+        return getCatalogs()[0];
     }
     /**
-     * Access to the local repository which you can add/remove services to.
-     * <p>
-     * The local repository is used to reflect what servies are known to the application. In
-     * particular it is used to track all services that are "connected" so that the application can
-     * clean up (ie call dispose) on these services when it is being shutdown.
-     * <p>
-     * This repository is persisted (currently the the contents are saved into the catalog plugin
-     * preferencestore, although a successful geoserver implementation indicates that the use of a
-     * hibernate is also appropriate).
-     * 
-     * @return Local repository used to manage known serivces and all connected services.
-     */
-    public IRepository getLocal() {
-        return local;
-    }
-    /**
-     * Service factory used to connect to new services.
-     * <p>
-     * Serivces hold on to live connections; please take care to call dispose() or to add the
-     * service to the local repository so that the service is disposed when the application shuts
-     * down.
-     * 
      * @return Returns the serviceFactory.
      */
     public IServiceFactory getServiceFactory() {
@@ -352,45 +305,81 @@ public class CatalogPlugin extends Plugin {
      * successful URL it can find. This is a utility method. Feel free to move it to another class.
      * In the future, it might be nice to have it return a List of the URLs it found, not just the
      * first one.
-     * 
+     *
      * @param data
      * @return a URL if it can find one, or null otherwise
-     * @deprecated Please use ID.cast( data ).toURL();
      */
     public static URL locateURL( Object data ) {
-        ID id = net.refractions.udig.catalog.ID.cast(data);
-        if (id == null) {
+        if (data == null)
             return null;
+
+        return toURL(data);
+    }
+
+    private static URL toURL( Object data ) {
+        URL url = null;
+        if (data instanceof String) {
+            String string = (String) data;
+            int index = string.indexOf("\n"); //$NON-NLS-1$
+            if (index > -1)
+                string = string.substring(0, index);
+
+            // try to turn into a string directly
+            try {
+                url = new URL(string);
+            } catch (MalformedURLException e) {
+                // try to go to a file first
+                try {
+                    url = new File(string).toURL();
+                } catch (MalformedURLException e1) {
+                    // do nothing
+                }
+            }
+
+        } else if (data instanceof File) {
+            try {
+                url = ((File) data).toURL();
+            } catch (MalformedURLException e) {
+                // do nothing
+            }
+        } else if (data instanceof URL) {
+            url = (URL) data;
+        } else if (data instanceof IGeoResource) {
+            IGeoResource resource = (IGeoResource) data;
+            return resource.getIdentifier();
+        } else if (data instanceof IService) {
+            IService service = (IService) data;
+            return service.getIdentifier();
         }
-        return id.toURL();
+
+        return url;
     }
 
     /**
-     * Helper method to log a message in the plugin's log.
+     * Logs the Throwable in the plugin's log.
      * <p>
      * This will be a user visable ERROR iff:
      * <ul>
-     * <li>t is an Exception we are assuming it is human readable or if a message is provided</li>
-     * </ul>
-     * 
-     * @param message log message
-     * @param t Throwable causing the message; if this is an exception an error will be logged
+     * <li>t is an Exception we are assuming it is human readable or if a message is provided
      */
-    public static void log( String message, Throwable t ) {
-        String msg = message == null ? "" : message;
+    public static void log( String message2, Throwable t ) {
+        String message=message2;
+        if (message == null)
+            message = ""; //$NON-NLS-1$
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
-        getDefault().getLog().log(new Status(status, ID, IStatus.OK, msg, t));
+        getDefault().getLog().log(new Status(status, ID, IStatus.OK, message, t));
     }
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:
-     * 
+     *
      * <pre><code>
      * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }
+     *
      */
     public static void trace( String message, Throwable e ) {
         if (getDefault().isDebugging()) {
@@ -408,40 +397,36 @@ public class CatalogPlugin extends Plugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ) {
         return getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 
     /**
-     * Returns the preference store for this UI plug-in. This preference store is used to hold
-     * persistent settings for this plug-in in the context of a workbench. Some of these settings
-     * will be user controlled, whereas others may be internal setting that are never exposed to the
-     * user.
+     * Returns the preference store for this UI plug-in.
+     * This preference store is used to hold persistent settings for this plug-in in
+     * the context of a workbench. Some of these settings will be user controlled,
+     * whereas others may be internal setting that are never exposed to the user.
      * <p>
-     * If an error occurs reading the preference store, an empty preference store is quietly
-     * created, initialized with defaults, and returned.
+     * If an error occurs reading the preference store, an empty preference store is
+     * quietly created, initialized with defaults, and returned.
      * </p>
      * <p>
-     * <strong>NOTE:</strong> As of Eclipse 3.1 this method is no longer referring to the core
-     * runtime compatibility layer and so plug-ins relying on Plugin#initializeDefaultPreferences
+     * <strong>NOTE:</strong> As of Eclipse 3.1 this method is
+     * no longer referring to the core runtime compatibility layer and so
+     * plug-ins relying on Plugin#initializeDefaultPreferences
      * will have to access the compatibility layer themselves.
      * </p>
-     * 
+     *
      * @return the preference store
      */
     public IPreferenceStore getPreferenceStore() {
         return preferenceStore;
     }
-    /**
-     * ResolveManager used to allow plugins to teach new resolve targets to existing IService and
-     * IGeoResoruce implementations.
-     * 
-     * @return IResolveManager
-     */
+
     public IResolveManager getResolveManager() {
         return resolveManager;
     }

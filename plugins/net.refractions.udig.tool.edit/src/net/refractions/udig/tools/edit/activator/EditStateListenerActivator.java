@@ -27,19 +27,19 @@ import net.refractions.udig.tools.edit.EditToolHandler;
 
 /**
  * Adds and removes a listener to the handler that sets the icons when the EditState Changes.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class EditStateListenerActivator implements Activator {
 
     private IconManager iconManager;
-    
+
     public void activate( EditToolHandler handler ) {
     	iconManager = new IconManager(handler);
     	handler.getContext().getMap().getBlackboard().addListener(iconManager);
     }
-    
+
     public void deactivate( EditToolHandler handler ) {
         handler.getContext().getMap().getBlackboard().removeListener(iconManager);
     	iconManager = null;
@@ -60,7 +60,7 @@ public class EditStateListenerActivator implements Activator {
         IconManager(EditToolHandler handler2){
             this.handler=handler2;
         }
-        
+
         public void blackBoardChanged( BlackboardEvent event ) {
             if (iconManager == null) {
                 event.getSource().removeListener(this);

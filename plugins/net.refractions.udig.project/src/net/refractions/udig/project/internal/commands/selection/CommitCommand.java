@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * MapCommand that commits the current Transaction.
- * 
+ *
  * @author jgarnett
  * @since 0.6.0
  */
@@ -40,7 +40,7 @@ public class CommitCommand extends AbstractCommand {
      * @see net.refractions.udig.project.command.MapCommand#getName()
      */
     public String getName() {
-        return Messages.CommitCommand_commitCommandName; 
+        return Messages.CommitCommand_commitCommandName;
     }
 
 }

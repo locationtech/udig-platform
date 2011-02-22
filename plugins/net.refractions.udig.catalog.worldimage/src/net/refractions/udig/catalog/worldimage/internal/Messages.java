@@ -20,13 +20,8 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "net.refractions.udig.catalog.worldimage.internal.messages"; //$NON-NLS-1$
-	public static String InMemoryCoverageLoader_close_button;
-    public static String InMemoryCoverageLoader_message;
-    public static String InMemoryCoverageLoader_msgTitle;
-    public static String InMemoryCoverageLoader_restart_button;
-    public static String WorldImageGeoResourceImpl_PrjUnavailable;
+	public static String WorldImageGeoResourceImpl_PrjUnavailable;
     public static String WorldImageServiceExtension_badFileExtension;
-    public static String WorldImageServiceExtension_file;
     public static String WorldImageServiceExtension_geotoolsDisagrees;
     public static String WorldImageServiceExtension_IllegalFilePart1;
     public static String WorldImageServiceExtension_IllegalFilePart2;

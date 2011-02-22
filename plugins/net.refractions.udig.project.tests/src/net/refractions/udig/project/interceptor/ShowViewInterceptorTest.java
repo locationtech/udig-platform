@@ -19,12 +19,10 @@ import java.net.URI;
 
 import junit.framework.TestCase;
 import net.refractions.udig.catalog.tests.CatalogTests;
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.interceptor.ShowViewInterceptor.ViewStyleContent;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.interceptor.ShowViewInterceptor;
-import net.refractions.udig.project.internal.interceptor.CacheInterceptor.ViewStyleContent;
 import net.refractions.udig.project.tests.support.MapTests;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -33,28 +31,25 @@ import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Id;
+import org.geotools.filter.FidFilter;
+import org.geotools.filter.Filter;
+import org.geotools.filter.FilterFactoryFinder;
 
 /**
  * Tests {@link ShowViewInterceptor}
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class ShowViewInterceptorTest extends TestCase {
 
     private Map map;
-    private  FeatureSource<SimpleFeatureType, SimpleFeature> featureSource;
-    private Id filter;
+    private FeatureSource featureSource;
+    private FidFilter filter;
     private ILayer layer;
-    private SimpleFeature f;
+    private Feature f;
     private Layer layer2;
 
     protected void setUp() throws Exception {
@@ -66,11 +61,9 @@ public class ShowViewInterceptorTest extends TestCase {
         map.getLayersInternal().add(layer2);
         featureSource = layer.getResource(FeatureSource.class,
                 new NullProgressMonitor());
-        f = (SimpleFeature) featureSource.getFeatures().iterator().next();
-        FilterFactory filterFactory = CommonFactoryFinder
-                .getFilterFactory(GeoTools.getDefaultHints());
-        filter = filterFactory.id(FeatureUtils.stringToId(filterFactory, f
-                .getID()));
+        f = (Feature) featureSource.getFeatures().iterator().next();
+        filter = FilterFactoryFinder.createFilterFactory().createFidFilter(
+                f.getID());
     }
 
     /**
@@ -80,7 +73,7 @@ public class ShowViewInterceptorTest extends TestCase {
     public void testFilterOnLayerStyleBlackboard() throws Exception {
         layer.getStyleBlackboard().put(ShowViewInterceptor.KEY, filter);
 
-        FeatureCollection<SimpleFeatureType, SimpleFeature>  features = assertFilter(layer, 1);
+        FeatureCollection features = assertFilter(layer, 1);
         assertEquals(f, features.iterator().next());
         assertFilter(layer2, 3);
 
@@ -97,7 +90,7 @@ public class ShowViewInterceptorTest extends TestCase {
     public void testFilterOnLayerBlackboard() throws Exception {
         layer.getBlackboard().put(ShowViewInterceptor.KEY, filter);
 
-        FeatureCollection<SimpleFeatureType, SimpleFeature>  features = assertFilter(layer, 1);
+        FeatureCollection features = assertFilter(layer, 1);
         assertEquals(f, features.iterator().next());
         assertFilter(layer2, 3);
 
@@ -108,11 +101,11 @@ public class ShowViewInterceptorTest extends TestCase {
         assertFilter(layer2, 3);
     }
 
-    private FeatureCollection<SimpleFeatureType, SimpleFeature> assertFilter(ILayer layer2, int expectedFeatures)
+    private FeatureCollection assertFilter(ILayer layer2, int expectedFeatures)
             throws IOException {
-        FeatureSource<SimpleFeatureType, SimpleFeature> fs = layer2.getResource(FeatureSource.class,
+        FeatureSource fs = layer2.getResource(FeatureSource.class,
                 new NullProgressMonitor());
-        FeatureCollection<SimpleFeatureType, SimpleFeature>  features = fs.getFeatures();
+        FeatureCollection features = fs.getFeatures();
         assertEquals(expectedFeatures, features.size());
         return features;
     }
@@ -125,11 +118,12 @@ public class ShowViewInterceptorTest extends TestCase {
         layer.getStyleBlackboard().put(ShowViewInterceptor.KEY,
                 new DefaultQuery(f.getFeatureType().getTypeName(), filter));
 
-        FeatureCollection<SimpleFeatureType, SimpleFeature>  features = assertFilter(layer, 1);
+        FeatureCollection features = assertFilter(layer, 1);
         assertEquals(f, features.iterator().next());
         assertFilter(layer2, 3);
-        
+
         layer.getStyleBlackboard().clear();
+        layer.getBlackboard().clear();
 
         assertFilter(layer, 5);
         assertFilter(layer2, 3);
@@ -143,12 +137,11 @@ public class ShowViewInterceptorTest extends TestCase {
         layer.getBlackboard().put(ShowViewInterceptor.KEY,
                 new DefaultQuery(f.getFeatureType().getTypeName(), filter));
 
-        FeatureCollection<SimpleFeatureType, SimpleFeature>  features = assertFilter(layer, 1);
+        FeatureCollection features = assertFilter(layer, 1);
         assertEquals(f, features.iterator().next());
         assertFilter(layer2, 3);
 
         layer.getStyleBlackboard().clear();
-        layer.getBlackboard().clear();
 
         assertFilter(layer, 5);
         assertFilter(layer2, 3);
@@ -172,12 +165,12 @@ public class ShowViewInterceptorTest extends TestCase {
     public void testStyleContentAllNoneFilters() throws Exception {
         ViewStyleContent content = new ViewStyleContent();
         XMLMemento memento = XMLMemento.createWriteRoot("root");
-        DefaultQuery start = new DefaultQuery("Feature", Filter.EXCLUDE);
+        DefaultQuery start = new DefaultQuery("Feature", Filter.ALL);
         content.save(memento, start);
         Query loaded = (Query) content.load(memento);
         assertEquals(start, loaded);
 
-        start = new DefaultQuery("Feature", Filter.INCLUDE);
+        start = new DefaultQuery("Feature", Filter.NONE);
         content.save(memento, start);
         loaded = (Query) content.load(memento);
         assertEquals(start, loaded);

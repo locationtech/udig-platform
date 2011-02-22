@@ -27,7 +27,7 @@ import net.refractions.udig.project.render.RenderException;
  * layers again.</li>
  * <li>The events the render stack must listen for are setState(DONE) events. The following code
  * illustrates how this can be done:
- * 
+ *
  * <pre><code>
  * executor.eAdapters().add(new RenderListenerAdapter(){
  *     //renderDone is called when setState(DONE) is called
@@ -38,13 +38,13 @@ import net.refractions.udig.project.render.RenderException;
  *     }
  * });
  * </code></pre>
- * 
+ *
  * <li>Call setState(RENDERING) when a redraw is required.</li>
  * </p>
  * The Default implementation simply draws the layers overtop one another to merge the Layers.
  * CompositeRenderer
  * </p>
- * 
+ *
  * @author jeichar
  * @model abstract="true"
  */
@@ -52,7 +52,7 @@ public interface MultiLayerRenderer extends Renderer, IMultiLayerRenderer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
@@ -69,7 +69,7 @@ public interface MultiLayerRenderer extends Renderer, IMultiLayerRenderer {
      * <p>
      * Note: This command differs from render. render() forces a full rerendering of the data
      * whereas refreshImage does not require that the renderer access the data again.
-     * 
+     *
      * @throws RenderException
      * @model
      */

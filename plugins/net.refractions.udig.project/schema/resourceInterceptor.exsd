@@ -19,7 +19,7 @@
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
@@ -73,7 +73,7 @@
          <attribute name="order" use="required">
             <annotation>
                <documentation>
-                  Indicates when, with respect to other interceptors, that this interceptor will be ran.  Interceptors in a category are ran in random order.  
+                  Indicates when, with respect to other interceptors, that this interceptor will be ran.  Interceptors in a category are ran in random order.
 &lt;ul&gt;
 &lt;li&gt;PRE-CACHING - The first category of interceptors to run.  This will be ran only if the cache claims to not contain the resource.  If a PRE-CACHING interceptor needs to affect the state of the resource each time then consider making it a POST-CACHING interceptor or implementing a custom CACHING strategy.  See the cachingInterceptor extension element for more details.&lt;p&gt;Example: SetTransactionInterceptor sets the transaction on FeatureStores.  It only needs to be done once per FeatureStore so it can be done before the caching takes place.&lt;/li&gt;
 &lt;li&gt;POST-CACHING - These interceptors are ran after the resource has been obtained from the cache.  So the effects will affect all resources regarless of whether the cache takes place.&lt;/li&gt;
@@ -166,7 +166,7 @@ For example if a new feature store was returned each time then every plugin that
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         
+
       </documentation>
    </annotation>
 

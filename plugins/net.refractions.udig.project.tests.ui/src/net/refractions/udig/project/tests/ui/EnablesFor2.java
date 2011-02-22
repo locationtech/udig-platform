@@ -31,7 +31,7 @@ public class EnablesFor2 implements IOp {
         ILayer[] layers=(ILayer[])target;
         if( layers.length!=2)
             throw new RuntimeException("target does not have 2 layers, instead: "+layers.length); //$NON-NLS-1$
-        
+
         System.out.println("Good"); //$NON-NLS-1$
     }
 

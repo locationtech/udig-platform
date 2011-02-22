@@ -48,7 +48,7 @@ import org.eclipse.swt.widgets.TreeItem;
 
 /**
  * Wizard Page associated with ConnectionFailurePage
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -72,17 +72,17 @@ public class  ConnectionFailurePage extends WorkflowWizardPage implements ILabel
         tree.setLayout(layout);
         tree.setLinesVisible(true);
         viewer=new TreeViewer(tree);
-        
+
         viewer.setContentProvider(this);
         viewer.setLabelProvider(this);
-        
+
         viewer.addPostSelectionChangedListener(new ISelectionChangedListener(){
 
             public void selectionChanged( SelectionChangedEvent event ) {
                 setDetails();
             }
         });
-        
+
         viewer.setSorter(new ViewerSorter(){
              @Override
             public void sort( Viewer viewer, Object[] elements ) {
@@ -91,18 +91,18 @@ public class  ConnectionFailurePage extends WorkflowWizardPage implements ILabel
                     public int compare( Object o1, Object o2 ) {
                         return 0;
                     }
-                    
+
                 });
             }
-             
+
         });
-        
+
         Composite composite = new Composite(form, SWT.BORDER);
         composite.setLayout(new FillLayout());
         details=new Text(composite, SWT.BORDER|SWT.WRAP|SWT.READ_ONLY|SWT.V_SCROLL);
-        
+
         form.setWeights(new int[]{75,25});
-        
+
         setControl(form);
     }
     private void setDetails() {
@@ -117,7 +117,7 @@ public class  ConnectionFailurePage extends WorkflowWizardPage implements ILabel
             details.setText(Messages.ConnectionFailurePage_selectChild);
         }
     }
-    
+
     @Override
     public void shown() {
         viewer.setInput(getState().getReports());
@@ -128,11 +128,11 @@ public class  ConnectionFailurePage extends WorkflowWizardPage implements ILabel
             setDetails();
         }
     }
-    
+
     public ConnectionFailureState getState(){
         return (ConnectionFailureState) super.getState();
     }
-    
+
     @Override
     public boolean canFlipToNextPage() {
         return false;
@@ -172,7 +172,7 @@ public class  ConnectionFailurePage extends WorkflowWizardPage implements ILabel
         if (parentElement instanceof Map) {
             Map<String, List<Data>> map = (Map<String, List<Data>>) parentElement;
             if( map.values().iterator().next().size()==1 ){
-                
+
                 // no need for hierarchy since each element only has a single data.
                 Collection<List<Data>> values = map.values();
                 List<Data> all=new ArrayList<Data>();
@@ -211,7 +211,7 @@ public class  ConnectionFailurePage extends WorkflowWizardPage implements ILabel
                     return entry;
                 }
             }
-        }        
+        }
         return null;
     }
 

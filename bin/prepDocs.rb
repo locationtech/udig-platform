@@ -41,7 +41,7 @@ class Javadocs
     end
 end
 
-if Dir["plugins"] 
+if Dir["plugins"]
     ep=ExtPointDocs.new
     ep.collect
     ep.post

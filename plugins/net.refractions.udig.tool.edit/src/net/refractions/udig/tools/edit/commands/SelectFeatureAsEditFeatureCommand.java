@@ -34,18 +34,17 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Sets the selected feature to be the edit feature.
  * <ul>
- * <li>Sets the editblack board so it contains the default geometry of the feature.</li>  
+ * <li>Sets the editblack board so it contains the default geometry of the feature.</li>
  * <li>Sets the edit managers editFeature to be the feature.</li>
  * <li>Sets the EditToolHandler's currentGeom to be the newly added geom.</li>
  * @author jones
@@ -54,7 +53,7 @@ import com.vividsolutions.jts.geom.Polygon;
 public class SelectFeatureAsEditFeatureCommand extends AbstractCommand implements Command, UndoableMapCommand {
 
     private ILayer selectedLayer;
-    private SimpleFeature feature;
+    private Feature feature;
     private EditToolHandler handler;
     private UndoableMapCommand unselectcommand;
     private UndoableMapCommand command;
@@ -63,9 +62,9 @@ public class SelectFeatureAsEditFeatureCommand extends AbstractCommand implement
     private PrimitiveShape currentShape;
     private EditState currentState;
     private Point mouse;
-    private ReferencedEnvelope refreshBounds;
+    private Envelope refreshBounds;
 
-    public SelectFeatureAsEditFeatureCommand( EditToolHandler handler, SimpleFeature feature, ILayer selectedLayer, Point mouse ) {
+    public SelectFeatureAsEditFeatureCommand( EditToolHandler handler, Feature feature, ILayer selectedLayer, Point mouse ) {
         if( mouse==null )
             throw new NullPointerException("mouse is null"); //$NON-NLS-1$
         this.handler=handler;
@@ -79,30 +78,30 @@ public class SelectFeatureAsEditFeatureCommand extends AbstractCommand implement
         EditUtils.instance.cancelHideSelection(selectedLayer);
         IToolContext context = handler.getContext();
 
-        this.refreshBounds=new ReferencedEnvelope(feature.getBounds());
+        this.refreshBounds=feature.getBounds();
         EditUtils.instance.refreshLayer(selectedLayer, feature, refreshBounds, false, true);
 
         unselectcommand = context.getSelectionFactory().createNoSelectCommand();
         command = context.getEditFactory().createSetEditFeatureCommand(feature,
                 selectedLayer);
-        
+
         unselectcommand.setMap(getMap());
         command.setMap(getMap());
-        
+
         unselectcommand.run(new SubProgressMonitor(monitor, 10));
         command.run(new SubProgressMonitor(monitor, 10));
-        
+
         this.removed=handler.getEditBlackboard(selectedLayer).getGeoms();
         this.currentGeom=handler.getCurrentGeom();
         this.currentShape=handler.getCurrentShape();
         this.currentState=handler.getCurrentState();
-        
+
         handler.setCurrentState(EditState.MODIFYING);
-        
+
 
         Collection<EditGeom> geoms = handler.getEditBlackboard(selectedLayer).setGeometries(
-                (Geometry) feature.getDefaultGeometry(), feature.getID()).values();
-        Class<?> type = selectedLayer.getSchema().getGeometryDescriptor().getType().getBinding();
+                feature.getDefaultGeometry(), feature.getID()).values();
+        Class<?> type = selectedLayer.getSchema().getDefaultGeometry().getType();
         boolean polygonLayer=Polygon.class.isAssignableFrom(type) || MultiPolygon.class.isAssignableFrom(type);
         EditGeom over = EditUtils.instance.getGeomWithMouseOver(geoms, mouse, polygonLayer);
         handler.setCurrentShape(over.getShell());
@@ -120,20 +119,20 @@ public class SelectFeatureAsEditFeatureCommand extends AbstractCommand implement
         handler.setCurrentState(currentState);
         EditGeom newCurrentGeom=null;
         List<EditGeom> empty = bb.getGeoms();
-        
+
         for( EditGeom original : removed ) {
             EditGeom inBlackboard = bb.newGeom(original.getFeatureIDRef().get(), original.getShapeType());
             inBlackboard.setChanged(original.isChanged());
             if( original == currentGeom )
                 newCurrentGeom=inBlackboard;
-            
+
             PrimitiveShape destination = inBlackboard.getShell();
             newCurrentGeom = setCurrentGeom(newCurrentGeom, destination, original.getShell());
-            
+
             for( Iterator<Coordinate> iter=original.getShell().coordIterator(); iter.hasNext(); ) {
                 bb.addCoordinate(iter.next(), destination);
             }
-            
+
             for( PrimitiveShape shape : original.getHoles() ) {
                 destination=inBlackboard.newHole();
                 newCurrentGeom = setCurrentGeom(newCurrentGeom, destination, shape);
@@ -145,13 +144,13 @@ public class SelectFeatureAsEditFeatureCommand extends AbstractCommand implement
 
         bb.removeGeometries(empty);
         monitor.worked(10);
-        refreshBounds.expandToInclude(new ReferencedEnvelope(feature.getBounds()));
+        refreshBounds.expandToInclude(feature.getBounds());
         EditUtils.instance.refreshLayer(selectedLayer, feature, refreshBounds, true, false);
 
         command.rollback(new SubProgressMonitor(monitor, 10));
         unselectcommand.rollback(new SubProgressMonitor(monitor, 10));
     }
-    
+
 
     private EditGeom setCurrentGeom( EditGeom newCurrentGeom, PrimitiveShape destination, PrimitiveShape shape ) {
         if( currentGeom!=null && newCurrentGeom!=null && shape==currentShape ){

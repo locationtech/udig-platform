@@ -29,14 +29,14 @@ import org.eclipse.emf.common.util.URI;
  * </p>
  * <p>
  * Example Use:
- * 
+ *
  * <pre><code>
  * Project project = registry.getProject(new URL(&quot;file://home/user/project.udig&quot;));
  * project.getElements();
  * </code></pre>
- * 
+ *
  * </p>
- * 
+ *
  * @author Jesse
  * @since 0.1
  */
@@ -53,7 +53,7 @@ public interface IProject {
      * <p>
      * This is an immutable list
      * </p>
-     * 
+     *
      * @return a list with all in the project
      */
     public List<IProjectElement> getElements();
@@ -67,7 +67,7 @@ public interface IProject {
      * Executes the command asynchronously. The commands are not placed in a commandstack so they
      * can not be undone. This allows developers to execute commands such as map creation.
      * <b>NOTICE: this should only be used if {@link IMap#sendCommand(MapCommand)}<b>
-     * 
+     *
      * @param command
      */
     public void sendASync( Command command );
@@ -76,11 +76,11 @@ public interface IProject {
      * Executes the command synchronously and blocks. The commands are not placed in a commandstack
      * so they can not be undone. This allows developers to execute commands such as map creation.
      * <b>NOTICE: this should only be used if {@link IMap#sendCommand(MapCommand)}<b>
-     * 
+     *
      * @param command
      */
     public void sendSync( Command command );
-    
+
     /**
      * The id of the Project.
      *

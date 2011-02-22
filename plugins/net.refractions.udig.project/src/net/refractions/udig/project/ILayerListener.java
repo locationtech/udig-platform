@@ -22,7 +22,7 @@ package net.refractions.udig.project;
  * <li>The LayerEvent can be used to communicate the nature of the change
  * </ul>
  * </p>
- * 
+ *
  * @author Jody Garnett
  * @since 0.9.0
  */
@@ -35,7 +35,7 @@ public interface ILayerListener {
      * <li>
      * </ul>
      * </p>
-     * 
+     *
      * @param event
      */
     void refresh( LayerEvent event );

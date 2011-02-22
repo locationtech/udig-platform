@@ -1,11 +1,8 @@
 /**
- * <copyright></copyright> $Id$
+ * <copyright></copyright> $Id: ProjectPlugin.java 30923 2008-10-25 04:34:39Z jeichar $
  */
 package net.refractions.udig.project.internal;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -41,6 +38,12 @@ public final class ProjectPlugin extends EMFPlugin {
     public final static String ID = "net.refractions.udig.project"; //$NON-NLS-1$
 
     /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
+    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
+
+    /**
      * Keep track of the singleton.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
@@ -49,7 +52,7 @@ public final class ProjectPlugin extends EMFPlugin {
 
     /**
      * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     static Implementation plugin;
@@ -70,36 +73,8 @@ public final class ProjectPlugin extends EMFPlugin {
      * @return the singleton instance.
      * @generated
      */
-    @Override
     public ResourceLocator getPluginResourceLocator() {
         return plugin;
-    }
-
-    /**
-     * Save the collection of projects
-     *
-     * @param projects projects to save
-     * @return Collection of error messages or empty collection
-     */
-    public static Collection<String> saveProjects( Collection<Project> projects ) {
-        ArrayList<String> errors = new ArrayList<String>();
-        for( Project project : projects ) {
-            try {
-                Resource eResource = project.eResource();
-                Map<String, String> saveOptions = getPlugin().saveOptions;
-                eResource.save(saveOptions);
-                List<ProjectElement> elementsInternal = project.getElementsInternal();
-                for( ProjectElement projectElement : elementsInternal ) {
-                    projectElement.eResource().save(saveOptions);
-                }
-            } catch (Exception e) {
-                log("Error while saving resource", e);
-                String msg = "Error occurred while saving project: " + project.getID().toString(); //$NON-NLS-1$
-                errors.add(msg);
-            }
-        }
-
-        return errors;
     }
 
     /**
@@ -155,7 +130,7 @@ public final class ProjectPlugin extends EMFPlugin {
             ShutdownTaskList.instance().addPostShutdownTask(new PostShutdownTask(){
 
                 public int getProgressMonitorSteps() {
-                    List<Resource> resources = getProjectRegistry().eResource().getResourceSet()
+                    List resources = getProjectRegistry().eResource().getResourceSet()
                             .getResources();
                     return resources.size();
                 }
@@ -168,9 +143,9 @@ public final class ProjectPlugin extends EMFPlugin {
                         throws Exception {
                     monitor.beginTask(Messages.ProjectPlugin_saving_task_name, 0);
                     turnOffEvents();
-                    List<Resource> resources = getProjectRegistry().eResource().getResourceSet()
+                    List resources = getProjectRegistry().eResource().getResourceSet()
                             .getResources();
-                    for( Iterator<Resource> iter = resources.iterator(); iter.hasNext(); ) {
+                    for( Iterator iter = resources.iterator(); iter.hasNext(); ) {
                         Resource resource = (Resource) iter.next();
                         if (resource.getContents().isEmpty())
                             continue;
@@ -179,7 +154,7 @@ public final class ProjectPlugin extends EMFPlugin {
                             try {
                                 resource.save(saveOptions);
                             } catch (Exception e) {
-                                ProjectPlugin.log("Error saving " + resource.getURI(), e); //$NON-NLS-1$
+                                ProjectPlugin.log("Error saving", e); //$NON-NLS-1$
                             }
                         }
                         monitor.worked(1);
@@ -234,7 +209,7 @@ public final class ProjectPlugin extends EMFPlugin {
         /**
          * Returns the preference store for this UI plug-in.
          * This preference store is used to hold persistent settings for this plug-in in
-         * the context of a workbench. Some of these settings will be user controlled, 
+         * the context of a workbench. Some of these settings will be user controlled,
          * whereas others may be internal setting that are never exposed to the user.
          * <p>
          * If an error occurs reading the preference store, an empty preference store is
@@ -247,7 +222,7 @@ public final class ProjectPlugin extends EMFPlugin {
          * will have to access the compatibility layer themselves.
          * </p>
          *
-         * @return the preference store 
+         * @return the preference store
          */
         public synchronized ScopedPreferenceStore getPreferenceStore() {
             // Create the preference store lazily.
@@ -285,7 +260,7 @@ public final class ProjectPlugin extends EMFPlugin {
      * private static final String RENDERING = "net.refractions.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
-     * 
+     *
      */
     private static void trace( String message, Throwable e ) {
         if (getPlugin().isDebugging()) {
@@ -297,7 +272,7 @@ public final class ProjectPlugin extends EMFPlugin {
     }
     /**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
-     * Available trace options can be found in the Trace class.  (They must also be part of the .options file) 
+     * Available trace options can be found in the Trace class.  (They must also be part of the .options file)
      */
     public static void trace( String traceID, Class caller, String message, Throwable e ) {
         if (isDebugging(traceID)) {
@@ -306,7 +281,7 @@ public final class ProjectPlugin extends EMFPlugin {
     }
 
     /**
-     * Adds the name of the caller class to the message. 
+     * Adds the name of the caller class to the message.
      *
      * @param caller class of the object doing the trace.
      * @param message tracing message, may be null.
@@ -324,7 +299,7 @@ public final class ProjectPlugin extends EMFPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ) {

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.internal.ui;
 
@@ -12,14 +12,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 /**
- * Utility class used to push buttons when writing test cases.
- * <p>
- * Having to write a class like this is insane, in a swing application
- * you can use the accessability API to push buttons during testing; does
- * SWT have similar functionality we can use?
- * <p>
- * The valuable part of this class is the push and findButton methods
- * for use in test cases.
+ * This class is insane the good part is the push and findbuttons as helpers for testing.
+ *
  */
 public class DialogDriver{
 

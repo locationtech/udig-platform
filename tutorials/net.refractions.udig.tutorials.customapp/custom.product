@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?pde version="3.5"?>
+<?pde version="3.1"?>
 
-<product name="Custom" id="net.refractions.udig.tutorials.customapp.customapp" application="net.refractions.udig.tutorials.customapp.id1" useFeatures="true" includeLaunchers="true">
+<product name="Custom" id="net.refractions.udig.tutorials.customapp.product" application="net.refractions.udig.tutorials.customapp.id1" useFeatures="true">
 
    <aboutInfo>
       <image path="/net.refractions.udig.tutorials.customapp/nl/en/about.gif"/>
       <text>
-         Hello World
-
-This is a custom application generated using the uDig SDK.
-For more information visit http://udig.refractions.net
+         This is the udig custom application tutorial
       </text>
    </aboutInfo>
 
-   <configIni use="default">
-   </configIni>
+   <configIni use="default"/>
 
    <launcherArgs>
       <vmArgs>-Xmx386M -Dosgi.parentClassloader=ext</vmArgs>
@@ -28,7 +24,6 @@ For more information visit http://udig.refractions.net
       startupMessageRect="7,180,445,16"
       startupForegroundColor="FFFFFF" />
    <launcher name="custom">
-      <linux icon="/net.refractions.udig/icons/udig.xpm"/>
       <solaris/>
       <win useIco="true">
          <ico path="/net.refractions.udig.tutorials.customapp/icons/world.ico"/>
@@ -37,20 +32,21 @@ For more information visit http://udig.refractions.net
    </launcher>
 
    <vm>
-      <macos include="true">JVM 1.5</macos>
+      <macos type="jre">JVM 1.5</macos>
    </vm>
 
    <plugins>
    </plugins>
 
    <features>
-      <feature id="net.refractions.udig_tutorials.custom_feature"/>
-      <feature id="net.refractions.udig_base"/>
-      <feature id="net.refractions.udig_platform"/>
-      <feature id="net.refractions.udig_application"/>
-      <feature id="net.refractions.udig_printing"/>
-      <feature id="org.eclipse.rcp"/>
+      <feature id="net.refractions.udig_base" version="1.1.0"/>
+      <feature id="net.refractions.udig_platform" version="1.1.0"/>
+      <feature id="net.refractions.udig_application" version="1.1.0"/>
+      <feature id="net.refractions.udig_printing" version="1.1.0"/>
+      <feature id="net.refractions.udig_language" version="1.1.0"/>
+      <feature id="net.refractions.udig_tutorials.custom_feature" version="1.0.0"/>
+      <feature id="org.eclipse.rcp" version="3.3.3.r33x_r20080129-8y8eE9UEUWI6qujeED0xT7bc"/>
+      <feature id="org.eclipse.rcp.nls1" version="3.2.0.v200606220026"/>
    </features>
-
 
 </product>

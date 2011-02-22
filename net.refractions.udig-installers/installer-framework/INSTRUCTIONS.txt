@@ -1,0 +1,3 @@
+These are instructions on how to use this installer.
+
+The installer configuration files are in the config folder.

@@ -38,7 +38,7 @@ import org.eclipse.swt.widgets.Control;
 
 /**
  * Opens a map when dropped on an IEditorPart
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -55,21 +55,21 @@ public class DropMap extends IDropAction {
             if ( control != LayersView.getViewer().getControl() && !(control instanceof ViewportPane))
                 return false;
         }
-        
+
         if (getData() instanceof IProjectElement) {
             return true;
         }
-       
+
         // we want to open the project element if one of it children is dragged
         if (getData() instanceof EObject && !(getDestination() instanceof ILayer)) {
             EObject eobj = (EObject) getData();
             while (eobj!=null && !(eobj instanceof IProjectElement) ){
                 eobj=eobj.eContainer();
             }
-            
+
             if (eobj == null)
                 return false;
-            
+
             // if layer dropped in layers view when map is open then we want use another action
             if( getData() instanceof ILayer && getDestination() instanceof LayersView && ApplicationGIS.getActiveMap()!=ApplicationGIS.NO_MAP ){
                 return false;
@@ -78,7 +78,7 @@ public class DropMap extends IDropAction {
             if( getData() instanceof ILayer && getDestination() instanceof MapEditor){
                 return false;
             }
-            
+
             return true;
         }
         URL url = null;

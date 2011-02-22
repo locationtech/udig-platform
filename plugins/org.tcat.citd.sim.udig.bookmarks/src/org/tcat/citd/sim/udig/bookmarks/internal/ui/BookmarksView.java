@@ -1,5 +1,7 @@
 package org.tcat.citd.sim.udig.bookmarks.internal.ui;
 
+import net.refractions.udig.project.ui.ApplicationGIS;
+
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -26,7 +28,7 @@ import org.tcat.citd.sim.udig.bookmarks.internal.actions.BookmarkAction;
  * This is the view that displays the <code>Bookmark</code>s. The content provider connects to
  * the <code>BookmarkManager</code> which is the model.
  * <p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
@@ -104,6 +106,8 @@ public class BookmarksView extends ViewPart implements ISetSelectionTarget {
 
         });
         initPopup();
+
+        ApplicationGIS.getToolManager().contributeGlobalActions(this, getViewSite().getActionBars());
     }
 
     /**

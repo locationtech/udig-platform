@@ -1,0 +1,66 @@
+<class-diagram generalizations="true" realizations="true" associations="true" dependencies="true"
+  nesting-relationships="true">
+  <classifier-display autosize="true" package="true" attributes="true" operations="true" initial-value="false"
+    signature="true" visibility="true"/>
+  <association-display labels="true" multiplicity="true"/>
+  <class type="java" name="net.refractions.udig.tutorials.urladapter.URLResolveAdapterFactory"
+    project="net.refractions.udig.tutorials.urladapter"
+    file="/net.refractions.udig.tutorials.urladapter/src/net/refractions/udig/tutorials/urladapter/URLResolveAdapterFactory.java"
+    corner="BOTTOM_RIGHT">
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true"
+      visibility="true"/>
+    <position x="522" y="485" width="-1" height="-1"/>
+  </class>
+  <interface type="java" name="net.refractions.udig.catalog.IResolveAdapterFactory"
+    project="net.refractions.udig.catalog"
+    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IResolveAdapterFactory.java"
+    corner="BOTTOM_RIGHT">
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true"
+      visibility="true"/>
+    <position x="524" y="315" width="-1" height="-1"/>
+  </interface>
+  <interface type="java" name="net.refractions.udig.catalog.IResolveManager" project="net.refractions.udig.catalog"
+    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IResolveManager.java" corner="BOTTOM_RIGHT">
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true"
+      visibility="true"/>
+    <position x="160" y="311" width="-1" height="-1"/>
+  </interface>
+  <interface type="java" name="net.refractions.udig.catalog.IResolve" project="net.refractions.udig.catalog"
+    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IResolve.java" corner="BOTTOM_RIGHT">
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true"
+      visibility="true"/>
+    <position x="160" y="111" width="-1" height="-1"/>
+  </interface>
+  <dependency>
+    <source project="net.refractions.udig.tutorials.urladapter"
+      name="net.refractions.udig.tutorials.urladapter.URLResolveAdapterFactory"
+      file="/net.refractions.udig.tutorials.urladapter/src/net/refractions/udig/tutorials/urladapter/URLResolveAdapterFactory.java"/>
+    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IResolveAdapterFactory"
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IResolveAdapterFactory.java"/>
+  </dependency>
+  <dependency>
+    <source project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IResolveAdapterFactory"
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IResolveAdapterFactory.java"/>
+    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IResolve"
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IResolve.java"/>
+  </dependency>
+  <realization>
+    <source project="net.refractions.udig.tutorials.urladapter"
+      name="net.refractions.udig.tutorials.urladapter.URLResolveAdapterFactory"
+      file="/net.refractions.udig.tutorials.urladapter/src/net/refractions/udig/tutorials/urladapter/URLResolveAdapterFactory.java"/>
+    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IResolveAdapterFactory"
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IResolveAdapterFactory.java"/>
+  </realization>
+  <dependency>
+    <source project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IResolveManager"
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IResolveManager.java"/>
+    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IResolve"
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IResolve.java"/>
+  </dependency>
+  <dependency>
+    <source project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IResolveManager"
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IResolveManager.java"/>
+    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IResolveAdapterFactory"
+      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IResolveAdapterFactory.java"/>
+  </dependency>
+</class-diagram>

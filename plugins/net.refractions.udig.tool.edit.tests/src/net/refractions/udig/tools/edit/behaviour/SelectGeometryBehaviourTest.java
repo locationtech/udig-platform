@@ -2,9 +2,7 @@ package net.refractions.udig.tools.edit.behaviour;
 
 
 import java.awt.Dimension;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.refractions.udig.AbstractProjectUITestCase;
 import net.refractions.udig.project.BlackboardEvent;
@@ -25,17 +23,11 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
 import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.identity.Identifier;
-import org.opengis.filter.spatial.BBOX;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.filter.FilterType;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -53,29 +45,25 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
     final int button1 = MapMouseEvent.BUTTON1;
     final int button2 = MapMouseEvent.BUTTON2;
     private net.refractions.udig.project.internal.Map map;
-    private FeatureCollection<SimpleFeatureType, SimpleFeature>  features;
+    private FeatureCollection features;
 
     java.awt.Point SCREEN=new java.awt.Point(500,500);
     private TestHandler handler;
-    
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         map=MapTests.createDefaultMap("Test",3,true,new Dimension(500,500)); //$NON-NLS-1$
-        FeatureStore<SimpleFeatureType, SimpleFeature> resource = map.getLayersInternal().get(0).getResource(FeatureStore.class, null);
+        FeatureStore resource = map.getLayersInternal().get(0).getResource(FeatureStore.class, null);
         features=resource.getFeatures();
         GeometryFactory fac=new GeometryFactory();
         int i=0;
-        for( FeatureIterator<SimpleFeature> iter=features.features(); iter.hasNext(); ){
+        for( FeatureIterator iter=features.features(); iter.hasNext(); ){
             i++;
-            SimpleFeature feature=iter.next();
+            Feature feature=iter.next();
             Coordinate c=map.getViewportModel().pixelToWorld(i*10,0);
-            FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-			Set<Identifier> ids = new HashSet<Identifier>();
-			ids.add(filterFactory.featureId(feature.getID()));
-			GeometryDescriptor defaultGeometry = feature.getFeatureType().getGeometryDescriptor();
-			resource.modifyFeatures(defaultGeometry, fac.createPoint(c),
-                    filterFactory.id(ids));
+            resource.modifyFeatures(feature.getFeatureType().getDefaultGeometry(), fac.createPoint(c),
+                    FilterFactoryFinder.createFilterFactory().createFidFilter(feature.getID()));
         }
         ((EditManager)map.getEditManager()).commitTransaction();
 
@@ -83,12 +71,12 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
         ((ToolContext)handler.getContext()).setMapInternal(map);
         ((ToolContext)handler.getContext()).setRenderManagerInternal(map.getRenderManagerInternal());
     }
-    
+
     /*
      * Test method for 'net.refractions.udig.tools.edit.mode.MoveVertexMode.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
     public void testIsValid() throws Exception {
-        SelectFeatureBehaviour mode=new SelectFeatureBehaviour(new Class[]{Polygon.class, MultiPolygon.class}, BBOX.class);
+        SelectFeatureBehaviour mode=new SelectFeatureBehaviour(new Class[]{Polygon.class, MultiPolygon.class}, FilterType.GEOMETRY_BBOX);
 
         assertFalse(mode.isValid(handler, new MapMouseEvent(null, 0, 0, none, none, 0), EventType.DOUBLE_CLICK));
 
@@ -110,12 +98,12 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
         // ctl down is not legal
         assertFalse(mode.isValid(handler, new MapMouseEvent(null, 10,0, alt, none, button1), EventType.RELEASED));
         // only 1 modifier is legal
-        assertFalse(mode.isValid(handler, new MapMouseEvent(null, 
+        assertFalse(mode.isValid(handler, new MapMouseEvent(null,
                 0, 0, shift|ctrl, none, button1), EventType.RELEASED));
-        
+
         // button2 is not legal
         assertFalse(mode.isValid(handler,  new MapMouseEvent(null, 10, 0, none, none, button2), EventType.RELEASED));
-        
+
         List<EditGeom> geoms = handler.getEditBlackboard().getGeoms();
         handler.getEditBlackboard().addPoint(10,0, geoms.get(0).getShell());
         handler.setCurrentShape(handler.getEditBlackboard().getGeoms().get(0).getShell());
@@ -125,16 +113,16 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
      * Test method for 'net.refractions.udig.tools.edit.mode.MoveVertexMode.run(EditToolHandler, MapMouseEvent, EventType)'
      */
     public void testRun() throws Exception {
-        SelectFeatureBehaviour mode=new SelectFeatureBehaviour(new Class[]{Point.class}, BBOX.class);
-        
+        SelectFeatureBehaviour mode=new SelectFeatureBehaviour(new Class[]{Point.class}, FilterType.GEOMETRY_BBOX);
+
         Listener l=new Listener();
         handler.getBehaviours().add(mode);
         handler.getContext().getMap().getBlackboard().addListener(l);
-        handler.setEditBlackboard(new EditBlackboard(SCREEN.x, 
+        handler.setEditBlackboard(new EditBlackboard(SCREEN.x,
                 SCREEN.y, map.getViewportModel().worldToScreenTransform(), map.getLayersInternal().get(0).layerToMapTransform()));
         handler.setContext(ApplicationGISInternal.createContext(map));
         handler.getEditBlackboard().getListeners().add(l);
-        
+
         handler.handleEvent(new MapMouseEvent(null, 10, 0, none, none, button1), EventType.RELEASED);
         assertEquals( net.refractions.udig.tools.edit.support.Point.valueOf(10,0), handler.getCurrentGeom().getShell().getPoint(0));
         assertTrue( l.set  );
@@ -148,7 +136,7 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
         assertEquals(geom,l.old);
         assertEquals( handler.getCurrentGeom(), l.current);
         assertEquals( 1, handler.getEditBlackboard().getGeoms().size());
-        
+
         // add using shift
         handler.handleEvent(new MapMouseEvent(null, 10, 0, shift, none, button1), EventType.RELEASED);
         geom=l.added.get(l.added.size()-1);
@@ -157,7 +145,7 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
         assertEquals(geom,l.current);
         assertEquals( geom, handler.getCurrentGeom());
         assertEquals( 2, handler.getEditBlackboard().getGeoms().size());
-        
+
         // add using ctrl
         handler.handleEvent(new MapMouseEvent(null, 30, 0, ctrl, none, button1), EventType.RELEASED);
         geom=l.added.get(l.added.size()-1);
@@ -165,29 +153,28 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
         assertFalse( l.set  );
         assertEquals( geom, handler.getCurrentGeom());
         assertEquals( 3, handler.getEditBlackboard().getGeoms().size());
-        
+
         // remove using ctrl
         handler.handleEvent(new MapMouseEvent(null, 30, 0, ctrl, none, button1), EventType.RELEASED);
         assertEquals(0, handler.getEditBlackboard().getGeoms(30,0).size());
         assertEquals( 2, handler.getEditBlackboard().getGeoms().size());
-        
+
         // click on nothing and all should be deselected
         handler.handleEvent( new MapMouseEvent(null, 0, 0, none, none, button1), EventType.RELEASED);
         assertEquals(0, handler.getEditBlackboard().getGeoms(20,0).size());
         assertEquals( 1, handler.getEditBlackboard().getGeoms().size());
         assertTrue(l.set);
         assertNull( handler.getCurrentGeom() );
-        
-    }
-    
-    public void testSelectMultiGeom() throws Exception {
-        SelectFeatureBehaviour mode=new SelectFeatureBehaviour(new Class[]{MultiLineString.class}, BBOX.class);
 
+    }
+
+    public void testSelectMultiGeom() throws Exception {
+        SelectFeatureBehaviour mode=new SelectFeatureBehaviour(new Class[]{MultiLineString.class}, FilterType.GEOMETRY_BBOX);
         handler.getBehaviours().add(mode);
-        handler.setEditBlackboard(new EditBlackboard(500,500, map.getViewportModel().worldToScreenTransform(), 
+        handler.setEditBlackboard(new EditBlackboard(500,500, map.getViewportModel().worldToScreenTransform(),
                 map.getLayersInternal().get(0).layerToMapTransform()));
-        
-        FeatureStore<SimpleFeatureType, SimpleFeature> resource = map.getLayersInternal().get(0).getResource(FeatureStore.class, null);
+
+        FeatureStore resource = map.getLayersInternal().get(0).getResource(FeatureStore.class, null);
         GeometryFactory factory=new GeometryFactory();
         LineString line1=factory.createLineString(new Coordinate[]{
                 map.getViewportModel().pixelToWorld(10,10), map.getViewportModel().pixelToWorld(10,20)
@@ -195,32 +182,29 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
         LineString line2=factory.createLineString(new Coordinate[]{
                 map.getViewportModel().pixelToWorld(20,10), map.getViewportModel().pixelToWorld(20,20)
         });
-        
+
         MultiLineString multiline = factory.createMultiLineString(new LineString[]{line1, line2});
-        
-        SimpleFeature feature = SimpleFeatureBuilder.build(resource.getSchema(), 
-        		new Object[]{multiline, "multiline"}, "testGeom"); //$NON-NLS-1$
-        Set<Identifier> ids = new HashSet<Identifier>();
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-        ids.add(filterFactory.featureId(features.features().next().getID()));
-		resource.modifyFeatures(feature.getFeatureType().getGeometryDescriptor(), multiline,
-                filterFactory.id(ids));
-    
-        
+
+        Feature feature = resource.getSchema().create(new Object[]{multiline, "multiline"}); //$NON-NLS-1$
+        resource.modifyFeatures(feature.getFeatureType().getDefaultGeometry(), multiline,
+                FilterFactoryFinder.createFilterFactory().createFidFilter(
+                        features.features().next().getID()));
+
+
         handler.handleEvent(new MapMouseEvent(null, 20, 15, none, none, button1), EventType.RELEASED);
-        
+
         assertTrue(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(20,10)));
         assertTrue(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(20,20)));
         assertFalse(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(10,10)));
         assertFalse(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(10,20)));
 
         handler.handleEvent(new MapMouseEvent(null, 10, 15, none, none, button1), EventType.RELEASED);
-        
+
         assertTrue(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(10,10)));
         assertTrue(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(10,20)));
         assertFalse(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(20,10)));
         assertFalse(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(20,20)));
-    
+
     }
 
     class Listener extends EditBlackboardAdapter implements IBlackboardListener{
@@ -228,11 +212,11 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
         boolean set=false;
         EditGeom old;
         EditGeom current;
-        
+
         @SuppressWarnings("unchecked")
         @Override
         public void changed( EditBlackboardEvent e ) {
-            
+
             switch( e.getType() ) {
             case SET_GEOMS:
                 set=true;
@@ -248,18 +232,18 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
                 break;
 
             default:
-                
+
                 break;
             }
         }
-        
+
         @Override
         public void batchChange( List<EditBlackboardEvent> e ) {
             for( EditBlackboardEvent event : e ) {
                 changed(event);
             }
         }
-        
+
         public void blackBoardChanged( BlackboardEvent event ) {
             if( event.getKey()==EditToolHandler.CURRENT_SHAPE){
                 if( event.getNewValue()==null )
@@ -267,7 +251,7 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
                 else
                     this.current=((PrimitiveShape) event.getNewValue()).getEditGeom();
                 if( event.getOldValue()!=null )
-                    this.old=((PrimitiveShape) event.getOldValue()).getEditGeom();      
+                    this.old=((PrimitiveShape) event.getOldValue()).getEditGeom();
             }
         }
 

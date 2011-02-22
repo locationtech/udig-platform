@@ -39,11 +39,11 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * Represents the simplest shape. EditGeoms are made up of PrimitiveShapes.
+ * Represents the simplest shape. GeomShapes are made up of PrimitiveShapes.
  * <p>
  * This is not a composite pattern.
  * </p>
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -112,7 +112,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
         /**
          * Adds a point and its corresponding coordinate
-         * 
+         *
          * @param p point to add
          * @param coords corresponding coordinate or null.
          */
@@ -122,7 +122,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
         /**
          * Adds a point and its corresponding coordinate
-         * 
+         *
          * @param i index of point location. Coordinate will be added as the last of the coordinates
          *        at that location.
          * @param p point to add
@@ -197,7 +197,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
         }
         /**
          * Adds a coordinate
-         * 
+         *
          * @param i index of coordinate to add.
          * @param c corresponding coordinate or null.
          */
@@ -210,7 +210,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
         /**
          * Remove a point and all the coordinates mapping to it.
-         * 
+         *
          * @param i index of point to remove
          */
         public Point removePoint( int i ) {
@@ -230,7 +230,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
         /**
          * Remove a coordinate at location i. Mapped points will be deleted too.
-         * 
+         *
          * @param i index of coordinate to remove
          */
         public Coordinate removeCoordinate( int i ) {
@@ -267,7 +267,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
         }
         /**
          * Remove a coordinate at location i. Mapped points will be deleted too.
-         * 
+         *
          * @param i index of coordinate to remove
          */
         public boolean remove( Coordinate c ) {
@@ -457,7 +457,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
          * This method will update the EditBlackboard rather than the edit blackboard updating
          * itself and the Primitive Shape. The pointCoordCalculator must have been updated already
          * with the new toScreen and toWorld transforms.
-         * 
+         *
          * @param oldToNew
          */
         Map< ? extends Point, ? extends List<Point>> transform( AffineTransform oldToScreen,
@@ -467,11 +467,11 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
                 return transformInternal(pointCoordCalculator);
             } else {
 
-                               //pan
-                return translate(AffineTransform.getTranslateInstance(
-                pointCoordCalculator.toScreen.getTranslateX()- oldToScreen.getTranslateX(), 
-                pointCoordCalculator.toScreen.getTranslateY()- oldToScreen.getTranslateY()),
-                pointCoordCalculator);
+                return translate(AffineTransform.getTranslateInstance(pointCoordCalculator.toScreen
+                        .getTranslateX()
+                        - oldToScreen.getTranslateX(), pointCoordCalculator.toScreen
+                        .getTranslateY()
+                        - oldToScreen.getTranslateY()));
             }
         }
 
@@ -494,15 +494,15 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
                     Coordinate coord = c.get(oldPoint);
 
                     Point newPoint = pointCoordCalculator.toPoint(coord);
-//                    // So that all the vertices don't make a big mess look around point in a 3x3
-//                    // radius
-//                    // if another point is there add to that point.
-//                    Point overLappingPoint;
-//                    overLappingPoint = getEditBlackboard().overVertex(newPoint,
-//                            PreferenceUtil.instance().getVertexRadius());
-//
-//                    if (overLappingPoint != null && getEditBlackboard().isCollapseVertices())
-//                        newPoint = overLappingPoint;
+                    // So that all the vertices don't make a big mess look around point in a 3x3
+                    // radius
+                    // if another point is there add to that point.
+                    Point overLappingPoint;
+                    overLappingPoint = getEditBlackboard().overVertex(newPoint,
+                            PreferenceUtil.instance().getVertexRadius());
+
+                    if (overLappingPoint != null && getEditBlackboard().isCollapseVertices())
+                        newPoint = overLappingPoint;
 
                     if (!newPoint.equals(oldPoint)) {
                         tmp = new PointCoordMap(newPoint);
@@ -560,7 +560,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
             return oldPointToNew;
         }
 
-        private Map< ? extends Point, ? extends List<Point>> translate( AffineTransform oldToNew, PointCoordCalculator pointCoordCalculator ) {
+        private Map< ? extends Point, ? extends List<Point>> translate( AffineTransform oldToNew ) {
             List<PointCoordMap> oldPoints = points;
 
             HashMap<Point, List<Point>> oldPointToNew = new HashMap<Point, List<Point>>();
@@ -573,63 +573,45 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
             int diffY = (int) oldToNew.getTranslateY();
             for( PointCoordMap map : oldPoints ) {
 
-                Point oldPoint = map.point;
-                for( Iterator<LazyCoord> iter = map.coords.iterator(); iter.hasNext(); ) {
-                    LazyCoord c = iter.next();
-                    PointCoordMap tmp = map;
-                    Point newPoint = Point.valueOf(map.point.getX() + diffX, map.point.getY()
-                            + diffY);
+                Point newPoint = Point.valueOf(map.point.getX() + diffX, map.point.getY() + diffY);
+                List<Point> pointMapping = oldPointToNew.get(map.point);
+                if (pointMapping == null) {
+                    pointMapping = new ArrayList<Point>();
+                    pointMapping.add(newPoint);
+                    oldPointToNew.put(map.point, pointMapping);
+                } else {
+                    pointMapping.add(newPoint);
+                }
+                map.point = newPoint;
 
-                    if (!newPoint.equals(oldPoint)) {
-                        tmp = new PointCoordMap(newPoint);
-                        tmp.coords.add(c);
-                        iter.remove();
-                    }
+                // update shape
+                points.add(map);
+                List<PointCoordMap> list = pointsToModel.get(newPoint);
+                if (list == null) {
+                    List<PointCoordMap> l = new ArrayList<PointCoordMap>();
+                    l.add(map);
+                    pointsToModel.put(newPoint, l);
+                } else {
+                    list.add(map);
+                }
 
-                    c.pointCoordCalculator = new PointCoordCalculator(pointCoordCalculator);
-                    c.start = newPoint;
+                // update Blackboard.
+                List<LazyCoord> coords = editBlackboard.coordMapping.get(newPoint);
+                if (coords == null) {
+                    List<LazyCoord> l = new ArrayList<LazyCoord>(map.coords);
+                    editBlackboard.coordMapping.put(newPoint, l);
+                } else {
+                    coords.addAll(map.coords);
+                }
 
-                    List<Point> pointMapping = oldPointToNew.get(oldPoint);
-                    if (pointMapping == null) {
-                        pointMapping = new ArrayList<Point>();
-                        pointMapping.add(newPoint);
-                        oldPointToNew.put(oldPoint, pointMapping);
-                    } else {
-                        pointMapping.add(newPoint);
-                    }
-                    tmp.point = newPoint;
-
-                    coordsToModel.put(c, tmp);
-
-                    // update shape
-                    points.add(tmp);
-                    List<PointCoordMap> list = pointsToModel.get(newPoint);
-                    if (list == null) {
-                        List<PointCoordMap> l = new ArrayList<PointCoordMap>();
-                        l.add(tmp);
-                        pointsToModel.put(newPoint, l);
-                    } else {
-                        list.add(tmp);
-                    }
-
-                    // update Blackboard.
-                    List<LazyCoord> coords = editBlackboard.coordMapping.get(newPoint);
-                    if (coords == null) {
-                        List<LazyCoord> l = new ArrayList<LazyCoord>(tmp.coords);
-                        editBlackboard.coordMapping.put(newPoint, l);
-                    } else {
-                        coords.addAll(tmp.coords);
-                    }
-
-                    Set<EditGeom> mappedGeoms = editBlackboard.geomMapping.get(newPoint);
-                    if (mappedGeoms == null) {
-                        Set<EditGeom> l = new HashSet<EditGeom>();
-                        l.add(getEditGeom());
-                        editBlackboard.geomMapping.put(newPoint, l);
-                    } else {
-                        if (!mappedGeoms.contains(getEditGeom()))
-                            mappedGeoms.add(getEditGeom());
-                    }
+                Set<EditGeom> mappedGeoms = editBlackboard.geomMapping.get(newPoint);
+                if (mappedGeoms == null) {
+                    Set<EditGeom> l = new HashSet<EditGeom>();
+                    l.add(getEditGeom());
+                    editBlackboard.geomMapping.put(newPoint, l);
+                } else {
+                    if (!mappedGeoms.contains(getEditGeom()))
+                        mappedGeoms.add(getEditGeom());
                 }
 
             }
@@ -639,7 +621,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
         /**
          * Moves a single LazyCoord from the start point to the end point. Keeps the order of the
          * coordinates in the same order.
-         * 
+         *
          * @param start
          * @param end
          * @param coord
@@ -779,7 +761,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
         /**
          * Returns lazycoords at point.
-         * 
+         *
          * @param point
          * @return
          */
@@ -891,7 +873,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
     /**
      * Returns an array with all the coordinates in shape.
-     * 
+     *
      * @return an array with all the coordinates in shape.
      */
     public Coordinate[] coordArray() {
@@ -905,7 +887,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
     /**
      * returns true if the point is contained in this shape.
-     * 
+     *
      * @param p an arbitrary point
      * @return Returns true if the point is contained in this shape.
      */
@@ -932,7 +914,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
     /**
      * Returns a {@link ClosestEdge} object that has information about the point that closest to the
      * click paramter and is on an edge of the part.
-     * 
+     *
      * @param click the point to use as the reference point
      * @return
      */
@@ -993,7 +975,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
     /**
      * Returns the bounding box of the Shape in pixel space.
-     * 
+     *
      * @return the bounding box of the Shape in pixel space.
      */
     public Rectangle getBounds() {
@@ -1018,7 +1000,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
     /**
      * Returns true if the point is contained in the shape or on the edge. It is considered on the
      * edge if it is within {@link PreferenceUtil#getVertexRadius()} of the edge.
-     * 
+     *
      * @param point An astrbitrary point
      * @param treatUnknownGeomsAsPolygon if {@link EditGeom#getShapeType()} return UNKOWN this
      *        parameter is used to determine if this shape should be considered a polygon.
@@ -1030,7 +1012,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
     /**
      * Returns true if the point is contained in the shape or on the edge.
-     * 
+     *
      * @param point An astrbitrary point
      * @param treatUnknownGeomsAsPolygon if {@link EditGeom#getShapeType()} return UNKOWN this
      *        parameter is used to determine if this shape should be considered a polygon.
@@ -1113,7 +1095,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
     /**
      * Returns all the coordinates that map to the point at location i.
-     * 
+     *
      * @param i index of a point in the shape
      * @return Returns all the coordinates that map to the point at location i.
      */
@@ -1174,7 +1156,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
                 }
             }
             if (!found) {
-                throw new AssertionError(lz + " is not in the mapped bag " + bag); //$NON-NLS-1$                
+                throw new AssertionError(lz + " is not in the mapped bag " + bag); //$NON-NLS-1$
             }
             if (getEditBlackboard().coordMapping.containsKey(bag.point)) {
                 found = false;
@@ -1187,7 +1169,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
                 }
 
                 if (!found) {
-                    throw new AssertionError(lz + " is not in editblackboard's coordMapping"); //$NON-NLS-1$                    
+                    throw new AssertionError(lz + " is not in editblackboard's coordMapping"); //$NON-NLS-1$
                 }
             } else {
                 throw new AssertionError(bag.point + " should be in the blackboard but isn't"); //$NON-NLS-1$
@@ -1199,20 +1181,20 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
             for( LazyCoord coordinate : b.coords ) {
                 if (!coordinates.contains(coordinate)) {
                     throw new AssertionError(coordinate
-                            + " is not in the list of coordinate but it should be"); //$NON-NLS-1$                
+                            + " is not in the list of coordinate but it should be"); //$NON-NLS-1$
                 }
                 if (!coordsToModel.containsKey(coordinate)) {
-                    throw new AssertionError(coordinate + " is not in coordsToModel map"); //$NON-NLS-1$                
+                    throw new AssertionError(coordinate + " is not in coordsToModel map"); //$NON-NLS-1$
                 }
                 if (!pointsToModel.containsKey(b.point))
-                    throw new AssertionError(b.point + " is not in pointsToModel map"); //$NON-NLS-1$                
+                    throw new AssertionError(b.point + " is not in pointsToModel map"); //$NON-NLS-1$
             }
             if (!getEditBlackboard().coordMapping.get(b.point).containsAll(b.coords)) {
                 throw new AssertionError("Not all coordinates in bags are in editblackboard"); //$NON-NLS-1$
             }
             if (!getEditBlackboard().geomMapping.get(b.point).contains(getEditGeom())) {
                 throw new AssertionError(
-                        "EditGeom is not mapped to " + b.point + " in edit blackboard's geomMapping"); //$NON-NLS-1$ //$NON-NLS-2$                
+                        "EditGeom is not mapped to " + b.point + " in edit blackboard's geomMapping"); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
 
@@ -1236,7 +1218,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
     /**
      * Returns the point closest to location. The search is a square of height and width radius + 1.
-     * 
+     *
      * @param location the locations to start searching from.
      * @param radius the distance away from location to search.
      * @return the point closest to location or null if no point exists.
@@ -1247,7 +1229,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
     /**
      * Returns the point closest to location. If ignore is true the point at locations will not be
      * returned. The search is a square of height and width radius + 1.
-     * 
+     *
      * @param location the locations to start searching from.
      * @param radius radius the distance away from location to search.
      * @param ignore true if the vertex at location is ignored
@@ -1267,7 +1249,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
     /**
      * Searchs for a vertext in a square i pixels away from the location.
-     * 
+     *
      * @param location center of search
      * @param i distance from center to search (is not an area search)
      * @param ignore
@@ -1326,7 +1308,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
      * only check the points not the real coordinates so this method must be used with care. Just
      * iterates through all the edges in one shape and checks if it overlap with an edge in the
      * other shape.
-     * 
+     *
      * <pre>
      *  ------------------
      *  |   ---------    |
@@ -1335,9 +1317,9 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
      *      |       |
      *      ---------
      * </pre>
-     * 
+     *
      * Above is considered overlapping but below is <em>only</em> if acceptTouches is true:
-     * 
+     *
      * <pre>
      *  ------------------
      *  |                |
@@ -1346,12 +1328,12 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
      *      |       |
      *      ---------
      * </pre>
-     * 
-     * <p> 
+     *
+     * <p>
      * <b>Note:</b> If one of the shapes is a point and the other is a line or a point then acceptTouches must be true
      * other or this method will always return false.
      * </p>
-     * 
+     *
      * @param shape2 other shape to test against
      * @param acceptTouches if true then this method will return true if the two shapes simply touch
      *        (but don't fully overlap). See above for more details
@@ -1362,16 +1344,16 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
         if (getNumPoints() == 0)
             return false;
-        
+
         if (shape2.getNumPoints() == 0)
             return false;
 
         if (getNumPoints() == 1)
-            return shape2.contains(getPoint(0), treatUnknownAsPolygon, true) 
+            return shape2.contains(getPoint(0), treatUnknownAsPolygon, true)
             && isAcceptableIntersection(shape2, getPoint(0), acceptTouches);
 
         if (shape2.getNumPoints() == 1)
-            return contains(shape2.getPoint(0), treatUnknownAsPolygon, true) 
+            return contains(shape2.getPoint(0), treatUnknownAsPolygon, true)
             && isAcceptableIntersection(this, shape2.getPoint(0), acceptTouches);
 
         Point last, current;
@@ -1397,7 +1379,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
             current = iter.next();
 
             // now check if this shape's vertices are contained in the other shape
-            if (s2.contains(last.getX(), last.getY()) 
+            if (s2.contains(last.getX(), last.getY())
                     && isAcceptableIntersection(shape2, last, acceptTouches))
                 return true;
 
@@ -1414,7 +1396,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
         return false;
     }
-    
+
     /**
      * detects if the edge intersects with any of the edges in the shape
      */
@@ -1448,7 +1430,7 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
             if( point.equals(shape.getPoint(0)) )
                 return acceptTouches;
         }
-        Envelope envelope2 = new Envelope( point.getX() - 0.1, point.getX() + 0.1,  
+        Envelope envelope2 = new Envelope( point.getX() - 0.1, point.getX() + 0.1,
                 point.getY() - 0.1, point.getY() + 0.1);
         if( EditUtils.instance.overEdgePixelPrecision(shape, envelope2)){
             return acceptTouches;
@@ -1472,11 +1454,4 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
                 || (owner.getShapeType() == ShapeType.UNKNOWN && treatUnknownAsPolygon);
     }
 
-    public List<Point> getPoints() {
-        List<Point> result = new ArrayList<Point>();
-        for( PointCoordMap point : points ) {
-            result.add(point.point);
-        }
-        return result;
-    }
 }

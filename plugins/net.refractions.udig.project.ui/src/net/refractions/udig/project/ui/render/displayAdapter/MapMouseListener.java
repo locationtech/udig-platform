@@ -11,14 +11,14 @@ package net.refractions.udig.project.ui.render.displayAdapter;
 /**
  * A Listener interested in mouse button event and entry and exit events. MapMouseListeners can sigh
  * up for
- * 
+ *
  * @author Jones
  * @since 0.3
  */
 public interface MapMouseListener {
     /**
      * Called when a button is pressed down.
-     * 
+     *
      * @param event the event data.
      * @see MapMouseEvent
      */
@@ -26,7 +26,7 @@ public interface MapMouseListener {
 
     /**
      * Called when a button is release.
-     * 
+     *
      * @param event the event data.
      * @see MapMouseEvent
      */
@@ -34,7 +34,7 @@ public interface MapMouseListener {
 
     /**
      * Called when the mouse cursor enters the map display area.
-     * 
+     *
      * @param event the event data.
      * @see MapMouseEvent
      */
@@ -42,7 +42,7 @@ public interface MapMouseListener {
 
     /**
      * Called when the mouse cursor exits the map dispaly area.
-     * 
+     *
      * @param event the event data.
      * @see MapMouseEvent
      */
@@ -50,7 +50,7 @@ public interface MapMouseListener {
 
     /**
      * Called when a button has been double clicked.
-     * 
+     *
      * @param event the event data.
      * @see MapMouseEvent
      */

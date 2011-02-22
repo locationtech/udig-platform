@@ -1,4 +1,4 @@
-<project name="gt2eclipse.xml" default="gt2eclipse" basedir="."> 
+<project name="gt2eclipse.xml" default="gt2eclipse" basedir=".">
 
 	<target name="check.sub" unless="sub">
 		<fail message="sub not set"/>

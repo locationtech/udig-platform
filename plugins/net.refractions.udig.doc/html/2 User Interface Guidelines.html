@@ -1,0 +1,232 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 2 User Interface Guidelines</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 2 User Interface Guidelines -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>Real quick and easy:</p>
+<ul>
+	<li>Follow Eclipse User Interface Guidelines (See <a href="http://www.eclipse.org/articles/Article-UI-Guidelines/Index.html" title="Visit page outside Confluence">Eclipse UI Guidelines</a>)</li>
+	<li>Use the <a href="Icons and Imagery.html" title="Icons and Imagery">Icons and Imagery</a> so we can have a consistent set of gylphs</li>
+</ul>
+
+
+<p>The user interace guidelines include a <a href="http://www.eclipse.org/articles/Article-UI-Guidelines/Contents.html#Checklist%20For%20Developers" title="Visit page outside Confluence">checklist</a>, we have linked to some of this content and provided our own summary.</p>
+
+<h3><a name="2UserInterfaceGuidelines-01GeneralUIGuidelines"><a href="01 General UI Guidelines.html" title="01 General UI Guidelines">01 General UI Guidelines</a></a></h3>
+<ul>
+	<li>Do what eclipse does <img class="emoticon" src="./icons/emoticons/smile.gif" height="20" width="20" align="absmiddle" alt="" border="0"/></li>
+	<li>Use <b>Headline style</b> capitalization for menus, tooltip and all titles, including those used for windows, dialogs, tabs, column headings and push buttons. Capitalize the first and last words, and all nouns, pronouns, adjectives, verbs and adverbs.  Do not include ending punctuation.</li>
+	<li>Use <b>Sentence style</b> capitalization for all control labels in a dialog or window, including those for check boxes, radio buttons, group labels, and simple text fields.  Capitalize the first letter of the first word, and any proper names such as the word Java.</li>
+	<li>Create localized version of the resources within your plug-in.</li>
+</ul>
+
+
+<h3><a name="2UserInterfaceGuidelines-02VisualDesignGuidelines"><a href="02 Visual Design Guidelines.html" title="02 Visual Design Guidelines">02 Visual Design Guidelines</a></a></h3>
+
+<ul>
+	<li>Re-use the core visual concepts to maintain consistent representation and meaning across Eclipse plug-ins.</li>
+	<li>Use the appropriate icon type in the location it is designed for within the user interface.</li>
+	<li>Follow the specific size specifications for each type of icon.</li>
+	<li>Cut the icons with the specific placement shown to ensure alignment in the user interface.</li>
+	<li>Follow the positioning guidelines for the different types of icons for optimal alignment of these elements relative to one another.</li>
+	<li>Follow the specific size specifications for wizard graphics.</li>
+	<li>Follow the predefined directory structure and naming convention.</li>
+	<li>Use the enabled, and disabled states provided.</li>
+</ul>
+
+
+<div class="panel"><div class="panelContent">
+<ul>
+	<li>Visual concepts for udig are located on the <a href="Icons and Imagery.html" title="Icons and Imagery">Icons and Imagery</a> page</li>
+</ul>
+</div></div>
+
+<h3><a name="2UserInterfaceGuidelines-ComponentDevelopment">Component Development</a></h3>
+
+<h4><a name="2UserInterfaceGuidelines-03CommandsGuidelines"><a href="03 Commands Guidelines.html" title="03 Commands Guidelines">03 Commands Guidelines</a></a></h4>
+<ul>
+	<li>require label, tool tip and icon</li>
+	<li>tool tip describes result</li>
+	<li>Follow workbench example of New, Delete and Add</li>
+	<li>Enablement be darn quick, even if you need to cheat</li>
+</ul>
+
+
+<h4><a name="2UserInterfaceGuidelines-04DialogsGuidelines"><a href="04 Dialogs Guidelines.html" title="04 Dialogs Guidelines">04 Dialogs Guidelines</a></a></h4>
+
+<ul>
+	<li>When opened focus should be on the first control</li>
+	<li>When using Twin Box for set member ship use '&gt;' '&lt;' '&gt;&gt;' '&lt;&lt;' buttons</li>
+</ul>
+
+
+<h4><a name="2UserInterfaceGuidelines-05WizardsGuidelines"><a href="05 Wizards Guidelines.html" title="05 Wizards Guidelines">05 Wizards Guidelines</a></a></h4>
+<ul>
+	<li>used for any task of many ordered steps</li>
+	<li>required header, banner graphic</li>
+	<li>'Back', 'Next', 'Finish', 'Canel' buttons</li>
+	<li>Start with a prompt not an error message</li>
+	<li>fill out as much information as you can for the user</li>
+	<li>validate in order, prompt for more information, error for invalid information</li>
+	<li>enabled Next, Finish when valid</li>
+	<li>Use a 'Browse' button where possible</li>
+	<li>Open editor on the results of the wizard, at the very least select it, change perspective if you have to</li>
+	<li>Use the most specific words possible, "WMS Layer" not "FeatureCollection"</li>
+</ul>
+
+
+<h4><a name="2UserInterfaceGuidelines-06EditorsGuidelines"><a href="06 Editors Guidelines.html" title="06 Editors Guidelines">06 Editors Guidelines</a></a></h4>
+<ul>
+	<li>used to edit or browse primary content</li>
+	<li>open-save-close lifecycle, &#42; indicates save is needed</li>
+	<li>cannot open the same editor twice, within a perspective</li>
+	<li>labeled with name of content</li>
+	<li>drag out multiple tabs if you have to</li>
+	<li>hook into any global commands you can: cut, copy, paste, delete etc ...</li>
+	<li>toolbar contains the most common items from the view menu</li>
+	<li>context menu is based on current selection</li>
+	<li>contenxt menu contents set by selection type, enabled/distable by selection state</li>
+	<li>support extention of context menu with MB_ADDITIONS and IActionFilter</li>
+	<li>use outline view if contents will not fit on screen</li>
+	<li>table cell editors should work with single click, and commited when user clicks away. Enter commit, Esc cancels</li>
+</ul>
+
+
+<h4><a name="2UserInterfaceGuidelines-07ViewsGuidelines"><a href="07 Views Guidelines.html" title="07 Views Guidelines">07 Views Guidelines</a></a></h4>
+<ul>
+	<li>use view to navigate information, open editor or display properties of an object</li>
+	<li>direct manipulation workflow</li>
+	<li>only one view per perspective, can be opened by several perspectives though</li>
+	<li>only commonly used commands on the toolbar, command must also be in a menu</li>
+	<li>view pulldown menu for presentation commands, in standard order</li>
+	<li>conext menu is for selection actions, in standard order, registered with the platform</li>
+	<li>context menu fixed set of commands by selection type, enabled/disabled based on selection state</li>
+	<li>an object appearing in more then one view should have the same context menu in each</li>
+	<li>support extention of context menu with MB_ADDITIONS and IActionFilter</li>
+	<li>hook into global commands like cut, copy, paste, delete</li>
+	<li>persist view state between sesssions</li>
+	<li>navigation views should have a "link" button</li>
+</ul>
+
+
+<div class="panel"><div class="panelContent">
+<ul class="alternate" type="square">
+	<li>udig will often need an apply-canel workflow</li>
+	<li>apply, cancel buttons are the last entries in the local toolbar</li>
+	<li>toolbar may also support a "link" button, allowing the option of direct manipulation (if the user can stand the delay)</li>
+	<li>a view will apply any modifications when selection changes</li>
+</ul>
+</div></div>
+
+<h4><a name="2UserInterfaceGuidelines-08PerspectivesGuidelines"><a href="08 Perspectives Guidelines.html" title="08 Perspectives Guidelines">08 Perspectives Guidelines</a></a></h4>
+
+<ul>
+	<li>create perspectives for long lived tasks</li>
+	<li>consider the workflow and view layout, menu bars, etc ...</li>
+	<li>only open the perspective if the user agrees, this is a massive context switch for them</li>
+	<li>limit the "shortcuts" in the New, Open Perspective and Show View menus to around 7</li>
+</ul>
+
+
+<h4><a name="2UserInterfaceGuidelines-09WindowsGuidelines"><a href="09 Windows Guidelines.html" title="09 Windows Guidelines">09 Windows Guidelines</a></a></h4>
+
+<ul>
+	<li>contribute ActionSets to the menu first, and then to the toolbar for frequent use</li>
+	<li>each ActionSet should have a specific task in mind, ie "zoom" vs "edit"</li>
+	<li>Be small, be many - an Action Set allows sharing between views and editors, you can't share if you have only one ActionSet for an entire plugin</li>
+	<li>let user control visible ActionSets</li>
+	<li>"Open" actions must appear in the Navigate pulldown menu of the window</li>
+	<li>Use the global status bar</li>
+</ul>
+
+
+<h4><a name="2UserInterfaceGuidelines-10PropertiesGuidelines"><a href="10 Properties Guidelines.html" title="10 Properties Guidelines">10 Properties Guidelines</a></a></h4>
+
+<ul>
+	<li>Use Properties view for quick easy changes, switching between local objects</li>
+	<li>Use Properties Dialog to edit a remote or complex object</li>
+	<li>Properties Dialog contains superset of items from the Properties view</li>
+</ul>
+
+
+
+<h4><a name="2UserInterfaceGuidelines-11WidgetsGuidelines"><a href="11 Widgets Guidelines.html" title="11 Widgets Guidelines">11 Widgets Guidelines</a></a></h4>
+
+
+<ul>
+	<li>Tree and Table widgets should ne careful when working with a checkbox; changing selection should not accidently change the check state</li>
+</ul>
+
+
+<h4><a name="2UserInterfaceGuidelines-12StandardComponentsGuidelines"><a href="12 Standard Components Guidelines.html" title="12 Standard Components Guidelines">12 Standard Components Guidelines</a></a></h4>
+
+<ul>
+	<li>you can hack the standard components, if you subclass or copy be sure to keep the same characteristics</li>
+	<li>We can't use the Navigator View or Tasks View in a RCP application</li>
+</ul>
+
+
+<p>Preference Dialog</p>
+<ul>
+	<li>is used for global options</li>
+	<li>expose preferences for a view, editor or windows via a menu or toolbar</li>
+	<li>start with a single preference page</li>
+	<li>If needed a preference group should start with wide spread effects and specialize in sub pages</li>
+	<li>try and slot into existing categories</li>
+</ul>
+
+
+<h3><a name="2UserInterfaceGuidelines-13FlatLookDesign"><a href="13 Flat Look Design.html" title="13 Flat Look Design">13 Flat Look Design</a></a></h3>
+
+<ul>
+	<li>Use the flat look design for extensive property and configuration editing</li>
+	<li>Have the core selections on the overview page expanded, other pages provide a Home icon to return to the overview</li>
+	<li>Have your tree in the outline corraspond to the tabs of your content editor</li>
+</ul>
+
+
+<h3><a name="2UserInterfaceGuidelines-14TaoofResource"><a href="14 Tao of Resource.html" title="14 Tao of Resource">14 Tao of Resource</a></a></h3>
+<ul>
+	<li>If your object is equivalent to a IGeoReference use an adapater to let others play</li>
+	<li>A layer should behave and look the same everwhere (ie. catalog, seach, layer view)</li>
+</ul>
+
+
+<h3><a name="2UserInterfaceGuidelines-15AccessibilityGuidelines"><a href="15 Accessibility Guidelines.html" title="15 Accessibility Guidelines">15 Accessibility Guidelines</a></a></h3>
+
+
+<ul>
+	<li>All of the features provided by a tool should be accessible using a mouse or the keyboard.</li>
+</ul>
+
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=214">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=214">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

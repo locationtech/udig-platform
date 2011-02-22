@@ -1,21 +1,21 @@
 
 /**
 *  This class is a groovy script.  You can run it using the command groovy JavadocGen.groovy (plugin directory) (destination directory).
-*  
+*
 *  This script searches for plugins (indicated by a .classpath file, dumb but it works) and creates a javadoc of all plugins that do not
 *  have test or internal in the name.  Packages that contain internal or impl are not included in the javadoc.
-*  
+*
 *  In addition adding a file called "nojavadoc" in the base plugin directory will also exclude the plugin from the javadocs.
-* 
-* 
-* Future Work:  
+*
+*
+* Future Work:
 *  Make javadoc linking work
 *  Produce Andreas class diagrams for docs.
-*  Process Manifest.MF in order to obtain the actual ID of the plugin.  Currently the root folder is used as the ID.  
+*  Process Manifest.MF in order to obtain the actual ID of the plugin.  Currently the root folder is used as the ID.
 */
 class NewJavadocGenerator {
     String root,docDest;
-    
+
 	public  NewJavadocGenerator( String root, String docDest ){
 	    this.root=root;
 	    this.docDest=docDest;
@@ -29,18 +29,18 @@ class NewJavadocGenerator {
 	     i++
 	     def dirs=[];
 	     if ( i==100 ) {print ".";  i=0}
-	    root.eachFile(){ file-> 
+	    root.eachFile(){ file->
 		   if( cper.call(file) )
 		           return;
 		   if( file.isDirectory() )
 		       dirs.add(file)
 	    }
-	    
+
 	    dirs.each(){ dir->
 	        find(dir,cper);
 	    }
 	}
-	 
+
 	/**
 	 * returns the name of the project of the file
 	 */
@@ -50,10 +50,10 @@ class NewJavadocGenerator {
 	     def parent=file.getParentFile()
 	     if( projects.contains( parent ) )
 	         return parent.getName();
-	     
+
 	     return project( projects, parent )
 	 }
-	 
+
 	 /**
 	 * Returns the package of the file as a string.
 	 */
@@ -75,7 +75,7 @@ class NewJavadocGenerator {
 	  	   }
 	  	   return null;
 	 }
-	 
+
 	 /**
 	 * Searches from the root for all classes and all projects.  Projects are identified by finding the .classpath file
 	 */
@@ -83,12 +83,12 @@ class NewJavadocGenerator {
 	  	 def classes=[:]
   		 def classpath=[:]
 	  	 def extensions=[:]
-  		                
+
          def currentproject;
   		 def cper={file->
 	      		    if( file.getName().contains(".test")||file.getName().equals(".svn") ||file.getName().equals("bin"))
 	      		        return true;
-	      		    if( file.isDirectory() && (file.getName().contains("internal") || file.getName().contains("impl") ))  
+	      		    if( file.isDirectory() && (file.getName().contains("internal") || file.getName().contains("impl") ))
 	      				return true
 	      		    if( file.getName().equalsIgnoreCase(".classpath") ) {
 	      		        currentproject=file.getParentFile();
@@ -96,25 +96,25 @@ class NewJavadocGenerator {
 	      		        classes[currentproject]=[];
 	      		        extensions[currentproject]=[];
 	      		    }
-	      	
+
 	      		    if( file.getName().endsWith(".java") ){
-	      		    	classes[currentproject].add(file); 
+	      		    	classes[currentproject].add(file);
 	      	 	    }
-	      		    
+
 	      		    if( file.getParentFile().getName().equals("doc") && file.getName().endsWith(".html") ){
 	      		        extensions[currentproject].add(file);
 	      		    }
 	    	};
-	 
+
 
 		print "searching for configuration files....";
 		find( new File(root ), cper )
-		
+
 	 	Data data=new Data();
 	 	data.classes=classes;
 	 	data.classpath=classpath;
 	 	data.extensions=extensions;
-	 	
+
 	 	return data;
 	}
 
@@ -124,53 +124,53 @@ class NewJavadocGenerator {
 	       def list=project.list();
 	       list.each() { entry-> if (entry=="nojavadoc" ) toRemove.add(project); }
 	    }
-  		
+
 	    toRemove.each(){ it ->
 	       data.classes.remove(it);
 	       data.classpath.remove(it);
 	       data.extensions.remove(it);
 	    }
 	}
-	
+
 	def getSourcePaths(File classpathFile, Collection classes){
-	    
+
 	    println "parsing "+classpathFile.getParent();
-	    
+
 	    if( classes.isEmpty() )
-	        return; 
-	    
+	        return;
+
 	    def srcpath="";
-	    
+
 	    classes.each{ file ->
 	        srcpath+=file.getPath()+",";
-	        
+
 	    }
-	    
+
 		return srcpath[0..srcpath.length()-2];
 	}
-	
+
 	def generateJavadocs(Data data){
 
 	    def projects=[];
-	    
+
 	    data.classes.keySet().each(){ project ->
-	    
+
 	    	println "generating javadocs for ${project.getName()}"
-	    
+
 	        String srcpath=getSourcePaths(data.classpath[project], data.classes[project]);
 
 	    	if( srcpath==null )
 	    	    return;
-	    	
+
 	    	projects.add(project);
-	    	
+
 	        String projectName=project.getName().trim();
-	        	        
+
 	        AntBuilder javadoc=new AntBuilder();
-	        
-	   		javadoc.javadoc( access:"protected", 
-	  		        author:"true", 
-	  		        sourcefiles:srcpath, 
+
+	   		javadoc.javadoc( access:"protected",
+	  		        author:"true",
+	  		        sourcefiles:srcpath,
 	  		        destdir:docDest+"/"+projectName,
 	  		        source:"1.5",
 	  		        doctitle:"Plugin: ${projectName}",
@@ -178,21 +178,21 @@ class NewJavadocGenerator {
 	  		        maxmemory:"512M"
 	  		)
 	    }
-	    
+
 	    /*
 	    projects.each(){ project ->
-	    
+
     		println "generating javadocs for ${project.getName()}"
-    
+
 	        String srcpath=getSourcePaths(data.classpath[project], data.classes[project]);
-	
+
 	        String projectName=project.getName().trim();
-	        
+
 	        AntBuilder javadoc=new AntBuilder();
-	        
-	   		javadoc.javadoc( access:"protected", 
-	  		        author:"true", 
-	  		        sourcefiles:srcpath, 
+
+	   		javadoc.javadoc( access:"protected",
+	  		        author:"true",
+	  		        sourcefiles:srcpath,
 	  		        destdir:docDest+"/"+projectName,
 	  		        source:"1.5",
 	  		        doctitle:"Plugin: ${projectName}",
@@ -203,12 +203,12 @@ class NewJavadocGenerator {
 	   		        javadoc.link( href:"file://${docDest}${p.getName()}", resolveLink:"true")
 	   		    }
 	   		}
-	   		
+
 	    }
 	    */
 	    return projects;
 	}
-	
+
 	def copyExtensionDocs(Data data){
 	    File docs=new File(docDest+'/extension-points');
 	    if( !docs.exists() )
@@ -217,28 +217,28 @@ class NewJavadocGenerator {
 	    File bookFile=new File(docs, "book.css");
 	    bookFile.createNewFile();
 	    bookFile.write(bookcss);
-	    
+
 	    File schemaFile=new File(docs, "schema.css");
 	    schemaFile.createNewFile();
 	    schemaFile.write(schemacss);
-	    
+
 	    def newFiles=[:];
-	    
+
 	    data.extensions.each(){ entry ->
-	    	
-			newFiles[entry.getKey()]=[];	    
+
+			newFiles[entry.getKey()]=[];
 	    	entry.getValue().each(){ ext ->
 		    	File destFile=new File(docs, ext.getName());
 		    	Writer writer=destFile.newWriter(false);
-		    	
+
 		    	println( "copying ${ext.getName()}")
-				
+
 		    	newFiles[entry.getKey()].add(destFile);
 		    	ext.eachLine(){ line->
 
 	    		def book=/<style>.+book.css/
 	    		def schema=/<style>.+schema.css/
-	    		
+
 		    		if( line =~ book )
 		    		    writer.write('<style>@import url(book.css);</style>' )
 	    		    else if( line =~ schema )
@@ -247,7 +247,7 @@ class NewJavadocGenerator {
 						writer.write(line);
 		    		writer.write('\n');
 		    	}
-		    	
+
 		    	writer.close();
 	    	}
 	    }
@@ -258,7 +258,7 @@ class NewJavadocGenerator {
 	    File rootFile=new File(docDest+"/index.html");
 	    def writer=rootFile.newPrintWriter();
 	    def indexBuilder = new groovy.xml.MarkupBuilder(writer);
-		
+
 	    indexBuilder.html{
 			head()
 			body{
@@ -274,13 +274,13 @@ class NewJavadocGenerator {
 	    }
 	    writer.close();
 	}
-	
+
 	// extensionMap is <Project, List<extensionPointFile>>
 	def buildExtensionPointIndexPage(def extensionMap){
 	    File rootFile=new File(docDest+"/extension-points/index.html");
 	    def writer=rootFile.newPrintWriter();
 	    def indexBuilder = new groovy.xml.MarkupBuilder(writer);
-		
+
 	    indexBuilder.html{
 			head()
 			body{
@@ -304,32 +304,32 @@ class NewJavadocGenerator {
 	    }
 	    writer.close();
 	}
-	
+
 	 def generate(){
 	     Data data=getData()
-	     
+
 	     removeUnwantedProjects(data);
-	     
+
 	     // copies is <projects,list<extensionPointFiles>>
 	     def copies=copyExtensionDocs(data);
-	     
+
 	     def projects=generateJavadocs(data);
-	     
+
 	     buildJavadocIndexPage(projects);
-	     
+
 	     buildExtensionPointIndexPage(copies);
-	     
+
 	 }
 	  static void main(args) {
-      
+
 	      String root='.';
 	      String dest='api-udig';
-	      
+
 	      if( args.size()>0 )
 	          root=args[0];
 	      if( args.size()>1 )
 	          dest=args[1];
-	      
+
 	      NewJavadocGenerator generator=new NewJavadocGenerator(root, dest );
 	      generator.generate();
 	  }
@@ -416,17 +416,17 @@ class NewJavadocGenerator {
 	/* end font size declarations */
 
 	body	     { background: #FFFFFF; margin-bottom: 1em }
-	h1           { font-size: 18pt; margin-top: 5; margin-bottom: 1 }	
+	h1           { font-size: 18pt; margin-top: 5; margin-bottom: 1 }
 	h2           { font-size: 14pt; margin-top: 25; margin-bottom: 3 }
 	h3           { font-size: 11pt; margin-top: 20; margin-bottom: 3 }
 	h4           { font-size: 10pt; margin-top: 20; margin-bottom: 3; font-style: italic }
 	p            { margin-top: 10px; margin-bottom: 10px }
-	pre          { margin-left: 6; font-size: 9pt; color: #4444CC } 
+	pre          { margin-left: 6; font-size: 9pt; color: #4444CC }
 	a:link	     { color: #0000FF }
 	a:hover	     { color: #000080 }
 	a:visited    { text-decoration: underline }
 	ul	     { margin-top: 10px; margin-bottom: 10px; }
-	li	     { margin-top: 5px; margin-bottom: 5px; } 
+	li	     { margin-top: 5px; margin-bottom: 5px; }
 	li p	     { margin-top: 5px; margin-bottom: 5px; }
 	ol	     { margin-top: 10px; margin-bottom: 10px; }
 	dl	     { margin-top: 10px; margin-bottom: 10px; }
@@ -435,7 +435,7 @@ class NewJavadocGenerator {
 	strong	     { font-weight: bold}
 	em	     { font-style: italic}
 	var	     { font-style: italic}
-	div.revision { border-left-style: solid; border-left-width: thin; 
+	div.revision { border-left-style: solid; border-left-width: thin;
 					   border-left-color: #7B68EE; padding-left:5 }
 	th	     { font-weight: bold }
 
@@ -446,29 +446,29 @@ class NewJavadocGenerator {
 		border-style: none;
 		vertical-align: middle;
 	}"""
-	  
-	
+
+
 	String schemacss="""
 	    /*******************************************************************************
 	     * Copyright (c) 2003 IBM Corporation and others.
-	     * All rights reserved. This program and the accompanying materials 
+	     * All rights reserved. This program and the accompanying materials
 	     * are made available under the terms of the Eclipse Public License v1.0
 	     * which accompanies this distribution, and is available at
 	     * http://www.eclipse.org/legal/epl-v10.html
-	     * 
+	     *
 	     * Contributors:
 	     *     IBM Corporation - initial API and implementation
 	     *******************************************************************************/
 
 	    H6.CaptionFigColumn#header {
-	    	font-size:16px; 
+	    	font-size:16px;
 	    	display:inline
 	    }
 
 	    P.Note#copyright {
-	    	font-size: smaller; 
+	    	font-size: smaller;
 	    	font-style: normal;
-	    	color: #336699; 
+	    	color: #336699;
 	    	display:inline;
 	    	margin-top: 3.000000pt;
 	    	margin-bottom: 11.000000pt;
@@ -477,7 +477,7 @@ class NewJavadocGenerator {
 	    }
 
 	    P.Code#dtd {
-	    	color: #800000; 
+	    	color: #800000;
 	    	margin-top: 0.000000pt;
 	    	margin-bottom: 0.000000pt;
 	    	margin-right: 0.000000pt;
@@ -485,7 +485,7 @@ class NewJavadocGenerator {
 	    }
 
 	    P.Code#dtdAttlist {
-	    	color: #800000; 
+	    	color: #800000;
 	    	margin-top: 0.000000pt;
 	    	margin-bottom: 0.000000pt;
 	    	margin-right: 0.000000pt;
@@ -493,7 +493,7 @@ class NewJavadocGenerator {
 	    }
 
 	    P.Code#tag {
-	    	color: #000080; 
+	    	color: #000080;
 	    	display:inline;
 	    	margin-top: 0.000000pt;
 	    	margin-bottom: 0.000000pt;
@@ -502,12 +502,12 @@ class NewJavadocGenerator {
 	    }
 
 	    P.Code#cstring {
-	    	color: #008000; 
+	    	color: #008000;
 	    	display:inline;
 	    	margin-top: 0.000000pt;
 	    	margin-bottom: 0.000000pt;
 	    	margin-right: 0.000000pt;
-	    	margin-left: 0.000000pt;	
+	    	margin-left: 0.000000pt;
 	    }
 
 	    .ConfigMarkup#elementDesc {

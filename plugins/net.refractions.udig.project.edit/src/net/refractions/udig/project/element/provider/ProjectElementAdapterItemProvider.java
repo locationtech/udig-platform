@@ -48,7 +48,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
             ITreeItemContentProvider,
             IItemLabelProvider,
             IItemPropertySource,
-            IFontProvider, 
+            IFontProvider,
             IColorProvider{
     private static final String LABEL_PROVIDER_ATT = "labelProvider";
     private static final String LABEL_ATT = "label";
@@ -88,7 +88,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
 
     /**
      * This adds a property descriptor for the Name feature.
-     * 
+     *
      * @generated NO MORE
      */
     protected void addNamePropertyDescriptor( Object object ) {
@@ -242,7 +242,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
 	 * returned by the extension's labelProvider or the icon defined in the
 	 * extension (if it is defined). If the element is not a
 	 * ProjectElementAdapter the a default image is returned
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	public Object getImage(Object object) {
@@ -284,7 +284,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
 	 * returned by the extension's labelProvider or the label defined in the
 	 * extension (if it is defined). If the element is not a
 	 * ProjectElementAdapter the a default text is returned
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	public String getText(Object object) {

@@ -24,7 +24,7 @@ import net.refractions.udig.ui.graphics.ViewportGraphics;
  * flag which is set false when the lifetime of the command is up. Once the valid flag is set to
  * false the command will be removed from the command stack the next update. The command must be
  * resent if the command is to be drawn again.
- * 
+ *
  * @author jeichar
  * @since 0.3
  * @see MapCommand
@@ -33,7 +33,7 @@ public interface IDrawCommand extends MapCommand {
     /**
      * Sets the graphics2D that this command will draw on. Will be called before execution of
      * command
-     * 
+     *
      * @param graphics the graphics2D that this command will draw on
      * @param display The display area that will be draw on.
      * @see ViewportGraphics
@@ -49,11 +49,11 @@ public interface IDrawCommand extends MapCommand {
      * Null may be returned if the valid area is unknown or is the entire screen.
      */
     public Rectangle getValidArea( );
-    
+
     /**
      * Sets whether the current command should be drawn. If not then it will be removed from the
      * draw stack. Default value is true;
-     * 
+     *
      * @param valid true if the command should be drawn.
      */
     public void setValid( boolean valid );
@@ -61,13 +61,13 @@ public interface IDrawCommand extends MapCommand {
     /**
      * Returns whether the current command should be drawn. If not then it will be removed from the
      * draw stack. Default value is true;
-     * 
+     *
      * @return true if the command should be drawn.
      */
     public boolean isValid();
     /**
      * Disposes of any resources that need to be disposed of.
-     * 
+     *
      * Called by the framework when draw command is removed from the viewport pane.
      */
     public void dispose();

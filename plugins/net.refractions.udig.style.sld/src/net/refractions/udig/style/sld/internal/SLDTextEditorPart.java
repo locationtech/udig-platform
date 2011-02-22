@@ -1,23 +1,6 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
- *
- *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation;
- *    version 2.1 of the License.
- *
- *    This library is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *    Lesser General Public License for more details.
- *
- */
 package net.refractions.udig.style.sld.internal;
 
 import java.awt.Color;
-import java.util.List;
 
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.style.sld.SLDEditorPart;
@@ -37,14 +20,13 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.geotools.data.FeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.FeatureType;
+import org.geotools.filter.Expression;
+import org.geotools.filter.FilterFactoryFinder;
 import org.geotools.styling.HaloImpl;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.TextSymbolizer;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.filter.expression.Expression;
 
 
 /**
@@ -61,16 +43,16 @@ import org.opengis.filter.expression.Expression;
  * </p>
  * <p>
  * Example:
- * 
+ *
  * <pre><code>
- * 
+ *
  *  SLDTextEditorPart x = new SLDTextEditorPart( ... );
  *  TODO code example
- *  
+ *
  * </code></pre>
- * 
+ *
  * </p>
- * 
+ *
  * @author aalam
  * @since 0.6.0
  */
@@ -91,7 +73,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.style.sld.SLDEditorPart#getContentType()
      */
     public Class getContentType() {
@@ -107,10 +89,10 @@ public class SLDTextEditorPart extends SLDEditorPart {
      * @param parent
      * @param tag
      * @param numColumns number of columns (usually 2_
-     * @return Composite with one label 
+     * @return Composite with one label
      */
     private Composite subpart( Composite parent, String tag, int width  ){
-        Composite subpart = new Composite( parent, SWT.NONE );        
+        Composite subpart = new Composite( parent, SWT.NONE );
         RowLayout across = new RowLayout();
         across.type = SWT.HORIZONTAL;
         across.wrap = true;
@@ -118,9 +100,9 @@ public class SLDTextEditorPart extends SLDEditorPart {
         across.fill = true;
         across.marginBottom = 1;
         across.marginRight = 2;
-        
+
         subpart.setLayout( across );
-        
+
         Label label = new Label( subpart, SWT.NONE );
         label.setText(tag);
         label.setAlignment( SWT.RIGHT );
@@ -128,12 +110,12 @@ public class SLDTextEditorPart extends SLDEditorPart {
         data.width = 40;
         data.height = 10;
         label.setLayoutData( data );
-                
+
         return subpart;
     }
-    
+
     private void labelPart( Composite parent ) {
-        Composite part = subpart(parent, Messages.SLDTextEditorPart_label_label, 2); 
+        Composite part = subpart(parent, Messages.SLDTextEditorPart_label_label, 2);
 
         labelCombo = new Combo(part, SWT.READ_ONLY);
         labelCombo.addSelectionListener(new SelectionAdapter(){
@@ -150,7 +132,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
     }
     private void haloPart( Composite parent ) {
         Composite halo = subpart(parent, Messages.SLDTextEditorPart_label_halo, 3);
-        
+
         labelHaloEnabled = new Button(halo, SWT.CHECK);
         labelHaloEnabled.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent event ) {
@@ -163,7 +145,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
                 apply(HALOCOLOR);
             }
         });
-        
+
         haloWidthScale = new Spinner(halo, SWT.HORIZONTAL);
         haloWidthScale.setMinimum(0);
         haloWidthScale.setMaximum(10);
@@ -174,7 +156,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
             }
         });
 
-        
+
         haloOpacityScale = new Spinner(halo, SWT.HORIZONTAL);
         haloOpacityScale.setMinimum(0);
         haloOpacityScale.setMaximum(opacityMaxValue);
@@ -188,11 +170,11 @@ public class SLDTextEditorPart extends SLDEditorPart {
     }
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.style.sld.SLDEditorPart#createPartControl(org.eclipse.swt.widgets.Composite)
      */
     protected Control createPartControl( Composite parent ) {
-        RowLayout layout = new RowLayout();        
+        RowLayout layout = new RowLayout();
         layout.pack = false;
         layout.wrap = true;
         layout.type = SWT.HORIZONTAL;
@@ -206,13 +188,13 @@ public class SLDTextEditorPart extends SLDEditorPart {
 
         labelPart( parent );
         haloPart( parent );
-                
+
         return parent;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.style.sld.SLDEditorPart#init()
      */
     public void init() {
@@ -220,7 +202,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
     }
 
     private void setStylingElements( TextSymbolizer symbolizer ) {
-        
+
         Color fontFill = SLDs.textFontFill(symbolizer);
         FontData[] tempFD = SLDs.textFont(symbolizer);
         Expression label = SLDs.textLabel(symbolizer);
@@ -236,25 +218,24 @@ public class SLDTextEditorPart extends SLDEditorPart {
                                     SymbolizerContent.DEFAULT_FONT_STYLE);
         }
         labelFont.setFontList(tempFD);
-        
-        // Need to get all available labels 
-        //check if this layer has a feature 
+
+        // Need to get all available labels
+        //check if this layer has a feature
         Layer currLayer = getLayer();
-        List<AttributeDescriptor> attributeList = null;
-        AttributeDescriptor defaultGeom = null;
+        AttributeType[] attributeList = null;
+        AttributeType defaultGeom = null;
         if (currLayer.hasResource(FeatureSource.class)) {
-            SimpleFeatureType ft = currLayer.getSchema();
-            attributeList = ft.getAttributeDescriptors();
-            defaultGeom=ft.getGeometryDescriptor();
+            FeatureType ft = currLayer.getSchema();
+            attributeList = ft.getAttributeTypes();
+            defaultGeom=ft.getDefaultGeometry();
         }
         labelCombo.removeAll();
         if (attributeList != null) {
-            for( int i = 0; i < attributeList.size(); i++ ) {
-                AttributeDescriptor attributeDescriptor = attributeList.get(i);
-				if( attributeDescriptor != defaultGeom )
-                    labelCombo.add(attributeDescriptor.getName().getLocalPart());
-                if( label != null && attributeDescriptor != null &&
-                        attributeDescriptor.getName().equals(label.toString()) ) {
+            for( int i = 0; i < attributeList.length; i++ ) {
+                if( attributeList[i] != defaultGeom )
+                    labelCombo.add(attributeList[i].getName());
+                if( label != null && attributeList[i] != null &&
+                        attributeList[i].getName().equals(label.toString()) ) {
                     //Set the correct initial label
                     labelCombo.select(i);
                 } else if( i == 0 ) {
@@ -273,13 +254,13 @@ public class SLDTextEditorPart extends SLDEditorPart {
         }
         labelHaloColorEditor.setColorValue(
                 new RGB(haloFill.getRed(), haloFill.getGreen(), haloFill.getBlue()));
-        
+
         int width = SLDs.textHaloWidth(symbolizer);
         if( width == 0 ) {
             width = (int)(SymbolizerContent.DEFAULT_HALO_WIDTH);
         }
         haloWidthScale.setSelection(width);
-        
+
         double opacity = SLDs.textHaloOpacity(symbolizer);
         if( Double.isNaN(opacity) ) {
             opacity = SymbolizerContent.DEFAULT_HALO_OPACITY;
@@ -289,7 +270,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.style.sld.SLDEditorPart#reset()
      */
     public void reset() {
@@ -298,7 +279,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.style.IStyleConfigurator#apply()
      */
     private void apply( int mask ) {
@@ -363,7 +344,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
                 textSymbolizer.setHalo(null);
             }
 
-            currLabel = (Expression) CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints()).property(selectedLabel);
+            currLabel = FilterFactoryFinder.createFilterFactory().createAttributeExpression(selectedLabel);
             textSymbolizer.setLabel(currLabel);
         }
     }

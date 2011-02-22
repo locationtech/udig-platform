@@ -26,27 +26,27 @@ import java.util.TreeSet;
 /**
  * Class gathering up the ColorBrewer palettes.
  * <p>
- * 
+ *
  * </p>
- * @see http://www.personal.psu.edu/faculty/c/a/cab38/ColorBrewerBeta2.html 
- * @see http://jira.codehaus.org/browse/UDIG-204 
- * @see http://cvs.sourceforge.net/viewcvs.py/geovistastudio/geovistastudio/GeoVista/colorbrewer/src/edu/psu/geovista/colorbrewer/ColorSpecifics.java?rev=1.5&view=auto 
- * 
+ * @see http://www.personal.psu.edu/faculty/c/a/cab38/ColorBrewerBeta2.html
+ * @see http://jira.codehaus.org/browse/UDIG-204
+ * @see http://cvs.sourceforge.net/viewcvs.py/geovistastudio/geovistastudio/GeoVista/colorbrewer/src/edu/psu/geovista/colorbrewer/ColorSpecifics.java?rev=1.5&view=auto
+ *
  * @author Biliang Zhou, GeoVISTA Center (Penn State, Dept. of Geography)
  * @author Jody Garnett, Refractions Research
  * @deprecated org.geotools.brewer.color.ColorBrewer
  * @since 0.6.0
  */
-public final class ColorBrewer {    
+public final class ColorBrewer {
     /** <code>BLUES</code> field */
     final public static Palette BLUES = pal( "blues" ); //$NON-NLS-1$
-    
+
     /** <code>BUGN</code> field */
     final public static Palette BUGN = pal( "BuGn" ); //$NON-NLS-1$
-    
+
     /** <code>BRBG</code> field */
     final public static Palette BRGB = pal( "BrBG" ); //$NON-NLS-1$
-    
+
     final static SortedSet<Palette> sequential(){
         return set( EnumSet.of( SchemeType.SEQUENTIAL ));
     }
@@ -62,13 +62,13 @@ public final class ColorBrewer {
     final static Palette sequential( Color color ){
         Palette best = null;
         double distance = Double.MAX_VALUE;
-        
+
         for( Palette pal : sequential() ){
             double score = 0;
             for( Scheme scheme : pal.contents ){
                 for( Color c: scheme.colors ){
                     score += distance( color, c );
-                    
+
                 }
             }
             if( score < distance ) {
@@ -76,9 +76,9 @@ public final class ColorBrewer {
                 distance = score;
             }
         }
-        return best;        
+        return best;
     }
-    
+
     /**
      * Distance between colors (between 0.0 and 1.0 ).
      * <p>
@@ -87,23 +87,23 @@ public final class ColorBrewer {
      * <li>max of difference of saturation, hue, etc the distance
      * <li>aka Black-White is the max distance of 1.0
      * <li>aka Blue=Blue is 0 distance
-     * <li> 
+     * <li>
      * </ul>
      * I am sure some researcher somewhere is laughing.
      * </p>
-     * 
+     *
      * @param a
      * @param b
-     * 
+     *
      * @return distance such that 0 implys a equals b
      */
     public static final double distance( Color a, Color b ){
         if( a.equals( b )) return 0.0;
-        
+
         // compare distance in HSB space - because it is the right thing to do
         float hsb1[] = Color.RGBtoHSB( a.getRed(), a.getGreen(), a.getBlue(), null );
         float hsb2[] = Color.RGBtoHSB( b.getRed(), b.getGreen(), b.getBlue(), null );
-        
+
         return Math.max(      Math.abs( hsb1[0] - hsb2[0] ),
                     Math.max( Math.abs( hsb1[1] - hsb2[1] ),
                               Math.abs( hsb1[2] - hsb2[2] )
@@ -118,14 +118,14 @@ public final class ColorBrewer {
      * <li>ColorBrewer.create().set( EnumSet.of( SchemeType.SEQUENTIAL ) );
      * </ul>
      * </p>
-     * 
+     *
      * @return set of Palette of provided type
      */
     private static SortedSet<Palette> set( EnumSet<SchemeType> types ){
         SortedSet<Palette> sorted = new TreeSet<Palette>(new Comparator<Palette>(){
-            public int compare( Palette a, Palette b ) {                
+            public int compare( Palette a, Palette b ) {
                 return a.name.compareTo( b.name );
-            }            
+            }
         });
         for( Field field : ColorBrewer.class.getFields() ){
             if( field.getType() == Palette.class){
@@ -142,7 +142,7 @@ public final class ColorBrewer {
             }
         }
         return sorted;
-    }    
+    }
     /** Load pal file */
     static final Palette pal( String palette ){
         try {
@@ -150,6 +150,6 @@ public final class ColorBrewer {
         } catch (Throwable t) {
             t.printStackTrace();
             return null;
-        } 
-    }        
+        }
+    }
 }

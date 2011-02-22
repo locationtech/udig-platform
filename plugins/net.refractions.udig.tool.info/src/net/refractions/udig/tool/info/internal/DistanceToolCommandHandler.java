@@ -22,7 +22,6 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.ui.IActionBars2;
 
 public class DistanceToolCommandHandler extends AbstractHandler implements IToolHandler {
 
@@ -40,11 +39,8 @@ public class DistanceToolCommandHandler extends AbstractHandler implements ITool
     public Object execute( ExecutionEvent event ) throws ExecutionException {
         if (ID.equals(current)) {
             tool.reset();
-            IActionBars2 actionBars = tool.getContext().getActionBars();
-            if (actionBars == null) {
-                return null;
-            }
-            final IStatusLineManager statusBar = actionBars.getStatusLineManager();
+            final IStatusLineManager statusBar = tool.getContext().getActionBars()
+                    .getStatusLineManager();
             if (statusBar != null) {
                 tool.getContext().updateUI(new Runnable(){
                     public void run() {

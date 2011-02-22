@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.catalog.arcsde; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.catalog.internal.arcsde.ArcsdePlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
@@ -11,11 +11,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.catalog,
  net.refractions.udig.catalog.ui,
- net.refractions.udig.libs,
- net.refractions.udig.catalog.rasterings;bundle-version="1.2.0"
-Bundle-ActivationPolicy: lazy
+ net.refractions.udig.libs
+Eclipse-LazyStart: true
 Bundle-ClassPath: .,
- lib/jsde_sdk-9.2+.jar,
- lib/jpe_sdk-9.2+.jar,
- lib/icu4j-3.2+.jar
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+ lib/jsde_sdk-XX.jar,
+ lib/jsde-jpe-XX.jar

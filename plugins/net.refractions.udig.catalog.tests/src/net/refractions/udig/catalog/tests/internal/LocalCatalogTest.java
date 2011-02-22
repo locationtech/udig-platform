@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class LocalCatalogTest extends AbstractCatalogTest {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.catalog.tests.AbstractCatalogTest#getResolve()
      */
     protected ICatalog getResolve() {
@@ -41,7 +40,7 @@ public class LocalCatalogTest extends AbstractCatalogTest {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see junit.framework.TestCase#setUp()
      */
     protected void setUp() throws Exception {
@@ -81,13 +80,9 @@ public class LocalCatalogTest extends AbstractCatalogTest {
                     return null;
                 }
             }
-            protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-                try {
-                    return new IServiceInfo("Testing 1", "", "", getIdentifier().toURI(), (URI) null, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                            (URI) null, (new String[]{"Test"}), (ImageDescriptor) null); //$NON-NLS-1$
-                } catch (URISyntaxException e) {
-                    throw (RuntimeException) new RuntimeException( ).initCause( e );
-                }                 
+            public IServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
+                return new IServiceInfo("Testing 1", "", "", getIdentifier(), (URL) null, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        (URI) null, (new String[]{"Test"}), (ImageDescriptor) null); //$NON-NLS-1$
             }
         });
         instance.add(new IService(){
@@ -105,12 +100,15 @@ public class LocalCatalogTest extends AbstractCatalogTest {
 					public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
 						return super.resolve(adaptee, monitor);
 					}
-                    protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+                    public IGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
                         return new IGeoResourceInfo("Test Title", "Test Name", "description", null,  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                                 new Envelope(20,30,0,40), DefaultGeographicCRS.WGS84, new String[0],
                                 null);
                     }
-                    public <T> boolean canResolve(Class<T> adaptee) {
+                    public IService service( IProgressMonitor monitor ) throws IOException {
+                        return null;
+                    }
+					public <T> boolean canResolve(Class<T> adaptee) {
 						return super.canResolve(adaptee);
 					}
 
@@ -125,7 +123,7 @@ public class LocalCatalogTest extends AbstractCatalogTest {
 					public URL getIdentifier() {
 						return null;
 					}
-            		
+
             	});
                 return list;
             }
@@ -153,19 +151,15 @@ public class LocalCatalogTest extends AbstractCatalogTest {
                     return null;
                 }
             }
-            protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-                try {
-                    return new IServiceInfo("Testing 2", "", "", getIdentifier().toURI(), (URI) null, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                            (URI) null, (new String[]{"Test"}), (ImageDescriptor) null); //$NON-NLS-1$
-                } catch (URISyntaxException e) {
-                    throw (RuntimeException) new RuntimeException( ).initCause( e );
-                } 
+            public IServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
+                return new IServiceInfo("Testing 2", "", "", getIdentifier(), (URL) null, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        (URI) null, (new String[]{"Test"}), (ImageDescriptor) null); //$NON-NLS-1$
             }
         });
     }
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.catalog.tests.AbstractCatalogTest#mutable()
      */
     protected boolean mutable() {
@@ -174,7 +168,7 @@ public class LocalCatalogTest extends AbstractCatalogTest {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.catalog.tests.AbstractCatalogTest#getSearchBounds()
      */
     protected Envelope getSearchBounds() {
@@ -183,7 +177,7 @@ public class LocalCatalogTest extends AbstractCatalogTest {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.catalog.tests.AbstractCatalogTest#getSearchString()
      */
     protected String getSearchString() {
@@ -192,7 +186,7 @@ public class LocalCatalogTest extends AbstractCatalogTest {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.catalog.tests.AbstractResolveTest#hasParent()
      */
     protected boolean hasParent() {
@@ -201,7 +195,7 @@ public class LocalCatalogTest extends AbstractCatalogTest {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.catalog.tests.AbstractResolveTest#isLeaf()
      */
     protected boolean isLeaf() {

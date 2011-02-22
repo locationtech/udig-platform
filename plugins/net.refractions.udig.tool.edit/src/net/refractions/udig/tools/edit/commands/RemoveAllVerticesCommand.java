@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Removes all vertices from EditGeom's shell.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -59,7 +59,7 @@ public class RemoveAllVerticesCommand extends AbstractCommand implements Undoabl
         for( Point p : oldGeom.getShell() ) {
             bb.addPoint(p.getX(), p.getY(), geom.getShell());
         }
-        
+
         for( PrimitiveShape shape : oldGeom.getHoles() ) {
             PrimitiveShape hole = geom.newHole();
             for( Point p : shape ) {

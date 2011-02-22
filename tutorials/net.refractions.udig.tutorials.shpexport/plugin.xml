@@ -17,22 +17,6 @@
             name="Export to Shapefile"
             targetClass="org.geotools.data.FeatureSource">
       </operation>
-      <operation
-            class="net.refractions.udig.tutorials.shpexport.CalculateLengthOp"
-            enablesFor="1"
-            id="net.refractions.udig.tutorials.shpexport.operation1"
-            name="Calculate Length"
-            targetClass="org.geotools.data.FeatureSource">
-         <enablement></enablement>
-      </operation>
-      <operation
-            class="net.refractions.udig.tutorials.shpexport.Op1"
-            enablesFor="1"
-            id="net.refractions.udig.tutorials.shpexport.operation1"
-            name="name"
-            targetClass="net.refractions.udig.tutorials.shpexport.Object1">
-         <enablement></enablement>
-      </operation>
    </extension>
 
 </plugin>

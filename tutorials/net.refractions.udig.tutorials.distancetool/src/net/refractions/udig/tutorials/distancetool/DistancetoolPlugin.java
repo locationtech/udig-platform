@@ -1,7 +1,7 @@
 package net.refractions.udig.tutorials.distancetool;
 
+import org.eclipse.ui.plugin.*;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -10,7 +10,7 @@ import org.osgi.framework.BundleContext;
 public class DistancetoolPlugin extends AbstractUIPlugin {
 	//The shared instance.
 	private static DistancetoolPlugin plugin;
-	
+
 	/**
 	 * The constructor.
 	 */

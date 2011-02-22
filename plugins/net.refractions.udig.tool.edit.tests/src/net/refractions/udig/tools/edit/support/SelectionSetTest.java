@@ -34,7 +34,7 @@ public class SelectionSetTest extends TestCase {
         listener=new TestEditBlackboardListener();
         blackboard.getListeners().add(listener);
     }
-    
+
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.add(Point)'
      */
@@ -44,7 +44,7 @@ public class SelectionSetTest extends TestCase {
         assertEquals(1, listener.getAdded().size());
         assertEquals(0, listener.getRemoved().size());
         assertTrue(listener.getAdded().contains(Point.valueOf(10,15)));
-        
+
     }
 
     /*
@@ -132,27 +132,27 @@ public class SelectionSetTest extends TestCase {
         assertEquals(2, listener.getRemoved().size());
         assertTrue(listener.getRemoved().contains(Point.valueOf(30,10)));
         assertTrue(listener.getRemoved().contains(Point.valueOf(40,10)));
-        
+
     }
-    
+
     public void testMoveVertex() throws Exception {
         blackboard.moveCoords(10,10, 10,15);
-        
+
         assertTrue(blackboard.getSelection().contains(Point.valueOf(10,15)));
         assertEquals(1, listener.getNum());
         assertEquals(1, listener.getAdded().size());
         assertTrue(listener.getAdded().contains(Point.valueOf(10,15)));
     }
-    
+
     public void testRemoveVertex() throws Exception {
         blackboard.removeCoordsAtPoint(10,10);
-        
+
         assertEquals(3, blackboard.getSelection().size());
         assertEquals(1, listener.getNum());
         assertFalse( blackboard.getSelection().contains(Point.valueOf(10,10)));
         assertTrue(listener.getRemoved().contains(Point.valueOf(10,10)));
     }
-    
+
     public void testSetTranslationTransform() throws Exception {
         blackboard.setToScreenTransform(AffineTransform.getTranslateInstance(0,5));
         assertEquals(1, listener.getNum());
@@ -160,13 +160,13 @@ public class SelectionSetTest extends TestCase {
         assertTrue(listener.getAdded().contains(Point.valueOf(20,15)));
         assertTrue(listener.getAdded().contains(Point.valueOf(30,15)));
         assertTrue(listener.getAdded().contains(Point.valueOf(40,15)));
-        
+
         assertTrue(listener.getRemoved().contains(Point.valueOf(10,10)));
         assertTrue(listener.getRemoved().contains(Point.valueOf(20,10)));
         assertTrue(listener.getRemoved().contains(Point.valueOf(30,10)));
         assertTrue(listener.getRemoved().contains(Point.valueOf(40,10)));
     }
-    
+
     public void testSetTranslationScale() throws Exception {
         blackboard.setToScreenTransform(AffineTransform.getScaleInstance(.5,.5));
         assertEquals(1, listener.getNum());
@@ -174,7 +174,7 @@ public class SelectionSetTest extends TestCase {
         assertTrue(listener.getAdded().contains(Point.valueOf(10,5)));
         assertTrue(listener.getAdded().contains(Point.valueOf(15,5)));
         assertTrue(listener.getAdded().contains(Point.valueOf(20,5)));
-        
+
         assertTrue(listener.getRemoved().contains(Point.valueOf(10,10)));
         assertTrue(listener.getRemoved().contains(Point.valueOf(20,10)));
         assertTrue(listener.getRemoved().contains(Point.valueOf(30,10)));
@@ -194,18 +194,18 @@ public class SelectionSetTest extends TestCase {
                 new Coordinate(20, 20),
                 new Coordinate(10, 10)
         });
-        
+
         blackboard.selectionClear();
         blackboard.setGeometries(linearRing, null);
         assertEquals(2, blackboard.getCoords(10,20).size());
         blackboard.selectionAdd(Point.valueOf(10,20));
         blackboard.setToScreenTransform(AffineTransform.getScaleInstance(1,2));
-            
+
         assertEquals(2, blackboard.getSelection().size());
         assertTrue(blackboard.getSelection().contains(Point.valueOf(10,40)));
         assertTrue(blackboard.getSelection().contains(Point.valueOf(10,41)));
     }
-    
+
     public void testSetGeometries() throws Exception {
         GeometryFactory factory = new GeometryFactory();
         int offset=0;
@@ -216,9 +216,9 @@ public class SelectionSetTest extends TestCase {
                 new Coordinate(offset+5, 8),
                 new Coordinate(offset+5, 7)
         });
-        
+
         blackboard.setGeometries(linearRing, null);
-        
+
         assertTrue(listener.getRemoved().contains(Point.valueOf(10,10)));
         assertTrue(listener.getRemoved().contains(Point.valueOf(20,10)));
         assertTrue(listener.getRemoved().contains(Point.valueOf(30,10)));
@@ -227,13 +227,13 @@ public class SelectionSetTest extends TestCase {
         assertEquals(4, listener.getRemoved().size());
     }
 
-    
+
     class TestEditBlackboardListener extends EditBlackboardAdapter{
         private Set<Point> added;
         private Set<Point> removed;
         private int num=0;
 
-        
+
         @SuppressWarnings("unchecked")
         @Override
         public void changed( EditBlackboardEvent e ) {
@@ -265,5 +265,5 @@ public class SelectionSetTest extends TestCase {
             return num;
         }
     }
-    
+
 }

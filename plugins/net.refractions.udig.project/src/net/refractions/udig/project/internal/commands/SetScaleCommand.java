@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Sets the scale denominator of the map.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -30,10 +30,7 @@ public class SetScaleCommand extends AbstractCommand implements UndoableCommand 
 
     private double oldScale;
     private double newScale;
-    /**
-     * 
-     * @param newScale Scale Denominator
-     */
+
     public SetScaleCommand( double newScale ) {
         this.newScale = newScale;
     }

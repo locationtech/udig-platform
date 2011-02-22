@@ -1,10 +1,14 @@
 package net.refractions.udig.tools.edit.support;
 
 import java.util.Iterator;
+import java.util.Map;
+
+import org.geotools.data.shapefile.shp.xml.ShpXmlFileReader;
 
 import junit.framework.TestCase;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.Polygon;
@@ -452,20 +456,20 @@ public class PrimitiveShapeTest extends TestCase {
         assertTrue(geom2.getShell().overlap(geom1.getShell(), false, false));
 
     }
-    
+
     public void testMovePointOnGeometry() throws Exception {
     	GeometryFactory fac = new GeometryFactory();
-    	
+
     	double[] coords = new double[]{10,10, 10,20, 10,30, 30,30, 20,30, 10,10};
 		LinearRing ring = fac.createLinearRing(new PackedCoordinateSequenceFactory().create(coords , 2));
     	Polygon poly = fac.createPolygon(ring, new LinearRing[0]);
-    	
+
     	bb.clear();
     	geom =  bb.addGeometry(poly, "poly").values().iterator().next();
-    	
+
     	bb.moveCoords(10, 10, 0, 10);
-    	
-    	
+
+
 	}
 
 }

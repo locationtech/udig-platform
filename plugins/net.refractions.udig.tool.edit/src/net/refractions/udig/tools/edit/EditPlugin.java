@@ -20,7 +20,7 @@ public class EditPlugin extends AbstractUIPlugin {
     public static final String RUN_ASSERTIONS = "net.refractions.udig.tools.edit/debug/assertions"; //$NON-NLS-1$
 	//The shared instance.
 	private static EditPlugin plugin;
-	
+
 	/**
 	 * The constructor.
 	 */
@@ -65,14 +65,14 @@ public class EditPlugin extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return AbstractUIPlugin.imageDescriptorFromPlugin(ID, path);
 	}
-	
+
     /**
      * Writes an info log in the plugin's log.
      * <p>
      * This should be used for user level messages.
      * </p>
-     * @param message 
-     * @param e 
+     * @param message
+     * @param e
      */
     public static void log( String message2, Throwable e) {
         String message=message2;
@@ -88,7 +88,7 @@ public class EditPlugin extends AbstractUIPlugin {
      * private static final String RENDERING = "net.refractions.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
-     * 
+     *
      */
     public static void trace( String message, Throwable e ) {
         if (getDefault().isDebugging()) {
@@ -100,10 +100,10 @@ public class EditPlugin extends AbstractUIPlugin {
     }
     /**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
-     * Available trace options can be found in the Trace class.  (They must also be part of the .options file) 
+     * Available trace options can be found in the Trace class.  (They must also be part of the .options file)
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
-     * 
+     *
      */
     public static void trace( String traceID, String message, Throwable e ) {
         if (getDefault().isDebugging()) {
@@ -117,10 +117,10 @@ public class EditPlugin extends AbstractUIPlugin {
     }
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
-     * @return true if this plugig is in your .options file 
+     * @return true if this plugig is in your .options file
      */
     public static boolean isDebugging( final String trace ){
-        return getDefault().isDebugging() && (trace  == null ||
-            "true".equalsIgnoreCase(Platform.getDebugOption(trace))); //$NON-NLS-1$    
-    }    
+        return getDefault().isDebugging() &&
+            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
+    }
 }

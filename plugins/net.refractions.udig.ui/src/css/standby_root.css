@@ -1,6 +1,6 @@
-/* 
+/*
  * Set up general font colours, sizes, etc.  Some of these will override
- * settings from the shared CSS 
+ * settings from the shared CSS
  */
 .intro-header H1 {
 	font-size : 15pt;
@@ -32,7 +32,7 @@ body {
 }
 
 /*
-.page { 
+.page {
 	background-image : url(graphics/rootpage/brandmark.gif);
 	background-repeat : no-repeat;
 	background-position : bottom left;
@@ -45,14 +45,14 @@ body {
 }
 */
 
-/* 
+/*
  * Set up the navigation bar.  It should be centered in the middle
  * of the page
  */
 
-#links-background { 
-	width : 100%; 
- 	margin-top : 10%; 
+#links-background {
+	width : 100%;
+ 	margin-top : 10%;
 	margin-bottom : auto;
 	text-align : center;
 }
@@ -60,7 +60,7 @@ body {
 #page-links a {
 	display : block;
 	width : 220px;
-	text-align : left; 
+	text-align : left;
 	margin-left : auto;
 	margin-right : auto;
 	margin-top : 0px;

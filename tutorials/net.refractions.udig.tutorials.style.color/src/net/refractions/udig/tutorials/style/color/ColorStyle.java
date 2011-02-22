@@ -4,11 +4,12 @@ import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.StyleContent;
-
+import org.apache.xml.resolver.apps.resolver;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
+
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.project.StyleContent;
 
 public class ColorStyle extends StyleContent {
     public static final String ID =
@@ -22,7 +23,7 @@ public class ColorStyle extends StyleContent {
             return resource.resolve( Color.class, monitor );
         }
         return null;
-    }    
+    }
     public Class<Color> getStyleClass() {
         return Color.class;
     }
@@ -35,20 +36,19 @@ public class ColorStyle extends StyleContent {
         int g = G == null ? 0 : (int) G;
         int b = B == null ? 0 : (int) B;
         int a = A == null ? 255 : (int) A;
-        
+
         return new Color( r, g, b, a );
     }
-    
+
     public Object load( URL url, IProgressMonitor monitor ) throws IOException {
         return null;
     }
     public void save( IMemento memento, Object value ) {
         Color color = (Color) value;
-        if (color != null){
-            memento.putInteger("r", color.getRed());
-            memento.putInteger("g", color.getGreen());
-            memento.putInteger("b", color.getBlue());
-            memento.putInteger("a", color.getAlpha());
-        }
+
+        memento.putInteger("r", color.getRed());
+        memento.putInteger("g", color.getGreen());
+        memento.putInteger("b", color.getBlue());
+        memento.putInteger("a", color.getAlpha());
     }
 }

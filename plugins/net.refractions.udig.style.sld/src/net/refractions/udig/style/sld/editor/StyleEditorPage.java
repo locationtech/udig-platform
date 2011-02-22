@@ -17,28 +17,26 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
+import org.geotools.event.GTEvent;
+import org.geotools.event.GTListener;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
 
 /**
- * Provides a user interface (by extension point) for pages in the SLD Editor
- * 
+ * <p>Provides a user interface (by extension point) for pages in the SLD Editor.</p>
+ * <p>Note: this will be rewritten in uDig 1.1.1</p>
  * @author chorner
  * @since 1.1
  */
 public abstract class StyleEditorPage extends DialogPage implements IStyleEditorPage {
 
-    /** Extension Point ID we are processing */
-    protected static final String XPID = "net.refractions.udig.style.sld.StyleEditorPage"; //$NON-NLS-1$
+    protected static final String XPID = "net.refractions.udig.style.sld.StyleEditorPage";
+
+	private IStyleEditorPageContainer container = null;
 
     /**
-     * Context for the page to run in; should have access to style blackboard and so forth.
-     */
-	private IStyleEditorPageContainer container = null; 
-    
-    /**
      * Description label.
-     * 
+     *
      * @see #createDescriptionLabel(Composite)
      */
     private Label descriptionLabel;
@@ -52,18 +50,18 @@ public abstract class StyleEditorPage extends DialogPage implements IStyleEditor
     }
 
     public void applyData(Object data) {
-    	
+
     }
-    
+
     /**
      * Creates the page Control.
-     * 
+     *
      * Subclasses should not override this method, but instead use createPageContent to create their contents.
-     * 
+     *
      * @param parent the parent composite
      */
     public void createControl( Composite parent ) {
-    	Composite page = new Composite(parent, SWT.NONE); 
+    	Composite page = new Composite(parent, SWT.NONE);
     	page.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         GridLayout layout = new GridLayout(1, false);
         layout.marginHeight = 0;
@@ -74,7 +72,7 @@ public abstract class StyleEditorPage extends DialogPage implements IStyleEditor
         initializeDialogUnits(page);
         //save the control
         setControl(page);
-        
+
         descriptionLabel = createDescriptionLabel(page);
         if (descriptionLabel != null) {
             descriptionLabel.setLayoutData(new GridData(SWT.FILL, SWT.DEFAULT, true, false));
@@ -85,7 +83,13 @@ public abstract class StyleEditorPage extends DialogPage implements IStyleEditor
 
         //invoke the layout
         parent.layout();
-        
+
+        //create the listener
+        StyledLayerDescriptor sld = container.getSLD();
+        if (sld != null) {
+            sld.addListener(new StyleChangedListener());
+        }
+
         container.addPageChangedListener(new IPageChangedListener() {
 
             public void pageChanged( PageChangedEvent event ) {
@@ -93,24 +97,24 @@ public abstract class StyleEditorPage extends DialogPage implements IStyleEditor
                     gotFocus(); //the current page just got focus, call the abstract method
                 }
             }
-            
+
         });
     }
 
     /**
      * Creates the page content.
-     * 
+     *
      * Subclasses must define this method and create their child controls here.
-     * 
+     *
      * @param parent composite to put the page content in
      */
     public abstract void createPageContent( Composite parent );
-    
+
     public abstract String getLabel();
-    
+
     /**
      * Initializes the page (optional)
-     * 
+     *
      * Subclasses may override this method if they need to initialize.
      *
      * @param bench
@@ -118,7 +122,7 @@ public abstract class StyleEditorPage extends DialogPage implements IStyleEditor
     public void init(IWorkbench bench) {
         //don't do anything by default
     }
-    
+
     /**
      * Computes the size for this page's UI control.
      * <p>
@@ -129,7 +133,7 @@ public abstract class StyleEditorPage extends DialogPage implements IStyleEditor
      * </p>
      *
      * @return the size of the preference page encoded as
-     *   <code>new Point(width,height)</code>, or 
+     *   <code>new Point(width,height)</code>, or
      *   <code>(0,0)</code> if the page doesn't currently have any UI component
      */
     public Point computeSize() {
@@ -154,7 +158,7 @@ public abstract class StyleEditorPage extends DialogPage implements IStyleEditor
      *   <code>new Point(width,height)</code>
      */
     protected Point doComputeSize() {
-    	Control page = getControl(); 
+    	Control page = getControl();
         if (descriptionLabel != null && page != null) {
             Point bodySize = page.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
             GridData gd = (GridData) descriptionLabel.getLayoutData();
@@ -162,7 +166,7 @@ public abstract class StyleEditorPage extends DialogPage implements IStyleEditor
         }
         return getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
     }
-    
+
     /**
      * Invoked when the user clicks cancel.
      */
@@ -171,7 +175,7 @@ public abstract class StyleEditorPage extends DialogPage implements IStyleEditor
     public IStyleEditorPageContainer getContainer() {
         return container;
     }
-    
+
     public void setContainer(IEditorPageContainer container) {
     	if (container instanceof IStyleEditorPageContainer) {
     		this.container = (IStyleEditorPageContainer) container;
@@ -213,7 +217,7 @@ public abstract class StyleEditorPage extends DialogPage implements IStyleEditor
         }
         return result;
     }
-    
+
     /**
      * Determines if the page contents are valid input. Subclasses should override if invalid input
      * is possible.
@@ -221,7 +225,7 @@ public abstract class StyleEditorPage extends DialogPage implements IStyleEditor
     public boolean isValid() {
         return true;
     }
-    
+
     /**
      * Returns the StyledLayerDescriptor from the style object on the blackboard (and creates one if it is missing).
      *
@@ -230,52 +234,49 @@ public abstract class StyleEditorPage extends DialogPage implements IStyleEditor
     public StyledLayerDescriptor getSLD() {
         return container.getSLD();
     }
-    
+
     /**
      * Returns the current style object from the dialog.
      *
      * @return style
      */
     public Style getStyle() {
-        return container.getStyle(); 
+        return container.getStyle();
     }
 
     /**
      * Sets the current style object (on our styleblackboard clone).
-     * 
+     *
      * @param style
      */
     public void setStyle(Style style) {
-        container.setStyle(style); 
+        container.setStyle(style);
     }
-    
+
     public StyleEditorPage getEditorPage() {
         return this;
     }
-    
+
     public StyleLayer getSelectedLayer() {
         return container.getSelectedLayer();
     }
 
     /**
      * Each subclass must implement this method which is called each time the page obtains focus.
-     * <p>
-     * You can use this method to check out the style and update the state of any widgets prior to display.
-     * Implementations Hint: The easiest thing to do is call IEditorPage.refresh() - which you have filled in
-     * to update the state of the widgets. You can optimize if you like by checking existing widget state and
-     * only updating the controls as needed.
-     * </p>
+     *
      */
     public abstract void gotFocus();
-    
+
     /**
      * Each subclass must implement this method which is called each time the style object is modified on ANY page.
-     * <p>
-     * A page implementation will usually just update its contents from scratch; as an optimization
-     * you can look at the provided source object and see if you can avoid updating everything.
-     * </p>
-     * @param source Source of change (often a FeatureTypeStyle or Rule)
      */
-    public abstract void styleChanged( Object source );
-    
+    public abstract void styleChanged( GTEvent event );
+
+    private class StyleChangedListener implements GTListener {
+        public void changed( GTEvent arg0 ) {
+            getContainer().setExitButtonState();
+            styleChanged( arg0 );
+        }
+    }
+
 }

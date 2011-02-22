@@ -9,10 +9,6 @@ import javax.swing.JFrame;
 
 import junit.framework.TestCase;
 
-/**
- * Tests the case where a polygon is just starting to be created.  There are only 2 lines
- * @author jeichar
- */
 public class ControlPointPathIteratorTest extends TestCase {
 
     private static final boolean DO_SHOW = true;
@@ -23,25 +19,24 @@ public class ControlPointPathIteratorTest extends TestCase {
         super.setUp();
         bb=new TestEditBlackboard();
         editGeom = bb.newGeom("id", ShapeType.POLYGON); //$NON-NLS-1$
-        
+
         bb.addPoint(10, 10, editGeom.getShell());
         bb.addPoint(30, 10, editGeom.getShell());
 
         PrimitiveShape hole = editGeom.newHole();
-        
+
         bb.addPoint(10, 30, hole);
         bb.addPoint(30, 30, hole);
 
         hole=editGeom.newHole();
-        
+
         bb.addPoint(10, 60, hole);
         bb.addPoint(30, 60, hole);
 
     }
 
     public void testDraw() throws Exception {
-        ControlPointPathIterator pathIterator = new ControlPointPathIterator(editGeom, true, 5, 5);
-        
+        ControlPointPathIterator pathIterator = new ControlPointPathIterator(editGeom, false, 5, 5);
 
         assertCorrectPath(pathIterator, false);
 
@@ -62,9 +57,9 @@ public class ControlPointPathIteratorTest extends TestCase {
                     g2.fill(shape);
                 }
             };
-            
+
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            
+
             frame.setSize(400, 400);
             frame.setVisible(true);
             Thread.sleep(50000);
@@ -90,7 +85,7 @@ public class ControlPointPathIteratorTest extends TestCase {
         assertPoint(pathIterator, Point.valueOf(30, 60), true);
         pathIterator.next();
         assertTrue(pathIterator.isDone());
-        
+
     }
 
     private void assertPoint( ControlPointPathIterator pathIterator, Point expectedPoint, boolean isLastPoint ) {
@@ -159,7 +154,7 @@ public class ControlPointPathIteratorTest extends TestCase {
         assertEquals(PathIterator.SEG_LINETO, result);
         assertEquals( (float)expectedPoint.getX()-2, nextFloats[0] );
         assertEquals( (float)expectedPoint.getY()-2, nextFloats[1] );
-        
+
         if( isLastPoint ){
             pathIterator.next();
             assertFalse( pathIterator.isDone() );

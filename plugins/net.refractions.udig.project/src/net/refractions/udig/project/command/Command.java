@@ -30,11 +30,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * method returns a new MapCommand without the undo data. The new MapCommand can safely be executed
  * with no negative side-effects.
  * </p>
- * 
- * @see A set of possible command categories are: zoom, pan, cut, paste, addVertex, etc.. Most
- *      commands are associated with tool whose job is to construct the commands. A MapCommand
- *      object describes an concrete change, for example: setBBox(0,0,1,1); setBBox(2,2,3,3) would
- *      be a separate object.
+ *
+ * @see net.refractions.udig.project.command.factory.NavigationCommandFactory A set of possible command
+ *      categories are: zoom, pan, cut, paste, addVertex, etc.. Most commands are associated with
+ *      tool whose job is to construct the commands. A MapCommand object describes an concrete
+ *      change, for example: setBBox(0,0,1,1); setBBox(2,2,3,3) would be a seperate object.
  * @author jeichar
  */
 public interface Command {
@@ -43,7 +43,7 @@ public interface Command {
      * <p>
      * Run is called by UDIG when the command is received. Commands are run in a seperate thread.
      * </p>
-     * 
+     *
      * @param monitor A progress monitor used by the command to report on its internal state. API
      *        how is this associated with a Thread? is it a Thread?
      * @throws Exception
@@ -53,7 +53,7 @@ public interface Command {
     /**
      * Instantiates a new copy of the command that will operate in the same manner as the original
      * command. API isn't this cloneable?
-     * 
+     *
      * @return A copy of the current command. The new command must run the same way as the current
      *         object.
      *         <p>
@@ -66,9 +66,9 @@ public interface Command {
     public Command copy();
 
     /**
-     * Each command has a name that is displayed with the undo/redo buttons.
-     * </p>
-     * @return The name of the command (often translated)
+     * Returns the name of the MapCommand
+     *
+     * @return The name of the command.
      */
     public String getName();
 

@@ -55,14 +55,14 @@ public class InsertOnNearestEdgeCommand extends AbstractCommand implements Undoa
         this.toAdd=toAdd;
         this.handler=handler2;
     }
-    
+
     public void rollback( IProgressMonitor monitor ) throws Exception {
         if( edges==null )
             throw new RuntimeException("The command has not yet been run!!"); //$NON-NLS-1$
-        
+
         if( edges.size()==0 )
             return;
-        
+
         for( ClosestEdge edge : edges ) {
             board.removeCoordinate(edge.getIndexOfPrevious()+1, edge.getAddedCoord(), edge.getPart());
         }
@@ -72,7 +72,7 @@ public class InsertOnNearestEdgeCommand extends AbstractCommand implements Undoa
 
     public void run( IProgressMonitor monitor ) throws Exception {
         ILayer editLayer = handler.getEditLayer();
-        Class<?> type = editLayer.getSchema().getGeometryDescriptor().getType().getBinding();
+        Class<?> type = editLayer.getSchema().getDefaultGeometry().getType();
         boolean polygonLayer=Polygon.class.isAssignableFrom(type) || MultiPolygon.class.isAssignableFrom(type);
         if( geom == null ){
             this.edges=board.addToNearestEdge(toAdd.getX(), toAdd.getY(),polygonLayer);
@@ -82,7 +82,7 @@ public class InsertOnNearestEdgeCommand extends AbstractCommand implements Undoa
         }
         if ( getMap()!=null )
             handler.repaint();
-          
+
     }
 
     public String getName() {

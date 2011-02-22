@@ -25,7 +25,7 @@ import net.refractions.udig.project.ui.tool.AbstractTool;
  * A tool that enables zooming using the mouse wheel and simulates the mouse
  * wheel zoom when the alt key is held down and the mouse is moved horizontally
  * This tool is always "on"
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -37,7 +37,7 @@ public class ScrollZoom extends AbstractTool {
     private int start;
 
     boolean in = true;
-    
+
     /**
      * Creates an new instance of ScrollZoom
      */
@@ -51,8 +51,7 @@ public class ScrollZoom extends AbstractTool {
     public void mouseWheelMoved(MapMouseWheelEvent e) {
         if( e.modifiersDown() )
             return;
-        UpdateThread.getUpdater().zoomWithFixedPoint(e.clickCount * 3, getContext(), 500,
-                e.getPoint());
+        UpdateThread.getUpdater().zoom(e.clickCount*3, getContext(), 500);
     }
 
     /**

@@ -12,41 +12,41 @@ import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.tests.DummyService;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.render.impl.CompositeRenderContextImpl;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
+import net.refractions.udig.project.render.IRenderMetrics;
 import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.render.internal.wms.basic.BasicWMSMetricsFactory2;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.ows.CRSEnvelope;
 import org.geotools.data.ows.Layer;
-import org.opengis.geometry.Envelope;
+import org.opengis.spatialschema.geometry.Envelope;
 
 public class WMSRenderMetricsTest extends TestCase {
 
-    private static final HashMap<String, CRSEnvelope> BBOXES1;
+    private static final HashMap<String, Envelope> BBOXES1;
     static{
-        BBOXES1 = new HashMap<String, CRSEnvelope>();
+        BBOXES1 = new HashMap<String, Envelope>();
         CRSEnvelope generalEnvelope = new CRSEnvelope("EPSG:4326",0,0, 100,20); //$NON-NLS-1$
         BBOXES1.put("EPSG:4326", generalEnvelope); //$NON-NLS-1$
         CRSEnvelope generalEnvelope2 = new CRSEnvelope("EPSG:3005",1000000,1111000, 1222222,1111222); //$NON-NLS-1$
         BBOXES1.put("EPSG:3005", generalEnvelope2); //$NON-NLS-1$
     }
-    private static final HashMap<String, CRSEnvelope> BBOXES2;
+    private static final HashMap<String, Envelope> BBOXES2;
     static{
-        BBOXES2 = new HashMap<String, CRSEnvelope>();
+        BBOXES2 = new HashMap<String, Envelope>();
         CRSEnvelope generalEnvelope = new CRSEnvelope("EPSG:4326",0,0, 20,80); //$NON-NLS-1$
         BBOXES2.put("EPSG:4326", generalEnvelope); //$NON-NLS-1$
         CRSEnvelope generalEnvelope2 = new CRSEnvelope("EPSG:3005",1555000,1555000, 1555222,1555333); //$NON-NLS-1$
         BBOXES2.put("EPSG:3005", generalEnvelope2); //$NON-NLS-1$
     }
 
-    public static final HashMap<String, CRSEnvelope> BBOXES3;
+    public static final HashMap<String, Envelope> BBOXES3;
     static{
-        BBOXES3 = new HashMap<String, CRSEnvelope>();
+        BBOXES3 = new HashMap<String, Envelope>();
         CRSEnvelope generalEnvelope = new CRSEnvelope("EPSG:4326",-180,-90,180,90); //$NON-NLS-1$
         BBOXES3.put("EPSG:4326", generalEnvelope); //$NON-NLS-1$
     }
-    
+
     private Map map;
     private List< ? extends IGeoResource> members;
     private List< ? extends IGeoResource> members2;
@@ -84,7 +84,7 @@ public class WMSRenderMetricsTest extends TestCase {
     public void testCanAddLayer() throws Throwable {
         BasicWMSMetricsFactory2 fac=new BasicWMSMetricsFactory2();
         CompositeRenderContextImpl comp = createCompositeRenderer();
-        AbstractRenderMetrics metrics = fac.createMetrics(comp);
+        IRenderMetrics metrics = fac.createMetrics(comp);
         assertTrue(metrics.canAddLayer(map.getLayersInternal().get(1)));
         net.refractions.udig.project.internal.Layer layer = map.getLayerFactory().createLayer(members2.get(0));
         assertFalse(metrics.canAddLayer(layer));

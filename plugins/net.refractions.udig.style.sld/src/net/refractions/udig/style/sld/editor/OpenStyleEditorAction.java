@@ -1,11 +1,8 @@
 package net.refractions.udig.style.sld.editor;
 
-import java.lang.reflect.Field;
 
 import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.style.sld.SLD;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -48,11 +45,11 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
     }
 
     /**
-     * Create a new <code>OpenPreferenceAction</code> and initialize it 
+     * Create a new <code>OpenPreferenceAction</code> and initialize it
      * from the given resource bundle.
      * @param window
      */
-    public OpenStyleEditorAction( IWorkbenchWindow window ) {
+    public OpenStyleEditorAction(IWorkbenchWindow window) {
         super();
         if (window == null) {
             throw new IllegalArgumentException();
@@ -60,9 +57,9 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
         this.workbenchWindow = window;
         setActionDefinitionId("net.refractions.style.sld.editor"); //$NON-NLS-1$
 
-        // setToolTipText(WorkbenchMessages.OpenPreferences_toolTip);
-        // window.getWorkbench().getHelpSystem().setHelp(this,
-        // IWorkbenchHelpContextIds.OPEN_PREFERENCES_ACTION);
+		//setToolTipText(WorkbenchMessages.OpenPreferences_toolTip);
+		//window.getWorkbench().getHelpSystem().setHelp(this,
+		//       IWorkbenchHelpContextIds.OPEN_PREFERENCES_ACTION);
     }
 
     public void run( IAction action ) {
@@ -71,38 +68,10 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
         }
 
         Shell shell = workbenchWindow.getShell();
-        // the page to select by default
-        String pageId = "simple"; //$NON-NLS-1$
-        // the filter to apply, if defined
-        // String[] displayedIds = null;
-
-        try {
-            if (SLD.POINT.supports(selectedLayer)) {
-                Class< ? > pointClass = Class.forName("eu.udig.style.advanced.editorpages.SimplePointEditorPage"); //$NON-NLS-1$
-                Field idField = pointClass.getField("ID"); //$NON-NLS-1$
-                Object value = idField.get(null);
-                pageId = value.toString();
-            } else if (SLD.LINE.supports(selectedLayer)) {
-                Class< ? > pointClass = Class.forName("eu.udig.style.advanced.editorpages.SimpleLineEditorPage"); //$NON-NLS-1$
-                Field idField = pointClass.getField("ID"); //$NON-NLS-1$
-                Object value = idField.get(null);
-                pageId = value.toString();
-            } else if (SLD.POLYGON.supports(selectedLayer)) {
-                Class< ? > pointClass = Class.forName("eu.udig.style.advanced.editorpages.SimplePolygonEditorPage"); //$NON-NLS-1$
-                Field idField = pointClass.getField("ID"); //$NON-NLS-1$
-                Object value = idField.get(null);
-                pageId = value.toString();
-            } else if (selectedLayer.getGeoResource().getInfo(new NullProgressMonitor()).getDescription()
-                    .equals("grassbinaryraster")) { //$NON-NLS-1$
-                Class< ? > pointClass = Class.forName("eu.udig.style.jgrass.colors.JGrassRasterStyleEditorPage"); //$NON-NLS-1$
-                Field idField = pointClass.getField("ID"); //$NON-NLS-1$
-                Object value = idField.get(null);
-                pageId = value.toString();
-            }
-        } catch (Exception e) {
-            // fallback on simple
-            pageId = "simple"; //$NON-NLS-1$
-        }
+        //the page to select by default
+        String pageId = "simple";  //$NON-NLS-1$
+        //the filter to apply, if defined
+        //String[] displayedIds = null;
 
         final EditorPageManager manager = EditorPageManager.loadManager(plugin, selectedLayer);
 
@@ -114,15 +83,15 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
         if (selection.isEmpty() || !(selection instanceof IStructuredSelection))
             return;
 
-        IStructuredSelection sselection = (IStructuredSelection) selection;
+        IStructuredSelection sselection = (IStructuredSelection)selection;
         if (sselection.getFirstElement() instanceof Layer) {
             selectedLayer = (Layer) sselection.getFirstElement();
         }
     }
 
     public void dispose() {
-        plugin = null;
-        workbenchWindow = null;
+    	plugin = null;
+    	workbenchWindow = null;
     }
 
     public void init( IWorkbenchWindow window ) {

@@ -1,0 +1,121 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 1 Simple Commands</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 1 Simple Commands -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="1SimpleCommands-SimpleCommands">Simple Commands</a></h1>
+
+<p>These are the workhorses of uDig application development, this is how to <b>do stuff</b>, and interestingly <b>undo stuff</b>.</p>
+
+<h2><a name="1SimpleCommands-ICOmmandandIUndoable">ICOmmand and IUndoable</a></h2>
+
+<p>There are two basic categories of commands, a <b><em>normal</em></b> ICommand, which can not be undone and when executed clears the undo stack, and <b>IUndoable</b> Commands, which can be undone and should be used in as many cases as possible.</p>
+
+<p>An example of a situation where is command can not be undone is a commit transaction command.  Once a transaction is committed it makes sense that it cannot be undone.  </p>
+
+
+<h4><a name="1SimpleCommands-CodeExample">Code Example</a></h4>
+
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>AddLayerCommand.java</b></div><div class="codeContent">
+<pre class="code-java">/**
+ * Creates a command that adds a layer to the map.
+ *
+ * @author jones
+ * @since 0.6.0
+ */
+<span class="code-keyword">public</span> class AddLayerCommand <span class="code-keyword">extends</span> AbstractCommand <span class="code-keyword">implements</span> UndoableCommand {
+
+    <span class="code-keyword">private</span> Layer layer;
+    <span class="code-keyword">private</span> <span class="code-object">int</span> index=-1;
+    /**
+     * Construct &lt;code&gt;AddLayerCommand&lt;/code&gt;.
+     *
+     * @param layer the layer that will be added.
+     */
+    <span class="code-keyword">public</span> AddLayerCommand(Layer layer) {
+        <span class="code-keyword">this</span>.layer=layer;
+    }
+
+    /**
+     * Construct &lt;code&gt;AddLayerCommand&lt;/code&gt;.
+     *
+     * @param layer the layer that will be added.
+     * @param index the zorder that the layer will be added.
+     */
+    <span class="code-keyword">public</span> AddLayerCommand(Layer layer, <span class="code-object">int</span> index) {
+        <span class="code-keyword">this</span>.layer=layer;
+        <span class="code-keyword">this</span>.index=index;
+    }
+
+    /**
+     * Remove the layer that was added during execution.
+     * @see net.refractions.udig.project.command.UndoableCommand#rollback()
+     */
+    <span class="code-keyword">public</span> void rollback() <span class="code-keyword">throws</span> Exception {
+        getMap().getLayersInternal().remove(layer);
+    }
+
+    /**
+     * Adds a layer to the map.  Defensive programming is recommended but command
+     * framework protects against exceptions raised in commands.
+     * @see net.refractions.udig.project.command.Command#run()
+     */
+    <span class="code-keyword">public</span> void run() <span class="code-keyword">throws</span> Exception {
+        <span class="code-keyword">if</span>( index&lt;0 || index&gt;getMap().getLayersInternal().size())
+            getMap().getLayersInternal().add(layer);
+        <span class="code-keyword">else</span>
+            getMap().getLayersInternal().add(index, layer);
+    }
+
+    /**
+     * Returns a copy of the command.  A command should only be executed once.  If the same
+     * command is to be used multiple times the command should be copied.  Some commands
+     * contain internal state.
+     *
+     * @see net.refractions.udig.project.command.Command#copy()
+     */
+    <span class="code-keyword">public</span> Command copy() {
+        <span class="code-keyword">return</span> <span class="code-keyword">new</span> AddLayerCommand(layer, index);
+    }
+
+    /**
+     * Each command has a name that is displayed with the undo/redo buttons.
+     * @see net.refractions.udig.project.command.Command#getName()
+     */
+    <span class="code-keyword">public</span> <span class="code-object">String</span> getName() {
+        <span class="code-keyword">return</span> Policy.bind(<span class="code-quote">"AddLayerCommand.Name"</span>)+layer.getName(); <span class="code-comment">//$NON-NLS-1$
+</span>    }
+
+}</pre>
+</div></div>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=4086">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=4086">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

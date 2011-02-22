@@ -24,8 +24,9 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
-import org.opengis.feature.Feature;
-import org.opengis.filter.Filter;
+import org.geotools.feature.Feature;
+import org.geotools.filter.Filter;
+
 /**
  * View used to track the workbench selection.
  * <p>
@@ -77,7 +78,7 @@ public class SelectionView extends ViewPart {
         // DESCRIPTION
         StringBuffer buffer = new StringBuffer();
         String separator = System.getProperty("line.separator");
-        for( Iterator<?> iterator=selection.iterator(); iterator.hasNext(); ){            
+        for( Iterator<?> iterator=selection.iterator(); iterator.hasNext(); ){
             object = iterator.next();
             buffer.append( "VALUE: ");
             buffer.append( object.toString());
@@ -87,93 +88,93 @@ public class SelectionView extends ViewPart {
             // from net.refractions.udig.project
             if( object instanceof IMap ){
                 buffer.append("instance of Map");
-                buffer.append(separator);                
+                buffer.append(separator);
             }
             if( object instanceof ILayer ){
                 buffer.append("instance of ILayer");
-                buffer.append(separator);                
+                buffer.append(separator);
             }
             // from net.refractions.udig.catalog
             if( object instanceof IService ){
                 buffer.append("instance of IService");
-                buffer.append(separator);                
+                buffer.append(separator);
             }
             if( object instanceof IGeoResource){
                 buffer.append("instance of IGeoResource");
-                buffer.append(separator);                
+                buffer.append(separator);
             }
             // from org.geotools
             if( object instanceof Filter ){
                 buffer.append("instance of Filter");
-                buffer.append(separator);                
+                buffer.append(separator);
             }
             if( object instanceof Feature ){
                 buffer.append("instance of Feature");
-                buffer.append(separator);                
+                buffer.append(separator);
             }
             // IADATABLE
             buffer.append("--------------------------");
-            buffer.append(separator);            
+            buffer.append(separator);
             if( object instanceof IAdaptable){
                 // IAdtable is a magic interface that allows
                 // a single object to return multiple interfaces
                 IAdaptable adaptable = (IAdaptable) object;
                 if( adaptable.getAdapter(IMap.class) != null ){
                     buffer.append("adapts to Map");
-                    buffer.append(separator);                    
+                    buffer.append(separator);
                 }
                 if( adaptable.getAdapter(ILayer.class) != null ){
                     buffer.append("adapts to ILayer");
-                    buffer.append(separator);                    
+                    buffer.append(separator);
                 }
                 // from net.refractions.udig.catalog
                 if( adaptable.getAdapter(IService.class) != null ){
                     buffer.append("adapts to IService");
-                    buffer.append(separator);                    
+                    buffer.append(separator);
                 }
                 if( adaptable.getAdapter(IGeoResource.class) != null){
                     buffer.append("adapts to IGeoResource");
-                    buffer.append(separator);                    
+                    buffer.append(separator);
                 }
                 // from org.geotools
                 if( adaptable.getAdapter(Filter.class) != null ){
                     buffer.append("adapts to Filter");
-                    buffer.append(separator);                    
+                    buffer.append(separator);
                 }
                 if( adaptable.getAdapter(Feature.class) != null ){
                     buffer.append("adapts to Feature");
-                    buffer.append(separator);                    
+                    buffer.append(separator);
                 }
                 if( adaptable.getAdapter(URL.class) != null ){
                     buffer.append("adapts to URL");
-                    buffer.append(separator);                    
+                    buffer.append(separator);
                 }
             }
         }  // NEXT
-        description.setText(buffer.toString());        
+        description.setText(buffer.toString());
     }
-    
-    /** Safely update the text; making sure we are in the Display thread 
+
+    /** Safely update the text; making sure we are in the Display thread
     protected void setText( final String str ){
         if( text == null ) return;
         text.setText( str );
         /*
         text.getDisplay().asyncExec( new Runnable(){
             public void run() {
-                if( text == null || text.isDisposed() ) return;                
+                if( text == null || text.isDisposed() ) return;
                 text.setText( str );
-            }            
-        });               
+            }
+        });
     }
     */
-    /** Safely update the text; making sure we are in the Display thread 
+    /** Safely update the text; making sure we are in the Display thread
     protected void setDescription( final String str ){
-        if( description == null ) return;       
+        if( description == null ) return;
         description.getDisplay().asyncExec( new Runnable(){
             public void run() {
-                if( description == null || description.isDisposed() ) return;                
-                description.setText( str );                
-            }            
+                if( description == null || description.isDisposed() ) return;
+                description.setText( str );
+            }
         });
         System.out.println( str );
     }
@@ -197,21 +198,21 @@ public class SelectionView extends ViewPart {
         Label label = new Label(parent, SWT.RIGHT );
         label.setLayoutData( new GridData(SWT.RIGHT,SWT.TOP,true,false ) );
         label.setText("Selection:");
-        
-        text = new Text(parent, SWT.DEFAULT | SWT.READ_ONLY | SWT.WRAP );
+
+        text = new Text(parent, SWT.DEFAULT | SWT.READ_ONLY );
         text.setTextLimit(70);
         text.setLayoutData( new GridData(SWT.LEFT,SWT.TOP,true,true, 3,1 ) );
-        
+
         label = new Label(parent, SWT.RIGHT );
         label.setLayoutData( new GridData(SWT.RIGHT,SWT.TOP,true,false ) );
         label.setText("Content:");
-        
+
         description = new Text(parent, SWT.V_SCROLL | SWT.H_SCROLL | SWT.MULTI );
         GridData gridData = new GridData(SWT.DEFAULT,SWT.DEFAULT,true,true, 3,3 );
         gridData.widthHint = 500;
         gridData.heightHint = 200;
         description.setLayoutData( gridData );
-        
+
         selectionListener = new WorkbenchSelectionListener();
         ISelectionService selectionService = getSite().getWorkbenchWindow().getSelectionService();
         selectionService.addPostSelectionListener(selectionListener);
@@ -225,7 +226,7 @@ public class SelectionView extends ViewPart {
         //  something like....)
         // description.setFocus()
     }
-    
+
     @Override
     public void dispose() {
         // STEP FIVE
@@ -237,7 +238,7 @@ public class SelectionView extends ViewPart {
             //
             ISelectionService selectionService = getSite().getWorkbenchWindow().getSelectionService();
             selectionService.removePostSelectionListener(selectionListener);
-            
+
             selectionListener = null;
         }
         super.dispose();

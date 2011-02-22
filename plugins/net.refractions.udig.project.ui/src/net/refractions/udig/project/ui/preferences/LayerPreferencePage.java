@@ -36,15 +36,15 @@ public class LayerPreferencePage extends FieldEditorPreferencePage
         super(GRID);
         setPreferenceStore(ProjectPlugin.getPlugin().getPreferenceStore());
     }
-    
+
     @Override
     protected void createFieldEditors() {
         RadioGroupFieldEditor layerSelectionColours = new RadioGroupFieldEditor(
-                   PreferenceConstants.P_HIGHLIGHT, Messages.LayerPreferences_highlight, 1, 
+                   PreferenceConstants.P_HIGHLIGHT, Messages.LayerPreferences_highlight, 1,
                    new String[][] {
-                           {Messages.LayerPreferences_none, PreferenceConstants.P_HIGHLIGHT_NONE}, 
-                           {Messages.LayerPreferences_foreground, PreferenceConstants.P_HIGHLIGHT_FOREGROUND}, 
-                           {Messages.LayerPreferences_background, PreferenceConstants.P_HIGHLIGHT_BACKGROUND} 
+                           {Messages.LayerPreferences_none, PreferenceConstants.P_HIGHLIGHT_NONE},
+                           {Messages.LayerPreferences_foreground, PreferenceConstants.P_HIGHLIGHT_FOREGROUND},
+                           {Messages.LayerPreferences_background, PreferenceConstants.P_HIGHLIGHT_BACKGROUND}
                    },
                    getFieldEditorParent(),
                    true);

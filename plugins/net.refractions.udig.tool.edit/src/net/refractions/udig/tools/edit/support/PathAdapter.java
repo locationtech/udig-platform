@@ -23,7 +23,7 @@ import org.eclipse.swt.graphics.Path;
 /**
  * Provides a single interface for interacting with swt Path objects and awt GeneralPath Objects.  This is because right now Linux requires awt and other
  * platforms use SWT.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -31,7 +31,7 @@ public class PathAdapter {
 
     Path swtPath;
     GeneralPath generalPath;
-    
+
     public void lineTo( int x, int y ) {
         if( isPath() )
             swtPath.lineTo(x, y);
@@ -73,7 +73,7 @@ public class PathAdapter {
         if( isPath() )
             swtPath.close();
         else
-            generalPath.closePath();    
+            generalPath.closePath();
     }
 
 

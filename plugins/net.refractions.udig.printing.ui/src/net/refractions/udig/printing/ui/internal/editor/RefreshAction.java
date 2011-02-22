@@ -22,7 +22,7 @@ import org.eclipse.gef.commands.Command;
 
 /**
  * Forces a refresh of the MapBox
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -39,7 +39,7 @@ public class RefreshAction implements IBoxEditAction {
     }
 
     public boolean isDone() {
-        return true;
+        return false;
     }
 
     public void perform() {

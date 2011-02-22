@@ -22,7 +22,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.ui.Drawing;
@@ -34,16 +37,17 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.widgets.Display;
+import org.geotools.data.FeatureReader;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.data.wms.request.GetLegendGraphicRequest;
-import org.geotools.feature.FeatureIterator;
+import org.geotools.feature.Feature;
+import org.geotools.feature.IllegalAttributeException;
 import org.geotools.styling.Style;
-import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * Builds SWT images for to represent layers.
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
@@ -128,8 +132,8 @@ public class GlyphBuilder {
                 request.setLayer(layer.getName());
 
                 String desiredFormat = null;
-                List formats = wms.getCapabilities().getRequest()
-                        .getGetLegendGraphic().getFormats();
+                List formats = Arrays.asList(wms.getCapabilities().getRequest()
+                        .getGetLegendGraphic().getFormatStrings());
                 if (formats.contains("image/png")) { //$NON-NLS-1$
                     desiredFormat = "image/png"; //$NON-NLS-1$
                 }
@@ -153,19 +157,27 @@ public class GlyphBuilder {
          * g2.setColor(Color.BLACK); g2.drawRect(0, 0, 15, 15); return createImageDescriptor(image);
          */
     }
-    private SimpleFeature sampleFeature( Layer layer ) {
-        FeatureIterator<SimpleFeature> reader = null;
+    private Feature sampleFeature( Layer layer ) {
+        FeatureReader reader = null;
         try {
-            reader = layer.getResource(FeatureSource.class, null).getFeatures().features();
+            reader = layer.getResource(FeatureSource.class, null).getFeatures().reader();
         } catch (Throwable ignore) {
             return null;
         }
         try {
             return reader.next();
-        } catch (Throwable e) {
+        } catch (NoSuchElementException e) {
+            return null;
+        } catch (IOException e) {
+            return null;
+        } catch (IllegalAttributeException e) {
             return null;
         } finally {
-            reader.close();            
+            try {
+                reader.close();
+            } catch (IOException e1) {
+                return null;
+            }
         }
     }
 
@@ -174,7 +186,7 @@ public class GlyphBuilder {
         int height = 16;
 
         Image image = new Image(Display.getDefault(), width, height);
-        SimpleFeature feature = sampleFeature(layer);
+        Feature feature = sampleFeature(layer);
         ViewportGraphics graphics = Drawing.createGraphics(new GC(image), Display.getDefault(),
                 new Dimension(width - 1, width - 1));
         graphics.clearRect(0, 0, width, height);
@@ -189,7 +201,7 @@ public class GlyphBuilder {
         // FeatureTypeStyle style = imp.getFeatureTypeStyles()[0];
         // Rule rule = style.getRules()[0];
         // Symbolizer symbolizer = rule.getSymbolizers()[0];
-        // SimpleFeature feature = sampleFeature( layer );
+        // Feature feature = sampleFeature( layer );
         //
         // if (symbolizer instanceof LineSymbolizer) {
         // try {

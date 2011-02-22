@@ -55,7 +55,7 @@
    </extension>
       <extension
             point="org.eclipse.ui.perspectiveExtensions">
-         <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
+         <perspectiveExtension targetID="net.refractions.udig.ui.alternateMapPerspective">
             <actionSet id="net.refractions.udig.legend.mapGraphic.action"/>
          </perspectiveExtension>
          <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">

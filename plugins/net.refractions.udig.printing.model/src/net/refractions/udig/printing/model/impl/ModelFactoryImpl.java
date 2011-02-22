@@ -7,7 +7,6 @@
 package net.refractions.udig.printing.model.impl;
 
 import java.awt.Graphics2D;
-import net.refractions.udig.printing.model.*;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -30,9 +29,7 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.ui.XMLMemento;
 
 /**
@@ -41,149 +38,127 @@ import org.eclipse.ui.XMLMemento;
  */
 public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	/**
-     * Creates the default factory implementation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public static ModelFactory init() {
-        try {
-            ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory("http:///net/refractions/udig/printing/model.ecore"); 
-            if (theModelFactory != null) {
-                return theModelFactory;
-            }
-        }
-        catch (Exception exception) {
-            EcorePlugin.INSTANCE.log(exception);
-        }
-        return new ModelFactoryImpl();
-    }
-
-    /**
-     * Creates an instance of the factory.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
+	 * Creates an instance of the factory.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
     public ModelFactoryImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
     public EObject create(EClass eClass) {
-        switch (eClass.getClassifierID()) {
-            case ModelPackage.BOX: return createBox();
-            case ModelPackage.CONNECTION: return createConnection();
-            case ModelPackage.ELEMENT: return createElement();
-            case ModelPackage.PAGE: return createPage();
-            default:
-                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-        }
-    }
+		switch (eClass.getClassifierID()) {
+			case ModelPackage.BOX: return createBox();
+			case ModelPackage.CONNECTION: return createConnection();
+			case ModelPackage.ELEMENT: return createElement();
+			case ModelPackage.PAGE: return createPage();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
 
 	/**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
     public Object createFromString(EDataType eDataType, String initialValue) {
-        switch (eDataType.getClassifierID()) {
-            case ModelPackage.GRAPHICS2_D:
-                return createGraphics2DFromString(eDataType, initialValue);
-            case ModelPackage.DIMENSION:
-                return createDimensionFromString(eDataType, initialValue);
-            case ModelPackage.POINT:
-                return createPointFromString(eDataType, initialValue);
-            case ModelPackage.IPROGRESS_MONITOR:
-                return createIProgressMonitorFromString(eDataType, initialValue);
-            case ModelPackage.BOX_PRINTER:
-                return createBoxPrinterFromString(eDataType, initialValue);
-            default:
-                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-        }
-    }
+		switch (eDataType.getClassifierID()) {
+			case ModelPackage.GRAPHICS2_D:
+				return createGraphics2DFromString(eDataType, initialValue);
+			case ModelPackage.DIMENSION:
+				return createDimensionFromString(eDataType, initialValue);
+			case ModelPackage.POINT:
+				return createPointFromString(eDataType, initialValue);
+			case ModelPackage.IPROGRESS_MONITOR:
+				return createIProgressMonitorFromString(eDataType, initialValue);
+			case ModelPackage.BOX_PRINTER:
+				return createBoxPrinterFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
 
 	/**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
     public String convertToString(EDataType eDataType, Object instanceValue) {
-        switch (eDataType.getClassifierID()) {
-            case ModelPackage.GRAPHICS2_D:
-                return convertGraphics2DToString(eDataType, instanceValue);
-            case ModelPackage.DIMENSION:
-                return convertDimensionToString(eDataType, instanceValue);
-            case ModelPackage.POINT:
-                return convertPointToString(eDataType, instanceValue);
-            case ModelPackage.IPROGRESS_MONITOR:
-                return convertIProgressMonitorToString(eDataType, instanceValue);
-            case ModelPackage.BOX_PRINTER:
-                return convertBoxPrinterToString(eDataType, instanceValue);
-            default:
-                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-        }
-    }
+		switch (eDataType.getClassifierID()) {
+			case ModelPackage.GRAPHICS2_D:
+				return convertGraphics2DToString(eDataType, instanceValue);
+			case ModelPackage.DIMENSION:
+				return convertDimensionToString(eDataType, instanceValue);
+			case ModelPackage.POINT:
+				return convertPointToString(eDataType, instanceValue);
+			case ModelPackage.IPROGRESS_MONITOR:
+				return convertIProgressMonitorToString(eDataType, instanceValue);
+			case ModelPackage.BOX_PRINTER:
+				return convertBoxPrinterToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Box createBox() {
-        BoxImpl box = new BoxImpl();
-        return box;
-    }
+		BoxImpl box = new BoxImpl();
+		return box;
+	}
 
 	/**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
     public Connection createConnection() {
-        ConnectionImpl connection = new ConnectionImpl();
-        return connection;
-    }
+		ConnectionImpl connection = new ConnectionImpl();
+		return connection;
+	}
 
 	/**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
     public Element createElement() {
-        ElementImpl element = new ElementImpl();
-        return element;
-    }
+		ElementImpl element = new ElementImpl();
+		return element;
+	}
 
 	/**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
     public Page createPage() {
-        PageImpl page = new PageImpl();
-        return page;
-    }
+		PageImpl page = new PageImpl();
+		return page;
+	}
 
 	/**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
     public Graphics2D createGraphics2DFromString(EDataType eDataType, String initialValue) {
-        return (Graphics2D)super.createFromString(eDataType, initialValue);
-    }
+		return (Graphics2D)super.createFromString(eDataType, initialValue);
+	}
 
 	/**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
     public String convertGraphics2DToString(EDataType eDataType, Object instanceValue) {
-        return super.convertToString(eDataType, instanceValue);
-    }
+		return super.convertToString(eDataType, instanceValue);
+	}
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Dimension createDimensionFromString( EDataType eDataType, String initialValue ) {
@@ -200,7 +175,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public String convertDimensionToString( EDataType eDataType, Object instanceValue ) {
@@ -210,7 +185,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Point createPointFromString( EDataType eDataType, String initialValue ) {
@@ -227,7 +202,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public String convertPointToString( EDataType eDataType, Object instanceValue ) {
@@ -236,20 +211,20 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
     }
 
 	/**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
     public IProgressMonitor createIProgressMonitorFromString(EDataType eDataType, String initialValue) {
-        return (IProgressMonitor)super.createFromString(eDataType, initialValue);
-    }
+		return (IProgressMonitor)super.createFromString(eDataType, initialValue);
+	}
 
 	/**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
     public String convertIProgressMonitorToString(EDataType eDataType, Object instanceValue) {
-        return super.convertToString(eDataType, instanceValue);
-    }
+		return super.convertToString(eDataType, instanceValue);
+	}
 
     /**
      * <!-- begin-user-doc -->
@@ -261,11 +236,11 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
         String extensionID=split[0].trim();
         String className=split[1].trim();
         String mementoString=split[2].trim();
-        
+
         if( mementoString.length()==0 ){
             return null;
         }
-        
+
         try{
             XMLMemento memento = XMLMemento.createReadRoot(new StringReader(mementoString));
             IExtension extension = Platform.getExtensionRegistry().getExtension(PrintingModelPlugin.BOX_PRINTER_EXTENSION_ID, extensionID);
@@ -304,7 +279,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
     }
 
     private final String SPLIT="_|||_"; //$NON-NLS-1$
-    
+
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -330,21 +305,20 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
     }
 
 	/**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
     public ModelPackage getModelPackage() {
-        return (ModelPackage)getEPackage();
-    }
+		return (ModelPackage)getEPackage();
+	}
 
 	/**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @deprecated
-     * @generated
-     */
-    @Deprecated
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @deprecated
+	 * @generated
+	 */
     public static ModelPackage getPackage() {
-        return ModelPackage.eINSTANCE;
-    }
+		return ModelPackage.eINSTANCE;
+	}
 
 } // ModelFactoryImpl

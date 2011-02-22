@@ -20,51 +20,49 @@ import net.refractions.udig.catalog.ui.internal.Messages;
 import net.refractions.udig.ui.ProgressFeatureCollection;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
+import org.geotools.feature.FeatureType;
 import org.geotools.geometry.jts.JTS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.feature.type.Name;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
+import org.opengis.spatialschema.geometry.MismatchedDimensionException;
 
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * Reprojects the features that as they are read from the collection.  The features are read only so don't try to attempt to 
+ * Reprojects the features that as they are read from the collection.  The features are read only so don't try to attempt to
  * set any values on the features.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class ReprojectingFeatureCollection extends ProgressFeatureCollection
         implements
-        FeatureCollection<SimpleFeatureType, SimpleFeature> {
+            FeatureCollection {
 
-    private SimpleFeatureType featureType;
+    private FeatureType featureType;
     private MathTransform mt;
 
     /**
      * new instance
      * @param delegate the feature collection to transform
      * @param monitor the monitor to update
-     * @param featureType the featureType of the <em>final</em> featureType.  Which means that the default geometry attribute 
+     * @param featureType the featureType of the <em>final</em> featureType.  Which means that the default geometry attribute
      * type declares the projection <em>after</em> the transformation.
      * @param mt
      */
-    public ReprojectingFeatureCollection( FeatureCollection<SimpleFeatureType, SimpleFeature> delegate, IProgressMonitor monitor, 
-            SimpleFeatureType SimplefeatureType, MathTransform mt ) {
+    public ReprojectingFeatureCollection( FeatureCollection delegate, IProgressMonitor monitor,
+            FeatureType featureType, MathTransform mt ) {
         super(delegate, monitor);
         this.mt=mt;
-        this.featureType=SimplefeatureType;
+        this.featureType=featureType;
     }
-    
+
     @Override
-    protected Iterator<SimpleFeature> openIterator() {
-        final FeatureIterator<SimpleFeature> iterator = delegate.features();
-        return new Iterator<SimpleFeature>(){
+    protected Iterator openIterator() {
+        final Iterator iterator = delegate.iterator();
+        return new Iterator(){
 
             private FeatureWrapper feature;
 
@@ -72,28 +70,27 @@ public class ReprojectingFeatureCollection extends ProgressFeatureCollection
                 while( feature == null ) {
                     if( !iterator.hasNext() )
                         return false;
-                    SimpleFeature next = iterator.next();
+                    Feature next = (Feature) iterator.next();
                     if( next==null )
                         continue;
-                    Geometry geometry = (Geometry) next.getDefaultGeometry();
+                    Geometry geometry = next.getDefaultGeometry();
                     if( geometry!=null ){
 	                    try {
 	                        geometry = JTS.transform(geometry, mt);
+	                    } catch (MismatchedDimensionException e) {
+	                        throw (RuntimeException) new RuntimeException().initCause(e);
 	                    } catch (TransformException e) {
 	                        throw (RuntimeException) new RuntimeException(
 	                                Messages.ReprojectingFeatureCollection_transformationError + next.getID()).initCause(e);
 	                    }
                     }
-                    GeometryDescriptor defaultGeometry2 = featureType.getGeometryDescriptor();
-                    Name name = defaultGeometry2.getName();
-                    String localPart = name.getLocalPart();
-                    feature = new FeatureWrapper(next, featureType, new Geometry[]{geometry}, 
-                    		new String[]{ localPart});
+                    feature = new FeatureWrapper(next, featureType, new Geometry[]{geometry},
+                    		new String[]{ featureType.getDefaultGeometry().getName()});
                 }
                 return feature!=null;
             }
 
-            public SimpleFeature next() {
+            public Object next() {
                 monitor.worked(1);
                 FeatureWrapper tmp = feature;
                 feature=null;
@@ -103,7 +100,7 @@ public class ReprojectingFeatureCollection extends ProgressFeatureCollection
             public void remove() {
                 iterator.next();
             }
-            
+
         };
     }
 

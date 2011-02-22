@@ -27,16 +27,16 @@ import org.eclipse.ui.cheatsheets.OpenCheatSheetAction;
 
 /**
  * Generic CheatSheet implementation of IFixer for IIssue objects.
- * 
+ *
  * @author chorner
  * @since 1.1.0
  */
 public class CheatSheetIssueFixer implements IFixer {
-    
+
     public static final String ATT_ID = "id";  //$NON-NLS-1$
     public static final String KEY_CHEATSHEET = "cheatSheetId"; //$NON-NLS-1$
     public static final String XPID_CHEATSHEET = "org.eclipse.ui.cheatsheets.cheatSheetContent"; //$NON-NLS-1$
-    
+
 	public boolean canFix(Object issue, IMemento fixerMemento) {
         if (issue == null || fixerMemento == null) {
             return false;
@@ -81,21 +81,21 @@ public class CheatSheetIssueFixer implements IFixer {
 //                    @Override
 //                    public void connect() throws IOException {
 //                    }
-//                  
-//                    @Override 
+//
+//                    @Override
 //                    public InputStream getInputStream() throws IOException {
 //                        ByteArrayInputStream in=new ByteArrayInputStream(cheatSheetXML.getBytes());
 //                        return in;
 //                    }
-//                    
+//
 //                };
 //                return conn;
 //            }
-//            
+//
 //        });
 
 	}
-    
+
     public void complete(Object issue) {
         ((IIssue) issue).setResolution(Resolution.RESOLVED);
     }

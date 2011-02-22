@@ -26,5 +26,5 @@
           <resolve type="net.refractions.udig.catalog.tests.internal.ResolvedTo"/>
        </factory>
     </extension>
-   
+
 </plugin>

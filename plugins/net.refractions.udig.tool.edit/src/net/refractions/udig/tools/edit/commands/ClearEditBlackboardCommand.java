@@ -14,17 +14,17 @@
  */
 package net.refractions.udig.tools.edit.commands;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.tool.edit.internal.Messages;
 import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-
 /**
  * Removes all the geoms from the edit blackboard.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */

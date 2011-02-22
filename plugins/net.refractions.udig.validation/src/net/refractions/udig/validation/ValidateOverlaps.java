@@ -14,6 +14,8 @@
  */
 package net.refractions.udig.validation;
 
+import java.net.URI;
+
 import net.refractions.udig.project.ILayer;
 
 import org.geotools.validation.IntegrityValidation;
@@ -24,21 +26,21 @@ import org.geotools.validation.relate.OverlapsIntegrity;
  * validation type.
  * <p>
  * </p>
- * 
+ *
  * @author chorner
  * @since 1.0.1
  */
 public class ValidateOverlaps extends IntegrityValidationOp {
     public IntegrityValidation getValidator(ILayer[] layer) {
-        OverlapsIntegrity overlapsIntegrity = new OverlapsIntegrity(); 
+        OverlapsIntegrity overlapsIntegrity = new OverlapsIntegrity();
         overlapsIntegrity.setExpected(false); //(for now we'll assume overlaps are unexpected)
-        String nameSpace = layer[0].getSchema().getName().getNamespaceURI();
-        String typeName = layer[0].getSchema().getName().getLocalPart();
+        URI nameSpace = layer[0].getSchema().getNamespace();
+        String typeName = layer[0].getSchema().getTypeName();
         overlapsIntegrity.setGeomTypeRefA(nameSpace+":"+typeName); //$NON-NLS-1$
         //check for the existence of a second layer
         if (layer.length > 1) {
-            nameSpace = layer[1].getSchema().getName().getNamespaceURI();
-            typeName = layer[1].getSchema().getName().getLocalPart();
+            nameSpace = layer[1].getSchema().getNamespace();
+            typeName = layer[1].getSchema().getTypeName();
             overlapsIntegrity.setGeomTypeRefB(nameSpace+":"+typeName); //$NON-NLS-1$
         }
         return overlapsIntegrity;

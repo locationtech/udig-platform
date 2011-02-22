@@ -26,7 +26,7 @@ public class Not implements OpFilter {
     public Not(OpFilter filter) {
         this.filter=filter;
     }
-    
+
     public boolean accept( Object object ) {
         return !filter.accept(object);
     }
@@ -49,5 +49,5 @@ public class Not implements OpFilter {
     }
 
 
-    
+
 }

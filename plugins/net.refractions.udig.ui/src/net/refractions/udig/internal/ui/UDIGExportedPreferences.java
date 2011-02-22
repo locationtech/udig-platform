@@ -26,7 +26,7 @@ import org.osgi.service.prefs.Preferences;
 
 /**
  * Uses a scoped preferences to store preferences.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -38,7 +38,7 @@ public class UDIGExportedPreferences implements IExportedPreferences {
     private String nodePath;
     private Map<String, String> map=new HashMap<String,String>();
     private Map<String, UDIGExportedPreferences> children=new HashMap<String, UDIGExportedPreferences>();
-    
+
     public UDIGExportedPreferences(IPreferenceStore store, String nodePath){
         if( nodePath.contains(":") ) //$NON-NLS-1$
             throw new IllegalArgumentException("Node name cannot contain a ':'"); //$NON-NLS-1$
@@ -52,7 +52,7 @@ public class UDIGExportedPreferences implements IExportedPreferences {
             UiPlugin.log("", e); //$NON-NLS-1$
         }
     }
-    
+
     public boolean isExportRoot() {
         return false;
     }
@@ -81,7 +81,7 @@ public class UDIGExportedPreferences implements IExportedPreferences {
         String string = nodePath+"/"+path; //$NON-NLS-1$
         if( children.get(path)!=null )
             return children.get(path);
-        
+
         UDIGExportedPreferences preferences=new UDIGExportedPreferences(store, string);
         children.put(path, preferences);
         return preferences;
@@ -211,7 +211,7 @@ public class UDIGExportedPreferences implements IExportedPreferences {
         }
         if( builder!=null )
         store.putValue(nodePath, builder.toString());
-        
+
         StringBuilder encodedChildren=null;
         for( String entry : children.keySet() ) {
             if( encodedChildren==null )
@@ -222,7 +222,7 @@ public class UDIGExportedPreferences implements IExportedPreferences {
         }
         if( encodedChildren!=null )
             store.putValue(nodePath+"$children", encodedChildren.toString()); //$NON-NLS-1$
-        
+
         for( UDIGExportedPreferences p : children.values() ) {
             if( p!=null )
                 p.flush();

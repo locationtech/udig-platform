@@ -11,8 +11,8 @@ public class EventHandlerTest extends TestCase {
     public class TestEventJob extends EventJob {
         int type;
         Object event;
-       
-        
+
+
         @Override
         public void fire( int type, Object event ) {
             this.type=type;
@@ -29,14 +29,14 @@ public class EventHandlerTest extends TestCase {
         eventJob=new TestEventJob();
         handler=new EventHandler(null, eventJob);
     }
-    
+
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.controlResized(Event)'
      */
     public void testControlResized() {
-        
-        
-        
+
+
+
     }
 
     /*
@@ -66,17 +66,17 @@ public class EventHandlerTest extends TestCase {
         assertEquals(MapMouseEvent.ALT_DOWN_MASK, event.modifiers);
         assertEquals(MapMouseEvent.BUTTON1, event.button);
         assertEquals(MapMouseEvent.BUTTON1, event.buttons);
-        
+
         e.button=2;
         e.stateMask=SWT.ALT|SWT.BUTTON1|SWT.BUTTON2;
-        
+
         handler.mouseDown(e);
         event=(MapMouseEvent) eventJob.event;
-        
+
         assertEquals(MapMouseEvent.ALT_DOWN_MASK, event.modifiers);
         assertEquals(MapMouseEvent.BUTTON2, event.button);
         assertEquals(MapMouseEvent.BUTTON1|MapMouseEvent.BUTTON2, event.buttons);
-        
+
     }
 
     /*
@@ -91,17 +91,17 @@ public class EventHandlerTest extends TestCase {
         e.button=2;
         e.stateMask=SWT.ALT|SWT.BUTTON2|SWT.BUTTON1;
         handler.mouseDown(e);
-        
+
         e.button=2;
         e.stateMask=SWT.ALT;
-        
+
         handler.mouseUp( e );
-        
+
         MapMouseEvent event = (MapMouseEvent) eventJob.event;
-        
+
         assertEquals(MapMouseEvent.BUTTON2, event.button);
         assertEquals(MapMouseEvent.NONE, event.buttons);
-        
+
 
         e.button=1;
         e.stateMask=SWT.ALT;
@@ -109,7 +109,7 @@ public class EventHandlerTest extends TestCase {
         event = (MapMouseEvent) eventJob.event;
         assertEquals(MapMouseEvent.BUTTON1, event.button);
         assertEquals(MapMouseEvent.NONE, event.buttons);
-        
+
     }
 
     /*

@@ -49,17 +49,13 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.PrimitiveShapeIterator;
 import net.refractions.udig.tools.edit.support.ShapeType;
 
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.filter.Filter;
-import org.opengis.filter.spatial.Intersects;
+import org.geotools.filter.FilterType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
 /**
- * Behaviour to queue up a couple of SelectFeatures commands based on a provided mouse click.
  * <p>
  * Requirements:
  * <ul>
@@ -103,7 +99,7 @@ import com.vividsolutions.jts.geom.Polygon;
  * </li>
  * </ul>
  * </p>
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -111,21 +107,21 @@ public class SelectFeatureBehaviour implements EventBehaviour {
 
     private final Set<Class<? extends Geometry>> acceptableClasses = new HashSet<Class<? extends Geometry>>();
     private boolean treatUnknownGeomsAsPolygon;
-    private Class<? extends Filter> filterType;
+    private short filterType;
     private boolean permitClear;
     private boolean onlyAdd;
     public final List<SelectionStrategy> selectionStrategies = new LinkedList<SelectionStrategy>();
     public final List<DeselectionStrategy> deselectionStrategies = new LinkedList<DeselectionStrategy>();
-    
+
     /**
      * Create instance
-     * 
+     *
      * @param acceptableClasses used to determine if a feature can be selected. If point is not in
      *        array then point geometries can not be selected.
-     * @param class2 Something like Intersects.class
+     * @param filterType one of the constants in {@link FilterType} that start with GEOMETRY_
      */
     @SuppressWarnings("unchecked")
-    public SelectFeatureBehaviour( Class<? extends Geometry>[] acceptableClasses, Class<? extends Filter> class2 ) {
+    public SelectFeatureBehaviour( Class<? extends Geometry>[] acceptableClasses, short filterType ) {
         setAcceptableClasses(acceptableClasses);
         this.treatUnknownGeomsAsPolygon = false;
         for( Class<? extends Geometry> class1 : acceptableClasses ) {
@@ -135,10 +131,10 @@ public class SelectFeatureBehaviour implements EventBehaviour {
                 break;
             }
         }
-        this.filterType = class2;
+        this.filterType = filterType;
         onlyAdd=false;
         permitClear=true;
-        initDefaultStrategies(null); 
+        initDefaultStrategies(null);
     }
 
     public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
@@ -158,7 +154,7 @@ public class SelectFeatureBehaviour implements EventBehaviour {
 
         if (handler.getCurrentGeom() == null)
             return true;
-        
+
         if (!handler.getCurrentShape().contains(Point.valueOf(e.x, e.y), treatUnknownGeomsAsPolygon))
             return true;
 
@@ -170,18 +166,18 @@ public class SelectFeatureBehaviour implements EventBehaviour {
         if (!isValid(handler, e, eventType)) {
             throw new IllegalArgumentException("Behaviour is not valid for the current state"); //$NON-NLS-1$
         }
-        
-        
+
+
         EditBlackboard editBlackboard = handler.getEditBlackboard(handler.getEditLayer());
         List<EditGeom> intersectingGeoms = EditUtils.instance.getIntersectingGeom(editBlackboard,
                 Point.valueOf(e.x, e.y), treatUnknownGeomsAsPolygon);
-        
+
         if (e.isModifierDown(MapMouseEvent.MOD1_DOWN_MASK) && !intersectingGeoms.isEmpty()) {
             return new DeselectEditGeomCommand(handler, intersectingGeoms);
         } else if (e.isShiftDown() && !intersectingGeoms.isEmpty()) {
             return null;
         }
-        // Check to see if shape is already on the blackboard
+
         PrimitiveShape newShape = findOnBlackboard(handler, e);
 
         if (newShape != null && newShape != handler.getCurrentShape()) {
@@ -195,22 +191,22 @@ public class SelectFeatureBehaviour implements EventBehaviour {
         SelectionParameter selectionParameter = new SelectionParameter(handler, e, getAcceptableClasses(), filterType, permitClear, onlyAdd);
         selectionParameter.selectionStrategies.addAll(selectionStrategies);
         selectionParameter.deselectionStrategies.addAll(deselectionStrategies);
-        
+
         SelectFeaturesAtPointCommand selectGeometryCommand = new SelectFeaturesAtPointCommand(selectionParameter);
         return selectGeometryCommand;
     }
-    /** Find the PrimitiveShape on the blackboard under the mouse event */
+
     private PrimitiveShape findOnBlackboard( EditToolHandler handler, MapMouseEvent e ) {
         //for overlapping geometries, select a different one on each click
         boolean cycleGeom = false;
         //set when the currently selected feature has been found
         boolean selectedFound = false;
         //for returning to the first match when we have the last match selected and click once more
-        PrimitiveShape firstMatch = null; 
+        PrimitiveShape firstMatch = null;
         if (handler.getCurrentShape() != null && handler.getCurrentShape().contains(e.x, e.y) && countOnBlackboard(handler, e) > 1) {
             cycleGeom = true;
         }
-            
+
         ILayer editLayer = handler.getEditLayer();
         List<EditGeom> geoms = handler.getEditBlackboard(editLayer).getGeoms();
         for( EditGeom geom : geoms ) {
@@ -231,12 +227,10 @@ public class SelectFeatureBehaviour implements EventBehaviour {
                 }
             }
             if (!cycleGeom) {
-                SimpleFeatureType featureType = editLayer.getSchema();
-                GeometryDescriptor defaultGeometryType = featureType.getGeometryDescriptor();
-                Class< ? > type = defaultGeometryType.getType().getBinding();
+                Class< ? > type = editLayer.getSchema().getDefaultGeometry().getType();
                 boolean polygonLayer=Polygon.class.isAssignableFrom(type) || MultiPolygon.class.isAssignableFrom(type);
                 ClosestEdge edge = geom.getShell().getClosestEdge(Point.valueOf(e.x, e.y), polygonLayer);
-                if (edge != null && 
+                if (edge != null &&
                         edge.getDistanceToEdge() <= PreferenceUtil.instance().getVertexRadius()){
                     return geom.getShell();
                 }
@@ -259,7 +253,7 @@ public class SelectFeatureBehaviour implements EventBehaviour {
         }
         return count;
     }
-    
+
     public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
         EditPlugin.log("", error); //$NON-NLS-1$
     }
@@ -284,14 +278,14 @@ public class SelectFeatureBehaviour implements EventBehaviour {
     /**
      * @return Returns the filterType.
      */
-    public Class<? extends Filter> getFilterType() {
+    public short getFilterType() {
         return this.filterType;
     }
 
     /**
      * @param filterType The filterType to set.
      */
-    public void setFilterType( Class<? extends Filter> filterType ) {
+    public void setFilterType( short filterType ) {
         this.filterType = filterType;
     }
 
@@ -348,7 +342,7 @@ public class SelectFeatureBehaviour implements EventBehaviour {
     public void addDeselectionStrategy(DeselectionStrategy strategy){
         deselectionStrategies.add(strategy);
     }
-    
+
     /**
      * Adds a DeselectionStrategy to the strategies that are ran when a selection intersects with features (only counts for
      * features not already on the edit blackboard)
@@ -358,7 +352,7 @@ public class SelectFeatureBehaviour implements EventBehaviour {
     public void addSelectionStrategy(SelectionStrategy strategy){
         selectionStrategies.add(strategy);
     }
-    
+
     /**
      * Clears the configuration and Adds the default strategies
      * @param typeToCreate the type of geometry to begin creating if a click does not intersect with anything.  If null then

@@ -1,26 +1,12 @@
-/* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2008, Refractions Research Inc.
+/**
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation;
- * version 2.1 of the License.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
  */
 package net.refractions.udig.style.sld.editor;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import net.refractions.udig.style.sld.SLDPlugin;
 import net.refractions.udig.style.sld.internal.Messages;
@@ -36,8 +22,8 @@ import org.geotools.brewer.color.BrewerPalette;
 import org.geotools.brewer.color.PaletteSuitability;
 import org.geotools.brewer.color.SampleScheme;
 import org.geotools.brewer.color.StyleGenerator;
-import org.geotools.filter.function.ExplicitClassifier;
-import org.geotools.filter.function.RangedClassifier;
+import org.geotools.filter.Expression;
+import org.geotools.filter.function.CustomClassifierFunction;
 import org.geotools.styling.Fill;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.Mark;
@@ -47,16 +33,10 @@ import org.geotools.styling.Rule;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.Symbolizer;
-import org.opengis.filter.expression.Expression;
 
-/**
- * Display a colour in a table, when used for editing
- * a palette will be presented to the user.
- * @since 1.0
- */
 final class IPaletteCellEditor implements ICellModifier {
 		/**
-		 * 
+		 *
 		 */
 		private final StyleThemePage styleThemePage;
 
@@ -122,62 +102,43 @@ final class IPaletteCellEditor implements ICellModifier {
 		            String newExpr = (String) value;
 		            TreeItem item = (TreeItem) element;
 		            Object data = item.getData();
-		            //create/modify the custom break 		            
-		            this.styleThemePage.customBreak = null; 
-		            
+		            //create/modify the custom break and regen
+		            this.styleThemePage.customBreak = new CustomClassifierFunction();
 		            //TODO: set expression?
 		            //figure out which rule has changed
 		            int ruleIndex = Integer.parseInt(((Rule) data).getName().substring(4))-1;
 		            //fill the custom classifier with the rule boundary values
-		            List<Rule> rules =  this.styleThemePage.getFTS().rules();
-		            
-		            //track items
-		            ArrayList<Double> min = new ArrayList<Double>();
-		            ArrayList<Double> max = new ArrayList<Double>();		            
-		            Set<String>[] values = new Set[rules.size()];
-		            
-		            for(int i = 0; i < rules.size(); i ++){
-		                String thisExpr = null;
-		                if (i == ruleIndex){
-		                    //use the new value
+		            Rule[] rules = this.styleThemePage.getFTS().getRules();
+		            for (int i = 0; i < rules.length; i++) {
+		                String thisExpr;
+		                if (i == ruleIndex) { //use the new value
 		                    thisExpr = newExpr;
-		                }else{
-		                    //use existing value
-		                    if (rules.get(i).getFilter() != null){
-		                        thisExpr = StyleGenerator.toStyleExpression(rules.get(i).getFilter());
+		                } else { //use the fts value
+		                    if (rules[i].getFilter() == null) {
+		                        thisExpr = null; //probably an else filter
+		                    } else {
+		                        thisExpr = StyleGenerator.toStyleExpression(rules[i].getFilter());
 		                    }
 		                }
-		                
 		                if (thisExpr == null) {
-                            //TODO: mark as "else"
-                        } else if (StyleGenerator.isRanged(thisExpr)) {
-                            String[] minMax = thisExpr.split("\\.\\."); //$NON-NLS-1$
-                            min.add(new Double(minMax[0]));
-                            max.add(new Double(minMax[1]));
-                        } else {
-                            String[] myvalues = thisExpr.split(","); //$NON-NLS-1$
-                            values[i] = new HashSet<String>();
-                            for (int j = 0; j < myvalues.length; j++) {
-                                values[i].add(myvalues[j].trim());
-                            }
-                        }
+		                    //TODO: mark as "else"
+		                } else if (StyleGenerator.isRanged(thisExpr)) {
+		                    String[] minMax = thisExpr.split("\\.\\."); //$NON-NLS-1$
+		                    Double min = new Double(minMax[0]);
+		                    Double max = new Double(minMax[1]);
+		                    this.styleThemePage.customBreak.setRangedValues(i, min, max);
+		                } else {
+		                    String[] values = thisExpr.split(", "); //$NON-NLS-1$
+		                    for (int j = 0; j < values.length; j++) {
+		                        this.styleThemePage.customBreak.setExplicitValues(i, values[j]);
+		                    }
+		                }
 		            }
-		            if (min.size() > 0){
-		                //lets make a range (this will ignore explicit classifiers)
-		                //really you can't mix the two so the ui
-		                //should probably be made smarter.
-		                this.styleThemePage.customBreak = new RangedClassifier(min.toArray(new Double[min.size()]), max.toArray(new Double[max.size()]));
-		            }else{
-		                //lets make a explicit classifier
-		                this.styleThemePage.customBreak = new ExplicitClassifier(values);
-		            }
-		            
-		            
 		            Combo breaks = this.styleThemePage.getCombo(StyleThemePage.COMBO_BREAKTYPE);
 		            String[] allBreaks = breaks.getItems();
 		            int hasCustom = -1;
 		            for (int i = 0; i < allBreaks.length; i++) {
-		                if (allBreaks[i].equalsIgnoreCase(Messages.StyleEditor_theme_custom)) { 
+		                if (allBreaks[i].equalsIgnoreCase(Messages.StyleEditor_theme_custom)) {
 		                    hasCustom = i;
 		                    break;
 		                }
@@ -185,7 +146,7 @@ final class IPaletteCellEditor implements ICellModifier {
 		            if (hasCustom > -1) {
 		                breaks.select(hasCustom);
 		            } else {
-		                breaks.add(Messages.StyleEditor_theme_custom); 
+		                breaks.add(Messages.StyleEditor_theme_custom);
 		                breaks.select(allBreaks.length);
 		            }
 		            if (this.styleThemePage.inputsValid()) this.styleThemePage.generateTheme();
@@ -256,38 +217,29 @@ final class IPaletteCellEditor implements ICellModifier {
                         oldColorExpr = stroke.getColor();
                         stroke.setColor(newColorExpr);
                     }
-                    
+
                     if (newColorExpr.equals(oldColorExpr)) {
                         return; //don't bother, same colour
                     }
                         //determine if the palette is already customized
                         if (this.styleThemePage.customPalette == null) {
-                            int numClasses = new Integer(this.styleThemePage.getCombo(StyleThemePage.COMBO_CLASSES).getText()).intValue();
+                            int numClasses = new Integer(this.styleThemePage.getCombo(StyleThemePage.COMBO_CLASSES).getItem(this.styleThemePage.getCombo(StyleThemePage.COMBO_CLASSES).getSelectionIndex())).intValue();
                             //create the palette from the current one
-                            BrewerPalette pal = (BrewerPalette) ((StructuredSelection) this.styleThemePage.paletteTable.getSelection()).getFirstElement(); 
+                            BrewerPalette pal = (BrewerPalette) ((StructuredSelection) this.styleThemePage.paletteTable.getSelection()).getFirstElement();
                             this.styleThemePage.customPalette = new BrewerPalette();
                             PaletteSuitability suitability = new PaletteSuitability();
                             //suitability.
                             //customPalette.setColors()
                             SampleScheme newScheme = new SampleScheme();
-                            int maxColors = pal.getMaxColors();
+                            Color[] colors = new Color[pal.getMaxColors()];
                             Color[] allColorsArray = pal.getColors();
-                            if (maxColors==Integer.MAX_VALUE) {
-                                // this means the array is dynamic, so the num is exactly the colors
-                                maxColors = numClasses;
-                                newScheme = new CustomSampleScheme(maxColors);
-                            }
-                            if (allColorsArray.length == 0) {
-                                allColorsArray = pal.getColors(maxColors);
-                            }
-                            Color[] colors = new Color[maxColors];
                             List<Color> allColors = new ArrayList<Color>();
                             for (int i = 0; i < allColorsArray.length; i++) {
                                 allColors.add(allColorsArray[i]);
                             }
                             String unknown = "?"; //$NON-NLS-1$
-                            for (int i = 0; i < maxColors; i++) {
-                                if (i > 0) { 
+                            for (int i = 0; i < pal.getMaxColors(); i++) {
+                                if (i > 0) {
                                     //create a simple scheme
                                     int[] scheme = new int[i+1];
                                     for (int j = 0; j < i+1; j++) {
@@ -297,9 +249,9 @@ final class IPaletteCellEditor implements ICellModifier {
                                     //set the suitability to unknown
                                     try {
                                         suitability.setSuitability(i+1, new String[] {unknown, unknown, unknown, unknown, unknown, unknown});
-                                    } catch (Exception e) {
+                                    } catch (IOException e) {
                                         SLDPlugin.log("setSuitability() failed", e); //$NON-NLS-1$
-//                                        return;
+                                        return;
                                     }
                                 }
                                 //copy the color
@@ -316,8 +268,8 @@ final class IPaletteCellEditor implements ICellModifier {
                             this.styleThemePage.customPalette.setPaletteSuitability(suitability);
                             this.styleThemePage.customPalette.setColors(colors);
                             this.styleThemePage.customPalette.setColorScheme(newScheme);
-                            this.styleThemePage.customPalette.setName(Messages.StyleEditor_theme_custom); 
-                            this.styleThemePage.customPalette.setDescription(Messages.StyleEditor_theme_custom_desc); 
+                            this.styleThemePage.customPalette.setName(Messages.StyleEditor_theme_custom);
+                            this.styleThemePage.customPalette.setDescription(Messages.StyleEditor_theme_custom_desc);
                             this.styleThemePage.customPalette.setType(pal.getType());
                             if (!this.styleThemePage.getBrewer().hasPalette(Messages.StyleEditor_theme_custom)) {
                                 this.styleThemePage.getBrewer().registerPalette(this.styleThemePage.customPalette);

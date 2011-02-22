@@ -16,7 +16,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
  */
 final class EMFEventListenerToMapEvents extends AdapterImpl {
 	/**
-	 * 
+	 *
 	 */
 	private final MapImpl map;
 
@@ -69,7 +69,7 @@ final class EMFEventListenerToMapEvents extends AdapterImpl {
 	        break;
 	    }
 	}
-	
+
 
     private void notifyMapListeners( MapEvent event ){
         for( IMapListener listener : map.mapListeners ) {

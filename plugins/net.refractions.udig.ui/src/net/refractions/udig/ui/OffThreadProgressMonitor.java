@@ -20,11 +20,6 @@ import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
 
-/**
- * An IProgressMonitor that guarantees that the 
- * @author jesse
- * @since 1.1.0
- */
 public class OffThreadProgressMonitor implements IProgressMonitor {
 
     private IProgressMonitor monitor;
@@ -32,26 +27,14 @@ public class OffThreadProgressMonitor implements IProgressMonitor {
     private Widget widget;
 
     public OffThreadProgressMonitor( IProgressMonitor part, Display display ) {
-        this(part);
+        this.monitor=part;
         this.display=display;
-    }
-
-    public OffThreadProgressMonitor( IProgressMonitor monitor2 ) {
-        display = Display.getCurrent();
-        if( display==null ){
-            display = Display.getDefault();
-        }
-
-        if( monitor2 instanceof Widget ){
-            widget=(Widget) monitor2;
-            display = widget.getDisplay();
-        }
-
-        monitor = monitor2;
+        if( part instanceof Widget )
+            widget=(Widget) part;
     }
 
     /**
-     * Because the methods are ran asynchronously in the display it is possible that the monitor is disposed by the 
+     * Because the methods are ran asynchronously in the display it is possible that the monitor is disposed by the
      * time the runnable executed... So the runnable this method returns executes the parameters and handles SWTExceptions
      * @param runnable the runnable to execute
      */
@@ -73,7 +56,7 @@ public class OffThreadProgressMonitor implements IProgressMonitor {
     public void beginTask( final String name, final int totalWork ) {
         Runnable runnable = new Runnable(){
             public void run() {
-                
+
                 monitor.beginTask(name, totalWork);
             }
         };

@@ -23,7 +23,7 @@ import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 /**
  * A Composite Mode (See GOF Composite Pattern) where contained modes are ordered by priority and only the
  * mode with the highest priority and is valid for the current context is ran.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -31,11 +31,11 @@ public class MutualExclusiveEventBehavior implements EventBehaviour, LockingBeha
 
     private List<EventBehaviour> behaviours=new ArrayList<EventBehaviour>();
     private EventBehaviour current;
-    
+
     public MutualExclusiveEventBehavior(List<EventBehaviour> modes) {
         this.behaviours=modes;
     }
-    
+
     /**
      * @param behaviour
      */
@@ -55,13 +55,13 @@ public class MutualExclusiveEventBehavior implements EventBehaviour, LockingBeha
 
     public UndoableMapCommand getCommand( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
         return current.getCommand(handler,e, eventType);
-        
+
     }
 
     public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
         EditPlugin.log("Very Strange I don't know how this happenned...", error); //$NON-NLS-1$
     }
-    
+
     @Override
     public String toString() {
         StringBuffer buffer=new StringBuffer("["); //$NON-NLS-1$

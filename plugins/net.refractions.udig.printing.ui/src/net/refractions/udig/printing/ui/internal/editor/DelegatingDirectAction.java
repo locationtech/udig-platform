@@ -25,8 +25,8 @@ import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * Permits the lazy loading of edit actions.  The name of the edit action is loaded from the extension point
- * but the class is not created until the action is clicked. 
- * 
+ * but the class is not created until the action is clicked.
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -41,7 +41,7 @@ public class DelegatingDirectAction extends SelectionAction implements IAction {
         setText(element.getAttribute("name")); //$NON-NLS-1$
         setId(element.getAttribute("id")); //$NON-NLS-1$
     }
-    
+
     @Override
     public void run() {
         if( action==null ){
@@ -49,7 +49,7 @@ public class DelegatingDirectAction extends SelectionAction implements IAction {
                 action=(IActionDelegate) element.createExecutableExtension("action");//$NON-NLS-1$
             } catch (CoreException e) {
                 PrintingPlugin.log("", e); //$NON-NLS-1$
-            } 
+            }
         }
         if( action!=null )
             action.run(this);

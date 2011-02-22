@@ -1,3 +1,0 @@
-instructions.configure=\
-  addRepository(type:1,location:http${#58}//udig.refractions.net/files/update/1.2/udig/);\
-  addRepository(type:0,location:http${#58}//udig.refractions.net/files/update/1.2/community/);

@@ -10,7 +10,7 @@ package net.refractions.udig.project.command;
 
 /**
  * The super interface for all commands that can be used to edit maps and pages.
- * 
+ *
  * @author jeichar
  * @since 0.3
  * @see MapCommand

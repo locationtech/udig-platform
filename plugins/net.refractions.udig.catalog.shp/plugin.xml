@@ -3,22 +3,19 @@
 <plugin>
 
     	<extension
-           id="net.refractions.udig.catalog.shp.service"
-           point="net.refractions.udig.catalog.ServiceExtension">
+         point="net.refractions.udig.catalog.ServiceExtension">
       <service
             class="net.refractions.udig.catalog.internal.shp.ShpServiceExtension"
             id="shp"
             name="Shapefile"/>
    	</extension>
     <extension
-          id="net.refractions.udig.catalog.shp.fileFormat"
           point="net.refractions.udig.catalog.ui.fileFormat">
        <fileService
              fileExtension="*.shp"
              name="%fileService.name"/>
     </extension>
     <extension
-          id="net.refractions.udig.catalog.shp.preferencePages"
           point="org.eclipse.ui.preferencePages">
        <page
              category="net.refractions.udig.catalog.ui.preferences.CatalogPreferencePage"
@@ -27,15 +24,13 @@
              name="%preferences.shapefile.name"/>
     </extension>
     <extension
-          id="net.refractions.udig.catalog.shp.preferences"
           point="org.eclipse.core.runtime.preferences">
        <initializer class="net.refractions.udig.catalog.shp.preferences.PreferenceInitializer"/>
     </extension>
     <extension
-          id="net.refractions.udig.catalog.shp.resolvers"
           point="net.refractions.udig.catalog.resolvers">
        <factory
-             class="net.refractions.udig.catalog.internal.shp.ShapeMoverAdaptorFactory"
+             class="net.refractions.udig.catalog.internal.shp.ShapeMover"
              resolveableType="net.refractions.udig.catalog.internal.shp.ShpServiceImpl">
           <resolve
                 type="net.refractions.udig.catalog.ServiceMover">
@@ -70,38 +65,15 @@
              id="net.refractions.udig.catalog.shp.prj.write"
              menuPath="net.refractions.udig.catalog.ui.operation.resourceCategory"
              name="%writePRJ"
-             targetClass="net.refractions.udig.catalog.IResolve">
+             targetClass="java.lang.Object">
           <enablement>
-             <or>
+             <and>
                 <adaptsTo
-                      target="net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl">
+                      target="org.geotools.data.shapefile.ShapefileDataStore">
                 </adaptsTo>
-                <adaptsTo
-                      target="net.refractions.udig.catalog.internal.shp.ShpServiceImpl">
-                </adaptsTo>
-             </or>
+             </and>
           </enablement>
        </operation>
-    </extension>
-    <extension
-          id="net.refractions.udig.catalog.shp.operations"
-          name="%Shapefile.Operations"
-          point="net.refractions.udig.ui.operation">
-       <category
-             context="ShpGeoResource"
-             id="net.refractions.udig.catalog.shp.operationCategory"
-             name="%Shapefile.Operations">
-       </category>
-    </extension>
-    <extension
-          point="org.eclipse.ui.menus">
-       <menuContribution
-             locationURI="menu:data?before=reset">
-          <dynamic
-                class="net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.catalog.shp.operationCategory"
-                id="net.refractions.udig.catalog.shp.menu">
-          </dynamic>
-       </menuContribution>
     </extension>
 	<!--<extension
          point="org.eclipse.ui.importWizards">

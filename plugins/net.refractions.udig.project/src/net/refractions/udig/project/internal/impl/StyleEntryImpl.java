@@ -14,8 +14,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * Default implementation 
- * 
+ * Default implementation
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -51,7 +51,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
     /**
      * The default value of the '{@link #getMemento() <em>Memento</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMemento()
      * @generated
      * @ordered
@@ -61,7 +61,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
     /**
      * The cached value of the '{@link #getMemento() <em>Memento</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMemento()
      * @generated
      * @ordered
@@ -71,7 +71,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
     /**
      * The default value of the '{@link #getStyle() <em>Style</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getStyle()
      * @generated
      * @ordered
@@ -81,7 +81,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
     /**
      * The default value of the '{@link #getStyleClass() <em>Style Class</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getStyleClass()
      * @generated
      * @ordered
@@ -90,14 +90,14 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
 
     /**
      * The cached style.
-     * 
+     *
      * @generated NOT
      */
     protected Object style = STYLE_EDEFAULT;
 
     /**
      * The cached style class.
-     * 
+     *
      * @generated NOT
      */
     private Class styleClass = STYLE_CLASS_EDEFAULT;
@@ -107,7 +107,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @see StyleBlackboard#setSelected(String[])
      */
     private volatile boolean selected=false;
-    
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
@@ -166,7 +166,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="style"
      * @generated NOT
      */
@@ -176,7 +176,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="style"
      * @generated NOT
      */
@@ -186,7 +186,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="styleClass"
      * @generated NOT
      */
@@ -196,7 +196,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="styleClass"
      * @generated NOT
      */

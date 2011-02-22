@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,15 +25,14 @@ import net.refractions.udig.tool.info.LayerPointInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.ows.Layer;
-import org.geotools.data.ows.StyleImpl;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.data.wms.request.GetFeatureInfoRequest;
 import org.geotools.data.wms.request.GetMapRequest;
 import org.geotools.data.wms.response.GetFeatureInfoResponse;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
+import org.opengis.layer.Style;
 import org.opengis.metadata.Identifier;
-import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.xml.sax.SAXException;
@@ -40,7 +40,7 @@ import org.xml.sax.SAXException;
 import com.vividsolutions.jts.geom.Envelope;
 
 public class WMSDescribeLayer {
-    
+
     /** Figures out the mapping from wms layers to udig layers */
     private Map<Layer, ILayer> getLayerMap( ICompositeRenderContext composite, IProgressMonitor monitor ) throws IOException {
         Map<Layer, ILayer> mapping=new HashMap<Layer, ILayer>();
@@ -48,18 +48,18 @@ public class WMSDescribeLayer {
             ILayer layer = context.getLayer();
             if( context.getLayer().isVisible()
                 //&& layer.isApplicable("information" )
-                ) {                
+                ) {
                 Layer wmslayer = layer.getResource( Layer.class, monitor );
                 mapping.put( wmslayer, layer );
             }
         }
         return mapping;
     }
-    
+
     public WebMapServer getWMS( ICompositeRenderContext context, IProgressMonitor monitor ) throws IOException {
         return context.getLayer().getResource(WebMapServer.class, monitor );
     }
-    
+
     /** Get list of applicable wms layers from composite */
     private List<Layer> getLayerList(ICompositeRenderContext composite) throws IOException {
         List<Layer> layers = new ArrayList<Layer>();
@@ -68,25 +68,25 @@ public class WMSDescribeLayer {
             if( layer.isVisible()
                 // && layer.isApplicable("information")
                     ) {
-                Layer wmslayer = layer.getResource( org.geotools.data.ows.Layer.class, null );                
+                Layer wmslayer = layer.getResource( org.geotools.data.ows.Layer.class, null );
                 layers.add( wmslayer );
-            }            
-        }    
+            }
+        }
         return layers;
     }
-    
+
     /**
-     * Implementation is forgiving codes must be in uppercase etc ... 
+     * Implementation is forgiving codes must be in uppercase etc ...
      *
      * @param crs CoordinateReferenceSystem
      * @param codes Set of valid vodes
-     * 
+     *
      * @return Code common to both or null
      */
-    private static String commonCode( CoordinateReferenceSystem crs, Set<String> codes ) {        
+    private static String commonCode( CoordinateReferenceSystem crs, Set<String> codes ) {
         // First pass based on string identity
         //
-        Set<String> crsCodes = new HashSet<String>();        
+        Set<String> crsCodes = new HashSet<String>();
         for( Identifier id : crs.getIdentifiers() ) {
             String code = id.toString();
             if( codes.contains( code ) ) return code;
@@ -94,7 +94,7 @@ public class WMSDescribeLayer {
         }
         // Second pass based on CoordinateReferenceSystem equality
         for( String code : codes ) {
-            try {               
+            try {
                 CoordinateReferenceSystem check = CRS.decode( code );
                 if( crs.equals( check )) {
                     // note we are trusting the code of the matched crs
@@ -102,56 +102,52 @@ public class WMSDescribeLayer {
                     // not get this far
                     //
                     return check.getIdentifiers().iterator().next().getCode();
-                }                
+                }
             } catch (NoSuchAuthorityCodeException e) {
                 // could not understand code
-            } catch (FactoryException e) {
-                // could not understand code                
             }
         }
         // last pass do the power set lookup based on id
         //
         for( String code : codes ) {
-            try {               
+            try {
                 CoordinateReferenceSystem check = CRS.decode( code );
                 for( Identifier checkId : check.getIdentifiers() ) {
                     String checkCode = checkId.toString();
                     if( crsCodes.contains( checkCode ) ) {
                         return code;
-                    }                    
-                }                
+                    }
+                }
             } catch (NoSuchAuthorityCodeException e) {
                 // could not understand code
-            } catch (FactoryException e) {
-                // could not understand code
             }
-        }        
+        }
         return null;
     }
-    
+
     @SuppressWarnings("unchecked")
     public static List<LayerPointInfo> info( ILayer layer, ReferencedEnvelope bbox ) throws IOException {
         LayerPointInfo info = info2( layer, bbox );
         if( info == null ) return Collections.EMPTY_LIST;
-        
-        return Collections.singletonList( info );        
+
+        return Collections.singletonList( info );
     }
-    
+
     /**
      * Aquire info for the provided bbox
-     * 
-     * @param layer Must be associated with a wms layer 
+     *
+     * @param layer Must be associated with a wms layer
      * @param bbox
      * @return LayerPointInfo object or null if information is unavailable.
-     * @throws IOException 
+     * @throws IOException
      * @throws IOException if Response could not be understood
-     * 
-     * TODO: possible problem with client side reprojection - may need to 
+     *
+     * TODO: possible problem with client side reprojection - may need to
      * properly reproject the center point that was clicked on
-     * 
+     *
      * TODO: this requires some testing
      */
-    public static LayerPointInfo info2( ILayer layer, ReferencedEnvelope bbox ) throws IOException {        
+    public static LayerPointInfo info2( ILayer layer, ReferencedEnvelope bbox ) throws IOException {
 
 		Envelope reprojected = null;
 		try {
@@ -160,36 +156,38 @@ public class WMSDescribeLayer {
 			InfoPlugin.log("", e); //$NON-NLS-1$
 			return null;
 		}
-		
+
 		Point centre = layer.getMap().getViewportModel().worldToPixel(reprojected.centre());
-    	
+
 		Envelope sanebbox = layer.getMap().getViewportModel().getBounds();
 		bbox = new ReferencedEnvelope(sanebbox, bbox.getCoordinateReferenceSystem());
-		
+
     	Layer wmslayer;
         wmslayer = layer.getResource( Layer.class, null );
-        
+
         if( wmslayer == null ) {
             throw new IllegalArgumentException("Provided layer cannot resolve to a wms layer" ); //$NON-NLS-1$
         }
         // TODO: Fix wmslayer so we can ask who its "source" is.
-        final WebMapServer wms = layer.getResource( WebMapServer.class, null );        
+        final WebMapServer wms = layer.getResource( WebMapServer.class, null );
         if( wms == null ) {
             throw new IllegalArgumentException("Provided layer cannot resolve to a wms" ); //$NON-NLS-1$
         }
         if( !wmslayer.isQueryable() ) return null;
-                            
-        String desiredFormat = desiredInfoFormat( wms );                
+
+        String desiredFormat = desiredInfoFormat( wms );
         if( desiredFormat == null ) return null;
-                        
+
         GetMapRequest getmap = wms.createGetMapRequest();
         Set srs = wmslayer.getSrs();
-        
+
+        @SuppressWarnings("unchecked")
         //String code = commonCode( layer.getMap().getViewportModel().getCRS(), srs );
         String code = BasicWMSRenderer2.findRequestCRS(
                 Collections.singletonList( wmslayer ), layer.getMap().getViewportModel().getCRS(), layer.getMap() );
+
 //        if( code != null ) {
-//            // we have a common crs! Use the bbox as is            
+//            // we have a common crs! Use the bbox as is
 //        }
 //        else {
 //            // lets reproject our bounding box then
@@ -207,18 +205,18 @@ public class WMSDescribeLayer {
 //            }
 //            if( code == null ) {
 //                return null; // we really can't get there from here
-//            }            
+//            }
 //            try {
-//                CoordinateReferenceSystem crs = CRS.decode(code);                
+//                CoordinateReferenceSystem crs = CRS.decode(code);
 //                bbox = bbox.transform(crs, true);
 //            } catch (Exception e) {
 //                return null; // we cannot transform this
 //            }
 //        }
-        
+
         // okay we got the bbox
         // lets fake a request to query against
-        // 3x3 pixels the dimension of the bbox                
+        // 3x3 pixels the dimension of the bbox
         getmap.setBBox(bbox.getMinX() + "," + bbox.getMinY() + "," +  //$NON-NLS-1$ //$NON-NLS-2$
                 bbox.getMaxX() + "," + bbox.getMaxY()); //$NON-NLS-1$
         getmap.setProperty( GetMapRequest.LAYERS, wmslayer.getName() );
@@ -226,8 +224,8 @@ public class WMSDescribeLayer {
         int height = layer.getMap().getRenderManager().getMapDisplay().getHeight();
         getmap.setDimensions(width, height);
         getmap.setSRS(code);
-        
-        List formats = wms.getCapabilities().getRequest().getGetMap().getFormats();
+
+        List formats = Arrays.asList(wms.getCapabilities().getRequest().getGetMap().getFormatStrings());
         if (formats.contains("image/png")) { //$NON-NLS-1$
             getmap.setProperty(GetMapRequest.FORMAT, "image/png"); //$NON-NLS-1$
         } else if (formats.contains("image/gif")) { //$NON-NLS-1$
@@ -237,26 +235,22 @@ public class WMSDescribeLayer {
         } else if (formats.contains("image/bmp")) { //$NON-NLS-1$
             getmap.setProperty(GetMapRequest.FORMAT, "image/bmp"); //$NON-NLS-1$
         }
-        
-        StyleImpl wmsStyle = (StyleImpl) layer.getStyleBlackboard().get(WMSStyleContent.WMSSTYLE);
-        if (wmsStyle != null) {
-            getmap.setProperty(GetMapRequest.STYLES, wmsStyle.getName());
-        }
-        else {
-            // supply an empty String as per UDIG-1507
-            getmap.setProperty(GetMapRequest.STYLES, "");
-        }
-        
-        final GetFeatureInfoRequest request = wms.createGetFeatureInfoRequest( getmap );                       
+
+        Style wmsStyle = (Style) layer.getStyleBlackboard().get(WMSStyleContent.WMSSTYLE);
+		if (wmsStyle != null) {
+			getmap.setProperty(GetMapRequest.STYLES, wmsStyle.getName());
+		}
+
+        final GetFeatureInfoRequest request = wms.createGetFeatureInfoRequest( getmap );
         request.setInfoFormat( desiredFormat );
-        request.setQueryPoint( centre.x, centre.y );                
+        request.setQueryPoint( centre.x, centre.y );
         request.setQueryLayers( Collections.singleton( wmslayer ) );
-                
+
         LayerPointInfo info = new LayerPointInfo( layer ){
-                    
+
             private GetFeatureInfoResponse response;
             /** Lazy request */
-                    
+
             protected GetFeatureInfoResponse getResponse() throws IOException {
                 if (this.response == null) {
                     try {
@@ -321,11 +315,12 @@ public class WMSDescribeLayer {
      * @return MIME type of prefered content, or null if we can't get our info on
      */
     private static String desiredInfoFormat( WebMapServer wms ) {
-        List formats  =
-            wms.getCapabilities().getRequest().getGetFeatureInfo().getFormats();
-        
+        String array[] =
+            wms.getCapabilities().getRequest().getGetFeatureInfo().getFormatStrings();
+        List formats = Arrays.asList( array );
+
         String desiredFormat;
-      
+
         if (formats.contains("text/html")) { //$NON-NLS-1$
             desiredFormat = "text/html"; //$NON-NLS-1$
         } else if (formats.contains("text/plain")) { //$NON-NLS-1$

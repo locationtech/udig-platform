@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * This tells the framework how to display the object in JFace viewers
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */

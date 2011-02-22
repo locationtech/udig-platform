@@ -61,10 +61,11 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.brewer.color.BrewerPalette;
 import org.geotools.data.FeatureEvent;
+import org.geotools.data.FeatureResults;
 import org.geotools.data.Query;
+import org.geotools.feature.Feature;
+import org.geotools.filter.Filter;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.picocontainer.MutablePicoContainer;
 
@@ -2035,6 +2036,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 "Coordinate", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(mapDisplayEDataType, IMapDisplay.class,
                 "MapDisplay", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEDataType(featureResultsEDataType, FeatureResults.class,
+                "FeatureResults", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(listEDataType, List.class,
                 "List", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(affineTransformEDataType, AffineTransform.class,
@@ -2049,8 +2052,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 "CoordinateReferenceSystem", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(commandStackEDataType, CommandStack.class,
                 "CommandStack", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(featureEDataType, SimpleFeature.class,
-                "SimpleFeature", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEDataType(featureEDataType, Feature.class,
+                "Feature", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(pointEDataType, Point.class,
                 "Point", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(adapterEDataType, Adapter.class,

@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * Toggles Advanced Editing on and off.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -52,14 +52,14 @@ public class AdvancedBehaviourCommandHandler extends AbstractHandler implements 
 
     private void displayNewStatus(  ) {
         Display display = Display.getCurrent();
-        String message=null;       
+        String message=null;
         boolean active=PreferenceUtil.instance().isAdvancedEditingActive();
         if( active ){
             message=Messages.AdvancedBehaviourCommandHandler_enabledLabel;
         }else{
             message=Messages.AdvancedBehaviourCommandHandler_disabledLabel;
         }
-        
+
         if( message!=null ){
             if( messageBubble!=null && messageBubble.isValid() )
                 messageBubble.setValid(false);

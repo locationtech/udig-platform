@@ -18,6 +18,7 @@ import net.refractions.udig.style.Images;
 import net.refractions.udig.style.StylePlugin;
 import net.refractions.udig.style.internal.Messages;
 import net.refractions.udig.style.internal.StyleLayer;
+import net.refractions.udig.style.internal.StyleManager;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -65,7 +66,9 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IServiceLocator;
 
 /**
- * Responsible for allowing the user to choose between applicable StyleConfigurators
+ * Style Editing View.
+ * <p>
+ * StyleView is responsible for allowing the user to choose between applicable StyleConfigurators
  * for the current blackboard.
  * </p>
  * <p>
@@ -83,13 +86,13 @@ import org.eclipse.ui.services.IServiceLocator;
  * the layer.
  * </ul>
  * </p>
- * 
+ * TODO: Clone the blackboard and give that to the configurator
+ *
  * @author jdeolive
  * @since 0.5
  */
-@SuppressWarnings("deprecation")
-public class StyleView extends ViewPart {
-    /** ID used in the extension point to identify this view */
+public class StyleView extends ViewPart implements StyleManager {
+    /** ID used in the extention point to identify this view */
     public final static String VIEW_ID = "net.refractions.udig.style.styleView"; //$NON-NLS-1$
 
     private final static String STYLE_MENU_GROUP = "style"; //$NON-NLS-1$
@@ -111,6 +114,11 @@ public class StyleView extends ViewPart {
     private Action applyAction;
     private Action cancelAction;
 
+    // private IContributionItem applyCI;
+    // private IContributionItem cancelCI;
+
+    // private HashMap<Layer, StyleLayer> layer2styleLayer = new HashMap<Layer,StyleLayer>();
+
     /** Current layer being worked on (wrapped as a StyleLayer) or null if we don't have a victim * */
     private StyleLayer currentLayer;
 
@@ -118,7 +126,7 @@ public class StyleView extends ViewPart {
      * List of StyleViewSites each one manages a IStyleConfigurator.
      * <p>
      * Note: This list should be accessed via getStyleConfigurators, that method will only show you
-     * sites that are applicable to the current layer.
+     * sites that are applicable to the curernt layer.
      * </p>
      */
     List<StyleViewSite> sites;
@@ -142,7 +150,7 @@ public class StyleView extends ViewPart {
                 IStructuredSelection sselection = (IStructuredSelection) selection;
 
                 // look for a Layer selection(s)
-                for( Iterator<?> itr = sselection.iterator(); itr.hasNext(); ) {
+                for( Iterator itr = sselection.iterator(); itr.hasNext(); ) {
                     Object obj = itr.next();
                     if (obj instanceof Layer) {
                         Layer layer = (Layer) obj;
@@ -206,7 +214,7 @@ public class StyleView extends ViewPart {
      * <p>
      * We used this to latch onto the defined StyleConfigurators.
      * </p>
-     * 
+     *
      * @see org.eclipse.ui.part.ViewPart#init(org.eclipse.ui.IViewSite, org.eclipse.ui.IMemento)
      */
     public void init( IViewSite site, IMemento memento ) throws PartInitException {
@@ -232,11 +240,11 @@ public class StyleView extends ViewPart {
                     config.init(styleSite);
                     sites.add(styleSite);
                 } catch (Exception e) {
-                    IStatus status = new Status(IStatus.ERROR, element.getNamespaceIdentifier(), IStatus.OK,
+                    IStatus status = new Status(IStatus.ERROR, element.getNamespace(), IStatus.OK,
                             null, e);
                     StylePlugin.getDefault().getLog().log(status);
                 } catch (Throwable t) {
-                    IStatus status = new Status(IStatus.ERROR, element.getNamespaceIdentifier(), IStatus.OK,
+                    IStatus status = new Status(IStatus.ERROR, element.getNamespace(), IStatus.OK,
                             "Could not create " + element.getName(), t); //$NON-NLS-1$
                     StylePlugin.getDefault().getLog().log(status);
                     // could not process element
@@ -246,9 +254,9 @@ public class StyleView extends ViewPart {
     }
 
     /**
-     * Creates the style editor layout, and uses a PageBook place-holder for ui widgets to be placed
+     * Creates the style editor layout, and uses a PageBook placeholder for ui widgets to be placed
      * into as Styles are selected.
-     * 
+     *
      * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
      * @param parent
      */
@@ -274,7 +282,7 @@ public class StyleView extends ViewPart {
 
         pleaseSelectLayer = new Label(book, SWT.DEFAULT);
         pleaseSelectLayer.setAlignment(SWT.LEFT);
-        pleaseSelectLayer.setText(Messages.StyleView_label_selectLayer_text); 
+        pleaseSelectLayer.setText(Messages.StyleView_label_selectLayer_text);
         book.showPage(pleaseSelectLayer);
 
         // Add in all the config controls as pages in the book
@@ -332,7 +340,7 @@ public class StyleView extends ViewPart {
             return false;
 
         IStructuredSelection selection = (IStructuredSelection) sel;
-        for( Iterator<?> iter = selection.iterator(); iter.hasNext(); ) {
+        for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
             Object e = iter.next();
             if (e instanceof Layer) {
                 layer = (Layer) e;
@@ -419,7 +427,7 @@ public class StyleView extends ViewPart {
 
         if (configChooser.getItemCount() == 0) {
             // no items, set a default message
-            String message = Messages.StyleView_chooser_message; 
+            String message = Messages.StyleView_chooser_message;
             configChooser.add(message);
             configChooser.setEnabled(false);
             configChooser.setText(message);
@@ -458,7 +466,7 @@ public class StyleView extends ViewPart {
      * This means you should *not* assume these IStyleConfigurators are totally happy and ready to
      * work. They will only listen to events when they are the current page for example.
      * </p>
-     * 
+     *
      * @return Set of configurators for the current layer, may be empty
      */
     public Set<IStyleConfigurator> getStyleConfigurators() { // FIXME - make this a List!
@@ -504,7 +512,7 @@ public class StyleView extends ViewPart {
      * Current AbstractStyleConfigurator or null if we don't have one
      * <p>
      * Grab the IStyleConfigurator
-     * 
+     *
      * @return IStyleConfigurator public IStyleConfigurator getCurrent(){ int index =
      *         chooser.getSelectionIndex(); if( index == -1 ) return null; Set<IStyleConfigurator>
      *         set = getStyleConfigurators( ); if( set == null || set.isEmpty() || set.size() <
@@ -547,7 +555,7 @@ public class StyleView extends ViewPart {
      * <li>set the chooser text to the config.getLabel!
      * <li>call site.focus() for the config - so the page gets show, and the toolbar gets shown
      * </ul>
-     * 
+     *
      * @param config IStyleConfigurator to be displayed by StyleView
      * @see org.eclipse.ui.IWorkbenchPart#setFocus()
      */
@@ -579,7 +587,7 @@ public class StyleView extends ViewPart {
      * <li>book needs to use StyleViewSite page associated with this StyleConfigurator
      * <li>the toolbar from the StyleViewSite also needs to be displayed
      * </ul>
-     * 
+     *
      * @return IStyleConfigurator currently being displayed
      */
     public IStyleConfigurator getStyleConfigurator() {
@@ -602,7 +610,7 @@ public class StyleView extends ViewPart {
             }
         };
         applyAction.setEnabled(false);
-        applyAction.setToolTipText(Messages.StyleView_apply_tooltip); 
+        applyAction.setToolTipText(Messages.StyleView_apply_tooltip);
         applyAction.setImageDescriptor(Images.getDescriptor(ImageConstants.APPLY_STYLE));
         // applyCI = new ActionContributionItem(applyAction);
 
@@ -612,7 +620,7 @@ public class StyleView extends ViewPart {
             }
         };
         cancelAction.setEnabled(false);
-        cancelAction.setToolTipText(Messages.StyleView_cancel_tooltip); 
+        cancelAction.setToolTipText(Messages.StyleView_cancel_tooltip);
         cancelAction.setImageDescriptor(Images.getDescriptor(ImageConstants.CANCEL_STYLE));
         // cancelCI = new ActionContributionItem(cancelAction);
     }
@@ -688,7 +696,7 @@ public class StyleView extends ViewPart {
 
     /**
      * Note: createPartControl may not even of been called
-     * 
+     *
      * @see org.eclipse.ui.part.WorkbenchPart#dispose()
      */
     public void dispose() {
@@ -710,7 +718,7 @@ public class StyleView extends ViewPart {
     /**
      * This is the "site" for the IStyleConfigurator - it provides context for the part to work
      * against.
-     * 
+     *
      * @author jgarnett
      * @since 0.9.0
      */
@@ -734,14 +742,14 @@ public class StyleView extends ViewPart {
 
         /**
          * Grabs a viewsite so we can talk to and manage resources associated with the part.
-         * 
-         * @param extention extension point being processed
+         *
+         * @param extention extention point being processed
          * @param element element providing content
          * @param part
          */
         public StyleViewSite( IExtension extention, IConfigurationElement element,
                 IStyleConfigurator part ) {
-            idPlugin = element.getNamespaceIdentifier();
+            idPlugin = element.getNamespace();
             idExtention = extention.getUniqueIdentifier();
             idStyle = part.getStyleId();
             config = part;
@@ -752,7 +760,7 @@ public class StyleView extends ViewPart {
 
         /**
          * Call config.createControl with a empty page from book.
-         * 
+         *
          * @param parent
          */
         public void createControl( Composite parent ) {
@@ -833,7 +841,7 @@ public class StyleView extends ViewPart {
          * <p>
          * The name comes from the <code>id</code> attribute in the configuration element.
          * </p>
-         * 
+         *
          * @return the registry extension id
          */
         public String getId() {
@@ -842,7 +850,7 @@ public class StyleView extends ViewPart {
 
         /**
          * Returns the unique identifier of the plug-in that defines this workbench site's part.
-         * 
+         *
          * @return the unique identifier of the declaring plug-in
          */
         public String getPluginId() {
@@ -882,7 +890,6 @@ public class StyleView extends ViewPart {
         public void setSelectionProvider( ISelectionProvider provider ) {
             StyleView.this.getViewSite().setSelectionProvider(provider);
         }
-        @SuppressWarnings("unchecked")
         public Object getAdapter( Class adapter ) {
             return null;
         }
@@ -891,7 +898,7 @@ public class StyleView extends ViewPart {
          * <p>
          * Note this object may be lazy loaded.
          * </p>
-         * 
+         *
          * @return Config object for the site
          */
         public IStyleConfigurator getConfig() {
@@ -970,14 +977,12 @@ public class StyleView extends ViewPart {
             return StyleView.this;
         }
 
-		@SuppressWarnings("unchecked")
-        public Object getService(Class api) {
+		public Object getService(Class api) {
 			// TODO3.2 Auto-generated method stub
 			return null;
 		}
 
-		@SuppressWarnings("unchecked")
-        public boolean hasService(Class api) {
+		public boolean hasService(Class api) {
 			// TODO3.2 Auto-generated method stub
 			return false;
 		}

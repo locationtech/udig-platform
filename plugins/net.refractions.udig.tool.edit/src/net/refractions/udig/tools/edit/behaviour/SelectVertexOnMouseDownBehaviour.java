@@ -38,17 +38,24 @@ import net.refractions.udig.tools.edit.support.Selection;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
- * <p>Requirements: * <ul> * <li>eventType PRESSED</li>
+ * <p>Requirements:
+ * <ul>
+ * <li>eventType PRESSED</li>
  * <li>handler has currentGeom</li>
  * <li>edit state is modified or NONE</li>
- *</ul> * </p> * <p>Action: * <ul> * <li>adds selected vertex</li>
+ *</ul>
+ * </p>
+ * <p>Action:
+ * <ul>
+ * <li>adds selected vertex</li>
  * <li>sets Edit State to Modified</li>
- *</ul> * </p>
+ *</ul>
+ * </p>
  * @author jones
  * @since 1.1.0
  */
 public class SelectVertexOnMouseDownBehaviour implements EventBehaviour {
-    
+
     public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
         boolean currentGeomNotNull = handler.getCurrentGeom()!=null;
         boolean eventTypePressed = eventType==EventType.PRESSED;

@@ -26,7 +26,7 @@ public class PrimitiveShapePathIteratorTest extends TestCase {
     private int width = 500;
 
     java.awt.Point SCREEN=new java.awt.Point(width,height);
-    
+
     private BufferedImage testImage = new BufferedImage(width, height,
             BufferedImage.TYPE_4BYTE_ABGR);
     private BufferedImage exampleImage = new BufferedImage(width, height,
@@ -37,7 +37,7 @@ public class PrimitiveShapePathIteratorTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-        layerToWorld = CRS.findMathTransform(DefaultGeographicCRS.WGS84, DefaultGeographicCRS.WGS84);
+        layerToWorld = CRS.transform(DefaultGeographicCRS.WGS84, DefaultGeographicCRS.WGS84);
         if (INTERACTIVE) {
             frame = new JFrame("EditGeomPathIterator Test"); //$NON-NLS-1$
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,7 +52,7 @@ public class PrimitiveShapePathIteratorTest extends TestCase {
                   g.drawRect(0,0,width, height);
                 }
             });
-            
+
             frame.getContentPane().add(new JPanel(){
                 /** long serialVersionUID field */
                 private static final long serialVersionUID = 1L;
@@ -63,11 +63,11 @@ public class PrimitiveShapePathIteratorTest extends TestCase {
                   g.drawRect(0,0,width, height);
                 }
             });
-            
-            
-            
+
+
+
             frame.setSize(width*2+20, height+50);
-            
+
             frame.setVisible(true);
         }
     }
@@ -102,21 +102,21 @@ public class PrimitiveShapePathIteratorTest extends TestCase {
 
         EditGeom geom = map.getGeoms().get(0);
 
-        
+
         GeneralPath path=new GeneralPath();
         path.append(PrimitiveShapeIterator.getPathIterator(geom.getShell()), false);
 
         map.addPoint(10, 10, geom.getShell());
-        
+
         path=new GeneralPath();
         path.append(PrimitiveShapeIterator.getPathIterator(geom.getShell()), false);
-        
+
         testG.draw(path);
         exampleG.drawRect(8,8,4,4);
         update();
         assertImagesEqual();
     }
-    
+
     public void testDrawLine() throws Exception {
         Graphics2D testG = testImage.createGraphics();
         Graphics2D exampleG = exampleImage.createGraphics();
@@ -191,7 +191,7 @@ public class PrimitiveShapePathIteratorTest extends TestCase {
 
         EditGeom geom = map.getGeoms().get(0);
 
-        
+
         // test get fill single point
         map.addPoint(0, 10, geom.getShell());
 

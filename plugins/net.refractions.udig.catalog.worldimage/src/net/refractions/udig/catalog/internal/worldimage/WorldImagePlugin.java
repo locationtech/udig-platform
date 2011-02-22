@@ -19,6 +19,7 @@ package net.refractions.udig.catalog.internal.worldimage;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -39,29 +40,29 @@ public class WorldImagePlugin extends AbstractUIPlugin {
         super();
         plugin = this;
     }
-    
+
     public void start(BundleContext context) throws Exception {
         super.start(context);
     }
-    
+
     public void stop(BundleContext context) throws Exception {
         plugin = null;
         this.resourceBundle = null;
         super.stop(context);
     }
-    
+
     /**
      * Retrieves the default instance of this class.
-     * 
+     *
      * @return Default instance of WorldImagePlugin.
      */
     public static WorldImagePlugin getDefault() {
         return plugin;
     }
-    
+
     /**
      * Retrieves the string value of the requested resource.
-     * 
+     *
      * @param key
      * @return Value of the desired resource string.
      */
@@ -73,10 +74,10 @@ public class WorldImagePlugin extends AbstractUIPlugin {
             return key;
         }
     }
-    
+
     /**
      * Retrieves the default resource bundle for this plugin.
-     * 
+     *
      * @return ResourceBundle
      */
     public ResourceBundle getResourceBundle() {
@@ -89,5 +90,5 @@ public class WorldImagePlugin extends AbstractUIPlugin {
             this.resourceBundle = null;
         }
         return this.resourceBundle;
-    } 
+    }
 }

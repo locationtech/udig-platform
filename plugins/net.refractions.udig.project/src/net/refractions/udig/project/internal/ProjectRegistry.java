@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * TODO Purpose of net.refractions.udig.project.internal
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @model
@@ -29,19 +29,18 @@ public interface ProjectRegistry extends EObject {
      * @generated
      */
     String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-	public static final String PROJECT_FILE = "project.uprj";
 
     /**
      * Will create or return the default project. This project is called: workspace/newProject.udig
      * (in english versions)
-     * 
+     *
      * @return the default project
      */
     public Project getDefaultProject();
 
     /**
      * Returns the last selected/modified project
-     * 
+     *
      * @return the last selected/modified project
      * @model transient="true"
      */
@@ -65,7 +64,7 @@ public interface ProjectRegistry extends EObject {
      * <ul>
      * <li>Loads projects when required.</li>
      * </ul>
-     * 
+     *
      * @model
      * @param uri The file name of the Project
      * @return The Project that maps to the file indicated by name
@@ -73,7 +72,7 @@ public interface ProjectRegistry extends EObject {
     public Project getProject( URI uri );
 
     /**
-     * Returns the Project that is associated with the file path.
+     * Returns the Project that is associated with the filename.
      * <p>
      * If the Project is not part of the ProjectRegistry it is loaded.
      * </p>
@@ -81,9 +80,9 @@ public interface ProjectRegistry extends EObject {
      * <ul>
      * <li>Loads projects when required.</li>
      * </ul>
-     * 
+     *
      * @model
-     * @param projectPath The file path of the Project
+     * @param uri The file name of the Project
      * @return The Project that maps to the file indicated by name
      */
     public Project getProject( String projectPath );

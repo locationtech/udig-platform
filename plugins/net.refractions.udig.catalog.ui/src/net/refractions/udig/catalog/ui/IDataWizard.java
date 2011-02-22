@@ -14,7 +14,7 @@ import org.eclipse.ui.IWorkbenchWizard;
  * <p>
  * This is wizard is made up of <b>primary</b> pages, and <b>secondary</b> pages. A primary page
  * is an
- * 
+ *
  * @see org.eclipse.jface.wizard.IWizardPage that the wizard declares it will contain. A secondary
  *      page is a page which is dynamically contributed to the wizard via a primary page, or another
  *      secondary page.
@@ -52,7 +52,7 @@ import org.eclipse.ui.IWorkbenchWizard;
  * 			wizard.init(page);
  * 			return page;
  * 		}
- * 
+ *
  * 		return super.getNextPage();
  * 	}
  * </code>
@@ -115,7 +115,7 @@ public abstract class IDataWizard extends Wizard implements IWorkbenchWizard {
 
     /**
      * Adds the primary pages to the wizard.
-     * 
+     *
      * @see org.eclipse.jface.wizard.IWizard#addPages()
      */
     public void addPages() {
@@ -128,7 +128,7 @@ public abstract class IDataWizard extends Wizard implements IWorkbenchWizard {
 
     /**
      * Returns the next primary page in the page sequence. This method is called by the
-     * 
+     *
      * @see org.eclipse.jface.wizard.IWizardContainer when a page does not contribute a secondary
      *      page.
      * @see org.eclipse.jface.wizard.IWizard#getNextPage(org.eclipse.jface.wizard.IWizardPage)
@@ -140,7 +140,7 @@ public abstract class IDataWizard extends Wizard implements IWorkbenchWizard {
 
     /**
      * Determines if the wizard has any more primary pages.
-     * 
+     *
      * @return True if so, otherwise false.
      */
     public boolean hasMorePrimaryPages() {
@@ -149,7 +149,7 @@ public abstract class IDataWizard extends Wizard implements IWorkbenchWizard {
 
     /**
      * Returns the next primary page, based on the current page.
-     * 
+     *
      * @param page A primary page, or secondary page.
      * @return The next primary page, or null if no more in sequence.
      */
@@ -192,7 +192,7 @@ public abstract class IDataWizard extends Wizard implements IWorkbenchWizard {
      * <li>There are no more primary pages.
      * </ol>
      * </p>
-     * 
+     *
      * @see org.eclipse.jface.wizard.IWizard#canFinish()
      */
     public boolean canFinish() {
@@ -213,7 +213,7 @@ public abstract class IDataWizard extends Wizard implements IWorkbenchWizard {
     /**
      * Initializes a wizard page for use in the data wizard. This method should be called by pages
      * returning a new page from getNextPage().
-     * 
+     *
      * @param page The page to be initialized.
      */
     public void init( WizardPage page ) {

@@ -18,7 +18,6 @@ package net.refractions.udig.printing.ui.internal.editor.parts;
 
 import java.util.List;
 
-import net.refractions.udig.printing.model.Box;
 import net.refractions.udig.printing.model.Page;
 import net.refractions.udig.printing.model.PropertyListener;
 import net.refractions.udig.printing.ui.internal.editor.figures.PageFigure;
@@ -36,7 +35,7 @@ import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 
 /**
  * Controller (Part) for Printing Pages.
- * 
+ *
  * @author Richard Gould
  * @since 0.3
  */
@@ -44,7 +43,7 @@ public class PagePart extends AbstractGraphicalEditPart {
 
     private InternalPropertyListener listener = new InternalPropertyListener();
 
-    protected List< ? > getModelChildren() {
+    protected List<?> getModelChildren() {
         return getModel().getBoxes();
     }
 
@@ -83,22 +82,11 @@ public class PagePart extends AbstractGraphicalEditPart {
     protected void refreshVisuals() {
         Page page = getModel();
 
-        Point loc = new Point(0, 0);
+        Point loc = new Point(0,0);
         Dimension size = page.getSize();
         Rectangle rectangle = new Rectangle(loc, size);
 
-        // this should trigger all the resize in PageImpl
-        IFigure fig = getFigure();
-        // Dimension fSize = fig.getSize();
-        fig.setSize(size);
-        getParent().setLayoutConstraint(this, fig, rectangle);
-        //
-        // List<Box> boxes = page.getBoxes();
-        // for( Box box : boxes ) {
-        // Dimension size2 = box.getSize();
-        // System.out.println(size2.width + "/" + size2.height);
-        // }
-
+        getParent().setLayoutConstraint(this, getFigure(), rectangle);
     }
 
     public GraphicalEditPart getParent() {

@@ -1,8 +1,8 @@
 package net.refractions.udig.project.ui.internal;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.MapTests;
+import junit.framework.TestCase;
 
 public class ViewerLayerSorterTest extends TestCase {
 

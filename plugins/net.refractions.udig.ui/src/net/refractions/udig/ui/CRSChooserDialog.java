@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.ui;
 
@@ -33,9 +33,9 @@ public class CRSChooserDialog extends Dialog {
 	        public void handleOk() {
 	            result=chooser.getCRS();
 	        }
-	        
+
 	    });
-	    
+
 	    Control control = chooser.createControl(parent, initialValue);
 	    chooser.setFocus();
 		return control;
@@ -46,7 +46,7 @@ public class CRSChooserDialog extends Dialog {
 	    result=chooser.getCRS();
 	    return super.close();
 	}
-	
+
 	public CoordinateReferenceSystem getResult() {
 		return result;
 	}

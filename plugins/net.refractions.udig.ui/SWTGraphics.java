@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * A Graphics object that wraps SWT's GC object
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -60,7 +60,7 @@ public class SWTGraphics implements ViewportGraphics {
 
 	/**
 	 * Construct <code>SWTGraphics</code>.
-	 * 
+	 *
 	 * @param Image
 	 *            image
 	 * @param display
@@ -73,7 +73,7 @@ public class SWTGraphics implements ViewportGraphics {
 
 	/**
 	 * Construct <code>SWTGraphics</code>.
-	 * 
+	 *
 	 * @param gc
 	 *            The GC object
 	 * @param display
@@ -135,15 +135,15 @@ public class SWTGraphics implements ViewportGraphics {
 		}
 	}
 
-	// public void drawPoint( Shape shape, SimpleFeature feature, PointSymbolizer
+	// public void drawPoint( Shape shape, Feature feature, PointSymbolizer
 	// pointSymbolizer ) {
 	// /** Factory that will resolve symbolizers into rendered styles */
 	// SLDStyleFactory styleFactory = new SLDStyleFactory();
 	// /** The painter class we use to depict shapes onto the screen */
 	// StyledShapePainter painter = new StyledShapePainter(null);
-	//        
+	//
 	// Style2D style = styleFactory.createStyle(feature, pointSymbolizer, null);
-	//        
+	//
 	// //Graphics2D graphics = getContext().getImage().createGraphics();
 	// painter.paint(this, shape, style, 1.0);
 	// }
@@ -216,7 +216,7 @@ public class SWTGraphics implements ViewportGraphics {
 
 	/**
 	 * This is hard because - background doesn't mean what we think it means.
-	 * 
+	 *
 	 * @see net.refractions.udig.project.render.ViewportGraphics#setBackground(java.awt.Color)
 	 */
 	public void setBackground(java.awt.Color c) {
@@ -373,8 +373,8 @@ public class SWTGraphics implements ViewportGraphics {
 
 		return new org.eclipse.swt.graphics.Image(Display.getDefault(), data);
 	}
-	
-	
+
+
 
 	// optimized version that works if the image is rgb with a byte data buffer
     public static ImageData createImageDataFromBytes( RenderedImage image ) {
@@ -386,17 +386,17 @@ public class SWTGraphics implements ViewportGraphics {
         depth = 24;
         palette = new PaletteData(0xFF0000, 0xFF00, 0xFF);
         swtdata = new ImageData(width, height, depth, palette);
-        
+
         Raster raster = image.getData();
         raster.getDataElements(0,0,width, height, swtdata.data);
 
-        
+
         return swtdata;
     }
 
 
 	public static ImageData createImageData( RenderedImage image, boolean transparent ) {
-		
+
 //		if( image.getData().getDataBuffer().getDataType()==DataBuffer.TYPE_BYTE
 //				&& !image.getColorModel().hasAlpha() )
 //			return createImageDataFromBytes(image);
@@ -405,7 +405,7 @@ public class SWTGraphics implements ViewportGraphics {
 	    int height = image.getHeight();
 	    PaletteData palette;
 	    int depth;
-	
+
 	    depth = 24;
 	    palette = new PaletteData(0xFF0000, 0xFF00, 0xFF);
 	    swtdata = new ImageData(width, height, depth, palette);
@@ -414,7 +414,7 @@ public class SWTGraphics implements ViewportGraphics {
 		byte redT=(byte) 255;
 		if ( transparent ){
 	    	swtdata.transparentPixel = TRANSPARENT;
-	    
+
 	        blueT = (byte) ((TRANSPARENT) & 0xFF);
 	        greenT = (byte) ((TRANSPARENT >> 8) & 0xFF);
 	        redT = (byte) ((TRANSPARENT >> 16) & 0xFF);
@@ -424,15 +424,15 @@ public class SWTGraphics implements ViewportGraphics {
 	    int[] awtdata = raster.getPixels(0, 0, width, height, new int[width * height
 	            * numbands]);
 	    int step = swtdata.depth / 8;
-	
+
 	    byte[] data = swtdata.data;
 	    int baseindex = 0;
 	    for( int y = 0; y < height; y++ ) {
 	        int idx = ((0 + y) * swtdata.bytesPerLine) + (0 * step);
-	
+
 	        for( int x = 0; x < width; x++ ) {
 	            baseindex = (x + (y * width)) * numbands;
-	
+
 	            if (numbands==4 && awtdata[baseindex + 3] == 0) {
 	                data[idx++] = blueT;
 	                data[idx++] = greenT;
@@ -462,14 +462,14 @@ public class SWTGraphics implements ViewportGraphics {
 	public void setTransform(AffineTransform transform) {
 		double [] matrix=new double[6];
 		transform.getMatrix(matrix);
-		gc.setTransform( new Transform(display, (float)matrix[0], (float)matrix[1], (float)matrix[2], 
+		gc.setTransform( new Transform(display, (float)matrix[0], (float)matrix[1], (float)matrix[2],
 				(float)matrix[3], (float)matrix[4], (float)matrix[5]));
 	}
 
 	/**
 	 * @see net.refractions.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image,
 	 *      int, int)
-	 * 
+	 *
 	 * Current version can only draw Image if the image is an RenderedImage
 	 */
 	public void drawImage(java.awt.Image image, int x, int y) {

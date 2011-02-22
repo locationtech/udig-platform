@@ -52,27 +52,27 @@ public interface ElementFactory extends EFactory {
     ElementPackage getElementPackage();
 
     /**
-     * Creates a {@link IGenericProjectElement} with an adapter that allows it to integrate with the 
-     * ProjectElement framework.  
+     * Creates a {@link IGenericProjectElement} with an adapter that allows it to integrate with the
+     * ProjectElement framework.
      *
      * @param project the project to add the new ProjectElementAdapter ot
      * @param typeToCreate the type of {@link IGenericProjectElement} that is created by the extension
      * @param extensionId The id of the extension to use to create the IGenericProjectElement
-     * 
+     *
      * @return the new {@link ProjectElementAdapter} (it has been added to the project already)
      */
     ProjectElementAdapter createProjectElementAdapter( IProject project,
             Class< ? extends IGenericProjectElement> typeToCreate, String extensionId );
 
     /**
-     * Creates a {@link IGenericProjectElement} with an adapter that allows it to integrate with the 
-     * ProjectElement framework.  
+     * Creates a {@link IGenericProjectElement} with an adapter that allows it to integrate with the
+     * ProjectElement framework.
      *
      * @param project the project to add the new ProjectElementAdapter to
      * @param elemName the name of the ProjectElementAdapter.  It will also be the name of the eResource created.
      * @param typeToCreate the type of {@link IGenericProjectElement} that is created by the extension
      * @param extensionId The id of the extension to use to create the IGenericProjectElement
-     * 
+     *
      * @return the new {@link ProjectElementAdapter} (it has been added to the project already)
      */
     ProjectElementAdapter createProjectElementAdapter( IProject project, String elemName,

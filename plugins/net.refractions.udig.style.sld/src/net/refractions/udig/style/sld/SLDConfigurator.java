@@ -28,9 +28,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.part.PageBook;
 import org.geotools.data.FeatureSource;
+import org.geotools.feature.FeatureType;
 import org.geotools.styling.Style;
 import org.geotools.styling.Symbolizer;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * An abstract class for style configurators intended for SLD style objects.
@@ -39,7 +39,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * capable of editing individual Symbolizers.
  * </p>
  * <p>
- * 
+ *
  * @author Justin Deoliveira, Refractions Research Inc.
  */
 public class SLDConfigurator extends IStyleConfigurator {
@@ -59,10 +59,47 @@ public class SLDConfigurator extends IStyleConfigurator {
     /** This is the data structure the extention point is processed into */
     SortedMap<Class, List<SLDEditorPart>> classToEditors;
 
+    // /** The sld editor parts **/
+    // private Map<Class, SLDEditorPart> editors;
+    //
+    // /** The cool bars **/
+    // private Map<Class, CoolBar> coolBars;
+    //
+    // /** page book pages **/
+    // private Map<Class, Composite> pages;
+    //
+    // private Map<Class, TabFolder> tabs;
+    //
+    // /** the cool bar / tool bar **/
+    // //private CoolBar coolBar;
+    //
+    // /** the dynamic part of the ui **/
+    // private PageBook pageBook;
+    //
+    // /** blank page **/
+    // private Composite blank;
+    //
+    // /** current page **/
+    // private Composite currentPage;
+    //
+    // /** current tab folder **/
+    // private TabFolder currentTabFolder;
+    //
+    // /** toolbar listener **/
+    // private SelectionListener toolListener;
+    //
+    // /** checkbox listener **/
+    // private SelectionListener checkListener;
+    //
+    // private Class geometryClass;
+
     /**
      * Creates the configurator.
      */
     public SLDConfigurator() {
+        // editors = new HashMap<Class, SLDEditorPart>();
+        // pages = new HashMap<Class, Composite>();
+        // tabs = new HashMap<Class, TabFolder>();
     }
 
     /**
@@ -86,7 +123,7 @@ public class SLDConfigurator extends IStyleConfigurator {
         Comparator<Class> compare = new Comparator<Class>(){
             public int compare( Class a, Class b) {
                 return a.getSimpleName().compareTo( b.getSimpleName() );
-            }                
+            }
         };
         classToEditors = new TreeMap<Class, List<SLDEditorPart>>( compare );
 
@@ -123,7 +160,7 @@ public class SLDConfigurator extends IStyleConfigurator {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.style.IStyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
      */
     public void createControl( Composite parent ) {
@@ -143,7 +180,7 @@ public class SLDConfigurator extends IStyleConfigurator {
                 }
             }
         }
-    }	
+    }
     /*
      * Called when new layer and blackbard values are available. <p> This provides update
      * information as a callback (rather than an event listener). </p>
@@ -155,23 +192,23 @@ public class SLDConfigurator extends IStyleConfigurator {
         }
         // pull the sld style off the blackboard, and initialize the cm
         Style style = (Style) getStyleBlackboard().get(SLDContent.ID);
-        
+
         // if no style information, create default
         if (style == null) {
             style = SLDContent.createDefaultStyle();
             getStyleBlackboard().put(SLDContent.ID, style);
         }
         sldContentManager.init(SLDContent.getStyleBuilder(), style);
-        
+
         // pull the feature type name out of the layer
         if (layer.getSchema() != null) {
-            SimpleFeatureType featureType = layer.getSchema();
-        
+            FeatureType featureType = layer.getSchema();
+
             //set the name of the feature type style for the feature renderer
-            String name = featureType.getName().getLocalPart();
+            String name = featureType.getTypeName();
             sldContentManager.getDefaultFeatureTypeStyle().setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
         }
-        
+
         // force the toolbar to refresh
         //
         IToolBarManager tbm = getViewSite().getActionBars().getToolBarManager();
@@ -197,7 +234,7 @@ public class SLDConfigurator extends IStyleConfigurator {
         // if we get here the current editor wasn't applicable, show first that works
         for( Class type : classToEditors.keySet() ){
             if( !supported.contains( type )) continue;
-            
+
             for( SLDEditorPart part : classToEditors.get( type ) ){
                 initEditor( part ); // FIXME: we don't want the editor to have content it should not
                 part.reset();
@@ -208,9 +245,66 @@ public class SLDConfigurator extends IStyleConfigurator {
             }
         }
         editorBook.showPage(blank);
-        
+
     }
 
+
+    // public void focus(Layer layer, StyleBlackboard styleBlackboard) {
+    // //pull the sld style off the blackboard, and initialize the cm
+    // Style style = (Style) styleBlackboard.get(SLDContent.ID);
+    //
+    // //if no style information, create default
+    // if (style == null) {
+    // style = SLDContent.createDefaultStyle();
+    // getStyleBlackboard().put(SLDContent.ID, style);
+    // }
+    // sldContentManager.init(SLDContent.getStyleBuilder(), style);
+    //
+    // //pull the feature type name out of the layer
+    // if (layer.getResource(FeatureSource.class, null) != null) {
+    // FeatureType featureType = layer.getResource(FeatureSource.class, null).getSchema();
+    // String name = featureType.getTypeName();
+    //
+    // sldContentManager.getDefaultFeatureTypeStyle().setFeatureTypeName(name);
+    // }
+    // }
+
+    //
+    // /**
+    // * Updates the SLD style on the blackboard. Subclasses overriding must call
+    // * this method in the last statement.
+    // */
+    // public void apply() {
+    //
+    // //update the blackboard
+    // getStyleBlackboard().put(SLDContent.ID, sldContentManager.getStyle());
+    // }
+    //
+    // /**
+    // * @return Returns the contentManager.
+    // */
+    // public SLDContentManager getContentManager() {
+    // return sldContentManager;
+    // }
+    //
+
+    //
+    //
+    // /* (non-Javadoc)
+    // * @see
+    // net.refractions.udig.style.AbstractStyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
+    // */
+    // protected Control create(Composite parent) {
+    // createActions();
+    // pageBook = new PageBook(parent, SWT.NONE);
+    // blank = new Composite(pageBook, SWT.NONE);
+    //
+    // currentPage = blank;
+    // pageBook.showPage(blank);
+    //
+    // return pageBook;
+    // }
+    //
     protected void createToolbarItems() {
         toolbarItems = new ArrayList<SLDEditorMenuAction>(); // FIXME!
         for( Class contentClass : classToEditors.keySet() ) {
@@ -243,7 +337,7 @@ public class SLDConfigurator extends IStyleConfigurator {
     void initEditor( SLDEditorPart editor ) {
         // enable the symbolizer if necessary
     	@SuppressWarnings("unchecked") Class<Symbolizer> symbolizerType = editor.getContentType();
-    	
+
         Symbolizer content = sldContentManager.getSymbolizer( symbolizerType );
         if (content == null) {
             sldContentManager.addSymbolizer( symbolizerType );
@@ -283,7 +377,7 @@ public class SLDConfigurator extends IStyleConfigurator {
         public void dispose() {
             if (menu != null) {
                 menu.dispose();
-            }            
+            }
         }
 
         public Menu getMenu( Control parent ) {
@@ -381,7 +475,7 @@ public class SLDConfigurator extends IStyleConfigurator {
         public SLDDisableEditorPart( Class<Symbolizer> contentType ) {
             this.contentType = contentType;
             setImageDescriptor(SLD.createDisabledImageDescriptor(contentType));
-            setLabel(Messages.SLDConfigurator_disable); 
+            setLabel(Messages.SLDConfigurator_disable);
         }
 
         public void init() {
@@ -390,7 +484,7 @@ public class SLDConfigurator extends IStyleConfigurator {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see net.refractions.udig.style.sld.SLDEditorPart#getContentType()
          */
         public Class getContentType() {
@@ -399,7 +493,7 @@ public class SLDConfigurator extends IStyleConfigurator {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see net.refractions.udig.style.sld.SLDEditorPart#createPartControl(org.eclipse.swt.widgets.Composite)
          */
         protected Control createPartControl( Composite parent ) {
@@ -408,7 +502,7 @@ public class SLDConfigurator extends IStyleConfigurator {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see net.refractions.udig.style.sld.SLDEditorPart#reset()
          */
         public void reset() {

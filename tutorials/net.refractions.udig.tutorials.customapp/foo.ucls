@@ -1,0 +1,6 @@
+<class-diagram generalizations="true" realizations="true" associations="true" dependencies="false"
+  nesting-relationships="true">
+  <classifier-display autosize="true" package="true" attributes="true" operations="true" initial-value="false"
+    signature="true" visibility="true"/>
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

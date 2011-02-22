@@ -20,8 +20,8 @@ import java.util.Iterator;
 
 /**
  * Iterates through all the points in an {@link EditGeom} starting with the shell
- * and then doing the holes in order, .  
- * 
+ * and then doing the holes in order
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -33,7 +33,7 @@ public class EditGeomPointIterator implements Iterator<Point> {
 
         /**
          * New instance
-         * 
+         *
          * @param geom Geometry to draw
          * @param selectedPoints points <em>NOT</em> to draw.
          */
@@ -42,7 +42,7 @@ public class EditGeomPointIterator implements Iterator<Point> {
             current=currentShape.next().iterator();
             this.selectedPoints=selectedPoints;
         }
-        
+
         public EditGeomPointIterator( EditGeom geom ) {
             this( geom, Collections.<Point>emptySet());
         }
@@ -53,7 +53,7 @@ public class EditGeomPointIterator implements Iterator<Point> {
             do{
                 next=getNext();
             }while( next!=null && selectedPoints.contains(next)  );
-            
+
             return next!=null;
         }
 
@@ -61,7 +61,7 @@ public class EditGeomPointIterator implements Iterator<Point> {
             if( current.hasNext() ){
                 return current.next();
             }
-            
+
             if( currentShape.hasNext() ){
                 current=currentShape.next().iterator();
                 return getNext();
@@ -79,5 +79,5 @@ public class EditGeomPointIterator implements Iterator<Point> {
         public void remove() {
             throw new UnsupportedOperationException();
         }
-        
+
 }

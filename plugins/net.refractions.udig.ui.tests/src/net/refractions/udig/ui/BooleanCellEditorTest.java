@@ -1,9 +1,9 @@
 package net.refractions.udig.ui;
 
-import junit.framework.TestCase;
-
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+
+import junit.framework.TestCase;
 
 public class BooleanCellEditorTest extends TestCase {
 
@@ -13,7 +13,7 @@ public class BooleanCellEditorTest extends TestCase {
         super.setUp();
         shell=new Shell(Display.getCurrent());
     }
-    
+
     @Override
     protected void tearDown() throws Exception {
         shell.dispose();
@@ -22,13 +22,13 @@ public class BooleanCellEditorTest extends TestCase {
     public void testDoGetValue() {
         BooleanCellEditor editor;
         editor = new BooleanCellEditor(shell);
-        
+
         editor.setValue(true);
         assertEquals( true, editor.getValue() );
 
         editor.setValue(false);
         assertEquals( false, editor.getValue() );
-        
+
         try{
             editor.setValue("illegal"); //$NON-NLS-1$
             fail();

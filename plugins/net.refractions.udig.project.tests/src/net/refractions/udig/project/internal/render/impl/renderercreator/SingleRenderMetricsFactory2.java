@@ -15,18 +15,18 @@
 package net.refractions.udig.project.internal.render.impl.renderercreator;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.media.jai.util.Range;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.render.Renderer;
 import net.refractions.udig.project.render.AbstractRenderMetrics;
 import net.refractions.udig.project.render.IRenderContext;
+import net.refractions.udig.project.render.IRenderMetrics;
 import net.refractions.udig.project.render.IRenderMetricsFactory;
 import net.refractions.udig.project.render.IRenderer;
-
-import org.geotools.util.Range;
 
 /**
  * For testing.  Creates a normal Renderer.  Accepts resources that resolve to RendererCreatorTestObjForSingleRenderer objects.
@@ -38,7 +38,7 @@ public class SingleRenderMetricsFactory2 implements IRenderMetricsFactory {
     public class SingleRenderMetrics extends AbstractRenderMetrics {
 
         public SingleRenderMetrics( IRenderContext context, IRenderMetricsFactory factory ) {
-            super(context, factory, new ArrayList<String>());
+            super(context, factory);
         }
 
         public boolean canAddLayer( ILayer layer ) {
@@ -54,17 +54,17 @@ public class SingleRenderMetricsFactory2 implements IRenderMetricsFactory {
         }
 
         @SuppressWarnings("unchecked")
-        public Set<Range<Double>> getValidScaleRanges() {
-            return new HashSet<Range<Double>>();
+        public Set<Range> getValidScaleRanges() {
+            return new HashSet<Range>();
         }
-        
+
     }
 
     public boolean canRender( IRenderContext context ) throws IOException {
         return context.getGeoResource().canResolve(RendererCreatorTestObjForSingleRenderer.class);
     }
 
-    public AbstractRenderMetrics createMetrics( IRenderContext context ) {
+    public IRenderMetrics createMetrics( IRenderContext context ) {
         return new SingleRenderMetrics(context, this);
     }
 

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.tool.info.tests;
 
@@ -21,11 +21,11 @@ import org.eclipse.swt.widgets.Control;
 public class TestViewportPane implements ViewportPane {
 
 	private Dimension displaySize;
-	
+
 	public TestViewportPane() {
 		super();
 	}
-	
+
 	/**
 	 * @param displaySize
 	 */
@@ -36,37 +36,37 @@ public class TestViewportPane implements ViewportPane {
 
 	public void addDrawCommand(IDrawCommand command) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void addMouseListener(MapMouseListener l) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void addMouseMotionListener(MapMouseMotionListener l) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void addMouseWheelListener(MapMouseWheelListener l) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void addPaneListener(IMapDisplayListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void enableDrawCommands(boolean enable) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public Control getControl() {
@@ -96,57 +96,57 @@ public class TestViewportPane implements ViewportPane {
 
 	public void removeMouseListener(MapMouseListener l) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void removeMouseMotionListener(MapMouseMotionListener l) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void removeMouseWheelListener(MapMouseWheelListener l) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void removePaneListener(IMapDisplayListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void renderDone() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void renderStarting() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void renderUpdate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void repaint() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void repaint(int x, int y, int width, int height) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setCursor(Cursor cursor) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setRenderManager(RenderManager manager) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public int getDPI() {
@@ -155,7 +155,7 @@ public class TestViewportPane implements ViewportPane {
 	}
 
 	public Dimension getDisplaySize() {
-		
+
 		return displaySize;
 	}
 

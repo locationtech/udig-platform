@@ -26,15 +26,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
-
 /**
  * Sets the CRS of the layer
  * @author Jesse
  * @since 1.1.0
  */
 public class SetLayerCRSCommand extends AbstractCommand implements UndoableMapCommand {
-    public static final String NAME=Messages.SetLayerCRSCommand_name; 
+    public static final String NAME=Messages.SetLayerCRSCommand_name;
 
     private StaticProvider<ILayer> provider;
     private Layer layer;
@@ -46,7 +44,7 @@ public class SetLayerCRSCommand extends AbstractCommand implements UndoableMapCo
         this.provider=new StaticProvider<ILayer>(layer);
         this.crs=crs;
     }
-    
+
     public String getName() {
         return NAME;
     }
@@ -60,17 +58,17 @@ public class SetLayerCRSCommand extends AbstractCommand implements UndoableMapCo
         layer.setCRS(crs);
         ViewportModel viewportModel = layer.getMapInternal().getViewportModelInternal();
             ReferencedEnvelope bounds = (ReferencedEnvelope) layer.getMapInternal().getViewportModel().getBounds();
-            if( layer.getMapInternal().getMapLayers().size()==1 
-                    && !bounds.intersects( (Envelope) layer.getBounds(monitor, viewportModel.getCRS()))){
+            if( layer.getMapInternal().getMapLayers().size()==1
+                    && !bounds.intersects(layer.getBounds(monitor, viewportModel.getCRS()))){
                 oldBounds=bounds;
-                
+
                 viewportModel.zoomToExtent();
             }
         monitor.done();
     }
 
-    public void rollback( IProgressMonitor monitor ) throws Exception {        
-        String name=Messages.SetLayerCRSCommand_undoTask; 
+    public void rollback( IProgressMonitor monitor ) throws Exception {
+        String name=Messages.SetLayerCRSCommand_undoTask;
         monitor.beginTask(name, 1);
         Layer layer=(Layer) provider.get();
         layer.setCRS(old);

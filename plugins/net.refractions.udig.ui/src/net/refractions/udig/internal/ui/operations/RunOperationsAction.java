@@ -11,14 +11,14 @@ public class RunOperationsAction extends Action {
 
     @Override
     public void run() {
-        RunOperationDialog dialog = new RunOperationDialog(Display.getDefault().getActiveShell(), 
+        RunOperationDialog dialog = new RunOperationDialog(Display.getDefault().getActiveShell(),
                 UiPlugin.getDefault().getOperationMenuFactory());
-               
+
         dialog.open();
-        
+
         if (dialog.getReturnCode() == Window.CANCEL)
             return;
-        
+
         final OpAction[] actions = dialog.getSelection();
         for (OpAction action : actions) {
             action.run();

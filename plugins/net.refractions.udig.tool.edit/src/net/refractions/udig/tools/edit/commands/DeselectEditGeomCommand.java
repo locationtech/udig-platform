@@ -36,22 +36,20 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.data.FeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Id;
+import org.geotools.filter.FidFilter;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * Removes an EditGeom from the edit blackboard and updates the handler's current geom if it has
- * been removed.
- * 
+ * Removes an EditGeom from the edit blackboard and updates the handler's current geom
+ * if it has been removed.
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -103,32 +101,30 @@ public class DeselectEditGeomCommand extends AbstractCommand implements Undoable
         monitor.done();
     }
 
-    private Pair<PrimitiveShape, SimpleFeature> newSelection( IProgressMonitor monitor )
+    private Pair<PrimitiveShape, Feature> newSelection( IProgressMonitor monitor )
             throws IOException {
 
         EditBlackboard editBlackboard = handler.getEditBlackboard(layer);
         if (!editBlackboard.isEmpty()) {
             EditGeom newSelection = editBlackboard.getGeoms().get(0);
 
-            FilterFactory factory = CommonFactoryFinder
-                    .getFilterFactory(GeoTools.getDefaultHints());
-            Id id = factory.id(Collections.singleton(factory.featureId(newSelection
-                    .getFeatureIDRef().get())));
+            FilterFactory factory = FilterFactoryFinder.createFilterFactory();
+            FidFilter id = factory.createFidFilter(newSelection.getFeatureIDRef().get());
 
-            FeatureSource<SimpleFeatureType, SimpleFeature> source = layer.getResource(FeatureSource.class, monitor);
-            FeatureCollection<SimpleFeatureType, SimpleFeature>  features = source.getFeatures(id);
+            FeatureSource source = layer.getResource(FeatureSource.class, monitor);
+            FeatureCollection features = source.getFeatures(id);
 
-            FeatureIterator<SimpleFeature> iter = features.features();
+            FeatureIterator iter = features.features();
             try {
                 if (iter.hasNext()) {
-                    return new Pair<PrimitiveShape, SimpleFeature>(newSelection.getShell(), iter
+                    return new Pair<PrimitiveShape, Feature>(newSelection.getShell(), iter
                             .next());
                 }
             } finally {
                 iter.close();
             }
         }
-        return new Pair<PrimitiveShape, SimpleFeature>(null, null);
+        return new Pair<PrimitiveShape, Feature>(null, null);
     }
 
     private void deselectCurrentEditFeature( IProgressMonitor monitor ) throws Exception {
@@ -136,7 +132,7 @@ public class DeselectEditGeomCommand extends AbstractCommand implements Undoable
         this.currentShape = handler.getCurrentShape();
         this.currentState = handler.getCurrentState();
 
-        Pair<PrimitiveShape, SimpleFeature> newSelection = newSelection(monitor);
+        Pair<PrimitiveShape, Feature> newSelection = newSelection(monitor);
 
         handler.setCurrentShape(newSelection.getLeft());
 

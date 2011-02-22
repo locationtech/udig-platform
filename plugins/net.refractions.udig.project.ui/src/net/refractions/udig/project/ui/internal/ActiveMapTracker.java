@@ -42,7 +42,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * Tracks which map is the active map. Essentially just listens to the workbench for part changes
  * and when a part is an MapEditorPart it marks that as the active map.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -50,7 +50,7 @@ public class ActiveMapTracker implements IPartListener2, IWindowListener, IPageL
 
 	/**
 	 * All the parts that are have been active in the order of activation.
-	 * 
+	 *
 	 */
     private List<MapPart> activeParts = new CopyOnWriteArrayList<MapPart>();
     /**
@@ -61,7 +61,7 @@ public class ActiveMapTracker implements IPartListener2, IWindowListener, IPageL
      * All the maps that are currently open
      */
     private Set<MapPart> openMaps = new CopyOnWriteArraySet<MapPart>();
-    
+
     /**
      * Returns the set of the visible maps.
      *
@@ -74,52 +74,40 @@ public class ActiveMapTracker implements IPartListener2, IWindowListener, IPageL
         }
         return Collections.unmodifiableCollection(maps);
     }
-    
+
     /**
-     * Returns the most recently active map or {@link ApplicationGIS#NO_MAP} if all maps have been closed 
+     * Returns the most recently active map or {@link ApplicationGIS#NO_MAP} if all maps have been closed
      *
      * @return
      */
     public Map getActiveMap(){
-    	
+
     	if( Display.getCurrent()!=null ){
     		MapPart part = getActivePart();
-    		if( part!=null && !activeParts.isEmpty() && part!=activeParts.get(0)){
+    		if( part!=null && part!=activeParts.get(0)){
     			addActivePart(part);
     			return part.getMap();
     		}
     	}
-    	
-    	//lets first look at activeParts
-    	MapPart mapPart = null;
-    	if ( !activeParts.isEmpty() ){
-    	    mapPart = activeParts.get(0);
+
+
+    	if( activeParts.isEmpty() ){
+    		return ApplicationGIS.NO_MAP;
     	}
-    	if (mapPart == null){
-    	    //not activeParts found so lets look at the open maps.
-    	    //lets see if we can find one that is open and visible
-    	    for( MapPart part : openMaps ) {
-    	        if (visibleMaps.contains(part)){
-    	            mapPart = part;
-    	            break;
-    	        }
-            }
-    	}
-    	
-    	if (mapPart == null){
-    	    //nothing found 
-    	    return ApplicationGIS.NO_MAP;
-    	}
+        MapPart mapPart = activeParts.get(0);
+        if( mapPart== null ){
+            return ApplicationGIS.NO_MAP;
+        }
         return mapPart.getMap();
     }
-    
+
 
     private MapPart getActivePart() {
     	IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
     	if( window==null ){
     		return null;
     	}
-    	
+
     	IWorkbenchPage page = window.getActivePage();
     	if( page!=null ){
     		IWorkbenchPart part = page.getActivePart();
@@ -127,7 +115,7 @@ public class ActiveMapTracker implements IPartListener2, IWindowListener, IPageL
     			return (MapPart) part;
     		}
     	}
-    	
+
 		return null;
 	}
 
@@ -180,7 +168,7 @@ public class ActiveMapTracker implements IPartListener2, IWindowListener, IPageL
         }
         window.removePageListener(this);
     }
-    
+
     public void windowOpened( IWorkbenchWindow window ) {
         // start listening to pages and parts
         // stop listening to pages and parts
@@ -199,26 +187,16 @@ public class ActiveMapTracker implements IPartListener2, IWindowListener, IPageL
         page.addPartListener(this);
         IEditorReference[] editors = page.getEditorReferences();
         for( IEditorReference reference : editors ) {
-            IWorkbenchPart workpart = reference.getPart(false);
             if( reference.getPart(false) instanceof MapPart ){
                 MapPart part = (MapPart) reference.getPart(false);
                 openMaps.add(part);
-                
-                if (page.isPartVisible(workpart)){
-                    visibleMaps.add(part);
-                }
             }
         }
         IViewReference[] views = page.getViewReferences();
         for( IViewReference reference : views ) {
-            IWorkbenchPart workpart = reference.getPart(false);
-            if( workpart instanceof MapPart ){
+            if( reference.getPart(false) instanceof MapPart ){
                 MapPart part = (MapPart) reference.getPart(false);
                 openMaps.add(part);
-                
-                if (page.isPartVisible(workpart)){
-                    visibleMaps.add(part);
-                }
             }
         }
     }
@@ -277,7 +255,7 @@ public class ActiveMapTracker implements IPartListener2, IWindowListener, IPageL
     public void windowActivated( IWorkbenchWindow window ) {
         // do nothing
     }
-    
+
     public void windowDeactivated( IWorkbenchWindow window ) {
         // do nothing
     }

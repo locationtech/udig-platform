@@ -22,7 +22,7 @@ import net.refractions.udig.catalog.ICatalogInfo;
 
 /**
  * Provides metadata for a catalog
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
@@ -34,7 +34,7 @@ public class CatalogInfoImpl extends ICatalogInfo {
 
     /**
      * Construct <code>CatalogInfoImpl</code>.
-     * 
+     *
      * @param title
      * @param description
      * @param source

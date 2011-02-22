@@ -23,7 +23,7 @@ public class SLDDropAction extends IDropAction {
 
     @Override
     public boolean accept( ) {
-        
+
         if( getViewerLocation()==ViewerDropLocation.NONE )
             return false;
         URL url=null;
@@ -47,7 +47,7 @@ public class SLDDropAction extends IDropAction {
 
             }
         } catch (MalformedURLException e) {
-            String msg = Messages.SLDDropAction_badSldUrl; 
+            String msg = Messages.SLDDropAction_badSldUrl;
             ProjectUIPlugin.log(msg, e);
         }
 
@@ -58,7 +58,7 @@ public class SLDDropAction extends IDropAction {
         } catch (Throwable e) {
             return false;
         }
-        
+
         return style != null && (getDestination() instanceof Layer || getDestination() instanceof Map);
     }
 
@@ -88,7 +88,7 @@ public class SLDDropAction extends IDropAction {
             layer.refresh(null);
 
         } catch (IOException e) {
-            String msg = Messages.SLDDropAction_sldParseError; 
+            String msg = Messages.SLDDropAction_sldParseError;
             ProjectUIPlugin.log(msg, e);
         }
     }

@@ -1,8 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004-2007, Refractions Research Inc.
- *    (C) 2007,      Adrian Custer.
+ *    (C) 2004, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -18,161 +17,317 @@
 package net.refractions.udig.catalog.internal.arcsde.ui;
 
 import java.io.Serializable;
+import java.net.URL;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import javax.sql.DataSource;
-
+import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.arcsde.internal.Messages;
+import net.refractions.udig.catalog.internal.arcsde.ArcServiceExtension;
 import net.refractions.udig.catalog.internal.arcsde.ArcsdePlugin;
+import net.refractions.udig.catalog.ui.UDIGConnectionPage;
 import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
 import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
-import net.refractions.udig.catalog.ui.wizard.DataBaseConnInfo;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Composite;
-import org.geotools.arcsde.ArcSDEDataStoreFactory;
-import org.geotools.data.DataAccessFactory.Param;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Text;
 import org.geotools.data.DataStoreFactorySpi;
+import org.geotools.data.DataStoreFactorySpi.Param;
+import org.geotools.data.arcsde.ArcSDEDataStoreFactory;
 
 /**
- * The concrete implementation of the wizard 'Page' used to import data using a database in the
- * ArcSDE format from ESRI.
- * 
- * @author David Zwiers, dzwiers, for Refractions Research, Inc.
- * @author Richard Gould, rgould, for Refractions Research, Inc.
- * @author Jody Garnett, jody, for Refractions Research, Inc.
- * @author Justin Deoliveira, jdeolive, for Refractions Research, Inc.
- * @author Jesse Eichar, jeichar, for Refractions Research, Inc.
- * @author Amr Alam, aalam, for Refractions Research, Inc.
- * @author Cory Horner, chorner, for Refractions Research, Inc.
- * @author Adrian Custer, acuster.
+ * Provides ...TODO summary sentence
+ * <p>
+ * TODO Description
+ * </p>
+ * @author dzwiers
  * @since 0.6
  */
-public class ArcSDEWizardPage extends AbstractProprietaryDatastoreWizardPage {
-
-    // TITLE IMAGE
-    public static final String IMAGE_KEY = ""; //$NON-NLS-1$
-
-    // STORED SETTINGS
+public class ArcSDEWizardPage extends AbstractProprietaryDatastoreWizardPage implements UDIGConnectionPage{
     private static final String ARCSDE_WIZARD = "ARCSDE_WIZARD"; //$NON-NLS-1$
-
     private static final String ARCSDE_RECENT = "ARCSDE_RECENT"; //$NON-NLS-1$
-
-    // CONNECTION
-    private static final DataBaseConnInfo DEFAULT_ARCSDE_CONN_INFO = new DataBaseConnInfo(
-            "", "", "", "", "", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-
-    private static ArcSDEDataStoreFactory factory = new ArcSDEDataStoreFactory();
+    private IDialogSettings settings;
+    private static final int COMBO_HISTORY_LENGTH = 15;
+    ArrayList<DataBaseConnInfo> dbData;
 
     public ArcSDEWizardPage() {
-
-        // Call super with dialog title string
         super(Messages.ArcSDEWizardPage_title);
-
-        // Get any stored settings or create a new one
         settings = ArcsdePlugin.getDefault().getDialogSettings().getSection(ARCSDE_WIZARD);
         if (settings == null) {
             settings = ArcsdePlugin.getDefault().getDialogSettings().addNewSection(ARCSDE_WIZARD);
         }
-
-        // Add the name so the parent can store back to this same section
-        settingsArrayName = ARCSDE_RECENT;
-
-        // Populate the Settings: default, current, and past list
-        defaultDBCI.setParameters(DEFAULT_ARCSDE_CONN_INFO);
-        currentDBCI.setParameters(defaultDBCI);
-        String[] recent = settings.getArray(ARCSDE_RECENT);
-        if (null != recent) {
-            for( String s : recent ) {
-                DataBaseConnInfo dbs = new DataBaseConnInfo(s);
-                if (!storedDBCIList.contains(dbs))
-                    storedDBCIList.add(dbs);
-            }
-        }
-
-        // Populate the db and schema exclusion lists
-        //        dbExclusionList.add("");                                                //$NON-NLS-1$
-        //        schemaExclusionList.add("");                                            //$NON-NLS-1$
-
-        // Populate the Char and CharSeq exclusion lists
-        // TODO: when we activate Verification
     }
 
-    // UTILITY METHODS
+    /**
+     * TODO summary sentence for getDataStoreFactorySpi ...
+     *
+     * @return x
+     */
     protected DataStoreFactorySpi getDataStoreFactorySpi() {
         return factory;
     }
 
-    public String getId() {
-        return "net.refractions.udig.catalog.ui.arcsde"; //$NON-NLS-1$
-    }
+    private static ArcSDEDataStoreFactory factory = new ArcSDEDataStoreFactory();
 
-    public Map<String, Serializable> getParams() {
-        Map<String, Serializable> params = new HashMap<String, Serializable>();
+	public String getId() {
+		return "net.refractions.udig.catalog.ui.arcsde"; //$NON-NLS-1$
+	}
+
+    /**
+     * TODO summary sentence for getParams ...
+     *
+     * @return x
+     */
+    public Map<String,Serializable> getParams() {
+        Map<String,Serializable> params = new HashMap<String,Serializable>();
         Param[] dbParams = factory.getParametersInfo();
-        params.put(dbParams[1].key, "arcsde"); //$NON-NLS-1$
-        params.put(dbParams[2].key, currentDBCI.getHostString());
-        String port1 = currentDBCI.getPortString();
-        try {
+        params.put(dbParams[1].key,"arcsde"); //$NON-NLS-1$
+        params.put(dbParams[2].key, getHostText());
+        String port1 = getPortText();
+        try{
             params.put(dbParams[3].key, Integer.valueOf(port1));
-        } catch (NumberFormatException e) {
+        }catch(NumberFormatException e){
             params.put(dbParams[3].key, Integer.valueOf(5432));
         }
 
-        String db = currentDBCI.getDbString();
-        params.put(dbParams[4].key, db);
+        String db = getDBText();
+        params.put(dbParams[4].key,db);
 
-        String user1 = currentDBCI.getUserString();
-        params.put(dbParams[5].key, user1);
-        String pass1 = currentDBCI.getPassString();
-        params.put(dbParams[6].key, pass1);
+        String user1 = getUserText();
+        params.put(dbParams[5].key,user1);
+        String pass1 = getPassText();
+        params.put(dbParams[6].key,pass1);
 
         return params;
     }
 
-    protected boolean dbmsUsesSchema() {
+    /**
+     *
+     * @return
+     */
+    protected String getPortText() {
+        return this.port.getText();
+    }
+
+    /**
+     *
+     * @return
+     */
+    protected String getPassText() {
+        return this.pass.getText();
+    }
+
+    /**
+     *
+     * @return
+     */
+    protected String getUserText() {
+        return this.user.getText();
+    }
+
+    /**
+     *
+     * @return
+     */
+    protected String getDBText() {
+        return ((Text)database).getText();
+    }
+
+    /**
+     *
+     * @return
+     */
+    protected String getHostText() {
+        return ((CCombo)host).getText();
+    }
+
+    public List<URL> getURLs() {
+    	return null;
+    }
+    /**
+     * TODO summary sentence for isDBCombo ...
+     *
+     * @return x
+     */
+    protected boolean isDBCombo() {
+        // instance?
         return false;
     }
 
-    protected DataSource getDataSource() {
+    protected boolean isHostCombo() {
+        return true;
+    }
+
+    /**
+     * TODO summary sentence for hasSchema ...
+     *
+     * @return x
+     */
+    protected boolean hasSchema() {
+        return false;
+    }
+
+    /**
+     * TODO summary sentence for createAdvancedControl ...
+     *
+     * @return x
+     */
+    protected Group createAdvancedControl( Composite arg0 ) {
         return null;
+    }
+
+    /**
+     * TODO summary sentence for getConnection ...
+     *
+     * @return null
+     */
+    protected Connection getConnection() {
+        return null;
+    }
+    /**
+     * TODO summary sentence for populateDB ...
+     *
+     *
+     */
+    protected void populateDB() {
+        // do nothing
+    }
+    /**
+     * TODO summary sentence for populateSchema ...
+     *
+     *
+     */
+    protected void populateSchema() {
+        // do nothing
     }
 
     @Override
     protected boolean doIsPageComplete() {
-        Map<String, Serializable> p = getParams();
-        if (p == null)
-            return false;
-        boolean r = factory.canProcess(p);
+		Map<String,Serializable> p = getParams();
+    	if(p==null)
+    		return false;
+    	boolean r = factory.canProcess(p);
+    	return r;
+	}
+
+    /*
+     * @see net.refractions.udig.catalog.ui.UDIGImportPage#getResources(org.eclipse.core.runtime.IProgressMonitor)
+     */
+    public List<IService> getResources( IProgressMonitor monitor ) throws Exception {
+        if( !isPageComplete() )
+			return null;
+
+        ArcServiceExtension creator = new ArcServiceExtension();
+
+        IService service = creator.createService( null, getParams() );
+        service.getInfo( monitor ); // load
+
+        List<IService> servers= new ArrayList<IService>();
+        servers.add( service );
+
+        /*
+         * Success! Store the URL in history.
+         */
+        saveWidgetValues();
+
+        return servers;
+	}
+
+    /**
+     * Saves the widget values
+     */
+    private void saveWidgetValues() {
+        // Update history
+        if (settings != null) {
+            String[] recentARCSDEs = settings.getArray(ARCSDE_RECENT);
+            if (recentARCSDEs == null) {
+                recentARCSDEs = new String[0];
+            }
+            String dbs = new DataBaseConnInfo(getHostText(), port.getText(),
+                    user.getText(), pass.getText(), getDBText(), schema.getText()).toString();
+            recentARCSDEs = addToHistory(recentARCSDEs, dbs);
+            settings.put(ARCSDE_RECENT, recentARCSDEs);
+        }
+    }
+
+    /**
+     * Adds an entry to a history, while taking care of duplicate history items
+     * and excessively long histories.  The assumption is made that all histories
+     * should be of length <code>COMBO_HISTORY_LENGTH</code>.
+     *
+     * @param history the current history
+     * @param newEntry the entry to add to the history
+     * @return the history with the new entry appended
+     * Stolen from org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage
+     */
+    private String[] addToHistory(String[] history, String newEntry) {
+        ArrayList<String> l = new ArrayList<String>(Arrays.asList(history));
+        addToHistory(l, newEntry);
+        String[] r = new String[l.size()];
+        l.toArray(r);
         return r;
     }
 
-    /*
-     * @seenet.refractions.udig.catalog.ui.UDIGImportPage#getResources(org.eclipse.core.runtime.
-     * IProgressMonitor)
+    /**
+     * Adds an entry to a history, while taking care of duplicate history items
+     * and excessively long histories.  The assumption is made that all histories
+     * should be of length <code>COMBO_HISTORY_LENGTH</code>.
+     *
+     * @param history the current history
+     * @param newEntry the entry to add to the history
+     * Stolen from org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage
      */
-    // public List<IService> getResources(IProgressMonitor monitor) throws Exception {
-    // if (!isPageComplete())
-    // return null;
-    //
-    // ArcServiceExtension creator = new ArcServiceExtension();
-    //
-    // IService service = creator.createService(null, getParams());
-    // service.getInfo(monitor); // load
-    //
-    // List<IService> servers = new ArrayList<IService>();
-    // servers.add(service);
-    //
-    // /*
-    // * Success! Store the URL in history.
-    // */
-    // // saveWidgetValues();
-    // return servers;
-    // }
+    private void addToHistory(List<String> history, String newEntry) {
+        history.remove(newEntry);
+        history.add(0,newEntry);
+
+        // since only one new item was added, we can be over the limit
+        // by at most one item
+        if (history.size() > COMBO_HISTORY_LENGTH)
+            history.remove(COMBO_HISTORY_LENGTH);
+    }
 
     @Override
     protected void doCreateWizardPage( Composite parent ) {
-        // All settings now added in parent
+        String[] recentARCSDEs = settings.getArray(ARCSDE_RECENT);
+        ArrayList<String> hosts = new ArrayList<String>();
+        dbData = new ArrayList<DataBaseConnInfo>();
+        if (recentARCSDEs != null) {
+            for( String recent : recentARCSDEs ) {
+                DataBaseConnInfo dbs = new DataBaseConnInfo(recent);
+                dbData.add(dbs);
+                hosts.add(dbs.getHost());
+            }
+        }
+        if( hosts.size() > 0 ) {
+            ((CCombo)host).setItems(hosts.toArray(new String[0]));
+            ((CCombo)host).addModifyListener(new ModifyListener(){
+                public void modifyText( ModifyEvent e ) {
+                    if(e.widget!=null) {
+                        for( DataBaseConnInfo db : dbData ) {
+                            if(db.getHost().equalsIgnoreCase(getHostText())) {
+                                port.setText(db.getPort());
+                                user.setText(db.getUser());
+                                pass.setText(db.getPass());
+                                ((Text)database).setText(db.getDb());
+                                schema.setText(db.getSchema());
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @Override

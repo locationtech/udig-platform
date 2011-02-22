@@ -1,5 +1,5 @@
 /**
- * <copyright></copyright> $Id$
+ * <copyright></copyright> $Id: ProjectPackage.java 30936 2008-10-29 12:21:56Z jeichar $
  */
 package net.refractions.udig.project.internal;
 
@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EReference;
  * TODO Purpose of net.refractions.udig.project.internal
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @model kind="package"
@@ -57,7 +57,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The meta object id for the '{@link Comparable <em>Comparable</em>}' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see Comparable
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getComparable()
      * @generated
@@ -67,7 +67,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Comparable</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -121,7 +121,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>IEdit Manager</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -139,7 +139,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>IProject</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -157,7 +157,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>IAbstract Context</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -175,7 +175,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>IBlackboard</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -193,7 +193,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>IProject Element</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -211,7 +211,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>IRender Manager</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -229,7 +229,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>IViewport Model</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -238,7 +238,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The meta object id for the '{@link Cloneable <em>Cloneable</em>}' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see Cloneable
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCloneable()
      * @generated
@@ -248,7 +248,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Cloneable</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -266,7 +266,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Render Manager Internal</b></em>' reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -284,7 +284,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Abstract Context</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -302,7 +302,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Layers</b></em>' containment reference list. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -320,7 +320,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Context Model</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -336,7 +336,7 @@ public interface ProjectPackage extends EPackage {
     int EDIT_MANAGER = 12;
 
     /**
-     * The feature id for the '<em><b>Edit SimpleFeature</b></em>' attribute.
+     * The feature id for the '<em><b>Edit Feature</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -347,7 +347,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Map Internal</b></em>' container reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -356,7 +356,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Edit Layer Internal</b></em>' reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -374,7 +374,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Edit Layer Locked</b></em>' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -392,7 +392,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Edit Manager</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -410,7 +410,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Context Model</b></em>' container reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -428,7 +428,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Style Blackboard</b></em>' containment reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -509,7 +509,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Geo Resources</b></em>' attribute list. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -561,9 +561,9 @@ public interface ProjectPackage extends EPackage {
     int LAYER__DEFAULT_COLOR = ILAYER_FEATURE_COUNT + 16;
 
     /**
-     * The feature id for the '<em><b>SimpleFeature Changes</b></em>' attribute list. <!--
+     * The feature id for the '<em><b>Feature Changes</b></em>' attribute list. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -626,7 +626,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Element</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -662,7 +662,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Context Model</b></em>' containment reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -680,7 +680,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Nav Command Stack</b></em>' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -698,7 +698,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Layer Factory</b></em>' containment reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -732,7 +732,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Render Manager Internal</b></em>' reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -800,7 +800,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Elements Internal</b></em>' reference list. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -809,7 +809,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Project</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -845,7 +845,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Registry</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -863,7 +863,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Content</b></em>' containment reference list. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -872,7 +872,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Style Blackboard</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -926,7 +926,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Style Entry</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -953,7 +953,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Layer Factory</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -971,7 +971,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>IAdaptable</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -989,7 +989,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>IBlocking Adaptable</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -1016,7 +1016,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Pico Blackboard</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -1034,7 +1034,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Entries</b></em>' containment reference list. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -1043,7 +1043,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Blackboard</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -1097,7 +1097,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The number of structural features of the the '<em>Blackboard Entry</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @ordered
      */
@@ -1141,7 +1141,7 @@ public interface ProjectPackage extends EPackage {
     int MAP_DISPLAY = 29;
 
     /**
-     * The meta object id for the '<em>SimpleFeature Results</em>' data type.
+     * The meta object id for the '<em>Feature Results</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.geotools.data.FeatureResults
@@ -1194,7 +1194,7 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Filter</em>' data type.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * @see org.opengis.filter.Filter
+     * @see org.geotools.filter.Filter
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFilter()
      * @generated
      */
@@ -1203,7 +1203,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The meta object id for the '<em>Coordinate Reference System</em>' data type. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.opengis.referencing.crs.CoordinateReferenceSystem
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCoordinateReferenceSystem()
      * @generated
@@ -1221,10 +1221,10 @@ public interface ProjectPackage extends EPackage {
     int COMMAND_STACK = 37;
 
     /**
-     * The meta object id for the '<em>SimpleFeature</em>' data type.
+     * The meta object id for the '<em>Feature</em>' data type.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * @see org.geotools.feature.SimpleFeature
+     * @see org.geotools.feature.Feature
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFeature()
      * @generated
      */
@@ -1323,7 +1323,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The meta object id for the '<em>Edit Manager Control Command</em>' data type. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditManagerControlCommand()
      * @generated
      */
@@ -1382,7 +1382,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * The meta object id for the '<em>Mutable Pico Container</em>' data type. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.picocontainer.MutablePicoContainer
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMutablePicoContainer()
      * @generated
@@ -1400,7 +1400,7 @@ public interface ProjectPackage extends EPackage {
     int REFERENCED_ENVELOPE = 55;
 
     /**
-     * The meta object id for the '<em>SimpleFeature Event</em>' data type.
+     * The meta object id for the '<em>Feature Event</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.geotools.data.FeatureEvent
@@ -1408,9 +1408,9 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     int FEATURE_EVENT = 56;
-    
+
     /**
-     * The meta object id for the '<em>SimpleFeature Event</em>' data type.
+     * The meta object id for the '<em>Feature Event</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.geotools.data.FeatureEvent
@@ -1422,7 +1422,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for class '<em>Comparable</em>'.
      * @see Comparable
      * @model instanceClass="Comparable"
@@ -1433,7 +1433,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for class '<em>Comparable</em>'.
      * @see net.refractions.udig.project.IMap
      * @model instanceClass="net.refractions.udig.project.IMap"
@@ -1444,7 +1444,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for class '<em>Comparable</em>'.
      * @see net.refractions.udig.project.ILayer
      * @model instanceClass="net.refractions.udig.project.ILayer"
@@ -1455,7 +1455,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for class '<em>Comparable</em>'.
      * @see net.refractions.udig.project.IEditManager
      * @model instanceClass="net.refractions.udig.project.IEditManager"
@@ -1466,7 +1466,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for class '<em>Comparable</em>'.
      * @see net.refractions.udig.project.IProject
      * @model instanceClass="net.refractions.udig.project.IProject"
@@ -1477,7 +1477,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for class '<em>Comparable</em>'.
      * @see net.refractions.udig.project.IAbstractContext
      * @model instanceClass="net.refractions.udig.project.IAbstractContext"
@@ -1488,7 +1488,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for class '<em>Comparable</em>'.
      * @see net.refractions.udig.project.IBlackboard
      * @model instanceClass="net.refractions.udig.project.IBlackboard"
@@ -1499,7 +1499,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for class '<em>Comparable</em>'.
      * @see net.refractions.udig.project.IProjectElement
      * @model instanceClass="net.refractions.udig.project.IProjectElement"
@@ -1510,7 +1510,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for class '<em>Comparable</em>'.
      * @see net.refractions.udig.project.render.IRenderManager
      * @model instanceClass="net.refractions.udig.project.render.IRenderManager"
@@ -1521,7 +1521,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for class '<em>Comparable</em>'.
      * @see net.refractions.udig.project.render.IViewportModel
      * @model instanceClass="net.refractions.udig.project.render.IViewportModel"
@@ -1597,9 +1597,9 @@ public interface ProjectPackage extends EPackage {
     EClass getEditManager();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.EditManager#getEditFeature <em>Edit SimpleFeature</em>}'.
+     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.EditManager#getEditFeature <em>Edit Feature</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Edit SimpleFeature</em>'.
+     * @return the meta object for the attribute '<em>Edit Feature</em>'.
      * @see net.refractions.udig.project.internal.EditManager#getEditFeature()
      * @see #getEditManager()
      * @generated
@@ -1837,9 +1837,9 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_DefaultColor();
 
     /**
-     * Returns the meta object for the attribute list '{@link net.refractions.udig.project.internal.Layer#getFeatureChanges <em>SimpleFeature Changes</em>}'.
+     * Returns the meta object for the attribute list '{@link net.refractions.udig.project.internal.Layer#getFeatureChanges <em>Feature Changes</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for the attribute list '<em>SimpleFeature Changes</em>'.
+     * @return the meta object for the attribute list '<em>Feature Changes</em>'.
      * @see net.refractions.udig.project.internal.Layer#getFeatureChanges()
      * @see #getLayer()
      * @generated
@@ -2123,7 +2123,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for class '{@link Cloneable <em>Cloneable</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for class '<em>Cloneable</em>'.
      * @see Cloneable
      * @model instanceClass="Cloneable"
@@ -2288,9 +2288,9 @@ public interface ProjectPackage extends EPackage {
     EDataType getMapDisplay();
 
     /**
-     * Returns the meta object for data type '{@link org.geotools.data.FeatureResults <em>SimpleFeature Results</em>}'.
+     * Returns the meta object for data type '{@link org.geotools.data.FeatureResults <em>Feature Results</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for data type '<em>SimpleFeature Results</em>'.
+     * @return the meta object for data type '<em>Feature Results</em>'.
      * @see org.geotools.data.FeatureResults
      * @model instanceClass="org.geotools.data.FeatureResults"
      * @generated
@@ -2300,7 +2300,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for data type '{@link java.util.List <em>List</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for data type '<em>List</em>'.
      * @see java.util.List
      * @model instanceClass="java.util.List"
@@ -2339,11 +2339,11 @@ public interface ProjectPackage extends EPackage {
     EDataType getIGeoResource();
 
     /**
-     * Returns the meta object for data type '{@link org.opengis.filter.Filter <em>Filter</em>}'.
+     * Returns the meta object for data type '{@link org.geotools.filter.Filter <em>Filter</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Filter</em>'.
-     * @see org.opengis.filter.Filter
-     * @model instanceClass="org.opengis.filter.Filter"
+     * @see org.geotools.filter.Filter
+     * @model instanceClass="org.geotools.filter.Filter"
      * @generated
      */
     EDataType getFilter();
@@ -2369,11 +2369,11 @@ public interface ProjectPackage extends EPackage {
     EDataType getCommandStack();
 
     /**
-     * Returns the meta object for data type '{@link org.geotools.feature.SimpleFeature <em>SimpleFeature</em>}'.
+     * Returns the meta object for data type '{@link org.geotools.feature.Feature <em>Feature</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for data type '<em>SimpleFeature</em>'.
-     * @see org.geotools.feature.SimpleFeature
-     * @model instanceClass="org.geotools.feature.SimpleFeature"
+     * @return the meta object for data type '<em>Feature</em>'.
+     * @see org.geotools.feature.Feature
+     * @model instanceClass="org.geotools.feature.Feature"
      * @generated
      */
     EDataType getFeature();
@@ -2381,7 +2381,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for data type '{@link java.awt.Point <em>Point</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for data type '<em>Point</em>'.
      * @see java.awt.Point
      * @model instanceClass="java.awt.Point"
@@ -2422,7 +2422,7 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for data type '{@link java.net.URL <em>URL</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @return the meta object for data type '<em>URL</em>'.
      * @see java.net.URL
      * @model instanceClass="java.net.URL"
@@ -2548,9 +2548,9 @@ public interface ProjectPackage extends EPackage {
     EDataType getReferencedEnvelope();
 
     /**
-     * Returns the meta object for data type '{@link org.geotools.data.FeatureEvent <em>SimpleFeature Event</em>}'.
+     * Returns the meta object for data type '{@link org.geotools.data.FeatureEvent <em>Feature Event</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for data type '<em>SimpleFeature Event</em>'.
+     * @return the meta object for data type '<em>Feature Event</em>'.
      * @see org.geotools.data.FeatureEvent
      * @model instanceClass="org.geotools.data.FeatureEvent"
      * @generated

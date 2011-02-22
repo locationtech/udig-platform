@@ -30,7 +30,7 @@ import net.refractions.udig.tools.edit.support.EditGeom;
 /**
  * If the {@link PreferenceConstants#P_SELECT_POST_ACCEPT} preference is true then this behaviour will
  * deselect the newly created feature.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -49,7 +49,7 @@ public class DeselectEditShapeAcceptBehaviour implements Behaviour {
     }
 
     public boolean isValid( EditToolHandler handler ) {
-        // might seem odd but the WriteChangesBehaviour leaves the created feature selected. 
+        // might seem odd but the WriteChangesBehaviour leaves the created feature selected.
         return !EditPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SELECT_POST_ACCEPT);
     }
 

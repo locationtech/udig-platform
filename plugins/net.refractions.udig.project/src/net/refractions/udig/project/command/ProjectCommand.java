@@ -28,11 +28,11 @@ package net.refractions.udig.project.command;
  * method returns a new Command without the undo data. The new Command can safely be executed with
  * no negative side-effects.
  * </p>
- * 
- * @see A set of possible command categories are: zoom, pan, cut, paste, addVertex, etc.. Most
- *      commands are associated with tool whose job is to construct the commands. A Command object
- *      describes an concrete change, for example: setBBox(0,0,1,1); setBBox(2,2,3,3) would be a
- *      separate object.
+ *
+ * @see net.refractions.udig.project.command.factory.NavigationCommandFactory A set of possible command
+ *      categories are: zoom, pan, cut, paste, addVertex, etc.. Most commands are associated with
+ *      tool whose job is to construct the commands. A Command object describes an concrete change,
+ *      for example: setBBox(0,0,1,1); setBBox(2,2,3,3) would be a seperate object.
  * @author jeichar
  */
 public interface ProjectCommand {
@@ -42,7 +42,7 @@ public interface ProjectCommand {
      * Run is called by UDIG when the command is received.
      * </p>
      * API how is this associated with a Thread? is it a Thread?
-     * 
+     *
      * @throws Exception
      */
     public void run() throws Exception;
@@ -50,7 +50,7 @@ public interface ProjectCommand {
     /**
      * Instantiates a new copy of the command that will operate in the same manner as the original
      * command. API isn't this cloneable?
-     * 
+     *
      * @return A copy of the current command. The new command must run the same way as the current
      *         object.
      *         <p>
@@ -63,7 +63,7 @@ public interface ProjectCommand {
 
     /**
      * Returns the name of the Command
-     * 
+     *
      * @return The name of the command.
      */
     public String getName();

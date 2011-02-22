@@ -16,14 +16,14 @@ package net.refractions.udig.core;
 
 /**
  * A simple class for wrapping a couple of objects.  Often for return types.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
 public class Pair<T,V> {
     private T left;
     private V right;
-    
+
     /**
      * Create a new insance
      * @param left
@@ -38,26 +38,26 @@ public class Pair<T,V> {
      * Factory method
      * @return return a new instance
      */
-    public static <L,R> Pair<L,R> create(L left, R right){
+    public <L,R> Pair<L,R> create(L left, R right){
         return new Pair<L,R>(left,right);
     }
-    
-    public final T l(){
+
+    public T l(){
         return getLeft();
     }
-    
-    public final V r(){
+
+    public V r(){
         return getRight();
     }
-    
-    public final T left(){
+
+    public T left(){
         return getLeft();
     }
-    
-    public final V right(){
+
+    public V right(){
         return getRight();
     }
-    
+
     /**
      * @return Returns the left.
      */
@@ -103,8 +103,8 @@ public class Pair<T,V> {
             return false;
         return true;
     }
-    
-    
-    
-    
+
+
+
+
 }

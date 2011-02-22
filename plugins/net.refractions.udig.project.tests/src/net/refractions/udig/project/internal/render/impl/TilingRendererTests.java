@@ -26,16 +26,16 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //						new Coordinate(x+featureSize,y),
 //						new Coordinate(x+featureSize,y+featureSize),
 //						new Coordinate(x,y+featureSize),
-//						new Coordinate(x,y),	
+//						new Coordinate(x,y),
 //				});
 //				polys[index]=factory.createPolygon( rings[index], new LinearRing[]{});
 //			}
 //		}
-//		
-//		SimpleFeature[] features = MapTests.createTestFeatures("features", polys, null);//$NON-NLS-1$
+//
+//		Feature[] features = MapTests.createTestFeatures("features", polys, null);//$NON-NLS-1$
 //		resource = MapTests.createGeoResource(features, true);
 //	}
-//	
+//
 //	protected void setUp() throws Exception {
 //        super.setUp();
 //
@@ -62,7 +62,7 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //	 * Test method for 'net.refractions.udig.project.internal.render.impl.TilingRenderer.render(Graphics2D, IProgressMonitor)'
 //	 */
 //	public void testRenderGraphics2DIProgressMonitor() throws Exception {
-//		
+//
 //		renderer.render(renderer.getContext().getImage().createGraphics(),new NullProgressMonitor());
 //		testImage(renderer.getContext().getImage(), 128);
 //		RenderExecutorTest.showImage("Graphics2D full render",renderer.getContext().getImage() ); //$NON-NLS-1$
@@ -156,7 +156,7 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //		frame.getContentPane().repaint();
 //		testImage(renderer.getContext().getImage(), 0, 0, 356,256);
 //	}
-//	
+//
 //	/**
 //	 * The Rectangle between minx,miny and maxx and maxy mst be red or the assertion fails
 //	 * @param image image to test
@@ -184,7 +184,7 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //		JFrame frame=RenderExecutorTest.showImage("pan render",renderer.getContext().getImage() ); //$NON-NLS-1$		map.getViewportModelInternal().panUsingScreenCoords(-200,0);
 //		Graphics2D g=renderer.getContext().getImage().createGraphics();
 //		g.setColor(Color.RED);
-//		g.fillRect(0,0,512,512);		
+//		g.fillRect(0,0,512,512);
 //		map.getViewportModelInternal().panUsingScreenCoords(-200,0);
 //		renderer.panImage();
 //		assertEquals( new Envelope(0,312,0,512), renderer.getPaintedArea() );
@@ -209,7 +209,7 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //		renderer.setOld();
 //		frame.getContentPane().repaint();
 //		renderer.render((Envelope)null,new NullProgressMonitor());
-//		
+//
 //		g.setColor(Color.RED);
 //		g.fillRect(0,0,512,512);
 //		map.getViewportModelInternal().panUsingScreenCoords(0,-200);
@@ -218,7 +218,7 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //		renderer.setOld();
 //		frame.getContentPane().repaint();
 //		renderer.render((Envelope)null,new NullProgressMonitor());
-//		
+//
 //		g.setColor(Color.RED);
 //		g.fillRect(0,0,512,512);
 //		map.getViewportModelInternal().panUsingScreenCoords(-200,100);
@@ -228,7 +228,7 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //		frame.getContentPane().repaint();
 //		renderer.render((Envelope)null,new NullProgressMonitor());
 //	}
-//	
+//
 //	public void testStateRenderRequest() throws Exception {
 //		renderer.render((Envelope)null,new NullProgressMonitor());
 //		renderer.setState(IRenderer.RENDER_REQUEST);
@@ -239,8 +239,8 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //		assertTrue(renderer.getPaintedArea().toString(), renderer.getPaintedArea().isNull());
 //		testImage(renderer.getContext().getImage(), 128);
 //	}
-//	
-//	
+//
+//
 //	public void testStateNever() throws Exception {
 //		renderer.render((Envelope)null,new NullProgressMonitor());
 //		renderer.setState(IRenderer.NEVER);
@@ -251,7 +251,7 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //		assertTrue(renderer.getPaintedArea().toString(), renderer.getPaintedArea().isNull());
 //		testImage(renderer.getContext().getImage(), 128);
 //	}
-//	
+//
 //	public void testStateRendering() throws Exception {
 //		renderer.render((Envelope)null,new NullProgressMonitor());
 //		renderer.setState(IRenderer.RENDERING);
@@ -262,7 +262,7 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //		assertTrue(renderer.getPaintedArea().toString(), renderer.getPaintedArea().isNull());
 //		testImage(renderer.getContext().getImage(), 128);
 //	}
-//	
+//
 //	/*
 //	 * Test method for 'net.refractions.udig.project.internal.render.impl.TilingRenderer.dispose()'
 //	 */
@@ -279,13 +279,13 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //
 //	/**
 //	 * @param image image to test
-//	 * @param notSame -1 if all pixels should be non-transparent.  Of the minimum y-value of the non-transparent pixels. 
+//	 * @param notSame -1 if all pixels should be non-transparent.  Of the minimum y-value of the non-transparent pixels.
 //	 */
 //	private void testImage(BufferedImage image, int alpha) {
 //		boolean blank=true;
 //		for( int x=0; x<512;x++){
 //			for( int y=0; y<512;y++){
-//				
+//
 //					if(0!=image.getRaster().getSample(x,y, 3))
 //						blank=false;
 //					assertEquals(alpha, image.getRaster().getSample(x,y,3));
@@ -293,13 +293,13 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //		}
 //		assertFalse("Image should not be blank", blank); //$NON-NLS-1$
 //	}
-//	
+//
 //	class TestTilingRenderer extends TilingRenderer{
 //
 //		public TestTilingRenderer(Renderer child) {
 //			super(child);
 //		}
-//		
+//
 //		public void setOld() {
 //			oldViewport = (ViewportModel) EcoreUtil.copy(getContext().getViewportModelInternal());
 //			oldDisplaySize = getContext().getMapDisplay().getDisplaySize();
@@ -308,22 +308,22 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //		public Envelope getPaintedArea() {
 //			return paintedAreaInWorld;
 //		}
-//		
+//
 //		public void setPaintedArea(Envelope area){
 //			paintedAreaInWorld=area;
 //		}
-//		
+//
 //		@Override
 //		public void render(Envelope bounds, IProgressMonitor monitor) throws RenderException {
 //			super.render(bounds, monitor);
 //			setState(DONE);
 //		}
-//		
+//
 //		@Override
 //		public void panImage() {
 //			super.panImage();
 //		}
-//		
+//
 //	}
-	
+
 }

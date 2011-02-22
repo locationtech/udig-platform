@@ -16,9 +16,9 @@ public class IssuesViewRefresherTest extends TestCase {
 
     public void testRefresh() throws Exception {
         IssuesView view = (IssuesView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(IssueConstants.VIEW_ID);
-        
+
         final boolean[] refresh=new boolean[1];
-        
+
         view.setContentProvider(new IssuesContentProvider(){
             @Override
             public Object[] getElements( Object inputElement ) {
@@ -26,16 +26,16 @@ public class IssuesViewRefresherTest extends TestCase {
                 return super.getElements(inputElement);
             }
         });
-        
-        
+
+
         assertTrue(refresh[0]);
-        
+
         refresh[0]=false;
-        
+
         IssueConfiguration.get().createViewRefeshControl().refresh();
-        
+
         assertTrue(refresh[0]);
-        
+
     }
 
 }

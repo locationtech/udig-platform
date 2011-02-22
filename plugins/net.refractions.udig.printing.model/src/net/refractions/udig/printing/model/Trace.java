@@ -6,7 +6,7 @@ package net.refractions.udig.printing.model;
  * <p>
  * Sample use:<pre><code>
  * static import net.refractions.udig.project.ui.internal.RENDERING;
- * 
+ *
  * if( WMSPlugin.isDebugging( RENDERING ) ){
  *      System.out.println( "your message here" );
  * }
@@ -16,5 +16,5 @@ package net.refractions.udig.printing.model;
 public interface Trace {
     /** You may set this to "true" in your .options file */
     public static final String PRINTING =
-        "net.refractions.udig.printing.model/debug/printing/trace"; //$NON-NLS-1$    
+        "net.refractions.udig.printing.model/debug/printing/trace"; //$NON-NLS-1$
 }

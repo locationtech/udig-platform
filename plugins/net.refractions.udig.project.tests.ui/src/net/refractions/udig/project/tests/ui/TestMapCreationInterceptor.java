@@ -19,7 +19,7 @@ import net.refractions.udig.project.internal.Map;
 
 /**
  * Prints out the maps name and that the map was created.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

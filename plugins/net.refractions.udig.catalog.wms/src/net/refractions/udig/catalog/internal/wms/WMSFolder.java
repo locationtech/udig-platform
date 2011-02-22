@@ -22,7 +22,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveFolder;
 import net.refractions.udig.catalog.IResolveManager;
@@ -39,7 +38,7 @@ import org.geotools.data.wms.WebMapServer;
  * Since WMSFolder is not a IGeoResource but it shares most of its code with
  * {@link WMSGeoResourceImpl} this class exists for sharing that code. If mixins were permitted in
  * Java this wouldn't be necessary... But it is.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -55,7 +54,7 @@ public class WMSFolder implements IResolveFolder {
 
     /**
      * Construct <code>WMSGeoResourceImpl</code>.
-     * 
+     *
      * @param service
      * @param parent the parent Georesource may be null if parent is the service.
      * @param layer
@@ -107,16 +106,14 @@ public class WMSFolder implements IResolveFolder {
 
         return CatalogPlugin.getDefault().getResolveManager().canResolve(this, adaptee);
     }
-    
+
     public void dispose( IProgressMonitor monitor ) {
     }
 
     public URL getIdentifier() {
         return identifier;
     }
-    public ID getID() {
-        return new ID( getIdentifier() );        
-    }
+
     public Throwable getMessage() {
         return null;
     }
@@ -179,10 +176,6 @@ public class WMSFolder implements IResolveFolder {
 
     public String getTitle() {
         return layer.getTitle();
-    }
-
-    public IService getService( IProgressMonitor monitor ) {
-        return service;
     }
 
 }

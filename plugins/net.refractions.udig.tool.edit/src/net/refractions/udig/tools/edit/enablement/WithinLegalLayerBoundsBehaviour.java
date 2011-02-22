@@ -19,10 +19,13 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import net.refractions.udig.tools.edit.EditPlugin;
 import net.refractions.udig.tools.edit.EditState;
 import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.EnablementBehaviour;
+import net.refractions.udig.tools.edit.EventBehaviour;
 import net.refractions.udig.tools.edit.EventType;
 
 import org.opengis.referencing.operation.MathTransform;
@@ -33,7 +36,7 @@ import com.vividsolutions.jts.geom.Envelope;
 /**
  * Sets the EditState to illegal if the Mouse moves into an area of the map where the layer is no
  * longer valid as according to its CRS. In addition puts a warning on the StatusLine.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

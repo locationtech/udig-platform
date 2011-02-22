@@ -13,8 +13,6 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         IPreferenceStore store = ProjectUIPlugin.getDefault().getPreferenceStore();
 
         store.setDefault(PreferenceConstants.P_OPEN_MAPS_ON_STARTUP, true);
-        store.setDefault(PreferenceConstants.MOUSE_SPEED,
-                ProjectUIPlugin.DEFAULT_DOUBLECLICK_SPEED_MILLIS);
         store.setDefault(MapEditor.ID, 0);
         store.setDefault("Test", 0);
     }

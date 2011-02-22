@@ -20,11 +20,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -80,18 +78,15 @@ import org.eclipse.ui.commands.ICommandService;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.filter.FidFilter;
+import org.geotools.filter.Filter;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Id;
-import org.opengis.filter.identity.Identifier;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.MathTransform;
 
@@ -100,7 +95,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * To delete soon EditManager will have an editblackboard.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -119,11 +114,11 @@ public class EditBlackboardUtil {
 
     private volatile static ViewportModelListener listener;
 
-    public static final EditBlackboard EMPTY_BLACKBOARD=new EditBlackboard(0,0,AffineTransform.getTranslateInstance(0, 0), 
+    public static final EditBlackboard EMPTY_BLACKBOARD=new EditBlackboard(0,0,AffineTransform.getTranslateInstance(0, 0),
             IDENTITY);
 
     public static final String EDIT_BLACKBOARD_KEY = "EDIT_BLACKBOARD_KEY_839834"; //$NON-NLS-1$
-    
+
     private static Lock blackboardLock = new ReentrantLock();
     public static EditBlackboard getEditBlackboard( IToolContext context, ILayer layer2 ) {
         if( layer2==null || !ApplicationGIS.getOpenMaps().contains(layer2.getMap()))
@@ -139,7 +134,7 @@ public class EditBlackboardUtil {
             }
 
             editBlackBoard = getEditBlackBoardFromLayer(layer);
-            
+
             if (editBlackBoard == null) {
 
                 MathTransform layerToMapTransform;
@@ -172,10 +167,10 @@ public class EditBlackboardUtil {
 
             }
             enableViewportListener((ViewportModel) context.getViewportModel());
-            
+
             //Vitalus: moved to EditToolHandler.enableListeners().
 //            enableClearBlackboardCommand(context);
-            
+
             // disabled until I fix the events
 //            enableLayerChangeEventListener(layer, editBlackBoard);
         } finally {
@@ -220,10 +215,10 @@ public class EditBlackboardUtil {
                         return;
 
                     FeatureEvent editEvent = (FeatureEvent) event.getNewValue();
-                    
+
                     if (editEvent == null )
                         return;
-                   
+
                     Envelope dirtyArea = dirtyAreas.get(editlayer);
                     if (dirtyArea == null) {
                         dirtyArea = editEvent.getBounds();
@@ -296,7 +291,6 @@ public class EditBlackboardUtil {
                                     .setForeground(display
                                             .getSystemColor(SWT.COLOR_WIDGET_FOREGROUND));
                             label.setImage(Dialog.getImage(Dialog.DLG_IMG_WARNING));
-                            
                             label.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
                             Text text = new Text(comp, SWT.WRAP | SWT.READ_ONLY);
                             text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -382,8 +376,8 @@ public class EditBlackboardUtil {
     }
 
     /**
-     * Updates the features in the "dirty Area" so that the {@link EditGeom}s reflect the actual state of the stored features.  
-     * Any changes to the {@link EditGeom} will be lost. 
+     * Updates the features in the "dirty Area" so that the {@link EditGeom}s reflect the actual state of the stored features.
+     * Any changes to the {@link EditGeom} will be lost.
      *
      * @param layer that needs to be updated.
      * @param monitor progress monitor
@@ -398,18 +392,16 @@ public class EditBlackboardUtil {
                 EditToolHandler.CURRENT_SHAPE);
         EditManager editManager = (EditManager) layer.getMap().getEditManager();
 
-        FilterFactory factory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-        Set<Identifier> ids = new HashSet<Identifier>();
+        FilterFactory factory = FilterFactoryFinder.createFilterFactory();
+        FidFilter fidFilter = factory.createFidFilter();
         for( EditGeom geom : geoms ) {
-        	ids.add(factory.featureId(geom.getFeatureIDRef().get()));
+            fidFilter.addFid(geom.getFeatureIDRef().get());
         }
-        Id fidFilter = factory.id(ids);
-        Filter filter =factory.and(fidFilter, layer.createBBoxFilter(dirtyArea, new NullProgressMonitor()));
-        	
+        Filter filter = fidFilter.and(layer.createBBoxFilter(dirtyArea, new NullProgressMonitor()));
         try {
-            FeatureSource<SimpleFeatureType, SimpleFeature> fs = layer.getResource(FeatureSource.class, monitor);
-            FeatureCollection<SimpleFeatureType, SimpleFeature>  results = fs.getFeatures(filter);
-            FeatureIterator<SimpleFeature> reader = results.features();
+            FeatureSource fs = layer.getResource(FeatureSource.class, monitor);
+            FeatureCollection results = fs.getFeatures(filter);
+            FeatureIterator reader = results.features();
             try {
                 int read = 0;
                 boolean selectedFound = false;
@@ -418,7 +410,7 @@ public class EditBlackboardUtil {
                 	int count = geoms.size() - read;
                     monitor.setTaskName(MessageFormat.format(Messages.EditBlackboardUtil_count_remaining, new Object[] {count}));
                     read++;
-                    SimpleFeature feature = reader.next();
+                    Feature feature = reader.next();
 
                     for( EditGeom geom : geoms ) {
                         if (feature.getID().equals(geom.getFeatureIDRef().get())) {
@@ -426,7 +418,7 @@ public class EditBlackboardUtil {
                         }
                     }
 
-                    Map<Geometry, EditGeom> mapping = bb.addGeometry((Geometry) feature.getDefaultGeometry(),
+                    Map<Geometry, EditGeom> mapping = bb.addGeometry(feature.getDefaultGeometry(),
                             feature.getID());
                     if (feature.getID().equals(shape.getEditGeom().getFeatureIDRef().get())) {
                         editManager.setEditFeature(feature, (Layer) layer);
@@ -471,7 +463,7 @@ public class EditBlackboardUtil {
      *  to clear EditBlackboard.
      */
     static IHandler clearEditBlackboardHandler;
-    
+
     /**
      * Listener for "net.refractions.udig.tool.edit.clearAction" command.
      */
@@ -481,7 +473,7 @@ public class EditBlackboardUtil {
      * Sets the command handler for the "ESC" button. The handler clears current edit blackboard.
      *  <p>
      *  Called from <code>EditToolHandler.enableListeners()</code>.
-     *  
+     *
      * @param context
      */
     static synchronized void enableClearBlackboardCommand( final IToolContext context ) {
@@ -516,7 +508,7 @@ public class EditBlackboardUtil {
 
         Command command = service.getCommand("net.refractions.udig.tool.edit.clearAction"); //$NON-NLS-1$
         command.setHandler(clearEditBlackboardHandler);
-        
+
         if(clearEditBlackboardCommandListener == null){
             clearEditBlackboardCommandListener  =  new ICommandListener(){
 
@@ -524,7 +516,7 @@ public class EditBlackboardUtil {
                     if (commandEvent.isHandledChanged()) {
                         commandEvent.getCommand().removeCommandListener(this);
                         clearEditBlackboardCommandListener = null;
-                        
+
                         IMap map = ApplicationGIS.getActiveMap();
                         resetBlackboards(map);
                     }
@@ -534,7 +526,7 @@ public class EditBlackboardUtil {
             command.addCommandListener(clearEditBlackboardCommandListener);
         }
     }
-    
+
     /**
      *  Removes a command handler for the "ESC" button.
      *  <p>
@@ -549,7 +541,7 @@ public class EditBlackboardUtil {
             command.removeCommandListener(clearEditBlackboardCommandListener);
             clearEditBlackboardCommandListener = null;
         }
-        
+
         command.setHandler(null);
 
     }
@@ -557,7 +549,7 @@ public class EditBlackboardUtil {
     /**
      * Disables listeners so that they will not get events.
      * Should be called when tool is disabled or when a blackboard is no longer required.
-     * 
+     *
      * @see #getEditBlackboard(IToolContext, ILayer) (it enables listeners).
      */
     public static void doneListening() {
@@ -579,7 +571,7 @@ public class EditBlackboardUtil {
 
     /**
      * Returns the selectedLayer or if it is not editable or not visible then the edit layer will be
-     * 
+     *
      * @return
      */
     public static ILayer findEditLayer( IToolContext context ) {
@@ -627,9 +619,9 @@ public class EditBlackboardUtil {
         listener = null;
     }
 
-    /** 
+    /**
      * Listens for changes to the viewport model and transforms the edit blackboards to the new CRS or bounds
-     * 
+     *
      */
     static class ViewportModelListener extends AdapterImpl {
         ViewportModel model;
@@ -645,32 +637,26 @@ public class EditBlackboardUtil {
                 listener = this;
                 return;
             }
-			switch( msg.getFeatureID(ViewportModel.class) ) {
+            switch( msg.getFeatureID(ViewportModel.class) ) {
             case RenderPackage.VIEWPORT_MODEL__BOUNDS: {
-                EditBlackboard editBlackBoard = getEditBlackBoardFromLayer(layer);
-                if( editBlackBoard == null ){
-                	return; // cannot notify edit blackboard
-                }
-            	editBlackBoard.setToScreenTransform(model.worldToScreenTransform());
+                getEditBlackBoardFromLayer(layer).setToScreenTransform(model.worldToScreenTransform());
                 break;
             }
-            case RenderPackage.VIEWPORT_MODEL__CRS: {            	
-                EditBlackboard editBlackBoard = getEditBlackBoardFromLayer(layer);
-                if( editBlackBoard == null ){
-                	return; // cannot notify edit blackboard
-                }
+            case RenderPackage.VIEWPORT_MODEL__CRS: {
                 try {
-                    editBlackBoard
+                    getEditBlackBoardFromLayer(layer)
                             .setMapLayerTransform(layer.mapToLayerTransform());
                 } catch (IOException e) {
                     EditPlugin.log("", e); //$NON-NLS-1$
                 }
-                editBlackBoard.setToScreenTransform(model.worldToScreenTransform());
+                getEditBlackBoardFromLayer(layer).setToScreenTransform(model.worldToScreenTransform());
                 break;
             }
-			}
+            }
         }
+
     }
+
     /**
      *  clears edit blackboard for all layers in a given map... Critical to prevent memory leaks
      */

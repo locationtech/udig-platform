@@ -16,7 +16,6 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
-import org.opengis.geometry.BoundingBox;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
@@ -65,7 +64,7 @@ public class CSVRenderer extends RendererImpl {
 
             ReferencedEnvelope bounds = getRenderBounds();
             monitor.subTask("connecting");
-            
+
             CSV csv = resource.resolve(CSV.class, new SubProgressMonitor(monitor, 10) );
             reader = csv.reader();
             reader.readHeaders();
@@ -73,8 +72,8 @@ public class CSVRenderer extends RendererImpl {
 
             IProgressMonitor drawMonitor = new SubProgressMonitor(monitor, 90);
             Coordinate worldLocation = new Coordinate();
-            
-            drawMonitor.beginTask("draw "+csv.toString(), csv.getSize());            
+
+            drawMonitor.beginTask("draw "+csv.toString(), csv.getSize());
             while( reader.readRecord() ) {
                 Point point = CSV.getPoint(reader);
                 Coordinate dataLocation = point.getCoordinate();
@@ -82,10 +81,10 @@ public class CSVRenderer extends RendererImpl {
                     JTS.transform(dataLocation, worldLocation, dataToWorld);
                 } catch (TransformException e) {
                     continue;
-                }                
+                }
                 if (bounds != null && !bounds.contains(worldLocation)) {
                     continue; // optimize!
-                }                
+                }
                 java.awt.Point p = getContext().worldToPixel(worldLocation);
                 g.fillOval(p.x, p.y, 10, 10);
                 String name = reader.get(nameIndex);
@@ -95,7 +94,7 @@ public class CSVRenderer extends RendererImpl {
                 if (drawMonitor.isCanceled())
                     break;
             }
-            drawMonitor.done();            
+            drawMonitor.done();
         } catch (IOException e) {
             throw new RenderException(e); // rethrow any exceptions encountered
         } catch (FactoryException e) {
@@ -109,7 +108,7 @@ public class CSVRenderer extends RendererImpl {
     /**
      * Replacement for getRenderBounds() that figures out
      * which is smaller.
-     * 
+     *
      * @return smaller of viewport bounds or getRenderBounds()
      */
     public ReferencedEnvelope getBounds() {
@@ -121,9 +120,9 @@ public class CSVRenderer extends RendererImpl {
         if (viewportBounds == null) {
             return renderBounds;
         }
-        if (viewportBounds.contains((BoundingBox)renderBounds)) {
+        if (viewportBounds.contains(renderBounds)) {
             return renderBounds;
-        } else if (renderBounds.contains((BoundingBox)viewportBounds)) {
+        } else if (renderBounds.contains(viewportBounds)) {
             return viewportBounds;
         }
         return renderBounds;
@@ -133,7 +132,7 @@ public class CSVRenderer extends RendererImpl {
      * example assumes the world is in WGS84; and makes use of a single worldToPixel transformation.
      * <p>
      * Please compare with the complete *render* method below
-     * 
+     *
      * @param g
      * @param monitor
      * @throws RenderException
@@ -164,7 +163,7 @@ public class CSVRenderer extends RendererImpl {
             Coordinate worldLocation = new Coordinate();
             while( reader.readRecord() ) {
                 Point point = CSV.getPoint(reader);
-                worldLocation = point.getCoordinate();
+                Coordinate dataLocation = point.getCoordinate();
                 if (bounds != null && !bounds.contains(worldLocation)) {
                     continue; // optimize!
                 }

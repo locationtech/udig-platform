@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.tool.info.tests;
 
@@ -20,7 +20,7 @@ public class TestRenderManager implements IRenderManager {
 
 	TestRenderManager() {
 	}
-	
+
 	/**
 	 * @param mapDisplay
 	 */
@@ -33,7 +33,7 @@ public class TestRenderManager implements IRenderManager {
 
 	public void clearSelection(ILayer layer) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public RenderedImage getImage() {
@@ -57,22 +57,22 @@ public class TestRenderManager implements IRenderManager {
 
 	public void refresh(Envelope bounds) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void refresh(ILayer layer, Envelope bounds) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void refreshSelection(ILayer layer, Envelope bounds) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void stopRendering() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }

@@ -18,7 +18,7 @@ import net.refractions.udig.project.interceptor.LayerInterceptor;
 
 /**
  * Prints a message when a layer is added to a map.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

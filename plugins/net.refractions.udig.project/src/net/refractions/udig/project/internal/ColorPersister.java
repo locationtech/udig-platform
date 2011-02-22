@@ -22,7 +22,7 @@ import org.eclipse.ui.IMemento;
 
 /**
  * Persister for persisting colors on blackboard.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

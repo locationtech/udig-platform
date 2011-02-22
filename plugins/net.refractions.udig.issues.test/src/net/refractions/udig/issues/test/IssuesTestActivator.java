@@ -13,7 +13,7 @@ public class IssuesTestActivator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static IssuesTestActivator plugin;
-	
+
 	/**
 	 * The constructor
 	 */

@@ -3,6 +3,7 @@ package net.refractions.udig.printing.model;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
@@ -19,12 +20,12 @@ public class PrintingModelPlugin extends Plugin {
 	private ResourceBundle resourceBundle;
     public static final String BOX_PRINTER_EXTENSION_ID = "net.refractions.udig.printing.ui.boxprinter"; //$NON-NLS-1$
     public static final String EDIT_ACTION_EXTENSION_ID = "net.refractions.udig.printing.ui.editAction"; //$NON-NLS-1$
-	
+
 	/**
 	 * Plugin ID
 	 */
     public static final String ID = "net.refractions.udig.printing.model"; //$NON-NLS-1$
-	
+
 	/**
 	 * The constructor.
 	 */
@@ -83,7 +84,7 @@ public class PrintingModelPlugin extends Plugin {
 		}
 		return resourceBundle;
 	}
-    
+
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
@@ -92,8 +93,8 @@ public class PrintingModelPlugin extends Plugin {
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      * </ul>
      * </p>
-     * @param message 
-     * @param t 
+     * @param message
+     * @param t
      */
     public static void log( String message, Throwable t ) {
         if (message==null )
@@ -111,8 +112,8 @@ public class PrintingModelPlugin extends Plugin {
      * }
      * </code></pre>
      * </p>
-     * @param message 
-     * @param e 
+     * @param message
+     * @param e
      */
     public static void trace( String message, Throwable e) {
         if( getDefault().isDebugging() ) {
@@ -120,11 +121,11 @@ public class PrintingModelPlugin extends Plugin {
             if( e != null ) e.printStackTrace();
         }
     }
-    
+
     public static void trace(String message) {
     	trace(message, null);
     }
-    
+
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
      * <p>
@@ -132,12 +133,12 @@ public class PrintingModelPlugin extends Plugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
-     * @return true if -debug is on for this plugin 
+     * @return true if -debug is on for this plugin
      */
     public static boolean isDebugging( final String trace ){
         return getDefault().isDebugging() &&
-            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 }

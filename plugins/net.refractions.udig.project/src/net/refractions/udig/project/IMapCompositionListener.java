@@ -17,7 +17,7 @@ package net.refractions.udig.project;
 /**
  * A listener interested in being notified of when the layers in a map are changed.
  * Events are fired when the layers of the Map change: added, removed or reordered.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -25,7 +25,7 @@ public interface IMapCompositionListener {
 
     /**
      * Called when an event occurs.
-     * 
+     *
      * @param event The event.
      */
     public void changed( MapCompositionEvent event );

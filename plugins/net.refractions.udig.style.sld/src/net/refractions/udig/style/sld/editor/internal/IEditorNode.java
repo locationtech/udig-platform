@@ -1,17 +1,3 @@
-/* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2008, Refractions Research Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation;
- * version 2.1 of the License.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- */
 package net.refractions.udig.style.sld.editor.internal;
 
 import net.refractions.udig.style.sld.IEditorPage;
@@ -20,12 +6,6 @@ import net.refractions.udig.style.sld.IEditorPageContainer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 
-/**
- * Node forming a tree structure allowing the user to select
- * an IEditorPage to interact with.
- * 
- * @since 1.1.0
- */
 public interface IEditorNode {
     /**
      * Adds the given preference node as a subnode of this
@@ -42,7 +22,7 @@ public interface IEditorNode {
 
     /**
      * Release the page managed by this node, and any SWT resources
-     * held onto by this node (Images, Fonts, etc).  
+     * held onto by this node (Images, Fonts, etc).
      *
      * Note that nodes are reused so this is not a call to dispose the
      * node itself.

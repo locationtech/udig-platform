@@ -16,20 +16,20 @@ package net.refractions.udig.project.internal.render.impl.renderercreator;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.media.jai.util.Range;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.render.Renderer;
 import net.refractions.udig.project.render.AbstractRenderMetrics;
 import net.refractions.udig.project.render.IRenderContext;
+import net.refractions.udig.project.render.IRenderMetrics;
 import net.refractions.udig.project.render.IRenderMetricsFactory;
 import net.refractions.udig.project.render.IRenderer;
-
-import org.geotools.util.Range;
 
 /**
  * For testing.  Creates a MultiLayerRenderer.  Accepts resources that resolve to RendererCreatorTestObjForMulitRenderer objects.
@@ -41,13 +41,13 @@ public class MultiRenderMetricsFactory implements IRenderMetricsFactory {
     public class MultiRenderMetrics extends AbstractRenderMetrics {
 
         public MultiRenderMetrics( IRenderContext context, IRenderMetricsFactory factory ) {
-            super(context, factory, new ArrayList<String>());
+            super(context, factory);
         }
 
         public boolean canAddLayer( ILayer layer ) {
             if (!layer.hasResource(RendererCreatorTestObjForMulitRenderer.class))
                 return false;
-            
+
             List<IGeoResource> resources = layer.getGeoResources();
             for( IGeoResource resource : resources ) {
                 try {
@@ -69,9 +69,15 @@ public class MultiRenderMetricsFactory implements IRenderMetricsFactory {
         public Renderer createRenderer() {
             return new MultiLayerRenderer();
         }
+
+        @Override
+        public boolean isOptimized() {
+            return true;
+        }
+
         @SuppressWarnings("unchecked")
-        public Set<Range<Double>> getValidScaleRanges() {
-            return new HashSet<Range<Double>>();
+        public Set<Range> getValidScaleRanges() {
+            return new HashSet<Range>();
         }
 
     }
@@ -80,7 +86,7 @@ public class MultiRenderMetricsFactory implements IRenderMetricsFactory {
         return context.getGeoResource().canResolve(RendererCreatorTestObjForMulitRenderer.class);
     }
 
-    public AbstractRenderMetrics createMetrics( IRenderContext context ) {
+    public IRenderMetrics createMetrics( IRenderContext context ) {
         return new MultiRenderMetrics(context, this);
     }
 

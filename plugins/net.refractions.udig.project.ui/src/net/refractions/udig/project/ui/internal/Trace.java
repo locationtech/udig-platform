@@ -5,15 +5,15 @@ package net.refractions.udig.project.ui.internal;
  * ProjectUIPlugin.getDefault().isDebugging().
  * <p>
  * Sample use:
- * 
+ *
  * <pre><code>
  *  static import net.refractions.udig.project.ui.internal.RENDERING;
- *  
+ *
  *  if( ProjectUIPlugin.isDebugging( RENDERING ) ){
  *       System.out.println( &quot;your message here&quot; );
  *  }
  * </code></pre>
- * 
+ *
  * </p>
  */
 public interface Trace {

@@ -2,12 +2,6 @@ package net.refractions.udig.issues.test;
 
 import java.awt.Dimension;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.tests.CatalogTests;
-import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.core.enums.Resolution;
 import net.refractions.udig.issues.FeatureIssue;
 import net.refractions.udig.issues.IIssue;
 import net.refractions.udig.issues.internal.view.IssueHandler;
@@ -15,6 +9,11 @@ import net.refractions.udig.issues.listeners.IIssueListener;
 import net.refractions.udig.issues.listeners.IssueChangeType;
 import net.refractions.udig.issues.listeners.IssueEvent;
 import net.refractions.udig.issues.listeners.IssuePropertyChangeEvent;
+import net.refractions.udig.AbstractProjectUITestCase;
+import net.refractions.udig.catalog.CatalogPlugin;
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.core.enums.Priority;
+import net.refractions.udig.core.enums.Resolution;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.AbstractCommand;
@@ -33,16 +32,13 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.XMLMemento;
 import org.geotools.data.FeatureSource;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.feature.Feature;
+import org.geotools.filter.FidFilter;
+import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Id;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import com.vividsolutions.jts.geom.Envelope;
+import org.opengis.referencing.operation.MathTransform;
 
 public class FeatureIssueTest extends AbstractProjectUITestCase {
 
@@ -62,11 +58,11 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
 
     private Map map;
 	private IGeoResource resource;
-	private SimpleFeature[] features;
+	private Feature[] features;
 	protected void setUp() throws Exception {
         super.setUp();
 		features = UDIGTestUtil.createDefaultTestFeatures("test", 20); //$NON-NLS-1$
-		resource = CatalogTests.createGeoResource(features, true);
+		resource = MapTests.createGeoResource(features, true);
 		map=MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(10,10));
 	}
 
@@ -80,51 +76,48 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
 	 * Test method for 'net.refractions.udig.project.ui.FeatureIssue.fixIssue(IViewPart, IEditorPart)'
 	 */
 	public void testFixIssue() throws Exception {
-		final Layer layer= map.getLayersInternal().get(0);
+		Layer layer= map.getLayersInternal().get(0);
 		layer.setCRS(DefaultGeographicCRS.WGS84);
 		CoordinateReferenceSystem crs = CRS.decode("EPSG:3005");//$NON-NLS-1$
-		map.getViewportModelInternal().setCRS(crs); 
+		final MathTransform mt=CRS.findMathTransform(layer.getCRS(), crs, true);
+		map.getViewportModelInternal().setCRS(crs);
 		FeatureIssue issue=new FeatureIssue(Priority.LOW, "Description",layer, features[0], "test" ); //$NON-NLS-1$ //$NON-NLS-2$
-		
+
 		if( issue.getViewPartId()!=null  ){
 			IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 			IViewPart view = activePage.findView(issue.getViewPartId());
 			activePage.hideView(view);
 		}
-		
+
 		assertFalse(ApplicationGIS.getActiveMap()==map);
-		
+
 
         IssueHandler handler = IssueHandler.createHandler(issue);
-        
+
         handler.fixIssue();
         map.sendCommandSync(new BlankCommand());
         UDIGTestUtil.inDisplayThreadWait(10000,new WaitCondition(){
 
-			public boolean isTrue()  {	
+			public boolean isTrue()  {
                 try{
-
-                    ReferencedEnvelope env = new ReferencedEnvelope(features[0].getBounds());
-                    Envelope transformed = (Envelope)env.transform(layer.getCRS(), true,5);
-				return features[0].equals(map.getEditManager().getEditFeature()) && 
-				map.getViewportModel().getBounds().contains(transformed);
+				return features[0].equals(map.getEditManager().getEditFeature()) &&
+				map.getViewportModel().getBounds().contains(JTS.transform(features[0].getBounds(),null,mt, 5));
                 }catch (Exception e) {
                     throw (RuntimeException)new RuntimeException().initCause(e);
                 }
 			}
-        	
+
         }, true);
-        assertTrue(layer.getFilter() instanceof Id);
-        assertEquals(features[0].getID(), ((Id)layer.getFilter()).getIDs().toArray(new String[0])[0]);
+        assertTrue(layer.getFilter() instanceof FidFilter);
+        assertEquals(features[0].getID(), ((FidFilter)layer.getFilter()).getFids()[0]);
         assertEquals(features[0], map.getEditManager().getEditFeature());
         assertEquals("active map should be the map of the issue", map, ApplicationGIS.getActiveMap()); //$NON-NLS-1$
-        ReferencedEnvelope env = new ReferencedEnvelope(features[0].getBounds());
-        assertTrue("Map must contain feature", map.getViewportModel().getBounds().contains((Envelope)env.transform(layer.getCRS(), true,5))); //$NON-NLS-1$
+        assertTrue("Map must contain feature", map.getViewportModel().getBounds().contains(JTS.transform(features[0].getBounds(),null,mt, 5))); //$NON-NLS-1$
 	}
-    
+
     public void testSetDescriptionEvents() throws Exception {
         FeatureIssue issue=IssuesListTestHelper.createFeatureIssue("Issue"); //$NON-NLS-1$
-        
+
         Listener l=new Listener();
         issue.addIssueListener(l);
         Object oldValue=issue.getDescription();
@@ -135,10 +128,10 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
         assertEquals(oldValue, l.oldValue);
         assertEquals(IssueChangeType.DESCRIPTION, l.change);
     }
-    
+
     public void testSetPriorityEvents() throws Exception {
         FeatureIssue issue=IssuesListTestHelper.createFeatureIssue("Issue"); //$NON-NLS-1$
-        
+
         Listener l=new Listener();
         issue.addIssueListener(l);
         Object oldValue=issue.getPriority();
@@ -149,10 +142,10 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
         assertEquals(oldValue, l.oldValue);
         assertEquals(IssueChangeType.PRIORITY, l.change);
     }
-    
+
     public void testSetResolutionEvents() throws Exception {
         FeatureIssue issue=IssuesListTestHelper.createFeatureIssue("Issue"); //$NON-NLS-1$
-        
+
         Listener l=new Listener();
         issue.addIssueListener(l);
         Object oldValue=issue.getResolution();
@@ -163,13 +156,12 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
         assertEquals(oldValue, l.oldValue);
         assertEquals(IssueChangeType.RESOLUTION, l.change);
     }
-    
+
     public void testPersistence() throws Exception {
         IMap map=MapTests.createDefaultMap("name", 1, true, new Dimension(10,10)); //$NON-NLS-1$
         ILayer layer=map.getMapLayers().get(0);
-        FeatureCollection<SimpleFeatureType, SimpleFeature> collection = layer.getResource(FeatureSource.class, null).getFeatures();
-        SimpleFeature feature=collection.features().next();
-        
+        Feature feature=layer.getResource(FeatureSource.class, null).getFeatures().features().next();
+
         IIssue original=new FeatureIssue(Priority.WARNING, "test description", layer, feature, "groupID"); //$NON-NLS-1$ //$NON-NLS-2$
         XMLMemento memento=XMLMemento.createWriteRoot("memento"); //$NON-NLS-1$
         XMLMemento viewMemento=XMLMemento.createWriteRoot("viewMemento"); //$NON-NLS-1$
@@ -180,7 +172,7 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
         restored.setDescription(original.getDescription());
         restored.setPriority(original.getPriority());
         restored.setResolution(original.getResolution());
-        
+
         assertEquals(original.getBounds(), restored.getBounds());
         assertEquals(original.getDescription(), restored.getDescription());
         assertEquals(original.getEditorID(), restored.getEditorID());

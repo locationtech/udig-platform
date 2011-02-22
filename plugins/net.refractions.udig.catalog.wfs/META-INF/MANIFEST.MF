@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.catalog.wfs; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.catalog.internal.wfs.WfsPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
@@ -11,8 +11,7 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.catalog,
  net.refractions.udig.catalog.ui,
  net.refractions.udig.libs
-Bundle-ActivationPolicy: lazy
+Eclipse-LazyStart: true
 Export-Package: net.refractions.udig.catalog.internal.wfs;x-friends:="net.refractions.udig.catalog.tests.wfs",
  net.refractions.udig.catalog.internal.wfs.ui;x-friends:="net.refractions.udig.context,net.refractions.udig.catalog.tests.wfs",
  net.refractions.udig.catalog.wfs.internal;x-friends:="net.refractions.udig.catalog.tests.wfs"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5

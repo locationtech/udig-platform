@@ -12,9 +12,9 @@ import org.eclipse.core.runtime.IExtension;
 
 public class Styles {
     /**
-     * 
+     *
      * Returns the set of style id's which support a particular layer.
-     * 
+     *
      * @return A set of id's.
      */
     public static Set<String> getStyleIDs(final Layer layer) {
@@ -25,8 +25,8 @@ public class Styles {
                 if (sce.canStyle(layer)) {
                     ids.add(sce.getStyleId());
                 }
-            }            
-        };        
+            }
+        };
         ExtensionPointUtil.process( StylePlugin.getDefault(), IStyleConfigurator.XPID, p);
         return ids;
     }

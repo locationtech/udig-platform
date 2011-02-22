@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <ul>
  *   <li>{@link net.refractions.udig.printing.model.impl.ElementImpl#getLocation <em>Location</em>}</li>
  *   <li>{@link net.refractions.udig.printing.model.impl.ElementImpl#getSize <em>Size</em>}</li>
- *   <li>{@link net.refractions.udig.printing.model.impl.ElementImpl#getPaperSize <em>Paper Size</em>}</li>
  * </ul>
  * </p>
  *
@@ -38,226 +37,170 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  */
 public class ElementImpl extends EObjectImpl implements Element {
 	/**
-     * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLocation()
-     * @generated
-     * @ordered
-     */
+	 * @see #getLocation()
+	 * @generated
+	 * @ordered
+	 */
     protected static final Point LOCATION_EDEFAULT = null;
 
 	/**
-     * The cached value of the '{@link #getLocation() <em>Location</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getLocation() <em>Location</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLocation()
-     * @generated
-     * @ordered
-     */
+	 * @see #getLocation()
+	 * @generated
+	 * @ordered
+	 */
     protected Point location = LOCATION_EDEFAULT;
 
 	/**
-     * The default value of the '{@link #getSize() <em>Size</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getSize() <em>Size</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getSize()
-     * @generated
-     * @ordered
-     */
+	 * @see #getSize()
+	 * @generated
+	 * @ordered
+	 */
     protected static final Dimension SIZE_EDEFAULT = null;
 
 	/**
-     * The cached value of the '{@link #getSize() <em>Size</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getSize() <em>Size</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getSize()
-     * @generated
-     * @ordered
-     */
+	 * @see #getSize()
+	 * @generated
+	 * @ordered
+	 */
     protected Dimension size = SIZE_EDEFAULT;
 
 	/**
-     * The default value of the '{@link #getPaperSize() <em>Paper Size</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getPaperSize()
-     * @generated
-     * @ordered
-     */
-    protected static final Dimension PAPER_SIZE_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getPaperSize() <em>Paper Size</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getPaperSize()
-     * @generated
-     * @ordered
-     */
-    protected Dimension paperSize = PAPER_SIZE_EDEFAULT;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ElementImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
+	 * @generated
+	 */
     protected EClass eStaticClass() {
-        return ModelPackage.Literals.ELEMENT;
-    }
+		return ModelPackage.eINSTANCE.getElement();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Point getLocation() {
-        return location;
-    }
+		return location;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setLocation(Point newLocation) {
-        Point oldLocation = location;
-        location = newLocation;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.ELEMENT__LOCATION, oldLocation, location));
-    }
+		Point oldLocation = location;
+		location = newLocation;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.ELEMENT__LOCATION, oldLocation, location));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Dimension getSize() {
-        return size;
-    }
+		return size;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setSize(Dimension newSize) {
-        Dimension oldSize = size;
-        size = newSize;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.ELEMENT__SIZE, oldSize, size));
-    }
+		Dimension oldSize = size;
+		size = newSize;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.ELEMENT__SIZE, oldSize, size));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public Dimension getPaperSize() {
-        return paperSize;
-    }
+	 * @generated
+	 */
+    public Object eGet(EStructuralFeature eFeature, boolean resolve) {
+		switch (eDerivedStructuralFeatureID(eFeature)) {
+			case ModelPackage.ELEMENT__LOCATION:
+				return getLocation();
+			case ModelPackage.ELEMENT__SIZE:
+				return getSize();
+		}
+		return eDynamicGet(eFeature, resolve);
+	}
 
-    /**
-     * <!-- begin-user-doc -->
+	/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setPaperSize(Dimension newPaperSize) {
-        Dimension oldPaperSize = paperSize;
-        paperSize = newPaperSize;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.ELEMENT__PAPER_SIZE, oldPaperSize, paperSize));
-    }
+	 * @generated
+	 */
+    public void eSet(EStructuralFeature eFeature, Object newValue) {
+		switch (eDerivedStructuralFeatureID(eFeature)) {
+			case ModelPackage.ELEMENT__LOCATION:
+				setLocation((Point)newValue);
+				return;
+			case ModelPackage.ELEMENT__SIZE:
+				setSize((Dimension)newValue);
+				return;
+		}
+		eDynamicSet(eFeature, newValue);
+	}
 
-    /**
-     * <!-- begin-user-doc -->
+	/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case ModelPackage.ELEMENT__LOCATION:
-                return getLocation();
-            case ModelPackage.ELEMENT__SIZE:
-                return getSize();
-            case ModelPackage.ELEMENT__PAPER_SIZE:
-                return getPaperSize();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+	 * @generated
+	 */
+    public void eUnset(EStructuralFeature eFeature) {
+		switch (eDerivedStructuralFeatureID(eFeature)) {
+			case ModelPackage.ELEMENT__LOCATION:
+				setLocation(LOCATION_EDEFAULT);
+				return;
+			case ModelPackage.ELEMENT__SIZE:
+				setSize(SIZE_EDEFAULT);
+				return;
+		}
+		eDynamicUnset(eFeature);
+	}
 
-    /**
-     * <!-- begin-user-doc -->
+	/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case ModelPackage.ELEMENT__LOCATION:
-                setLocation((Point)newValue);
-                return;
-            case ModelPackage.ELEMENT__SIZE:
-                setSize((Dimension)newValue);
-                return;
-            case ModelPackage.ELEMENT__PAPER_SIZE:
-                setPaperSize((Dimension)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+	 * @generated
+	 */
+    public boolean eIsSet(EStructuralFeature eFeature) {
+		switch (eDerivedStructuralFeatureID(eFeature)) {
+			case ModelPackage.ELEMENT__LOCATION:
+				return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
+			case ModelPackage.ELEMENT__SIZE:
+				return SIZE_EDEFAULT == null ? size != null : !SIZE_EDEFAULT.equals(size);
+		}
+		return eDynamicIsSet(eFeature);
+	}
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void eUnset(int featureID) {
-        switch (featureID) {
-            case ModelPackage.ELEMENT__LOCATION:
-                setLocation(LOCATION_EDEFAULT);
-                return;
-            case ModelPackage.ELEMENT__SIZE:
-                setSize(SIZE_EDEFAULT);
-                return;
-            case ModelPackage.ELEMENT__PAPER_SIZE:
-                setPaperSize(PAPER_SIZE_EDEFAULT);
-                return;
-        }
-        super.eUnset(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case ModelPackage.ELEMENT__LOCATION:
-                return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
-            case ModelPackage.ELEMENT__SIZE:
-                return SIZE_EDEFAULT == null ? size != null : !SIZE_EDEFAULT.equals(size);
-            case ModelPackage.ELEMENT__PAPER_SIZE:
-                return PAPER_SIZE_EDEFAULT == null ? paperSize != null : !PAPER_SIZE_EDEFAULT.equals(paperSize);
-        }
-        return super.eIsSet(featureID);
-    }
-
-    /**
+	/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated NOT
@@ -266,7 +209,7 @@ public class ElementImpl extends EObjectImpl implements Element {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-        result.append(MessageFormat.format(Messages.ElementImpl_0+Messages.ElementImpl_toString, new Object[] { location, size } ));  
+        result.append(MessageFormat.format(Messages.ElementImpl_0+Messages.ElementImpl_toString, new Object[] { location, size } ));
 		return result.toString();
 	}
 

@@ -19,14 +19,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.AbstractCommand;
+import net.refractions.udig.project.command.NavCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
+import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.ProjectPlugin;
@@ -38,20 +39,18 @@ import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.geotools.feature.collection.AdaptorFeatureCollection;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.collection.AbstractFeatureCollection;
+import org.geotools.filter.FidFilter;
+import org.geotools.filter.Filter;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Id;
-import org.opengis.filter.identity.FeatureId;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
@@ -62,7 +61,7 @@ import com.vividsolutions.jts.geom.Envelope;
 /**
  * Copies features selected by the filter from the source layer to the destination layer. Then sets
  * the filter of the destination layer to be the newly added features.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -73,7 +72,7 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
     private ILayer sourceLayer;
 
     // for undo
-    private Id addedFeaturesFilter;
+    private FidFilter addedFeaturesFilter;
     private Filter previousDesinationLayerFilter;
     private ReferencedEnvelope previousEnvelope;
 
@@ -84,7 +83,7 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
     }
 
     public void run( IProgressMonitor monitor ) throws Exception {
-        if (sourceLayer == null || destinationLayer == null)
+        if( sourceLayer==null || destinationLayer==null )
             return;
         previousEnvelope = getMap().getViewportModel().getBounds();
         previousDesinationLayerFilter = destinationLayer.getFilter();
@@ -99,13 +98,12 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
         monitor.worked(1);
         try {
             SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, 2);
-            FeatureStore<SimpleFeatureType, SimpleFeature> destination = targetLayer.getResource(
-                    FeatureStore.class, subProgressMonitor);
+            FeatureStore destination = targetLayer.getResource(FeatureStore.class,
+                    subProgressMonitor);
             subProgressMonitor.done();
             worked[0] += 2;
             subProgressMonitor = new SubProgressMonitor(monitor, 2);
-            FeatureSource<SimpleFeatureType, SimpleFeature> source = sourceLayer.getResource(
-                    FeatureSource.class, subProgressMonitor);
+            FeatureSource source = sourceLayer.getResource(FeatureSource.class, subProgressMonitor);
             subProgressMonitor.done();
             worked[0] += 2;
             // If no FeatureStore then features can't be copied
@@ -126,23 +124,22 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
                 targetLayer.setFilter(filter);
                 return;
             }
-            MathTransform mt = createMathTransform(sourceLayer, targetLayer);
-            FeatureCollection<SimpleFeatureType, SimpleFeature> features = source
-                    .getFeatures(query);
-            SimpleFeatureType schema = targetLayer.getSchema();
+            MathTransform mt=createMathTransform(sourceLayer, targetLayer);
+            FeatureCollection features = source.getFeatures(query);
+            FeatureType schema = targetLayer.getSchema();
 
             CopyFeatureCollection c = new CopyFeatureCollection(schema, features, monitor, worked,
                     mt, attributeMap, targetLayer.layerToMapTransform());
             Envelope env = c.env;
             targetLayer.eSetDeliver(false);
             try {
-                List<FeatureId> fids = destination.addFeatures(c);
+                Set<String> fids = destination.addFeatures(c);
 
                 displayCopiedFeatures(env);
 
-                FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
-                        .getDefaultHints());
-                addedFeaturesFilter = filterFactory.id(new HashSet(fids));
+                addedFeaturesFilter = FilterFactoryFinder.createFilterFactory().createFidFilter();
+                addedFeaturesFilter.addAllFids(fids);
+                targetLayer.setFilter(addedFeaturesFilter);
             } finally {
                 targetLayer.eSetDeliver(true);
             }
@@ -154,13 +151,13 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
         }
     }
 
-    private void displayCopiedFeatures( Envelope env ) {
+    private void displayCopiedFeatures(Envelope env){
         if (!getMap().getViewportModel().getBounds().intersects(env) && !env.isNull()
                 || tooSmallOnScreen(env)) {
 
             double d = env.getHeight() / 2;
             double e = env.getWidth() / 2;
-            
+
             ViewportModel viewportModel = getMap().getViewportModelInternal();
 			viewportModel.eSetDeliver(false);
             try {
@@ -173,7 +170,7 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
         }
     }
 
-    private MathTransform createMathTransform( ILayer sourceLayer, ILayer targetLayer ) {
+    private MathTransform createMathTransform( ILayer sourceLayer, ILayer targetLayer ){
         MathTransform temp;
         try {
             CoordinateReferenceSystem targetCRS = targetLayer.getCRS();
@@ -189,12 +186,11 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
             temp = null;
         }
 
-        if (temp == null) {
-            try {
-                return CRS
-                        .findMathTransform(DefaultGeographicCRS.WGS84, DefaultGeographicCRS.WGS84);
-            } catch (Exception e) {
-                ProjectPlugin.log("", e); //$NON-NLS-1$
+        if( temp==null ){
+            try{
+            return CRS.findMathTransform(DefaultGeographicCRS.WGS84, DefaultGeographicCRS.WGS84);
+            }catch(Exception e){
+                ProjectPlugin.log("",e); //$NON-NLS-1$
                 return null;
             }
         }
@@ -206,10 +202,8 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
         getMap().getViewportModel().worldToScreenTransform().transform(d, 0, d, 0, 2);
         Rectangle r = new Rectangle((int) d[0], (int) d[1], (int) Math.abs(d[2] - d[0]), (int) Math
                 .abs(d[3] - d[1]));
-        return (double) r.getWidth() < getMap().getRenderManager().getMapDisplay().getWidth()
-                / (double) 16
-                && (double) r.getHeight() < getMap().getRenderManager().getMapDisplay().getHeight()
-                        / (double) 16;
+        return (double)r.getWidth() < getMap().getRenderManager().getMapDisplay().getWidth() / (double)16
+                && (double)r.getHeight() < getMap().getRenderManager().getMapDisplay().getHeight() /(double)16;
     }
 
     public static int updateProgress( final IProgressMonitor monitor, int numberToCopyForIncrement,
@@ -230,7 +224,7 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
     /**
      * Creates a query that requests the features in sourceLayer as dictated by filter. Query only
      * requests the attributes that can be mapped from sourceLayer to targetLayer.
-     * 
+     *
      * @param queryAttributes populates with a mapping of attributeTypeNames from targetLayer to
      *        sourcelayer
      * @return
@@ -238,13 +232,13 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
     @SuppressWarnings("unchecked")
     private Query createQuery( ILayer sourceLayer, Filter filter, Layer targetLayer,
             Map<String, String> queryAttributes ) {
-        SimpleFeatureType sourceSchema = sourceLayer.getSchema();
-        SimpleFeatureType targetSchema = targetLayer.getSchema();
+        FeatureType sourceSchema = sourceLayer.getSchema();
+        FeatureType targetSchema = targetLayer.getSchema();
         // Maps type names to type names since we are ignoring case
 
         queryAttributes.putAll(FeatureUtils.createAttributeMapping(sourceSchema, targetSchema));
         Set<String> properties = new HashSet(queryAttributes.values());
-        return new DefaultQuery(sourceSchema.getName().getLocalPart(), filter, properties
+        return new DefaultQuery(sourceSchema.getTypeName(), filter, properties
                 .toArray(new String[properties.size()]));
     }
 
@@ -253,44 +247,43 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
     }
 
     public void rollback( IProgressMonitor monitor ) throws Exception {
-        if (sourceLayer == null || destinationLayer == null)
+        if( sourceLayer==null || destinationLayer==null )
             return;
         monitor.beginTask(Messages.CopyFeaturesCommand_undo + getName(), 4);
         monitor.worked(1);
         this.destinationLayer.eSetDeliver(false);
-        try {
-            FeatureStore<SimpleFeatureType, SimpleFeature> store = this.destinationLayer
-                    .getResource(FeatureStore.class, new SubProgressMonitor(monitor, 1));
+        try{
+            FeatureStore store = this.destinationLayer.getResource(FeatureStore.class,
+                    new SubProgressMonitor(monitor, 1));
             store.removeFeatures(addedFeaturesFilter);
             this.destinationLayer.setFilter(previousDesinationLayerFilter);
-        } finally {
+        }finally{
             this.destinationLayer.eSetDeliver(true);
         }
         getMap().getViewportModelInternal().setBounds(this.previousEnvelope);
     }
 
-    private static class CopyFeatureCollection extends AdaptorFeatureCollection {
+    private static class CopyFeatureCollection extends AbstractFeatureCollection {
 
-        final SimpleFeatureType schema;
-        final FeatureCollection<SimpleFeatureType, SimpleFeature> features;
+        final FeatureType schema;
+        final FeatureCollection features;
         final IProgressMonitor monitor;
         final int[] worked;
         final MathTransform mt, toWorld;
         final Map<String, String> attributeMap;
-        final ReferencedEnvelope env;
+        final Envelope env;
 
-        CopyFeatureCollection( SimpleFeatureType schema,
-                FeatureCollection<SimpleFeatureType, SimpleFeature> features,
+        CopyFeatureCollection( FeatureType schema, FeatureCollection features,
                 IProgressMonitor monitor, int[] worked, MathTransform mt,
                 HashMap<String, String> attributeMap, MathTransform toWorld ) {
-            super("copyCollection", schema);
+            super(schema);
             this.schema = schema;
             this.features = features;
             this.monitor = monitor;
             this.worked = worked;
             this.mt = mt;
             this.attributeMap = attributeMap;
-            this.env = new ReferencedEnvelope(schema.getCoordinateReferenceSystem());
+            this.env = new Envelope();
             this.toWorld = toWorld;
         }
 
@@ -299,20 +292,20 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
             return features.size();
         }
 
-        Map<Iterator, FeatureIterator<SimpleFeature>> iterators = new HashMap<Iterator, FeatureIterator<SimpleFeature>>();
+        Map<Iterator, FeatureIterator> iterators = new HashMap<Iterator, FeatureIterator>();
 
         @Override
         protected Iterator openIterator() {
-            final FeatureIterator<SimpleFeature> iter = features.features();
+            final FeatureIterator iter = features.features();
             Iterator i = new Iterator(){
 
                 // for progress monitor.
                 int numberToCopyForIncrement = 1000;
-                private SimpleFeature next;
-                Iterator<SimpleFeature> copiedFeatures;
+                private Feature next;
+                Iterator<Feature> copiedFeatures;
 
-                public SimpleFeature next() {
-                    SimpleFeature result = next;
+                public Feature next() {
+                    Feature result = next;
                     next = null;
                     return result;
                 }
@@ -322,23 +315,24 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
                         if (copiedFeatures != null && copiedFeatures.hasNext()) {
                             next = copiedFeatures.next();
                         } else {
-                            if (!iter.hasNext())
+                            if( !iter.hasNext() )
                                 return false;
-                            SimpleFeature source = iter.next();
+                            Feature source = iter.next();
                             numberToCopyForIncrement = updateProgress(monitor,
                                     numberToCopyForIncrement, worked);
-                            copiedFeatures = FeatureUtils.copyFeature(source, schema, attributeMap,
-                                    mt).iterator();
-                            if (!copiedFeatures.hasNext())
+                            copiedFeatures = FeatureUtils.copyFeature(source, schema, attributeMap, mt).iterator();
+                            if( !copiedFeatures.hasNext() )
                                 return false;
                             next = copiedFeatures.next();
-                            ReferencedEnvelope newbounds = new ReferencedEnvelope(next.getBounds());
+                            Envelope newbounds = next.getBounds();
                             try {
-                                newbounds = newbounds.transform(env.crs(), true);
-                                env.expandToInclude(newbounds);
+                                newbounds = JTS.transform(newbounds, toWorld);
+                                if (env.isNull()) {
+                                    env.init(newbounds);
+                                } else {
+                                    env.expandToInclude(newbounds);
+                                }
                             } catch (TransformException e) {
-                                ProjectPlugin.log("", e); //$NON-NLS-1$
-                            } catch (FactoryException e) {
                                 ProjectPlugin.log("", e); //$NON-NLS-1$
                             }
 

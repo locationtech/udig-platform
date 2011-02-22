@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: ConnectionItemProvider.java 23333 2006-12-08 19:40:41Z jeichar $
  */
 package net.refractions.udig.printing.model.provider;
 
@@ -20,7 +20,6 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -57,8 +56,7 @@ public class ConnectionItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+    public List getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -80,12 +78,10 @@ public class ConnectionItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_Connection_connected_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Connection_connected_feature", "_UI_Connection_type"),
-                 ModelPackage.Literals.CONNECTION__CONNECTED,
+                 getString("_UI_Connection_connected_feature"), //$NON-NLS-1$
+                 getString("_UI_PropertyDescriptor_description", "_UI_Connection_connected_feature", "_UI_Connection_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                 ModelPackage.eINSTANCE.getConnection_Connected(),
                  true,
-                 false,
-                 false,
                  ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
                  null,
                  null));
@@ -102,12 +98,10 @@ public class ConnectionItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_Connection_source_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Connection_source_feature", "_UI_Connection_type"),
-                 ModelPackage.Literals.CONNECTION__SOURCE,
+                 getString("_UI_Connection_source_feature"), //$NON-NLS-1$
+                 getString("_UI_PropertyDescriptor_description", "_UI_Connection_source_feature", "_UI_Connection_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                 ModelPackage.eINSTANCE.getConnection_Source(),
                  true,
-                 false,
-                 false,
                  null,
                  null,
                  null));
@@ -124,12 +118,10 @@ public class ConnectionItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_Connection_target_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Connection_target_feature", "_UI_Connection_type"),
-                 ModelPackage.Literals.CONNECTION__TARGET,
+                 getString("_UI_Connection_target_feature"), //$NON-NLS-1$
+                 getString("_UI_PropertyDescriptor_description", "_UI_Connection_target_feature", "_UI_Connection_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                 ModelPackage.eINSTANCE.getConnection_Target(),
                  true,
-                 false,
-                 false,
                  null,
                  null,
                  null));
@@ -141,9 +133,8 @@ public class ConnectionItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/Connection"));
+        return getResourceLocator().getImage("full/obj16/Connection"); //$NON-NLS-1$
     }
 
     /**
@@ -152,13 +143,12 @@ public class ConnectionItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getText(Object object) {
         Point labelValue = ((Connection)object).getLocation();
         String label = labelValue == null ? null : labelValue.toString();
         return label == null || label.length() == 0 ?
-            getString("_UI_Connection_type") :
-            getString("_UI_Connection_type") + " " + label;
+            getString("_UI_Connection_type") : //$NON-NLS-1$
+            getString("_UI_Connection_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
@@ -168,7 +158,6 @@ public class ConnectionItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
@@ -181,15 +170,24 @@ public class ConnectionItemProvider
     }
 
     /**
-     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-     * that can be created under this object.
+     * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
+     * describing all of the children that can be created under this object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+    protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
         super.collectNewChildDescriptors(newChildDescriptors, object);
+    }
+
+    /**
+     * Return the resource locator for this item provider's resources.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ResourceLocator getResourceLocator() {
+        return PageEditPlugin.INSTANCE;
     }
 
 }

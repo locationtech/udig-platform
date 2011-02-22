@@ -33,9 +33,9 @@ import org.eclipse.jface.viewers.StructuredSelection;
 
 /**
  * The selection provided by this provider is first the vertices of the edit geom, if there are any selected.
- * 
+ *
  *  If not then it is the EditFeature in the edit manager.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -50,7 +50,7 @@ public class EditSelectionProvider extends AbstractMapEditorSelectionProvider {
                 e.getEditBlackboard().getListeners().remove(this);
                 return;
             }
-            
+
             if( e.getType()==EditBlackboardEvent.EventType.SELECTION ){
                 selection();
             }
@@ -64,11 +64,11 @@ public class EditSelectionProvider extends AbstractMapEditorSelectionProvider {
                     lastSelecion=event;
                 }
             }
-            
+
             if( lastSelecion!=null )
                 changed(lastSelecion);
         }
-        
+
     };
     private IMap map;
     private final IEditManagerListener editManagerListener=new IEditManagerListener(){
@@ -91,22 +91,22 @@ public class EditSelectionProvider extends AbstractMapEditorSelectionProvider {
             case EditManagerEvent.SELECTED_LAYER:
                 if( event.getNewValue()==event.getOldValue() )
                     return;
-                
+
                 EditBlackboard old = EditBlackboardUtil.getEditBlackboard(context, (ILayer) event.getOldValue());
                 old.getListeners().remove(listener);
-                
+
                 selection();
                 break;
             default:
                 break;
             }
         }
-        
+
     };
 
 
-    private IToolContext context;    
-    
+    private IToolContext context;
+
     public void setActiveMap(IMap map, MapPart editor) {
         this.map=map;
         context=ApplicationGIS.createContext(map);
@@ -131,7 +131,7 @@ public class EditSelectionProvider extends AbstractMapEditorSelectionProvider {
      */
     private boolean selectVertices( ) {
         EditBlackboard editBlackboard = EditBlackboardUtil.getEditBlackboard(context, map.getEditManager().getSelectedLayer());
-        
+
         if( editBlackboard==null || editBlackboard.getSelection().isEmpty() )
             return false;
         selection=new StructuredSelection(editBlackboard.getSelection().toArray());
@@ -150,7 +150,7 @@ public class EditSelectionProvider extends AbstractMapEditorSelectionProvider {
         }
 
         notifyListeners();
-        
+
     }
 
 }

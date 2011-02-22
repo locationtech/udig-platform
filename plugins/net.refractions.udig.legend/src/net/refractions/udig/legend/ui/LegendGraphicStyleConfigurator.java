@@ -50,29 +50,29 @@ public class LegendGraphicStyleConfigurator extends IStyleConfigurator implement
     private ColorEditor backgroundColour;
 
     /*
-     *         verticalMargin = 3; 
-        horizontalMargin = 2; 
-        verticalSpacing = 5; 
-        horizontalSpacing = 3; 
+     *         verticalMargin = 3;
+        horizontalMargin = 2;
+        verticalSpacing = 5;
+        horizontalSpacing = 3;
         indentSize = 10;
         imageHeight = 16;
         imageWidth = 16;
         maxWidth = -1;
         maxHeight = -1;
-               
+
         foregroundColour = Color.BLACK;
         backgroundColour = Color.WHITE;
-        
+
         location = new Point(30, 10);
      */
-    
+
     public void createControl( Composite parent) {
         IBlackboard blackboard = getStyleBlackboard();
         LegendStyle style = null;
         if (blackboard != null) {
             style = (LegendStyle) blackboard.get(LegendStyleContent.ID);
         }
-        
+
         if (style == null) {
             style = LegendStyleContent.createDefault();
             if (blackboard != null) {
@@ -80,13 +80,13 @@ public class LegendGraphicStyleConfigurator extends IStyleConfigurator implement
                 ((StyleBlackboard) blackboard).setSelected(new String[]{LegendStyleContent.ID});
             }
         }
-        
+
         ScrolledComposite scrollComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         Composite composite = new Composite(scrollComposite, SWT.BORDER);
-        
+
         GridLayout layout = new GridLayout(2, true);
         composite.setLayout(layout);
-        
+
         GridData layoutData = null;
 
         Label verticalMarginLabel = new Label(composite, SWT.NONE);
@@ -94,49 +94,49 @@ public class LegendGraphicStyleConfigurator extends IStyleConfigurator implement
         verticalMarginLabel.setLayoutData(layoutData);
         verticalMargin = new Text(composite, SWT.BORDER);
         verticalMargin.setLayoutData(layoutData);
-        
+
 
         Label horizontalMarginLabel = new Label(composite, SWT.NONE);
         horizontalMarginLabel.setLayoutData(layoutData);
         horizontalMarginLabel.setText(Messages.LegendGraphicStyleConfigurator_horizontal_margin);
-        horizontalMargin = new Text(composite, SWT.BORDER);     
+        horizontalMargin = new Text(composite, SWT.BORDER);
         horizontalMargin.setLayoutData(layoutData);
-        
+
         Label verticalSpacingLabel = new Label(composite, SWT.NONE);
         verticalSpacingLabel.setLayoutData(layoutData);
         verticalSpacingLabel.setText(Messages.LegendGraphicStyleConfigurator_vertical_spacing);
         verticalSpacing = new Text(composite, SWT.BORDER);
         verticalSpacing.setLayoutData(layoutData);
-        
+
         Label horizontalSpacingLabel = new Label(composite, SWT.NONE);
         horizontalSpacingLabel.setLayoutData(layoutData);
         horizontalSpacingLabel.setText(Messages.LegendGraphicStyleConfigurator_horizontal_spacing);
         horizontalSpacing = new Text(composite, SWT.BORDER);
         horizontalSpacing.setLayoutData(layoutData);
-        
+
         Label indentSizeLabel = new Label(composite, SWT.NONE);
         indentSizeLabel.setLayoutData(layoutData);
         indentSizeLabel.setText(Messages.LegendGraphicStyleConfigurator_indent_size);
         indentSize = new Text(composite, SWT.BORDER);
         indentSize.setLayoutData(layoutData);
-        
+
         Label fontColourLabel = new Label(composite, SWT.NONE);
         fontColourLabel.setLayoutData(layoutData);
         fontColourLabel.setText(Messages.LegendGraphicStyleConfigurator_font_colour);
         fontColour = new ColorEditor(composite);
-       
+
         Label backgroundColourLabel = new Label(composite, SWT.NONE);
         backgroundColourLabel.setLayoutData(layoutData);
         backgroundColourLabel.setText(Messages.LegendGraphicStyleConfigurator_background_colour);
         backgroundColour = new ColorEditor(composite);
-        
-        
-        
+
+
+
         composite.layout();
         Point size = composite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         composite.setSize(size);
         scrollComposite.setContent(composite);
-        
+
         verticalMargin.setText(Integer.toString(style.verticalMargin));
         horizontalMargin.setText(Integer.toString(style.horizontalMargin));
         verticalSpacing.setText(Integer.toString(style.verticalSpacing));
@@ -144,14 +144,14 @@ public class LegendGraphicStyleConfigurator extends IStyleConfigurator implement
         indentSize.setText(Integer.toString(style.indentSize));
         fontColour.setColorValue(new RGB(
                 style.foregroundColour.getRed(),
-                style.foregroundColour.getGreen(), 
+                style.foregroundColour.getGreen(),
                 style.foregroundColour.getBlue()));
         backgroundColour.setColorValue(new RGB(
                 style.backgroundColour.getRed(),
                 style.backgroundColour.getGreen(),
                 style.backgroundColour.getBlue()
                 ));
-        
+
         verticalMargin.addModifyListener(this);
         horizontalMargin.addModifyListener(this);
         verticalSpacing.addModifyListener(this);
@@ -160,7 +160,7 @@ public class LegendGraphicStyleConfigurator extends IStyleConfigurator implement
         backgroundColour.addSelectionListener(this);
         fontColour.addSelectionListener(this);
     }
-    
+
     @Override
     public boolean canStyle( Layer aLayer ) {
         return aLayer.hasResource(LegendGraphic.class);
@@ -171,30 +171,30 @@ public class LegendGraphicStyleConfigurator extends IStyleConfigurator implement
         System.out.println("refresh"); //$NON-NLS-1$ //TODO erase this line
         IBlackboard blackboard = getStyleBlackboard();
         LegendStyle style = (LegendStyle) blackboard.get(LegendStyleContent.ID);
-        
+
         if (style == null) {
             style = LegendStyleContent.createDefault();
             blackboard.put(LegendStyleContent.ID, style);
             ((StyleBlackboard) blackboard).setSelected(new String[]{LegendStyleContent.ID});
         }
     }
-    
+
     private void updateBlackboard() {
         IBlackboard blackboard = getStyleBlackboard();
         LegendStyle style = (LegendStyle) blackboard.get(LegendStyleContent.ID);
-        
+
         if (style == null) {
             style = LegendStyleContent.createDefault();
             blackboard.put(LegendStyleContent.ID, style);
             ((StyleBlackboard) blackboard).setSelected(new String[]{LegendStyleContent.ID});
         }
-        
+
         RGB bg = backgroundColour.getColorValue();
         style.backgroundColour = new Color(bg.red, bg.green, bg.blue);
-        
+
         RGB fg = fontColour.getColorValue();
         style.foregroundColour = new Color(fg.red, fg.green, fg.blue);
-        
+
         style.horizontalMargin = Integer.parseInt(horizontalMargin.getText());
         style.horizontalSpacing = Integer.parseInt(horizontalSpacing.getText());
         style.indentSize = Integer.parseInt(indentSize.getText());

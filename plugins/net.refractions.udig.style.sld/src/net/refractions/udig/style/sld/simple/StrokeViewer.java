@@ -58,7 +58,7 @@ import org.geotools.styling.StyleBuilder;
  * <li>fire( SelectionSevent ) - notify SimpleStyleConfigurator of change
  * <li>getStroke( StyleBuilder ) - construct a Stroke based on fields
  * </ul>
- * </p>  
+ * </p>
  * @author Jody Garnett
  * @since 1.0.0
  */
@@ -125,9 +125,9 @@ public class StrokeViewer {
 
     /**
      * TODO summary sentence for createControl ...
-     * 
+     *
      * @param parent
-     * @param klisten 
+     * @param klisten
      * @return Generated composite
      */
     public Composite createControl(Composite parent, KeyListener klisten) {
@@ -141,19 +141,19 @@ public class StrokeViewer {
         this.size.setItems(new String[]{"1", "2", "3", "5", "10"}); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
         this.size.setTextLimit(2);
         this.size.addKeyListener(klisten);
-        this.size.setToolTipText(Messages.StrokeViewer_size_tooltip); 
+        this.size.setToolTipText(Messages.StrokeViewer_size_tooltip);
 
         this.percent = new Combo(part, SWT.DROP_DOWN);
         this.percent.setItems(new String[]{"0%", "25%", "50%", "75%", "100%"}); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$//$NON-NLS-5$
         this.percent.setTextLimit(3);
         this.percent.addKeyListener(klisten);
-        this.percent.setToolTipText(Messages.StrokeViewer_percent_tooltip); 
+        this.percent.setToolTipText(Messages.StrokeViewer_percent_tooltip);
         return part;
     }
 
     /**
      * Accepts a listener that will be notified when content changes.
-     * @param listener1 
+     * @param listener1
      */
     public void addListener( SelectionListener listener1 ) {
         this.listener = listener1;
@@ -161,7 +161,7 @@ public class StrokeViewer {
 
     /**
      * Remove listener.
-     * @param listener1 
+     * @param listener1
      */
     public void removeListener( SelectionListener listener1 ) {
         if (this.listener == listener1)
@@ -170,7 +170,7 @@ public class StrokeViewer {
 
     /**
      * TODO summary sentence for fire ...
-     * 
+     *
      * @param event
      */
     protected void fire( SelectionEvent event ) {
@@ -199,10 +199,10 @@ public class StrokeViewer {
 
     /**
      * TODO summary sentence for setStroke ...
-     * 
+     *
      * @param line
-     * @param mode 
-     * @param defaultColor 
+     * @param mode
+     * @param defaultColor
      */
     public void setStroke( Stroke aLine, Mode mode, Color defaultColor ) {
         listen(false);
@@ -211,12 +211,12 @@ public class StrokeViewer {
             Stroke line=aLine;
 
             if ( line==null ){
-                StyleBuilder builder=new StyleBuilder(); 
+                StyleBuilder builder=new StyleBuilder();
                 line=builder.createStroke(defaultColor);
                 enabled=false;
             }
             this.enabled =  enabled && (mode != Mode.NONE && line != null);
-            this.color = SLDs.color(line);
+            this.color = SLDs.strokeColor(line);
             this.width = SLDs.width(line);
             this.opacity = SLDs.opacity(line);
 
@@ -243,7 +243,7 @@ public class StrokeViewer {
 
     /**
      * Called to set up this "viewer" based on the provided symbolizer
-     * 
+     *
      * @param sym public void set( LineSymbolizer sym, Mode mode ){ listen( false ); // don't sync
      *        when setting up try { this.enabled = mode != Mode.NONE || sym == null; this.color =
      *        SLDs.color( sym ); this.width = SLDs.width( sym ); this.opacity = SLDs.lineOpacity(
@@ -260,8 +260,8 @@ public class StrokeViewer {
 
     /**
      * TODO summary sentence for getStroke ...
-     * @param build 
-     * 
+     * @param build
+     *
      * @return Stroke defined by this model
      */
     public Stroke getStroke( StyleBuilder build ) {

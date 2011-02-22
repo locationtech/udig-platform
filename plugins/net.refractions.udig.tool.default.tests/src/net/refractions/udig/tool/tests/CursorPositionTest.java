@@ -43,14 +43,14 @@ public class CursorPositionTest extends TestCase {
 		CoordinateReferenceSystem albers = CRS.decode("EPSG:3005"); //$NON-NLS-1$
 		coord=CursorPosition.parse("124 88LAT LONG", albers); //$NON-NLS-1$
 		Coordinate expected=new Coordinate();
-		JTS.transform(new Coordinate(124,88), expected, CRS.findMathTransform(DefaultGeographicCRS.WGS84,albers));
+		JTS.transform(new Coordinate(124,88), expected, CRS.transform(DefaultGeographicCRS.WGS84,albers));
 		assertEquals(expected.x, coord.x, 0.00001);
 
 		coord=CursorPosition.parse("aasdf asdf", DefaultGeographicCRS.WGS84); //$NON-NLS-1$
 		assertNull(coord);
-		
+
 		coord=CursorPosition.parse("13g4", DefaultGeographicCRS.WGS84); //$NON-NLS-1$
 		assertNull(coord);
-		
+
 	}
 }

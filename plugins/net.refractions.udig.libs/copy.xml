@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<project default="synchronize with local maven" basedir=".">
+
+	<property name="lib" value="${basedir}/lib" />
+	<description>Download open source jars from the internet.</description>
+	<property environment="env" />
+	<property file="copy.properties" />
+
+	<target name="auto">
+		<description>Used to create the libs folder if it does not exist</description>
+		<available property="already_downloaded" type="dir" file="${lib}" />
+		<antcall target="create" />
+
+		<antcall target="gt.download" />
+		<antcall target="other.download" />
+	</target>
+
+	<target name="clean">
+		<description>
+			Download the jars - used by a manual "clean"
+			HOOK THIS UP AFTER A CLEAN
+		</description>
+
+		<antcall target="create" />
+		<antcall target="gt.download" />
+		<antcall target="other.download" />
+	</target>
+
+	<target name="synchronize with local maven">
+		<description>
+			Synchornize udig with your local maven repository.
+			HOOK THIS UP TO THE MANUAL BUILD
+		</description>
+		<available property="already_downloaded" type="dir" file="${lib}" />
+		<antcall target="create" />
+
+		<!-- this is added for automated build -->
+		<antcall target="first.time" />
+
+		<antcall target="gt.local.m2" />
+		<antcall target="other.local.m2" />
+	</target>
+
+	<target name="first.time" unless="already_downloaded" >
+		<antcall target="gt.download" />
+		<antcall target="other.download" />
+	</target>
+
+	<target name="create" unless="already_downloaded">
+		<description>creates the lib director if needed</description>
+		<mkdir dir="${lib}" />
+	</target>
+
+	<target name="gt.local.m2">
+		<description>Refresh libs based on local repository. Used to test out your local build of GeoTools.</description>
+		<get src="${repo}/org/geotools/gt2-api/${repo.version}/gt2-api-${repo.version}.jar" dest="${lib}/gt2-api.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-arcgrid/${repo.version}/gt2-arcgrid-${repo.version}.jar" dest="${lib}/gt2-arcgrid.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-arcsde/${repo.version}/gt2-arcsde-${repo.version}.jar" dest="${lib}/gt2-arcsde.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-brewer/${repo.version}/gt2-brewer-${repo.version}.jar" dest="${lib}/gt2-brewer.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-coverage/${repo.version}/gt2-coverage-${repo.version}.jar" dest="${lib}/gt2-coverage.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-cql/${repo.version}/gt2-cql-${repo.version}.jar" dest="${lib}/gt2-cql.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-db2/${repo.version}/gt2-db2-${repo.version}.jar" dest="${lib}/gt2-db2.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-epsg-wkt/${repo.version}/gt2-epsg-wkt-${repo.version}.jar" dest="${lib}/gt2-epsg.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-geotiff/${repo.version}/gt2-geotiff-${repo.version}.jar" dest="${lib}/gt2-geotiff.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-gml/${repo.version}/gt2-gml-${repo.version}.jar" dest="${lib}/gt2-gml.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-image/${repo.version}/gt2-image-${repo.version}.jar" dest="${lib}/gt2-image.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-indexed-shapefile/${repo.version}/gt2-indexed-shapefile-${repo.version}.jar" dest="${lib}/gt2-indexed-shapefile.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-main/${repo.version}/gt2-main-${repo.version}.jar" dest="${lib}/gt2-main.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-mysql/${repo.version}/gt2-mysql-${repo.version}.jar" dest="${lib}/gt2-mysql.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-oracle-spatial/${repo.version}/gt2-oracle-spatial-${repo.version}.jar" dest="${lib}/gt2-oracle-spatial.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-postgis/${repo.version}/gt2-postgis-${repo.version}.jar" dest="${lib}/gt2-postgis.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-referencing/${repo.version}/gt2-referencing-${repo.version}.jar" dest="${lib}/gt2-referencing.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-render/${repo.version}/gt2-render-${repo.version}.jar" dest="${lib}/gt2-render.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-shapefile/${repo.version}/gt2-shapefile-${repo.version}.jar" dest="${lib}/gt2-shapefile.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-shapefile-renderer/${repo.version}/gt2-shapefile-renderer-${repo.version}.jar" dest="${lib}/gt2-shapefile-renderer.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-validation/${repo.version}/gt2-validation-${repo.version}.jar" dest="${lib}/gt2-validation.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-wfs/${repo.version}/gt2-wfs-${repo.version}.jar" dest="${lib}/gt2-wfs.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-wms/${repo.version}/gt2-wms-${repo.version}.jar" dest="${lib}/gt2-wms.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/geotools/gt2-epsg-hsql/${repo.version}/gt2-epsg-hsql-${repo.version}.jar" dest="${lib}/gt2-epsg-hsql.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+	</target>
+
+	<target name="gt.download" unless="already_downloaded" depends="create">
+		<description>Refresh geotools based on snapshot deployed to public repository.</description>
+		<get src="${updateURL}/org/geotools/gt2-arcgrid/${geotools.version}/gt2-arcgrid-${geotools.version}.jar" dest="${lib}/gt2-arcgrid.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-api/${geotools.version}/gt2-api-${geotools.version}.jar" dest="${lib}/gt2-api.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-brewer/${geotools.version}/gt2-brewer-${geotools.version}.jar" dest="${lib}/gt2-brewer.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-arcsde/${geotools.version}/gt2-arcsde-${geotools.version}.jar" dest="${lib}/gt2-arcsde.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-coverage/${geotools.version}/gt2-coverage-${geotools.version}.jar" dest="${lib}/gt2-coverage.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-cql/${geotools.version}/gt2-cql-${geotools.version}.jar" dest="${lib}/gt2-cql.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-db2/${geotools.version}/gt2-db2-${geotools.version}.jar" dest="${lib}/gt2-db2.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-epsg-wkt/${geotools.version}/gt2-epsg-wkt-${geotools.version}.jar" dest="${lib}/gt2-epsg.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-geotiff/${geotools.version}/gt2-geotiff-${geotools.version}.jar" dest="${lib}/gt2-geotiff.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-gml/${geotools.version}/gt2-gml-${geotools.version}.jar" dest="${lib}/gt2-gml.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-image/${geotools.version}/gt2-image-${geotools.version}.jar" dest="${lib}/gt2-image.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-indexed-shapefile/${geotools.version}/gt2-indexed-shapefile-${geotools.version}.jar" dest="${lib}/gt2-indexed-shapefile.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-main/${geotools.version}/gt2-main-${geotools.version}.jar" dest="${lib}/gt2-main.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-mysql/${geotools.version}/gt2-mysql-${geotools.version}.jar" dest="${lib}/gt2-mysql.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-oracle-spatial/${geotools.version}/gt2-oracle-spatial-${geotools.version}.jar" dest="${lib}/gt2-oracle-spatial.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-postgis/${geotools.version}/gt2-postgis-${geotools.version}.jar" dest="${lib}/gt2-postgis.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-referencing/${geotools.version}/gt2-referencing-${geotools.version}.jar" dest="${lib}/gt2-referencing.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-render/${geotools.version}/gt2-render-${geotools.version}.jar" dest="${lib}/gt2-render.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-shapefile/${geotools.version}/gt2-shapefile-${geotools.version}.jar" dest="${lib}/gt2-shapefile.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-shapefile-renderer/${geotools.version}/gt2-shapefile-renderer-${geotools.version}.jar" dest="${lib}/gt2-shapefile-renderer.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-validation/${geotools.version}/gt2-validation-${geotools.version}.jar" dest="${lib}/gt2-validation.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-wfs/${geotools.version}/gt2-wfs-${geotools.version}.jar" dest="${lib}/gt2-wfs.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-wms/${geotools.version}/gt2-wms-${geotools.version}.jar" dest="${lib}/gt2-wms.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/geotools/gt2-epsg-hsql/${geotools.version}/gt2-epsg-hsql-${geotools.version}.jar" dest="${lib}/gt2-epsg-hsql.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+	</target>
+
+	<target name="other.local.m2" depends="create">
+		<description>Update libs from your local repository, useful trying out local geoapi changes.</description>
+		<get src="${repo}/org/opengis/geoapi/${geoapi.version}/geoapi-${geoapi.version}.jar" dest="${lib}/geoapi.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/com/vividsolutions/jts/${jts.version}/jts-${jts.version}.jar" dest="${lib}/jts-${jts.version}.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/commons-collections/commons-collections/2.1/commons-collections-2.1.jar" dest="${lib}/commons-collections-2.1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/commons-lang/commons-lang/2.1/commons-lang-2.1.jar" dest="${lib}/commons-lang-2.1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/commons-pool/commons-pool/1.2/commons-pool-1.2.jar" dest="${lib}/commons-pool-1.2.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/edu/oswego/concurrent/1.3.4/concurrent-1.3.4.jar" dest="${lib}/concurrent-1.3.4.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/hsqldb/hsqldb/1.8.0.1/hsqldb-1.8.0.1.jar" dest="${lib}/hsqldb-1.8.0.1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/java3d/vecmath/1.3.1/vecmath-1.3.1.jar" dest="${lib}/vecmath-1.3.1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/jdom/jdom/1.0/jdom-1.0.jar" dest="${lib}/jdom-1.0.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/log4j/log4j/1.2.8/log4j-1.2.8.jar" dest="${lib}/log4j-1.2.8.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/mysql/mysql-connector-java/3.0.10/mysql-connector-java-3.0.10.jar" dest="${lib}/mysql-connector-java-3.0.10.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/esa/beam/1.0/beam-1.0.jar" dest="${lib}/beam-1.0.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/opengis/geoapi-legacy/0.1/geoapi-legacy-0.1.jar" dest="${lib}/opengis-legacy-0.1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/openplans/spatialdb/0.1/spatialdb-0.1.jar" dest="${lib}/spatialdb-0.1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/picocontainer/picocontainer/1.2/picocontainer-1.2.jar" dest="${lib}/picocontainer-1.2.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/picocontainer/picocontainer/1.2/picocontainer-1.2.jar" dest="${lib}/picocontainer-1.2.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/org/wkb4j/wkb4j/1.0-RC1/wkb4j-1.0-RC1.jar" dest="${lib}/wkb4j-1.0-RC1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${repo}/units/units/0.01/units-0.01.jar" dest="${lib}/units-0.01.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+
+		<get src="http://www.ibiblio.org/maven/xmlrpc/jars/xmlrpc-2.0.jar" dest="${lib}/xmlrpc-2.0.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="http://www.ibiblio.org/maven/commons-codec/jars/commons-codec-1.3.jar" dest="${lib}/commons-codec-1.3.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+
+	</target>
+
+	<target name="other.download" unless="already_downloaded" depends="create">
+		<description>Download fresh libs from various public repositories</description>
+		<get src="${updateURL}/org/opengis/geoapi/${geoapi.version}/geoapi-${geoapi.version}.jar" dest="${lib}/geoapi.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/com/vividsolutions/jts/${jts.version}/jts-${jts.repo}.jar" dest="${lib}/jts-${jts.version}.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/commons-collections/commons-collections/2.1/commons-collections-2.1.jar" dest="${lib}/commons-collections-2.1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/commons-lang/commons-lang/2.1/commons-lang-2.1.jar" dest="${lib}/commons-lang-2.1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/commons-pool/commons-pool/1.2/commons-pool-1.2.jar" dest="${lib}/commons-pool-1.2.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/edu/oswego/concurrent/1.3.4/concurrent-1.3.4.jar" dest="${lib}/concurrent-1.3.4.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/hsqldb/hsqldb/1.8.0.1/hsqldb-1.8.0.1.jar" dest="${lib}/hsqldb-1.8.0.1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/java3d/vecmath/1.3.1/vecmath-1.3.1.jar" dest="${lib}/vecmath-1.3.1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/jdom/jdom/1.0/jdom-1.0.jar" dest="${lib}/jdom-1.0.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/log4j/log4j/1.2.8/log4j-1.2.8.jar" dest="${lib}/log4j-1.2.8.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/mysql/mysql-connector-java/3.0.10/mysql-connector-java-3.0.10.jar" dest="${lib}/mysql-connector-java-3.0.10.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/esa/beam/1.0/beam-1.0.jar" dest="${lib}/beam-1.0.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/opengis/geoapi-legacy/0.1/geoapi-legacy-0.1.jar" dest="${lib}/opengis-legacy-0.1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/openplans/spatialdb/0.1/spatialdb-0.1.jar" dest="${lib}/spatialdb-0.1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/picocontainer/picocontainer/1.2/picocontainer-1.2.jar" dest="${lib}/picocontainer-1.2.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/picocontainer/picocontainer/1.2/picocontainer-1.2.jar" dest="${lib}/picocontainer-1.2.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/org/wkb4j/wkb4j/1.0-RC1/wkb4j-1.0-RC1.jar" dest="${lib}/wkb4j-1.0-RC1.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="${updateURL}/units/units/0.01/units-0.01.jar" dest="${lib}/units-0.01.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+
+		<get src="http://www.ibiblio.org/maven/xmlrpc/jars/xmlrpc-2.0.jar" dest="${lib}/xmlrpc-2.0.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+		<get src="http://www.ibiblio.org/maven/commons-codec/jars/commons-codec-1.3.jar" dest="${lib}/commons-codec-1.3.jar" usetimestamp="true" ignoreerrors="true" verbose="true" />
+	</target>
+
+</project>

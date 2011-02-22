@@ -25,22 +25,7 @@ public class Messages extends NLS {
 	public static String BasicGridCoverageRenderer_errorPainting;
 	public static String BasicGridCoverageRenderer_rendering_status;
 	public static String BasicGridCoverageRenderer_statusMessage;
-    public static String ChannelViewer_BandLabel;
-	public static String MosaicInfoPanel_BandLabel;
-    public static String MosaicInfoPanel_BlueBandLabel;
-    public static String MosaicInfoPanel_FileDateLabel;
-    public static String MosaicInfoPanel_FileInformationHeader;
-    public static String MosaicInfoPanel_FileLabel;
-    public static String MosaicInfoPanel_FileSizeLabel;
-    public static String MosaicInfoPanel_FileTypeLabel;
-    public static String MosaicInfoPanel_GreenBandLabel;
-    public static String MosaicInfoPanel_InvalidBandSelectionMessage;
-    public static String MosaicInfoPanel_NoDataText;
-    public static String MosaicInfoPanel_RedBandLabel;
-    public static String MosaicInfoView_DefaultViewText;
-    public static String MosaicInfoView_UndoAction;
-    public static String MosaicInfoView_UndoActionToolTip;
-    static {
+	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}

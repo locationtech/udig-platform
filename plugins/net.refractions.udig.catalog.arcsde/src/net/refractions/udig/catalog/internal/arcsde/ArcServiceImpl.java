@@ -21,12 +21,11 @@ import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolveChangeEvent;
 import net.refractions.udig.catalog.IResolveDelta;
 import net.refractions.udig.catalog.IService;
@@ -37,135 +36,90 @@ import net.refractions.udig.catalog.internal.ResolveDelta;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.geotools.arcsde.data.ArcSDEDataStoreConfig;
-import org.geotools.arcsde.session.ArcSDEConnectionConfig;
 import org.geotools.data.DataStore;
+import org.geotools.data.arcsde.ArcSDEDataStoreFactory;
 
 /**
  * Connect to ArcSDE.
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
 public class ArcServiceImpl extends IService {
 
-    private final URL url;
-
-    private Throwable msg;
-
-    private ArcSDEVectorService vectorService;
-    private ArcSDERasterService rasterService;
-
-    // private volatile ISessionPool sessionPool;
-    // private volatile ArcSDEDataStore ds = null;
-    private volatile List<IGeoResource> members;
-
-    private final ArcSDEDataStoreConfig dataStoreConfig;
-
+    private URL url = null;
+    private Map<String, Serializable> params = null;
     /**
      * Construct <code>PostGISServiceImpl</code>.
-     * 
-     * @param url
-     * @param params
+     *
+     * @param arg1
+     * @param arg2
      */
-    public ArcServiceImpl( URL url, Map<String, Serializable> params ) {
-        this.url = url;
-        this.dataStoreConfig = new ArcSDEDataStoreConfig(params);
-        vectorService = new ArcSDEVectorService(this);
-        rasterService = new ArcSDERasterService(this);
+    public ArcServiceImpl( URL arg1, Map<String, Serializable> arg2 ) {
+        url = arg1;
+        params = arg2;
     }
 
-    /**
-     * @see IService#resolve(Class, IProgressMonitor)
+    /*
+     * Required adaptions: <ul> <li>IServiceInfo.class <li>List.class <IGeoResource> </ul>
+     *
+     * @see net.refractions.udig.catalog.IService#resolve(java.lang.Class,
+     *      org.eclipse.core.runtime.IProgressMonitor)
      */
-    public <T> T resolve( final Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
-        if (monitor == null) {
+    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
+        if (monitor == null)
             monitor = new NullProgressMonitor();
-        }
+
         if (adaptee == null) {
             throw new NullPointerException("No adaptor specified"); //$NON-NLS-1$
         }
         if (adaptee.isAssignableFrom(DataStore.class)) {
-            try {
-                return adaptee.cast(vectorService.getDataStore(monitor));
-            } catch (IOException e) {
-                msg = e;
-                throw e;
-            } catch (Exception e) {
-                msg = e;
-                throw (IOException) (new IOException(e.getLocalizedMessage()).initCause(e));
-            }
+            return adaptee.cast(getDS(monitor));
         }
-        // if (rasterService != null && rasterService.canResolve(adaptee)) {
-        // return rasterService.resolve(adaptee, monitor);
-        // }
-        return super.resolve(adaptee, monitor);
+        return super.resolve( adaptee, monitor);
     }
-
-    /**
-     * @see net.refractions.udig.catalog.IResolve#canResolve(Class)
+    /*
+     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
-        if (adaptee == null) {
-            return false;
-        }
-        if (adaptee.isAssignableFrom(DataStore.class)) {
-            return true;
-        }
-        // if (rasterService != null && rasterService.canResolve(adaptee)) {
-        // return true;
-        // }
-        return super.canResolve(adaptee);
+        return adaptee != null
+                && (adaptee.isAssignableFrom(IServiceInfo.class)
+                        || adaptee.isAssignableFrom(List.class) || adaptee
+                        .isAssignableFrom(DataStore.class));
     }
 
-    /**
-     * @see IService#resources(IProgressMonitor)
+    /*
+     * @see net.refractions.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
-    @Override
-    public List<IGeoResource> resources( final IProgressMonitor monitor ) throws IOException {
+    public List<ArcGeoResource> resources( IProgressMonitor monitor ) throws IOException {
         if (members == null) {
-            synchronized (this) {
+            synchronized (getDS(monitor)) {
                 if (members == null) {
-                    members = new ArrayList<IGeoResource>();
-                    if (vectorService != null) {
-                        members.addAll(vectorService.resources(monitor));
-                    }
-                    if (rasterService != null) {
-                        members.addAll(rasterService.resources(monitor));
-                    }
-                    // final IProgressMonitor nm = new NullProgressMonitor();
-                    // Collections.sort(members, new Comparator<IGeoResource>(){
-                    // public int compare( IGeoResource o1, IGeoResource o2 ) {
-                    // return o1.getInfo(nm).getTitle().compareTo(o2.getInfo(nm).getTitle());
-                    // }
-                    // });
-
-                    IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
-                    ((CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog())
-                            .fire(new ResolveChangeEvent(this,
-                                    IResolveChangeEvent.Type.POST_CHANGE, delta));
-
+                    getDS(null); // load ds
+                    members = new LinkedList<ArcGeoResource>();
+                    String[] typenames = ds.getTypeNames();
+                    if (typenames != null)
+                        for( int i = 0; i < typenames.length; i++ ) {
+                            members.add(new ArcGeoResource(this, typenames[i]));
+                        }
                 }
             }
         }
         return members;
     }
+    private volatile List<ArcGeoResource> members = null;
 
-    @Override
-    public IServiceArcSDEInfo getInfo( IProgressMonitor monitor ) throws IOException {
-        return (IServiceArcSDEInfo) super.getInfo(monitor);
-    }
     /*
      * @see net.refractions.udig.catalog.IService#getInfo(org.eclipse.core.runtime.IProgressMonitor)
      */
-    @Override
-    protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        if (info == null) {
-            synchronized (this) {
+    public IServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
+        getDS(monitor); // load ds
+        if (info == null && ds != null) {
+            synchronized (ds) {
                 if (info == null) {
-                    URL identifier = getIdentifier();
-                    info = new IServiceArcSDEInfo(identifier, dataStoreConfig.getSessionConfig());
+                    info = new IServiceArcSDEInfo(ds);
                 }
             }
             IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
@@ -174,107 +128,96 @@ public class ArcServiceImpl extends IService {
         }
         return info;
     }
-
-    /**
-     * @see IService#getConnectionParams()
+    private volatile IServiceInfo info = null;
+    /*
+     * @see net.refractions.udig.catalog.IService#getConnectionParams()
      */
     public Map<String, Serializable> getConnectionParams() {
-        return dataStoreConfig == null ? null : dataStoreConfig.toMap();
+        return params;
     }
-
-    /**
-     * @see IService#getStatus()
+    private Throwable msg = null;
+    private volatile DataStore ds = null;
+    DataStore getDS(IProgressMonitor monitor) throws IOException {
+        if (ds == null) {
+            synchronized (ArcSDEDataStoreFactory.class) {
+                // please copy a better example from WFS
+                if (ds == null) {
+                    ArcSDEDataStoreFactory dsf = new ArcSDEDataStoreFactory();
+                    if (dsf.canProcess(params)) {
+                        try {
+                            ds = dsf.createDataStore(params);
+                        } catch (IOException e) {
+                            msg = e;
+                            throw e;
+                        }
+                    }
+                }
+            }
+            IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
+            ((CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog())
+                    .fire(new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, delta));
+        }
+        return ds;
+    }
+    /*
+     * @see net.refractions.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
-        // return msg != null ? Status.BROKEN : vectorService != null
-        // ? vectorService.getStatus()
-        // : (rasterService != null ? rasterService.getStatus() : Status.NOTCONNECTED);
-        return msg != null ? Status.BROKEN : vectorService != null
-                ? Status.CONNECTED
-                : Status.NOTCONNECTED;
+        return msg != null ? Status.BROKEN : ds == null ? Status.NOTCONNECTED : Status.CONNECTED;
     }
-
-    /**
-     * @see IService#getMessage()
+    /*
+     * @see net.refractions.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return msg;
     }
-
-    /**
-     * @see IService#getIdentifier()
+    /*
+     * @see net.refractions.udig.catalog.IResolve#getIdentifier()
      */
     public URL getIdentifier() {
         return url;
     }
 
-    private static class IServiceArcSDEInfo extends IServiceInfo {
+    private class IServiceArcSDEInfo extends IServiceInfo {
 
-        private final URL identifier;
-
-        IServiceArcSDEInfo( final URL identifier, final ArcSDEConnectionConfig connectionConfig ) {
-            // ISessionPool pool = createPool(connectionConfig);
-            // try {
-            // ISession session = pool.getSession(false);
-            // try {
-            //
-            // } finally {
-            // session.dispose();
-            // }
-            // } finally {
-            // pool.close();
-            // }
-            //
-            // this.identifier = identifier;
-            // String[] tns = null;
-            // try {
-            // tns = dataStoreConfig.getTypeNames();
-            // } catch (IOException e) {
-            // ArcsdePlugin.log(null, e);
-            // tns = new String[0];
-            // }
-            // keywords = new String[tns.length + 1];
-            // System.arraycopy(tns, 0, keywords, 1, tns.length);
-            //            keywords[0] = "ArcSDE"; //$NON-NLS-1$
-
-            this.identifier = identifier;
+        IServiceArcSDEInfo( DataStore resource ) {
+            super();
+            String[] tns = null;
             try {
-                schema = new URI("arcsde://geotools/gml"); //$NON-NLS-1$
+                tns = resource.getTypeNames();
+            } catch (IOException e) {
+                ArcsdePlugin.log(null, e);
+                tns = new String[0];
+            }
+            keywords = new String[tns.length + 1];
+            System.arraycopy(tns, 0, keywords, 1, tns.length);
+            keywords[0] = "postgis"; //$NON-NLS-1$
+
+            try {
+                schema = new URI("jdbc://arcsde/gml"); //$NON-NLS-1$
             } catch (URISyntaxException e) {
                 ArcsdePlugin.log(null, e);
             }
-            icon = AbstractUIPlugin.imageDescriptorFromPlugin(ArcsdePlugin.ID,
-                    "icons/obj16/arcsde_obj.gif"); //$NON-NLS-1$
         }
 
         public String getDescription() {
-            return identifier.toString();
+            return getIdentifier().toString();
         }
 
-        public URI getSource() {
-            try {
-                return identifier.toURI();
-            } catch (URISyntaxException e) {
-                // This would be bad
-                throw (RuntimeException) new RuntimeException().initCause(e);
-            }
+        public URL getSource() {
+            return getIdentifier();
         }
 
         public String getTitle() {
-            return "ARCSDE " + identifier.getHost(); //$NON-NLS-1$
+            return "ARCSDE " + getIdentifier().getHost(); //$NON-NLS-1$
         }
 
-    }
-
-    public ArcSDEDataStoreConfig getDataStoreConfig() {
-        return dataStoreConfig;
-    }
-
-    public ArcSDEConnectionConfig getConnectionConfig() {
-        return dataStoreConfig.getSessionConfig();
-    }
-
-    public ArcSDEVectorService getVectorService() {
-        return vectorService;
+        /*
+         * @see net.refractions.udig.catalog.IServiceInfo#getIcon()
+         */
+        public ImageDescriptor getIcon() {
+            return AbstractUIPlugin.imageDescriptorFromPlugin(ArcsdePlugin.ID,
+                    "icons/obj16/arcsde_obj.gif"); //$NON-NLS-1$
+        }
     }
 }

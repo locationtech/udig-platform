@@ -27,11 +27,11 @@
             id="net.refractions.udig.ui.mapPerspective">
       </perspective>
       <perspective
-            class="net.refractions.udig.internal.ui.StylePerspective"
+            class="net.refractions.udig.internal.ui.AlternateMapPerspective"
             fixed="false"
             icon="icons/obj16/map_obj.gif"
-            id="net.refractions.udig.ui.stylePerspective"
-            name="%style.perspective.name"/>
+            id="net.refractions.udig.ui.alternateMapPerspective"
+            name="%alternate.perspective.name"/>
    </extension>
       <extension
          point="org.eclipse.ui.preferencePages">
@@ -40,15 +40,6 @@
             class="net.refractions.udig.ui.preferences.UiPreferences"
             id="net.refractions.udig.ui.preferences"
             name="%uiPreferences">
-         <keywordReference
-               id="charset">
-         </keywordReference>
-      </page>
-      <page
-            category="net.refractions.udig.ui.page.general"
-            class="net.refractions.udig.ui.preferences.RuntimePreferences"
-            id="net.refractions.udig.ui.runntimepreferences"
-            name="%runntimePreferences">
          <keywordReference
                id="charset">
          </keywordReference>
@@ -64,8 +55,8 @@
          </run>
       </application>
    </extension>
-   
-  
+
+
    <extension
          point="org.eclipse.ui.views">
       <view
@@ -81,12 +72,12 @@
 				label="%HelpActionSet.label"
 				visible="false"
 				id="net.refractions.udig.helpMenuItems">
-				<menu
+			<menu
          id="net.refractions.udig.updateMenu"
          label="%UpdateActionSet.menu.label"
          path="help/helpEnd">
 			</menu>
-				<action
+			<action
          class="net.refractions.udig.InstallWizardAction"
          disabledIcon="icons/dtool16/usearch_obj.gif"
          icon="icons/etool16/usearch_obj.gif"
@@ -95,8 +86,8 @@
          menubarPath="help/helpEnd">
 			</action>
    <action
-         class="net.refractions.udig.internal.ui.ShowSubmitIssueAction"
-         id="net.refractions.udig.ui.submitIssueAction"
+         class="net.refractions.udig.internal.ui.ShowSendLogAction"
+         id="net.refractions.udig.ui.sendLogAction"
          label="%log.action.name"
          menubarPath="help/helpEnd"
          style="push"
@@ -131,9 +122,6 @@
     <extension
           point="org.eclipse.ui.startup">
        <startup class="net.refractions.udig.ui.internal.DeveloperStartup"/>
-       <startup
-             class="net.refractions.udig.internal.ui.UDIGStartup">
-       </startup>
     </extension>
     <extension
           point="org.eclipse.ui.preferencePages">
@@ -155,8 +143,12 @@
     <extension
           point="net.refractions.udig.ui.operation">
                <category
-           id="net.refractions.udig.ui.edit"
-           name="%EditCategory"/>
+                     id="net.refractions.udig.ui.edit"
+                     name="%EditCategory">
+                  <menuContribution
+                        locationURI="menu:edit?before=additions">
+                  </menuContribution>
+               </category>
     </extension>
     <extension
           point="org.eclipse.ui.bindings">
@@ -173,68 +165,68 @@
              commandId="org.eclipse.ui.file.save"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="M1+S"/>    
+             sequence="M1+S"/>
        <key
              commandId="org.eclipse.ui.file.print"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="M1+P"/>    
+             sequence="M1+P"/>
        <key
              commandId="org.eclipse.ui.file.properties"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="M1+ENTER"/>    
+             sequence="M1+ENTER"/>
        <key
              commandId="org.eclipse.ui.edit.undo"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="M1+Z"/>    
+             sequence="M1+Z"/>
        <key
              commandId="org.eclipse.ui.edit.redo"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="M1+Y"/>    
+             sequence="M1+Y"/>
        <key
              commandId="org.eclipse.ui.edit.cut"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="M1+X"/>    
+             sequence="M1+X"/>
        <key
              commandId="org.eclipse.ui.edit.copy"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="M1+C"/>    
+             sequence="M1+C"/>
        <key
              commandId="org.eclipse.ui.edit.paste"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="M1+V"/>    
+             sequence="M1+V"/>
        <key
              commandId="org.eclipse.ui.edit.delete"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="DELETE"/>    
+             sequence="DELETE"/>
 
        <key
              commandId="org.eclipse.ui.edit.selectAll"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="M1+A"/>    
+             sequence="M1+A"/>
        <key
              commandId="org.eclipse.ui.edit.addBookmark"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="M1+D"/>    
+             sequence="M1+D"/>
        <key
              commandId="org.eclipse.ui.navigate.back"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="ALT+ARROW_LEFT"/>    
+             sequence="ALT+ARROW_LEFT"/>
        <key
              commandId="org.eclipse.ui.navigate.forward"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="ALT+ARROW_RIGHT"/>    
+             sequence="ALT+ARROW_RIGHT"/>
        </extension>
     <extension
           id="net.refractions.udig.ui.tip.default"
@@ -247,7 +239,7 @@
        <tip
              id="net.refractions.udig.ui.keyPan"
              name="%pan.tip.name">
-          %pan.tip.tip 
+          %pan.tip.tip
        </tip>
        <tip
              id="net.refractions.udig.ui.zoomExtent"
@@ -365,7 +357,7 @@
        <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
           <actionSet id="net.refractions.udig.helpMenuItems"/>
        </perspectiveExtension>
-       <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
+       <perspectiveExtension targetID="net.refractions.udig.ui.alternateMapPerspective">
           <actionSet id="net.refractions.udig.helpMenuItems"/>
        </perspectiveExtension>
     </extension>

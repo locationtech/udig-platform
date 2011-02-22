@@ -30,7 +30,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 /**
  * Creates Edit commands which must be used to modify editable feature data. API internal classes
  * are in the returned API
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -38,7 +38,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 public class BasicCommandFactory extends net.refractions.udig.project.command.BasicCommandFactory {
     /**
      * Creates a new EditCommandFactory object
-     * 
+     *
      * @return a new EditCommandFactory object
      */
     public static BasicCommandFactory getInstance() {
@@ -52,7 +52,7 @@ public class BasicCommandFactory extends net.refractions.udig.project.command.Ba
 
     /**
      * Create a delete layer command
-     * 
+     *
      * @param map the map containing the layer
      * @param layer the layer to delete
      * @return a new {@linkplain DeleteLayerCommand}object that deletes the layer.
@@ -64,7 +64,7 @@ public class BasicCommandFactory extends net.refractions.udig.project.command.Ba
 
     /**
      * Create an Add Layer command
-     * 
+     *
      * @param layer the layer to add to the map.
      * @return a new {@linkplain AddLayerCommand}object that deletes the feature.
      * @see AddLayerCommand
@@ -75,7 +75,7 @@ public class BasicCommandFactory extends net.refractions.udig.project.command.Ba
 
     /**
      * Create an Add Layer command
-     * 
+     *
      * @param layer the layer to add to the map.
      * @param index the zorder where the layer will be added.
      * @return a new {@linkplain AddLayerCommand}object that deletes the feature.
@@ -87,7 +87,7 @@ public class BasicCommandFactory extends net.refractions.udig.project.command.Ba
 
     /**
      * Create an AddLayers command that adds all the layers in the collection
-     * 
+     *
      * @param evaluationObject the layer to add to the map.
      * @param index the zorder where the layer will be added.
      * @return a new {@linkplain AddLayersCommand}object that deletes the feature.
@@ -99,7 +99,7 @@ public class BasicCommandFactory extends net.refractions.udig.project.command.Ba
 
     /**
      * Create an AddLayers command that adds all the layers in the collection
-     * 
+     *
      * @param evaluationObject the layer to add to the map.
      * @return a new {@linkplain AddLayersCommand}object that deletes the feature.
      * @see AddLayersCommand
@@ -110,7 +110,7 @@ public class BasicCommandFactory extends net.refractions.udig.project.command.Ba
 
     /**
      * Create a Change CRS command
-     * 
+     *
      * @param map the map for which the CRS is going to change.
      * @return a new {@linkplain ChangeCRSCommand}object that changes the CRS.
      * @see ChangeCRSCommand
@@ -121,7 +121,7 @@ public class BasicCommandFactory extends net.refractions.udig.project.command.Ba
 
     /**
      * Create a CreateMapCommand
-     * 
+     *
      * @param name the name of the map
      * @param layerResources the IGeoResources that will make up the layers of the map.
      * @param owner The project that will contain the map.
@@ -134,7 +134,7 @@ public class BasicCommandFactory extends net.refractions.udig.project.command.Ba
 
     /**
      * Create a CreateMapCommand
-     * 
+     *
      * @param layerResources the IGeoResources that will make up the layers of the map.
      * @param owner The project that will contain the map.
      * @return
@@ -145,7 +145,7 @@ public class BasicCommandFactory extends net.refractions.udig.project.command.Ba
 
     /**
      * Create a CreateMapCommand
-     * 
+     *
      * @param name the name of the map
      * @param layerResources the IGeoResources that will make up the layers of the map.
      * @return
@@ -156,7 +156,7 @@ public class BasicCommandFactory extends net.refractions.udig.project.command.Ba
 
     /**
      * Create a CreateMapCommand
-     * 
+     *
      * @param layerResources the objects, (Layers or IGeoResources) that will make up the map.
      * @return
      */

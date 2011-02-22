@@ -1,3 +1,6 @@
+/**
+ *
+ */
 package net.refractions.udig.project.internal.render.impl;
 
 import java.awt.Dimension;
@@ -5,9 +8,9 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
-import javax.measure.converter.UnitConverter;
-import javax.measure.unit.SI;
-import javax.measure.unit.Unit;
+import javax.units.Converter;
+import javax.units.SI;
+import javax.units.Unit;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
@@ -32,7 +35,7 @@ import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Methods for calculating the ScaleDenominator
- * 
+ *
  * @author jesse
  */
 public final class ScaleUtils {
@@ -51,25 +54,25 @@ public final class ScaleUtils {
 	public static double fromMeterToCrs(double value,
 			CoordinateReferenceSystem crs) {
 		Unit unit = getUnit(crs);
-		UnitConverter converter = SI.METER.getConverterTo(unit);
+		Converter converter = SI.METER.getConverterTo(unit);
 		return converter.convert(value);
 	}
 
 	public static double fromCrsToMeter(double value,
 			CoordinateReferenceSystem crs) {
-		Unit<?> unit = getUnit(crs);
-		UnitConverter converter = unit.getConverterTo(javax.measure.unit.SI.METER);
+		Unit unit = getUnit(crs);
+		Converter converter = unit.getConverterTo(SI.METER);
 		return converter.convert(value);
 	}
 
 	/**
 	 * Determines if the crs is a lat/long crs (has angular units)
-	 * 
+	 *
 	 * @return true if the crs is a latlong crs (has angular units)
 	 */
 	public static boolean isLatLong(CoordinateReferenceSystem crs) {
-		Unit<?> unit = getUnit(crs);
-		Unit<?> degrees = getUnit(DefaultGeographicCRS.WGS84);
+		Unit unit = getUnit(crs);
+		Unit degrees = getUnit(DefaultGeographicCRS.WGS84);
 		boolean isLatLong = CRS.equalsIgnoreMetadata(unit, degrees);
 		return isLatLong;
 	}
@@ -77,7 +80,7 @@ public final class ScaleUtils {
 	/**
 	 * Calculates the width of the bounding box that will fit in the display
 	 * size at the specified scale.
-	 * 
+	 *
 	 * @param newScaleDenominator
 	 *            The scale denominator to use to calculate the bounds
 	 * @param displaySize
@@ -89,7 +92,6 @@ public final class ScaleUtils {
 	 *            latlong
 	 * @return the width of the extent that is at the specified scale
 	 */
-
 	public static ReferencedEnvelope calculateBoundsFromScale(
 			double newScaleDenominator, Dimension displaySize, int dpi,
 			ReferencedEnvelope currentBounds) {
@@ -97,7 +99,6 @@ public final class ScaleUtils {
 		if (newScaleDenominator <= MIN_SCALE || Double.isInfinite(newScaleDenominator) || Double.isNaN(newScaleDenominator)) {
 			return currentBounds;
 		}
-
 		return calculateBoundsFromScaleInternal(newScaleDenominator,
 				displaySize, dpi, currentBounds, 0);
 	}
@@ -105,9 +106,9 @@ public final class ScaleUtils {
 	private static ReferencedEnvelope calculateBoundsFromScaleInternal(
 			double newScaleDenominator, Dimension displaySize, int dpi,
 			ReferencedEnvelope currentBounds, int iterations) {
+		double min = Double.MIN_VALUE;
 		double oldScaleDenom = calculateScaleDenominator(currentBounds,
 				displaySize, dpi);
-		
 		if(oldScaleDenom<=0 || Double.isInfinite(oldScaleDenom) || Double.isNaN(oldScaleDenom)){
 			return currentBounds;
 		}
@@ -157,21 +158,18 @@ public final class ScaleUtils {
 			}
 			GeodeticCalculator calc = new GeodeticCalculator();
 			double centerY = centeredYWithinWorld(referencePixelLatLong);
-			calc.setStartingGeographicPoint(minX, centerY);
-			calc.setDestinationGeographicPoint(maxX, centerY);
+			calc.setAnchorPoint(minX, centerY);
+			calc.setDestinationPoint(maxX, centerY);
 			return calc.getOrthodromicDistance() * scale;
 		} catch (FactoryException e) {
 			ProjectPlugin.log("error transforming: " + referencePixel
 					+ " to latlong", e);
 			return -1;
 		} catch (TransformException e) {
-            ProjectPlugin.log("error transforming: " + referencePixel
-                    + " to latlong", e);
-            return -1;
-        } catch (AssertionError e) {
-            ProjectPlugin.log("Bad parameters", e);
-            return -1;
-        }
+			ProjectPlugin.log("error transforming: " + referencePixel
+					+ " to latlong", e);
+			return -1;
+		}
 	}
 
 	/**
@@ -248,7 +246,7 @@ public final class ScaleUtils {
 	/**
 	 * calculates the pixel closest to x and y that is contained within the
 	 * world
-	 * 
+	 *
 	 * @param displaySize
 	 */
 	static Point nearestPixel(double x, double y, ReferencedEnvelope extent,
@@ -291,7 +289,7 @@ public final class ScaleUtils {
 		if( ul==null || lr==null ){
 			return new ReferencedEnvelope(new Envelope(), currentBounds.getCoordinateReferenceSystem());
 		}
-		
+
 		return new ReferencedEnvelope(ul.x, lr.x, ul.y, lr.y, currentBounds
 				.getCoordinateReferenceSystem());
 
@@ -299,7 +297,7 @@ public final class ScaleUtils {
 
 	public static double calculateScaleDenominator(ReferencedEnvelope bounds,
 			Dimension displaySize, int dpi) {
-		
+
 		if( bounds.getWidth()==0 || bounds.getHeight()==0){
 			return -1;
 		}
@@ -379,14 +377,14 @@ public final class ScaleUtils {
 
 		return at;
 	}
-	
+
 	public static Point worldToPixel(Coordinate coord,
 			ReferencedEnvelope bounds, Dimension displaySize) {
 
 		Point2D w = new Point2D.Double(coord.x, coord.y);
 		AffineTransform at = worldToScreenTransform(bounds, displaySize);
 		Point2D p = at.transform(w, new Point2D.Double());
-		return new Point((int)Math.round(p.getX()), (int)Math.round(p.getY()));
+		return new Point((int) p.getX(), (int) p.getY());
 	}
 
 
@@ -395,7 +393,7 @@ public final class ScaleUtils {
      * the new and old BBox should be the same.
      *
      * @param bbox the bbox to restrict to a value between the min and max scales.
-     * 
+     *
      * @return a new bounds that is withing the min and max bounds of the layer
      */
     public static ReferencedEnvelope fitToMinAndMax(ReferencedEnvelope bbox, ILayer layer) {
@@ -466,20 +464,4 @@ public final class ScaleUtils {
                 .getDisplaySize(), mapDisplay.getDPI(), requestedBounds);
     }
 
-    /**
-     * Creates affine transform for zooming that keeps <i>fixedPoint</i> stationary.
-     *
-     * @param zoom zoom ration
-     * @param fixedPoint point to keep stationary
-     * @return an <i>AffineTransform</i> object containing scale transform that keeps
-     *         <i>fixedPoint</i> stationary
-     */
-    public static AffineTransform createScaleTransformWithFixedPoint( double zoom,
-            Coordinate fixedPoint ) {
-        AffineTransform t = new AffineTransform();
-        t.translate(fixedPoint.x, fixedPoint.y);
-        t.scale(1 / zoom, 1 / zoom);
-        t.translate(-fixedPoint.x, -fixedPoint.y);
-        return t;
-    }
 }

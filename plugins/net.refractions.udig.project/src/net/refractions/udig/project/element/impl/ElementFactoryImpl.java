@@ -51,7 +51,7 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
     public static ElementFactory init() {
         try {
             ElementFactory theElementFactory = (ElementFactory) EPackage.Registry.INSTANCE
-                    .getEFactory("http:///net/refractions/udig/project/element.ecore"); //$NON-NLS-1$ 
+                    .getEFactory("http:///net/refractions/udig/project/element.ecore"); //$NON-NLS-1$
             if (theElementFactory != null) {
                 return theElementFactory;
             }

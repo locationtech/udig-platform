@@ -24,7 +24,7 @@
                standalone="true"
                visible="false"/>
       </perspectiveExtension>
-      <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
+      <perspectiveExtension targetID="net.refractions.udig.ui.alternateMapPerspective">
          <viewShortcut id="net.refractions.udig.location.view"/>
          <view
                closeable="true"

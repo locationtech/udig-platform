@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * A command that rollsback current changes.
- * 
+ *
  * @author jgarnett
  * @since 0.6.0
  */
@@ -47,7 +47,7 @@ public class RollbackCommand extends AbstractEditCommand {
      * @see net.refractions.udig.project.command.MapCommand#getName()
      */
     public String getName() {
-        return Messages.RollbackCommand_name; 
+        return Messages.RollbackCommand_name;
     }
 
 }

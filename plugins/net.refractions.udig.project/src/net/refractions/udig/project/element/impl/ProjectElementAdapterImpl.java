@@ -383,15 +383,5 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
         }
         return null;
     }
-    
-    @SuppressWarnings("unchecked")
-    public List getElements( Class type ) {
-        return getBackingObject().getElements(type);
-    }
-
-    @SuppressWarnings("unchecked")
-    public List getElements() {
-        return getBackingObject().getElements();
-    }
 
 } //ProjectElementAdapterImpl

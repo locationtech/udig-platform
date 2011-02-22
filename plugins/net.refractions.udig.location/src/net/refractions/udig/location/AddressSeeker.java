@@ -15,21 +15,18 @@
 package net.refractions.udig.location;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
-import org.apache.xmlrpc.client.XmlRpcClient;
-import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
+import org.apache.xmlrpc.XmlRpcClient;
 import org.apache.xmlrpc.XmlRpcException;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.AttributeTypeFactory;
+import org.geotools.feature.Feature;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.FeatureTypeBuilder;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -40,42 +37,43 @@ import com.vividsolutions.jts.geom.Point;
  * @author James
  */
 public class AddressSeeker {
-    
+
     // protected String host = "http://geocoder.us/service/xmlrpc";
     protected String username = ""; //$NON-NLS-1$
     protected String password = ""; //$NON-NLS-1$
-    
+
     /** Creates a new instance of AddressSeeker */
     public AddressSeeker() {
-        
+
     }
-    
+
     public void setPassword(String pwd){
         password = pwd;
     }
-    
-    static private SimpleFeatureType createAddressType( List<String> keys ) {
-    	SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
-    	builder.setName("Address");
+
+    static private FeatureType createAddressType( List<String> keys ) {
+        AttributeTypeFactory fac = AttributeTypeFactory.defaultInstance();
+        AttributeType[] types = new AttributeType[keys.size()-1];
+        int index=0;
         for( String key : keys ){
             if( "long".equals(key) || "lat".equals(key)) continue;             //$NON-NLS-1$ //$NON-NLS-2$
-            builder.add(key, String.class);
+            types[index] = fac.newAttributeType( key, String.class);
+            index++;
         }
-        String geometryAtt = "location";
-		builder.add(geometryAtt, Point.class, DefaultGeographicCRS.WGS84); //$NON-NLS-1$
-        builder.setDefaultGeometry(geometryAtt);
-        
+        types[index] = fac.newAttributeType("location", Point.class); //$NON-NLS-1$
+
+        FeatureType type;
         try {
-            return builder.buildFeatureType(); //$NON-NLS-1$
+            return FeatureTypeBuilder.newFeatureType(types, "Address"); //$NON-NLS-1$
         } catch (Throwable e) {
             return null;
         }
     }
-    
+
     public void setUsername(String uname){
         username = uname;
     }
-    
+
     private List<String> keys( Vector<Hashtable<String,Object>> vector ){
         List<String> keys = new ArrayList<String>();
         for( Hashtable<String,Object> record : vector )
@@ -83,32 +81,24 @@ public class AddressSeeker {
                 if( !keys.contains( key ) ) keys.add( key );
         return keys;
     }
-    
-    private XmlRpcClient getGeoCoderClient(String username, String password) throws MalformedURLException {
-        XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-        XmlRpcClient geocoder = new XmlRpcClient();
-        
-        if(username != null && password != null){
-            config.setServerURL(new URL("http://"+username+":"+password+"@geocoder.us/service/xmlrpc")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        }else{
-            config.setServerURL(new URL("http://geocoder.us/service/xmlrpc")); //$NON-NLS-1$
-        }
-        geocoder.setConfig(config);        
-        
-        return geocoder;
-    }
-    
-    /** Returns a List<SimpleFeature> of ADDRESS */
+
+    /** Returns a List<Feature> of ADDRESS */
     public Point where(String address) throws IOException,XmlRpcException {
-        GeometryFactory fac = new GeometryFactory();        
-        XmlRpcClient geocoder = getGeoCoderClient(username, password);
-        
+        GeometryFactory fac = new GeometryFactory();
+
+        XmlRpcClient geocoder;
+        if(username != null && password != null){
+            geocoder = new XmlRpcClient("http://"+username+":"+password+"@geocoder.us/service/xmlrpc"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        }else{
+            geocoder = new XmlRpcClient("http://geocoder.us/service/xmlrpc"); //$NON-NLS-1$
+        }
+
         Vector params = new Vector();
         params.addElement(address);
         // this method returns a string
         Vector vec = (Vector)geocoder.execute("geocode", params); //$NON-NLS-1$
         System.out.println("vec"+vec); //$NON-NLS-1$
-        
+
         Hashtable table = (Hashtable)vec.get(0);
         double lat = ((Number)table.get("lat")).doubleValue(); //$NON-NLS-1$
         double lon = ((Number)table.get("long")).doubleValue(); //$NON-NLS-1$
@@ -116,22 +106,27 @@ public class AddressSeeker {
         Point p = fac.createPoint(c);
         return p;
     }
-    
-    public List<SimpleFeature> geocode(String address) throws IOException,XmlRpcException {
-        GeometryFactory fac = new GeometryFactory();      
-        XmlRpcClient geocoder = getGeoCoderClient(username, password);
-        
+
+    public List<Feature> geocode(String address) throws IOException,XmlRpcException {
+        GeometryFactory fac = new GeometryFactory();
+
+        XmlRpcClient geocoder;
+        if(username != null && password != null){
+            geocoder = new XmlRpcClient("http://"+username+":"+password+"@geocoder.us/service/xmlrpc"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        }else{
+            geocoder = new XmlRpcClient("http://geocoder.us/service/xmlrpc"); //$NON-NLS-1$
+        }
         Vector params = new Vector();
         params.addElement(address);
-        
+
         // this method returns a string
         Vector<Hashtable<String,Object>> vec = (Vector<Hashtable<String,Object>>)geocoder.execute("geocode", params); //$NON-NLS-1$
         System.out.println("vec"+vec); //$NON-NLS-1$
 
         List<String> keys = keys( vec );
-        SimpleFeatureType ADDRESS = createAddressType( keys );
-        
-        List<SimpleFeature> places = new ArrayList<SimpleFeature>( vec.size() );
+        FeatureType ADDRESS = createAddressType( keys );
+
+        List<Feature> places = new ArrayList<Feature>( vec.size() );
 
         int count=1;
         for( Hashtable table : vec ){
@@ -151,7 +146,7 @@ public class AddressSeeker {
                         else if( "long".equals( key ) ){ //$NON-NLS-1$
                             lon = ((Number)table.get("long")).doubleValue(); //$NON-NLS-1$
                             continue;
-                        }                
+                        }
                         values[index] = table.get( key );
                 }
                 index++;
@@ -163,7 +158,7 @@ public class AddressSeeker {
                 values[index] = fac.createPoint( new Coordinate(lon, lat) );
             }
             try{
-                SimpleFeature f = SimpleFeatureBuilder.build(ADDRESS, values, fid( count++, table ) );
+                Feature f = ADDRESS.create( values, fid( count++, table ) );
                 places.add( f );
             } catch(Exception e){
                 e.printStackTrace();
@@ -174,14 +169,14 @@ public class AddressSeeker {
     private void append( StringBuffer fid, Hashtable<String,Object> table, String key ){
         if( table.containsKey( key ) && table.get(key ) != null ){
             fid.append( " " );                     //$NON-NLS-1$
-            fid.append( table.get( key ) );                    
+            fid.append( table.get( key ) );
         }
     }
     String fid( int count, Hashtable<String,Object> table ){
         StringBuffer fid = new StringBuffer();
-        fid.append( count );                        
+        fid.append( count );
         fid.append( "." );                 //$NON-NLS-1$
-        
+
         append( fid, table, "number"); //$NON-NLS-1$
         append( fid, table, "street"); //$NON-NLS-1$
         append( fid, table, "type");             //$NON-NLS-1$

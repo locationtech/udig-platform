@@ -14,8 +14,6 @@
  */
 package net.refractions.udig.project.ui.tool.selection.provider;
 
-import net.refractions.udig.core.filter.AdaptingFilter;
-import net.refractions.udig.core.filter.AdaptingFilterFactory;
 import net.refractions.udig.project.EditManagerEvent;
 import net.refractions.udig.project.IEditManagerListener;
 import net.refractions.udig.project.ILayer;
@@ -23,17 +21,18 @@ import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.LayerEvent.EventType;
+import net.refractions.udig.project.ui.internal.AdaptingFilter;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.opengis.filter.Filter;
+import org.geotools.filter.Filter;
 
 /**
  * A selection provider that provides as the current selection the currently selected layer's selection filter.
  * (map.getEditManager().getSelectedLayer().getFilter()).  The filter will be an Adaptable filter that adapts
  * to the layer that the filter is from.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -45,21 +44,19 @@ public class FilterSelectionProvider extends AbstractMapEditorSelectionProvider 
                 event.getSource().removeListener(this);
             }
             if( event.getType()==EventType.FILTER ){
-                AdaptingFilter filter = AdaptingFilterFactory.createAdaptingFilter((Filter) event.getNewValue(), event.getSource() );
-                
-                selection=new StructuredSelection( filter );
+                selection=new StructuredSelection(new AdaptingFilter((Filter) event.getNewValue(), event.getSource()));
                 notifyListeners();
             }
         }
-    
+
     };
-    
+
     private IMap map;
-    
+
     private IEditManagerListener editManagerListener =  new IEditManagerListener(){
 
         public void changed( EditManagerEvent event ) {
-        	
+
         	if(event.getSource().getMap() != map){
         		event.getSource().removeListener(this);
         		return;
@@ -71,15 +68,14 @@ public class FilterSelectionProvider extends AbstractMapEditorSelectionProvider 
                 ILayer selectedLayer = (ILayer) event.getNewValue();
                 if( selectedLayer!=null ){
                     selectedLayer.addListener(layerListener);
-                    AdaptingFilter filter = AdaptingFilterFactory.createAdaptingFilter(
-                            selectedLayer.getFilter(), selectedLayer );                    
-                    selection=new StructuredSelection( filter );
+                    Filter filter = selectedLayer.getFilter();
+                    selection=new StructuredSelection(new AdaptingFilter(filter, selectedLayer));
                 }
                 notifyListeners();
             }
-        } 
+        }
     };
-    
+
 
 
 	public void setActiveMap( IMap map, MapPart editor ) {
@@ -91,14 +87,13 @@ public class FilterSelectionProvider extends AbstractMapEditorSelectionProvider 
 			ILayer selectedLayer = map.getEditManager().getSelectedLayer();
             if( selectedLayer!=null ){
                 selectedLayer.addListener(layerListener);
-            
-    			AdaptingFilter filter = AdaptingFilterFactory.createAdaptingFilter(
-    			        selectedLayer.getFilter(), selectedLayer );
-    			selection=new StructuredSelection(filter);
+
+    			Filter filter = selectedLayer.getFilter();
+    			selection=new StructuredSelection(new AdaptingFilter(filter, selectedLayer));
     			notifyListeners();
             }
 		}
-		
+
 		if(!map.getEditManager().containsListener(editManagerListener))
 			map.getEditManager().addListener(editManagerListener);
     }

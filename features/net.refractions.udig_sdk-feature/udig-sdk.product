@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?pde version="3.5"?>
+<?pde version="3.1"?>
 
-<product name="uDig SDK" uid="udig-sdk" id="net.refractions.udig.sdk" application="net.refractions.udig.ui.application" version="1.2.1.qualifier" useFeatures="true" includeLaunchers="false">
+<product name="%product.sdk.name" id="net.refractions.udig.product" application="net.refractions.udig.ui.application" useFeatures="true">
 
-   <configIni use="default" path="/net.refractions.udig-feature/config.files/configuration/config.ini">
-   </configIni>
+   <aboutInfo>
+      <image path="/net.refractions.udig/icons/about.gif"/>
+      <text>
+         %verboseAboutText
+      </text>
+   </aboutInfo>
+
+   <configIni use="default" path="/net.refractions.udig-feature/config.files/configuration/config.ini"/>
 
    <launcherArgs>
       <vmArgs>-Xmx386M -Dosgi.parentClassloader=ext</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true</vmArgsMac>
    </launcherArgs>
 
-   <windowImages/>
+   <windowImages i16="/net.refractions.udig/icons/icon16.gif" i32="/net.refractions.udig/icons/icon32.gif" i64="/net.refractions.udig/icons/icon64.gif" i128="/net.refractions.udig/icons/icon128.gif"/>
 
-   <launcher>
+   <splash
+      location="net.refractions.udig"
+      startupProgressRect="0,196,500,8"
+      startupMessageRect="7,180,445,16"
+      startupForegroundColor="FFFFFF" />
+   <launcher name="udigsdk">
       <linux icon="/net.refractions.udig/icons/udig.xpm"/>
       <macosx icon="/net.refractions.udig/icons/icon128.icns"/>
       <solaris/>
@@ -23,19 +34,20 @@
       </win>
    </launcher>
 
+   <intro introId="net.refractions.udig.ui.intro"/>
+
    <vm>
    </vm>
-
-   <license>
-        <url>http://www.gnu.org/licenses/lgpl.html</url>
-   </license>
 
    <plugins>
    </plugins>
 
    <features>
-      <feature id="net.refractions.udig_sdk"/>
+      <feature id="org.eclipse.rcp" version="3.3.3.r33x_r20080129-8y8eE9UEUWI6qujeED0xT7bc"/>
+      <feature id="org.eclipse.rcp.nls1" version="3.2.0.v200606220026"/>
+      <feature id="org.eclipse.rcp.source" version="3.3.3.r33x_r20080129-8y8eE9UEUWI6qujeED0xT7bc"/>
+      <feature id="org.eclipse.rcp.source.nls1" version="3.2.0.v200606220026"/>
+      <feature id="net.refractions.udig_sdk" version="1.1.0"/>
    </features>
-
 
 </product>

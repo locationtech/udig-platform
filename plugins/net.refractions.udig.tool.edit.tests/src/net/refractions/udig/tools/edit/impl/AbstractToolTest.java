@@ -8,10 +8,10 @@ import net.refractions.udig.tools.edit.support.TestHandler;
 public abstract class AbstractToolTest extends TestCase {
 
     protected abstract AbstractEditTool createTool();
-    
+
     AbstractEditTool tool;
     protected TestHandler handler;
-    
+
     @Override
     protected void setUp() throws Exception {
         tool=createTool();

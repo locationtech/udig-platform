@@ -27,25 +27,25 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
  * </p>
  * <p>
  * Example Use:
- * 
+ *
  * <pre><code>
  * renderExecutor.eAdapters().add(new RenderListenerAdapter(){
  *     protected void renderStarting() {
  *         //Enter starting behaviour
  *     }
- * 
+ *
  *     protected void renderUpdate() {
  *         //Enter update behaviour
  *     }
- * 
+ *
  *     protected void renderDone() {
  *         //Enter done behaviour
  *     }
  * });
  * </code></pre>
- * 
+ *
  * </p>
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -97,7 +97,7 @@ public class RenderListenerAdapter extends AdapterImpl {
     /**
      * Subclasses may implement if they are interested in being notified when a renderer has been
      * disposed
-     * 
+     *
      * @param msg
      */
     protected void renderDisposed( Notification msg ) {

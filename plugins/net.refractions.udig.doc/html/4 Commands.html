@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 4 Commands</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 4 Commands -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <p>Commands are the only acceptable way of modifying the data model.  The reason for forcing developers to write and use commands is so that actions can be undone and redone, otherwise developers <b>will</b> directly attack the model and none of the changes will be able to be undone by the application user.</p>
+
+<ul><li><a href="1 Simple Commands.html" title="1 Simple Commands">1 Simple Commands</a> &mdash; <span class="smalltext">how to <b>do stuff</b></span></li><li><a href="2 NavCommand Example.html" title="2 NavCommand Example">2 NavCommand Example</a> &mdash; <span class="smalltext">used to go places</span></li><li><a href="3 Draw Command.html" title="3 Draw Command">3 Draw Command</a> &mdash; <span class="smalltext">affect the MapDisplay and are how tools provide dynamic feedback</span></li><li><a href="3 Edit Commands.html" title="3 Edit Commands">3 Edit Commands</a> &mdash; <span class="smalltext">affect data within a transaction</span></li><li><a href="5 Composite Commands.html" title="5 Composite Commands">5 Composite Commands</a> &mdash; <span class="smalltext">combine commands</span></li></ul>
+
+<p>Command authors have a parallel but separate API than most extension authors.  Command authors are permitted to use the <em>internal</em> API, that is classes with internal in their package name.  Notice that Command authors are not permitted to reference any classes implementation classes (classes with impl in their package name).  </p>
+
+<h3><a name="4Commands-CommandHelperclasses">Command Helper classes</a></h3>
+<h5><a name="4Commands-CommandFactories">Command Factories</a></h5>
+<p>There are a number of factories built into uDig that create commonly used commands.  </p>
+<ol>
+	<li>BasicCommandFactory: Creates the common commands such as Delete Layer Commands and Add Layer Commands.</li>
+	<li>SelectionCommandFactory: Creates subset of ICommands that sets the current selection in layers.  All the commands are normal Commands.</li>
+	<li>NavigationCommandFactory: Creates common navigation commands such as PanCommand.</li>
+	<li>EditCommandFactory: Creates edit commands such as ModifyFeatureCommand and AddFeatureCommand.</li>
+	<li>DrawCommandFactory: Creates draw commands such as TranslationCommand and DrawShapeCommand.</li>
+</ol>
+
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=19">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=19">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

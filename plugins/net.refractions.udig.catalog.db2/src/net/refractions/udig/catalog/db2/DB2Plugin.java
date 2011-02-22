@@ -19,12 +19,13 @@ package net.refractions.udig.catalog.db2;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.geotools.data.db2.DB2NGDataStoreFactory;
+import org.geotools.data.db2.DB2DataStoreFactory;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -53,7 +54,7 @@ public class DB2Plugin extends AbstractUIPlugin {
         super.start(context);
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         try{
-            Thread.currentThread().setContextClassLoader(DB2NGDataStoreFactory.class.getClassLoader());
+            Thread.currentThread().setContextClassLoader(DB2DataStoreFactory.class.getClassLoader());
             Logger.getLogger("org.geotools.data.db2").setLevel(Level.SEVERE); //$NON-NLS-1$
         }finally{
             Thread.currentThread().setContextClassLoader(loader);
@@ -78,7 +79,7 @@ public class DB2Plugin extends AbstractUIPlugin {
 
     /**
      * Returns an image descriptor for the image file at the given plug-in relative path.
-     * 
+     *
      * @param path the path
      * @return the image descriptor
      */
@@ -103,13 +104,13 @@ public class DB2Plugin extends AbstractUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:
-     * 
+     *
      * <pre><code>
      * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }
-     * 
+     *
      */
     public static void trace( String message, Throwable e ) {
         if (getDefault().isDebugging()) {
@@ -127,11 +128,11 @@ public class DB2Plugin extends AbstractUIPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ) {
         return getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 }

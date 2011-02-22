@@ -29,7 +29,7 @@ import org.osgi.service.prefs.Preferences;
  * circumstance; since we want to have the same functionality as the preference dialog without being
  * the preference dialog, this seems appropriate.
  * </p>
- * 
+ *
  * @author chorner
  * @since 1.1
  */
@@ -43,12 +43,12 @@ public class SLDPreferencesService implements IPreferencesService, IRegistryChan
     static final SLDRootPreferences root = new SLDRootPreferences();
     private static final Map<String, Object> scopeRegistry = Collections.synchronizedMap(new HashMap<String, Object>());
 
-    
+
     public SLDPreferencesService() {
         super();
         initializeScopes();
     }
-    
+
     public String get( String key, String defaultValue, Preferences[] nodes ) {
         return null;
     }
@@ -155,7 +155,7 @@ public class SLDPreferencesService implements IPreferencesService, IRegistryChan
 
     public void registryChanged( IRegistryChangeEvent event ) {
     }
-   
+
     protected IEclipsePreferences createNode(String name) {
         IScope scope = null;
         Object value = scopeRegistry.get(name);
@@ -183,9 +183,9 @@ public class SLDPreferencesService implements IPreferencesService, IRegistryChan
             instance = new SLDPreferencesService();
         return instance;
     }
-    
+
     static void log(IStatus status) {
         //InternalPlatform.getDefault().log(status);
     }
-    
+
 }

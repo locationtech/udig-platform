@@ -14,7 +14,7 @@
                name="%refresh.name"
                onToolbar="true"
                tooltip="%refresh.tooltip">
-         </actionTool>   
+         </actionTool>
          <actionTool
                class="net.refractions.udig.tools.internal.CancelTool"
                icon="icons/etool16/cancel_all_co.gif"
@@ -23,7 +23,7 @@
                onToolbar="true"
                name="%cancel.name"
                id="net.refractions.udig.tools.cancel">
-         </actionTool>   
+         </actionTool>
          <modalTool
                categoryId="net.refractions.udig.tool.category.zoom"
                class="net.refractions.udig.tools.internal.Zoom"
@@ -129,26 +129,6 @@
                      name="Middle Mouse Pan"
                      tooltip="Pan holding the middle mouse down.">
                </backgroundTool>
-               <modalTool
-                     categoryId="net.refractions.udig.tool.category.pan"
-                     class="net.refractions.udig.tools.internal.FixedScalePan"
-                     icon="icons/etool16/pan_mode.gif"
-                     id="net.refractions.udig.tools.FixedScalePan"
-                     name="%FixedScalePan.name"
-                     onToolbar="true"
-                     toolCursorId="move"
-                     tooltip="%FixedScalePan.tooltip">
-               </modalTool>
-               <modalTool
-                     categoryId="net.refractions.udig.tool.category.pan"
-                     class="net.refractions.udig.tools.internal.ScrollPanTool"
-                     icon="icons/etool16/pan_mode.gif"
-                     id="net.refractions.udig.tools.ScrollPan"
-                     name="%ScrollPanTool.name"
-                     onToolbar="true"
-                     toolCursorId="move"
-                     tooltip="%ScrollPanTool.tooltip">
-               </modalTool>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -188,7 +168,7 @@
             description="%refresh.tooltip"
             id="net.refractions.udig.tools.refreshCommand"
             name="%refresh.name"/>
-   </extension> 
+   </extension>
       <extension
          point="org.eclipse.ui.bindings">
       <key

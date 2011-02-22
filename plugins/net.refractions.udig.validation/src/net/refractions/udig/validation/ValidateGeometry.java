@@ -22,7 +22,7 @@ import org.geotools.validation.spatial.IsValidGeometryValidation;
  * validation type.
  * <p>
  * </p>
- * 
+ *
  * @author chorner
  * @since 1.0.1
  */

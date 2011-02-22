@@ -26,7 +26,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 /**
  * Preferences for setting optional preferences that impact the performance of editing.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -43,16 +43,16 @@ public class PerformancelPreferences extends FieldEditorPreferencePage
 
     @Override
     protected void createFieldEditors() {
-        addField( new BooleanFieldEditor(PreferenceConstants.P_FILL_POLYGONS, 
+        addField( new BooleanFieldEditor(PreferenceConstants.P_FILL_POLYGONS,
                 Messages.PerformancelPreferences_fill_polygons,
                 getFieldEditorParent()));
-        addField( new BooleanFieldEditor(PreferenceConstants.P_HIDE_SELECTED_FEATURES, 
+        addField( new BooleanFieldEditor(PreferenceConstants.P_HIDE_SELECTED_FEATURES,
                 Messages.PerformancelPreferences_hide_features,
                 getFieldEditorParent()));
-        addField( new BooleanFieldEditor(net.refractions.udig.project.preferences.PreferenceConstants.P_SHOW_ANIMATIONS, 
+        addField( new BooleanFieldEditor(net.refractions.udig.project.preferences.PreferenceConstants.P_SHOW_ANIMATIONS,
                 net.refractions.udig.project.ui.internal.Messages.RenderPreferences_animations,
                 getFieldEditorParent()){
-            
+
             @Override
             public IPreferenceStore getPreferenceStore() {
                 return ProjectPlugin.getPlugin().getPreferenceStore();

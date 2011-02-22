@@ -26,7 +26,7 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * A decorator that synchronizes on all methods of the list.
- * 
+ *
  * When iterating make sure to use:
  * list.lock();
  * try{
@@ -34,30 +34,30 @@ import org.eclipse.emf.common.util.EList;
  * }finally{
  *    list.unlock();
  * }
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class SynchronizedEList<T> implements EList<T> {
     private EList<T> wrapped;
     Lock lock=new UDIGDisplaySafeLock();
-    
+
     /**
      * Lock this list.
      */
     public void lock() {
         lock.lock();
     }
-    
+
     public void unlock() {
         lock.unlock();
     }
-    
+
     public SynchronizedEList( EList<T> list ){
         wrapped=list;
     }
-    
-    
+
+
     public void add( int arg0, T arg1 ) {
         lock.lock();
         try{
@@ -67,7 +67,7 @@ public class SynchronizedEList<T> implements EList<T> {
         }
     }
 
-    
+
     public boolean add( T arg0 ) {
         lock.lock();
         try{
@@ -77,7 +77,7 @@ public class SynchronizedEList<T> implements EList<T> {
         }
     }
 
-    
+
     public boolean addAll( Collection<? extends T> arg0 ) {
         lock.lock();
         try{
@@ -87,7 +87,7 @@ public class SynchronizedEList<T> implements EList<T> {
         }
     }
 
-    
+
     public boolean addAll( int arg0, Collection<? extends T> arg1 ) {
         lock.lock();
         try{
@@ -115,7 +115,7 @@ public class SynchronizedEList<T> implements EList<T> {
         }
     }
 
-    
+
     public boolean containsAll( Collection<?> arg0 ) {
         lock.lock();
         try{
@@ -189,7 +189,7 @@ public class SynchronizedEList<T> implements EList<T> {
         return listIterator(0);
     }
 
-    
+
     public ListIterator<T> listIterator(int arg0) {
 		return new ListIterator<T>() {
 			ListIterator<T> iter = wrapped.listIterator();
@@ -315,7 +315,7 @@ public class SynchronizedEList<T> implements EList<T> {
         }
     }
 
-    
+
     public boolean removeAll( Collection<?> arg0 ) {
         lock.lock();
         try{
@@ -325,7 +325,7 @@ public class SynchronizedEList<T> implements EList<T> {
         }
     }
 
-    
+
     public boolean retainAll( Collection<?> arg0 ) {
         lock.lock();
         try{
@@ -335,7 +335,7 @@ public class SynchronizedEList<T> implements EList<T> {
         }
     }
 
-    
+
     public T set( int arg0, T arg1 ) {
         lock.lock();
         try{
@@ -375,7 +375,7 @@ public class SynchronizedEList<T> implements EList<T> {
 
     }
 
-    
+
     public<E> E[] toArray( E[] arg0 ) {
         lock.lock();
         try{

@@ -2,20 +2,17 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.style.sld; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.style.sld.SLDPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Eclipse-BuddyPolicy: global
 Export-Package: net.refractions.udig.style.sld,
  net.refractions.udig.style.sld.editor,
- net.refractions.udig.style.sld.editor.internal,
  net.refractions.udig.style.sld.simple
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.project,
  net.refractions.udig.style,
  net.refractions.udig.catalog,
- net.refractions.udig.ui,
- org.eclipse.ui.forms
-Bundle-ActivationPolicy: lazy
+ net.refractions.udig.ui
+Eclipse-LazyStart: true

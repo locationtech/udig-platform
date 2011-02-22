@@ -17,7 +17,7 @@ import net.refractions.udig.project.internal.Map;
  * TODO Purpose of net.refractions.udig.project.internal.commands.edit
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -41,7 +41,7 @@ public abstract class AbstractEditCommand implements EditCommand {
     public Map getMap() {
         return map;
     }
-    
+
     public Command copy() {
         return null;
     }

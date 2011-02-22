@@ -9,7 +9,6 @@
 package net.refractions.udig.project.internal.commands.edit;
 
 import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.MapCommand;
 import net.refractions.udig.project.command.PostDeterminedEffectCommand;
@@ -20,34 +19,32 @@ import net.refractions.udig.project.internal.Messages;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.filter.FilterFactory;
+import org.geotools.feature.Feature;
+import org.geotools.filter.FilterFactoryFinder;
 
 /**
  * Deletes a feature from the map.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
-public class DeleteFeatureCommand extends AbstractEditCommand implements UndoableMapCommand, 
+public class DeleteFeatureCommand extends AbstractEditCommand implements UndoableMapCommand,
     PostDeterminedEffectCommand {
 
-    IBlockingProvider<SimpleFeature> featureProvider;
+    IBlockingProvider<Feature> featureProvider;
 
     private IBlockingProvider<ILayer> layerProvider;
 
     protected boolean done;
 
-	private SimpleFeature feature;
+	private Feature feature;
 
 	private ILayer oldLayer;
 
     /**
      * Construct <code>DeleteFeatureCommand</code>.
      */
-    public DeleteFeatureCommand( IBlockingProvider<SimpleFeature> featureProvider, IBlockingProvider<ILayer> layerProvider ) {
+    public DeleteFeatureCommand( IBlockingProvider<Feature> featureProvider, IBlockingProvider<ILayer> layerProvider ) {
         this.featureProvider = featureProvider;
         this.layerProvider = layerProvider;
     }
@@ -60,15 +57,14 @@ public class DeleteFeatureCommand extends AbstractEditCommand implements Undoabl
     }
 
     public boolean execute( IProgressMonitor monitor ) throws Exception {
-        monitor.beginTask(Messages.DeleteFeatureCommand_deleteFeature, 4); 
+        monitor.beginTask(Messages.DeleteFeatureCommand_deleteFeature, 4);
         monitor.worked(1);
         feature = featureProvider.get(new SubProgressMonitor(monitor, 1));
         if( feature==null )
             return false;
         oldLayer = layerProvider.get(new SubProgressMonitor(monitor, 1));
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-		oldLayer.getResource(FeatureStore.class, null).removeFeatures(
-                filterFactory.id(FeatureUtils.stringToId(filterFactory, feature.getID())));
+        oldLayer.getResource(FeatureStore.class, null).removeFeatures(
+                FilterFactoryFinder.createFilterFactory().createFidFilter(feature.getID()));
         map.getEditManagerInternal().setEditFeature(null, null);
         return true;
     }
@@ -80,7 +76,7 @@ public class DeleteFeatureCommand extends AbstractEditCommand implements Undoabl
      * @see net.refractions.udig.project.command.MapCommand#getName()
      */
     public String getName() {
-        return Messages.DeleteFeatureCommand_deleteFeature; 
+        return Messages.DeleteFeatureCommand_deleteFeature;
     }
 
     /**

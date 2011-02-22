@@ -8,7 +8,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.geotools.jdbc.JDBCDataStore;
+import org.geotools.data.mysql.MySQLDataStore;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -23,12 +23,12 @@ public class MySQLPlugin extends AbstractUIPlugin {
 
 	// The shared instance
 	private static MySQLPlugin plugin;
-	
+
 	private ResourceBundle resourceBundle;
 
-	private static final Set<JDBCDataStore> dsList = new CopyOnWriteArraySet<JDBCDataStore>();
+	private static final Set<MySQLDataStore> dsList = new CopyOnWriteArraySet<MySQLDataStore>();
 
-	
+
 	/**
 	 * The constructor
 	 */
@@ -63,7 +63,7 @@ public class MySQLPlugin extends AbstractUIPlugin {
         }*/
 		super.stop(context);
 	}
-	
+
 	/**
 	 * Returns the plugin's resource bundle,
 	 * @return x
@@ -77,10 +77,10 @@ public class MySQLPlugin extends AbstractUIPlugin {
 		}
 		return resourceBundle;
 	}
-    
-	
+
+
     /**
-     * 
+     *
      * Logs the Throwable in the plugin's log.
      * <p>
      * This will be a user visible ERROR iff:
@@ -88,18 +88,18 @@ public class MySQLPlugin extends AbstractUIPlugin {
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      * </ul>
      * </p>
-     * @param message 
-     * @param t 
+     * @param message
+     * @param t
      */
     public static void log( String message, Throwable t ) {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
         getDefault().getLog().log(new Status(status, PLUGIN_ID, IStatus.OK, message, t));
     }
 
-    public static void addDataStore(JDBCDataStore ds) {
+    static void addDataStore(MySQLDataStore ds) {
         dsList.add(ds);
     }
-    
+
 	/**
 	 * Returns the shared instance
 	 *

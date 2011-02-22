@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 /**
  * Synchronizes reads and writes but not within synchronization block during notification. When
  * iterating make sure to use: synchronized( list ){ do iterations }
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */

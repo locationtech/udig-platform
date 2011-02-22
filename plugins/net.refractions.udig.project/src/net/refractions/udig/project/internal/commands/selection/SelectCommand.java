@@ -21,7 +21,7 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.opengis.filter.Filter;
+import org.geotools.filter.Filter;
 
 /**
  * Set an arbitrary selection filter on a layer.
@@ -46,7 +46,7 @@ public class SelectCommand extends AbstractCommand implements UndoableMapCommand
     }
 
     public String getName() {
-        return Messages.SelectCommand_name + layer.getName(); 
+        return Messages.SelectCommand_name + layer.getName();
     }
 
     public void rollback( IProgressMonitor monitor ) throws Exception {

@@ -23,8 +23,8 @@ import net.refractions.udig.project.internal.Messages;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * Command for setting the applicability of a layer.  
- * 
+ * Command for setting the applicability of a layer.
+ *
  * @see ILayer#isApplicable(String)
  * @author Jesse
  * @since 1.0.0
@@ -43,7 +43,7 @@ public class SetApplicabilityCommand extends AbstractCommand implements Undoable
     }
 
     public void run( IProgressMonitor monitor ) throws Exception {
-        monitor.beginTask(Messages.SetApplicabilityCommand_name,3); 
+        monitor.beginTask(Messages.SetApplicabilityCommand_name,3);
         monitor.worked(1);
         this.oldValue=layer.isApplicable(applicabilityId);
         if( oldValue==newValue)
@@ -53,11 +53,11 @@ public class SetApplicabilityCommand extends AbstractCommand implements Undoable
     }
 
     public String getName() {
-        return Messages.SetApplicabilityCommand_name; 
+        return Messages.SetApplicabilityCommand_name;
     }
 
     public void rollback( IProgressMonitor monitor ) throws Exception {
-        monitor.beginTask(Messages.SetApplicabilityCommand_name,3); 
+        monitor.beginTask(Messages.SetApplicabilityCommand_name,3);
         monitor.worked(1);
         if( oldValue==newValue)
             return;

@@ -22,7 +22,7 @@ import net.refractions.udig.catalog.IGeoResource;
 import org.eclipse.jface.viewers.ViewerSorter;
 /**
  * Sorts the Catalog Viewers so that like Services are listed together.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */

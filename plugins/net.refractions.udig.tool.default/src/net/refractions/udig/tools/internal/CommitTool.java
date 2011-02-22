@@ -18,16 +18,16 @@ package net.refractions.udig.tools.internal;
 
 import java.lang.reflect.InvocationTargetException;
 
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.ui.tool.AbstractActionTool;
-import net.refractions.udig.ui.PlatformGIS;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+
+import net.refractions.udig.project.command.MapCommand;
+import net.refractions.udig.project.ui.tool.AbstractActionTool;
+import net.refractions.udig.ui.PlatformGIS;
 
 /**
  * Commit the current transaction
@@ -42,7 +42,7 @@ public class CommitTool extends AbstractActionTool {
      */
     public void run() {
 //        context.sendASyncCommand(context.getEditFactory().createCommitCommand());
-    	// I don't need confirmation on a commit so rather than use a command I'm going to 
+    	// I don't need confirmation on a commit so rather than use a command I'm going to
     	// directly execute the command here
     	PlatformGIS.run(new IRunnableWithProgress(){
 
@@ -57,7 +57,7 @@ public class CommitTool extends AbstractActionTool {
 					Display display = Display.getDefault();
 					display.asyncExec(new Runnable() {
 						public void run() {
-							
+
 							Shell parent = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 							String message = Messages.CommitTool_Error_message;
 							MessageDialog.openError(parent , Messages.CommitTool_error_shell_title, message);
@@ -65,7 +65,7 @@ public class CommitTool extends AbstractActionTool {
 					});
 				}
 			}
-    		
+
     	});
     }
 

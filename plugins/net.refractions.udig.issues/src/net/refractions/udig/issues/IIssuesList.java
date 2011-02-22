@@ -7,15 +7,15 @@ import net.refractions.udig.issues.listeners.IIssuesListListener;
 
 
 /**
- * Encapsulates a list of issues.  The default implementation is a list kept 
- * in memory.  But other implementation can be defined by the user.
- * 
+ * Encapsulates a list of issues.  The default implementation is a list kept in memory.  But other implementation can be defined by
+ * the
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public interface IIssuesList extends List<IIssue> {
     /**
-     * Returns a set of all the issue groups that are in the list. 
+     * Returns a set of all the issue groups that are in the list.
      *
      * @return a set of all the issue groups.
      */
@@ -30,7 +30,7 @@ public interface IIssuesList extends List<IIssue> {
     /**
      * Remove all issues in the group.
      *
-     * @param groupId group id of issues to remove 
+     * @param groupId group id of issues to remove
      */
     public void removeIssues(String groupId);
     /**

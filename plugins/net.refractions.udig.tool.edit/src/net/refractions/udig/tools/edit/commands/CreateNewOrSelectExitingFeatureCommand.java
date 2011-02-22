@@ -14,7 +14,6 @@
  */
 package net.refractions.udig.tools.edit.commands;
 
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
@@ -25,18 +24,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureStore;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureIterator;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
+import org.geotools.filter.FilterFactoryFinder;
 
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * If there is no feature with the Feature ID in the layer then a new feature will be
  * created.  Otherwise the feature's geometry will be set.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -47,7 +44,7 @@ public class CreateNewOrSelectExitingFeatureCommand extends AbstractCommand impl
     private String fid;
     private boolean createFeature;
     private UndoableMapCommand modifyCommand;
-    private SimpleFeature feature;
+    private Feature feature;
     private UndoableMapCommand createCommand;
 
     public CreateNewOrSelectExitingFeatureCommand( String fid2, ILayer layer2, Geometry geom2 ) {
@@ -59,11 +56,8 @@ public class CreateNewOrSelectExitingFeatureCommand extends AbstractCommand impl
     public void run( IProgressMonitor monitor ) throws Exception {
         monitor.beginTask(Messages.CreateOrSetFeature_name, 10);
         monitor.worked(1);
-        FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(FeatureStore.class, new SubProgressMonitor(monitor,2));
-        Filter id = FeatureUtils.id(fid);
-        String typeName = store.getSchema().getTypeName();
-        DefaultQuery query = new DefaultQuery(typeName, id);
-        FeatureIterator<SimpleFeature> iter=store.getFeatures( query ).features();
+        FeatureStore store = layer.getResource(FeatureStore.class, new SubProgressMonitor(monitor,2));
+        FeatureIterator iter=store.getFeatures( new DefaultQuery(store.getSchema().getTypeName(), FilterFactoryFinder.createFilterFactory().createFidFilter(fid)) ).features();
         try{
             createFeature=!iter.hasNext();
         }finally{
@@ -78,12 +72,12 @@ public class CreateNewOrSelectExitingFeatureCommand extends AbstractCommand impl
 
     /**
      * Modifies the existing feature.
-     * 
+     *
      * @param monitor
-     * @throws Exception 
+     * @throws Exception
      */
     private void modifyFeature( IProgressMonitor monitor ) throws Exception {
-        
+
         modifyCommand=EditCommandFactory.getInstance().createSetGeomteryCommand(fid, layer, geom);
         modifyCommand.setMap(getMap());
         modifyCommand.run(monitor);
@@ -94,8 +88,7 @@ public class CreateNewOrSelectExitingFeatureCommand extends AbstractCommand impl
      * @param monitor
      */
     private void createFeature( IProgressMonitor monitor ) throws Exception  {
-        Object[] attributeArray = new Object[layer.getSchema().getAttributeCount()];
-        feature=SimpleFeatureBuilder.build(layer.getSchema(), attributeArray, "newFeature"); //$NON-NLS-1$
+        feature=layer.getSchema().create(new Object[layer.getSchema().getAttributeCount()]);
         feature.setDefaultGeometry(geom);
         createCommand=EditCommandFactory.getInstance().createAddFeatureCommand(feature, layer);
         createCommand.setMap(getMap());

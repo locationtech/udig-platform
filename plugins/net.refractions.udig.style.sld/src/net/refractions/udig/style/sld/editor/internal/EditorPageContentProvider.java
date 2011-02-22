@@ -1,24 +1,15 @@
-/* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2010, Refractions Research Inc.
- * (C) 2003, 2005 IBM Corporation and others
- * ------
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation;
- * version 2.1 of the License.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * --------
+package net.refractions.udig.style.sld.editor.internal;
+
+/*******************************************************************************
+ * Copyright (c) 2003, 2005 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- */
-package net.refractions.udig.style.sld.editor.internal;
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
 
 import net.refractions.udig.style.sld.editor.EditorPageManager;
 
@@ -27,7 +18,7 @@ import org.eclipse.jface.viewers.Viewer;
 
 /**
  * Provides a tree model for <code>PreferenceManager</code> content.
- * 
+ *
  * @since 3.0
  */
 public class EditorPageContentProvider implements ITreeContentProvider {
@@ -44,7 +35,7 @@ public class EditorPageContentProvider implements ITreeContentProvider {
     /**
      * Find the parent of the provided node.  Will search recursivly through the
      * preference tree.
-     * 
+     *
      * @param parent the possible parent node.
      * @param target the target child node.
      * @return the parent node of the child node.
@@ -111,7 +102,7 @@ public class EditorPageContentProvider implements ITreeContentProvider {
 	/**
 	 * Set the manager for the preferences.
 	 * @param manager The manager to set.
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected void setManager(EditorPageManager manager) {

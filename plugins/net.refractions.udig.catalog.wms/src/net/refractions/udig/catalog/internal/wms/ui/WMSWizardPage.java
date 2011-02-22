@@ -15,9 +15,9 @@ import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.internal.wms.WMSServiceExtension;
 import net.refractions.udig.catalog.internal.wms.WMSServiceImpl;
 import net.refractions.udig.catalog.internal.wms.WmsPlugin;
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
 import net.refractions.udig.catalog.ui.UDIGConnectionPage;
 import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
+import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
 import net.refractions.udig.catalog.wms.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -51,11 +51,11 @@ import org.eclipse.ui.PlatformUI;
  * <p>
  * This page is used in the Import and Add Layer wizards.
  * </p>
- * 
+ *
  * @author jgarnett
  * @since 1.0.0
  */
-public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListener, UDIGConnectionPage {
+public class WMSWizardPage extends WizardPage implements ModifyListener, UDIGConnectionPage {
 
     final static String[] types = {"WMS", "Directory"}; //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -70,11 +70,11 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
 
     /**
      * Construct <code>WMSWizardPage</code>.
-     * 
+     *
      * @param pageName
      */
     public WMSWizardPage() {
-        super(Messages.WMSWizardPage_title); 
+        super(Messages.WMSWizardPage_title);
 
         settings = WmsPlugin.getDefault().getDialogSettings().getSection(WMS_WIZARD);
         if (settings == null) {
@@ -95,12 +95,12 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
         if( !toParams.isEmpty() ){
         	return toParams;
         }
-        
+
     	WMSConnectionFactory connectionFactory = new WMSConnectionFactory();
     	Map<String, Serializable> params = connectionFactory.createConnectionParameters( getState().getWorkflow().getContext() );
     	if( params !=null )
     		return params;
-    	
+
     	return Collections.emptyMap();
     }
     /** Retrieve "best" WMS guess of parameters based on provided context */
@@ -115,7 +115,7 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
         }
         return Collections.EMPTY_MAP;
     }
-  
+
     public void createControl( Composite parent ) {
         String[] recentWMSs = settings.getArray(WMS_RECENT);
         if (recentWMSs == null) {
@@ -133,21 +133,21 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
         gridData = new GridData();
 
         Label urlLabel = new Label(composite, SWT.NONE);
-        urlLabel.setText(Messages.WMSWizardPage_label_url_text); 
+        urlLabel.setText(Messages.WMSWizardPage_label_url_text);
         urlLabel.setLayoutData(gridData);
 
         gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.widthHint = 400;
 
         // For Drag 'n Drop as well as for general selections
-        // look for a url as part of the selection
+        // look for a url as part of the selction
         Map<String,Serializable> params = defaultParams(); // based on selection
-        
+
         urlCombo = new Combo(composite, SWT.BORDER);
         urlCombo.setItems(recentWMSs);
         urlCombo.setVisibleItemCount(15);
         urlCombo.setLayoutData(gridData);
-        
+
         URL selectedURL = getURL( params );
         if (selectedURL != null) {
             urlCombo.setText( selectedURL.toExternalForm() );
@@ -164,10 +164,10 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
         urlCombo.addModifyListener(this);
 
         setControl(composite);
-        
+
         Display.getCurrent().asyncExec(new Runnable() {
 			public void run() {
-				
+
 				EndConnectionState currentState = getState();
 				Map<IService, Throwable> errors = currentState.getErrors();
 				if( errors!=null && !errors.isEmpty()){
@@ -199,34 +199,36 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
     	WizardPage page=(WizardPage) getContainer().getCurrentPage();
     	page.setMessage(newMessage);
     }
-    
+
     @Override
     public void setMessage(String newMessage, int messageType) {
     	WizardPage page=(WizardPage) getContainer().getCurrentPage();
     	page.setMessage(newMessage, messageType);
     }
 
-	public EndConnectionState getState() {
-		return (EndConnectionState) super.getState();
+	private EndConnectionState getState() {
+		WorkflowWizard wizard = (WorkflowWizard)getWizard();
+		EndConnectionState currentState = (EndConnectionState) (wizard).getWorkflow().getCurrentState();
+		return currentState;
 	}
-    
+
     public URL getURL( Map<String,Serializable> params ){
         Object value = params.get( WMSServiceImpl.WMS_URL_KEY );
         if( value == null ) return null;
         if( value instanceof URL ) return (URL) value;
         if( value instanceof String) {
             try {
-                URL url = new URL( (String) value );   
+                URL url = new URL( (String) value );
                 return url;
             }
-            catch( MalformedURLException erp ){                
+            catch( MalformedURLException erp ){
             }
         }
-        return null;        
+        return null;
     }
     /**
      * Double click in list, or return from url control.
-     * 
+     *
      * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
      * @param e
      */
@@ -237,14 +239,14 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
         }
     }
 
-    
-    
+
+
     /**
      * This should be called using the Wizard .. job when next/finish is pressed.
      */
     public List<IService> getResources( IProgressMonitor monitor ) throws Exception {
         URL location = new URL(url);
-        
+
         WMSServiceExtension creator = new WMSServiceExtension();
 
         Map<String, Serializable> params = creator.createParams(location);
@@ -270,10 +272,10 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
             setErrorMessage(null);
             setPageComplete(true);
         } catch (MalformedURLException exception) {
-            setErrorMessage(Messages.WMSWizardPage_error_invalidURL); 
+            setErrorMessage(Messages.WMSWizardPage_error_invalidURL);
             setPageComplete(false);
         }
-        
+
         getWizard().getContainer().updateButtons();
     }
 
@@ -296,7 +298,7 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
      * Adds an entry to a history, while taking care of duplicate history items and excessively long
      * histories. The assumption is made that all histories should be of length
      * <code>COMBO_HISTORY_LENGTH</code>.
-     * 
+     *
      * @param history the current history
      * @param newEntry the entry to add to the history
      * @return the history with the new entry appended Stolen from
@@ -314,7 +316,7 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
      * Adds an entry to a history, while taking care of duplicate history items and excessively long
      * histories. The assumption is made that all histories should be of length
      * <code>COMBO_HISTORY_LENGTH</code>.
-     * 
+     *
      * @param history the current history
      * @param newEntry the entry to add to the history Stolen from
      *        org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage
@@ -329,33 +331,34 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
             history.remove(COMBO_HISTORY_LENGTH);
     }
 
-    public Map<String, Serializable> getParams() {
-        try {
-            URL location = new URL(url);
+	public Map<String, Serializable> getParams() {
+		try {
+			URL location = new URL(url);
 
-            WMSServiceExtension creator = new WMSServiceExtension();
-            String errorMessage = creator.reasonForFailure(location);
-            if (errorMessage != null) {
+			WMSServiceExtension creator = new WMSServiceExtension();
+            String errorMessage=creator.reasonForFailure(location);
+            if( errorMessage!=null ){
                 setErrorMessage(errorMessage);
                 return Collections.emptyMap();
-            } else
+            }else
                 return creator.createParams(location);
-        } catch (MalformedURLException e) {
-            return null;
-        }
-    }
+		}
+		catch(MalformedURLException e) {
+			return null;
+		}
+	}
 
 	public List<URL> getURLs() {
 		try {
 			ArrayList<URL> l = new ArrayList<URL>();
 			l.add(new URL(url));
-			
+
 			return l;
 		}
 		catch(MalformedURLException e) {
 			return null;
 		}
 	}
-    
+
 }
 

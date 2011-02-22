@@ -45,7 +45,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * Removes the set of selected vertices from the blackboard.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -79,11 +79,11 @@ public class RemoveSelectedVerticesCommand extends AbstractCommand
                 if( deleteVertexAnimation!=null ){
                     final DeleteVertexAnimation finalDeleteVertexAnim=deleteVertexAnimation;
                     PlatformGIS.wait(deleteVertexAnimation.getFrameInterval(), 5000, new WaitCondition(){
-    
+
                         public boolean isTrue()  {
                             return !finalDeleteVertexAnim.isValid();
                         }
-                        
+
                     }, null);
                 }
             }
@@ -92,9 +92,9 @@ public class RemoveSelectedVerticesCommand extends AbstractCommand
             for( Point point : points ) {
                 allAffectedGeoms.addAll(blackboard.getGeoms(point.getX(), point.getY()));
             }
-            
+
             Map<PrimitiveShape, Integer> deletes = new HashMap<PrimitiveShape, Integer>();
-            
+
             for( EditGeom geom : allAffectedGeoms ) {
                 for( PrimitiveShape shape : geom ) {
                     for( int i = 0; i < shape.getNumPoints(); i++ ) {
@@ -157,11 +157,11 @@ public class RemoveSelectedVerticesCommand extends AbstractCommand
     public String getName() {
         return Messages.RemoveSelectedVerticesCommand_name;
     }
-    
+
     public void rollback( IProgressMonitor monitor ) throws Exception {
         EditBlackboard blackboard = handler.getEditBlackboard(handler.getEditLayer());
         blackboard.startBatchingEvents();
-        
+
         try {
             for( int i = undoData.size() - 1; i > -1; i-- ) {
                 Bag bag = undoData.get(i);
@@ -188,14 +188,14 @@ public class RemoveSelectedVerticesCommand extends AbstractCommand
     enum Action{
         ADD, REMOVE
     }
-    
+
     static class Bag {
         Action action;
         Point p;
         int index;
         List<Coordinate> coords;
         PrimitiveShape shape;
-        
+
         @Override
         public String toString() {
             return action+" "+coords; //$NON-NLS-1$
@@ -210,5 +210,5 @@ public class RemoveSelectedVerticesCommand extends AbstractCommand
     public void setRunAnimation( boolean run ) {
         this.runAnimation=run;
     }
-    
+
 }

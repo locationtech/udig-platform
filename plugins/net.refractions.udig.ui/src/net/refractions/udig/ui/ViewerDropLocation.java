@@ -18,8 +18,8 @@ import org.eclipse.jface.viewers.ViewerDropAdapter;
 
 /**
  * Enumerates the number of places that a element can be dropped on an element in a viewer.
- * 
- * For example when dropping something on an item in a ListViewer the item can be BEFORE, ON or AFTER 
+ *
+ * For example when dropping something on an item in a ListViewer the item can be BEFORE, ON or AFTER
  * @author Jesse
  * @since 1.1.0
  */
@@ -41,7 +41,7 @@ public enum ViewerDropLocation {
      * Indicates the dropped item was not dropped on an item
      */
     NONE;
-    
+
     public static ViewerDropLocation valueOf( int location ){
         switch( location ) {
         case ViewerDropAdapter.LOCATION_BEFORE:
@@ -54,5 +54,5 @@ public enum ViewerDropLocation {
             return NONE;
         }
     }
-    
+
 }

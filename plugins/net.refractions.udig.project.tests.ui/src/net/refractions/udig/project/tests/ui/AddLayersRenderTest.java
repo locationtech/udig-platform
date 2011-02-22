@@ -25,7 +25,7 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.ui.PlatformUI;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.feature.Feature;
 
 public class AddLayersRenderTest extends AbstractProjectUITestCase {
 
@@ -46,13 +46,13 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
             public boolean isTrue() {
                 return map.getRenderManagerInternal().getRenderExecutor().getState()==IRenderer.DONE;
             }
-            
+
         }, false);
         listener=new RenderListenerAdapter(){
           @Override
             protected void renderRequest() {
                 renders++;
-            }  
+            }
         };
         contextListener=new CompositeContextListener(){
 
@@ -63,17 +63,17 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
                         if( added ){
                             ((Renderer)renderer).eAdapters().add(listener);
                         }else{
-                            ((Renderer)renderer).eAdapters().remove(listener);                            
+                            ((Renderer)renderer).eAdapters().remove(listener);
                         }
                     }
                 }
             }
-            
+
         };
         AdapterImpl adapterImpl = new AdapterImpl(){
                    @Override
                 public void notifyChanged( final Notification msg ) {
-                    
+
                     if( msg.getNotifier() instanceof RenderManager &&
                             msg.getFeatureID(RenderManager.class)==RenderPackage.RENDER_MANAGER__RENDER_EXECUTOR ){
                         if( msg.getNewValue()!=null ){
@@ -94,7 +94,7 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
                             }
                         }
                     }
-                } 
+                }
                 };
         map.getRenderManagerInternal().eAdapters().add( adapterImpl);
         CompositeRendererImpl compRenderer = (CompositeRendererImpl)map.getRenderManagerInternal().getRenderExecutor().getRenderer();
@@ -105,12 +105,12 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
         }
         CompositeRenderContext compContext = ((CompositeRenderContext)map.getRenderManagerInternal().getRenderExecutor().getContext());
         compContext.addListener(contextListener);
-        
+
         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(LayersView.ID);
         ApplicationGISInternal.getActiveEditor().isTesting=true;
 
     }
-    
+
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
@@ -119,9 +119,9 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
 
     public void testAddOneLayer() throws Exception {
         renders=0;
-        
+
         List<IGeoResource> resources=new ArrayList<IGeoResource>();
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("type2", 4); //$NON-NLS-1$
+        Feature[] features = UDIGTestUtil.createDefaultTestFeatures("type2", 4); //$NON-NLS-1$
         resources.add(MapTests.createGeoResource(features, true));
         ApplicationGIS.addLayersToMap(map, resources, 0);
         UDIGTestUtil.inDisplayThreadWait(3000, new WaitCondition(){
@@ -129,16 +129,16 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
             public boolean isTrue() {
                 return 0<renders;
             }
-            
+
         }, false);
         assertEquals(1,renders);
     }
     public void testAddMultipleLayers() throws Exception {
         renders=0;
         List<IGeoResource> resources=new ArrayList<IGeoResource>();
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("type3", 3); //$NON-NLS-1$
-        SimpleFeature[] features2 = UDIGTestUtil.createDefaultTestFeatures("type4", 4); //$NON-NLS-1$
-        SimpleFeature[] features3 = UDIGTestUtil.createDefaultTestFeatures("type5", 5); //$NON-NLS-1$
+        Feature[] features = UDIGTestUtil.createDefaultTestFeatures("type3", 3); //$NON-NLS-1$
+        Feature[] features2 = UDIGTestUtil.createDefaultTestFeatures("type4", 4); //$NON-NLS-1$
+        Feature[] features3 = UDIGTestUtil.createDefaultTestFeatures("type5", 5); //$NON-NLS-1$
         resources.add(MapTests.createGeoResource(features, true));
         resources.add(MapTests.createGeoResource(features2, true));
         IGeoResource createGeoResource = MapTests.createGeoResource(features3, true);
@@ -150,9 +150,9 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
             public boolean isTrue() {
                 return 3<renders;
             }
-            
+
         }, false);
         assertEquals(4,renders);
     }
-    
+
 }

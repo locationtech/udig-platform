@@ -21,7 +21,7 @@ import org.geotools.validation.spatial.PolygonNoGapsValidation;
  * Overrides the FeatureValidationOp abstract class to return PolygonNoGapsValidation()
  * <p>
  * </p>
- * 
+ *
  * @author chorner
  * @since 1.0.1
  */

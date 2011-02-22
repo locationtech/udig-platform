@@ -26,7 +26,7 @@ import org.geotools.brewer.color.ColorBrewer;
 public class PaletteSelectionFieldEditor extends FieldEditor {
 
     TableViewer palettes;
-    
+
     public PaletteSelectionFieldEditor(String name, String string, Composite parent) {
         super(name, string, parent);
     }
@@ -87,14 +87,14 @@ public class PaletteSelectionFieldEditor extends FieldEditor {
                     String text = null;
                     text = palette.getName() + ": " + palette.getDescription(); //$NON-NLS-1$
                     if (text == null) text = palette.getName();
-                    return text; 
+                    return text;
                 }
                 return null;
             }
         });
 
         paletteTable.setContentProvider(new IStructuredContentProvider() {
-            
+
             public Object[] getElements(Object inputElement) {
                 if (inputElement instanceof ColorBrewer) {
                     ColorBrewer brewer = (ColorBrewer) inputElement;
@@ -102,7 +102,7 @@ public class PaletteSelectionFieldEditor extends FieldEditor {
                 } else {
                     return new Object[0];
                 }
-            } 
+            }
 
             public void dispose() {
             }
@@ -122,13 +122,13 @@ public class PaletteSelectionFieldEditor extends FieldEditor {
                     return p1.getName().compareTo(p2.getName());
                 } else return super.compare(viewer, e1, e2);
             }
-            
+
         });
-        
+
         paletteTable.setInput(PlatformGIS.getColorBrewer());
         return paletteTable;
     }
-    
+
     @Override
     protected void doLoad() {
         if (palettes != null) {
@@ -150,7 +150,7 @@ public class PaletteSelectionFieldEditor extends FieldEditor {
         BrewerPalette palette = brewer.getPalette(paletteName);
         palettes.setSelection(new StructuredSelection(palette));
     }
-    
+
     @Override
     protected void doStore() {
         ISelection select = palettes.getSelection();

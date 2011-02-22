@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.refractions.udig.style.sld.editor;
 
@@ -10,7 +10,7 @@ import org.geotools.brewer.color.PaletteSuitability;
 
 final class BrewerPaletteViewerFilter extends ViewerFilter {
 	/**
-	 * 
+	 *
 	 */
 	private final StyleThemePage styleThemePage;
 
@@ -26,8 +26,7 @@ final class BrewerPaletteViewerFilter extends ViewerFilter {
 	    if (element instanceof BrewerPalette) {
 	        BrewerPalette pal = (BrewerPalette) element;
 	        int numClasses = new Integer(this.styleThemePage.getCombo(StyleThemePage.COMBO_CLASSES).getText()).intValue();
-	        int maxColors = pal.getMaxColors();
-            if (maxColors!=-1 && maxColors < numClasses) {
+	        if (pal.getMaxColors() < numClasses) {
 	            return false;
 	        }
 	        if (this.styleThemePage.getButton(StyleThemePage.BUTTON_COLORBLIND).getSelection()) {

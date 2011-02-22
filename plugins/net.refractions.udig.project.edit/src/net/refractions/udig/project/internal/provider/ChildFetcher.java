@@ -62,7 +62,7 @@ class ChildFetcher extends Job {
         childIndex++;
         return next!=null;
     }
-    private volatile List<Object> childrenInternal; 
+    private volatile List<Object> childrenInternal;
     Object parent;
     protected volatile boolean dataReady;
     @Override

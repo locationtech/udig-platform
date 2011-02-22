@@ -18,9 +18,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
- * An element that is part of the IResolve Hierarchy but is there only for structural purposes.  It can have a Title and a Icon associated 
+ * An element that is part of the IResolve Hierarchy but is there only for structural purposes.  It can have a Title and a Icon associated
  * so the folder can be displayed in the UI.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -38,7 +38,5 @@ public interface IResolveFolder extends IResolve {
      * @return a title to use for when displaying this resolve in the ui
      */
     public String getTitle();
-    
-    public IService getService( IProgressMonitor monitor );
-    
+
 }

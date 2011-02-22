@@ -1,18 +1,10 @@
 /*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
- *
- *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation;
- *    version 2.1 of the License.
- *
- *    This library is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *    Lesser General Public License for more details.
- *
+ * uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004,
+ * Refractions Research Inc. This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the Free Software
+ * Foundation; version 2.1 of the License. This library is distributed in the hope that it will be
+ * useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 package net.refractions.udig.style.sld.internal;
 
@@ -39,7 +31,7 @@ import org.geotools.styling.StyleBuilder;
 
 /**
  * Editor for polygon symbolizer
- * 
+ *
  * @author aalam
  * @since 0.6.0
  */
@@ -59,7 +51,7 @@ public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionList
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.style.sld.SLDEditorPart#getContentType()
      */
     public Class getContentType() {
@@ -68,7 +60,7 @@ public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionList
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.style.sld.SLDEditorPart#init()
      */
     public void init() {
@@ -77,7 +69,7 @@ public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionList
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.refractions.udig.style.sld.SLDEditorPart#reset()
      */
     public void reset() {
@@ -168,7 +160,7 @@ public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionList
      * Creates a composite with a grid layout of the specifed columns, and a label with text from
      * tag.
      * </p>
-     * 
+     *
      * @param parent
      * @param tag
      * @param numColumns number of columns (usually 2_
@@ -209,7 +201,7 @@ public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionList
             public void widgetDefaultSelected( SelectionEvent e ) {
             }
         });
-//        borderEnabled.setToolTipText(Messages.SLDMarkerEditorPart_boder_enabled_tooltip); 
+//        borderEnabled.setToolTipText(Messages.SLDMarkerEditorPart_boder_enabled_tooltip);
 
         borderColour = new StolenColorEditor(border, this);
 
@@ -218,19 +210,19 @@ public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionList
         borderWidth.setMaximum(30);
         borderWidth.setPageIncrement(5);
         borderWidth.addSelectionListener(this);
-//        borderWidth.setToolTipText(Messages.SLDMarkerEditorPart_boder_width_tooltip); 
+//        borderWidth.setToolTipText(Messages.SLDMarkerEditorPart_boder_width_tooltip);
 
         borderOpacity = new Spinner(border, SWT.NONE);
         borderOpacity.setMinimum(0);
         borderOpacity.setMaximum(opacityMaxValue);
         borderOpacity.setPageIncrement(10);
-//        borderOpacity.setToolTipText(Messages.SLDMarkerEditorPart_boder_opacity_tooltip); 
+//        borderOpacity.setToolTipText(Messages.SLDMarkerEditorPart_boder_opacity_tooltip);
     }
     private void fillPart( Composite parent ) {
         Composite fill = subpart(parent, Messages.SLDPolygonEditorPart_label_fill, 3);
         fillEnabled = new Button(fill, SWT.CHECK);
         fillEnabled.addSelectionListener(this);
-//        fillEnabled.setToolTipText(Messages.SLDMarkerEditorPart_marker_enabled_tooltip); 
+//        fillEnabled.setToolTipText(Messages.SLDMarkerEditorPart_marker_enabled_tooltip);
         fillEnabled.addSelectionListener(new SelectionListener(){
             public void widgetSelected( SelectionEvent e ) {
                 fillColour.getButton().setEnabled(fillEnabled.getSelection());
@@ -246,7 +238,7 @@ public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionList
         fillOpacity.setMinimum(0);
         fillOpacity.setMaximum(opacityMaxValue);
         fillOpacity.setPageIncrement(10);
-//        fillOpacity.setToolTipText(Messages.SLDMarkerEditorPart_fill_opacity_tooltip); 
+//        fillOpacity.setToolTipText(Messages.SLDMarkerEditorPart_fill_opacity_tooltip);
     }
     protected Control createPartControl( Composite parent ) {
         RowLayout layout = new RowLayout();
@@ -273,7 +265,7 @@ public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionList
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
      */
     public void widgetSelected( SelectionEvent e ) {

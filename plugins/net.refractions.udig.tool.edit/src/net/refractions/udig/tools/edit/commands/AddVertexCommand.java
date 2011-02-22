@@ -55,7 +55,7 @@ public class AddVertexCommand extends AbstractCommand implements UndoableMapComm
     private boolean showAnimation=true;
     /**
      * Create an AddVertext command; coordinate will be added at the indicated point.
-     * 
+     *
      * @param handler2
      * @param editBlackboard
      * @param point
@@ -68,7 +68,7 @@ public class AddVertexCommand extends AbstractCommand implements UndoableMapComm
     /**
      * Create an AddVertext command; coordinate will be created at the indicated Point when
      * executed.
-     * 
+     *
      * @param handler EditToolHandler responsible for adding vertex
      * @param bb edit blackboard
      * @param provider Shape being updated
@@ -85,11 +85,11 @@ public class AddVertexCommand extends AbstractCommand implements UndoableMapComm
     }
     /**
      * Will use EditUtils.instance.getClosestSnapPoint if useSnapping is true.
-     * 
+     *
      * @param point Point as provided by the user
      * @param useSnapping true if we want the current snapping policy applied
      * @return Coordinate created from the provided point
-     */    
+     */
     private Coordinate toCoordinate( Point point, boolean useSnapping ) {
         Coordinate toCoord = board.toCoord(point);
         if (useSnapping) {

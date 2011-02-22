@@ -60,56 +60,56 @@ public class PrintingPreferences extends PreferencePage implements IWorkbenchPre
 
     /**
      * TODO summary sentence for createContents ...
-     * 
+     *
      * @see org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse.swt.widgets.Composite)
      * @param parent
      * @return
      */
     protected Control createContents( Composite parent ) {
         templateIds = new ArrayList();
-        
+
 		GridData gridData;
 		Composite composite = new Composite(parent, SWT.NULL);
-		
+
 		GridLayout gridLayout = new GridLayout();
 		int columns = 1;
 		gridLayout.numColumns = columns;
 		composite.setLayout(gridLayout);
-		
+
 		gridData = new GridData();
-		
+
 		Label urlLabel = new Label(composite, SWT.NONE);
-		urlLabel.setText(Messages.PrintingPreferences_label_defaultTemplate); 
+		urlLabel.setText(Messages.PrintingPreferences_label_defaultTemplate);
 		urlLabel.setLayoutData(gridData);
 
 		gridData = new GridData(GridData.FILL_HORIZONTAL);
-		
+
 		Map templates = PrintingPlugin.getDefault().getTemplateFactories();
 
 		list = new List(composite, SWT.SINGLE|SWT.BORDER);
 		list.setLayoutData(gridData);
-		
+
 		Iterator iter = templates.entrySet().iterator();
 		for(int i = 0; iter.hasNext(); i++) {
 		    Map.Entry entry = (Map.Entry) iter.next();
-		    
+
 		    TemplateFactory templateFactory = (TemplateFactory) entry.getValue();
-		    
+
 		    templateIds.add(i, entry.getKey());
-		    
+
 		    if (defaultTemplate.equals(templateFactory.getName())) {
 		        list.select(i);
 		    }
-		    
+
 		    list.add(templateFactory.getName());
 		}
-				
+
 		return composite;
     }
 
     /**
      * TODO summary sentence for init ...
-     * 
+     *
      * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
      * @param workbench
      */

@@ -25,7 +25,7 @@ import org.eclipse.ui.IPersistableElement;
 
 /**
  * So the project explorer could generically open any editor.
- * 
+ *
  * @author jones
  * @since 0.3
  */
@@ -45,7 +45,7 @@ public abstract class UDIGEditorInput implements IEditorInput {
     public void setProjectElement( IProjectElement projectElement ) {
         this.projectElement = projectElement;
     }
-    
+
     @Override
     public boolean equals(Object arg0) {
     	if (arg0 instanceof UDIGEditorInput) {
@@ -54,7 +54,7 @@ public abstract class UDIGEditorInput implements IEditorInput {
 		}
     	return false;
     }
-    
+
     @Override
     public int hashCode() {
     	return getProjectElement().hashCode();

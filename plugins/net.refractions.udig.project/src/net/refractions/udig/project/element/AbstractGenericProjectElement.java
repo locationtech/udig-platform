@@ -16,13 +16,13 @@ public abstract class AbstractGenericProjectElement implements
 		IGenericProjectElement {
 
 	/**
-	 * This is an id for the {@link #firePropertyEvent(String, Object, Object)} 
+	 * This is an id for the {@link #firePropertyEvent(String, Object, Object)}
 	 * indicating that an unspecified change has occurred and emf should update.
-	 * 
+	 *
 	 * EMF is the framework that provides the labels and icons in the different
 	 * views in the system. Without triggering this event the labels and icons
 	 * will not update.
-	 * 
+	 *
 	 * EMF will ignore any before and after values.
 	 */
 	public static final String PROP_UPDATE_EMF = "UPDATE_EMF";
@@ -71,14 +71,14 @@ public abstract class AbstractGenericProjectElement implements
 
 	/**
 	 * Fires an event to the registered listeners.
-	 * 
+	 *
 	 * @see #PROP_UPDATE_EMF
-	 * 
+	 *
 	 * @param eventId
 	 *            the id of the event. There is a special {@link #PROP_UPDATE_EMF}
 	 *            event to update labels and icons in the project explorer and
 	 *            other viewers that use the EMF ItemProviders for labels.
-	 * 
+	 *
 	 * @param oldValue
 	 *            the value before the event.
 	 * @param newValue
@@ -96,17 +96,17 @@ public abstract class AbstractGenericProjectElement implements
 			listener.propertyChange(event);
 		}
 	}
-	
+
 	/**
 	 * Updates the resource responsible for saving the element that the
 	 * element has data that needs to be saved.
-	 * 
+	 *
 	 * @param dirty if true then a save will occur when save is called or shutdown takes place
 	 */
 	protected void setDirty(boolean dirty){
 		getProjectElementAdapter().eResource().setModified(dirty);
 	}
-	
+
 	/**
 	 * Save the resource
 	 * @throws IOException

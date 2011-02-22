@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id$
+ * $Id: ElementItemProvider.java 23333 2006-12-08 19:40:41Z jeichar $
  */
 package net.refractions.udig.printing.model.provider;
 
@@ -20,7 +20,6 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -58,14 +57,12 @@ public class ElementItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+    public List getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
             addLocationPropertyDescriptor(object);
             addSizePropertyDescriptor(object);
-            addPaperSizePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -81,12 +78,10 @@ public class ElementItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_Element_location_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Element_location_feature", "_UI_Element_type"),
-                 ModelPackage.Literals.ELEMENT__LOCATION,
+                 getString("_UI_Element_location_feature"), //$NON-NLS-1$
+                 getString("_UI_PropertyDescriptor_description", "_UI_Element_location_feature", "_UI_Element_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                 ModelPackage.eINSTANCE.getElement_Location(),
                  true,
-                 false,
-                 false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
@@ -103,34 +98,10 @@ public class ElementItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_Element_size_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Element_size_feature", "_UI_Element_type"),
-                 ModelPackage.Literals.ELEMENT__SIZE,
+                 getString("_UI_Element_size_feature"), //$NON-NLS-1$
+                 getString("_UI_PropertyDescriptor_description", "_UI_Element_size_feature", "_UI_Element_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                 ModelPackage.eINSTANCE.getElement_Size(),
                  true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Paper Size feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addPaperSizePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_Element_paperSize_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Element_paperSize_feature", "_UI_Element_type"),
-                 ModelPackage.Literals.ELEMENT__PAPER_SIZE,
-                 true,
-                 false,
-                 false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
@@ -142,9 +113,8 @@ public class ElementItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/Element"));
+        return getResourceLocator().getImage("full/obj16/Element"); //$NON-NLS-1$
     }
 
     /**
@@ -153,13 +123,12 @@ public class ElementItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getText(Object object) {
         Point labelValue = ((Element)object).getLocation();
         String label = labelValue == null ? null : labelValue.toString();
         return label == null || label.length() == 0 ?
-            getString("_UI_Element_type") :
-            getString("_UI_Element_type") + " " + label;
+            getString("_UI_Element_type") : //$NON-NLS-1$
+            getString("_UI_Element_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
@@ -169,14 +138,12 @@ public class ElementItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
         switch (notification.getFeatureID(Element.class)) {
             case ModelPackage.ELEMENT__LOCATION:
             case ModelPackage.ELEMENT__SIZE:
-            case ModelPackage.ELEMENT__PAPER_SIZE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }
@@ -184,14 +151,13 @@ public class ElementItemProvider
     }
 
     /**
-     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-     * that can be created under this object.
+     * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
+     * describing all of the children that can be created under this object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+    protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
         super.collectNewChildDescriptors(newChildDescriptors, object);
     }
 
@@ -201,7 +167,6 @@ public class ElementItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ResourceLocator getResourceLocator() {
         return PageEditPlugin.INSTANCE;
     }

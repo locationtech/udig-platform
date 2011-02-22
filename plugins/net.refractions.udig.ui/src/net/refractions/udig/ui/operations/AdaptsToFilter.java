@@ -31,7 +31,7 @@ public class AdaptsToFilter implements OpFilter {
     public AdaptsToFilter( String targetClass) {
         this.targetClass=targetClass;
     }
-    
+
     public boolean accept( Object object ) {
         return AdapterUtil.instance.canAdaptTo(targetClass, object);
     }

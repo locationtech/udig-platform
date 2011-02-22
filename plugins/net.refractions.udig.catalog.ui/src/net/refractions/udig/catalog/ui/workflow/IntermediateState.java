@@ -16,13 +16,13 @@ package net.refractions.udig.catalog.ui.workflow;
 
 import java.io.IOException;
 
+import net.refractions.udig.catalog.ui.workflow.Workflow.State;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * A state that tracks intermediate pages.
- * <p>
- * They have no purpose beyond matching the state of a wizard page.
- * 
+ * A state that tracks intermediate pages.  They have no purpose beyond matching the state of a wizard page.
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -34,9 +34,9 @@ public class IntermediateState extends State {
 
     /**
      * New instance
-     * 
-     * @param numberOfPages the number of pages that this state must track.  The last page will be the endState 
-     * 
+     *
+     * @param numberOfPages the number of pages that this state must track.  The last page will be the endState
+     *
      * @param endState the state that must be satisfied for all the pages to be satisfied.
      */
     public IntermediateState( int index, int numberOfPages, State endState ) {
@@ -49,7 +49,7 @@ public class IntermediateState extends State {
     public boolean hasNext() {
         return true;
     }
-    
+
     @Override
     public State next() {
         if( currentPage<numberOfPages-2 ){
@@ -57,7 +57,7 @@ public class IntermediateState extends State {
         }
         return endState;
     }
-    
+
     @Override
     public boolean run( IProgressMonitor monitor ) throws IOException {
         return true;
@@ -75,5 +75,5 @@ public class IntermediateState extends State {
     public int getIndex() {
         return currentPage;
     }
-    
+
 }

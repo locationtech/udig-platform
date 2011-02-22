@@ -18,73 +18,72 @@ package net.refractions.udig.printing.model;
 
 import java.util.List;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 
 /**
  * A Box is a conceptual object that can appear on a page. It is an extension
  * of an <code>Element</code> and provides methods that allow a Box to draw
- * itself and support connections to other boxes. 
- * 
+ * itself and support connections to other boxes.
+ *
  * Implementors should directly implement this interface or one of its
  * implementations. DecoratorBox in particular.
- * 
+ *
  * @author Richard Gould
  * @since 0.3
  * @see Element
  * @model
  */
-public interface Box extends Element, IAdaptable {
-    
+public interface Box extends Element {
+
     /**
      * This is used by the GEF system to access the source connections on this Box
-     * 
+     *
      * @return a List of Connections that use this Box as a source
      * @model resolveProxy="false" type="net.refractions.udig.printing.model.Connection"
      */
     public List<Connection> getSourceConnections();
-    
+
     /**
      * This is used by the GEF system to access the target connections on this Box
-     * 
+     *
      * @return a List of Connections that use this Box as a target
      * @model resolveProxy="false" type="net.refractions.udig.printing.model.Connection"
      */
     public List<Connection> getTargetConnections();
-    
+
     /**
-     * 
+     *
      * Adds a Connection to this Box
      * @see Connection
      * @param connection the connection to add to this Box
      */
     void add(Connection connection);
-    
+
     /**
-     * 
-     * Removes a Connection to this Box 
+     *
+     * Removes a Connection to this Box
      * @see Connection
      * @param connection the connection to be removed
      */
     void remove(Connection connection);
- 
+
     /**
      * Gets the object responsible for drawing the preview and printing the contents of this box.
      *
      * @return Gets the object responsible for drawing the preview and printing the contents of this box.
-     * @model 
+     * @model
      */
     BoxPrinter getBoxPrinter();
-    
+
 	/**
-     * Sets the value of the '{@link net.refractions.udig.printing.model.Box#getBoxPrinter <em>Box Printer</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link net.refractions.udig.printing.model.Box#getBoxPrinter <em>Box Printer</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Box Printer</em>' attribute.
-     * @see #getBoxPrinter()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Box Printer</em>' attribute.
+	 * @see #getBoxPrinter()
+	 * @generated
+	 */
     void setBoxPrinter(BoxPrinter value);
 
     /**
@@ -93,7 +92,7 @@ public interface Box extends Element, IAdaptable {
      * @param eventData
      */
     void notifyPropertyChange( PropertyChangeEvent event);
-    
+
     /**
      * Adds a listener to the box.  Each listener will only be added once.
      *
@@ -107,23 +106,23 @@ public interface Box extends Element, IAdaptable {
      * @param l the listener to remove.
      */
     void removePropertyChangeListener( IPropertyChangeListener l);
-    
+
     /**
      * Gets the id for the box.
      *
      * @return the id for the box.
-     * @model 
+     * @model
      */
     String getID();
 
 	/**
-     * Sets the value of the '{@link net.refractions.udig.printing.model.Box#getID <em>ID</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link net.refractions.udig.printing.model.Box#getID <em>ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>ID</em>' attribute.
-     * @see #getID()
-     * @generated
-     */
+	 * @param value the new value of the '<em>ID</em>' attribute.
+	 * @see #getID()
+	 * @generated
+	 */
     void setID(String value);
-    
+
 }

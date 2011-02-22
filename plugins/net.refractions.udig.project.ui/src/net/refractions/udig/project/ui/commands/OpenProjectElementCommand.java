@@ -36,8 +36,8 @@ public class OpenProjectElementCommand implements UndoableCommand {
         try {
             if (PlatformUI.getWorkbench().isClosing())
                 return;
-            
-            monitor.beginTask(Messages.OpenMapCommand_taskName, IProgressMonitor.UNKNOWN); 
+
+            monitor.beginTask(Messages.OpenMapCommand_taskName, IProgressMonitor.UNKNOWN);
             final UDIGEditorInput input = ApplicationGIS.getInput(element);
 //          if (element instanceof Map) {
 //              Map map = (Map) element;
@@ -80,7 +80,7 @@ public class OpenProjectElementCommand implements UndoableCommand {
         try {
             IEditorPart part = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(input,
                     input.getEditorId(), true, IWorkbenchPage.MATCH_NONE);
-            
+
             ProjectExplorer explorer = ProjectExplorer.getProjectExplorer();
             explorer.setSelection(Collections.singleton(input.getProjectElement()), true);
 
@@ -100,7 +100,7 @@ public class OpenProjectElementCommand implements UndoableCommand {
     }
 
     public String getName() {
-        return Messages.OpenMapCommand_commandName; 
+        return Messages.OpenMapCommand_commandName;
     }
 
     public void rollback( IProgressMonitor monitor ) throws Exception {

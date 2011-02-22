@@ -4,15 +4,13 @@
      <extension
          point="net.refractions.udig.catalog.ServiceExtension">
       <service
-            class="net.crischan.udig.arcgrid.ArcGridServiceExtension"
+            class="net.refractions.udig.catalog.arcgrid.ArcGridServiceExtension"
             id="ArcGrid"
             name="ArcGrid"/>
    </extension>
    <extension
          point="net.refractions.udig.catalog.ui.fileFormat">
-      <fileService
-            fileExtension="*.asc"
-            name="Arcgrid"/>
+      <fileService fileExtension="*.asc"/>
    </extension>
 
 </plugin>

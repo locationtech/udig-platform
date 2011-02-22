@@ -33,7 +33,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
  * needed. The mapping between a IProjectElements and IEditorInput types are defined by
  * net.refractions.udig.project.ui.editorInputs extensions.
  * </p>
- * 
+ *
  * @author jones
  * @since 0.3
  */
@@ -45,7 +45,7 @@ public class UDIGEditorInputDescriptor {
     protected Map<IProjectElement, UDIGEditorInput> instances = new HashMap<IProjectElement, UDIGEditorInput>();
     /**
      * Creates a UDIGEditorInput
-     * 
+     *
      * @param element
      * @return the EditorInput
      * @throws CoreException

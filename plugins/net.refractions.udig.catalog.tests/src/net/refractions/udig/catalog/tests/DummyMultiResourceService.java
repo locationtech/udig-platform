@@ -29,7 +29,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * For testing. A service with multiple resources like a WMS.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -55,7 +55,7 @@ public class DummyMultiResourceService extends DummyService {
 
         if (adaptee == null) {
             throw new NullPointerException("No adaptor specified" );
-        }        
+        }
         if (adaptee.isAssignableFrom(DummyMultiResourceService.class)){
             monitor.done();
             return adaptee.cast(this);

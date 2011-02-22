@@ -1,5 +1,5 @@
 /**
- * <copyright></copyright> $Id$
+ * <copyright></copyright> $Id: RendererCreatorImpl.java 28117 2007-11-29 00:14:46Z jeichar $
  */
 package net.refractions.udig.project.internal.render.impl;
 
@@ -17,6 +17,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.media.jai.util.Range;
+
 import net.refractions.udig.core.internal.ExtensionPointUtil;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.ContextModel;
@@ -30,19 +32,18 @@ import net.refractions.udig.project.internal.render.Renderer;
 import net.refractions.udig.project.internal.render.RendererCreator;
 import net.refractions.udig.project.internal.render.SelectionLayer;
 import net.refractions.udig.project.internal.render.impl.InternalRenderMetricsFactory.InternalRenderMetrics;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
 import net.refractions.udig.project.render.IRenderContext;
+import net.refractions.udig.project.render.IRenderMetrics;
 import net.refractions.udig.project.render.IRenderMetricsFactory;
 import net.refractions.udig.project.render.IRenderer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Notification;
 import org.geotools.data.FeatureSource;
-import org.geotools.util.Range;
 
 /**
  * Default implementation
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -50,27 +51,20 @@ import org.geotools.util.Range;
 public class RendererCreatorImpl implements RendererCreator {
 
     /**
-     * The cached value of the '{@link #getContext() <em>Context</em>}' reference. 
-     * 
+     * The cached value of the '{@link #getContext() <em>Context</em>}' reference.
+     *
      * @see #getContext()
      * @generated NOT
      */
     protected volatile RenderContext context = null;
 
     /**
-     * The cached value of the '{@link #getLayers() <em>Layers</em>}' reference list. 
-     * 
+     * The cached value of the '{@link #getLayers() <em>Layers</em>}' reference list.
+     *
      * @see #getLayers()
      */
     protected final SortedSet<Layer> layers = Collections.synchronizedSortedSet(new TreeSet<Layer>());
 
-    /**
-     * @uml.property name="configuration"
-     * @uml.associationEnd qualifier="key:java.lang.Object
-     *                     net.refractions.udig.project.internal.render.RenderContext"
-     */
-    private volatile Map<Layer, RenderContext> configuration;
-    
     public RendererCreatorImpl() {
         super();
     }
@@ -85,7 +79,7 @@ public class RendererCreatorImpl implements RendererCreator {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="layers"
      * @generated NOT
      */
@@ -96,7 +90,7 @@ public class RendererCreatorImpl implements RendererCreator {
 
     /**
      * <code>MetricsMap</code> maintains a list of metrics by Layer.
-     * 
+     *
      * @uml.property name="metrics"
      * @uml.associationEnd qualifier="key:java.lang.Object java.util.SortedSet<IRenderMetrics>"
      */
@@ -104,22 +98,22 @@ public class RendererCreatorImpl implements RendererCreator {
 
     public Map<String, String> getAvailableRenderersInfo(Layer layer) {
         Map<String, String> renderers = new HashMap<String, String>();
-        
+
         List<InternalRenderMetrics> availableRenderers = layerToMetricsFactoryMap.get(layer);
-        
+
         for( InternalRenderMetrics irm : availableRenderers ) {
-            renderers.put( 
+            renderers.put(
                     irm.getName(), irm.getDescription() );
         }
-        
+
         return renderers;
     }
 
-    public Collection<AbstractRenderMetrics> getAvailableRendererMetrics(Layer layer) {
-        List<AbstractRenderMetrics> metrics = new ArrayList<AbstractRenderMetrics>();
-        
+    public Collection<IRenderMetrics> getAvailableRendererMetrics(Layer layer) {
+        List<IRenderMetrics> metrics = new ArrayList<IRenderMetrics>();
+
         List<InternalRenderMetrics> availableRenderers = layerToMetricsFactoryMap.get(layer);
-        
+
         if (availableRenderers == null) {
 			createConfiguration();
 			availableRenderers = layerToMetricsFactoryMap.get(layer);
@@ -127,33 +121,29 @@ public class RendererCreatorImpl implements RendererCreator {
 				return Collections.emptyList();
 			}
         }
+
         for( InternalRenderMetrics internalRenderMetrics : availableRenderers ) {
-            IRenderContext renderContext = internalRenderMetrics.getRenderContext();
-            IRenderMetricsFactory renderMetricsFactory = internalRenderMetrics.getRenderMetricsFactory();
-            AbstractRenderMetrics createMetrics = renderMetricsFactory.createMetrics(renderContext);
-            metrics.add(createMetrics);
+            metrics.add(internalRenderMetrics.getRenderMetricsFactory().createMetrics(internalRenderMetrics.getRenderContext()));
         }
         return metrics;
     }
-    
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Renderer getRenderer( RenderContext context ) {
 
         // Part 1 of decision goes here
         Object o = layerToMetricsFactoryMap.get(context.getLayer());
-        if (o == null){
-            createConfiguration(); // carefully creates the configuration entry for the layer
-        }
+        if (o == null)
+            createConfiguration();
         List<InternalRenderMetrics> list = layerToMetricsFactoryMap.get(context.getLayerInternal());
-        if( list.isEmpty() ){
-            return getPlaceHolder(context); // layer won't be rendered
-        }
+        if( list.isEmpty() )
+            return getPlaceHolder(context);
         InternalRenderMetrics internalRenderMetrics=null;
-        for( Iterator<InternalRenderMetrics> iter = list.iterator(); 
+        for( Iterator<InternalRenderMetrics> iter = list.iterator();
                     iter.hasNext() && internalRenderMetrics==null; ) {
             internalRenderMetrics = iter.next();
             boolean canRender;
@@ -176,71 +166,61 @@ public class RendererCreatorImpl implements RendererCreator {
         placeHolder.setContext(context);
         return placeHolder;
     }
-    /**
-     * Carefully creates the configuration in a threadsafe manner.
-     * <p>
-     * This method has the side effect of setting a Layer/RenderContext entry in the configuration
-     * map.
-     * <p>
-     * Because the rendermetrics may call any code in order to obtain their metrics it is possible
-     * that the rendermetrics could end up triggering createConfiguration to be called. Because of
-     * this the render metrics methods cannot be called within a synchronization block because a
-     * deadlock could occur
-     * <p>
-     * Consider: rendermetrics somehow resets a IGeoResource which triggers a re-render (and
-     * therefore a re-evaluation of the renderers). If anywhere there is synchronous waiting between
-     * 2 threads a dead lock can occur.
-     * <p>
-     * To overcome this issue this method has limitted synchronization. The configuration is made
-     * but before it assigns the configuration it determines whether or not the layers have changed
-     * since it started (this check is in a synchronization block so that it is thread safe) if the
-     * layers have changed then it starts over again. This way there is no chance for deadlock but
-     * the correctness semantics are maintained.
-     */
+
     void createConfiguration() {
+
+        // Because the rendermetrics may call any code in order to obtain their metrics it is possible
+        // that the rendermetrics could end up triggering createConfiguration to be called.  Because of this
+        // the render metrics methods cannot be called within a synchronization block because a deadlock could occur
+        // Consider:  rendermetrics somehow resets a IGeoResource which triggers a re-render (and therefore a re-evaluation of
+        // the renderers).  If anywhere there is synchronous waiting between 2 threads a dead lock can occur.
+        // To overcome this issue this method has limitted synchronization.  The configuration is made but before it assigns the
+        // configuration it determines whether or not the layers have changed since it started (this check is in a synchronization
+        // block so that it is thread safe) if the layers have changed then it starts over again.
+        // This way there is not change for deadlock but the correctness semantics are maintained.
         boolean configurationPassed=false;
-        
+
         while( !configurationPassed ){
-        
+
             initRenderMetrics();
-    
+
             Set<Layer> configured = new HashSet<Layer>();
             List<Layer> layers = new ArrayList<Layer>();
-            
+
             synchronized (this.layers) {
                 layers.addAll(this.layers);
             }
-    
+
             Map<Layer, RenderContext> configuration = new HashMap<Layer, RenderContext>();
-            
+
             LAYERS: for( int i = 0; i < layers.size(); i++ ) {
                 Layer layer = layers.get(i);
-    
+
                 if (configured.contains(layer)) {
                     continue LAYERS;
                 }
-    
+
                 List<InternalRenderMetrics> layerfactories = layerToMetricsFactoryMap.get(layer);
                 Collections.sort(layerfactories, new RenderMetricsSorter(layers));
-    
+
                 if (layerfactories.isEmpty()) {
                     // nobody loves this layer
                     // layer.setStatus( Layer.UNCONFIGURED );
                     continue LAYERS;
                 } else {
-                    AbstractRenderMetrics metrics = layerfactories.get(0); // sorted in order of preference
-                  
+                    IRenderMetrics metrics = layerfactories.get(0); // sorted in order of preference
+
                     if( metrics!=null ){
                         RenderContext renderContext = (RenderContext) metrics.getRenderContext();
                         if (renderContext instanceof CompositeRenderContext) {
-                            constructCompositeContext(configured, layers, configuration, i, metrics, 
+                            constructCompositeContext(configured, layers, configuration, i, metrics,
                                     (CompositeRenderContext) renderContext);
                         }
                         configuration.put(layer, renderContext);
                     }
                 }
             }
-    
+
             synchronized (this.layers) {
                 Iterator<Layer> iter1=layers.iterator();
                 Iterator<Layer> iter2 = this.layers.iterator();
@@ -263,13 +243,13 @@ public class RendererCreatorImpl implements RendererCreator {
         }
     }
 
-    private void constructCompositeContext( Set<Layer> configured, List<Layer> layers, Map<Layer, RenderContext> configuration, 
-            int i, AbstractRenderMetrics metrics, CompositeRenderContext renderContext ) {
-        
+    private void constructCompositeContext( Set<Layer> configured, List<Layer> layers, Map<Layer, RenderContext> configuration,
+            int i, IRenderMetrics metrics, CompositeRenderContext renderContext ) {
+
         renderContext.addContexts(Collections.singleton(renderContext));
         configured.add(renderContext.getLayerInternal());
         configuration.put(renderContext.getLayerInternal(), renderContext);
-        
+
         CONTEXT: for( int j = i+1; j < layers.size(); j++ ) {
             try {
                 Layer layer = layers.get(j);
@@ -284,10 +264,10 @@ public class RendererCreatorImpl implements RendererCreator {
         }
     }
 
-    private void addChildContextToComposite( Set<Layer> configured, Map<Layer, RenderContext> configuration, 
+    private void addChildContextToComposite( Set<Layer> configured, Map<Layer, RenderContext> configuration,
             CompositeRenderContext renderContext, Layer layer ) {
         List<InternalRenderMetrics> layerfactories2 = layerToMetricsFactoryMap.get(layer);
-        AbstractRenderMetrics metrics2 = layerfactories2.get(0);
+        IRenderMetrics metrics2 = layerfactories2.get(0);
         Set<RenderContext> child = Collections.singleton((RenderContext) metrics2.getRenderContext());
         renderContext.addContexts(child);
         // add to configurated to indicate that it has been configured.
@@ -310,7 +290,7 @@ public class RendererCreatorImpl implements RendererCreator {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public RenderContext getRenderContext( Layer layer ) {
@@ -353,10 +333,10 @@ public class RendererCreatorImpl implements RendererCreator {
             }
             break;
         }
-        
+
         /*
          * The collection <code>layers</code> is a sorted TreeMap of <? extends Layer> objects:
-         * Layer.compareTo() is used to sort and identify items for equality. Comparing is performed 
+         * Layer.compareTo() is used to sort and identify items for equality. Comparing is performed
          * by z-order. But this collection (<code>layers</code>) contains also
          * additional SelectionLayer objects and their z-order is artificial. This leads to
          * errors during removing by TreeMap.remove(..) methods.
@@ -364,11 +344,11 @@ public class RendererCreatorImpl implements RendererCreator {
          * layers from map with synchronization of this cache list of layers and selection layers with
          * map's list.
          */
-        
+
         case Notification.REMOVE: {
 
             synchronized (layers) {
-            	
+
             	Layer removedLayer = (Layer) event.getOldValue();
 
                 for ( Iterator iter = layers.iterator(); iter.hasNext(); ) {
@@ -381,12 +361,12 @@ public class RendererCreatorImpl implements RendererCreator {
                             iter.remove();
                     }
                 }
-                
+
             }
             break;
         }
         case Notification.REMOVE_MANY: {
-        	
+
             synchronized (layers) {
             	Collection<Layer> removedLayers = (Collection<Layer>) event.getOldValue();
 
@@ -404,10 +384,10 @@ public class RendererCreatorImpl implements RendererCreator {
             break;
         }
         case Notification.MOVE: {
-            // this should be a layer accordint to the reverse engineered rules... 
-            // I like type safety better. or at least documentation :( 
+            // this should be a layer accordint to the reverse engineered rules...
+            // I like type safety better. or at least documentation :(
             Layer newV=(Layer) event.getNewValue();
-            
+
             // remove then add the layers to fix ordering of layers.
             synchronized (layers) {
                 SelectionLayer selectionLayer=null;
@@ -428,11 +408,11 @@ public class RendererCreatorImpl implements RendererCreator {
                     layers.add(selectionLayer);
                 }
             }
-            
+
             break;
         }case Notification.SET:{
             Layer oldV=(Layer) event.getOldValue();
-            
+
             Layer newV=(Layer) event.getNewValue();
             SelectionLayer selectionLayer=null;
             if( newV.hasResource(FeatureSource.class) )
@@ -462,12 +442,12 @@ public class RendererCreatorImpl implements RendererCreator {
         default:
             break;
         }
-        configuration = null;
+            configuration=null;
     }
 
     /**
      * Locates the selection layer for layer or returns null;
-     * 
+     *
      * @return the selection layer for layer or returns null;
      */
     public SelectionLayer findSelectionLayer( ILayer targetLayer ) {
@@ -486,10 +466,17 @@ public class RendererCreatorImpl implements RendererCreator {
     }
 
     /**
+     * @uml.property name="configuration"
+     * @uml.associationEnd qualifier="key:java.lang.Object
+     *                     net.refractions.udig.project.internal.render.RenderContext"
+     */
+    private volatile Map<Layer, RenderContext> configuration;
+
+    /**
      * @author Jesse
      * @since 1.0.0
      */
-    static class DumbRendererMetrics extends AbstractRenderMetrics {
+    static class DumbRendererMetrics implements IRenderMetrics {
 
         private RenderContext context;
 
@@ -497,7 +484,6 @@ public class RendererCreatorImpl implements RendererCreator {
          * @param layer
          */
         public DumbRendererMetrics( Layer layer, IRenderContext context ) {
-            super(context, null, new ArrayList<String>());
             this.context = (RenderContext) context;
         }
 
@@ -542,8 +528,8 @@ public class RendererCreatorImpl implements RendererCreator {
         }
 
         @SuppressWarnings("unchecked")
-        public Set<Range<Double>> getValidScaleRanges() {
-            return new HashSet<Range<Double>>();
+        public Set<Range> getValidScaleRanges() {
+            return new HashSet<Range>();
         }
 
     }
@@ -587,9 +573,9 @@ public class RendererCreatorImpl implements RendererCreator {
     }
 
     private void initFactories( Layer layer ) {
-        
-        RendererExtensionProcessor p = new RendererExtensionProcessor(layer, 
-                getContext().getMapInternal(), 
+
+        RendererExtensionProcessor p = new RendererExtensionProcessor(layer,
+                getContext().getMapInternal(),
                 getContext().getRenderManagerInternal());
 
         ExtensionPointUtil.process(ProjectPlugin.getPlugin(), IRenderer.RENDER_EXT, p);
@@ -610,7 +596,7 @@ public class RendererCreatorImpl implements RendererCreator {
         Set<RenderContext> values;
         synchronized (configuration) {
             values = new HashSet<RenderContext>(configuration.values());
-            
+
         }
         synchronized (contexts) {
             contexts.clear();
@@ -624,7 +610,7 @@ public class RendererCreatorImpl implements RendererCreator {
     public void reset() {
         configuration=null;
         contexts.clear();
-        
+
         getConfiguration();
     }
 

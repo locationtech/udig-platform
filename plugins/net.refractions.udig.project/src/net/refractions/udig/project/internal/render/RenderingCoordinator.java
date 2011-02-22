@@ -24,9 +24,9 @@ import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
 /**
- * Coordinates the starting/stopping of renderers and updating of the 
+ * Coordinates the starting/stopping of renderers and updating of the
  * {@link IMapDisplay}
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -37,7 +37,7 @@ public class RenderingCoordinator {
      * @param listener listener to add.
      */
     public void addRenderListener(IRenderListener listener){
-        
+
     }
     /**
      * Removes a listener from the RenderCoordinator.
@@ -45,7 +45,7 @@ public class RenderingCoordinator {
      * @param listener listener to remove.
      */
     public void removeRenderListener(IRenderListener listener){
-        
+
     }
     /**
      * This method is inherently thread un-safe.  It will return a state that the renderer was in recently but
@@ -61,7 +61,7 @@ public class RenderingCoordinator {
      * @param screen area to render.
      */
     public void render(Rectangle screen){
-        
+
     }
     /**
      * Requests that the area indicated by the envelope be rendered for all layers.
@@ -69,13 +69,13 @@ public class RenderingCoordinator {
      * @param envelope area to render.
      */
     public void render(ReferencedEnvelope envelope){
-        
+
     }
     /**
      * Requests that the entire viewport and all of the layers be rendered.
      */
     public void render(){
-        
+
     }
     /**
      * Requests that the area indicated by the rectangle on the screen be rendered for layers the indicated layers.
@@ -84,7 +84,7 @@ public class RenderingCoordinator {
      * @param layers layer to render
      */
     public void render(Rectangle screen, List<ILayer> layers){
-        
+
     }
     /**
      * Requests that the area indicated by the rectangle on the screen be rendered for layers the indicated layers.
@@ -93,7 +93,7 @@ public class RenderingCoordinator {
      * @param layers layer to render
      */
     public void render(ReferencedEnvelope envelope, List<ILayer> layers ){
-        
+
     }
     /**
      * Requests that the entire viewport be rendered for the indicated layers only.
@@ -101,18 +101,18 @@ public class RenderingCoordinator {
      * @param layers layers to be rendered.
      */
     public void render( List<ILayer> layers){
-        
+
     }
     /**
      * Returns the rendered image.  The return type is determined by the parameter passed in.  The {@link RenderingCoordinator} will
-     * try to create an image of the requested type but if it is not possible then null will be returned.  
+     * try to create an image of the requested type but if it is not possible then null will be returned.
      *
      * @param <T> The desired type of image to return.  For example org.eclipse.swt.Image or java.awt.BufferedImage.
      * @param imageTypeToReturn the class of the type of the image that is desired.
      * @return The rendered image in the requested type or null if that is not possible with this {@link RenderingCoordinator}
      */
     public <T> T getImage(Class<T> imageTypeToReturn){
-       return null; 
+       return null;
     }
-    
+
 }

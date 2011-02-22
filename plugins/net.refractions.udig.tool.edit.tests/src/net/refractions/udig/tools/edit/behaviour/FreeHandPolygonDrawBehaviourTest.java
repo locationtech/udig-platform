@@ -49,7 +49,7 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        
+
         handler=new TestHandler();
         behav = new FreeHandPolygonDrawBehaviour();
         handler.getBehaviours().add(behav);
@@ -57,7 +57,7 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
         acceptor=new TestAcceptBehaviour();
         handler.getAcceptBehaviours().add(acceptor);
     }
-    
+
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.FreeHandPolygonDrawBehaviour.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
@@ -84,11 +84,11 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
         assertTrue(handler.isLocked());
         assertNotNull(handler.getCurrentShape());
         assertEquals(EditState.CREATING, handler.getCurrentState());
-        
+
         event=new MapMouseEvent(null, 20,10,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.DRAGGED);
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         assertFalse(handler.isLocked());
         assertEquals(Point.valueOf(0,10), handler.getCurrentShape().getPoint(0));
         assertEquals(Point.valueOf(10,10), handler.getCurrentShape().getPoint(1));
@@ -98,7 +98,7 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
 
         //continue line
         PrimitiveShape currentShape = handler.getCurrentShape();
-        
+
         handler.getMouseTracker().setDragStarted(Point.valueOf(20,11));
         event=new MapMouseEvent(null, 30,10,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.DRAGGED);
@@ -109,27 +109,27 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
         assertEquals(Point.valueOf(10,10), handler.getCurrentShape().getPoint(1));
         assertEquals(Point.valueOf(20,10), handler.getCurrentShape().getPoint(2));
         assertEquals(Point.valueOf(30,10), handler.getCurrentShape().getPoint(3));
-        
-        
+
+
         //start a new line
         acceptor.ran=false;
         handler.getMouseTracker().setDragStarted(Point.valueOf(100,10));
         event=new MapMouseEvent(null, 100,20,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.DRAGGED);
-        
+
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         assertEquals(Point.valueOf(100,10), handler.getCurrentShape().getPoint(0));
         assertEquals(Point.valueOf(100,20), handler.getCurrentShape().getPoint(1));
-        
+
     }
-    
+
     public void testDrawPolygon(){
         handler.getMouseTracker().setDragStarted(Point.valueOf(0,10));
-        
+
         MapMouseEvent event=new MapMouseEvent(null, 10,10,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.DRAGGED);
-        
+
         event=new MapMouseEvent(null, 20,10,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.DRAGGED);
 
@@ -143,7 +143,7 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
         handler.handleEvent(event, EventType.DRAGGED);
 
         handler.handleEvent(event, EventType.RELEASED);
-    
+
         assertEquals(Point.valueOf(0,10), handler.getCurrentShape().getPoint(0));
         assertEquals(Point.valueOf(10,10), handler.getCurrentShape().getPoint(1));
         assertEquals(Point.valueOf(20,10), handler.getCurrentShape().getPoint(2));
@@ -151,9 +151,9 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
         assertEquals(Point.valueOf(10,20), handler.getCurrentShape().getPoint(4));
         assertEquals(Point.valueOf(0,10), handler.getCurrentShape().getPoint(5));
         assertEquals(ShapeType.POLYGON, handler.getCurrentGeom().getShapeType());
-        
+
     }
-    
+
     public void testCutHole() throws Exception {
         EditBlackboard editBlackboard = handler.getEditBlackboard();
         EditGeom geom = editBlackboard.getGeoms().get(0);
@@ -163,12 +163,12 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
         editBlackboard.addPoint(0,40,geom.getShell());
         editBlackboard.addPoint(0,0,geom.getShell());
         handler.setCurrentShape(geom.getShell());
-        
+
         handler.getMouseTracker().setDragStarted(Point.valueOf(10,10));
-        
+
         MapMouseEvent event=new MapMouseEvent(null, 20,10,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.DRAGGED);
-        
+
         event=new MapMouseEvent(null, 20,20,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.DRAGGED);
 
@@ -179,7 +179,7 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
         handler.handleEvent(event, EventType.DRAGGED);
 
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         assertEquals(geom, handler.getCurrentGeom());
         assertEquals(geom.getHoles().get(0), handler.getCurrentShape());
         assertEquals(Point.valueOf(10,10), handler.getCurrentShape().getPoint(0));
@@ -187,7 +187,7 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
         assertEquals(Point.valueOf(20,20), handler.getCurrentShape().getPoint(2));
         assertEquals(Point.valueOf(10,20), handler.getCurrentShape().getPoint(3));
     }
-    
+
     private static final boolean INTERACTIVE = false;
     private int height = 50;
     private int width = 50;
@@ -199,7 +199,7 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
             BufferedImage.TYPE_4BYTE_ABGR);
     JFrame frame;
 
-    
+
     protected void openFrame() throws Exception {
         if (INTERACTIVE) {
             frame = new JFrame("EditGeomPathIterator Test"); //$NON-NLS-1$
@@ -215,7 +215,7 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
                   g.drawRect(0,0,width, height);
                 }
             });
-            
+
             frame.getContentPane().add(new JPanel(){
                 /** long serialVersionUID field */
                 private static final long serialVersionUID = 1L;
@@ -226,9 +226,9 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
                   g.drawRect(0,0,width, height);
                 }
             });
-            
+
             frame.setSize(width*2+20, height+50);
-            
+
             frame.setVisible(true);
         }
     }
@@ -238,13 +238,13 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
             frame.dispose();
         super.tearDown();
     }
-        
+
     class TestAcceptBehaviour implements Behaviour{
 
         boolean ran=false;
 
         public boolean isValid( EditToolHandler handler ) {
-            return handler.getCurrentShape()!=null && ( handler.getCurrentState()==EditState.CREATING 
+            return handler.getCurrentShape()!=null && ( handler.getCurrentState()==EditState.CREATING
                     || handler.getCurrentState()==EditState.MODIFYING);
         }
 
@@ -255,9 +255,9 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
 
         public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
         }
-        
+
     }
-    
-    
-    
+
+
+
 }

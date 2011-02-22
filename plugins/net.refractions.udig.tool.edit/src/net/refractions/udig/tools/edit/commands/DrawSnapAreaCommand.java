@@ -32,7 +32,7 @@ public class DrawSnapAreaCommand extends AbstractDrawCommand{
     public DrawSnapAreaCommand(IProvider<Point> tracker){
         this.tracker=tracker;
     }
-    
+
     public void run( IProgressMonitor monitor ) throws Exception {
         graphics.setColor(PreferenceUtil.instance().getFeedbackColor());
         int radius = PreferenceUtil.instance().getSnappingRadius();
@@ -53,7 +53,7 @@ public class DrawSnapAreaCommand extends AbstractDrawCommand{
             return rectangle.union(lastArea);
         else
             return rectangle;
-        
+
     }
 
 }

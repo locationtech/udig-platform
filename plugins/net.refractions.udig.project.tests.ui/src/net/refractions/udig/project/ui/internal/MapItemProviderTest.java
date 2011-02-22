@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Shell;
 /**
  * Test cases for map and project item providers to ensure that when a map or layer is added then the item provider
  * fires an event for the viewers to update themselves.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -60,7 +60,7 @@ public class MapItemProviderTest extends AbstractProjectUITestCase {
                         shells[0]=Display.getDefault().getShells()[0];
                     }
                 });
-                    
+
                 return shells[0];
             }
 
@@ -86,12 +86,12 @@ public class MapItemProviderTest extends AbstractProjectUITestCase {
             @Override
             public void setSelection( ISelection selection, boolean reveal ) {
             }
-            
+
         };
         map = MapTests.createDefaultMap("name", 10, true, new Dimension(500,500)); //$NON-NLS-1$
         map.getLayersInternal().clear();
     }
-    
+
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
@@ -106,20 +106,20 @@ public class MapItemProviderTest extends AbstractProjectUITestCase {
             public boolean isTrue()  {
                 return getNumItemProviders()>0;
             }
-            
+
         }, false );
 
         refresh=false;
-        
+
         assertEquals( 1, getNumItemProviders() );
-        
+
         map.getLayersInternal().add(ProjectFactory.eINSTANCE.createLayer());
         UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition(){
 
             public boolean isTrue()  {
                 return refresh;
             }
-            
+
         }, false );
         assertTrue(refresh);
         assertEquals( 1, getNumItemProviders() );

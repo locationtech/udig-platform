@@ -32,8 +32,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.PathData;
 
@@ -53,7 +53,7 @@ public class AWTGraphics implements ViewportGraphics {
     }
     /**
      * Construct a AWTGraphics with the indicated dpi
-     * 
+     *
      * @param g
      * @param dpi
      */
@@ -102,7 +102,7 @@ public class AWTGraphics implements ViewportGraphics {
      * <p>
      * Please note that the provided AWT Font makes use of a size in *points* (which are documented
      * to be 72 DPI). Internally we adjust this size by the getDPI() value for this AWTGraphics.
-     * 
+     *
      * @param f Font in 72 dpi
      */
     public void setFont( Font f ) {
@@ -201,22 +201,37 @@ public class AWTGraphics implements ViewportGraphics {
 
     /**
      * Converts an SWT image to an AWT BufferedImage
-     * 
+     *
      * @param swtImageData
      * @return
-     * 
-     * @deprecated use {@link AWTSWTImageUtils}
      */
     public static BufferedImage toAwtImage( ImageData swtImageData ) {
-        return AWTSWTImageUtils.convertToAWT(swtImageData);
+        int width = swtImageData.width;
+        int height = swtImageData.height;
+        PaletteData palette = swtImageData.palette;
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        for( int y = 0; y < height; y++ ) {
+            for( int x = 0; x < width; x++ ) {
+                int rgb = swtImageData.getPixel(x, y);
+
+                int red = (rgb & palette.redMask) >> Math.abs(palette.redShift);
+                int green = (rgb & palette.greenMask) >> Math.abs(palette.greenShift);
+                int blue = (rgb & palette.blueMask) >>> Math.abs(palette.blueShift);
+
+                Color color = new Color(red, green, blue);
+                bufferedImage.setRGB(x, y, color.getRGB());
+            }
+        }
+        return bufferedImage;
     }
 
     public void drawLine( int x1, int y1, int x2, int y2 ) {
         g.drawLine(x1, y1, x2, y2);
     }
 
-	public void drawImage(org.eclipse.swt.graphics.Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2) {
-		BufferedImage awtImage = AWTSWTImageUtils.convertToAWT(image.getImageData());
+    public void drawImage( org.eclipse.swt.graphics.Image image, int dx1, int dy1, int dx2,
+            int dy2, int sx1, int sy1, int sx2, int sy2 ) {
+        BufferedImage awtImage = toAwtImage(image.getImageData());
         drawImage(awtImage, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2);
     }
 
@@ -263,7 +278,7 @@ public class AWTGraphics implements ViewportGraphics {
     }
 
     public void drawImage( org.eclipse.swt.graphics.Image swtImage, int x, int y ) {
-        BufferedImage awtImage = AWTSWTImageUtils.convertToAWT(swtImage.getImageData());
+        BufferedImage awtImage = toAwtImage(swtImage.getImageData());
         drawImage((Image) awtImage, x, y);
 
     }
@@ -393,13 +408,6 @@ public class AWTGraphics implements ViewportGraphics {
         }
         g.setPaint(gradPaint);
         g.fillRect(x, y, width, height);
-    }
-    
-    public <T> T getGraphics( Class<T> adaptee ) {
-        if (adaptee.isAssignableFrom(Graphics2D.class)) {
-            return adaptee.cast(g);
-        }
-        return null;
     }
 
 }

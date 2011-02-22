@@ -36,7 +36,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.styling.Style;
 
 /**
- * TODO Purpose of 
+ * TODO Purpose of
  * <p>
  *
  * </p>
@@ -59,7 +59,7 @@ public class SLDDropActionTest extends TestCase {
                 MapTests.createGeoResource("DropActionTestFeatures2", 4, true), //$NON-NLS-1$
                 MapTests.createGeoResource("DropActionTestFeatures2", 5, true), //$NON-NLS-1$
                 MapTests.createGeoResource("DropActionTestFeatures2", 6, true) //$NON-NLS-1$
-                
+
         };
         ApplicationGIS.addLayersToMap(map, Arrays.asList(resources),0,null, true);
         action = new SLDDropAction();
@@ -74,7 +74,7 @@ public class SLDDropActionTest extends TestCase {
      * Test method for {@link net.refractions.udig.project.ui.internal.actions.SLDDropAction#accept()}.
      */
     public void testAccept() {
-        
+
         // All locations but NONE should be acceptable.
         Layer destination = map.getLayersInternal().get(1);
         action.init(null, null, ViewerDropLocation.AFTER, destination, sldURL);
@@ -85,7 +85,7 @@ public class SLDDropActionTest extends TestCase {
         assertTrue(action.accept());
         action.init(null, null, ViewerDropLocation.NONE, destination, sldURL);
         assertFalse(action.accept());
-        
+
         action.init(null, null, ViewerDropLocation.BEFORE, destination, sldFile);
         assertTrue(action.accept());
 
@@ -98,7 +98,7 @@ public class SLDDropActionTest extends TestCase {
         assertTrue(action.accept());
         action.init(null, null, ViewerDropLocation.NONE, map, sldFile);
         assertFalse(action.accept());
-        
+
         // can't drop on say... a ViewportModel
         action.init(null, null, ViewerDropLocation.ON, map.getViewportModel(), sldFile);
         assertFalse(action.accept());
@@ -113,11 +113,11 @@ public class SLDDropActionTest extends TestCase {
         UDIGTestUtil.inDisplayThreadWait(3000, new WaitCondition(){
 
             public boolean isTrue() {
-                return isTestStyle(destination, expectedName); 
+                return isTestStyle(destination, expectedName);
             }
-            
+
         }, false);
-        
+
         assertTrue(isTestStyle(destination, expectedName));
     }
 
@@ -130,11 +130,11 @@ public class SLDDropActionTest extends TestCase {
         UDIGTestUtil.inDisplayThreadWait(3000, new WaitCondition(){
 
             public boolean isTrue() {
-                return isTestStyle(destination, expectedName); 
+                return isTestStyle(destination, expectedName);
             }
-            
+
         }, false);
-        
+
         assertTrue(isTestStyle(destination, expectedName));
     }
 
@@ -146,11 +146,11 @@ public class SLDDropActionTest extends TestCase {
         UDIGTestUtil.inDisplayThreadWait(3000, new WaitCondition(){
 
             public boolean isTrue() {
-                return isTestStyle(map.getEditManager().getSelectedLayer(), expectedName); 
+                return isTestStyle(map.getEditManager().getSelectedLayer(), expectedName);
             }
-            
+
         }, false);
-        
+
         assertTrue(isTestStyle(map.getEditManager().getSelectedLayer(), expectedName));
     }
 
@@ -162,29 +162,29 @@ public class SLDDropActionTest extends TestCase {
         UDIGTestUtil.inDisplayThreadWait(3000, new WaitCondition(){
 
             public boolean isTrue() {
-                return isTestStyle(map.getEditManager().getSelectedLayer(), expectedName); 
+                return isTestStyle(map.getEditManager().getSelectedLayer(), expectedName);
             }
-            
+
         }, false);
-        
+
         assertTrue(isTestStyle(map.getEditManager().getSelectedLayer(), expectedName));
     }
-    
+
     public void testDropOnLayerIntegration() throws Exception {
         final Layer destination = map.getLayersInternal().get(2);
 
         handler.setTarget(destination);
         handler.performDrop(sldURL, null);
-        
+
         final String expectedName="Test Style"; //$NON-NLS-1$
         UDIGTestUtil.inDisplayThreadWait(3000, new WaitCondition(){
 
             public boolean isTrue() {
-                return isTestStyle(destination, expectedName); 
+                return isTestStyle(destination, expectedName);
             }
-            
+
         }, false);
-        
+
         assertTrue(isTestStyle(destination, expectedName));
     }
 

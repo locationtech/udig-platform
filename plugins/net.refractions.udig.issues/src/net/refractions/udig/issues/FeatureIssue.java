@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.List;
 
 import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.issues.internal.Messages;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
@@ -42,21 +41,20 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewPart;
 import org.geotools.data.FeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.feature.FeatureType;
+import org.geotools.filter.FilterFactoryFinder;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Id;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+
+import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Represents a problem or issue with a feature. The map containing the feature and the
  * FeatureEditor will both be show. The map will be zoomed to show the feature.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -66,8 +64,8 @@ public class FeatureIssue extends AbstractIssue {
     private static final String LAYER_KEY = "layer"; //$NON-NLS-1$
     private static final String PROJECT_KEY = "project"; //$NON-NLS-1$
     private static final String FEATURE_KEY = "feature"; //$NON-NLS-1$
-    
-    private SimpleFeature feature;
+
+    private Feature feature;
     private String viewid;
     private FeatureEditorLoader featureEditorLoader;
 	private ILayer layer;
@@ -81,33 +79,33 @@ public class FeatureIssue extends AbstractIssue {
     private static boolean testing=false;
 
     public FeatureIssue( ){
-        
+
     }
-    
-    public FeatureIssue( Priority priority, String description, ILayer containingLayer, SimpleFeature feature, String groupId ) {
+
+    public FeatureIssue( Priority priority, String description, ILayer containingLayer, Feature feature, String groupId ) {
     	assert groupId!=null && priority!=null && containingLayer!=null && feature!=null;
-    	
+
         setPriority(priority);
         setDescription(description);
         this.layer=containingLayer;
         this.feature = feature;
 		featureEditorLoader = ApplicationGISInternal.getFeatureEditorLoader(feature);
 		viewid = featureEditorLoader.getViewId();
-        
+
 		setGroupId(groupId);
-        setBounds(new ReferencedEnvelope(feature.getBounds()));
+        setBounds(new ReferencedEnvelope(feature.getBounds(), feature.getFeatureType().getDefaultGeometry().getCoordinateSystem()));
     }
-    
+
     @Override
     public void setId( String id ) {
         super.setId(id);
     }
-    
+
     @Override
     public String getEditorID() {
     	return MapEditor.ID;
     }
-    
+
     @Override
     public IEditorInput getEditorInput() {
         return new MapEditorInput(getLayer().getMap());
@@ -116,14 +114,14 @@ public class FeatureIssue extends AbstractIssue {
     @Override
     public String getViewPartId() {
         if( viewid==null ){
-            
+
         }
         return viewid;
     }
 
     public String getProblemObject() {
-    	SimpleFeature feature = getFeature();
-    	SimpleFeatureType featureType = feature.getFeatureType();
+    	Feature feature = getFeature();
+    	FeatureType featureType = feature.getFeatureType();
     	String text = null;
     	text = getAttribute(feature, featureType, Messages.FeatureIssue_attributeName);
 		if( text==null ){
@@ -139,9 +137,9 @@ public class FeatureIssue extends AbstractIssue {
         return text;
     }
 
-	private String getAttribute(SimpleFeature feature, SimpleFeatureType featureType,
+	private String getAttribute(Feature feature, FeatureType featureType,
 			String attName) {
-		int attributeIndex = featureType.indexOf(attName); 
+		int attributeIndex = featureType.find(attName);
     	if ( attributeIndex!=-1 ){
     		Object attribute = feature.getAttribute(attributeIndex);
 			return attribute.toString();
@@ -157,14 +155,14 @@ public class FeatureIssue extends AbstractIssue {
 					String title = Messages.FeatureIssue_DialogText;
 					String message = Messages.FeatureIssue_DialogMessage;
 					MessageDialog.openInformation(parent, title, message);
-					
+
 				}
 			});
     		return;
     	}
         final ToolContext context = ApplicationGISInternal.createContext(getLayer().getMap());
         final CoordinateReferenceSystem crs=getLayer().getCRS( );
-        ReferencedEnvelope bounds = new ReferencedEnvelope(getFeature().getBounds());
+        Envelope bounds = getFeature().getBounds();
         double deltax=bounds.getWidth()/4;
         double deltay=bounds.getHeight()/4;
         bounds.expandToInclude(bounds.getMinX()-deltax, bounds.getMinY()-deltay);
@@ -178,8 +176,8 @@ public class FeatureIssue extends AbstractIssue {
         NavCommand zoom = context.getNavigationFactory().createSetViewportBBoxCommand(
                 bounds, crs);
         context.sendASyncCommand(zoom);
-        composite.getCommands().add(context.getSelectionFactory().createFIDSelectCommand(getLayer(),getFeature()));
         composite.getCommands().add(context.getEditFactory().createSetEditFeatureCommand(getFeature(), getLayer()));
+        composite.getCommands().add(context.getSelectionFactory().createFIDSelectCommand(getLayer(),getFeature()));
         context.sendASyncCommand(composite);
     }
 
@@ -207,16 +205,14 @@ public class FeatureIssue extends AbstractIssue {
         memento.putString(FEATURE_KEY, getFeature().getID());
     }
 
-    private SimpleFeature getFeature() {
+    private Feature getFeature() {
         if( feature==null ){
             ILayer layer=getLayer();
-             FeatureSource<SimpleFeatureType, SimpleFeature> featureSource;
+            FeatureSource featureSource;
             try {
                 featureSource = layer.getResource(FeatureSource.class, ProgressManager.instance().get());
-                FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-				Id id2 = filterFactory.id(FeatureUtils.stringToId(filterFactory,featureID));
-				FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featureSource.getFeatures(id2);
-                FeatureIterator<SimpleFeature> iter = features.features();
+                FeatureCollection features = featureSource.getFeatures(FilterFactoryFinder.createFilterFactory().createFidFilter(featureID));
+                FeatureIterator iter = features.features();
                 try{
                     if ( iter.hasNext() )
                         feature=iter.next();
@@ -254,7 +250,7 @@ public class FeatureIssue extends AbstractIssue {
             }
             if( foundMap==null )
                 throw new IllegalStateException("This issue is not legal for this uDig instance because the map:"+mapID+" cannot be found.");  //$NON-NLS-1$//$NON-NLS-2$
-    
+
             List<ILayer> layers= foundMap.getMapLayers();
             for( ILayer layer : layers ) {
                 if( layer.getID().toString().equals(layerID) ){
@@ -274,5 +270,5 @@ public class FeatureIssue extends AbstractIssue {
         testing=b;
     }
 
-	
+
 }

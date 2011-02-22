@@ -39,7 +39,7 @@ public class LayerSelectionListener implements ISelectionListener {
 
     /**
      * Construct <code>LayerSelectionListener</code>.
-     * 
+     *
      * @param callback The callback used when a layer or layers have been added.
      */
     public LayerSelectionListener( Callback callback ) {

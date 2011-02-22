@@ -1,0 +1,152 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 3 Draw Command</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 3 Draw Command -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h1><a name="3DrawCommand-DrawCommand">Draw Command</a></h1>
+
+<p>Draw Commands are a special, and slightly confusing class of commands.  Draw Commands affect the MapDisplay and are how tools provide dynamic feedback to users.</p>
+
+<h2><a name="3DrawCommand-Alwayson%21">Always on!</a></h2>
+
+<p>Draw commands are strange because then are not fire and forget like "normal" commands because the command must exist each time the MapDisplay is refreshed/repainted (this is different from re-rendering ).</p>
+<ul>
+	<li>Each time the MapDisplay is refreshed all the currently active draw commands are executed if isActive return true.</li>
+	<li>Each time a re-rendering occurs all commands are removed.</li>
+</ul>
+
+
+<p>This is the case because it is the most common requirement of tools.  For example pan applies a transformation to the ViewportGraphics and when the button is released a re-rendering occurs.  Currently there is not support for persistent DrawCommands although if the requirement emerges and new interface can be created to flag commans that should stay valid across renders.</p>
+
+<p>There are two types of Draw Commands currently IPreMapDrawCommand and the basic IDrawCommand.  Normal IDrawCommands are executed after the rendered image is displayed.  They are good for drawing shapes, such as the zoom box.  IPreMapDrawCommands are executed before the rendered image is displayed.  The TranslateCommand is an example of a IPreMapDrawCommand.</p>
+
+<p>Summary:</p>
+<ol>
+	<li>Draw Commands must provide the correct result after every execution.</li>
+	<li>Draw Commands have an isActive method that the MapDisplay calls to determine whether the command should be kept in the execution stack.</li>
+	<li>All Draw Commands are dropped when a re-render begins.</li>
+	<li>Two types of Draw Commands: IPreMapDrawCommand (executed before rendered image is drawn) and IDrawCommand (executed after the rendered image is drawn).</li>
+</ol>
+
+
+<h2><a name="3DrawCommand-NoteonDrawingTechnology">Note on Drawing Technology</a></h2>
+
+<p>Note the abstraction used to draw against is not a Java Graphics2D, we make use of our own API inorder to draw to both SWT, AWT and hopefully OpenGL.</p>
+
+<p>As with all uDig APIs, if you need something please ask! We are limited by time, not ability, we cannot tell what is needed until someone asks for it.</p>
+
+<h4><a name="3DrawCommand-DrawCommandExample">Draw Command Example</a></h4>
+
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>DeleteFeatureCommand.java</b></div><div class="codeContent">
+<pre class="code-java">/**
+ * Sets the ViewportGraphics object translate its 0,0 coordinate by -x,-y.
+ * IE. shapes are drawn down and right <span class="code-keyword">if</span> x,y are both positive.
+ *
+ * @author jeichar
+ * @since 0.3
+ */
+<span class="code-keyword">public</span> class TranslateCommand <span class="code-keyword">extends</span> AbstractDrawCommand <span class="code-keyword">implements</span> IMapTransformCommand, IPreMapDrawCommand {
+
+    <span class="code-keyword">private</span> Point offset;
+
+    /**
+     * Construct &lt;code&gt;TranslateCommand&lt;/code&gt;.
+     *
+     * @param offset The amount of offset
+     */
+    <span class="code-keyword">public</span> TranslateCommand(Point offset){
+        <span class="code-keyword">this</span>.offset=offset;
+    }
+
+    /**
+     * Construct &lt;code&gt;TranslateCommand&lt;/code&gt;.
+     *
+     * @param x The amount of offset in the x-direction
+     * @param y The amount of offset in the y-direction
+     */
+    <span class="code-keyword">public</span> TranslateCommand(<span class="code-object">int</span> x, <span class="code-object">int</span> y){
+        <span class="code-keyword">this</span>.offset=<span class="code-keyword">new</span> Point(x,y);
+    }
+    /**
+     * @see net.refractions.udig.project.internal.command.Command#run()
+     */
+    <span class="code-keyword">public</span> void run() <span class="code-keyword">throws</span> Exception {
+        <span class="code-keyword">if</span>(offset.x&gt;0){
+            graphics.clearRect(0,0,offset.x,display.getHeight());
+        }<span class="code-keyword">else</span>{
+            graphics.clearRect(display.getWidth(),0,-offset.x,display.getHeight());
+        }
+        <span class="code-keyword">if</span>(offset.y&gt;0){
+            graphics.clearRect(0,0,display.getWidth(), offset.y);
+        }<span class="code-keyword">else</span>{
+            graphics.clearRect(0,display.getHeight(),display.getWidth(),-offset.y);
+        }
+        graphics.translate(offset);
+    }
+
+    /**
+     * @see net.refractions.udig.project.internal.command.Command#copy()
+     */
+    <span class="code-keyword">public</span> Command copy() {
+        <span class="code-keyword">return</span> <span class="code-keyword">new</span> TranslateCommand(offset);
+    }
+
+    /**
+     * Sets the amount the command will translate during the next paint phase
+     *
+     * @param x x-translation
+     * @param y y-translation
+     */
+    <span class="code-keyword">public</span> void setTranslation( <span class="code-object">int</span> x, <span class="code-object">int</span> y ) {
+        offset.x=x;
+        offset.y=y;
+    }
+    /**
+     * Sets the amount the command will translate during the next paint phase
+     *
+     * @param offset  The amount of translation
+     */
+    <span class="code-keyword">public</span> void setTranslation(Point offset ){
+        <span class="code-keyword">this</span>.offset=offset;
+    }
+
+    /**
+     * @see net.refractions.udig.project.command.Command#getName()
+     */
+    <span class="code-keyword">public</span> <span class="code-object">String</span> getName() {
+        <span class="code-keyword">return</span> Policy.bind(<span class="code-quote">"TranslateCommand.translateDisplayArea"</span>); <span class="code-comment">//$NON-NLS-1$
+</span>    }
+
+}</pre>
+</div></div>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=4089">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=4089">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

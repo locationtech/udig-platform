@@ -28,16 +28,15 @@ import net.refractions.udig.catalog.wms.internal.Messages;
 
 /**
  * A service extension for creating WMS Services
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
 public class WMSServiceExtension implements ServiceExtension2 {
 
     public IService createService( URL id, Map<String, Serializable> params ) {
-        if (params == null){
+        if (params == null)
             return null;
-        }
 
         if ((!params.containsKey(WMSServiceImpl.WMS_URL_KEY) && id == null)
                 && !params.containsKey(WMSServiceImpl.WMS_WMS_KEY)) {
@@ -46,13 +45,12 @@ public class WMSServiceExtension implements ServiceExtension2 {
 
         URL extractedId = extractId(params);
         if (extractedId != null) {
-            if (id != null){
+            if (id != null)
                 return new WMSServiceImpl(id, params);
-            }
-            else {
+            else
                 return new WMSServiceImpl(extractedId, params);
-            }
         }
+
         return null;
     }
     private URL extractId( Map<String, Serializable> params ) {
@@ -105,18 +103,11 @@ public class WMSServiceExtension implements ServiceExtension2 {
                     + Messages.WMSServiceExtension_nullValue;
         return reasonForFailure(id);
     }
-    /**
-     * Error message for failing to connect with the provided url
-     */
+
     public String reasonForFailure( URL url ) {
         return processURL(url);
     }
-    /**
-     * Checks the URL to see if it is a capabilities document; returns a string with any
-     * error message.
-     * @param url
-     * @return error message for provided url; or null if it is okay
-     */
+
     private static String processURL( URL url ) {
         if (url == null) {
             return Messages.WMSServiceExtension_nullURL;
@@ -130,7 +121,7 @@ public class WMSServiceExtension implements ServiceExtension2 {
         }
         if( QUERY != null && QUERY.toUpperCase().indexOf( "SERVICE=" ) != -1){ //$NON-NLS-1$
             int indexOf = QUERY.toUpperCase().indexOf( "SERVICE=" ); //$NON-NLS-1$
-            // we have a service! it better be wfs            
+            // we have a service! it better be wfs
             if( QUERY.toUpperCase().indexOf( "SERVICE=WMS") == -1 ){ //$NON-NLS-1$
                 int endOfExp = QUERY.indexOf('&', indexOf);
                 if( endOfExp == -1 )

@@ -9,66 +9,69 @@ import net.refractions.udig.tool.info.LayerPointInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.Feature;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.feature.FeatureType;
+import org.geotools.filter.AttributeExpression;
+import org.geotools.filter.BBoxExpression;
+import org.geotools.filter.FilterFactory;
+import org.geotools.filter.FilterFactoryFinder;
+import org.geotools.filter.GeometryFilter;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.FilterFactory2;
-import org.opengis.filter.spatial.Intersects;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-
 public class DataStoreDescribeLayer {
-    
+
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#createInfo(java.awt.Point)
+     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#getInfo(java.awt.Point)
      */
     public static List<LayerPointInfo> info( final ILayer layer, ReferencedEnvelope bbox, IProgressMonitor monitor ) throws Exception{
-        List<SimpleFeature> features = info2( layer, bbox, monitor );
+        List<Feature> features = info2( layer, bbox, monitor );
         List<LayerPointInfo> list = new ArrayList<LayerPointInfo>( features.size() );
-        for( SimpleFeature feature :  features  ) {
-            final SimpleFeature feature2 = feature;
-            LayerPointInfo info =  new LayerPointInfo( layer ){                    
+        for( Feature feature :  features  ) {
+            final Feature feature2 = feature;
+            LayerPointInfo info =  new LayerPointInfo( layer ){
                 public String getMimeType() {
                     return LayerPointInfo.GML;
                 }
                 public Object acquireValue() {
                     return feature2;
-                }            
+                }
             };
             list.add( info );
         }
         return list;
     }
-    
-    public static List<SimpleFeature> info2( ILayer layer, ReferencedEnvelope bbox, IProgressMonitor monitor ) throws Exception{
-        FeatureSource<SimpleFeatureType, SimpleFeature> source = layer.getResource( FeatureSource.class, null );
-        SimpleFeatureType type = source.getSchema();
+
+    public static List<Feature> info2( ILayer layer, ReferencedEnvelope bbox, IProgressMonitor monitor ) throws Exception{
+        FeatureSource source = layer.getResource( FeatureSource.class, null );
+        FeatureType type = source.getSchema();
         CoordinateReferenceSystem crs = layer.getCRS();
-        
+
         if( !bbox.getCoordinateReferenceSystem().equals( crs )) {
             bbox = bbox.transform(crs, true);
         }
-        FilterFactory2 factory = (FilterFactory2) CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-        Geometry geom = new GeometryFactory().toGeometry(bbox);
-        Intersects filter = factory.intersects(factory.property(type.getGeometryDescriptor().getName()), factory.literal(geom));
-        
+        FilterFactory factory = FilterFactoryFinder.createFilterFactory();
+
+        BBoxExpression theBBox = factory.createBBoxExpression( bbox );
+        AttributeExpression theGeom = factory.createAttributeExpression(type.getDefaultGeometry().getName() );
+
+        GeometryFilter filter = factory.createGeometryFilter( GeometryFilter.GEOMETRY_INTERSECTS );
+        filter.addLeftGeometry( theGeom );
+        filter.addRightGeometry( theBBox );
+
         layer.getQuery(false);
-        final FeatureCollection<SimpleFeatureType, SimpleFeature>  results = source.getFeatures( filter );
+        final FeatureCollection results = source.getFeatures( filter );
 //        if( results.getCount() == 0 ) {
 //            return null; // no content!
 //        }
 
-        List<SimpleFeature> list = new ArrayList<SimpleFeature>();
-        FeatureIterator<SimpleFeature> reader = results.features();
+        List<Feature> list = new ArrayList<Feature>();
+        FeatureIterator reader = results.features();
         try {
             while( reader.hasNext() ) {
-                if( monitor != null && monitor.isCanceled() ) return list;                
+                if( monitor != null && monitor.isCanceled() ) return list;
                 list.add( new AdaptableFeature( reader.next(), layer) );
             }
         }

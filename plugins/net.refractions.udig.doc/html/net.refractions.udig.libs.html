@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : net.refractions.udig.libs</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : net.refractions.udig.libs -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h3><a name="net.refractions.udig.libs-%22Libs%22Plugin">"Libs" Plugin</a></h3>
+
+<p>The libs plugin is the "glue" between uDig and the rest of the open source world. This plugin is responsible for gathering together all the other code dependencies uDig has on the outside world.</p>
+
+<h3><a name="net.refractions.udig.libs-Custombuild.xml">Custom build.xml</a></h3>
+
+<p>The libs plugin contains a custom build.xml file, this file fetches the required jars from the following locations:</p>
+<ul class="alternate" type="square">
+	<li><a href="http://lists.refractions.net/" title="Visit page outside Confluence">&#104;ttp://lists.refractions.net/</a></li>
+	<li>your local MAVEN repository</li>
+</ul>
+
+
+<p>This allows you to run uDig against the latest experimintal geotools code on your computer! More importantly it lets you test bug fixes and enhancements to these open source projects.</p>
+
+<p>This build.xml file is called via a "builder" in eclispe, to use simply "clean" libs. You can watch the script run as it downloads all the required files.</p>
+
+<h3><a name="net.refractions.udig.libs-UpdatingtheLibsPlugin">Updating the Libs Plugin</a></h3>
+
+<p>The Libs plugin can be customized in a number of ways, usually for each release:</p>
+
+<p>Changing GeoTools versions:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;target name=<span class="code-quote">"update.gt"</span>&gt;
+    &lt;property name=<span class="code-quote">"moduleName"</span> value=<span class="code-quote">"gt2"</span>/&gt;
+    &lt;property name=<span class="code-quote">"geotools.version"</span> value=<span class="code-quote">"2.1.RC1"</span>/&gt;
+    &lt;property name=<span class="code-quote">"geotools.snapshot"</span> value=<span class="code-quote">"2.1.1"</span>/&gt;
+    ...
+&lt;/target&gt;
+&lt;target name=<span class="code-quote">"update.libs"</span>&gt;
+    &lt;property name=<span class="code-quote">"geoapi.version"</span> value=<span class="code-quote">"2.0-tiger"</span>/&gt;
+    &lt;property name=<span class="code-quote">"geotools.version"</span> value=<span class="code-quote">"2.1.1"</span>/&gt;
+    &lt;property name=<span class="code-quote">"geotools.snapshot"</span> value=<span class="code-quote">"2.1.1"</span>/&gt;
+    ....
+&lt;/target&gt;</pre>
+</div></div>
+
+<p>How is this information used:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;get src=<span class="code-quote">"${repo}/${moduleName}/jars/main-${geotools.version}.jar"</span>
+         dest=<span class="code-quote">"${lib}/main-${geotools.version}.jar"</span>
+         usetimestamp=<span class="code-quote">"<span class="code-keyword">true</span>"</span> ignoreerrors=<span class="code-quote">"<span class="code-keyword">true</span>"</span> verbose=<span class="code-quote">"<span class="code-keyword">true</span>"</span>/&gt;
+    ...
+    &lt;get src=<span class="code-quote">"${updateURL}/${moduleName}/${geotools.snapshot}/main-${geotools.version}.jar"</span>
+         dest=<span class="code-quote">"${lib}/main-${geotools.version}.jar"</span>
+         usetimestamp=<span class="code-quote">"<span class="code-keyword">true</span>"</span> ignoreerrors=<span class="code-quote">"<span class="code-keyword">true</span>"</span> verbose=<span class="code-quote">"<span class="code-keyword">true</span>"</span>/&gt;</pre>
+</div></div>
+
+<p>If the local maven repository contains the indicated jar, it will be copied to the lib folder. If not the remote jar is copied from the update site.</p>
+
+  <img src="http://udig.refractions.net/image/DEV/ngrelr.gif">
+
+<p><a href="http://udig.refractions.net/confluence/display/UDIG/How+to+fix+a+broken+build" title="Visit page outside Confluence">How to fix a broken build</a></p>
+
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=6551">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=6551">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

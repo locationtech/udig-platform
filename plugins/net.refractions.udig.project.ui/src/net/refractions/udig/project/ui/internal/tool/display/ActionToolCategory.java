@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.ToolItem;
 
 /**
  * All Fire and forget actions are in this category.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
@@ -38,7 +38,7 @@ public class ActionToolCategory extends ToolCategory {
 
     /**
      * Construct <code>ActionCategory</code>.
-     * 
+     *
      * @param element
      * @param manager
      */
@@ -47,7 +47,7 @@ public class ActionToolCategory extends ToolCategory {
     }
     /**
      * Construct <code>ActionToolCategory2</code>.
-     * 
+     *
      * @param manager
      */
     public ActionToolCategory( IToolManager manager ) {
@@ -64,7 +64,7 @@ public class ActionToolCategory extends ToolCategory {
 
     /**
      * Contribution class for action tools on the toolbar.
-     * 
+     *
      * @author jeichar
      * @author Vitalus
      *

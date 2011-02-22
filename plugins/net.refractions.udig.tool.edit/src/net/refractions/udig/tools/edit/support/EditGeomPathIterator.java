@@ -24,7 +24,7 @@ import net.refractions.udig.tools.edit.support.EditBlackboardEvent.EventType;
 /**
  * Wraps a {@link net.refractions.udig.tools.edit.support.EditGeom} so that it can be drawn to a
  * Graphics2d object.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -35,10 +35,10 @@ public class EditGeomPathIterator extends AbstractPathIterator {
     protected EditGeomPathIterator( EditGeom shape ) {
         super( shape );
     }
-    
+
     public void dispose() {
     }
-    
+
     private static final Map<EditBlackboard, EditBlackboardListener> listeners=new HashMap<EditBlackboard, EditBlackboardListener>();
 
     private static final Map<EditGeom, EditGeomPathIterator> map=new HashMap<EditGeom, EditGeomPathIterator>();
@@ -60,7 +60,7 @@ public class EditGeomPathIterator extends AbstractPathIterator {
                             }
                         }
                     }
-                    
+
                     @Override
                     public void batchChange( List<EditBlackboardEvent> e ) {
                         for( EditBlackboardEvent event : e ) {
@@ -76,7 +76,7 @@ public class EditGeomPathIterator extends AbstractPathIterator {
         return iter;
     }
 
-    
+
     public int currentSegment( float[] coords ) {
 
         int result = super.currentSegment(coords);

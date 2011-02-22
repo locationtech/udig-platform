@@ -35,19 +35,28 @@ import net.refractions.udig.tools.edit.support.Point;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
- * <p>Requirements: * <ul> * <li>EventType==DOUBLE_CLICKED</li> * <li>EditState==MODIFIED or CREATING</li>
+ * <p>Requirements:
+ * <ul>
+ * <li>EventType==DOUBLE_CLICKED</li>
+ * <li>EditState==MODIFIED or CREATING</li>
  * <li>no modifiers</li>
  * <li>button1 clicked</li>
- * <li>no buttons down</li> * </ul> * </p> * <p>Action: * <ul>
- * <li>Adds the point where double click occurs <b>if</b> addPoint is true. (Default behaviour)</li * <li>Runs Accept Behaviours</li>
- * <li>If current state is CREATING the changes state to MODIFYING</li> * </ul> * </p>
+ * <li>no buttons down</li> * </ul>
+ * </p>
+ * <p>Action:
+ * <ul>
+ * <li>Adds the point where double click occurs <b>if</b> addPoint is true. (Default behaviour)</li
+ * <li>Runs Accept Behaviours</li>
+ * <li>If current state is CREATING the changes state to MODIFYING</li>
+ * </ul>
+ * </p>
  * @author jones
  * @since 1.1.0
  */
 public class AcceptOnDoubleClickBehaviour implements EventBehaviour {
 
     boolean addPoint=true;
-    
+
     public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
         boolean goodState = handler.getCurrentState()!=EditState.NONE;
         boolean releasedEvent = eventType==EventType.DOUBLE_CLICK;
@@ -57,7 +66,7 @@ public class AcceptOnDoubleClickBehaviour implements EventBehaviour {
         boolean shapeIsSet=handler.getCurrentShape()!=null;
         if( !(shapeIsSet && goodState && releasedEvent && noModifiers && button1 && onlyButton1Down) )
             return false;
-        
+
         boolean changedGeom=false;
         for( EditGeom geom : handler.getEditBlackboard(handler.getEditLayer()).getGeoms() ) {
             if( geom.isChanged() ){
@@ -74,14 +83,14 @@ public class AcceptOnDoubleClickBehaviour implements EventBehaviour {
 
     public UndoableMapCommand getCommand( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
         List<UndoableMapCommand> commands=new ArrayList<UndoableMapCommand>();
-        
+
         if( handler.getCurrentState()==EditState.CREATING && addPoint){
             Point clickPoint = Point.valueOf(e.x, e.y);
             EditBlackboard editBlackboard = handler.getEditBlackboard(handler.getEditLayer());
-            
+
             Point destination = editBlackboard.overVertex(clickPoint, PreferenceUtil.instance().getVertexRadius());
             if( destination==null ){
-                
+
                 AddVertexCommand addVertexCommand = new AddVertexCommand(handler, editBlackboard, clickPoint);
 
                 try {
@@ -93,7 +102,7 @@ public class AcceptOnDoubleClickBehaviour implements EventBehaviour {
                 commands.add(new UndoRedoCommand(addVertexCommand));
             }
         }
-        
+
         commands.add(handler.getCommand(handler.getAcceptBehaviours()));
         UndoableComposite undoableComposite = new UndoableComposite(commands);
         return undoableComposite;

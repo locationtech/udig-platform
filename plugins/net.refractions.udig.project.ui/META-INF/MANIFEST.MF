@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.project.ui; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.1.2
 Bundle-Activator: net.refractions.udig.project.ui.internal.ProjectUIPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
@@ -11,7 +11,6 @@ Export-Package: net.refractions.udig.project.internal.ui.wizard,
  net.refractions.udig.project.ui,
  net.refractions.udig.project.ui.commands,
  net.refractions.udig.project.ui.controls,
- net.refractions.udig.project.ui.feature,
  net.refractions.udig.project.ui.internal,
  net.refractions.udig.project.ui.internal.actions,
  net.refractions.udig.project.ui.internal.adapters,
@@ -24,32 +23,24 @@ Export-Package: net.refractions.udig.project.internal.ui.wizard,
  net.refractions.udig.project.ui.internal.tool,
  net.refractions.udig.project.ui.internal.tool.display,
  net.refractions.udig.project.ui.internal.tool.impl,
- net.refractions.udig.project.ui.internal.wizard,
  net.refractions.udig.project.ui.internal.wizard.url,
  net.refractions.udig.project.ui.operations.example,
  net.refractions.udig.project.ui.preferences,
  net.refractions.udig.project.ui.render.displayAdapter,
- net.refractions.udig.project.ui.render.glass,
  net.refractions.udig.project.ui.tool,
- net.refractions.udig.project.ui.tool.selection.provider,
- net.refractions.udig.project.ui.viewers,
- net.refractions.udig.project.ui.wizard.export,
- net.refractions.udig.project.ui.wizard.export.image,
- net.refractions.udig.project.ui.wizard.export.map,
- net.refractions.udig.project.ui.wizard.export.project
+ net.refractions.udig.project.ui.tool.selection.provider
 Require-Bundle: net.refractions.udig.style.sld,
  org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.project;visibility:=reexport,
  net.refractions.udig.core,
  org.eclipse.jface,
- net.refractions.udig.catalog,
  org.eclipse.gef,
  net.refractions.udig.ui;visibility:=reexport,
  org.eclipse.emf.edit.ui,
- net.refractions.udig.catalog.ui,
+ net.refractions.udig.catalog.ui;visibility:=reexport,
  net.refractions.udig.project.edit,
  org.eclipse.ui.cheatsheets,
  org.eclipse.core.expressions,
  com.lowagie.itext
-Bundle-ActivationPolicy: lazy
+Eclipse-LazyStart: true

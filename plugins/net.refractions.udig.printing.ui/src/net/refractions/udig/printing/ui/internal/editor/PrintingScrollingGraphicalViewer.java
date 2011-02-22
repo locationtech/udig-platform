@@ -14,13 +14,12 @@
  */
 package net.refractions.udig.printing.ui.internal.editor;
 
-import org.eclipse.gef.editparts.LayerManager;
 import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
 
 /**
  * Adds a reference to the PageEditor so that EditParts can get access to the PageEditor and add
  * actions to its ActionRegistry.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -39,5 +38,5 @@ public class PrintingScrollingGraphicalViewer extends ScrollingGraphicalViewer{
     public PageEditor getEditor() {
         return editor;
     }
-    
+
 }

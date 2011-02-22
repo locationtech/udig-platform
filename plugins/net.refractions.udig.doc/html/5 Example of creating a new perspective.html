@@ -1,0 +1,128 @@
+<html>
+    <head>
+        <title>UDIG Developer Guide : 5 Example of creating a new perspective</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body BGCOLOR="#FFFFFF">
+        <!-- UDIG Developer Guide : 5 Example of creating a new perspective -->
+
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td valign="top" class="pagebody">
+
+				    <h2><a name="5Exampleofcreatinganewperspective-CreatingaNewPerspective">Creating a New Perspective</a></h2>
+<p>This tutorial creates a new perspective that is based on combining </p>
+
+<h3><a name="5Exampleofcreatinganewperspective-DeclarenewPerspective">Declare new Perspective</a></h3>
+<p>Add the following XML snippet to your plugin.xml:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;extension
+         point=<span class="code-quote">"org.eclipse.ui.perspectives"</span>&gt;
+      &lt;perspective
+            class=<span class="code-quote">"tutorial.PerspectiveFactory1"</span>
+            id=<span class="code-quote">"tutorial.perspective1"</span>
+            name=<span class="code-quote">"tutorial.perspective1"</span>/&gt;
+   <span class="code-tag">&lt;/extension&gt;</span></pre>
+</div></div>
+
+<p>The plugin.xml editor's extension tab should now be similar to the following (provided you did the last two tutorials):<br/>
+<div align="center"><img src="5 Example of creating a new perspective_attachments/perspectiveDec.gif" border="0" /></div></p>
+
+<h3><a name="5Exampleofcreatinganewperspective-CreateaPerspectiveFactoryclass">Create a Perspective Factory class</a></h3>
+<div class="code"><div class="codeHeader"><b>PerspectiveFactory1</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> tutorial;
+
+<span class="code-keyword">import</span> org.eclipse.ui.IPageLayout;
+<span class="code-keyword">import</span> org.eclipse.ui.IPerspectiveFactory;
+
+<span class="code-keyword">public</span> class PerspectiveFactory1 <span class="code-keyword">implements</span> IPerspectiveFactory {
+
+	<span class="code-keyword">public</span> void createInitialLayout(IPageLayout layout) {
+		layout.createFolder(<span class="code-quote">"left"</span>, IPageLayout.LEFT, 0.2f, IPageLayout.ID_EDITOR_AREA);;
+		layout.createFolder(<span class="code-quote">"right"</span>, IPageLayout.RIGHT, 0.6f, IPageLayout.ID_EDITOR_AREA);;
+		layout.createFolder(<span class="code-quote">"bottom"</span>, IPageLayout.BOTTOM, 0.8f, IPageLayout.ID_EDITOR_AREA);;
+		layout.createFolder(<span class="code-quote">"top"</span>, IPageLayout.TOP, 0.6f, IPageLayout.ID_EDITOR_AREA);;
+	}
+
+}</pre>
+</div></div>
+
+<h3><a name="5Exampleofcreatinganewperspective-CreatethePerspectiveExtensions">Create the Perspective Extensions </a></h3>
+<p>See the <a href="4 Example of extending an existing perspective.html" title="4 Example of extending an existing perspective">4 Example of extending an existing perspective</a> tutorial on how to create Perspective extensions.<br/>
+Add the following xml snippet to the plugin.xml.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;extension
+         point=<span class="code-quote">"org.eclipse.ui.perspectiveExtensions"</span>&gt;
+      <span class="code-tag">&lt;perspectiveExtension targetID=<span class="code-quote">"tutorial.perspective1"</span>&gt;</span>
+         &lt;view
+               id=<span class="code-quote">"org.eclipse.ui.views.ResourceNavigator"</span>
+               relationship=<span class="code-quote">"stack"</span>
+               relative=<span class="code-quote">"right"</span>/&gt;
+         &lt;view
+               id=<span class="code-quote">"org.eclipse.ui.views.TaskList"</span>
+               relationship=<span class="code-quote">"stack"</span>
+               relative=<span class="code-quote">"top"</span>/&gt;
+         &lt;view
+               id=<span class="code-quote">"org.eclipse.ui.views.BookmarkView"</span>
+               relationship=<span class="code-quote">"stack"</span>
+               relative=<span class="code-quote">"left"</span>/&gt;
+         &lt;view
+               id=<span class="code-quote">"org.eclipse.ui.views.ProblemView"</span>
+               relationship=<span class="code-quote">"stack"</span>
+               relative=<span class="code-quote">"bottom"</span>/&gt;
+      <span class="code-tag">&lt;/perspectiveExtension&gt;</span>
+   <span class="code-tag">&lt;/extension&gt;</span></pre>
+</div></div>
+
+<h3><a name="5Exampleofcreatinganewperspective-Runtheapplication.">Run the application.</a></h3>
+<p>Create a new Application Launcher by doing the following:</p>
+
+
+<ul>
+	<li>Right click on your new plugin and select Run As &gt; Eclipse Application.</li>
+	<li>Your view should open up and you can click you button (which does nothing currently).</li>
+	<li>Close the intro page.</li>
+	<li>Select menu item: Window &gt; Open Perspective &gt; Other</li>
+	<li>Select tutorial.perspective1</li>
+</ul>
+
+
+<p>The workbench should now look similar to the following image:<br/>
+<div align="center"><img src="5 Example of creating a new perspective_attachments/perspective.gif" border="0" /></div></p>
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="5 Example of creating a new perspective_attachments/perspective.gif">perspective.gif</a> (image/gif)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="5 Example of creating a new perspective_attachments/perspectivedec.gif">perspectivedec.gif</a> (image/gif)
+                                <br/>
+                                                    </div>
+
+                    			    </td>
+		    </tr>
+	    </table>
+
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+			    <td align="center">
+<div float="left">
+   <a href="http://udig.refractions.net/confluence/pages/viewpage.action?pageId=4946">[view]</a>
+   <a href="http://udig.refractions.net/confluence/pages/editpage.action?pageId=4946">[edit]</a>
+</div>
+<font color="grey">
+    <small>(c) Copyright (c) 2004,2005 Refractions Research Inc. and others.</small>
+</font>
+                            </td>
+		    </tr>
+	    </table>
+
+    </body>
+</html>

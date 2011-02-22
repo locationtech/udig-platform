@@ -21,14 +21,14 @@ import java.awt.geom.PathIterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import net.refractions.udig.ui.graphics.SWTGraphics;
 
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Path;
 
 /**
  * An abstract class for drawing {@link net.refractions.udig.tools.edit.support.EditGeom} objects
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -38,7 +38,7 @@ public abstract class AbstractPathIterator implements PathIterator{
     private Iterator<PrimitiveShape> shapes;
     protected Iterator<Point> points;
     protected Point currentPoint, nextPoint;
-    
+
     protected PrimitiveShape currentShape;
 
     protected AbstractPathIterator( EditGeom shape ) {
@@ -62,22 +62,22 @@ public abstract class AbstractPathIterator implements PathIterator{
                 return createPoint;
         }
         GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
-        
+
         path.append(this, false);
-        
+
         return path;
     }
 
     public Path toPath(Device device) {
         prepareToPath();
-        
+
         if( geom.getShell().getNumPoints()==1 ){
             Path createPoint = createPointPath(device);
             if( createPoint!=null )
                 return createPoint;
         }
-        
-        return AWTSWTImageUtils.createPath(this, device);
+
+        return SWTGraphics.createPath(this, device);
     }
 
 
@@ -88,7 +88,7 @@ public abstract class AbstractPathIterator implements PathIterator{
         currentShape=null;
         shapes=geom.iterator();
     }
-    
+
 
 
     /**
@@ -117,28 +117,28 @@ public abstract class AbstractPathIterator implements PathIterator{
     public boolean isDone() {
         return isDoneInternal();
     }
-    
+
     private boolean isDoneInternal() {
         if( nextPoint!=null )
             return false;
-        
+
         if( points!=null && points.hasNext() ){
             nextPoint=points.next();
             return false;
         }
-        
+
         // points is null or is done so get next shape
         while( shapes.hasNext()){
             currentShape=shapes.next();
-            
+
             points=currentShape.iterator();
-            
+
             if( points.hasNext() ){
                 nextPoint=points.next();
                 break;
             }
         }
-        
+
         return nextPoint==null;
     }
 
@@ -158,10 +158,10 @@ public abstract class AbstractPathIterator implements PathIterator{
             throw new NoSuchElementException(
                     "Shape is done, make sure to check isDone before calling next()"); //$NON-NLS-1$
         }
-        
-    
+
+
     }
-    
+
     public int currentSegment( float[] coords ) {
 
         int result=SEG_LINETO;
@@ -171,7 +171,7 @@ public abstract class AbstractPathIterator implements PathIterator{
             coords[1] = nextPoint.getY();
             return SEG_MOVETO;
         }
-        
+
         coords[0] = currentPoint.getX();
         coords[1] = currentPoint.getY();
 

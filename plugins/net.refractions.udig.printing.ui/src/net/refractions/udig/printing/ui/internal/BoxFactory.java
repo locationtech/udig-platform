@@ -24,7 +24,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 /**
  * A utility class for processing Box extensions.  Provides a convenient way of accessing
  * the data in a particular box configuration element.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -51,9 +51,9 @@ public class BoxFactory {
     private ImageDescriptor createDescriptor( IConfigurationElement element, String imagePath ) {
         if( imagePath==null )
             return null;
-        
+
         String pluginID = element.getNamespaceIdentifier();
-        
+
         ImageDescriptor imageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(pluginID, imagePath);
         return imageDescriptor;
     }
@@ -65,9 +65,9 @@ public class BoxFactory {
     public synchronized BoxPrinter createBox() throws CoreException {
         BoxPrinter box = (BoxPrinter) configurationElement.createExecutableExtension("class");//$NON-NLS-1$
         this.type=box.getClass();
-        return box; 
+        return box;
     }
-    
+
     public synchronized Class< ? extends BoxPrinter> getType() {
 //        return null;
         if( type==null && !attempted ){

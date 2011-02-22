@@ -9,15 +9,20 @@ import net.refractions.udig.project.element.ElementFactory;
 import net.refractions.udig.project.element.ElementPackage;
 import net.refractions.udig.project.element.IGenericProjectElement;
 import net.refractions.udig.project.element.ProjectElementAdapter;
+
 import net.refractions.udig.project.internal.ProjectPackage;
+
 import net.refractions.udig.project.internal.impl.ProjectPackageImpl;
+
 import net.refractions.udig.project.internal.render.RenderPackage;
+
 import net.refractions.udig.project.internal.render.impl.RenderPackageImpl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**

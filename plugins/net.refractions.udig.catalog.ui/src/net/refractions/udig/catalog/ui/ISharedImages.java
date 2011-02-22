@@ -29,12 +29,12 @@ import org.eclipse.swt.graphics.Image;
  * the associated Image part of the Plug-In api.
  * </p>
  * To use one of these images:
- * 
+ *
  * <pre><code>
  * ImageRegistry images = CatalogUIPlugin.getDefault().getImageRegistry();
  * ImageDescriptor image = images.getDescriptor(ISharedImages.IMG_DATASTORE_OBJ);
  * </code></pre>
- * 
+ *
  * <p>
  * This interface is not intended to be implemented by clients.
  * </p>
@@ -72,11 +72,11 @@ public interface ISharedImages {
      */
     public final static String ERROR_OVR = OVERLAY + "error_ovr.gif"; //$NON-NLS-1$
     /**
-     * Graphic representing a SimpleFeature File
+     * Graphic representing a Feature File
      */
     public final static String FEATURE_FILE_OBJ = OBJECT + "feature_file_obj.gif"; //$NON-NLS-1$
     /**
-     * Graphic representing a SimpleFeature (default for an indivudal IGeoResource)
+     * Graphic representing a Feature (default for an indivudal IGeoResource)
      */
     public final static String FEATURE_OBJ = OBJECT + "feature_obj.gif"; //$NON-NLS-1$
     /**
@@ -97,7 +97,7 @@ public interface ISharedImages {
      * Graphic representing a Grid (default for an indivudal IGeoResource)
      */
     public final static String GRID_OBJ = OBJECT + "grid_obj.gif"; //$NON-NLS-1$
-    public final static String GRID_MISSING = OBJECT + "grid_missing_obj.gif"; //$NON-NLS-1$    
+    public final static String GRID_MISSING = OBJECT + "grid_missing_obj.gif"; //$NON-NLS-1$
     /**
      * Graphic representing a Grid (default for an indivudal IGeoResource)
      */
@@ -138,7 +138,7 @@ public interface ISharedImages {
      */
     public final static String WARNING_OVR = OVERLAY + "warning_ovr.gif"; //$NON-NLS-1$
     /**
-     * Web SimpleFeature Server is a standards based external source of feature information.
+     * Web Feature Server is a standards based external source of feature information.
      */
     public final static String WFS_OBJ = OBJECT + "wfs_obj.gif"; //$NON-NLS-1$
     /**
@@ -153,7 +153,7 @@ public interface ISharedImages {
 
     /**
      * Returns shared image for the given image ID. Returns null if there is no such image.
-     * 
+     *
      * @param id Constant from ISharedImages
      * @return Shared image for image ID, do plugin will manage disposal.
      */
@@ -161,7 +161,7 @@ public interface ISharedImages {
 
     /**
      * Returns the image descriptor for the given image ID. Returns null if there is no such image.
-     * 
+     *
      * @param id Constant from ISharedImages
      * @return ImageDescriptor locating resource associated with id
      */

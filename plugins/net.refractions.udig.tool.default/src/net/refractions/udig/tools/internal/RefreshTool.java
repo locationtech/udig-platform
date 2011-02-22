@@ -20,13 +20,13 @@ import net.refractions.udig.project.ui.tool.AbstractActionTool;
 
 /**
  * A tool that triggers a rerender
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
 public class RefreshTool  extends AbstractActionTool {
 
-	
+
 	public void run() {
         // Force an update of the renderers
         context.getRenderManager().refresh(null);

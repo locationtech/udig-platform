@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * Provides a consistent way to show progress of blocking operations.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -29,7 +29,7 @@ public class ProgressManager implements IProvider<IProgressMonitor>{
     private ProgressManager() {
     }
     private static final ProgressManager instance=new ProgressManager();
-    
+
     /**
      * Returns the singleton instance
      *

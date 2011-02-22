@@ -41,7 +41,7 @@ import org.eclipse.jface.viewers.LabelProviderChangedEvent;
  * Note we may need to squirl away the clock number in the layer blackboard to keep it spinning
  * smoothly.
  * </p>
- * 
+ *
  * @author jgarnett
  * @since 0.6.0
  */
@@ -82,7 +82,7 @@ public class LayerStatusDecorator implements ILightweightLabelDecorator {
     @SuppressWarnings("unchecked")
     public synchronized void decorate( Object element, IDecoration decoration ) {
         Layer layer = (Layer) element; // should be safe, extention point does the instanceof
-                       
+
         // check
         ImageDescriptor ovr = statusIcon(layer);
         if (ovr != null)
