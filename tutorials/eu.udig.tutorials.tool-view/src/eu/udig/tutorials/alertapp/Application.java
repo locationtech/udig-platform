@@ -1,6 +1,4 @@
-package x;
-
-import net.refractions.udig.ui.UDIGDragDropUtilities;
+package eu.udig.tutorials.alertapp;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;

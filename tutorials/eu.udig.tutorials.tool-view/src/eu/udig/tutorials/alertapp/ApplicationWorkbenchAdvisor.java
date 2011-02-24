@@ -1,4 +1,4 @@
-package x;
+package eu.udig.tutorials.alertapp;
 
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;

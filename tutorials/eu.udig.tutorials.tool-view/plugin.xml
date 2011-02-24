@@ -7,14 +7,14 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="x.Application">
+               class="eu.udig.tutorials.alertapp.Application">
          </run>
       </application>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="x.Perspective"
+            class="eu.udig.tutorials.alertapp.Perspective"
             fixed="false"
             id="X.perspective"
             name="Perspective">
@@ -23,7 +23,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="x.View"
+            class="eu.udig.tutorials.alertapp.View"
             id="X.view"
             name="View">
       </view>
@@ -57,43 +57,58 @@
    <extension
          point="net.refractions.udig.project.ui.tool">
       <modalTool
-            categoryId="net.refractions.udig.tool.category.info"
-            class="RInfoTool"
+            categoryId="eu.udig.tutorials.alert-app.alerts"
+            class="eu.udig.tutorials.alertapp.SendAlertTool"
             icon="icons/etool16/info_mode.gif"
-            id="X.modalTool1"
-            name="Info"
+            id="eu.udig.tutorials.alert-app.sendalerttool"
+            name="Send Alert"
             onToolbar="true"
-            toolCursorId="X.toolCursor1">
+            toolCursorId="eu.udig.tutorials.alert-app.toolCursor1">
       </modalTool>
       <toolCursor
             hotspotX="5"
             hotspotY="5"
-            id="X.toolCursor1"
+            id="eu.udig.tutorials.alert-app.toolCursor1"
             image="icons/pointer/info_source.png">
       </toolCursor>
+      <category
+            id="eu.udig.tutorials.alert-app.alerts"
+            name="Alerts">
+      </category>
    </extension>
    <extension
          point="net.refractions.udig.project.ui.toolManagers">
       <toolManager
-            class="x.CustomToolManager"
-            id="X.customToolManager">
+            class="eu.udig.tutorials.alertapp.CustomToolManager"
+            id="eu.udig.tutorials.alert-app.customToolManager">
       </toolManager>
    </extension>
    <extension
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
-            application="X.application"
-            name="X">
+            application="eu.udig.tutorials.alert-app.application"
+            name="Alert App">
          <property
                name="appName"
-               value="X">
+               value="Alert App">
          </property>
          <property
                name="preferenceCustomization"
                value="plugin_customization.ini">
          </property>
+         <property
+               name="startupProgressRect"
+               value="5,275,445,15">
+         </property>
       </product>
+   </extension>
+   <extension
+         point="net.refractions.udig.mapgraphic.mapgraphic">
+      <mapGraphic
+            class="eu.udig.tutorials.alertapp.ShowAlertsMapGraphic"
+            id="eu.udig.tutorials.alert-app.showalertmapgraphic">
+      </mapGraphic>
    </extension>
 
 </plugin>

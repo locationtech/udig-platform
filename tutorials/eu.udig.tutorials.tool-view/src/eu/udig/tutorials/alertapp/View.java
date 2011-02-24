@@ -1,4 +1,4 @@
-package x;
+package eu.udig.tutorials.alertapp;
 
 import java.io.IOException;
 import java.net.URL;
@@ -9,6 +9,7 @@ import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.internal.ui.IDropTargetProvider;
+import net.refractions.udig.mapgraphic.internal.MapGraphicService;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.commands.CreateMapCommand;
@@ -21,6 +22,7 @@ import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.ui.UDIGDragDropUtilities;
 import net.refractions.udig.ui.UDIGDragDropUtilities.DropTargetDescriptor;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -50,10 +52,13 @@ public class View extends ViewPart implements MapPart, IDropTargetProvider{
 	 */
 	public void createPartControl(Composite parent) {
 		try {
-			
+			IProgressMonitor monitor = getViewSite().getActionBars().getStatusLineManager().getProgressMonitor();
 			viewer = new MapViewer(parent, SWT.DOUBLE_BUFFERED);
-//			List<IGeoResource> resources = addTileService();
-			List<IGeoResource> resources = addWMSService();
+			List<IGeoResource> resources = new ArrayList<IGeoResource>();
+			addAlertsMapgraphic(monitor, resources);
+
+			
+			addShpService("/Users/jeichar/Desktop/countries.shp",resources,monitor);
 			
 			IProject activeProject = ApplicationGIS.getActiveProject();
 
@@ -63,9 +68,9 @@ public class View extends ViewPart implements MapPart, IDropTargetProvider{
 			viewer.setMap(createdMap);
 			viewer.init(this);
 
-			viewer.getMap().getViewportModelInternal().setBounds(485412.344, 833840.7, 75270, 295935);
-			// ---------------
+			viewer.getMap().getViewportModelInternal().zoomToExtent();
 			
+			// ---------------
 	        this.selectionProvider = new MapEditorSelectionProvider();
 
 	        selectionProvider.setActiveMap(createdMap, this);
@@ -82,8 +87,7 @@ public class View extends ViewPart implements MapPart, IDropTargetProvider{
 	        toolbarManager.add(new Separator());
 	        toolManager.contributeActionTools(toolbarManager, bars);
 	        
-	        createdMap.getEditManagerInternal().setEditLayerLocked(true);
-	        createdMap.getEditManagerInternal().setSelectedLayer(createdMap.getLayersInternal().get(0));
+	        createdMap.getEditManagerInternal().setSelectedLayer(createdMap.getLayersInternal().get(1));
 	        
 	        enableDropSupport();
 	        
@@ -95,46 +99,31 @@ public class View extends ViewPart implements MapPart, IDropTargetProvider{
 			System.exit(-1);
 		}
 	}
+
+
+	private void addAlertsMapgraphic(IProgressMonitor monitor,
+			List<IGeoResource> resources) throws IOException {
+		IService service = CatalogPlugin.getDefault().getLocalCatalog().acquire(MapGraphicService.SERVICE_URL,monitor);
+		String desiredIdString = MapGraphicService.SERVICE_URL+"#"+ShowAlertsMapGraphic.EXTENSION_ID;
+		for (IGeoResource resource : service.resources(null)) {
+			String idString = resource.getID().toString();
+			if(idString.equals(desiredIdString)) {
+				resources.add(resource);
+				return;
+			}
+		}
+		throw new IllegalStateException("Unable to find " + desiredIdString + " mapgraphic");
+	}
 	
 
 	private void enableDropSupport() {
 		dropTarget = UDIGDragDropUtilities.addDropSupport(viewer.getViewport().getControl(), this);
 	}
 
-	private List<IGeoResource> addWMSService() throws IOException {
-		IService service = CatalogPlugin.getDefault().getLocalCatalog().acquire(new URL("http://localhost:8080/geoserver/wms?version=1.3.0&service=WMS&request=getCapabilities"),null);
-
-		List<IGeoResource> resources = new ArrayList<IGeoResource>();
-		for (IGeoResource resource : service.resources(null)) {
-			String title = resource.getInfo(null).getTitle();
-			if(title.contains("CH")) {
-				resources.add(resource);
-				break;
-			}
-		}
+	private void addShpService(String path,List<IGeoResource> resources, IProgressMonitor monitor) throws IOException {
+		IService service = CatalogPlugin.getDefault().getLocalCatalog().acquire(new URL("file://"+path),monitor);
 		
-		addShpService("/Users/jeichar/Desktop/countries.shp",resources);
-		return resources;
-	}
-	
-	private void addShpService(String path,List<IGeoResource> resources) throws IOException {
-		IService service = CatalogPlugin.getDefault().getLocalCatalog().acquire(new URL("file://"+path),null);
-		
-		resources.addAll(service.resources(null));
-	}
-
-	private List<IGeoResource> addTileService() throws IOException {
-		IService service = CatalogPlugin.getDefault().getLocalCatalog().acquire(new URL("http://localhost:8080/geoserver/gwc/service/wms?version=1.1.1&service=WMS&request=getCapabilities&tiled=true"),null);
-
-		List<IGeoResource> resources = new ArrayList<IGeoResource>();
-		for (IGeoResource resource : service.resources(null)) {
-			String title = resource.getInfo(null).getTitle();
-			if(title.contains("CH") && title.contains("png")) {
-				resources.add(resource);
-				break;
-			}
-		}	
-		return resources;
+		resources.addAll(service.resources(monitor));
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package x;
+package eu.udig.tutorials.alertapp;
 
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;

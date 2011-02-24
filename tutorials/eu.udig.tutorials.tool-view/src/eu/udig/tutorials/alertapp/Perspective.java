@@ -1,4 +1,4 @@
-package x;
+package eu.udig.tutorials.alertapp;
 
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;

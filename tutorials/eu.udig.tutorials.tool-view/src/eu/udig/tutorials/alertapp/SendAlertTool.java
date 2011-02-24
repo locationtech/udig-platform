@@ -1,7 +1,9 @@
+package eu.udig.tutorials.alertapp;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ui.AnimationUpdater;
@@ -9,18 +11,30 @@ import net.refractions.udig.project.ui.IAnimation;
 import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
 import net.refractions.udig.project.ui.internal.commands.draw.DrawShapeCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import net.refractions.udig.project.ui.tool.IToolContext;
 import net.refractions.udig.project.ui.tool.SimpleTool;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.FeatureSource;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.filter.FilterFactory2;
+import org.opengis.filter.expression.Literal;
+import org.opengis.filter.expression.PropertyName;
+import org.opengis.filter.spatial.Touches;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 
-public class RInfoTool extends SimpleTool {
+public class SendAlertTool extends SimpleTool {
 
+	public final static String EXTENSION_ID = "eu.udig.tutorials.alert-app.sendalerttool";
+	
 	private static class Pulse extends AbstractDrawCommand implements IAnimation{
 
 		private Point center;
@@ -64,7 +78,7 @@ public class RInfoTool extends SimpleTool {
 	
 	private DrawShapeCommand affectedArea = new DrawShapeCommand();
 	
-	public RInfoTool() {
+	public SendAlertTool() {
 		super(MOUSE|MOTION);
 		affectedArea.setFill(new Color(200, 200,0,50));
 		affectedArea.setPaint(new Color(200, 200,0,255));
@@ -128,17 +142,77 @@ public class RInfoTool extends SimpleTool {
 	
 	@Override
 	protected void onMouseReleased(MapMouseEvent e) {
+		IToolContext toolContext = getContext();
+		ILayer mapGraphicLayer = findMapGraphicLayer(toolContext);
+		
 		FeatureIterator<SimpleFeature> features = null;
 		try {
-			AnimationUpdater.runTimer(getContext().getMapDisplay(), new Pulse(e.getPoint()));
-			Envelope bbox = getContext().getBoundingBox(e.getPoint(), 4);
-			ILayer layer = getContext().getSelectedLayer();
-			getContext().getFeaturesInBbox(layer, bbox);
+			AnimationUpdater.runTimer(toolContext.getMapDisplay(), new Pulse(e.getPoint()));
+			Envelope bbox = toolContext.getBoundingBox(e.getPoint(), 4);
+			ILayer selectedLayer = toolContext.getSelectedLayer();
+			features = toolContext.getFeaturesInBbox(selectedLayer, bbox).features();
+			
+			ArrayList<ReferencedEnvelope> alerts = new ArrayList<ReferencedEnvelope>();
+			ReferencedEnvelope bounds = new ReferencedEnvelope();
+			while(features.hasNext()) {
+				SimpleFeature feature = features.next();
+				addAlertsForFeature(feature, alerts, bounds);
+			}
+
+			mapGraphicLayer.getBlackboard().put(ShowAlertsMapGraphic.ALERTS_KEY, alerts);
+			
+			mapGraphicLayer.refresh(bounds);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} finally {
 			if(features != null) features.close();
 		}
+	}
+	private void addAlertsForFeature(SimpleFeature feature,
+			ArrayList<ReferencedEnvelope> alerts, ReferencedEnvelope bounds) {
+		FeatureIterator<SimpleFeature> features = null;
+		try {
+			addBounds(feature, alerts, bounds);
+			features = getAffectedFeatures(feature);
+			while(features.hasNext()) {
+				addBounds(features.next(), alerts, bounds);
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} finally {
+			if(features != null) features.close();
+		}
+	}
+	private void addBounds(SimpleFeature feature,
+			ArrayList<ReferencedEnvelope> alerts, ReferencedEnvelope bounds) {
+		ReferencedEnvelope featureBounds = new ReferencedEnvelope(feature.getBounds());
+		bounds.expandToInclude(featureBounds);
+		alerts.add(featureBounds);
+	}
+	@SuppressWarnings("unchecked")
+	private FeatureIterator<SimpleFeature> getAffectedFeatures(SimpleFeature feature) throws IOException {
+		FilterFactory2 filterFactory = CommonFactoryFinder.getFilterFactory2(GeoTools.getDefaultHints());
+		String geomAttName = feature.getFeatureType().getGeometryDescriptor().getLocalName();
+		PropertyName geomPropertyExpression = filterFactory.property(geomAttName);
+		Literal literalGeomExpression = filterFactory.literal(feature.getDefaultGeometry());
+		Touches filter = filterFactory.touches(geomPropertyExpression, literalGeomExpression);
+		
+		IProgressMonitor monitor = 
+			getContext().getActionBars().getStatusLineManager().getProgressMonitor();
+		FeatureSource<SimpleFeatureType,SimpleFeature> resource = 
+			getContext().getSelectedLayer().getResource(FeatureSource.class, monitor);
+		
+		return resource.getFeatures(filter).features();
+	}
+	
+	
+	private ILayer findMapGraphicLayer(IToolContext toolContext) {
+		for( ILayer layer : toolContext.getMapLayers()) {
+			if(layer.hasResource(ShowAlertsMapGraphic.class)) {
+				return layer;
+			}
+		}
+		throw new IllegalStateException("This tool should not be enabled if the ShowAlertsMapGraphic is not in map");
 	}
 
 }

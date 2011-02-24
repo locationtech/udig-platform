@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="X" uid="X.Product" id="X.product" application="X.application" version="X" useFeatures="false" includeLaunchers="true">
+<product name="Alert App" uid="eu.udig.tutorials.alert-app.Product" id="eu.udig.tutorials.alert-app.product" application="eu.udig.tutorials.alert-app.application" version="1.0" useFeatures="false" includeLaunchers="true">
 
 
    <configIni use="default">
@@ -16,6 +16,7 @@
    <windowImages/>
 
    <splash
+      location="eu.udig.tutorials.alert-app"
       startupProgressRect="5,275,445,15" />
    <launcher>
       <solaris/>
@@ -28,13 +29,12 @@
    <vm>
    </vm>
 
-
    <plugins>
-      <plugin id="X"/>
       <plugin id="com.ibm.icu"/>
       <plugin id="com.lowagie.itext"/>
       <plugin id="com.mapquest"/>
       <plugin id="eu.udig.mapquest.apiwrapper"/>
+      <plugin id="eu.udig.tutorials.alert-app"/>
       <plugin id="javax.servlet"/>
       <plugin id="javax.servlet.jsp"/>
       <plugin id="net.refractions.udig.catalog"/>
@@ -47,6 +47,7 @@
       <plugin id="net.refractions.udig.core"/>
       <plugin id="net.refractions.udig.jai.macosx" fragment="true"/>
       <plugin id="net.refractions.udig.libs"/>
+      <plugin id="net.refractions.udig.mapgraphic"/>
       <plugin id="net.refractions.udig.project"/>
       <plugin id="net.refractions.udig.project.edit"/>
       <plugin id="net.refractions.udig.project.ui"/>
@@ -121,11 +122,15 @@
       <plugin id="org.eclipse.core.jobs.nl_it" fragment="true"/>
       <plugin id="org.eclipse.core.jobs.nl_ko" fragment="true"/>
       <plugin id="org.eclipse.core.net"/>
+      <plugin id="org.eclipse.core.net.linux.x86" fragment="true"/>
+      <plugin id="org.eclipse.core.net.linux.x86_64" fragment="true"/>
       <plugin id="org.eclipse.core.net.nl_de" fragment="true"/>
       <plugin id="org.eclipse.core.net.nl_es" fragment="true"/>
       <plugin id="org.eclipse.core.net.nl_fr" fragment="true"/>
       <plugin id="org.eclipse.core.net.nl_it" fragment="true"/>
       <plugin id="org.eclipse.core.net.nl_ko" fragment="true"/>
+      <plugin id="org.eclipse.core.net.win32.x86" fragment="true"/>
+      <plugin id="org.eclipse.core.net.win32.x86_64" fragment="true"/>
       <plugin id="org.eclipse.core.runtime"/>
       <plugin id="org.eclipse.core.runtime.compatibility.auth"/>
       <plugin id="org.eclipse.core.runtime.nl_de" fragment="true"/>
@@ -180,6 +185,7 @@
       <plugin id="org.eclipse.equinox.security.nl_fr" fragment="true"/>
       <plugin id="org.eclipse.equinox.security.nl_it" fragment="true"/>
       <plugin id="org.eclipse.equinox.security.nl_ko" fragment="true"/>
+      <plugin id="org.eclipse.equinox.security.win32.x86" fragment="true"/>
       <plugin id="org.eclipse.gef"/>
       <plugin id="org.eclipse.help"/>
       <plugin id="org.eclipse.help.base"/>
@@ -199,6 +205,7 @@
       <plugin id="org.eclipse.help.ui.nl_fr" fragment="true"/>
       <plugin id="org.eclipse.help.ui.nl_it" fragment="true"/>
       <plugin id="org.eclipse.help.ui.nl_ko" fragment="true"/>
+      <plugin id="org.eclipse.jdt.junit.runtime"/>
       <plugin id="org.eclipse.jface"/>
       <plugin id="org.eclipse.jface.databinding"/>
       <plugin id="org.eclipse.jface.databinding.nl_de" fragment="true"/>
@@ -224,13 +231,31 @@
       <plugin id="org.eclipse.osgi.services.nl_it" fragment="true"/>
       <plugin id="org.eclipse.osgi.services.nl_ko" fragment="true"/>
       <plugin id="org.eclipse.swt"/>
+      <plugin id="org.eclipse.swt.carbon.macosx" fragment="true"/>
+      <plugin id="org.eclipse.swt.cocoa.macosx" fragment="true"/>
       <plugin id="org.eclipse.swt.cocoa.macosx.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.linux.ppc" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.linux.ppc64" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.linux.s390" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.linux.s390x" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.linux.x86" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.linux.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.solaris.sparc" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.solaris.x86" fragment="true"/>
+      <plugin id="org.eclipse.swt.motif.aix.ppc" fragment="true"/>
+      <plugin id="org.eclipse.swt.motif.hpux.ia64_32" fragment="true"/>
+      <plugin id="org.eclipse.swt.motif.linux.x86" fragment="true"/>
+      <plugin id="org.eclipse.swt.motif.solaris.sparc" fragment="true"/>
       <plugin id="org.eclipse.swt.nl_de" fragment="true"/>
       <plugin id="org.eclipse.swt.nl_es" fragment="true"/>
       <plugin id="org.eclipse.swt.nl_fr" fragment="true"/>
       <plugin id="org.eclipse.swt.nl_it" fragment="true"/>
       <plugin id="org.eclipse.swt.nl_ko" fragment="true"/>
+      <plugin id="org.eclipse.swt.photon.qnx.x86" fragment="true"/>
+      <plugin id="org.eclipse.swt.win32.win32.x86" fragment="true"/>
+      <plugin id="org.eclipse.swt.win32.win32.x86_64" fragment="true"/>
       <plugin id="org.eclipse.ui"/>
+      <plugin id="org.eclipse.ui.carbon" fragment="true"/>
       <plugin id="org.eclipse.ui.cheatsheets"/>
       <plugin id="org.eclipse.ui.cheatsheets.nl_de" fragment="true"/>
       <plugin id="org.eclipse.ui.cheatsheets.nl_es" fragment="true"/>
@@ -263,6 +288,8 @@
       <plugin id="org.eclipse.ui.workbench.nl_ko" fragment="true"/>
       <plugin id="org.eclipse.update.configurator"/>
       <plugin id="org.eclipse.update.core"/>
+      <plugin id="org.eclipse.update.core.linux" fragment="true"/>
+      <plugin id="org.eclipse.update.core.win32" fragment="true"/>
       <plugin id="org.eclipse.update.ui"/>
       <plugin id="org.eclipse.xsd"/>
       <plugin id="org.hamcrest.core"/>
