@@ -20,23 +20,29 @@ import net.refractions.udig.project.internal.impl.AbstractContextImpl;
 import net.refractions.udig.project.internal.render.RenderManager;
 import net.refractions.udig.project.ui.commands.DrawCommandFactory;
 import net.refractions.udig.project.ui.commands.IDrawCommand;
-import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
-import net.refractions.udig.project.ui.internal.MapEditorSite;
+import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.internal.tool.ToolContext;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.ICoolBarManager;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IActionBars2;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.services.IServiceLocator;
 
 /**
  * <p>
@@ -61,7 +67,55 @@ import org.eclipse.ui.PlatformUI;
  */
 public class ToolContextImpl extends AbstractContextImpl implements ToolContext {
 
-    /**
+    private final class IActionBars2Adapter implements IActionBars2 {
+		private final IViewPart view;
+		IActionBars bars;
+
+		private IActionBars2Adapter(IViewPart view) {
+			this.view = view;
+			bars = view.getViewSite().getActionBars();
+		}
+
+		public void clearGlobalActionHandlers() {
+			bars.clearGlobalActionHandlers();
+		}
+
+		public IAction getGlobalActionHandler(String actionId) {
+			return bars.getGlobalActionHandler(actionId);
+		}
+
+		public IMenuManager getMenuManager() {
+			return bars.getMenuManager();
+		}
+
+		public IServiceLocator getServiceLocator() {
+			return bars.getServiceLocator();
+		}
+
+		public IStatusLineManager getStatusLineManager() {
+			return bars.getStatusLineManager();
+		}
+
+		public IToolBarManager getToolBarManager() {
+			return bars.getToolBarManager();
+		}
+
+		public void setGlobalActionHandler(String actionId,
+				IAction handler) {
+			bars.setGlobalActionHandler(actionId, handler);
+		}
+
+		public void updateActionBars() {
+			bars.updateActionBars();
+		}
+
+		@Override
+		public ICoolBarManager getCoolBarManager() {
+			return null;
+		}
+	}
+
+	/**
      * The cached value of the '{@link #getDrawFactory() <em>Draw Factory</em>}' attribute. 
      * 
      * @see #getDrawFactory()
@@ -175,30 +229,45 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
         return getMapInternal().getRenderManagerInternal();
     }
     public IStatusLineManager getStatusBar() {
-        MapEditorSite site = getEditorSite();
-        if (site == null)
+        IActionBars2 bars = getActionBars();
+        if (bars == null)
             return null;
-        return site.getActionBars().getStatusLineManager();
+        return bars.getStatusLineManager();
     }
     
     public IActionBars2 getActionBars() {
-        IEditorSite site = getEditorSite();
-        if (site == null)
-            return null;
-        return (IActionBars2) site.getActionBars();
-    }
-
-    private MapEditorSite getEditorSite() {
         IWorkbenchWindow window = getWindow();
         if (window == null)
             return null;
         IWorkbenchPage page = window.getActivePage();
         if (page == null)
             return null;
-        IEditorPart part = page.getActiveEditor();
-        if (part == null || !(part instanceof MapEditor) )
-            return null;
-        return ((MapEditorPart)part).getMapEditorSite();
+        IEditorReference[] editors = page.getEditorReferences();
+        
+        for (IEditorReference ref : editors) {
+			IEditorPart editor = ref.getEditor(false);
+			if (editor instanceof MapPart) {
+				MapPart mapPart = (MapPart) editor;
+				if(getMap() == mapPart.getMap()) {
+					return (IActionBars2) editor.getEditorSite().getActionBars();
+				}
+			}
+		}
+
+        IViewReference[] views = page.getViewReferences();
+        
+        for (IViewReference ref : views) {
+			final IViewPart view = ref.getView(false);
+			if (view instanceof MapPart) {
+				MapPart mapPart = (MapPart) view;
+				if(getMap() == mapPart.getMap()) {
+					return new IActionBars2Adapter(view);
+				}
+			}
+		}
+
+        
+        return null;
     }
 
     private IWorkbenchWindow getWindow() {
