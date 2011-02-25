@@ -139,10 +139,10 @@ public abstract class AbstractToggleMapGraphicAction extends ActionDelegate
             IGeoResource legendResource = null;
 
             URL url = new URL(MapGraphicService.SERVICE_URL, "#" + getExtensionID()); //$NON-NLS-1$
-            List<IResolve> matches = CatalogPlugin.getDefault().getLocalCatalog().find(url,
-                    ProgressManager.instance().get());
+            List<IGeoResource> matches = CatalogPlugin.getDefault().getLocalCatalog().find(IGeoResource.class,
+            		url, ProgressManager.instance().get());
             if (!matches.isEmpty())
-                legendResource = (IGeoResource) matches.get(0);
+                legendResource = matches.get(0);
 
             if (legendResource == null) {
                 List<IService> results = CatalogPlugin.getDefault().getServiceFactory()

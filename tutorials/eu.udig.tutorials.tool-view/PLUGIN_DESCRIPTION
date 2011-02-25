@@ -1,0 +1,17 @@
+This plug-in demonstrates:
+ - how to integrate a map in a view
+ - integrate the uDig tool framework into the view
+ - how a tool and a mapgraphic can communicate together using the layer's Blackboard to share information
+ - how to implement a custom modal tool
+ - how to implement a mapgraphic that renders shapes dependent on shapes the tool has put on the layer's blackboard  
+ - how to load all the features at the point of a mouse click
+ - how to load all the features that touch a given feature
+ - how to implement a custom ToolManager to control which tools are displayed in the toolbar
+ - how to show animations with a tool
+ - how to draw tool feedback 
+ 
+The main classes of interest are:
+ - CustomToolManager
+ - SendAlertTool
+ - ShowAlertsMapGraphic
+ - View
