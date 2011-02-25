@@ -24,6 +24,7 @@
          point="org.eclipse.ui.views">
       <view
             class="eu.udig.tutorials.alertapp.View"
+            icon="icons/view16/alert_view.png"
             id="X.view"
             name="View">
       </view>
@@ -59,7 +60,7 @@
       <modalTool
             categoryId="eu.udig.tutorials.alert-app.alerts"
             class="eu.udig.tutorials.alertapp.SendAlertTool"
-            icon="icons/etool16/info_mode.gif"
+            icon="icons/etool16/alert_mode.png"
             id="eu.udig.tutorials.alert-app.sendalerttool"
             name="Send Alert"
             onToolbar="true"
@@ -69,7 +70,7 @@
             hotspotX="5"
             hotspotY="5"
             id="eu.udig.tutorials.alert-app.toolCursor1"
-            image="icons/pointer/info_source.png">
+            image="icons/pointer/alert_source.png">
       </toolCursor>
       <category
             id="eu.udig.tutorials.alert-app.alerts"
@@ -107,6 +108,7 @@
          point="net.refractions.udig.mapgraphic.mapgraphic">
       <mapGraphic
             class="eu.udig.tutorials.alertapp.ShowAlertsMapGraphic"
+            icon="icons/view16/alert_view.png"
             id="eu.udig.tutorials.alert-app.showalertmapgraphic">
       </mapGraphic>
    </extension>

@@ -30,11 +30,22 @@ import org.opengis.filter.spatial.Touches;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-
+/**
+ * Finds all features under the mouse pointer (and surrounding 4 pixels) and all features that touch those features.
+ * For each feature a ReferencedEnvelope is added to the {@link ShowAlertsMapGraphic}'s layer blackboard.
+ * 
+ * This class also show a rectangle around the mouse pointer and an animation of a circle zooming to a point when the mouse is
+ * clicked.
+ *  
+ * @author jeichar
+ */
 public class SendAlertTool extends SimpleTool {
 
 	public final static String EXTENSION_ID = "eu.udig.tutorials.alert-app.sendalerttool";
 	
+	/**
+	 * Animation of a circle zooming to a point.
+	 */
 	private static class Pulse extends AbstractDrawCommand implements IAnimation{
 
 		private Point center;
@@ -143,11 +154,14 @@ public class SendAlertTool extends SimpleTool {
 	@Override
 	protected void onMouseReleased(MapMouseEvent e) {
 		IToolContext toolContext = getContext();
+
+		// start animation
+		AnimationUpdater.runTimer(toolContext.getMapDisplay(), new Pulse(e.getPoint()));
+		
 		ILayer mapGraphicLayer = findMapGraphicLayer(toolContext);
 		
 		FeatureIterator<SimpleFeature> features = null;
 		try {
-			AnimationUpdater.runTimer(toolContext.getMapDisplay(), new Pulse(e.getPoint()));
 			Envelope bbox = toolContext.getBoundingBox(e.getPoint(), 4);
 			ILayer selectedLayer = toolContext.getSelectedLayer();
 			features = toolContext.getFeaturesInBbox(selectedLayer, bbox).features();
