@@ -202,6 +202,7 @@ public class ToolManager implements IToolManager {
     private volatile IAction backwardAction;
     private volatile IAction deleteAction;
     private volatile IAction enterAction;
+    private volatile IAction zoomToSelectionAction;
     private volatile IAction pasteAction;
     private volatile IAction copyAction;
     private volatile IAction cutAction;
@@ -1233,6 +1234,19 @@ public class ToolManager implements IToolManager {
             }
     
             return enterAction;
+        }finally{
+            enterLock.unlock();
+        }
+    }
+    
+    public synchronized IAction getZOOMTOSELECTEDAction() {
+        enterLock.lock();
+        try{
+            if (zoomToSelectionAction == null) {
+                zoomToSelectionAction = getToolAction("net.refractions.udig.tool.default.show.selection", "net.refractions.udig.tool.category.zoom");
+            }
+            
+            return zoomToSelectionAction;
         }finally{
             enterLock.unlock();
         }
