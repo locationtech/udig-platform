@@ -67,21 +67,13 @@ class OpFilterPropertyValueCondition implements OpFilter {
     private boolean accepted( Object object ) {
         if( object==null)
             return false;
-        
-        Class< ? extends Object> localTargetObject = getTargetObject(object);
-        if ( localTargetObject!=null && !localTargetObject.isAssignableFrom(object.getClass()) )
+        if ( getTargetObject(object)!=null && !getTargetObject(object).isAssignableFrom(object.getClass()) )
             return false;
-        
+
         PropertyValue v = getValue();
         if( v==null )
             return false;
-        
-        try {
-            return v.isTrue(object, this.equalsValue);
-        }catch (Exception e) {
-            // FIXME this should be different
-            return false;
-        }
+        return v.isTrue(object, this.equalsValue);
     }
 
     
