@@ -150,7 +150,7 @@
          </destination>
          <acceptedType
                adapt="false"
-               class="java.io.File">
+               class="java.net.URL">
          </acceptedType>
          <description>
             Drop text on the map and render it
