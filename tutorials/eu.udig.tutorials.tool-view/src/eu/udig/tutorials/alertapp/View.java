@@ -51,6 +51,8 @@ public class View extends ViewPart implements MapPart, IDropTargetProvider{
 
 	private DropTargetDescriptor dropTarget;
 
+	private Object appContext;
+
 	/**
 	 * This is a callback that will allow us to create the viewer and initialize
 	 * it.
@@ -83,7 +85,8 @@ public class View extends ViewPart implements MapPart, IDropTargetProvider{
 	        selectionProvider.setActiveMap(createdMap, this);
 	        getSite().setSelectionProvider(selectionProvider);
 
-	        selectionProvider.setSelection(new StructuredSelection(new Object[]{createdMap}));
+	        appContext = new AlertAppContext(this);
+	        selectionProvider.setSelection(new StructuredSelection(new Object[]{appContext}));
 	        
 	        createContextMenu();
 	        

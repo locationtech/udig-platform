@@ -112,5 +112,50 @@
             id="eu.udig.tutorials.alert-app.showalertmapgraphic">
       </mapGraphic>
    </extension>
+   <extension
+         point="net.refractions.udig.ui.operation">
+      <operation
+            class="eu.udig.tutorials.alertapp.SelectAffectedFeatures"
+            enablesFor="1"
+            icon="icons/pointer/select_affected_source.png"
+            id="eu.udig.tutorials.alert-app.affectedFeatures"
+            name="Select Affected Features"
+            targetClass="eu.udig.tutorials.alertapp.AlertAppContext">
+         <enablement>
+            <property
+                  expectedValue="ignored"
+                  propertyId="eu.udig.tutorials.alert-app.overAlertArea">
+            </property></enablement>
+      </operation>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.objectProperty">
+      <object
+            targetClass="eu.udig.tutorials.alertapp.AlertAppContext">
+         <property
+               class="eu.udig.tutorials.alertapp.OverAlertArea"
+               id="overAlertArea">
+         </property>
+      </object>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.dropAction">
+      <action
+            class="eu.udig.tutorials.alertapp.DropTextAction"
+            enablesFor="1"
+            name="Drop Text On Map">
+         <destination
+               adapt="false"
+               class="net.refractions.udig.project.ui.internal.MapPart">
+         </destination>
+         <acceptedType
+               adapt="false"
+               class="java.io.File">
+         </acceptedType>
+         <description>
+            Drop text on the map and render it
+         </description>
+      </action>
+   </extension>
 
 </plugin>

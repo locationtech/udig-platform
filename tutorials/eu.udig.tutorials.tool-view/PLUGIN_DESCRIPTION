@@ -9,9 +9,13 @@ This plug-in demonstrates:
  - how to implement a custom ToolManager to control which tools are displayed in the toolbar
  - how to show animations with a tool
  - how to draw tool feedback 
+ - how to add a context menu to the map part
+ - how to define operations that will be enabled and disabled depending on if the alert tool was used or not
  
 The main classes of interest are:
  - CustomToolManager
  - SendAlertTool
  - ShowAlertsMapGraphic
  - View
+ - OverAlertArea
+ - SelecteAffectedFeatures
