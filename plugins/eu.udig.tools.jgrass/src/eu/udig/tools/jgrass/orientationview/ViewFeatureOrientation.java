@@ -21,28 +21,22 @@ package eu.udig.tools.jgrass.orientationview;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
 import net.refractions.udig.project.ui.commands.IDrawCommand;
 import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.style.sld.SLD;
 import net.refractions.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
-import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.filter.Filter;
 import org.opengis.geometry.BoundingBox;
@@ -53,32 +47,17 @@ import com.vividsolutions.jts.geom.Geometry;
 /**
  * Operation that draws arrows to show the orientation of the lines in a layer.
  * 
- * @author Andrea Antonello - www.hydrologis.com
+ * @author Andrea Antonello (www.hydrologis.com)
  */
 public class ViewFeatureOrientation implements IOp {
 
     public void op( final Display display, Object target, IProgressMonitor monitor ) throws Exception {
-        ILayer layer = (ILayer) target;
-        SimpleFeatureSource source = (SimpleFeatureSource) layer.getResource(FeatureSource.class, new SubProgressMonitor(monitor,
-                1));
-        if (source == null) {
-            return;
-        }
-        SimpleFeatureType schema = source.getSchema();
-        GeometryDescriptor geometryDescriptor = schema.getGeometryDescriptor();
+        SimpleFeatureStore featureStore = (SimpleFeatureStore) target;
+        GeometryDescriptor geometryDescriptor = featureStore.getSchema().getGeometryDescriptor();
         ReferencedEnvelope bounds = ApplicationGIS.getActiveMap().getViewportModel().getBounds();
         String name = geometryDescriptor.getLocalName();
         Filter bboxFilter = getBboxFilter(name, bounds);
-        SimpleFeatureCollection featureCollection = source.getFeatures(bboxFilter);
-        if (!SLD.isLine(geometryDescriptor)) {
-            display.asyncExec(new Runnable(){
-                public void run() {
-                    MessageDialog.openWarning(display.getActiveShell(), "Wrong layer",
-                            "This operation works only for line layers.");
-                }
-            });
-            return;
-        }
+        SimpleFeatureCollection featureCollection = featureStore.getFeatures(bboxFilter);
 
         FeatureIterator<SimpleFeature> featureIterator = featureCollection.features();
         IViewportModel viewPort = ApplicationGIS.getActiveMap().getViewportModel();
@@ -96,9 +75,8 @@ public class ViewFeatureOrientation implements IOp {
         IToolContext toolContext = ApplicationGIS.createContext(ApplicationGIS.getActiveMap());
         IDrawCommand compositeCommand = toolContext.getDrawFactory().createCompositeDrawCommand(commands);
         toolContext.sendASyncCommand(compositeCommand);
-
     }
-    
+
     /**
      * Create a bounding box filter from a bounding box.
      * 
@@ -127,6 +105,7 @@ public class ViewFeatureOrientation implements IOp {
      * @return the filter.
      * @throws CQLException
      */
+    @SuppressWarnings("nls")
     public static Filter getBboxFilter( String attribute, double west, double east, double south, double north )
             throws CQLException {
 
