@@ -30,14 +30,18 @@ import net.refractions.udig.project.ui.tool.IToolContext;
 import net.refractions.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
+import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
-import org.geotools.data.simple.SimpleFeatureStore;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Geometry;
+
+import eu.udig.tools.jgrass.i18n.Messages;
 
 /**
  * Operation that inverts the orientation of selected features.
@@ -48,9 +52,13 @@ public class ReverseFeatureOrientation implements IOp {
 
     private int count = 0;
     public void op( final Display display, Object target, IProgressMonitor monitor ) throws Exception {
-        SimpleFeatureStore featureStore = (SimpleFeatureStore) target;
-        ILayer selectedLayer = ApplicationGIS.getActiveMap().getEditManager().getSelectedLayer();
-        SimpleFeatureCollection featureCollection = featureStore.getFeatures(selectedLayer.getQuery(true));
+        ILayer selectedLayer = (ILayer) target;
+        SimpleFeatureSource featureSource = (SimpleFeatureSource) selectedLayer.getResource(FeatureSource.class,
+                new SubProgressMonitor(monitor, 1));
+        if (featureSource == null) {
+            return;
+        }
+        SimpleFeatureCollection featureCollection = featureSource.getFeatures(selectedLayer.getQuery(true));
         SimpleFeatureIterator featureIterator = featureCollection.features();
         EditCommandFactory cmdFactory = EditCommandFactory.getInstance();
         List<UndoableMapCommand> cmdList = new LinkedList<UndoableMapCommand>();
@@ -65,11 +73,11 @@ public class ReverseFeatureOrientation implements IOp {
         }
         CompositeCommand compositeCommand = new CompositeCommand(cmdList);
         IToolContext toolContext = ApplicationGIS.createContext(ApplicationGIS.getActiveMap());
-        toolContext.sendASyncCommand(compositeCommand);
+        toolContext.sendSyncCommand(compositeCommand);
 
         display.asyncExec(new Runnable(){
             public void run() {
-                MessageDialog.openInformation(display.getActiveShell(), "INFO", "Selected features inverted: " + count);
+                MessageDialog.openInformation(display.getActiveShell(), Messages.getString("ReverseFeatureOrientation_info"), Messages.getString("ReverseFeatureOrientation_infomsg") + count); //$NON-NLS-1$ //$NON-NLS-2$
             }
         });
 

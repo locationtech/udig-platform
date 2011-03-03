@@ -21,6 +21,7 @@ package eu.udig.tools.jgrass.orientationview;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
@@ -29,9 +30,11 @@ import net.refractions.udig.project.ui.tool.IToolContext;
 import net.refractions.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.swt.widgets.Display;
+import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.data.simple.SimpleFeatureStore;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
@@ -52,12 +55,17 @@ import com.vividsolutions.jts.geom.Geometry;
 public class ViewFeatureOrientation implements IOp {
 
     public void op( final Display display, Object target, IProgressMonitor monitor ) throws Exception {
-        SimpleFeatureStore featureStore = (SimpleFeatureStore) target;
-        GeometryDescriptor geometryDescriptor = featureStore.getSchema().getGeometryDescriptor();
+        ILayer selectedLayer = (ILayer) target;
+        SimpleFeatureSource featureSource = (SimpleFeatureSource) selectedLayer.getResource(FeatureSource.class,
+                new SubProgressMonitor(monitor, 1));
+        if (featureSource == null) {
+            return;
+        }
+        GeometryDescriptor geometryDescriptor = featureSource.getSchema().getGeometryDescriptor();
         ReferencedEnvelope bounds = ApplicationGIS.getActiveMap().getViewportModel().getBounds();
         String name = geometryDescriptor.getLocalName();
         Filter bboxFilter = getBboxFilter(name, bounds);
-        SimpleFeatureCollection featureCollection = featureStore.getFeatures(bboxFilter);
+        SimpleFeatureCollection featureCollection = featureSource.getFeatures(bboxFilter);
 
         FeatureIterator<SimpleFeature> featureIterator = featureCollection.features();
         IViewportModel viewPort = ApplicationGIS.getActiveMap().getViewportModel();
