@@ -175,7 +175,8 @@ public class UDIGDropHandler extends DropTargetAdapter {
                     if( object == null ) {
                         continue;
                     }
-                    actions = findDropActions(object, event);                                      if( !actions.isEmpty() ) break;
+                    actions = findDropActions(object, event);
+                    if( !actions.isEmpty() ) break;
                 }
             }
         }
