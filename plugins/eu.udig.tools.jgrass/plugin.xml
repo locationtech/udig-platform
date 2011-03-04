@@ -105,14 +105,43 @@
    <extension
          point="net.refractions.udig.ui.operation">
       <operation
+            categoryId="eu.udig.tools.jgrass.toolscategory"
             class="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientation"
             enablesFor="1"
             id="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientation"
             name="View lines orientation"
             targetClass="net.refractions.udig.project.ILayer">
-         <enablement></enablement>
+            <enablement>
+             <and>
+               <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
+               <or>
+                    <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+                    <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+               </or>
+             </and>
+            </enablement>
       </operation>
       <operation
+            categoryId="eu.udig.tools.jgrass.toolscategory"
+            class="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientation"
+            enablesFor="1"
+            id="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientation"
+            name="Invert geometry orientation"
+            targetClass="net.refractions.udig.project.ILayer">
+            <enablement>
+             <and>
+               <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
+               <or>
+                    <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+                    <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+                    <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+                    <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+               </or>
+             </and>
+            </enablement>
+      </operation>
+      <operation
+            categoryId="eu.udig.tools.jgrass.toolscategory"
             class="eu.udig.tools.jgrass.profile.FeatureOnCoverageProfileOperation"
             enablesFor="2"
             id="eu.udig.tools.jgrass.profile.fromfeature"
@@ -120,6 +149,10 @@
             targetClass="net.refractions.udig.project.ILayer">
          <enablement></enablement>
       </operation>
+      <category
+            id="eu.udig.tools.jgrass.toolscategory"
+            name="JGrass Tools">
+      </category>
    </extension>
    <extension
          point="org.eclipse.ui.importWizards">
