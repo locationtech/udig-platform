@@ -42,6 +42,8 @@ import org.geotools.data.simple.SimpleFeatureSource;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
+import eu.udig.tools.jgrass.i18n.Messages;
+
 /**
  * Common methods for less code in operations.
  * 
@@ -92,7 +94,8 @@ public class OperationUtils {
 
         int toPosition = currentPosition + delta;
         if (toPosition < 0 || toPosition > mapLayers.size() - 1) {
-            showMessage(display, "WARNING", "There is no layer to move the feature into.", MSGTYPE.WARNING);
+            showMessage(display,
+                    Messages.getString("OperationUtils_warning"), Messages.getString("OperationUtils_nolayer"), MSGTYPE.WARNING); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         }
         ILayer toLayer = mapLayers.get(toPosition);
@@ -101,14 +104,17 @@ public class OperationUtils {
         SimpleFeatureType selectedSchema = selectedLayer.getSchema();
         int compare = DataUtilities.compare(toSchema, selectedSchema);
         if (compare != 0) {
-            showMessage(display, "WARNING", "Feature moving is allowed only between layer of same type and attributes.",
+            showMessage(display,
+                    Messages.getString("OperationUtils_warning"), Messages.getString("OperationUtils_sametypeproblem"), //$NON-NLS-1$ //$NON-NLS-2$
                     MSGTYPE.WARNING);
             return;
         }
 
         SimpleFeatureCollection featureCollection = featureSource.getFeatures(selectedLayer.getQuery(true));
         if (featureCollection.size() < 1) {
-            showMessage(display, "WARNING", "No selected features found to be moved.", MSGTYPE.WARNING);
+            showMessage(
+                    display,
+                    Messages.getString("OperationUtils_warning"), Messages.getString("OperationUtils_nofeaturesproblem"), MSGTYPE.WARNING); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         }
 
@@ -134,15 +140,19 @@ public class OperationUtils {
             CompositeCommand compositeCommand = new CompositeCommand(copyOverList);
             toolContext.sendSyncCommand(compositeCommand);
         } catch (Exception e) {
-            showMessage(display, "ERROR", "A problem occurred while trying to copy the features.", MSGTYPE.ERROR);
+            showMessage(display,
+                    Messages.getString("OperationUtils_error"), Messages.getString("OperationUtils_copyproblem"), MSGTYPE.ERROR); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         }
         try {
             CompositeCommand compositeCommand = new CompositeCommand(deleteOldList);
             toolContext.sendSyncCommand(compositeCommand);
-            showMessage(display, "INFO", MessageFormat.format("Moved {0} features to the target layer.", count), MSGTYPE.WARNING);
+            showMessage(
+                    display,
+                    Messages.getString("OperationUtils_info"), MessageFormat.format(Messages.getString("OperationUtils_movedinfo"), count), MSGTYPE.WARNING); //$NON-NLS-1$ //$NON-NLS-2$
         } catch (Exception e) {
-            showMessage(display, "ERROR", "A problem occurred while trying to remove the copied features.", MSGTYPE.ERROR);
+            showMessage(display,
+                    Messages.getString("OperationUtils_error"), Messages.getString("OperationUtils_deleteproblem"), MSGTYPE.ERROR); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 }

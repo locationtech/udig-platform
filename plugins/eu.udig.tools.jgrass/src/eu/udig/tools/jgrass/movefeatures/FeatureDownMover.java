@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Display;
 import eu.udig.tools.jgrass.utils.OperationUtils;
 
 /**
- * Operation to move features one layer up. 
+ * Operation to move features one layer down. 
  * 
  * @author Andrea Antonello (www.hydrologis.com)
  */
