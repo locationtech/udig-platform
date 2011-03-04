@@ -180,17 +180,34 @@ public class UDIGDropHandler extends DropTargetAdapter {
                 }
             }
         }
+        
         CompositeDropActionJob actionJob = getActionJob();
         if (actions != null && !actions.isEmpty()){
-            UiPlugin.trace(Trace.DND, getClass(), event.data+" dropped on "+getTarget()+" "+actions.size()+" found to process drop",null); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            UiPlugin.trace(Trace.DND, getClass(), "Actions for drop are: "+actions.toString(), null ); //$NON-NLS-1$
-            actionJob.addActions(this, actions);
+        	List<IDropAction> filteredActions = filterActions(event,actions);
+            UiPlugin.trace(Trace.DND, getClass(), event.data+" dropped on "+getTarget()+" "+filteredActions.size()+" found to process drop",null); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            UiPlugin.trace(Trace.DND, getClass(), "Actions for drop are: "+filteredActions.toString(), null ); //$NON-NLS-1$
+            actionJob.addActions(this, filteredActions);
         } else {
             UiPlugin.trace(Trace.DND, getClass(), event.data+" dropped on "+getTarget()+" found no actions for processing it",null );  //$NON-NLS-1$//$NON-NLS-2$
             notifyNoDropAction(event.data);
         }
     }
-    private List<IDropAction> findDropActions( Object data, DropTargetEvent event ) {
+    /**
+     * A hook for subclasses to modify the list of actions that will be executed for this drop event.
+     * 
+     * The intention is to be able to use the same set of drop extensions for the views but allow a
+     * subset to be used for different views.
+     * 
+     * Default action is to return all actions in the same order as the extension mechanism found.
+     * 
+     * @param event the event that has just occurred and is being processed
+     * @param the action extensions that were found that claim to be able to process the drop event
+     */
+    protected List<IDropAction> filterActions(DropTargetEvent event, List<IDropAction> actions) {
+		return actions;
+	}
+
+	private List<IDropAction> findDropActions( Object data, DropTargetEvent event ) {
         if (UiPlugin.isDebugging(Trace.DND)) {
             System.out.println("Find drop called on " + data + "(" + data.getClass() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
