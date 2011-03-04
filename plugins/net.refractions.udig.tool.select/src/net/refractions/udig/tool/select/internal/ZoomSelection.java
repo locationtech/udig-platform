@@ -26,7 +26,6 @@ import net.refractions.udig.ui.ProgressManager;
 import org.geotools.data.Query;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.filter.Filter;
 
 /**
  * Sets the ViewportModel bounds to equal the bounds of the selected features
@@ -47,10 +46,7 @@ public class ZoomSelection extends AbstractActionTool {
         if (layer.hasResource(SimpleFeatureSource.class)) {
             try {
                 SimpleFeatureSource resource = featureSource(layer);
-                String typeName = resource.getSchema().getTypeName();
-                Filter filter = layer.getFilter();
-                String[] properties = new String[]{resource.getSchema().getGeometryDescriptor().getLocalName()};
-                Query query = new Query(typeName, filter, properties);
+                Query query = layer.getQuery(true);
                 ReferencedEnvelope bounds = resource.getBounds(query);
                 if (bounds == null) {
                     ReferencedEnvelope envelope = resource.getFeatures(query).getBounds();
