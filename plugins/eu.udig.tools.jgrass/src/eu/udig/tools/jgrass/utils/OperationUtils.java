@@ -17,8 +17,30 @@
  */
 package eu.udig.tools.jgrass.utils;
 
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.LinkedList;
+import java.util.List;
+
+import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.command.CompositeCommand;
+import net.refractions.udig.project.command.UndoableMapCommand;
+import net.refractions.udig.project.command.factory.EditCommandFactory;
+import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.ui.tool.IToolContext;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
+import org.geotools.data.DataUtilities;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Common methods for less code in operations.
@@ -51,4 +73,76 @@ public class OperationUtils {
         });
     }
 
+    protected void moveFeatures( final Display display, IProgressMonitor monitor, ILayer selectedLayer, boolean moveUp )
+            throws IOException {
+        SimpleFeatureSource featureSource = (SimpleFeatureSource) selectedLayer.getResource(FeatureSource.class,
+                new SubProgressMonitor(monitor, 1));
+        if (featureSource == null) {
+            return;
+        }
+
+        int delta = 1;
+        if (!moveUp) {
+            delta = -1;
+        }
+
+        IMap activeMap = ApplicationGIS.getActiveMap();
+        List<ILayer> mapLayers = activeMap.getMapLayers();
+        int currentPosition = mapLayers.indexOf(selectedLayer);
+
+        int toPosition = currentPosition + delta;
+        if (toPosition < 0 || toPosition > mapLayers.size() - 1) {
+            showMessage(display, "WARNING", "There is no layer to move the feature into.", MSGTYPE.WARNING);
+            return;
+        }
+        ILayer toLayer = mapLayers.get(toPosition);
+
+        SimpleFeatureType toSchema = toLayer.getSchema();
+        SimpleFeatureType selectedSchema = selectedLayer.getSchema();
+        int compare = DataUtilities.compare(toSchema, selectedSchema);
+        if (compare != 0) {
+            showMessage(display, "WARNING", "Feature moving is allowed only between layer of same type and attributes.",
+                    MSGTYPE.WARNING);
+            return;
+        }
+
+        SimpleFeatureCollection featureCollection = featureSource.getFeatures(selectedLayer.getQuery(true));
+        if (featureCollection.size() < 1) {
+            showMessage(display, "WARNING", "No selected features found to be moved.", MSGTYPE.WARNING);
+            return;
+        }
+
+        SimpleFeatureIterator featureIterator = featureCollection.features();
+        EditCommandFactory cmdFactory = EditCommandFactory.getInstance();
+        List<UndoableMapCommand> copyOverList = new LinkedList<UndoableMapCommand>();
+        List<UndoableMapCommand> deleteOldList = new LinkedList<UndoableMapCommand>();
+        int count = 0;
+        while( featureIterator.hasNext() ) {
+            SimpleFeature feature = featureIterator.next();
+            UndoableMapCommand addFeatureCmd = cmdFactory.createAddFeatureCommand(feature, toLayer);
+            copyOverList.add(addFeatureCmd);
+            UndoableMapCommand deleteFeatureCmd = cmdFactory.createDeleteFeature(feature, selectedLayer);
+            deleteOldList.add(deleteFeatureCmd);
+            count++;
+        }
+
+        /*
+         * first copy things over and if that works, delete the old ones
+         */
+        IToolContext toolContext = ApplicationGIS.createContext(ApplicationGIS.getActiveMap());
+        try {
+            CompositeCommand compositeCommand = new CompositeCommand(copyOverList);
+            toolContext.sendSyncCommand(compositeCommand);
+        } catch (Exception e) {
+            showMessage(display, "ERROR", "A problem occurred while trying to copy the features.", MSGTYPE.ERROR);
+            return;
+        }
+        try {
+            CompositeCommand compositeCommand = new CompositeCommand(deleteOldList);
+            toolContext.sendSyncCommand(compositeCommand);
+            showMessage(display, "INFO", MessageFormat.format("Moved {0} features to the target layer.", count), MSGTYPE.WARNING);
+        } catch (Exception e) {
+            showMessage(display, "ERROR", "A problem occurred while trying to remove the copied features.", MSGTYPE.ERROR);
+        }
+    }
 }
