@@ -20,6 +20,8 @@ import net.refractions.udig.catalog.ui.UDIGConnectionFactory;
 import net.refractions.udig.core.internal.CorePlugin;
 import net.refractions.udig.core.internal.ExtensionPointProcessor;
 import net.refractions.udig.core.internal.ExtensionPointUtil;
+import net.refractions.udig.internal.ui.Trace;
+import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.ui.IDropAction;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -195,7 +197,7 @@ public class CatalogImportDropAction extends IDropAction {
      * @return
      */
     private URL formatFileURL( URL result ) {
-        if (result.getProtocol().equalsIgnoreCase("file")) { //$NON-NLS-1$
+        if (result != null && result.getProtocol().equalsIgnoreCase("file")) { //$NON-NLS-1$
             try { 
                 return new URL(result.toExternalForm());
             } catch (MalformedURLException e) {
@@ -211,8 +213,8 @@ public class CatalogImportDropAction extends IDropAction {
         Matcher urlMatcher = urlPattern.matcher(line);
 
         if (urlMatcher.find()) {
+        	String group = urlMatcher.group(1);
             try {
-                String group = urlMatcher.group(1);
                 int index = group.indexOf('"');
                 if (index != -1)
                     group = group.substring(0, index);
@@ -221,7 +223,7 @@ public class CatalogImportDropAction extends IDropAction {
                     group = group.substring(0, index);
                 result = new URL(group);
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+            	UiPlugin.trace(Trace.DND, CatalogImportDropAction.class,"failure to create url from "+group, e);
             }
         }
         return result;

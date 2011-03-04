@@ -395,7 +395,7 @@
 	       <acceptedType class="java.net.URL"/>
 	       <acceptedType class="java.lang.String"/>
 	       <acceptedType class="java.io.File"/>
-	       <destination class="org.eclipse.ui.IEditorPart"/>
+	       <destination class="net.refractions.udig.project.ui.internal.MapPart"/>
            <destination
                  class="net.refractions.udig.project.ui.internal.LayersView"/>
            <acceptedType
