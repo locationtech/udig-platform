@@ -15,11 +15,12 @@ public class UDIGControlDropListener extends DropTargetAdapter implements UDIGDr
     UDIGDropHandler handler;
     private IDropTargetProvider destinationProvider;
 
-	public UDIGControlDropListener(IDropTargetProvider destinationProvider ) {
-		handler = new UDIGDropHandler();
+
+	public UDIGControlDropListener(IDropTargetProvider destinationProvider, UDIGDropHandler dropHandler) {
+		handler = dropHandler;
         if( destinationProvider==null )
             destinationProvider=new NullProvider();
-        this.destinationProvider=destinationProvider;
+        this.destinationProvider=destinationProvider;		
 	}
     private void initHandler(DropTargetEvent event) {
         handler.setTarget(destinationProvider.getTarget(event));

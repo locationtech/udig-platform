@@ -11,6 +11,7 @@ import net.refractions.udig.internal.ui.IDropTargetProvider;
 import net.refractions.udig.internal.ui.UDIGControlDragListener;
 import net.refractions.udig.internal.ui.UDIGControlDropListener;
 import net.refractions.udig.internal.ui.UDIGDNDProcessor;
+import net.refractions.udig.internal.ui.UDIGDropHandler;
 import net.refractions.udig.internal.ui.UDIGTransfer;
 import net.refractions.udig.internal.ui.UDIGViewerDropAdapter;
 
@@ -235,6 +236,27 @@ public class UDIGDragDropUtilities {
         dragSource.addDragListener(controlDragListener);
         return new DragSourceDescriptor(dragSource, controlDragListener);
 	}
+	/**
+	 * Adds drop support to the StructuredViewer.
+	 * <p>For this to work the destination object must have a dropAction extension
+	 * defined for it.<p>
+	 * 
+	 * @param control the viewer to have drop support added to it.
+	 * @param destination the destination that determines what actions will take
+	 * place when a drop event occurs.
+	 * @param dropHandler the custom drop handler to use for processing drop events and DropAction extensions
+	 * @return 
+	 */
+	public static DropTargetDescriptor addDropSupport(Control control, IDropTargetProvider destination, 
+			UDIGDropHandler dropHandler) {
+		int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK | DND.DROP_DEFAULT;
+	    Set<Transfer> transfers = getTransfers();
+	    DropTarget target=new DropTarget(control, dndOperations);
+	    target.setTransfer(transfers.toArray(new Transfer[transfers.size()]));
+	    UDIGControlDropListener controlDropListener = new UDIGControlDropListener(destination,dropHandler);
+        target.addDropListener(controlDropListener);
+        return new DropTargetDescriptor(target, controlDropListener);		
+	}
 
 	/**
 	 * Adds drop support to the StructuredViewer.
@@ -247,13 +269,7 @@ public class UDIGDragDropUtilities {
 	 * @return 
 	 */
 	public static DropTargetDescriptor addDropSupport(Control control, IDropTargetProvider destination) {
-		int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK | DND.DROP_DEFAULT;
-	    Set<Transfer> transfers = getTransfers();
-	    DropTarget target=new DropTarget(control, dndOperations);
-	    target.setTransfer(transfers.toArray(new Transfer[transfers.size()]));
-	    UDIGControlDropListener controlDropListener = new UDIGControlDropListener(destination);
-        target.addDropListener(controlDropListener);
-        return new DropTargetDescriptor(target, controlDropListener);
+		return addDropSupport(control, destination, new UDIGDropHandler());
 	}
 
 	/**
@@ -271,13 +287,23 @@ public class UDIGDragDropUtilities {
      * Registers the DND Support needed by uDig.
      * Public because it might need to be called by another application using uDig as a plugin.
      * @param configurer The IWorkbenchWindowConfigurer for the workbench
+     * @param the dropHandler strategy for processing the drop using the DropAction extension point
      */
     public static void registerUDigDND( IWorkbenchWindowConfigurer configurer ) {
+    	registerUDigDND(configurer, new UDIGDropHandler());
+    }
+
+    /**
+     * Registers the DND Support needed by uDig.
+     * Public because it might need to be called by another application using uDig as a plugin.
+     * @param configurer The IWorkbenchWindowConfigurer for the workbench
+     */
+    public static void registerUDigDND( IWorkbenchWindowConfigurer configurer, UDIGDropHandler dropHandler ) {
         Set<Transfer> transfers = getTransfers();
         for (Transfer transfer : transfers ) {
             configurer.addEditorAreaTransfer(transfer);
         }
-        configurer.configureEditorAreaDropListener(new UDIGControlDropListener(new EditorPlaceholder()));
+        configurer.configureEditorAreaDropListener(new UDIGControlDropListener(new EditorPlaceholder(),dropHandler));
     }
 
     /**
@@ -287,8 +313,19 @@ public class UDIGDragDropUtilities {
      * @return  a drop listener that will send the drop event to the 
      * currently active editor.
      */
-	public static UDIGControlDropListener getEditorDropListener() {
-		return new UDIGControlDropListener(new EditorPlaceholder());
+    public static UDIGControlDropListener getEditorDropListener() {
+		return getEditorDropListener(new UDIGDropHandler());
+    }
+    /**
+     * Creates a drop listener that will send the drop event to the 
+     * currently active editor.
+     *
+     * @param the dropHandler strategy for processing the drop using the DropAction extension point
+     * @return  a drop listener that will send the drop event to the 
+     * currently active editor.
+     */
+	public static UDIGControlDropListener getEditorDropListener(UDIGDropHandler dropHandler) {
+		return new UDIGControlDropListener(new EditorPlaceholder(),dropHandler);
 	}
 
     public static class DragSourceDescriptor{
