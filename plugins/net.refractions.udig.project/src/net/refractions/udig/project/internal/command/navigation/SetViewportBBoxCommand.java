@@ -98,7 +98,7 @@ public class SetViewportBBoxCommand extends AbstractNavCommand {
 				if (!mt.isIdentity()) {
 					Envelope transformedBounds = JTS.transform(newbbox, null,
 							mt, 5);
-					crs = null;
+					crs = model.getCRS();
 					newbbox = transformedBounds;
 				}
 			} catch (Exception e) {

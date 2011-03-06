@@ -108,6 +108,7 @@
             categoryId="eu.udig.tools.jgrass.toolscategory"
             class="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientation"
             enablesFor="1"
+            icon="icons/view_orientation.gif"
             id="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientation"
             name="View lines orientation"
             targetClass="net.refractions.udig.project.ILayer">
@@ -125,6 +126,7 @@
             categoryId="eu.udig.tools.jgrass.toolscategory"
             class="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientation"
             enablesFor="1"
+            icon="icons/invert.gif"
             id="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientation"
             name="Invert geometry orientation"
             targetClass="net.refractions.udig.project.ILayer">
@@ -137,6 +139,34 @@
                     <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
                     <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
                </or>
+             </and>
+            </enablement>
+      </operation>
+      <operation
+            categoryId="eu.udig.tools.jgrass.toolscategory"
+            class="eu.udig.tools.jgrass.movefeatures.FeatureUpMover"
+            enablesFor="1"
+            icon="icons/prev_nav.gif"
+            id="eu.udig.tools.jgrass.movefeatures.FeatureUpMover"
+            name="Move features one layer up"
+            targetClass="net.refractions.udig.project.ILayer">
+            <enablement>
+             <and>
+               <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
+             </and>
+            </enablement>
+      </operation>
+      <operation
+            categoryId="eu.udig.tools.jgrass.toolscategory"
+            class="eu.udig.tools.jgrass.movefeatures.FeatureDownMover"
+            enablesFor="1"
+            icon="icons/next_nav.gif"
+            id="eu.udig.tools.jgrass.movefeatures.FeatureDownMover"
+            name="Move features one layer down"
+            targetClass="net.refractions.udig.project.ILayer">
+            <enablement>
+             <and>
+               <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
              </and>
             </enablement>
       </operation>

@@ -31,7 +31,6 @@ import net.refractions.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
@@ -42,13 +41,14 @@ import org.opengis.feature.simple.SimpleFeature;
 import com.vividsolutions.jts.geom.Geometry;
 
 import eu.udig.tools.jgrass.i18n.Messages;
+import eu.udig.tools.jgrass.utils.OperationUtils;
 
 /**
  * Operation that inverts the orientation of selected features.
  * 
  * @author Andrea Antonello (www.hydrologis.com)
  */
-public class ReverseFeatureOrientation implements IOp {
+public class ReverseFeatureOrientation extends OperationUtils implements IOp {
 
     private int count = 0;
     public void op( final Display display, Object target, IProgressMonitor monitor ) throws Exception {
@@ -75,11 +75,9 @@ public class ReverseFeatureOrientation implements IOp {
         IToolContext toolContext = ApplicationGIS.createContext(ApplicationGIS.getActiveMap());
         toolContext.sendSyncCommand(compositeCommand);
 
-        display.asyncExec(new Runnable(){
-            public void run() {
-                MessageDialog.openInformation(display.getActiveShell(), Messages.getString("ReverseFeatureOrientation_info"), Messages.getString("ReverseFeatureOrientation_infomsg") + count); //$NON-NLS-1$ //$NON-NLS-2$
-            }
-        });
+        showMessage(display, Messages.getString("ReverseFeatureOrientation_info"), //$NON-NLS-1$
+                Messages.getString("ReverseFeatureOrientation_infomsg") + count, MSGTYPE.INFO); //$NON-NLS-1$
 
     }
+
 }
