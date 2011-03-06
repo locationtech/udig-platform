@@ -141,7 +141,7 @@
    <extension
          point="net.refractions.udig.ui.dropAction">
       <action
-            class="eu.udig.tutorials.alertapp.DropTextAction"
+            class="eu.udig.tutorials.alertapp.DropImageAction"
             enablesFor="1"
             name="Drop Text On Map">
          <destination

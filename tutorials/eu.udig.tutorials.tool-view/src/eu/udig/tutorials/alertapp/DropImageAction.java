@@ -40,7 +40,7 @@ import org.eclipse.swt.widgets.Display;
  *  
  * Since this is not production code those are the only cases we are looking for.  
  */
-public class DropTextAction extends IDropAction implements Runnable{
+public class DropImageAction extends IDropAction implements Runnable{
 	// pattern for extracting the image tag
 	private final static Pattern IMAGE_TAG_PATTERN = Pattern.compile(".*<\\s*img[^>]*src=\"(.*?)\".*");
 	
@@ -98,7 +98,7 @@ public class DropTextAction extends IDropAction implements Runnable{
 			File file = new File(urlString);
 			if(file.exists()) {
 				try {
-					file.toURI().toURL();
+					url = file.toURI().toURL();
 				} catch (MalformedURLException e1) {
 					// skip
 				}

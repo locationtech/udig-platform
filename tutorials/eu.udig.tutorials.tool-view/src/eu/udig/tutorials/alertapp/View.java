@@ -127,7 +127,7 @@ public class View extends ViewPart implements MapPart, IDropTargetProvider{
 	
 
 	private void enableDropSupport() {
-		dropTarget = UDIGDragDropUtilities.addDropSupport(viewer.getViewport().getControl(), this);
+		dropTarget = UDIGDragDropUtilities.addDropSupport(viewer.getViewport().getControl(), this, new RestrictedDropHandler());
 	}
 
 	private void addShpService(String path,List<IGeoResource> resources, IProgressMonitor monitor) throws IOException {
