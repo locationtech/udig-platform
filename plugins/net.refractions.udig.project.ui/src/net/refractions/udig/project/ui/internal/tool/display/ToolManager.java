@@ -202,6 +202,7 @@ public class ToolManager implements IToolManager {
     private volatile IAction backwardAction;
     private volatile IAction deleteAction;
     private volatile IAction enterAction;
+    private volatile IAction zoomToSelectionAction;
     private volatile IAction pasteAction;
     private volatile IAction copyAction;
     private volatile IAction cutAction;
@@ -242,12 +243,12 @@ public class ToolManager implements IToolManager {
                 ToolProxy proxy = new ToolProxy(extension, element, this);
                 backgroundTools.add(proxy);
             } else if (type.equals("modalTool")) { //$NON-NLS-1$
-                String categoryId = element.getAttribute("categoryId"); //$NON-NLS-1$
+                String categoryId = getCategoryIdAttribute(element); //$NON-NLS-1$
                 ToolProxy proxy = new ToolProxy(extension, element, this);
 
                 addToModalCategory(categoryId, proxy);
             } else if (type.equals("actionTool")) { //$NON-NLS-1$
-                String categoryId = element.getAttribute("categoryId"); //$NON-NLS-1$
+                String categoryId = getCategoryIdAttribute(element); //$NON-NLS-1$
                 ToolProxy proxy = new ToolProxy(extension, element, this);
 
                 addToActionCategory(categoryId, proxy);
@@ -261,6 +262,11 @@ public class ToolManager implements IToolManager {
         if( activeModalToolProxy  == null )
         	activeModalToolProxy = defaultModalToolProxy;
     }
+
+	private String getCategoryIdAttribute(IConfigurationElement element) {
+		String id  = element.getAttribute("categoryId");
+		return id == null? "" : id;
+	}
     
 
     /**
@@ -323,7 +329,7 @@ public class ToolManager implements IToolManager {
      * If the message returns true the tool <b>will not</b> be added.
      * The default implementation always returns false.
      * 
-     * @param categoryId the id of the category that the tool will be added to
+     * @param categoryId the id of the category that the tool will be added to, this will never be null
      * @param proxy the proxy for the tool.  
      * @param categoryType the type of category
      * 
@@ -1228,6 +1234,19 @@ public class ToolManager implements IToolManager {
             }
     
             return enterAction;
+        }finally{
+            enterLock.unlock();
+        }
+    }
+    
+    public synchronized IAction getZOOMTOSELECTEDAction() {
+        enterLock.lock();
+        try{
+            if (zoomToSelectionAction == null) {
+                zoomToSelectionAction = getToolAction("net.refractions.udig.tool.default.show.selection", "net.refractions.udig.tool.category.zoom");
+            }
+            
+            return zoomToSelectionAction;
         }finally{
             enterLock.unlock();
         }

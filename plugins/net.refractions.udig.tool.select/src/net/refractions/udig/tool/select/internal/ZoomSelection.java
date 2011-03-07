@@ -23,12 +23,9 @@ import net.refractions.udig.project.ui.tool.AbstractActionTool;
 import net.refractions.udig.tool.select.SelectPlugin;
 import net.refractions.udig.ui.ProgressManager;
 
-import org.geotools.data.DefaultQuery;
-import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Sets the ViewportModel bounds to equal the bounds of the selected features
@@ -46,41 +43,37 @@ public class ZoomSelection extends AbstractActionTool {
 
     public void run() {
         ILayer layer = getContext().getSelectedLayer();
-        if ( layer.hasResource(FeatureSource.class)){
+        if (layer.hasResource(SimpleFeatureSource.class)) {
             try {
-            	FeatureSource<SimpleFeatureType, SimpleFeature> resource = featureSource(layer);
-                Query query = new DefaultQuery( resource.getSchema().getTypeName(), layer.getFilter(), 
-                        new String[]{resource.getSchema().getGeometryDescriptor().getLocalName()});
+                SimpleFeatureSource resource = featureSource(layer);
+                Query query = layer.getQuery(true);
                 ReferencedEnvelope bounds = resource.getBounds(query);
-                if( bounds==null ){
-                	ReferencedEnvelope envelope = resource.getFeatures(query).getBounds();
-                	if (envelope != null) {
-                		bounds = new ReferencedEnvelope(envelope, layer.getCRS());
-                	}
+                if (bounds == null) {
+                    ReferencedEnvelope envelope = resource.getFeatures(query).getBounds();
+                    if (envelope != null) {
+                        bounds = new ReferencedEnvelope(envelope, layer.getCRS());
+                    }
                 }
-             // If the selection is a single point the bounds will 
+                // If the selection is a single point the bounds will
                 // have height == 0 and width == 0. This will break
                 // in ScaleUtils:306. Adding 1 to the extent fixes the problem:
                 if (bounds.getHeight() <= 0 || bounds.getWidth() <= 0) {
                     bounds.expandBy(1);
                 }
                 bounds = ScaleUtils.fitToMinAndMax(bounds, layer);
-                
-                getContext().sendASyncCommand(new SetViewportBBoxCommand(bounds,
-                        layer.getCRS()));
+
+                getContext().sendASyncCommand(new SetViewportBBoxCommand(bounds, layer.getCRS()));
             } catch (IOException e) {
                 SelectPlugin.log("failed to obtain resource", e); //$NON-NLS-1$
             }
-            
+
         }
     }
 
-	@SuppressWarnings("unchecked")
-	private FeatureSource<SimpleFeatureType, SimpleFeature> featureSource(
-			ILayer layer) throws IOException {
-		FeatureSource<SimpleFeatureType, SimpleFeature> resource = layer.getResource(FeatureSource.class, ProgressManager.instance().get());
-		return resource;
-	}
+    private SimpleFeatureSource featureSource( ILayer layer ) throws IOException {
+        SimpleFeatureSource resource = layer.getResource(SimpleFeatureSource.class, ProgressManager.instance().get());
+        return resource;
+    }
 
     public void dispose() {
     }

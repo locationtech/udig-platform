@@ -311,6 +311,8 @@ public class Messages extends NLS {
     public static String MapSelectorPageWithScaleColumn_invalidScaleError;
     public static String MapSelectorPageWithScaleColumn_scale;
     public static String MapSelectorPageWithScaleColumn_scaleColumnText;
+    public static String ToolManager_zoomToSelectionAction;
+    public static String ToolManager_zoomToSelectionActionTooltip;
     
     public static String mousePreferences_setvalue;
     public static String mousePreferences_title;

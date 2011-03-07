@@ -61,10 +61,12 @@
 				<exclude name="*-feature/" />
 			</fileset>
 			<!-- copy core fragments to the build's plugin directory-->
+	<!-- not required anymore
 			<fileset dir="${basedir}/fragments/">
 				<exclude name="**/.svn" />
 				<exclude name="**/bin/" />
 			</fileset>
+	-->
 			<!-- 3rd parties can add their plugins here-->
 		</sync>
 		<!-- copy all features to the build's feature directory-->

@@ -135,8 +135,9 @@ public class DrawFeatureCommand extends AbstractDrawCommand {
     }
     
     private void renderInternal(){
-        if( syms!=null )
+        if( syms==null ) {
             syms = Drawing.getSymbolizers(((Geometry)feature.getDefaultGeometry()).getClass(), color,false);
+        }
         MathTransform mt = getMathTransform(featureCRS);
         AffineTransform toScreen=getMap().getViewportModel().worldToScreenTransform();
 
