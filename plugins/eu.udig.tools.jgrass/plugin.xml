@@ -211,4 +211,47 @@
          </description>
       </wizard>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientationCommand"
+            id="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientationCommand"
+            name="View lines orientation">
+      </command>
+      <keyBinding
+            commandId="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientationCommand"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            keySequence="Alt+Shift+A">
+      </keyBinding>
+      <command
+            defaultHandler="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientationCommand"
+            id="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientationCommand"
+            name="Invert lines orientation">
+      </command>
+      <keyBinding
+            commandId="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientationCommand"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            keySequence="Alt+Shift+S">
+      </keyBinding>
+      <command
+            defaultHandler="eu.udig.tools.jgrass.movefeatures.FeatureDownMoverCommand"
+            id="eu.udig.tools.jgrass.movefeatures.FeatureDownMoverCommand"
+            name="Move feature a layer down">
+      </command>
+      <keyBinding
+            commandId="eu.udig.tools.jgrass.movefeatures.FeatureDownMoverCommand"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            keySequence="Alt+Shift+Z">
+      </keyBinding>
+      <command
+            defaultHandler="eu.udig.tools.jgrass.movefeatures.FeatureUpMoverCommand"
+            id="eu.udig.tools.jgrass.movefeatures.FeatureUpMoverCommand"
+            name="Move feature a layer up">
+      </command>
+      <keyBinding
+            commandId="eu.udig.tools.jgrass.movefeatures.FeatureUpMoverCommand"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            keySequence="Alt+Shift+W">
+      </keyBinding>
+   </extension>
 </plugin>

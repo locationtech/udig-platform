@@ -51,6 +51,8 @@ import org.opengis.referencing.operation.MathTransform;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 
+import eu.udig.tools.jgrass.utils.ArrowDrawCommand;
+
 /**
  * Operation that draws arrows to show the orientation of the lines in a layer.
  * 
