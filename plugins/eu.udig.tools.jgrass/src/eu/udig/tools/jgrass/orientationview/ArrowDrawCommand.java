@@ -25,9 +25,6 @@ import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -45,7 +42,8 @@ public class ArrowDrawCommand extends AbstractDrawCommand {
     private Coordinate start;
     private Coordinate end;
     private Rectangle validArea;
-    private Color lineColor = new Color(255, 0, 0, 255);
+    private Color lineColor1 = new Color(255, 0, 0, 255);
+    private Color lineColor2 = new Color(0, 0, 0, 255);
 
     /**
      * Contructor.
@@ -61,7 +59,6 @@ public class ArrowDrawCommand extends AbstractDrawCommand {
     public void run( IProgressMonitor monitor ) throws Exception {
 
         display.addMouseListener(mouseListener);
-        display.addMouseWheelListener(wheelListener);
 
         LineSegment l = new LineSegment(start, end);
         start = l.pointAlong(0.1);
@@ -76,8 +73,11 @@ public class ArrowDrawCommand extends AbstractDrawCommand {
         validArea = new Rectangle((int) start.x, (int) start.y, (int) (start.x + (end.x - start.x)),
                 (int) (start.y + (end.y - start.y)));
 
+        graphics.setLineWidth(3);
+        graphics.setColor(lineColor2);
+        graphics.drawLine((int) start.x, (int) start.y, (int) tmp.x, (int) tmp.y);
         graphics.setLineWidth(1);
-        graphics.setColor(lineColor);
+        graphics.setColor(lineColor1);
         graphics.drawLine((int) start.x, (int) start.y, (int) tmp.x, (int) tmp.y);
 
         GeneralPath path = new GeneralPath();
@@ -86,6 +86,8 @@ public class ArrowDrawCommand extends AbstractDrawCommand {
         path.lineTo(right.x, right.y);
         path.closePath();
         graphics.fill(path);
+        graphics.setColor(lineColor2);
+        graphics.draw(path);
     }
     public Rectangle getValidArea() {
         return validArea;
@@ -94,17 +96,14 @@ public class ArrowDrawCommand extends AbstractDrawCommand {
     public void setValid( boolean valid ) {
         super.setValid(valid);
         display.removeMouseListener(mouseListener);
-        display.removeMouseWheelListener(wheelListener);
     }
 
     private MapMouseListener mouseListener = new MapMouseListener(){
 
         public void mouseDoubleClicked( MapMouseEvent event ) {
-            disable((ViewportPane) event.source, this);
         }
 
         public void mouseEntered( MapMouseEvent event ) {
-            disable((ViewportPane) event.source, this);
         }
 
         public void mouseExited( MapMouseEvent event ) {
@@ -116,29 +115,15 @@ public class ArrowDrawCommand extends AbstractDrawCommand {
         }
 
         public void mouseReleased( MapMouseEvent event ) {
-            disable((ViewportPane) event.source, this);
-        }
-
-    };
-
-    private MapMouseWheelListener wheelListener = new MapMouseWheelListener(){
-
-        public void mouseWheelMoved( MapMouseWheelEvent e ) {
-            disable(display, this);
         }
 
     };
 
     void disable( ViewportPane pane, Object listener ) {
         if (!isValid(pane)) {
-            if (listener instanceof MapMouseMotionListener)
-                pane.removeMouseMotionListener((MapMouseMotionListener) listener);
-            else if (listener instanceof MapMouseListener) {
+            if (listener instanceof MapMouseListener) {
                 pane.removeMouseListener((MapMouseListener) listener);
-            } else if (listener instanceof MapMouseWheelListener) {
-                pane.removeMouseWheelListener((MapMouseWheelListener) listener);
             }
-
             return;
         }
 
