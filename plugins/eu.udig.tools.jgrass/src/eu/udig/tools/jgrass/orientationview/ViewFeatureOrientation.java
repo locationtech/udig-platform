@@ -38,11 +38,15 @@ import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
+import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.filter.Filter;
 import org.opengis.geometry.BoundingBox;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.MathTransform;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -63,8 +67,17 @@ public class ViewFeatureOrientation implements IOp {
         }
         GeometryDescriptor geometryDescriptor = featureSource.getSchema().getGeometryDescriptor();
         ReferencedEnvelope bounds = ApplicationGIS.getActiveMap().getViewportModel().getBounds();
+        CoordinateReferenceSystem mapCrs = bounds.getCoordinateReferenceSystem();
+        
+        ReferencedEnvelope featureBounds = featureSource.getBounds();
+        CoordinateReferenceSystem featureCrs = featureBounds.getCoordinateReferenceSystem();
+        ReferencedEnvelope tBounds = bounds.transform(featureCrs, true); 
+        
+        boolean crsEqual = CRS.equalsIgnoreMetadata(featureCrs, mapCrs);
+        MathTransform mathTransform = CRS.findMathTransform(featureCrs, mapCrs, true);
+        
         String name = geometryDescriptor.getLocalName();
-        Filter bboxFilter = getBboxFilter(name, bounds);
+        Filter bboxFilter = getBboxFilter(name, tBounds);
         SimpleFeatureCollection featureCollection = featureSource.getFeatures(bboxFilter);
 
         FeatureIterator<SimpleFeature> featureIterator = featureCollection.features();
@@ -73,8 +86,10 @@ public class ViewFeatureOrientation implements IOp {
         while( featureIterator.hasNext() ) {
             SimpleFeature feature = featureIterator.next();
             Geometry fGeom = (Geometry) feature.getDefaultGeometry();
+            if (!crsEqual) {
+                fGeom = JTS.transform(fGeom, mathTransform);
+            }
             Coordinate[] coords = fGeom.getCoordinates();
-
             java.awt.Point start = viewPort.worldToPixel(coords[0]);
             java.awt.Point end = viewPort.worldToPixel(coords[coords.length - 1]);
             commands.add(new ArrowDrawCommand(new Coordinate(start.x, start.y), new Coordinate(end.x, end.y)));
