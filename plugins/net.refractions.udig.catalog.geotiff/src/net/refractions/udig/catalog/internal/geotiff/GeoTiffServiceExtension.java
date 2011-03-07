@@ -20,16 +20,20 @@ import java.io.File;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ServiceExtension2;
+import net.refractions.udig.catalog.URLUtils;
 import net.refractions.udig.catalog.geotiff.internal.Messages;
 
 import org.geotools.gce.geotiff.GeoTiffFormat;
 import org.geotools.gce.geotiff.GeoTiffFormatFactorySpi;
+import org.geotools.gce.image.WorldImageFormat;
 
 
 /**
@@ -159,11 +163,24 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
         }
         return null;
     }
+    
     private boolean isSupportedExtension( URL url ) {
-        String file=url.getFile();
-        file=file.toLowerCase();
+        File file = URLUtils.urlToFile(url);
+        String fileLower = file.getAbsolutePath().toLowerCase();
+        String fileExt = fileLower.substring(fileLower.lastIndexOf('.') + 1);
 
-        return (file.endsWith(".tiff") || file.endsWith(".tif")); //$NON-NLS-1$ //$NON-NLS-2$
+        Collection<String> endings = new HashSet<String>(WorldImageFormat.getWorldExtension(fileExt));
+        endings.add(".wld"); //$NON-NLS-1$
+        endings.add(fileExt + "w"); //$NON-NLS-1$
+
+        File[] found = URLUtils.findRelatedFiles(file, endings.toArray(new String[0]));
+        if (found.length != 0) {
+            // we don't want it to be loaded if it has a world file
+            return false;
+        }
+
+        boolean isTiff = fileLower.endsWith(".tiff") || fileLower.endsWith(".tif"); //$NON-NLS-1$ //$NON-NLS-2$
+        return isTiff;
     }
 
     
