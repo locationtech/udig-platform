@@ -33,10 +33,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
 
+/**
+ * The main view port.  Adds a shapefile to the View and configures the view with the tools and context menu 
+ * (when selection tool is active)
+ */
 public class View extends ViewPart implements MapPart, IDropTargetProvider{
 	public static final String ID = "X.view";
 
@@ -45,6 +50,8 @@ public class View extends ViewPart implements MapPart, IDropTargetProvider{
 	private MapEditorSelectionProvider selectionProvider;
 
 	private DropTargetDescriptor dropTarget;
+
+	private Object appContext;
 
 	/**
 	 * This is a callback that will allow us to create the viewer and initialize
@@ -57,8 +64,10 @@ public class View extends ViewPart implements MapPart, IDropTargetProvider{
 			List<IGeoResource> resources = new ArrayList<IGeoResource>();
 			addAlertsMapgraphic(monitor, resources);
 
-			
-			addShpService("/Users/jeichar/Desktop/countries.shp",resources,monitor);
+			FileDialog dialog = new FileDialog(parent.getShell());
+			dialog.setFilterExtensions(new String[]{"shp"});
+			String file = dialog.open();
+			addShpService(file,resources,monitor);
 			
 			IProject activeProject = ApplicationGIS.getActiveProject();
 
@@ -76,7 +85,8 @@ public class View extends ViewPart implements MapPart, IDropTargetProvider{
 	        selectionProvider.setActiveMap(createdMap, this);
 	        getSite().setSelectionProvider(selectionProvider);
 
-	        selectionProvider.setSelection(new StructuredSelection(new Object[]{createdMap}));
+	        appContext = new AlertAppContext(this);
+	        selectionProvider.setSelection(new StructuredSelection(new Object[]{appContext}));
 	        
 	        createContextMenu();
 	        
@@ -117,7 +127,7 @@ public class View extends ViewPart implements MapPart, IDropTargetProvider{
 	
 
 	private void enableDropSupport() {
-		dropTarget = UDIGDragDropUtilities.addDropSupport(viewer.getViewport().getControl(), this);
+		dropTarget = UDIGDragDropUtilities.addDropSupport(viewer.getViewport().getControl(), this, new RestrictedDropHandler());
 	}
 
 	private void addShpService(String path,List<IGeoResource> resources, IProgressMonitor monitor) throws IOException {

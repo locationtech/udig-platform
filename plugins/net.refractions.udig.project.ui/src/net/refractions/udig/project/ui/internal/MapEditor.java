@@ -1076,7 +1076,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
                     contextMenu.add(tm.getENTERAction());
                     contextMenu.add(new Separator());
                     
-                    contextMenu.add(tm.getFORWARD_HISTORYAction());
+                    contextMenu.add(tm.getZOOMTOSELECTEDAction());
                     contextMenu.add(new Separator());
                     contextMenu.add(tm.getBACKWARD_HISTORYAction());
                     contextMenu.add(tm.getFORWARD_HISTORYAction());

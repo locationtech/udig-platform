@@ -10,6 +10,10 @@ import net.refractions.udig.ui.graphics.ViewportGraphics;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
+/**
+ * Render all Referenced envelopes on the map as red semi-transparent rectangles.  The SendAlertTool will place
+ * the alerts on the blackboard
+ */
 public class ShowAlertsMapGraphic implements MapGraphic {
 	
 	public static final String ALERTS_KEY = "ALERTS";
@@ -22,7 +26,6 @@ public class ShowAlertsMapGraphic implements MapGraphic {
 		if(alerts == null) return;
 		
 		ViewportGraphics graphics = context.getGraphics();
-
 		
 		for (ReferencedEnvelope referencedEnvelope : alerts) {
 			Shape shape = context.toShape(referencedEnvelope);

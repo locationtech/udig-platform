@@ -105,18 +105,6 @@ public class AnimationUpdater {
             display = Display.getCurrent();
             display.timerExec(frameInterval, next);
         }
-
-        
-//        TimerTask task = new TimerTask(){
-//
-//            @Override
-//            public void run() {
-//                display.asyncExec(next);
-//            }
-//            
-//        };
-//        
-//        new Timer().schedule(task, frameInterval);
     }
 
     private RunUpdaters next() {

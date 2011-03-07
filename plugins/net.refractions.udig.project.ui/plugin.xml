@@ -395,7 +395,7 @@
 	       <acceptedType class="java.net.URL"/>
 	       <acceptedType class="java.lang.String"/>
 	       <acceptedType class="java.io.File"/>
-	       <destination class="org.eclipse.ui.IEditorPart"/>
+	       <destination class="net.refractions.udig.project.ui.internal.MapPart"/>
            <destination
                  class="net.refractions.udig.project.ui.internal.LayersView"/>
            <acceptedType
@@ -927,6 +927,19 @@
                id="net.refractions.udig.project.ui.operations.MakeHole"
                name="%Selection.MakeHole"
                targetClass="net.refractions.udig.project.ILayer">
+         </operation>         
+         <operation
+               categoryId="net.refractions.udig.project.ui.operation.selectionCategory"
+               class="net.refractions.udig.project.ui.operations.SelectAllFeaturesOp"
+               enablesFor="1"
+               id="net.refractions.udig.project.ui.operations.SelectAllFeaturesOp"
+               name="Select all features"
+               targetClass="net.refractions.udig.project.ILayer">
+           <enablement>
+             <and>
+               <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
+             </and>
+            </enablement>
          </operation>         
          <!--operation
                categoryId="net.refractions.udig.project.ui.operation.selectionCategory"

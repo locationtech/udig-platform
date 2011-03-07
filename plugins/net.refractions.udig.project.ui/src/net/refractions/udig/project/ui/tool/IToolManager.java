@@ -138,6 +138,8 @@ public interface IToolManager {
     void setDELETEAction( IAction action, IWorkbenchPart part );
 
     IAction getENTERAction();
+    
+    IAction getZOOMTOSELECTEDAction();
 
     /**
      * Adds both action tools and modal tools to the manager
