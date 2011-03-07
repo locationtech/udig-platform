@@ -13,7 +13,6 @@ Require-Bundle: net.refractions.udig.core,
  net.refractions.udig.project,
  org.eclipse.core.runtime,
  org.eclipse.ui,
- org.eclipse.help,
  net.refractions.udig.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
