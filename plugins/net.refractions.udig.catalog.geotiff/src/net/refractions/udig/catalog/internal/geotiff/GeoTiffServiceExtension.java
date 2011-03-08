@@ -169,6 +169,10 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
         String fileLower = file.getAbsolutePath().toLowerCase();
         String fileExt = fileLower.substring(fileLower.lastIndexOf('.') + 1);
 
+        boolean isTiff = fileLower.endsWith(".tiff") || fileLower.endsWith(".tif"); //$NON-NLS-1$ //$NON-NLS-2$
+        if (!isTiff) {
+            return false;
+        }
         Collection<String> endings = new HashSet<String>(WorldImageFormat.getWorldExtension(fileExt));
         endings.add(".wld"); //$NON-NLS-1$
         endings.add(fileExt + "w"); //$NON-NLS-1$
@@ -178,9 +182,7 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
             // we don't want it to be loaded if it has a world file
             return false;
         }
-
-        boolean isTiff = fileLower.endsWith(".tiff") || fileLower.endsWith(".tif"); //$NON-NLS-1$ //$NON-NLS-2$
-        return isTiff;
+        return true;
     }
 
     
