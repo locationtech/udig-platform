@@ -21,7 +21,6 @@ import java.awt.Point;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.Command;
 import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.command.navigation.PanCommand;
 import net.refractions.udig.project.internal.render.ViewportModel;
@@ -96,7 +95,6 @@ public class Pan extends AbstractModalTool implements ModalTool {
         if (dragging) {
         	((ViewportPane)context.getMapDisplay()).enableDrawCommands(true);
             Point end=e.getPoint();
-            NavigationCommandFactory r = context.getNavigationFactory();
             NavCommand finalPan = new PanCommand((start.x-end.x), (start.y-end.y));
 
             //clear any events before we try to pan.  This dramatically reduces the number
