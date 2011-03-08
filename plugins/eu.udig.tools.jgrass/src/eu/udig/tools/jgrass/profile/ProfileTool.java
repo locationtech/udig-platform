@@ -210,7 +210,7 @@ public class ProfileTool extends SimpleTool {
     }
 
     public void setActive( boolean active ) {
-        super.setActive(active);
+        
         if (!active) {
             // on tool deactivation
             rasterMapResource = null;
@@ -233,18 +233,18 @@ public class ProfileTool extends SimpleTool {
                         }
                     }
                 };
-                PlatformGIS.runInProgressDialog("Reading map...", true, operation, true);
+                PlatformGIS.runInProgressDialog("Reading map for profile...", false, operation, false);
 
-            } else {
+            }
 
-                Display.getDefault().asyncExec(new Runnable(){
+            if (rasterMapResource == null) {
+                getContext().updateUI(new Runnable(){
                     public void run() {
                         Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
                         MessageBox msgBox = new MessageBox(shell, SWT.ICON_ERROR);
-                        msgBox.setMessage("The profile tool works only on coverage layer resources. Please select a proper layer.");
+                        msgBox.setMessage("The selected layer can't be read by the available datastores. Unable to create a profile on it.");
                         msgBox.open();
                     }
-
                 });
                 super.setActive(false);
                 return;
@@ -270,6 +270,7 @@ public class ProfileTool extends SimpleTool {
                 }
             });
         }
+        super.setActive(active);
     }
 
     private double distance() throws TransformException {
