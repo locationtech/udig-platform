@@ -12,7 +12,6 @@ import java.util.Properties;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.internal.ui.Images;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.ISharedImages;
 import net.refractions.udig.catalog.ui.internal.Messages;
@@ -269,7 +268,7 @@ public class ReshapeOperation implements IOp {
             text.setLayoutData(gridData);
             
             errors = new ControlDecoration(text, SWT.LEFT|SWT.TOP);
-            ImageDescriptor desc = Images.getDescriptor(ISharedImages.ERROR_OVR);
+            ImageDescriptor desc = CatalogUIPlugin.getImageDescriptor(ISharedImages.ERROR_OVR);
             ImageRegistry imageRegistry = CatalogUIPlugin.getDefault().getImageRegistry();
             Image image = imageRegistry.get(ISharedImages.ERROR_OVR);
             if( image==null ){

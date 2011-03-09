@@ -101,8 +101,7 @@ enum GTFormat {
 
         @Override
         public ImageDescriptor getIcon() {
-            ISharedImages images = CatalogUIPlugin.getDefault().getImages();
-            return images.getImageDescriptor( ISharedImages.DATABASE_OBJ ); // generic!
+            return CatalogUIPlugin.getImageDescriptor( ISharedImages.DATABASE_OBJ ); // generic!
         }
     },
     FILE {
@@ -147,8 +146,7 @@ enum GTFormat {
         }
         @Override
         public ImageDescriptor getIcon() {
-            ISharedImages images = CatalogUIPlugin.getDefault().getImages();
-            return images.getImageDescriptor( ISharedImages.FEATURE_FILE_OBJ ); // generic!
+            return CatalogUIPlugin.getImageDescriptor( ISharedImages.FEATURE_FILE_OBJ ); // generic!
         }
     },
     WFS {
@@ -174,8 +172,7 @@ enum GTFormat {
         }
         @Override
         public ImageDescriptor getIcon() {
-            ISharedImages images = CatalogUIPlugin.getDefault().getImages();
-            return images.getImageDescriptor( ISharedImages.WFS_OBJ ); // generic!
+            return CatalogUIPlugin.getImageDescriptor( ISharedImages.WFS_OBJ ); // generic!
         }
     },
     PROPERTY {
@@ -205,8 +202,7 @@ enum GTFormat {
         }
         @Override
         public ImageDescriptor getIcon() {
-            ISharedImages images = CatalogUIPlugin.getDefault().getImages();
-            return images.getImageDescriptor( ISharedImages.FEATURE_FILE_OBJ ); // generic!
+            return CatalogUIPlugin.getImageDescriptor( ISharedImages.FEATURE_FILE_OBJ ); // generic!
         }
     },
     OTHER {
@@ -262,8 +258,7 @@ enum GTFormat {
         }
         @Override
         public ImageDescriptor getIcon() {
-            ISharedImages images = CatalogUIPlugin.getDefault().getImages();
-            return images.getImageDescriptor( ISharedImages.DATASTORE_OBJ ); // generic!
+            return CatalogUIPlugin.getImageDescriptor( ISharedImages.DATASTORE_OBJ ); // generic!
         }
     };
 

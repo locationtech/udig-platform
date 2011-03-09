@@ -64,7 +64,7 @@ public class WMSCGeoResourceInfo extends IGeoResourceInfo {
         keywordsFromWMSC.add(this.name);
         this.keywords = keywordsFromWMSC.toArray(new String[keywordsFromWMSC.size()]);
 
-        super.icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.GRID_OBJ);
+        super.icon = CatalogUIPlugin.getImageDescriptor(ISharedImages.GRID_OBJ);
 
     }
     

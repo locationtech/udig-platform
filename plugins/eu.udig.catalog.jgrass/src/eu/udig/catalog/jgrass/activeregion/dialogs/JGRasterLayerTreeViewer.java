@@ -309,7 +309,7 @@ public class JGRasterLayerTreeViewer extends Composite implements ISelectionChan
             listeners = new ArrayList<ILabelProviderListener>();
 
             // Create the images
-            rasterMaps = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.GRID_OBJ).createImage();
+            rasterMaps = CatalogUIPlugin.getImageDescriptor(ISharedImages.GRID_OBJ).createImage();
             mainRasterMaps = AbstractUIPlugin
                     .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/jgrass_obj.gif").createImage(); //$NON-NLS-1$
             grassasciiRasterMaps = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID,

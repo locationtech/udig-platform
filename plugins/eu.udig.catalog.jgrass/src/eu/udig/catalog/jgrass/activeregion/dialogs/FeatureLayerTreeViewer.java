@@ -239,8 +239,8 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
             listeners = new ArrayList<ILabelProviderListener>();
 
             // Create the images
-            vectorMaps = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.FEATURE_OBJ).createImage();
-            mainMaps = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.CATALOG_OBJ).createImage();
+            vectorMaps = CatalogUIPlugin.getImageDescriptor(ISharedImages.FEATURE_OBJ).createImage();
+            mainMaps = CatalogUIPlugin.getImageDescriptor(ISharedImages.CATALOG_OBJ).createImage();
         }
 
         /**

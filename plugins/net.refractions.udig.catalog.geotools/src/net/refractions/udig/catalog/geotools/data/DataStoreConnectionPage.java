@@ -89,26 +89,26 @@ public class DataStoreConnectionPage extends AbstractUDIGImportPage implements U
 
         @Override
         public Image getImage( Object element ) {
-            ISharedImages images = CatalogUIPlugin.getDefault().getImages();
+//            ISharedImages images = CatalogUIPlugin.getDefault().getImages();
             String name = element.getClass().getSimpleName();
             
             if (element instanceof JDBCDataStoreFactory) {
-                return images.get(ISharedImages.DATABASE_OBJ);
+                return CatalogUIPlugin.getImage(ISharedImages.DATABASE_OBJ);
             }
             if (element instanceof FileDataStoreFactorySpi) {
-                return images.get(ISharedImages.FEATURE_FILE_OBJ);
+                return CatalogUIPlugin.getImage(ISharedImages.FEATURE_FILE_OBJ);
             }
             if (name.indexOf("WFSDataStoreFactory") != -1) {
-                return images.get(ISharedImages.WFS_OBJ);
+                return CatalogUIPlugin.getImage(ISharedImages.WFS_OBJ);
             }
             if (name.indexOf("PropertyDataStoreFactory") != -1){
-                return images.get(ISharedImages.FEATURE_FILE_OBJ );
+                return CatalogUIPlugin.getImage(ISharedImages.FEATURE_FILE_OBJ );
             }
             if (name.indexOf("PostgisDataStoreFactory")!=-1){
-                return images.get(ISharedImages.DATABASE_OBJ);
+                return CatalogUIPlugin.getImage(ISharedImages.DATABASE_OBJ);
             }
             if (element instanceof DataStoreFactorySpi) {
-                return images.get(ISharedImages.DATASTORE_OBJ );
+                return CatalogUIPlugin.getImage(ISharedImages.DATASTORE_OBJ );
             }
             return super.getImage(element);
         }

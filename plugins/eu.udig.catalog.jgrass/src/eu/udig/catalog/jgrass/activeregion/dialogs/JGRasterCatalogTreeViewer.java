@@ -39,7 +39,6 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -314,7 +313,7 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
             listeners = new ArrayList<ILabelProviderListener>();
 
             // Create the images
-            rasterMaps = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.GRID_OBJ).createImage();
+            rasterMaps = CatalogUIPlugin.getImageDescriptor(ISharedImages.GRID_OBJ).createImage();
             mainRasterMaps = AbstractUIPlugin
                     .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/jgrass_obj.gif").createImage(); //$NON-NLS-1$
             grassasciiRasterMaps = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID,
