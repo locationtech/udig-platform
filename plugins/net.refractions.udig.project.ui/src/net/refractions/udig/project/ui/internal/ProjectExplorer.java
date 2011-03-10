@@ -376,8 +376,8 @@ public class ProjectExplorer extends ViewPart
         };
         boolean linked = preferenceStore.getBoolean(PROJECT_EXPLORER_LINKED);
         linkAction.setChecked(linked);
-        linkAction.setImageDescriptor(ProjectUIPlugin.getImageDescriptor(ISharedImages.LINKED_ENABLED_CO));
-        linkAction.setDisabledImageDescriptor(ProjectUIPlugin
+        linkAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.LINKED_ENABLED_CO));
+        linkAction.setDisabledImageDescriptor(ProjectUIPlugin.getDefault()
                 .getImageDescriptor(ISharedImages.LINKED_DISABLED_CO));
         linkAction.setToolTipText(Messages.ProjectExplorer_link_tooltip);
         if (linked)

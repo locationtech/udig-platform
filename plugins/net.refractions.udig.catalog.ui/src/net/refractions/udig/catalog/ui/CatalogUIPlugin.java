@@ -6,23 +6,19 @@ import java.util.List;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ICatalogInfo;
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveChangeEvent;
+import net.refractions.udig.catalog.IResolveChangeEvent.Type;
 import net.refractions.udig.catalog.IResolveChangeListener;
 import net.refractions.udig.catalog.IResolveDelta;
+import net.refractions.udig.catalog.IResolveDelta.Kind;
 import net.refractions.udig.catalog.IResolveFolder;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.IResolveChangeEvent.Type;
-import net.refractions.udig.catalog.IResolveDelta.Kind;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.catalog.util.HandleListener;
 import net.refractions.udig.core.AbstractUdigUIPlugin;
-import net.refractions.udig.core.internal.CorePlugin;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -36,13 +32,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.osgi.framework.BundleContext;
-//import org.picocontainer.Disposable;
-//import org.picocontainer.MutablePicoContainer;
-//import org.picocontainer.Startable;
 
 /**
  * Lifecycle & Resource management for RegistryUI.
@@ -53,7 +45,7 @@ import org.osgi.framework.BundleContext;
  * 
  * <pre><code>
  * ImageRegistry images = CatalogUIPlugin.getDefault().getImageRegistry();
- * ImageDescriptor image = CatalogUIPlugin.getImageDescriptor(ISharedImages.IMG_DATASTORE_OBJ);
+ * ImageDescriptor image = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.IMG_DATASTORE_OBJ);
  * </code></pre>
  * 
  * </p>
@@ -71,6 +63,7 @@ import org.osgi.framework.BundleContext;
  */
 public class CatalogUIPlugin extends AbstractUdigUIPlugin {
 
+	private static CatalogUIPlugin INSTANCE; 
     /**
      * The id of the plug-in
      */
@@ -86,11 +79,6 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
 
     private static final String LABELS_PREFERENCE_STORE = "CATALOG_LABELS_PREFERENCE_STORAGE"; //$NON-NLS-1$
 
-    private boolean loaded = false;
-
-    // The shared instance.
-    private static CatalogUIPlugin plugin;
-
     /** Managed Images instance */
     //private Images images = new Images();
     //private volatile static MutablePicoContainer pluginContainer;
@@ -100,7 +88,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
      */
     public CatalogUIPlugin() {
         super();
-        plugin = this;
+        INSTANCE = this;
     }
 
     /**
@@ -151,35 +139,6 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
         });
     }
 
-    /**
-     * Cleanup after shared images.
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-     * @param context
-     * @throws Exception
-     */
-    public void stop( BundleContext context ) throws Exception {
-        super.stop(context);
-    }
-
-    /**
-     * Returns the shared instance.
-     * 
-     * @return CatalogUIPlugin singleton
-     */
-    public static CatalogUIPlugin getDefault() {
-        if (plugin == null || !plugin.loaded) {
-            synchronized (CatalogUIPlugin.class) {
-
-                if (plugin == null) {
-                    plugin = new CatalogUIPlugin();
-                }
-
-            }
-        }
-        return plugin;
-    }
-    
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
@@ -265,22 +224,22 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
             return null;
         }
         if (resolve instanceof IResolveFolder ) {
-        	return CatalogUIPlugin.getImage(ISharedImages.FOLDER_OBJ);
+        	return CatalogUIPlugin.getDefault().getImage(ISharedImages.FOLDER_OBJ);
         }else if (resolve instanceof IGeoResource) {
             IGeoResource resource = (IGeoResource) resolve;
             boolean isFeature = resource.canResolve(FeatureSource.class);
             String iconId = iconInternalResource( resource.getID(), isFeature );
-            return CatalogUIPlugin.getImage( iconId );
+            return CatalogUIPlugin.getDefault().getImage( iconId );
         } else if (resolve instanceof IService) {
             IService service = (IService) resolve;
             boolean isFeature = service.canResolve(DataStore.class);
             
             String iconId = iconInternalService( service.getID(), isFeature );
-            return CatalogUIPlugin.getImage( iconId );
+            return CatalogUIPlugin.getDefault().getImage( iconId );
         } else if (resolve instanceof ICatalog) {
-            return CatalogUIPlugin.getImage(ISharedImages.CATALOG_OBJ);
+            return CatalogUIPlugin.getDefault().getImage(ISharedImages.CATALOG_OBJ);
         }
-        return CatalogUIPlugin.getImage(ISharedImages.RESOURCE_OBJ);
+        return CatalogUIPlugin.getDefault().getImage(ISharedImages.RESOURCE_OBJ);
     }
 
     public static ImageDescriptor icon( IResolve resolve ) throws IOException {
@@ -308,7 +267,6 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
             ImageDescriptor icon = icon((IGeoResource) resolve, monitor);
             return icon != null ? icon : new ImageDescriptor(){
 
-                @Override
                 public ImageData getImageData() {
                     return image(resolve).getImageData();
                 }
@@ -321,19 +279,19 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
             if( icon != null ){
             	return icon;
             }
-            return CatalogUIPlugin.getImageDescriptor(ISharedImages.SERVER_OBJ);
+            return CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.SERVER_OBJ);
         }
 
         if (resolve instanceof IResolveFolder) {
             ImageDescriptor icon = icon((IResolveFolder) resolve, monitor);
-            return icon != null ? icon : CatalogUIPlugin.getImageDescriptor(ISharedImages.FOLDER_OBJ);
+            return icon != null ? icon : CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.FOLDER_OBJ);
         }
 
         if (resolve instanceof ICatalog)
-            return CatalogUIPlugin.getImageDescriptor(
+            return CatalogUIPlugin.getDefault().getImageDescriptor(
                     ISharedImages.CATALOG_OBJ);
 
-        return CatalogUIPlugin.getImageDescriptor(
+        return CatalogUIPlugin.getDefault().getImageDescriptor(
                 ISharedImages.RESOURCE_OBJ);
     }
 
@@ -367,7 +325,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
         // check for default icon last
         boolean isFeature = resource.canResolve(FeatureSource.class);
         String iconId = iconInternalResource( resource.getID(), isFeature );
-        return CatalogUIPlugin.getImageDescriptor( iconId );
+        return CatalogUIPlugin.getDefault().getImageDescriptor( iconId );
     }
     
     /** Lookup default resource icon id */
@@ -409,7 +367,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
     		if( icon != null ) return icon;
     	}
         // check for default icon last
-        return CatalogUIPlugin.getImageDescriptor( ISharedImages.FOLDER_OBJ );
+        return CatalogUIPlugin.getDefault().getImageDescriptor( ISharedImages.FOLDER_OBJ );
     }
 
     
@@ -446,7 +404,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
         // check for default icon last
         boolean isFeature = service.canResolve( DataStore.class );
         String iconId = iconInternalService( service.getID(), isFeature );
-        return CatalogUIPlugin.getImageDescriptor( iconId );
+        return CatalogUIPlugin.getDefault().getImageDescriptor( iconId );
     }
 
 	private static String iconInternalService(ID id, boolean isFeature) {
@@ -479,9 +437,15 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
         }
 	}
 
-	@Override
+	/* (non-Javadoc)
+	 * @see net.refractions.udig.core.AbstractUdigUIPlugin#getIconPath()
+	 */
 	public IPath getIconPath() {
 		return new Path(ICONS_PATH);
 	}
    
+	public static CatalogUIPlugin getDefault() {
+		return INSTANCE;
+	}
+	
 }

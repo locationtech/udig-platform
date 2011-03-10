@@ -55,7 +55,7 @@ public class NewObjectContribution extends ContributionItem {
      */
     public void fill( final ToolBar parent, int index ) {
         ToolItem item = new ToolItem(parent, SWT.DROP_DOWN, index);
-        item.setImage(UiPlugin.getImage(ImageConstants.NEW_WIZ));
+        item.setImage(UiPlugin.getDefault().getImage(ImageConstants.NEW_WIZ));
         item.addSelectionListener(new SelectionListener(){
 
             protected ImageRegistry registry;

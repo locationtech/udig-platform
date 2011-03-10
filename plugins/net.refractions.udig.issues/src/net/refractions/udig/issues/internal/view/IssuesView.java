@@ -375,7 +375,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 
 	private IAction createDeleteGroupAction() {
 		IAction action = new Action(Messages.IssuesView_deleteRelatedAction, IssuesActivator 
-				.getImageDescriptor(ImageConstants.DELETE_GROUP)) {
+				.getDefault().getImageDescriptor(ImageConstants.DELETE_GROUP)) {
 			@Override
 			public void runWithEvent(Event event) {
 				IStructuredSelection sel = (IStructuredSelection) viewer
@@ -443,7 +443,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 
 	private IAction createDeleteAction() {
 		Action action = new Action(Messages.IssuesView_DeleteIssueAction, IssuesActivator 
-				.getImageDescriptor(ImageConstants.DELETE)) {
+				.getDefault().getImageDescriptor(ImageConstants.DELETE)) {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void runWithEvent(Event event) {
@@ -545,7 +545,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
                 fixIssue((IIssue) sel.getFirstElement());
             }
         };
-        action.setImageDescriptor(IssuesActivator
+        action.setImageDescriptor(IssuesActivator.getDefault()
                 .getImageDescriptor(ImageConstants.GOTO_ISSUE));
         action.setText(Messages.IssuesView_fix_action_name); 
         action.setToolTipText(Messages.IssuesView_fix_action_tooltip); 

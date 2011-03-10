@@ -283,12 +283,12 @@ public class Messages extends NLS {
             }
             ImageDescriptor image;
 
-            image = CatalogUIPlugin.getImageDescriptor(ePath);
+            image = CatalogUIPlugin.getDefault().getImageDescriptor(ePath);
             if (id != null) {
                 CatalogUIPlugin.trace(id + ": '" + ePath + "' found " + id); //$NON-NLS-1$ //$NON-NLS-2$
                 a.setImageDescriptor(image);
             }
-            image = CatalogUIPlugin.getImageDescriptor(dPath);
+            image = CatalogUIPlugin.getDefault().getImageDescriptor(dPath);
             if (id != null) {
                 CatalogUIPlugin.trace(id + ": '" + dPath + "' found " + id); //$NON-NLS-1$ //$NON-NLS-2$
                 a.setDisabledImageDescriptor(image);

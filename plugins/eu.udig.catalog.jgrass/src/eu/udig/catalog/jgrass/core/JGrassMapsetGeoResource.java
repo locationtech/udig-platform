@@ -367,7 +367,7 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
             // calculate bounds
             JGrassRegion activeRegionWindow = getActiveRegionWindow();
             this.bounds = new ReferencedEnvelope(activeRegionWindow.getEnvelope(), getCRS());
-            super.icon = CatalogUIPlugin.getImageDescriptor(ISharedImages.CATALOG_OBJ);
+            super.icon = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.CATALOG_OBJ);
         }
 
         public CoordinateReferenceSystem getCRS() {
@@ -405,7 +405,7 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
 
     public ImageDescriptor getIcon( IProgressMonitor monitor ) {
         if (icon == null) {
-            icon = CatalogUIPlugin.getImageDescriptor(ISharedImages.GRID_OBJ);
+            icon = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.GRID_OBJ);
         }
         return icon;
     }

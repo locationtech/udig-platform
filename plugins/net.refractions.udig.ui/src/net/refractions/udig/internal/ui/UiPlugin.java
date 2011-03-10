@@ -61,8 +61,6 @@ import com.google.common.base.Function;
  * @author Jody 
  */
 public class UiPlugin extends AbstractUdigUIPlugin {
-    // The shared instance.
-    private static UiPlugin plugin;
 
     /** Icons path (value "icons/") */
     public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
@@ -88,13 +86,15 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * @see loadVersion()
      */
     private String version;
+    
+    private static UiPlugin INSTANCE;
 
     /**
      * The constructor.
      */
     public UiPlugin() {
         super();
-        plugin = this;
+        INSTANCE = this;
     }
 
     /**
@@ -232,7 +232,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * Returns the shared instance.
      */
     public static UiPlugin getDefault() {
-        return plugin;
+        return INSTANCE;
     }
 
     public OperationMenuFactory getOperationMenuFactory() {
@@ -243,17 +243,6 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         return operationMenuFactory;
     }
 
-    public void stop( BundleContext context ) throws Exception {
-        // try{
-        // // if( preferences!=null )
-        // // preferences.flush();
-        // }catch (Throwable e) {
-        //            log("Error saving preferences", e); //$NON-NLS-1$
-        // }
-        super.stop(context);
-
-        plugin = null;
-    }
     /**
      * Logs the given throwable to the platform log, indicating the class and
      * method from where it is being logged (this is not necessarily where it
@@ -697,9 +686,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         return new InstanceScope().getNode(ID);
     }
 
-	@Override
 	public IPath getIconPath() {
 		return new Path(ICONS_PATH);
 	}
-
 }

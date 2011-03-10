@@ -88,7 +88,7 @@ public class LayerStatusDecorator implements ILightweightLabelDecorator {
         if (ovr != null)
             decoration.addOverlay(ovr, IDecoration.BOTTOM_LEFT);
 
-        // decoration.addOverlay( ProjectUIPlugin.getImageDescriptor( ISharedImages.SELECT_UDR ),
+        // decoration.addOverlay( ProjectUIPlugin.getDefault().getImageDescriptor( ISharedImages.SELECT_UDR ),
         // IDecoration.UNDERLAY );
 
         if (!layer.eAdapters().contains(hack))
@@ -99,34 +99,34 @@ public class LayerStatusDecorator implements ILightweightLabelDecorator {
         currentlyDisplayedStatus.put(layer, layer.getStatus());
         switch( layer.getStatus() ) {
         case ILayer.WARNING:
-            return ProjectUIPlugin.getImageDescriptor(ISharedImages.WARN_OVR);
+            return ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.WARN_OVR);
 
         case ILayer.ERROR:
-            return ProjectUIPlugin.getImageDescriptor(ISharedImages.ERROR_OVR);
+            return ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.ERROR_OVR);
 
         case ILayer.MISSING:
-            return ProjectUIPlugin.getImageDescriptor(ISharedImages.HUH_OVR);
+            return ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.HUH_OVR);
 
         case ILayer.UNCONFIGURED:
-            return ProjectUIPlugin.getImageDescriptor(ISharedImages.UNCONFIGURED_OVR);
+            return ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.UNCONFIGURED_OVR);
 
         case ILayer.WAIT:
-            return ProjectUIPlugin.getImageDescriptor(ISharedImages.WAIT_OVR);
+            return ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.WAIT_OVR);
 
         case ILayer.WORKING:
-            return ProjectUIPlugin.getImageDescriptor(ISharedImages.CLOCK0_OVR);
+            return ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.CLOCK0_OVR);
         /*
          * { int clock = 0; if( layer.getProperties().contains("clock")){ clock =
          * layer.getProperties().getInteger( "clock" ); } clock++; if ( clock > 7 ) clock = 0;
          * layer.getProperties().putInteger( "clock", clock ); switch( clock ){ case 0: return
-         * ProjectUIPlugin.getImageDescriptor( ISharedImages.CLOCK0_OVR ); case 1: return ProjectUIPlugin.getImageDescriptor(
-         * ISharedImages.CLOCK1_OVR ); case 2: return ProjectUIPlugin.getImageDescriptor(
-         * ISharedImages.CLOCK2_OVR ); case 3: return ProjectUIPlugin.getImageDescriptor(
-         * ISharedImages.CLOCK3_OVR ); case 4: return ProjectUIPlugin.getImageDescriptor(
-         * ISharedImages.CLOCK4_OVR ); case 5: return ProjectUIPlugin.getImageDescriptor(
-         * ISharedImages.CLOCK5_OVR ); case 6: return ProjectUIPlugin.getImageDescriptor(
-         * ISharedImages.CLOCK6_OVR ); case 7: return ProjectUIPlugin.getImageDescriptor(
-         * ISharedImages.CLOCK7_OVR ); default: return ProjectUIPlugin.getImageDescriptor(
+         * ProjectUIPlugin.getDefault().getImageDescriptor( ISharedImages.CLOCK0_OVR ); case 1: return ProjectUIPlugin.getDefault().getImageDescriptor(
+         * ISharedImages.CLOCK1_OVR ); case 2: return ProjectUIPlugin.getDefault().getImageDescriptor(
+         * ISharedImages.CLOCK2_OVR ); case 3: return ProjectUIPlugin.getDefault().getImageDescriptor(
+         * ISharedImages.CLOCK3_OVR ); case 4: return ProjectUIPlugin.getDefault().getImageDescriptor(
+         * ISharedImages.CLOCK4_OVR ); case 5: return ProjectUIPlugin.getDefault().getImageDescriptor(
+         * ISharedImages.CLOCK5_OVR ); case 6: return ProjectUIPlugin.getDefault().getImageDescriptor(
+         * ISharedImages.CLOCK6_OVR ); case 7: return ProjectUIPlugin.getDefault().getImageDescriptor(
+         * ISharedImages.CLOCK7_OVR ); default: return ProjectUIPlugin.getDefault().getImageDescriptor(
          * ISharedImages.WAIT_OVR ); } }
          */
         case ILayer.DONE:

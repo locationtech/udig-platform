@@ -277,7 +277,7 @@ public class UserHostPage extends AbstractUDIGImportPage implements UDIGConnecti
         ImageRegistry imageRegistry = CatalogUIPlugin.getDefault().getImageRegistry();
         Image image = imageRegistry.get(REQUIRED_DECORATION);
         if (image == null) {
-            image = CatalogUIPlugin.getImageDescriptor(ISharedImages.WARNING_OVR).createImage();
+            image = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.WARNING_OVR).createImage();
             imageRegistry.put(REQUIRED_DECORATION, image);
         }
         decoration.setImage(image);

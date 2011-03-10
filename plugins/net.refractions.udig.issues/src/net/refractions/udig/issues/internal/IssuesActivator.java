@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchListener;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -26,14 +25,13 @@ public class IssuesActivator extends AbstractUdigUIPlugin {
 
     static final String ICONS_PATH = "icons/"; //$NON-NLS-1$
 
-	// The shared instance
-	private static IssuesActivator plugin;
-	
+	private static IssuesActivator INSTANCE;
+
 	/**
 	 * The constructor
 	 */
 	public IssuesActivator() {
-		plugin = this;
+		super();
 	}
 
 	/*
@@ -62,24 +60,6 @@ public class IssuesActivator extends AbstractUdigUIPlugin {
             
         });
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
-
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
-	public static IssuesActivator getDefault() {
-		return plugin;
-	}
     
     /**
      * Writes an info log in the plugin's log.
@@ -94,7 +74,13 @@ public class IssuesActivator extends AbstractUdigUIPlugin {
         getDefault().getLog().log(new Status(IStatus.INFO, PLUGIN_ID, IStatus.OK, message, e));
     }
 
-	@Override
+	public static IssuesActivator getDefault() {
+		return INSTANCE;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.refractions.udig.core.AbstractUdigUIPlugin#getIconPath()
+	 */
 	public IPath getIconPath() {
 		return new Path(ICONS_PATH);
 	}

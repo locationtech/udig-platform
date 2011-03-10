@@ -915,7 +915,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         setPartName(getMap().getName());
 
         setTitleToolTip(Messages.MapEditor_titleToolTip);
-        setTitleImage(ProjectUIPlugin.getImage(ISharedImages.MAP_OBJ));
+        setTitleImage(ProjectUIPlugin.getDefault().getImage(ISharedImages.MAP_OBJ));
 
         final IPreferenceStore preferenceStore = ProjectPlugin.getPlugin().getPreferenceStore();
         boolean istiled = preferenceStore

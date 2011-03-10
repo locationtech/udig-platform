@@ -72,7 +72,7 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
         setDialogSettings(ProjectUIPlugin.getDefault().getDialogSettings());
 
         String title = null; // will use default title
-        ImageDescriptor banner = ProjectUIPlugin.getImageDescriptor(Icons.WIZBAN + "exportimage_wiz.gif"); //$NON-NLS-1$
+        ImageDescriptor banner = ProjectUIPlugin.getDefault().getImageDescriptor(Icons.WIZBAN + "exportimage_wiz.gif"); //$NON-NLS-1$
         setDefaultPageImageDescriptor(banner);
         mapSelectorPage = new MapSelectorPageWithScaleColumn("Select Map With Scale", title, banner); //$NON-NLS-1$
         addPage(mapSelectorPage);

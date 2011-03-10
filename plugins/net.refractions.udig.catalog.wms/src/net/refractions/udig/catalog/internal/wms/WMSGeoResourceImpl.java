@@ -194,7 +194,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
             if (icon == null) {
                 icon = fetchIcon(monitor, layer, service(monitor));
                 if (icon == null) {
-                    icon = CatalogUIPlugin.getImageDescriptor(
+                    icon = CatalogUIPlugin.getDefault().getImageDescriptor(
                             ISharedImages.GRID_OBJ);
                 }
             }
@@ -220,7 +220,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
 
             if (layer.getChildren() != null && layer.getChildren().length != 0) {
                 // Do not request "parent" layer graphics - this kills Mapserver
-                return CatalogUIPlugin.getImageDescriptor(
+                return CatalogUIPlugin.getDefault().getImageDescriptor(
                         ISharedImages.GRID_OBJ);
             }
 
@@ -272,7 +272,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
                 int sh = 0;
                 ImageData contents = image.getImageData();
                 if (contents == null) {
-                    return CatalogUIPlugin.getImageDescriptor(
+                    return CatalogUIPlugin.getDefault().getImageDescriptor(
                             ISharedImages.GRID_MISSING);
                 }
                 if (contents.maskData != null) {
@@ -379,7 +379,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
             }
         } catch (IOException t) {
             WmsPlugin.trace("Could not get icon", t); //$NON-NLS-1$
-            return CatalogUIPlugin.getImageDescriptor(
+            return CatalogUIPlugin.getDefault().getImageDescriptor(
                     ISharedImages.GRID_MISSING);
         }
     }
@@ -390,7 +390,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
         WebMapServer wms = service.getWMS(monitor);
 
         if (wms.getCapabilities().getRequest().getGetLegendGraphic() == null) {
-            return CatalogUIPlugin.getImageDescriptor(
+            return CatalogUIPlugin.getDefault().getImageDescriptor(
                     ISharedImages.GRID_OBJ);
         }
 
@@ -433,16 +433,16 @@ public class WMSGeoResourceImpl extends IGeoResource {
 
             if (imageDescriptor == null) {
                 // cannot understand any of the provided formats
-                return CatalogUIPlugin.getImageDescriptor(
+                return CatalogUIPlugin.getDefault().getImageDescriptor(
                         ISharedImages.GRID_OBJ);
             }
         } catch (UnsupportedOperationException notAvailable) {
             WmsPlugin.trace("Icon is not available", notAvailable); //$NON-NLS-1$                
-            return CatalogUIPlugin.getImageDescriptor(
+            return CatalogUIPlugin.getDefault().getImageDescriptor(
                     ISharedImages.GRID_OBJ);
         } catch (ServiceException e) {
             WmsPlugin.trace("Icon is not available", e); //$NON-NLS-1$                
-            return CatalogUIPlugin.getImageDescriptor(
+            return CatalogUIPlugin.getDefault().getImageDescriptor(
                     ISharedImages.GRID_OBJ);
         }
 
@@ -544,7 +544,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
             }
             description = caps.getService().get_abstract();
 
-            super.icon = CatalogUIPlugin.getImageDescriptor(
+            super.icon = CatalogUIPlugin.getDefault().getImageDescriptor(
                     ISharedImages.GRID_OBJ);
 
             // icon = fetchIcon( monitor );

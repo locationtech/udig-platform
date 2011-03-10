@@ -32,15 +32,15 @@ public class IssuesLabelProvider extends LabelProvider implements
 			case IssuesView.PRIORITY_COLUMN:
 				switch (issue.getPriority()) {
 				case CRITICAL:
-					return IssuesActivator.getImage(ImageConstants.PRIORITY_CRITICAL);
+					return IssuesActivator.getDefault().getImage(ImageConstants.PRIORITY_CRITICAL);
 				case HIGH:
-					return IssuesActivator.getImage(ImageConstants.PRIORITY_HIGH);
+					return IssuesActivator.getDefault().getImage(ImageConstants.PRIORITY_HIGH);
 				case WARNING:
-					return IssuesActivator.getImage(ImageConstants.PRIORITY_WARNING);
+					return IssuesActivator.getDefault().getImage(ImageConstants.PRIORITY_WARNING);
 				case LOW:
-					return IssuesActivator.getImage(ImageConstants.PRIORITY_LOW);
+					return IssuesActivator.getDefault().getImage(ImageConstants.PRIORITY_LOW);
 				case TRIVIAL:
-					return IssuesActivator.getImage(ImageConstants.PRIORITY_TRIVIAL);
+					return IssuesActivator.getDefault().getImage(ImageConstants.PRIORITY_TRIVIAL);
 
 				default:
 					break;
@@ -48,13 +48,13 @@ public class IssuesLabelProvider extends LabelProvider implements
 			case IssuesView.RESOLUTION_COLUMN:
 				switch (issue.getResolution()) {
 				case RESOLVED:
-					return IssuesActivator.getImage(ImageConstants.RESOLUTION_RESOLVED);
+					return IssuesActivator.getDefault().getImage(ImageConstants.RESOLUTION_RESOLVED);
 				case UNKNOWN:
-					return IssuesActivator.getImage(ImageConstants.RESOLUTION_UNKNOWN);
+					return IssuesActivator.getDefault().getImage(ImageConstants.RESOLUTION_UNKNOWN);
 				case UNRESOLVED:
-					return IssuesActivator.getImage(ImageConstants.RESOLUTION_UNRESOLVED);
+					return IssuesActivator.getDefault().getImage(ImageConstants.RESOLUTION_UNRESOLVED);
 				case IN_PROGRESS:
-					return IssuesActivator.getImage(ImageConstants.RESOLUTION_VIEWED);
+					return IssuesActivator.getDefault().getImage(ImageConstants.RESOLUTION_VIEWED);
 
 				default:
 					break;

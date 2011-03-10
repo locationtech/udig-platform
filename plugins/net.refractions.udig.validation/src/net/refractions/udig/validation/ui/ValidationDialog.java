@@ -276,7 +276,7 @@ public class ValidationDialog extends TitleAreaDialog {
         Composite composite = new Composite(parent, SWT.NONE);
         setTitle(Messages.ValidationDialog_title); 
         setMessage(""); //$NON-NLS-1$
-        ImageDescriptor image = ValidationPlugin.getImageDescriptor(ImageConstants.IMAGE_WIZBAN);
+        ImageDescriptor image = ValidationPlugin.getDefault().getImageDescriptor(ImageConstants.IMAGE_WIZBAN);
         if (image != null) setTitleImage(image.createImage());
 
         GridData gd;

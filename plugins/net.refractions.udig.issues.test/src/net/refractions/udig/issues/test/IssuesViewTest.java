@@ -37,6 +37,8 @@ import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.MapEditor;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
+import opendap.servlet.GetDirHandler;
+
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -113,15 +115,15 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
                 assertNotNull(p.getColumnImage(list.get(4), IssuesView.PRIORITY_COLUMN));
 
                 assertEquals(p.getColumnImage(list.get(0), IssuesView.PRIORITY_COLUMN), IssuesActivator
-                		.getImage(ImageConstants.PRIORITY_CRITICAL));
+                		.getDefault().getImage(ImageConstants.PRIORITY_CRITICAL));
                 assertEquals(p.getColumnImage(list.get(1), IssuesView.PRIORITY_COLUMN), IssuesActivator
-                		.getImage(ImageConstants.PRIORITY_HIGH));
+                		.getDefault().getImage(ImageConstants.PRIORITY_HIGH));
                 assertEquals(p.getColumnImage(list.get(2), IssuesView.PRIORITY_COLUMN), IssuesActivator
-                		.getImage(ImageConstants.PRIORITY_LOW));
+                		.getDefault().getImage(ImageConstants.PRIORITY_LOW));
                 assertEquals(p.getColumnImage(list.get(3), IssuesView.PRIORITY_COLUMN), IssuesActivator
-                		.getImage(ImageConstants.PRIORITY_TRIVIAL));
+                		.getDefault().getImage(ImageConstants.PRIORITY_TRIVIAL));
                 assertEquals(p.getColumnImage(list.get(4), IssuesView.PRIORITY_COLUMN), IssuesActivator
-                		.getImage(ImageConstants.PRIORITY_WARNING));
+                		.getDefault().getImage(ImageConstants.PRIORITY_WARNING));
 
                 // resolution image
                 assertNotNull(p.getColumnImage(list.get(0), IssuesView.RESOLUTION_COLUMN));
@@ -131,15 +133,15 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
                 assertNotNull(p.getColumnImage(list.get(4), IssuesView.RESOLUTION_COLUMN));
 
                 assertEquals(p.getColumnImage(list.get(0), IssuesView.RESOLUTION_COLUMN), IssuesActivator
-                		.getImage(ImageConstants.RESOLUTION_UNRESOLVED));
+                		.getDefault().getImage(ImageConstants.RESOLUTION_UNRESOLVED));
                 assertEquals(p.getColumnImage(list.get(1), IssuesView.RESOLUTION_COLUMN), IssuesActivator
-                		.getImage(ImageConstants.RESOLUTION_VIEWED));
+                		.getDefault().getImage(ImageConstants.RESOLUTION_VIEWED));
                 assertEquals(p.getColumnImage(list.get(2), IssuesView.RESOLUTION_COLUMN), IssuesActivator
-                		.getImage(ImageConstants.RESOLUTION_RESOLVED));
+                		.getDefault().getImage(ImageConstants.RESOLUTION_RESOLVED));
                 assertEquals(p.getColumnImage(list.get(3), IssuesView.RESOLUTION_COLUMN), IssuesActivator
-                		.getImage(ImageConstants.RESOLUTION_UNKNOWN));
+                		.getDefault().getImage(ImageConstants.RESOLUTION_UNKNOWN));
                 assertEquals(p.getColumnImage(list.get(4), IssuesView.RESOLUTION_COLUMN), IssuesActivator
-                		.getImage(ImageConstants.RESOLUTION_UNRESOLVED));
+                		.getDefault().getImage(ImageConstants.RESOLUTION_UNRESOLVED));
 
                 // name image
                 assertNull(p.getColumnImage(list.get(0), IssuesView.OBJECT_COLUMN));

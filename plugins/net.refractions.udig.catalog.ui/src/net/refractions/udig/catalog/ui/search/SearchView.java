@@ -297,7 +297,7 @@ public class SearchView extends SearchPart {
                 contextMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
                 contextMenu.add(new Separator());
 
-                refreshAction.setImageDescriptor(CatalogUIPlugin.getImageDescriptor(ImageConstants.REFRESH_CO));
+                refreshAction.setImageDescriptor(CatalogUIPlugin.getDefault().getImageDescriptor(ImageConstants.REFRESH_CO));
 
                 // contextMenu.add(refreshAction);
                 IWorkbenchWindow window = getSite().getWorkbenchWindow();

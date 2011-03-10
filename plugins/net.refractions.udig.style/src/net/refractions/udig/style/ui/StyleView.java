@@ -602,7 +602,7 @@ public class StyleView extends ViewPart {
         };
         applyAction.setEnabled(false);
         applyAction.setToolTipText(Messages.StyleView_apply_tooltip); 
-        applyAction.setImageDescriptor(StylePlugin.getImageDescriptor(ImageConstants.APPLY_STYLE));
+        applyAction.setImageDescriptor(StylePlugin.getDefault().getImageDescriptor(ImageConstants.APPLY_STYLE));
         // applyCI = new ActionContributionItem(applyAction);
 
         cancelAction = new Action("cancel"){ //$NON-NLS-1$
@@ -612,7 +612,7 @@ public class StyleView extends ViewPart {
         };
         cancelAction.setEnabled(false);
         cancelAction.setToolTipText(Messages.StyleView_cancel_tooltip); 
-        cancelAction.setImageDescriptor(StylePlugin.getImageDescriptor(ImageConstants.CANCEL_STYLE));
+        cancelAction.setImageDescriptor(StylePlugin.getDefault().getImageDescriptor(ImageConstants.CANCEL_STYLE));
         // cancelCI = new ActionContributionItem(cancelAction);
     }
 

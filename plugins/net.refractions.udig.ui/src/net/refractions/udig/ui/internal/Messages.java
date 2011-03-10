@@ -274,11 +274,11 @@ public class Messages extends NLS {
             }
             ImageDescriptor image;
 
-            image = UiPlugin.getImageDescriptor(ePath);
+            image = UiPlugin.getDefault().getImageDescriptor(ePath);
             if (id != null) {
                 a.setImageDescriptor(image);
             }
-            image = UiPlugin.getImageDescriptor(dPath);
+            image = UiPlugin.getDefault().getImageDescriptor(dPath);
             if (id != null) {
                 a.setDisabledImageDescriptor(image);
             }

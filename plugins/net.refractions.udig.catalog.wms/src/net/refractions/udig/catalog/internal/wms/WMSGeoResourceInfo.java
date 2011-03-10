@@ -111,7 +111,7 @@ class WMSGeoResourceInfo extends IGeoResourceInfo {
         } else {
             title = caps.getService().getTitle();
         }
-        super.icon = CatalogUIPlugin.getImageDescriptor(
+        super.icon = CatalogUIPlugin.getDefault().getImageDescriptor(
                 ISharedImages.GRID_OBJ);
     }
     public String getName() {

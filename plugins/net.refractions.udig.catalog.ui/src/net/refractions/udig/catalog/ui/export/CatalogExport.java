@@ -165,7 +165,7 @@ public class CatalogExport {
     protected Map<Class<? extends State>, WorkflowWizardPageProvider> createPageMapping() {
         HashMap<Class<? extends State>, WorkflowWizardPageProvider> map = new HashMap<Class<? extends State>, WorkflowWizardPageProvider>();
         String title = Messages.LayerSelectionPage_title;
-        ImageDescriptor banner = CatalogUIPlugin.getImageDescriptor(ImageConstants.PATH_WIZBAN+"exportshapefile_wiz.gif"); //$NON-NLS-1$
+        ImageDescriptor banner = CatalogUIPlugin.getDefault().getImageDescriptor(ImageConstants.PATH_WIZBAN+"exportshapefile_wiz.gif"); //$NON-NLS-1$
         ExportResourceSelectionPage page = new ExportResourceSelectionPage("Select Layers", title, banner ); 
         map.put(ExportResourceSelectionState.class, new BasicWorkflowWizardPageFactory(page));
 

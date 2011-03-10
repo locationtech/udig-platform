@@ -43,7 +43,7 @@ public class NewProjectWizardPage extends WizardPage {
      */
     public NewProjectWizardPage() {
         super(
-                Messages.NewProjectWizardPage_newProject, Messages.NewProjectWizardPage_newProject, ProjectUIPlugin.getImageDescriptor(ISharedImages.NEWPROJECT_WIZBAN));   
+                Messages.NewProjectWizardPage_newProject, Messages.NewProjectWizardPage_newProject, ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.NEWPROJECT_WIZBAN));   
         setDescription(Messages.NewProjectWizardPage_newProject_description); 
     }
 

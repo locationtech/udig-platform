@@ -280,7 +280,7 @@ public class LocationView extends SearchPart {
                         IWorkbenchActionConstants.MB_ADDITIONS));
                 contextMenu.add(new Separator());
                 
-                showAction.setImageDescriptor( LocationUIPlugin.getImageDescriptor(ImageConstants.SHOW_CO));
+                showAction.setImageDescriptor( LocationUIPlugin.getDefault().getImageDescriptor(ImageConstants.SHOW_CO));
 
                 contextMenu.add(showAction);
             }

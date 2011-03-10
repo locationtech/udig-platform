@@ -4,7 +4,6 @@ import net.refractions.udig.core.AbstractUdigUIPlugin;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.osgi.framework.BundleContext;
 
 public class StylePlugin extends AbstractUdigUIPlugin {
     
@@ -13,43 +12,22 @@ public class StylePlugin extends AbstractUdigUIPlugin {
   	
   	/** Icons path (value "icons/") */
   	public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
-  	
-  	/** The shared instance **/
-  	private static StylePlugin plugin;
+
+	private static StylePlugin INSTANCE;
   	
     /**
      * The constructor.
      */
   	public StylePlugin() {
   	    super();
-  	    plugin = this; 
+  	    INSTANCE = this;
   	}
   	
-  	/**
-     * Set up shared images.
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     * @param context
-     * @throws Exception
-     */
-    public void start(BundleContext context) throws Exception {
-        super.start( context );
-    }
-    
-  	/**
-     * Returns the shared instance.
-     * @return StylePlugin singleton
-     */
-  	public static StylePlugin getDefault() {
-  	    return plugin;
-  	}
-    
-	public void stop(BundleContext context) throws Exception {
-		super.stop(context);
-	}
-
-	@Override
 	public IPath getIconPath() {
 		return new Path(ICONS_PATH);
+	}
+
+	public static StylePlugin getDefault() {
+		return INSTANCE;
 	}
 }

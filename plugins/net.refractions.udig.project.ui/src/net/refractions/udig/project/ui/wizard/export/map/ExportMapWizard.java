@@ -32,7 +32,7 @@ public class ExportMapWizard extends Wizard implements IExportWizard {
 	public ExportMapWizard() {
 	    setWindowTitle("Export Map");
 	    String title = null; // will use default page title
-	    ImageDescriptor banner = ProjectUIPlugin.getImageDescriptor( Icons.WIZBAN +"exportselection_wiz.gif" );
+	    ImageDescriptor banner = ProjectUIPlugin.getDefault().getImageDescriptor( Icons.WIZBAN +"exportselection_wiz.gif" );
 	    //setDefaultPageImageDescriptor(banner);
 	    mapSelector = new MapSelectorPageWithScaleColumn("Export Selection", title, banner );
 	}

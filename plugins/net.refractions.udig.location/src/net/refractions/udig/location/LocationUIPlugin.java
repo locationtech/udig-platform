@@ -7,55 +7,28 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
  */
 public class LocationUIPlugin extends AbstractUdigUIPlugin {
 
+	private static LocationUIPlugin INSTANCE;
     public static String ID = "net.refractions.udig.location"; //$NON-NLS-1$
     /** Icons path (value "icons/") */
     public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
     
-	//The shared instance.
-	private static LocationUIPlugin plugin;
-	
 	/**
 	 * The constructor.
 	 */
 	public LocationUIPlugin() {
-		plugin = this;
+		super();
+		INSTANCE = this;
 	}
 
-    /**
-     * Set up shared images.
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     * @param context
-     * @throws Exception
-     */
-    public void start( BundleContext context ) throws Exception {
-        super.start(context);
-    }
-    /**
-     * Cleanup after shared images.
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-     * @param context
-     * @throws Exception
-     */
-    public void stop( BundleContext context ) throws Exception {
-        super.stop(context);
-    }
-
-	/**
-	 * Returns the shared instance.
-	 */
 	public static LocationUIPlugin getDefault() {
-		return plugin;
+		return INSTANCE;
 	}
-
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
@@ -123,7 +96,9 @@ public class LocationUIPlugin extends AbstractUdigUIPlugin {
                 && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
     }
 
-	@Override
+	/* (non-Javadoc)
+	 * @see net.refractions.udig.core.AbstractUdigUIPlugin#getIconPath()
+	 */
 	public IPath getIconPath() {
 		return new Path(ICONS_PATH);
 	}

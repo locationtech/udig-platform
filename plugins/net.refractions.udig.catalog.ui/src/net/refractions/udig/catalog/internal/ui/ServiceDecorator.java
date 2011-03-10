@@ -90,14 +90,14 @@ public class ServiceDecorator implements ILabelDecorator {
         }
         switch( service.getStatus() ) {
         case CONNECTED:
-            return overlayCache.applyStatus(image, CatalogUIPlugin
+            return overlayCache.applyStatus(image, CatalogUIPlugin.getDefault()
                     .getImageDescriptor(ImageConstants.CONNECTED_OVR));
 
         case NOTCONNECTED:
-            return overlayCache.applyStatus(image, CatalogUIPlugin.getImageDescriptor(ImageConstants.WAIT_OVR));
+            return overlayCache.applyStatus(image, CatalogUIPlugin.getDefault().getImageDescriptor(ImageConstants.WAIT_OVR));
 
         case BROKEN:
-            return overlayCache.applyStatus(image, CatalogUIPlugin.getImageDescriptor(ImageConstants.ERROR_OVR));
+            return overlayCache.applyStatus(image, CatalogUIPlugin.getDefault().getImageDescriptor(ImageConstants.ERROR_OVR));
 
         default:
             return image;

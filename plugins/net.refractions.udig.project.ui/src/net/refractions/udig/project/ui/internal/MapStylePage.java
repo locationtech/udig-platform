@@ -56,7 +56,7 @@ public class MapStylePage extends WizardPage {
      */
     protected MapStylePage( List layers ) {
         super(
-                Messages.MapStylePage_editStyles, Messages.MapStylePage_editStyles, ProjectUIPlugin.getImageDescriptor(ISharedImages.NEWMAP_WIZBAN));  
+                Messages.MapStylePage_editStyles, Messages.MapStylePage_editStyles, ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.NEWMAP_WIZBAN));  
         setDescription(Messages.MapStylePage_editStyles_description); 
         this.layers = layers;
     }
