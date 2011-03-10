@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.refractions.udig.core.internal.ExtensionPointList;
 import net.refractions.udig.internal.ui.ImageConstants;
-import net.refractions.udig.internal.ui.Images;
 import net.refractions.udig.internal.ui.UiPlugin;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -56,7 +55,7 @@ public class NewObjectContribution extends ContributionItem {
      */
     public void fill( final ToolBar parent, int index ) {
         ToolItem item = new ToolItem(parent, SWT.DROP_DOWN, index);
-        item.setImage(Images.get(ImageConstants.NEW_WIZ));
+        item.setImage(UiPlugin.getImage(ImageConstants.NEW_WIZ));
         item.addSelectionListener(new SelectionListener(){
 
             protected ImageRegistry registry;

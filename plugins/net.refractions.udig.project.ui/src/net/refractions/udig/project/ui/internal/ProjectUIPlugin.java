@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.refractions.udig.core.AbstractUdigUIPlugin;
 import net.refractions.udig.project.ui.feature.FeaturePanelProcessor;
 import net.refractions.udig.ui.PlatformGIS;
 
@@ -21,7 +22,9 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -45,7 +48,7 @@ import org.osgi.framework.BundleContext;
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
-public class ProjectUIPlugin extends AbstractUIPlugin {
+public class ProjectUIPlugin extends AbstractUdigUIPlugin {
 
 
     /**
@@ -76,8 +79,6 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
 
     private static ProjectUIPlugin plugin;
 
-    Images images = new Images();
-
     List<AdapterFactory> adapterFactories;
 
     private static final String ADAPTER_FACTORIES_ID = "net.refractions.udig.project.ui.itemProviderAdapterFactories"; //$NON-NLS-1$
@@ -103,14 +104,6 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
-
-        final URL iconsUrl = context.getBundle().getEntry(ICONS_PATH);
-
-        PlatformGIS.syncInDisplayThread(new Runnable(){
-            public void run() {
-                images.initializeImages(iconsUrl, getImageRegistry());
-            }
-        });
         
         new ActiveMapTracker().startup();
     }
@@ -122,13 +115,6 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
      */
     public static ProjectUIPlugin getDefault() {
         return plugin;
-    }
-
-    /**
-     * @return Returns the images.
-     */
-    public Images getImages() {
-        return images;
     }
 
     /**
@@ -338,5 +324,10 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
         }
         return mouseSpeed; 
     }
+
+	@Override
+	public IPath getIconPath() {
+		return new Path(ICONS_PATH);
+	}
 
 }

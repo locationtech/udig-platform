@@ -1,11 +1,12 @@
 package net.refractions.udig.style;
 
-import java.net.URL;
+import net.refractions.udig.core.AbstractUdigUIPlugin;
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.osgi.framework.BundleContext;
 
-public class StylePlugin extends AbstractUIPlugin {
+public class StylePlugin extends AbstractUdigUIPlugin {
     
     /** The id of the plug-in */
   	public static final String ID = "net.refractions.udig.style"; //$NON-NLS-1$
@@ -16,9 +17,6 @@ public class StylePlugin extends AbstractUIPlugin {
   	/** The shared instance **/
   	private static StylePlugin plugin;
   	
-    /** Managed Images instance */
-    private Images images = new Images();
-            
     /**
      * The constructor.
      */
@@ -36,8 +34,6 @@ public class StylePlugin extends AbstractUIPlugin {
      */
     public void start(BundleContext context) throws Exception {
         super.start( context );
-        final URL iconsUrl = context.getBundle().getEntry( ICONS_PATH );
-        images.initializeImages( iconsUrl, getImageRegistry() );		
     }
     
   	/**
@@ -47,17 +43,13 @@ public class StylePlugin extends AbstractUIPlugin {
   	public static StylePlugin getDefault() {
   	    return plugin;
   	}
-  	
-    /**
-     * Images instance for use with ImageConstants.
-     * 
-     * @return Images for use with ImageConstants.
-     */
-    public Images getImages() {
-        return images;
-    }
     
 	public void stop(BundleContext context) throws Exception {
 		super.stop(context);
+	}
+
+	@Override
+	public IPath getIconPath() {
+		return new Path(ICONS_PATH);
 	}
 }

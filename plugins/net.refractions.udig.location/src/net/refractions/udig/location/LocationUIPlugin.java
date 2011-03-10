@@ -1,19 +1,18 @@
 package net.refractions.udig.location;
 
-import java.net.URL;
+import net.refractions.udig.core.AbstractUdigUIPlugin;
 
-import net.refractions.udig.location.internal.Images;
-
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
  */
-public class LocationUIPlugin extends AbstractUIPlugin {
+public class LocationUIPlugin extends AbstractUdigUIPlugin {
 
     public static String ID = "net.refractions.udig.location"; //$NON-NLS-1$
     /** Icons path (value "icons/") */
@@ -21,7 +20,6 @@ public class LocationUIPlugin extends AbstractUIPlugin {
     
 	//The shared instance.
 	private static LocationUIPlugin plugin;
-    private Images images = new Images();
 	
 	/**
 	 * The constructor.
@@ -39,9 +37,6 @@ public class LocationUIPlugin extends AbstractUIPlugin {
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
-        final URL iconsUrl = context.getBundle().getEntry(ICONS_PATH);
-
-        images.initializeImages(iconsUrl, getImageRegistry());
     }
     /**
      * Cleanup after shared images.
@@ -51,7 +46,6 @@ public class LocationUIPlugin extends AbstractUIPlugin {
      * @throws Exception
      */
     public void stop( BundleContext context ) throws Exception {
-        images.cleanUp();
         super.stop(context);
     }
 
@@ -62,9 +56,6 @@ public class LocationUIPlugin extends AbstractUIPlugin {
 		return plugin;
 	}
 
-    public Images getImages() {
-        return images;
-    }
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
@@ -131,4 +122,9 @@ public class LocationUIPlugin extends AbstractUIPlugin {
         return getDefault().isDebugging()
                 && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
     }
+
+	@Override
+	public IPath getIconPath() {
+		return new Path(ICONS_PATH);
+	}
 }

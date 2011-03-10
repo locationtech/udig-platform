@@ -2,7 +2,11 @@ package net.refractions.udig.validation;
 
 import java.net.URL;
 
+import net.refractions.udig.core.AbstractUdigUIPlugin;
+
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -12,10 +16,9 @@ import org.osgi.framework.BundleContext;
 /**
  * The main plugin class to be used in the desktop.
  */
-public class ValidationPlugin extends AbstractUIPlugin {
+public class ValidationPlugin extends AbstractUdigUIPlugin {
 
 	private static ValidationPlugin plugin;
-    private Images images = new Images();
 	private static final String ID = "net.refractions.udig.validation"; //$NON-NLS-1$
     public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
 	
@@ -31,8 +34,6 @@ public class ValidationPlugin extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-        final URL iconsUrl = context.getBundle().getEntry( ICONS_PATH );
-        images.initializeImages( iconsUrl, getImageRegistry() );        
 	}
 
 	/**
@@ -132,14 +133,10 @@ public class ValidationPlugin extends AbstractUIPlugin {
         return getDefault().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
 
     }
-    
-    /**
-     * Images instance for use with ImageConstants.
-     * 
-     * @return Images for use with ImageConstants.
-     */
-    public Images getImages() {
-        return images;
-    }
+
+	@Override
+	public IPath getIconPath() {
+		return new Path(ICONS_PATH);
+	}
 
 }

@@ -26,7 +26,6 @@ import net.refractions.udig.ui.graphics.TableUtils;
 import net.refractions.udig.validation.DTOUtils;
 import net.refractions.udig.validation.GenericValidationResults;
 import net.refractions.udig.validation.ImageConstants;
-import net.refractions.udig.validation.Images;
 import net.refractions.udig.validation.ValidationPlugin;
 import net.refractions.udig.validation.ValidationProcessor;
 import net.refractions.udig.validation.internal.Messages;
@@ -277,7 +276,7 @@ public class ValidationDialog extends TitleAreaDialog {
         Composite composite = new Composite(parent, SWT.NONE);
         setTitle(Messages.ValidationDialog_title); 
         setMessage(""); //$NON-NLS-1$
-        ImageDescriptor image = Images.getDescriptor(ImageConstants.IMAGE_WIZBAN);
+        ImageDescriptor image = ValidationPlugin.getImageDescriptor(ImageConstants.IMAGE_WIZBAN);
         if (image != null) setTitleImage(image.createImage());
 
         GridData gd;

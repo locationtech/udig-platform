@@ -7,7 +7,7 @@ import java.util.Collection;
 
 import net.refractions.udig.core.internal.Icons;
 import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.internal.Images;
+import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.project.ui.wizard.export.MapSelectorPage;
 import net.refractions.udig.project.ui.wizard.export.image.MapSelectorPageWithScaleColumn;
 
@@ -32,7 +32,7 @@ public class ExportMapWizard extends Wizard implements IExportWizard {
 	public ExportMapWizard() {
 	    setWindowTitle("Export Map");
 	    String title = null; // will use default page title
-	    ImageDescriptor banner = Images.getDescriptor( Icons.WIZBAN +"exportselection_wiz.gif" );
+	    ImageDescriptor banner = ProjectUIPlugin.getImageDescriptor( Icons.WIZBAN +"exportselection_wiz.gif" );
 	    //setDefaultPageImageDescriptor(banner);
 	    mapSelector = new MapSelectorPageWithScaleColumn("Export Selection", title, banner );
 	}

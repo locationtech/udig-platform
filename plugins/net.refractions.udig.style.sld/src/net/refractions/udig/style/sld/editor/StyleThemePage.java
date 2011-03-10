@@ -13,7 +13,6 @@ import java.util.Set;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.style.internal.StyleLayer;
 import net.refractions.udig.style.sld.ImageConstants;
-import net.refractions.udig.style.sld.Images;
 import net.refractions.udig.style.sld.SLDContent;
 import net.refractions.udig.style.sld.SLDPlugin;
 import net.refractions.udig.style.sld.editor.BorderColorComboListener.Outline;
@@ -512,12 +511,12 @@ public class StyleThemePage extends StyleEditorPage {
         layout.marginWidth = 0;
         icons.setLayout(layout);
 
-        createSuitabilityIcon(icons, LABEL_ICON_COLORBLIND, Messages.StyleEditor_theme_suitability_colour, Images.getDescriptor(ImageConstants.COLORBLIND_ICON).createImage()); 
-        createSuitabilityIcon(icons, LABEL_ICON_CRT, Messages.StyleEditor_theme_suitability_crt, Images.getDescriptor(ImageConstants.CRT_ICON).createImage()); 
-        createSuitabilityIcon(icons, LABEL_ICON_PROJECTOR, Messages.StyleEditor_theme_suitability_proj, Images.getDescriptor(ImageConstants.PROJECTOR_ICON).createImage()); 
-        createSuitabilityIcon(icons, LABEL_ICON_LCD, Messages.StyleEditor_theme_suitability_lcd, Images.getDescriptor(ImageConstants.LAPTOP_ICON).createImage()); 
-        createSuitabilityIcon(icons, LABEL_ICON_PRINT, Messages.StyleEditor_theme_suitability_print, Images.getDescriptor(ImageConstants.PRINTER_ICON).createImage()); 
-        createSuitabilityIcon(icons, LABEL_ICON_PHOTOCOPY, Messages.StyleEditor_theme_suitability_pcopy, Images.getDescriptor(ImageConstants.PHOTOCOPY_ICON).createImage());
+        createSuitabilityIcon(icons, LABEL_ICON_COLORBLIND, Messages.StyleEditor_theme_suitability_colour, SLDPlugin.getImageDescriptor(ImageConstants.COLORBLIND_ICON).createImage()); 
+        createSuitabilityIcon(icons, LABEL_ICON_CRT, Messages.StyleEditor_theme_suitability_crt, SLDPlugin.getImageDescriptor(ImageConstants.CRT_ICON).createImage()); 
+        createSuitabilityIcon(icons, LABEL_ICON_PROJECTOR, Messages.StyleEditor_theme_suitability_proj, SLDPlugin.getImageDescriptor(ImageConstants.PROJECTOR_ICON).createImage()); 
+        createSuitabilityIcon(icons, LABEL_ICON_LCD, Messages.StyleEditor_theme_suitability_lcd, SLDPlugin.getImageDescriptor(ImageConstants.LAPTOP_ICON).createImage()); 
+        createSuitabilityIcon(icons, LABEL_ICON_PRINT, Messages.StyleEditor_theme_suitability_print, SLDPlugin.getImageDescriptor(ImageConstants.PRINTER_ICON).createImage()); 
+        createSuitabilityIcon(icons, LABEL_ICON_PHOTOCOPY, Messages.StyleEditor_theme_suitability_pcopy, SLDPlugin.getImageDescriptor(ImageConstants.PHOTOCOPY_ICON).createImage());
 	}
 
 	private CellEditor[] createCellEditors() {
@@ -794,12 +793,12 @@ public class StyleThemePage extends StyleEditorPage {
         compMiddle4.setLayout(layout);
         
         //toggle buttons
-        createToggleButton(compMiddle4, BUTTON_COLORBLIND, Images.getDescriptor(ImageConstants.COLORBLIND_ICON).createImage());
-        createToggleButton(compMiddle4, BUTTON_CRT, Images.getDescriptor(ImageConstants.CRT_ICON).createImage());
-        createToggleButton(compMiddle4, BUTTON_PROJECTOR, Images.getDescriptor(ImageConstants.PROJECTOR_ICON).createImage());
-        createToggleButton(compMiddle4, BUTTON_LCD, Images.getDescriptor(ImageConstants.LAPTOP_ICON).createImage());
-        createToggleButton(compMiddle4, BUTTON_PRINT, Images.getDescriptor(ImageConstants.PRINTER_ICON).createImage());
-        createToggleButton(compMiddle4, BUTTON_PHOTOCOPY, Images.getDescriptor(ImageConstants.PHOTOCOPY_ICON).createImage());
+        createToggleButton(compMiddle4, BUTTON_COLORBLIND, SLDPlugin.getImageDescriptor(ImageConstants.COLORBLIND_ICON).createImage());
+        createToggleButton(compMiddle4, BUTTON_CRT, SLDPlugin.getImageDescriptor(ImageConstants.CRT_ICON).createImage());
+        createToggleButton(compMiddle4, BUTTON_PROJECTOR, SLDPlugin.getImageDescriptor(ImageConstants.PROJECTOR_ICON).createImage());
+        createToggleButton(compMiddle4, BUTTON_LCD, SLDPlugin.getImageDescriptor(ImageConstants.LAPTOP_ICON).createImage());
+        createToggleButton(compMiddle4, BUTTON_PRINT, SLDPlugin.getImageDescriptor(ImageConstants.PRINTER_ICON).createImage());
+        createToggleButton(compMiddle4, BUTTON_PHOTOCOPY, SLDPlugin.getImageDescriptor(ImageConstants.PHOTOCOPY_ICON).createImage());
 	}
 
 	private Composite createPaletteLabel(Font font, Composite compMiddle) {
@@ -1692,17 +1691,17 @@ public class StyleThemePage extends StyleEditorPage {
                     + controlNames.get(icon) + " ";     //$NON-NLS-1$
             Label label = getLabel(icon);
             if (quality == PaletteSuitability.QUALITY_GOOD) {
-                //getLabel(icon).setImage(getImageWithOverlay(icon, Images.getDescriptor(ImageConstants.GOOD_OVERLAY)));
+                //getLabel(icon).setImage(getImageWithOverlay(icon, SLDPlugin.getImageDescriptor(ImageConstants.GOOD_OVERLAY)));
                 label.setImage(getImageWithOverlay(icon, null));
                 label.setToolTipText(viewer+Messages.StyleEditor_theme_suitability_good); 
             } else if (quality == PaletteSuitability.QUALITY_DOUBTFUL) {
-                getLabel(icon).setImage(getImageWithOverlay(icon, Images.getDescriptor(ImageConstants.DOUBTFUL_OVERLAY)));
+                getLabel(icon).setImage(getImageWithOverlay(icon, SLDPlugin.getImageDescriptor(ImageConstants.DOUBTFUL_OVERLAY)));
                 label.setToolTipText(viewer+Messages.StyleEditor_theme_suitability_doubtful); 
             } else if (quality == PaletteSuitability.QUALITY_BAD) {
-                getLabel(icon).setImage(getImageWithOverlay(icon, Images.getDescriptor(ImageConstants.BAD_OVERLAY)));
+                getLabel(icon).setImage(getImageWithOverlay(icon, SLDPlugin.getImageDescriptor(ImageConstants.BAD_OVERLAY)));
                 label.setToolTipText(viewer+Messages.StyleEditor_theme_suitability_bad); 
             } else { //UNKNOWN
-                getLabel(icon).setImage(getImageWithOverlay(icon, Images.getDescriptor(ImageConstants.UNKNOWN_OVERLAY)));
+                getLabel(icon).setImage(getImageWithOverlay(icon, SLDPlugin.getImageDescriptor(ImageConstants.UNKNOWN_OVERLAY)));
                 label.setToolTipText(viewer+Messages.StyleEditor_theme_suitability_unknown); 
             }
         }
@@ -1712,12 +1711,12 @@ public class StyleThemePage extends StyleEditorPage {
         //get the base image
         ImageDescriptor descriptor = null;
     	Image base = null;
-        if (iconLabelID == LABEL_ICON_COLORBLIND) descriptor = Images.getDescriptor(ImageConstants.COLORBLIND_ICON); 
-        else if (iconLabelID == LABEL_ICON_CRT) descriptor = Images.getDescriptor(ImageConstants.CRT_ICON); 
-        else if (iconLabelID == LABEL_ICON_LCD) descriptor = Images.getDescriptor(ImageConstants.LAPTOP_ICON); 
-        else if (iconLabelID == LABEL_ICON_PHOTOCOPY) descriptor = Images.getDescriptor(ImageConstants.PHOTOCOPY_ICON); 
-        else if (iconLabelID == LABEL_ICON_PRINT) descriptor = Images.getDescriptor(ImageConstants.PRINTER_ICON); 
-        else if (iconLabelID == LABEL_ICON_PROJECTOR) descriptor = Images.getDescriptor(ImageConstants.PROJECTOR_ICON); 
+        if (iconLabelID == LABEL_ICON_COLORBLIND) descriptor = SLDPlugin.getImageDescriptor(ImageConstants.COLORBLIND_ICON); 
+        else if (iconLabelID == LABEL_ICON_CRT) descriptor = SLDPlugin.getImageDescriptor(ImageConstants.CRT_ICON); 
+        else if (iconLabelID == LABEL_ICON_LCD) descriptor = SLDPlugin.getImageDescriptor(ImageConstants.LAPTOP_ICON); 
+        else if (iconLabelID == LABEL_ICON_PHOTOCOPY) descriptor = SLDPlugin.getImageDescriptor(ImageConstants.PHOTOCOPY_ICON); 
+        else if (iconLabelID == LABEL_ICON_PRINT) descriptor = SLDPlugin.getImageDescriptor(ImageConstants.PRINTER_ICON); 
+        else if (iconLabelID == LABEL_ICON_PROJECTOR) descriptor = SLDPlugin.getImageDescriptor(ImageConstants.PROJECTOR_ICON); 
         if (descriptor != null) base = descriptor.createImage();
         if (overlay == null) return base;
         //apply the overlay

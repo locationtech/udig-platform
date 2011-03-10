@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.internal.ui.Images;
 import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.ui.internal.Messages;
 import net.refractions.udig.ui.preferences.PreferenceConstants;
@@ -447,7 +446,7 @@ public class FeatureTypeEditor {
             createAttributeAction.setId("net.refractions.udig.ui.FeatureTypeEditor.createAttributeAction"); //$NON-NLS-1$
             createAttributeAction.setText(Messages.addAttributeAction_label); 
             createAttributeAction.setToolTipText(Messages.addAttributeAction_label); 
-            createAttributeAction.setImageDescriptor(Images.getDescriptor("elcl16/new_attribute.gif")); //$NON-NLS-1$
+            createAttributeAction.setImageDescriptor(UiPlugin.getImageDescriptor("elcl16/new_attribute.gif")); //$NON-NLS-1$
         }
         return createAttributeAction;
     }
@@ -477,7 +476,7 @@ public class FeatureTypeEditor {
             };
             deleteAttributeAction.setText(Messages.deleteAttributeAction_label);
             deleteAttributeAction.setToolTipText(Messages.deleteAttributeAction_tooltip);
-            deleteAttributeAction.setImageDescriptor(Images.getDescriptor("elcl16/delete.gif")); //$NON-NLS-1$
+            deleteAttributeAction.setImageDescriptor(UiPlugin.getImageDescriptor("elcl16/delete.gif")); //$NON-NLS-1$
             deleteAttributeAction.setDescription(Messages.deleteAttributeAction_description);
             deleteAttributeAction.setId("net.refractions.udig.ui.FeatureTypeEditor.deleteAttributeAction"); //$NON-NLS-1$
         }

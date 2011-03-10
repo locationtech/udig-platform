@@ -1,19 +1,21 @@
 package net.refractions.udig.style.sld;
 
-import java.net.URL;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import net.refractions.udig.core.AbstractUdigUIPlugin;
+
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
  */
-public class SLDPlugin extends AbstractUIPlugin {
+public class SLDPlugin extends AbstractUdigUIPlugin {
 
     /** The id of the plug-in */
     public static final String ID = "net.refractions.udig.style.sld"; //$NON-NLS-1$
@@ -25,8 +27,6 @@ public class SLDPlugin extends AbstractUIPlugin {
     // Resource bundle.
     private ResourceBundle resourceBundle;
 
-    private Images images = new Images();
-    
     /**
      * The constructor.
      */
@@ -40,8 +40,6 @@ public class SLDPlugin extends AbstractUIPlugin {
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
-        final URL iconsUrl = context.getBundle().getEntry( ICONS_PATH );
-        images.initializeImages( iconsUrl, getImageRegistry() );        
     }
 
     /**
@@ -126,13 +124,9 @@ public class SLDPlugin extends AbstractUIPlugin {
         return getDefault().isDebugging() &&
             "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
     }
-    
-    /**
-     * Images instance for use with ImageConstants.
-     * 
-     * @return Images for use with ImageConstants.
-     */
-    public Images getImages() {
-        return images;
-    }
+
+	@Override
+	public IPath getIconPath() {
+		return new Path(ICONS_PATH);
+	}
 }

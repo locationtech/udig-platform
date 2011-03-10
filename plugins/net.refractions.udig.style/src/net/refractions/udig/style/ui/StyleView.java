@@ -14,7 +14,6 @@ import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.style.IStyleConfigurator;
-import net.refractions.udig.style.Images;
 import net.refractions.udig.style.StylePlugin;
 import net.refractions.udig.style.internal.Messages;
 import net.refractions.udig.style.internal.StyleLayer;
@@ -603,7 +602,7 @@ public class StyleView extends ViewPart {
         };
         applyAction.setEnabled(false);
         applyAction.setToolTipText(Messages.StyleView_apply_tooltip); 
-        applyAction.setImageDescriptor(Images.getDescriptor(ImageConstants.APPLY_STYLE));
+        applyAction.setImageDescriptor(StylePlugin.getImageDescriptor(ImageConstants.APPLY_STYLE));
         // applyCI = new ActionContributionItem(applyAction);
 
         cancelAction = new Action("cancel"){ //$NON-NLS-1$
@@ -613,7 +612,7 @@ public class StyleView extends ViewPart {
         };
         cancelAction.setEnabled(false);
         cancelAction.setToolTipText(Messages.StyleView_cancel_tooltip); 
-        cancelAction.setImageDescriptor(Images.getDescriptor(ImageConstants.CANCEL_STYLE));
+        cancelAction.setImageDescriptor(StylePlugin.getImageDescriptor(ImageConstants.CANCEL_STYLE));
         // cancelCI = new ActionContributionItem(cancelAction);
     }
 

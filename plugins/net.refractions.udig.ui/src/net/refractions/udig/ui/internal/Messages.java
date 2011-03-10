@@ -18,7 +18,6 @@ package net.refractions.udig.ui.internal;
 
 import java.lang.reflect.Field;
 
-import net.refractions.udig.internal.ui.Images;
 import net.refractions.udig.internal.ui.UiPlugin;
 
 import org.eclipse.jface.action.IAction;
@@ -275,11 +274,11 @@ public class Messages extends NLS {
             }
             ImageDescriptor image;
 
-            image = Images.getDescriptor(ePath);
+            image = UiPlugin.getImageDescriptor(ePath);
             if (id != null) {
                 a.setImageDescriptor(image);
             }
-            image = Images.getDescriptor(dPath);
+            image = UiPlugin.getImageDescriptor(dPath);
             if (id != null) {
                 a.setDisabledImageDescriptor(image);
             }

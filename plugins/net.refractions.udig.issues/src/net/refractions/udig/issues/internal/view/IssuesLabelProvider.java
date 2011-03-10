@@ -4,7 +4,7 @@ import net.refractions.udig.issues.Column;
 import net.refractions.udig.issues.IIssue;
 import net.refractions.udig.issues.IIssuesLabelProvider;
 import net.refractions.udig.issues.internal.ImageConstants;
-import net.refractions.udig.issues.internal.Images;
+import net.refractions.udig.issues.internal.IssuesActivator;
 import net.refractions.udig.issues.internal.Messages;
 
 import org.eclipse.jface.viewers.IColorProvider;
@@ -32,15 +32,15 @@ public class IssuesLabelProvider extends LabelProvider implements
 			case IssuesView.PRIORITY_COLUMN:
 				switch (issue.getPriority()) {
 				case CRITICAL:
-					return Images.get(ImageConstants.PRIORITY_CRITICAL);
+					return IssuesActivator.getImage(ImageConstants.PRIORITY_CRITICAL);
 				case HIGH:
-					return Images.get(ImageConstants.PRIORITY_HIGH);
+					return IssuesActivator.getImage(ImageConstants.PRIORITY_HIGH);
 				case WARNING:
-					return Images.get(ImageConstants.PRIORITY_WARNING);
+					return IssuesActivator.getImage(ImageConstants.PRIORITY_WARNING);
 				case LOW:
-					return Images.get(ImageConstants.PRIORITY_LOW);
+					return IssuesActivator.getImage(ImageConstants.PRIORITY_LOW);
 				case TRIVIAL:
-					return Images.get(ImageConstants.PRIORITY_TRIVIAL);
+					return IssuesActivator.getImage(ImageConstants.PRIORITY_TRIVIAL);
 
 				default:
 					break;
@@ -48,13 +48,13 @@ public class IssuesLabelProvider extends LabelProvider implements
 			case IssuesView.RESOLUTION_COLUMN:
 				switch (issue.getResolution()) {
 				case RESOLVED:
-					return Images.get(ImageConstants.RESOLUTION_RESOLVED);
+					return IssuesActivator.getImage(ImageConstants.RESOLUTION_RESOLVED);
 				case UNKNOWN:
-					return Images.get(ImageConstants.RESOLUTION_UNKNOWN);
+					return IssuesActivator.getImage(ImageConstants.RESOLUTION_UNKNOWN);
 				case UNRESOLVED:
-					return Images.get(ImageConstants.RESOLUTION_UNRESOLVED);
+					return IssuesActivator.getImage(ImageConstants.RESOLUTION_UNRESOLVED);
 				case IN_PROGRESS:
-					return Images.get(ImageConstants.RESOLUTION_VIEWED);
+					return IssuesActivator.getImage(ImageConstants.RESOLUTION_VIEWED);
 
 				default:
 					break;

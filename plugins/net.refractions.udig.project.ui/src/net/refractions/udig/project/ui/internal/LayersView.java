@@ -744,7 +744,7 @@ public class LayersView extends ViewPart
         };
         downAction.setEnabled(false);
         downAction.setToolTipText(Messages.LayersView_down_tooltip);
-        downAction.setImageDescriptor(Images.getDescriptor(ImageConstants.DOWN_CO));
+        downAction.setImageDescriptor(ProjectUIPlugin.getImageDescriptor(ISharedImages.DOWN_CO));
         return downAction;
     }
 
@@ -765,7 +765,7 @@ public class LayersView extends ViewPart
         };
         upAction.setEnabled(false);
         upAction.setToolTipText(Messages.LayersView_up_tooltip);
-        upAction.setImageDescriptor(Images.getDescriptor(ImageConstants.UP_CO));
+        upAction.setImageDescriptor(ProjectUIPlugin.getImageDescriptor(ISharedImages.UP_CO));
         return upAction;
     }
 

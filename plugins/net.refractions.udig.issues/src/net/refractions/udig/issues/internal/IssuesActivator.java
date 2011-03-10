@@ -1,9 +1,12 @@
 package net.refractions.udig.issues.internal;
 
+import net.refractions.udig.core.AbstractUdigUIPlugin;
 import net.refractions.udig.issues.IIssuesManager;
 import net.refractions.udig.ui.ProgressManager;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
@@ -16,7 +19,7 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class IssuesActivator extends AbstractUIPlugin {
+public class IssuesActivator extends AbstractUdigUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "net.refractions.udig.issues"; //$NON-NLS-1$
@@ -25,8 +28,6 @@ public class IssuesActivator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static IssuesActivator plugin;
-
-    private Images images=new Images();
 	
 	/**
 	 * The constructor
@@ -68,7 +69,6 @@ public class IssuesActivator extends AbstractUIPlugin {
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
-        images.cleanUp();
 		super.stop(context);
 	}
 
@@ -94,10 +94,9 @@ public class IssuesActivator extends AbstractUIPlugin {
         getDefault().getLog().log(new Status(IStatus.INFO, PLUGIN_ID, IStatus.OK, message, e));
     }
 
-    public Images getImages() {
-    	images.ensureReady();
-        return images;
-    }
-
+	@Override
+	public IPath getIconPath() {
+		return new Path(ICONS_PATH);
+	}
 
 }
