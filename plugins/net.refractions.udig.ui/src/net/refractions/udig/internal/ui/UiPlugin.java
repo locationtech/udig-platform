@@ -14,10 +14,8 @@ import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Properties;
 import java.util.PropertyResourceBundle;
-import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,6 +24,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import net.refractions.udig.core.AbstractUdigUIPlugin;
 import net.refractions.udig.core.internal.ExtensionPointProcessor;
 import net.refractions.udig.core.internal.ExtensionPointUtil;
 import net.refractions.udig.internal.ui.operations.OperationMenuFactory;
@@ -39,6 +38,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProduct;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -47,14 +47,11 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.internal.misc.StatusUtil;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.Preferences;
 
 import com.google.common.base.Function;
-
 /**
  * The UiPlugin helps integrate uDig with your custom RCP application.
  * <p>
@@ -63,9 +60,7 @@ import com.google.common.base.Function;
  * needed for your own custom (or existing) RCP application.
  * @author Jody 
  */
-public class UiPlugin extends AbstractUIPlugin {
-    // The shared instance.
-    private static UiPlugin plugin;
+public class UiPlugin extends AbstractUdigUIPlugin {
 
     /** Icons path (value "icons/") */
     public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
@@ -82,9 +77,6 @@ public class UiPlugin extends AbstractUIPlugin {
 
     private static final String UDIG_PRODUCT_ID = "net.refractions.udig.product"; //$NON-NLS-1$
 
-    /** Managed Images instance */
-    private Images images = new Images();
-
     private URL iconsUrl;
 
     private OperationMenuFactory operationMenuFactory;
@@ -94,13 +86,15 @@ public class UiPlugin extends AbstractUIPlugin {
      * @see loadVersion()
      */
     private String version;
+    
+    private static UiPlugin INSTANCE;
 
     /**
      * The constructor.
      */
     public UiPlugin() {
         super();
-        plugin = this;
+        INSTANCE = this;
     }
 
     /**
@@ -238,16 +232,7 @@ public class UiPlugin extends AbstractUIPlugin {
      * Returns the shared instance.
      */
     public static UiPlugin getDefault() {
-        return plugin;
-    }
-
-    /**
-     * Images instance for use with ImageConstants.
-     * 
-     * @return Images for use with ImageConstants.
-     */
-    public Images getImages() {
-        return images;
+        return INSTANCE;
     }
 
     public OperationMenuFactory getOperationMenuFactory() {
@@ -258,17 +243,6 @@ public class UiPlugin extends AbstractUIPlugin {
         return operationMenuFactory;
     }
 
-    public void stop( BundleContext context ) throws Exception {
-        // try{
-        // // if( preferences!=null )
-        // // preferences.flush();
-        // }catch (Throwable e) {
-        //            log("Error saving preferences", e); //$NON-NLS-1$
-        // }
-        super.stop(context);
-
-        plugin = null;
-    }
     /**
      * Logs the given throwable to the platform log, indicating the class and
      * method from where it is being logged (this is not necessarily where it
@@ -712,4 +686,7 @@ public class UiPlugin extends AbstractUIPlugin {
         return new InstanceScope().getNode(ID);
     }
 
+	public IPath getIconPath() {
+		return new Path(ICONS_PATH);
+	}
 }

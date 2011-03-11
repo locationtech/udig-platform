@@ -14,13 +14,12 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveChangeEvent;
+import net.refractions.udig.catalog.IResolveChangeEvent.Type;
 import net.refractions.udig.catalog.IResolveChangeListener;
 import net.refractions.udig.catalog.ISearch;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.IResolveChangeEvent.Type;
 import net.refractions.udig.catalog.internal.ui.ImageConstants;
-import net.refractions.udig.catalog.internal.ui.Images;
 import net.refractions.udig.catalog.ui.CatalogTreeViewer;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.ResolveContentProvider;
@@ -298,7 +297,7 @@ public class SearchView extends SearchPart {
                 contextMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
                 contextMenu.add(new Separator());
 
-                refreshAction.setImageDescriptor(Images.getDescriptor(ImageConstants.REFRESH_CO));
+                refreshAction.setImageDescriptor(CatalogUIPlugin.getDefault().getImageDescriptor(ImageConstants.REFRESH_CO));
 
                 // contextMenu.add(refreshAction);
                 IWorkbenchWindow window = getSite().getWorkbenchWindow();

@@ -14,14 +14,7 @@ import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.ImageTypeSpecifier;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
@@ -33,9 +26,8 @@ import net.refractions.udig.core.internal.Icons;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.render.RenderException;
 import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.BoundsStrategy;
 import net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter;
-import net.refractions.udig.project.ui.internal.Images;
+import net.refractions.udig.project.ui.BoundsStrategy;
 import net.refractions.udig.project.ui.internal.Messages;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
@@ -53,8 +45,6 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
@@ -82,7 +72,7 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
         setDialogSettings(ProjectUIPlugin.getDefault().getDialogSettings());
 
         String title = null; // will use default title
-        ImageDescriptor banner = Images.getDescriptor(Icons.WIZBAN + "exportimage_wiz.gif"); //$NON-NLS-1$
+        ImageDescriptor banner = ProjectUIPlugin.getDefault().getImageDescriptor(Icons.WIZBAN + "exportimage_wiz.gif"); //$NON-NLS-1$
         setDefaultPageImageDescriptor(banner);
         mapSelectorPage = new MapSelectorPageWithScaleColumn("Select Map With Scale", title, banner); //$NON-NLS-1$
         addPage(mapSelectorPage);

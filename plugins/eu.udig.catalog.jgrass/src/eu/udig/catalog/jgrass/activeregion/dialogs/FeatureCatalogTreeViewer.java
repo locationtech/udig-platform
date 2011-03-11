@@ -234,7 +234,7 @@ public class FeatureCatalogTreeViewer extends Composite
             listeners = new ArrayList<ILabelProviderListener>();
 
             // Create the images
-            vectorMaps = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(
+            vectorMaps = CatalogUIPlugin.getDefault().getImageDescriptor(
                     ISharedImages.FEATURE_OBJ).createImage();
         }
 

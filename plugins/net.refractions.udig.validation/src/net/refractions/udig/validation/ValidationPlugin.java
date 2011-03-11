@@ -1,66 +1,29 @@
 package net.refractions.udig.validation;
 
-import java.net.URL;
+import net.refractions.udig.core.AbstractUdigUIPlugin;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
  */
-public class ValidationPlugin extends AbstractUIPlugin {
+public class ValidationPlugin extends AbstractUdigUIPlugin {
 
-	private static ValidationPlugin plugin;
-    private Images images = new Images();
 	private static final String ID = "net.refractions.udig.validation"; //$NON-NLS-1$
     public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
+	private static ValidationPlugin INSTANCE;
 	
 	/**
 	 * The constructor.
 	 */
 	public ValidationPlugin() {
-		plugin = this;
+		super();
 	}
 
-	/**
-	 * This method is called upon plug-in activation
-	 */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-        final URL iconsUrl = context.getBundle().getEntry( ICONS_PATH );
-        images.initializeImages( iconsUrl, getImageRegistry() );        
-	}
-
-	/**
-	 * This method is called when the plug-in is stopped
-	 */
-	public void stop(BundleContext context) throws Exception {
-        super.stop(context);
-		plugin = null;
-	}
-
-	/**
-	 * Returns the shared instance.
-	 */
-	public static ValidationPlugin getDefault() {
-		return plugin;
-	}
-
-	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path.
-	 *
-	 * @param path the path
-	 * @return the image descriptor
-	 */
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return AbstractUIPlugin.imageDescriptorFromPlugin(ID, path);
-	}
-	
     /**
      * Writes an info log in the plugin's log.
      * @param message
@@ -96,7 +59,12 @@ public class ValidationPlugin extends AbstractUIPlugin {
                 e.printStackTrace();
         }
     }
-    /**
+    
+    public static ValidationPlugin getDefault() {
+		return INSTANCE;
+	}
+
+	/**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
      * Available trace options can be found in the Trace class.  (They must also be part of the .options file) 
      * <p>
@@ -132,14 +100,12 @@ public class ValidationPlugin extends AbstractUIPlugin {
         return getDefault().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
 
     }
-    
-    /**
-     * Images instance for use with ImageConstants.
-     * 
-     * @return Images for use with ImageConstants.
-     */
-    public Images getImages() {
-        return images;
-    }
+
+	/* (non-Javadoc)
+	 * @see net.refractions.udig.core.AbstractUdigUIPlugin#getIconPath()
+	 */
+	public IPath getIconPath() {
+		return new Path(ICONS_PATH);
+	}
 
 }

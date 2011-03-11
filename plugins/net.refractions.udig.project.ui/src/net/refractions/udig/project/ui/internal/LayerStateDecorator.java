@@ -76,7 +76,7 @@ public class LayerStateDecorator implements ILightweightLabelDecorator {
     public void decorate( Object element, IDecoration decoration ) {
         Layer layer = (Layer) element; // should be safe, extention point does the instanceof
                                             // check
-        decoration.addOverlay(Images.getDescriptor(ImageConstants.WRITE_OVR));
+        decoration.addOverlay(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.WRITE_OVR));
 
         if (!layer.eAdapters().contains(hack)) {
             layer.eAdapters().add(hack);

@@ -457,7 +457,7 @@ public class ValidationProcessor extends org.geotools.validation.ValidationProce
 	/**
 	 * Creates a new validation test of the correct type when passed the plugInDTO.
 	 * 
-	 * @param plugin
+	 * @param INSTANCE
 	 * @return
 	 * @throws ValidationException
 	 * @throws ClassNotFoundException

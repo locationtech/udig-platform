@@ -81,7 +81,7 @@ public class ResourceSelectionPage extends WorkflowWizardPage implements IPageCh
         setTitle(Messages.ResourceSelectionPage_title); 
         setMessage(Messages.ResourceSelectionPage_message);
         setDescription(Messages.ResourceSelectionPage_description);
-        setImageDescriptor(Images.getDescriptor(ImageConstants.CHOOSE_LAYER_WIZARD));
+        setImageDescriptor(CatalogUIPlugin.getDefault().getImageDescriptor(ImageConstants.CHOOSE_LAYER_WIZARD));
         schemaSelected = null;
     }
 

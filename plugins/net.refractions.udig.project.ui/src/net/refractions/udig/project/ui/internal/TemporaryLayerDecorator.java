@@ -32,7 +32,7 @@ public class TemporaryLayerDecorator implements ILightweightLabelDecorator {
     public void decorate( Object element, IDecoration decoration ) {
         ILayer layer = (ILayer) element;
         if( layer.hasResource(ITransientResolve.class) ){
-            decoration.addOverlay(Images.getDescriptor(ImageConstants.CHANGED_OVR));
+            decoration.addOverlay(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.CHANGED_OVR));
         }
     }
 

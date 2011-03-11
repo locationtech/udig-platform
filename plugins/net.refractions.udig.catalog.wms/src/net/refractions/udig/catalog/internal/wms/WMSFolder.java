@@ -167,7 +167,7 @@ public class WMSFolder implements IResolveFolder {
             if (icon == null) {
                 icon = WMSGeoResourceImpl.fetchIcon(monitor, layer, service);
                 if (icon == null) {
-                    icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(
+                    icon = CatalogUIPlugin.getDefault().getImageDescriptor(
                             ISharedImages.GRID_OBJ);
                 }
             }

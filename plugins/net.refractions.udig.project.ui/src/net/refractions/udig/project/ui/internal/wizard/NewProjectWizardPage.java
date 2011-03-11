@@ -11,9 +11,9 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.refractions.udig.project.ui.internal.ImageConstants;
-import net.refractions.udig.project.ui.internal.Images;
+import net.refractions.udig.project.ui.internal.ISharedImages;
 import net.refractions.udig.project.ui.internal.Messages;
+import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
@@ -43,7 +43,7 @@ public class NewProjectWizardPage extends WizardPage {
      */
     public NewProjectWizardPage() {
         super(
-                Messages.NewProjectWizardPage_newProject, Messages.NewProjectWizardPage_newProject, Images.getDescriptor(ImageConstants.NEWPROJECT_WIZBAN));   
+                Messages.NewProjectWizardPage_newProject, Messages.NewProjectWizardPage_newProject, ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.NEWPROJECT_WIZBAN));   
         setDescription(Messages.NewProjectWizardPage_newProject_description); 
     }
 

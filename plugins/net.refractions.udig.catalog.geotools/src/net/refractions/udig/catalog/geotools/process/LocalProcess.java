@@ -48,7 +48,7 @@ public class LocalProcess extends IProcess {
             if (version != null) {
                 this.keywords = new String[]{version};
             }
-            icon = CatalogUIPlugin.getDefault().getImages()
+            icon = CatalogUIPlugin.getDefault()
                     .getImageDescriptor(ISharedImages.GRID_OBJ);
         }
     }
