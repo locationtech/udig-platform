@@ -122,6 +122,7 @@
             point="net.refractions.udig.mapgraphic.mapgraphic">
          <mapGraphic
                class="eu.udig.imagegeoreferencing.GeoReferenceMapGraphic"
+               icon="icons/etool16/georef.png"
                id="net.refractions.udig.imagegeoreferencing.geoReferenceMapGraphic"
                name="Image Geo Referencing">
          </mapGraphic>
