@@ -10,7 +10,7 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
 	
-	    private static final String BUNDLE_NAME = "net.refractions.udig.imagegeoreference.internal.messages"; //$NON-NLS-1$
+	    private static final String BUNDLE_NAME = "eu.udig.imagegeoreferencing.i18n.messages"; //$NON-NLS-1$
 	    public static String MarkerDialog_title;
 	    public static String MarkerDialog_desc;
 	    public static String MarkerDialog_removemarkerscheck;
