@@ -416,6 +416,11 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         });
 
     }
+    
+    /**
+     * The quote used to delimit multiple proxies.
+     */
+    private static final String PROXYQUOTES = "'";
 
     /**
      * Sets the proxy.
@@ -452,7 +457,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
             sB.append("-D" + RuntimeFieldEditor.PROXYPORT + "=").append(proxyPort).append("\n");
             if (proxyNonHost != null && proxyNonHost.length() > 0) {
                 // add quotes for multiple non proxy hosts
-                proxyNonHost = "\"" + proxyNonHost + "\"";
+                proxyNonHost = PROXYQUOTES + proxyNonHost + PROXYQUOTES;
                 sB.append("-D" + RuntimeFieldEditor.PROXYNONHOSTS + "=").append(proxyNonHost).append("\n");
             }
         }
@@ -491,7 +496,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
             if (line.matches(".*D" + RuntimeFieldEditor.PROXYNONHOSTS + ".*")) {
                 String proxyNonHosts = line.split("=")[1].trim();
                 // remove quotes if there are
-                proxyNonHosts = proxyNonHosts.replaceAll("\"", "");
+                proxyNonHosts = proxyNonHosts.replaceAll(PROXYQUOTES, "");
                 properties.put(RuntimeFieldEditor.PROXYNONHOSTS, proxyNonHosts);
             }
         }
