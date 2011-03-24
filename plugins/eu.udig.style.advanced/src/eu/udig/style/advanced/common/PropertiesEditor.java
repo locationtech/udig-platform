@@ -66,6 +66,7 @@ public abstract class PropertiesEditor {
     protected SLD type;
 
     protected Name geometryPropertyName;
+    protected List<String> stringAttributeNames = new ArrayList<String>();
     protected List<String> numericAttributeNames = new ArrayList<String>();
     protected List<String> allAttributeNames = new ArrayList<String>();
 
@@ -284,6 +285,8 @@ public abstract class PropertiesEditor {
                 if (!(attributeType instanceof GeometryDescriptor)) { // don't include the geometry
                     if (isNumber(attributeType)) {
                         numericAttributeNames.add(attributeType.getName().getLocalPart());
+                    } else if (isString(attributeType)) {
+                        stringAttributeNames.add(attributeType.getName().getLocalPart());
                     }
                     allAttributeNames.add(attributeType.getName().getLocalPart());
                 } else {
@@ -303,6 +306,13 @@ public abstract class PropertiesEditor {
         return false;
     }
 
+    private boolean isString( AttributeDescriptor attributeType ) {
+        if (String.class.isAssignableFrom(attributeType.getType().getBinding())) {
+            return true;
+        }
+        return false;
+    }
+
     public Name getGeometryPropertyName() {
         return geometryPropertyName;
     }
@@ -313,6 +323,10 @@ public abstract class PropertiesEditor {
 
     public List<String> getAllAttributeNames() {
         return allAttributeNames;
+    }
+    
+    public List<String> getStringAttributeNames() {
+        return stringAttributeNames;
     }
 
     // /**
