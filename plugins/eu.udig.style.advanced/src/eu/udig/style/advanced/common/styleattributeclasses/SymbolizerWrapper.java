@@ -27,6 +27,7 @@ import java.net.URL;
 
 import net.refractions.udig.catalog.URLUtils;
 
+import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ExternalGraphic;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.Symbolizer;
@@ -339,6 +340,11 @@ public abstract class SymbolizerWrapper {
         if (expression instanceof PropertyName) {
             PropertyName pName = (PropertyName) expression;
             return pName.getPropertyName();
+        }
+
+        if (expression instanceof LiteralExpressionImpl) {
+            LiteralExpressionImpl pName = (LiteralExpressionImpl) expression;
+            return pName.getValue().toString();
         }
 
         Integer evaluateInt = expression.evaluate(null, Integer.class);

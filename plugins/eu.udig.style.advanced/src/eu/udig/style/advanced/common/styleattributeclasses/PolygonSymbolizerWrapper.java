@@ -75,7 +75,8 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
 
         stroke = polygonSymbolizer.getStroke();
         if (stroke != null) {
-            strokeColor = stroke.getColor().evaluate(null, String.class);
+            Expression color = stroke.getColor();
+            strokeColor = expressionToString(color);
             Expression width = stroke.getWidth();
             strokeWidth = expressionToString(width);
             Expression opacity = stroke.getOpacity();
@@ -127,10 +128,11 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         fill = polygonSymbolizer.getFill();
         if (fill != null) {
             Expression color = fill.getColor();
-            if (color != null)
-                fillColor = color.evaluate(null, String.class);
+            if (color != null) {
+                fillColor = expressionToString(color);
+            }
             Expression opacity = fill.getOpacity();
-            fillOpacity = opacity.evaluate(null, String.class);
+            fillOpacity = expressionToString(opacity);
 
             fillGraphicFill = fill.getGraphicFill();
             if (fillGraphicFill != null) {
@@ -210,7 +212,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         this.hasStroke = hasStroke;
         if (hasStroke) {
             checkStrokeExists();
-        }else{
+        } else {
             stroke = null;
             PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) getSymbolizer();
             polygonSymbolizer.setStroke(null);
@@ -231,17 +233,21 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
             strokeGraphicStroke = stroke.getGraphicStroke();
         }
     }
-    
-    public void setFillColor( String fillColor ) {
+
+    public void setFillColor( String fillColor, boolean isProperty ) {
         this.fillColor = fillColor;
         checkFillExists();
         fill.setGraphicFill(null);
-        if (fillColor == null) {
-            hasFill = false;
+        if (isProperty) {
+            fill.setColor(ff.property(fillColor));
         } else {
-            hasFill = true;
+            if (fillColor == null) {
+                hasFill = false;
+            } else {
+                hasFill = true;
+            }
+            fill.setColor(ff.literal(fillColor));
         }
-        fill.setColor(ff.literal(fillColor));
     }
 
     public void setFillOpacity( String fillOpacity, boolean isProperty ) {

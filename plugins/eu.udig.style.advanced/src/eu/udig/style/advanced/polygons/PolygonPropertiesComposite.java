@@ -186,7 +186,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         tabItem2.setControl(borderParametersInternalComposite);
 
         // Fill GROUP
-        fillParametersComposite = new PolygonFillParametersComposite(tabFolder, numericAttributesArrays);
+        fillParametersComposite = new PolygonFillParametersComposite(tabFolder, numericAttributesArrays, stringattributesArrays);
         fillParametersComposite.init(ruleWrapper);
         fillParametersComposite.addListener(this);
         Composite fillParametersInternalComposite = fillParametersComposite.getComposite();
@@ -311,7 +311,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
             break;
         }
         case FILLCOLOR: {
-            polygonSymbolizerWrapper.setFillColor(value);
+            polygonSymbolizerWrapper.setFillColor(value, fromField);
             break;
         }
         case FILLOPACITY: {

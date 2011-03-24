@@ -199,7 +199,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         borderColorAttributecombo.addSelectionListener(this);
         borderColorAttributecombo.select(0);
         if (tmpColor == null) {
-            int index = getAttributeIndex(opacity, stringAttributesArrays);
+            int index = getAttributeIndex(color, stringAttributesArrays);
             if (index != -1) {
                 borderColorAttributecombo.select(index);
             }
