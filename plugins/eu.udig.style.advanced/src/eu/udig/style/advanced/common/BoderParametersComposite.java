@@ -69,10 +69,13 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
     private Text dashOffsetText;
     private Combo lineJoinCombo;
     private Combo lineCapCombo;
+    private final String[] stringAttributesArrays;
+    private Combo borderColorAttributecombo;
 
-    public BoderParametersComposite( Composite parent, String[] numericAttributesArrays ) {
+    public BoderParametersComposite( Composite parent, String[] numericAttributesArrays, String[] stringattributesArrays ) {
         this.parent = parent;
         this.numericAttributesArrays = numericAttributesArrays;
+        this.stringAttributesArrays = stringattributesArrays;
     }
 
     @Override
@@ -188,8 +191,19 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         borderColorEditor.setColor(tmpColor);
         borderColorButton = borderColorEditor.getButton();
         GridData borderColorButtonSIMPLEGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
-        borderColorButtonSIMPLEGD.horizontalSpan = 2;
         borderColorButton.setLayoutData(borderColorButtonSIMPLEGD);
+
+        borderColorAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        borderColorAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        borderColorAttributecombo.setItems(stringAttributesArrays);
+        borderColorAttributecombo.addSelectionListener(this);
+        borderColorAttributecombo.select(0);
+        if (tmpColor == null) {
+            int index = getAttributeIndex(opacity, stringAttributesArrays);
+            if (index != -1) {
+                borderColorAttributecombo.select(index);
+            }
+        }
 
         // graphics fill
         Label graphicsFillLabel = new Label(mainComposite, SWT.RADIO);
@@ -335,13 +349,20 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
 
         // border color
         String color = lineSymbolizerWrapper.getStrokeColor();
-        Color tmpColor;
+        Color tmpColor = null;
         try {
             tmpColor = Color.decode(color);
         } catch (Exception e) {
-            tmpColor = Color.gray;
+            // ignore and try for field
         }
-        borderColorEditor.setColor(tmpColor);
+        if (tmpColor != null) {
+            borderColorEditor.setColor(tmpColor);
+        } else {
+            int index = getAttributeIndex(color, stringAttributesArrays);
+            if (index != -1) {
+                borderColorAttributecombo.select(index);
+            }
+        }
 
         // graphics path
         try {
@@ -408,6 +429,8 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         borderOpacitySpinner.setEnabled(comboIsNone);
         comboIsNone = comboIsNone(borderWidthAttributecombo);
         borderWidthSpinner.setEnabled(comboIsNone);
+        comboIsNone = comboIsNone(borderColorAttributecombo);
+        borderColorEditor.setEnabled(comboIsNone);
     }
 
     public void widgetSelected( SelectionEvent e ) {
@@ -431,11 +454,21 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
                 }
                 notifyListeners(field, true, STYLEEVENTTYPE.BORDERWIDTH);
             }
-        } else if (source.equals(borderColorButton)) {
-            Color color = borderColorEditor.getColor();
-            Expression colorExpr = ff.literal(color);
-            String strokeColor = colorExpr.evaluate(null, String.class);
-            notifyListeners(strokeColor, false, STYLEEVENTTYPE.BORDERCOLOR);
+        } else if (source.equals(borderColorButton) || source.equals(borderColorAttributecombo)) {
+            boolean comboIsNone = comboIsNone(borderColorAttributecombo);
+            if (comboIsNone) {
+                Color color = borderColorEditor.getColor();
+                Expression colorExpr = ff.literal(color);
+                String strokeColor = colorExpr.evaluate(null, String.class);
+                notifyListeners(strokeColor, false, STYLEEVENTTYPE.BORDERCOLOR);
+            } else {
+                int index = borderColorAttributecombo.getSelectionIndex();
+                String field = borderColorAttributecombo.getItem(index);
+                if (field.length() == 0) {
+                    return;
+                }
+                notifyListeners(field, true, STYLEEVENTTYPE.BORDERCOLOR);
+            }
         } else if (source.equals(borderOpacitySpinner) || source.equals(borderOpacityAttributecombo)) {
             boolean comboIsNone = comboIsNone(borderOpacityAttributecombo);
             if (comboIsNone) {

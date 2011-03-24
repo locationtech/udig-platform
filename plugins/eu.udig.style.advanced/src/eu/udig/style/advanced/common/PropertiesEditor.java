@@ -296,6 +296,7 @@ public abstract class PropertiesEditor {
             // add none option
             numericAttributeNames.add(0, Utilities.NONE);
             allAttributeNames.add(0, Utilities.NONE);
+            stringAttributeNames.add(0, Utilities.NONE);
         }
     }
 
