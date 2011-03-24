@@ -115,7 +115,7 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
 
     @Override
     public <T> boolean canResolve( Class<T> adaptee ) {
-        if (GridCoverageLoader.class.isAssignableFrom(adaptee) && !isTiff())
+        if (GridCoverageLoader.class.isAssignableFrom(adaptee))
             return true;
 
         return super.canResolve(adaptee);
@@ -123,16 +123,11 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
 
     @Override
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
-        if (GridCoverageLoader.class.isAssignableFrom(adaptee) && !isTiff()) {
+        if (GridCoverageLoader.class.isAssignableFrom(adaptee)) {
             return adaptee.cast(loader);
         }
 
         return super.resolve(adaptee, monitor);
-    }
-
-    private boolean isTiff() {
-        boolean isTiff = fileName.toLowerCase().endsWith(".tiff") || fileName.toLowerCase().endsWith(".tif"); //$NON-NLS-1$ //$NON-NLS-2$
-        return isTiff;
     }
 
     /**

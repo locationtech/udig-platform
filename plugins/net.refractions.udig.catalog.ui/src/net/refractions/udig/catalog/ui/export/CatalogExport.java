@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.refractions.udig.catalog.internal.ui.ImageConstants;
-import net.refractions.udig.catalog.internal.ui.Images;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.internal.Messages;
 import net.refractions.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
@@ -166,7 +165,7 @@ public class CatalogExport {
     protected Map<Class<? extends State>, WorkflowWizardPageProvider> createPageMapping() {
         HashMap<Class<? extends State>, WorkflowWizardPageProvider> map = new HashMap<Class<? extends State>, WorkflowWizardPageProvider>();
         String title = Messages.LayerSelectionPage_title;
-        ImageDescriptor banner = Images.getDescriptor(ImageConstants.PATH_WIZBAN+"exportshapefile_wiz.gif"); //$NON-NLS-1$
+        ImageDescriptor banner = CatalogUIPlugin.getDefault().getImageDescriptor(ImageConstants.PATH_WIZBAN+"exportshapefile_wiz.gif"); //$NON-NLS-1$
         ExportResourceSelectionPage page = new ExportResourceSelectionPage("Select Layers", title, banner ); 
         map.put(ExportResourceSelectionState.class, new BasicWorkflowWizardPageFactory(page));
 

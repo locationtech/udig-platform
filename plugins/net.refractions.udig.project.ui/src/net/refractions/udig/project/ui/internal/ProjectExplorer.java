@@ -18,7 +18,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.internal.ui.IDropTargetProvider;
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.IProjectElement;
 import net.refractions.udig.project.element.ProjectElementAdapter;
@@ -28,8 +27,6 @@ import net.refractions.udig.project.internal.Project;
 import net.refractions.udig.project.internal.ProjectElement;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.ProjectRegistry;
-import net.refractions.udig.project.internal.impl.MapImpl;
-import net.refractions.udig.project.internal.impl.ProjectImpl;
 import net.refractions.udig.project.internal.provider.LoadingPlaceHolder;
 import net.refractions.udig.project.ui.AdapterFactoryLabelProviderDecorator;
 import net.refractions.udig.project.ui.ApplicationGIS;
@@ -40,7 +37,6 @@ import net.refractions.udig.ui.UDIGDragDropUtilities;
 import net.refractions.udig.ui.ZoomingDialog;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
@@ -89,8 +85,6 @@ import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetPage;
-
-import sun.security.krb5.internal.PAEncTSEnc;
 
 /**
  * Displays the Projects and their contents
@@ -382,9 +376,9 @@ public class ProjectExplorer extends ViewPart
         };
         boolean linked = preferenceStore.getBoolean(PROJECT_EXPLORER_LINKED);
         linkAction.setChecked(linked);
-        linkAction.setImageDescriptor(Images.getDescriptor(ImageConstants.LINKED_ENABLED_CO));
-        linkAction.setDisabledImageDescriptor(Images
-                .getDescriptor(ImageConstants.LINKED_DISABLED_CO));
+        linkAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.LINKED_ENABLED_CO));
+        linkAction.setDisabledImageDescriptor(ProjectUIPlugin.getDefault()
+                .getImageDescriptor(ISharedImages.LINKED_DISABLED_CO));
         linkAction.setToolTipText(Messages.ProjectExplorer_link_tooltip);
         if (linked)
             addEditorListener();

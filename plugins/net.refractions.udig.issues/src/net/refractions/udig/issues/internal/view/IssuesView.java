@@ -38,7 +38,6 @@ import net.refractions.udig.issues.IIssuesViewSorter;
 import net.refractions.udig.issues.IRemoteIssuesList;
 import net.refractions.udig.issues.IssuesList;
 import net.refractions.udig.issues.internal.ImageConstants;
-import net.refractions.udig.issues.internal.Images;
 import net.refractions.udig.issues.internal.IssuesActivator;
 import net.refractions.udig.issues.internal.Messages;
 import net.refractions.udig.issues.listeners.IIssuesListListener;
@@ -375,8 +374,8 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 	private boolean testing=false;
 
 	private IAction createDeleteGroupAction() {
-		IAction action = new Action(Messages.IssuesView_deleteRelatedAction, Images 
-				.getDescriptor(ImageConstants.DELETE_GROUP)) {
+		IAction action = new Action(Messages.IssuesView_deleteRelatedAction, IssuesActivator 
+				.getDefault().getImageDescriptor(ImageConstants.DELETE_GROUP)) {
 			@Override
 			public void runWithEvent(Event event) {
 				IStructuredSelection sel = (IStructuredSelection) viewer
@@ -443,8 +442,8 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 	}
 
 	private IAction createDeleteAction() {
-		Action action = new Action(Messages.IssuesView_DeleteIssueAction, Images 
-				.getDescriptor(ImageConstants.DELETE)) {
+		Action action = new Action(Messages.IssuesView_DeleteIssueAction, IssuesActivator 
+				.getDefault().getImageDescriptor(ImageConstants.DELETE)) {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void runWithEvent(Event event) {
@@ -546,8 +545,8 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
                 fixIssue((IIssue) sel.getFirstElement());
             }
         };
-        action.setImageDescriptor(Images
-                .getDescriptor(ImageConstants.GOTO_ISSUE));
+        action.setImageDescriptor(IssuesActivator.getDefault()
+                .getImageDescriptor(ImageConstants.GOTO_ISSUE));
         action.setText(Messages.IssuesView_fix_action_name); 
         action.setToolTipText(Messages.IssuesView_fix_action_tooltip); 
         if (viewer.getSelection().isEmpty()) {

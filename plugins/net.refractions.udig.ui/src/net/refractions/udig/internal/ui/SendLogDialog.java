@@ -83,7 +83,7 @@ public class SendLogDialog extends TitleAreaDialog {
     @Override
     protected Control createDialogArea( Composite parent ) {
         setTitle(Messages.SendLogDialog_description); 
-        ImageDescriptor image = Images.getDescriptor(ImageConstants.LOG_WIZ);
+        ImageDescriptor image = UiPlugin.getDefault().getImageDescriptor(ImageConstants.LOG_WIZ);
         if (image != null) setTitleImage(image.createImage());
         
         // create a composite with standard margins and spacing

@@ -45,8 +45,7 @@ public class FeatureSourceGeoResourceInfo extends IGeoResourceInfo {
             this.title = title.replace('_', ' ');
         }
         
-        ISharedImages images = CatalogUIPlugin.getDefault().getImages();
-        this.icon = images.getImageDescriptor( ISharedImages.FEATURE_OBJ ); // generic!
+        this.icon = CatalogUIPlugin.getDefault().getImageDescriptor( ISharedImages.FEATURE_OBJ ); // generic!
     }
     /**
      * Can be called to refresh the bounds from the internal info object.

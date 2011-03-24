@@ -240,7 +240,7 @@ public class JGrassMapGeoResource extends IGeoResource {
                             .getJGrassCrs();
                     bounds = new ReferencedEnvelope(fileWindow.getEnvelope(), grassCrs);
 
-                    super.icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.GRID_OBJ);
+                    super.icon = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.GRID_OBJ);
                 }
                 /*
                  * what if it is a grass ascii raster map?
@@ -285,7 +285,7 @@ public class JGrassMapGeoResource extends IGeoResource {
                  * what if it is a vector map
                  */
                 else if (JGrassMapGeoResource.this.type.equals(JGrassConstants.GRASS6VECTORMAP)) {
-                    super.icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.FEATURE_OBJ);
+                    super.icon = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.FEATURE_OBJ);
                 }
                 /*
                  * what if it is a point map
@@ -326,9 +326,9 @@ public class JGrassMapGeoResource extends IGeoResource {
 
                     bounds = new ReferencedEnvelope(tmpBounds,
                             ((JGrassMapsetGeoResource) JGrassMapGeoResource.this.parent).getJGrassCrs());
-                    super.icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.PIXEL_OBJ);
+                    super.icon = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.PIXEL_OBJ);
                 } else {
-                    super.icon = CatalogUIPlugin.getDefault().getImages().getImageDescriptor(ISharedImages.GRID_MISSING);
+                    super.icon = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.GRID_MISSING);
                 }
             } catch (Exception e) {
                 super.icon = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/problem.gif"); //$NON-NLS-1$

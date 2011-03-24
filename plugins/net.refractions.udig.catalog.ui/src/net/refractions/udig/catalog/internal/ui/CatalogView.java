@@ -199,7 +199,7 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
         
         Messages.initAction(removeAction, "action_remove"); //$NON-NLS-1$
         removeAction.setEnabled(false);
-        removeAction.setImageDescriptor(Images.getDescriptor(ImageConstants.REMOVE_CO));
+        removeAction.setImageDescriptor(CatalogUIPlugin.getDefault().getImageDescriptor(ImageConstants.REMOVE_CO));
         removeAction.setActionDefinitionId("org.eclipse.ui.edit.delete"); //$NON-NLS-1$
         getViewSite().getActionBars().setGlobalActionHandler(ActionFactory.DELETE.getId(), removeAction);
         getSite().getKeyBindingService().registerAction(removeAction);
@@ -335,8 +335,8 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
         IWorkbenchWindow window = getSite().getWorkbenchWindow();
         IAction action = ActionFactory.IMPORT.create(window);
 
-        action.setImageDescriptor(Images
-                .getDescriptor(ImageConstants.PATH_ETOOL + "import_wiz.gif")); //$NON-NLS-1$
+        action.setImageDescriptor(CatalogUIPlugin.getDefault()
+                .getImageDescriptor(ImageConstants.PATH_ETOOL + "import_wiz.gif")); //$NON-NLS-1$
         mgr.add(action);
 
         mgr.add(removeAction);

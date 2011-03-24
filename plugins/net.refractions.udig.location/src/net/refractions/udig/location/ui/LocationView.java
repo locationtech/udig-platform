@@ -7,7 +7,7 @@ import java.util.List;
 import net.refractions.udig.location.Location;
 import net.refractions.udig.location.LocationUIPlugin;
 import net.refractions.udig.location.USGLocation;
-import net.refractions.udig.location.internal.Images;
+import net.refractions.udig.location.internal.ImageConstants;
 import net.refractions.udig.location.internal.Messages;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.NavCommand;
@@ -280,7 +280,7 @@ public class LocationView extends SearchPart {
                         IWorkbenchActionConstants.MB_ADDITIONS));
                 contextMenu.add(new Separator());
                 
-                showAction.setImageDescriptor( Images.getDescriptor(Images.SHOW_CO));
+                showAction.setImageDescriptor( LocationUIPlugin.getDefault().getImageDescriptor(ImageConstants.SHOW_CO));
 
                 contextMenu.add(showAction);
             }

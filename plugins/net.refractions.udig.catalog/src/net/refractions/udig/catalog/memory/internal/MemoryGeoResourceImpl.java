@@ -14,6 +14,8 @@ import net.refractions.udig.catalog.ITransientResolve;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.feature.simple.SimpleFeature;
@@ -53,9 +55,9 @@ public class MemoryGeoResourceImpl extends IGeoResource implements ITransientRes
             return adaptee.cast(this);
         if (adaptee.isAssignableFrom(IGeoResourceInfo.class))
             return adaptee.cast(createInfo(monitor));
-        if (adaptee.isAssignableFrom(FeatureStore.class))
+        if (adaptee.isAssignableFrom(SimpleFeatureStore.class))
             return adaptee.cast(parent.getDS().getFeatureSource(type));
-        if (adaptee.isAssignableFrom(FeatureSource.class))
+        if (adaptee.isAssignableFrom(SimpleFeatureSource.class))
             return adaptee.cast(parent.getDS().getFeatureSource(type));
         if (adaptee.isAssignableFrom(SimpleFeatureType.class))
             return adaptee.cast(parent.getDS().getSchema(type));
@@ -67,10 +69,8 @@ public class MemoryGeoResourceImpl extends IGeoResource implements ITransientRes
         if (adaptee == null)
             return false;
 
-        return adaptee.isAssignableFrom(IGeoResourceInfo.class)
-                || adaptee.isAssignableFrom(FeatureStore.class)
-                || adaptee.isAssignableFrom(FeatureSource.class)
-                || adaptee.isAssignableFrom(IService.class)
+        return adaptee.isAssignableFrom(IGeoResourceInfo.class) || adaptee.isAssignableFrom(FeatureStore.class)
+                || adaptee.isAssignableFrom(FeatureSource.class) || adaptee.isAssignableFrom(IService.class)
                 || adaptee.isAssignableFrom(ITransientResolve.class) || super.canResolve(adaptee);
     }
 

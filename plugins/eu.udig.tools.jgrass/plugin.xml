@@ -2,32 +2,11 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="eu.udig.tools.jgrass"
-         name="%tools.name"
          point="net.refractions.udig.project.ui.tool">
       <modalTool
             categoryId="net.refractions.udig.tool.category.info"
-            class="eu.udig.tools.jgrass.coverageinfo.WhatRastTool"
-            icon="icons/d_what_rast.png"
-            id="eu.hydrologis.jgrass.whatrast.whatrasttool"
-            name="%whatrast.name"
-            onToolbar="false"
-            toolCursorId="whatrastCursor"
-            tooltip="%whatrast.tooltip">
-         <cursor
-               hotspotX="10"
-               hotspotY="10"
-               image="icons/measure_source.gif">
-         </cursor>
-      </modalTool>
-      <toolCursor
-            hotspotX="10"
-            hotspotY="10"
-            id="whatrastCursor"
-            image="icons/measure_source.gif"/>
-      <modalTool
-            categoryId="net.refractions.udig.tool.category.info"
             class="eu.udig.tools.jgrass.profile.ProfileTool"
+            icon="icons/profileview.png"
             id="eu.udig.tools.jgrass.profiletool"
             name="%profile.name"
             onToolbar="true"
@@ -39,33 +18,17 @@
                      id="profileCursor"
                      image="icons/profilecursor.gif">
                </cursor>
+           <enablement>
+              <adaptsTo
+                    target="org.geotools.coverage.grid.io.AbstractGridCoverage2DReader">
+              </adaptsTo>
+           </enablement>
       </modalTool>
       <toolCursor
             hotspotX="10"
             hotspotY="10"
             id="profileCursor"
             image="icons/profilecursor.gif"/>
-      <modalTool
-            categoryId="net.refractions.udig.tool.category.info"
-            class="eu.udig.tools.jgrass.correct.RcorrectTool"
-            icon="icons/r_correct.png"
-            id="eu.udig.tools.jgrass.rcorrecttool"
-            name="%rcorrect.name"
-            onToolbar="false"
-            toolCursorId="rcorrectCursor"
-            tooltip="%rcorrect.tooltip">
-               <cursor
-                     hotspotX="10"
-                     hotspotY="10"
-                     id="rcorrectCursor"
-                     image="icons/measure_source.gif">
-               </cursor>
-      </modalTool>
-      <toolCursor
-            hotspotX="10"
-            hotspotY="10"
-            id="rcorrectCursor"
-            image="icons/measure_source.gif"/>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -210,5 +173,48 @@
             Import a kml file into the workspace.
          </description>
       </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientationCommand"
+            id="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientationCommand"
+            name="View lines orientation">
+      </command>
+      <keyBinding
+            commandId="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientationCommand"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            keySequence="Alt+Shift+A">
+      </keyBinding>
+      <command
+            defaultHandler="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientationCommand"
+            id="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientationCommand"
+            name="Invert lines orientation">
+      </command>
+      <keyBinding
+            commandId="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientationCommand"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            keySequence="Alt+Shift+S">
+      </keyBinding>
+      <command
+            defaultHandler="eu.udig.tools.jgrass.movefeatures.FeatureDownMoverCommand"
+            id="eu.udig.tools.jgrass.movefeatures.FeatureDownMoverCommand"
+            name="Move feature a layer down">
+      </command>
+      <keyBinding
+            commandId="eu.udig.tools.jgrass.movefeatures.FeatureDownMoverCommand"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            keySequence="Alt+Shift+Z">
+      </keyBinding>
+      <command
+            defaultHandler="eu.udig.tools.jgrass.movefeatures.FeatureUpMoverCommand"
+            id="eu.udig.tools.jgrass.movefeatures.FeatureUpMoverCommand"
+            name="Move feature a layer up">
+      </command>
+      <keyBinding
+            commandId="eu.udig.tools.jgrass.movefeatures.FeatureUpMoverCommand"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            keySequence="Alt+Shift+W">
+      </keyBinding>
    </extension>
 </plugin>

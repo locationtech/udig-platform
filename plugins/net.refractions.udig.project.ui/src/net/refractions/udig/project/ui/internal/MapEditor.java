@@ -7,10 +7,7 @@
  */
 package net.refractions.udig.project.ui.internal;
 
-import java.awt.AWTException;
 import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -918,7 +915,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         setPartName(getMap().getName());
 
         setTitleToolTip(Messages.MapEditor_titleToolTip);
-        setTitleImage(Images.get(ISharedImages.MAP_OBJ));
+        setTitleImage(ProjectUIPlugin.getDefault().getImage(ISharedImages.MAP_OBJ));
 
         final IPreferenceStore preferenceStore = ProjectPlugin.getPlugin().getPreferenceStore();
         boolean istiled = preferenceStore

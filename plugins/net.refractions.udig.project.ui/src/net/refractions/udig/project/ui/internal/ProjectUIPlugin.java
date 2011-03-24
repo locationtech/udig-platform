@@ -8,20 +8,21 @@
  */
 package net.refractions.udig.project.ui.internal;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.refractions.udig.core.AbstractUdigUIPlugin;
 import net.refractions.udig.project.ui.feature.FeaturePanelProcessor;
-import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -33,7 +34,6 @@ import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.osgi.framework.BundleContext;
@@ -45,15 +45,11 @@ import org.osgi.framework.BundleContext;
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
-public class ProjectUIPlugin extends AbstractUIPlugin {
-
-
-    /**
-     * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public static final ProjectUIPlugin INSTANCE = new ProjectUIPlugin();
+/**
+ * @author fgdrf
+ *
+ */
+public class ProjectUIPlugin extends AbstractUdigUIPlugin {
 
     /**
      * The default speed for mouse double click in milliseconds.
@@ -74,9 +70,7 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
      */
     public static final int MAX_RESOURCES_IN_SERVICE = 1;
 
-    private static ProjectUIPlugin plugin;
-
-    Images images = new Images();
+	private static ProjectUIPlugin INSTANCE;
 
     List<AdapterFactory> adapterFactories;
 
@@ -91,7 +85,7 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
      */
     public ProjectUIPlugin() {
         super();
-        plugin = this;
+        INSTANCE = this;
     }
 
     FeatureEditorExtensionProcessor featureEditProcessor = new FeatureEditorExtensionProcessor();
@@ -103,14 +97,6 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
-
-        final URL iconsUrl = context.getBundle().getEntry(ICONS_PATH);
-
-        PlatformGIS.syncInDisplayThread(new Runnable(){
-            public void run() {
-                images.initializeImages(iconsUrl, getImageRegistry());
-            }
-        });
         
         new ActiveMapTracker().startup();
     }
@@ -121,14 +107,7 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
      * @return the plugin object
      */
     public static ProjectUIPlugin getDefault() {
-        return plugin;
-    }
-
-    /**
-     * @return Returns the images.
-     */
-    public Images getImages() {
-        return images;
+        return INSTANCE;
     }
 
     /**
@@ -338,5 +317,12 @@ public class ProjectUIPlugin extends AbstractUIPlugin {
         }
         return mouseSpeed; 
     }
+
+	/* (non-Javadoc)
+	 * @see net.refractions.udig.core.AbstractUdigUIPlugin#getIconPath()
+	 */
+	public IPath getIconPath() {
+		return new Path(ICONS_PATH);
+	}
 
 }
