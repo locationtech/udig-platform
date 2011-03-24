@@ -800,10 +800,7 @@ public class ApplicationGIS {
                                 ApplicationGIS.class,
                                 "ApplicationGIS.drawMap() beginning rendering of map '" + map.getName() + "'", null); //$NON-NLS-1$ //$NON-NLS-2$
 
-                
-                ReferencedEnvelope bounds = (ReferencedEnvelope) params.toDraw.getViewportModel().getBounds();
-                ReferencedEnvelope boundsCopy = new ReferencedEnvelope(bounds);
-				RenderContext tools = configureMapForRendering(map, params.destinationSize, params.dpi, params.boundsStrategy, boundsCopy);
+                RenderContext tools = configureMapForRendering(map, params.destinationSize, params.dpi, params.boundsStrategy, (ReferencedEnvelope) params.toDraw.getViewportModel().getBounds());
                 
                 RendererCreator decisive = new RendererCreatorImpl();
                 decisive.setContext(tools);
