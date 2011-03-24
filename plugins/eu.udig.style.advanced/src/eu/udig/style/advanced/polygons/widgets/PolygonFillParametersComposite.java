@@ -68,10 +68,13 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
     private Text graphicsPathText;
     private Button wkmColorButton;
     private Spinner wkmSizeSpinner;
+    private final String[] stringAttributesArrays;
+    private Combo fillColorAttributecombo;
 
-    public PolygonFillParametersComposite( Composite parent, String[] numericAttributesArrays ) {
+    public PolygonFillParametersComposite( Composite parent, String[] numericAttributesArrays, String[] stringAttributesArrays ) {
         this.parent = parent;
         this.numericAttributesArrays = numericAttributesArrays;
+        this.stringAttributesArrays = stringAttributesArrays;
     }
 
     public Composite getComposite() {
@@ -120,8 +123,19 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         fillColorEditor.setColor(tmpColor);
         fillColorButton = fillColorEditor.getButton();
         GridData fillColorButtonGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
-        fillColorButtonGD.horizontalSpan = 2;
         fillColorButton.setLayoutData(fillColorButtonGD);
+
+        fillColorAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        fillColorAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        fillColorAttributecombo.setItems(stringAttributesArrays);
+        fillColorAttributecombo.addSelectionListener(this);
+        fillColorAttributecombo.select(0);
+        if (tmpColor == null) {
+            int index = getAttributeIndex(color, stringAttributesArrays);
+            if (index != -1) {
+                fillColorAttributecombo.select(index);
+            }
+        }
 
         // graphics fill
         Label graphicsFillLabel = new Label(mainComposite, SWT.RADIO);
@@ -296,9 +310,16 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         try {
             tmpColor = Color.decode(color);
         } catch (Exception e) {
-            tmpColor = Color.gray;
+            // ignore and try for field
         }
-        fillColorEditor.setColor(tmpColor);
+        if (tmpColor != null) {
+            fillColorEditor.setColor(tmpColor);
+        } else {
+            int index = getAttributeIndex(color, stringAttributesArrays);
+            if (index != -1) {
+                fillColorAttributecombo.select(index);
+            }
+        }
 
         // graphics path
         try {
@@ -360,6 +381,8 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
     private void checkEnablements() {
         boolean comboIsNone = comboIsNone(fillOpacityAttributecombo);
         fillOpacitySpinner.setEnabled(comboIsNone);
+        comboIsNone = comboIsNone(fillColorAttributecombo);
+        fillColorEditor.setEnabled(comboIsNone);
     }
 
     public void widgetSelected( SelectionEvent e ) {
@@ -367,11 +390,21 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         if (source.equals(fillEnableButton)) {
             boolean selected = fillEnableButton.getSelection();
             notifyListeners(String.valueOf(selected), false, STYLEEVENTTYPE.FILLENABLE);
-        } else if (source.equals(fillColorButton)) {
-            Color color = fillColorEditor.getColor();
-            Expression colorExpr = ff.literal(color);
-            String fillColor = colorExpr.evaluate(null, String.class);
-            notifyListeners(fillColor, false, STYLEEVENTTYPE.FILLCOLOR);
+        } else if (source.equals(fillColorButton) || source.equals(fillColorAttributecombo)) {
+            boolean comboIsNone = comboIsNone(fillColorAttributecombo);
+            if (comboIsNone) {
+                Color color = fillColorEditor.getColor();
+                Expression colorExpr = ff.literal(color);
+                String fillColor = colorExpr.evaluate(null, String.class);
+                notifyListeners(fillColor, false, STYLEEVENTTYPE.FILLCOLOR);
+            } else {
+                int index = fillColorAttributecombo.getSelectionIndex();
+                String field = fillColorAttributecombo.getItem(index);
+                if (field.length() == 0) {
+                    return;
+                }
+                notifyListeners(field, true, STYLEEVENTTYPE.FILLCOLOR);
+            }
         } else if (source.equals(fillOpacitySpinner) || source.equals(fillOpacityAttributecombo)) {
             boolean comboIsNone = comboIsNone(fillOpacityAttributecombo);
             if (comboIsNone) {

@@ -79,7 +79,8 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
 
         stroke = lineSymbolizer.getStroke();
         if (stroke != null) {
-            strokeColor = stroke.getColor().evaluate(null, String.class);
+            Expression color = stroke.getColor();
+            strokeColor = expressionToString(color);
             Expression width = stroke.getWidth();
             strokeWidth = expressionToString(width);
             Expression opacity = stroke.getOpacity();
@@ -87,14 +88,17 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
 
             if (strokeColor == null) {
                 strokeColor = DEFAULT_COLOR;
+                stroke.setColor(ff.literal(DEFAULT_COLOR));
             }
             if (strokeOpacity == null) {
                 strokeOpacity = DEFAULT_OPACITY;
+                stroke.setOpacity(ff.literal(DEFAULT_OPACITY));
             }
             if (strokeWidth == null) {
                 strokeWidth = DEFAULT_WIDTH;
+                stroke.setWidth(ff.literal(DEFAULT_WIDTH));
             }
-
+            
             strokeGraphicStroke = stroke.getGraphicStroke();
             if (strokeGraphicStroke != null) {
                 List<GraphicalSymbol> graphicalSymbolsList = strokeGraphicStroke.graphicalSymbols();
