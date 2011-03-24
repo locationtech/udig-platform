@@ -66,6 +66,8 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
     private StackLayout mainStackLayout;
 
     private String[] numericAttributesArrays;
+    private String[] allAttributesArrays;
+    private String[] stringattributesArrays;
 
     private Composite parentComposite;
 
@@ -76,8 +78,6 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
     private BoderParametersComposite borderParametersComposite;
 
     private LineLabelsParametersComposite labelsParametersComposite;
-
-    private String[] allAttributesArrays;
 
     private FiltersComposite filtersComposite;
 
@@ -114,10 +114,11 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         // System.out.println("open: " + rule.getName());
 
         List<String> numericAttributeNames = linePropertiesEditor.getNumericAttributeNames();
-        numericAttributesArrays = (String[]) numericAttributeNames.toArray(new String[numericAttributeNames.size()]);
+        numericAttributesArrays = numericAttributeNames.toArray(new String[0]);
         List<String> allAttributeNames = linePropertiesEditor.getAllAttributeNames();
-        allAttributesArrays = (String[]) allAttributeNames.toArray(new String[allAttributeNames.size()]);
-        // geometryPropertyName = linePropertiesEditor.getGeometryPropertyName().getLocalPart();
+        allAttributesArrays = allAttributeNames.toArray(new String[0]);
+        List<String> stringAttributeNames = linePropertiesEditor.getStringAttributeNames();
+        stringattributesArrays = stringAttributeNames.toArray(new String[0]);
 
         parentComposite = new Composite(parent, SWT.NONE);
         parentComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -169,7 +170,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         tabItem1.setControl(generalParametersInternalComposite);
 
         // BORDER GROUP
-        borderParametersComposite = new BoderParametersComposite(tabFolder, numericAttributesArrays);
+        borderParametersComposite = new BoderParametersComposite(tabFolder, numericAttributesArrays, stringattributesArrays);
         borderParametersComposite.init(ruleWrapper);
         borderParametersComposite.addListener(this);
         Composite borderParametersInternalComposite = borderParametersComposite.getComposite();
@@ -248,7 +249,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
             break;
         }
         case BORDERCOLOR: {
-            lineSymbolizerWrapper.setStrokeColor(value);
+            lineSymbolizerWrapper.setStrokeColor(value, fromField);
             break;
         }
         case BORDEROPACITY: {

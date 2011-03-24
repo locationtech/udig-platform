@@ -81,8 +81,10 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
     private PolygonLabelsParametersComposite labelsParametersComposite;
 
     private String[] allAttributesArrays;
-    
+
     private FiltersComposite filtersComposite;
+
+    private String[] stringattributesArrays;
 
     public PolygonPropertiesComposite( final PolygonPropertiesEditor polygonPropertiesEditor, Composite parent ) {
         this.polygonPropertiesEditor = polygonPropertiesEditor;
@@ -121,7 +123,8 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         numericAttributesArrays = (String[]) numericAttributeNames.toArray(new String[numericAttributeNames.size()]);
         List<String> allAttributeNames = polygonPropertiesEditor.getAllAttributeNames();
         allAttributesArrays = (String[]) allAttributeNames.toArray(new String[allAttributeNames.size()]);
-        // geometryPropertyName = polygonPropertiesEditor.getGeometryPropertyName().getLocalPart();
+        List<String> stringAttributeNames = polygonPropertiesEditor.getStringAttributeNames();
+        stringattributesArrays = stringAttributeNames.toArray(new String[0]);
 
         parentComposite = new Composite(parent, SWT.NONE);
         parentComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -173,7 +176,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         tabItem1.setControl(generalParametersInternalComposite);
 
         // BORDER GROUP
-        borderParametersComposite = new BoderParametersComposite(tabFolder, numericAttributesArrays);
+        borderParametersComposite = new BoderParametersComposite(tabFolder, numericAttributesArrays, stringattributesArrays);
         borderParametersComposite.init(ruleWrapper);
         borderParametersComposite.addListener(this);
         Composite borderParametersInternalComposite = borderParametersComposite.getComposite();
@@ -201,7 +204,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         TabItem tabItem4 = new TabItem(tabFolder, SWT.NULL);
         tabItem4.setText("Labels  ");
         tabItem4.setControl(labelParametersInternalComposite);
-        
+
         // Filter GROUP
         filtersComposite = new FiltersComposite(tabFolder);
         filtersComposite.init(ruleWrapper);
@@ -263,7 +266,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
             break;
         }
         case BORDERCOLOR: {
-            polygonSymbolizerWrapper.setStrokeColor(value);
+            polygonSymbolizerWrapper.setStrokeColor(value, fromField);
             break;
         }
         case BORDEROPACITY: {
