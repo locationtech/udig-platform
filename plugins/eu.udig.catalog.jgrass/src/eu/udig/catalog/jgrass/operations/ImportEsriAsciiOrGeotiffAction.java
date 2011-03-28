@@ -117,7 +117,8 @@ public class ImportEsriAsciiOrGeotiffAction
                                 // create a thread and inside do a syncExec
                                 FileDialog fileDialog = new FileDialog(Display.getDefault().getActiveShell(), SWT.OPEN
                                         | SWT.MULTI);
-                                fileDialog.setFilterExtensions(new String[]{"*.asc", "*.tif", "*.tiff"});
+                                fileDialog.setFilterExtensions(new String[]{"*.asc", "*.ASC", "*.tif", "*.TIF", "*.tiff",
+                                        "*.TIFF", "*.*"});
                                 String selpath = fileDialog.open();
                                 if (selpath == null) {
                                     return;
@@ -138,13 +139,14 @@ public class ImportEsriAsciiOrGeotiffAction
                                     CoordinateReferenceSystem jGrassCrs = mapsetResource.getJGrassCrs();
                                     GridCoverage2D geodata = null;
                                     CoordinateReferenceSystem fileCrs = null;
-                                    if (mapFile.getName().endsWith(".asc")) {
+                                    if (mapFile.getName().toLowerCase().endsWith(".asc")) {
                                         ArcGridReader arcGridReader = new ArcGridReader(mapFile);
                                         geodata = arcGridReader.read(null);
                                         geodata = geodata.view(ViewType.GEOPHYSICS);
                                         geodata = JGrassCatalogUtilities.removeNovalues(geodata);
                                         fileCrs = arcGridReader.getCrs();
-                                    } else if (mapFile.getName().endsWith(".tif") || mapFile.getName().endsWith(".tiff")) {
+                                    } else if (mapFile.getName().toLowerCase().endsWith(".tif")
+                                            || mapFile.getName().toLowerCase().endsWith(".tiff")) {
                                         GeoTiffReader geotiffGridReader = new GeoTiffReader(mapFile);
                                         geodata = geotiffGridReader.read(null);
                                         geodata = geodata.view(ViewType.GEOPHYSICS);
