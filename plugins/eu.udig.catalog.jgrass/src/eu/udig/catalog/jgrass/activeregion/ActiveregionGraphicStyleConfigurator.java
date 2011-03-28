@@ -404,14 +404,17 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator imp
 
             JGrassRegion tmp = new JGrassRegion(style.west, style.east, style.south, style.north, style.rows, style.cols);
             // set initial values
-            northText.setText(Double.toString(style.north));
-            southText.setText(Double.toString(style.south));
-            westText.setText(Double.toString(style.west));
-            eastText.setText(Double.toString(style.east));
-            xresText.setText(Double.toString(tmp.getWEResolution()));
-            yresText.setText(Double.toString(tmp.getNSResolution()));
-            colsText.setText(Double.toString(style.cols));
-            rowsText.setText(Double.toString(style.rows));
+            isWorking = true;
+            northText.setText(String.valueOf(style.north));
+            southText.setText(String.valueOf(style.south));
+            westText.setText(String.valueOf(style.west));
+            eastText.setText(String.valueOf(style.east));
+            xresText.setText(String.valueOf(tmp.getWEResolution()));
+            yresText.setText(String.valueOf(tmp.getNSResolution()));
+            colsText.setText(String.valueOf(style.cols));
+            rowsText.setText(String.valueOf(style.rows));
+            isWorking = false;
+
             forgroundAlphaText.setText(Float.toString(style.fAlpha));
             backgroundAlphaText.setText(Float.toString(style.bAlpha));
             foregroundColor.setColorValue(new RGB(style.foregroundColor.getRed(), style.foregroundColor.getGreen(),
@@ -649,9 +652,11 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator imp
                 double ewRes = Double.parseDouble(ewresstr);
 
                 double deltaNS = (n - s) % nsRes;
-                s = s + deltaNS - nsRes;
+                if (deltaNS > 0.00001)
+                    s = s + deltaNS - nsRes;
                 double deltaWE = (e - w) % ewRes;
-                e = e - deltaWE + ewRes;
+                if (deltaWE > 0)
+                    e = e - deltaWE + ewRes;
                 southText.setText(String.valueOf(s));
                 eastText.setText(String.valueOf(e));
 
