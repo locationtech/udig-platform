@@ -646,7 +646,6 @@ public class Utilities {
     public static Rule createDefaultPointRule() {
         Graphic graphic = sf.createDefaultGraphic();
         Mark circleMark = sf.getCircleMark();
-        circleMark.setSize(ff.literal(DEFAULT_SIZE));
         circleMark.setFill(sf.createFill(ff.literal(Color.red)));
         circleMark.setStroke(sf.createStroke(ff.literal(Color.BLACK), ff.literal(DEFAULT_WIDTH)));
         graphic.graphicalSymbols().clear();
@@ -857,18 +856,13 @@ public class Utilities {
 
         Graphic graphic = SLDs.graphic(pointSymbolizer);
         graphic.graphicalSymbols().clear();
+        
         Mark mark = Utilities.sf.createMark();
         mark.setWellKnownName(Utilities.ff.literal(wellKnownMarkName));
         if (oldMark != null) {
             mark.setFill(oldMark.getFill());
-            mark.setRotation(oldMark.getRotation());
-            mark.setSize(oldMark.getSize());
             mark.setStroke(oldMark.getStroke());
-        } else {
-            mark.setRotation(graphic.getRotation());
-            mark.setSize(graphic.getSize());
         }
-
         graphic.graphicalSymbols().add(mark);
     }
 
