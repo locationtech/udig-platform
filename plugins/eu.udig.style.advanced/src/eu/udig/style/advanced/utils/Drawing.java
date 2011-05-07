@@ -51,6 +51,7 @@ import org.geotools.renderer.style.Style2D;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.LineSymbolizer;
+import org.geotools.styling.Mark;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
@@ -63,6 +64,7 @@ import org.geotools.styling.TextSymbolizer;
 import org.geotools.util.NumberRange;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.opengis.geometry.BoundingBox;
 import org.opengis.referencing.operation.MathTransform;
@@ -441,9 +443,11 @@ public final class Drawing {
             syms[0] = builder.createLineSymbolizer(baseColor, 2);
         if (Point.class.isAssignableFrom(type) || MultiPoint.class.isAssignableFrom(type)) {
             PointSymbolizer point = builder.createPointSymbolizer(builder.createGraphic());
-            point.getGraphic().getMarks()[0].setSize((Expression) CommonFactoryFinder
-                    .getFilterFactory(GeoTools.getDefaultHints()).literal(10));
-            point.getGraphic().getMarks()[0].setFill(builder.createFill(baseColor));
+            FilterFactory ff = builder.getFilterFactory();            
+            //point.getGraphic().getMarks()[0].setSize((Expression) ff.literal(10));
+            point.getGraphic().setSize( ff.literal(10));
+            Mark mark = (Mark) point.getGraphic().graphicalSymbols().get(0);
+            mark.setFill(builder.createFill(baseColor));
             syms[0] = point;
         }
         if (Polygon.class.isAssignableFrom(type) || MultiPolygon.class.isAssignableFrom(type)) {
