@@ -1474,8 +1474,6 @@ public class StyleThemePage extends StyleEditorPage {
                                 Fill newFill = sb.createFill(fill);
                                 newFill.setOpacity(ff.literal(opac));
                                 mark.setFill(newFill);
-                                mark.setRotation(oldMark.getRotation());
-                                mark.setSize(oldMark.getSize());
 
                                 Stroke newStroke = oldMark.getStroke();
                                 if (newStroke != null) {
@@ -1489,6 +1487,7 @@ public class StyleThemePage extends StyleEditorPage {
 
                                 Graphic newGraphic = SLDs.graphic(newPointSymbolizer);
                                 newGraphic.setSize(oldGraphic.getSize());
+                                newGraphic.setRotation( oldGraphic.getRotation());
                                 newGraphic.graphicalSymbols().clear();
                                 newGraphic.graphicalSymbols().add(mark);
                                 break;
