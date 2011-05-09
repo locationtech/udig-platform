@@ -93,7 +93,9 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
                     String title = resource.getTitle();
                     if (title == null) {
                         IGeoResourceInfo info = resource.getInfo(new NullProgressMonitor());
-                        title = info.getTitle();
+                        if(info != null) {
+                        	title = info.getTitle();
+                        }
                     }
                     ID id = resource.getID();
                     if (title == null) {

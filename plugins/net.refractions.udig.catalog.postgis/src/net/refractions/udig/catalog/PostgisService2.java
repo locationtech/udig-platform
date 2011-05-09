@@ -71,6 +71,12 @@ public class PostgisService2 extends IService {
         // clean up connection
         dispose(new NullProgressMonitor());
     }
+    
+    @Override
+    public String getTitle() {
+        URL id = getIdentifier();
+		return ("PostGIS " +id.getHost()+ "/" +id.getPath()).replaceAll("//","/"); //$NON-NLS-1$
+    }
 
     @Override
     public Map<String, Serializable> getConnectionParams() {
@@ -158,7 +164,7 @@ public class PostgisService2 extends IService {
             status = Status.BROKEN;
             return null;
         }
-        Set<TableDescriptor> tables = runnable.getSchemas();
+        Set<TableDescriptor> tables = runnable.getTableDescriptors();
         Set<String> schemas = new HashSet<String>();
         for( TableDescriptor schema : tables ) {
             schemas.add(schema.schema);

@@ -204,7 +204,7 @@ public class DataConnectionPage extends AbstractUDIGImportPage implements Listen
                         tableSelection.setTableInput(Collections.<TableDescriptor>emptySet());
                     } else {
                         setErrorMessage(null);
-                        tableSelection.setTableInput(runnable.getSchemas());
+                        tableSelection.setTableInput(runnable.getTableDescriptors());
                     }
                     getContainer().updateButtons();
                 } catch (InvocationTargetException e) {
@@ -269,6 +269,8 @@ public class DataConnectionPage extends AbstractUDIGImportPage implements Listen
             System.arraycopy(names, 0, items, 1, names.length);
 
             database.setItems(items);
+            
+            database.select(1);
         }
     }
 

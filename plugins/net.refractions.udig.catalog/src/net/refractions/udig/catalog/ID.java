@@ -231,7 +231,7 @@ public class ID implements Serializable {
         int slash = name.lastIndexOf('/');
         int dot = name.lastIndexOf('.');
         int beginIndex = (slash == -1 && slash < name.length() - 1 ? 0 : slash) + 1;
-        int endIndex = dot == -1 ? name.length() : dot;
+        int endIndex = dot == -1 || dot < beginIndex ? name.length() : dot;
         return name.substring(beginIndex, endIndex);
         /*
          * String name = file.getName(); int split = name.lastIndexOf('.'); if( split == -1 ){

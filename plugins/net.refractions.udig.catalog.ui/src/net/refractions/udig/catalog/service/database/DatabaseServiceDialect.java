@@ -25,16 +25,16 @@ import org.geotools.data.DataAccessFactory.Param;
  */
 public abstract class DatabaseServiceDialect {
     // The parameter information required for creating a Geotools Datastore.
-	// Postgis was used as the template
+	// Teradata was used as the template
 	/**
-	 * The key of the parameter that (at least in Postgis) identifies the schema
+	 * The key of the parameter that (at least in Teradata) identifies the schema
 	 * that the table resides in.
 	 */
 	public final Param schemaParam;
 
 	/**
 	 * The key of the parameter that identifies the database (within the
-	 * database, this is concept is inherited from Postgis)
+	 * database, this is concept is inherited from Teradata)
 	 */
 	public final Param databaseParam;
 
@@ -59,7 +59,7 @@ public abstract class DatabaseServiceDialect {
 	public final Param passwordParam;
 
 	/**
-	 * The key that indicates the type of Datastore to create.  For example PostgisDataStoreFactory#DBTYPE
+	 * The key that indicates the type of Datastore to create.  For example TeradataDataStoreFactory#DBTYPE
 	 */
     public final Param typeParam;
     
@@ -68,7 +68,7 @@ public abstract class DatabaseServiceDialect {
     /**
      * The prefix/host to put in a url that identifies this type of database.
      * 
-     * For example the postgis one is: "jdbc.postgis"
+     * For example the Teradata one is: "jdbc.Teradata"
      */
     public final String urlPrefix;
 
@@ -112,16 +112,15 @@ public abstract class DatabaseServiceDialect {
         Integer intPort = (Integer) params.get(portParam.key);
         String the_database = (String) params.get(databaseParam.key);
         String the_username = (String) params.get(usernameParam.key);
-        String the_password = (String) params.get(passwordParam.key);
 
-        URL toURL = toURL(the_username, the_password, the_host, intPort, the_database);
+        URL toURL = toURL(the_username, the_host, intPort, the_database);
         return toURL;
     }
 
-    public URL toURL( String the_username, String the_password, String the_host,
+    public URL toURL( String the_username, String the_host,
             Integer intPort, String the_database ) throws MalformedURLException {
         String the_spec = urlPrefix+"://" + the_username //$NON-NLS-1$
-                + ":" + the_password + "@" + the_host //$NON-NLS-1$ //$NON-NLS-2$
+                + "@" + the_host //$NON-NLS-1$ //$NON-NLS-2$
                 + ":" + intPort + "/" + the_database; //$NON-NLS-1$  //$NON-NLS-2$
         return toURL(the_spec);
     }
@@ -141,7 +140,7 @@ public abstract class DatabaseServiceDialect {
      * @param port the port on which to connect
      * @param username the username for connections
      * @param password the password for connection
-     * @param database In postgis there are databases within a database.  This is a common construct but often
+     * @param database In Teradata there are databases within a database.  This is a common construct but often
      *                 named differently.  Please try to make the mapping.  
      * @return {@link DatabaseConnectionRunnable}
      */
@@ -165,7 +164,7 @@ public abstract class DatabaseServiceDialect {
      * @param port the port on which to connect
      * @param username the username for connections
      * @param password the password for connection
-     * @param database In postgis there are databases within a database.  This is a common construct but often
+     * @param database In Teradata there are databases within a database.  This is a common construct but often
      *                 named differently.  Please try to make the mapping.  
      * @return {@link LookUpSchemaRunnable}
      */

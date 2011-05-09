@@ -17,7 +17,6 @@ package net.refractions.udig.catalog;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,8 +69,7 @@ public class PostgisServiceInfo extends IServiceInfo {
     }
 
     public String getTitle() {
-        URL id = service.getIdentifier();
-		return ("PostGIS " +id.getHost()+ "/" +id.getPath()).replaceAll("//","/"); //$NON-NLS-1$
+    	return service.getTitle();
     }
 
 }

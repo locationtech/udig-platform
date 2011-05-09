@@ -378,8 +378,9 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
         public IStatus run( final IProgressMonitor monitor ) {
             updater=new DisplayUpdater(monitor);
             try{
-                while( !toDecorate.isEmpty() ) {
+                while( true ) {
                     final IResolve element = toDecorate.poll();
+                    if(element == null) break;
                     // check if some how request has already been fullfilled.
                     LabelData labelData = decorated.get(element);
                     if (text && labelData != null)

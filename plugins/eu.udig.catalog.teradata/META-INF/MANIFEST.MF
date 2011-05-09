@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Teradata
+Bundle-SymbolicName: eu.udig.catalog.teradata;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: eu.udig.catalog.teradata.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.catalog;bundle-version="1.2.0",
+ net.refractions.udig.catalog.ui;bundle-version="1.2.0",
+ eu.udig.libs.teradata;bundle-version="1.2.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: eu.udig.catalog.teradata

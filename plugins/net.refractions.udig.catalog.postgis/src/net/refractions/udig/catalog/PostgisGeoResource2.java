@@ -57,18 +57,16 @@ public class PostgisGeoResource2 extends IGeoResource {
             } catch (MalformedURLException e) {
                 throw new IllegalArgumentException("The service URL must not contain a #", e);
             }
-            
-            try {
-                info = new PostgisResourceInfo(this);
-            } catch (Exception e) {
-                PostgisPlugin.log("Error creating a PostgisInfo object", e);
-            }            
     }
 
     public URL getIdentifier() {
         return identifier;
     }
 
+    @Override
+    public String getTitle() {
+    	return typename;
+    }
     @Override
     public IResolve parent( IProgressMonitor monitor ) throws IOException {
         return parent;
@@ -147,12 +145,13 @@ public class PostgisGeoResource2 extends IGeoResource {
                 || super.canResolve(adaptee);
     }
 
-    @Override
-    public PostgisResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
-        return (PostgisResourceInfo) super.getInfo(monitor);
-    }
     protected PostgisResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        return (PostgisResourceInfo) info; // created during the constructor
+        try {
+            return new PostgisResourceInfo(this);
+        } catch (Exception e) {
+            PostgisPlugin.log("Error creating a PostgisInfo object", e);
+            return null;
+        }      
     }
 
     /**

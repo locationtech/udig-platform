@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.CatalogPlugin;
+import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.PostgisGeoResource2;
@@ -59,7 +60,7 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
         if( url == null ){
             // so we are not sure it is a postgis url
             // lets guess
-            url = CatalogPlugin.locateURL(context);
+            url = ID.cast( context ).toURL();
         }
         if( url != null && PostgisServiceExtension2.isPostGIS(url)) {  
             // well we have a url - lets try it!            
@@ -139,8 +140,8 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
         else if( data instanceof String ){
             return toCapabilitiesURL( (String) data );
         }
-        else if( CatalogPlugin.locateURL(data) != null ){
-            return toCapabilitiesURL( CatalogPlugin.locateURL(data) );
+        else if( ID.cast( data ).toURL() != null ){
+            return toCapabilitiesURL( ID.cast( data ).toURL() );
         }
         else {
             return null; // no idea what this should be
@@ -218,7 +219,7 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
         //URL(String protocol, String host, int port, String file)
         URL url = null;
         try {
-            url = DIALECT.toURL( the_username, the_password, the_host, intPort, the_database); 
+            url = DIALECT.toURL( the_username, the_host, intPort, the_database); 
             
         } catch (MalformedURLException e) {
             // TODO Catch e

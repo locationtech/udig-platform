@@ -251,7 +251,7 @@ public class PostgisLookUpSchemaRunnable implements LookUpSchemaRunnable {
      * @return the names of the databases in the database that this object connected to when the run
      *         method was executed.
      */
-    public Set<TableDescriptor> getSchemas() {
+    public Set<TableDescriptor> getTableDescriptors() {
         return tables;
     }
 
