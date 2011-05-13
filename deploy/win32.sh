@@ -22,7 +22,10 @@ then
         echo "Building ${BUILD}/udig-${VERSION}-win32.win32.x86.zip ..."
         echo "Extracting ${JRE_WIN32}"
         unzip -q -d ${BUILD}/win32 ${JRE}/${JRE_WIN32}.zip
-        mv ${BUILD}/win32/${JRE_WIN32} ${BUILD}/win32/udig
+        #mv ${BUILD}/win32/${JRE_WIN32} ${BUILD}/win32/udig
+        mkdir ${BUILD}/win32/udig
+        mv ${BUILD}/win32/jre ${BUILD}/win32/udig/
+        mv ${BUILD}/win32/gdal_data ${BUILD}/win32/udig/
         mv ${BUILD}/win32/udig/License.txt ${BUILD}/win32/udig/ImageIO-License.txt
         rm ${BUILD}/win32/udig/README.txt
         
