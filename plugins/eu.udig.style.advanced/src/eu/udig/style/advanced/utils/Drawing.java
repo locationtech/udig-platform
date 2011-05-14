@@ -385,11 +385,11 @@ public final class Drawing {
             SLDStyleFactory styleFactory = new SLDStyleFactory();
             Style2D tmp = null;
             try {
-                tmp = styleFactory.createStyle(feature, pointSymbolizer, new NumberRange(Double.NEGATIVE_INFINITY,
+                tmp = styleFactory.createStyle(feature, pointSymbolizer, new NumberRange(Double.class, Double.NEGATIVE_INFINITY,
                         Double.POSITIVE_INFINITY));
             } catch (Exception e) {
                 PointSymbolizerWrapper tmpPs = new PointSymbolizerWrapper(pointSymbolizer, null);
-                tmp = styleFactory.createStyle(feature, pointSymbolizer, new NumberRange(Double.NEGATIVE_INFINITY,
+                tmp = styleFactory.createStyle(feature, pointSymbolizer, new NumberRange(Double.class, Double.NEGATIVE_INFINITY,
                         Double.POSITIVE_INFINITY));
             }
             if (tmp instanceof MarkStyle2D) {
@@ -443,9 +443,9 @@ public final class Drawing {
             syms[0] = builder.createLineSymbolizer(baseColor, 2);
         if (Point.class.isAssignableFrom(type) || MultiPoint.class.isAssignableFrom(type)) {
             PointSymbolizer point = builder.createPointSymbolizer(builder.createGraphic());
-            FilterFactory ff = builder.getFilterFactory();            
-            //point.getGraphic().getMarks()[0].setSize((Expression) ff.literal(10));
-            point.getGraphic().setSize( ff.literal(10));
+            FilterFactory ff = builder.getFilterFactory();
+            // point.getGraphic().getMarks()[0].setSize((Expression) ff.literal(10));
+            point.getGraphic().setSize(ff.literal(10));
             Mark mark = (Mark) point.getGraphic().graphicalSymbols().get(0);
             mark.setFill(builder.createFill(baseColor));
             syms[0] = point;
