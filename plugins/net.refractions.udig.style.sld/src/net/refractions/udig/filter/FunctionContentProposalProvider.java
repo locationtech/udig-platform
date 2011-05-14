@@ -8,6 +8,8 @@ import java.util.TreeSet;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.filter.FunctionFinder;
+import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Function;
 
 /**
@@ -23,12 +25,9 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
     public static Set<String> proposals;
     static {
         proposals = new TreeSet<String>();
-        Set<Function> oldFunctions = CommonFactoryFinder.getFunctionExpressions(null);
-        for( Function function : oldFunctions ) {
-            proposals.add(function.getName().toLowerCase());
-        }
-        Set<Function> newFunctions = CommonFactoryFinder.getFunctions(null);
-        for( Function function : newFunctions ) {
+        FunctionFinder functionFinder = new FunctionFinder(null);
+        
+        for( FunctionName function : functionFinder.getAllFunctionDescriptions() ){
             proposals.add(function.getName().toLowerCase());
         }
     }

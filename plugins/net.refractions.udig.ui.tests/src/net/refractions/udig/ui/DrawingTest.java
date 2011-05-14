@@ -11,6 +11,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
+import org.geotools.styling.Graphic;
 import org.geotools.styling.Mark;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
@@ -43,17 +44,22 @@ public class DrawingTest extends TestCase {
         d.drawFeature(graphics, d.feature(d.polygon(new int[]{2, 2, 2, 14, 14, 14, 14, 2, 2, 2})),
                 new AffineTransform(), rule);
         graphics.dispose();
-        int blue = image.getImageData().palette.getPixel(new RGB(Color.BLUE.getRed(), Color.BLUE.getGreen(), Color.BLUE.getBlue()));
-        int red = image.getImageData().palette.getPixel(new RGB(Color.RED.getRed(), Color.RED.getGreen(), Color.RED.getBlue()));
-        int white = image.getImageData().palette.getPixel(new RGB(Color.WHITE.getRed(), Color.WHITE.getGreen(), Color.WHITE.getBlue()));
+        int blue = image.getImageData().palette.getPixel(new RGB(Color.BLUE.getRed(), Color.BLUE
+                .getGreen(), Color.BLUE.getBlue()));
+        int red = image.getImageData().palette.getPixel(new RGB(Color.RED.getRed(), Color.RED
+                .getGreen(), Color.RED.getBlue()));
+        int white = image.getImageData().palette.getPixel(new RGB(Color.WHITE.getRed(), Color.WHITE
+                .getGreen(), Color.WHITE.getBlue()));
 
-        for( int i = 0; i < 16; i++ ) //white
+        for( int i = 0; i < 16; i++ )
+            // white
             assertEquals("(" + i + "," + 0 + ")", white, image.getImageData().getPixel(i, 0)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        for( int i = 2; i < 15; i++ ) { //blue or off-blue
+        for( int i = 2; i < 15; i++ ) { // blue or off-blue
             int pixel = image.getImageData().getPixel(i, 2);
-            assertTrue("(" + i + "," + 2 + ") != blue", Math.abs(pixel-blue) < 1000);  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            assertTrue("(" + i + "," + 2 + ") != blue", Math.abs(pixel - blue) < 1000); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
-        for( int i = 3; i < 14; i++ ) //red
+        for( int i = 3; i < 14; i++ )
+            // red
             assertEquals("(" + i + "," + 3 + ")", red, image.getImageData().getPixel(i, 3)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     }
@@ -77,14 +83,16 @@ public class DrawingTest extends TestCase {
         graphics.clearRect(0, 0, 16, 16);
         d.drawFeature(graphics, d.feature(line), style, new AffineTransform());
         graphics.dispose();
-        int blue = image.getImageData().palette.getPixel(new RGB(Color.BLUE.getRed(), Color.BLUE.getGreen(), Color.BLUE.getBlue()));
-        int white = image.getImageData().palette.getPixel(new RGB(Color.WHITE.getRed(), Color.WHITE.getGreen(), Color.WHITE.getBlue()));
+        int blue = image.getImageData().palette.getPixel(new RGB(Color.BLUE.getRed(), Color.BLUE
+                .getGreen(), Color.BLUE.getBlue()));
+        int white = image.getImageData().palette.getPixel(new RGB(Color.WHITE.getRed(), Color.WHITE
+                .getGreen(), Color.WHITE.getBlue()));
 
         for( int y = 0; y < 16; y++ ) {
-            for( int x = 1; x < 15; x++ ) { //anti-aliasing seems to stay on for windows
+            for( int x = 1; x < 15; x++ ) { // anti-aliasing seems to stay on for windows
                 int pixel = image.getImageData().getPixel(x, y);
-                if (y > 0 && y < 4) //blue or off-blue
-                    assertTrue("(" + x + "," + y + ") != blue", Math.abs(pixel-blue) < 1000);  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                if (y > 0 && y < 4) // blue or off-blue
+                    assertTrue("(" + x + "," + y + ") != blue", Math.abs(pixel - blue) < 1000); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 else
                     assertTrue(white == pixel);
             }
@@ -102,9 +110,10 @@ public class DrawingTest extends TestCase {
         Mark mark = builder.createMark(StyleBuilder.MARK_SQUARE);
         mark.setStroke(builder.createStroke(Color.BLUE));
         mark.setFill(builder.createFill(Color.BLUE));
-        mark.setSize(builder.getFilterFactory().literal(5));
-        Style style = builder.createStyle(builder.createPointSymbolizer(builder.createGraphic(null,
-                mark, null)));
+        Graphic graphic = builder.createGraphic(null,
+                mark, null);
+        graphic.setSize(builder.getFilterFactory().literal(5));
+        Style style = builder.createStyle(builder.createPointSymbolizer(graphic));
 
         image = new Image(display, 16, 16);
 
