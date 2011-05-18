@@ -2,19 +2,29 @@
 <feature
       id="net.refractions.udig_application"
       label="net.refractions.udig_application-feature"
-      version="1.2.0.qualifier"
+      version="1.2.2.qualifier"
       provider-name="Refractions Research">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description url="http://udig.refractions.net/confluence/display/DEV/6+Working+with+GIS+Application">
+      The uDig &quot;GIS Application&quot; represents is the tier of the uDig architecture where visualization occurs. This feature gathers up the plugins related to visualisation (including the Map, Layer, Viewport model and associated UI concepts such as the MapEditor).
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright url="http://udig.refractions.net/">
+      (c) 2005-2011 Refractions Research
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license url="http://www.gnu.org/licenses/lgpl-2.1.html">
+      uDig - User Friendly Desktop Internet GIS client
+http://udig.refractions.net
+(C) 2010, Refractions Research Inc.
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; version 2.1 of
+the License.
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
    </license>
 
    <url>

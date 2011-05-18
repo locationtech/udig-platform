@@ -93,29 +93,26 @@ public final class Java2dDrawing {
         drawFeature(bI, feature, worldToScreenTransform, false, getSymbolizers(rule), null);
     }
 
-    public void drawFeature( BufferedImage bI, SimpleFeature feature,
-            AffineTransform worldToScreenTransform, boolean drawVertices, MathTransform mt ) {
+    public void drawFeature( BufferedImage bI, SimpleFeature feature, AffineTransform worldToScreenTransform,
+            boolean drawVertices, MathTransform mt ) {
         if (feature == null)
             return;
         drawFeature(bI, feature, worldToScreenTransform, drawVertices, getSymbolizers(feature), mt);
     }
 
-    public void drawFeature( BufferedImage bI, SimpleFeature feature,
-            AffineTransform worldToScreenTransform ) {
+    public void drawFeature( BufferedImage bI, SimpleFeature feature, AffineTransform worldToScreenTransform ) {
         if (feature == null)
             return;
         drawFeature(bI, feature, worldToScreenTransform, false, getSymbolizers(feature), null);
     }
 
-    public void drawFeature( BufferedImage bI, SimpleFeature feature,
-            AffineTransform worldToScreenTransform, Style style ) {
+    public void drawFeature( BufferedImage bI, SimpleFeature feature, AffineTransform worldToScreenTransform, Style style ) {
         if (feature == null)
             return;
         drawFeature(bI, feature, worldToScreenTransform, false, getSymbolizers(style), null);
     }
 
-    public void drawFeature( BufferedImage bI, SimpleFeature feature, Style style,
-            AffineTransform worldToScreenTransform ) {
+    public void drawFeature( BufferedImage bI, SimpleFeature feature, Style style, AffineTransform worldToScreenTransform ) {
         if (feature == null)
             return;
 
@@ -143,9 +140,8 @@ public final class Java2dDrawing {
         return symbs.toArray(new Symbolizer[symbs.size()]);
     }
 
-    public void drawFeature( BufferedImage bI, SimpleFeature feature,
-            AffineTransform worldToScreenTransform, boolean drawVertices, Symbolizer[] symbs,
-            MathTransform mt ) {
+    public void drawFeature( BufferedImage bI, SimpleFeature feature, AffineTransform worldToScreenTransform,
+            boolean drawVertices, Symbolizer[] symbs, MathTransform mt ) {
 
         LiteShape shape = new LiteShape(null, worldToScreenTransform, false);
         if (symbs == null)
@@ -155,9 +151,8 @@ public final class Java2dDrawing {
         }
     }
 
-    public void drawFeature( BufferedImage bI, SimpleFeature feature,
-            AffineTransform worldToScreenTransform, boolean drawVertices, Symbolizer symbolizer,
-            MathTransform mathTransform, LiteShape shape ) {
+    public void drawFeature( BufferedImage bI, SimpleFeature feature, AffineTransform worldToScreenTransform,
+            boolean drawVertices, Symbolizer symbolizer, MathTransform mathTransform, LiteShape shape ) {
         Graphics2D g2d = (Graphics2D) bI.getGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         if (symbolizer instanceof RasterSymbolizer) {
@@ -196,9 +191,7 @@ public final class Java2dDrawing {
                     for( int i = 0; i < coords.length; i++ ) {
                         Coordinate coord = coords[i];
                         java.awt.Point p = worldToPixel(coord, worldToScreenTransform);
-                        g2d
-                                .fillRect(p.x - (pixels - 1) / 2, p.y - (pixels - 1) / 2, pixels,
-                                        pixels);
+                        g2d.fillRect(p.x - (pixels - 1) / 2, p.y - (pixels - 1) / 2, pixels, pixels);
                     }
                 }
             }
@@ -231,8 +224,7 @@ public final class Java2dDrawing {
             if (Double.isNaN(opacity))
                 opacity = 1.0;
             if (fill != null) {
-                fill = new Color(fill.getRed(), fill.getGreen(), fill.getBlue(),
-                        (int) (255 * opacity));
+                fill = new Color(fill.getRed(), fill.getGreen(), fill.getBlue(), (int) (255 * opacity));
                 g2d.setColor(fill);
                 g2d.fill(shape);
             }
@@ -265,8 +257,7 @@ public final class Java2dDrawing {
             float[] point = new float[6];
             shape.getPathIterator(null).currentSegment(point);
             SLDStyleFactory styleFactory = new SLDStyleFactory();
-            Style2D tmp = styleFactory.createStyle(feature, pointSymbolizer, new NumberRange(0,
-                    imgH));
+            Style2D tmp = styleFactory.createStyle(feature, pointSymbolizer, new NumberRange(Integer.class, 0, imgH));
 
             if (tmp instanceof MarkStyle2D) {
 
@@ -309,15 +300,13 @@ public final class Java2dDrawing {
         }
     }
     public static Symbolizer[] getSymbolizers( SimpleFeature feature ) {
-        return getSymbolizers((Class< ? extends Geometry>) feature.getDefaultGeometry().getClass(),
-                Color.RED);
+        return getSymbolizers((Class< ? extends Geometry>) feature.getDefaultGeometry().getClass(), Color.RED);
     }
 
     public static Symbolizer[] getSymbolizers( Class< ? extends Geometry> type, Color baseColor ) {
         return getSymbolizers(type, baseColor, true);
     }
-    public static Symbolizer[] getSymbolizers( Class< ? extends Geometry> type, Color baseColor,
-            boolean useTransparency ) {
+    public static Symbolizer[] getSymbolizers( Class< ? extends Geometry> type, Color baseColor, boolean useTransparency ) {
 
         StyleBuilder builder = new StyleBuilder();
         Symbolizer[] syms = new Symbolizer[1];
@@ -327,14 +316,15 @@ public final class Java2dDrawing {
             PointSymbolizer point = builder.createPointSymbolizer(builder.createGraphic());
             FilterFactory ff = builder.getFilterFactory();
 
-            point.getGraphic().setSize( ff.literal(10));
+            point.getGraphic().setSize(ff.literal(10));
+
             Mark mark = (Mark) point.getGraphic().graphicalSymbols().get(0);
             mark.setFill(builder.createFill(baseColor));
             syms[0] = point;
         }
         if (Polygon.class.isAssignableFrom(type) || MultiPolygon.class.isAssignableFrom(type)) {
-            syms[0] = builder.createPolygonSymbolizer(builder.createStroke(baseColor, 2), builder
-                    .createFill(baseColor, useTransparency ? .6 : 1.0));
+            syms[0] = builder.createPolygonSymbolizer(builder.createStroke(baseColor, 2),
+                    builder.createFill(baseColor, useTransparency ? .6 : 1.0));
         }
         return syms;
     }
@@ -348,8 +338,7 @@ public final class Java2dDrawing {
      * @return The geometry requested in the symbolizer, or the default geometry if none is
      *         specified
      */
-    private com.vividsolutions.jts.geom.Geometry findGeometry( SimpleFeature feature,
-            Symbolizer symbolizer ) {
+    private com.vividsolutions.jts.geom.Geometry findGeometry( SimpleFeature feature, Symbolizer symbolizer ) {
         String geomName = getGeometryPropertyName(symbolizer);
         // get the geometry
         com.vividsolutions.jts.geom.Geometry geometry;
@@ -366,8 +355,7 @@ public final class Java2dDrawing {
         // point in order to avoid recomputing that location at each rendering
         // step
 
-        if ((symbolizer instanceof PointSymbolizer || symbolizer instanceof TextSymbolizer)
-                && !(geometry instanceof Point)) {
+        if ((symbolizer instanceof PointSymbolizer || symbolizer instanceof TextSymbolizer) && !(geometry instanceof Point)) {
             if (geometry instanceof LineString && !(geometry instanceof LinearRing)) {
                 // use the mid point to represent the point/text symbolizer
                 // anchor
@@ -405,8 +393,7 @@ public final class Java2dDrawing {
      * @param rectangle
      * @return
      */
-    public static AffineTransform worldToScreenTransform( BoundingBox mapExtent,
-            Rectangle screenSize ) {
+    public static AffineTransform worldToScreenTransform( BoundingBox mapExtent, Rectangle screenSize ) {
         double scaleX = screenSize.getWidth() / mapExtent.getWidth();
         double scaleY = screenSize.getHeight() / mapExtent.getHeight();
 
@@ -452,12 +439,9 @@ public final class Java2dDrawing {
             pointSchema = DataUtilities.createType("generated:point", "*point:Point"); //$NON-NLS-1$ //$NON-NLS-2$
             lineSchema = DataUtilities.createType("generated:linestring", "*linestring:LineString"); //$NON-NLS-1$ //$NON-NLS-2$
             polygonSchema = DataUtilities.createType("generated:polygon", "*polygon:Polygon"); //$NON-NLS-1$ //$NON-NLS-2$
-            multipointSchema = DataUtilities.createType(
-                    "generated:multipoint", "*multipoint:MultiPoint"); //$NON-NLS-1$ //$NON-NLS-2$
-            multilineSchema = DataUtilities.createType(
-                    "generated:multilinestring", "*multilinestring:MultiLineString"); //$NON-NLS-1$ //$NON-NLS-2$
-            multipolygonSchema = DataUtilities.createType(
-                    "generated:multipolygon", "*multipolygon:MultiPolygon"); //$NON-NLS-1$ //$NON-NLS-2$
+            multipointSchema = DataUtilities.createType("generated:multipoint", "*multipoint:MultiPoint"); //$NON-NLS-1$ //$NON-NLS-2$
+            multilineSchema = DataUtilities.createType("generated:multilinestring", "*multilinestring:MultiLineString"); //$NON-NLS-1$ //$NON-NLS-2$
+            multipolygonSchema = DataUtilities.createType("generated:multipolygon", "*multipolygon:MultiPolygon"); //$NON-NLS-1$ //$NON-NLS-2$
         } catch (SchemaException unExpected) {
             System.err.println(unExpected);
         }

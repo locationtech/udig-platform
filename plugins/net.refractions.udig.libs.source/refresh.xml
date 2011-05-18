@@ -17,16 +17,15 @@
 		</java>
 		<loadproperties srcfile="${basedir}/dest.properties" />
 		<echo>copy into: ${libs_src_dir}</echo>
-		<echo>should be: ${basedir}/src/net.refractions.udig.libs_1.2.1.qualifier/lib </echo>
+		<echo>should be: ${basedir}/src/net.refractions.udig.libs_1.2.2.qualifier/lib </echo>
 		<!-- formally ${libs_src_dir} -->
-		<copy todir="${basedir}/src/net.refractions.udig.libs_1.2.1.qualifier/lib" verbose="true">
+		<copy todir="${basedir}/src/net.refractions.udig.libs_1.2.2.qualifier/lib" verbose="true">
 			<fileset refid="sources.dependency.fileset" />
 			<chainedmapper>
 				<mapper type="flatten" />
 				<mapper type="glob" from="*-sources.jar" to="*src.zip" />
 			</chainedmapper>
 		</copy>
-		<!--antcall target="fix" /-->
 	</target>
 
 	<!-- ================================= 
@@ -36,16 +35,6 @@
 		<delete dir="${basedir}/lib" />
 		<delete file="dest.properties" />
 		<delete dir="${basedir}/src" />
-	</target>
-
-	<target name="fix">
-		<move file="${libs_src_dir}/geoapi-2.3-SNAPSHOTsrc.zip" tofile="${libs_src_dir}/geoapi-2.2-PREVIOUSsrc.zip" verbose="true" failonerror="no" />
-		<move todir="${libs_src_dir}" verbose="true" failonerror="no">
-			<fileset dir="${libs_src_dir}">
-				<include name="geoapi-2.3-*.zip" />
-			</fileset>
-			<mapper type="regexp" from="^.*$" to="geoapi-2\.3-SNAPSHOTsrc\.zip" />
-		</move>
 	</target>
 
 	<!-- Used by headless build please make sure this does everthing from clean to download and fix etc.. -->
