@@ -18,7 +18,6 @@ import static org.geotools.data.teradata.TeradataDataStoreFactory.PORT;
 import static org.geotools.jdbc.JDBCDataStoreFactory.DATABASE;
 import static org.geotools.jdbc.JDBCDataStoreFactory.HOST;
 import static org.geotools.jdbc.JDBCDataStoreFactory.PASSWD;
-import static org.geotools.jdbc.JDBCDataStoreFactory.SCHEMA;
 import static org.geotools.jdbc.JDBCDataStoreFactory.USER;
 
 import java.io.IOException;
@@ -27,7 +26,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -96,17 +94,15 @@ public class TeradataService extends IService {
 			throws IOException {
 		lock.lock();
 		try {
-			if (members.isEmpty()) {
-				String[] tables = lookupTablesInDB(SubMonitor.convert(monitor,
+			if (status != Status.CONNECTED) {
+				Set<TableDescriptor> tables = lookupTablesInDB(SubMonitor.convert(monitor,
 						"looking up schemas", 1));
-				if (tables == null) {
-					// couldn't look up schema so...
-					String commaSeperated = (String) params.get(SCHEMA.key);
-					tables = commaSeperated.split(","); //$NON-NLS-1$
-				}
-				createGeoResources(tables);
 				message = null;
 				status = Status.CONNECTED;
+				if (tables == null) {
+					return Collections.unmodifiableList(members);
+				}
+				createGeoResources(tables);
 			}
 			return Collections.unmodifiableList(members);
 		} finally {
@@ -115,7 +111,7 @@ public class TeradataService extends IService {
 	}
 
 
-	private String[] lookupTablesInDB(IProgressMonitor monitor) {
+	private Set<TableDescriptor> lookupTablesInDB(IProgressMonitor monitor) {
 		String host = (String) params.get(HOST.key);
 		Integer port = (Integer) params.get(PORT.key);
 		String database = (String) params.get(DATABASE.key);
@@ -132,23 +128,19 @@ public class TeradataService extends IService {
 			return null;
 		}
 		Set<TableDescriptor> tables = runnable.getTableDescriptors();
-		Set<String> schemas = new HashSet<String>();
-		for (TableDescriptor tableDesc : tables) {
-			schemas.add(tableDesc.name);
-		}
-		return schemas.toArray(new String[0]);
+		return tables;
 	}
 
-	private void createGeoResources(String[] tableNames) {
+	private void createGeoResources(Set<TableDescriptor> tables) {
 
-		for (String name : tableNames) {
-			String trimmedName = name.trim();
+		for (TableDescriptor desc : tables) {
+			String trimmedName = desc.name.trim();
 			if (trimmedName.length() == 0) {
 				continue;
 			}
 
 			try {
-				members.add(new TeradataGeoResource(this, trimmedName));
+				members.add(new TeradataGeoResource(this, desc));
 			} catch (Throwable e) {
 				Activator.log("Error occurred while Georesource "+trimmedName+" it is most likely simply a table that we cannot access or that is not spatially enabled.  Error message is: "+e.getMessage(),null);
 			}
@@ -182,8 +174,7 @@ public class TeradataService extends IService {
 
 	public synchronized JDBCDataStore getDataStore() throws IOException {
 		if (datastore == null) {
-			datastore = TeradataServiceExtension.getFactory().createDataStore(
-					params);
+			datastore = TeradataServiceExtension.getFactory().createDataStore(params);
 		}
 		return datastore;
 	}

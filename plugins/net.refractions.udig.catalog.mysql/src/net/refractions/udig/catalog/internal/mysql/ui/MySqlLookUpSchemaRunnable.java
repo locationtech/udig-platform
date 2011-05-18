@@ -79,6 +79,7 @@ public class MySqlLookUpSchemaRunnable implements LookUpSchemaRunnable {
     }
 
     private void loadTableDescriptrs( MysqlDataSource ds ) throws SQLException {
+    	MySqlDialect dialect = new MySqlDialect();
         Connection connection = ds.getConnection(username, password);
         try {
 
@@ -95,7 +96,7 @@ public class MySqlLookUpSchemaRunnable implements LookUpSchemaRunnable {
                         String geometryColumn = results.getLeft();
                         String geometryType = results.getRight().getLeft();
                         String srid = results.getRight().getRight();
-                        tables.add(new TableDescriptor(table, geometryType, null,
+                        tables.add(new TableDescriptor(table, dialect.toGeomClass(geometryType), null,
                                 geometryColumn, srid,false));
                     }
 

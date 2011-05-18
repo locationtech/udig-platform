@@ -79,10 +79,7 @@ public class DataConnectionPage extends AbstractUDIGImportPage implements Listen
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         DatabaseServiceDialect dialect = dialect();
         
-        params.put(dialect.hostParam.key, userHostPage.getHost());
-        params.put(dialect.portParam.key, userHostPage.getPort());
-        params.put(dialect.usernameParam.key, userHostPage.getUsername());
-        params.put(dialect.passwordParam.key, userHostPage.getPassword());
+        params.putAll(userHostPage.addParams());
         params.put(dialect.databaseParam.key, database.getText());
         
         if( dialect.schemaParam != null && dialect.schemaParam.key != null ){

@@ -200,4 +200,17 @@ This library is distributed in the hope that it will be useful, but WITHOUT ANY 
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="eu.udig.catalog.teradata"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="eu.udig.libs.teradata"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
 </feature>

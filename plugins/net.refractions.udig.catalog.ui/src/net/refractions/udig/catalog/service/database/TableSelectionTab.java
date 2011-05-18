@@ -26,6 +26,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import net.refractions.udig.core.Either;
+import net.refractions.udig.ui.graphics.Glyph;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -285,7 +286,17 @@ public class TableSelectionTab implements Tab {
                 IColorProvider{
 
         public Image getColumnImage( Object element, int columnIndex ) {
-            return null;
+            TableDescriptor table = (TableDescriptor) element;
+            switch( columnIndex ) {
+            case 3:
+                if( table.broken ){
+                    return null;
+                }
+                return Glyph.icon(table.geometryType).createImage();
+            default:
+                return null;
+            
+            }
         }
 
         public String getColumnText( Object element, int columnIndex ) {
@@ -304,7 +315,7 @@ public class TableSelectionTab implements Tab {
                 if( table.broken ){
                     return localization.incorrectConfiguration;
                 }
-                return table.geometryType;
+                return table.geometryType.getSimpleName();
             default:
                 throw new IllegalArgumentException(columnIndex
                         + " is not a valid index for this table"); //$NON-NLS-1$
@@ -344,7 +355,7 @@ public class TableSelectionTab implements Tab {
                 } else {
                     Pattern filter = Pattern.compile("\\w*" + filterBox.getText().toLowerCase() //$NON-NLS-1$
                             + "\\w*"); //$NON-NLS-1$
-                    boolean geometryTypeMatch = filter.matcher(table.geometryType.toLowerCase())
+                    boolean geometryTypeMatch = filter.matcher(table.geometryType.getSimpleName().toLowerCase())
                             .matches();
                     boolean nameMatch = filter.matcher(table.name.toLowerCase()).matches();
                     boolean sridMatch = filter.matcher(table.srid.toLowerCase()).matches();

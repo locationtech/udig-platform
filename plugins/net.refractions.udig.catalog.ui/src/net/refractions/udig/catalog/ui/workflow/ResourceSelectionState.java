@@ -114,7 +114,7 @@ public class ResourceSelectionState extends State {
         for( IGeoResource geoResource : members ) {
             for( URL url : selectedResources ) {
                 if (resources.size() < selectedResources.size()) {
-                    if (URLUtils.urlEquals(url, geoResource.getIdentifier(), false)) {
+                	if (URLUtils.urlEquals(url, geoResource.getIdentifier(), false)) {
                         resources.put(geoResource, service);
                         break;
                     }

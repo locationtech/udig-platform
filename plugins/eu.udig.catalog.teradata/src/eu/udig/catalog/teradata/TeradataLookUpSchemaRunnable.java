@@ -122,15 +122,19 @@ public class TeradataLookUpSchemaRunnable implements LookUpSchemaRunnable {
 			List<Pair<String, String>> tableNames = new ArrayList<Pair<String, String>>();
 
 			ResultSet resultSet = statement
-					.executeQuery("SELECT F_TABLE_NAME FROM SYSSPATIAL.GEOMETRY_COLUMNS ORDER BY F_TABLE_NAME;");
+					.executeQuery("SELECT F_TABLE_NAME,f_geometry_column FROM SYSSPATIAL.GEOMETRY_COLUMNS ORDER BY F_TABLE_NAME;");
 			while (resultSet.next()) {
 				String schema = database; //$NON-NLS-1$
 				String table = resultSet.getString(1); //$NON-NLS-1$
-				tableNames.add(Pair.create(schema, table));
+				if (hasWritableTable(database+"."+table, resultSet.getString(2), statement)) { //$NON-NLS-1$
+					tableNames.add(Pair.create(schema, table));
+				}
 			}
-			Collection<TableDescriptor> results = lookupGeometryColumn(
-					tableNames, connection);
-			tables.addAll(results);
+			if(tableNames.size() > 0) {
+				Collection<TableDescriptor> results = lookupGeometryColumn(
+						tableNames, connection);
+				tables.addAll(results);
+			}
 			statement.close();
 		} catch (SQLException e) {
 			error = "An error occurred when querying the database about the data it contains. Please talk to the administrator: "
@@ -172,6 +176,9 @@ public class TeradataLookUpSchemaRunnable implements LookUpSchemaRunnable {
 		final String f_table_name = "f_table_name";
 		final String f_table_schema = "f_table_schema";
 		Statement statement = connection.createStatement();
+		
+		TeradataDialect dialect = new TeradataDialect();
+
 		try {
 			StringBuilder where = new StringBuilder();
 			final String wherePattern = " ( {0}=''{1}'' AND {2}=''{3}'')";
@@ -197,7 +204,7 @@ public class TeradataLookUpSchemaRunnable implements LookUpSchemaRunnable {
 
 				boolean broken = isBroken(connection, table, schema, geom,
 						geomType);
-				tables.add(new TableDescriptor(table, geomType, schema, geom,
+				tables.add(new TableDescriptor(table, dialect.toGeomClass(geomType), schema, geom,
 						srid, broken));
 
 			}

@@ -22,13 +22,6 @@ public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "eu.udig.catalog.teradata.internal.messages"; //$NON-NLS-1$
 
 	public static String TeradataServiceExtension_badURL;
-
-    public static String TeradataWizardPage_0;
-	public static String TeradataWizardPage_title;
-	public static String TeradataWizardPage_button_looseBBox_tooltip;
-	public static String TeradataWizardPage_button_looseBBox_text;
-	public static String TeradataWizardPage_button_wkb_tooltip;
-	public static String TeradataWizardPage_button_wkb_text;
 	public static String TeradataGeoResource_error_layer_bounds;
 	static {
 		// initialize resource bundle

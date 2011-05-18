@@ -25,6 +25,7 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
+import net.refractions.udig.catalog.service.database.TableDescriptor;
 import net.refractions.udig.core.internal.CorePlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -49,10 +50,12 @@ public class TeradataGeoResource extends IGeoResource {
 	private final URL identifier;
 	private Boolean readOnly = null; // we won't know until we try
 	private TeradataService parent;
+	final TableDescriptor desc;
 
-	public TeradataGeoResource(TeradataService service, String typename) {
+	public TeradataGeoResource(TeradataService service, TableDescriptor desc) {
 		this.service = this.parent = service;
-		this.typename = typename;
+		this.desc = desc;
+		this.typename = desc.name;
 		try {
 			URL identifier2 = service.getIdentifier();
 			identifier = new URL(identifier2, identifier2.toExternalForm()
@@ -149,11 +152,6 @@ public class TeradataGeoResource extends IGeoResource {
 		boolean isConnection = adaptee.isAssignableFrom(Connection.class);
 		return (isGeoResource || isFeatureStore || isFeatureSource || isIService)
 				|| isConnection || super.canResolve(adaptee);
-	}
-	
-	@Override
-	public String getTitle() {
-		return super.getTitle();
 	}
 
 	@Override

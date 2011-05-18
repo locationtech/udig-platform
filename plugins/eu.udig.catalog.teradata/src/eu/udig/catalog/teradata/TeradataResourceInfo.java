@@ -42,47 +42,32 @@ import eu.udig.catalog.teradata.internal.Messages;
 
 class TeradataResourceInfo extends IGeoResourceInfo {
 
-	private SimpleFeatureType ft = null;
 	private TeradataGeoResource owner;
 
 	TeradataResourceInfo(TeradataGeoResource owner) throws IOException {
 		this.owner = owner;
-
-		try {
-			ft = owner.getSchema();
-		} catch (DataSourceException e) {
-			if (e.getMessage().contains("permission")) { //$NON-NLS-1$
-				owner.setStatus(Status.RESTRICTED_ACCESS, e);
-			} else {
-				owner.setStatus(Status.BROKEN, e);
-			}
-			Activator
-					.log("Unable to retrieve SimpleFeatureType schema for type '" + owner.typename + "'.", e); //$NON-NLS-1$ //$NON-NLS-2$
-			keywords = new String[] { "teradata", //$NON-NLS-1$
-					owner.typename };
-			return;
+		this.name = owner.typename;
+		if(owner.desc.geometryType != null) {
+			this.icon = Glyph.icon(owner.desc.geometryType);
 		}
-
+		
 		keywords = new String[] { "teradata", //$NON-NLS-1$
-				owner.typename, ft.getName().getNamespaceURI() };
-
-		icon = Glyph.icon(ft);
-
+				owner.typename };
 	}
-
+	
 	@Override
 	public synchronized ReferencedEnvelope getBounds() {
 		if (bounds == null) {
 
 			try {
+				@SuppressWarnings("unchecked")
 				FeatureSource<SimpleFeatureType, SimpleFeature> source = owner
 						.resolve(FeatureSource.class, new NullProgressMonitor());
 				ReferencedEnvelope temp = source.getBounds();
 
 				bounds = temp;
 				if (bounds == null) {
-					CoordinateReferenceSystem crs = ft
-							.getCoordinateReferenceSystem();
+					CoordinateReferenceSystem crs = getCRS();
 					// try getting an envelope out of the crs
 					org.opengis.geometry.Envelope envelope = CRS
 							.getEnvelope(crs);
@@ -132,11 +117,30 @@ class TeradataResourceInfo extends IGeoResourceInfo {
 	}
 
 	public CoordinateReferenceSystem getCRS() {
-		if (owner.getStatus() == Status.BROKEN
-				|| owner.getStatus() == Status.RESTRICTED_ACCESS)
+		SimpleFeatureType ft = getFeatureType();
+		if(ft == null) {
 			return DefaultGeographicCRS.WGS84;
+		}
+		
+		return ft.getGeometryDescriptor().getCoordinateReferenceSystem();
+	}
 
-		return ft.getCoordinateReferenceSystem();
+	private SimpleFeatureType getFeatureType() {
+		try {
+			return owner.getSchema();
+		} catch (IOException e) {
+			if (e.getMessage().contains("permission")) { //$NON-NLS-1$
+				owner.setStatus(Status.RESTRICTED_ACCESS, e);
+			} else {
+				owner.setStatus(Status.BROKEN, e);
+			}
+			Activator
+					.log("Unable to retrieve SimpleFeatureType schema for type '" + owner.typename + "'.", e); //$NON-NLS-1$ //$NON-NLS-2$
+			keywords = new String[] { "teradata", //$NON-NLS-1$
+					owner.typename };
+			return null;
+		}
+
 	}
 
 	public String getName() {
@@ -144,9 +148,9 @@ class TeradataResourceInfo extends IGeoResourceInfo {
 	}
 
 	public URI getSchema() {
-		if (owner.getStatus() == Status.BROKEN
-				|| owner.getStatus() == Status.RESTRICTED_ACCESS)
-			return null;
+		SimpleFeatureType ft = getFeatureType();
+		if (ft == null) return null;
+		
 		try {
 			Name typeName = ft.getName();
 			if (typeName.getNamespaceURI() != null) {

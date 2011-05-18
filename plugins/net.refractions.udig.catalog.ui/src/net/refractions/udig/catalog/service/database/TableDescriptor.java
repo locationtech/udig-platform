@@ -1,5 +1,7 @@
 package net.refractions.udig.catalog.service.database;
 
+import com.vividsolutions.jts.geom.Geometry;
+
 /**
  * Data structure that contains the information about a Table in a database.
  * 
@@ -14,7 +16,7 @@ public class TableDescriptor {
     /**
      * The type of geometry contained in the geometry column
      */
-    public final String geometryType;
+    public final Class<? extends Geometry> geometryType;
     /**
      * if postgis the schema the table is in.  Other databases have other terminology
      */
@@ -32,7 +34,7 @@ public class TableDescriptor {
      */
     public final boolean broken;
     
-    public TableDescriptor( String name, String geometryType, String schema, String geometryColumn, String srid, boolean broken ) {
+    public TableDescriptor( String name, Class<? extends Geometry> geometryType, String schema, String geometryColumn, String srid, boolean broken ) {
         super();
         this.name = name;
         this.geometryType = geometryType;

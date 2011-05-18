@@ -35,6 +35,10 @@ public class InitMapBoundsInterceptor implements LayerInterceptor {
             // this check is here because we could be doing a copy
             return;
         }
+        if(layer.getMap().getProject() == null) {
+        	// this check is here because we are probably loading
+        	return;
+        }
         Map map = layer.getMapInternal();
 
         ReferencedEnvelope bounds = map.getViewportModelInternal().getBounds();

@@ -22,17 +22,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import net.refractions.udig.catalog.internal.postgis.PostgisPlugin;
+import net.refractions.udig.catalog.service.database.TableDescriptor;
 import net.refractions.udig.core.internal.CorePlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.geotools.data.DataStore;
 import org.geotools.jdbc.JDBCDataStore;
 /**
  * A Folder that represents a schema in a postgis folder. Its members are the tables and are
@@ -44,13 +45,14 @@ import org.geotools.jdbc.JDBCDataStore;
 public class PostgisSchemaFolder implements IResolveFolder {
 
     private final String schema;
-    private final JDBCDataStore datastore;
     private final ArrayList<IResolve> members;
     private final PostgisService2 service;
     private final URL identifier;
     private Exception trace;
+	private HashMap<String, Serializable> params;
+	private JDBCDataStore datastore;
 
-    public PostgisSchemaFolder( PostgisService2 service, String schema ) throws IOException {
+    public PostgisSchemaFolder( PostgisService2 service, String schema, Collection<TableDescriptor> descriptors) {
         this.trace = new Exception("Creating folder"); //$NON-NLS-1$
         this.service = service;
         this.schema = schema;
@@ -65,12 +67,11 @@ public class PostgisSchemaFolder implements IResolveFolder {
         HashMap<String, Serializable> params = new HashMap<String, Serializable>(service
                 .getConnectionParams());
         params.put(SCHEMA.key, schema);
-        datastore = PostgisServiceExtension2.getFactory().createDataStore(params);
+        this.params = params;
         members = new ArrayList<IResolve>();
 
-        String[] typenames = datastore.getTypeNames();
-        for( String typename : typenames ) {
-            PostgisGeoResource2 resource2 = new PostgisGeoResource2(service, this, typename);
+        for (TableDescriptor tableDescriptor : descriptors) {
+            PostgisGeoResource2 resource2 = new PostgisGeoResource2(service, this, tableDescriptor);
             members.add(resource2);
         }
     }
@@ -105,7 +106,9 @@ public class PostgisSchemaFolder implements IResolveFolder {
 
     public void dispose( IProgressMonitor monitor ) {
         trace = null;
-        datastore.dispose();
+        if(datastore!=null) {
+        	datastore.dispose();
+        }
     }
 
     public URL getIdentifier() {
@@ -147,7 +150,10 @@ public class PostgisSchemaFolder implements IResolveFolder {
         return CatalogPlugin.getDefault().getResolveManager().resolve(this, adaptee, monitor);
     }
 
-    public JDBCDataStore getDataStore() {
+    public JDBCDataStore getDataStore() throws IOException {
+    	if(datastore == null) {
+            datastore = PostgisServiceExtension2.getFactory().createDataStore(params);
+    	}
         return datastore;
     }
 

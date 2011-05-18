@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Teradata
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: eu.udig.catalog.teradata;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: eu.udig.catalog.teradata.Activator

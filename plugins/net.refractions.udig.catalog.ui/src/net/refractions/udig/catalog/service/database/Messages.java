@@ -30,6 +30,7 @@ public class Messages extends NLS {
     public static String DatabaseWizardLocalization_tableSelectionFilterTooltip;
     public static String DatabaseWizardLocalization_unexpectedError;
     public static String DatabaseWizardLocalization_username;
+	public static String DatabaseWizardLocalization_optionalParams;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

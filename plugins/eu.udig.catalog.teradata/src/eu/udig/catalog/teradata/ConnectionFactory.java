@@ -115,9 +115,10 @@ public class ConnectionFactory extends UDIGConnectionFactory {
 			return toCapabilitiesURL((URL) data);
 		} else if (data instanceof String) {
 			return toCapabilitiesURL((String) data);
-		} else if (ID.cast(data).toURL() != null) {
+		} else if (ID.cast(data) != null && ID.cast(data).toURL() != null) {
 			return toCapabilitiesURL(ID.cast(data).toURL());
 		} else {
+			Activator.log("Unable to convert object: "+data+" to a capabilities url for teradata", null);
 			return null; // no idea what this should be
 		}
 	}

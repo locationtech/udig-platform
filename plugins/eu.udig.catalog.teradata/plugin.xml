@@ -13,14 +13,14 @@
             description="%wizard.description"
             icon="icons/wizban/teradata-icon.png"
             id="hostPage"
-            name="Teradata">
+            name="%wizardPage.hostPage.name">
       </wizardPage>
       <wizardPage
             banner="icons/wizban/teradata-banner.png"
             class="net.refractions.udig.catalog.service.database.DataConnectionPage"
             description="%wizard.description"
             icon="icons/wizban/teradata-icon.png"
-            name="Connection">
+            name="%wizardPage.connectionPage.name">
       </wizardPage>
    </extension>
    <extension
@@ -28,7 +28,7 @@
       <service
             class="eu.udig.catalog.teradata.TeradataServiceExtension"
             id="eu.udig.catalog.teradata.service2"
-            name="Teradata">
+            name="%service.name">
       </service>
    </extension>
 

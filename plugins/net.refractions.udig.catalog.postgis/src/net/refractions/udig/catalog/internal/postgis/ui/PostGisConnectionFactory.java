@@ -98,7 +98,8 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
             return (URL) context;
         }
         if( context instanceof Map){
-            Map params=(Map) context;
+            @SuppressWarnings("rawtypes")
+			Map params=(Map) context;
             
             try {
                 return DIALECT.toURL(params);
@@ -197,7 +198,6 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
         //int databaseEnd = string.indexOf(" ", databaseStart);
         String the_host = string.substring(passwordEnd+1, hostEnd);
         String the_username=string.substring(startindex, usernameEnd);
-        String the_password=string.substring(usernameEnd+1, passwordEnd);
         String the_port;
         String the_database;
 
@@ -232,7 +232,8 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
     @SuppressWarnings("unchecked") 
     protected Map<String,Serializable> createParams( URL url ){
         PostgisServiceExtension2 serviceFactory = new PostgisServiceExtension2();
-        Map params = serviceFactory.createParams( url );
+        @SuppressWarnings("rawtypes")
+		Map params = serviceFactory.createParams( url );
         if( params != null) return params;
         
         Map<String,Serializable> params2 = new HashMap<String,Serializable>();

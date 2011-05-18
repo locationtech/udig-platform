@@ -17,6 +17,14 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TabFolder;
 import org.geotools.data.DataAccessFactory.Param;
 
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.MultiLineString;
+import com.vividsolutions.jts.geom.MultiPoint;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
+
 /**
  * This class abstracts out all of the service and database specific code for a
  * Geotools Database-based DatastoreIService extension.
@@ -170,4 +178,60 @@ public abstract class DatabaseServiceDialect {
      */
     public abstract LookUpSchemaRunnable createLookupSchemaRunnable( String host, int port, String username,
             String password, String database );
+    
+    /**
+     * Convert a geometry string to the class it represents.  The case is unimportant in the default version  
+     * <p>
+     * Default names are:
+     * <ul>
+     * <li>GEOMETRY</li>
+     * <li>GEOMETRY</li>
+     * <li>GEOMETRYCOLLECTION</li>
+     * <li>POINT</li>
+     * <li>MULTIPOINT</li>
+     * <li>POLYGON</li>
+     * <li>MULTIPOLYGON</li>
+     * <li>LINESTRING</li>
+     * <li>MULTILINESTRING</li>  
+     * </ul>
+     * 
+     * @param geomName The name of the geometry read from the database
+     * @return the vividsolutions class
+     */
+    public Class<? extends Geometry> toGeomClass(String geomName) {
+    	if(geomName.equals("GEOMETRYCOLLECTION") || geomName.equals("GEOMETRY")) return Geometry.class;
+    	if(geomName.equals("POINT")) return Point.class;
+    	if(geomName.equals("MULTIPOINT")) return MultiPoint.class;
+    	if(geomName.equals("POLYGON")) return Polygon.class;
+    	if(geomName.equals("MULTIPOLYGON")) return MultiPolygon.class;
+    	if(geomName.equals("LINESTRING")) return LineString.class;
+    	if(geomName.equals("MULTILINESTRING")) return MultiLineString.class;
+    	return Geometry.class;
+    }
+    
+    /**
+     * Returns a control for configuring extra parameters.  if it returns null the component will not appear in the wizard
+     * by default this method calls hostPageExtraParams and constructs an editable table control
+     */
+    protected ExtraParamsControl createHostPageExtraParamControl() {
+    	List<ExtraParams> params = hostPageExtraParams();
+    	if(params == null) {
+    		return null;
+    	} else {
+    		return new TableBasedExtraParamsControl(params);
+    	}
+    }
+    
+    /**
+     * Return The extra params to add to the Host page for extra configuration
+     * 
+     * This is called by {@link #createHostPageExtraParamControl(Control)}.  Either this method or 
+     * that can be overridden to add parameters to  
+     *  
+     * @return The extra params to add to the Host page for extra configuration
+     */
+    protected List<ExtraParams> hostPageExtraParams() {
+    	return Collections.emptyList();
+    }
+    
 }
