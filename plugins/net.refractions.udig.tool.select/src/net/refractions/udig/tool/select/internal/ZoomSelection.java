@@ -54,15 +54,18 @@ public class ZoomSelection extends AbstractActionTool {
                         bounds = new ReferencedEnvelope(envelope, layer.getCRS());
                     }
                 }
-                // If the selection is a single point the bounds will
-                // have height == 0 and width == 0. This will break
-                // in ScaleUtils:306. Adding 1 to the extent fixes the problem:
-                if (bounds.getHeight() <= 0 || bounds.getWidth() <= 0) {
-                    bounds.expandBy(1);
-                }
-                bounds = ScaleUtils.fitToMinAndMax(bounds, layer);
-
-                getContext().sendASyncCommand(new SetViewportBBoxCommand(bounds, layer.getCRS()));
+                
+                if (bounds != null && (bounds.getMaxX() > bounds.getMinX() && bounds.getMaxY() > bounds.getMinY())) {
+	                // If the selection is a single point the bounds will
+	                // have height == 0 and width == 0. This will break
+	                // in ScaleUtils:306. Adding 1 to the extent fixes the problem:
+	                if (bounds.getHeight() <= 0 || bounds.getWidth() <= 0) {
+	                    bounds.expandBy(1);
+	                }
+	                bounds = ScaleUtils.fitToMinAndMax(bounds, layer);
+	
+	                getContext().sendASyncCommand(new SetViewportBBoxCommand(bounds, layer.getCRS()));
+            	}
             } catch (IOException e) {
                 SelectPlugin.log("failed to obtain resource", e); //$NON-NLS-1$
             }
