@@ -49,13 +49,16 @@ public class ZoomSelection extends AbstractActionTool {
                 Query query = layer.getQuery(true);
                 ReferencedEnvelope bounds = resource.getBounds(query);
                 if (bounds == null) {
-                    ReferencedEnvelope envelope = resource.getFeatures(query).getBounds();
-                    if (envelope != null) {
-                        bounds = new ReferencedEnvelope(envelope, layer.getCRS());
-                    }
+                	FeatureCollection<SimpleFeatureType, SimpleFeature> featureResult = resource.getFeatures(query);
+                	if (featureResult != null && !featureResult.isEmpty()) {
+                		ReferencedEnvelope envelope = featureResult.getBounds();
+	                	if (envelope != null) {
+	                		bounds = new ReferencedEnvelope(envelope, layer.getCRS());
+	                	}
+                	}
                 }
                 
-                if (bounds != null && (bounds.getMaxX() > bounds.getMinX() && bounds.getMaxY() > bounds.getMinY())) {
+                if (bounds != null) {
 	                // If the selection is a single point the bounds will
 	                // have height == 0 and width == 0. This will break
 	                // in ScaleUtils:306. Adding 1 to the extent fixes the problem:
