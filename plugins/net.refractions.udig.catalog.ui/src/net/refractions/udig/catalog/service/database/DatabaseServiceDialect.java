@@ -215,7 +215,7 @@ public abstract class DatabaseServiceDialect {
      */
     protected ExtraParamsControl createHostPageExtraParamControl() {
     	List<ExtraParams> params = hostPageExtraParams();
-    	if(params == null) {
+    	if(params == null || params.isEmpty()) {
     		return null;
     	} else {
     		return new TableBasedExtraParamsControl(params);

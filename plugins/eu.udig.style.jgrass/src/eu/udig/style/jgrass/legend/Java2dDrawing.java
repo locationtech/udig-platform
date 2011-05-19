@@ -317,7 +317,6 @@ public final class Java2dDrawing {
             FilterFactory ff = builder.getFilterFactory();
 
             point.getGraphic().setSize(ff.literal(10));
-
             Mark mark = (Mark) point.getGraphic().graphicalSymbols().get(0);
             mark.setFill(builder.createFill(baseColor));
             syms[0] = point;
