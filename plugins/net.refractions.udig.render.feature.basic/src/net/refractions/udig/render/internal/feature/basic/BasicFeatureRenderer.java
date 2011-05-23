@@ -282,25 +282,26 @@ public class BasicFeatureRenderer extends RendererImpl {
             int width = Math.abs(max.x - min.x);
             int height = Math.abs(max.y - min.y);
 
-			// if the width is smaller than 50 px add 25 on the left and right to get symbols well rendered.
-			if (width < 50) {
-				width += 50;
-				min.x -= 25;
-				max.x += 25;
-			}
-			// does the same with height 
-			if (height < 50) {
-				height += 50;
-				min.y -= 25;
-				max.y += 25;
-			}
+            // if the width is smaller than 50 px add 25 on the left and right to get symbols well rendered.
+            if (width < 50) {
+                width += 50;
+                min.x -= 25;
+                max.x += 25;
+            }
 
-			graphics.setBackground(new Color(0,0,0,0));
-			graphics.clearRect( min.x, min.y, width, height );
-			Rectangle paintArea = new Rectangle(Math.min(min.x, max.x), Math
-			        .min(min.y, max.y), width, height);
-			
-			validBounds=getContext().worldBounds(paintArea);
+            // do the same with height 
+            if (height < 50) {
+                height += 50;
+                min.y -= 25;
+                max.y += 25;
+            }
+
+            graphics.setBackground(new Color(0,0,0,0));
+            graphics.clearRect( min.x, min.y, width, height );
+            Rectangle paintArea = new Rectangle(Math.min(min.x, max.x), Math
+                    .min(min.y, max.y), width, height);
+
+            validBounds=getContext().worldBounds(paintArea);
 
             map.setAreaOfInterest(validBounds, getContext().getViewportModel().getCRS());
 
