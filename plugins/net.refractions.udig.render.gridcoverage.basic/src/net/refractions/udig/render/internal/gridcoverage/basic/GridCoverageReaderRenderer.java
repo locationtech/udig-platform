@@ -46,6 +46,7 @@ import org.geotools.coverage.grid.GridGeometry2D;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.factory.Hints;
 import org.geotools.geometry.DirectPosition2D;
 import org.geotools.geometry.Envelope2D;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -197,12 +198,13 @@ public class GridCoverageReaderRenderer extends RendererImpl {
 	            //
 	            final TileCache tempCache=currentContext.getTileCache();
 	            hints.add(new RenderingHints(JAI.KEY_TILE_CACHE,tempCache));
-	            
+	            //hints.add( new Hints( Hints.RESAMPLE_TOLERANCE, 0.000000000001 )); 
+                
 	            if( CRS.getHorizontalCRS(destinationCRS) == null ){
 	                destinationCRS = coverage.getCoordinateReferenceSystem2D();
 	            }
 	            //
-	            AffineTransform worldToScreen = null; // we are leting the GridCoverageRenderer sor that out
+	            AffineTransform worldToScreen = null; // we are leting the GridCoverageRenderer sort that out
 	            
 	            //draw
 	            try {

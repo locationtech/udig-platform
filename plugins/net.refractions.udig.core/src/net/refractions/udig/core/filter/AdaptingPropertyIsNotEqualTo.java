@@ -1,6 +1,8 @@
 package net.refractions.udig.core.filter;
 
+import org.opengis.filter.BinaryComparisonOperator;
 import org.opengis.filter.PropertyIsNotEqualTo;
+import org.opengis.filter.MultiValuedFilter.MatchAction;
 import org.opengis.filter.expression.Expression;
 
 /**
@@ -26,5 +28,7 @@ class AdaptingPropertyIsNotEqualTo extends AdaptingFilter implements PropertyIsN
     public boolean isMatchingCase() {
         return ((PropertyIsNotEqualTo)wrapped).isMatchingCase();
     }
-    
+    public MatchAction getMatchAction() {
+        return ((BinaryComparisonOperator)wrapped).getMatchAction();
+    }
 }

@@ -39,5 +39,9 @@ class AdaptingBBOX extends AdaptingFilter implements BBOX {
 
     public Expression getExpression2() {
         return ((BBOX)wrapped).getExpression2();
+    }
+
+    public MatchAction getMatchAction() {
+        return ((BBOX)wrapped).getMatchAction();
     }    
 }

@@ -29,4 +29,7 @@ class AdaptingDWithin extends AdaptingFilter implements DWithin{
     public Expression getExpression2() {
         return ((DWithin)wrapped).getExpression2();
     }
+    public MatchAction getMatchAction() {
+        return ((DWithin)wrapped).getMatchAction();
+    }
 }

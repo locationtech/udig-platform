@@ -33,5 +33,7 @@ class AdaptingExcludeFilter extends AdaptingFilter implements PropertyIsEqualTo 
     public boolean isMatchingCase() {
         return false;
     } 
-
+    public MatchAction getMatchAction() {
+        return MatchAction.ANY;
+    }
 }

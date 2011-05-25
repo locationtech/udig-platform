@@ -1,6 +1,9 @@
 package net.refractions.udig.core.filter;
 
+import org.opengis.filter.BinaryComparisonOperator;
+import org.opengis.filter.MultiValuedFilter.MatchAction;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.spatial.BinarySpatialOperator;
 import org.opengis.filter.spatial.Touches;
 
 /**
@@ -20,5 +23,8 @@ class AdaptingTouches extends AdaptingFilter implements Touches {
 
     public Expression getExpression2() {
         return ((Touches)wrapped).getExpression1();
+    }
+    public MatchAction getMatchAction() {
+        return ((Touches)wrapped).getMatchAction();
     }
 }

@@ -26,5 +26,7 @@ class AdaptingPropertyIsBetween extends AdaptingFilter implements PropertyIsBetw
     public Expression getUpperBoundary() {
         return ((PropertyIsBetween)wrapped).getUpperBoundary();
     }
-
+    public MatchAction getMatchAction() {
+        return ((PropertyIsBetween)wrapped).getMatchAction();
+    }
 }

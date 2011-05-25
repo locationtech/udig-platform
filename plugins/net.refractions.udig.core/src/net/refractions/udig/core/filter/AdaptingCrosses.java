@@ -1,5 +1,6 @@
 package net.refractions.udig.core.filter;
 
+import org.opengis.filter.MultiValuedFilter.MatchAction;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.spatial.Crosses;
 
@@ -20,5 +21,8 @@ class AdaptingCrosses extends AdaptingFilter implements Crosses {
 
     public Expression getExpression2() {
         return ((Crosses)wrapped).getExpression2();
+    }
+    public MatchAction getMatchAction() {
+        return ((Crosses)wrapped).getMatchAction();
     }
 }
