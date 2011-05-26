@@ -74,7 +74,6 @@ public class CoverageDescribeLayer {
             final double[] evaluated = new double[bands];
             try {
                 coverage.evaluate(p, evaluated);
-                System.out.println(evaluated[0]);
             } catch (Exception e) {
                 // TODO make this more nice
                 return null;
