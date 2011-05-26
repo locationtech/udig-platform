@@ -17,6 +17,10 @@
  */
 package eu.udig.catalog.jgrass.operations;
 
+import it.geosolutions.imageio.plugins.arcgrid.AsciiGridsImageMetadataFormat;
+import it.geosolutions.imageio.plugins.arcgrid.raster.AsciiGridRaster;
+import it.geosolutions.imageio.plugins.arcgrid.raster.AsciiGridRaster.AsciiGridRasterType;
+
 import java.awt.geom.AffineTransform;
 import java.awt.image.ComponentSampleModel;
 import java.awt.image.DataBuffer;
@@ -24,10 +28,12 @@ import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
+import javax.imageio.stream.FileImageInputStream;
 import javax.media.jai.RasterFactory;
 import javax.media.jai.iterator.RandomIter;
 import javax.media.jai.iterator.RandomIterFactory;
