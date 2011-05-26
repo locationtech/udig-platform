@@ -102,7 +102,7 @@ public class MapSummaryAction implements IObjectActionDelegate, IWorkbenchWindow
                                         AbstractGridCoverage2DReader.class, pm);
                                 geodata = ((GridCoverage2D) gridCoverage2DReader.read(null));
                                 geodata = geodata.view(ViewType.GEOPHYSICS);
-                                
+
                                 Envelope envelope = geodata.getEnvelope();
                                 DirectPosition lowerCorner = envelope.getLowerCorner();
                                 double[] westSouth = lowerCorner.getCoordinate();
@@ -136,7 +136,7 @@ public class MapSummaryAction implements IObjectActionDelegate, IWorkbenchWindow
                                 regionString.append(rows);
                                 regionString.append("\ncols=");
                                 regionString.append(cols);
-                                
+
                             } else if (object instanceof JGrassMapGeoResource) {
                                 JGrassMapGeoResource mr = (JGrassMapGeoResource) object;
                                 File mapFile = mr.getMapFile();
@@ -167,7 +167,7 @@ public class MapSummaryAction implements IObjectActionDelegate, IWorkbenchWindow
                                 regionString.append(rows);
                                 regionString.append("\ncols=");
                                 regionString.append(cols);
-                                
+
                                 GeneralParameterValue[] readParams = createGridGeometryGeneralParameter(cols, rows, north, south,
                                         east, west, mapEnvironment.getCoordinateReferenceSystem());
                                 AbstractGridFormat format = (AbstractGridFormat) new GrassCoverageFormatFactory().createFormat();
@@ -226,6 +226,7 @@ public class MapSummaryAction implements IObjectActionDelegate, IWorkbenchWindow
                             sb.append("active cells: " + minMaxMeans[3] + "\n");
                             sb.append("active area (assuming metric resolution): " + minMaxMeans[4] + "\n");
                             sb.append(regionString.toString() + "\n");
+                            sb.append("data crs: " + geodata.getCoordinateReferenceSystem().getName().toString());
 
                             MessageDialog.openInformation(shell, "Summary", sb.toString());
 
@@ -241,7 +242,7 @@ public class MapSummaryAction implements IObjectActionDelegate, IWorkbenchWindow
             }
         };
 
-        PlatformGIS.runInProgressDialog("Export maps...", true, operation, true);
+        PlatformGIS.runInProgressDialog("Calculating map summery...", true, operation, true);
 
     }
     /**
