@@ -1,5 +1,6 @@
 package net.refractions.udig.core.filter;
 
+import org.opengis.filter.MultiValuedFilter.MatchAction;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.spatial.Within;
 
@@ -22,5 +23,7 @@ class AdaptingWithin extends AdaptingFilter implements Within {
     public Expression getExpression2() {
         return ((Within)wrapped).getExpression1();
     }
-    
+    public MatchAction getMatchAction() {
+        return ((Within)wrapped).getMatchAction();
+    }
 }

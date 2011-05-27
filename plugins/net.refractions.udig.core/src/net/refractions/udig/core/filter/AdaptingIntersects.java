@@ -1,5 +1,6 @@
 package net.refractions.udig.core.filter;
 
+import org.opengis.filter.MultiValuedFilter.MatchAction;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.spatial.Intersects;
 
@@ -20,5 +21,8 @@ class AdaptingIntersects extends AdaptingFilter implements Intersects {
 
     public Expression getExpression2() {
         return ((Intersects)wrapped).getExpression2();
+    }
+    public MatchAction getMatchAction() {
+        return ((Intersects)wrapped).getMatchAction();
     }
 }

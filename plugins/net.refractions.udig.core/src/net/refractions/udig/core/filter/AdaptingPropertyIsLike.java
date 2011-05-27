@@ -38,5 +38,7 @@ class AdaptingPropertyIsLike extends AdaptingFilter implements PropertyIsLike {
     public boolean isMatchingCase() {
         return ((PropertyIsLike)wrapped).isMatchingCase();
     }
-    
+    public MatchAction getMatchAction() {
+        return ((PropertyIsLike)wrapped).getMatchAction();
+    }
 }

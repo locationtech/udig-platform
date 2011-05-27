@@ -2,6 +2,7 @@ package net.refractions.udig.core.filter;
 
 import org.opengis.filter.BinaryComparisonOperator;
 import org.opengis.filter.PropertyIsGreaterThanOrEqualTo;
+import org.opengis.filter.MultiValuedFilter.MatchAction;
 import org.opengis.filter.expression.Expression;
 
 /**
@@ -25,5 +26,8 @@ class AdaptingPropertyIsGreaterOrEqualTo extends AdaptingFilter implements Prope
 
     public boolean isMatchingCase() {
         return ((BinaryComparisonOperator)wrapped).isMatchingCase();
+    }
+    public MatchAction getMatchAction() {
+        return ((BinaryComparisonOperator)wrapped).getMatchAction();
     }
 }
