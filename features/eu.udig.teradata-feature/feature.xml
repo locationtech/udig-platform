@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="eu.udig.teradata.feature"
+      label="Teradata Connector"
+      version="1.0.0.qualifier">
+
+   <description url="http://teradata.com/">
+      Add Teradata connection wizard and services
+   </description>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <url>
+      <update label="C2C udig update site" url="http://dev.mapfish.org/udig/eu.udig.teradata-site/"/>
+      <discovery label="Teradata homepage" url="http://teradata.com/"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="net.refractions.udig.catalog" version="1.2.0" match="greaterOrEqual"/>
+      <import plugin="net.refractions.udig.catalog.ui" version="1.2.0" match="greaterOrEqual"/>
+      <import plugin="eu.udig.libs.teradata" version="1.2.0" match="greaterOrEqual"/>
+      <import plugin="net.refractions.udig.libs"/>
+   </requires>
+
+   <plugin
+         id="eu.udig.catalog.teradata"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="eu.udig.libs.teradata"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>

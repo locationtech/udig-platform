@@ -32,7 +32,6 @@ import eu.udig.tools.jgrass.utils.OperationUtils;
  */
 public class FeatureDownMover extends OperationUtils implements IOp {
 
-    @Override
     public void op( final Display display, Object target, IProgressMonitor monitor ) throws Exception {
         ILayer selectedLayer = (ILayer) target;
         moveFeatures(display, monitor, selectedLayer, false);

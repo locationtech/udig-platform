@@ -152,7 +152,6 @@ public class UserHostPage extends AbstractUDIGImportPage implements UDIGConnecti
 
 	        optionalParams.addListener(SWT.Selection, new Listener() {
 				
-				@Override
 				public void handleEvent(Event event) {
 					extraParamsControl.setVisible(optionalParams.getSelection());
 				}

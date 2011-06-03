@@ -148,14 +148,12 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
             FeatureListener listener = new FeatureListener() {
         		long lastUpdate = System.currentTimeMillis();
         		long count = 0;
-				@Override
 				public void changed(FeatureEvent event) {
 					if(event.getType() == Type.ADDED) {
 						count ++;
 		            	if(System.currentTimeMillis() - lastUpdate > 1000) {
 		            		Display.getDefault().asyncExec(new Runnable() {
 								
-								@Override
 								public void run() {
 									String name2 = MessageFormat.format(copyFeaturesCommand_name,0);
 				                	monitor.setTaskName(name2);

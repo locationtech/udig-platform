@@ -25,7 +25,6 @@ public class TableBasedExtraParamsControl implements ExtraParamsControl {
 		this.paramsDefinition = paramsDefinition;
 	}
 
-	@Override
 	public Control createControl(Composite parent) {
 		TableViewer viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER); 
@@ -75,7 +74,6 @@ public class TableBasedExtraParamsControl implements ExtraParamsControl {
 		return viewerColumn;
 
 	}
-	@Override
 	public Map<String, Serializable> getParams() {
 		Map<String, Serializable> params = new HashMap<String, Serializable>();
 		
