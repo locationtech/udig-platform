@@ -37,7 +37,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.gce.grassraster.JGrassMapEnvironment;
-import org.geotools.gce.grassraster.core.color.Format;
 import org.geotools.gce.grassraster.core.color.JGrassColorTable;
 
 import eu.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
@@ -190,7 +189,7 @@ public class RasterLegendGraphic implements MapGraphic {
 
                 int tx = round(currentX + 1.5f * bWidth);
                 graphics.setColor(legendStyle.fontColor);
-                graphics.drawString(Format.sprintf("%-8.2f", Float.parseFloat(firstValue)), //$NON-NLS-1$
+                graphics.drawString(String.format("%-8.2f", Float.parseFloat(firstValue)), //$NON-NLS-1$
                         tx,// +horizontalMargin,
                         currentY, // - graphics.getFontAscent(),// +textVerticalOffset,
                         ViewportGraphics.ALIGN_LEFT, ViewportGraphics.ALIGN_MIDDLE);
@@ -201,7 +200,7 @@ public class RasterLegendGraphic implements MapGraphic {
                     // add also last text
                     tx = round(currentX + 1.5f * bWidth);
                     graphics.setColor(legendStyle.fontColor);
-                    graphics.drawString(Format.sprintf("%-8.2f", Float.parseFloat(secondValue)), //$NON-NLS-1$
+                    graphics.drawString(String.format("%-8.2f", Float.parseFloat(secondValue)), //$NON-NLS-1$
                             tx,// +horizontalMargin,
                             currentY, // - graphics.getFontAscent(),// +textVerticalOffset,
                             ViewportGraphics.ALIGN_LEFT, ViewportGraphics.ALIGN_MIDDLE);
