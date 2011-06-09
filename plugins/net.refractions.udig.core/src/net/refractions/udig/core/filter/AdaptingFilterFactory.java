@@ -28,6 +28,20 @@ import org.opengis.filter.spatial.Intersects;
 import org.opengis.filter.spatial.Overlaps;
 import org.opengis.filter.spatial.Touches;
 import org.opengis.filter.spatial.Within;
+import org.opengis.filter.temporal.After;
+import org.opengis.filter.temporal.AnyInteracts;
+import org.opengis.filter.temporal.Before;
+import org.opengis.filter.temporal.Begins;
+import org.opengis.filter.temporal.BegunBy;
+import org.opengis.filter.temporal.During;
+import org.opengis.filter.temporal.EndedBy;
+import org.opengis.filter.temporal.Ends;
+import org.opengis.filter.temporal.Meets;
+import org.opengis.filter.temporal.MetBy;
+import org.opengis.filter.temporal.OverlappedBy;
+import org.opengis.filter.temporal.TContains;
+import org.opengis.filter.temporal.TEquals;
+import org.opengis.filter.temporal.TOverlaps;
 
 public class AdaptingFilterFactory {
     /**
@@ -43,8 +57,8 @@ public class AdaptingFilterFactory {
      * @param source Often an ILayer or IGeoResource
      * @return A specific AdaptingFilter subclass based on the type of filter
      */
-    public static AdaptingFilter createAdaptingFilter( Filter filter, Object source ){
-        AdaptingFilter adaptingFilter = createAdaptingFilter(filter);
+    public static <F extends Filter> AdaptingFilter<F> createAdaptingFilter( F filter, Object source ){
+        AdaptingFilter<F> adaptingFilter = createAdaptingFilter(filter);
         adaptingFilter.addAdapter( source );        
         return adaptingFilter;
     }
@@ -54,8 +68,9 @@ public class AdaptingFilterFactory {
      * @param filter
      * @return A specific AdaptingFilter subclass based on the type of filter
      */
-    public static AdaptingFilter createAdaptingFilter( Filter filter ){
-        return (AdaptingFilter) filter.accept( creator, null );
+    @SuppressWarnings("unchecked")
+    public static <F extends Filter> AdaptingFilter<F> createAdaptingFilter( F filter ){
+        return (AdaptingFilter<F>) filter.accept( creator, null );
     }
     
     /**
@@ -64,113 +79,169 @@ public class AdaptingFilterFactory {
      * @since 1.1.0
      */
     static class CreateAdaptingFilterVisitor implements FilterVisitor {
-        public AdaptingFilter visit( ExcludeFilter filter, Object data ) {
+        public AdaptingExcludeFilter visit( ExcludeFilter filter, Object data ) {
             return new AdaptingExcludeFilter();
         }
 
-        public AdaptingFilter visit( IncludeFilter filter, Object data ) {
+        public AdaptingIncludeFilter visit( IncludeFilter filter, Object data ) {
             return new AdaptingIncludeFilter();
         }
 
-        public AdaptingFilter visit( And filter, Object data ) {
+        public AdaptingAnd visit( And filter, Object data ) {
             return new AdaptingAnd( filter );
         }
 
-        public AdaptingFilter visit( Id filter, Object data ) {
+        public AdaptingId visit( Id filter, Object data ) {
             return new AdaptingId( filter );
         }
 
-        public AdaptingFilter visit( Not filter, Object data ) {
+        public AdaptingNot visit( Not filter, Object data ) {
             return new AdaptingNot( filter );
         }
 
-        public AdaptingFilter visit( Or filter, Object data ) {
+        public AdaptingOr visit( Or filter, Object data ) {
             return new AdaptingOr( filter );
         }
 
-        public AdaptingFilter visit( PropertyIsBetween filter, Object data ) {
+        public AdaptingPropertyIsBetween visit( PropertyIsBetween filter, Object data ) {
             return new AdaptingPropertyIsBetween( filter );
         }
 
-        public AdaptingFilter visit( PropertyIsEqualTo filter, Object data ) {
+        public AdaptingPropertyIsEqualTo visit( PropertyIsEqualTo filter, Object data ) {
             return new AdaptingPropertyIsEqualTo( filter );
         }
 
-        public AdaptingFilter visit( PropertyIsNotEqualTo filter, Object data ) {
+        public AdaptingPropertyIsNotEqualTo visit( PropertyIsNotEqualTo filter, Object data ) {
             return new AdaptingPropertyIsNotEqualTo( filter );
         }
 
-        public AdaptingFilter visit( PropertyIsGreaterThan filter, Object data ) {
+        public AdaptingPropertyIsGreaterThan visit( PropertyIsGreaterThan filter, Object data ) {
             return new AdaptingPropertyIsGreaterThan( filter );
         }
 
-        public AdaptingFilter visit( PropertyIsGreaterThanOrEqualTo filter, Object data ) {
+        public AdaptingPropertyIsGreaterThanOrEqualTo visit( PropertyIsGreaterThanOrEqualTo filter, Object data ) {
             return new AdaptingPropertyIsGreaterThanOrEqualTo( filter );
         }
 
-        public AdaptingFilter visit( PropertyIsLessThan filter, Object data ) {
+        public AdaptingPropertyIsLessThan visit( PropertyIsLessThan filter, Object data ) {
             return new AdaptingPropertyIsLessThan( filter );
         }
 
-        public AdaptingFilter visit( PropertyIsLessThanOrEqualTo filter, Object data ) {
+        public AdaptingPropertyIsLessThanOrEqualTo visit( PropertyIsLessThanOrEqualTo filter, Object data ) {
             return new AdaptingPropertyIsLessThanOrEqualTo( filter );
         }
 
-        public AdaptingFilter visit( PropertyIsLike filter, Object data ) {
+        public AdaptingPropertyIsLike visit( PropertyIsLike filter, Object data ) {
             return new AdaptingPropertyIsLike( filter );
         }
 
-        public AdaptingFilter visit( PropertyIsNull filter, Object data ) {
+        public AdaptingPropertyIsNull visit( PropertyIsNull filter, Object data ) {
             return new AdaptingPropertyIsNull( filter );
         }
 
-        public AdaptingFilter visit( BBOX filter, Object data ) {
+        public AdaptingBBOX visit( BBOX filter, Object data ) {
             return new AdaptingBBOX( filter );
         }
 
-        public AdaptingFilter visit( Beyond filter, Object data ) {
+        public AdaptingBeyond visit( Beyond filter, Object data ) {
             return new AdaptingBeyond( filter );
         }
 
-        public AdaptingFilter visit( Contains filter, Object data ) {
+        public AdaptingContains visit( Contains filter, Object data ) {
             return new AdaptingContains( filter );
         }
 
-        public AdaptingFilter visit( Crosses filter, Object data ) {
+        public AdaptingCrosses visit( Crosses filter, Object data ) {
             return new AdaptingCrosses( filter );
         }
 
-        public AdaptingFilter visit( Disjoint filter, Object data ) {
+        public AdaptingDisjoint visit( Disjoint filter, Object data ) {
             return new AdaptingDisjoint( filter );
         }
 
-        public AdaptingFilter visit( DWithin filter, Object data ) {
+        public AdaptingDWithin visit( DWithin filter, Object data ) {
             return new AdaptingDWithin( filter );
         }
 
-        public AdaptingFilter visit( Equals filter, Object data ) {
+        public AdaptingEquals visit( Equals filter, Object data ) {
             return new AdaptingEquals( filter );
         }
 
-        public AdaptingFilter visit( Intersects filter, Object data ) {
+        public AdaptingIntersects visit( Intersects filter, Object data ) {
             return new AdaptingIntersects( filter );
         }
 
-        public AdaptingFilter visit( Overlaps filter, Object data ) {
+        public AdaptingOverlaps visit( Overlaps filter, Object data ) {
             return new AdaptingOverlaps( filter );
         }
 
-        public AdaptingFilter visit( Touches filter, Object data ) {
+        public AdaptingTouches visit( Touches filter, Object data ) {
             return new AdaptingTouches( filter );
         }
 
-        public AdaptingFilter visit( Within filter, Object data ) {
+        public AdaptingWithin visit( Within filter, Object data ) {
             return new AdaptingWithin( filter );
         }
-
-        public AdaptingFilter visitNullFilter( Object data ) {
+        /** Called null is visited */
+        public AdaptingFilter<?> visitNullFilter( Object data ) {
             return null;
         }
+        // temporal
         
+        public AdaptingAfter visit( After filter, Object arg1 ) {
+            return new AdaptingAfter( filter);
+        }
+
+        public AdaptingAnyInteracts visit( AnyInteracts filter, Object arg1 ) {
+            return new AdaptingAnyInteracts( filter );
+        }
+
+        public AdaptingBefore visit( Before filter, Object arg1 ) {
+            return new AdaptingBefore( filter );
+        }
+
+        public AdaptingBegins visit( Begins filter, Object arg1 ) {
+            return new AdaptingBegins( filter );
+        }
+
+        public AdaptingBegunBy visit( BegunBy filter, Object arg1 ) {
+            return new AdaptingBegunBy( filter );
+        }
+
+        public AdaptingDuring visit( During filter, Object arg1 ) {
+            return new AdaptingDuring( filter );
+        }
+        
+        public AdaptingEndedBy visit( EndedBy filter, Object arg1 ) {
+            return new AdaptingEndedBy( filter );
+        }
+
+        public AdaptingEnds visit( Ends filter, Object arg1 ) {
+            return new AdaptingEnds( filter );
+        }
+
+        public AdaptingMeets visit( Meets filter, Object arg1 ) {
+            return new AdaptingMeets( filter );
+        }
+
+        public AdaptingMetBy visit( MetBy filter, Object arg1 ) {
+            return new AdaptingMetBy( filter );
+        }
+
+        public AdaptingOverlappedBy visit( OverlappedBy filter, Object arg1 ) {
+            return new AdaptingOverlappedBy( filter );
+        }
+
+        public AdaptingTContains visit( TContains filter, Object arg1 ) {
+            return new AdaptingTContains( filter );
+        }
+
+        public AdaptingTEquals visit( TEquals filter, Object arg1 ) {
+            return new AdaptingTEquals( filter );
+        }
+
+        public AdaptingTOverlaps visit( TOverlaps filter, Object arg1 ) {
+            return new AdaptingTOverlaps( filter );
+        }        
     }
 }

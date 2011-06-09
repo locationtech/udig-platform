@@ -19,7 +19,6 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.geotools.filter.text.cql2.CQL;
-import org.geotools.filter.text.ecql.ECQL;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterVisitor;
 
@@ -34,17 +33,17 @@ import org.opengis.filter.FilterVisitor;
  * @author jones
  * @since 1.1.0
  */
-public class AdaptingFilter implements Filter, IAdaptable {
-    protected Filter wrapped;
+public class AdaptingFilter<F extends Filter> implements Filter, IAdaptable {
+    protected F wrapped;
     protected Set<Object> adapters = new CopyOnWriteArraySet<Object>();
     
-    AdaptingFilter(Filter filter) {
+    AdaptingFilter(F filter) {
         if( filter==null )
             throw new NullPointerException("filterA cannot be null"); //$NON-NLS-1$
     	wrapped = filter;
 	}
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public Object getAdapter( Class adapter ) {
         for( Object obj : adapters ) {
             if( adapter.isAssignableFrom(obj.getClass()) )

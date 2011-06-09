@@ -9,36 +9,37 @@ import org.opengis.filter.expression.Expression;
  * @author Jody
  * @since 1.1.0
  */
-class AdaptingPropertyIsLike extends AdaptingFilter implements PropertyIsLike {
+class AdaptingPropertyIsLike extends AdaptingFilter<PropertyIsLike> implements PropertyIsLike {
 
     AdaptingPropertyIsLike( PropertyIsLike filter ) {
         super(filter);
     }
 
     public String getEscape() {
-        return ((PropertyIsLike)wrapped).getEscape();
+        return wrapped.getEscape();
     }
 
     public Expression getExpression() {
-        return ((PropertyIsLike)wrapped).getExpression();
+        return wrapped.getExpression();
     }
 
     public String getLiteral() {
-        return ((PropertyIsLike)wrapped).getLiteral();
+        return wrapped.getLiteral();
     }
 
     public String getSingleChar() {
-        return ((PropertyIsLike)wrapped).getSingleChar();
+        return wrapped.getSingleChar();
     }
 
     public String getWildCard() {
-        return ((PropertyIsLike)wrapped).getWildCard();
+        return wrapped.getWildCard();
     }
 
     public boolean isMatchingCase() {
-        return ((PropertyIsLike)wrapped).isMatchingCase();
+        return wrapped.isMatchingCase();
     }
+    
     public MatchAction getMatchAction() {
-        return ((PropertyIsLike)wrapped).getMatchAction();
+        return wrapped.getMatchAction();
     }
 }

@@ -11,22 +11,20 @@ import org.opengis.filter.identity.Identifier;
  * @author Jody
  * @since 1.1.0
  */
-class AdaptingId extends AdaptingFilter implements Id {
+class AdaptingId extends AdaptingFilter<Id> implements Id {
 
     AdaptingId( Id filter ) {
         super(filter);
     }
     
     public Set<Object> getIDs() {
-        return ((Id)wrapped).getIDs();
+        return wrapped.getIDs();
     }
 
-    @SuppressWarnings("unchecked")
     public Set<Identifier> getIdentifiers() {
-        return ((Id)wrapped).getIdentifiers();
+        return wrapped.getIdentifiers();
     }
     public String toString() {
-        Id id = (Id) wrapped;
-        return "Adapting:"+id.getIDs();
+        return "Adapting:"+wrapped.getIDs();
     }
 }

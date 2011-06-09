@@ -9,13 +9,13 @@ import org.opengis.filter.expression.Expression;
  * @author Jody
  * @since 1.1.0
  */
-class AdaptingPropertyIsNull extends AdaptingFilter implements PropertyIsNull{
+class AdaptingPropertyIsNull extends AdaptingFilter<PropertyIsNull> implements PropertyIsNull{
 
     AdaptingPropertyIsNull( PropertyIsNull filter ) {
         super(filter);
     }
     
     public Expression getExpression() {
-        return ((PropertyIsNull)wrapped).getExpression();
+        return wrapped.getExpression();
     }
 }

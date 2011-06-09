@@ -1,8 +1,6 @@
 package net.refractions.udig.core.filter;
 
-import org.opengis.filter.MultiValuedFilter.MatchAction;
 import org.opengis.filter.expression.Expression;
-import org.opengis.filter.spatial.BBOX;
 import org.opengis.filter.spatial.Beyond;
 
 /**
@@ -10,29 +8,30 @@ import org.opengis.filter.spatial.Beyond;
  * 
  * @author Jody
  * @since 1.1.0
+ * @version 1.2.2
  */
-class AdaptingBeyond extends AdaptingFilter implements Beyond {
+class AdaptingBeyond extends AdaptingFilter<Beyond> implements Beyond {
 
     AdaptingBeyond( Beyond filter ) {
         super(filter);
     }
 
     public double getDistance() {
-        return ((Beyond)wrapped).getDistance();
+        return wrapped.getDistance();
     }
 
     public String getDistanceUnits() {
-        return ((Beyond)wrapped).getDistanceUnits();
+        return wrapped.getDistanceUnits();
     }
 
     public Expression getExpression1() {
-        return ((Beyond)wrapped).getExpression1();
+        return wrapped.getExpression1();
     }
 
     public Expression getExpression2() {
-        return ((Beyond)wrapped).getExpression2();
+        return wrapped.getExpression2();
     }
     public MatchAction getMatchAction() {
-        return ((Beyond)wrapped).getMatchAction();
+        return wrapped.getMatchAction();
     }
 }

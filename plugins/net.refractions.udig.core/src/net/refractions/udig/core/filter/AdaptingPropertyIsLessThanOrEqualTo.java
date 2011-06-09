@@ -1,8 +1,6 @@
 package net.refractions.udig.core.filter;
 
-import org.opengis.filter.BinaryComparisonOperator;
 import org.opengis.filter.PropertyIsLessThanOrEqualTo;
-import org.opengis.filter.MultiValuedFilter.MatchAction;
 import org.opengis.filter.expression.Expression;
 
 /**
@@ -11,24 +9,21 @@ import org.opengis.filter.expression.Expression;
  * @author Jody
  * @since 1.1.0
  */
-class AdaptingPropertyIsLessThanOrEqualTo extends AdaptingFilter implements PropertyIsLessThanOrEqualTo{
+class AdaptingPropertyIsLessThanOrEqualTo extends AdaptingFilter<PropertyIsLessThanOrEqualTo> implements PropertyIsLessThanOrEqualTo{
 
     AdaptingPropertyIsLessThanOrEqualTo( PropertyIsLessThanOrEqualTo filter ) {
         super(filter);
     }
-
     public Expression getExpression1() {
-        return ((BinaryComparisonOperator)wrapped).getExpression1();
+        return wrapped.getExpression1();
     }
-
     public Expression getExpression2() {
-        return ((BinaryComparisonOperator)wrapped).getExpression2();
+        return wrapped.getExpression2();
     }
-
     public boolean isMatchingCase() {
-        return ((BinaryComparisonOperator)wrapped).isMatchingCase();
+        return wrapped.isMatchingCase();
     }
     public MatchAction getMatchAction() {
-        return ((BinaryComparisonOperator)wrapped).getMatchAction();
+        return wrapped.getMatchAction();
     }
 }

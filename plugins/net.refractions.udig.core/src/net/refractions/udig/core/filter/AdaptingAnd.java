@@ -11,14 +11,14 @@ import org.opengis.filter.Filter;
  * @author Jody
  * @since 1.1.0
  */
-class AdaptingAnd extends AdaptingFilter implements And {
+class AdaptingAnd extends AdaptingFilter<And> implements And {
 
     AdaptingAnd( And filter ) {
         super(filter);
     }
 
     public List<Filter> getChildren() {
-        return ((And)wrapped).getChildren();
+        return wrapped.getChildren();
     }
     
 }

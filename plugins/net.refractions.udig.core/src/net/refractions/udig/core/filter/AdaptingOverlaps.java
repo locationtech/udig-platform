@@ -1,9 +1,6 @@
 package net.refractions.udig.core.filter;
 
-import org.opengis.filter.PropertyIsBetween;
-import org.opengis.filter.MultiValuedFilter.MatchAction;
 import org.opengis.filter.expression.Expression;
-import org.opengis.filter.spatial.BinarySpatialOperator;
 import org.opengis.filter.spatial.Overlaps;
 
 /**
@@ -12,20 +9,21 @@ import org.opengis.filter.spatial.Overlaps;
  * @author Jody
  * @since 1.1.0
  */
-class AdaptingOverlaps extends AdaptingFilter implements Overlaps {
+class AdaptingOverlaps extends AdaptingFilter<Overlaps> implements Overlaps {
 
     AdaptingOverlaps( Overlaps filter ) {
         super(filter);
     }
 
     public Expression getExpression1() {
-        return ((BinarySpatialOperator)wrapped).getExpression1();
+        return wrapped.getExpression1();
     }
 
     public Expression getExpression2() {
-        return ((BinarySpatialOperator)wrapped).getExpression2();
+        return wrapped.getExpression2();
     }
+    
     public MatchAction getMatchAction() {
-        return ((BinarySpatialOperator)wrapped).getMatchAction();
+        return wrapped.getMatchAction();
     }
 }
