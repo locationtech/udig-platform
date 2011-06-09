@@ -17,12 +17,15 @@
  */
 package eu.udig.catalog.jgrass.operations;
 
+import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 
 import javax.media.jai.iterator.RandomIter;
 import javax.media.jai.iterator.RandomIterFactory;
 
+import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource;
 import net.refractions.udig.ui.ExceptionDetailsDialog;
 import net.refractions.udig.ui.PlatformGIS;
 
@@ -56,7 +59,11 @@ import org.geotools.geometry.DirectPosition2D;
 import org.geotools.geometry.Envelope2D;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.parameter.Parameter;
+import org.geotools.referencing.operation.matrix.XAffineTransform;
+import org.geotools.resources.coverage.CoverageUtilities;
 import org.opengis.coverage.grid.GridCoverageReader;
+import org.opengis.coverage.grid.GridEnvelope;
+import org.opengis.geometry.DirectPosition;
 import org.opengis.geometry.Envelope;
 import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -82,71 +89,147 @@ public class MapSummaryAction implements IObjectActionDelegate, IWorkbenchWindow
             public void run( final IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
                 Display.getDefault().syncExec(new Runnable(){
                     public void run() {
+                        final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
 
                         final Object object = selection.getFirstElement();
                         try {
                             pm.beginTask("Collecting stats...", IProgressMonitor.UNKNOWN);
+                            StringBuilder regionString = new StringBuilder();
+                            GridCoverage2D geodata = null;
+                            if (object instanceof AbstractRasterGeoResource) {
+                                AbstractRasterGeoResource rGeo = (AbstractRasterGeoResource) object;
+                                AbstractGridCoverage2DReader gridCoverage2DReader = rGeo.resolve(
+                                        AbstractGridCoverage2DReader.class, pm);
+                                geodata = ((GridCoverage2D) gridCoverage2DReader.read(null));
+                                geodata = geodata.view(ViewType.GEOPHYSICS);
 
-                            if (object instanceof JGrassMapGeoResource) {
+                                Envelope envelope = geodata.getEnvelope();
+                                DirectPosition lowerCorner = envelope.getLowerCorner();
+                                double[] westSouth = lowerCorner.getCoordinate();
+                                DirectPosition upperCorner = envelope.getUpperCorner();
+                                double[] eastNorth = upperCorner.getCoordinate();
+                                GridGeometry2D gridGeometry = geodata.getGridGeometry();
+                                GridEnvelope2D gridRange = gridGeometry.getGridRange2D();
+                                int rows = gridRange.height;
+                                int cols = gridRange.width;
+
+                                AffineTransform gridToCRS = (AffineTransform) gridGeometry.getGridToCRS();
+                                double we_res = XAffineTransform.getScaleX0(gridToCRS);
+                                double ns_res = XAffineTransform.getScaleY0(gridToCRS);
+                                double north = eastNorth[1];
+                                double south = westSouth[1];
+                                double east = eastNorth[0];
+                                double west = westSouth[0];
+                                regionString.append("region:\nwest=");
+                                regionString.append(west);
+                                regionString.append("\neast=");
+                                regionString.append(east);
+                                regionString.append("\nsouth=");
+                                regionString.append(south);
+                                regionString.append("\nnorth=");
+                                regionString.append(north);
+                                regionString.append("\nwe_res=");
+                                regionString.append(we_res);
+                                regionString.append("\nns_res=");
+                                regionString.append(ns_res);
+                                regionString.append("\nrows=");
+                                regionString.append(rows);
+                                regionString.append("\ncols=");
+                                regionString.append(cols);
+
+                            } else if (object instanceof JGrassMapGeoResource) {
                                 JGrassMapGeoResource mr = (JGrassMapGeoResource) object;
                                 File mapFile = mr.getMapFile();
                                 JGrassMapEnvironment mapEnvironment = new JGrassMapEnvironment(mapFile);
                                 JGrassRegion jGrassRegion = mapEnvironment.getActiveRegion();
-                                
-                                GeneralParameterValue[] readParams = createGridGeometryGeneralParameter(jGrassRegion.getCols(),
-                                        jGrassRegion.getRows(), jGrassRegion.getNorth(), jGrassRegion.getSouth(),
-                                        jGrassRegion.getEast(), jGrassRegion.getWest(),
-                                        mapEnvironment.getCoordinateReferenceSystem());
 
-                                AbstractGridFormat format = (AbstractGridFormat) new GrassCoverageFormatFactory().createFormat();
-                                AbstractGridCoverage2DReader reader = format.getReader(mapEnvironment.getCELL());
-                                GridCoverage2D geodata = ((GridCoverage2D) reader.read(readParams));
-                                geodata = geodata.view(ViewType.GEOPHYSICS);
-                                RandomIter inputIter = RandomIterFactory.create(geodata.getRenderedImage(), null);
-                                /*
-                                 * calculate mean, max and min
-                                 */
-                                double mean = 0.0;
-
-                                double[] minMaxMeans = new double[]{Double.MAX_VALUE, Double.MIN_VALUE, 0, 0, 0};
                                 int cols = jGrassRegion.getCols();
                                 int rows = jGrassRegion.getRows();
-                                int validCells = 0;
-                                for( int y = 0; y < rows; y++ ) {
-                                    for( int x = 0; x < cols; x++ ) {
-                                        double value = inputIter.getSampleDouble(x, y, 0);
-                                        if (!Double.isNaN(value)) {
-                                            if (value < minMaxMeans[0])
-                                                minMaxMeans[0] = value;
-                                            if (value > minMaxMeans[1])
-                                                minMaxMeans[1] = value;
-                                            mean = mean + value;
-                                            validCells++;
-                                        }
+                                double north = jGrassRegion.getNorth();
+                                double south = jGrassRegion.getSouth();
+                                double east = jGrassRegion.getEast();
+                                double west = jGrassRegion.getWest();
+                                double we_res = jGrassRegion.getWEResolution();
+                                double ns_res = jGrassRegion.getNSResolution();
+                                regionString.append("region:\nwest=");
+                                regionString.append(west);
+                                regionString.append("\neast=");
+                                regionString.append(east);
+                                regionString.append("\nsouth=");
+                                regionString.append(south);
+                                regionString.append("\nnorth=");
+                                regionString.append(north);
+                                regionString.append("\nwe_res=");
+                                regionString.append(we_res);
+                                regionString.append("\nns_res=");
+                                regionString.append(ns_res);
+                                regionString.append("\nrows=");
+                                regionString.append(rows);
+                                regionString.append("\ncols=");
+                                regionString.append(cols);
+
+                                GeneralParameterValue[] readParams = createGridGeometryGeneralParameter(cols, rows, north, south,
+                                        east, west, mapEnvironment.getCoordinateReferenceSystem());
+                                AbstractGridFormat format = (AbstractGridFormat) new GrassCoverageFormatFactory().createFormat();
+                                AbstractGridCoverage2DReader reader = format.getReader(mapEnvironment.getCELL());
+                                geodata = ((GridCoverage2D) reader.read(readParams));
+                                geodata = geodata.view(ViewType.GEOPHYSICS);
+                            } else {
+                                MessageDialog.openInformation(shell, "WARNING", "Unable to read format");
+                                return;
+                            }
+
+                            GridGeometry2D gridGeometry = geodata.getGridGeometry();
+                            GridEnvelope2D gridRange = gridGeometry.getGridRange2D();
+                            int rows = gridRange.height;
+                            int cols = gridRange.width;
+                            AffineTransform gridToCRS = (AffineTransform) gridGeometry.getGridToCRS();
+                            double xRes = XAffineTransform.getScaleX0(gridToCRS);
+                            double yRes = XAffineTransform.getScaleY0(gridToCRS);
+
+                            RandomIter inputIter = RandomIterFactory.create(geodata.getRenderedImage(), null);
+                            /*
+                             * calculate mean, max and min
+                             */
+                            double mean = 0.0;
+
+                            double[] minMaxMeans = new double[]{Double.MAX_VALUE, Double.MIN_VALUE, 0, 0, 0};
+                            int validCells = 0;
+                            for( int y = 0; y < rows; y++ ) {
+                                for( int x = 0; x < cols; x++ ) {
+                                    double value = inputIter.getSampleDouble(x, y, 0);
+                                    if (!Double.isNaN(value) && (int) value != -9999) {
+                                        if (value < minMaxMeans[0])
+                                            minMaxMeans[0] = value;
+                                        if (value > minMaxMeans[1])
+                                            minMaxMeans[1] = value;
+                                        mean = mean + value;
+                                        validCells++;
                                     }
                                 }
-
-                                mean = mean / (double) validCells;
-
-                                minMaxMeans[2] = mean;
-                                minMaxMeans[3] = validCells;
-                                minMaxMeans[4] = validCells * jGrassRegion.getWEResolution() * jGrassRegion.getNSResolution();
-
-                                /*
-                                 * print out some system out
-                                 */
-                                StringBuilder sb = new StringBuilder();
-                                sb.append("Summary for the map:\n");
-                                sb.append("\n");
-                                sb.append("range: " + minMaxMeans[0] + " - " + minMaxMeans[1] + "\n");
-                                sb.append("mean: " + minMaxMeans[2] + "\n");
-                                sb.append("active cells: " + minMaxMeans[3] + "\n");
-                                sb.append("active area (assuming metric resolution): " + minMaxMeans[4] + "\n");
-                                sb.append(jGrassRegion.toString() + "\n");
-
-                                final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-                                MessageDialog.openInformation(shell, "Summary", sb.toString());
                             }
+
+                            mean = mean / (double) validCells;
+
+                            minMaxMeans[2] = mean;
+                            minMaxMeans[3] = validCells;
+                            minMaxMeans[4] = validCells * xRes * yRes;
+
+                            /*
+                             * print out some system out
+                             */
+                            StringBuilder sb = new StringBuilder();
+                            sb.append("Summary for the map:\n");
+                            sb.append("\n");
+                            sb.append("range: " + minMaxMeans[0] + " - " + minMaxMeans[1] + "\n");
+                            sb.append("mean: " + minMaxMeans[2] + "\n");
+                            sb.append("active cells: " + minMaxMeans[3] + "\n");
+                            sb.append("active area (assuming metric resolution): " + minMaxMeans[4] + "\n");
+                            sb.append(regionString.toString() + "\n");
+                            sb.append("data crs: " + geodata.getCoordinateReferenceSystem().getName().toString());
+
+                            MessageDialog.openInformation(shell, "Summary", sb.toString());
+
                         } catch (Exception e) {
                             String message = "An error occurred while exporting the maps.";
                             ExceptionDetailsDialog.openError("ERROR", message, IStatus.ERROR, JGrassPlugin.PLUGIN_ID, e);
@@ -159,10 +242,9 @@ public class MapSummaryAction implements IObjectActionDelegate, IWorkbenchWindow
             }
         };
 
-        PlatformGIS.runInProgressDialog("Export maps...", true, operation, true);
+        PlatformGIS.runInProgressDialog("Calculating map summery...", true, operation, true);
 
     }
-
     /**
     * @see org.eclipse.ui.IActionDelegate#selectionChanged(org.eclipse.jface.action.IAction,
     *      org.eclipse.jface.viewers.ISelection)

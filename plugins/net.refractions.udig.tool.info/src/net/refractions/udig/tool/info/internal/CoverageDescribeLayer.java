@@ -24,19 +24,22 @@ import java.text.DecimalFormat;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.tool.info.CoveragePointInfo;
-import net.refractions.udig.tool.info.InfoPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.coverage.grid.GridCoordinates2D;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.InvalidGridGeometryException;
 import org.geotools.geometry.DirectPosition2D;
+import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
 import org.opengis.coverage.grid.GridCoverage;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Coverage click info gathering class.
@@ -48,21 +51,25 @@ public class CoverageDescribeLayer {
     public static CoveragePointInfo info2( ILayer layer, ReferencedEnvelope bbox, IProgressMonitor monitor ) throws IOException,
             InvalidGridGeometryException, TransformException {
 
-        Envelope reprojected = null;
-        try {
-            reprojected = bbox.transform(layer.getMap().getViewportModel().getCRS(), true);
-        } catch (Exception e) {
-            InfoPlugin.log("", e); //$NON-NLS-1$
-            return null;
-        }
-
+        final Coordinate envelopeCenterOrig = bbox.centre();
+        CoordinateReferenceSystem sourceCRS = bbox.getCoordinateReferenceSystem();
         final DecimalFormat formatter = new DecimalFormat("0.####");
-        final Coordinate envelopeCenter = reprojected.centre();
         IGeoResource geoResource = layer.getGeoResource();
         if (geoResource.canResolve(GridCoverage.class)) {
             GridCoverage2D coverage = (GridCoverage2D) geoResource.resolve(GridCoverage.class, monitor);
+            CoordinateReferenceSystem targetCrs = coverage.getCoordinateReferenceSystem();
 
-            Point2D p = new Point2D.Double(envelopeCenter.x, envelopeCenter.y);
+            Coordinate evaluateCoord = envelopeCenterOrig;
+            if (!CRS.equalsIgnoreMetadata(sourceCRS, targetCrs)) {
+                try {
+                    MathTransform transform = CRS.findMathTransform(sourceCRS, targetCrs);
+                    evaluateCoord = JTS.transform(envelopeCenterOrig, null, transform);
+                } catch (FactoryException e1) {
+                    return null;
+                }
+            }
+
+            Point2D p = new Point2D.Double(evaluateCoord.x, evaluateCoord.y);
             int bands = coverage.getSampleDimensions().length;
             final double[] evaluated = new double[bands];
             try {
@@ -88,9 +95,9 @@ public class CoverageDescribeLayer {
                         sb.append(" = ").append(evaluated[0]).append("\n\n");
                     }
                     sb.append("\tin coordinates (easting, northing):\n");
-                    sb.append("\t").append(formatter.format(envelopeCenter.x));
+                    sb.append("\t").append(formatter.format(envelopeCenterOrig.x));
                     sb.append(", ");
-                    sb.append(formatter.format(envelopeCenter.y));
+                    sb.append(formatter.format(envelopeCenterOrig.y));
                     sb.append("\n\n");
                     sb.append("\tand grid coordinates (row, col):\n");
                     sb.append("\t").append(gridCoord.y);

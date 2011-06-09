@@ -221,6 +221,18 @@
                            tooltip="View a simple map summary on the active region">
          </action>
       </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="eu.udig.catalog.jgrass.core.GridCoverage.contribution"
+            objectClass="net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource">
+                     <action
+                           class="eu.udig.catalog.jgrass.operations.MapSummaryAction"
+                           icon="icons/report.png"
+                           id="eu.udig.catalog.jgrass.operations.MapSummaryAction"
+                           label="Map summary"
+                           tooltip="View a simple map summary">
+         </action>
+      </objectContribution>
    </extension>
 
 </plugin>
