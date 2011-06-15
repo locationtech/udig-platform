@@ -1,20 +1,19 @@
 package net.refractions.udig.core.filter;
 
 import org.opengis.filter.expression.Expression;
-import org.opengis.filter.spatial.Disjoint;
+import org.opengis.filter.temporal.TOverlaps;
 
 /**
- * AdaptingFilter that implements Disjoint interface.
- * 
+ * Adapting wrapper for TOverlaps temporal filter.
  * @author Jody
- * @since 1.1.0
- * @version 1.2.2
+ * @since 1.2.2
  */
-class AdaptingDisjoint extends AdaptingFilter<Disjoint> implements Disjoint {
+public class AdaptingTOverlaps extends AdaptingFilter<TOverlaps> implements TOverlaps {
 
-    AdaptingDisjoint( Disjoint filter ) {
+    AdaptingTOverlaps( TOverlaps filter ) {
         super(filter);
     }
+
     public Expression getExpression1() {
         return wrapped.getExpression1();
     }
@@ -22,7 +21,9 @@ class AdaptingDisjoint extends AdaptingFilter<Disjoint> implements Disjoint {
     public Expression getExpression2() {
         return wrapped.getExpression2();
     }
+
     public MatchAction getMatchAction() {
         return wrapped.getMatchAction();
     }
+
 }

@@ -1,6 +1,7 @@
 package net.refractions.udig.core.filter;
 
 import org.geotools.factory.CommonFactoryFinder;
+import org.opengis.filter.ExcludeFilter;
 import org.opengis.filter.Filter;
 import org.opengis.filter.PropertyIsEqualTo;
 import org.opengis.filter.expression.Expression;
@@ -14,10 +15,10 @@ import org.opengis.filter.expression.Expression;
  * it wont show up for code using a FilterVisitor; but it will be noticed
  * by coding doing an instanceof check.
  * <p>
- * @author Jody Garnett (Refracitons Research Inc)
+ * @author Jody Garnett (Refractions Research Inc)
  * @since 1.2.0
  */
-class AdaptingExcludeFilter extends AdaptingFilter implements PropertyIsEqualTo {
+class AdaptingExcludeFilter extends AdaptingFilter<ExcludeFilter> implements PropertyIsEqualTo {
     AdaptingExcludeFilter() {
         super( Filter.EXCLUDE );
     }

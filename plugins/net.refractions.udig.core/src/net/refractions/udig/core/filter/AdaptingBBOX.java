@@ -3,45 +3,46 @@ package net.refractions.udig.core.filter;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.spatial.BBOX;
 
-class AdaptingBBOX extends AdaptingFilter implements BBOX {
+@SuppressWarnings("deprecation")
+class AdaptingBBOX extends AdaptingFilter<BBOX> implements BBOX {
 
     AdaptingBBOX( BBOX filter ) {
         super(filter);
     }
 
     public double getMaxX() {
-        return ((BBOX)wrapped).getMaxX();
+        return wrapped.getMaxX();
     }
 
     public double getMaxY() {
-        return ((BBOX)wrapped).getMaxY();
+        return wrapped.getMaxY();
     }
 
     public double getMinX() {
-        return ((BBOX)wrapped).getMinX();
+        return wrapped.getMinX();
     }
 
     public double getMinY() {
-        return ((BBOX)wrapped).getMinY();
+        return wrapped.getMinY();
     }
 
     public String getPropertyName() {
-        return ((BBOX)wrapped).getPropertyName();
+        return wrapped.getPropertyName();
     }
 
     public String getSRS() {
-        return ((BBOX)wrapped).getSRS();
+        return wrapped.getSRS();
     }
 
     public Expression getExpression1() {
-        return ((BBOX)wrapped).getExpression1();
+        return wrapped.getExpression1();
     }
 
     public Expression getExpression2() {
-        return ((BBOX)wrapped).getExpression2();
+        return wrapped.getExpression2();
     }
 
     public MatchAction getMatchAction() {
-        return ((BBOX)wrapped).getMatchAction();
+        return wrapped.getMatchAction();
     }    
 }

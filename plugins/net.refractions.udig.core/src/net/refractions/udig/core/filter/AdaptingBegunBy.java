@@ -1,20 +1,19 @@
 package net.refractions.udig.core.filter;
 
 import org.opengis.filter.expression.Expression;
-import org.opengis.filter.spatial.Disjoint;
+import org.opengis.filter.temporal.BegunBy;
 
 /**
- * AdaptingFilter that implements Disjoint interface.
- * 
+ * Adapting wrapper for BegunBy temporal filter.
  * @author Jody
- * @since 1.1.0
- * @version 1.2.2
+ * @since 1.2.2
  */
-class AdaptingDisjoint extends AdaptingFilter<Disjoint> implements Disjoint {
+public class AdaptingBegunBy extends AdaptingFilter<BegunBy> implements BegunBy {
 
-    AdaptingDisjoint( Disjoint filter ) {
+    AdaptingBegunBy( BegunBy filter ) {
         super(filter);
     }
+
     public Expression getExpression1() {
         return wrapped.getExpression1();
     }
@@ -22,7 +21,9 @@ class AdaptingDisjoint extends AdaptingFilter<Disjoint> implements Disjoint {
     public Expression getExpression2() {
         return wrapped.getExpression2();
     }
+
     public MatchAction getMatchAction() {
         return wrapped.getMatchAction();
     }
+
 }

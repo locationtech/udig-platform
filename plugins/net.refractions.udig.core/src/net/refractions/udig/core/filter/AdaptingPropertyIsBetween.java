@@ -9,24 +9,25 @@ import org.opengis.filter.expression.Expression;
  * @author Jody
  * @since 1.1.0
  */
-class AdaptingPropertyIsBetween extends AdaptingFilter implements PropertyIsBetween {
+class AdaptingPropertyIsBetween extends AdaptingFilter<PropertyIsBetween> implements PropertyIsBetween {
 
     AdaptingPropertyIsBetween( PropertyIsBetween filter ) {
         super(filter);
     }
 
     public Expression getExpression() {
-        return ((PropertyIsBetween)wrapped).getExpression();
+        return wrapped.getExpression();
     }
 
     public Expression getLowerBoundary() {
-        return ((PropertyIsBetween)wrapped).getLowerBoundary();
+        return wrapped.getLowerBoundary();
     }
 
     public Expression getUpperBoundary() {
-        return ((PropertyIsBetween)wrapped).getUpperBoundary();
+        return wrapped.getUpperBoundary();
     }
+    
     public MatchAction getMatchAction() {
-        return ((PropertyIsBetween)wrapped).getMatchAction();
+        return wrapped.getMatchAction();
     }
 }

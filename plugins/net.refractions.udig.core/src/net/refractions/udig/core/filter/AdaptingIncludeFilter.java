@@ -2,6 +2,7 @@ package net.refractions.udig.core.filter;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.opengis.filter.Filter;
+import org.opengis.filter.IncludeFilter;
 import org.opengis.filter.PropertyIsEqualTo;
 import org.opengis.filter.expression.Expression;
 
@@ -16,7 +17,7 @@ import org.opengis.filter.expression.Expression;
  * @author Jody Garnett (Refracitons Research Inc)
  * @since 1.2.0
  */
-class AdaptingIncludeFilter extends AdaptingFilter implements PropertyIsEqualTo {
+class AdaptingIncludeFilter extends AdaptingFilter<IncludeFilter> implements PropertyIsEqualTo {
     
     AdaptingIncludeFilter() {
         super( Filter.INCLUDE );

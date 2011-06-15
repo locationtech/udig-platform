@@ -9,14 +9,14 @@ import org.opengis.filter.Not;
  * @author Jody
  * @since 1.1.0
  */
-class AdaptingNot extends AdaptingFilter implements Not {
+class AdaptingNot extends AdaptingFilter<Not> implements Not {
 
     AdaptingNot( Not filter ) {
         super(filter);
     }
 
     public Filter getFilter() {
-        return ((Not)wrapped).getFilter();
+        return wrapped.getFilter();
     }
 
 }

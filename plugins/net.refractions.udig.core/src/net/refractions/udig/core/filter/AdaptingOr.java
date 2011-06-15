@@ -11,14 +11,14 @@ import org.opengis.filter.Or;
  * @author Jody
  * @since 1.1.0
  */
-class AdaptingOr extends AdaptingFilter implements Or {
+class AdaptingOr extends AdaptingFilter<Or> implements Or {
 
     AdaptingOr( Or filter ) {
         super(filter);
     }
 
     public List<Filter> getChildren() {
-        return ((Or)wrapped).getChildren();
+        return wrapped.getChildren();
     }
     
 }
