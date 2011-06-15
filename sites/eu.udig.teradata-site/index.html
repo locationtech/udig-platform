@@ -16,7 +16,7 @@
 				xmlFile.load("site.xml");
 				stylesheet.load("web/site.xsl");
 			} else {
-				alert("Document could not be loaded by browser.");
+				// can't do the loading... oh well
 			}
 			xmlFile.addEventListener("load", transform, false);
 			stylesheet.addEventListener("load", transform, false);
@@ -54,7 +54,7 @@
 </script>
 </head>
 <body onload="init();">
-<!--[insert static HTML here]-->
+Welcome to the uDig-Teradata update site.  This site contains the teradata plugins to allow uDig to connection to teradata databases.
 <div id="data"><!-- this is where the transformed data goes --></div>
 </body>
 </html>

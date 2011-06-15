@@ -68,6 +68,10 @@ public class TeradataServiceExtension extends AbstractDataStoreServiceExtension
 			params2.put(TeradataDataStoreFactory.APPLICATION.key, "uDig");
 			params2.put(TeradataDataStoreFactory.TESSELLATION_TABLE.key, TeradataDataStoreFactory.TESSELLATION_TABLE.sample.toString());
 			
+			if(!Activator.checkTeradataDrivers()){
+				return new TeradataServiceHolder(finalID,params2);
+			}
+			
 			return new TeradataService(finalID, params2);
 		} catch (MalformedURLException e) {
 			Activator.log("Unable to construct proper service URL.", e); //$NON-NLS-1$

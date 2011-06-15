@@ -116,6 +116,7 @@ public class TableBasedExtraParamsControl implements ExtraParamsControl {
 		@Override
 		protected void setValue(Object element, Object value) {
 			ExtraParams def = (ExtraParams)element;
+			viewer.refresh(element,true);
 			def.getCellEditor().setValue(value);
 		}
 	}
