@@ -22,6 +22,7 @@ import java.net.URL;
 import java.sql.Connection;
 
 import net.refractions.udig.catalog.internal.postgis.PostgisPlugin;
+import net.refractions.udig.catalog.service.database.TableDescriptor;
 import net.refractions.udig.core.internal.CorePlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -40,6 +41,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * @since 1,2
  */
 public class PostgisGeoResource2 extends IGeoResource {
+    final TableDescriptor desc;
     final String typename;
     private volatile Status status;
     private volatile Throwable message;
@@ -47,28 +49,27 @@ public class PostgisGeoResource2 extends IGeoResource {
     private final PostgisSchemaFolder parent;
     private Boolean readOnly = null; // we won't know until we try
     
-    public PostgisGeoResource2( PostgisService2 service, PostgisSchemaFolder postgisSchemaFolder, String typename ) {        
+    public PostgisGeoResource2( PostgisService2 service, PostgisSchemaFolder postgisSchemaFolder, TableDescriptor desc ) {        
             this.service = service;
             this.parent=postgisSchemaFolder;
-            this.typename = typename;
+            this.desc = desc;
+            this.typename = desc.name;
             try {
                 URL identifier2 = service.getIdentifier();
                 identifier = new URL(identifier2, identifier2.toExternalForm() + "#" + typename, CorePlugin.RELAXED_HANDLER);
             } catch (MalformedURLException e) {
                 throw new IllegalArgumentException("The service URL must not contain a #", e);
             }
-            
-            try {
-                info = new PostgisResourceInfo(this);
-            } catch (Exception e) {
-                PostgisPlugin.log("Error creating a PostgisInfo object", e);
-            }            
     }
 
     public URL getIdentifier() {
         return identifier;
     }
 
+    @Override
+    public String getTitle() {
+    	return typename;
+    }
     @Override
     public IResolve parent( IProgressMonitor monitor ) throws IOException {
         return parent;
@@ -147,12 +148,13 @@ public class PostgisGeoResource2 extends IGeoResource {
                 || super.canResolve(adaptee);
     }
 
-    @Override
-    public PostgisResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
-        return (PostgisResourceInfo) super.getInfo(monitor);
-    }
     protected PostgisResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        return (PostgisResourceInfo) info; // created during the constructor
+        try {
+            return new PostgisResourceInfo(this);
+        } catch (Exception e) {
+            PostgisPlugin.log("Error creating a PostgisInfo object", e);
+            return null;
+        }      
     }
 
     /**

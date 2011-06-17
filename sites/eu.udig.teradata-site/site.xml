@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/eu.udig.teradata.feature_1.0.0.201106060842.jar" id="eu.udig.teradata.feature" version="1.0.0.201106060842">
+      <category name="ConnectorsPlugins"/>
+   </feature>
+   <category-def name="ConnectorsPlugins" label="Connector Plugins"/>
+</site>

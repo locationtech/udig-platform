@@ -107,7 +107,6 @@ public class EndConnectionState extends State {
                 IService service = ((IGeoResource) context).service(monitor);
                 services = Collections.singleton(service);
             }else{
-            
                 Map<String, Serializable> params = factory.createConnectionParameters(context);
                 if (params != null && params.isEmpty())
                     params = null;
@@ -215,7 +214,6 @@ public class EndConnectionState extends State {
         // use the parameters/url to acquire a set of services
         //
         IServiceFactory sFactory = CatalogPlugin.getDefault().getServiceFactory();
-        IRepository local = CatalogPlugin.getDefault().getLocal();
         
         monitor.setTaskName(Messages.ConnectionState_task);
 

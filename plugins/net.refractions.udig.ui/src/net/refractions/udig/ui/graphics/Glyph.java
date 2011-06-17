@@ -164,7 +164,17 @@ public class Glyph {
             }
         };
     }
-    
+    /**
+     * Icon for point data in the provided color
+     * <p>
+     * XXX: Suggest point( SLD style ) at a later time.
+     * </p>
+     * @return ImageDescriptor
+     */    
+    public static ImageDescriptor point() {
+    	return point(DEFAULT_BORDER, DEFAULT_FILL);
+    }
+
     /**
      * Icon for point data in the provided color
      * <p>
@@ -217,7 +227,35 @@ public class Glyph {
                 }
             }
         };
-    }      
+    } 
+    /**
+     * Complex render of Geometry allowing presentation of point, line and polygon styles.
+     * <p>
+     * Layout:<pre><code>
+     *    1 2 3 4 5 6 7 8 9101112131415
+     *   0
+     *  1          LL                 L  
+     *  2          L L                L
+     *  3         L  L               L                   
+     *  4        L    L             L  
+     *  5        L     L            L  
+     *  6       L      L           L   
+     *  7      L        L         L    
+     *  8      L         L        L    
+     *  9     L          L       L     
+     * 10    L            L     L      
+     * 11    L             L    L      
+     * 12   L              L   L       
+     * 13  L                L L        
+     * 14  L                 LL            
+     * 15
+     * </code><pre>
+     * </p>
+     */
+    public static ImageDescriptor line() {
+    	return line(DEFAULT_BORDER,1);
+    }
+
     /**
      * Complex render of Geometry allowing presentation of point, line and polygon styles.
      * <p>
@@ -481,6 +519,13 @@ public class Glyph {
     }
   
     /**
+     * Icon for polygon in default border, fill and width
+     */
+    public static ImageDescriptor polygon() {
+    	return polygon(DEFAULT_BORDER, DEFAULT_FILL,1);
+    }
+
+    	/**
      * Icon for polygon in provided border, fill and width
      * 
      * @param black
@@ -776,19 +821,23 @@ public class Glyph {
         if( ft==null || ft.getGeometryDescriptor()==null )
             return null;
         
-        if( Point.class.isAssignableFrom(ft.getGeometryDescriptor().getType().getBinding()) 
-                || MultiPoint.class.isAssignableFrom(ft.getGeometryDescriptor().getType().getBinding()) ){
+        Class<?> geomType = ft.getGeometryDescriptor().getType().getBinding();
+        return icon(geomType);
+    }
+    public static ImageDescriptor icon(Class<?> geomType) {
+		if( Point.class.isAssignableFrom(geomType) 
+                || MultiPoint.class.isAssignableFrom(geomType) ){
             return point(DEFAULT_BORDER, DEFAULT_FILL);
         }
         
-        if( LineString.class.isAssignableFrom(ft.getGeometryDescriptor().getType().getBinding()) 
-                || MultiLineString.class.isAssignableFrom(ft.getGeometryDescriptor().getType().getBinding()) 
-                || LinearRing.class.isAssignableFrom(ft.getGeometryDescriptor().getType().getBinding())){
+        if( LineString.class.isAssignableFrom(geomType) 
+                || MultiLineString.class.isAssignableFrom(geomType) 
+                || LinearRing.class.isAssignableFrom(geomType)){
             return line(DEFAULT_BORDER, 1);
         }
         
-        if( Polygon.class.isAssignableFrom(ft.getGeometryDescriptor().getType().getBinding()) 
-                || MultiPolygon.class.isAssignableFrom(ft.getGeometryDescriptor().getType().getBinding()) ){
+        if( Polygon.class.isAssignableFrom(geomType) 
+                || MultiPolygon.class.isAssignableFrom(geomType) ){
             return polygon(DEFAULT_BORDER, DEFAULT_FILL, 1);
         }
         

@@ -109,7 +109,6 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
 			bars.updateActionBars();
 		}
 
-		@Override
 		public ICoolBarManager getCoolBarManager() {
 			return null;
 		}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="net.refractions.udig.catalog.ui.connectionFactory">
+      <factory
+            class="eu.udig.catalog.teradata.ConnectionFactory"
+            id="eu.udig.catalog.teradata.connectionFactory">
+      </factory>
+      <wizardPage
+            banner="icons/wizban/teradata-banner.png"
+            class="eu.udig.catalog.teradata.HostPage"
+            description="%wizard.description"
+            icon="icons/wizban/teradata-icon.png"
+            id="hostPage"
+            name="%wizardPage.hostPage.name">
+      </wizardPage>
+      <wizardPage
+            banner="icons/wizban/teradata-banner.png"
+            class="net.refractions.udig.catalog.service.database.DataConnectionPage"
+            description="%wizard.description"
+            icon="icons/wizban/teradata-icon.png"
+            name="%wizardPage.connectionPage.name">
+      </wizardPage>
+   </extension>
+   <extension
+         point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="eu.udig.catalog.teradata.TeradataServiceExtension"
+            id="eu.udig.catalog.teradata.service2"
+            name="%service.name">
+      </service>
+   </extension>
+
+</plugin>

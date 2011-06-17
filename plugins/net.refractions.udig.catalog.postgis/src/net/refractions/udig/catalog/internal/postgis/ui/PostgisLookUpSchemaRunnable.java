@@ -17,10 +17,10 @@ package net.refractions.udig.catalog.internal.postgis.ui;
 import static java.text.MessageFormat.format;
 import static org.geotools.data.postgis.PostgisNGDataStoreFactory.PORT;
 import static org.geotools.jdbc.JDBCDataStoreFactory.DATABASE;
+import static org.geotools.jdbc.JDBCDataStoreFactory.DBTYPE;
 import static org.geotools.jdbc.JDBCDataStoreFactory.HOST;
 import static org.geotools.jdbc.JDBCDataStoreFactory.PASSWD;
 import static org.geotools.jdbc.JDBCDataStoreFactory.USER;
-import static org.geotools.jdbc.JDBCDataStoreFactory.DBTYPE;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -167,6 +167,7 @@ public class PostgisLookUpSchemaRunnable implements LookUpSchemaRunnable {
 
     private Set<TableDescriptor> lookupGeometryColumn( List<Pair<String, String>> tablenames,
             Connection connection ) throws SQLException {
+    	PostgisServiceDialect dialect = new PostgisServiceDialect();
         final String f_geometry_column = "f_geometry_column";
         final String geomTypeCol = "type";
         final String sridCol = "srid";
@@ -195,7 +196,7 @@ public class PostgisLookUpSchemaRunnable implements LookUpSchemaRunnable {
                 String schema = results.getString(f_table_schema);
 
                 boolean broken = isBroken(connection, table, schema, geom, geomType);
-                tables.add(new TableDescriptor(table, geomType, schema, geom, srid, broken));
+                tables.add(new TableDescriptor(table, dialect.toGeomClass(geomType), schema, geom, srid, broken));
 
             }
 
@@ -205,7 +206,7 @@ public class PostgisLookUpSchemaRunnable implements LookUpSchemaRunnable {
         }
     }
 
-    private boolean isBroken( Connection connection, String table, String schema, String geom,
+	private boolean isBroken( Connection connection, String table, String schema, String geom,
             String type ) throws SQLException {
         Statement statement = connection.createStatement();
         try {
@@ -251,7 +252,7 @@ public class PostgisLookUpSchemaRunnable implements LookUpSchemaRunnable {
      * @return the names of the databases in the database that this object connected to when the run
      *         method was executed.
      */
-    public Set<TableDescriptor> getSchemas() {
+    public Set<TableDescriptor> getTableDescriptors() {
         return tables;
     }
 

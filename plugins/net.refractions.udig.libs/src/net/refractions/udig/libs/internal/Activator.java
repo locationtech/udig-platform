@@ -6,6 +6,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import javax.imageio.spi.ImageReaderSpi;
 
@@ -31,6 +36,7 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.referencing.factory.PropertyAuthorityFactory;
 import org.geotools.referencing.factory.ReferencingFactoryContainer;
 import org.geotools.resources.image.ImageUtilities;
+import org.geotools.util.logging.Logging;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
@@ -59,6 +65,8 @@ import org.osgi.util.tracker.ServiceTracker;
 public class Activator implements BundleActivator {
 
     public static String ID = "net.refractions.udig.libs"; //$NON-NLS-1$
+    public static String JDBC_DATA_TRACE_FINE = "net.refractions.udig.libs/debug/data/jdbc/fine";
+    public static String JDBC_TRACE_FINE = "net.refractions.udig.libs/debug/jdbc/fine";
 
     public void start( final BundleContext context ) throws Exception {
         if (Platform.getOS().equals(Platform.OS_WIN32)) {
@@ -86,12 +94,41 @@ public class Activator implements BundleActivator {
         map.put(Hints.LENIENT_DATUM_SHIFT, true);
         Hints global = new Hints(map);
         GeoTools.init(global);
+        
+//        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+//        Thread.currentThread().setContextClassLoader(GeoTools.class.getClassLoader());
+//        try {
+        Logger jdbcLogger = Logging.getLogger("org.geotools.jdbc");
+        Logger jdbcDataLogger = Logging.getLogger("org.geotools.data.jdbc");
+        ConsoleHandler handler = new ConsoleHandler();
+        handler.setLevel(Level.FINEST);
+        
+        Logging.getLogger("org.geotools").addHandler(handler);
 
+        if (isDebugging(JDBC_TRACE_FINE)) {
+
+        	jdbcLogger.setLevel(Level.FINEST);
+        } else {
+        	jdbcLogger.setLevel(Level.INFO);
+        }
+        if (isDebugging(JDBC_DATA_TRACE_FINE)) {
+        	jdbcDataLogger.setLevel(Level.FINEST);
+        } else {
+        	jdbcDataLogger.setLevel(Level.INFO);
+        }
+//        } finally {
+//        	Thread.currentThread().setContextClassLoader(cl);
+//        }
+        
         // We cannot do this here - it takes too long!
         // Early startup is too late
         // functionality moved to the UDIGApplication init method
         //
         // initializeReferencingModule( context.getBundle(), null );
+    }
+    public static boolean isDebugging(final String trace) {
+        return isDebugging()
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
     }
 
     public static boolean isDebugging() {

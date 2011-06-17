@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.CatalogPlugin;
+import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.PostgisGeoResource2;
@@ -59,7 +60,7 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
         if( url == null ){
             // so we are not sure it is a postgis url
             // lets guess
-            url = CatalogPlugin.locateURL(context);
+            url = ID.cast( context ).toURL();
         }
         if( url != null && PostgisServiceExtension2.isPostGIS(url)) {  
             // well we have a url - lets try it!            
@@ -97,7 +98,8 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
             return (URL) context;
         }
         if( context instanceof Map){
-            Map params=(Map) context;
+            @SuppressWarnings("rawtypes")
+			Map params=(Map) context;
             
             try {
                 return DIALECT.toURL(params);
@@ -139,8 +141,8 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
         else if( data instanceof String ){
             return toCapabilitiesURL( (String) data );
         }
-        else if( CatalogPlugin.locateURL(data) != null ){
-            return toCapabilitiesURL( CatalogPlugin.locateURL(data) );
+        else if( ID.cast( data ).toURL() != null ){
+            return toCapabilitiesURL( ID.cast( data ).toURL() );
         }
         else {
             return null; // no idea what this should be
@@ -196,7 +198,6 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
         //int databaseEnd = string.indexOf(" ", databaseStart);
         String the_host = string.substring(passwordEnd+1, hostEnd);
         String the_username=string.substring(startindex, usernameEnd);
-        String the_password=string.substring(usernameEnd+1, passwordEnd);
         String the_port;
         String the_database;
 
@@ -218,7 +219,7 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
         //URL(String protocol, String host, int port, String file)
         URL url = null;
         try {
-            url = DIALECT.toURL( the_username, the_password, the_host, intPort, the_database); 
+            url = DIALECT.toURL( the_username, the_host, intPort, the_database); 
             
         } catch (MalformedURLException e) {
             // TODO Catch e
@@ -231,7 +232,8 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
     @SuppressWarnings("unchecked") 
     protected Map<String,Serializable> createParams( URL url ){
         PostgisServiceExtension2 serviceFactory = new PostgisServiceExtension2();
-        Map params = serviceFactory.createParams( url );
+        @SuppressWarnings("rawtypes")
+		Map params = serviceFactory.createParams( url );
         if( params != null) return params;
         
         Map<String,Serializable> params2 = new HashMap<String,Serializable>();

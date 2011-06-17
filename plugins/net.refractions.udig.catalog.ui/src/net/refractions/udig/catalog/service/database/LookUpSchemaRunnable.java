@@ -48,5 +48,5 @@ public interface LookUpSchemaRunnable extends IRunnableWithProgress {
      * @return the names of the databases in the database that this object connected to when the run
      *         method was executed.
      */
-    Set<TableDescriptor> getSchemas();
+    Set<TableDescriptor> getTableDescriptors();
 }

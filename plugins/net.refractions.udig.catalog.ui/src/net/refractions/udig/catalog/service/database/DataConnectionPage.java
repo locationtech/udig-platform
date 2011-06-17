@@ -79,10 +79,7 @@ public class DataConnectionPage extends AbstractUDIGImportPage implements Listen
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         DatabaseServiceDialect dialect = dialect();
         
-        params.put(dialect.hostParam.key, userHostPage.getHost());
-        params.put(dialect.portParam.key, userHostPage.getPort());
-        params.put(dialect.usernameParam.key, userHostPage.getUsername());
-        params.put(dialect.passwordParam.key, userHostPage.getPassword());
+        params.putAll(userHostPage.addParams());
         params.put(dialect.databaseParam.key, database.getText());
         
         if( dialect.schemaParam != null && dialect.schemaParam.key != null ){
@@ -204,7 +201,7 @@ public class DataConnectionPage extends AbstractUDIGImportPage implements Listen
                         tableSelection.setTableInput(Collections.<TableDescriptor>emptySet());
                     } else {
                         setErrorMessage(null);
-                        tableSelection.setTableInput(runnable.getSchemas());
+                        tableSelection.setTableInput(runnable.getTableDescriptors());
                     }
                     getContainer().updateButtons();
                 } catch (InvocationTargetException e) {
@@ -269,6 +266,8 @@ public class DataConnectionPage extends AbstractUDIGImportPage implements Listen
             System.arraycopy(names, 0, items, 1, names.length);
 
             database.setItems(items);
+            
+            database.select(1);
         }
     }
 

@@ -35,5 +35,6 @@ public class DatabaseWizardLocalization {
     public String incorrectConfiguration = Messages.DatabaseWizardLocalization_incorrectConfiguration;
     public String list = Messages.DatabaseWizardLocalization_list;
     public String databasePermissionProblemMessage = Messages.DatabaseWizardLocalization_databasePermissionProblemMessage;
+	public String optionalParams=Messages.DatabaseWizardLocalization_optionalParams;
 
 }

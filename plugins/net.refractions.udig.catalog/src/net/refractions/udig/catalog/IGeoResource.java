@@ -56,7 +56,7 @@ public abstract class IGeoResource implements IResolve {
     protected IService service = null;
 
     /** Description of this resource */
-    protected IGeoResourceInfo info = null;
+    protected volatile IGeoResourceInfo info = null;
 
     /**
      * Blocking operation to resolve into the adaptee, if available.

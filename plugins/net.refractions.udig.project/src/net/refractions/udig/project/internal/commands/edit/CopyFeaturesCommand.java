@@ -16,6 +16,8 @@ package net.refractions.udig.project.internal.commands.edit;
 
 import java.awt.Rectangle;
 import java.io.IOException;
+import java.text.Format;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -34,7 +36,11 @@ import net.refractions.udig.project.internal.render.ViewportModel;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.swt.widgets.Display;
 import org.geotools.data.DefaultQuery;
+import org.geotools.data.FeatureEvent;
+import org.geotools.data.FeatureEvent.Type;
+import org.geotools.data.FeatureListener;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
@@ -94,7 +100,10 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
     @SuppressWarnings("unchecked")
     private void copyFeatures( ILayer sourceLayer, Filter filter, final Layer targetLayer,
             final IProgressMonitor monitor ) {
-        monitor.beginTask(Messages.CopyFeaturesCommand_name, 104);
+        final String copyFeaturesCommand_name = Messages.CopyFeaturesCommand_name;
+		String name = MessageFormat.format(copyFeaturesCommand_name,0);
+		monitor.setTaskName(name);
+		monitor.beginTask(name, 104);
         final int[] worked = new int[]{-3};
         monitor.worked(1);
         try {
@@ -131,20 +140,49 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
                     .getFeatures(query);
             SimpleFeatureType schema = targetLayer.getSchema();
 
+            
             CopyFeatureCollection c = new CopyFeatureCollection(schema, features, monitor, worked,
                     mt, attributeMap, targetLayer.layerToMapTransform());
             Envelope env = c.env;
             targetLayer.eSetDeliver(false);
+            FeatureListener listener = new FeatureListener() {
+        		long lastUpdate = System.currentTimeMillis();
+        		long count = 0;
+				public void changed(FeatureEvent event) {
+					if(event.getType() == Type.ADDED) {
+						count ++;
+		            	if(System.currentTimeMillis() - lastUpdate > 1000) {
+		            		Display.getDefault().asyncExec(new Runnable() {
+								
+								public void run() {
+									String name2 = MessageFormat.format(copyFeaturesCommand_name,0);
+				                	monitor.setTaskName(name2);
+								}
+							});
+		                	lastUpdate = System.currentTimeMillis();
+		            	}
+					}
+				}
+			};
+			boolean performedZoom = false;
             try {
+
+            	destination.addFeatureListener(listener);
                 List<FeatureId> fids = destination.addFeatures(c);
 
-                displayCopiedFeatures(env);
+                performedZoom = displayCopiedFeatures(env);
 
                 FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
                         .getDefaultHints());
                 addedFeaturesFilter = filterFactory.id(new HashSet(fids));
             } finally {
                 targetLayer.eSetDeliver(true);
+                destination.removeFeatureListener(listener);
+            }
+            if(performedZoom) {
+            	getMap().getRenderManager().refresh(null);
+            } else {
+            	targetLayer.refresh(env);
             }
             getMap().getRenderManager().refresh(targetLayer, env);
         } catch (IOException e) {
@@ -154,7 +192,7 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
         }
     }
 
-    private void displayCopiedFeatures( Envelope env ) {
+    private boolean displayCopiedFeatures( Envelope env ) {
         if (!getMap().getViewportModel().getBounds().intersects(env) && !env.isNull()
                 || tooSmallOnScreen(env)) {
 
@@ -167,9 +205,12 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
 				viewportModel.setBounds(
 						env.getMinX() - e, env.getMaxX() + e,
 						env.getMinY() - d, env.getMaxY() + d);
+				return true;
 			}finally{
             	viewportModel.eSetDeliver(true);
             }
+        } else {
+        	return false;
         }
     }
 

@@ -14,9 +14,9 @@
  */
 package net.refractions.udig.catalog;
 
+import static org.geotools.data.postgis.PostgisNGDataStoreFactory.LOOSEBBOX;
 import static org.geotools.data.postgis.PostgisNGDataStoreFactory.PORT;
 import static org.geotools.data.postgis.PostgisNGDataStoreFactory.SCHEMA;
-import static org.geotools.data.postgis.PostgisNGDataStoreFactory.LOOSEBBOX;
 import static org.geotools.jdbc.JDBCDataStoreFactory.DATABASE;
 import static org.geotools.jdbc.JDBCDataStoreFactory.HOST;
 import static org.geotools.jdbc.JDBCDataStoreFactory.PASSWD;
@@ -26,15 +26,14 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 
-import net.refractions.udig.catalog.internal.postgis.PostgisPlugin;
 import net.refractions.udig.catalog.internal.postgis.ui.PostgisLookUpSchemaRunnable;
 import net.refractions.udig.catalog.service.database.TableDescriptor;
 import net.refractions.udig.ui.UDIGDisplaySafeLock;
@@ -42,6 +41,9 @@ import net.refractions.udig.ui.UDIGDisplaySafeLock;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
+
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 
 /**
  * A postgis service that represents the database. Its children are "folders" that each resolve to a
@@ -70,6 +72,12 @@ public class PostgisService2 extends IService {
         super.finalize();
         // clean up connection
         dispose(new NullProgressMonitor());
+    }
+    
+    @Override
+    public String getTitle() {
+        URL id = getIdentifier();
+		return ("PostGIS " +id.getHost()+ "/" +id.getPath()).replaceAll("//","/"); //$NON-NLS-1$
     }
 
     @Override
@@ -125,12 +133,16 @@ public class PostgisService2 extends IService {
         lock.lock();
         try {
             if (members.isEmpty()) {
-                String[] schemas = lookupSchemasInDB(SubMonitor.convert(monitor,
+            	Map<String, Collection<TableDescriptor>> schemas = lookupSchemasInDB(SubMonitor.convert(monitor,
                         "looking up schemas", 1));
                 if (schemas == null) {
                     // couldn't look up schema so...
                     String commaSeperated = (String) params.get(SCHEMA.key);
-                    schemas = commaSeperated.split(","); //$NON-NLS-1$
+                    String[] schemaNames = commaSeperated.split(","); //$NON-NLS-1$
+                    schemas = new HashMap<String, Collection<TableDescriptor>>();
+                    for (String name : schemaNames) {
+						schemas.put(name, Collections.<TableDescriptor>emptyList());
+					}
                 }
                 createSchemaFolder(schemas);
                 message = null;
@@ -142,7 +154,7 @@ public class PostgisService2 extends IService {
         }
     }
 
-    private String[] lookupSchemasInDB( IProgressMonitor monitor ) {
+    private Map<String, Collection<TableDescriptor>> lookupSchemasInDB( IProgressMonitor monitor ) {
         String host = (String) params.get(HOST.key);
         Integer port = (Integer) params.get(PORT.key);
         String database = (String) params.get(DATABASE.key);
@@ -158,28 +170,23 @@ public class PostgisService2 extends IService {
             status = Status.BROKEN;
             return null;
         }
-        Set<TableDescriptor> tables = runnable.getSchemas();
-        Set<String> schemas = new HashSet<String>();
+        Set<TableDescriptor> tables = runnable.getTableDescriptors();
+        Multimap<String, TableDescriptor> schemas = Multimaps.newHashMultimap();
         for( TableDescriptor schema : tables ) {
-            schemas.add(schema.schema);
+            schemas.put(schema.schema,schema);
         }
-        return schemas.toArray(new String[0]);
+        return schemas.asMap();
     }
 
-    private void createSchemaFolder( String[] schemas ) {
+    private void createSchemaFolder( Map<String, Collection<TableDescriptor>> schemas ) {
 
-        for( String string : schemas ) {
-            String trimmed = string.trim();
+        for( Map.Entry<String, Collection<TableDescriptor>> schema : schemas.entrySet() ) {
+            String trimmed = schema.getKey().trim();
             if (trimmed.length() == 0) {
                 continue;
             }
 
-            try {
-                members.add(new PostgisSchemaFolder(this, trimmed));
-            } catch (IOException e) {
-                // bummer something went wrong
-                PostgisPlugin.log("Couldn't construct PostgisSchemaFolder for " + trimmed, e); //$NON-NLS-1$
-            }
+            members.add(new PostgisSchemaFolder(this, trimmed,schema.getValue()));
         }
     }
 

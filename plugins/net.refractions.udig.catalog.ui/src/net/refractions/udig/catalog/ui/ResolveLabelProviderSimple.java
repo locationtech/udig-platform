@@ -91,25 +91,17 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
                 if (resolve instanceof IGeoResource) {
                     IGeoResource resource = (IGeoResource) resolve;
                     String title = resource.getTitle();
-                    if (title == null) {
-                        IGeoResourceInfo info = resource.getInfo(new NullProgressMonitor());
-                        title = info.getTitle();
-                    }
+// This provider should be non-blocking                    
+//                    if (title == null) {
+//                        IGeoResourceInfo info = resource.getInfo(new NullProgressMonitor());
+//                        if(info != null) {
+//                        	title = info.getTitle();
+//                        }
+//                    }
                     ID id = resource.getID();
-                    if (title == null) {
-                        // we are going to fake something here
-                        String name = id.toBaseFile();
-                        if (name == null) {
-                            name = id.toString();
-                        }
-                        if (name.lastIndexOf('.') != -1) {
-                            name = name.substring(0, name.lastIndexOf(".")); //$NON-NLS-1$                        
-                        }
-                        title = name.replace('_', ' ');
+                    if(title == null) {
+                    	title = id.labelResource();
                     }
-                    // if( id.getTypeQualifier() != null ){
-                    // return title + "("+id.getTypeQualifier()+")";
-                    // }
                     return title;
 
                 } else if (resolve instanceof IService) {
