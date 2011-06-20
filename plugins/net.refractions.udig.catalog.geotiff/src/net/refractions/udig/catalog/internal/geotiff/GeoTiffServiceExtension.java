@@ -1,7 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+ *    (C) 2004-2011, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -167,19 +167,8 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
     private boolean isSupportedExtension( URL url ) {
         File file = URLUtils.urlToFile(url);
         String fileLower = file.getAbsolutePath().toLowerCase();
-        String fileExt = fileLower.substring(fileLower.lastIndexOf('.') + 1);
-
         boolean isTiff = fileLower.endsWith(".tiff") || fileLower.endsWith(".tif"); //$NON-NLS-1$ //$NON-NLS-2$
         if (!isTiff) {
-            return false;
-        }
-        Collection<String> endings = new HashSet<String>(WorldImageFormat.getWorldExtension(fileExt));
-        endings.add(".wld"); //$NON-NLS-1$
-        endings.add(fileExt + "w"); //$NON-NLS-1$
-
-        File[] found = URLUtils.findRelatedFiles(file, endings.toArray(new String[0]));
-        if (found.length != 0) {
-            // we don't want it to be loaded if it has a world file
             return false;
         }
         return true;

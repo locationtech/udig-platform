@@ -1,7 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+ *    (C) 2004-2011, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -28,7 +28,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -90,6 +92,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * @author David Zwiers (Refractions Research)
  * @author Jody Garnett
  * @since 0.6
+ * @version 1.2
  */
 public class CatalogImpl extends ICatalog {
     private static final String TEMPORARY_RESOURCE_EXT_ID = "net.refractions.udig.catalog.temporaryResource"; //$NON-NLS-1$
@@ -255,134 +258,124 @@ public class CatalogImpl extends ICatalog {
     //
     // Registration: creation
     //
+    
+    /**
+     * This is the preferred way to connect to a service using a URL.
+     * <p>
+     * If the service is already in the catalog it will be returned; if not we will
+     * connect to the service (add it to the catalog for safekeeping and cleanup)
+     * and return you the result.
+     * <p>
+     * The catalog takes responsibility for cleaning up after the service (ie call dispose())
+     * so you are free to continue with your work.
+     * @param url
+     * @param monitor
+     * @return Service used to access the provided url
+     */
     public IService acquire( URL url, IProgressMonitor monitor ) throws IOException {
+        List<IService> possible = new ArrayList<IService>();
+        IService createdService = null;
+        
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
-        IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
-
         monitor.beginTask("acquire", 100);
         monitor.subTask("acquire services");
-        List<IService> possible = factory.createService(url);
+
         monitor.worked(10);
         try {
+
+            possible = constructServices(Collections.singletonList(url), monitor);
+
             if (possible.isEmpty()) {
                 throw new IOException("Unable to connect to any service supporting " + url);
             }
-            IProgressMonitor monitor2 = new SubProgressMonitor(monitor, 20);
-            monitor2.beginTask("search", possible.size());
-            for( IService created : possible ) {
-                if (created == null)
-                    continue;
-                ID id = created.getID();
-                monitor2.subTask("search " + id);
-                IService found = getById(IService.class, id, null);
-                if (found != null) {
-                    return found; // already connected!
-                }
-                monitor2.worked(1);
+            
+            createdService = possible.get(0);
+            
+            try {
+                
+                add(createdService);// TODO don't clean this one up!
+                return createdService;
+            } catch (Throwable t) {
+                // usually indicates an IOException as the service is unable to connect
+                CatalogPlugin.trace("trouble connecting to " + createdService.getID(), t);
             }
-            monitor2.done();
 
-            IProgressMonitor monitor3 = new SubProgressMonitor(monitor, 60);
-            monitor3.beginTask("connect", possible.size() * 10);
-
-            for( Iterator<IService> iterator = possible.iterator(); iterator.hasNext(); ) {
-                IService service = iterator.next();
-                if (service == null)
-                    continue;
-                monitor3.subTask("connect " + service.getID());
-                try {
-                    // try connecting
-                    IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor3, 10));
-                    if (info == null) {
-                        CatalogPlugin.trace("unable to connect to " + service.getID(), null);
-                        continue; // skip unable to connect
-                    }
-                    // connected!
-                    iterator.remove(); // don't clean this one up!
-                    add(service);
-                    return service;
-                } catch (Throwable t) {
-                    // usually indicates an IOException as the service is unable to connect
-                    CatalogPlugin.trace("trouble connecting to " + service.getID(), t);
-                }
-            }
-            monitor3.done();
         } finally {
-            factory.dispose(possible, new SubProgressMonitor(monitor, 10)); // clean up any unused
-            // services
+            List<IService> members = checkMembers(possible);
+            
+            for( Iterator<IService> iterator = members.iterator(); iterator.hasNext(); ) {
+                IService service = iterator.next();
+
+                if (service.equals(createdService))
+                    continue;
+
+                service.dispose(new SubProgressMonitor(monitor, 10));
+            }
             monitor.done();
         }
         return null; // unable to connect
     }
 
     /**
-     * Implementation uses default service factory to produce a service for the provided connection
-     * parameters.
+     * This is the preferred way to connect to a service using connection parameters.
+     * <p>
+     * If the service is already in the catalog it will be returned; if not we will
+     * connect to the service (add it to the catalog for safekeeping and cleanup)
+     * and return you the result.
+     * <p>
+     * The catalog takes responsibility for cleaning up after the service (ie call dispose())
+     * so you are free to continue with your work.
+     * @param connectionParameters
+     * @param monitor
+     * @return Service used to access the provided connectionParameters
      */
     public IService acquire( Map<String, Serializable> connectionParameters,
             IProgressMonitor monitor ) throws IOException {
-        if (monitor == null)
-            monitor = new NullProgressMonitor();
-
-        IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
+        
+        List<IService> possible = new ArrayList<IService>();
+        IService createdService = null;
+        
+        if (monitor == null) monitor = new NullProgressMonitor();
 
         monitor.beginTask("acquire", 100);
         monitor.subTask("acquire services");
-        List<IService> possible = factory.createService(connectionParameters);
-        monitor.worked(10);
+
         try {
+
+            possible = constructServices(connectionParameters, monitor);
+
             if (possible.isEmpty()) {
-                throw new IOException("Unable to connect to any service supporting "
-                        + connectionParameters);
+                throw new IOException("Unable to connect to any service ");
             }
-            IProgressMonitor monitor2 = new SubProgressMonitor(monitor, 20);
-            monitor2.beginTask("search", possible.size());
-            for( IService created : possible ) {
-                if (created == null)
-                    continue;
-                ID id = created.getID();
-                monitor2.subTask("search " + id);
-                IService found = getById(IService.class, id, null);
-                if (found != null) {
-                    return found; // already connected!
-                }
-                monitor2.worked(1);
-            }
-            monitor2.done();
 
-            IProgressMonitor monitor3 = new SubProgressMonitor(monitor, 60);
-            monitor3.beginTask("connect", possible.size() * 10);
+            createdService = possible.get(0);
 
-            for( Iterator<IService> iterator = possible.iterator(); iterator.hasNext(); ) {
-                IService service = iterator.next();
-                if (service == null)
-                    continue;
-                monitor3.subTask("connect " + service.getID());
-                try {
-                    // try connecting
-                    IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor3, 10));
-                    if (info == null) {
-                        CatalogPlugin.trace("unable to connect to " + service.getID(), null);
-                        continue; // skip unable to connect
-                    }
-                    // connected!
-                    iterator.remove(); // don't clean this one up!
-                    add(service);
-                    return service;
-                } catch (Throwable t) {
-                    // usually indicates an IOException as the service is unable to connect
-                    CatalogPlugin.trace("trouble connecting to " + service.getID(), t);
-                }
+            try {
+                add(createdService);// TODO don't clean this one up!
+                return createdService;
+            } catch (Throwable t) {
+                // usually indicates an IOException as the service is unable to connect
+                CatalogPlugin.trace("trouble connecting to " + createdService.getID(), t);
             }
-            monitor3.done();
+
         } finally {
-            factory.dispose(possible, new SubProgressMonitor(monitor, 10)); // clean up any unused
-            // services
+            List<IService> members = checkMembers(possible);
+            
+            for( Iterator<IService> iterator = members.iterator(); iterator.hasNext(); ) {
+                IService service = iterator.next();
+
+                if (service.equals(createdService))
+                    continue;
+
+                service.dispose(new SubProgressMonitor(monitor, 10));
+            }
+            monitor.done();
+            
             monitor.done();
         }
-        return null; // unable to connect
+        return null;
     }
 
     //
@@ -1119,5 +1112,187 @@ public class CatalogImpl extends ICatalog {
                 CatalogPlugin.trace( activity +" "+element.getAttribute("class")+":"+e, e); //$NON-NLS-1$
             }
         }
+    }
+    
+    /**
+     * Takes a list of IServices and prioritises them by the percentage of metadata available. This
+     * method relies on IServiceInfo.getMetric() for metadata metric calculations. Subclasses are
+     * encouraged to override IServiceInfo getMetric() to calculate required metadata for each
+     * services.
+     * 
+     * @param services A list of IServices to be prioritised.
+     * @param monitor Used to track the process of connecting
+     * @return
+     * @see #IserviceInfo.getMetric()
+     */
+    private List<IService> prioritise( List<IService> services, IProgressMonitor monitor ) {
+        
+        //If there is less than 2 IService there is no sorting required. 
+        if(services.size() < 2){
+            return services;
+        }
+        
+        final IProgressMonitor monitor2 = new SubProgressMonitor(monitor, 60);
+
+        class IServiceComparator implements Comparator<IService> {
+            
+            @Override
+            public int compare( IService o1, IService o2 ) {
+                try {
+                    IServiceInfo info1 = o1.getInfo(new SubProgressMonitor(monitor2, 1));
+                    IServiceInfo info2 = o2.getInfo(new SubProgressMonitor(monitor2, 1));
+
+                    if (info1.getMetric() > info2.getMetric()) {
+                        return 1;
+                    }else if(info1.getMetric() < info2.getMetric()){
+                       return -1;
+                    }else{
+                       return 0;
+                    }
+                    
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        }
+       
+        Comparator<IService> comparator = new IServiceComparator();
+        Collections.sort(services, comparator);
+
+        return services;
+    }
+
+    @Override
+    public List<IService> checkMembers( List<IService> constructServiceList ) {
+        List<IService> catalogServices = new ArrayList<IService>();
+
+        for( IService service : constructServiceList ) {
+
+            ID id = service.getID();
+            IService found = getById(IService.class, id, new NullProgressMonitor());
+
+            if (!(found == null)) {
+                catalogServices.add(service);
+            }
+
+        }
+
+        return catalogServices;
+    }
+
+    @Override
+    public List<IService> checkNonMembers( List<IService> constructServiceList ) {
+        List<IService> catalogServices = new ArrayList<IService>();
+
+        for( IService service : constructServiceList ) {
+
+            ID id = service.getID();
+            IService found = getById(IService.class, id, new NullProgressMonitor());
+
+            if (found == null) {
+                catalogServices.add(service);
+            }
+        }
+
+        return catalogServices;
+    }
+
+    @Override
+    public List<IService> constructServices( Collection<URL> urls, IProgressMonitor monitor )
+            throws IOException {
+        if (monitor == null)
+            monitor = new NullProgressMonitor();
+        
+        if (urls == null){
+            return null;
+        }
+        
+        int urlProcessCount = 0;
+        
+        List<IService> availableServices = new ArrayList<IService>();//services already in catalog
+
+        IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
+
+        monitor.beginTask("Check", urls.size());
+        monitor.subTask("Check available services");
+        
+        try {
+        if (urls != null && !urls.isEmpty()) {        
+            for( URL url : urls ) {
+                List<IService> possible = factory.createService(url);
+                monitor.worked(urlProcessCount);
+
+                    IProgressMonitor monitor3 = new SubProgressMonitor(monitor, 60);
+                    monitor3.beginTask("connect", possible.size() * 10);
+   
+                    for( Iterator<IService> iterator = possible.iterator(); iterator.hasNext(); ) {
+                        IService service = iterator.next();
+
+                        if (service == null)
+                            continue;
+                        
+                        monitor3.subTask("connect " + service.getID());
+                        try {
+                            // try connecting
+                            IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor3, 10));
+            
+                            if (info == null) {
+                                CatalogPlugin.trace("unable to connect to " + service.getID(), null);
+                                continue; // skip unable to connect
+                            }
+                            
+                            availableServices.add(service);
+                        } catch (Throwable t) {
+                            // usually indicates an IOException as the service is unable to connect
+                            CatalogPlugin.trace("trouble connecting to " + service.getID(), t);
+                        }
+                    }
+                    monitor3.done();
+            }
+        }
+        } finally {
+            monitor.done();
+        }
+        return prioritise(availableServices, monitor); //return a prioritise list
+    }
+
+    @Override
+    public List<IService> constructServices( Map<String, Serializable> params,
+            IProgressMonitor monitor ) throws IOException {
+        if (monitor == null)
+            monitor = new NullProgressMonitor();
+
+        List<IService> availableServices = new ArrayList<IService>();//services already in catalog
+
+        IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
+
+        try {
+
+            if (params != null && !params.isEmpty()) {
+                Set<IService> results = new HashSet<IService>(factory.createService(params));
+                for( IService service : results ) {
+                    
+                    IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor, 10));
+                    
+                    if (info == null) {
+                        CatalogPlugin.trace("unable to connect to " + service.getID(), null);
+                        continue; // skip unable to connect
+                    }
+
+                    availableServices.add(service);
+                }
+
+            }
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            monitor.done();
+        }
+        
+        return prioritise(availableServices, monitor); //return a prioritise list
     }
 }
