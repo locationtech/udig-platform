@@ -7,8 +7,6 @@
 	<property environment="env" />
 	<dirname file="${ant.file.refresh_libs}" property="refresh_libs_basedir" />
 	<property file="${refresh_libs_basedir}${file.separator}copy.properties" />
-	<echo message="${refresh_libs_basedir}"/>
-	<echo message="${lib}"/>
 
 	<!-- remote repositories as defined in copy.properties -->
 	<artifact:remoteRepository id="mapfish.repository" url="${mapfishDevRepository}" />
@@ -27,6 +25,9 @@
 	</target>
 
 	<target name="load_m2_deps">
+		<echo message="${refresh_libs_basedir}"/>
+		<echo message="${lib}"/>
+
 		<!-- we can probably replace this with a reference to a pom.xml file -->
 		<!-- Use http://mvnrepository.com/ to look stuff up -->
 		<artifact:dependencies filesetId="dependency.fileset" 
@@ -58,33 +59,25 @@
 			<fileset refid="dependency.fileset" />
 		</path>
 		<property name="myjars" refid="jars" />
-		<echo message="Jars = ${myjars}" />
 		<!--propertyregex property="listjars"
 		              input="${myjars}"
 		              regexp="\;"
 		              select="{$line.seperator}"
 		              casesensitive="false" /-->
 		<echo message="Jars = ${myjars}" />
-		<echo message="Jars = ${listjars}" />
+<!--		<echo message="Jars = ${listjars}" /> -->
 	</target>
 
 	<target name="build" depends="load_m2_deps">
 		<description>Download the jars - used by a manual "clean"</description>
-		<available property="already_downloaded" type="dir" file="${lib}" />
 
-		<!--setproxy proxyhost="192.168.20.1" proxyport="8080"/-->
-
-		<antcall target="create" />
+		<mkdir dir="${lib}" />
 
 		<!-- (flat) copy all downloaded JARs (classes) to plugin directory ${lib} -->
+		<echo message="copy teradata dependencies"/>
 		<copy todir="${lib}" verbose="true" flatten="true">
 			<fileset refid="dependency.fileset" />
 		</copy>
-	</target>
-
-	<target name="create" unless="already_downloaded">
-		<description>creates the lib directory if needed</description>
-		<mkdir dir="${lib}" />
 	</target>
 
 	<!-- Used by headless build please make sure this does everthing from clean to download and fix etc.. -->
