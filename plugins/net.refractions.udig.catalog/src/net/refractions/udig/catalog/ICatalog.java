@@ -179,7 +179,7 @@ public abstract class ICatalog extends IRepository {
     
     
     /**
-     * This method evaualtes the results of constructServices are returns the list of Services that
+     * This method evaualtes the results of constructServices and returns the list of Services that
      * have already been added to the catalog.
      * <p>
      * Services that have already been added to the catalog will be properly disposed when the
@@ -192,7 +192,7 @@ public abstract class ICatalog extends IRepository {
     
    
     /**
-     * This method evaualtes the results of constructServices are returns the list of Services that
+     * This method evaualtes the results of constructServices and returns the list of Services that
      * are not listed in the catalogs.
      * <p>
      * The list of services returned have not been added to the catalog and you are responsible for
@@ -213,7 +213,7 @@ public abstract class ICatalog extends IRepository {
      * 
      * @param urls URLs indicating resources from a drag and drop (or wizard)
      * @param monitor Used to track the process of connecting
-     * @return prioritised list of services
+     * @return new ArrayList prioritised list of services
      * @throws IOException
      */
     public abstract List<IService> constructServices(Collection<URL> urls, IProgressMonitor monitor) throws IOException;
@@ -227,7 +227,7 @@ public abstract class ICatalog extends IRepository {
      * 
      * @param services a Map of connection parameters to 
      * @param monitor Used to track the process of connecting
-     * @return a prioritise list of services
+     * @return a ArrayList prioritise list of services
      * @throws IOException 
      */
     public abstract List<IService> constructServices(Map<String, Serializable> params, IProgressMonitor monitor) throws IOException;

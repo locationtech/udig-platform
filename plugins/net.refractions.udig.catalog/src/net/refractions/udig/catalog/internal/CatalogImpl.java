@@ -273,6 +273,9 @@ public class CatalogImpl extends ICatalog {
      * @return Service used to access the provided url
      */
     public IService acquire( URL url, IProgressMonitor monitor ) throws IOException {
+        List<IService> possible = new ArrayList<IService>();
+        IService createdService = null;
+        
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
@@ -282,26 +285,34 @@ public class CatalogImpl extends ICatalog {
         monitor.worked(10);
         try {
 
-            List<IService> possible = constructServices(Collections.singletonList(url), monitor);
+            possible = constructServices(Collections.singletonList(url), monitor);
 
             if (possible.isEmpty()) {
                 throw new IOException("Unable to connect to any service supporting " + url);
             }
             
-            IService service = possible.get(0);
+            createdService = possible.get(0);
             
             try {
                 
-                add(service);// TODO don't clean this one up!
-                return service;
+                add(createdService);// TODO don't clean this one up!
+                return createdService;
             } catch (Throwable t) {
                 // usually indicates an IOException as the service is unable to connect
-                CatalogPlugin.trace("trouble connecting to " + service.getID(), t);
+                CatalogPlugin.trace("trouble connecting to " + createdService.getID(), t);
             }
 
         } finally {
-            //TODO Cleanup
-            // factory.dispose(possible, new SubProgressMonitor(monitor, 10)); // clean up any
+            List<IService> members = checkMembers(possible);
+            
+            for( Iterator<IService> iterator = members.iterator(); iterator.hasNext(); ) {
+                IService service = iterator.next();
+
+                if (service.equals(createdService))
+                    continue;
+
+                service.dispose(new SubProgressMonitor(monitor, 10));
+            }
             monitor.done();
         }
         return null; // unable to connect
@@ -322,6 +333,10 @@ public class CatalogImpl extends ICatalog {
      */
     public IService acquire( Map<String, Serializable> connectionParameters,
             IProgressMonitor monitor ) throws IOException {
+        
+        List<IService> possible = new ArrayList<IService>();
+        IService createdService = null;
+        
         if (monitor == null) monitor = new NullProgressMonitor();
 
         monitor.beginTask("acquire", 100);
@@ -329,25 +344,35 @@ public class CatalogImpl extends ICatalog {
 
         try {
 
-            List<IService> possible = constructServices(connectionParameters, monitor);
+            possible = constructServices(connectionParameters, monitor);
 
             if (possible.isEmpty()) {
                 throw new IOException("Unable to connect to any service ");
             }
 
-            IService service = possible.get(0);
+            createdService = possible.get(0);
 
             try {
-                add(service);// TODO don't clean this one up!
-                return service;
+                add(createdService);// TODO don't clean this one up!
+                return createdService;
             } catch (Throwable t) {
                 // usually indicates an IOException as the service is unable to connect
-                CatalogPlugin.trace("trouble connecting to " + service.getID(), t);
+                CatalogPlugin.trace("trouble connecting to " + createdService.getID(), t);
             }
 
         } finally {
-            // TODO clean up any unused
-            // services
+            List<IService> members = checkMembers(possible);
+            
+            for( Iterator<IService> iterator = members.iterator(); iterator.hasNext(); ) {
+                IService service = iterator.next();
+
+                if (service.equals(createdService))
+                    continue;
+
+                service.dispose(new SubProgressMonitor(monitor, 10));
+            }
+            monitor.done();
+            
             monitor.done();
         }
         return null;
