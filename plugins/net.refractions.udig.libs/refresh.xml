@@ -79,7 +79,6 @@
 			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-mysql" version="${geotools.version}" />
 			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-oracle" version="${geotools.version}" />
 			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-postgis" version="${geotools.version}" />
-			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-teradata" version="${geotools.version}" />
 			<dependency groupId="org.geotools" artifactId="gt-shapefile" version="${geotools.version}" />
 			<dependency groupId="org.geotools" artifactId="gt-wfs" version="${geotools.version}" />
 			<dependency groupId="org.geotools" artifactId="gt-process" version="${geotools.version}" />
