@@ -257,134 +257,99 @@ public class CatalogImpl extends ICatalog {
     //
     // Registration: creation
     //
+    
+    /**
+     * This is the preferred way to connect to a service using a URL.
+     * <p>
+     * If the service is already in the catalog it will be returned; if not we will
+     * connect to the service (add it to the catalog for safekeeping and cleanup)
+     * and return you the result.
+     * <p>
+     * The catalog takes responsibility for cleaning up after the service (ie call dispose())
+     * so you are free to continue with your work.
+     * @param url
+     * @param monitor
+     * @return Service used to access the provided url
+     */
     public IService acquire( URL url, IProgressMonitor monitor ) throws IOException {
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
-        IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
-
         monitor.beginTask("acquire", 100);
         monitor.subTask("acquire services");
-        List<IService> possible = factory.createService(url);
+
         monitor.worked(10);
         try {
+
+            List<IService> possible = constructServices(Collections.singletonList(url), monitor);
+
             if (possible.isEmpty()) {
                 throw new IOException("Unable to connect to any service supporting " + url);
             }
-            IProgressMonitor monitor2 = new SubProgressMonitor(monitor, 20);
-            monitor2.beginTask("search", possible.size());
-            for( IService created : possible ) {
-                if (created == null)
-                    continue;
-                ID id = created.getID();
-                monitor2.subTask("search " + id);
-                IService found = getById(IService.class, id, null);
-                if (found != null) {
-                    return found; // already connected!
-                }
-                monitor2.worked(1);
+            
+            IService service = possible.get(0);
+            
+            try {
+                
+                add(service);// TODO don't clean this one up!
+                return service;
+            } catch (Throwable t) {
+                // usually indicates an IOException as the service is unable to connect
+                CatalogPlugin.trace("trouble connecting to " + service.getID(), t);
             }
-            monitor2.done();
 
-            IProgressMonitor monitor3 = new SubProgressMonitor(monitor, 60);
-            monitor3.beginTask("connect", possible.size() * 10);
-
-            for( Iterator<IService> iterator = possible.iterator(); iterator.hasNext(); ) {
-                IService service = iterator.next();
-                if (service == null)
-                    continue;
-                monitor3.subTask("connect " + service.getID());
-                try {
-                    // try connecting
-                    IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor3, 10));
-                    if (info == null) {
-                        CatalogPlugin.trace("unable to connect to " + service.getID(), null);
-                        continue; // skip unable to connect
-                    }
-                    // connected!
-                    iterator.remove(); // don't clean this one up!
-                    add(service);
-                    return service;
-                } catch (Throwable t) {
-                    // usually indicates an IOException as the service is unable to connect
-                    CatalogPlugin.trace("trouble connecting to " + service.getID(), t);
-                }
-            }
-            monitor3.done();
         } finally {
-            factory.dispose(possible, new SubProgressMonitor(monitor, 10)); // clean up any unused
-            // services
+            //TODO Cleanup
+            // factory.dispose(possible, new SubProgressMonitor(monitor, 10)); // clean up any
             monitor.done();
         }
         return null; // unable to connect
     }
 
     /**
-     * Implementation uses default service factory to produce a service for the provided connection
-     * parameters.
+     * This is the preferred way to connect to a service using connection parameters.
+     * <p>
+     * If the service is already in the catalog it will be returned; if not we will
+     * connect to the service (add it to the catalog for safekeeping and cleanup)
+     * and return you the result.
+     * <p>
+     * The catalog takes responsibility for cleaning up after the service (ie call dispose())
+     * so you are free to continue with your work.
+     * @param connectionParameters
+     * @param monitor
+     * @return Service used to access the provided connectionParameters
      */
     public IService acquire( Map<String, Serializable> connectionParameters,
             IProgressMonitor monitor ) throws IOException {
-        if (monitor == null)
-            monitor = new NullProgressMonitor();
-
-        IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
+        if (monitor == null) monitor = new NullProgressMonitor();
 
         monitor.beginTask("acquire", 100);
         monitor.subTask("acquire services");
-        List<IService> possible = factory.createService(connectionParameters);
-        monitor.worked(10);
+
         try {
+
+            List<IService> possible = constructServices(connectionParameters, monitor);
+
             if (possible.isEmpty()) {
-                throw new IOException("Unable to connect to any service supporting "
-                        + connectionParameters);
+                throw new IOException("Unable to connect to any service ");
             }
-            IProgressMonitor monitor2 = new SubProgressMonitor(monitor, 20);
-            monitor2.beginTask("search", possible.size());
-            for( IService created : possible ) {
-                if (created == null)
-                    continue;
-                ID id = created.getID();
-                monitor2.subTask("search " + id);
-                IService found = getById(IService.class, id, null);
-                if (found != null) {
-                    return found; // already connected!
-                }
-                monitor2.worked(1);
-            }
-            monitor2.done();
 
-            IProgressMonitor monitor3 = new SubProgressMonitor(monitor, 60);
-            monitor3.beginTask("connect", possible.size() * 10);
+            IService service = possible.get(0);
 
-            for( Iterator<IService> iterator = possible.iterator(); iterator.hasNext(); ) {
-                IService service = iterator.next();
-                if (service == null)
-                    continue;
-                monitor3.subTask("connect " + service.getID());
-                try {
-                    // try connecting
-                    IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor3, 10));
-                    if (info == null) {
-                        CatalogPlugin.trace("unable to connect to " + service.getID(), null);
-                        continue; // skip unable to connect
-                    }
-                    // connected!
-                    iterator.remove(); // don't clean this one up!
-                    add(service);
-                    return service;
-                } catch (Throwable t) {
-                    // usually indicates an IOException as the service is unable to connect
-                    CatalogPlugin.trace("trouble connecting to " + service.getID(), t);
-                }
+            try {
+                add(service);// TODO don't clean this one up!
+                return service;
+            } catch (Throwable t) {
+                // usually indicates an IOException as the service is unable to connect
+                CatalogPlugin.trace("trouble connecting to " + service.getID(), t);
             }
-            monitor3.done();
+
         } finally {
-            factory.dispose(possible, new SubProgressMonitor(monitor, 10)); // clean up any unused
+            // TODO clean up any unused
             // services
             monitor.done();
         }
-        return null; // unable to connect
+        return null;
     }
 
     //
