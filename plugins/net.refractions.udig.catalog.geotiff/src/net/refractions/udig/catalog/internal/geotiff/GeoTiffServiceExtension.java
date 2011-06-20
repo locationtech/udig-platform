@@ -173,15 +173,6 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
         if (!isTiff) {
             return false;
         }
-        Collection<String> endings = new HashSet<String>(WorldImageFormat.getWorldExtension(fileExt));
-        endings.add(".wld"); //$NON-NLS-1$
-        endings.add(fileExt + "w"); //$NON-NLS-1$
-
-        File[] found = URLUtils.findRelatedFiles(file, endings.toArray(new String[0]));
-        if (found.length != 0) {
-            // we don't want it to be loaded if it has a world file
-            return false;
-        }
         return true;
     }
 
