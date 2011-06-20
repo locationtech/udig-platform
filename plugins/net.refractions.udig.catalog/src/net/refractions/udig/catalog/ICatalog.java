@@ -17,9 +17,12 @@
 package net.refractions.udig.catalog;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import net.refractions.udig.catalog.internal.Messages;
 import net.refractions.udig.ui.ErrorManager;
@@ -172,4 +175,59 @@ public abstract class ICatalog extends IRepository {
             }
         
     }
+    
+    
+    /**
+     * This method evaualtes the results of constructServices are returns the list of Services that
+     * have already been added to the catalog.
+     * <p>
+     * Services that have already been added to the catalog will be properly disposed when the
+     * applicaiton shuts down; you do not need to call dispose on these services yourself.
+     * 
+     * @param constructServiceList
+     * @return a filtered list of services that exists in the catalog
+     */
+   public abstract List<IService> checkMembers(List<IService> constructServiceList );
+    
+   
+    /**
+     * This method evaualtes the results of constructServices are returns the list of Services that
+     * are not listed in the catalogs.
+     * <p>
+     * The list of services returned have not been added to the catalog and you are responsible for
+     * making sure dispose is called.
+     * 
+     * @param constructServiceList
+     * @return a filtered list of services that exists in the catalog
+     */
+   public abstract List<IService> checkNonMembers(List<IService> constructServiceList );
+   
+    /**
+     * Creates a prioritised list of services that can implement the url, the calling method is
+     * responsible for disposing if serviced.
+     * <p>
+     * This method uses ServiceFactory to get a list of services that think they can implement the
+     * url. The ServiceFactory doesn’t guarantee that the services it provides can connect so it is
+     * the responsibility of this method to check that they can.
+     * 
+     * @param urls URLs indicating resources from a drag and drop (or wizard)
+     * @param monitor Used to track the process of connecting
+     * @return prioritised list of services
+     * @throws IOException
+     */
+    public abstract List<IService> constructServices(Collection<URL> urls, IProgressMonitor monitor) throws IOException;
+    
+    /**
+     * Takes a list of services and orders them from highest priority to lowest. The
+     * priority is worked from the IServiceInfo .getCompleteness() method The priority is determined
+     * by the result of the IServiceInfo .getCompleteness(), this method should be overridden in
+     * each serviced specific IServiceInfo object to return a value that represents the completes of
+     * required metadata to implement the service.
+     * 
+     * @param services a Map of connection parameters to 
+     * @param monitor Used to track the process of connecting
+     * @return a prioritise list of services
+     * @throws IOException 
+     */
+    public abstract List<IService> constructServices(Map<String, Serializable> params, IProgressMonitor monitor) throws IOException;
 }

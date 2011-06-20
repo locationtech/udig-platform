@@ -28,6 +28,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1119,5 +1120,31 @@ public class CatalogImpl extends ICatalog {
                 CatalogPlugin.trace( activity +" "+element.getAttribute("class")+":"+e, e); //$NON-NLS-1$
             }
         }
+    }
+
+    @Override
+    public List<IService> checkMembers( List<IService> constructServiceList ) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<IService> checkNonMembers( List<IService> constructServiceList ) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<IService> constructServices( Collection<URL> urls, IProgressMonitor monitor )
+            throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<IService> constructServices( Map<String, Serializable> params,
+            IProgressMonitor monitor ) throws IOException {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
