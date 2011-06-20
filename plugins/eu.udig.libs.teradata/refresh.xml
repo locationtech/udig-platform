@@ -8,6 +8,8 @@
 	<dirname file="${ant.file.refresh_libs}" property="refresh_libs_basedir" />
 	<property file="${refresh_libs_basedir}${file.separator}copy.properties" />
 	<echo message="${refresh_libs_basedir}"/>
+	<echo message="${lib}"/>
+
 	<!-- remote repositories as defined in copy.properties -->
 	<artifact:remoteRepository id="mapfish.repository" url="${mapfishDevRepository}" />
 	<artifact:remoteRepository id="geotools.repository" url="${geotoolsRepository}" />
@@ -27,22 +29,23 @@
 	<target name="load_m2_deps">
 		<!-- we can probably replace this with a reference to a pom.xml file -->
 		<!-- Use http://mvnrepository.com/ to look stuff up -->
-		<artifact:dependencies filesetId="dependency.fileset" sourcesFilesetId="sources.dependency.fileset" versionsId="dependency.versions" useScope="runtime" cacheDependencyRefs="false">
+		<artifact:dependencies filesetId="dependency.fileset" 
+			 
+			versionsId="dependency.versions" useScope="runtime" cacheDependencyRefs="false">
 
 			<!-- local repository as defined above-->
 			<localRepository refid="local.repository" />
 
 			<!-- remote repositories as defined above -->
-			<!-- remoteRepository refid="udig.snapshot.repository" /-->
 
 			<remoteRepository refid="mapfish.repository" />
-<!--			<remoteRepository refid="geotools.repository" />
+			<remoteRepository refid="geotools.repository" />
 			<remoteRepository refid="geotools.repository.snapshot" />
 			<remoteRepository refid="central.repository" />
 			<remoteRepository refid="jaitoolsmaven.repository" />
 			<remoteRepository refid="geosolutionsmaven.repository" />
--->
-			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-teradata" version="${geotools.version}" />
+
+			<dependency groupId="org.geotools.jdbc" artifactId="gt-jdbc-teradata" version="${geotools.version}" ></dependency>
 
 		</artifact:dependencies>
 	</target>
@@ -77,24 +80,11 @@
 		<copy todir="${lib}" verbose="true" flatten="true">
 			<fileset refid="dependency.fileset" />
 		</copy>
-
-		<!-- (flat) copy downloaded source JARs (sources) to plugin directory ${libs_src_dir} -->
-		<!--
-		<copy todir="${libs_src_dir}" flatten="true" verbose="true">
-			<fileset refid="sources.dependency.fileset" />
-			<chainedmapper>
-				<mapper type="flatten" />
-				<globmapper from="*-sources.jar" to="*-sources.zip" />
-			</chainedmapper>
-		</copy>
-		-->
-		<!-- <eclipse.refreshLocal resource="net.refractions.udig.libs/lib" depth="infinite"/>	-->
 	</target>
 
 	<target name="create" unless="already_downloaded">
 		<description>creates the lib directory if needed</description>
 		<mkdir dir="${lib}" />
-		<mkdir dir="${libs_src_dir}" />
 	</target>
 
 	<!-- Used by headless build please make sure this does everthing from clean to download and fix etc.. -->

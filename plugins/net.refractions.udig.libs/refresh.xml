@@ -19,11 +19,11 @@
 	<!-- local repository i.e. folder to be used as storage for downloaded library files -->
 	<artifact:localRepository id="local.repository" path="${repo}" />
 
-	<target name="clean" description="deletes external libraries folder">
+	<target name="clean" depends="teradata-clean" description="deletes external libraries folder">
 		<delete dir="${lib}" />
 	</target>
-
-	<target name="load_m2_deps">
+	
+	<target name="load_m2_deps" depends="load-teradata-deps" >
 		<!-- we can probably replace this with a reference to a pom.xml file -->
 		<!-- Use http://mvnrepository.com/ to look stuff up -->
 		<artifact:dependencies filesetId="dependency.fileset" sourcesFilesetId="sources.dependency.fileset" versionsId="dependency.versions" useScope="runtime" cacheDependencyRefs="false">
@@ -275,4 +275,35 @@
 -->
 		<echo level="info" message="updated ${project_classpath} with links to source archives" />
 	</target>
+	
+	
+	<!-- tasks for kicking off teradata plugin depedencies update -->
+	
+	<property name="teradata.plugin" value="${basedir}${file.separator}..${file.separator}eu.udig.libs.teradata"/>
+	<property name="teradata.ant.file" value="${teradata.plugin}${file.separator}refresh.xml"/>
+	<property name="teradata.ant.properties" value="${teradata.plugin}${file.separator}copy.properties"/>
+	<target name="check-teradata-libs">
+	    <available file="${teradata.ant.file}" property="teradata.present"/>
+	</target>
+
+	<target 
+		name="load-teradata-deps" 
+		description="execute the teradata libs project"
+		depends="check-teradata-libs" if="teradata.present">
+		<ant 
+			antfile="${teradata.ant.file}"
+			target="load_m2_deps"
+			
+			inheritAll="false">
+			<property file="${teradata.ant.properties}"/>			
+		</ant>
+	</target>
+
+	<target name="teradata-clean">
+		<ant antfile="${teradata.ant.file}" target="clean">
+			<property file="${teradata.ant.properties}"/>
+		</ant>
+	</target>
+	
+	<!-- End Teradata section -->
 </project>
