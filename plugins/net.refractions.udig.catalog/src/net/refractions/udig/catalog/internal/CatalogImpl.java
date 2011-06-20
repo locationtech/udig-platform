@@ -1,7 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+ *    (C) 2004-2011, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -92,6 +92,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * @author David Zwiers (Refractions Research)
  * @author Jody Garnett
  * @since 0.6
+ * @version 1.2
  */
 public class CatalogImpl extends ICatalog {
     private static final String TEMPORARY_RESOURCE_EXT_ID = "net.refractions.udig.catalog.temporaryResource"; //$NON-NLS-1$

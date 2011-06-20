@@ -1,7 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+ *    (C) 2004-2011, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -44,6 +44,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * 
  * @author David Zwiers, Refractions Research
  * @since 0.6
+ * @version 1.2
  */
 public class IServiceInfo {
 

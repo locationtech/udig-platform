@@ -1,3 +1,19 @@
+/*
+ *    uDig - User Friendly Desktop Internet GIS client
+ *    http://udig.refractions.net
+ *    (C) 2004-2011, Refractions Research Inc.
+ *
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation;
+ *    version 2.1 of the License.
+ *
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *    Lesser General Public License for more details.
+ *
+ */
 package net.refractions.udig.catalog.ui.workflow;
 
 import java.io.File;
@@ -37,6 +53,27 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Display;
 
+/**
+ * This is the "end of the line" when using an import wizard to add services
+ * to the catalog.
+ * <p>
+ * This wizard State is responsible for trying to connect to services.
+ * <ul>
+ * <li>If it can connect the method {@link #getServices()} makes the list
+ * available to the {@link CatalogImport#performFinish} which will
+ * add the servies to the catalog
+ * </li>
+ * <li>
+ * If it cannot connect it is responsible for indicating the connection error
+ * to the user so they can fix things
+ * </li>
+ * </ul>
+ * This  approach, while annoying as  developer, prevents us needing to create services
+ * twice. You may also find the code looking in the local catalog to see if we already
+ * have a connection.
+ * @author putnal
+ * @since 1.2.0
+ */
 public class EndConnectionState extends State {
 
     /** selected descriptor from previous page * */
@@ -191,6 +228,20 @@ public class EndConnectionState extends State {
         }
     }
 
+    /**
+     * Deprecated use CatalogImpl.constructServices();
+     * <p>
+     * Responsible for providing a list of services produced either/and connection parameters or urls.
+     * <p>
+     * Calling code is responsible for adding these to the local catalog (or otherwise cleaning up
+     * the mess).
+     * 
+     * @param monitor
+     * @param params
+     * @param urls
+     * @return List of matching Services (may be created from service factory or retrieved from local catalog)
+     */
+    @Deprecated
     public static Collection<IService> constructServices( IProgressMonitor monitor, Map<String, Serializable> params, Collection<URL> urls ) {
         // use the parameters/url to acquire a set of services
         //
