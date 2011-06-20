@@ -30,6 +30,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -1121,30 +1122,186 @@ public class CatalogImpl extends ICatalog {
             }
         }
     }
+    
+    /**
+     * Takes a list of IServices and prioritises them by the percentage of metadata available. This
+     * method relies on IServiceInfo.getMetric() for metadata metric calculations. Subclasses are
+     * encouraged to override IServiceInfo getMetric() to calculate required metadata for each
+     * services.
+     * 
+     * @param services A list of IServices to be prioritised.
+     * @param monitor Used to track the process of connecting
+     * @return
+     * @see #IserviceInfo.getMetric()
+     */
+    private List<IService> prioritise( List<IService> services, IProgressMonitor monitor ) {
+        
+        //If there is less than 2 IService there is no sorting required. 
+        if(services.size() < 2){
+            return services;
+        }
+        
+        final IProgressMonitor monitor2 = new SubProgressMonitor(monitor, 60);
+
+        class IServiceComparator implements Comparator<IService> {
+            
+            @Override
+            public int compare( IService o1, IService o2 ) {
+                try {
+                    IServiceInfo info1 = o1.getInfo(new SubProgressMonitor(monitor2, 1));
+                    IServiceInfo info2 = o2.getInfo(new SubProgressMonitor(monitor2, 1));
+
+                    if (info1.getMetric() > info2.getMetric()) {
+                        return 1;
+                    }else if(info1.getMetric() < info2.getMetric()){
+                       return -1;
+                    }else{
+                       return 0;
+                    }
+                    
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        }
+       
+        Comparator<IService> comparator = new IServiceComparator();
+        Collections.sort(services, comparator);
+
+        return services;
+    }
 
     @Override
     public List<IService> checkMembers( List<IService> constructServiceList ) {
-        // TODO Auto-generated method stub
-        return null;
+        List<IService> catalogServices = new ArrayList<IService>();
+
+        for( IService service : constructServiceList ) {
+
+            ID id = service.getID();
+            IService found = getById(IService.class, id, new NullProgressMonitor());
+
+            if (!(found == null)) {
+                catalogServices.add(service);
+            }
+
+        }
+
+        return catalogServices;
     }
 
     @Override
     public List<IService> checkNonMembers( List<IService> constructServiceList ) {
-        // TODO Auto-generated method stub
-        return null;
+        List<IService> catalogServices = new ArrayList<IService>();
+
+        for( IService service : constructServiceList ) {
+
+            ID id = service.getID();
+            IService found = getById(IService.class, id, new NullProgressMonitor());
+
+            if (found == null) {
+                catalogServices.add(service);
+            }
+        }
+
+        return catalogServices;
     }
 
     @Override
     public List<IService> constructServices( Collection<URL> urls, IProgressMonitor monitor )
             throws IOException {
-        // TODO Auto-generated method stub
-        return null;
+        if (monitor == null)
+            monitor = new NullProgressMonitor();
+        
+        if (urls == null){
+            return null;
+        }
+        
+        int urlProcessCount = 0;
+        
+        List<IService> availableServices = new ArrayList<IService>();//services already in catalog
+
+        IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
+
+        monitor.beginTask("Check", urls.size());
+        monitor.subTask("Check available services");
+        
+        try {
+        if (urls != null && !urls.isEmpty()) {        
+            for( URL url : urls ) {
+                List<IService> possible = factory.createService(url);
+                monitor.worked(urlProcessCount);
+
+                    IProgressMonitor monitor3 = new SubProgressMonitor(monitor, 60);
+                    monitor3.beginTask("connect", possible.size() * 10);
+   
+                    for( Iterator<IService> iterator = possible.iterator(); iterator.hasNext(); ) {
+                        IService service = iterator.next();
+
+                        if (service == null)
+                            continue;
+                        
+                        monitor3.subTask("connect " + service.getID());
+                        try {
+                            // try connecting
+                            IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor3, 10));
+            
+                            if (info == null) {
+                                CatalogPlugin.trace("unable to connect to " + service.getID(), null);
+                                continue; // skip unable to connect
+                            }
+                            
+                            availableServices.add(service);
+                        } catch (Throwable t) {
+                            // usually indicates an IOException as the service is unable to connect
+                            CatalogPlugin.trace("trouble connecting to " + service.getID(), t);
+                        }
+                    }
+                    monitor3.done();
+            }
+        }
+        } finally {
+            monitor.done();
+        }
+        return prioritise(availableServices, monitor); //return a prioritise list
     }
 
     @Override
     public List<IService> constructServices( Map<String, Serializable> params,
             IProgressMonitor monitor ) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
+        if (monitor == null)
+            monitor = new NullProgressMonitor();
+
+        List<IService> availableServices = new ArrayList<IService>();//services already in catalog
+
+        IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
+
+        try {
+
+            if (params != null && !params.isEmpty()) {
+                Set<IService> results = new HashSet<IService>(factory.createService(params));
+                for( IService service : results ) {
+                    
+                    IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor, 10));
+                    
+                    if (info == null) {
+                        CatalogPlugin.trace("unable to connect to " + service.getID(), null);
+                        continue; // skip unable to connect
+                    }
+
+                    availableServices.add(service);
+                }
+
+            }
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            monitor.done();
+        }
+        
+        return prioritise(availableServices, monitor); //return a prioritise list
     }
 }
