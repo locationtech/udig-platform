@@ -167,8 +167,6 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
     private boolean isSupportedExtension( URL url ) {
         File file = URLUtils.urlToFile(url);
         String fileLower = file.getAbsolutePath().toLowerCase();
-        String fileExt = fileLower.substring(fileLower.lastIndexOf('.') + 1);
-
         boolean isTiff = fileLower.endsWith(".tiff") || fileLower.endsWith(".tif"); //$NON-NLS-1$ //$NON-NLS-2$
         if (!isTiff) {
             return false;

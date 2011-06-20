@@ -95,32 +95,50 @@ public class EndConnectionState extends State {
         if( !services.isEmpty() ){
             return true;
         }
+        
+        ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
+        List<IService> availableServices;
+        
         monitor.beginTask(Messages.ConnectionState_task, IProgressMonitor.UNKNOWN);
+        
         errors = null;
         try {
                 // use the context object to try to build connection info
             Object context = getWorkflow().getContext();
     
             if( context instanceof IService ){
-                services = Collections.singleton((IService)context);
+                services.add((IService)context);
+                //services = Collections.singleton((IService)context);
             }else if (context instanceof IGeoResource){
                 IService service = ((IGeoResource) context).service(monitor);
-                services = Collections.singleton(service);
+                services.add((IService)context);
+                services.add(service);
             }else{
+            
                 Map<String, Serializable> params = factory.createConnectionParameters(context);
-                if (params != null && params.isEmpty())
-                    params = null;
                 
                 URL url = factory.createConnectionURL(context);
                 HashSet<URL> urls = new HashSet<URL>();
-                if (url != null) {
-                    urls.add(url);
-                }
+                if (url != null)
+                    urls.add(url);  
         
                 if (params == null && urls.isEmpty())
                     return false; // could not build connection info
-    
-                services = constructServices(monitor, params, urls);
+                
+                if(!urls.isEmpty()){
+                    availableServices = catalog.constructServices(urls, monitor);
+                    if(!availableServices.isEmpty()){
+                        services.add(availableServices.iterator().next());
+                        return true;
+                    }
+                }
+                
+                if(params != null && !params.isEmpty()){
+                    availableServices = catalog.constructServices(params, monitor);
+                    if(!availableServices.isEmpty()){
+                        services.add(availableServices.iterator().next());
+                    }
+                }
             }
         } catch (Throwable t) {
             CatalogPlugin.log(t.getLocalizedMessage(), t);
@@ -128,44 +146,7 @@ public class EndConnectionState extends State {
         }
 
         try {
-            // make the connection, catch errors for post handling
-            errors = new HashMap<IService, Throwable>();
-            for( Iterator<IService> itr = services.iterator(); itr.hasNext(); ) {
-                IService service = itr.next();
-                try {
-                    SubProgressMonitor membersMonitor = new SubProgressMonitor(monitor, 2);
-                    monitor.setTaskName(MessageFormat.format(Messages.ConnectionState_findLayers,
-                            new Object[]{formatServiceID(service)}));
-                    List< ? extends IGeoResource> resources = service.resources(membersMonitor);
-
-                    if (true || !validateServices)
-                        continue;
-//                    try {
-//                        SubProgressMonitor infoMonitor = new SubProgressMonitor(monitor, 8);
-//                        try {
-//                            for( IGeoResource resource : resources ) {
-//                                try {
-//                                    monitor.setTaskName(MessageFormat.format(
-//                                            Messages.ConnectionState_loadingLayer,
-//                                            new Object[]{resource.getIdentifier().getRef()}));
-//                                    resource.getInfo(infoMonitor);
-//                                } catch (Exception e) {
-//                                    CatalogUIPlugin.log("", e); //$NON-NLS-1$
-//                                }
-//                            }
-//                        } finally {
-//                            infoMonitor.done();
-//                        }
-//
-//                    } finally {
-//                        membersMonitor.done();
-//                    }
-                } catch (Throwable t) {
-                    t.printStackTrace();
-                    errors.put(service, t);
-                    itr.remove();
-                }
-            }
+           
         } finally {
             monitor.done();
         }
