@@ -1,7 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+ *    (C) 2004-2011, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -44,6 +44,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * 
  * @author David Zwiers, Refractions Research
  * @since 0.6
+ * @version 1.2
  */
 public class IServiceInfo {
 
@@ -237,6 +238,19 @@ public class IServiceInfo {
         }
         
         return AWTSWTImageUtils.awtIcon2ImageDescriptor(icon2);
+    }
+
+    /**
+     * Check the completeness of available metadata for this service, this value is used to rank
+     * services so that the Catalog can make an informed decision on what service handle to use.
+     * <p>
+     * Sub classes are encouraged to override this method, implementing there own completeness
+     * 
+     * @return the completeness of possible metadata for this service. A value of 1 = complete 
+     * and 0 = incomplete, a value in-between represents a partial completeness.
+     */
+    public double getMetric() {
+        return 0;
     }
 
 }
