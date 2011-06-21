@@ -62,6 +62,7 @@ import org.eclipse.ui.PlatformUI;
  * 
  * @author jeichar
  * @since 0.9.0
+ * @version 1.2.0
  */
 public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGConnectionPage {
 
@@ -357,8 +358,7 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
                         URL url = URLIterator.next();
 
                         try {
-                            availableServices = catalog.constructServices(
-                                    Collections.singleton(url), monitor);
+                            availableServices = catalog.constructServices(url, monitor);
                             if (!availableServices.isEmpty()) {
                                 IService service = availableServices.iterator().next();
                                 resourceIds.add(service.getIdentifier());
