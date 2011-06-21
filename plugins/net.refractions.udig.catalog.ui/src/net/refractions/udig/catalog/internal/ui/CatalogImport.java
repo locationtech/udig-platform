@@ -1,3 +1,19 @@
+/*
+ *    uDig - User Friendly Desktop Internet GIS client
+ *    http://udig.refractions.net
+ *    (C) 2004-2011, Refractions Research Inc.
+ *
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation;
+ *    version 2.1 of the License.
+ *
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *    Lesser General Public License for more details.
+ *
+ */
 package net.refractions.udig.catalog.internal.ui;
 
 import java.net.URL;
@@ -40,6 +56,13 @@ import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
+/**
+ * This is the catalog import workflow.
+ * <p>
+ * Example use: dragging and dropping a URL into the catalog.
+ * </p>
+ * @since 1.2.0
+ */
 public class CatalogImport { 
 
 	Shell shell;
@@ -188,44 +211,50 @@ public class CatalogImport {
 		
 		@Override
 		protected boolean performFinish(IProgressMonitor monitor) {
-			//get the connection state from the pipe
-			EndConnectionState connState = 
-				getWorkflow().getState(EndConnectionState.class);
-			
-			if (connState == null)
-				return false;
-			
-			//add the services to the catalog
-			final Collection<IService> services = connState.getServices();
-			if (services == null || services.isEmpty())
-				return false;
-			
-			//add the services to the catalog
-			ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-			for (IService service : services) catalog.add(service);
-			
-			//select the first service
-			//TODO: this has threading issues
+		  //get the connection state from the pipe
+            EndConnectionState connState = 
+                getWorkflow().getState(EndConnectionState.class);
+            
+            if (connState == null)
+                return false;
+            
+            // wizard page is responsible for sorting out the services
+            // to add to the catalog.
+            final Collection<IService> services = connState.getServices();
+            if (services == null || services.isEmpty())
+                return false;
+            
+            //add the services to the catalog
+            ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
+            catalog.add(services.iterator().next());//add the first service to catalog
+
+            //for (IService service : services) {
+            //    catalog.add(service);
+            //}
+            
+            // To meet Eclipse UI Guidelines wizards are supposed to show the result
+            // of their action - in this case selecting the first service added
+            //TODO: this has threading issues
             PlatformGIS.asyncInDisplayThread(
-				new Runnable() {
-					public void run() {
-						try {
-						    CatalogView view = getCatalogView();
+                new Runnable() {
+                    public void run() {
+                        try {
+                            CatalogView view = getCatalogView();
                             if( view!=null ){
                                 CatalogTreeViewer treeviewer = view.getTreeviewer();
                                 treeviewer.setSelection(
-    								new StructuredSelection(services.iterator().next())	
-    							);
+                                    new StructuredSelection(services.iterator().next()) 
+                                );
                             }
-						} 
-						catch (Exception e) {
-							CatalogUIPlugin.log(e.getLocalizedMessage(), e);
-						}
-					}
-				}, true
-			);
-			
-			return true;
+                        } 
+                        catch (Exception e) {
+                            CatalogUIPlugin.log(e.getLocalizedMessage(), e);
+                        }
+                    }
+                }, true
+            );
+            
+            return true;
 		}
 
         protected boolean isShowCatalogView() {

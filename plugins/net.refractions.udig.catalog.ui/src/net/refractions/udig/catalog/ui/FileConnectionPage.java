@@ -1,7 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+ *    (C) 2004-2011, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -23,6 +23,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.refractions.udig.catalog.CatalogPlugin;
+import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ui.internal.Messages;
@@ -60,6 +62,7 @@ import org.eclipse.ui.PlatformUI;
  * 
  * @author jeichar
  * @since 0.9.0
+ * @version 1.2.0
  */
 public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGConnectionPage {
 
@@ -340,29 +343,49 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
     public Collection<IService> getServices() {
         resourceIds.clear();
 
+        final ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
         final Collection<IService> services = new ArrayList<IService>();
+
         IRunnableWithProgress runnable = new IRunnableWithProgress(){
 
             public void run( IProgressMonitor monitor ) throws InvocationTargetException,
                     InterruptedException {
-                services.addAll(EndConnectionState.constructServices(monitor,
-                        new HashMap<String, Serializable>(), list));
-                for( IService service : services ) {
-                    try {
-                        List< ? extends IGeoResource> resources = service.resources(SubMonitor
-                                .convert(monitor));
-                        if (resources.size() == 1) {
-                            IGeoResource resource = resources.iterator().next();
-                            resourceIds.add(resource.getIdentifier());
+
+                List<IService> availableServices = null;
+
+                if (!list.isEmpty()) {
+                    for( Iterator<URL> URLIterator = list.iterator(); URLIterator.hasNext(); ) {
+                        URL url = URLIterator.next();
+
+                        try {
+                            availableServices = catalog.constructServices(url, monitor);
+                            if (!availableServices.isEmpty()) {
+                                IService service = availableServices.iterator().next();
+                                resourceIds.add(service.getIdentifier());
+                                services.add(service);// add the first service
+                            }
+                        } catch (IOException e) {
+                            throw (RuntimeException) new RuntimeException().initCause(e);
+                        } finally {
+                            List<IService> members = catalog.checkMembers(availableServices);
+
+                            for( Iterator<IService> iterator = members.iterator(); iterator
+                                    .hasNext(); ) {
+                                IService service = iterator.next();
+
+                                if (service.equals(service)) continue;
+
+                                service.dispose(new SubProgressMonitor(monitor, 10));
+                            }
+                            monitor.done();
                         }
-                    } catch (IOException e) {
-                        // skip
-                        CatalogUIPlugin.log("error resolving:" + service.getIdentifier(), e); //$NON-NLS-1$
+
                     }
                 }
             }
 
         };
+
         try {
             getContainer().run(false, true, runnable);
         } catch (InvocationTargetException e) {
@@ -370,6 +393,7 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         } catch (InterruptedException e) {
             throw (RuntimeException) new RuntimeException().initCause(e);
         }
+
         return services;
     }
 
