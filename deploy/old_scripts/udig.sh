@@ -3,7 +3,7 @@
 UDIGEXEC=udig_internal
 
 PRG="$0"
-
+echo PRG $PRG
 while [ -h "$PRG" ]; do
 	ls=`ls -ld "$PRG"`
 	link=`expr "$ls" : '.*-> \(.*\)$'`
