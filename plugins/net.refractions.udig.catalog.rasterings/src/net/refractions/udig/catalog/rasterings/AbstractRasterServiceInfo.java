@@ -69,7 +69,7 @@ public class AbstractRasterServiceInfo extends IServiceInfo {
             return completeness;
         }
         
-        int numberOfexpectedInfoFields = 2;
+        final int numberOfexpectedInfoFields = 2;
         int numberOfAvailableInfoFields = 0;
 
         AbstractGridCoverage2DReader reader = null;

@@ -211,12 +211,12 @@ public abstract class ICatalog extends IRepository {
      * url. The ServiceFactory doesn’t guarantee that the services it provides can connect so it is
      * the responsibility of this method to check that they can.
      * 
-     * @param urls URLs indicating resources from a drag and drop (or wizard)
+     * @param url URL indicating resources from a drag and drop (or wizard)
      * @param monitor Used to track the process of connecting
      * @return new ArrayList prioritised list of services
      * @throws IOException
      */
-    public abstract List<IService> constructServices(Collection<URL> urls, IProgressMonitor monitor) throws IOException;
+    public abstract List<IService> constructServices(URL url, IProgressMonitor monitor) throws IOException;
     
     /**
      * Takes a list of services and orders them from highest priority to lowest. The
