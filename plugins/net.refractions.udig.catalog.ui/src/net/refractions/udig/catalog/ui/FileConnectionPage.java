@@ -23,6 +23,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -352,29 +353,34 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
                 List<IService> availableServices = null;
 
                 if (!list.isEmpty()) {
-                    try {
-                        availableServices = catalog.constructServices(list, monitor);
-                        if (!availableServices.isEmpty()) {
-                            IService service = availableServices.iterator().next();
-                            resourceIds.add(service.getIdentifier());
-                            services.add(service);// add the first service
+                    for( Iterator<URL> URLIterator = list.iterator(); URLIterator.hasNext(); ) {
+                        URL url = URLIterator.next();
+
+                        try {
+                            availableServices = catalog.constructServices(
+                                    Collections.singleton(url), monitor);
+                            if (!availableServices.isEmpty()) {
+                                IService service = availableServices.iterator().next();
+                                resourceIds.add(service.getIdentifier());
+                                services.add(service);// add the first service
+                            }
+                        } catch (IOException e) {
+                            throw (RuntimeException) new RuntimeException().initCause(e);
+                        } finally {
+                            List<IService> members = catalog.checkMembers(availableServices);
+
+                            for( Iterator<IService> iterator = members.iterator(); iterator
+                                    .hasNext(); ) {
+                                IService service = iterator.next();
+
+                                if (service.equals(service)) continue;
+
+                                service.dispose(new SubProgressMonitor(monitor, 10));
+                            }
+                            monitor.done();
                         }
-                    } catch (IOException e) {
-                        throw (RuntimeException) new RuntimeException().initCause(e);
-                    } finally {
-                        List<IService> members = catalog.checkMembers(availableServices);
 
-                        for( Iterator<IService> iterator = members.iterator(); iterator.hasNext(); ) {
-                            IService service = iterator.next();
-
-                            if (service.equals(service)) 
-                                continue;
-
-                            service.dispose(new SubProgressMonitor(monitor, 10));
-                        }
-                        monitor.done();
                     }
-
                 }
             }
 
