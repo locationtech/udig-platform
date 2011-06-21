@@ -2,9 +2,7 @@ package eu.udig.catalog.teradata;
 
 import static java.util.Collections.emptyMap;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -16,14 +14,17 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 import ucar.unidata.io.RandomAccessFile;
-
 import eu.udig.catalog.teradata.internal.Messages;
 
 /**
@@ -61,95 +62,102 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	public static boolean checkTeradataDrivers() {
-		final boolean[] returnVal = new boolean[1];
-		PlatformGIS.asyncInDisplayThread(new Runnable() {
-			public void run() {
-				try {
-					Class.forName("com.teradata.jdbc.TeraDriver"); //$NON-NLS-1$
-					returnVal[0] = true;
-				} catch (ClassNotFoundException e) {
-					RandomAccessFile out = null;
-					try {
-						returnVal[0] = false;
-						String config = "tdgssconfig.jar"; //$NON-NLS-1$
-						String driver = "terajdbc4.jar"; //$NON-NLS-1$
-						Bundle teradataLibsBundle = Platform.getBundle("eu.udig.libs.teradata");
-						String dest = FileLocator.toFileURL(FileLocator.find(teradataLibsBundle,new Path("libs"), emptyMap())).getFile();
-						
-						dest = dest.replace(File.separator + File.separator,
-								File.separator);
-						String msg = Messages.HostPage_GetDriverMsg;
-						MessageDialog.openInformation(Display.getCurrent()
-								.getActiveShell(),
-								Messages.HostPage_GetDriverTitle, String.format(
-										msg, config, driver, dest));
-						
-						File manifest = new File(dest, ".."+File.separator+"META-INF"+File.separator+"MANIFEST.MF");
-						getDefault().getLog().log(new Status(IStatus.INFO, PLUGIN_ID, IStatus.OK, "Updating Manifest: "+manifest, null));
-						
-						@SuppressWarnings("unchecked")
-						List<String> lines = FileUtils.readLines(manifest, "UTF-8");
-						
-						String manifestData = ",\n com.ncr.teradata,\n"
-								+ " com.teradata.jdbc,\n"
-								+ " com.teradata.jdbc.interfaces,\n"
-								+ " com.teradata.jdbc.jdbc,\n"
-								+ " com.teradata.jdbc.jdbc.console,\n"
-								+ " com.teradata.jdbc.jdbc.fastexport,\n"
-								+ " com.teradata.jdbc.jdbc.fastload,\n"
-								+ " com.teradata.jdbc.jdbc.monitor,\n"
-								+ " com.teradata.jdbc.jdbc.raw,\n"
-								+ " com.teradata.jdbc.jdbc_3,\n"
-								+ " com.teradata.jdbc.jdbc_3.dbmetadata,\n"
-								+ " com.teradata.jdbc.jdbc_3.ifjdbc_4,\n"
-								+ " com.teradata.jdbc.jdbc_3.util,\n"
-								+ " com.teradata.jdbc.jdbc_4,\n"
-								+ " com.teradata.jdbc.jdbc_4.ifsupport,\n"
-								+ " com.teradata.jdbc.jdbc_4.io,\n"
-								+ " com.teradata.jdbc.jdbc_4.logging,\n"
-								+ " com.teradata.jdbc.jdbc_4.parcel,\n"
-								+ " com.teradata.jdbc.jdbc_4.statemachine,\n"
-								+ " com.teradata.jdbc.jdbc_4.util,\n"
-								+ " com.teradata.jdbc.resource,\n"
-								+ " com.teradata.tdgss.jalgapi,\n"
-								+ " com.teradata.tdgss.jgssp2gss,\n"
-								+ " com.teradata.tdgss.jgssp2ldap,\n"
-								+ " com.teradata.tdgss.jgssp2td1,\n"
-								+ " com.teradata.tdgss.jgssp2td2,\n"
-								+ " com.teradata.tdgss.jgssspi,\n"
-								+ " com.teradata.tdgss.jtdgss";
-
-						
-						out = new RandomAccessFile(manifest.getPath(), "rw");
-						StringBuilder b= new StringBuilder();
-						for (String string : lines) {
-							if(b.length() > 0) {
-								b.append("\n");
+		try {
+			Class.forName("com.teradata.jdbc.TeraDriver"); //$NON-NLS-1$
+			return true;
+		} catch (ClassNotFoundException e) {
+			PlatformGIS.asyncInDisplayThread(new Runnable() {
+				public void run() {
+						RandomAccessFile out = null;
+						try {
+							final String config = "tdgssconfig.jar"; //$NON-NLS-1$
+							final String driver = "terajdbc4.jar"; //$NON-NLS-1$
+							Bundle teradataLibsBundle = Platform.getBundle("eu.udig.libs.teradata");
+							final String dest = FileLocator.toFileURL(FileLocator.find(teradataLibsBundle,new Path("libs"), emptyMap())).getFile();
+							
+							final String msg = Messages.HostPage_GetDriverMsg;
+							Dialog dialog = new Dialog(Display.getCurrent().getActiveShell()) {
+								protected org.eclipse.swt.widgets.Control createDialogArea(org.eclipse.swt.widgets.Composite parent) {
+									getShell().setText(Messages.HostPage_GetDriverTitle);
+									Text text = new Text(parent, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
+									text.setText(String.format(
+											msg, config, driver, dest));
+									return text;
+								};
+								
+							};
+							if (dialog.open() == Window.CANCEL) return;
+							File manifest = new File(dest, ".."+File.separator+"META-INF"+File.separator+"MANIFEST.MF");
+							getDefault().getLog().log(new Status(IStatus.INFO, PLUGIN_ID, IStatus.OK, "Updating Manifest: "+manifest, null));
+							
+							@SuppressWarnings("unchecked")
+							List<String> lines = FileUtils.readLines(manifest, "UTF-8");
+							for (String string : lines) {
+								if(string.contains("com.teradata.jdbc")) {
+									return;
+								}
 							}
-							if(string.trim().length() > 0) {
-								b.append(string);
+							
+							
+							String manifestData = "Export-Package: org.geotools.data.teradata,"
+									+ "\n com.ncr.teradata,\n"
+									+ " com.teradata.jdbc,\n"
+									+ " com.teradata.jdbc.interfaces,\n"
+									+ " com.teradata.jdbc.jdbc,\n"
+									+ " com.teradata.jdbc.jdbc.console,\n"
+									+ " com.teradata.jdbc.jdbc.fastexport,\n"
+									+ " com.teradata.jdbc.jdbc.fastload,\n"
+									+ " com.teradata.jdbc.jdbc.monitor,\n"
+									+ " com.teradata.jdbc.jdbc.raw,\n"
+									+ " com.teradata.jdbc.jdbc_3,\n"
+									+ " com.teradata.jdbc.jdbc_3.dbmetadata,\n"
+									+ " com.teradata.jdbc.jdbc_3.ifjdbc_4,\n"
+									+ " com.teradata.jdbc.jdbc_3.util,\n"
+									+ " com.teradata.jdbc.jdbc_4,\n"
+									+ " com.teradata.jdbc.jdbc_4.ifsupport,\n"
+									+ " com.teradata.jdbc.jdbc_4.io,\n"
+									+ " com.teradata.jdbc.jdbc_4.logging,\n"
+									+ " com.teradata.jdbc.jdbc_4.parcel,\n"
+									+ " com.teradata.jdbc.jdbc_4.statemachine,\n"
+									+ " com.teradata.jdbc.jdbc_4.util,\n"
+									+ " com.teradata.jdbc.resource,\n"
+									+ " com.teradata.tdgss.jalgapi,\n"
+									+ " com.teradata.tdgss.jgssp2gss,\n"
+									+ " com.teradata.tdgss.jgssp2ldap,\n"
+									+ " com.teradata.tdgss.jgssp2td1,\n"
+									+ " com.teradata.tdgss.jgssp2td2,\n"
+									+ " com.teradata.tdgss.jgssspi,\n"
+									+ " com.teradata.tdgss.jtdgss";
+	
+							
+							out = new RandomAccessFile(manifest.getPath(), "rw");
+							StringBuilder b= new StringBuilder();
+							for (String string : lines) {
+								if(b.length() > 0) {
+									b.append("\n");
+								}
+								if(string.trim().startsWith("Export-Package")) {
+									b.append(manifestData);
+								} else if (string.trim().length() > 0) {
+									b.append(string);
+								}
 							}
-							if(string.trim().startsWith("Export-Package")) {
-								b.append(manifestData);								
-							}
+							out.seek(0);
+							out.write(b.toString().getBytes("UTF-8"));
+						} catch (IOException e1) {
+							throw new RuntimeException(e1);
+						} finally {
+							if (out != null)
+								try {
+									out.close();
+								} catch (IOException e1) {
+									throw new RuntimeException(e1);
+								}
 						}
-						out.seek(0);
-						out.write(b.toString().getBytes("UTF-8"));
-					} catch (IOException e1) {
-						throw new RuntimeException(e1);
-					} finally {
-						if (out != null)
-							try {
-								out.close();
-							} catch (IOException e1) {
-								throw new RuntimeException(e1);
-							}
 					}
-
-				}
-			}
-		}, true);
-		return returnVal[0];
+			}, true);
+			return false;
+		}
 	}
 
 	/**

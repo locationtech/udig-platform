@@ -65,7 +65,9 @@ public class TeradataServiceExtension extends AbstractDataStoreServiceExtension
 			if(!params2.containsKey(TeradataDataStoreFactory.ESTIMATED_BOUNDS.key)) {
 				params2.put(TeradataDataStoreFactory.ESTIMATED_BOUNDS.key, true);
 			}
-			params2.put(TeradataDataStoreFactory.APPLICATION.key, "uDig");
+			if(!params2.containsKey(TeradataDataStoreFactory.APPLICATION.key)) {
+				params2.put(TeradataDataStoreFactory.APPLICATION.key, "uDig");
+			}
 			params2.put(TeradataDataStoreFactory.TESSELLATION_TABLE.key, TeradataDataStoreFactory.TESSELLATION_TABLE.sample.toString());
 			
 			if(!Activator.checkTeradataDrivers()){
