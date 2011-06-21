@@ -1136,7 +1136,6 @@ public class CatalogImpl extends ICatalog {
 
         class IServiceComparator implements Comparator<IService> {
             
-            @Override
             public int compare( IService o1, IService o2 ) {
                 try {
                     IServiceInfo info1 = o1.getInfo(new SubProgressMonitor(monitor2, 1));
