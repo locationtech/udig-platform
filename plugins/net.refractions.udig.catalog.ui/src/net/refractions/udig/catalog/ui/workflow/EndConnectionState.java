@@ -182,11 +182,6 @@ public class EndConnectionState extends State {
             return false;
         }
 
-        try {
-           
-        } finally {
-            monitor.done();
-        }
 
         // even if errors occured, we are still done
         // return true;

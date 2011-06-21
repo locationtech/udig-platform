@@ -371,7 +371,6 @@ public class CatalogImpl extends ICatalog {
 
                 service.dispose(new SubProgressMonitor(monitor, 10));
             }
-            monitor.done();
             
             monitor.done();
         }
