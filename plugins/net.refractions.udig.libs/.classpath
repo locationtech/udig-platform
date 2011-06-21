@@ -132,7 +132,5 @@
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-client-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-common-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xpp3-1.1.3.4.O.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-teradata-8-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jcommon-1.0.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
