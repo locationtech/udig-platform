@@ -285,7 +285,7 @@ public class CatalogImpl extends ICatalog {
         monitor.worked(10);
         try {
 
-            possible = constructServices(Collections.singletonList(url), monitor);
+            possible = constructServices(url, monitor);
 
             if (possible.isEmpty()) {
                 throw new IOException("Unable to connect to any service supporting " + url);
@@ -371,7 +371,6 @@ public class CatalogImpl extends ICatalog {
 
                 service.dispose(new SubProgressMonitor(monitor, 10));
             }
-            monitor.done();
             
             monitor.done();
         }
@@ -1199,12 +1198,12 @@ public class CatalogImpl extends ICatalog {
     }
 
     @Override
-    public List<IService> constructServices( Collection<URL> urls, IProgressMonitor monitor )
+    public List<IService> constructServices(URL url, IProgressMonitor monitor )
             throws IOException {
         if (monitor == null)
             monitor = new NullProgressMonitor();
         
-        if (urls == null){
+        if (url == null){
             return null;
         }
         
@@ -1214,43 +1213,38 @@ public class CatalogImpl extends ICatalog {
 
         IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
 
-        monitor.beginTask("Check", urls.size());
+        monitor.beginTask("Check", 1);
         monitor.subTask("Check available services");
-        
+
         try {
-        if (urls != null && !urls.isEmpty()) {        
-            for( URL url : urls ) {
-                List<IService> possible = factory.createService(url);
-                monitor.worked(urlProcessCount);
+            List<IService> possible = factory.createService(url);
+            monitor.worked(urlProcessCount);
 
-                    IProgressMonitor monitor3 = new SubProgressMonitor(monitor, 60);
-                    monitor3.beginTask("connect", possible.size() * 10);
-   
-                    for( Iterator<IService> iterator = possible.iterator(); iterator.hasNext(); ) {
-                        IService service = iterator.next();
+            IProgressMonitor monitor3 = new SubProgressMonitor(monitor, 60);
+            monitor3.beginTask("connect", possible.size() * 10);
 
-                        if (service == null)
-                            continue;
-                        
-                        monitor3.subTask("connect " + service.getID());
-                        try {
-                            // try connecting
-                            IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor3, 10));
-            
-                            if (info == null) {
-                                CatalogPlugin.trace("unable to connect to " + service.getID(), null);
-                                continue; // skip unable to connect
-                            }
-                            
-                            availableServices.add(service);
-                        } catch (Throwable t) {
-                            // usually indicates an IOException as the service is unable to connect
-                            CatalogPlugin.trace("trouble connecting to " + service.getID(), t);
-                        }
+            for( Iterator<IService> iterator = possible.iterator(); iterator.hasNext(); ) {
+                IService service = iterator.next();
+
+                if (service == null) continue;
+
+                monitor3.subTask("connect " + service.getID());
+                try {
+                    // try connecting
+                    IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor3, 10));
+
+                    if (info == null) {
+                        CatalogPlugin.trace("unable to connect to " + service.getID(), null);
+                        continue; // skip unable to connect
                     }
-                    monitor3.done();
+
+                    availableServices.add(service);
+                } catch (Throwable t) {
+                    // usually indicates an IOException as the service is unable to connect
+                    CatalogPlugin.trace("trouble connecting to " + service.getID(), t);
+                }
             }
-        }
+            monitor3.done();
         } finally {
             monitor.done();
         }

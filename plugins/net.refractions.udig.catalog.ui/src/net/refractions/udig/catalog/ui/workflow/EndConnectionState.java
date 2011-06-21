@@ -154,16 +154,13 @@ public class EndConnectionState extends State {
             
                 Map<String, Serializable> params = factory.createConnectionParameters(context);
                 
-                URL url = factory.createConnectionURL(context);
-                HashSet<URL> urls = new HashSet<URL>();
-                if (url != null)
-                    urls.add(url);  
+                URL url = factory.createConnectionURL(context);  
         
-                if (params == null && urls.isEmpty())
+                if (params == null && url == null)
                     return false; // could not build connection info
                 
-                if(!urls.isEmpty()){
-                    availableServices = catalog.constructServices(urls, monitor);
+                if(url != null){
+                    availableServices = catalog.constructServices(url, monitor);
                     if(!availableServices.isEmpty()){
                         services.add(availableServices.iterator().next());
                         return true;
@@ -182,11 +179,6 @@ public class EndConnectionState extends State {
             return false;
         }
 
-        try {
-           
-        } finally {
-            monitor.done();
-        }
 
         // even if errors occured, we are still done
         // return true;
