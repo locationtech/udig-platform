@@ -23,7 +23,7 @@
 		<delete dir="${lib}" />
 	</target>
 	
-	<target name="load_m2_deps" depends="load-teradata-deps" >
+	<target name="load_m2_deps" >
 		<!-- we can probably replace this with a reference to a pom.xml file -->
 		<!-- Use http://mvnrepository.com/ to look stuff up -->
 		<artifact:dependencies filesetId="dependency.fileset" sourcesFilesetId="sources.dependency.fileset" versionsId="dependency.versions" useScope="runtime" cacheDependencyRefs="false">
@@ -193,7 +193,7 @@
 		</artifact:dependencies>
 	</target>
 
-	<target name="print" depends="load_m2_deps">
+	<target name="print" depends="load_m2_deps,teradata-print">
 		<description>Print the dependencies the jars</description>
 
 		<!--setproxy proxyhost="192.168.20.1" proxyport="8080"/-->
@@ -211,7 +211,7 @@
 		<echo message="Jars = ${listjars}" />
 	</target>
 
-	<target name="build" depends="load_m2_deps">
+	<target name="build" depends="load_m2_deps,load-teradata-deps">
 		<description>Download the jars - used by a manual "clean"</description>
 		<available property="already_downloaded" type="dir" file="${lib}" />
 
@@ -292,7 +292,7 @@
 		depends="check-teradata-libs" if="teradata.present">
 		<ant 
 			antfile="${teradata.ant.file}"
-			target="load_m2_deps"
+			target="build"
 			
 			inheritAll="false">
 			<property file="${teradata.ant.properties}"/>			
@@ -301,6 +301,11 @@
 
 	<target name="teradata-clean">
 		<ant antfile="${teradata.ant.file}" target="clean">
+			<property file="${teradata.ant.properties}"/>
+		</ant>
+	</target>
+	<target name="teradata-print">
+		<ant antfile="${teradata.ant.file}" target="print">
 			<property file="${teradata.ant.properties}"/>
 		</ant>
 	</target>
