@@ -141,8 +141,14 @@ public class UDIGApplication implements IApplication {
             display.dispose();
         }
         if (returnCode == PlatformUI.RETURN_RESTART) {
+        	String systemExitCode = System.getProperty("eclipse.exitcode");
+			if("24".equals(systemExitCode)) {
+        		return EXIT_RELAUNCH;
+        	}
             return EXIT_RESTART;
         }
+        
+        
         return EXIT_OK;
     }
 

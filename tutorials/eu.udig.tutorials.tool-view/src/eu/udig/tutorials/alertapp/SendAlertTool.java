@@ -16,6 +16,7 @@ import net.refractions.udig.project.ui.tool.SimpleTool;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.ui.PlatformUI;
 import org.geotools.data.FeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;

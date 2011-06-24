@@ -190,7 +190,7 @@ public class UpdateThread implements Runnable {
         }
         if( commands.size()>0 ){
             NavComposite composite = new NavComposite(commands);
-            composite.addFinalizerCommand(new InvalidateCommand(command));
+            //composite.addFinalizerCommand(new InvalidateCommand(command));
 			context.sendASyncCommand( composite );
         }
         amount=0;

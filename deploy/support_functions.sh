@@ -50,7 +50,7 @@ function prepare_resources () {
         cp udig-debug.sh ${BUILD}/${PLATFORM}/udig        
     fi
     if [[ $PLATFORM == win* ]] ; then
-        cp udig.bat ${BUILD}/${PLATFORM}/udig
+        cp *.bat ${BUILD}/${PLATFORM}/udig
         mkdir -p ${BUILD}/${PLATFORM}/udig/icons
         cp installer/*.ico ${BUILD}/${PLATFORM}/udig/icons/
         windows_installer

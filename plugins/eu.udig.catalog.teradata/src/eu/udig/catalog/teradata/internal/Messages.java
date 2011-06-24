@@ -21,13 +21,17 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "eu.udig.catalog.teradata.internal.messages"; //$NON-NLS-1$
 
-	public static String HostPage_GetDriverMsg;
+	public static String GetHTMLDriverMsg;
+	public static String GetHTMLCopyPluginMsg;
+	public static String GetDriverMsg;
+	public static String GetCopyPluginMsg;
 
-	public static String HostPage_GetDriverTitle;
+	public static String GetDriverTitle;
 
 	public static String TeradataGeoResource_hostPageTitle;
 	public static String TeradataServiceExtension_badURL;
 	public static String TeradataGeoResource_error_layer_bounds;
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
