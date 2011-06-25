@@ -273,33 +273,32 @@ public class BasicFeatureRenderer extends RendererImpl {
             listener.init(monitor);
             setQueries();
 
-            Coordinate minCoord = new Coordinate(validBounds.getMinX(), validBounds.getMinY());
-            Point min = getContext().worldToPixel(minCoord);
-
-            Coordinate maxCoord = new Coordinate(validBounds.getMaxX(), validBounds.getMaxY());
-            Point max = getContext().worldToPixel(maxCoord);
-
+            Point min = getContext().worldToPixel(
+                    new Coordinate(validBounds.getMinX(), validBounds
+                            .getMinY()));
+            Point max = getContext().worldToPixel(
+                    new Coordinate(validBounds.getMaxX(), validBounds
+                            .getMaxY()));
+   
             int width = Math.abs(max.x - min.x);
             int height = Math.abs(max.y - min.y);
-            // TODO: if width or height = 0, then it's a point...need to
-            // figure out how much ti render (examine style)
-            Rectangle paintArea;
-            if (height == 0 || width == 0) {
-                width = 50;
-                height = 50;
-                min.x -= 25;
-                min.y -= 25;
-                max.x += 25;
-                max.x += 25;
-                graphics.setBackground(new Color(0, 0, 0, 0));
-                graphics.clearRect(min.x, min.y, width, height);
-                paintArea = new Rectangle(Math.min(min.x, max.x), Math.min(min.y, max.y), width,
-                        height);
-                validBounds = getContext().worldBounds(paintArea);
-            } else {
-                paintArea = new Rectangle(Math.min(min.x, max.x), Math.min(min.y, max.y), width,
-                        height);
-            }
+
+            Rectangle paintArea = new Rectangle(Math.min(min.x, max.x), Math.min(min.y, max.y), width, height);
+
+            int EXPAND_RECTANGLE_SIZE = 30;
+            // expand the painArea by 30 pixels each direction to get symbols
+            // rendered right (up to a size of 60 pix)
+            // upper left
+            paintArea.add(  Math.min(min.x, max.x) - EXPAND_RECTANGLE_SIZE,
+                            Math.min(min.y, max.y) - EXPAND_RECTANGLE_SIZE);
+            // lower right
+            paintArea.add(  Math.max(min.x, max.x) + EXPAND_RECTANGLE_SIZE,
+                            Math.max(min.y, max.y) + EXPAND_RECTANGLE_SIZE);
+
+            graphics.setBackground(new Color(0,0,0,0));
+            graphics.clearRect(paintArea.x, paintArea.y, paintArea.width, paintArea.height);
+
+            validBounds=getContext().worldBounds(paintArea);
 
             map.setAreaOfInterest(validBounds, getContext().getViewportModel().getCRS());
 
