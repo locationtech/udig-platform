@@ -17,8 +17,6 @@ package net.refractions.udig.tools.internal;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import com.vividsolutions.jts.geom.Coordinate;
-
 import net.refractions.udig.project.command.NavCommand;
 import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.internal.command.navigation.NavComposite;
@@ -26,6 +24,8 @@ import net.refractions.udig.project.internal.command.navigation.PanCommand;
 import net.refractions.udig.project.internal.command.navigation.ZoomCommand;
 import net.refractions.udig.project.ui.commands.TransformDrawCommand;
 import net.refractions.udig.project.ui.tool.IToolContext;
+
+import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * Waits 1 second after the most recent request before running operation.
@@ -42,7 +42,7 @@ public class UpdateThread implements Runnable {
 
     private static TransformDrawCommand command;
     private static final UpdateThread updater=new UpdateThread();
-    private NavigationCommandFactory factory = NavigationCommandFactory.getInstance();
+    private final NavigationCommandFactory factory = NavigationCommandFactory.getInstance();
     int amount = 0;
     private int vertical=0;
     private int horizontal=0;
@@ -55,6 +55,7 @@ public class UpdateThread implements Runnable {
     /**
      * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
      */
+    @Override
     public final void run() {
         synchronized (UpdateThread.class) {
             if (thread != Thread.currentThread())
@@ -181,7 +182,7 @@ public class UpdateThread implements Runnable {
         ArrayList<NavCommand> commands=new ArrayList<NavCommand>();
         if( horizontal!=0 || vertical!=0 ){
             commands.add(
-                    (NavCommand) new PanCommand((horizontal*-PAN_AMOUNT), (vertical*-PAN_AMOUNT)));
+                    new PanCommand((horizontal*-PAN_AMOUNT), (vertical*-PAN_AMOUNT)));
         }
         if( zoom>0.00000001 ){
             ZoomCommand zoomCommand = new ZoomCommand(zoom);
@@ -190,7 +191,6 @@ public class UpdateThread implements Runnable {
         }
         if( commands.size()>0 ){
             NavComposite composite = new NavComposite(commands);
-            //composite.addFinalizerCommand(new InvalidateCommand(command));
 			context.sendASyncCommand( composite );
         }
         amount=0;
