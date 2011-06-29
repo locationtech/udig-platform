@@ -223,6 +223,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
                     // check to see if it exists; we don't like empty existing files
                     File file = new File( projectURI.toFileString() );
                     if( file.exists() ){
+                        if(!file.delete())
                         throw new NullPointerException("Unable to load "+uri+" file was empty");
                     }                    
                 }
