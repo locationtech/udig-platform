@@ -47,11 +47,11 @@ public class FeatureStoreResourceProperty extends AbstractPropertyValue<ILayer>
     private Set<URL> ids = new CopyOnWriteArraySet<URL>();
 
     public boolean canCacheResult() {
-        return true;
+        return false;
     }
 
     public boolean isBlocking() {
-        return true;
+        return false;
     }
 
     public boolean isTrue( final ILayer object, String value ) {

@@ -47,10 +47,12 @@ import org.geotools.map.DefaultMapContext;
 import org.geotools.map.DefaultMapLayer;
 import org.geotools.map.MapContext;
 import org.geotools.map.MapLayer;
-import org.geotools.referencing.operation.projection.ProjectionException;
 import org.geotools.renderer.GTRenderer;
 import org.geotools.renderer.RenderListener;
+import org.geotools.renderer.lite.MetaBufferEstimator;
 import org.geotools.renderer.lite.StreamingRenderer;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.opengis.feature.simple.SimpleFeature;
@@ -61,7 +63,6 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.TopologyException;
 
 /**
@@ -110,6 +111,8 @@ public class BasicFeatureRenderer extends RendererImpl {
     private final static int NOT_INITIALIZED = -2;
 
     int count = NOT_INITIALIZED;
+
+    private int expandSizePaintArea = 0;
 
     protected void setQueries() {
         try {
@@ -185,6 +188,11 @@ public class BasicFeatureRenderer extends RendererImpl {
         } catch (Throwable e) {
             RendererPlugin.log("Error duplicating style for transparency setting", e); //$NON-NLS-1$
         }
+
+        if (style != null) {
+            expandSizePaintArea  = getExpandSizeFromStyle(style);
+        }
+
         if (style == null) {
             style = Styling.createLineStyle(featureSource.getSchema().getName().getLocalPart(),
                     Color.BLUE);
@@ -195,6 +203,40 @@ public class BasicFeatureRenderer extends RendererImpl {
     private Style removeTransparency( Style style ) {
         style.accept(new TransparencyRemovingVisitor());
         return style;
+    }
+
+    /**
+     * Returns an estimate of the rendering buffer needed to properly display this
+     * layer taking into consideration the sizes of strokes, symbols and icons in 
+     * the feature type styles.
+     *
+     * For more Details have a look at StreamingRenderer#findRenderingBuffer(Style)
+     *
+     * @param styles
+     *            the feature type styles to be applied to the layer
+     * @return an estimate of the buffer that should be used to properly display a layer
+     *         rendered with the specified styles
+     *
+     */
+
+    private int getExpandSizeFromStyle( Style style ) {
+        MetaBufferEstimator rbe = new MetaBufferEstimator();
+        FeatureTypeStyle[] styles = style.getFeatureTypeStyles();
+        for (int t=0; t<styles.length; t++) {
+            final FeatureTypeStyle lfts = styles[t];
+            Rule[] rules = lfts.getRules();
+            for (int j = 0; j < rules.length; j++) {
+                rbe.visit(rules[j]);
+            }
+        }
+
+        if(!rbe.isEstimateAccurate())
+            RendererPlugin.log("Assuming rendering buffer = " + rbe.getBuffer() 
+                + ", but estimation is not accurate, you may want to set a buffer manually", null);
+
+        // the actual amount we have to grow the rendering area by is half of the stroke/symbol sizes
+        // plus one extra pixel for antialiasing effects
+        return (int) Math.round(rbe.getBuffer() / 2.0 + 1);
     }
 
     /**
@@ -285,15 +327,18 @@ public class BasicFeatureRenderer extends RendererImpl {
 
             Rectangle paintArea = new Rectangle(Math.min(min.x, max.x), Math.min(min.y, max.y), width, height);
 
-            int EXPAND_RECTANGLE_SIZE = 30;
+            int expandPaintAreaBy = 0;
+            if (expandSizePaintArea > 0) {
+                expandPaintAreaBy = expandSizePaintArea;
+            }
             // expand the painArea by 30 pixels each direction to get symbols
             // rendered right (up to a size of 60 pix)
             // upper left
-            paintArea.add(  Math.min(min.x, max.x) - EXPAND_RECTANGLE_SIZE,
-                            Math.min(min.y, max.y) - EXPAND_RECTANGLE_SIZE);
+            paintArea.add(  Math.min(min.x, max.x) - expandPaintAreaBy,
+                            Math.min(min.y, max.y) - expandPaintAreaBy);
             // lower right
-            paintArea.add(  Math.max(min.x, max.x) + EXPAND_RECTANGLE_SIZE,
-                            Math.max(min.y, max.y) + EXPAND_RECTANGLE_SIZE);
+            paintArea.add(  Math.max(min.x, max.x) + expandPaintAreaBy,
+                            Math.max(min.y, max.y) + expandPaintAreaBy);
 
             graphics.setBackground(new Color(0,0,0,0));
             graphics.clearRect(paintArea.x, paintArea.y, paintArea.width, paintArea.height);

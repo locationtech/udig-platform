@@ -190,6 +190,9 @@
 			<!-- Jaitools deps -->
 			<dependency groupId="org.jaitools" artifactId="jt-all" version="1.2.0" />
 			<dependency groupId="org.jaitools" artifactId="jt-jiffle-language" version="0.2.0" />
+			<dependency groupId="org.jaitools" artifactId="jt-utils" version="1.2.0" scope="provided" />
+			<dependency groupId="org.jaitools" artifactId="jt-vectorbinarize" version="1.2.0" scope="provided" />
+			<dependency groupId="org.jaitools" artifactId="jt-zonalstats" version="1.2.0" scope="provided" />
 		</artifact:dependencies>
 	</target>
 
