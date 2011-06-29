@@ -106,11 +106,11 @@
 
 			<!-- stuff for jgrass contributions -->
 			<dependency groupId="org.geotools" artifactId="gt-temporal" version="${geotools.version}" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-streams" version="1.1-RC1" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf-core" version="1.1-RC1" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf" version="1.1-RC1" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-utilities" version="1.1-RC1" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-geocore" version="1.1-RC1" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-streams" version="1.1.0" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf-core" version="1.1.0" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf" version="1.1.0" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-utilities" version="1.1.0" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-geocore" version="1.1.0" />
 			<dependency groupId="opendap" artifactId="opendap" version="2.1" />
 			<dependency groupId="org.geotools" artifactId="gt-grassraster" version="${geotools.version}" />
             <!--
