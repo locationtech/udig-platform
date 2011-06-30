@@ -64,24 +64,44 @@ function prepare_resources () {
 }
 
 function windows_installer () {
-    WINE=`which wine`
+    MAKENSIS=`which makensis`
     if [ $? == 0 ] ; then
-        cp installer/* ${BUILD}/${PLATFORM}/
         HERE=`pwd`
-        if [ ! -f "${TOOL}" ] ; then
-            TOOL=`find $HOME/.wine -name makensis.exe|sed -n 1p`
+        # todo use sed or something to update VERSION inside uDigInstallScript.nsi
+        
+        cp ${INSTALLER}/uDigInstallScript.nsi ${BUILD}/${PLATFORM}
+        cp ${INSTALLER}/32-uDigIcon.ico ${BUILD}/${PLATFORM}
+        cp ${INSTALLER}/ECWEULA.txt ${BUILD}/${PLATFORM}
+        cp ${INSTALLER}/LICENSE.txt ${BUILD}/${PLATFORM}
+        cp ${INSTALLER}/uDigInstallScript.nsi ${BUILD}/${PLATFORM}
+        cp ${INSTALLER}/32-uninstallIcon.ico ${BUILD}/${PLATFORM}
+        cp ${INSTALLER}/LGPL.txt ${BUILD}/${PLATFORM}
+        cp ${INSTALLER}/udig/icons ${BUILD}/${PLATFORM}/icons
+        
+        cd ${BUILD}/${PLATFORM}
+        makensis "-NOCD" uDigInstallScript.nsi
+        cd ${HERE}
+        cp ${BUILD}/${PLATFORM}/udig-*.exe ${BUILD}/udig-${VERSION}.${EXT}.exe
+    else
+        WINE=`which wine`
+        if [ $? == 0 ] ; then
+            cp installer/* ${BUILD}/${PLATFORM}/
+            HERE=`pwd`
+            if [ ! -f "${TOOL}" ] ; then
+                TOOL=`find $HOME/.wine -name makensis.exe|sed -n 1p`
+            fi
+    
+            if [ -f "${TOOL}" ] ; then
+                cd ${BUILD}/${PLATFORM}
+                $WINE "${TOOL}" "/NOCD" uDigInstallScript.nsi
+                cd ${HERE}
+                cp ${BUILD}/${PLATFORM}/udig-*.exe ${BUILD}/udig-${VERSION}.${EXT}.exe
+            else
+                echo "makensisw.exe cannot be found"
+            fi
+        else 
+            echo "wine is not installed so creating windows installer"
         fi
-
-        if [ -f "${TOOL}" ] ; then
-            cd ${BUILD}/${PLATFORM}
-            $WINE "${TOOL}" "/NOCD" uDigInstallScript.nsi
-            cd ${HERE}
-            cp ${BUILD}/${PLATFORM}/udig-*.exe ${BUILD}/udig-${VERSION}.${EXT}.exe
-        else
-            echo "makensisw.exe cannot be found"
-        fi
-    else 
-        echo "wine is not installed so creating windows installer"
     fi
 }
 
