@@ -114,7 +114,7 @@ public class CoverageLayersTreeViewer extends Composite implements ISelectionCha
         }
     }
 
-    private class MyContentProvider implements ITreeContentProvider {
+    private static class MyContentProvider implements ITreeContentProvider {
         public Object[] getElements( Object arg0 ) {
             return getChildren(arg0);
         }
@@ -144,7 +144,7 @@ public class CoverageLayersTreeViewer extends Composite implements ISelectionCha
         }
     }
 
-    private class MyLabelProvider extends LabelProvider {
+    private static class MyLabelProvider extends LabelProvider {
         public Image getImage( Object arg0 ) {
             return ImageCache.getInstance().getImage(ImageCache.GRID);
         }

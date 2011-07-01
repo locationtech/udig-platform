@@ -188,9 +188,9 @@ public class ModuleDescription {
         return scriptName;
     }
 
-//    public Class< ? > getModuleClass() {
-//        return moduleClass;
-//    }
+    // public Class< ? > getModuleClass() {
+    // return moduleClass;
+    // }
 
     public String getCategory() {
         return category;
@@ -295,13 +295,15 @@ public class ModuleDescription {
         result = prime * result + ((description == null) ? 0 : description.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((inputsList == null) ? 0 : inputsList.hashCode());
-        for( FieldData inData : inputsList ) {
-            result = prime * result + inData.fieldValue.hashCode();
-        }
+        if (inputsList != null)
+            for( FieldData inData : inputsList ) {
+                result = prime * result + inData.fieldValue.hashCode();
+            }
         result = prime * result + ((outputsList == null) ? 0 : outputsList.hashCode());
-        for( FieldData outData : outputsList ) {
-            result = prime * result + outData.fieldValue.hashCode();
-        }
+        if (outputsList != null)
+            for( FieldData outData : outputsList ) {
+                result = prime * result + outData.fieldValue.hashCode();
+            }
         result = prime * result + ((status == null) ? 0 : status.hashCode());
         return Math.abs(result);
     }

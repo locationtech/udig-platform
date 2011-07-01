@@ -232,24 +232,25 @@ public class GuiFilespathListInputField extends ModuleGuiElement implements Modi
                             }
                             if (geoResource != null) {
                                 ID id = geoResource.getID();
-                                if (id.isFile()) {
-                                    File file = id.toFile();
-                                    if (file.exists()) {
-                                        addFileToViewer(file);
-                                        OmsBoxPlugin.getDefault().setLastFolderChosen(file.getParentFile().getAbsolutePath());
+                                if (id != null)
+                                    if (id.isFile()) {
+                                        File file = id.toFile();
+                                        if (file.exists()) {
+                                            addFileToViewer(file);
+                                            OmsBoxPlugin.getDefault().setLastFolderChosen(file.getParentFile().getAbsolutePath());
+                                        }
+                                    } else if (id.toString().contains("#") && id.toString().startsWith("file")) {
+                                        // try to get the file
+                                        String string = id.toString().replaceAll("#", "");
+                                        URL url = new URL(string);
+                                        File file = new File(url.toURI());
+                                        if (file.exists()) {
+                                            addFileToViewer(file);
+                                            OmsBoxPlugin.getDefault().setLastFolderChosen(file.getParentFile().getAbsolutePath());
+                                        }
+                                    } else {
+                                        System.out.println("Not a file: " + id.toString());
                                     }
-                                } else if (id.toString().contains("#") && id.toString().startsWith("file")) {
-                                    // try to get the file
-                                    String string = id.toString().replaceAll("#", "");
-                                    URL url = new URL(string);
-                                    File file = new File(url.toURI());
-                                    if (file.exists()) {
-                                        addFileToViewer(file);
-                                        OmsBoxPlugin.getDefault().setLastFolderChosen(file.getParentFile().getAbsolutePath());
-                                    }
-                                } else {
-                                    System.out.println("Not a file: " + id.toString());
-                                }
                             }
 
                         }

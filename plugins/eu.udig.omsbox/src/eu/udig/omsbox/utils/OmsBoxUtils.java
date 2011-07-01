@@ -158,13 +158,19 @@ public class OmsBoxUtils {
                 InputStream inStream = OmsModulesManager.getInstance().getResourceAsStream(path);
                 // InputStream inStream = moduleClass.getResourceAsStream(documentationStr);
                 if (inStream != null) {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
-                    StringBuilder tmpSb = new StringBuilder();
-                    String line = "";
-                    while( (line = br.readLine()) != null ) {
-                        tmpSb.append(line).append(NEWLINE);
+                    BufferedReader br = null;
+                    try {
+                        br = new BufferedReader(new InputStreamReader(inStream));
+                        StringBuilder tmpSb = new StringBuilder();
+                        String line = "";
+                        while( (line = br.readLine()) != null ) {
+                            tmpSb.append(line).append(NEWLINE);
+                        }
+                        documentationStr = tmpSb.toString();
+                    } finally {
+                        if (br != null)
+                            br.close();
                     }
-                    documentationStr = tmpSb.toString();
                 }
             }
             sb.append("<h2>Description</h2>").append(NEWLINE);

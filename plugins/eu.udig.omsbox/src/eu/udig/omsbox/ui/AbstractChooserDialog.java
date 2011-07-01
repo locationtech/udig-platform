@@ -39,7 +39,7 @@ public abstract class AbstractChooserDialog extends SelectionAdapter {
     private Label visibleLayersLabel = null;
     private Button catalogLayersRadioButton = null;
     private Label catalogLayersLabel = null;
-    private final String CATALOGTYPE = "catalogtype";
+    private static final String CATALOGTYPE = "catalogtype";
     protected final String VISIBLELAYERTYPE = "visiblelayertype";
     protected boolean isCatalogType = false;
     protected Composite checkArea;

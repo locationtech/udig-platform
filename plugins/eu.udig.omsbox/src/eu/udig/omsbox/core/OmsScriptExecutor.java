@@ -22,6 +22,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -244,10 +245,11 @@ public class OmsScriptExecutor {
 
         new Thread(){
             public void run() {
+                BufferedReader br = null;
                 try {
                     InputStream is = process.getInputStream();
                     InputStreamReader isr = new InputStreamReader(is);
-                    BufferedReader br = new BufferedReader(isr);
+                    br = new BufferedReader(isr);
                     String line;
                     while( (line = br.readLine()) != null ) {
                         internalStream.println(line);
@@ -256,6 +258,12 @@ public class OmsScriptExecutor {
                     e.printStackTrace();
                     errorStream.println(e.getLocalizedMessage());
                 } finally {
+                    if (br != null)
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     isRunning = false;
                     updateListeners();
                 }
@@ -268,10 +276,11 @@ public class OmsScriptExecutor {
 
         new Thread(){
             public void run() {
+                BufferedReader br = null;
                 try {
                     InputStream is = process.getErrorStream();
                     InputStreamReader isr = new InputStreamReader(is);
-                    BufferedReader br = new BufferedReader(isr);
+                    br = new BufferedReader(isr);
                     String line;
                     while( (line = br.readLine()) != null ) {
                         /*
@@ -287,6 +296,13 @@ public class OmsScriptExecutor {
                 } catch (Exception e) {
                     e.printStackTrace();
                     errorStream.println(e.getLocalizedMessage());
+                } finally {
+                    if (br != null)
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                 }
             };
         }.start();

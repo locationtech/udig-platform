@@ -215,9 +215,9 @@ public class OmsModulesManager {
             }
             urlList.add(jarFile.toURI().toURL());
         }
-        
+
         URL[] urls = (URL[]) urlList.toArray(new URL[urlList.size()]);
-        
+
         jarClassloader = new URLClassLoader(urls, this.getClass().getClassLoader());
 
         List<Class< ? >> allComponents = new ArrayList<Class< ? >>();
@@ -226,11 +226,10 @@ public class OmsModulesManager {
         } catch (Throwable e) {
             e.printStackTrace();
         }
-        
+
         // clean up html docs in config area, it will be redone
         OmsBoxUtils.cleanModuleDocumentation();
-        
-        
+
         for( Class< ? > moduleClass : allComponents ) {
             try {
                 UI uiHints = moduleClass.getAnnotation(UI.class);
@@ -310,7 +309,8 @@ public class OmsModulesManager {
                 }
 
             } catch (NoClassDefFoundError e) {
-                System.out.println("ERROR IN: " + moduleClass.getCanonicalName());
+                if (moduleClass != null)
+                    System.out.println("ERROR IN: " + moduleClass.getCanonicalName());
                 e.printStackTrace();
             }
         }

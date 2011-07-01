@@ -48,41 +48,42 @@ public class ModuleGuiFactory {
     public List<ModuleGuiElement> createInputGui( FieldData inputData, int[] row ) {
 
         List<ModuleGuiElement> guiElements = new ArrayList<ModuleGuiElement>();
-        if (isAtLeastOneAssignable(inputData.fieldType, String.class)) {
-            if (inputData.guiHints != null && inputData.guiHints.startsWith(OmsBoxConstants.MULTILINE_UI_HINT)) {
-                handleTextArea(inputData, row, guiElements);
-            } else {
+        if (inputData != null)
+            if (isAtLeastOneAssignable(inputData.fieldType, String.class)) {
+                if (inputData.guiHints != null && inputData.guiHints.startsWith(OmsBoxConstants.MULTILINE_UI_HINT)) {
+                    handleTextArea(inputData, row, guiElements);
+                } else {
+                    handleTextField(inputData, row, guiElements);
+                }
+            } else if (isAtLeastOneAssignable(inputData.fieldType, Double.class, double.class)) {
                 handleTextField(inputData, row, guiElements);
-            }
-        } else if (isAtLeastOneAssignable(inputData.fieldType, Double.class, double.class)) {
-            handleTextField(inputData, row, guiElements);
-        } else if (isAtLeastOneAssignable(inputData.fieldType, Float.class, float.class)) {
-            handleTextField(inputData, row, guiElements);
-        } else if (isAtLeastOneAssignable(inputData.fieldType, Integer.class, int.class)) {
-            handleTextField(inputData, row, guiElements);
-        } else if (isAtLeastOneAssignable(inputData.fieldType, Short.class, short.class)) {
-            handleTextField(inputData, row, guiElements);
-        } else if (isAtLeastOneAssignable(inputData.fieldType, Boolean.class, boolean.class)) {
-            handleBooleanField(inputData, row, guiElements);
-        } else if (isAtLeastOneAssignable(inputData.fieldType, GridCoverage2D.class)) {
-            handleGridcoverageInputField(inputData, row, guiElements);
-        } else if (isAtLeastOneAssignable(inputData.fieldType, GridGeometry2D.class)) {
-            handleGridgeometryInputField(inputData, row, guiElements);
-        } else if (isAtLeastOneAssignable(inputData.fieldType, SimpleFeatureCollection.class)) {
-            handleFeatureInputField(inputData, row, guiElements);
-        } else if (isAtLeastOneAssignable(inputData.fieldType, HashMap.class)) {
-            handleHashMapInputField(inputData, row, guiElements);
-        } else if (isAtLeastOneAssignable(inputData.fieldType, List.class)) {
-            if (inputData.guiHints != null && inputData.guiHints.equals(OmsBoxConstants.FILESPATHLIST_UI_HINT)) {
-                handleFilesPathListInputField(inputData, row, guiElements);
+            } else if (isAtLeastOneAssignable(inputData.fieldType, Float.class, float.class)) {
+                handleTextField(inputData, row, guiElements);
+            } else if (isAtLeastOneAssignable(inputData.fieldType, Integer.class, int.class)) {
+                handleTextField(inputData, row, guiElements);
+            } else if (isAtLeastOneAssignable(inputData.fieldType, Short.class, short.class)) {
+                handleTextField(inputData, row, guiElements);
+            } else if (isAtLeastOneAssignable(inputData.fieldType, Boolean.class, boolean.class)) {
+                handleBooleanField(inputData, row, guiElements);
+            } else if (isAtLeastOneAssignable(inputData.fieldType, GridCoverage2D.class)) {
+                handleGridcoverageInputField(inputData, row, guiElements);
+            } else if (isAtLeastOneAssignable(inputData.fieldType, GridGeometry2D.class)) {
+                handleGridgeometryInputField(inputData, row, guiElements);
+            } else if (isAtLeastOneAssignable(inputData.fieldType, SimpleFeatureCollection.class)) {
+                handleFeatureInputField(inputData, row, guiElements);
+            } else if (isAtLeastOneAssignable(inputData.fieldType, HashMap.class)) {
+                handleHashMapInputField(inputData, row, guiElements);
+            } else if (isAtLeastOneAssignable(inputData.fieldType, List.class)) {
+                if (inputData.guiHints != null && inputData.guiHints.equals(OmsBoxConstants.FILESPATHLIST_UI_HINT)) {
+                    handleFilesPathListInputField(inputData, row, guiElements);
+                } else {
+                    handleListInputField(inputData, row, guiElements);
+                }
             } else {
-                handleListInputField(inputData, row, guiElements);
+                if (!inputData.fieldType.endsWith("ProgressMonitor")) {
+                    System.out.println("Skipping input field: " + inputData.fieldType);
+                }
             }
-        } else {
-            if (!inputData.fieldType.endsWith("ProgressMonitor")) {
-                System.out.println("Skipping input field: " + inputData.fieldType);
-            }
-        }
 
         return guiElements;
         // throw new IllegalArgumentException();
@@ -115,7 +116,8 @@ public class ModuleGuiFactory {
         } else if (isAtLeastOneAssignable(outputData.fieldType, List.class)) {
             handleListOutputField(outputData, row, guiElements);
         } else {
-            System.out.println("Skipping output field: " + outputData.fieldType);
+            if (outputData != null)
+                System.out.println("Skipping output field: " + outputData.fieldType);
         }
         return guiElements;
         // throw new IllegalArgumentException();
