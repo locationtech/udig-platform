@@ -40,19 +40,19 @@
 ;General
 
   ;Name and file
-  ;:TODO: Change this with each release of uDIG!
-  Name "uDig 1.2-teradata"
-  OutFile "udig-1.2-teradata.exe"
+  ; The following is changed by win32.sh
+  Name "uDig VersionXXXX"
+  OutFile "udig-VersionXXXX.exe"
   ;:TODO: End of changes required when upgrading installer to new version of uDIG.
 
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\uDig\1.2-teradata"
+  InstallDir "$PROGRAMFILES\uDig\VersionXXXX"
   
   ;Get installation folder from registry if available - This will check the registry to see if an install directory
   ;is present, and if so, replace the value in InstallDir with it.  If there is no value, the installer will fall
   ;back on InstallDir as the default install directory.
-  InstallDirRegKey HKCU "Software\1.2-teradata" ""
+  InstallDirRegKey HKCU "Software\VersionXXXX" ""
 
 ;--------------------------------
 ;Variables
@@ -124,7 +124,7 @@
   ;you like the uDig start menu
   ;Start Menu Folder Page Configuration
   !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU" 
-  !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\uDig1.2-teradata" 
+  !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\uDigVersionXXXX" 
   !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
   
   !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
@@ -162,7 +162,7 @@ Section "uDig Section" SecuDig
   File /r udig
     
   ;Store installation folderh
-  WriteRegStr HKCU "Software\uDig1.2-teradata" "" $INSTDIR
+  WriteRegStr HKCU "Software\uDigVersionXXXX" "" $INSTDIR
   
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -218,7 +218,7 @@ Section "uDig Section" SecuDig
      DONE:
     SetOutPath "$INSTDIR\udig\"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\uDig.lnk" \
-                   "$INSTDIR\udig\udig.bat" "-data $\"%HOMEDRIVE%%HOMEPATH%\uDig\$\" -configuration $\"%APPDATA%\udig\1.2-teradata\$\" -vm $\"$INSTDIR\udig\jre\bin\javaw.exe$\"" \
+                   "$INSTDIR\udig\udig.bat" "-data $\"%HOMEDRIVE%%HOMEPATH%\uDig\$\" -configuration $\"%APPDATA%\udig\VersionXXXX\$\" -vm $\"$INSTDIR\udig\jre\bin\javaw.exe$\"" \
                    "$INSTDIR\udig\icons\32-uDigIcon.ico" 0 SW_SHOWNORMAL
 
     ;Set path back to normal
@@ -270,7 +270,7 @@ Section "Uninstall"
   RMDIR "$INSTDIR\.."
 
   ;REMOVE THE CONFIGURATION DATA 
-  RMDIR /r "$APPDATA\uDig\uDig1.2-teradata"
+  RMDIR /r "$APPDATA\uDig\uDigVersionXXXX"
   ;WILL REMOVE IF THERE ARE NO MORE UDIG INSTALLS
   RMDIR "$APPDATA\uDig"
   
@@ -303,7 +303,7 @@ Section "Uninstall"
     
   RMDIR /r "$SMPROGRAMS\$MUI_TEMP"
 
-  DeleteRegKey /ifempty HKCU "Software\uDig1.2-teradata"
+  DeleteRegKey /ifempty HKCU "Software\uDigVersionXXXX"
 
 SectionEnd
 

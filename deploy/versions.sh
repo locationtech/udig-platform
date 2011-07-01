@@ -5,6 +5,7 @@ export COPYFILE_DISABLE=true
 export BASE=`dirname $0`
 
 # Release Configuration
+export INSTALLER=${BASE}/installer
 export TARGET=${BASE}/target
 export VERSION=1.2-SNAPSHOT
 export BUILD=${BASE}/build
