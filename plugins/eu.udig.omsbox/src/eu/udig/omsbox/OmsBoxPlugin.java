@@ -225,24 +225,29 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
             // add this plugins classes
             Bundle omsBundle = Platform.getBundle(OmsBoxPlugin.PLUGIN_ID);
             String pluginPath = getPath(omsBundle, "/");
-            sb.append(pluginPath);
-            sb.append(File.pathSeparator);
-            sb.append(pluginPath + File.separator + "bin");
-
+            if (pluginPath != null) {
+                sb.append(pluginPath);
+                sb.append(File.pathSeparator);
+                sb.append(pluginPath + File.separator + "bin");
+            }
             // add udig libs
             Bundle udigLibsBundle = Platform.getBundle(Activator.ID);
             String udigLibsFolderPath = getPath(udigLibsBundle, "lib");
-            sb.append(File.pathSeparator);
-            sb.append(udigLibsFolderPath);
-            sb.append(File.separator);
-            sb.append("*");
+            if (udigLibsFolderPath != null) {
+                sb.append(File.pathSeparator);
+                sb.append(udigLibsFolderPath);
+                sb.append(File.separator);
+                sb.append("*");
+            }
 
             // add this plugins libs
             String libsFolderPath = getPath(omsBundle, "libs");
-            sb.append(File.pathSeparator);
-            sb.append(libsFolderPath);
-            sb.append(File.separator);
-            sb.append("*");
+            if (libsFolderPath   != null) {
+                sb.append(File.pathSeparator);
+                sb.append(libsFolderPath);
+                sb.append(File.separator);
+                sb.append("*");
+            }
 
             // add loaded jars
             String[] retrieveSavedJars = retrieveSavedJars();
@@ -298,6 +303,9 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     private String getPath( Bundle omsBundle, String path ) throws IOException {
         URL entry = omsBundle.getEntry(path);
+        if (entry == null) {
+            return null;
+        }
         URL resolvedURL = FileLocator.resolve(entry);
         File file = new File(resolvedURL.getFile());
         return file.getAbsolutePath();
