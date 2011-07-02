@@ -237,10 +237,10 @@ GNU Lesser General Public License for more details.
          unpack="false"/>
 
    <plugin
-         id="eu.udig.imagegeoreferencing"
+         id="eu.udig.omsbox"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
+         unpack="true"/>
 
 </feature>
