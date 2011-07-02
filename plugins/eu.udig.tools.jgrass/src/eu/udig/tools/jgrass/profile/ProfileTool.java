@@ -210,13 +210,11 @@ public class ProfileTool extends SimpleTool {
     }
 
     public void setActive( boolean active ) {
-        
+
         if (!active) {
             // on tool deactivation
             rasterMapResource = null;
-            if (command != null)
-                command.setValid(false);
-            return;
+            disposeCommand();
         } else {
             // on tool activation
             final ILayer selectedLayer = getContext().getSelectedLayer();
