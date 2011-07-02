@@ -198,7 +198,7 @@
 			<dependency groupId="com.sun" artifactId="tools" version="1.6.0" scope="system" systemPath="${java.home}/../lib/tools.jar"/>
 			<dependency groupId="org.codehaus.groovy" artifactId="groovy-all" version="1.7.1" />
 			<dependency groupId="com.sun.jna" artifactId="jna" version="3.0.9" />
-			<dependency groupId="org.jgrasstools" artifactId="jgt-oms3" version="0.8.0-SNAPSHOT" />
+			<dependency groupId="org.jgrasstools" artifactId="jgt-oms3" version="0.7.1" />
 			<dependency groupId="javassist" artifactId="javassist" version="3.8.0.GA" />
 			<dependency groupId="net.sf.scannotation" artifactId="scannotation" version="1.0.2" scope="provided" />
 			<dependency groupId="jline" artifactId="jline" version="0.9.94" scope="provided" />

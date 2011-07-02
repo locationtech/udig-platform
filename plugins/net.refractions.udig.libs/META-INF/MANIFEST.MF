@@ -164,7 +164,7 @@ Bundle-ClassPath: library.jar,
  lib/groovy-all-1.7.1.jar,
  lib/javassist-3.8.0.GA.jar,
  lib/jna-3.0.9.jar,
- lib/jgt-oms3-0.8.0-SNAPSHOT.jar
+ lib/jgt-oms3-0.7.1.jar
 Export-Package: .,
  antlr,
  antlr.ASdebug,
