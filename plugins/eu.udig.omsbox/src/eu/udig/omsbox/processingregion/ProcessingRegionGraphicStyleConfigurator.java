@@ -374,12 +374,16 @@ public class ProcessingRegionGraphicStyleConfigurator extends IStyleConfigurator
                 if (layer instanceof IGeoResource) {
                     IGeoResource geoResource = (IGeoResource) layer;
                     try {
-                        if (geoResource.canResolve(GridCoverage.class)) {
+                        GridGeometry2D gridGeometry = null;
+                        if (geoResource.canResolve(GridGeometry2D.class)) {
+                            gridGeometry = geoResource.resolve(GridGeometry2D.class, new NullProgressMonitor());
+                        } else if (geoResource.canResolve(GridCoverage.class)) {
                             GridCoverage2D gridCoverage = (GridCoverage2D) geoResource.resolve(GridCoverage.class,
                                     new NullProgressMonitor());
-                            GridGeometry2D gridGeometry = gridCoverage.getGridGeometry();
-                            setWidgetsToWindow(OmsBoxUtils.gridGeometry2ProcessingRegion(gridGeometry));
+                            gridGeometry = gridCoverage.getGridGeometry();
                         }
+                        if (gridGeometry != null)
+                            setWidgetsToWindow(OmsBoxUtils.gridGeometry2ProcessingRegion(gridGeometry));
 
                     } catch (IOException e1) {
                         return;
