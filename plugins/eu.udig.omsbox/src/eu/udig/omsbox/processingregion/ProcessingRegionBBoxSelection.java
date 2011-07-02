@@ -76,7 +76,7 @@ public class ProcessingRegionBBoxSelection extends SimpleTool implements ModalTo
                 Coordinate c1 = context.getMap().getViewportModel().pixelToWorld(start.x, start.y);
                 Coordinate c2 = context.getMap().getViewportModel().pixelToWorld(end.x, end.y);
 
-                Envelope bounds = new Envelope(c1, c2);
+                Envelope newRegionBounds = new Envelope(c1, c2);
 
                 ILayer processingRegionLayer = OmsBoxPlugin.getDefault().getProcessingRegionMapGraphic();
                 IStyleBlackboard blackboard = processingRegionLayer.getStyleBlackboard();
@@ -86,7 +86,7 @@ public class ProcessingRegionBBoxSelection extends SimpleTool implements ModalTo
                 }
                 ProcessingRegion processinRegion = new ProcessingRegion(style.west, style.east, style.south, style.north, style.rows,
                         style.cols);
-                ProcessingRegion newProcessingRegion = ProcessingRegion.adaptActiveRegionToEnvelope(bounds, processinRegion);
+                ProcessingRegion newProcessingRegion = ProcessingRegion.adaptActiveRegionToEnvelope(newRegionBounds, processinRegion);
 
                 style.north = (float) newProcessingRegion.getNorth();
                 style.south = (float) newProcessingRegion.getSouth();
@@ -99,7 +99,7 @@ public class ProcessingRegionBBoxSelection extends SimpleTool implements ModalTo
 
                 processingRegionLayer.refresh(null);
 
-                sendSelectionCommand(e, bounds);
+                sendSelectionCommand(e, newRegionBounds);
             }
         }
     }

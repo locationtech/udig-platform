@@ -393,8 +393,29 @@ public class ProcessingRegion {
      *         region grid.
      */
     public static ProcessingRegion adaptActiveRegionToEnvelope( Envelope sourceEnvelope, ProcessingRegion sourceRegion ) {
-        ProcessingRegion newRegion = new ProcessingRegion(sourceEnvelope.getMinX(), sourceEnvelope.getMaxX(),
-                sourceEnvelope.getMinY(), sourceEnvelope.getMaxY(), sourceRegion.getRows(), sourceRegion.getCols());
+
+        double originalXres = sourceRegion.getNSResolution();
+        double originalYres = sourceRegion.getWEResolution();
+
+        double newWest = sourceEnvelope.getMinX();
+        double deltaX = newWest % originalXres;
+        newWest = newWest - deltaX;
+
+        double newSouth = sourceEnvelope.getMinY();
+        double deltaY = newSouth % originalYres;
+        newSouth = newSouth - deltaY;
+
+        double newWidth = sourceEnvelope.getWidth();
+        double deltaW = newWidth % originalXres;
+        newWidth = newWidth - deltaW + originalXres;
+
+        double newHeight = sourceEnvelope.getHeight();
+        double deltaH = newHeight % originalYres;
+        newHeight = newHeight - deltaH + originalYres;
+
+        ProcessingRegion newRegion = new ProcessingRegion(newWest, newWest + newWidth, newSouth, newSouth + newHeight,
+                originalXres, originalYres);
+
         return newRegion;
     }
 
