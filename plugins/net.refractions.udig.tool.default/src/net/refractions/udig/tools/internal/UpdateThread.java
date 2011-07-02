@@ -55,7 +55,6 @@ public class UpdateThread implements Runnable {
     /**
      * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
      */
-    @Override
     public final void run() {
         synchronized (UpdateThread.class) {
             if (thread != Thread.currentThread())
