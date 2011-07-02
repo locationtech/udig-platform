@@ -5,7 +5,7 @@
          point="org.eclipse.ui.views">
       <category
             id="eu.udig.omsbox.category"
-            name="Oms">
+            name="Spatial Toolbox">
       </category>
       <view
             allowMultiple="false"
@@ -14,7 +14,7 @@
             fastViewWidthRatio="0.30"
             icon="icons/blocks.gif"
             id="eu.udig.omsbox.view.OmsBoxView"
-            name="Oms Box"
+            name="Spatial Toolbox"
             restorable="true">
       </view>
    </extension>
