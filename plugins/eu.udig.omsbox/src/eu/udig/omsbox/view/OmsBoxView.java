@@ -97,13 +97,22 @@ public class OmsBoxView extends ViewPart {
         mainComposite.setLayout(mainLayout);
         mainComposite.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
 
-        Group modulesGroup = new Group(mainComposite, SWT.BORDER);
+        Composite modulesComposite = new Composite(mainComposite, SWT.NONE);
         GridData modulesGroupGD = new GridData(SWT.FILL, SWT.FILL, true, true);
-        modulesGroup.setLayoutData(modulesGroupGD);
-        modulesGroup.setLayout(new GridLayout(3, true));
-        modulesGroup.setText(Messages.OmsBoxView_Modules);
-
-        Composite modulesListComposite = new Composite(modulesGroup, SWT.NONE);
+        modulesComposite.setLayoutData(modulesGroupGD);
+        GridLayout modulesCompositeLayout = new GridLayout(3, true);
+        modulesCompositeLayout.marginWidth = 0;
+        modulesComposite.setLayout(modulesCompositeLayout);
+        
+        Label modulesLabel = new Label(modulesComposite, SWT.NONE);
+        modulesLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        modulesLabel.setText(Messages.OmsBoxView_Modules);
+        Label dummyLabel = new Label(modulesComposite, SWT.NONE);
+        GridData dummyLabelGD = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
+        dummyLabelGD.horizontalSpan = 2;
+        dummyLabel.setLayoutData(dummyLabelGD);
+        
+        Composite modulesListComposite = new Composite(modulesComposite, SWT.NONE);
         modulesListComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         modulesListComposite.setLayout(new GridLayout(1, false));
 
@@ -114,7 +123,7 @@ public class OmsBoxView extends ViewPart {
         addFilterButtons(modulesListComposite);
         addQuickSettings(modulesListComposite);
 
-        modulesGuiComposite = new Composite(modulesGroup, SWT.BORDER);
+        modulesGuiComposite = new Composite(modulesComposite, SWT.BORDER);
         modulesGuiStackLayout = new StackLayout();
         modulesGuiComposite.setLayout(modulesGuiStackLayout);
         GridData modulesGuiCompositeGD = new GridData(SWT.FILL, SWT.FILL, true, true);
