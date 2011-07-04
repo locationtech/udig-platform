@@ -20,7 +20,7 @@
                </cursor>
            <enablement>
               <adaptsTo
-                    target="org.geotools.coverage.grid.io.AbstractGridCoverage2DReader">
+                    target="org.opengis.coverage.grid.GridCoverage">
               </adaptsTo>
            </enablement>
       </modalTool>

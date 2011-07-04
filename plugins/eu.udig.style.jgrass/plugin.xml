@@ -25,6 +25,7 @@
             requires="eu.udig.style.jgrass.legend.RasterLegendGraphic"
             styleId="eu.udig.style.jgrass.legend.rasterlegendStyle">
       </styleConfigurator>
+      <!--
       <styleConfigurator
             class="eu.udig.style.jgrass.legend.VectorLegendGraphicStyleConfigurator"
             id="jgrassvectorlegend"
@@ -32,6 +33,7 @@
             requires="eu.udig.style.jgrass.legend.VectorLegendGraphic"
             styleId="eu.udig.style.jgrass.legend.vectorlegendStyle">
       </styleConfigurator>
+      -->
    </extension>
    <extension
          point="net.refractions.udig.project.style">
@@ -54,12 +56,14 @@
             id="jgrassrasterlegend"
             name="%legend.name">
       </mapGraphic>
+      <!--
       <mapGraphic
             class="eu.udig.style.jgrass.legend.VectorLegendGraphic"
             icon="icons/vectorlegend.gif"
             id="jgrassvectorlegend"
             name="JGrass Vector Legend">
       </mapGraphic>
+      -->
    </extension>
    <extension
          point="net.refractions.udig.project.ui.tool">

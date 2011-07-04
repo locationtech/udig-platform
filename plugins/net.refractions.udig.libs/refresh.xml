@@ -106,11 +106,11 @@
 
 			<!-- stuff for jgrass contributions -->
 			<dependency groupId="org.geotools" artifactId="gt-temporal" version="${geotools.version}" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-streams" version="1.1-RC1" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf-core" version="1.1-RC1" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf" version="1.1-RC1" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-utilities" version="1.1-RC1" />
-			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-geocore" version="1.1-RC1" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-streams" version="1.1.0" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf-core" version="1.1.0" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf" version="1.1.0" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-utilities" version="1.1.0" />
+			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-geocore" version="1.1.0" />
 			<dependency groupId="opendap" artifactId="opendap" version="2.1" />
 			<dependency groupId="org.geotools" artifactId="gt-grassraster" version="${geotools.version}" />
             <!--
@@ -188,9 +188,25 @@
 			<dependency groupId="com.miglayout" artifactId="miglayout" version="3.7" classifier="swing" scope="provided" />
 			
 			<!-- Jaitools deps -->
-			<dependency groupId="com.googlecode.jaitools" artifactId="jt-all" version="1.1.1" />
-			<dependency groupId="com.googlecode.jaitools" artifactId="jt-jiffle-language" version="0.1.0" />
+			<dependency groupId="org.jaitools" artifactId="jt-all" version="1.2.0" />
+			<dependency groupId="org.jaitools" artifactId="jt-jiffle-language" version="0.2.0" />
+			<dependency groupId="org.jaitools" artifactId="jt-utils" version="1.2.0" scope="provided" />
+			<dependency groupId="org.jaitools" artifactId="jt-vectorbinarize" version="1.2.0" scope="provided" />
+			<dependency groupId="org.jaitools" artifactId="jt-zonalstats" version="1.2.0" scope="provided" />
+			
+			<!-- omsbox dependencies -->
+			<dependency groupId="com.sun" artifactId="tools" version="1.6.0" scope="system" systemPath="${java.home}/../lib/tools.jar"/>
+			<dependency groupId="org.codehaus.groovy" artifactId="groovy-all" version="1.7.1" />
+			<dependency groupId="com.sun.jna" artifactId="jna" version="3.0.9" />
+			<dependency groupId="org.jgrasstools" artifactId="jgt-oms3" version="0.7.1" />
+			<dependency groupId="javassist" artifactId="javassist" version="3.8.0.GA" />
+			<dependency groupId="net.sf.scannotation" artifactId="scannotation" version="1.0.2" scope="provided" />
+			<dependency groupId="jline" artifactId="jline" version="0.9.94" scope="provided" />
+			<dependency groupId="org.fusesource.jansi" artifactId="jansi" version="1.1" scope="provided" />
+			
 		</artifact:dependencies>
+		<!-- compiler needed for omsbox, needs to be in the plugins folder, but *NOT* on the classpath  -->
+		<get src="http://udig.refractions.net/files/downloads/jre/tools_1.6.0_25.jar" dest="${lib}/tools_1.6.0_25.jar"/>
 	</target>
 
 	<target name="print" depends="load_m2_deps,teradata-print">
