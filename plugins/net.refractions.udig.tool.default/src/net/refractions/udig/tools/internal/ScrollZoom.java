@@ -51,7 +51,7 @@ public class ScrollZoom extends AbstractTool {
     public void mouseWheelMoved(MapMouseWheelEvent e) {
         if( e.modifiersDown() )
             return;
-        UpdateThread.getUpdater().zoomWithFixedPoint(e.clickCount * 3, getContext(), 500,
+        NavigationUpdateThread.getUpdater().zoomWithFixedPoint(e.clickCount * 3, getContext(), NavigationUpdateThread.DEFAULT_DELAY,
                 e.getPoint());
     }
 
@@ -72,7 +72,7 @@ public class ScrollZoom extends AbstractTool {
             distance += (start - e.x);
 
             if ((distance >= INTERVAL) || (distance <= -INTERVAL)) {
-                UpdateThread.getUpdater().zoom(10*(distance > 0?1:-1), getContext(), 300);
+                NavigationUpdateThread.getUpdater().zoom(10*(distance > 0?1:-1), getContext(), 300);
                 distance = 0;
                 start = e.x;
             }

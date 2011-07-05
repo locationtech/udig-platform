@@ -11,7 +11,6 @@ package net.refractions.udig.project.render;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
-import java.util.List;
 import java.util.SortedSet;
 
 import net.refractions.udig.project.IMap;
@@ -167,14 +166,25 @@ public interface IViewportModel {
 	  */
 	public double getScaleDenominator();
 
+    /**
+     * The default preferred scale denominator.  if getDefaultPreferredScaleDenominators == getPreferredScaleDenominators then
+     * defaults are being used and should only be treated as hints
+     */
+    public SortedSet<Double> getDefaultPreferredScaleDenominators();
+    
 	/**
-	 * List of preferred scale denominators for the map.
-	 * <p>
-	 * This set is used to provide good options for a user to change the scale; or to support
-	 * the creation of "fixed" zoom in and zoom out tools.
-	 * 
-	 * @see getScaleDEnominator for a definition of scale denominator
-	 * @return List of preferred scale denominator values for the map
+     * List of preferred scale denominators for the map.
+     * <p>
+     * This set is used to provide good options for a user to change the scale
+     * </p>
+     * <p>
+     * The values will always be present but if the object returned by {@link #getDefaultPreferredScaleDenominators()} and this method
+     * are the same <em>instance</em> then they are simply defaults and can be ignored if desired.  However if they are not the same
+     * then assume that the values are only hints and can be ignored
+     * </p>
+     * 
+     * @see getScaleDEnominator for a definition of scale denominator
+     * @return List of preferred scale denominator values for the map
 	 */
 	public SortedSet<Double> getPreferredScaleDenominators();
 	

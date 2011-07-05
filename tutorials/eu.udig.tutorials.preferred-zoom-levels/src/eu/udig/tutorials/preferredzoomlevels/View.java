@@ -36,6 +36,9 @@ public class View extends DefaultMapViewPart {
 		scales.add(10000.0);
 		scales.add(100000.0);
 		scales.add(1000000.0);
+		scales.add(10000000.0);
+		scales.add(100000000.0);
+		scales.add(1000000000.0);
 		createdMap.getViewportModelInternal().setPreferredScaleDenominators(scales);
 		super.initMap(createdMap);
 	}

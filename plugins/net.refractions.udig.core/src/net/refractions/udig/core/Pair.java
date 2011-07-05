@@ -73,6 +73,11 @@ public class Pair<T,V> {
     }
 
     @Override
+    public String toString() {
+    	return "Pair("+left+", "+right+")";
+    }
+    
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
