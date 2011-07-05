@@ -101,7 +101,8 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="net.refractions.udig.ui.application"
-            name="uDig SDK">
+            description="User-friendly Desktop Internet GIS"
+            name="uDig">
          <property
                name="appName"
                value="uDig SDK">

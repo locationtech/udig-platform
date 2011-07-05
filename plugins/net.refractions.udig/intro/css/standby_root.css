@@ -26,10 +26,10 @@ body {
 	min-width : 230px;
 	/* since IE doesn't support min-width, use expression */
 	width:expression(document.body.clientWidth < 230? "230px": "auto" );
-	background-image : url(graphics/UDIG_WelcomeScreen_small.jpg);
+	background-image : url(graphics/Landscape.jpg);
 	background-repeat : no-repeat;
-	background-position : top left;
-	background-color : #7169D1;
+	background-position : bottom center;
+	background-color : #FFFFFF;
 }
 
 .page { 
@@ -47,7 +47,7 @@ body {
  */
 
 #links-background { 
-	width : 280; 
+	width : 200; 
  	margin-top : 10%; 
 	margin-bottom : auto;
 	text-align : center;
@@ -55,7 +55,7 @@ body {
 
 #page-links a {
 	display : block;
-	width : 220px;
+	width : 200px;
 	text-align : left; 
 	margin-left : auto;
 	margin-right : auto;
