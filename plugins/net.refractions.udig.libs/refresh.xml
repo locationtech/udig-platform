@@ -105,7 +105,6 @@
 			<dependency groupId="joda-time" artifactId="joda-time" version="1.6" />
 
 			<!-- stuff for jgrass contributions -->
-			<dependency groupId="org.geotools" artifactId="gt-temporal" version="${geotools.version}" />
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-streams" version="1.1.0" />
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf-core" version="1.1.0" />
 			<dependency groupId="it.geosolutions.imageio-ext" artifactId="imageio-ext-netcdf" version="1.1.0" />
@@ -205,8 +204,6 @@
 			<dependency groupId="org.fusesource.jansi" artifactId="jansi" version="1.1" scope="provided" />
 			
 		</artifact:dependencies>
-		<!-- compiler needed for omsbox, needs to be in the plugins folder, but *NOT* on the classpath  -->
-		<get src="http://udig.refractions.net/files/downloads/jre/tools_1.6.0_25.jar" dest="${lib}/tools_1.6.0_25.jar"/>
 	</target>
 
 	<target name="print" depends="load_m2_deps,teradata-print">
@@ -240,6 +237,9 @@
 			<fileset refid="dependency.fileset" />
 		</copy>
 
+		<!-- compiler needed for omsbox, needs to be in the plugins folder, but *NOT* on the classpath  -->
+		<get dest="${lib}/tools_1.6.0_25.jar" src="http://udig.refractions.net/files/downloads/jre/tools_1.6.0_25.jar"/>
+		
 		<!-- (flat) copy downloaded source JARs (sources) to plugin directory ${libs_src_dir} -->
 		<!--
 		<copy todir="${libs_src_dir}" flatten="true" verbose="true">
