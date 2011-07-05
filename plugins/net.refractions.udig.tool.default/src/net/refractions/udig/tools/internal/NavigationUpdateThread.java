@@ -18,7 +18,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.internal.command.navigation.NavComposite;
 import net.refractions.udig.project.internal.command.navigation.PanCommand;
 import net.refractions.udig.project.internal.command.navigation.ZoomCommand;
@@ -33,7 +32,7 @@ import com.vividsolutions.jts.geom.Coordinate;
  * @author Jesse
  * @since 1.1.0
  */
-public class UpdateThread implements Runnable {
+public class NavigationUpdateThread implements Runnable {
 
     private static final int PAN_AMOUNT = 30;
     private static final double FACTOR = 1.01;
@@ -41,27 +40,28 @@ public class UpdateThread implements Runnable {
     private static Thread thread;
 
     private static TransformDrawCommand command;
-    private static final UpdateThread updater=new UpdateThread();
-    private final NavigationCommandFactory factory = NavigationCommandFactory.getInstance();
-    int amount = 0;
+    private static final NavigationUpdateThread updater=new NavigationUpdateThread();
+	public static final int DEFAULT_DELAY = 1000;
+    int zoomAmount = 0;
     private int vertical=0;
     private int horizontal=0;
     private IToolContext context;
 	private volatile long updateDelay = 1000;
     private Coordinate fixedPoint;
+	private double previousZoom = 1.0;
     
-    private UpdateThread(){}
+    private NavigationUpdateThread(){}
     
     /**
      * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
      */
     public final void run() {
-        synchronized (UpdateThread.class) {
+        synchronized (NavigationUpdateThread.class) {
             if (thread != Thread.currentThread())
                 return;
         }
         while( getElapsedTimeSinceLastRequest() < updateDelay  ) {
-            synchronized (UpdateThread.class) {
+            synchronized (NavigationUpdateThread.class) {
                 if (thread != Thread.currentThread())
                     return;
             }
@@ -69,7 +69,7 @@ public class UpdateThread implements Runnable {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 ToolsPlugin.log("", e); //$NON-NLS-1$
-                synchronized (UpdateThread.class) {
+                synchronized (NavigationUpdateThread.class) {
                     if (thread != Thread.currentThread())
                         return;
                     thread = null;
@@ -78,7 +78,7 @@ public class UpdateThread implements Runnable {
                 return;
             }
         }
-        synchronized (UpdateThread.class) {
+        synchronized (NavigationUpdateThread.class) {
             if (thread != Thread.currentThread())
                 return;
             thread = null;
@@ -95,7 +95,7 @@ public class UpdateThread implements Runnable {
 
     public synchronized void requestStart() {
         request = System.currentTimeMillis();
-        synchronized (UpdateThread.class) {
+        synchronized (NavigationUpdateThread.class) {
             if (thread == null) {
                 thread = new Thread(this);
                 thread.setName(Messages.ScrollZoom_scroll_zoom); 
@@ -123,7 +123,7 @@ public class UpdateThread implements Runnable {
     }
     
     private void update(IToolContext context, int updateDelay2) {
-        synchronized (UpdateThread.class) {
+        synchronized (NavigationUpdateThread.class) {
         	this.updateDelay = updateDelay2;
             this.context=context;
             if (command == null) {
@@ -147,12 +147,12 @@ public class UpdateThread implements Runnable {
      */
     public void zoomWithFixedPoint( int change, IToolContext context, int updateDelay,
             Point fixedPoint ) {
-        amount += change;
-        this.updateDelay = updateDelay;
 
-        double zoom = Math.abs(Math.pow(FACTOR, amount));
+    	double zoomChange = Math.abs(Math.pow(FACTOR, change));
 
-        synchronized (UpdateThread.class) {
+        synchronized (NavigationUpdateThread.class) {
+        	this.updateDelay = updateDelay;
+        	double targetZoom;
             if (command == null) {
                 TransformDrawCommand transformDrawCommand = new TransformDrawCommand();
                 command = transformDrawCommand;
@@ -162,11 +162,21 @@ public class UpdateThread implements Runnable {
                 }
                 transformDrawCommand.fixPoint(fixedPoint);
                 this.fixedPoint = context.pixelToWorld(fixedPoint.x, fixedPoint.y);
-                transformDrawCommand.zoom(zoom, zoom);
-                context.sendASyncCommand(transformDrawCommand);
+                targetZoom = context.calculateZoomLevel(previousZoom, zoomChange,this.fixedPoint,false, change != 0);
+                if(Math.abs(targetZoom - previousZoom) > 0.0001) {
+                	transformDrawCommand.zoom(targetZoom, targetZoom);
+                	context.sendASyncCommand(transformDrawCommand);
+                }
             } else {
-                command.zoom(zoom, zoom);
-                context.getViewportPane().repaint();
+				targetZoom = context.calculateZoomLevel(previousZoom,zoomChange,this.fixedPoint,false, change != 0);
+                command.zoom(targetZoom, targetZoom);
+                if(Math.abs(targetZoom - previousZoom) > 0.0001) {
+                	context.getViewportPane().repaint();
+                }
+            }
+            if(Math.abs(targetZoom - previousZoom) > 0.0001) {
+                zoomAmount += change;
+                this.previousZoom = targetZoom;
             }
         }
 
@@ -175,16 +185,16 @@ public class UpdateThread implements Runnable {
         requestStart();
     }
 
-    protected synchronized void performChange() {
-        
-        double zoom = Math.abs(Math.pow(FACTOR, amount));
+	protected synchronized void performChange() {
+        double zoom = Math.abs(Math.pow(FACTOR, previousZoom));
         ArrayList<NavCommand> commands=new ArrayList<NavCommand>();
         if( horizontal!=0 || vertical!=0 ){
             commands.add(
                     new PanCommand((horizontal*-PAN_AMOUNT), (vertical*-PAN_AMOUNT)));
         }
         if( zoom>0.00000001 ){
-            ZoomCommand zoomCommand = new ZoomCommand(zoom);
+        	double targetZoom = context.calculateZoomLevel(1,previousZoom, fixedPoint, false, zoomAmount != 0);
+            ZoomCommand zoomCommand = new ZoomCommand(previousZoom);
             zoomCommand.setFixedPoint(fixedPoint);
             commands.add(zoomCommand);
         }
@@ -192,7 +202,8 @@ public class UpdateThread implements Runnable {
             NavComposite composite = new NavComposite(commands);
 			context.sendASyncCommand( composite );
         }
-        amount=0;
+        previousZoom = 1.0;
+        zoomAmount=0;
         if( command!=null ){
             command.setValid(false);
         }
@@ -202,20 +213,26 @@ public class UpdateThread implements Runnable {
     }
 
     protected void cancel() {
-        amount=0;
-        if( command!=null ){
-            command.setValid(false);
-        }
-        command=null;
-        horizontal=0;
-        vertical=0;
-        context.getViewportPane().repaint();
+    	if(context != null) {
+            zoomAmount=0;
+            previousZoom=1.0;
+	        boolean requireUpdate = false;
+			if( command!=null ) {
+	        	requireUpdate  = true;
+	            command.setValid(false);
+	        }
+	        command=null;
+	        horizontal=0;
+	        vertical=0;
+	        if(context.getViewportPane() !=null && requireUpdate)
+	        	context.getViewportPane().repaint();
+    	}
     }
     
     /**
      * @return Returns the updater.
      */
-    public static UpdateThread getUpdater() {
+    public static NavigationUpdateThread getUpdater() {
         return updater;
     }
 

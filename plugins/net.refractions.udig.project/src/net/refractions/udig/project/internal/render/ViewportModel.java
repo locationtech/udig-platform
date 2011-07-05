@@ -10,7 +10,6 @@ package net.refractions.udig.project.internal.render;
 
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
-import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -80,8 +79,13 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     /**
      * List of preferred scale denominators for the map.
      * <p>
-     * This set is used to provide good options for a user to change the scale; or to support
-     * the creation of "fixed" zoom in and zoom out tools.
+     * This set is used to provide good options for a user to change the scale
+     * </p>
+     * <p>
+     * The values will always be present but if the object returned by {@link #getDefaultPreferredScaleDenominators()} and this method
+     * are the same <em>instance</em> then they are simply defaults and can be ignored if desired.  However if they are not the same
+     * then assume that the values are only hints and can be ignored
+     * </p>
      * 
      * @see getScaleDEnominator for a definition of scale denominator
      * @return List of preferred scale denominator values for the map

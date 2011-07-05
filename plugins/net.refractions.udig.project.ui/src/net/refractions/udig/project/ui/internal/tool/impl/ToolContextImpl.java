@@ -7,6 +7,9 @@
 package net.refractions.udig.project.ui.internal.tool.impl;
 
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.refractions.udig.project.command.Command;
 import net.refractions.udig.project.command.EditCommand;
@@ -18,6 +21,9 @@ import net.refractions.udig.project.command.factory.NavigationCommandFactory;
 import net.refractions.udig.project.command.factory.SelectionCommandFactory;
 import net.refractions.udig.project.internal.impl.AbstractContextImpl;
 import net.refractions.udig.project.internal.render.RenderManager;
+import net.refractions.udig.project.internal.render.ViewportModel;
+import net.refractions.udig.project.internal.render.impl.ScaleUtils;
+import net.refractions.udig.project.internal.render.impl.ScaleUtils.CalculateZoomLevelParameter;
 import net.refractions.udig.project.ui.commands.DrawCommandFactory;
 import net.refractions.udig.project.ui.commands.IDrawCommand;
 import net.refractions.udig.project.ui.internal.MapPart;
@@ -43,6 +49,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.services.IServiceLocator;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+
+import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * <p>
@@ -68,11 +77,9 @@ import org.eclipse.ui.services.IServiceLocator;
 public class ToolContextImpl extends AbstractContextImpl implements ToolContext {
 
     private final class IActionBars2Adapter implements IActionBars2 {
-		private final IViewPart view;
 		IActionBars bars;
 
 		private IActionBars2Adapter(IViewPart view) {
-			this.view = view;
 			bars = view.getViewSite().getActionBars();
 		}
 
@@ -303,4 +310,9 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
     public ToolContextImpl copy() {
         return new ToolContextImpl(this);
     }
+	public double calculateZoomLevel(double previousZoom, double zoom, Coordinate fixedPoint,
+			boolean alwayUsePreferredZoomLevels, boolean alwaysChangeZoom) {
+		return ScaleUtils.calculateZoomLevel(new CalculateZoomLevelParameter(getViewportModelInternal(), getViewportPane(), previousZoom, zoom, fixedPoint,
+				alwayUsePreferredZoomLevels, alwaysChangeZoom));
+	}
 } // Impl
