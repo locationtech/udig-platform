@@ -37,7 +37,7 @@ public class PanHandler extends AbstractHandler implements IToolHandler {
     private static final String RIGHT = "net.refractions.udig.tools.panRightCommand"; //$NON-NLS-1$
     private static final String UP = "net.refractions.udig.tools.panUpCommand"; //$NON-NLS-1$
     private static final String DOWN = "net.refractions.udig.tools.panDownCommand"; //$NON-NLS-1$
-    private static UpdateThread PANNER=UpdateThread.getUpdater();
+    private static NavigationUpdateThread PANNER=NavigationUpdateThread.getUpdater();
     
     public void setTool( Tool tool ) {
         TOOL=(Pan) tool;

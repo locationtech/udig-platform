@@ -21,7 +21,7 @@ import java.awt.geom.AffineTransform;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * Tranforms the Viewport's graphics current transform.
+ * Transforms the Viewport's graphics current transform.
  * 
  * @author Jesse
  * @since 1.1.0

@@ -6,9 +6,7 @@ package net.refractions.udig.project.internal.render.impl;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
@@ -19,11 +17,11 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.render.RenderFactory;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.render.RenderManager;
 import net.refractions.udig.project.internal.render.RenderPackage;
 import net.refractions.udig.project.internal.render.ViewportModel;
+import net.refractions.udig.project.internal.render.impl.ScaleUtils.CalculateZoomLevelParameter;
 import net.refractions.udig.project.preferences.PreferenceConstants;
 import net.refractions.udig.project.render.IViewportModelListener;
 import net.refractions.udig.project.render.ViewportModelEvent;
@@ -36,8 +34,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -48,9 +44,9 @@ import org.eclipse.swt.widgets.Display;
 import org.geotools.geometry.DirectPosition2D;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.joda.time.DateTime;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
+import org.joda.time.DateTime;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.FactoryException;
@@ -187,6 +183,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @ordered
      */
     protected SortedSet<Double> preferredScaleDenominators;
+    
+    private SortedSet<Double> defaultScaleDenominators = null;
 
     /**
      * The cached value of the '{@link #getAvailableTimesteps() <em>Available Timesteps</em>}' attribute list.
@@ -253,7 +251,6 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
-    @SuppressWarnings("unchecked")
     protected ViewportModelImpl() {
     }
 
@@ -382,11 +379,26 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @uml.property name="bounds"
      * @generated NOT
      */
-    public void setBounds( Envelope newBounds ) {
+    public void setBounds( Envelope newBounds) {
+    	Envelope finalBounds = newBounds;
+    	if(getDefaultPreferredScaleDenominators() != getPreferredScaleDenominators() && validState()) {
+    		IMapDisplay mapDisplay = getRenderManagerInternal().getMapDisplay();
+    		ReferencedEnvelope referenced;
+			if(newBounds instanceof ReferencedEnvelope) {
+    			referenced = (ReferencedEnvelope) newBounds;
+    		} else {
+    			referenced = new ReferencedEnvelope(newBounds,getCRS());
+    		}
+			double scale = ScaleUtils.calculateScaleDenominator(referenced, mapDisplay.getDisplaySize(), mapDisplay.getDPI());
+			scale = ScaleUtils.calculateClosestScale(getPreferredScaleDenominators(),scale);
+			
+			finalBounds = ScaleUtils.calculateBoundsFromScale(scale, mapDisplay.getDisplaySize(), mapDisplay.getDPI(), referenced);
+    	}
+    	
         Envelope oldBounds = bounds == null ? new Envelope() : bounds;
         if (!getBounds().isNull() && !Double.isNaN(getAspectRatio())
-                && !Double.isNaN(newBounds.getWidth()) && !Double.isNaN(newBounds.getHeight())) {
-            double nRatio = newBounds.getWidth() / newBounds.getHeight();
+                && !Double.isNaN(finalBounds.getWidth()) && !Double.isNaN(finalBounds.getHeight())) {
+            double nRatio = finalBounds.getWidth() / finalBounds.getHeight();
             if (Double.isNaN(nRatio))
                 nRatio = 0.0;
             double dRatio = getAspectRatio();
@@ -396,15 +408,15 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                 // the
                 // x-axis solves the problem.
                 final double arbitraryChange = 2 * 0.0000001;
-                newBounds.init(newBounds.getMinX() - (arbitraryChange),
-                        (newBounds.getMaxX() + arbitraryChange), newBounds.getMinY(), newBounds
+                finalBounds.init(finalBounds.getMinX() - (arbitraryChange),
+                        (finalBounds.getMaxX() + arbitraryChange), finalBounds.getMinY(), finalBounds
                                 .getMaxY());
 
-                zoomToBox(newBounds);
+                zoomToBox(finalBounds);
                 return;
             }
         }
-        bounds = new ReferencedEnvelope(newBounds, getCRS());
+        bounds = new ReferencedEnvelope(finalBounds, getCRS());
         fireNotification(oldBounds);
     }
 
@@ -729,23 +741,13 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         if (fixedPoint == null) {
             fixedPoint = getCenter();
         }
-        AffineTransform transformer = ScaleUtils.createScaleTransformWithFixedPoint(zoom,
+        double effectiveZoom = zoom;
+        AffineTransform transformer = ScaleUtils.createScaleTransformWithFixedPoint(effectiveZoom,
                 fixedPoint);
         ReferencedEnvelope srcEnvelope = getBounds();
-        Envelope transformedEnvelope = transformEnvelope(srcEnvelope, transformer);
+        Envelope transformedEnvelope = ScaleUtils.transformEnvelope(srcEnvelope, transformer);
         setBounds(transformedEnvelope);
         return this;
-    }
-
-    private Envelope transformEnvelope( ReferencedEnvelope srcEnvelope, AffineTransform transformer ) {
-        Point2D lowLeft = new Point2D.Double(srcEnvelope.getMinX(), srcEnvelope.getMinY());
-        Point2D transformedLowLeft = new Point2D.Double();
-        transformedLowLeft = transformer.transform(lowLeft, transformedLowLeft);
-        Point2D upRight = new Point2D.Double(srcEnvelope.getMaxX(), srcEnvelope.getMaxY());
-        Point2D transformedUpRight = new Point2D.Double();
-        transformedUpRight = transformer.transform(upRight, transformedUpRight);
-        return new Envelope(transformedLowLeft.getX(), transformedUpRight.getX(),
-                transformedLowLeft.getY(), transformedUpRight.getY());
     }
 
     /**
@@ -1228,27 +1230,38 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                 .getDPI());
 
     }
+    
+    public synchronized SortedSet<Double> getDefaultPreferredScaleDenominators() {
+    	if (defaultScaleDenominators == null) {
+    		TreeSet<Double> scales = new TreeSet<Double>();
+    		scales.add(1000000.0);
+    		scales.add(100000.0);
+    		scales.add(50000.0);
+    		scales.add(20000.0);
+    		scales.add(10000.0);
+    		scales.add(5000.0);
+    		scales.add(2500.0);
+    		scales.add(1000.0);
+			defaultScaleDenominators = Collections.unmodifiableSortedSet(scales);
+		}
+
+        return defaultScaleDenominators;
+    }
+    
     public SortedSet<Double> getPreferredScaleDenominators() {
-        SortedSet<Double> preferred = new TreeSet<Double>();
-        preferred.add(1000000.0);
-        preferred.add(100000.0);
-        preferred.add(50000.0);
-        preferred.add(20000.0);
-        preferred.add(10000.0);
-        preferred.add(5000.0);
-        preferred.add(2500.0);
-        preferred.add(1000.0);
-        return Collections.unmodifiableSortedSet(preferred); // we need a good default from preferences or something?
+    	if(preferredScaleDenominators == null) {
+    		return getDefaultPreferredScaleDenominators();
+    	}
+        return preferredScaleDenominators;
     }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public void setPreferredScaleDenominators( SortedSet<Double> newPreferredScaleDenominators ) {
         SortedSet<Double> oldPreferredScaleDenominators = preferredScaleDenominators;
-        preferredScaleDenominators = newPreferredScaleDenominators;
+        if(newPreferredScaleDenominators == getDefaultPreferredScaleDenominators()) {
+        	preferredScaleDenominators = null;
+        } else {
+        	preferredScaleDenominators = Collections.unmodifiableSortedSet(new TreeSet<Double>(newPreferredScaleDenominators));
+        }
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.VIEWPORT_MODEL__PREFERRED_SCALE_DENOMINATORS,

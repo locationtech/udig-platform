@@ -31,7 +31,7 @@ public class ZoomOut extends AbstractActionTool{
      * @see net.refractions.udig.project.ui.tool.ActionTool#run()
      */
     public void run() {
-        UpdateThread.getUpdater().zoom(-10, getContext(), 500);
+        NavigationUpdateThread.getUpdater().zoom(-10, getContext(), NavigationUpdateThread.DEFAULT_DELAY);
     }
 
     /*
