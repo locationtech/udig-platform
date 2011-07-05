@@ -30,7 +30,7 @@
          </property>
          <property
                name="aboutImage"
-               value="icons/about.gif">
+               value="icons/about.png">
          </property>
          <property
                name="aboutText"
