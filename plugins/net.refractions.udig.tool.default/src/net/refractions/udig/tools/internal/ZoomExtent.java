@@ -39,6 +39,7 @@ public class ZoomExtent extends AbstractActionTool{
      * @see net.refractions.udig.project.ui.tool.ActionTool#run()
      */
     public void run() {
+    	NavigationUpdateThread.getUpdater().cancel();
     	getContext().sendASyncCommand(new ZoomExtentCommand());
     }
 
