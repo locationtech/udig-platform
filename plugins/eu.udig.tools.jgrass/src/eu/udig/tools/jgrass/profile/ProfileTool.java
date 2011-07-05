@@ -195,11 +195,12 @@ public class ProfileTool extends SimpleTool {
                         if (!Double.isNaN(elevation)) {
                             chartView.addToSeries(latestProgessiveDistance + profilePoint.getProgressive(), elevation);
                         } else {
-                            chartView.addToSeries(latestProgessiveDistance + profilePoint.getProgressive(), 0.0);
+//                            chartView.addToSeries(latestProgessiveDistance + profilePoint.getProgressive(), Double.NaN);
                         }
                     }
                     ProfilePoint last = profile.get(profile.size() - 1);
                     chartView.addStopLine(latestProgessiveDistance + last.getProgressive());
+                    chartView.setRangeToDataBounds();
                     latestProgessiveDistance = latestProgessiveDistance + last.getProgressive();
                 }
             });
