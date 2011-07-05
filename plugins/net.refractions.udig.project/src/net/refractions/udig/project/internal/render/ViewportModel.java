@@ -87,19 +87,20 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * then assume that the values are only hints and can be ignored
      * </p>
      * 
-     * @see getScaleDEnominator for a definition of scale denominator
-     * @return List of preferred scale denominator values for the map
+     * @see #getScaleDenominator() for a definition of scale denominator
+     * @return Unmodifiable Set of preferred scale denominator values for the map
      * @model 
      */
     public SortedSet<Double> getPreferredScaleDenominators();
 
     /**
      * Sets the value of the '{@link net.refractions.udig.project.internal.render.ViewportModel#getPreferredScaleDenominators <em>Preferred Scale Denominators</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * 
+     * If set to null getPreferredScaleDenominators will return the defaults.
+     * 
      * @param value the new value of the '<em>Preferred Scale Denominators</em>' attribute.
      * @see #getPreferredScaleDenominators()
-     * @generated
+     * @generated NOTE
      */
     void setPreferredScaleDenominators( SortedSet<Double> value );
 

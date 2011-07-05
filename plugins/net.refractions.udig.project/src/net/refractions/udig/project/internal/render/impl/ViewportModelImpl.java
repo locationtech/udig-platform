@@ -1257,7 +1257,11 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     public void setPreferredScaleDenominators( SortedSet<Double> newPreferredScaleDenominators ) {
         SortedSet<Double> oldPreferredScaleDenominators = preferredScaleDenominators;
-        preferredScaleDenominators = Collections.unmodifiableSortedSet(new TreeSet<Double>(newPreferredScaleDenominators));
+        if(newPreferredScaleDenominators == getDefaultPreferredScaleDenominators()) {
+        	preferredScaleDenominators = null;
+        } else {
+        	preferredScaleDenominators = Collections.unmodifiableSortedSet(new TreeSet<Double>(newPreferredScaleDenominators));
+        }
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.VIEWPORT_MODEL__PREFERRED_SCALE_DENOMINATORS,
