@@ -205,8 +205,6 @@
 			<dependency groupId="org.fusesource.jansi" artifactId="jansi" version="1.1" scope="provided" />
 			
 		</artifact:dependencies>
-		<!-- compiler needed for omsbox, needs to be in the plugins folder, but *NOT* on the classpath  -->
-		<get src="http://udig.refractions.net/files/downloads/jre/tools_1.6.0_25.jar" dest="${lib}/tools_1.6.0_25.jar"/>
 	</target>
 
 	<target name="print" depends="load_m2_deps,teradata-print">
@@ -239,6 +237,9 @@
 		<copy todir="${lib}" verbose="true" flatten="true">
 			<fileset refid="dependency.fileset" />
 		</copy>
+		
+		<!-- compiler needed for omsbox, needs to be in the plugins folder, but *NOT* on the classpath  -->
+		<get src="http://udig.refractions.net/files/downloads/jre/tools_1.6.0_25.jar" dest="${lib}/tools_1.6.0_25.jar"/>
 
 		<!-- (flat) copy downloaded source JARs (sources) to plugin directory ${libs_src_dir} -->
 		<!--
