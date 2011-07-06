@@ -21,7 +21,9 @@ public class DeveloperStartup implements IStartup {
             closeIntro();
         }
     }
-    
+    /**
+     * Used to close the intro part to facilitate development.
+     */
     private void closeIntro() {
         PlatformGIS.syncInDisplayThread(new Runnable(){
 

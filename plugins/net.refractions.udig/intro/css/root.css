@@ -25,13 +25,13 @@
  */
 
 body {
-	min-width : 770px;
+	min-width : 792px;
 	/* since IE doesn't support min-width, use expression */
-	width:expression(document.body.clientWidth < 770? "770px": "auto" );
-	background-image : url(graphics/UDIG_WelcomeScreen.jpg);
+	width:expression(document.body.clientWidth < 792? "792px": "auto" );
+	background-image : url(graphics/Landscape_Stretched.jpg);
 	background-repeat : no-repeat;
-	background-position : top left;
-	background-color : #7169D1;
+	background-position : bottom center;
+	background-color : #FFFFFF;
 }
 
 #root {
@@ -262,7 +262,7 @@ a#news .background-image {
 #action-links a#workbench:hover .background-image,
 #action-links a#workbench:focus .background-image,
 #action-links a#workbench:active .background-image {
-	visibility : visible;
+	visibility : hidden;
 }
 
 /* hide the link and description until users hover over the link */
