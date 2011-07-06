@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.measure.unit.SI;
 
+import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.ShutdownTaskList;
 import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
 import net.refractions.udig.ui.internal.Messages;
@@ -21,6 +22,8 @@ import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.intro.IIntroManager;
+import org.eclipse.ui.intro.IIntroPart;
 import org.geotools.referencing.ReferencingFactoryFinder;
 
 
@@ -54,11 +57,29 @@ public class UDIGStartup implements IStartup {
 	 */
 	public void earlyStartup() {
         checkForGDI();
-
         loadCommonlyUsedObject();
 		PlatformUI.getWorkbench().addWorkbenchListener(ShutdownTaskList.instance());		
+		standByWelcome(); // uDig wants the welcome page put to the side on startup
 	}
-	
+	/**
+	 * Make sure the Welcome screen is put into standby mode; prevents
+	 * confusion when Add Layer is used and the map is displayed behind the welcome
+	 * page (also looks better).
+	 */
+    private void standByWelcome() {
+        PlatformGIS.syncInDisplayThread(new Runnable(){
+
+            public void run() {
+                IIntroManager introManager = PlatformUI.getWorkbench().getIntroManager();
+                IIntroPart intro = introManager.getIntro();
+                if (intro != null){
+                    introManager.setIntroStandby(intro, true );
+                }
+            }
+
+        });
+    }
+
     /**
      * Forces the class loader to load several troublesome classes; mostly focused on FactorySPI
      * plugins used by the GeoTools library.

@@ -120,11 +120,11 @@ body {
 
 #background-image {
 	width : 100%;
-	min-width : 770px;
-	height : 164px;
-	background-image : url(graphics/UDIG_WelcomeScreen.jpg);
+	min-width : 792px;
+	height : 154px;
+	background-image : url(graphics/Landscape.jpg);
 	background-repeat : no-repeat;
-	background-position : top left;	
+	background-position : bottom center;	
 	position : absolute;
 	top : 0px;
 	z-index : -100;
