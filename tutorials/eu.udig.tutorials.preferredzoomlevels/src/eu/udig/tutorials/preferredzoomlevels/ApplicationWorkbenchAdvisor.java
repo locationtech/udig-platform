@@ -6,7 +6,8 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
-	private static final String PERSPECTIVE_ID = "eu.udig.tutorials.preferred-zoom-levels.perspective";
+	@SuppressWarnings("nls")
+    private static final String PERSPECTIVE_ID = "eu.udig.tutorials.preferredzoomlevels.perspective";
 
 	public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(
 			IWorkbenchWindowConfigurer configurer) {

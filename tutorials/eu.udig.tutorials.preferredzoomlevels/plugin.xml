@@ -16,7 +16,7 @@
       <perspective
             name="Perspective"
             class="eu.udig.tutorials.preferredzoomlevels.Perspective"
-            id="eu.udig.tutorials.preferred-zoom-levels.perspective">
+            id="eu.udig.tutorials.preferredzoomlevels.perspective">
       </perspective>
    </extension>
    <extension
@@ -24,7 +24,7 @@
       <view
             name="View"
             class="eu.udig.tutorials.preferredzoomlevels.View"
-            id="eu.udig.tutorials.preferred-zoom-levels.view">
+            id="eu.udig.tutorials.preferredzoomlevels.view">
       </view>
    </extension>
    <extension
