@@ -41,7 +41,7 @@ public class NavigationUpdateThread implements Runnable {
 
     private static TransformDrawCommand command;
     private static final NavigationUpdateThread updater=new NavigationUpdateThread();
-	public static final int DEFAULT_DELAY = 1000;
+	public static final int DEFAULT_DELAY = 500;
     int zoomAmount = 0;
     private int vertical=0;
     private int horizontal=0;
@@ -148,8 +148,9 @@ public class NavigationUpdateThread implements Runnable {
     public void zoomWithFixedPoint( int change, IToolContext context, int updateDelay,
             Point fixedPoint ) {
 
-    	double zoomChange = Math.abs(Math.pow(FACTOR, change));
-
+    	double zoomChange = Math.pow(FACTOR, change);
+    	if(change < 0) zoomChange = -zoomChange;
+    	
         synchronized (NavigationUpdateThread.class) {
         	this.updateDelay = updateDelay;
         	double targetZoom;

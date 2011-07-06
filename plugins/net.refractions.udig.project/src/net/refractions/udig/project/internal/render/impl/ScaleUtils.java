@@ -540,7 +540,7 @@ public final class ScaleUtils {
 	        }
 	        return params.model.getScaleDenominator()/chosen;
 		} else {
-			return params.previousZoom - params.zoomChange;
+				return Math.abs(params.previousZoom*params.zoomChange);
 		}
 	}
 

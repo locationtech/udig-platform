@@ -312,7 +312,8 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
     }
 	public double calculateZoomLevel(double previousZoom, double zoom, Coordinate fixedPoint,
 			boolean alwayUsePreferredZoomLevels, boolean alwaysChangeZoom) {
-		return ScaleUtils.calculateZoomLevel(new CalculateZoomLevelParameter(getViewportModelInternal(), getViewportPane(), previousZoom, zoom, fixedPoint,
-				alwayUsePreferredZoomLevels, alwaysChangeZoom));
+		CalculateZoomLevelParameter params = new CalculateZoomLevelParameter(getViewportModelInternal(), getViewportPane(), previousZoom, zoom, fixedPoint,
+						alwayUsePreferredZoomLevels, alwaysChangeZoom);
+		return ScaleUtils.calculateZoomLevel(params);
 	}
 } // Impl

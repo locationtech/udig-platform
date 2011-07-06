@@ -28,6 +28,7 @@ import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.ui.commands.DrawCommandFactory;
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.AbstractModalTool;
 import net.refractions.udig.project.ui.tool.ModalTool;
 
@@ -46,6 +47,8 @@ public class Zoom extends AbstractModalTool implements ModalTool {
     DrawCommandFactory dfactory = DrawCommandFactory.getInstance();
     SelectionBoxCommand shapeCommand = new SelectionBoxCommand();
 
+    boolean showContextOnRightClick = false;
+    
     /**
      * Creates an new instance of Zoom
      */
@@ -106,6 +109,10 @@ public class Zoom extends AbstractModalTool implements ModalTool {
      * @see net.refractions.udig.project.tool.AbstractTool#mousePressed(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mousePressed(MapMouseEvent e) {
+        if (e.button == MapMouseEvent.BUTTON3 && showContextOnRightClick) {
+            ((ViewportPane) e.source).getMapEditor().openContextMenu();
+        	return;
+    	}
         if ( !e.isAltDown() && !e.isShiftDown() && 
                 (e.button == MapMouseEvent.BUTTON1 
                         || e.button == MapMouseEvent.BUTTON3
@@ -123,6 +130,10 @@ public class Zoom extends AbstractModalTool implements ModalTool {
      * @see net.refractions.udig.project.tool.AbstractTool#mouseReleased(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mouseReleased(MapMouseEvent e) {
+        if (e.button == MapMouseEvent.BUTTON3  && showContextOnRightClick) {
+            ((ViewportPane) e.source).getMapEditor().openContextMenu();
+        	return;
+    	}
         if (zooming) {
             IViewportModel m = getContext().getViewportModel();
             if ((Math.abs(start.x - e.x)<5) && (Math.abs(start.y - e.y)<5)) {
@@ -185,10 +196,12 @@ public class Zoom extends AbstractModalTool implements ModalTool {
                 r.x + r.width / 2, r.y + r.height / 2));
         getContext().sendASyncCommand(cmd);
     }
-    /**
-     * @see net.refractions.udig.project.tool.Tool#dispose()
-     */
-    public void dispose() {
-        super.dispose();
-    }
+
+	public boolean isShowContextOnRightClick() {
+		return showContextOnRightClick;
+	}
+
+	public void setShowContextOnRightClick(boolean showContextOnRightClick) {
+		this.showContextOnRightClick = showContextOnRightClick;
+	}
 }
