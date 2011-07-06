@@ -7,7 +7,7 @@ export BASE=`dirname $0`
 # Release Configuration
 export INSTALLER=${BASE}/installer
 export TARGET=${BASE}/target
-export VERSION=1.2-SNAPSHOT
+export VERSION=1.2.2
 export BUILD=${BASE}/build
 
 # net.refractions.udig.libs "qualifier" for SDK

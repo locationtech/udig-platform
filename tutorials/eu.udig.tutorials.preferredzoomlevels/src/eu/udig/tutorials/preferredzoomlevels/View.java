@@ -16,15 +16,15 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 
-import eu.udig.tutorials.preferred_zoom_levels.Activator;
-
 public class View extends DefaultMapViewPart {
-	public static final String ID = "eu.udig.tutorials.preferred-zoom-levels.view";
+	@SuppressWarnings("nls")
+    public static final String ID = "eu.udig.tutorials.preferredzoomlevels.view";
 
 	@Override
 	protected void createResources(List<IGeoResource> resources, 
 			IProgressMonitor monitor) throws IOException {
-		URL url = FileLocator.find(Activator.getDefault().getBundle(), new Path("data/face.shp"), Collections.emptyMap());
+		@SuppressWarnings("nls")
+        URL url = FileLocator.find(Activator.getDefault().getBundle(), new Path("data/face.shp"), Collections.emptyMap());
 		IService r = CatalogPlugin.getDefault().getLocalCatalog().acquire(FileLocator.resolve(url), monitor);
 		resources.add(r.resources(monitor).get(0));
 	}
