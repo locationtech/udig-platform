@@ -199,9 +199,9 @@
 			<dependency groupId="com.sun.jna" artifactId="jna" version="3.0.9" />
 			<dependency groupId="org.jgrasstools" artifactId="jgt-oms3" version="0.7.1" />
 			<dependency groupId="javassist" artifactId="javassist" version="3.8.0.GA" />
-			<dependency groupId="net.sf.scannotation" artifactId="scannotation" version="1.0.2" scope="provided" />
-			<dependency groupId="jline" artifactId="jline" version="0.9.94" scope="provided" />
-			<dependency groupId="org.fusesource.jansi" artifactId="jansi" version="1.1" scope="provided" />
+			<dependency groupId="net.sf.scannotation" artifactId="scannotation" version="1.0.2" />
+			<dependency groupId="jline" artifactId="jline" version="0.9.94" />
+			<dependency groupId="org.fusesource.jansi" artifactId="jansi" version="1.1" />
 			
 		</artifact:dependencies>
 	</target>
@@ -240,9 +240,6 @@
 		<!-- compiler needed for omsbox, needs to be in the plugins folder, but *NOT* on the classpath  -->
 		<get src="http://udig.refractions.net/files/downloads/jre/tools_1.6.0_25.jar" dest="${lib}/tools_1.6.0_25.jar"/>
 
-		<!-- compiler needed for omsbox, needs to be in the plugins folder, but *NOT* on the classpath  -->
-		<get dest="${lib}/tools_1.6.0_25.jar" src="http://udig.refractions.net/files/downloads/jre/tools_1.6.0_25.jar"/>
-		
 		<!-- (flat) copy downloaded source JARs (sources) to plugin directory ${libs_src_dir} -->
 		<!--
 		<copy todir="${libs_src_dir}" flatten="true" verbose="true">
