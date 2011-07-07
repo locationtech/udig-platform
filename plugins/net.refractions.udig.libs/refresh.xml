@@ -199,9 +199,9 @@
 			<dependency groupId="com.sun.jna" artifactId="jna" version="3.0.9" />
 			<dependency groupId="org.jgrasstools" artifactId="jgt-oms3" version="0.7.1" />
 			<dependency groupId="javassist" artifactId="javassist" version="3.8.0.GA" />
-			<dependency groupId="net.sf.scannotation" artifactId="scannotation" version="1.0.2" scope="provided" />
-			<dependency groupId="jline" artifactId="jline" version="0.9.94" scope="provided" />
-			<dependency groupId="org.fusesource.jansi" artifactId="jansi" version="1.1" scope="provided" />
+			<dependency groupId="net.sf.scannotation" artifactId="scannotation" version="1.0.2" />
+			<dependency groupId="jline" artifactId="jline" version="0.9.94" />
+			<dependency groupId="org.fusesource.jansi" artifactId="jansi" version="1.1" />
 			
 		</artifact:dependencies>
 	</target>
