@@ -70,7 +70,6 @@
 				</executions>
 				<configuration>
 					<scalaVersion>${scala.version}</scalaVersion>
-					<scalaVersion>${scala.version}</scalaVersion>
 					<scriptFile>src/script/scala/main.scala</scriptFile>
 					<removeFromClasspath>ant-1.6.2.jar</removeFromClasspath>
 					<keepGeneratedScript>true</keepGeneratedScript>
