@@ -8,17 +8,8 @@
                 </topic>
             
         <topic label="Getting Started" href="http://udig.refractions.net/confluence/display/EN/Getting Started">
-        
-                            
-        <topic label="Introduction to the Spatial Toolbox" href="http://udig.refractions.net/confluence/display/EN/Introduction to the Spatial Toolbox">
-        
-                </topic>
                     
         <topic label="Quickstart" href="http://udig.refractions.net/confluence/display/EN/Quickstart">
-        
-                </topic>
-                    
-        <topic label="Quickstart Draft" href="http://udig.refractions.net/confluence/display/EN/Quickstart Draft">
         
                 </topic>
                     
@@ -29,6 +20,12 @@
         <topic label="Walkthrough 2" href="http://udig.refractions.net/confluence/display/EN/Walkthrough 2">
         
                 </topic>
+        
+                            
+        <topic label="Introduction to the Spatial Toolbox" href="http://udig.refractions.net/confluence/display/EN/Introduction to the Spatial Toolbox">
+        
+                </topic>
+                    
         </topic>
             
         <topic label="Concepts" href="http://udig.refractions.net/confluence/display/EN/Concepts">

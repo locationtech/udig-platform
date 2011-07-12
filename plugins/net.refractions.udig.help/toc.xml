@@ -8,17 +8,8 @@
                 </topic>
             
         <topic label="Getting Started" href="EN/Getting Started.html">
-        
-                            
-        <topic label="Introduction to the Spatial Toolbox" href="EN/Introduction to the Spatial Toolbox.html">
-        
-                </topic>
                     
         <topic label="Quickstart" href="EN/Quickstart.html">
-        
-                </topic>
-                    
-        <topic label="Quickstart Draft" href="EN/Quickstart Draft.html">
         
                 </topic>
                     
@@ -29,6 +20,12 @@
         <topic label="Walkthrough 2" href="EN/Walkthrough 2.html">
         
                 </topic>
+        
+                            
+        <topic label="Introduction to the Spatial Toolbox" href="EN/Introduction to the Spatial Toolbox.html">
+        
+                </topic>
+                    
         </topic>
             
         <topic label="Concepts" href="EN/Concepts.html">
