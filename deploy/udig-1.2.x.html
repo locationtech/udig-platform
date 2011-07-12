@@ -2,11 +2,11 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>1.2.1 Release Notes</title>
+  <title>1.2.2 Release Notes</title>
 </head>
 <body>
-<p>Welcome to the uDig 1.2.1 release.</p>
-<p>This release is made in conjunction with GeoTools 2.7-RC1.</p>
+<p>Welcome to the uDig 1.2.2 release.
+<p>This release is made in conjunction with GeoTools 8.0-M1</p>
 <h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">Installation</h2>
 <p>Download the package appropriate to your platform, unzip and run:</p>
 <ul>
@@ -23,148 +23,41 @@
   <li><a href="http://udig.refractions.net/confluence/display/EN/Walkthrough+2">Walkthrough 2</a></li>
 </ul>
 
-<h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">About uDig 1.2.1</h2>
-<p>The release adds a number of new features, a tangible benefit to the developers switching to a "git" repository. We would like to thank Refractions for hosting the previous subversion repository.
-
+<h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">About uDig 1.2.2</h2>
+<p>The release adds a number of new features and updates the uDig platform to the latest open
+source libraries.</p>
+<p>
 Here is what you can look forward to:</p>
 <ul>
-  <li>Additional style editor pages; thanks to the JGrass project and Hydrologis</li>
-  <li>Access to the latest GeoTools renderer with support for hatch patterns</li>
-  <li>Access to world+image "bmp" files</li>
-  <li>Experimental - WMS 1.3.0 support</li>
-  <li>Updated "submit log" in the help menu</li>
+  <li>Updated Info and Profile tool for raster data</li>
+  <li>Teradata support</li>
+  <li>Spatial Toolbox view allowing access to OMS3 processing; with tutorial!</li>
+  <li>New import and export formats: CSV and KML.</li>
+  <li>Checkout <a href="http://udig.refractions.net/confluence/display/EN/What+is+new">What is new page</a> for details</li>
 </ul>
 
 <p>Additional documentation:</p>
 <ul>
-  <li>Updated online help capturing the new style pages <a href="http://udig.refractions.net/confluence/display/EN/Style+Editor+Dialog">style pages</a></li>
-  <li>Updated intro documentation for users and developers</li>
+  <li>Extensive update to online help including <a href="http://udig.refractions.net/confluence/display/EN/uDig+Overview">uDig Overview</a></li>
+  <li>New step by step <a href="http://udig.refractions.net/confluence/display/EN/Introduction+to+the+Spatial+Toolbox">Introduction to Spatial Toolbox</a></li>
+  <li>Updated <a href="http://udig.refractions.net/confluence/display/EN/What+is+new">What is new page</a></li>
 </ul>
 
 For developers:
 <ul>
    <li>We have migrated to a new git repository <a href="http://gitorious.org/udig">http://gitorious.org/udig</a></li>
-   <li>Access to the latest GeoTools 2.7 Release Candidate</li>
+   <li>Access to the latest GeoTools 8.0-M1</li>
+   <li>Access to the latest ImageIO-EXT and finally a modern version of GDAL (on supported platforms)</li>
 </ul>
 
-<h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">Release Notes - uDIG - Version UDIG 1.2.1</h2>
-        
-Bug
+Release notes:
 <ul>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-1586'>UDIG-1586</a>] -         Operation doesn&#39;t check for update if selection in layer view didn&#39;t changed
-</li>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-1614'>UDIG-1614</a>] -         Worldimage plugin does not load images with german locale
-</li>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-1744'>UDIG-1744</a>] -         Submit Log Item in Help Menu
-</li>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-1745'>UDIG-1745</a>] -         WFS Transaction Failure with GeoTools 2.7
-</li>
-</ul>
-    
-Improvement
-<ul>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-677'>UDIG-677</a>] -         Support Autocad hatch patterns
-</li>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-1594'>UDIG-1594</a>] -         Performance issue with GeometryProperty
-</li>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-1616'>UDIG-1616</a>] -         What is new uDig 1.2
-</li>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-1643'>UDIG-1643</a>] -         Upgrade to GeoTools 2.7
-</li>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-1717'>UDIG-1717</a>] -         User Control of Raster Caching
-</li>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-1719'>UDIG-1719</a>] -         Include GeoTools source code in SDK
-</li>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-1742'>UDIG-1742</a>] -         Add *.bmp support for uDig.
-</li>
-</ul>
-    
-New Feature
-<ul>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-1637'>UDIG-1637</a>] -         Adding services for GRASS locations (rasters) and netcdf files
-</li>
-</ul>
-    
-Task
-<ul>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-583'>UDIG-583</a>] -         Random Access for features.  
-</li>
-</ul>
-        
-Wish
-<ul>
-<li>[<a href='http://jira.codehaus.org/browse/UDIG-1729'>UDIG-1729</a>] -         RFC Migrate to GIT
-</li>
+   <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=15072">uDig 1.2.2 Release Notes</a></li>
+   <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=16440">uDig 1.2.1 Release Notes</a></li>
+   <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=16264">uDig 1.2.0 Release Notes</a></li>
 </ul>
 
-
-<h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">1.2.0 Release Notes</h2>
-        <p>Bug</p>
-        <ul>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1518">UDIG-1518</a>] - WMSC in GDA64</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1582">UDIG-1582</a>] - axios spatial operation extension 1.2 for uDIG 1.1.1 error: bad version number in .class file</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1641">UDIG-1641</a>] - RenderContextImpl fails when MapViewer not shown yet</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1672">UDIG-1672</a>] - can't display a WMS layer</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1699">UDIG-1699</a>] - Modal tool Icons disappear from toolbar</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1705">UDIG-1705</a>] - uDIG does not open geowebcache- wms-c urls</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1715">UDIG-1715</a>] - Glyph NPE when fill defined by Function(Regression from GeoTools 2.2)</li>
-        </ul>
-        <p>Improvement</p>
-        <ul>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1635">UDIG-1635</a>] - Box should implement IAdaptable</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1636">UDIG-1636</a>] - Move Layer up and down commands</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1676">UDIG-1676</a>] - udig intro screens at first run are missleading</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1695">UDIG-1695</a>] - List SNAPSHOT releases on the download page</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1714">UDIG-1714</a>] - Edit Tools provide a feedback for WFS 1.1 not supported</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1716">UDIG-1716</a>] - Restore Shapefile Renderer</li>
-        </ul>
-        <p>New Feature</p>
-        <ul>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1710">UDIG-1710</a>] - Add support for ArcSDE Rasters</li>
-        </ul>
-        <p>Wish</p>
-        <ul>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1478">UDIG-1478</a>] - Export Project Wizard</li>
-        </ul>
-
-<h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">1.2-RC3 Release Notes</h2>
-        <ul>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1632">UDIG-1632</a>] - IFeaturePanel class and Extension Point</li>
-        </ul>
-        <p>Bug</p>
-        <ul>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1520">UDIG-1520</a>] - unable to connect WMS with Udig</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1553">UDIG-1553</a>] - axios plugin edittools</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1578">UDIG-1578</a>] - OracleGeoResource keeps its own IService</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1587">UDIG-1587</a>] - Adding WMS service via wizard fails.</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1612">UDIG-1612</a>] - Bluemarble tif not displayed</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1629">UDIG-1629</a>] - PostGIS next() called before hasNext()</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1633">UDIG-1633</a>] - Cannot resolve PostGIS layer to JDBCDataStore</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1638">UDIG-1638</a>] - Marker size defaults to 6</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1639">UDIG-1639</a>] - Table show selection does nothing</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1641">UDIG-1641</a>] - RenderContextImpl fails when MapViewer not shown yet</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1642">UDIG-1642</a>] - Cant edit PostGIS line feature in 1.2-rc2</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1650">UDIG-1650</a>] - Add transparency support for default Image format image/png8</li>
-        </ul>
-        <p>Improvement</p>
-        <ul>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1631">UDIG-1631</a>] - Move public documentation to public svn</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1634">UDIG-1634</a>] - Break ICatalog up into ISearch and IRepository and check interface boundaries</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1647">UDIG-1647</a>] - Add visual queues to information tool layer list</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1648">UDIG-1648</a>] - Change Coordinate System: Set focus to Search field</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1655">UDIG-1655</a>] - Allow user to change layer filter</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1656">UDIG-1656</a>] - FeatureInterceptor for creation of default values</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1657">UDIG-1657</a>] - Service and GeoResource Interceptors</li>
-        </ul>
-        <p>New Feature</p>
-        <ul>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1658">UDIG-1658</a>] - Generic GeoTools DataStore support</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1659">UDIG-1659</a>] - Relaxing requirement to know bounds</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1660">UDIG-1660</a>] - User control of Feature Caching</li>
-          <li>[<a href="http://jira.codehaus.org/browse/UDIG-1661">UDIG-1661</a>] - Filter layer content with "query builder"</li>
-        </ul>
-
-<h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">Known problems:</h2>
+<h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">Known Issues:</h2>
 <ul>
   <li>The mac release is unable to support the full range of ImageIO-EXT formats. Please contact udig-devel if you are able to build GDAL on Mac OSX.</li>
 </ul>
