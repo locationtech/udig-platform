@@ -209,7 +209,7 @@ public class ScriptHandler {
      * @param script the script.
      */
     public void runModule( final String scriptId, String script ) {
-        JConsoleOutputConsole outputConsole = new JConsoleOutputConsole(null);
+        JConsoleOutputConsole outputConsole = new JConsoleOutputConsole(scriptId);
         outputConsole.clearConsole();
 
         PrintStream internalStream = outputConsole.internal;

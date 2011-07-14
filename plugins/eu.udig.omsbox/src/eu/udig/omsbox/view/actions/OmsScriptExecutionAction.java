@@ -72,7 +72,7 @@ public class OmsScriptExecutionAction implements IViewActionDelegate, IProcessLi
     }
 
     private void execute( String path ) {
-        JConsoleOutputConsole outputConsole = new JConsoleOutputConsole(null);
+        JConsoleOutputConsole outputConsole = new JConsoleOutputConsole("Script: " + path);
         outputConsole.clearConsole();
 
         PrintStream internalStream = outputConsole.internal;

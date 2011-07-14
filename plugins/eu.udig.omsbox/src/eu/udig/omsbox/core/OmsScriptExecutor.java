@@ -287,8 +287,7 @@ public class OmsScriptExecutor {
                          * remove of ugly recurring geotools warnings. Not nice, but 
                          * at least users do not get confused. 
                          */
-                        if (line.contains("Kakadu") || line.contains("Error while parsing JAI registry")
-                                || line.contains("A descriptor is already registered") || line.contains("Error in registry file")) {
+                        if (ConsoleMessageFilter.doRemove(line)) {
                             continue;
                         }
                         errorStream.println(line);
