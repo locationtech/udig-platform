@@ -76,9 +76,9 @@ public class OmsScriptGenerationAction implements IViewActionDelegate {
                     FileUtils.writeStringToFile(tempFile, script);
 
                     program.execute(tempFile.getAbsolutePath());
-                    
+
                     // cleanup when leaving uDig
-                    tempFile.deleteOnExit();
+                    // tempFile.deleteOnExit();
                 } else {
                     // make it the good old way prompting
                     FileDialog fileDialog = new FileDialog(view.getSite().getShell(), SWT.SAVE);

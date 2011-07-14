@@ -93,9 +93,9 @@ public class OmsScriptExecutionAction implements IViewActionDelegate, IProcessLi
             File scriptFile = new File(path);
             scriptID = scriptFile.getName() + " " + new DateTime().toString(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS);
             OmsBoxPlugin.getDefault().addProcess(process, scriptID);
-            
+
             // cleanup when leaving uDig
-            scriptFile.deleteOnExit();
+            // scriptFile.deleteOnExit();
         } catch (Exception e) {
             e.printStackTrace();
         }
