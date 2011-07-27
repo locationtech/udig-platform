@@ -356,17 +356,6 @@
             <groupId>jfree</groupId>
             <artifactId>jfreechart</artifactId>
             <version>${jfreechart.version}</version>
-		    <exclusions>
-		      <exclusion>
-		        <groupId>jfree</groupId>
-     		    <artifactId>jcommon</artifactId>
-		      </exclusion>
-		    </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>jfree</groupId>
-            <artifactId>jcommon</artifactId>
-            <version>${jfreechart.version}</version>
         </dependency>
         <dependency>
             <groupId>jfree</groupId>
