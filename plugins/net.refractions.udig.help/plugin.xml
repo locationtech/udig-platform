@@ -1,7 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
-
+	<extension point="org.eclipse.ui.actionSets">
+	    <actionSet id="org.eclipse.ui.cheatsheets.actionSet" label="%CHEAT_SHEETS" visible="true">
+	        <action class="org.eclipse.ui.cheatsheets.CheatSheetExtensionFactory:helpMenuAction"
+	            id="org.eclipse.ui.cheatsheets.actions.CheatSheetHelpMenuAction"
+	            label="Cheat Sheet..."
+	            menubarPath="help/helpStart"
+	            style="push"/>
+	    </actionSet>
+	</extension>
+ <extension
+       point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+    <category
+          id="net.refractions.udig.help.cheatsheet.categoty.project"
+          name="Projects">
+    </category>
+    <category
+          id="net.refractions.udig.help.sheatsheet.category.layers"
+          name="Layers">
+    </category>
+ </extension>
+	<extension point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+	    <cheatsheet
+	        category="net.refractions.udig.help.cheatsheet.categoty.project"
+	        composite="false"
+	        contentFile="cheatsheets/newProjectWizard.xml"
+	        id="net.refractions.udig.help.cheatsheet.newprojectwizard"
+	        name="New Project Wizard">
+	    </cheatsheet>
+     <cheatsheet
+           composite="false"
+           contentFile="cheatsheets/workbench.xml"
+           id="net.refractions.udig.help.cheatsheet.workbench"
+           name="Workbench">
+     </cheatsheet>
+     <cheatsheet
+           category="net.refractions.udig.help.sheatsheet.category.addlayers"
+           composite="false"
+           contentFile="cheatsheets/dragFromFileSystem.xml"
+           id="net.refractions.udig.help.cheatsheet.dragFromFileSystem"
+           name="Drag From File System">
+     </cheatsheet>
+     <cheatsheet
+           category="net.refractions.udig.help.sheatsheet.category.addlayers"
+           composite="false"
+           contentFile="cheatsheets/loadShapeFile.xml"
+           id="net.refractions.udig.help.cheatsheet.loadShapeFile"
+           name="Load Shape File">
+     </cheatsheet>
+	</extension>
+ <extension
+       point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+    <cheatsheet
+          composite="true"
+          contentFile="cheatsheets/quickstart.xml"
+          id="net.refractions.udig.help.cheatsheet.quickstart"
+          name="Quickstart">
+    </cheatsheet>
+ </extension>
+	
      <extension
          id="net.refractions.udig.project.ui.mapEditor"
          name="%context.name"
