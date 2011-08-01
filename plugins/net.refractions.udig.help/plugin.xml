@@ -20,6 +20,14 @@
           id="net.refractions.udig.help.sheatsheet.category.layers"
           name="Layers">
     </category>
+    <category
+          id="net.refractions.udig.help.category.workbench"
+          name="Workbench">
+    </category>
+    <category
+          id="net.refractions.udig.help.sheatsheet.category.gettingstarted"
+          name="Getting Started">
+    </category>
  </extension>
 	<extension point="org.eclipse.ui.cheatsheets.cheatSheetContent">
 	    <cheatsheet
@@ -30,10 +38,11 @@
 	        name="New Project Wizard">
 	    </cheatsheet>
      <cheatsheet
+           category="net.refractions.udig.help.category.workbench"
            composite="false"
            contentFile="cheatsheets/workbench.xml"
            id="net.refractions.udig.help.cheatsheet.workbench"
-           name="Workbench">
+           name="Workbench Basics">
      </cheatsheet>
      <cheatsheet
            category="net.refractions.udig.help.sheatsheet.category.addlayers"
@@ -43,16 +52,38 @@
            name="Drag From File System">
      </cheatsheet>
      <cheatsheet
-           category="net.refractions.udig.help.sheatsheet.category.addlayers"
+           category="net.refractions.udig.help.sheatsheet.category.layers"
            composite="false"
            contentFile="cheatsheets/loadShapeFile.xml"
            id="net.refractions.udig.help.cheatsheet.loadShapeFile"
            name="Load Shape File">
      </cheatsheet>
+     <cheatsheet
+           category="net.refractions.udig.help.sheatsheet.category.layers"
+           composite="false"
+           contentFile="cheatsheets/style.xml"
+           id="net.refractions.udig.help.cheatsheet.stylelayer"
+           name="Style Layer">
+     </cheatsheet>
+     <cheatsheet
+           category="net.refractions.udig.help.category.map"
+           composite="false"
+           contentFile="cheatsheets/mapNavigation.xml"
+           id="net.refractions.udig.help.cheatsheet.mapnavigation"
+           name="Map Navigation">
+     </cheatsheet>
+     <cheatsheet
+           category="net.refractions.udig.help.sheatsheet.category.layers"
+           composite="false"
+           contentFile="cheatsheets/webMapServer.xml"
+           id="net.refractions.udig.help.cheatsheet.webmapservice"
+           name="Web Map Service">
+     </cheatsheet>
 	</extension>
  <extension
        point="org.eclipse.ui.cheatsheets.cheatSheetContent">
     <cheatsheet
+          category="net.refractions.udig.help.sheatsheet.category.gettingstarted"
           composite="true"
           contentFile="cheatsheets/quickstart.xml"
           id="net.refractions.udig.help.cheatsheet.quickstart"
