@@ -35,14 +35,14 @@
 	        composite="false"
 	        contentFile="cheatsheets/newProjectWizard.xml"
 	        id="net.refractions.udig.help.cheatsheet.newprojectwizard"
-	        name="New Project Wizard">
+	        name="New Project">
 	    </cheatsheet>
      <cheatsheet
            category="net.refractions.udig.help.category.workbench"
            composite="false"
            contentFile="cheatsheets/workbench.xml"
            id="net.refractions.udig.help.cheatsheet.workbench"
-           name="Workbench Basics">
+           name="Workbench">
      </cheatsheet>
      <cheatsheet
            category="net.refractions.udig.help.sheatsheet.category.addlayers"
