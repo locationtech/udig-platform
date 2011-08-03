@@ -107,7 +107,7 @@ public class CatalogImport {
         if( d==null )
             d=Display.getCurrent();
         Shell parent = d.getActiveShell();
-		return new Shell(parent, SWT.PRIMARY_MODAL | SWT.ON_TOP);
+		return new Shell(parent);
     }
 
     public WorkflowWizardDialog getDialog() {
