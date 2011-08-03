@@ -29,7 +29,7 @@ When asked for the file location choose an appropriate location such as your des
          </task>
          
          <taskGroup name= "Add Layers" kind = "sequence">
-             <intro> First you will learn how to add some simple layers to our workbench. 
+             <intro> First you will learn how to add some simple layers to our map. 
              <br/><br/>This task requires that you have some sample data, you can download the latest sample 
              data set from the <a href="http://udig.refractions.net/download/">uDig website download page</a>.
              </intro>
@@ -61,6 +61,11 @@ When asked for the file location choose an appropriate location such as your des
              </task>       
          </taskGroup>
          
+         <taskGroup name= "Working With The Map" kind = "sequence">
+             <intro>
+             Now we have some layers on our map lets learn how to work with them.
+             </intro>
+              <onCompletion>Congratulations you now know how to work with the map.</onCompletion>
          <task kind="cheatsheet" name= "Layer Order" skip="true">
               <param name = "id" value = "net.refractions.udig.help.cheatsheet.layerorder" />
               <intro>In this cheat sheet we are going to order some of the layers we just added.
@@ -78,9 +83,10 @@ When asked for the file location choose an appropriate location such as your des
          <task kind="cheatsheet" name= "Map Navigation" skip="true">
               <param name = "id" value = "net.refractions.udig.help.cheatsheet.mapnavigation" />
               <intro>
-              In this cheat sheet we are going to learn about using dome of the tools available to navigate around the map.
+              In this cheat sheet we are going to learn about using some of the tools available to navigate around the map.
               </intro>
                <onCompletion>Congratulations you now know how navigate agound a map.</onCompletion>                  
          </task>
+         </taskGroup>
     </taskGroup>
 </compositeCheatsheet> 

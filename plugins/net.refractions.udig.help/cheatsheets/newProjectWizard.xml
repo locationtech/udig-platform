@@ -4,8 +4,11 @@
     <description>
     In this cheat sheet we are going to creating a simple project. 
 </description>
-  </intro href="/net.refractions.udig.help/EN/Wizards and Dialogs.html">  
-  <item title="New Project Wizard" dialog="true">
+  </intro>  
+  <item  
+  	href="/net.refractions.udig.help/EN/Wizards and Dialogs.html" 
+  	title="New Project Wizard" 
+  	dialog="true">
      <description>
      Create a simple project by select <b>File > New > New Project</b> from the menu bar.
      </description>

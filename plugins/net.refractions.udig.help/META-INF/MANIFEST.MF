@@ -16,7 +16,8 @@ Require-Bundle: org.apache.ant,
  net.refractions.udig.style.sld;bundle-version="1.2.0",
  net.refractions.udig.project.ui;bundle-version="1.2.0",
  net.refractions.udig.project.ui.editor;bundle-version="1.2.0",
- net.refractions.udig.catalog.ui;bundle-version="1.2.0"
+ net.refractions.udig.catalog.ui;bundle-version="1.2.0",
+ net.refractions.udig.tool.default;bundle-version="1.2.0"
 Eclipse-LazyStart: true
 Import-Package: net.refractions.udig.catalog.internal.ui,
  net.refractions.udig.project.ui.internal

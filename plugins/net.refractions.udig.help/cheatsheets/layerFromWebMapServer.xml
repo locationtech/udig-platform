@@ -9,7 +9,8 @@
     	Servers (WMS) which make available layers of information that you can mix into your own maps.
 	</description>
   </intro>  
-  <item title="Web View">
+  
+  <item skip="true" title="Web View">
      <description>
      	We are going to make use for the WMS published on the uDig site.
      	<br/><br/>
@@ -19,7 +20,7 @@
             serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=net.refractions.udig.browser.ui.browserContainerView)"/>
   </item>
   
-  <item skip="false" title="Load Service" dialog="true">
+  <item skip="true" title="Load Service" dialog="true">
      <description>
 		Click on the link <b>WMS:dm solutions</b> link to load the service.
 		<br/><br/>
