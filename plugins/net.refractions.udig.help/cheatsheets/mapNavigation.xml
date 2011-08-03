@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Load Shape File">
+  <intro href="/net.refractions.udig.help/EN/Navigation Tools.html">
+    <description>
+    	You can control where the Map Editor is looking by using the navigation tools, the 
+    	navigation tools are located in the tool bar along the top of the screen.
+	</description>
+  </intro>  
+  <item skip="true" title="Zoom Tool">
+     <description>
+		The <b>Zoom Tool</b> is available by default. You can activate the tool by clicking 
+		it in the tool bar.
+	</description>
+  
+  </item>
+  
+  <item skip="true" title="Zoom In Selection">
+     <description>
+		Use the <b>Zoom Tool</b> by drawing a box using the left mouse button around the area of the 
+		map you wish to see.
+	</description>
+  </item>
+  
+  <item skip="true" title="Zoom Out Selection">
+     <description>
+		To <b>Zoom Out</b> draw a box with the right mouse button. The current map extents will be 
+		located within the box you draw
+	</description>
+  </item>
+  
+  <item skip="true" title="Pan Tool">
+     <description>
+		The <b>Pan Tool</b> can be used to scroll around your map with out changing scale. You can activate the tool by clicking 
+		it in the tool bar.
+	</description>
+  </item>
+  
+  <item skip="true" title="Pan Tool">
+     <description>
+		Using the left mouse button click and drag the map to pan you view.
+	</description>
+  </item>
+  
+  <item skip="true" title="Zoom In">
+     <description>
+		 The <b>Zoom In Tool</b> can be used to change the scale by a fixed amount. Click the tool once will 
+		 zoom the map in one level, clicking in again will zoom the map out a further level.
+	</description>
+  </item>
+  
+  <item skip="true" title="Zoom Out">
+     <description>
+		The <b>Zoom Out Tool</b> can be used to change the scale by a fixed amount. Click the tool once will 
+		 zoom out the map by one level, clicking in again will zoom the map out a further level.
+	</description>
+  </item>
+  
+  <item skip="true" title="Zoom To Extent">
+     <description>
+		The <b>Show All Tool</b> can be used to return the map to the full extents at any time. Click the tool once
+		to zoom to fill extent.
+	</description>
+  </item>
+  
+</cheatsheet>

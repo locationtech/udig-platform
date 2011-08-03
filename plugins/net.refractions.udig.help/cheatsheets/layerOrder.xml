@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Layer View">
+  <intro>
+    <description>
+    	The context menu for this view also allows you to change the style of the selected layer, perform analysis on the layer, zoom to the layer, delete the layer, rename the layer and set which tools will work on the layer.
+    	<br/><br/>
+    	To complete this cheat sheet you need to have a minimum of two layers added to a map.
+	</description>
+  </intro>  
+  <item title="Layer Order">
+     <description>
+		Like other views in the Workbench, the Layers has its own toolbar. Toolbar buttons are provided for moving a layer up or down in the rendering context.
+	</description>
+  
+  </item>
+  
+  <item title="Order Up">
+     <description>
+		<b>Click</b> the <b>Up Arrow</b> to move the selected layer towards the front, changing its z order, allowing it to appear over top of layers further down in the list.
+	</description>
+  
+  </item>
+  
+  <item title="Order Down">
+     <description>
+     Similarly <b>Click</b> the <b>Down Arrow</b> to move the selected layer towards the back, changing its z order, allowing it to be drawn under layers further up in the list.
+	</description>
+  
+  </item>
+  
+  <item title="Order Down">
+     <description>
+     In addition to using the up and down arrow you can also drag and drop the layer order. Drag the layer from the top to the bottom of the layer list to change order.
+	</description>
+  
+  </item>
+  </cheatsheet>

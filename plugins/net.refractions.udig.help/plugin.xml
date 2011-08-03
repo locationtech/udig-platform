@@ -28,6 +28,10 @@
           id="net.refractions.udig.help.sheatsheet.category.gettingstarted"
           name="Getting Started">
     </category>
+    <category
+          id="net.refractions.udig.help.category.tools"
+          name="Tools">
+    </category>
  </extension>
 	<extension point="org.eclipse.ui.cheatsheets.cheatSheetContent">
 	    <cheatsheet
@@ -45,28 +49,28 @@
            name="Workbench">
      </cheatsheet>
      <cheatsheet
-           category="net.refractions.udig.help.sheatsheet.category.addlayers"
+           category="net.refractions.udig.help.sheatsheet.category.layers"
            composite="false"
-           contentFile="cheatsheets/dragFromFileSystem.xml"
+           contentFile="cheatsheets/layerFromFileSystem.xml"
            id="net.refractions.udig.help.cheatsheet.dragFromFileSystem"
-           name="Drag From File System">
+           name="Layer from File System">
      </cheatsheet>
      <cheatsheet
            category="net.refractions.udig.help.sheatsheet.category.layers"
            composite="false"
-           contentFile="cheatsheets/loadShapeFile.xml"
+           contentFile="cheatsheets/layerFromShapeFile.xml"
            id="net.refractions.udig.help.cheatsheet.loadShapeFile"
-           name="Load Shape File">
+           name="Layer from Shape File">
      </cheatsheet>
      <cheatsheet
            category="net.refractions.udig.help.sheatsheet.category.layers"
            composite="false"
-           contentFile="cheatsheets/style.xml"
+           contentFile="cheatsheets/layerChangeStyle.xml"
            id="net.refractions.udig.help.cheatsheet.stylelayer"
            name="Style Layer">
      </cheatsheet>
      <cheatsheet
-           category="net.refractions.udig.help.category.map"
+           category="net.refractions.udig.help.category.tools"
            composite="false"
            contentFile="cheatsheets/mapNavigation.xml"
            id="net.refractions.udig.help.cheatsheet.mapnavigation"
@@ -75,9 +79,16 @@
      <cheatsheet
            category="net.refractions.udig.help.sheatsheet.category.layers"
            composite="false"
-           contentFile="cheatsheets/webMapServer.xml"
+           contentFile="cheatsheets/layerFromWebMapServer.xml"
            id="net.refractions.udig.help.cheatsheet.webmapservice"
-           name="Web Map Service">
+           name="Layer from Web Map Service">
+     </cheatsheet>
+     <cheatsheet
+           category="net.refractions.udig.help.sheatsheet.category.layers"
+           composite="false"
+           contentFile="cheatsheets/layerOrder.xml"
+           id="net.refractions.udig.help.cheatsheet.layerorder"
+           name="Order Layers">
      </cheatsheet>
 	</extension>
  <extension

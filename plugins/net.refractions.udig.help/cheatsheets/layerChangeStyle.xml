@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Layer Style">
+  <intro href="/net.refractions.udig.help/EN/Change a Layers Style.html">
+    <description>
+    	We are going to quickly add a data layer to uDig by dragging the file from out file system onto the workbench, uDig will process this file for us and preform all the necessary steps.
+	</description>
+  </intro>  
+  
+  <item skip="false" title="Open Style Editor" dialog="true" href="/net.refractions.udig.help/EN/Style Editor Dialog.html">
+     <description>
+    The style of a layer may be changed by opening the Style Editor.
+    <br/><br/> 
+	Open up the Style Editor dialog by <b>right clicking</b> on the layer you wish to style and choosing <b>Change Style</b>.
+	<br/><br/> 
+	<b>Example: Right click</b> on countries and select <b>Change Style</b>
+	</description>
+	
+  </item>
+ 
+  <item
+        title="Change Style" >
+     <description>
+       Change the layers fill colour by selection the <b>Fill</b> tab and then clicking on the colour button to activate the colour dialog.
+<br/><br/>
+Select a new colour and close the dialog.
+     </description>
+  </item>
+  
+  <item
+        title="Apply">
+     <description>
+        Click the <b>Apply</b> button to see what this new style looks like on your Map, the Layer view will also be updated to reflect the current style
+     </description>
+  </item> 
+  
+  <item
+        title="XML">
+     <description>
+       Should you need to do something a little more complex than what the simple or theme pages offer, the XML page allows you to directly modify the Styled Layer Descriptor document (this describes how you would like your layer drawn).
+     </description>
+  </item> 
+  
+   <item
+        title="Style View">
+     <description>
+       uDig also offers a Style View that can be utilised to preform simple layer styling. To see the Style View in action change to the Style Perspective by selection  <b>Window > Open Perspective > Style Perspective</b>
+     </description>
+     <command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=net.refractions.udig.ui.stylePerspective)" required="false" translate=""/>
+  </item> 
+</cheatsheet>
