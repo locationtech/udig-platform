@@ -2,7 +2,7 @@
 <cheatsheet title="Drag In File">
   <intro>
     <description>
-    	We are going to quickly add a data layer to uDig by dragging a file from out file 
+    	We are going to quickly add a data layer to uDig by dragging a file from out of the file 
     	system onto the workbench, uDig will process the file for us and add it to the map.
 	</description>
   </intro>  

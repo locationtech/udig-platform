@@ -12,7 +12,7 @@
   
   <item skip="true" title="Web View">
      <description>
-     	We are going to make use for the WMS published on the uDig site.
+     	We are going to make use of the WMS published on the uDig site.
      	<br/><br/>
 		Change to the Web view by clicking <b>Window > Show View > Web</b> . 
 	</description>
@@ -22,7 +22,7 @@
   
   <item skip="true" title="Load Service" dialog="true">
      <description>
-		Click on the link <b>WMS:dm solutions</b> link to load the service.
+		Click on the link <b>WMS:dm solutions</b> to load the service.
 		<br/><br/>
 		From the Resource Selection page we are going to <b>check</b> the following layers: <b>Elevation/Bathymetry</b>, <b>Parks</b> and <b>Cities</b>
 		<br/><br/>

@@ -35,7 +35,7 @@
   <item title="Drag and Drop" 
   	href="/net.refractions.udig.help/EN/Drag andDrop.html">
      <description>
-     In addition to using the up and down arrow you can also drag and drop the layer order. 
+     In addition to using the up and down arrows you can also drag and drop layers to change the order. 
      <br/><br/>
      <b>Drag</b> the layer from the top of the layer list to the bottom of the layer list to change its draw order on the map.
 	</description>

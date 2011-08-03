@@ -3,7 +3,7 @@
   <intro>
     <description>
     	Before we start playing with maps, let’s take a look at the default layout of the uDig
-workbench and what some of the key view's are.
+workbench and what some of the key views are.
 	</description>
   </intro>  
   <item title="Perspectives">
@@ -13,7 +13,7 @@ workbench and what some of the key view's are.
 		The workbench contains the menu bar, tool bars and a number of views. By default your workbench 
 		is loaded in the Map Perspective.
 		<br/><br/>
-		You can change to the Style Perspective by selection the <b>Window > Open Perspective > Style Perspective</b>
+		You can change to the Style Perspective by selecting the <b>Window > Open Perspective > Style Perspective</b>
 		</description>
 	<command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=net.refractions.udig.ui.stylePerspective)" required="false" translate=""/>
   
@@ -21,7 +21,7 @@ workbench and what some of the key view's are.
 
   <item title="Map Perspective">
      <description>
-		Similarly you can change back to the Map Perspective by selection the <b>Window > Open Perspective > Map Perspective</b>
+		Similarly, you can change back to the Map Perspective by selecting the <b>Window > Open Perspective > Map Perspective</b>
 	</description>
   	<command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=net.refractions.udig.ui.mapPerspective)" required="false" translate=""/>
   

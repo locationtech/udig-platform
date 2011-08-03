@@ -28,7 +28,7 @@ Select a new colour and close the dialog.
   <item
         title="Apply">
      <description>
-        Click the <b>Apply</b> button to see what this new style looks like on your Map, the Layer view will also be updated to reflect the current style
+        Click the <b>Apply</b> button to see what this new style looks like on your Map. The Layer view will also be updated to reflect the current style
      </description>
   </item> 
   
@@ -50,7 +50,7 @@ Select a new colour and close the dialog.
    <item
     title="Style View">
      <description>
-      uDig also offers a Style View that can be utilised to preform simple layer styling. To see the Style View in action change to the Style Perspective by selection  <b>Window > Open Perspective > Style Perspective</b>
+      uDig also offers a Style View that can be utilised to perform simple layer styling. To see the Style View in action change to the Style Perspective by selecting  <b>Window > Open Perspective > Style Perspective</b>
       </description>
      <command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=net.refractions.udig.ui.stylePerspective)" required="false" translate=""/>
   </item> 

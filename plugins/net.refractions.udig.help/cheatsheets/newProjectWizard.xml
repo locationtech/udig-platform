@@ -10,7 +10,7 @@
   	title="New Project Wizard" 
   	dialog="true">
      <description>
-     Create a simple project by select <b>File > New > New Project</b> from the menu bar.
+     Create a simple project by selecting <b>File > New > New Project</b> from the menu bar.
      </description>
         <command 
 		serialization="org.eclipse.ui.newWizard(newWizardId=net.refractions.udig.project.ui.wizards.newProject)" 
