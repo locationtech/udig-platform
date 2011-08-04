@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Drag In File">
+  <intro>
+    <description>
+    	We are going to quickly add a data layer to uDig by dragging a file from out of the file 
+    	system onto the workbench, uDig will process the file for us and add it to the map.
+	</description>
+  </intro>  
+  
+  <item title="File System">
+     <description>
+		In your file system locate your data folder that contained some spatial data. 
+	</description>
+  
+  </item>
+  
+  <item title="Drag a File">
+     <description>
+		Drag a spatial file onto your map.
+		<br/><br/>
+		<b>Example:</b> NE1_50M_SR_W.tif
+	</description>
+  </item>
+  <item
+        title="Layer Added">
+     <description>
+        You will see a new layer has been added to your map. It will be the top most layer on the map.
+     </description>
+  </item>
+</cheatsheet>
