@@ -134,6 +134,48 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         buttonComposite.setLayoutData(gridDataBC);
         buttonComposite.setLayout(new GridLayout(8, true));
 
+        Button selectAllButton = new Button(buttonComposite, SWT.PUSH);
+        GridData selectAllGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        selectAllGD.horizontalSpan = 3;
+        selectAllButton.setLayoutData(selectAllGD);
+        selectAllButton.setText("Select all");
+        selectAllButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                for( CoverageRule cRule : listOfRules ) {
+                    cRule.setActive(true);
+                }
+                redoLayout();
+            }
+        });
+
+        Button unselectAllButton = new Button(buttonComposite, SWT.PUSH);
+        GridData unselectAllGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        unselectAllGD.horizontalSpan = 3;
+        unselectAllButton.setLayoutData(unselectAllGD);
+        unselectAllButton.setText("Unselect all");
+        unselectAllButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                for( CoverageRule cRule : listOfRules ) {
+                    cRule.setActive(false);
+                }
+                redoLayout();
+            }
+        });
+
+        Button invertSelectionButton = new Button(buttonComposite, SWT.PUSH);
+        GridData invertSelectionGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        invertSelectionGD.horizontalSpan = 2;
+        invertSelectionButton.setLayoutData(invertSelectionGD);
+        invertSelectionButton.setText("Invert selection");
+        invertSelectionButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                for( CoverageRule cRule : listOfRules ) {
+                    cRule.setActive(!cRule.isActive());
+                }
+                redoLayout();
+            }
+        });
+
         GridData resetGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         resetGD.horizontalSpan = 8;
         resetColormapButton = new Button(buttonComposite, SWT.NONE);
@@ -179,7 +221,6 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         addNovalueRulesButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         addNovalueRulesButton.setText("Add rules for novalues");
         addNovalueRulesButton.addSelectionListener(new SelectionAdapter(){
-            @Override
             public void widgetSelected( SelectionEvent e ) {
                 double[] nvArray = getExtraNovalues();
                 if (nvArray.length > 0) {
@@ -187,7 +228,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                         Color fromColor = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
                         Color toColor = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
                         CoverageRule rule = new CoverageRule(new double[]{nv, nv}, fromColor, toColor, 0.0, true);
-                        listOfRules.add(0,rule);
+                        listOfRules.add(0, rule);
                         redoLayout();
                     }
                 }
