@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Preferred Zoom Levels
+Bundle-SymbolicName: eu.udig.tutorials.preferredzoomlevels;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: eu.udig.tutorials.preferred_zoom_levels.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.tool.default;bundle-version="1.2.0",
+ net.refractions.udig.tool.info;bundle-version="1.2.0",
+ net.refractions.udig.tool.select;bundle-version="1.2.0",
+ net.refractions.udig.project.ui;bundle-version="1.2.0",
+ net.refractions.udig.project.ui.editor;bundle-version="1.2.0",
+ net.refractions.udig.catalog.shp;bundle-version="1.2.0",
+ net.refractions.udig.render.feature.basic;bundle-version="1.2.1"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -31,6 +31,10 @@ GNU Lesser General Public License for more details.
       <update label="User-friendly Desktop Internet GIS Updates" url="http://udig.refractions.net/update/"/>
    </url>
 
+   <includes
+         id="eu.udig.teradata.feature"
+         version="0.0.0"/>
+
    <plugin
          id="net.refractions.udig.mapgraphic"
          download-size="0"
@@ -233,10 +237,10 @@ GNU Lesser General Public License for more details.
          unpack="false"/>
 
    <plugin
-         id="eu.udig.imagegeoreferencing"
+         id="eu.udig.omsbox"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
+         unpack="true"/>
 
 </feature>

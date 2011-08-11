@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Workbench">
+  <intro>
+    <description>
+    	Before we start playing with maps, let’s take a look at the default layout of the uDig
+workbench and what some of the key views are.
+	</description>
+  </intro>  
+  <item title="Perspectives">
+
+     <description>
+		The term workbench is used to describe the environment in which all of your work will be done. 
+		The workbench contains the menu bar, tool bars and a number of views. By default your workbench 
+		is loaded in the Map Perspective.
+		<br/><br/>
+		You can change to the Style Perspective by selecting the <b>Window > Open Perspective > Style Perspective</b>
+		</description>
+	<command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=net.refractions.udig.ui.stylePerspective)" required="false" translate=""/>
+  
+  </item>
+
+  <item title="Map Perspective">
+     <description>
+		Similarly, you can change back to the Map Perspective by selecting the <b>Window > Open Perspective > Map Perspective</b>
+	</description>
+  	<command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=net.refractions.udig.ui.mapPerspective)" required="false" translate=""/>
+  
+  </item>
+  
+   <item title="Project View">
+     <description>
+		A Perspective is made up of several views including the Project view.
+		<br/><br/>
+		The Project View is used to display opened projects, and their contents.
+		</description>
+  		<command when = "Search View" 
+            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=net.refractions.udig.project.ui.projectExplorer)"/>
+  </item>
+  
+  <item title="Layer View">
+     <description>
+		The Layers view shows the layers displayed on the current Map.
+		<br/><br/>
+		The context menu for this view also allows you to change the style of the selected layer, 
+		perform analysis on the layer, zoom to the layer, delete the layer, rename the layer and 
+		set which tools will work on the layer (Tool Applicability).
+	</description>
+	<command when = "Search View" 
+            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=net.refractions.udig.project.ui.layerManager)"/>
+  
+  </item>
+  
+  <item title="Catalog View">
+     <description>
+		The Catalog view is used to explore services and resources known to the uDig application. 
+		Resources in the catalog view can be added to your map using drag and drop.
+	</description>
+	<command when = "Search View" 
+            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=net.refractions.udig.catalog.ui.CatalogView)"/>
+  </item>
+</cheatsheet>

@@ -29,6 +29,8 @@ import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.ui.IActionBars2;
 
+import com.vividsolutions.jts.geom.Coordinate;
+
 /**
  * A set of tools that is provided to Tool extensions.
  * <p>
@@ -141,4 +143,20 @@ public interface IToolContext extends IAbstractContext {
     public void updateUI( Runnable runnable );
 
     public IToolContext copy();
+
+    /**
+     * Calculates the best zoom level based on the Preferred Zoom levels  in ViewportModel.  
+     * As recommended in the API the preferred zoom levels are used only if they are not defaults.
+     * 
+     * That behaviour can be overridden by setting alwayUsePreferredZoomLevels to be true 
+     * 
+     * @param previousZoom the value of the previousZoom level.  1 is no zoom.  This is required for incremental zooming
+     * @param zoomChange the difference between the previousZoom level and the new desiredZoom
+     * @param fixedPoint the zoom center
+     * @param alwayUsePreferredZoomLevels true to always used preferred zoom levels even if they are the defaults
+     * @param alwaysChangeZoom make sure the zoom always changes useful for zoom in buttons
+     * 
+     * @return the best zoom level to use
+     */
+	public double calculateZoomLevel(double previousZoom, double zoom, Coordinate fixedPoint, boolean alwayUsePreferredZoomLevels, boolean alwaysChangeZoom);
 }

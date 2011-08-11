@@ -61,6 +61,9 @@ public class ProfileView extends ViewPart {
     private XYItemRenderer renderer;
     private XYPlot plot;
 
+    private double max = Double.NEGATIVE_INFINITY;
+    private double min = Double.POSITIVE_INFINITY;
+
     private List<Marker> markers = new ArrayList<Marker>();
 
     public ProfileView() {
@@ -90,7 +93,14 @@ public class ProfileView extends ViewPart {
     }
 
     public void addToSeries( final double x, final double y ) {
+        max = Math.max(max, y);
+        min = Math.min(min, y);
         series.add(x, y);
+    }
+
+    public void setRangeToDataBounds() {
+        ValueAxis rangeAxis = plot.getRangeAxis();
+        rangeAxis.setRange(min - 1, max + 1);
     }
 
     public void clearSeries() {

@@ -95,6 +95,7 @@
             styleId="eu.udig.catalog.jgrass.activeregion.activeregionStyle">
       </styleConfigurator>
    </extension>
+   <!--
    <extension
          point="net.refractions.udig.project.ui.tool">
       <modalTool
@@ -120,6 +121,7 @@
             image="icons/select_source.png">
       </toolCursor>
    </extension>
+   -->
    <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution

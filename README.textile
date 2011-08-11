@@ -1,0 +1,40 @@
+h1. uDig Overview
+
+The User-friendly Desktop Internet GIS (uDig) is an open source (LGPL) desktop application framework, built with the Eclipse Rich Client (RCP) technology.
+
+* uDig can be used as a stand-alone application
+* uDig can be extended with RCP "plug-ins"
+* uDig can be used as a plug-in in an existing RCP application
+
+uDig is an open project, with developers from multiple companies participating in the decision making process and project direction. All decisions are made transparently, on the public mailing list, or in open IRC discussions.
+
+* #udig on freenode
+* #geotools on freenode
+
+h1. Website
+
+* uDig Website - "http://udig.refractions.net/":http://udig.refractions.net/
+* Developers Guide - "http://udig.refractions.net/developers/":http://udig.refractions.net/developers/
+
+h1. Project Outline
+
+The goal of uDig is to provide a complete Java solution for desktop GIS data access, editing, and viewing. uDig aims to be:
+* *U*ser friendly, providing a familiar graphical environment for GIS users;
+* *D*esktop located, running as a thick client, natively on Windows, Mac OS/X and Linux;
+* *I*nternet oriented, consuming standard (WMS, WFS, WCS) and de facto (GeoRSS, KML, tiles) geospatial web services; and,
+* *G*IS ready, providing the framework on which complex analytical capabilities can be built, and gradually subsuming those capabilities into the main application.
+
+h1. Steering Committee
+
+* Andrea Antonello
+* Jesse Eichar
+* Jody Garnett
+* Mauricio Pazos
+
+h1. Contributing
+
+Join us in working on uDig
+
+* "How to Take part":http://udig.refractions.net/confluence/display/ADMIN/How+to+take+part
+* "Development Environment":http://udig.refractions.net/confluence/display/ADMIN/02+Development+Environment
+* "Project Procedures":http://udig.refractions.net/confluence/display/ADMIN/04+Project+Procedures

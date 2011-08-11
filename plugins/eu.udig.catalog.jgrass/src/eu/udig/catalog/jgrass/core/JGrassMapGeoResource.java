@@ -42,20 +42,15 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.coverage.grid.GridCoverage2D;
-import org.geotools.coverage.grid.io.AbstractGridFormat;
-import org.geotools.gce.grassraster.GrassCoverageReadParam;
-import org.geotools.gce.grassraster.GrassCoverageReader;
+import org.geotools.coverage.grid.GridEnvelope2D;
+import org.geotools.coverage.grid.GridGeometry2D;
 import org.geotools.gce.grassraster.JGrassConstants;
 import org.geotools.gce.grassraster.JGrassMapEnvironment;
 import org.geotools.gce.grassraster.JGrassRegion;
-import org.geotools.gce.grassraster.JGrassUtilities;
-import org.geotools.gce.grassraster.format.GrassCoverageFormatFactory;
+import org.geotools.geometry.Envelope2D;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.coverage.grid.GridCoverage;
-import org.opengis.coverage.grid.GridCoverageReader;
-import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.opengis.referencing.datum.PixelInCell;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
@@ -119,7 +114,7 @@ public class JGrassMapGeoResource extends IGeoResource {
          */
         return adaptee.isAssignableFrom(IService.class) || adaptee.isAssignableFrom(IGeoResource.class)
                 || adaptee.isAssignableFrom(JGrassMapGeoResource.class) || adaptee.isAssignableFrom(GridCoverage.class)
-                || super.canResolve(adaptee);
+                || adaptee.isAssignableFrom(GridGeometry2D.class) || super.canResolve(adaptee);
         // || adaptee.isAssignableFrom(File.class);
     }
 
@@ -141,6 +136,19 @@ public class JGrassMapGeoResource extends IGeoResource {
         }
         if (adaptee.isAssignableFrom(IGeoResource.class)) {
             return adaptee.cast(this);
+        }
+        if (adaptee.isAssignableFrom(GridGeometry2D.class)) {
+            try {
+                CoordinateReferenceSystem crs = jGrassMapEnvironment.getCoordinateReferenceSystem();
+                JGrassRegion r = jGrassMapEnvironment.getFileRegion();
+                Envelope2D envelope = new Envelope2D(crs, r.getWest(), r.getSouth(), r.getEast() - r.getWest(), r.getNorth()
+                        - r.getSouth());
+                GridEnvelope2D gridRange = new GridEnvelope2D(0, 0, r.getCols(), r.getRows());
+                GridGeometry2D gridGeometry2D = new GridGeometry2D(gridRange, (org.opengis.geometry.Envelope) envelope);
+                return adaptee.cast(gridGeometry2D);
+            } catch (Exception e) {
+                msg = e;
+            }
         }
         if (adaptee.isAssignableFrom(GridCoverage.class)) {
             try {

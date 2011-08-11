@@ -17,7 +17,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
@@ -29,9 +28,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -53,23 +52,19 @@ public class Activator extends AbstractUIPlugin {
 	static final String JDBC_FILE_NAME = "terajdbc4.jar"; //$NON-NLS-1$
 
 	private static final class LicenseDialog extends Dialog {
-		private String jdbcPath = System.getProperty("user.home")+File.separator+JDBC_FILE_NAME;
-		private String configPath = System.getProperty("user.home")+File.separator+CONFIG_FILE_NAME;
+		private String path = System.getProperty("user.home");
 
 		private LicenseDialog(Shell parentShell) {
 			super(parentShell);
 		}
 
-		public String getJdbcPath() {
-			return jdbcPath;
-		}
-		public String getConfigPath() {
-			return configPath;
+		public File getPath() {
+			return new File(path);
 		}
 		protected int getShellStyle() {
 			return SWT.RESIZE | SWT.MAX |super.getShellStyle();
 		}
-
+		String htmlForm = "<html><head><style type='text/css'>body {font-family: Arial,Helvetica,sans-serif;font-size: 12px;background: #ffffff;}</style></head><body>%s</body</html>";
 		protected org.eclipse.swt.widgets.Control createDialogArea(
 				final org.eclipse.swt.widgets.Composite parent) {
 			Composite comp = new Composite(parent, SWT.NONE);
@@ -83,7 +78,7 @@ public class Activator extends AbstractUIPlugin {
 			Control msg;
 		    try {
 				Browser browser = new Browser(comp, SWT.NONE);
-				browser.setText(Messages.GetHTMLDriverMsg);
+				browser.setText(String.format(htmlForm,Messages.GetHTMLDriverMsg));
 		        msg = browser;
 		        browser.addLocationListener(new LocationListener() {
 					
@@ -109,27 +104,21 @@ public class Activator extends AbstractUIPlugin {
 		    }
 			GridDataFactory.fillDefaults().span(2, 1)
 					.hint(500, 200).applyTo(msg);
-			area(jdbcPath, JDBC_FILE_NAME, comp);
-			area(configPath, CONFIG_FILE_NAME, comp);
+			area(path, JDBC_FILE_NAME, comp);
 
 			return comp;
 		}
 
-		public Text area(String path,
+		public Text area(String defaultPath,
 				final String textData, final Composite comp) {
-			
 			final Text text1 = new Text(comp, SWT.SINGLE
 					| SWT.BORDER | SWT.SHADOW_IN);
-			text1.setText(path);
+			text1.setText(defaultPath);
 			text1.addListener(SWT.Modify, new Listener() {
 
 				@Override
 				public void handleEvent(Event event) {
-					if(textData.equals(CONFIG_FILE_NAME)) {
-						configPath = text1.getText(); 
-					} else {
-						jdbcPath = text1.getText();
-					}
+					path = text1.getText(); 
 					updateRestart();
 				}
 
@@ -147,7 +136,7 @@ public class Activator extends AbstractUIPlugin {
 
 						@Override
 						public void handleEvent(Event event) {
-							FileDialog fdialog = new FileDialog(
+							DirectoryDialog fdialog = new DirectoryDialog(
 									comp.getShell(),
 									SWT.OPEN);
 							String result = fdialog.open();
@@ -173,8 +162,19 @@ public class Activator extends AbstractUIPlugin {
 		}
 
 		private void updateRestart() {
-			boolean driv = new File(jdbcPath.trim()).exists();
-			boolean conf = new File(configPath.trim()).exists();
+			File dir = new File(path.trim());
+			boolean driv = false;
+			boolean conf = false;
+			if(dir.exists() && dir.isDirectory()) {
+				for (File f : dir.listFiles()) {
+					if(f.getName().equals(JDBC_FILE_NAME)) {
+						driv = true;
+					} else if(f.getName().equals(CONFIG_FILE_NAME)){
+						conf = true;
+					}
+					if(driv && conf) break;
+				}
+			}
 			getButton(Window.OK).setEnabled(conf && driv);
 		}
 	}
@@ -318,12 +318,7 @@ public class Activator extends AbstractUIPlugin {
 					RandomAccessFile out = null;
 					RandomAccessFile in = null;
 					try {
-						String fromPath = null;
-						if (dialog.getJdbcPath().contains(driver)) {
-							fromPath = dialog.getJdbcPath();
-						} else {
-							fromPath = dialog.getConfigPath();
-						}
+						String fromPath = new File(dialog.getPath(),driver).getPath();
 						
 						String toPath = new File(dest, driver).getPath();
 						out = new RandomAccessFile(toPath, "rw");

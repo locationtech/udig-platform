@@ -4,7 +4,7 @@
 <product name="%product.name" uid="udig" id="net.refractions.udig.product" application="net.refractions.udig.ui.application" version="1.2.2.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
-      <image path="/net.refractions.udig/icons/about.gif"/>
+      <image path="/net.refractions.udig/icons/about.png"/>
       <text>
          %verboseAboutText
       </text>
@@ -14,7 +14,7 @@
    </configIni>
 
    <launcherArgs>
-      <vmArgs>-Xmx386M -Dosgi.parentClassloader=ext -Dorg.eclipse.emf.ecore.plugin.EcorePlugin.doNotLoadResourcesPlugin=true</vmArgs>
+      <vmArgs>-Xmx386M -Dosgi.parentClassloader=ext -Dorg.eclipse.emf.ecore.plugin.EcorePlugin.doNotLoadResourcesPlugin=true -XX:MaxPermSize=256m</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true</vmArgsMac>
    </launcherArgs>
 

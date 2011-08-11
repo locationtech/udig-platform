@@ -28,6 +28,7 @@ import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.ui.commands.DrawCommandFactory;
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.AbstractModalTool;
 import net.refractions.udig.project.ui.tool.ModalTool;
 
@@ -39,13 +40,15 @@ import net.refractions.udig.project.ui.tool.ModalTool;
  */
 public class Zoom extends AbstractModalTool implements ModalTool {
     /** <code>ZOOMFACTOR</code> field */
-    public static final double ZOOMFACTOR = 2;
+    public static final int ZOOMFACTOR = 2;
     private boolean zooming;
     private Point start;
     //NavigationCommandFactory factory = NavigationCommandFactory.getInstance();
     DrawCommandFactory dfactory = DrawCommandFactory.getInstance();
     SelectionBoxCommand shapeCommand = new SelectionBoxCommand();
 
+    boolean showContextOnRightClick = false;
+    
     /**
      * Creates an new instance of Zoom
      */
@@ -106,6 +109,10 @@ public class Zoom extends AbstractModalTool implements ModalTool {
      * @see net.refractions.udig.project.tool.AbstractTool#mousePressed(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mousePressed(MapMouseEvent e) {
+        if (e.button == MapMouseEvent.BUTTON3 && showContextOnRightClick) {
+            ((ViewportPane) e.source).getMapEditor().openContextMenu();
+        	return;
+    	}
         if ( !e.isAltDown() && !e.isShiftDown() && 
                 (e.button == MapMouseEvent.BUTTON1 
                         || e.button == MapMouseEvent.BUTTON3
@@ -123,6 +130,10 @@ public class Zoom extends AbstractModalTool implements ModalTool {
      * @see net.refractions.udig.project.tool.AbstractTool#mouseReleased(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mouseReleased(MapMouseEvent e) {
+        if (e.button == MapMouseEvent.BUTTON3  && showContextOnRightClick) {
+            ((ViewportPane) e.source).getMapEditor().openContextMenu();
+        	return;
+    	}
         if (zooming) {
             IViewportModel m = getContext().getViewportModel();
             if ((Math.abs(start.x - e.x)<5) && (Math.abs(start.y - e.y)<5)) {
@@ -166,47 +177,31 @@ public class Zoom extends AbstractModalTool implements ModalTool {
     }
 
 	private void zoomout( IViewportModel m ) {
-        NavCommand[] commands = new NavCommand[]{
-                new SetViewportCenterCommand(m.pixelToWorld(start.x, start.y)),
-                new ZoomCommand((1 / ZOOMFACTOR))};
-        getContext().sendASyncCommand(new NavComposite(Arrays.asList(commands)));
+		NavigationUpdateThread.getUpdater().zoomWithFixedPoint(-ZOOMFACTOR, context, NavigationUpdateThread.DEFAULT_DELAY,start);
     }
 
 	private void zoomIn(IViewportModel m) {
-		NavCommand[] commands = new NavCommand[] {
-		        new SetViewportCenterCommand(m.pixelToWorld(start.x,
-                start.y)), new ZoomCommand(ZOOMFACTOR) };
-		getContext().sendASyncCommand(new NavComposite(Arrays.asList(commands)));
+		NavigationUpdateThread.getUpdater().zoomWithFixedPoint(ZOOMFACTOR, context, NavigationUpdateThread.DEFAULT_DELAY,start);
 	}
 
-    /**
-     *
-     * @param m
-     * @param r
-     */
     private void zoomin( IViewportModel m, Rectangle r ) {
-        NavCommand[] commands = new NavCommand[]{
-                new SetViewportCenterCommand(m.pixelToWorld(r.x + r.width / 2, r.y + r.height / 2)),
-                new ZoomCommand(getContext().getMapDisplay().getDisplaySize().getWidth() / r.width)};
-        getContext().sendASyncCommand(new NavComposite(Arrays.asList(commands)));
+    	ZoomCommand cmd = new ZoomCommand(getContext().getMapDisplay().getDisplaySize().getWidth() / r.width);
+    	cmd.setFixedPoint(m.pixelToWorld(r.x + r.width / 2, r.y + r.height / 2));
+        getContext().sendASyncCommand(cmd);
     }
 
-    /**
-     *
-     * @param m
-     * @param r
-     */
     private void zoomout( IViewportModel m, Rectangle r ) {
-        NavCommand[] commands = new NavCommand[] {
-                new SetViewportCenterCommand(m.pixelToWorld(
-                r.x + r.width / 2, r.y + r.height / 2)),
-                new ZoomCommand((r.width / getContext().getMapDisplay().getDisplaySize().getWidth())) };
-        getContext().sendASyncCommand(new NavComposite(Arrays.asList(commands)));
+    	ZoomCommand cmd = new ZoomCommand((r.width / getContext().getMapDisplay().getDisplaySize().getWidth()));
+    	cmd.setFixedPoint(m.pixelToWorld(
+                r.x + r.width / 2, r.y + r.height / 2));
+        getContext().sendASyncCommand(cmd);
     }
-    /**
-     * @see net.refractions.udig.project.tool.Tool#dispose()
-     */
-    public void dispose() {
-        super.dispose();
-    }
+
+	public boolean isShowContextOnRightClick() {
+		return showContextOnRightClick;
+	}
+
+	public void setShowContextOnRightClick(boolean showContextOnRightClick) {
+		this.showContextOnRightClick = showContextOnRightClick;
+	}
 }

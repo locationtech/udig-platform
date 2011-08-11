@@ -30,7 +30,7 @@
          </property>
          <property
                name="aboutImage"
-               value="icons/about.gif">
+               value="icons/about.png">
          </property>
          <property
                name="aboutText"
@@ -101,7 +101,8 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="net.refractions.udig.ui.application"
-            name="uDig SDK">
+            description="User-friendly Desktop Internet GIS"
+            name="uDig">
          <property
                name="appName"
                value="uDig SDK">

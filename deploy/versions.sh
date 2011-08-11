@@ -5,13 +5,16 @@ export COPYFILE_DISABLE=true
 export BASE=`dirname $0`
 
 # Release Configuration
-export TARGET=${BASE}/1.2.teradata
-export VERSION=1.2.teradata
+export INSTALLER=${BASE}/installer
+export TARGET=${BASE}/target
+export VERSION=1.2.2
 export BUILD=${BASE}/build
 
-# net.refractions.udig.libs "qualifier" for SDK
-export TAG=1.2.teradata
-export QUALIFIER=1.2.2.teradata
+# net.refractions.udig.libs "qualifier" for SDK (used to update libs source reference
+# example: TAG=1.2.2
+# example: QUALIFIER=1.2.2.201107241506
+export TAG=1.2.2
+export QUALIFIER=1.2.2.201107241506
 
 # Build Resources
 export JRE=${BASE}/jre

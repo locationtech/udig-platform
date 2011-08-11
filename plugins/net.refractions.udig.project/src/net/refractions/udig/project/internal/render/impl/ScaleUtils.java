@@ -4,11 +4,14 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.measure.converter.UnitConverter;
 import javax.measure.unit.SI;
 import javax.measure.unit.Unit;
 
+import net.refractions.udig.core.Pair;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ProjectBlackboardConstants;
@@ -44,13 +47,13 @@ public final class ScaleUtils {
 	private ScaleUtils() {
 	}
 
-	public static Unit getUnit(CoordinateReferenceSystem crs) {
+	public static Unit<?> getUnit(CoordinateReferenceSystem crs) {
 		return crs.getCoordinateSystem().getAxis(0).getUnit();
 	}
 
 	public static double fromMeterToCrs(double value,
 			CoordinateReferenceSystem crs) {
-		Unit unit = getUnit(crs);
+		Unit<?> unit = getUnit(crs);
 		UnitConverter converter = SI.METER.getConverterTo(unit);
 		return converter.convert(value);
 	}
@@ -482,4 +485,132 @@ public final class ScaleUtils {
         t.translate(-fixedPoint.x, -fixedPoint.y);
         return t;
     }
+
+	public static Envelope transformEnvelope( ReferencedEnvelope srcEnvelope, AffineTransform transformer ) {
+	    Point2D lowLeft = new Point2D.Double(srcEnvelope.getMinX(), srcEnvelope.getMinY());
+	    Point2D transformedLowLeft = new Point2D.Double();
+	    transformedLowLeft = transformer.transform(lowLeft, transformedLowLeft);
+	    Point2D upRight = new Point2D.Double(srcEnvelope.getMaxX(), srcEnvelope.getMaxY());
+	    Point2D transformedUpRight = new Point2D.Double();
+	    transformedUpRight = transformer.transform(upRight, transformedUpRight);
+	    return new Envelope(transformedLowLeft.getX(), transformedUpRight.getX(),
+	            transformedLowLeft.getY(), transformedUpRight.getY());
+	}
+	
+	public static class CalculateZoomLevelParameter {
+		public final ViewportModel model;
+		public final IMapDisplay display;
+		public final double previousZoom;
+		public final double zoomChange;
+		public final Coordinate fixedPoint;
+		public final boolean alwayUsePreferredZoomLevels;
+		public final boolean alwaysChangeZoom;
+
+		public CalculateZoomLevelParameter(ViewportModel model,
+				IMapDisplay display, double previousZoom, double zoomChange, Coordinate fixedPoint,
+				boolean alwayUsePreferredZoomLevels, boolean alwaysChangeZoom) {
+			this.model = model;
+			this.display = display;
+			this.previousZoom = previousZoom;
+			this.zoomChange = zoomChange;
+			this.fixedPoint = fixedPoint;
+			this.alwayUsePreferredZoomLevels = alwayUsePreferredZoomLevels;
+			this.alwaysChangeZoom = alwaysChangeZoom;
+		}
+	}
+	public static double calculateZoomLevel(CalculateZoomLevelParameter params) {
+		
+		SortedSet<Double> preferredScaleDenominators = params.model.getPreferredScaleDenominators();
+		if(!params.alwayUsePreferredZoomLevels && !preferredScaleDenominators.isEmpty() &&
+				preferredScaleDenominators != params.model.getDefaultPreferredScaleDenominators()) {
+	        Pair<Double, ReferencedEnvelope> previousScale = calculateScaleFromZoom(params.previousZoom, params.model.getBounds(), params);
+	        ZoomCalculation targetZoomInfo = new ZoomCalculation(previousScale, params);
+	        
+	        double chosen;
+	        
+			double varianceFromPrevious = Math.abs(targetZoomInfo.closestMatch - previousScale.getLeft())/previousScale.getLeft();
+			if(params.alwaysChangeZoom && varianceFromPrevious < 0.1) {
+	        	if(params.zoomChange < 1) {
+					chosen = targetZoomInfo.nextGreater == null? targetZoomInfo.closestMatch : targetZoomInfo.nextGreater;
+	        	} else {
+	        		chosen = targetZoomInfo.nextSmaller == null ? targetZoomInfo.closestMatch : targetZoomInfo.nextSmaller;
+	        	}
+	        } else {
+	        	chosen = targetZoomInfo.closestMatch;
+	        }
+	        return params.model.getScaleDenominator()/chosen;
+		} else {
+				return Math.abs(params.previousZoom*params.zoomChange);
+		}
+	}
+
+
+	private static Pair<Double, ReferencedEnvelope> calculateScaleFromZoom(double zoom,
+			ReferencedEnvelope baseEnv, CalculateZoomLevelParameter params) {
+		AffineTransform transformer = ScaleUtils.createScaleTransformWithFixedPoint(zoom,params.fixedPoint);
+		ReferencedEnvelope transformedEnvelope = new ReferencedEnvelope(transformEnvelope(baseEnv, transformer),baseEnv.getCoordinateReferenceSystem());
+		Double scale = ScaleUtils.calculateScaleDenominator(transformedEnvelope, params.display.getDisplaySize(), params.display.getDPI());
+		// if there is a close match in preferred scale round to that scale
+		Double closest = calculateClosestScale(params.model.getPreferredScaleDenominators(), scale);
+		if(Math.abs(closest - scale)/scale < 0.01) {
+			scale = closest;
+		}
+		return Pair.create(scale, transformedEnvelope);
+	}
+
+	public static Double calculateClosestScale(SortedSet<Double> scaleDenominators, Double scale) {
+		SortedSet<Double> tail = scaleDenominators.tailSet(scale);
+		SortedSet<Double> head = scaleDenominators.headSet(scale);
+		Double next = first(tail,Double.MAX_VALUE);
+		Double last = last(head,Double.MAX_VALUE);
+		Double closest = Math.abs(next - scale) > Math.abs(last - scale) ? last : next;
+		return closest;
+	}
+
+	private static class ZoomCalculation {
+        Double nextSmaller;
+        double closestMatch;
+        Double nextGreater;
+        double scale;
+        
+        public ZoomCalculation(Pair<Double,ReferencedEnvelope> previous,CalculateZoomLevelParameter params) {
+    		scale = calculateScaleFromZoom(params.zoomChange, previous.getRight(), params).getLeft();
+    		SortedSet<Double> preferredScaleDenominators = new TreeSet<Double>(params.model.getPreferredScaleDenominators());
+    		boolean zoomingIn = params.zoomChange < 1;
+    		SortedSet<Double> tailSet = preferredScaleDenominators.tailSet(scale);
+    		SortedSet<Double> headSet = preferredScaleDenominators.headSet(scale);
+    		
+    		if(preferredScaleDenominators.contains(scale)) {
+    			closestMatch = scale;
+    			tailSet.remove(scale);
+    			headSet.remove(scale);
+    			nextGreater = first(tailSet,null);
+    			nextSmaller = last(headSet, null);
+    		} else if(zoomingIn) {
+    			closestMatch = tailSet.isEmpty() ? scale : tailSet.first();
+    			tailSet.remove(closestMatch);
+    			nextGreater = first(tailSet,null);
+    			nextSmaller = last(headSet,null);
+    		} else {
+    			closestMatch = headSet.isEmpty() ? scale : headSet.last();
+    			headSet.remove(closestMatch);
+    			nextSmaller = last(headSet,null);
+    			nextGreater = first(tailSet,null);				
+    		}
+		}
+    	
+    	@Override
+    	public String toString() {
+    		return scale+" ["+nextSmaller+", *"+closestMatch+"*, "+nextGreater+"]";
+    	}
+	}
+
+	private static Double first(SortedSet<Double> set, Double defaultVal) {
+		if(set.isEmpty()) return defaultVal;
+		else return set.first();
+	}
+	private static Double last(SortedSet<Double> set, Double defaultVal) {
+		if(set.isEmpty()) return defaultVal;
+		else return set.last();
+	}
 }

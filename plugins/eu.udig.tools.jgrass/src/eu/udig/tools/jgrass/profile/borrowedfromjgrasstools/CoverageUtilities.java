@@ -20,19 +20,14 @@ package eu.udig.tools.jgrass.profile.borrowedfromjgrasstools;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.awt.image.RenderedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.media.jai.iterator.RandomIter;
-import javax.media.jai.iterator.RandomIterFactory;
-
-import org.geotools.coverage.grid.GridCoordinates2D;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridEnvelope2D;
 import org.geotools.coverage.grid.GridGeometry2D;
-import org.geotools.geometry.DirectPosition2D;
+import org.geotools.geometry.Envelope2D;
 import org.geotools.referencing.operation.matrix.XAffineTransform;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.geometry.Envelope;
@@ -116,9 +111,18 @@ public class CoverageUtilities {
         List<ProfilePoint> profilePointsList = new ArrayList<ProfilePoint>();
         double progressive = 0.0;
 
+        int samDim = coverage.getSampleDimensions().length;
+        GridGeometry2D gridGeometry = coverage.getGridGeometry();
+        Envelope2D envelope2d = gridGeometry.getEnvelope2D();
+        final double[] evaluated = new double[samDim];
+
         // ad the first point
-        double[] evaluated = coverage.evaluate(new Point2D.Double(start.x, start.y), (double[])null);
-        double value = evaluated[0];
+        final Point2D.Double point = new Point2D.Double(start.x, start.y);
+        double value = Double.NaN;
+        if (envelope2d.contains(point)) {
+            coverage.evaluate(point, evaluated);
+            value = evaluated[0];
+        }
 
         ProfilePoint profilePoint = new ProfilePoint(0.0, value, start.x, start.y);
         profilePointsList.add(profilePoint);
@@ -126,16 +130,24 @@ public class CoverageUtilities {
 
         while( progressive < lenght ) {
             Coordinate c = pline.pointAlong(progressive / lenght);
-            evaluated = coverage.evaluate(new Point2D.Double(c.x, c.y), (double[])null);
-            value = evaluated[0];
+            value = Double.NaN;
+            point.setLocation(c.x, c.y);
+            if (envelope2d.contains(point)) {
+                coverage.evaluate(point, evaluated);
+                value = evaluated[0];
+            }
             profilePoint = new ProfilePoint(progressive, value, c.x, c.y);
             profilePointsList.add(profilePoint);
             progressive = progressive + xres;
         }
 
         // add the last point
-        evaluated = coverage.evaluate(new Point2D.Double(end.x, end.y), (double[])null);
-        value = evaluated[0];
+        value = Double.NaN;
+        point.setLocation(end.x, end.y);
+        if (envelope2d.contains(point)) {
+            coverage.evaluate(point, evaluated);
+            value = evaluated[0];
+        }
         profilePoint = new ProfilePoint(lenght, value, end.x, end.y);
         profilePointsList.add(profilePoint);
 

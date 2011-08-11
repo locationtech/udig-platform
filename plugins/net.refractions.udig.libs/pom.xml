@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.refractions.udig</groupId>
+    <artifactId>libs</artifactId>
+    <version>1.2.x</version>
+    <name>uDig - User-friendly Desktop Internet GIS</name>
+    <packaging>pom</packaging>
+    
+    <properties>
+        <geotools.version>8-SNAPSHOT</geotools.version>
+        <imageio-ext.version>1.1.0</imageio-ext.version>
+        <jfreechart.version>1.0.13</jfreechart.version>
+    </properties>
+    
+    <repositories>
+        <!-- Open Source Geospatial Foundation is the official repository used by
+        the GeoTools project for stable releases - use this repository when
+        using an official GeoTools numbered release -->
+        <repository>
+            <id>geotools-release</id>
+            <name>Geotools Release</name>
+            <url>http://download.osgeo.org/webdav/geotools</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+        
+        <!-- The OpenGeo company offers a SNAPSHOT repository populated by GeoTools
+        nightly builds - in general it is much faster then the official repository
+        above -->
+        <repository>
+            <id>geotools-snapshot</id>
+            <name>Geotools Snapshot</name>
+            <url>http://repo.opengeo.org</url>
+            <releases><enabled>false</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+        
+        <!-- The JAI tools maven repository is actually the offical sonaType snapshot repository -->
+        <repository>
+            <id>sonatype-snapshot</id>
+            <name>Sonatype Snapshot Repository</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases><enabled>false</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+        
+        <!-- GeoSolutions provide their own repository for imageio-ext builds -->
+        <repository>
+            <id>geosolutions</id>
+            <name>GeoSolutions</name>
+            <url>http://maven.geo-solutions.it</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+        
+        <!-- jgrasstools repo -->
+        <!--<repository>
+            <id>jgrasstools</id>
+            <name>jgrasstools</name>
+            <url>https://jgrasstools.googlecode.com/hg/mavenrepo</url>
+            <url>https://bitbucket.org/moovida/jgrasstools/src/tip/mavenrepo</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>-->
+    </repositories>
+    
+    <dependencies>
+        <!-- uDig Specific Extras -->
+        <!--<dependency>
+            <groupId>xmlrpc</groupId>
+            <artifactId>xmlrpc</artifactId>
+            <version>2.0</version>
+        </dependency>-->
+        <dependency>
+            <groupId>org.apache.xmlrpc</groupId>
+            <artifactId>xmlrpc-client</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlrpc</groupId>
+            <artifactId>xmlrpc-common</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.2</version>
+        </dependency>-->
+        <dependency>
+            <groupId>commons-jxpath</groupId>
+            <artifactId>commons-jxpath</artifactId>
+            <version>1.3</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.google.collections</groupId>
+            <artifactId>google-collections</artifactId>
+            <version>0.8</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>jaxb</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>1.3</version>
+        </dependency>-->
+        <dependency>
+            <groupId>net.sourceforge.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout</artifactId>
+            <version>3.7</version>
+        </dependency>
+        
+        <!-- geotools library -->
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-main</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-render</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-xml</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-cql</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        
+        <!-- geotools extentions -->
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-brewer</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-shapefile-renderer</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-validation</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-wms</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        
+        <!-- geotools plug-ins -->
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-arcgrid</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-arcsde-common</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-arcsde</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-epsg-h2</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geotiff</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-image</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-imagemosaic</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-imageio-ext-gdal</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-db2</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-mysql</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-oracle</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-postgis</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-shapefile</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-wfs</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-process</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-charts</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-swing</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        
+        <!-- additional untested plugins so we can connect using generic geotools datastore -->
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-postgis-versioned</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-property</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-sqlserver</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-spatialite</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-h2</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        
+        <!-- pending -->
+        <!--<dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-app-schema</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>-->
+        
+        <!-- geotools unsupported modules that we only need for some community modules? -->
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-wps</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.xsd</groupId>
+            <artifactId>gt-xsd-kml</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        
+        <!-- geotools unsupported modules (ie legacy) -->
+        <!--<dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-postgis</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>-->
+        
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>1.6</version>
+        </dependency>
+        
+        <!-- stuff for jgrass contributions -->
+        <dependency>
+            <groupId>it.geosolutions.imageio-ext</groupId>
+            <artifactId>imageio-ext-streams</artifactId>
+            <version>${imageio-ext.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.imageio-ext</groupId>
+            <artifactId>imageio-ext-netcdf-core</artifactId>
+            <version>${imageio-ext.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.imageio-ext</groupId>
+            <artifactId>imageio-ext-netcdf</artifactId>
+            <version>${imageio-ext.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.imageio-ext</groupId>
+            <artifactId>imageio-ext-utilities</artifactId>
+            <version>${imageio-ext.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.imageio-ext</groupId>
+            <artifactId>imageio-ext-geocore</artifactId>
+            <version>${imageio-ext.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>opendap</groupId>
+            <artifactId>opendap</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-grassraster</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-coverage-api</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.hydrologis.jgrass</groupId>
+            <artifactId>jgrassgears</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>-->
+        
+        <!-- jfreechart -->
+        <dependency>
+            <groupId>jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>${jfreechart.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jfree</groupId>
+            <artifactId>jfreechart-swt</artifactId>
+            <version>${jfreechart.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jfree</groupId>
+            <artifactId>jfreechart-experimental</artifactId>
+            <version>${jfreechart.version}</version>
+        </dependency>
+        
+        <!-- these may already be accounted for by the above plug-ins -->
+        <!--<dependency>
+            <groupId>org.geotools.xsd</groupId>
+            <artifactId>gt-gml2</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.xsd</groupId>
+            <artifactId>gt-gml3</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.xsd</groupId>
+            <artifactId>gt-core</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.xsd</groupId>
+            <artifactId>gt-xsd-wfs</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.xsd</groupId>
+            <artifactId>gt-xsd-wps</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.xsd</groupId>
+            <artifactId>gt-ows</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.xsd</groupId>
+            <artifactId>gt-filter</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>-->
+        
+        <!-- Java Advanced Imaging is bundled into our JRE - as such we don't need them to be 
+        downloaded now; however we must run with: -Dosgi.parentClassloader=ext -->
+        <dependency>
+            <groupId>javax.media</groupId>
+            <artifactId>jai_imageio</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.media</groupId>
+            <artifactId>jai_codec</artifactId>
+            <version>1.1.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.media</groupId>
+            <artifactId>jai_core</artifactId>
+            <version>1.1.3</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- These GeoTools dependencies are required for compile only - we are using gt-epsg-h2 -->
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-epsg-hsql</artifactId>
+            <version>${geotools.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-epsg-wkt</artifactId>
+            <version>${geotools.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-sample-data</artifactId>
+            <version>${geotools.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>ant</groupId>
+            <artifactId>ant-optional</artifactId>
+            <version>1.5.1</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- We get this from the base RCP as such they are already provided by 
+        our net.refractions.udig.libs dependencies in the MANIFEST.MF 
+        and we don't need to ask for them to be downloaded now. -->
+        <!--<dependency>
+            <groupId>org.apache</groupId>
+            <artifactId>xerces</artifactId>
+            <version>2.7.1</version>
+            <scope>provided</scope>
+        </dependency>-->
+        <!--<dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.7.1</version>
+            <scope>provided</scope>
+        </dependency>-->
+        
+        <!-- the following is provided by the eclipse modeling target platform -->
+        <dependency>
+            <groupId>com.ibm.icu</groupId>
+            <artifactId>icu4j</artifactId>
+            <version>3.4.4</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- batik jars - used by geotools renderer -->
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-svg</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-transcoder</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- using batik from eclipse 
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-dom</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-svg-dom</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-css</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-bridge</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-gvt</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-ext</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-xml</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-script</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-awt-util</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-parser</artifactId>
+            <version>1.7</version>
+        </dependency>-->
+        
+        <!-- These dependencies are for optional batik components and are not used -->
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis-xerces</artifactId>
+            <version>2.7.1</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.0.b2</version>
+            <scope>provided</scope>
+        </dependency>-->
+        
+        <!--<dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.0.b2</version>
+            <scope>provided</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--<dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.1</version>
+            <scope>provided</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.0.3</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.xsd</groupId>
+            <artifactId>xsd</artifactId>
+            <version>2.2.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.emf</groupId>
+            <artifactId>ecore</artifactId>
+            <version>2.2.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.emf</groupId>
+            <artifactId>common</artifactId>
+            <version>2.2.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout</artifactId>
+            <version>3.7</version>
+            <classifier>swing</classifier>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- Jaitools deps -->
+        <dependency>
+            <groupId>org.jaitools</groupId>
+            <artifactId>jt-all</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jaitools</groupId>
+            <artifactId>jt-jiffle-language</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jaitools</groupId>
+            <artifactId>jt-utils</artifactId>
+            <version>1.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jaitools</groupId>
+            <artifactId>jt-vectorbinarize</artifactId>
+            <version>1.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jaitools</groupId>
+            <artifactId>jt-zonalstats</artifactId>
+            <version>1.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- omsbox dependencies -->
+        
+        <!-- tools.jar provided by refresh.xml -->
+        <!-- <dependency>
+          <groupId>com.sun</groupId>
+          <artifactId>tools</artifactId>
+          <version>1.6.0_25</version>
+          <scope>provided</scope>
+        </dependency> -->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>3.0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jgrasstools</groupId>
+            <artifactId>jgt-oms3</artifactId>
+            <version>0.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.8.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.scannotation</groupId>
+            <artifactId>scannotation</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>jline</groupId>
+            <artifactId>jline</artifactId>
+            <version>0.9.94</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fusesource.jansi</groupId>
+            <artifactId>jansi</artifactId>
+            <version>1.3</version>
+        </dependency>
+    </dependencies>
+</project>

@@ -17,7 +17,7 @@
 	<group id="action-links">
 	  <link url="http://org.eclipse.ui.intro/close" label="Workbench" id="workbench" style-id="right">
         <img id="workbench_img" style-id="content-img" src="css/graphics/icons/etool/wb48.gif" alt="Close Introduction"></img>
-        <text>Close this screen to begin using uDig.</text>
+        <text>Close this screen to use uDig.</text>
       </link>
 	</group>
   </page>
