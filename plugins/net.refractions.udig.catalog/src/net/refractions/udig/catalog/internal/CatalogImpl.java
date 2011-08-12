@@ -87,7 +87,7 @@ import org.osgi.service.prefs.Preferences;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * Local Catalog implementation (tracking known services in mememory)
+ * Local Catalog implementation (tracking known services, persisted by XML currently).
  * 
  * @author David Zwiers (Refractions Research)
  * @author Jody Garnett
@@ -603,11 +603,12 @@ public class CatalogImpl extends ICatalog {
 
     /**
      * Utility method that will search in the provided handle for an ID match; especially good for
-     * nested content such as folders or WMS layers. <h4>Old Comment</h4> The following comment was
-     * original included in the source code: we are not sure it should be believed ... we will do
-     * our best to search CONNECTED services first, nut NOTCONNECTED is included in our search.
-     * <quote> Although the following is a 'blocking' call, we have deemed it safe based on the
-     * following reasons:
+     * nested content such as folders or WMS layers.
+     * <p>
+     * <h4>Old Comment</h4> The following comment was original included in the source code: we are
+     * not sure it should be believed ... we will do our best to search CONNECTED services first,
+     * nut NOTCONNECTED is included in our search. <quote> Although the following is a 'blocking'
+     * call, we have deemed it safe based on the following reasons:
      * <ul>
      * <li>This will only be called for Identifiers which are well known.
      * <li>The Services being checked have already been screened, and only a limited number of
