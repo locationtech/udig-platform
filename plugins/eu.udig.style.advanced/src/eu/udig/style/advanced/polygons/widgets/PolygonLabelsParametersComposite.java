@@ -18,7 +18,6 @@
 package eu.udig.style.advanced.polygons.widgets;
 
 import static eu.udig.style.advanced.utils.Utilities.ff;
-import static eu.udig.style.advanced.utils.Utilities.sf;
 
 import java.awt.Color;
 
@@ -40,8 +39,8 @@ import org.eclipse.swt.widgets.Text;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.expression.Expression;
 
-import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
+import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
 import eu.udig.style.advanced.utils.FontEditor;
@@ -436,17 +435,43 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
 
     private void checkEnablements() {
         boolean comboIsNone = comboIsNone(labelNameAttributecombo);
-        labelNameText.setEnabled(comboIsNone);
-        comboIsNone = comboIsNone(labelOpacityAttributecombo);
-        labelOpacitySpinner.setEnabled(comboIsNone);
-        comboIsNone = comboIsNone(rotationAttributecombo);
-        rotationSpinner.setEnabled(comboIsNone);
+        boolean selected = labelEnableButton.getSelection();
+        if (!selected) {
+            setEnabled(false);
+        } else {
+            labelNameText.setEnabled(comboIsNone);
+            comboIsNone = comboIsNone(labelOpacityAttributecombo);
+            labelOpacitySpinner.setEnabled(comboIsNone);
+            comboIsNone = comboIsNone(rotationAttributecombo);
+            rotationSpinner.setEnabled(comboIsNone);
+        }
+
+    }
+
+    private void setEnabled( boolean enable ) {
+        labelOpacitySpinner.setEnabled(enable);
+        labelOpacityAttributecombo.setEnabled(enable);
+        haloColorButton.setEnabled(enable);
+        haloColorEditor.setEnabled(enable);
+        haloRadiusSpinner.setEnabled(enable);
+        rotationSpinner.setEnabled(enable);
+        rotationAttributecombo.setEnabled(enable);
+        maxDisplacementText.setEnabled(enable);
+        autoWrapText.setEnabled(enable);
+        spaceAroundText.setEnabled(enable);
+        fontEditor.setEnabled(enable);
+        fontButton.setEnabled(enable);
+        fontColorEditor.setEnabled(enable);
+        fontColorButton.setEnabled(enable);
+        labelNameText.setEnabled(enable);
+        labelNameAttributecombo.setEnabled(enable);
     }
 
     public void widgetSelected( SelectionEvent e ) {
         Object source = e.getSource();
         if (source.equals(labelEnableButton)) {
             boolean selected = labelEnableButton.getSelection();
+            setEnabled(labelEnableButton.getSelection());
             notifyListeners(String.valueOf(selected), false, STYLEEVENTTYPE.LABELENABLE);
         } else if (source.equals(labelNameAttributecombo)) {
             boolean comboIsNone = comboIsNone(labelNameAttributecombo);
@@ -505,12 +530,12 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
             if (comboIsNone) {
                 int opacity = labelOpacitySpinner.getSelection();
                 String opacityStr = String.valueOf(opacity);
-                
+
                 notifyListeners(opacityStr, false, STYLEEVENTTYPE.LABELOPACITY);
-            }else{
+            } else {
                 int index = labelOpacityAttributecombo.getSelectionIndex();
                 String opacityField = labelOpacityAttributecombo.getItem(index);
-                
+
                 notifyListeners(opacityField, true, STYLEEVENTTYPE.LABELOPACITY);
             }
         }

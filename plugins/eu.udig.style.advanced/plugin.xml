@@ -7,21 +7,21 @@
             class="eu.udig.style.advanced.editorpages.SimplePointEditorPage"
             contentType="net.refractions.udig.project.ILayer"
             id="eu.udig.style.advanced.editorpages.SimplePointEditorPage"
-            label="Simple Points"
+            label="Points"
             requires="org.geotools.data.FeatureSource">
       </StyleEditorPage>
       <StyleEditorPage
             class="eu.udig.style.advanced.editorpages.SimpleLineEditorPage"
             contentType="net.refractions.udig.project.ILayer"
             id="eu.udig.style.advanced.editorpages.SimpleLineEditorPage"
-            label="Simple Lines"
+            label="Lines"
             requires="org.geotools.data.FeatureSource">
       </StyleEditorPage>
       <StyleEditorPage
             class="eu.udig.style.advanced.editorpages.SimplePolygonEditorPage"
             contentType="net.refractions.udig.project.ILayer"
             id="eu.udig.style.advanced.editorpages.SimplePolygonEditorPage"
-            label="Simple Polygons"
+            label="Polygons"
             requires="org.geotools.data.FeatureSource">
       </StyleEditorPage>
       <StyleEditorPage

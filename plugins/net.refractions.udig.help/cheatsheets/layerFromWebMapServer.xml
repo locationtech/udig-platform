@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Web Map Server">
+  <intro 
+  href="/net.refractions.udig.help/EN/WMS Preferences.html">
+    <description>
+    	One of the reasons to use an application like uDig is to access all the great free 
+    	geospatial information available on the web. 
+    	<br/><br/>This section covers the use of Web Map 
+    	Servers (WMS) which make available layers of information that you can mix into your own maps.
+	</description>
+  </intro>  
+  
+  <item skip="true" title="Web View">
+     <description>
+     	We are going to make use of the WMS published on the uDig site.
+     	<br/><br/>
+		Change to the Web view by clicking <b>Window > Show View > Web</b> . 
+	</description>
+	<command when = "Search View" 
+            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=net.refractions.udig.browser.ui.browserContainerView)"/>
+  </item>
+  
+  <item skip="true" title="Load Service" dialog="true">
+     <description>
+		Click on the link <b>WMS:dm solutions</b> to load the service.
+		<br/><br/>
+		From the Resource Selection page we are going to <b>check</b> the following layers: <b>Elevation/Bathymetry</b>, <b>Parks</b> and <b>Cities</b>
+		<br/><br/>
+		Press <b>Finish</b> to add these layers to your map.
+	</description>
+	<action 
+  		class="net.refractions.udig.project.ui.internal.actions.AddLayersAction" 
+  		pluginId="net.refractions.udig.project.ui.editor"
+  		confirm="false"/>
+  </item>
+</cheatsheet>

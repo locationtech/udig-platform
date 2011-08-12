@@ -153,6 +153,7 @@ public class CoverageRuleComposite implements MouseListener, SelectionListener, 
         fromLabel.setBackground(this.rule.getFromColor());
         toLabel.setBackground(this.rule.getToColor());
 
+        alphaText.setText(String.valueOf(this.rule.getOpacity()));
     }
 
     /**

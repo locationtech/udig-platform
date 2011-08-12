@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Map Navigation">
+  <intro href="/net.refractions.udig.help/EN/Navigation Tools.html">
+    <description>
+    	You can control where the Map Editor is looking by using the navigation tools. The 
+    	navigation tools are located in the tool bar along the top of the screen.
+	</description>
+  </intro>  
+
+  <item title="Zoom Tool">
+     <description>
+		The <b>Zoom Tool</b> is available by default. You can activate the tool by clicking 
+		it in the tool bar.
+	</description>
+	<command 
+		serialization="net.refractions.udig.tools.ZoomCommand" 
+		required="false"/>
+  </item>
+  
+  <item title="Zoom In Selection">
+     <description>
+		Use the <b>Zoom Tool</b> by drawing a box, using the left mouse button, around the area of the 
+		map you wish to see.
+	</description>
+  </item>
+  
+  <item title="Zoom Out Selection">
+     <description>
+		To <b>Zoom Out</b> draw a box with the right mouse button. The current map will be 
+		located within the box you draw.
+	</description>
+  </item>
+  
+  <item title="Zoom In">
+     <description>
+		 The <b>Zoom In Tool</b> can be used to change the scale by a fixed amount. Clicking the tool once will 
+		 zoom the map in one level, clicking it again will zoom the map out a further level.
+	</description>
+	 <command 
+		serialization="net.refractions.udig.tool.default.zoom.in" 
+		required="false"/>
+  </item>
+  
+  <item title="Zoom Out">
+     <description>
+		The <b>Zoom Out Tool</b> can be used to change the scale by a fixed amount. Clicking the tool once will 
+		 zoom out the map by one level, clicking in again will zoom the map out a further level.
+	</description>
+	<command 
+		serialization="net.refractions.udig.tool.default.zoom.out" 
+		required="false"/>
+  </item>
+  
+  <item title="Zoom To Extent">
+     <description>
+		The <b>Show All Tool</b> can be used to return the map to its full size at any time. Click the tool once
+		to zoom to the full extent.
+	</description>
+	<command 
+		serialization="net.refractions.udig.tool.default.zoom.all" 
+		required="false"/>
+  </item>
+  
+  <item title="Pan Tool">
+     <description>
+		The <b>Pan Tool</b> can be used to scroll around your map with out changing the scale. You can activate the tool by clicking 
+		it in the tool bar.
+	</description>
+  <command 
+		serialization="net.refractions.udig.tools.PanCommand" 
+		required="false"/>
+  </item>
+  
+  <item title="Pan Map">
+     <description>
+		Using the left mouse button <b>Click and Drag</b> the map to pan out the area you wish to view.
+	</description>
+	<command 
+		serialization="net.refractions.udig.tools.panLeftCommand" 
+		required="false"/>
+  </item>
+
+</cheatsheet>

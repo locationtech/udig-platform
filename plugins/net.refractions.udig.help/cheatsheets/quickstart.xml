@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<compositeCheatsheet name="Quickstart">
+    <taskGroup name= "Quickstart">
+        <intro> 
+This is a quick introduction to the uDig application included as part of online help.
+<br/><br/>
+Before you start please take a moment to download some sample data that we have made available on the web. <a href="http://udig.refractions.net/download/">http://udig.refractions.net/download/</a>
+<br/><br/>
+When asked for the file location choose an appropriate location such as your desktop unzip the contents of this file into a data folder
+        </intro>
+         
+         <onCompletion>Congratulations you have completed the Quickstart.</onCompletion>  
+                    
+         <task kind="cheatsheet" name= "Workbench" skip="true">
+              <param name = "id" value = "net.refractions.udig.help.cheatsheet.workbench" />
+              <intro>This Cheat Sheet will introduce you to the basic layout of the Workbench. If you are already familiar with the Workbench layout you can skip this task.
+              </intro>
+               <onCompletion>Congratulations you now know about the Workbenck layout.</onCompletion>                  
+         </task>
+         
+         <task kind="cheatsheet" name= "Project" skip="true">
+              <param name="id" value="net.refractions.udig.help.cheatsheet.newprojectwizard" />
+              <intro>
+              This cheat sheet introduce you to Projects.
+              <br/><br/>
+              Projects can be automatically created as part of Add Layer and Add Map. This cheat sheet focuses on manually creating a project.
+              </intro>
+               <onCompletion>Congratulations you now know about Projects.</onCompletion>                  
+         </task>
+         
+         <taskGroup name= "Add Layers" kind = "sequence">
+             <intro> First you will learn how to add some simple layers to our map. 
+             <br/><br/>This task requires that you have some sample data, you can download the latest sample 
+             data set from the <a href="http://udig.refractions.net/download/">uDig website download page</a>.
+             </intro>
+              <onCompletion>Congratulations you have added additional layers to uDig.</onCompletion>
+             <task kind="cheatsheet" name="Add Layers" id="addLayers">
+                 <intro>
+                 	This cheat sheet walks you through the process of adding a shape file to uDig.
+                 </intro>
+                 <param name="id" value = "net.refractions.udig.help.cheatsheet.loadShapeFile"/>
+                 <onCompletion>Congratulations you have succeeded added a shape file.</onCompletion>
+             </task>
+             <task kind="cheatsheet" name= "Drag in Layer">
+                 <intro>
+					In addition to using the using the dialog tool you can also drag content onto your uDig workbench and uDig will
+					do all the work for you.
+					
+					This task will walk you through dragging a layer onto you map.
+                 </intro>
+                 <param name = "id" value = "net.refractions.udig.help.cheatsheet.dragFromFileSystem" />
+                 <onCompletion>Congratulations you have succeeded dragging a layer onto your map.</onCompletion>           
+             </task> 
+             
+             <task kind="cheatsheet" name= "Web Map Service">
+                 <intro>
+					This section covers the use of Web Map Servers, which make available layers of information that can be added to your map.
+                 </intro>
+                 <param name = "id" value = "net.refractions.udig.help.cheatsheet.webmapservice" />
+                 <onCompletion>Congratulations you have succeeded added Web Map Services (WMS) to your map.</onCompletion>           
+             </task>       
+         </taskGroup>
+         
+         <taskGroup name= "Working With The Map" kind = "sequence">
+             <intro>
+             Now we have some layers on our map let's learn how to work with them.
+             </intro>
+              <onCompletion>Congratulations you now know how to work with the map.</onCompletion>
+         <task kind="cheatsheet" name= "Layer Order" skip="true">
+              <param name = "id" value = "net.refractions.udig.help.cheatsheet.layerorder" />
+              <intro>In this cheat sheet we are going to order some of the layers we just added.
+              </intro>
+               <onCompletion>Congratulations you now know how to order layers.</onCompletion>                  
+         </task>
+         
+         <task kind="cheatsheet" name= "Style Layer" skip="true">
+              <param name = "id" value = "net.refractions.udig.help.cheatsheet.stylelayer" />
+              <intro>In this cheat sheet we are going to apply some simple styles to a layer.
+              </intro>
+               <onCompletion>Congratulations you now know how to style a layer.</onCompletion>                  
+         </task>
+         
+         <task kind="cheatsheet" name= "Map Navigation" skip="true">
+              <param name = "id" value = "net.refractions.udig.help.cheatsheet.mapnavigation" />
+              <intro>
+              In this cheat sheet we are going to learn about using some of the tools available to navigate around the map.
+              </intro>
+               <onCompletion>Congratulations you now know how to navigate around a map.</onCompletion>                  
+         </task>
+         </taskGroup>
+    </taskGroup>
+</compositeCheatsheet> 

@@ -18,7 +18,6 @@
 package eu.udig.style.advanced.lines.widgets;
 
 import static eu.udig.style.advanced.utils.Utilities.ff;
-import static eu.udig.style.advanced.utils.Utilities.sf;
 
 import java.awt.Color;
 
@@ -40,8 +39,8 @@ import org.eclipse.swt.widgets.Text;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.expression.Expression;
 
-import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
+import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
 import eu.udig.style.advanced.utils.FontEditor;
@@ -521,15 +520,21 @@ public class LineLabelsParametersComposite extends ParameterComposite {
 
     private void checkEnablements() {
         boolean comboIsNone = comboIsNone(labelNameAttributecombo);
-        labelNameText.setEnabled(comboIsNone);
-        comboIsNone = comboIsNone(labelOpacityAttributecombo);
-        labelOpacitySpinner.setEnabled(comboIsNone);
+        boolean selected = labelEnableButton.getSelection();
+        if (!selected) {
+            setEnabled(false);
+        } else {
+            labelNameText.setEnabled(comboIsNone);
+            comboIsNone = comboIsNone(labelOpacityAttributecombo);
+            labelOpacitySpinner.setEnabled(comboIsNone);
+        }
     }
 
     public void widgetSelected( SelectionEvent e ) {
         Object source = e.getSource();
         if (source.equals(labelEnableButton)) {
             boolean selected = labelEnableButton.getSelection();
+            setEnabled(selected);
             notifyListeners(String.valueOf(selected), false, STYLEEVENTTYPE.LABELENABLE);
         } else if (source.equals(labelNameAttributecombo)) {
             boolean comboIsNone = comboIsNone(labelNameAttributecombo);
@@ -584,6 +589,28 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         }
 
         checkEnablements();
+    }
+
+    private void setEnabled( boolean enable ) {
+        labelOpacitySpinner.setEnabled(enable);
+        labelOpacityAttributecombo.setEnabled(enable);
+        haloColorButton.setEnabled(enable);
+        haloColorEditor.setEnabled(enable);
+        haloRadiusSpinner.setEnabled(enable);
+        initialGapText.setEnabled(enable);
+        maxDisplacementText.setEnabled(enable);
+        repeatText.setEnabled(enable);
+        autoWrapText.setEnabled(enable);
+        spaceAroundText.setEnabled(enable);
+        fontEditor.setEnabled(enable);
+        fontButton.setEnabled(enable);
+        fontColorEditor.setEnabled(enable);
+        fontColorButton.setEnabled(enable);
+        perpendicularOffsetText.setEnabled(enable);
+        followLineText.setEnabled(enable);
+        maxAngleDeltaText.setEnabled(enable);
+        labelNameText.setEnabled(enable);
+        labelNameAttributecombo.setEnabled(enable);
     }
 
     public void focusGained( FocusEvent e ) {

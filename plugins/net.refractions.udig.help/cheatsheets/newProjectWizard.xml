@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="New Project Wizard">
+  <intro href="/net.refractions.udig.help/EN/Working with Projects.html">
+    <description>
+    In this cheat sheet we are going to creating a simple project. 
+</description>
+  </intro>  
+  <item  
+  	href="/net.refractions.udig.help/EN/Wizards and Dialogs.html" 
+  	title="New Project Wizard" 
+  	dialog="true">
+     <description>
+     Create a simple project by selecting <b>File > New > New Project</b> from the menu bar.
+     </description>
+        <command 
+		serialization="org.eclipse.ui.newWizard(newWizardId=net.refractions.udig.project.ui.wizards.newProject)" 
+		required="false"/>
+     
+  </item>
+  
+  <item title="Project Name">
+     <description>
+     In the <b>New Project</b> field, type a project file name.  
+     <br/><br/>
+     <b>Example: </b> "My First Map Project"
+     <br/><br/>
+     <b>Note</b> you may also use the Browse button
+     </description>
+  </item>
+  
+  <item title="Finish">
+     <description>
+     Click <b>Finish</b> when you are done. If you look at the Projects view, you will see that it now contains your new project.
+     </description>
+  </item>
+</cheatsheet>
