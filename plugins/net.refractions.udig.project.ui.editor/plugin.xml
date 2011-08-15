@@ -25,12 +25,12 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="net.refractions.udig.project.ui.internal.MapEditor"
+            class="net.refractions.udig.project.ui.internal.MapEditorWithPalette"
             contributorClass="net.refractions.udig.project.ui.internal.MapEditorActionBarContributor"
             default="true"
-            icon="icons/obj16/map_obj.gif"
-            id="net.refractions.udig.project.ui.mapEditor"
-            name="%mapEditor.name">
+            icon="icons/obj16/style_obj.gif"
+            id="net.refractions.udig.project.ui.mapEditorWithPalette"
+            name="%mapEditorPalette.name">
       </editor>
    </extension>
    
