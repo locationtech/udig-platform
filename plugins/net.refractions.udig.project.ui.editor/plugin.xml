@@ -28,7 +28,7 @@
             class="net.refractions.udig.project.ui.internal.MapEditorWithPalette"
             contributorClass="net.refractions.udig.project.ui.internal.MapEditorActionBarContributor"
             default="true"
-            icon="icons/obj16/style_obj.gif"
+            icon="icons/obj16/map_obj.gif"
             id="net.refractions.udig.project.ui.mapEditorWithPalette"
             name="%mapEditorPalette.name">
       </editor>

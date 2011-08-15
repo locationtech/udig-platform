@@ -48,6 +48,7 @@ import net.refractions.udig.project.ui.IAnimation;
 import net.refractions.udig.project.ui.UDIGEditorInput;
 import net.refractions.udig.project.ui.commands.IDrawCommand;
 import net.refractions.udig.project.ui.controls.ScaleRatioLabel;
+import net.refractions.udig.project.ui.controls.ScaleRatioLabelPalette;
 import net.refractions.udig.project.ui.internal.commands.draw.DrawFeatureCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
@@ -124,7 +125,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.SubActionBars2;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
-import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -136,7 +136,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
-public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette implements IDropTargetProvider, IAdaptable, MapEditorPart {
+public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette implements IDropTargetProvider, IAdaptable, MapEditorWithPalettePart {
     private static final String LAYER_DIRTY_KEY = "DIRTY"; //$NON-NLS-1$
     /** The id of the MapViewport View */
     public final static String ID = "net.refractions.udig.project.ui.mapEditorWithPalette"; //$NON-NLS-1$
@@ -668,9 +668,9 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         IContributionManager bar = mapEditorSite.getActionBars().getStatusLineManager();
         if (bar == null)
             return;
-        ScaleRatioLabel label = (ScaleRatioLabel) bar.find(ScaleRatioLabel.SCALE_ITEM_ID);
+        ScaleRatioLabelPalette label = (ScaleRatioLabelPalette) bar.find(ScaleRatioLabelPalette.SCALE_ITEM_ID);
         if (label == null) {
-            label = new ScaleRatioLabel(this);
+            label = new ScaleRatioLabelPalette(this);
             bar.appendToGroup(StatusLineManager.MIDDLE_GROUP, label);
             label.setVisible(true);
             bar.update(true);
@@ -1091,7 +1091,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                     contextMenu.add(tm.getBACKWARD_HISTORYAction());
                     contextMenu.add(tm.getFORWARD_HISTORYAction());
                     contextMenu.add(new Separator());
-                    // contextMenu.add(tm.createCUTAction(MapEditor.this));
+                    //contextMenu.add(tm.createCUTAction(MapEditorWithPalette.this));
                     contextMenu.add(tm.getCOPYAction(MapEditorWithPalette.this));
                     contextMenu.add(tm.getPASTEAction(MapEditorWithPalette.this));
                     contextMenu.add(tm.getDELETEAction());
@@ -1307,7 +1307,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         createContextMenu();
     }
 
-    public MapEditorSite getMapEditorSite() {
+    public MapPaletteEditorSite getMapEditorSite() {
         return mapEditorSite;
     }
 
