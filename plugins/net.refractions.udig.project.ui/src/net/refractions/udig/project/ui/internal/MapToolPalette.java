@@ -11,7 +11,7 @@ import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
  * @author Scott Henderson (LISAsoft)
  * @author Jody Garnett (LISAsoft)
  */
-public class ToolPalette extends GraphicalEditorWithFlyoutPalette implements IAdaptable {
+public class MapToolPalette extends GraphicalEditorWithFlyoutPalette implements IAdaptable {
 
 	/** This is the rooot of our palette; forming a tree of categories */
     private PaletteRoot paletteRoot;
@@ -20,7 +20,7 @@ public class ToolPalette extends GraphicalEditorWithFlyoutPalette implements IAd
     protected PaletteRoot getPaletteRoot() {
 
         if (paletteRoot == null) {
-            paletteRoot = ToolPaletteFactory.createPalette();
+            paletteRoot = MapToolPaletteFactory.createPalette();
         }
 
         return paletteRoot;

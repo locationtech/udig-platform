@@ -21,7 +21,7 @@ import org.eclipse.gef.tools.SelectionTool;
 import org.eclipse.gef.ui.palette.FlyoutPaletteComposite.FlyoutPreferences;
 import org.eclipse.jface.preference.IPreferenceStore;
 
-public class ToolPaletteFactory {
+public class MapToolPaletteFactory {
 
     private static final String PREFIX = "ToolPaletteFactory."; //$NON-NLS-1$
     private static final String PALETTE_DOCK_LOCATION = PREFIX + "Location"; //$NON-NLS-1$

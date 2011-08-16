@@ -180,7 +180,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     protected PaletteRoot getPaletteRoot() {
 
         if (paletteRoot == null) {
-            paletteRoot = ToolPaletteFactory.createPalette();
+            paletteRoot = MapToolPaletteFactory.createPalette();
         }
 
         return paletteRoot;
