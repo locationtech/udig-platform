@@ -48,7 +48,6 @@ import net.refractions.udig.project.ui.IAnimation;
 import net.refractions.udig.project.ui.UDIGEditorInput;
 import net.refractions.udig.project.ui.commands.IDrawCommand;
 import net.refractions.udig.project.ui.controls.ScaleRatioLabel;
-import net.refractions.udig.project.ui.controls.ScaleRatioLabelPalette;
 import net.refractions.udig.project.ui.internal.commands.draw.DrawFeatureCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
@@ -82,6 +81,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.StatusLineLayoutData;
@@ -136,13 +136,13 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
-public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette implements IDropTargetProvider, IAdaptable, MapEditorWithPalettePart {
+public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette implements IDropTargetProvider, IAdaptable, MapEditorPart {
     private static final String LAYER_DIRTY_KEY = "DIRTY"; //$NON-NLS-1$
     /** The id of the MapViewport View */
     public final static String ID = "net.refractions.udig.project.ui.mapEditorWithPalette"; //$NON-NLS-1$
     final MapEditorWithPalette editor = this;
     final StatusLineManager statusLineManager = new StatusLineManager();
-    private MapPaletteEditorSite mapEditorSite;
+    private MapEditorSite mapEditorSite;
     private boolean dirty = false;
     private PaletteRoot paletteRoot;
 
@@ -668,9 +668,9 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         IContributionManager bar = mapEditorSite.getActionBars().getStatusLineManager();
         if (bar == null)
             return;
-        ScaleRatioLabelPalette label = (ScaleRatioLabelPalette) bar.find(ScaleRatioLabelPalette.SCALE_ITEM_ID);
+        ScaleRatioLabel label = (ScaleRatioLabel) bar.find(ScaleRatioLabel.SCALE_ITEM_ID);
         if (label == null) {
-            label = new ScaleRatioLabelPalette(this);
+            label = new ScaleRatioLabel(this);
             bar.appendToGroup(StatusLineManager.MIDDLE_GROUP, label);
             label.setVisible(true);
             bar.update(true);
@@ -1016,7 +1016,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         this.replaceableSelectionProvider = new ReplaceableSelectionProvider();
         getSite().setSelectionProvider(replaceableSelectionProvider);
         runMapOpeningInterceptor(getMap());
-        mapEditorSite = new MapPaletteEditorSite(super.getSite(), this);
+        mapEditorSite = new MapEditorSite(super.getSite(), this);
         updateCRS();
         updateScaleLabel();
 
@@ -1307,7 +1307,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         createContextMenu();
     }
 
-    public MapPaletteEditorSite getMapEditorSite() {
+    public MapEditorSite getMapEditorSite() {
         return mapEditorSite;
     }
 
@@ -1394,4 +1394,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         return viewer.getRenderManager();
     }
 
+    @Override
+    public IStatusLineManager getStatusLineManager() {
+    	return statusLineManager;
+    }
 }

@@ -16,6 +16,7 @@ import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.ModalTool;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -24,6 +25,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.part.WorkbenchPart;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
@@ -199,6 +203,19 @@ public class MapViewer implements MapPart {
     public Menu getMenu(){
         return menu;        
     }
+    public IStatusLineManager getStatusLineManager() {
+    	IWorkbenchPartSite site = part.getSite();
+    	if( site instanceof IViewSite){
+    		IViewSite viewSite = (IViewSite) site;
+    		return viewSite.getActionBars().getStatusLineManager();
+    	}
+    	else if ( site instanceof IEditorSite){
+    		IEditorSite editorSite = (IEditorSite) site;
+    		return editorSite.getActionBars().getStatusLineManager();
+    	}
+    	throw new NullPointerException( "Unable to determine StatusLineManager");
+    }
+
     /**
      * Will open the menu provided by getMenu().
      * <p>

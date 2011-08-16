@@ -15,6 +15,7 @@ import net.refractions.udig.project.ui.internal.DefaultMapViewPart;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.action.IStatusLineManager;
 
 public class View extends DefaultMapViewPart {
 	@SuppressWarnings("nls")
@@ -46,6 +47,10 @@ public class View extends DefaultMapViewPart {
 	@Override
 	protected boolean acquireToolbar() {
 		return true;
+	}
+	@Override
+	public IStatusLineManager getStatusLineManager() {
+		return getViewSite().getActionBars().getStatusLineManager();
 	}
 	
 }

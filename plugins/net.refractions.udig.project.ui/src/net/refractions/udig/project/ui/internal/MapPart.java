@@ -3,6 +3,7 @@ package net.refractions.udig.project.ui.internal;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.widgets.Control;
 
 /**
@@ -31,4 +32,10 @@ public interface MapPart {
 
     public void setSelectionProvider(
 			IMapEditorSelectionProvider selectionProvider);
+
+    /**
+     * Access to status line manager; used to display messages and provide tool feedback.
+     * @return
+     */
+	public abstract IStatusLineManager getStatusLineManager();
 }

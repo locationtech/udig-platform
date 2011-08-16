@@ -79,6 +79,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.StatusLineLayoutData;
@@ -1380,5 +1381,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     RenderManager getRenderManager() {
         return viewer.getRenderManager();
     }
-
+    public IStatusLineManager getStatusLineManager() {
+    	return statusLineManager;
+    }
 }
