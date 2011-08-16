@@ -72,6 +72,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.gef.DefaultEditDomain;
+import org.eclipse.gef.EditDomain;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.jface.action.Action;
@@ -138,14 +140,19 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  */
 public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette implements IDropTargetProvider, IAdaptable, MapEditorPart {
     private static final String LAYER_DIRTY_KEY = "DIRTY"; //$NON-NLS-1$
+    
     /** The id of the MapViewport View */
     public final static String ID = "net.refractions.udig.project.ui.mapEditorWithPalette"; //$NON-NLS-1$
     final MapEditorWithPalette editor = this;
     final StatusLineManager statusLineManager = new StatusLineManager();
     private MapEditorSite mapEditorSite;
     private boolean dirty = false;
+    
     private PaletteRoot paletteRoot;
-
+    
+    // We should already have an EditDomain
+    // private DefaultEditDomain domain = new DefaultEditDomain(this);
+    
     // Menu menu;
 
     // private ViewportPane viewportPane;
@@ -168,21 +175,27 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
      */
     public MapEditorWithPalette() {
         super();
+        
         // Make sure the featureEditorProcessor has been started.
+        // This will load all the tools so we can use them        
         ProjectUIPlugin.getDefault().getFeatureEditProcessor();
+        
+        // we need an edit domain for GEF
+        // This represents the "Current Tool" for the Palette
+        // We shoudl not duplicate the idea of current tools so we may
+        // need to delegate to getEditDomain; and just use the MapEditTool *id*
+        setEditDomain(new DefaultEditDomain(this));
     }
 
     public Composite getComposite() {
         return composite;
     }
-    
+
     @Override
     protected PaletteRoot getPaletteRoot() {
-
         if (paletteRoot == null) {
             paletteRoot = MapToolPaletteFactory.createPalette();
         }
-
         return paletteRoot;
     }
 

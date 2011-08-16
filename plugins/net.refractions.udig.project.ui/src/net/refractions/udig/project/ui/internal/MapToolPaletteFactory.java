@@ -8,6 +8,7 @@ import net.refractions.udig.project.ui.internal.tool.display.ModalItem;
 import net.refractions.udig.project.ui.internal.tool.display.ModalToolCategory;
 import net.refractions.udig.project.ui.tool.IToolManager;
 
+import org.eclipse.gef.EditDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.palette.CombinedTemplateCreationEntry;
 import org.eclipse.gef.palette.PaletteContainer;
@@ -32,7 +33,9 @@ public class MapToolPaletteFactory {
     /**
      * Create a map tool palette bridging from from uDig ToolManager to the GEF
      * ToolEntry model.
+     * @param domain 
      * 
+     * @param domain The domain (ie MapEditor or MapPart) for which we are tacking tools
      * @return PaletteRoot suitable for use with a PaletteView
      */
     public static PaletteRoot createPalette() {
@@ -52,8 +55,8 @@ public class MapToolPaletteFactory {
 			PaletteDrawer drawer = new PaletteDrawer( category.getName() );
 			
 			for (ModalItem modalItem : category) {
-				ToolEntry tool = null; // new MapToolEntry();
-				//drawer.add(tool);
+				ToolEntry tool = new MapToolEntry( modalItem );
+				drawer.add(tool);
 			}
 			categories.add( drawer );
 		}
