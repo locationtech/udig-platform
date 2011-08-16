@@ -5,8 +5,15 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 
+/**
+ * Palette for our Map Tools.
+ * 
+ * @author Scott Henderson (LISAsoft)
+ * @author Jody Garnett (LISAsoft)
+ */
 public class ToolPalette extends GraphicalEditorWithFlyoutPalette implements IAdaptable {
-    
+
+	/** This is the rooot of our palette; forming a tree of categories */
     private PaletteRoot paletteRoot;
 
     @Override
@@ -19,10 +26,12 @@ public class ToolPalette extends GraphicalEditorWithFlyoutPalette implements IAd
         return paletteRoot;
     }
     
+    /**
+     * We would override this method to save the current tool when we save out the map
+     */
     @Override
     public void doSave( IProgressMonitor monitor ) {
-        // TODO Auto-generated method stub
-        
+        // we are not going to save out right now
     }
 
 }

@@ -51,6 +51,5 @@ Require-Bundle: net.refractions.udig.style.sld,
  net.refractions.udig.project.edit,
  org.eclipse.ui.cheatsheets,
  org.eclipse.core.expressions,
- com.lowagie.itext,
- net.refractions.udig.printing.ui;bundle-version="1.2.0"
+ com.lowagie.itext
 Bundle-ActivationPolicy: lazy
