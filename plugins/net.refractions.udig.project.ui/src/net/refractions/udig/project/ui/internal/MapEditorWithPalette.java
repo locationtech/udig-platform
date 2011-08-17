@@ -142,7 +142,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     private static final String LAYER_DIRTY_KEY = "DIRTY"; //$NON-NLS-1$
     
     /** The id of the MapViewport View */
-    public final static String ID = "net.refractions.udig.project.ui.mapEditorWithPalette"; //$NON-NLS-1$
+    public final static String ID = "net.refractions.udig.project.ui.mapEditor"; //$NON-NLS-1$
     final MapEditorWithPalette editor = this;
     final StatusLineManager statusLineManager = new StatusLineManager();
     private MapEditorSite mapEditorSite;
@@ -150,11 +150,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     
     private PaletteRoot paletteRoot;
     
-    // We should already have an EditDomain
-    // private DefaultEditDomain domain = new DefaultEditDomain(this);
-    
-    // Menu menu;
-
     // private ViewportPane viewportPane;
     private MapViewer viewer = null;
 
@@ -179,12 +174,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         // Make sure the featureEditorProcessor has been started.
         // This will load all the tools so we can use them        
         ProjectUIPlugin.getDefault().getFeatureEditProcessor();
-        
-        // we need an edit domain for GEF
-        // This represents the "Current Tool" for the Palette
-        // We shoudl not duplicate the idea of current tools so we may
-        // need to delegate to getEditDomain; and just use the MapEditTool *id*
-        setEditDomain(new DefaultEditDomain(this));
     }
 
     public Composite getComposite() {
@@ -954,6 +943,13 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         }
         // allow the viewer to open our context menu; work with our selection proivder etc
         viewer.init(this);
+        
+        // we need an edit domain for GEF
+        // This represents the "Current Tool" for the Palette
+        // We should not duplicate the idea of current tools so we may
+        // need to delegate to getEditDomain; and just use the MapEditTool *id*
+        setEditDomain(viewer.getEditDomain());
+        
         // if a map was provided as input we can ask the viewer to use it
         Map input = (Map) ((UDIGEditorInput) getEditorInput()).getProjectElement();
         if (input != null) {

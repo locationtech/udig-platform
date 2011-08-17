@@ -41,6 +41,7 @@ import net.refractions.udig.project.ui.tool.ModalTool;
 public class Zoom extends AbstractModalTool implements ModalTool {
     /** <code>ZOOMFACTOR</code> field */
     public static final int ZOOMFACTOR = 2;
+    /** true if we are in the middle of a zoom (and the map is being rescaled) */
     private boolean zooming;
     private Point start;
     //NavigationCommandFactory factory = NavigationCommandFactory.getInstance();
