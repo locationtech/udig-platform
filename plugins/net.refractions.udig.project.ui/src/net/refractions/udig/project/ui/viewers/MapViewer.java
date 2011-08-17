@@ -11,12 +11,10 @@ import net.refractions.udig.project.ui.internal.TiledRenderManagerDynamic;
 import net.refractions.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneSWT;
 import net.refractions.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneTiledSWT;
 import net.refractions.udig.project.ui.internal.tool.ToolContext;
-import net.refractions.udig.project.ui.internal.tool.display.ToolProxy;
 import net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.project.ui.tool.Tool;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.gef.DefaultEditDomain;
@@ -37,7 +35,6 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
-import org.eclipse.ui.part.WorkbenchPart;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
 /**
@@ -414,7 +411,6 @@ public class MapViewer implements MapPart {
      * @since 1.2.3
      */
     class MapEditDomain extends DefaultEditDomain {
-        private ModalTool activeTool;
         private PaletteListener paletteListener = new PaletteListener() {
             public void activeToolChanged(PaletteViewer viewer, ToolEntry tool) {
                 if( viewer != null ){

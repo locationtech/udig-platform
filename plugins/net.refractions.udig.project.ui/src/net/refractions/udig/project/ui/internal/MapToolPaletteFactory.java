@@ -8,12 +8,9 @@ import net.refractions.udig.project.ui.internal.tool.display.ModalItem;
 import net.refractions.udig.project.ui.internal.tool.display.ModalToolCategory;
 import net.refractions.udig.project.ui.tool.IToolManager;
 
-import org.eclipse.gef.EditDomain;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gef.palette.CombinedTemplateCreationEntry;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteDrawer;
-import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.SelectionToolEntry;
