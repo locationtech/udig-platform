@@ -28,10 +28,9 @@ public class MapToolPaletteFactory {
     private static final int DEFAULT_PALETTE_SIZE = 125;
 
     /**
-     * Create a map tool palette bridging from from uDig ToolManager to the GEF
-     * ToolEntry model.
-     * @param domain 
+     * Create a map tool palette bridging from from uDig ToolManager to the GEF ToolEntry model.
      * 
+     * @param domain
      * @param domain The domain (ie MapEditor or MapPart) for which we are tacking tools
      * @return PaletteRoot suitable for use with a PaletteView
      */
@@ -39,34 +38,51 @@ public class MapToolPaletteFactory {
         PaletteRoot root = new PaletteRoot();
 
         IToolManager toolManager = ApplicationGIS.getToolManager();
-        
+
         List<PaletteContainer> categories = new ArrayList<PaletteContainer>();
-        
+
         // Normal GEF Tools (SelectionTool etc...)
-        PaletteContainer controlGroup = createControlGroup(root);
-		categories.add(controlGroup);
-        
-		for (ModalToolCategory category : toolManager.getModalToolCategories() ) {
-			
-			// Simple PaletteDrawer (no icon for the tool category at this time)
-			PaletteDrawer drawer = new PaletteDrawer( category.getName() );
-			
-			for (ModalItem modalItem : category) {
-				ToolEntry tool = new MapToolEntry( modalItem );
-				drawer.add(tool);
-			}
-			categories.add( drawer );
-		}
-		root.addAll(categories);
+        // PaletteContainer controlGroup = createControlGroup(root);
+        // categories.add(controlGroup);
+        int open = 2;
+        for( ModalToolCategory category : toolManager.getModalToolCategories() ) {
+            // Simple PaletteDrawer (no icon for the tool category at this time)
+            String name = category.getName();
+            name = fixLabel(name);
+
+            PaletteDrawer drawer = new PaletteDrawer(name);
+            if (open > 0) {
+                drawer.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
+                open--;
+            } else {
+                drawer.setInitialState(PaletteDrawer.INITIAL_STATE_CLOSED);
+            }
+            drawer.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
+            drawer.setShowDefaultIcon(false);
+
+            for( ModalItem modalItem : category ) {
+                String label = fixLabel(modalItem.getName());
+                ToolEntry tool = new MapToolEntry(label, modalItem, category.getId());
+                drawer.add(tool);
+            }
+            categories.add(drawer);
+        }
+        root.addAll(categories);
         return root;
     }
 
-    
+    /** Trim funny simples as the world tool from the label displayed */
+    static String fixLabel( String label ) {
+        label = label.replace("&", "");
+        //label = label.replace("Tools", "");
+        //label = label.replace("Tool", "");
+        return label;
+    }
+
     /**
-     * This looks like a PaletteContainer that hosts the "normal" GEF tools
-     * (such as the SelectionTool "arrow").
-     * 
-     * We won't be using this but I will keep it hear for a bit as a reference point.
+     * This looks like a PaletteContainer that hosts the "normal" GEF tools (such as the
+     * SelectionTool "arrow"). We won't be using this but I will keep it hear for a bit as a
+     * reference point.
      * 
      * @param root
      * @return container of the usual GEF suspects
@@ -75,23 +91,23 @@ public class MapToolPaletteFactory {
         PaletteGroup controlGroup = new PaletteGroup("Actions");
 
         List<ToolEntry> entries = new ArrayList<ToolEntry>();
-        
+
         ToolEntry tool = new SelectionToolEntry();
         tool.setToolClass(SelectionToolWithDoubleClick.class);
         entries.add(tool);
         root.setDefaultEntry(tool);
 
         controlGroup.addAll(entries);
-        
+
         return controlGroup;
     }
-    
+
     /**
-     * We make use of the ProjectUIPlugin preference store
-     * (if we need to offer the user any control over palette presentation).
+     * We make use of the ProjectUIPlugin preference store (if we need to offer the user any control
+     * over palette presentation).
      */
     private static IPreferenceStore getPreferenceStore() {
-    	return ProjectUIPlugin.getDefault().getPreferenceStore();
+        return ProjectUIPlugin.getDefault().getPreferenceStore();
     }
 
     static FlyoutPreferences createPalettePreferences() {
@@ -104,35 +120,40 @@ public class MapToolPaletteFactory {
             public int getDockLocation() {
                 return getPreferenceStore().getInt(PALETTE_DOCK_LOCATION);
             }
+
             public int getPaletteState() {
                 return getPreferenceStore().getInt(PALETTE_STATE);
             }
+
             public int getPaletteWidth() {
                 return getPreferenceStore().getInt(PALETTE_SIZE);
             }
+
             public void setDockLocation( int location ) {
                 getPreferenceStore().setValue(PALETTE_DOCK_LOCATION, location);
             }
+
             public void setPaletteState( int state ) {
                 getPreferenceStore().setValue(PALETTE_STATE, state);
             }
+
             public void setPaletteWidth( int width ) {
                 getPreferenceStore().setValue(PALETTE_SIZE, width);
             }
         };
     }
+
     /**
-     * An extension of the normal GEF SelectionTool that can pass on a double click
-     * events.
+     * An extension of the normal GEF SelectionTool that can pass on a double click events.
+     * 
      * @author jody
-     *
      */
     public static class SelectionToolWithDoubleClick extends SelectionTool {
         @Override
         protected boolean handleDoubleClick( int button ) {
-        	EditPart part = getTargetEditPart();
-        	
-        	// handle any "double click actions here
+            EditPart part = getTargetEditPart();
+
+            // handle any "double click actions here
             return super.handleDoubleClick(button);
         }
     }

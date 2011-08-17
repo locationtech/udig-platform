@@ -52,6 +52,7 @@ import net.refractions.udig.project.ui.internal.commands.draw.DrawFeatureCommand
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.IToolManager;
+import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.ui.CRSChooserDialog;
 import net.refractions.udig.ui.IBlockingSelection;
@@ -72,8 +73,11 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.gef.DefaultEditDomain;
+import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
+import org.eclipse.gef.ui.parts.GraphicalViewerImpl;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.GroupMarker;
@@ -167,8 +171,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
      * Creates a new MapViewport object.
      */
     public MapEditorWithPalette() {
-        super();
-        
         // Make sure the featureEditorProcessor has been started.
         // This will load all the tools so we can use them        
         ProjectUIPlugin.getDefault().getFeatureEditProcessor();
@@ -397,6 +399,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         }
 
     };
+
+	private MapEditDomain mapDomain;
 
     public Object getAdapter( Class adaptee ) {
         if (adaptee.isAssignableFrom(Map.class)) {
@@ -705,7 +709,9 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
         deregisterFeatureFlasher();
         getSite().getPage().removePartListener(partlistener);
-        viewer.getViewport().removePaneListener(getMap().getViewportModelInternal());
+        if( viewer != null ){
+        	viewer.getViewport().removePaneListener(getMap().getViewportModelInternal());
+        }
         getMap().getViewportModelInternal().setInitialized(false);
 
         selectFeatureListener = null;
@@ -914,15 +920,47 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         return true;
     }
 
+
     /**
      * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
      */
     public void createPartControl( final Composite parent ) {
-
         ShutdownTaskList.instance().addPreShutdownTask(shutdownTask);
 
-        composite = new Composite(parent, SWT.NO_BACKGROUND);
-
+        mapDomain = new MapEditDomain(this);
+		setEditDomain( mapDomain );
+        
+        // super class sets up the splitter; it needs the setEditDomain to be defined
+        // prior to the method being called (so the FlyoutPaletteComposite split can latch on)
+        
+    	super.createPartControl(parent);
+    	// the above sets up a splitter; and then calls GraphicalEditor.createGraphicalViewer
+    	// which we can use to set up our display area...        
+    }
+    
+    protected Control getGraphicalControl() {
+    	return composite;
+    }
+    
+	/**
+	 * Hijacked; supposed to create a GraphicalViewer on the specified <code>Composite</code>.
+	 * <p>
+	 * Instead we steal the composite for our MapViewer.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 */
+	protected void createGraphicalViewer(Composite parent) {
+		
+		// GraphicalViewer viewer = new GraphicalViewerImpl();
+		// viewer.createControl(parent);
+		// setGraphicalViewer(viewer);
+		// configureGraphicalViewer();
+		// hookGraphicalViewer();
+		// initializeGraphicalViewer();
+		
+    	composite = new Composite( parent, SWT.NO_BACKGROUND);
+        
         composite.setLayout(new FormLayout());
         composite.setFont(parent.getFont());
         setPartName(getMap().getName());
@@ -1042,7 +1080,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         });
 
         setDirty(isMapDirty());
-    }
+	}
 
     private void runMapOpeningInterceptor( Map map ) {
         List<IConfigurationElement> interceptors = ExtensionPointList
@@ -1404,4 +1442,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     public IStatusLineManager getStatusLineManager() {
     	return statusLineManager;
     }
+    @Override
+	public MapEditDomain getEditDomain() {
+		return mapDomain;
+	}
 }

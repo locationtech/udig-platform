@@ -6,6 +6,7 @@ import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxC
 import net.refractions.udig.project.ui.internal.MapImport;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
+import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.tools.internal.ScrollPanTool;
 import net.refractions.udig.tools.internal.Zoom;
@@ -48,6 +49,8 @@ public class OverviewMapView extends ViewPart implements MapPart {
     private MapViewer mapviewer; // main map viewer
     private OverviewMapViewer overviewmapviewer; // overview map viewer
 
+	private MapEditDomain editDomain;
+
     public OverviewMapView() {
         super();
     }
@@ -69,7 +72,6 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
     @Override
     public void createPartControl( Composite parent ) {
-
         parent.setLayout(new FormLayout());
 
         // create two maps
@@ -88,6 +90,8 @@ public class OverviewMapView extends ViewPart implements MapPart {
         overviewmapviewer.getControl().setLayoutData(fd);
 
         // create map
+    	editDomain = new MapEditDomain(null);
+
         mapviewer = new MapViewer(parent, SWT.MULTI | SWT.NO_BACKGROUND);
         mapviewer.setMap(mainmap);
         fd = new FormData();
@@ -233,6 +237,11 @@ public class OverviewMapView extends ViewPart implements MapPart {
 	@Override
 	public IStatusLineManager getStatusLineManager() {
 		return getViewSite().getActionBars().getStatusLineManager();
+	}
+	
+	@Override
+	public MapEditDomain getEditDomain() {
+		return editDomain;
 	}
 }
 

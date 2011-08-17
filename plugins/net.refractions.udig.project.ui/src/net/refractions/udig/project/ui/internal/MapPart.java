@@ -2,6 +2,7 @@ package net.refractions.udig.project.ui.internal;
 
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
+import net.refractions.udig.project.ui.viewers.MapEditDomain;
 
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.widgets.Control;
@@ -54,4 +55,11 @@ public interface MapPart {
      * @return
      */
 	public abstract IStatusLineManager getStatusLineManager();
+
+	/**
+	 * EditDomain used to control the current tool.
+	 * @return
+	 */
+	public abstract MapEditDomain getEditDomain();
+	
 }

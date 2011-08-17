@@ -34,6 +34,7 @@ import net.refractions.udig.project.ui.internal.MapImport;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.ModalTool;
+import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.tools.internal.FixedScalePan;
 import net.refractions.udig.tools.internal.Zoom;
@@ -68,6 +69,7 @@ public class MapView extends ViewPart implements MapPart {
     // private RenderManager renderManager;
     private Map map;
     private SeagullGlassPaneOp seagullOp;
+	private MapEditDomain editDomain;
 
     public MapView() {
         super();
@@ -75,6 +77,7 @@ public class MapView extends ViewPart implements MapPart {
 
     @Override
     public void createPartControl( Composite parent ) {
+    	editDomain = new MapEditDomain(null);
         FillLayout fillLayout = new FillLayout();
         fillLayout.type = SWT.VERTICAL;
         parent.setLayout(fillLayout);
@@ -323,4 +326,8 @@ public class MapView extends ViewPart implements MapPart {
 		return getViewSite().getActionBars().getStatusLineManager();
 	}
 
+	@Override
+	public MapEditDomain getEditDomain() {
+		return editDomain;
+	}
 }

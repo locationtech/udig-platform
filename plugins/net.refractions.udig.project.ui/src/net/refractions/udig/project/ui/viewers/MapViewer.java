@@ -4,8 +4,8 @@ import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
 import net.refractions.udig.project.internal.render.RenderManager;
 import net.refractions.udig.project.internal.render.ViewportModel;
+import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.internal.MapToolEntry;
 import net.refractions.udig.project.ui.internal.RenderManagerDynamic;
 import net.refractions.udig.project.ui.internal.TiledRenderManagerDynamic;
 import net.refractions.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneSWT;
@@ -14,15 +14,15 @@ import net.refractions.udig.project.ui.internal.tool.ToolContext;
 import net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
+import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.project.ui.tool.ModalTool;
+import net.refractions.udig.project.ui.tool.Tool;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.gef.DefaultEditDomain;
-import org.eclipse.gef.palette.PaletteListener;
-import org.eclipse.gef.palette.ToolEntry;
-import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Composite;
@@ -143,13 +143,9 @@ public class MapViewer implements MapPart {
     public void init( IWorkbenchPart part ){
         this.part = part;
         this.mapPart = (MapPart) part;
-        if( part instanceof IEditorPart){
-            // we are an editor we can have a palette!
-            editDomain = new MapEditDomain( (IEditorPart) part );
-        }
-        else {
-            // no palette - use "ActiveTool"
-        }
+        
+        MapEditDomain editDomain = mapPart.getEditDomain();
+        editDomain.setMapViewer( this );
     }
     
     /**
@@ -287,17 +283,30 @@ public class MapViewer implements MapPart {
      * @param tool
      */
     public void setModalTool( ModalTool tool ) {
+    	IToolManager tools = ApplicationGIS.getToolManager();
+        
         if (activeTool != null) {
             // ask the current tool to stop listening etc...
             activeTool.setActive(false);
             activeTool = null;
         }
+        if(tools.getActiveTool() != null ){
+        	ModalTool globalTool = (ModalTool) tools.getActiveTool();
+        	globalTool.setActive(false);
+        }
+        
         if( tool == null ){
             return;
         }
         activeTool = tool;
         activeTool.setContext(getToolContext());
-        activeTool.setActive(true);
+        activeTool.setActive(true); // this should register itself with the tool manager
+        
+        
+        // this was normally handled by the ToolProxy which we cannot get a hold of
+        String currentCursorID = activeTool.getCursorID();
+		Cursor toolCursor = tools.findToolCursor(currentCursorID);
+		getToolContext().getViewportPane().setCursor(toolCursor);
     }
 
     /**
@@ -401,58 +410,10 @@ public class MapViewer implements MapPart {
         } );
     }
     /**
-     * Domain responsible for managing the active tool; and advertising the set of available
-     * tools to the palette
-     * <p>
-     * The palette is actually going to handle the user interface for this; we are simply listening for
-     * changes and providing a palette root.
-     * 
-     * @author shenders
-     * @since 1.2.3
-     */
-    class MapEditDomain extends DefaultEditDomain {
-        private PaletteListener paletteListener = new PaletteListener() {
-            public void activeToolChanged(PaletteViewer viewer, ToolEntry tool) {
-                if( viewer != null ){
-                    //deactivate current tool
-                    if (activeTool !=null)
-                        activeTool.setActive(false);
-                    ToolEntry entry = viewer.getActiveTool();
-                    if( entry instanceof MapToolEntry){
-                        MapToolEntry mapEntry = (MapToolEntry) entry;
-                        ModalTool mapTool = mapEntry.getMapTool();
-                        mapTool.setActive(true);// activate activate activate
-                        activeTool = mapTool;
-                    }
-                }
-            }
-        };
-        /**
-         * Create an edit domain for the provided IEditorPart / MapPart.
-         * @param editorPart
-         */
-        public MapEditDomain( IEditorPart editorPart ) {
-            super(editorPart);
-        }
-        
-        @Override
-        public void setPaletteViewer( PaletteViewer palette ) {
-            PaletteViewer current = getPaletteViewer();
-            if( current != null ){
-                current.removePaletteListener(paletteListener);
-            }
-            super.setPaletteViewer(palette);
-            if( palette != null ){
-                   palette.addPaletteListener(paletteListener);
-            }
-        }
-    }
-    
-    /**
      * Get the MapEditDomain
      * @return
      */
-    public DefaultEditDomain getEditDomain() {
+    public MapEditDomain getEditDomain() {
         return editDomain;
     }
 

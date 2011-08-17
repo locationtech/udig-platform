@@ -10,9 +10,12 @@ import org.eclipse.gef.palette.ToolEntry;
 
 public class MapToolEntry extends ToolEntry {
 
-    public MapToolEntry( ModalItem item ) {
-        super(item.getName(), item.getToolTipText(), item.getImageDescriptor(), null);
+    private String categoryId;
+
+	public MapToolEntry( String label, ModalItem item, String categoryId) {
+        super( label, item.getToolTipText(), item.getImageDescriptor(), null);
         setId(item.getId());
+        this.categoryId = categoryId;
     }
 
     public ModalTool getMapTool() {
@@ -21,4 +24,5 @@ public class MapToolEntry extends ToolEntry {
 
         return tool;
     }
+    
 }
