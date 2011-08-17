@@ -414,16 +414,19 @@ public class MapViewer implements MapPart {
      * @since 1.2.3
      */
     class MapEditDomain extends DefaultEditDomain {
+        private ModalTool activeTool;
         private PaletteListener paletteListener = new PaletteListener() {
             public void activeToolChanged(PaletteViewer viewer, ToolEntry tool) {
                 if( viewer != null ){
+                    //deactivate current tool
+                    if (activeTool !=null)
+                        activeTool.setActive(false);
                     ToolEntry entry = viewer.getActiveTool();
                     if( entry instanceof MapToolEntry){
                         MapToolEntry mapEntry = (MapToolEntry) entry;
-                        
                         ModalTool mapTool = mapEntry.getMapTool();
-                        
                         mapTool.setActive(true);// activate activate activate
+                        activeTool = mapTool;
                     }
                 }
             }

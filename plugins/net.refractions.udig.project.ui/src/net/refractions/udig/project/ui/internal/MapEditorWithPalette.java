@@ -72,8 +72,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.gef.DefaultEditDomain;
-import org.eclipse.gef.EditDomain;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.jface.action.Action;
@@ -1403,7 +1401,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         return viewer.getRenderManager();
     }
 
-    @Override
     public IStatusLineManager getStatusLineManager() {
     	return statusLineManager;
     }
