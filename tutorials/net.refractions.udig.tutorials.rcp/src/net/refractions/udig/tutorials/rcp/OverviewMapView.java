@@ -15,6 +15,7 @@ import net.refractions.udig.tutorials.tracking.glasspane.TrackSeagullOp;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -228,6 +229,11 @@ public class OverviewMapView extends ViewPart implements MapPart {
             });
         }
     }
+
+	@Override
+	public IStatusLineManager getStatusLineManager() {
+		return getViewSite().getActionBars().getStatusLineManager();
+	}
 }
 
 class OverviewLayoutManager extends Layout {

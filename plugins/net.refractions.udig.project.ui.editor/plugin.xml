@@ -25,12 +25,12 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="net.refractions.udig.project.ui.internal.MapEditor"
+            class="net.refractions.udig.project.ui.internal.MapEditorWithPalette"
             contributorClass="net.refractions.udig.project.ui.internal.MapEditorActionBarContributor"
             default="true"
             icon="icons/obj16/map_obj.gif"
-            id="net.refractions.udig.project.ui.mapEditor"
-            name="%mapEditor.name">
+            id="net.refractions.udig.project.ui.mapEditorWithPalette"
+            name="%mapEditorPalette.name">
       </editor>
    </extension>
    
@@ -219,7 +219,7 @@
       <extension
          point="net.refractions.udig.project.ui.editorInputs">
       <editorInput
-            editorPartID="net.refractions.udig.project.ui.mapEditor"
+            editorPartID="net.refractions.udig.project.ui.mapEditorWithPalette"
             projectElement="net.refractions.udig.project.internal.impl.MapImpl"
             class="net.refractions.udig.project.ui.internal.MapEditorInput"
             name="net.refractions.udig.project.internal.ui.mapEditorInput"/>

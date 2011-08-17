@@ -5,17 +5,25 @@ import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxC
 import net.refractions.udig.project.internal.render.RenderManager;
 import net.refractions.udig.project.internal.render.ViewportModel;
 import net.refractions.udig.project.ui.internal.MapPart;
+import net.refractions.udig.project.ui.internal.MapToolEntry;
 import net.refractions.udig.project.ui.internal.RenderManagerDynamic;
 import net.refractions.udig.project.ui.internal.TiledRenderManagerDynamic;
 import net.refractions.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneSWT;
 import net.refractions.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneTiledSWT;
 import net.refractions.udig.project.ui.internal.tool.ToolContext;
+import net.refractions.udig.project.ui.internal.tool.display.ToolProxy;
 import net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.ModalTool;
+import net.refractions.udig.project.ui.tool.Tool;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.gef.DefaultEditDomain;
+import org.eclipse.gef.palette.PaletteListener;
+import org.eclipse.gef.palette.ToolEntry;
+import org.eclipse.gef.ui.palette.PaletteViewer;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -24,6 +32,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.part.WorkbenchPart;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
@@ -46,13 +59,39 @@ public class MapViewer implements MapPart {
      * This is the current map.
      */
     protected Map map;
-    private WorkbenchPart part;
+    
+    /**
+     * This is the workbench part displaying the map;
+     * it should implement MapPart or I will cry.
+     */
+    private IWorkbenchPart part;
+    
+    /** context menu or view menu or something nice for the user to look at */
     private Menu menu;
+    
+    /** Current tool taking contorl of the map*/
     private ModalTool activeTool;
+    
+    /**
+     * This is responsible for tracking the active tool; it is a facility provided
+     * by GEF. We are not using GEF tools directly; simpily borrowing some of their
+     * infrastructure to support a nice visual palette.
+     * <p.
+     * The *id* of the current tool in the editDomain is ued to determine the 
+     * active tool for the map.
+     */
+    MapEditDomain editDomain;
+    
+    /** Allows a tool to communicate with stuff - ie a "tool site" */
     private ToolContextImpl toolcontext;
+    
+    /** Draws the map */
     private RenderManager renderManager;
     
+    /** Whacky - preferred scales like open layers */
     private double[] resolutions;
+
+    private MapPart mapPart;
     
     /**
      * Creates a map viewer on a newly-created viewport pane under the given
@@ -104,8 +143,16 @@ public class MapViewer implements MapPart {
      * </p>
      * @param part Editor or View workbench part
      */
-    public void init( WorkbenchPart part ){
+    public void init( IWorkbenchPart part ){
         this.part = part;
+        this.mapPart = (MapPart) part;
+        if( part instanceof IEditorPart){
+            // we are an editor we can have a palette!
+            editDomain = new MapEditDomain( (IEditorPart) part );
+        }
+        else {
+            // no palette - use "ActiveTool"
+        }
     }
     
     /**
@@ -199,6 +246,19 @@ public class MapViewer implements MapPart {
     public Menu getMenu(){
         return menu;        
     }
+    public IStatusLineManager getStatusLineManager() {
+    	IWorkbenchPartSite site = part.getSite();
+    	if( site instanceof IViewSite){
+    		IViewSite viewSite = (IViewSite) site;
+    		return viewSite.getActionBars().getStatusLineManager();
+    	}
+    	else if ( site instanceof IEditorSite){
+    		IEditorSite editorSite = (IEditorSite) site;
+    		return editorSite.getActionBars().getStatusLineManager();
+    	}
+    	throw new NullPointerException( "Unable to determine StatusLineManager");
+    }
+
     /**
      * Will open the menu provided by getMenu().
      * <p>
@@ -244,7 +304,7 @@ public class MapViewer implements MapPart {
     }
 
     /**
-     * @return tool context (used to teach tools about our MapViewer facilities.
+     * @return tool context (used to teach tools about our MapViewer facilities)
      */
     protected synchronized ToolContext getToolContext(){
         if( toolcontext == null ){
@@ -343,9 +403,58 @@ public class MapViewer implements MapPart {
             }
         } );
     }
-
-
-
-      
+    /**
+     * Domain responsible for managing the active tool; and advertising the set of available
+     * tools to the palette
+     * <p>
+     * The palette is actually going to handle the user interface for this; we are simply listening for
+     * changes and providing a palette root.
+     * 
+     * @author shenders
+     * @since 1.2.3
+     */
+    class MapEditDomain extends DefaultEditDomain {
+        private PaletteListener paletteListener = new PaletteListener() {
+            public void activeToolChanged(PaletteViewer viewer, ToolEntry tool) {
+                if( viewer != null ){
+                    ToolEntry entry = viewer.getActiveTool();
+                    if( entry instanceof MapToolEntry){
+                        MapToolEntry mapEntry = (MapToolEntry) entry;
+                        
+                        ModalTool mapTool = mapEntry.getMapTool();
+                        
+                        mapTool.setActive(true);// activate activate activate
+                    }
+                }
+            }
+        };
+        /**
+         * Create an edit domain for the provided IEditorPart / MapPart.
+         * @param editorPart
+         */
+        public MapEditDomain( IEditorPart editorPart ) {
+            super(editorPart);
+        }
+        
+        @Override
+        public void setPaletteViewer( PaletteViewer palette ) {
+            PaletteViewer current = getPaletteViewer();
+            if( current != null ){
+                current.removePaletteListener(paletteListener);
+            }
+            super.setPaletteViewer(palette);
+            if( palette != null ){
+                   palette.addPaletteListener(paletteListener);
+            }
+        }
+    }
+    
+    /**
+     * Get the MapEditDomain
+     * @return
+     */
+    public DefaultEditDomain getEditDomain() {
+        return editDomain;
+    }
 
 }

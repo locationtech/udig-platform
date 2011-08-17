@@ -11,6 +11,7 @@ import net.refractions.udig.mapgraphic.internal.MapGraphicService;
 import net.refractions.udig.project.ui.internal.DefaultMapViewPart;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.PlatformUI;
 
@@ -56,4 +57,8 @@ public class View extends DefaultMapViewPart {
 		return true;
 	}
 	
+	@Override
+	public IStatusLineManager getStatusLineManager() {
+		return getViewSite().getActionBars().getStatusLineManager();
+	}
 }
