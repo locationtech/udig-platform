@@ -140,7 +140,7 @@
    <extension
          point="org.eclipse.ui.editorActions">
       <editorContribution
-            targetID="net.refractions.udig.project.ui.mapEditorWithPalette"
+            targetID="net.refractions.udig.project.ui.mapEditor"
             id="net.refractions.udig.printing.ui.mapEditorContribution">
          <action
                disabledIcon="icons/dtool16/newpage_wiz.gif"
