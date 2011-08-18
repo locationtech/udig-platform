@@ -52,6 +52,7 @@ import net.refractions.udig.project.ui.internal.commands.draw.DrawFeatureCommand
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.IToolManager;
+import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.ui.CRSChooserDialog;
@@ -982,14 +983,17 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         } else {
             viewer = new MapViewer(composite, SWT.MULTI | SWT.NO_BACKGROUND);
         }
-        // allow the viewer to open our context menu; work with our selection proivder etc
-        viewer.init(this);
         
         // we need an edit domain for GEF
         // This represents the "Current Tool" for the Palette
         // We should not duplicate the idea of current tools so we may
         // need to delegate to getEditDomain; and just use the MapEditTool *id*
         setEditDomain(viewer.getEditDomain());
+
+        // allow the viewer to open our context menu; work with our selection proivder etc
+        viewer.init(this);
+        
+        //viewer.setModalTool( (ModalTool) ApplicationGIS.getToolManager().getActiveTool());
         
         // if a map was provided as input we can ask the viewer to use it
         Map input = (Map) ((UDIGEditorInput) getEditorInput()).getProjectElement();
@@ -1257,7 +1261,10 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         public void partActivated( IWorkbenchPartReference partRef ) {
             if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 registerFeatureFlasher();
-                ApplicationGIS.getToolManager().setCurrentEditor(editor);
+                IToolManager toolManager = ApplicationGIS.getToolManager();
+                toolManager.setCurrentEditor(editor);
+                
+                editor.viewer.setModalTool( (ModalTool) toolManager.getActiveTool() );
             }
         }
 
