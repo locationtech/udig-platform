@@ -27,6 +27,11 @@ public class MapToolPaletteFactory {
     private static final String PALETTE_STATE = PREFIX + "State"; //$NON-NLS-1$
     private static final String PALETTE_SIZE = PREFIX + "Size"; //$NON-NLS-1$
     private static final int DEFAULT_PALETTE_SIZE = 125;
+    
+    /**
+     * The ID of the default tool: Zoom
+     */
+    private static final String DEFAULT_ID = "net.refractions.udig.tools.Zoom"; //$NON-NLS-1$
 
     /**
      * Create a map tool palette bridging from from uDig ToolManager to the GEF ToolEntry model.
@@ -84,7 +89,13 @@ public class MapToolPaletteFactory {
             for( ModalItem modalItem : category ) {
                 String label = fixLabel(modalItem.getName());
                 ToolEntry tool = new MapToolEntry(label, modalItem, category.getId());
-                container.add(tool);
+                
+                //set the default tool
+                if(modalItem.getId().equals(DEFAULT_ID)){
+                    root.setDefaultEntry(tool);
+                }
+                
+                drawer.add(tool);
             }
             categories.add(container);
         }
