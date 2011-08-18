@@ -131,9 +131,16 @@ public class MenuToolCategory extends ToolCategory {
             toolManager.setVisible(true);
         }
     }
-
+    /**
+     * Allows a ToolProxy to be contributed as a MenuItem.
+     */
     protected class MenuCurrentToolItem extends CurrentContributionItem {
+        /**
+         * Tool proxy represented by this menu item.
+         */
         ToolProxy tool;
+        
+        /** Menu item contributed to menu - by {@link #fill(org.eclipse.swt.widgets.Composite) */
         MenuItem menuItem;
 
         /**
@@ -168,10 +175,10 @@ public class MenuToolCategory extends ToolCategory {
             });
 
         }
-
+        
         public void setSelection( boolean checked, ModalItem proxy ) {
             if (proxy != tool)
-                throw new AssertionError();
+                throw new AssertionError("Tool not provided for MenuCurrentToolItem");
             if (!menuItem.isDisposed())
                 menuItem.setSelection(checked);
         }
