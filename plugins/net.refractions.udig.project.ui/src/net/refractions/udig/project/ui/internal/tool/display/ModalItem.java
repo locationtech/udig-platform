@@ -35,6 +35,7 @@ import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 
 /**
+ * Item used to represent one mode in a group.
  * <p>
  * Responsibilities:
  * <ul>
