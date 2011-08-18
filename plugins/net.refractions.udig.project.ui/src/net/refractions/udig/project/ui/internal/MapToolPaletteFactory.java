@@ -95,7 +95,7 @@ public class MapToolPaletteFactory {
                     root.setDefaultEntry(tool);
                 }
                 
-                drawer.add(tool);
+                container.add(tool);
             }
             categories.add(container);
         }
@@ -189,4 +189,30 @@ public class MapToolPaletteFactory {
             return super.handleDoubleClick(button);
         }
     }
+
+    /**
+     * New Idea - have the factory know how to cleanup after itself (rather than distribute the
+     * knowledge.
+     * 
+     * @param paletteRoot may be null
+     */
+    public static void dispose( PaletteRoot paletteRoot ) {
+        if( paletteRoot == null ) return;
+        
+        IToolManager tools = ApplicationGIS.getToolManager();
+        
+        // We should unhook the ToolManager enablement notifications
+        for( Object child : paletteRoot.getChildren() ){
+            if( child instanceof PaletteContainer){
+                PaletteContainer container = (PaletteContainer) child;
+                for( Object entry : container.getChildren() ){
+                    if ( entry instanceof MapToolEntry){
+                        MapToolEntry mapEntry = (MapToolEntry) entry;
+                        mapEntry.dispose();
+                    }
+                }
+            }
+        }
+    }
+    
 }

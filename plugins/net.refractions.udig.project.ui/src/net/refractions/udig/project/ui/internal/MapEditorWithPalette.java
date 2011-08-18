@@ -721,7 +721,10 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
         if (statusLineManager != null)
             statusLineManager.dispose();
-
+        
+        MapToolPaletteFactory.dispose( paletteRoot );
+        paletteRoot = null;
+        
         final ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
         if (!PlatformUI.getWorkbench().isClosing()) {
             ShutdownTaskList.instance().removePreShutdownTask(shutdownTask);

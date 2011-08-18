@@ -19,10 +19,12 @@ package net.refractions.udig.project.ui.internal.tool.display;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.internal.ui.operations.OperationCategory;
+import net.refractions.udig.project.ui.internal.MapToolEntry;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.graphics.Glyph;
@@ -56,6 +58,7 @@ public abstract class ModalItem implements ILazyOpListener {
 //            .getSystemCursor(SWT.CURSOR_ARROW);
     
     private List<CurrentContributionItem> contributions = new ArrayList<CurrentContributionItem>();
+    private CopyOnWriteArrayList<MapToolEntry> mapToolEntries = new CopyOnWriteArrayList<MapToolEntry>();
     
     protected String[] commandIds;
     protected String handlerType;
@@ -182,6 +185,14 @@ public abstract class ModalItem implements ILazyOpListener {
     
     public void clearContributions() {
         contributions.clear();
+    }
+    /**
+     * Provides access to the list of MapToolEntry that are notified when enablement changes.
+     * 
+     * @return A copy on write array of the MapToolEntry to notify for enablement
+     */
+    public CopyOnWriteArrayList<MapToolEntry> getMapToolEntries() {
+        return mapToolEntries;
     }
 
     /**
@@ -332,6 +343,9 @@ public abstract class ModalItem implements ILazyOpListener {
             this.isEnabled = isEnabled2;
             for( CurrentContributionItem contrib : getContributions() ) {
                 contrib.setEnabled(isEnabled2);
+            }
+            for( MapToolEntry entry : mapToolEntries ){
+                entry.setVisible(isEnabled2);
             }
         } finally {
             enabledLock.unlock();
