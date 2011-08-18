@@ -9,6 +9,8 @@ import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.operations.IOpFilterListener;
 import net.refractions.udig.ui.operations.OpFilter;
 
+import org.eclipse.gef.palette.PaletteContainer;
+import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.ToolEntry;
 
 public class MapToolEntry extends ToolEntry {
@@ -29,8 +31,23 @@ public class MapToolEntry extends ToolEntry {
     public ModalTool getMapTool() {
         IToolManager tools = ApplicationGIS.getToolManager();
         ModalTool tool = (ModalTool) tools.findTool(getId());
-
         return tool;
+    }
+
+    @Override
+    public void setVisible( boolean isVisible ) {
+        super.setVisible(isVisible);
+        
+        PaletteContainer parent = getParent();
+        boolean doubleCheck = false;
+        FREE: for( Object child : parent.getChildren() ){
+            PaletteEntry entry = (PaletteEntry) child;
+            if( entry.isVisible() ){
+                doubleCheck = true;
+                break FREE; // yes I just did that to be funny
+            }
+        }
+        parent.setVisible(doubleCheck);        
     }
     
     public void dispose(){
