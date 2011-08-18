@@ -13,7 +13,7 @@ public class MapToolEntry extends ToolEntry {
     private String categoryId;
 
 	public MapToolEntry( String label, ModalItem item, String categoryId) {
-        super( label, item.getToolTipText(), item.getImageDescriptor(), null);
+        super( label, item.getToolTipText(), item.getImageDescriptor(), item.getLargeImageDescriptor());
         setId(item.getId());
         this.categoryId = categoryId;
     }

@@ -13,6 +13,7 @@ import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteDrawer;
 import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
+import org.eclipse.gef.palette.PaletteToolbar;
 import org.eclipse.gef.palette.SelectionToolEntry;
 import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gef.tools.SelectionTool;
@@ -44,30 +45,48 @@ public class MapToolPaletteFactory {
         // Normal GEF Tools (SelectionTool etc...)
         // PaletteContainer controlGroup = createControlGroup(root);
         // categories.add(controlGroup);
-        int open = 2;
+        int open = 0;
         for( ModalToolCategory category : toolManager.getModalToolCategories() ) {
+            open++;                
+
             // Simple PaletteDrawer (no icon for the tool category at this time)
             String name = category.getName();
             name = fixLabel(name);
-
-            PaletteDrawer drawer = new PaletteDrawer(name);
             
-            if (open > 0) {
+            final int NOT_USED = -1;
+            PaletteContainer container;
+            if (open == NOT_USED ) {
+                // interesting look (toolbar with tooltip)
+                PaletteToolbar toolbar = new PaletteToolbar(name);
+                toolbar.setUserModificationPermission(PaletteToolbar.PERMISSION_NO_MODIFICATION);
+                container = toolbar;
+            }
+            else if (open == NOT_USED ){
+                PaletteGroup group = new PaletteGroup( name );
+                container = group;
+            }
+            else if( open == 1 || open == 2){
+                PaletteDrawer drawer = new PaletteDrawer(name);
+                
                 drawer.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
-                open--;
+                drawer.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
+                drawer.setShowDefaultIcon(false);
+                container = drawer;
             } else {
+                PaletteDrawer drawer = new PaletteDrawer(name);
                 drawer.setInitialState(PaletteDrawer.INITIAL_STATE_CLOSED);
+                drawer.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
+                drawer.setShowDefaultIcon(false);
+                container = drawer;
             }
             
-            drawer.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
-            drawer.setShowDefaultIcon(false);
-
+            
             for( ModalItem modalItem : category ) {
                 String label = fixLabel(modalItem.getName());
                 ToolEntry tool = new MapToolEntry(label, modalItem, category.getId());
-                drawer.add(tool);
+                container.add(tool);
             }
-            categories.add(drawer);
+            categories.add(container);
         }
         root.addAll(categories);
         return root;

@@ -67,6 +67,8 @@ public abstract class ModalItem implements ILazyOpListener {
     protected List<OperationCategory> operationCategories;
     protected boolean isEnabled = true;
 
+    private ImageDescriptor largeImageDescriptor;
+
     /**
      * Gets the image descriptor of the item.
      * 
@@ -76,6 +78,14 @@ public abstract class ModalItem implements ILazyOpListener {
         return imageDescriptor;
     }
 
+    /**
+     * Gets the large image descriptor of the item.
+     * 
+     * @return the image descripor of the item; may be null if not provided
+     */
+    public ImageDescriptor getLargeImageDescriptor() {
+        return largeImageDescriptor;
+    }
     /**
      * Marks each contribution item as selected.
      * 
@@ -253,6 +263,15 @@ public abstract class ModalItem implements ILazyOpListener {
         IMAGES.remove(getId());
     }
 
+    /**
+     * Sets the images descriptor of the item.
+     * 
+     * @param imageDescriptor the new image descriptor.
+     */
+    public void setLargeImageDescriptor( ImageDescriptor imageDescriptor ) {
+        this.largeImageDescriptor = imageDescriptor;
+    }
+    
     /**
      * Gets the icon image of the tool
      * 
