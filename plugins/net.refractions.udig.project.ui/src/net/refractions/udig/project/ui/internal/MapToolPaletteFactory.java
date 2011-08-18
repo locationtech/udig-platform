@@ -21,7 +21,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 public class MapToolPaletteFactory {
 
-    private static final String PREFIX = "ToolPaletteFactory."; //$NON-NLS-1$
+    private static final String PREFIX = "MapToolPaletteFactory."; //$NON-NLS-1$
     private static final String PALETTE_DOCK_LOCATION = PREFIX + "Location"; //$NON-NLS-1$
     private static final String PALETTE_STATE = PREFIX + "State"; //$NON-NLS-1$
     private static final String PALETTE_SIZE = PREFIX + "Size"; //$NON-NLS-1$
@@ -51,12 +51,14 @@ public class MapToolPaletteFactory {
             name = fixLabel(name);
 
             PaletteDrawer drawer = new PaletteDrawer(name);
+            
             if (open > 0) {
                 drawer.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
                 open--;
             } else {
                 drawer.setInitialState(PaletteDrawer.INITIAL_STATE_CLOSED);
             }
+            
             drawer.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
             drawer.setShowDefaultIcon(false);
 
