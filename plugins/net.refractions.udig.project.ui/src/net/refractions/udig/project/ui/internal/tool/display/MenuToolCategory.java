@@ -35,6 +35,7 @@ import org.eclipse.ui.contexts.IContextService;
  * 
  * @author jeichar
  * @since 0.9.0
+ * @version 1.3.0
  */
 public class MenuToolCategory extends ToolCategory {
 

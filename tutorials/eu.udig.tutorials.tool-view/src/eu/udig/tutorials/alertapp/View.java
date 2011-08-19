@@ -18,6 +18,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * The main view port.  Adds a shapefile to the View and configures the view with the tools and context menu 
  * (when selection tool is active)
+ * @version 1.3.0
  */
 public class View extends DefaultMapViewPart {
 	public static final String ID = "X.view";

@@ -61,6 +61,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * 
  * @author Emily Gouge, Graham Davis (Refractions Research, Inc.)
  * @since 1.1.0
+ * @version 1.3.0
  */
 public class MapView extends ViewPart implements MapPart {
     public static String ID = "net.refractions.udig.tutorials.rcp.mapView";

@@ -40,6 +40,8 @@ import org.eclipse.ui.part.ViewPart;
  * view should acquire a the toolbar when the view has focus.  Init map can be overridden to further configure the map.
  * 
  * @author jeichar
+ * 
+ * @version 1.3.0
  */
 public abstract class DefaultMapViewPart extends ViewPart implements MapPart, IDropTargetProvider {
 

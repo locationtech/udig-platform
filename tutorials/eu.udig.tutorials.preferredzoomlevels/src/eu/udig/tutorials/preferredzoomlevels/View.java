@@ -17,6 +17,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.IStatusLineManager;
 
+/**
+ * 
+ * @version 1.3.0
+ */
 public class View extends DefaultMapViewPart {
 	@SuppressWarnings("nls")
     public static final String ID = "eu.udig.tutorials.preferredzoomlevels.view";

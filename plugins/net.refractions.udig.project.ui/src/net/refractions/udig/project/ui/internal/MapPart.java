@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Control;
  * </ul>
  * @author Jesse, GDavis
  * @since 1.1.0
+ * @version 1.3.0
  */
 public interface MapPart {
 

@@ -49,6 +49,7 @@ import org.eclipse.swt.graphics.Image;
  * 
  * @author jeichar
  * @since 0.9.0
+ * @version 1.3.0
  */
 public abstract class ModalItem implements ILazyOpListener {
 

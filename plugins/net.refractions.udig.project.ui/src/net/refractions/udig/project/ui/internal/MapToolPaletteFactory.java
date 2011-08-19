@@ -20,6 +20,13 @@ import org.eclipse.gef.tools.SelectionTool;
 import org.eclipse.gef.ui.palette.FlyoutPaletteComposite.FlyoutPreferences;
 import org.eclipse.jface.preference.IPreferenceStore;
 
+/**
+ * Factory for the Tool Palette
+ * 
+ * @author Jody Garnett
+ * @since 1.3.0
+ * @version 1.3.0
+ */
 public class MapToolPaletteFactory {
 
     private static final String PREFIX = "MapToolPaletteFactory."; //$NON-NLS-1$

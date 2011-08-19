@@ -21,6 +21,7 @@ import org.eclipse.ui.IEditorPart;
  * 
  * @author Jody Garnett
  * @since 1.2.3
+ * @version 1.3.0
  */
 public class MapEditDomain extends DefaultEditDomain {
 	MapViewer mapViewer;

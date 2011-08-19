@@ -36,7 +36,7 @@ import net.refractions.udig.project.ui.tool.ModalTool;
  * This class Provides zoom box and click functionality.
  * 
  * @author Jesse Eichar
- * @version $Revision: 1.9 $
+ * @version 1.3.0
  */
 public class Zoom extends AbstractModalTool implements ModalTool {
     /** <code>ZOOMFACTOR</code> field */

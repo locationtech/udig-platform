@@ -41,6 +41,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * 
  * @author Emily Gouge
  * @since 1.2.0
+ * @version 1.3.0
  */
 public class OverviewMapView extends ViewPart implements MapPart {
 
