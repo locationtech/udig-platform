@@ -113,6 +113,15 @@ public class GridCoverageReaderRenderer extends RendererImpl {
         try {
         	// get the current context
         	final IRenderContext currentContext = getContext();       	
+        	final IGeoResource geoResource = currentContext.getGeoResource();
+        	
+        	if (geoResource.canResolve(RendererImpl.class)) {
+                RendererImpl rendererImpl = geoResource.resolve(RendererImpl.class, monitor);
+                rendererImpl.setContext(currentContext);
+                rendererImpl.render(graphics, monitor);
+                rendererImpl.dispose();
+                return;
+            }
         	
         	//check that actually we have something to draw
             currentContext.setStatus(ILayer.WAIT);
@@ -129,7 +138,7 @@ public class GridCoverageReaderRenderer extends RendererImpl {
             screenSize.add( bottomRight );
         	IMapDisplay mapDisplay = currentContext.getMapDisplay();
             
-        	 final IGeoResource geoResource = currentContext.getGeoResource();
+        	 
              AbstractGridCoverage2DReader reader = (AbstractGridCoverage2DReader) geoResource.resolve( AbstractGridCoverage2DReader.class, monitor);
              CoordinateReferenceSystem destinationCRS = currentContext.getCRS();
              ReferencedEnvelope bounds = (ReferencedEnvelope) currentContext.getImageBounds();
@@ -178,7 +187,8 @@ public class GridCoverageReaderRenderer extends RendererImpl {
              currentContext.setStatus(ILayer.WORKING);
              setState( STARTING );
              
-             GridCoverage2D coverage = (GridCoverage2D) reader.read(group.values().toArray(new ParameterValue[0]));
+             ParameterValue[] parameterValues = group.values().toArray(new ParameterValue[0]);
+            GridCoverage2D coverage = (GridCoverage2D) reader.read(parameterValues);
              if(coverage!=null){	            
 	            //setting rendering hints
                  //

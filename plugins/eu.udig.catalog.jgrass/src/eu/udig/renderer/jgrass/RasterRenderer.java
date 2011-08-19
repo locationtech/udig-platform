@@ -68,10 +68,6 @@ public class RasterRenderer extends RendererImpl {
 
     private static final String THE_MAP_IS_OUTSIDE_OF_THE_VISIBLE_REGION = "The map is outside of the visible region.";
 
-    public RasterRenderer( IRenderContext context ) {
-        setContext(context);
-    }
-
     public void render( Graphics2D g2d, IProgressMonitor monitor ) throws RenderException {
         try {
             final IRenderContext currentContext = getContext();

@@ -37,19 +37,24 @@ import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.URLUtils;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.ISharedImages;
+import net.refractions.udig.project.internal.render.impl.RendererImpl;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.geotools.arcsde.raster.io.RasterReaderFactory;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridEnvelope2D;
 import org.geotools.coverage.grid.GridGeometry2D;
+import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
+import org.geotools.gce.grassraster.GrassCoverageReader;
 import org.geotools.gce.grassraster.JGrassConstants;
 import org.geotools.gce.grassraster.JGrassMapEnvironment;
 import org.geotools.gce.grassraster.JGrassRegion;
 import org.geotools.geometry.Envelope2D;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.coverage.grid.GridCoverage;
+import org.opengis.coverage.grid.GridCoverageReader;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -57,6 +62,7 @@ import com.vividsolutions.jts.geom.Envelope;
 
 import eu.udig.catalog.jgrass.JGrassPlugin;
 import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import eu.udig.renderer.jgrass.RasterRenderer;
 
 public class JGrassMapGeoResource extends IGeoResource {
 
@@ -114,6 +120,9 @@ public class JGrassMapGeoResource extends IGeoResource {
          */
         return adaptee.isAssignableFrom(IService.class) || adaptee.isAssignableFrom(IGeoResource.class)
                 || adaptee.isAssignableFrom(JGrassMapGeoResource.class) || adaptee.isAssignableFrom(GridCoverage.class)
+                 || adaptee.isAssignableFrom(AbstractGridCoverage2DReader.class)
+                 || adaptee.isAssignableFrom(RendererImpl.class)
+                 || adaptee.isAssignableFrom(CoordinateReferenceSystem.class)
                 || adaptee.isAssignableFrom(GridGeometry2D.class) || super.canResolve(adaptee);
         // || adaptee.isAssignableFrom(File.class);
     }
@@ -136,6 +145,19 @@ public class JGrassMapGeoResource extends IGeoResource {
         }
         if (adaptee.isAssignableFrom(IGeoResource.class)) {
             return adaptee.cast(this);
+        }
+        if (adaptee.isAssignableFrom(RendererImpl.class)) {
+            RasterRenderer renderer = new RasterRenderer();
+            return adaptee.cast(renderer);
+        }
+        if (adaptee.isAssignableFrom(AbstractGridCoverage2DReader.class)) {
+            GrassCoverageReader reader = new GrassCoverageReader(jGrassMapEnvironment.getMapFile());
+            
+            return adaptee.cast(reader);
+        }
+        if (adaptee.isAssignableFrom(CoordinateReferenceSystem.class)) {
+            CoordinateReferenceSystem crs = getInfo(monitor).getCRS();
+            return adaptee.cast(crs);
         }
         if (adaptee.isAssignableFrom(GridGeometry2D.class)) {
             try {
