@@ -83,7 +83,13 @@ public class CoverageDescribeLayer {
                     evaluateCoord.y - 1, evaluateCoord.x + 1, evaluateCoord.x - 1, targetCrs);
 
             coverage = reader.read(parameterValues);
-
+            
+            /*
+             * the following is done since the reader might read a singlwe pixel 
+             * region and the gridcoordinate would be 0, 0 in that case. Later
+             * we want to supply the gridcoordinate of the position in the whole
+             * coverage. 
+             */
             gridGeometry = new GridGeometry2D(reader.getOriginalGridRange(), reader.getOriginalEnvelope());
         }
         // else try with coverage
