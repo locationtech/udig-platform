@@ -166,10 +166,13 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
             icon = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid, iconID);
             
             if( "icons/etool16/pan_mode.gif".equals( iconID )){
-                String largeIconID = iconID.replace("etool16","etool48");
+                String largeIconID = iconID.replace("etool16","etool24");
                 
                 ImageDescriptor large = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid, largeIconID);
                 setLargeImageDescriptor( large );
+            }
+            else {
+                setLargeImageDescriptor( icon );
             }
         }
         setImageDescriptor(icon);
