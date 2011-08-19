@@ -2,6 +2,7 @@ package net.refractions.udig.project.ui.internal;
 
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.tool.display.ModalItem;
+import net.refractions.udig.project.ui.internal.tool.display.ToolProxy;
 import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.tool.Tool;
@@ -22,9 +23,7 @@ public class MapToolEntry extends ToolEntry {
         super( label, item.getToolTipText(), item.getImageDescriptor(), item.getLargeImageDescriptor());
         setId(item.getId());
         this.categoryId = categoryId;
-
         this.item = item;
-
         item.getMapToolEntries().add( this ); // register for enablement
 	}
 
@@ -34,6 +33,9 @@ public class MapToolEntry extends ToolEntry {
         return tool;
     }
 
+    public ToolProxy getMapToolProxy(){
+        return (ToolProxy) item;
+    }
     @Override
     public void setVisible( boolean isVisible ) {
         super.setVisible(isVisible);

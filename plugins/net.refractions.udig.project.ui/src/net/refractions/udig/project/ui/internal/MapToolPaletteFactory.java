@@ -85,6 +85,7 @@ public class MapToolPaletteFactory {
                 container = drawer;
             }
             
+            category.container( container ); // hook up so container can cycle tools on keypres
             
             for( ModalItem modalItem : category ) {
                 String label = fixLabel(modalItem.getName());
