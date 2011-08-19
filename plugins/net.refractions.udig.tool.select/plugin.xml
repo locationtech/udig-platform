@@ -18,21 +18,27 @@
             hotspotX="10"
             image="icons/pointers/select_source.png"
             id="bbox_cursor"/>
+            <enablement>
+                     <property propertyId="net.refractions.udig.tool.select.layerHasSelectionProperty" expectedValue="" />
+            </enablement>
          </modalTool>
-                     <modalTool
-                           categoryId="net.refractions.udig.tool.category.selection"
-                           class="net.refractions.udig.tool.select.ArrowSelection"
-                           icon="icons/etool16/select_feature_mode.gif"
-                           id="net.refractions.udig.tools.ArrowSelect"
-                           name="%selection.arrow.name"
-                           onToolbar="false"
-                           toolCursorId="selectFeatureCursor"
-                           tooltip="%selection.arrow.tooltip">
+          <modalTool
+                   categoryId="net.refractions.udig.tool.category.selection"
+                   class="net.refractions.udig.tool.select.ArrowSelection"
+                   icon="icons/etool16/select_feature_mode.gif"
+                   id="net.refractions.udig.tools.ArrowSelect"
+                   name="%selection.arrow.name"
+                   onToolbar="false"
+                   toolCursorId="selectFeatureCursor"
+                   tooltip="%selection.arrow.tooltip">
    			<cursor
             hotspotY="10"
             hotspotX="10"
             image="icons/pointers/select_feature_cursor.gif"
             id="arrow_cursor"/>
+             <enablement>
+                     <property propertyId="net.refractions.udig.tool.select.layerHasSelectionProperty" expectedValue="" />
+            </enablement>
          </modalTool>
                 <actionTool
                      categoryId="net.refractions.udig.tool.category.zoom"
