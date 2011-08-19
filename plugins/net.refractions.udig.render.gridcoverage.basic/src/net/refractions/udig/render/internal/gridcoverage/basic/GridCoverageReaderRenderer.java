@@ -116,6 +116,7 @@ public class GridCoverageReaderRenderer extends RendererImpl {
         	final IGeoResource geoResource = currentContext.getGeoResource();
         	
         	if (geoResource.canResolve(RendererImpl.class)) {
+        	    // if the service wants to use its own renderer, let it be
                 RendererImpl rendererImpl = geoResource.resolve(RendererImpl.class, monitor);
                 rendererImpl.setContext(currentContext);
                 rendererImpl.render(graphics, monitor);
