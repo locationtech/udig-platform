@@ -99,10 +99,10 @@ public class CoverageDescribeLayer {
                     sb.append(", ");
                     sb.append(formatter.format(envelopeCenterOrig.y));
                     sb.append("\n\n");
-                    sb.append("\tand grid coordinates (row, col):\n");
-                    sb.append("\t").append(gridCoord.y);
+                    sb.append("\tand grid coordinates (col, row):\n");
+                    sb.append("\t").append(gridCoord.x);
                     sb.append(", ");
-                    sb.append(gridCoord.x);
+                    sb.append(gridCoord.y);
                     sb.append("\n");
 
                     return sb.toString();
