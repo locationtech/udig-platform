@@ -13,6 +13,13 @@ import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.ToolEntry;
 
+/**
+ * Descriptor class for a tool entry specifically made for the map.
+ * 
+ * @author Jody Garnett
+ * @since 1.3.0
+ * @version 1.3.0
+ */
 public class MapToolEntry extends ToolEntry {
 
     private String categoryId;

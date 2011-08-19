@@ -56,6 +56,8 @@ import org.eclipse.ui.dialogs.ListDialog;
  * Creates a Page using the current map
  * 
  * @author Richard Gould
+ * 
+ * @version 1.3.0
  */
 public class CreatePageAction implements IEditorActionDelegate {
 

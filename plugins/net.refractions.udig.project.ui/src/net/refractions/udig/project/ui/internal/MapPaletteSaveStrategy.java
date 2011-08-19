@@ -36,6 +36,13 @@ import net.refractions.udig.project.internal.StyleBlackboard;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 
+/**
+ * Save strategy for Map Palette
+ * 
+ * @author Jody Garnett
+ * @since 1.3.0
+ * @version 1.3.0
+ */
 public final class MapPaletteSaveStrategy extends CatalogExport {
 	private final ExportResourceSelectionState state;
 	private MapEditorWithPalette editor;

@@ -57,7 +57,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * editors are concerned.
  * 
  * @author Jesse Eichar
- * @version $Revision: 1.9 $
+ * @version 1.3.0
  */
 public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
  

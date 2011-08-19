@@ -16,6 +16,13 @@ import net.refractions.udig.project.internal.EditManager;
 
 import org.eclipse.jface.viewers.StructuredSelection;
 
+/**
+ * Save strategy for Map Palette
+ * 
+ * @author Jody Garnett
+ * @since 1.3.0
+ * @version 1.3.0
+ */
 class SaveMapPaletteRunnable implements Runnable{
     	private final MapEditorWithPalette mapEditor;
     	private final boolean[] success;

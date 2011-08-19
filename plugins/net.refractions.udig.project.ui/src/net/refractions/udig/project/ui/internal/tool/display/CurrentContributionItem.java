@@ -24,8 +24,8 @@ import org.eclipse.jface.action.ContributionItem;
  * <p>
  * The real strength of this class is the ability to handle enablement via the setEnabled method;
  * this allows an external party such as ToolManager to control what is shown.
- * 
- * @version 1.1
+ * @since 1.1.0
+ * @version 1.3.0
  */
 public abstract class CurrentContributionItem extends ContributionItem {
 	

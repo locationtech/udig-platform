@@ -45,6 +45,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * </p>
  * @author Jody Garnett
  * @since 1.1.0
+ * @version 1.3.0
  */
 public class MapViewer implements MapPart {
     /**

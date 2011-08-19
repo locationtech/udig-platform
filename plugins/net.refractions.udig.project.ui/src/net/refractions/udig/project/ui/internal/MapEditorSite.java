@@ -40,6 +40,7 @@ import org.eclipse.ui.services.IServiceLocator;
  * 
  * @author Jesse
  * @since 1.1.0
+ * @version 1.3.0
  */
 public class MapEditorSite implements IEditorSite, IViewSite {
 
