@@ -92,7 +92,7 @@ public class MapToolPaletteFactory {
                 container = drawer;
             }
             
-            category.container( container ); // hook up so container can cycle tools on keypres
+            category.container( container ); // hook up so container can cycle tools on keypress
             
             for( ModalItem modalItem : category ) {
                 String label = fixLabel(modalItem.getName());
@@ -101,8 +101,7 @@ public class MapToolPaletteFactory {
                 //set the default tool
                 if(modalItem.getId().equals(DEFAULT_ID)){
                     root.setDefaultEntry(tool);
-                }
-                
+                }                
                 container.add(tool);
             }
             categories.add(container);

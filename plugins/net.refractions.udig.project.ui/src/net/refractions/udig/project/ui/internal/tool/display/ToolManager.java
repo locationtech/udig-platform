@@ -622,12 +622,15 @@ public class ToolManager implements IToolManager {
         setCommandActions(editor.getMap(), editor);
         editor.setSelectionProvider(activeModalToolProxy.getSelectionProvider());
     }
-
-    private void setContext( List categories, ToolContext tools ) {
-        for( Iterator iter = categories.iterator(); iter.hasNext(); ) {
-            ToolCategory category = (ToolCategory) iter.next();
-            for( Iterator titer = category.iterator(); titer.hasNext(); ) {
-                ToolProxy tool = (ToolProxy) titer.next();
+    /**
+     * Go through List of ToolCategory and update each tol with the new tool context.
+     * @param categories
+     * @param tools
+     */
+    private void setContext( List<? extends ToolCategory> categories, ToolContext tools ) {
+        for(  ToolCategory category : categories ) {
+            for(ModalItem item : category.items ) {
+                ToolProxy tool = (ToolProxy) item;
                 tool.setContext(tools);
             }
         }

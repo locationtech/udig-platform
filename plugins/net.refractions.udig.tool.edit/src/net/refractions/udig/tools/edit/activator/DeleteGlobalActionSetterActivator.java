@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IActionBars2;
 import org.eclipse.ui.IKeyBindingService;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.actions.ActionFactory;
 
 /**
@@ -81,7 +82,11 @@ public class DeleteGlobalActionSetterActivator implements Activator {
         }
         IWorkbenchPart part=ApplicationGISInternal.getActiveEditor();
         
-        IKeyBindingService keyBindingService = part.getSite().getKeyBindingService();
+        if( part == null ) return;
+        
+        IWorkbenchPartSite site = part.getSite();
+        
+        IKeyBindingService keyBindingService = site.getKeyBindingService();
         keyBindingService.unregisterAction(deleteVertexHandler);
         deleteVertexHandler=null;
         

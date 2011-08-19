@@ -284,7 +284,8 @@ public class MapViewer implements MapPart {
      * @param tool
      */
     public void setModalTool( ModalTool tool ) {
-    	IToolManager tools = ApplicationGIS.getToolManager();
+
+        IToolManager tools = ApplicationGIS.getToolManager();
         
         if (activeTool != null) {
             // ask the current tool to stop listening etc...

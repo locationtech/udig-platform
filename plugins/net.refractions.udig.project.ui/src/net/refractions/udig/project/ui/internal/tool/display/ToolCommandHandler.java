@@ -89,36 +89,15 @@ public class ToolCommandHandler extends AbstractHandler {
                     }
                 }
             }
-            if( victim != null ){
+            if( victim == null ){
                 victim = first; // we were at the end of the list; cycle back to first
             }
             
             // okay victim is our new "Active" tool; how do we update the map an palette to use it?
             if( victim != null ){
-//                IToolManager tools = ApplicationGIS.getToolManager();
-//
-//                ModalTool globalTool = (ModalTool) tools.getActiveTool();
-
                 if( victim.getMapToolProxy() != null ){
-                    victim.getMapToolProxy().setActive(true);
+                    victim.getMapToolProxy().run();
                 }
-//                
-//                if (globalTool != null) {
-//                    // ask the current tool to stop listening etc...
-//                    globalTool.setActive(false);
-//                }
-                
-//                IToolContext toolContext = victim.getMapToolProxy().toolContext;
-//                
-//                activeTool = victim.getMapTool();
-//                activeTool.setContext( toolContext );
-//                activeTool.setActive(true); // this should register itself with the tool manager
-//                
-//                
-//                // this was normally handled by the ToolProxy which we cannot get a hold of
-//                String currentCursorID = activeTool.getCursorID();
-//                Cursor toolCursor = tools.findToolCursor(currentCursorID);
-//                toolContext.getViewportPane().setCursor(toolCursor);
             }
         }
         else {

@@ -24,14 +24,24 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.internal.ui.operations.OperationCategory;
+import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.internal.MapToolEntry;
+import net.refractions.udig.project.ui.internal.MapToolPaletteFactory;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import net.refractions.udig.project.ui.tool.IToolContext;
+import net.refractions.udig.project.ui.tool.IToolManager;
+import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.graphics.Glyph;
 import net.refractions.udig.ui.operations.ILazyOpListener;
 import net.refractions.udig.ui.operations.OpFilter;
 
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.palette.PaletteContainer;
+import org.eclipse.gef.palette.PaletteRoot;
+import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
@@ -104,6 +114,23 @@ public abstract class ModalItem implements ILazyOpListener {
                 item.setSelection(checked, this);
         }
         contributions.removeAll(toRemove);
+
+        IToolManager tools = ApplicationGIS.getToolManager();
+        
+        MapPart currentEditor = ((ToolManager)tools).currentEditor;
+        if( currentEditor != null ){
+            MapEditDomain editDomain = currentEditor.getEditDomain();
+            PaletteViewer paletteViewer = editDomain.getPaletteViewer();
+            
+            for( MapToolEntry entry : this.mapToolEntries ){
+                paletteViewer.setActiveTool( entry );
+                
+                EditPart part = (EditPart) paletteViewer.getEditPartRegistry().get( entry );
+                
+                paletteViewer.reveal( part );
+                break;
+            }
+        }
     }
 
     /**

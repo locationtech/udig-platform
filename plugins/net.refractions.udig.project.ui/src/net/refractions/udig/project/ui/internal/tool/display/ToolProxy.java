@@ -487,7 +487,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     	if (toolContext == null)
     		return;
     	
-    	setChecked(active);
+    	setChecked(active); // will check this in each menu / toolbar contribution 
     	
     	if (getTool() instanceof ModalTool) {
     		ModalTool modalTool = (ModalTool)getTool();
@@ -498,6 +498,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     			String currentCursorID = modalTool.getCursorID();
     			toolContext.getViewportPane().setCursor(
     					ApplicationGIS.getToolManager().findToolCursor(currentCursorID));
+    			
     		}
     	}
     }

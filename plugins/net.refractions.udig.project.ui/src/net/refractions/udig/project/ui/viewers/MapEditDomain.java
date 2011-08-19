@@ -28,6 +28,12 @@ public class MapEditDomain extends DefaultEditDomain {
 
 	private PaletteListener paletteListener = new PaletteListener() {
 		public void activeToolChanged(PaletteViewer viewer, ToolEntry tool) {
+//		    if( tool instanceof MapToolEntry ){
+//		        MapToolEntry mapToolEntry = (MapToolEntry) tool;
+//		        
+//		        mapToolEntry.getMapToolProxy().run();
+//		    }
+		    
 			IToolManager toolManager = ApplicationGIS.getToolManager();
 			if (viewer != null && mapViewer != null) {
 				ToolEntry entry = viewer.getActiveTool();
