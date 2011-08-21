@@ -94,7 +94,7 @@ public class RasterRenderer extends RendererImpl {
 
             JGrassRegion fileWindow = new JGrassRegion(grassMapGeoResource.getFileWindow());
             JGrassMapsetGeoResource parent = (JGrassMapsetGeoResource) grassMapGeoResource.parent(new NullProgressMonitor());
-            CoordinateReferenceSystem grassCrs = parent.getJGrassCrs();
+            CoordinateReferenceSystem grassCrs = parent.getLocationCrs();
             JGrassRegion screenDrawWindow = new JGrassRegion(envelope.getMinX(), envelope.getMaxX(), envelope.getMinY(),
                     envelope.getMaxY(), fileWindow.getRows(), fileWindow.getCols());
 
