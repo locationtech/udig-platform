@@ -146,6 +146,15 @@
             id="eu.udig.tools.jgrass.toolscategory"
             name="JGrass Tools">
       </category>
+      <operation
+            categoryId="eu.udig.tools.jgrass.toolscategory"
+            class="eu.udig.tools.jgrass.copypath.CopyPathOp"
+            enablesFor="1"
+            id="eu.udig.tools.jgrass.copypath.CopyPathOp"
+            name="%copy.file.path"
+            targetClass="java.io.File">
+         <enablement></enablement>
+      </operation>
    </extension>
    <extension
          point="org.eclipse.ui.importWizards">

@@ -40,7 +40,9 @@ public class RasterRenderMetrics extends AbstractRenderMetrics {
     }
 
     public Renderer createRenderer() {
-        return new RasterRenderer(context);
+        RasterRenderer rasterRenderer = new RasterRenderer();
+        rasterRenderer.setContext(context);
+        return rasterRenderer;
     }
 
     public boolean canAddLayer( ILayer layer ) {
