@@ -63,7 +63,6 @@ import org.geotools.gce.grassraster.JGrassMapEnvironment;
 import org.geotools.gce.grassraster.JGrassUtilities;
 import org.geotools.gce.grassraster.core.color.ColorRule;
 import org.geotools.gce.grassraster.core.color.JGrassColorTable;
-import org.jfree.io.FileUtilities;
 
 import eu.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
 import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
@@ -538,6 +537,7 @@ public class ColorEditor extends Composite implements SelectionListener {
 
     }
 
+    @SuppressWarnings("rawtypes")
     public void update( Object updatedObject ) {
         if (updatedObject instanceof List) {
             String mapName = null;
