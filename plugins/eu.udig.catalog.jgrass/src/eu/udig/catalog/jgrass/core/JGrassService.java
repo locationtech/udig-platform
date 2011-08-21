@@ -211,48 +211,31 @@ public class JGrassService extends IService {
      */
     private Map<String, String> loadMapsets( IProgressMonitor monitor ) {
         try {
-            // resolve to a file
-            File file = resolve(File.class, monitor);
-            if (file == null) {
-                return null;
-            }
-
             Map<String, String> props = new HashMap<String, String>();
 
             // list the mapsets inside the location folder
-            String[] mapsets = file.list();
-            if (mapsets == null) {
+            File[] mapsetFiles = locationFolderFile.listFiles();
+            if (mapsetFiles == null) {
                 msg = new Throwable("Either dir does not exist or is not a directory");
                 return null;
             }
 
             // store the mapset name and the absolute path to it
-            for( String mapsetName : mapsets ) {
-                if (mapsetName.equals(JGrassConstants.PERMANENT_MAPSET)) {
+            File permanentMapsetFile = null;
+            for( File mapsetFile : mapsetFiles ) {
+                if (mapsetFile.getName().equals(JGrassConstants.PERMANENT_MAPSET)) {
+                    permanentMapsetFile = mapsetFile;
                     continue;
                 }
-                String mapsetPath = file.getAbsolutePath() + File.separator + mapsetName;
-                File mapsetFile = new File(mapsetPath);
                 // the folder has contain the region definition file to be
                 // consistent
-                File windInMapsetFile = new File(mapsetPath + File.separator + JGrassConstants.WIND);
+                File windInMapsetFile = new File(mapsetFile, JGrassConstants.WIND);
                 if (mapsetFile.exists() && mapsetFile.isDirectory() && windInMapsetFile.exists()) {
-                    // if (!windInMapsetFile.exists()) {
-                    // windInMapsetFile = new File(mapsetPath + File.separator
-                    // + JGrassConstans.WIND.toLowerCase());
-                    // if (!windInMapsetFile.exists()) {
-                    // msg = new Throwable(
-                    // "Couldn't find a suitable region file in the mapset. Check your Location.");
-                    // return null;
-                    // }
-                    // }
-
-                    props.put(mapsetName, mapsetFile.getAbsolutePath());
+                    props.put(mapsetFile.getName(), mapsetFile.getAbsolutePath());
                 }
             }
-            if (props.size() == 0) {
-                props.put(JGrassConstants.PERMANENT_MAPSET, file.getAbsolutePath() + File.separator
-                        + JGrassConstants.PERMANENT_MAPSET);
+            if (props.size() == 0 && permanentMapsetFile != null) {
+                props.put(JGrassConstants.PERMANENT_MAPSET, permanentMapsetFile.getAbsolutePath());
             }
 
             // clear message, everything is ok
