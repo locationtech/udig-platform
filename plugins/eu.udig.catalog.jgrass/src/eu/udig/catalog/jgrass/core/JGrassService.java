@@ -151,19 +151,20 @@ public class JGrassService extends IService {
         // seed the potentially null field
         members(monitor);
         List<JGrassMapGeoResource> children = new ArrayList<JGrassMapGeoResource>();
-        collectChildren(this, children);
+        collectChildren(this, children, monitor);
 
         return children;
     }
 
-    private void collectChildren( IResolve resolve, List<JGrassMapGeoResource> children ) throws IOException {
-        List<IResolve> resolves = resolve.members(new NullProgressMonitor());
+    private void collectChildren( IResolve resolve, List<JGrassMapGeoResource> children, IProgressMonitor monitor )
+            throws IOException {
+        List<IResolve> resolves = resolve.members(monitor);
 
         if (resolve instanceof JGrassMapGeoResource && resolves.isEmpty()) {
             children.add((JGrassMapGeoResource) resolve);
         } else {
             for( IResolve resolve2 : resolves ) {
-                collectChildren(resolve2, children);
+                collectChildren(resolve2, children, monitor);
             }
         }
     }

@@ -100,7 +100,7 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
         this.name = name;
 
         mapsetFile = new File(mapsetPath);
-        if (!mapsetFile.isDirectory()) {
+        if (!mapsetFile.exists() || !mapsetFile.isDirectory()) {
             throw new IllegalArgumentException("The GRASS mapset has to be a folder: " + mapsetPath);
         }
         cellFolderFile = new File(mapsetFile, JGrassConstants.CELL);
