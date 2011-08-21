@@ -52,8 +52,10 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.gce.grassraster.JGrassConstants;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import eu.udig.catalog.jgrass.JGrassPlugin;
+import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 
 /**
  * <p>
@@ -77,21 +79,27 @@ public class JGrassService extends IService {
     /** the resources members field */
     private volatile List<IResolve> mapsetMembers = null;
 
-    /** error messahe field */
+    /** error message field */
     private Throwable msg = null;
 
     private ID id;
+
+    private File locationFolderFile;
+
+    private CoordinateReferenceSystem locationCrs;
 
     public JGrassService( Map<String, Serializable> params ) {
         this.params = params;
 
         // get the file url from the connection parameters
         url = (URL) this.params.get(JGrassServiceExtension.KEY);
-        try {
-            id = new ID(url);
-        } catch (Throwable t) {
-            t.printStackTrace();
+        id = new ID(url);
+
+        locationFolderFile = URLUtils.urlToFile(url);
+        if (!locationFolderFile.isDirectory()) {
+            throw new IllegalArgumentException("The GRASS location has to be a folder: " + locationFolderFile.getAbsolutePath());
         }
+        locationCrs = JGrassCatalogUtilities.getLocationCrs(locationFolderFile.getAbsolutePath());
     }
 
     @Override
@@ -133,12 +141,7 @@ public class JGrassService extends IService {
             return adaptee.cast(members(monitor));
         }
         if (adaptee.isAssignableFrom(File.class)) {
-            // turn the url into a file and be sure that it is a folder
-            File locationFolderFile = URLUtils.urlToFile(url);
-            if (locationFolderFile.isDirectory()) {
-                return adaptee.cast(locationFolderFile);
-            } else
-                return super.resolve(adaptee, monitor);
+            return adaptee.cast(locationFolderFile);
         }
         // bad call to resolve
         return super.resolve(adaptee, monitor);
@@ -272,6 +275,15 @@ public class JGrassService extends IService {
         return id;
     }
 
+    /**
+     * Getter for the location {@link CoordinateReferenceSystem}.
+     * 
+     * @return the location crs.
+     */
+    public CoordinateReferenceSystem getLocationCrs() {
+        return locationCrs;
+    }
+
     public static URL createId( String locationPath ) {
         try {
             URL locationUrl = new File(locationPath).toURI().toURL();
@@ -300,8 +312,7 @@ public class JGrassService extends IService {
     }
 
     public File getFile() {
-        File serviceFile = URLUtils.urlToFile(getIdentifier());
-        return serviceFile;
+        return locationFolderFile;
     }
 
     public File getPermanetMapsetFile() {
