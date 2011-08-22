@@ -6,6 +6,7 @@ import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxC
 import net.refractions.udig.project.ui.internal.MapImport;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
+import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.tools.internal.ScrollPanTool;
 import net.refractions.udig.tools.internal.Zoom;
@@ -15,6 +16,7 @@ import net.refractions.udig.tutorials.tracking.glasspane.TrackSeagullOp;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -39,6 +41,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * 
  * @author Emily Gouge
  * @since 1.2.0
+ * @version 1.3.0
  */
 public class OverviewMapView extends ViewPart implements MapPart {
 
@@ -46,6 +49,8 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
     private MapViewer mapviewer; // main map viewer
     private OverviewMapViewer overviewmapviewer; // overview map viewer
+
+	private MapEditDomain editDomain;
 
     public OverviewMapView() {
         super();
@@ -68,7 +73,6 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
     @Override
     public void createPartControl( Composite parent ) {
-
         parent.setLayout(new FormLayout());
 
         // create two maps
@@ -87,6 +91,8 @@ public class OverviewMapView extends ViewPart implements MapPart {
         overviewmapviewer.getControl().setLayoutData(fd);
 
         // create map
+    	editDomain = new MapEditDomain(null);
+
         mapviewer = new MapViewer(parent, SWT.MULTI | SWT.NO_BACKGROUND);
         mapviewer.setMap(mainmap);
         fd = new FormData();
@@ -228,6 +234,16 @@ public class OverviewMapView extends ViewPart implements MapPart {
             });
         }
     }
+
+	@Override
+	public IStatusLineManager getStatusLineManager() {
+		return getViewSite().getActionBars().getStatusLineManager();
+	}
+	
+	@Override
+	public MapEditDomain getEditDomain() {
+		return editDomain;
+	}
 }
 
 class OverviewLayoutManager extends Layout {

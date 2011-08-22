@@ -34,6 +34,7 @@ import net.refractions.udig.project.ui.internal.MapImport;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.ModalTool;
+import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.tools.internal.FixedScalePan;
 import net.refractions.udig.tools.internal.Zoom;
@@ -44,6 +45,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -59,6 +61,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * 
  * @author Emily Gouge, Graham Davis (Refractions Research, Inc.)
  * @since 1.1.0
+ * @version 1.3.0
  */
 public class MapView extends ViewPart implements MapPart {
     public static String ID = "net.refractions.udig.tutorials.rcp.mapView";
@@ -67,6 +70,7 @@ public class MapView extends ViewPart implements MapPart {
     // private RenderManager renderManager;
     private Map map;
     private SeagullGlassPaneOp seagullOp;
+	private MapEditDomain editDomain;
 
     public MapView() {
         super();
@@ -74,6 +78,7 @@ public class MapView extends ViewPart implements MapPart {
 
     @Override
     public void createPartControl( Composite parent ) {
+    	editDomain = new MapEditDomain(null);
         FillLayout fillLayout = new FillLayout();
         fillLayout.type = SWT.VERTICAL;
         parent.setLayout(fillLayout);
@@ -317,4 +322,13 @@ public class MapView extends ViewPart implements MapPart {
         mapviewer.setSelectionProvider(selectionProvider);
     }
 
+	@Override
+	public IStatusLineManager getStatusLineManager() {
+		return getViewSite().getActionBars().getStatusLineManager();
+	}
+
+	@Override
+	public MapEditDomain getEditDomain() {
+		return editDomain;
+	}
 }

@@ -22,10 +22,18 @@ import org.eclipse.ui.part.EditorActionBarContributor;
 
 /**
  * Adds {@link net.refractions.udig.project.ui.tool.Tool}s to the actions bars.
+ * <p>
+ * You can configure the MapEditorActionBarContributor to only add Action Tools
+ * (in order to make use of the GEF palette.
+ * 
  * @author jeichar
+ * @version 2.3
  */
 public class MapEditorActionBarContributor extends EditorActionBarContributor {
+	/** SubCoolBarManager used to wrap normal coolBarManager and watch the add/remove of items */
 	private SubCoolBarManager subManager;
+	
+    private boolean isModalIncluded = false;
 
     @Override
     public void init( IActionBars bars, IWorkbenchPage page ) {
@@ -37,9 +45,9 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
 	public void contributeToCoolBar(ICoolBarManager coolBarManager) {
 		if (coolBarManager instanceof SubCoolBarManager) {
 			subManager = (SubCoolBarManager) coolBarManager;
-		}else
-			subManager=new SubCoolBarManager(coolBarManager);
-        
+		} else {
+			subManager = new SubCoolBarManager(coolBarManager);
+		}
       /*
       * Vitalus:
       * For correct toolbar management by Eclipse platform we MUST
@@ -58,6 +66,7 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
          * Contribute action tools to the toolbar.
          */
         ToolBarManager actionToolBarManager = new ToolBarManager(SWT.FLAT);
+        
         ApplicationGIS.getToolManager().contributeActionTools(actionToolBarManager, getActionBars());
         if ( actionToolBarManager.getItems().length > 0){
             IContributionItem item = subManager.find(ToolConstants.ACTION_TOOLBAR_ID);
@@ -71,17 +80,18 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
         /*
          * Contribute modal tools to the toolbar.
          */
-        ToolBarManager modalToolBarManager = new ToolBarManager(SWT.FLAT);
-        ApplicationGIS.getToolManager().contributeModalTools(modalToolBarManager, getActionBars());
-        if ( modalToolBarManager.getItems().length > 0){
-            IContributionItem item = subManager.find(ToolConstants.MODAL_TOOLBAR_ID);
-            if(item != null){
-                subManager.remove(ToolConstants.MODAL_TOOLBAR_ID);
+        if( isModalIncluded ){
+            ToolBarManager modalToolBarManager = new ToolBarManager(SWT.FLAT);
+            ApplicationGIS.getToolManager().contributeModalTools(modalToolBarManager, getActionBars());
+            if ( modalToolBarManager.getItems().length > 0){
+                IContributionItem item = subManager.find(ToolConstants.MODAL_TOOLBAR_ID);
+                if(item != null){
+                    subManager.remove(ToolConstants.MODAL_TOOLBAR_ID);
+                }
+                ToolBarContributionItem toolBarContributionItem = new ToolBarContributionItem(modalToolBarManager, ToolConstants.MODAL_TOOLBAR_ID);
+                subManager.add(toolBarContributionItem);
             }
-            ToolBarContributionItem toolBarContributionItem = new ToolBarContributionItem(modalToolBarManager, ToolConstants.MODAL_TOOLBAR_ID);
-            subManager.add(toolBarContributionItem);
         }
-        
 		super.contributeToCoolBar(coolBarManager);
 	}
 

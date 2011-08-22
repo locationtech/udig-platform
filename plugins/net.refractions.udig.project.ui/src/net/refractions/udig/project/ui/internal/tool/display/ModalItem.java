@@ -19,22 +19,35 @@ package net.refractions.udig.project.ui.internal.tool.display;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.internal.ui.operations.OperationCategory;
+import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.ui.internal.MapPart;
+import net.refractions.udig.project.ui.internal.MapToolEntry;
+import net.refractions.udig.project.ui.internal.MapToolPaletteFactory;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import net.refractions.udig.project.ui.tool.IToolContext;
+import net.refractions.udig.project.ui.tool.IToolManager;
+import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.graphics.Glyph;
 import net.refractions.udig.ui.operations.ILazyOpListener;
 import net.refractions.udig.ui.operations.OpFilter;
 
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.palette.PaletteContainer;
+import org.eclipse.gef.palette.PaletteRoot;
+import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 
 /**
+ * Item used to represent one mode in a group.
  * <p>
  * Responsibilities:
  * <ul>
@@ -46,6 +59,7 @@ import org.eclipse.swt.graphics.Image;
  * 
  * @author jeichar
  * @since 0.9.0
+ * @version 1.3.0
  */
 public abstract class ModalItem implements ILazyOpListener {
 
@@ -55,6 +69,7 @@ public abstract class ModalItem implements ILazyOpListener {
 //            .getSystemCursor(SWT.CURSOR_ARROW);
     
     private List<CurrentContributionItem> contributions = new ArrayList<CurrentContributionItem>();
+    private CopyOnWriteArrayList<MapToolEntry> mapToolEntries = new CopyOnWriteArrayList<MapToolEntry>();
     
     protected String[] commandIds;
     protected String handlerType;
@@ -66,6 +81,8 @@ public abstract class ModalItem implements ILazyOpListener {
     protected List<OperationCategory> operationCategories;
     protected boolean isEnabled = true;
 
+    private ImageDescriptor largeImageDescriptor;
+
     /**
      * Gets the image descriptor of the item.
      * 
@@ -75,6 +92,14 @@ public abstract class ModalItem implements ILazyOpListener {
         return imageDescriptor;
     }
 
+    /**
+     * Gets the large image descriptor of the item.
+     * 
+     * @return the image descripor of the item; may be null if not provided
+     */
+    public ImageDescriptor getLargeImageDescriptor() {
+        return largeImageDescriptor;
+    }
     /**
      * Marks each contribution item as selected.
      * 
@@ -89,6 +114,23 @@ public abstract class ModalItem implements ILazyOpListener {
                 item.setSelection(checked, this);
         }
         contributions.removeAll(toRemove);
+
+        IToolManager tools = ApplicationGIS.getToolManager();
+        
+        MapPart currentEditor = ((ToolManager)tools).currentEditor;
+        if( currentEditor != null ){
+            MapEditDomain editDomain = currentEditor.getEditDomain();
+            PaletteViewer paletteViewer = editDomain.getPaletteViewer();
+            
+            for( MapToolEntry entry : this.mapToolEntries ){
+                paletteViewer.setActiveTool( entry );
+                
+                EditPart part = (EditPart) paletteViewer.getEditPartRegistry().get( entry );
+                
+                paletteViewer.reveal( part );
+                break;
+            }
+        }
     }
 
     /**
@@ -172,6 +214,14 @@ public abstract class ModalItem implements ILazyOpListener {
     public void clearContributions() {
         contributions.clear();
     }
+    /**
+     * Provides access to the list of MapToolEntry that are notified when enablement changes.
+     * 
+     * @return A copy on write array of the MapToolEntry to notify for enablement
+     */
+    public CopyOnWriteArrayList<MapToolEntry> getMapToolEntries() {
+        return mapToolEntries;
+    }
 
     /**
      * Returns an instance of a command handler for the current item.
@@ -253,6 +303,15 @@ public abstract class ModalItem implements ILazyOpListener {
     }
 
     /**
+     * Sets the images descriptor of the item.
+     * 
+     * @param imageDescriptor the new image descriptor.
+     */
+    public void setLargeImageDescriptor( ImageDescriptor imageDescriptor ) {
+        this.largeImageDescriptor = imageDescriptor;
+    }
+    
+    /**
      * Gets the icon image of the tool
      * 
      * @return the icon image of the tool.
@@ -312,6 +371,9 @@ public abstract class ModalItem implements ILazyOpListener {
             this.isEnabled = isEnabled2;
             for( CurrentContributionItem contrib : getContributions() ) {
                 contrib.setEnabled(isEnabled2);
+            }
+            for( MapToolEntry entry : mapToolEntries ){
+                entry.setVisible(isEnabled2);
             }
         } finally {
             enabledLock.unlock();

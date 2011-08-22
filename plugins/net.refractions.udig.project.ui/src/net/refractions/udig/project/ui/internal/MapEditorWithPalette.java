@@ -52,6 +52,7 @@ import net.refractions.udig.project.ui.internal.commands.draw.DrawFeatureCommand
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.IToolManager;
+import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.ui.CRSChooserDialog;
@@ -73,6 +74,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.gef.palette.PaletteRoot;
+import org.eclipse.gef.ui.palette.FlyoutPaletteComposite.FlyoutPreferences;
+import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.GroupMarker;
@@ -124,7 +128,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.SubActionBars2;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
-import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -136,17 +139,18 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
-public class MapEditor extends EditorPart implements IDropTargetProvider, IAdaptable, MapEditorPart {
+public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette implements IDropTargetProvider, IAdaptable, MapEditorPart {
     private static final String LAYER_DIRTY_KEY = "DIRTY"; //$NON-NLS-1$
+    
     /** The id of the MapViewport View */
     public final static String ID = "net.refractions.udig.project.ui.mapEditor"; //$NON-NLS-1$
-    final MapEditor editor = this;
+    final MapEditorWithPalette editor = this;
     final StatusLineManager statusLineManager = new StatusLineManager();
     private MapEditorSite mapEditorSite;
     private boolean dirty = false;
-
-    // Menu menu;
-
+    
+    private PaletteRoot paletteRoot;
+    
     // private ViewportPane viewportPane;
     private MapViewer viewer = null;
 
@@ -165,14 +169,26 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     /**
      * Creates a new MapViewport object.
      */
-    public MapEditor() {
-        super();
+    public MapEditorWithPalette() {
         // Make sure the featureEditorProcessor has been started.
+        // This will load all the tools so we can use them        
         ProjectUIPlugin.getDefault().getFeatureEditProcessor();
     }
 
     public Composite getComposite() {
         return composite;
+    }
+
+    @Override
+    protected PaletteRoot getPaletteRoot() {
+        if (paletteRoot == null) {
+            paletteRoot = MapToolPaletteFactory.createPalette();
+        }
+        return paletteRoot;
+    }
+    
+    protected FlyoutPreferences getPalettePreferences() {
+        return MapToolPaletteFactory.createPalettePreferences();
     }
 
     /**
@@ -253,7 +269,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
                 return;
             }
 
-            MapEditor.this.composite.getDisplay().asyncExec(new Runnable(){
+            MapEditorWithPalette.this.composite.getDisplay().asyncExec(new Runnable(){
                 public void run() {
                     switch( event.getType() ) {
                     case NAME:
@@ -386,6 +402,8 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         }
 
     };
+
+	private MapEditDomain mapDomain;
 
     public Object getAdapter( Class adaptee ) {
         if (adaptee.isAssignableFrom(Map.class)) {
@@ -694,7 +712,9 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
         deregisterFeatureFlasher();
         getSite().getPage().removePartListener(partlistener);
-        viewer.getViewport().removePaneListener(getMap().getViewportModelInternal());
+        if( viewer != null ){
+        	viewer.getViewport().removePaneListener(getMap().getViewportModelInternal());
+        }
         getMap().getViewportModelInternal().setInitialized(false);
 
         selectFeatureListener = null;
@@ -702,7 +722,10 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
         if (statusLineManager != null)
             statusLineManager.dispose();
-
+        
+        MapToolPaletteFactory.dispose( paletteRoot );
+        paletteRoot = null;
+        
         final ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
         if (!PlatformUI.getWorkbench().isClosing()) {
             ShutdownTaskList.instance().removePreShutdownTask(shutdownTask);
@@ -796,7 +819,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     public void doSave( IProgressMonitor monitor ) {
         final boolean[] success = new boolean[]{false};
 
-        PlatformGIS.syncInDisplayThread(new SaveMapRunnable(this, success));
+        PlatformGIS.syncInDisplayThread(new SaveMapPaletteRunnable(this, success));
 
         if (success[0]) {
             setDirty(false);
@@ -903,15 +926,47 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         return true;
     }
 
+
     /**
      * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
      */
     public void createPartControl( final Composite parent ) {
-
         ShutdownTaskList.instance().addPreShutdownTask(shutdownTask);
 
-        composite = new Composite(parent, SWT.NO_BACKGROUND);
-
+        mapDomain = new MapEditDomain(this);
+		setEditDomain( mapDomain );
+        
+        // super class sets up the splitter; it needs the setEditDomain to be defined
+        // prior to the method being called (so the FlyoutPaletteComposite split can latch on)
+        
+    	super.createPartControl(parent);
+    	// the above sets up a splitter; and then calls GraphicalEditor.createGraphicalViewer
+    	// which we can use to set up our display area...        
+    }
+    
+    protected Control getGraphicalControl() {
+    	return composite;
+    }
+    
+	/**
+	 * Hijacked; supposed to create a GraphicalViewer on the specified <code>Composite</code>.
+	 * <p>
+	 * Instead we steal the composite for our MapViewer.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 */
+	protected void createGraphicalViewer(Composite parent) {
+		
+		// GraphicalViewer viewer = new GraphicalViewerImpl();
+		// viewer.createControl(parent);
+		// setGraphicalViewer(viewer);
+		// configureGraphicalViewer();
+		// hookGraphicalViewer();
+		// initializeGraphicalViewer();
+		
+    	composite = new Composite( parent, SWT.NO_BACKGROUND);
+        
         composite.setLayout(new FormLayout());
         composite.setFont(parent.getFont());
         setPartName(getMap().getName());
@@ -928,8 +983,18 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         } else {
             viewer = new MapViewer(composite, SWT.MULTI | SWT.NO_BACKGROUND);
         }
+        
+        // we need an edit domain for GEF
+        // This represents the "Current Tool" for the Palette
+        // We should not duplicate the idea of current tools so we may
+        // need to delegate to getEditDomain; and just use the MapEditTool *id*
+        setEditDomain(viewer.getEditDomain());
+
         // allow the viewer to open our context menu; work with our selection proivder etc
         viewer.init(this);
+        
+        //viewer.setModalTool( (ModalTool) ApplicationGIS.getToolManager().getActiveTool());
+        
         // if a map was provided as input we can ask the viewer to use it
         Map input = (Map) ((UDIGEditorInput) getEditorInput()).getProjectElement();
         if (input != null) {
@@ -1024,7 +1089,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         });
 
         setDirty(isMapDirty());
-    }
+	}
 
     private void runMapOpeningInterceptor( Map map ) {
         List<IConfigurationElement> interceptors = ExtensionPointList
@@ -1080,9 +1145,9 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
                     contextMenu.add(tm.getBACKWARD_HISTORYAction());
                     contextMenu.add(tm.getFORWARD_HISTORYAction());
                     contextMenu.add(new Separator());
-                    // contextMenu.add(tm.createCUTAction(MapEditor.this));
-                    contextMenu.add(tm.getCOPYAction(MapEditor.this));
-                    contextMenu.add(tm.getPASTEAction(MapEditor.this));
+                    //contextMenu.add(tm.createCUTAction(MapEditorWithPalette.this));
+                    contextMenu.add(tm.getCOPYAction(MapEditorWithPalette.this));
+                    contextMenu.add(tm.getPASTEAction(MapEditorWithPalette.this));
                     contextMenu.add(tm.getDELETEAction());
 
                     /*
@@ -1194,9 +1259,12 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
     IPartListener2 partlistener = new IPartListener2(){
         public void partActivated( IWorkbenchPartReference partRef ) {
-            if (partRef.getPart(false) == MapEditor.this) {
+            if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 registerFeatureFlasher();
-                ApplicationGIS.getToolManager().setCurrentEditor(editor);
+                IToolManager toolManager = ApplicationGIS.getToolManager();
+                toolManager.setCurrentEditor(editor);
+                
+                editor.viewer.setModalTool( (ModalTool) toolManager.getActiveTool() );
             }
         }
 
@@ -1204,7 +1272,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         }
 
         public void partClosed( IWorkbenchPartReference partRef ) {
-            if (partRef.getPart(false) == MapEditor.this) {
+            if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 deregisterFeatureFlasher();
                 visible = false;
             }
@@ -1219,14 +1287,14 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         }
 
         public void partHidden( IWorkbenchPartReference partRef ) {
-            if (partRef.getPart(false) == MapEditor.this) {
+            if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 deregisterFeatureFlasher();
                 visible = false;
             }
         }
 
         public void partVisible( IWorkbenchPartReference partRef ) {
-            if (partRef.getPart(false) == MapEditor.this) {
+            if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 registerFeatureFlasher();
                 visible = true;
             }
@@ -1239,7 +1307,6 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
     private boolean draggingEnabled;
     private volatile boolean visible = false;
-	private MapEditDomain editDomain;
 
     /**
      * Opens the map's context menu.
@@ -1304,7 +1371,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     private class FlashFeatureListener implements ISelectionListener {
 
         public void selectionChanged( IWorkbenchPart part, final ISelection selection ) {
-            if (part == MapEditor.this || getSite().getPage().getActivePart() != part
+            if (part == MapEditorWithPalette.this || getSite().getPage().getActivePart() != part
                     || selection instanceof IBlockingSelection)
                 return;
 
@@ -1383,11 +1450,12 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     RenderManager getRenderManager() {
         return viewer.getRenderManager();
     }
+
     public IStatusLineManager getStatusLineManager() {
     	return statusLineManager;
     }
     @Override
 	public MapEditDomain getEditDomain() {
-		return editDomain;
+		return mapDomain;
 	}
 }

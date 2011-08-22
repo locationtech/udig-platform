@@ -11,12 +11,14 @@ import net.refractions.udig.mapgraphic.internal.MapGraphicService;
 import net.refractions.udig.project.ui.internal.DefaultMapViewPart;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.PlatformUI;
 
 /**
  * The main view port.  Adds a shapefile to the View and configures the view with the tools and context menu 
  * (when selection tool is active)
+ * @version 1.3.0
  */
 public class View extends DefaultMapViewPart {
 	public static final String ID = "X.view";
@@ -56,4 +58,8 @@ public class View extends DefaultMapViewPart {
 		return true;
 	}
 	
+	@Override
+	public IStatusLineManager getStatusLineManager() {
+		return getViewSite().getActionBars().getStatusLineManager();
+	}
 }

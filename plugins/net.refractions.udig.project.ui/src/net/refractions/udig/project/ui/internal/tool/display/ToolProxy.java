@@ -57,7 +57,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * editors are concerned.
  * 
  * @author Jesse Eichar
- * @version $Revision: 1.9 $
+ * @version 1.3.0
  */
 public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
  
@@ -119,7 +119,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
      * 
      * @param extension The Tool extension
      * @param tool The configuration element which describes the tool
-     * @param newParam TODO
+     * @param toolManager ToolManager responsible for this tool
      */
     public ToolProxy( IExtension extension, IConfigurationElement tool, ToolManager toolManager ) {
         super();
@@ -162,11 +162,21 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         ImageDescriptor icon;
         if (iconID == null) {
             icon = null;
-        }else{
+        } else {
             icon = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid, iconID);
+            
+            if( "icons/etool16/pan_mode.gif".equals( iconID )){
+                String largeIconID = iconID.replace("etool16","etool24");
+                
+                ImageDescriptor large = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid, largeIconID);
+                setLargeImageDescriptor( large );
+            }
+            else {
+                setLargeImageDescriptor( icon );
+            }
         }
         setImageDescriptor(icon);
-    
+        
         this.element = tool;
         setName(name);
         setToolTipText(toolTip);
@@ -477,7 +487,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     	if (toolContext == null)
     		return;
     	
-    	setChecked(active);
+    	setChecked(active); // will check this in each menu / toolbar contribution 
     	
     	if (getTool() instanceof ModalTool) {
     		ModalTool modalTool = (ModalTool)getTool();
@@ -488,6 +498,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     			String currentCursorID = modalTool.getCursorID();
     			toolContext.getViewportPane().setCursor(
     					ApplicationGIS.getToolManager().findToolCursor(currentCursorID));
+    			
     		}
     	}
     }
