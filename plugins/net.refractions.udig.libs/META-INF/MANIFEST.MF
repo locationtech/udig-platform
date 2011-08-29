@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.libs;singleton:=true
-Bundle-Version: 1.2.2.qualifier
+Bundle-Version: 1.2.3.qualifier
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Eclipse-BuddyPolicy: registered,
@@ -845,8 +845,6 @@ Export-Package: .,
  org.geotools.process.function,
  org.geotools.process.gs,
  org.geotools.process.impl,
- org.geotools.process.literal,
- org.geotools.process.raster,
  org.geotools.referencing,
  org.geotools.referencing.crs,
  org.geotools.referencing.cs,
