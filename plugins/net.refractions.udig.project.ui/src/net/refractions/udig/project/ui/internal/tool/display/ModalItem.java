@@ -127,12 +127,12 @@ public abstract class ModalItem implements ILazyOpListener {
                 
                 if(paletteViewer.getEditPartRegistry().get(entry) != null ){ 
                     paletteViewer.setActiveTool( entry );
+                    
+                    EditPart part = (EditPart) paletteViewer.getEditPartRegistry().get( entry );
+                    
+                    paletteViewer.reveal( part );
+                    break;
                 }
-                
-                EditPart part = (EditPart) paletteViewer.getEditPartRegistry().get( entry );
-                
-                paletteViewer.reveal( part );
-                break;
             }
         }
     }
