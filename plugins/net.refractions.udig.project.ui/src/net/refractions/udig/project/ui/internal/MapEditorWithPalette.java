@@ -751,9 +751,15 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                             if (p.eResource() != null && p.eResource().isModified()) {
                                 p.eResource().save(ProjectPlugin.getPlugin().saveOptions);
                             }
-
-                            final Resource resource = getMap().eResource();
-                            resource.save(ProjectPlugin.getPlugin().saveOptions);
+                            
+                            /*
+                             * when closing a map the platform wants to save the map resource,
+                             * but if you are removing the map, its no longer available.
+                             */
+                            final Map map = getMap();
+                            final Resource resource = map.eResource();
+                            if (resource != null)
+                                resource.save(ProjectPlugin.getPlugin().saveOptions);
 
                             // need to kick the Project so viewers will update
                             p.eNotify(new ENotificationImpl((InternalEObject) p, Notification.SET,
