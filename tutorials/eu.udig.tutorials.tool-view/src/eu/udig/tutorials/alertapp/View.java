@@ -1,5 +1,6 @@
 package eu.udig.tutorials.alertapp;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -13,6 +14,7 @@ import net.refractions.udig.project.ui.internal.DefaultMapViewPart;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.PlatformUI;
+import org.geotools.data.DataUtilities;
 
 /**
  * The main view port.  Adds a shapefile to the View and configures the view with the tools and context menu 
@@ -27,9 +29,12 @@ public class View extends DefaultMapViewPart {
 		addAlertsMapgraphic(monitor, resources);
 
 		FileDialog dialog = new FileDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
-		dialog.setFilterExtensions(new String[]{"shp"});
-		String file = dialog.open();
-		addShpService(file,resources,monitor);
+		dialog.setFilterExtensions(new String[]{"*.shp"});
+		String path = dialog.open();
+		File file = new File( path );
+		URL url = DataUtilities.fileToURL(file);
+		
+		addShpService(url,resources,monitor);
 	}
 	private void addAlertsMapgraphic(IProgressMonitor monitor,
 			List<IGeoResource> resources) throws IOException {
@@ -45,8 +50,8 @@ public class View extends DefaultMapViewPart {
 		throw new IllegalStateException("Unable to find " + desiredIdString + " mapgraphic");
 	}
 	
-	private void addShpService(String path,List<IGeoResource> resources, IProgressMonitor monitor) throws IOException {
-		IService service = CatalogPlugin.getDefault().getLocalCatalog().acquire(new URL("file://"+path),monitor);
+	private void addShpService(URL url,List<IGeoResource> resources, IProgressMonitor monitor) throws IOException {
+		IService service = CatalogPlugin.getDefault().getLocalCatalog().acquire(url,monitor);
 		
 		resources.addAll(service.resources(monitor));
 	}
