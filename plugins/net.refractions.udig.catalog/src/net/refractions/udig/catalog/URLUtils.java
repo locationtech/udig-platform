@@ -33,7 +33,7 @@ import net.refractions.udig.core.internal.CorePlugin;
 public class URLUtils {
 
     /**
-     * Primarily for testing the cOomparison of URLS. it is not a simple thing because different
+     * Primarily for testing the coomparison of URLS. it is not a simple thing because different
      * platforms can sometimes create ones with a dangling / or with / vs \ some times file:/// or
      * file:/.
      * 

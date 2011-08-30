@@ -17,6 +17,7 @@
  */
 package eu.udig.catalog.jgrass.operations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.action.IAction;
@@ -56,16 +57,34 @@ public class OpenFolderAction implements IObjectActionDelegate, IWorkbenchWindow
         Display.getDefault().syncExec(new Runnable(){
             public void run() {
                 List toList = selection.toList();
+                List<String> paths = new ArrayList<String>();
                 for( Object object : toList ) {
                     if (object instanceof JGrassMapsetGeoResource) {
                         JGrassMapsetGeoResource mapsetGeoresource = (JGrassMapsetGeoResource) object;
                         String mapsetPath = mapsetGeoresource.getFile().getAbsolutePath();
-                        Program.launch(mapsetPath);
+                        if (!Program.launch(mapsetPath)) {
+                            paths.add(mapsetPath);
+                        }
+                        paths.add(mapsetPath);
                     } else if (object instanceof JGrassService) {
                         JGrassService locationService = (JGrassService) object;
                         String locationPath = locationService.getFile().getAbsolutePath();
-                        Program.launch(locationPath);
+                        if (!Program.launch(locationPath)) {
+                            paths.add(locationPath);
+                        }
+                        paths.add(locationPath);
                     }
+                }
+
+                if (!paths.isEmpty()) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("No program to open the following paths could be found:\n");
+                    for( String path : paths ) {
+                        sb.append(path).append("\n");
+                    }
+
+                    Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+                    MessageDialog.openWarning(shell, "WARNING", sb.toString());
                 }
             }
         });

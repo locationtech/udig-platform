@@ -68,10 +68,6 @@ public class RasterRenderer extends RendererImpl {
 
     private static final String THE_MAP_IS_OUTSIDE_OF_THE_VISIBLE_REGION = "The map is outside of the visible region.";
 
-    public RasterRenderer( IRenderContext context ) {
-        setContext(context);
-    }
-
     public void render( Graphics2D g2d, IProgressMonitor monitor ) throws RenderException {
         try {
             final IRenderContext currentContext = getContext();
@@ -98,7 +94,7 @@ public class RasterRenderer extends RendererImpl {
 
             JGrassRegion fileWindow = new JGrassRegion(grassMapGeoResource.getFileWindow());
             JGrassMapsetGeoResource parent = (JGrassMapsetGeoResource) grassMapGeoResource.parent(new NullProgressMonitor());
-            CoordinateReferenceSystem grassCrs = parent.getJGrassCrs();
+            CoordinateReferenceSystem grassCrs = parent.getLocationCrs();
             JGrassRegion screenDrawWindow = new JGrassRegion(envelope.getMinX(), envelope.getMaxX(), envelope.getMinY(),
                     envelope.getMaxY(), fileWindow.getRows(), fileWindow.getCols());
 

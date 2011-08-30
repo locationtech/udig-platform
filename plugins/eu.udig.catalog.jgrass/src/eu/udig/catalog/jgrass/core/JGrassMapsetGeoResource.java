@@ -58,7 +58,6 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import eu.udig.catalog.jgrass.JGrassPlugin;
-import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 
 /**
  * Represents the GRASS Mapset in the JGrass Location service for uDig.
@@ -73,9 +72,6 @@ import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
  * @since 2.0
  */
 public class JGrassMapsetGeoResource implements IResolveFolder {
-
-    /** jgrass mapset url field */
-    private URL mapsetUrl = null;
 
     /** the parent service field */
     private JGrassService parent = null;
@@ -93,16 +89,23 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
 
     private Map<String, String> mapNamesAndTypes;
 
-    public JGrassMapsetGeoResource( JGrassService parent, String name, String absolutePath ) {
+    private CoordinateReferenceSystem locationCrs;
+
+    private File mapsetFile;
+
+    private File cellFolderFile;
+
+    public JGrassMapsetGeoResource( JGrassService parent, String name, String mapsetPath ) {
         this.parent = parent;
         this.name = name;
 
-        try {
-            this.mapsetUrl = new File(absolutePath).toURI().toURL();
-        } catch (MalformedURLException e) {
-            msg = new RuntimeException().initCause(e);
+        mapsetFile = new File(mapsetPath);
+        if (!mapsetFile.exists() || !mapsetFile.isDirectory()) {
+            throw new IllegalArgumentException("The GRASS mapset has to be a folder: " + mapsetPath);
         }
+        cellFolderFile = new File(mapsetFile, JGrassConstants.CELL);
 
+        locationCrs = parent.getLocationCrs();
     }
 
     public <T> boolean canResolve( Class<T> adaptee ) {
@@ -129,10 +132,7 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
             return adaptee.cast(parent);
         }
         if (adaptee.isAssignableFrom(File.class)) {
-            // turn the url into a file and be sure that it is a folder
-            File locationFolder = getFile();
-            if (locationFolder.isDirectory())
-                return adaptee.cast(locationFolder);
+            return adaptee.cast(mapsetFile);
         }
         // bad call to resolve
         IResolveManager rm = CatalogPlugin.getDefault().getResolveManager();
@@ -140,11 +140,6 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
             return rm.resolve(this, adaptee, monitor);
         }
         return null;
-    }
-
-    public File getFile() {
-        File locationFolder = URLUtils.urlToFile(mapsetUrl);
-        return locationFolder;
     }
 
     /**
@@ -174,12 +169,6 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
                     String name = item.getKey();
                     String type = item.getValue();
 
-                    // TODO add support for vectors and sites, until that
-                    // moment, ignore them
-                    String typeString = type.split("\\|")[0];//$NON-NLS-1$
-                    if (typeString.equals(JGrassConstants.GRASS6VECTORMAP) || typeString.equals(JGrassConstants.SITESMAP)) {
-                        continue;
-                    }
                     IResolve jgrassMapGeoResource = new JGrassMapGeoResource(parent, this, name, type);
                     jgrassMapMembers.add(jgrassMapGeoResource);
                 }
@@ -205,111 +194,24 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
      */
     private Map<String, String> loadMaps( IProgressMonitor monitor ) {
         try {
-            // resolve to a file
-            File file = resolve(File.class, monitor);
-            if (file == null) {
-                return null;
-            }
-
             mapNamesAndTypes = new HashMap<String, String>();
-
             /*
              * binary grass raster maps
              */
             // check the raster maps folder
-            String cellMapFolder = file.getAbsolutePath() + File.separator + JGrassConstants.CELL;
-            File rasterFile = new File(cellMapFolder);
-            String[] rasterMaps = rasterFile.list();
-            if (rasterMaps == null) {
+
+            File[] rasterFiles = cellFolderFile.listFiles();
+            if (rasterFiles == null) {
                 msg = new Throwable("Either dir does not exist or is not a directory");
             } else {
                 // check raster file bundle consistency and add map if ok
-                for( String mapName : rasterMaps ) {
-                    if (JGrassUtilities.checkRasterMapConsistence(file.getAbsolutePath(), mapName)) {
-                        mapNamesAndTypes.put(mapName, JGrassConstants.GRASSBINARYRASTERMAP + "|" + cellMapFolder + File.separator
-                                + mapName);
-                    }
-                }
-            }
-
-            /*
-             * ascii grass raster maps
-             */
-            String grassasciiMapFolder = file.getAbsolutePath() + File.separator + JGrassConstants.GRASSASCIIRASTER;
-            File grassasciirasterFile = new File(grassasciiMapFolder);
-            String[] grassasciirasterMaps = grassasciirasterFile.list();
-            if (grassasciirasterMaps == null) {
-                msg = new Throwable("Either dir does not exist or is not a directory");
-            } else {
-                for( String mapName : grassasciirasterMaps ) {
-                    mapNamesAndTypes.put(mapName, JGrassConstants.GRASSASCIIRASTERMAP + "|" + grassasciiMapFolder
-                            + File.separator + mapName);
-                }
-            }
-
-            /*
-             * fluidturtle raster maps
-             */
-            String fluidturtleMapFolder = file.getAbsolutePath() + File.separator + JGrassConstants.FLUIDTURTLEASCIIRASTER;
-            File fluidturtlerasterFile = new File(fluidturtleMapFolder);
-            String[] fluidturtlerasterMaps = fluidturtlerasterFile.list();
-            if (fluidturtlerasterMaps == null) {
-                msg = new Throwable("Either dir does not exist or is not a directory");
-            } else {
-                for( String mapName : fluidturtlerasterMaps ) {
-                    mapNamesAndTypes.put(mapName, JGrassConstants.FTRASTERMAP + "|" + fluidturtleMapFolder + File.separator
-                            + mapName);
-                }
-            }
-
-            /*
-             * esri grid raster maps
-             */
-            String esrigridMapFolder = file.getAbsolutePath() + File.separator + JGrassConstants.ESRIASCIIRASTER;
-            File esrigridrasterFile = new File(esrigridMapFolder);
-            String[] esrigridrasterMaps = esrigridrasterFile.list();
-            if (esrigridrasterMaps == null) {
-                msg = new Throwable("Either dir does not exist or is not a directory");
-            } else {
-                for( String mapName : esrigridrasterMaps ) {
-                    mapNamesAndTypes.put(mapName, JGrassConstants.ESRIRASTERMAP + "|" + esrigridMapFolder + File.separator
-                            + mapName);
-                }
-            }
-
-            /*
-             * sites maps
-             */
-            // check the sites maps folder
-            String sitesMapFolder = file.getAbsolutePath() + File.separator + JGrassConstants.SITE_LISTS;
-            File siteFile = new File(sitesMapFolder);
-            if (siteFile.exists()) {
-                String[] sitesMaps = siteFile.list();
-                if (sitesMaps == null) {
-                    msg = new Throwable("Either dir does not exist or is not a directory");
-                } else {
-                    // add sites to hashmap
-                    for( String mapName : sitesMaps ) {
-                        mapNamesAndTypes.put(mapName, JGrassConstants.SITESMAP + "|" + sitesMapFolder + File.separator + mapName);
-                    }
-                }
-            }
-
-            /*
-             * vector maps
-             */
-            // list the vector maps
-            String vectorMapFolder = file.getAbsolutePath() + File.separator + JGrassConstants.VECTORS;
-            File vectorFile = new File(vectorMapFolder);
-            if (vectorFile.exists()) {
-                String[] vectormaps = vectorFile.list();
-                if (vectormaps == null) {
-                    msg = new Throwable("Either dir does not exist or is not a directory");
-                } else {
-                    // add vector maps to hashmap
-                    for( String mapName : vectormaps ) {
-                        mapNamesAndTypes.put(mapName, JGrassConstants.GRASS6VECTORMAP + "|" + vectorMapFolder + File.separator
-                                + mapName);
+                for( File rasterFile : rasterFiles ) {
+                    if (JGrassUtilities.checkRasterMapConsistence(mapsetFile.getAbsolutePath(), rasterFile.getName())) {
+                        StringBuilder sb = new StringBuilder();
+                        sb.append(JGrassConstants.GRASSBINARYRASTERMAP);
+                        sb.append("|");
+                        sb.append(rasterFile.getAbsolutePath());
+                        mapNamesAndTypes.put(rasterFile.getName(), sb.toString());
                     }
                 }
             }
@@ -371,7 +273,7 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
         }
 
         public CoordinateReferenceSystem getCRS() {
-            return getJGrassCrs();
+            return locationCrs;
         }
     }
 
@@ -385,22 +287,15 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
     }
 
     public String getActiveRegionWindowPath() {
-        File windFile = new File(getFile() + File.separator + JGrassConstants.WIND);
+        File windFile = new File(mapsetFile, JGrassConstants.WIND);
         if (!windFile.exists()) {
-            windFile = new File(getFile() + File.separator + JGrassConstants.WIND.toLowerCase());
+            windFile = new File(mapsetFile, JGrassConstants.WIND.toLowerCase());
             if (!windFile.exists()) {
                 msg = new Throwable("Couldn't find a suitable region file in the mapset. Check your Location.");
                 return null;
             }
         }
         return windFile.getAbsolutePath();
-    }
-
-    public CoordinateReferenceSystem getJGrassCrs() {
-        CoordinateReferenceSystem readCrs = null;
-        String locationPath = URLUtils.urlToFile(parent.getIdentifier()).getAbsolutePath();
-        readCrs = JGrassCatalogUtilities.getLocationCrs(locationPath);
-        return readCrs;
     }
 
     public ImageDescriptor getIcon( IProgressMonitor monitor ) {
@@ -461,8 +356,8 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
      * @return the {@link JGrassMapGeoResource georesource} that was added.
      */
     public JGrassMapGeoResource addMap( String mapName, String mapType ) {
-        String mapLocation = new File(getFile(), JGrassConstants.CELL + "/" + mapName).getAbsolutePath();
-        String mapTypeAndPath = mapType + "|" + mapLocation;
+        String mapPath = new File(cellFolderFile, mapName).getAbsolutePath();
+        String mapTypeAndPath = mapType + "|" + mapPath;
         JGrassMapGeoResource resource = new JGrassMapGeoResource(parent, this, mapName, mapTypeAndPath);
         if (jgrassMapMembers == null) {
             jgrassMapMembers = members(ProgressManager.instance().get(null));
@@ -493,8 +388,8 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
     }
 
     public JGrassMapGeoResource removeMap( String mapName, String mapType ) {
-        String mapLocation = new File(getFile(), JGrassConstants.CELL + "/" + mapName).getAbsolutePath();
-        String mapTypeAndPath = mapType + "|" + mapLocation;
+        String mapPath = new File(cellFolderFile, mapName).getAbsolutePath();
+        String mapTypeAndPath = mapType + "|" + mapPath;
         JGrassMapGeoResource resource = new JGrassMapGeoResource(parent, this, mapName, mapTypeAndPath);
         if (jgrassMapMembers == null) {
             jgrassMapMembers = members(ProgressManager.instance().get(null));
@@ -512,4 +407,21 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
         return resource;
     }
 
+    /**
+     * Getter for the mapset file.
+     * 
+     * @return the mapset file.
+     */
+    public File getFile() {
+        return mapsetFile;
+    }
+
+    /**
+     * Getter for the location {@link CoordinateReferenceSystem}.
+     * 
+     * @return the location's crs.
+     */
+    public CoordinateReferenceSystem getLocationCrs() {
+        return locationCrs;
+    }
 }

@@ -23,7 +23,6 @@ import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
@@ -53,7 +52,6 @@ import org.geotools.data.FeatureSource;
 import org.geotools.gce.grassraster.JGrassRegion;
 import org.geotools.referencing.CRS;
 import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
@@ -155,7 +153,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator imp
                 windPathText.setText(windPath);
 
                 JGrassRegion jgR = jGrassMapsetGeoResource.getActiveRegionWindow();
-                CoordinateReferenceSystem crs = jGrassMapsetGeoResource.getJGrassCrs();
+                CoordinateReferenceSystem crs = jGrassMapsetGeoResource.getLocationCrs();
 
                 commitToBlackboards(jgR, crs, windPath);
             }
@@ -391,7 +389,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator imp
                 style.rows = activeRegionWindow.getRows();
                 style.cols = activeRegionWindow.getCols();
 
-                CoordinateReferenceSystem jGrassCrs = jGrassMapsetGeoResource.getJGrassCrs();
+                CoordinateReferenceSystem jGrassCrs = jGrassMapsetGeoResource.getLocationCrs();
                 try {
                     Integer epsg = CRS.lookupEpsgCode(jGrassCrs, true);
                     style.crsString = "EPSG:" + epsg;
