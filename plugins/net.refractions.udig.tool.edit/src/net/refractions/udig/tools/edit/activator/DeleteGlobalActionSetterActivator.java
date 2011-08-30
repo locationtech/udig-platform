@@ -59,6 +59,9 @@ public class DeleteGlobalActionSetterActivator implements Activator {
         if( actionBars==null )
             return;
         IWorkbenchPart part=ApplicationGISInternal.getActiveEditor();
+        
+        if( part == null ) return;
+        
         oldAction=ApplicationGIS.getToolManager().getDELETEAction();
         IKeyBindingService keyBindingService = part.getSite().getKeyBindingService();
         if( oldAction!=null )
