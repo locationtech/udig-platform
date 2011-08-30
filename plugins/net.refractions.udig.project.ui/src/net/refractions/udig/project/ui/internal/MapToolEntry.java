@@ -5,10 +5,6 @@ import net.refractions.udig.project.ui.internal.tool.display.ModalItem;
 import net.refractions.udig.project.ui.internal.tool.display.ToolProxy;
 import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.project.ui.tool.Tool;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.operations.IOpFilterListener;
-import net.refractions.udig.ui.operations.OpFilter;
 
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteEntry;
