@@ -1,4 +1,4 @@
-package eu.udig.tutorials.alertapp;
+package eu.udig.tutorials.toolview;
 
 import net.refractions.udig.project.ui.internal.tool.display.ToolCategory;
 import net.refractions.udig.project.ui.internal.tool.display.ToolManager;

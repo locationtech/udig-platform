@@ -39,6 +39,7 @@ import net.refractions.udig.ui.operations.OpFilter;
 
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.internal.ui.palette.editparts.ToolEntryEditPart;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.palette.PaletteViewer;
@@ -123,12 +124,15 @@ public abstract class ModalItem implements ILazyOpListener {
             PaletteViewer paletteViewer = editDomain.getPaletteViewer();
             
             for( MapToolEntry entry : this.mapToolEntries ){
-                paletteViewer.setActiveTool( entry );
                 
-                EditPart part = (EditPart) paletteViewer.getEditPartRegistry().get( entry );
-                
-                paletteViewer.reveal( part );
-                break;
+                if(paletteViewer.getEditPartRegistry().get(entry) != null ){ 
+                    paletteViewer.setActiveTool( entry );
+                    
+                    EditPart part = (EditPart) paletteViewer.getEditPartRegistry().get( entry );
+                    
+                    paletteViewer.reveal( part );
+                    break;
+                }
             }
         }
     }
