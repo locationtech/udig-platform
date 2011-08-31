@@ -1,4 +1,4 @@
-package eu.udig.tutorials.alertapp;
+package eu.udig.tutorials.toolview;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
