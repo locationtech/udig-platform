@@ -2,6 +2,8 @@ package net.refractions.udig.project.ui.viewers;
 
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.MapToolEntry;
+import net.refractions.udig.project.ui.internal.tool.display.ToolManager;
+import net.refractions.udig.project.ui.internal.tool.display.ToolProxy;
 import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.project.ui.tool.ModalTool;
 
@@ -24,23 +26,17 @@ import org.eclipse.ui.IEditorPart;
  * @version 1.3.0
  */
 public class MapEditDomain extends DefaultEditDomain {
-	MapViewer mapViewer;
+    //MapViewer mapViewer;
 
 	private PaletteListener paletteListener = new PaletteListener() {
 		public void activeToolChanged(PaletteViewer viewer, ToolEntry tool) {
-//		    if( tool instanceof MapToolEntry ){
-//		        MapToolEntry mapToolEntry = (MapToolEntry) tool;
-//		        
-//		        mapToolEntry.getMapToolProxy().run();
-//		    }
-		    
-			IToolManager toolManager = ApplicationGIS.getToolManager();
-			if (viewer != null && mapViewer != null) {
-				ToolEntry entry = viewer.getActiveTool();
+			ToolManager tools = (ToolManager) ApplicationGIS.getToolManager();
+			if (viewer != null) {
+			    ToolEntry entry = viewer.getActiveTool();
 				if (entry instanceof MapToolEntry) {
 					MapToolEntry mapEntry = (MapToolEntry) entry;
-					ModalTool mapTool = mapEntry.getMapTool();
-					mapViewer.setModalTool(mapTool);
+					ToolProxy toolProxy = mapEntry.getMapToolProxy();
+					tools.setActiveModalToolProxy( toolProxy );
 				}
 			}
 		}
@@ -58,14 +54,14 @@ public class MapEditDomain extends DefaultEditDomain {
 		super(editorPart);
 	}
 
-	/**
-	 * Provided a viewer that the MapEditDomain can report tool changes to.
-	 * 
-	 * @param mapViewer
-	 */
-	public void setMapViewer(MapViewer mapViewer) {
-		this.mapViewer = mapViewer;
-	}
+//	/**
+//	 * Provided a viewer that the MapEditDomain can report tool changes to.
+//	 * 
+//	 * @param mapViewer
+//	 */
+//	public void setMapViewer(MapViewer mapViewer) {
+//		this.mapViewer = mapViewer;
+//	}
 
 	@Override
 	public void setPaletteViewer(PaletteViewer palette) {

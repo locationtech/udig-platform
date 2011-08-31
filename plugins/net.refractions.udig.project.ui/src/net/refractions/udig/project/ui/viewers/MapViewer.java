@@ -4,25 +4,17 @@ import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
 import net.refractions.udig.project.internal.render.RenderManager;
 import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.internal.RenderManagerDynamic;
 import net.refractions.udig.project.ui.internal.TiledRenderManagerDynamic;
 import net.refractions.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneSWT;
 import net.refractions.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneTiledSWT;
-import net.refractions.udig.project.ui.internal.tool.ToolContext;
-import net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
-import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.project.ui.tool.Tool;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Composite;
@@ -30,7 +22,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPart;
@@ -43,6 +34,9 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * In order to facilitate experimentation with a range of GIS widgets
  * we have created a JFace "viewer" for working with a Map.
  * </p>
+ * This component implements MapPart allowing your view to make use of eclipse
+ * delegate facilities.
+ * 
  * @author Jody Garnett
  * @since 1.1.0
  * @version 1.3.0
@@ -67,26 +61,13 @@ public class MapViewer implements MapPart {
     /** context menu or view menu or something nice for the user to look at */
     private Menu menu;
     
-    /** Current tool taking contorl of the map*/
-    private ModalTool activeTool;
-    
-    /**
-     * This is responsible for tracking the active tool; it is a facility provided
-     * by GEF. We are not using GEF tools directly; simpily borrowing some of their
-     * infrastructure to support a nice visual palette.
-     * <p.
-     * The *id* of the current tool in the editDomain is ued to determine the 
-     * active tool for the map.
-     */
-    MapEditDomain editDomain;
-    
     /** Allows a tool to communicate with stuff - ie a "tool site" */
-    private ToolContextImpl toolcontext;
+    //private ToolContextImpl toolcontext;
     
     /** Draws the map */
     private RenderManager renderManager;
     
-    /** Whacky - preferred scales like open layers */
+    /** Preferred scales like open layers (used for zoom in, zoom out etc...) */
     private double[] resolutions;
 
     private MapPart mapPart;
@@ -144,9 +125,6 @@ public class MapViewer implements MapPart {
     public void init( IWorkbenchPart part ){
         this.part = part;
         this.mapPart = (MapPart) part;
-        
-        MapEditDomain editDomain = mapPart.getEditDomain();
-        editDomain.setMapViewer( this );
     }
     
     /**
@@ -283,45 +261,44 @@ public class MapViewer implements MapPart {
      * </p>
      * @param tool
      */
-    public void setModalTool( ModalTool tool ) {
-
-        IToolManager tools = ApplicationGIS.getToolManager();
-        
-        if (activeTool != null) {
-            // ask the current tool to stop listening etc...
-            activeTool.setActive(false);
-            activeTool = null;
-        }
-        if(tools.getActiveTool() != null ){
-        	ModalTool globalTool = (ModalTool) tools.getActiveTool();
-        	globalTool.setActive(false);
-        }
-        
-        if( tool == null ){
-            return;
-        }
-        activeTool = tool;
-        activeTool.setContext(getToolContext());
-        activeTool.setActive(true); // this should register itself with the tool manager
-        
-        
-        // this was normally handled by the ToolProxy which we cannot get a hold of
-        String currentCursorID = activeTool.getCursorID();
-		Cursor toolCursor = tools.findToolCursor(currentCursorID);
-		getToolContext().getViewportPane().setCursor(toolCursor);
-    }
+//    public void setModalTool( ModalTool tool ) {
+//        IToolManager tools = ApplicationGIS.getToolManager();
+//        
+//        if (activeTool != null) {
+//            // ask the current tool to stop listening etc...
+//            activeTool.setActive(false);
+//            activeTool = null;
+//        }
+//        if(tools.getActiveTool() != null ){
+//        	ModalTool globalTool = (ModalTool) tools.getActiveTool();
+//        	globalTool.setActive(false);
+//        }
+//        
+//        if( tool == null ){
+//            return;
+//        }
+//        activeTool = tool;
+//        activeTool.setContext(getToolContext());
+//        activeTool.setActive(true); // this should register itself with the tool manager
+//        
+//        
+//        // this was normally handled by the ToolProxy which we cannot get a hold of
+//        String currentCursorID = activeTool.getCursorID();
+//		Cursor toolCursor = tools.findToolCursor(currentCursorID);
+//		getToolContext().getViewportPane().setCursor(toolCursor);
+//    }
 
     /**
      * @return tool context (used to teach tools about our MapViewer facilities)
      */
-    protected synchronized ToolContext getToolContext(){
-        if( toolcontext == null ){
-            toolcontext = new ToolContextImpl();
-            toolcontext.setMapInternal(map);        
-            toolcontext.setRenderManagerInternal(map.getRenderManagerInternal());            
-        }
-        return toolcontext;
-    }
+//    protected synchronized ToolContext getToolContext(){
+//        if( toolcontext == null ){
+//            toolcontext = new ToolContextImpl();
+//            toolcontext.setMapInternal(map);        
+//            toolcontext.setRenderManagerInternal(map.getRenderManagerInternal());            
+//        }
+//        return toolcontext;
+//    }
     
     public void setFont( Control control ) {
         Display display = control.getDisplay();
@@ -411,12 +388,12 @@ public class MapViewer implements MapPart {
             }
         } );
     }
-    /**
-     * Get the MapEditDomain
-     * @return
-     */
-    public MapEditDomain getEditDomain() {
-        return editDomain;
-    }
+//    /**
+//     * Get the MapEditDomain
+//     * @return
+//     */
+//    public MapEditDomain getEditDomain() {
+//        return editDomain;
+//    }
 
 }

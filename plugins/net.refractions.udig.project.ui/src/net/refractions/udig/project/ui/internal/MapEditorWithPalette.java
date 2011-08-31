@@ -49,6 +49,7 @@ import net.refractions.udig.project.ui.UDIGEditorInput;
 import net.refractions.udig.project.ui.commands.IDrawCommand;
 import net.refractions.udig.project.ui.controls.ScaleRatioLabel;
 import net.refractions.udig.project.ui.internal.commands.draw.DrawFeatureCommand;
+import net.refractions.udig.project.ui.internal.tool.display.ToolManager;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.IToolManager;
@@ -402,8 +403,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         }
 
     };
-
-	private MapEditDomain mapDomain;
 
     public Object getAdapter( Class adaptee ) {
         if (adaptee.isAssignableFrom(Map.class)) {
@@ -770,7 +769,10 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                             if (resource != null)
                                 resource.save(ProjectPlugin.getPlugin().saveOptions);
                         }
-                        viewer.dispose();
+                        if( viewer != null ){
+                            viewer.dispose();
+                            viewer = null;
+                        }
                         // setMap(null);
                     }
 
@@ -939,8 +941,12 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     public void createPartControl( final Composite parent ) {
         ShutdownTaskList.instance().addPreShutdownTask(shutdownTask);
 
-        mapDomain = new MapEditDomain(this);
-		setEditDomain( mapDomain );
+        ToolManager tools = (ToolManager) ApplicationGIS.getToolManager();
+        MapEditDomain domain = tools.getEditDomain();
+        if( domain == null ){
+            throw new NullPointerException("MapEditDomain is required from ToolManager");
+        }      
+		setEditDomain( domain );
         
         // super class sets up the splitter; it needs the setEditDomain to be defined
         // prior to the method being called (so the FlyoutPaletteComposite split can latch on)
@@ -994,7 +1000,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         // This represents the "Current Tool" for the Palette
         // We should not duplicate the idea of current tools so we may
         // need to delegate to getEditDomain; and just use the MapEditTool *id*
-        setEditDomain(viewer.getEditDomain());
+        ToolManager tools = (ToolManager) ApplicationGIS.getToolManager();
+        setEditDomain( tools.getEditDomain());
 
         // allow the viewer to open our context menu; work with our selection proivder etc
         viewer.init(this);
@@ -1267,10 +1274,9 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         public void partActivated( IWorkbenchPartReference partRef ) {
             if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 registerFeatureFlasher();
-                IToolManager toolManager = ApplicationGIS.getToolManager();
-                toolManager.setCurrentEditor(editor);
-                
-                editor.viewer.setModalTool( (ModalTool) toolManager.getActiveTool() );
+                IToolManager tools = ApplicationGIS.getToolManager();
+                tools.setCurrentEditor(editor);
+                //editor.viewer.setModalTool( (ModalTool) tools.getActiveTool() );
             }
         }
 
@@ -1460,8 +1466,5 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     public IStatusLineManager getStatusLineManager() {
     	return statusLineManager;
     }
-    @Override
-	public MapEditDomain getEditDomain() {
-		return mapDomain;
-	}
+
 }

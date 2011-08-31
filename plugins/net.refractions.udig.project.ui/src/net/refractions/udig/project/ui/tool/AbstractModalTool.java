@@ -77,8 +77,9 @@ public abstract class AbstractModalTool extends AbstractTool implements ModalToo
         if (!active) {
             deregisterMouseListeners();
         } else {
-        	if(isEnabled())
+        	if(isEnabled()){
         		registerMouseListeners();
+        	}
         }
     }
 
@@ -106,8 +107,9 @@ public abstract class AbstractModalTool extends AbstractTool implements ModalToo
     public void setContext( IToolContext context ) {
         deregisterMouseListeners();
         this.context = context;
-        if( isActive() && isEnabled())
+        if( isActive() && isEnabled()){
             registerMouseListeners();
+        }
     }
     
     

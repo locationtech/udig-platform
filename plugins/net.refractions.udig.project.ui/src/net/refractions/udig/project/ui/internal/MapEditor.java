@@ -1386,8 +1386,4 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     public IStatusLineManager getStatusLineManager() {
     	return statusLineManager;
     }
-    @Override
-	public MapEditDomain getEditDomain() {
-		return editDomain;
-	}
 }

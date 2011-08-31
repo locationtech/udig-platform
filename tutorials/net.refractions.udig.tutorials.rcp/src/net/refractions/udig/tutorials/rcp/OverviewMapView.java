@@ -3,9 +3,13 @@ package net.refractions.udig.tutorials.rcp;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.MapImport;
 import net.refractions.udig.project.ui.internal.MapPart;
+import net.refractions.udig.project.ui.internal.tool.display.ToolManager;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
+import net.refractions.udig.project.ui.tool.IToolManager;
+import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.tools.internal.ScrollPanTool;
@@ -147,7 +151,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
         private ScrollPanTool tool = new ScrollPanTool();
         public void run() {
-            mapviewer.setModalTool(tool);
+            setActive(tool);
         }
     }
 
@@ -157,10 +161,21 @@ public class OverviewMapView extends ViewPart implements MapPart {
             super("Zoom"); //$NON-NLS-1$
         }
         public void run() {
-            mapviewer.setModalTool(tool);
+            setActive(tool);
         }
     }
-
+    ModalTool activeTool = null;
+    public void setActive( ModalTool tool ){
+        if( activeTool == tool ){
+            return; // no change
+        }
+        if( activeTool != null ){
+            activeTool.setActive(false);
+            activeTool = null;
+        }
+        tool.setActive(true);
+        activeTool = tool;
+    }
     class SetZoomToMapToolAction extends Action {
         public SetZoomToMapToolAction() {
             super("Zoom to Map"); //$NON-NLS-1$
@@ -238,11 +253,6 @@ public class OverviewMapView extends ViewPart implements MapPart {
 	@Override
 	public IStatusLineManager getStatusLineManager() {
 		return getViewSite().getActionBars().getStatusLineManager();
-	}
-	
-	@Override
-	public MapEditDomain getEditDomain() {
-		return editDomain;
 	}
 }
 

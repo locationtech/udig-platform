@@ -57,10 +57,10 @@ public interface MapPart {
      */
 	public abstract IStatusLineManager getStatusLineManager();
 
-	/**
-	 * EditDomain used to control the current tool.
-	 * @return
-	 */
-	public abstract MapEditDomain getEditDomain();
+//	/**
+//	 * EditDomain used to control the current tool.
+//	 * @return
+//	 */
+//	public abstract MapEditDomain getEditDomain();
 	
 }

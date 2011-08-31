@@ -34,7 +34,6 @@ import net.refractions.udig.project.ui.internal.MapImport;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.tools.internal.FixedScalePan;
 import net.refractions.udig.tools.internal.Zoom;
@@ -70,7 +69,6 @@ public class MapView extends ViewPart implements MapPart {
     // private RenderManager renderManager;
     private Map map;
     private SeagullGlassPaneOp seagullOp;
-	private MapEditDomain editDomain;
 
     public MapView() {
         super();
@@ -78,7 +76,6 @@ public class MapView extends ViewPart implements MapPart {
 
     @Override
     public void createPartControl( Composite parent ) {
-    	editDomain = new MapEditDomain(null);
         FillLayout fillLayout = new FillLayout();
         fillLayout.type = SWT.VERTICAL;
         parent.setLayout(fillLayout);
@@ -173,7 +170,7 @@ public class MapView extends ViewPart implements MapPart {
 
         private FixedScalePan tool = new FixedScalePan();
         public void run() {
-            mapviewer.setModalTool(tool);
+            setActive(tool);
         }
     }
 
@@ -183,7 +180,7 @@ public class MapView extends ViewPart implements MapPart {
             super("Zoom"); //$NON-NLS-1$
         }
         public void run() {
-            mapviewer.setModalTool(tool);
+            setActive(tool);
         }
     }
 
@@ -230,7 +227,7 @@ public class MapView extends ViewPart implements MapPart {
                 return;
             List<IGeoResource> dataHandles = new ArrayList<IGeoResource>();
             ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-            IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
+            
             for( File file : files ) {
                 try {
                     URL url = file.toURI().toURL();
@@ -297,7 +294,7 @@ public class MapView extends ViewPart implements MapPart {
     }
 
     public void setModalTool( ModalTool tool ) {
-        mapviewer.setModalTool(tool);
+        tool.setActive(true);
     }
     public Map getMap() {
         return mapviewer.getMap();
@@ -327,8 +324,16 @@ public class MapView extends ViewPart implements MapPart {
 		return getViewSite().getActionBars().getStatusLineManager();
 	}
 
-	@Override
-	public MapEditDomain getEditDomain() {
-		return editDomain;
-	}
+    ModalTool activeTool = null;
+    public void setActive( ModalTool tool ){
+        if( activeTool == tool ){
+            return; // no change
+        }
+        if( activeTool != null ){
+            activeTool.setActive(false);
+            activeTool = null;
+        }
+        tool.setActive(true);
+        activeTool = tool;
+    }
 }

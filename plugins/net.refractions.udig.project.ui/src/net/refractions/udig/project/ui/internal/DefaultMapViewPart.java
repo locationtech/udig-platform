@@ -204,10 +204,5 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
             getSite().registerContextMenu(contextMenu, getSite().getSelectionProvider());
         }
     }
-    
-    @Override
-    public MapEditDomain getEditDomain() {
-    	return editDomain;
-    }
 
 }

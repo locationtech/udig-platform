@@ -111,16 +111,16 @@ public abstract class ModalItem implements ILazyOpListener {
         for( CurrentContributionItem item : contributions ) {
             if (item.isDisposed()) {
                 toRemove.add(item);
-            } else
+            } else {
                 item.setSelection(checked, this);
+            }
         }
         contributions.removeAll(toRemove);
 
-        IToolManager tools = ApplicationGIS.getToolManager();
-        
-        MapPart currentEditor = ((ToolManager)tools).currentEditor;
+        ToolManager tools = (ToolManager) ApplicationGIS.getToolManager();
+        MapPart currentEditor = tools.currentEditor;
         if( currentEditor != null ){
-            MapEditDomain editDomain = currentEditor.getEditDomain();
+            MapEditDomain editDomain = tools.getEditDomain();
             PaletteViewer paletteViewer = editDomain.getPaletteViewer();
             
             for( MapToolEntry entry : this.mapToolEntries ){
@@ -138,19 +138,43 @@ public abstract class ModalItem implements ILazyOpListener {
     }
 
     /**
+     * Responsible for activating this modal item.
+     * <p>
+     * This method is overriden by the one subclass ModalTool (so that the tool manager
+     * is kept informed on what tool is active).
+     * 
      * @see net.refractions.udig.project.ui.tool.ActionTool#run()
      */
-    public void run() {        
-        if (runModeless() && isEnabled )
-            return;
-        
-        ModalItem activeModalItem = getActiveItem();
-        if (activeModalItem != null)
-        	activeModalItem.setActive(false);
-        
+    public void run() {
+        if( isModeless() ){
+            runModeless();
+            if (isEnabled() ){
+                return; // we are already enabled!
+            }
+            // not sure about the isEnabled check?
+            // do we really need to progress and try and
+            // activate this one?
+        }
+        else {
+            runModal();
+        }
+        // go ahead and activate
         setActive(true);
-        setActiveItem(this);
-
+        
+        // a bit of quality assurance here 
+        // while we expect the above setActive method to update
+        // that active item we will double check now
+        ModalItem activeModalItem = getActiveItem();
+        if( activeModalItem == this ){
+            // good that worked then
+        }
+        else {
+            // okay we will change the active item ourself
+            if (activeModalItem != null){
+                activeModalItem.setActive(false);
+            }
+            setActiveItem( this );
+        }
     }
 
     /**
@@ -172,12 +196,29 @@ public abstract class ModalItem implements ILazyOpListener {
     protected abstract void setActiveItem( ModalItem item );
 
     /**
-     * If the current Item is modeless then runModelss runs the item and return true.
+     * Indicate if this modal item needs {@link #runModeless()}.
      * 
-     * @return true if the item is modeless.
+     * @return true to use {@link #runModeless()}
      */
-    protected abstract boolean runModeless();
-
+    protected boolean isModeless(){
+        return false;
+    }
+    
+    /**
+     * Called if {@link #isModeless() is true; used to run this item as a
+     * "fire and forget" action that does not effect the current active item.
+     */
+    protected abstract void runModeless();
+    
+    /**
+     * Called if {@link #isModeless()} is false; used to run this item as a modal item
+     * (resulting it in it being the active item).
+     * <p>
+     * Implementations should take responsible for ensuring the item isActiveItem()
+     * after this method is called.
+     */
+    protected abstract void runModal();
+    
     /**
      * disposes of any resources held by the item.
      */
