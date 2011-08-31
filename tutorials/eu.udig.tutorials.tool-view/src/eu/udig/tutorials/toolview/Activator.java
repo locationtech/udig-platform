@@ -1,4 +1,4 @@
-package eu.udig.tutorials.alertapp;
+package eu.udig.tutorials.toolview;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
