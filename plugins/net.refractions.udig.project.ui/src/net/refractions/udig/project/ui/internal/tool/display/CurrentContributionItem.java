@@ -19,13 +19,15 @@ package net.refractions.udig.project.ui.internal.tool.display;
 import org.eclipse.jface.action.ContributionItem;
 
 /**
- * 
- * 
- * @version UDIG 1.1
- *
+ * Contribution item used to work with modal tools (thus having the concept of a
+ * "current" contribution item).
+ * <p>
+ * The real strength of this class is the ability to handle enablement via the setEnabled method;
+ * this allows an external party such as ToolManager to control what is shown.
+ * @since 1.1.0
+ * @version 1.3.0
  */
 public abstract class CurrentContributionItem extends ContributionItem {
-	
 	
 	/**
 	 * Enablement of the contribution item.
@@ -40,20 +42,23 @@ public abstract class CurrentContributionItem extends ContributionItem {
     }
 
     /**
-     * indicates whether the widget should appear pressed.
+     * Tndicates whether the widget should appear pressed.
      * 
      * @param checked indicates whether the widget should appear pressed.
      */
     public abstract void setSelection( boolean checked, ModalItem proxy );
     
+    /**
+     * True of the item is selected.
+     * 
+     * @return true if the item is considered checked (ie current)
+     */
     protected abstract boolean isChecked();
 
     /**
      * Indicates if the item is disposed.
      */
     public abstract boolean isDisposed();
-    
-    
     
     /**
      *  (non-Javadoc)
