@@ -8,6 +8,7 @@ import net.refractions.udig.project.ui.internal.tool.display.PlaceholderToolbarC
 import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.project.ui.tool.ToolConstants;
 
+import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IMenuManager;
@@ -117,6 +118,12 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
 	@Override
 	public void setActiveEditor(IEditorPart targetEditor) {
 	    super.setActiveEditor(targetEditor);
+	    if( targetEditor instanceof GraphicalEditorWithFlyoutPalette){
+	        isModalIncluded = false;
+	    }
+	    else {
+	        isModalIncluded = true;
+	    }	    
         IToolManager toolManager = ApplicationGIS.getToolManager();
         toolManager.contributeGlobalActions(targetEditor, getActionBars());
         toolManager.registerActionsWithPart(targetEditor);
