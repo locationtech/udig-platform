@@ -39,7 +39,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * 
  * @author Jody Garnett
  * @since 1.1.0
- * @version 1.3.0
+ * @version 1.2.3
  */
 public class MapViewer implements MapPart {
     /**

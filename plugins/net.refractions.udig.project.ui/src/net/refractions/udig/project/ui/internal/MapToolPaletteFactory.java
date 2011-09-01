@@ -65,19 +65,8 @@ public class MapToolPaletteFactory {
             String name = category.getName();
             name = fixLabel(name);
             
-            final int NOT_USED = -1;
             PaletteContainer container;
-            if (open == NOT_USED ) {
-                // interesting look (toolbar with tooltip)
-                PaletteToolbar toolbar = new PaletteToolbar(name);
-                toolbar.setUserModificationPermission(PaletteToolbar.PERMISSION_NO_MODIFICATION);
-                container = toolbar;
-            }
-            else if (open == NOT_USED ){
-                PaletteGroup group = new PaletteGroup( name );
-                container = group;
-            }
-            else if( open == 1 || open == 2){
+            if( open == 1 || open == 2){
                 PaletteDrawer drawer = new PaletteDrawer(name);
                 
                 drawer.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
@@ -110,9 +99,9 @@ public class MapToolPaletteFactory {
         return root;
     }
 
-    /** Trim funny simples as the world tool from the label displayed */
+    /** Trim funny symbols as the world tool from the label displayed */
     static String fixLabel( String label ) {
-        label = label.replace("&", "");
+        label = label.replace("&", ""); // remove reference to keyboard short cut
         //label = label.replace("Tools", "");
         //label = label.replace("Tool", "");
         return label;

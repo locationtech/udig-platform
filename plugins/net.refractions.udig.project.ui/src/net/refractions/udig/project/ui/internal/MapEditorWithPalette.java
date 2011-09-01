@@ -136,10 +136,18 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 /**
  * This class is the Eclipse editor Part in which a ViewportPane is embedded. The ViewportPane
  * displays and edits Maps. MapViewport is used to intialize ViewportPane and the RenderManager.
+ * <p>
+ * Note:
+ * <ul>
+ * <li>The super class GraphicalEditorWithFlyoutPalette will smoothly switch between displaying
+ * the palette inline; and hiding it when the normal PaletteView is opened
+ * </li>
+ * </ul>
  * 
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
+// TODO: Rename this to MapEditor to prevent code bloat / code duplication
 public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette implements IDropTargetProvider, IAdaptable, MapEditorPart {
     private static final String LAYER_DIRTY_KEY = "DIRTY"; //$NON-NLS-1$
     
