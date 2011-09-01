@@ -42,17 +42,16 @@ public class MapToolEntry extends ToolEntry {
     @Override
     public void setVisible( boolean isVisible ) {
         super.setVisible(isVisible);
-        
-        PaletteContainer parent = getParent();
-        boolean doubleCheck = false;
-        FREE: for( Object child : parent.getChildren() ){
-            PaletteEntry entry = (PaletteEntry) child;
-            if( entry.isVisible() ){
-                doubleCheck = true;
-                break FREE; // yes I just did that to be funny
-            }
-        }
-        parent.setVisible(doubleCheck);        
+//        PaletteContainer parent = getParent();
+//        boolean doubleCheck = false;
+//        FREE: for( Object child : parent.getChildren() ){
+//            PaletteEntry entry = (PaletteEntry) child;
+//            if( entry.isVisible() ){
+//                doubleCheck = true;
+//                break FREE; // yes I just did that to be funny
+//            }
+//        }
+//        parent.setVisible(doubleCheck);
     }
     
     public void dispose(){

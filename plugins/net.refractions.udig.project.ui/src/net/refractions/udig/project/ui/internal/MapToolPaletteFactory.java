@@ -66,21 +66,20 @@ public class MapToolPaletteFactory {
             name = fixLabel(name);
             
             PaletteContainer container;
-            if( open == 1 || open == 2){
-                PaletteDrawer drawer = new PaletteDrawer(name);
-                
-                drawer.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
-                drawer.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
-                drawer.setShowDefaultIcon(false);
-                container = drawer;
-            } else {
-                PaletteDrawer drawer = new PaletteDrawer(name);
-                drawer.setInitialState(PaletteDrawer.INITIAL_STATE_CLOSED);
-                drawer.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
-                drawer.setShowDefaultIcon(false);
-                container = drawer;
-            }
             
+            PaletteDrawer drawer = new PaletteDrawer(name);
+            if( category == toolManager.getActiveCategory()){
+                drawer.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
+            }
+            else {
+                drawer.setInitialState(PaletteDrawer.INITIAL_STATE_CLOSED);
+            }
+            drawer.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
+            drawer.setUserModificationPermission(PaletteContainer.PERMISSION_NO_MODIFICATION);
+            
+            drawer.setShowDefaultIcon(false);
+            container = drawer;
+        
             category.container( container ); // hook up so container can cycle tools on keypress
             
             for( ModalItem modalItem : category ) {
