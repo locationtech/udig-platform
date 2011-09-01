@@ -454,15 +454,6 @@
       </object>
    </extension>
          <extension
-               point="org.eclipse.ui.perspectiveExtensions">
-            <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
-               <actionSet id="net.refractions.udig.tools.edit.mapGraphic.action"/>
-            </perspectiveExtension>
-            <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
-               <actionSet id="net.refractions.udig.tools.edit.mapGraphic.action"/>
-            </perspectiveExtension>
-         </extension>
-         <extension
                point="net.refractions.udig.project.mapInterceptor">
             <mapClosing
                   class="net.refractions.udig.tools.edit.support.DisposeBlackboardOnCloseInterceptor"
