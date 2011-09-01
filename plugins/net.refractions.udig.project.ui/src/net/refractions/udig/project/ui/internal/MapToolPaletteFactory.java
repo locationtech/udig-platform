@@ -1,6 +1,9 @@
 package net.refractions.udig.project.ui.internal;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import net.refractions.udig.project.ui.ApplicationGIS;
@@ -49,7 +52,6 @@ public class MapToolPaletteFactory {
      */
     public static PaletteRoot createPalette() {
         PaletteRoot root = new PaletteRoot();
-
         IToolManager toolManager = ApplicationGIS.getToolManager();
 
         List<PaletteContainer> categories = new ArrayList<PaletteContainer>();
@@ -68,6 +70,8 @@ public class MapToolPaletteFactory {
             PaletteContainer container;
             
             PaletteDrawer drawer = new PaletteDrawer(name);
+            drawer.setId( category.getId() );
+
             if( category == toolManager.getActiveCategory()){
                 drawer.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
             }
@@ -78,10 +82,10 @@ public class MapToolPaletteFactory {
             drawer.setUserModificationPermission(PaletteContainer.PERMISSION_NO_MODIFICATION);
             
             drawer.setShowDefaultIcon(false);
+            
             container = drawer;
         
             category.container( container ); // hook up so container can cycle tools on keypress
-            
             for( ModalItem modalItem : category ) {
                 String label = fixLabel(modalItem.getName());
                 ToolEntry tool = new MapToolEntry(label, modalItem, category.getId());
@@ -94,7 +98,100 @@ public class MapToolPaletteFactory {
             }
             categories.add(container);
         }
-        root.addAll(categories);
+        
+        Comparator<PaletteContainer> sorter = new Comparator<PaletteContainer>(){
+            List<String> preferredOrder = Arrays.asList(new String[]{
+                    "net.refractions.udig.tool.category.zoom",
+                    "net.refractions.udig.tool.category.pan",
+                    "net.refractions.udig.tool.category.info",
+                    "net.refractions.udig.tool.category.selection"
+            });
+            int order( String id ){
+                int index = preferredOrder.indexOf(id);
+                if ("Other".equals(id)) {
+                    // Other will be -2 after everything else
+                    return -2;
+                }
+                else if (index == -1 ){
+                    return -1;
+                }
+                else {
+                    // make this a positive experience with "zoom" showing up first
+                    return 100-index;
+                }
+            }
+            
+            public int compare( PaletteContainer o1, PaletteContainer o2 ) {
+                String s1 = o1.getId();
+                String s2 = o2.getId();
+                int order1 = order(s1);
+                int order2 = order(s2);
+                
+                if ( order1 == order2){
+                    return 0;
+                }
+                else if (order1 < order2){
+                    return 1;
+                }
+                else {
+                    return -1;
+                }
+                // return order1-order2; // is this the fast way? I am not good a C
+            }
+        };
+        Collections.sort(categories,sorter );
+        
+//        List<PaletteContainer> children = new ArrayList<PaletteContainer>( categories );
+//
+//        // sort stuff into an initial order - every day I am a shuffling
+//        for( PaletteContainer child : categories ){
+//            String id = child.getId();
+//            if( "net.refractions.udig.tool.category.zoom".equals(id) ){
+//                PaletteContainer move = children.get(0);
+//                if( move != child ){
+//                    children.remove( move );
+//                    children.remove( child );
+//                    
+//                    children.add(0, child );
+//                    children.add(move);
+//                }
+//                ((PaletteDrawer)child).setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
+//            }
+//            else if( "net.refractions.udig.tool.category.pan".equals(id) ){
+//                PaletteContainer move = children.get(1);
+//                if( move != child ){
+//                    children.remove( move );
+//                    children.remove( child );
+//                    
+//                    children.add(1, child );
+//                    children.add(move);
+//                }
+//                ((PaletteDrawer)child).setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
+//            }
+//            else if( "net.refractions.udig.tool.category.info".equals(id) ){
+//                PaletteContainer move = children.get(2);
+//                if( move != child ){
+//                    children.remove( move );
+//                    children.remove( child );
+//                    
+//                    children.add(2, child );
+//                    children.add(move);
+//                }
+//            }
+//            else if( "net.refractions.udig.tool.category.selection".equals(id) ){
+//                PaletteContainer move = children.get(3);
+//                if( move != child ){
+//                    children.remove( move );
+//                    children.remove( child );
+//                    
+//                    children.add(3, child );
+//                    children.add(move);
+//                }
+//            }
+//        }
+        // try and prevent tool category order from changing
+        root.setUserModificationPermission( PaletteContainer.PERMISSION_NO_MODIFICATION );
+        root.setChildren(categories);
         return root;
     }
 
