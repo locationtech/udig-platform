@@ -209,13 +209,6 @@ GNU Lesser General Public License for more details.
          unpack="false"/>
 
    <plugin
-         id="eu.udig.render.jgrass"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="eu.udig.style.jgrass"
          download-size="0"
          install-size="0"
@@ -240,7 +233,6 @@ GNU Lesser General Public License for more details.
          id="eu.udig.omsbox"
          download-size="0"
          install-size="0"
-         version="0.0.0"
-         unpack="true"/>
+         version="0.0.0"/>
 
 </feature>
