@@ -34,8 +34,6 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
 	/** SubCoolBarManager used to wrap normal coolBarManager and watch the add/remove of items */
 	private SubCoolBarManager subManager;
 	
-    private boolean isModalIncluded = false;
-
     @Override
     public void init( IActionBars bars, IWorkbenchPage page ) {
         super.init(bars, page);
@@ -78,21 +76,17 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
             subManager.add(toolBarContributionItem);
         }
         
-        /*
-         * Contribute modal tools to the toolbar.
-         */
-        if( isModalIncluded ){
-            ToolBarManager modalToolBarManager = new ToolBarManager(SWT.FLAT);
-            ApplicationGIS.getToolManager().contributeModalTools(modalToolBarManager, getActionBars());
-            if ( modalToolBarManager.getItems().length > 0){
-                IContributionItem item = subManager.find(ToolConstants.MODAL_TOOLBAR_ID);
-                if(item != null){
-                    subManager.remove(ToolConstants.MODAL_TOOLBAR_ID);
-                }
-                ToolBarContributionItem toolBarContributionItem = new ToolBarContributionItem(modalToolBarManager, ToolConstants.MODAL_TOOLBAR_ID);
-                subManager.add(toolBarContributionItem);
-            }
-        }
+//        ToolBarManager modalToolBarManager = new ToolBarManager(SWT.FLAT);
+//        ApplicationGIS.getToolManager().contributeModalTools(modalToolBarManager, getActionBars());
+//        if ( modalToolBarManager.getItems().length > 0){
+//            IContributionItem item = subManager.find(ToolConstants.MODAL_TOOLBAR_ID);
+//            if(item != null){
+//                subManager.remove(ToolConstants.MODAL_TOOLBAR_ID);
+//            }
+//            ToolBarContributionItem toolBarContributionItem = new ToolBarContributionItem(modalToolBarManager, ToolConstants.MODAL_TOOLBAR_ID);
+//            subManager.add(toolBarContributionItem);
+//        }
+
 		super.contributeToCoolBar(coolBarManager);
 	}
 
@@ -118,12 +112,7 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
 	@Override
 	public void setActiveEditor(IEditorPart targetEditor) {
 	    super.setActiveEditor(targetEditor);
-	    if( targetEditor instanceof GraphicalEditorWithFlyoutPalette){
-	        isModalIncluded = false;
-	    }
-	    else {
-	        isModalIncluded = true;
-	    }	    
+	    
         IToolManager toolManager = ApplicationGIS.getToolManager();
         toolManager.contributeGlobalActions(targetEditor, getActionBars());
         toolManager.registerActionsWithPart(targetEditor);
