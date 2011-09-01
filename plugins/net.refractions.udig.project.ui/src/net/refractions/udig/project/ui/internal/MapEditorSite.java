@@ -40,13 +40,14 @@ import org.eclipse.ui.services.IServiceLocator;
  * 
  * @author Jesse
  * @since 1.1.0
+ * @version 1.3.0
  */
 public class MapEditorSite implements IEditorSite, IViewSite {
 
     IWorkbenchPartSite delegate;
-    private MapEditor editor;
+    private MapPart editor;
     
-    public MapEditorSite(IWorkbenchPartSite original, MapEditor editor) {
+    public MapEditorSite(IWorkbenchPartSite original, MapPart editor) {
         delegate=original;
         this.editor=editor;
     }
@@ -152,10 +153,10 @@ public class MapEditorSite implements IEditorSite, IViewSite {
     }
 
     private static class MapEditorActionBars implements IActionBars2 {
-        MapEditor editor;
+    	MapPart editor;
         private IActionBars2 actionBars;
 
-        public MapEditorActionBars( IActionBars2 actionBars, MapEditor editor ) {
+        public MapEditorActionBars( IActionBars2 actionBars, MapPart editor ) {
             this.editor=editor;
             this.actionBars=actionBars;
         }
@@ -177,7 +178,7 @@ public class MapEditorSite implements IEditorSite, IViewSite {
         }
 
         public IStatusLineManager getStatusLineManager() {
-            return editor.statusLineManager;
+            return editor.getStatusLineManager();
         }
 
         public IToolBarManager getToolBarManager() {

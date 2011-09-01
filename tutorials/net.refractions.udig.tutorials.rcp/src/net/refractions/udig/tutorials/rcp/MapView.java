@@ -44,6 +44,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -59,6 +60,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * 
  * @author Emily Gouge, Graham Davis (Refractions Research, Inc.)
  * @since 1.1.0
+ * @version 1.3.0
  */
 public class MapView extends ViewPart implements MapPart {
     public static String ID = "net.refractions.udig.tutorials.rcp.mapView";
@@ -168,7 +170,7 @@ public class MapView extends ViewPart implements MapPart {
 
         private FixedScalePan tool = new FixedScalePan();
         public void run() {
-            mapviewer.setModalTool(tool);
+            setActive(tool);
         }
     }
 
@@ -178,7 +180,7 @@ public class MapView extends ViewPart implements MapPart {
             super("Zoom"); //$NON-NLS-1$
         }
         public void run() {
-            mapviewer.setModalTool(tool);
+            setActive(tool);
         }
     }
 
@@ -225,7 +227,7 @@ public class MapView extends ViewPart implements MapPart {
                 return;
             List<IGeoResource> dataHandles = new ArrayList<IGeoResource>();
             ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-            IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
+            
             for( File file : files ) {
                 try {
                     URL url = file.toURI().toURL();
@@ -292,7 +294,7 @@ public class MapView extends ViewPart implements MapPart {
     }
 
     public void setModalTool( ModalTool tool ) {
-        mapviewer.setModalTool(tool);
+        tool.setActive(true);
     }
     public Map getMap() {
         return mapviewer.getMap();
@@ -317,4 +319,21 @@ public class MapView extends ViewPart implements MapPart {
         mapviewer.setSelectionProvider(selectionProvider);
     }
 
+	@Override
+	public IStatusLineManager getStatusLineManager() {
+		return getViewSite().getActionBars().getStatusLineManager();
+	}
+
+    ModalTool activeTool = null;
+    public void setActive( ModalTool tool ){
+        if( activeTool == tool ){
+            return; // no change
+        }
+        if( activeTool != null ){
+            activeTool.setActive(false);
+            activeTool = null;
+        }
+        tool.setActive(true);
+        activeTool = tool;
+    }
 }

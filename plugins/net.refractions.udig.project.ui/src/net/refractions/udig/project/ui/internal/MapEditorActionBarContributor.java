@@ -8,6 +8,7 @@ import net.refractions.udig.project.ui.internal.tool.display.PlaceholderToolbarC
 import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.project.ui.tool.ToolConstants;
 
+import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IMenuManager;
@@ -22,11 +23,17 @@ import org.eclipse.ui.part.EditorActionBarContributor;
 
 /**
  * Adds {@link net.refractions.udig.project.ui.tool.Tool}s to the actions bars.
+ * <p>
+ * You can configure the MapEditorActionBarContributor to only add Action Tools
+ * (in order to make use of the GEF palette.
+ * 
  * @author jeichar
+ * @version 2.3
  */
 public class MapEditorActionBarContributor extends EditorActionBarContributor {
+	/** SubCoolBarManager used to wrap normal coolBarManager and watch the add/remove of items */
 	private SubCoolBarManager subManager;
-
+	
     @Override
     public void init( IActionBars bars, IWorkbenchPage page ) {
         super.init(bars, page);
@@ -37,9 +44,9 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
 	public void contributeToCoolBar(ICoolBarManager coolBarManager) {
 		if (coolBarManager instanceof SubCoolBarManager) {
 			subManager = (SubCoolBarManager) coolBarManager;
-		}else
-			subManager=new SubCoolBarManager(coolBarManager);
-        
+		} else {
+			subManager = new SubCoolBarManager(coolBarManager);
+		}
       /*
       * Vitalus:
       * For correct toolbar management by Eclipse platform we MUST
@@ -58,6 +65,7 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
          * Contribute action tools to the toolbar.
          */
         ToolBarManager actionToolBarManager = new ToolBarManager(SWT.FLAT);
+        
         ApplicationGIS.getToolManager().contributeActionTools(actionToolBarManager, getActionBars());
         if ( actionToolBarManager.getItems().length > 0){
             IContributionItem item = subManager.find(ToolConstants.ACTION_TOOLBAR_ID);
@@ -68,20 +76,17 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
             subManager.add(toolBarContributionItem);
         }
         
-        /*
-         * Contribute modal tools to the toolbar.
-         */
-        ToolBarManager modalToolBarManager = new ToolBarManager(SWT.FLAT);
-        ApplicationGIS.getToolManager().contributeModalTools(modalToolBarManager, getActionBars());
-        if ( modalToolBarManager.getItems().length > 0){
-            IContributionItem item = subManager.find(ToolConstants.MODAL_TOOLBAR_ID);
-            if(item != null){
-                subManager.remove(ToolConstants.MODAL_TOOLBAR_ID);
-            }
-            ToolBarContributionItem toolBarContributionItem = new ToolBarContributionItem(modalToolBarManager, ToolConstants.MODAL_TOOLBAR_ID);
-            subManager.add(toolBarContributionItem);
-        }
-        
+//        ToolBarManager modalToolBarManager = new ToolBarManager(SWT.FLAT);
+//        ApplicationGIS.getToolManager().contributeModalTools(modalToolBarManager, getActionBars());
+//        if ( modalToolBarManager.getItems().length > 0){
+//            IContributionItem item = subManager.find(ToolConstants.MODAL_TOOLBAR_ID);
+//            if(item != null){
+//                subManager.remove(ToolConstants.MODAL_TOOLBAR_ID);
+//            }
+//            ToolBarContributionItem toolBarContributionItem = new ToolBarContributionItem(modalToolBarManager, ToolConstants.MODAL_TOOLBAR_ID);
+//            subManager.add(toolBarContributionItem);
+//        }
+
 		super.contributeToCoolBar(coolBarManager);
 	}
 
@@ -107,6 +112,7 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
 	@Override
 	public void setActiveEditor(IEditorPart targetEditor) {
 	    super.setActiveEditor(targetEditor);
+	    
         IToolManager toolManager = ApplicationGIS.getToolManager();
         toolManager.contributeGlobalActions(targetEditor, getActionBars());
         toolManager.registerActionsWithPart(targetEditor);

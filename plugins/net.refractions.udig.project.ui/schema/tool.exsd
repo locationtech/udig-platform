@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.render">
+<schema targetNamespace="net.refractions.udig.render" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appInfo>
+      <appinfo>
          <meta.schema plugin="net.refractions.udig.render" id="Tool" name="Tool"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          &lt;p&gt;The tool extension point allows third-party developers to develop new tools for UDIG and is one of the most used points of extension.  There are three different type of tools and two ways of grouping tools.  The three type of tools are as follows:&lt;/p&gt;
 
@@ -21,6 +21,11 @@
    </annotation>
 
    <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
       <complexType>
          <choice minOccurs="1" maxOccurs="unbounded">
             <element ref="category"/>
@@ -55,9 +60,9 @@
 
    <element name="category">
       <annotation>
-         <appInfo>
+         <appinfo>
             <meta.element labelAttribute="name" icon="icon"/>
-         </appInfo>
+         </appinfo>
          <documentation>
             A category represents a collection of tools.  In toolbars tools within a category are grouped together and accessed via the same keyboard shortcut.
          </documentation>
@@ -77,9 +82,9 @@
                <documentation>
                   The command that will cycle and activate the modal tools in a category.  This must identify a command extension.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="icon" type="string">
@@ -94,9 +99,9 @@
                <documentation>
                   A human readable name of the category.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="selectionProvider" type="string">
@@ -105,9 +110,9 @@
                   Tools are responsible for declaring the selection provider used by the MapEditor.  This attribute declares the IMapEditorSelectionProvider used.  If the attribute is declared a selection provider that has the map selected is used.  It is the MapEditorSelectionProvider.
 This declaration can be overridden by the selectionProvider attribute of a particular tool.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.selection.provider.AbstractMapEditorSelectionProvider"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="applicabilityId" type="string">
@@ -122,9 +127,9 @@ This declaration can be overridden by the selectionProvider attribute of a parti
 
    <element name="modalTool">
       <annotation>
-         <appInfo>
+         <appinfo>
             <meta.element icon="icon"/>
-         </appInfo>
+         </appinfo>
          <documentation>
             A modal tool is a tool that has an on and an off.  Examples are the zoom tool.  Some types of tools may be exclusive, for example the zoom tool cannot be on at the same time as other exclusively modal tools, such as the pan tool.
          </documentation>
@@ -142,6 +147,9 @@ This declaration can be overridden by the selectionProvider attribute of a parti
 
 For internationalization you should consider using %toolName.tooltip%, where toolName.tooltip is an entry in plugin.propertiers
                </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="class" type="string">
@@ -149,9 +157,9 @@ For internationalization you should consider using %toolName.tooltip%, where too
                <documentation>
                   The Tool implementation.  It is recommended that the AbstractTool class is exteneded for mouse tools.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.SimpleTool"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="icon" type="string">
@@ -159,9 +167,9 @@ For internationalization you should consider using %toolName.tooltip%, where too
                <documentation>
                   The icon that will be used to represent the tool in a toolbar or menu.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="resource"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="id" type="string" use="required">
@@ -178,6 +186,9 @@ For internationalization you should consider using %toolName.tooltip%, where too
 
 For internationalization you should consider using %toolName.name%, where toolName.name is an entry in plugin.propertiers
                </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="onToolbar" type="boolean" use="default" value="true">
@@ -192,6 +203,9 @@ For internationalization you should consider using %toolName.name%, where toolNa
                <documentation>
                   The id of the category that the tool is a part of.  In the toolbar it will be part of the drop down menu.
                </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="net.refractions.udig.project.ui.tool/category/@id"/>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="commandIds" type="string">
@@ -207,6 +221,9 @@ See the command extension point.
                <documentation>
                   
                </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="net.refractions.udig.project.ui.tool/modalTool/cursor/@id"/>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="commandHandler" type="string">
@@ -214,9 +231,9 @@ See the command extension point.
                <documentation>
                   This handler will handle called when a command has been requested.  See the command extension point
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.IToolHandler"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="selectionProvider" type="string">
@@ -225,9 +242,9 @@ See the command extension point.
                   Tools are responsible for declaring the selection provider used by the MapEditor.  This attribute declares the IMapEditorSelectionProvider used.  
 If this attribute is not used then the selectionProvider attribute in the category declaration is used.  If that is null then the default is used (MapEditorSelectionProvider)
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.selection.provider.AbstractMapEditorSelectionProvider"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -235,9 +252,9 @@ If this attribute is not used then the selectionProvider attribute in the catego
 
    <element name="backgroundTool">
       <annotation>
-         <appInfo>
+         <appinfo>
             <meta.element icon="icon"/>
-         </appInfo>
+         </appinfo>
          <documentation>
             A background tool is a tool that runs the entire time an editor is active. Often they do things like update the status bar.
          </documentation>
@@ -255,9 +272,9 @@ If this attribute is not used then the selectionProvider attribute in the catego
                <documentation>
                   The Tool implementation.  It is recommended that the AbstractTool class is exteneded for mouse tools.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.AbstractTool:net.refractions.udig.project.ui.tool.Tool"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="icon" type="string">
@@ -265,9 +282,9 @@ If this attribute is not used then the selectionProvider attribute in the catego
                <documentation>
                   The icon that will be used as a display for the icon
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="resource"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="id" type="string" use="required">
@@ -297,9 +314,9 @@ See the command extension point
                <documentation>
                   This handler will handle called when a command has been requested.  See the command extension point
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="org.eclipse.ui.commands.IHandler"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -307,9 +324,9 @@ See the command extension point
 
    <element name="actionTool">
       <annotation>
-         <appInfo>
+         <appinfo>
             <meta.element icon="icon"/>
-         </appInfo>
+         </appinfo>
          <documentation>
             An action tool is a tool that is equivalent to a eclipse action.  The only difference is that it implements the ActionTool interface
          </documentation>
@@ -330,9 +347,9 @@ See the command extension point
                <documentation>
                   The Tool implementation.  It is recommended that the AbstractTool class is exteneded for mouse tools.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.AbstractActionTool"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="icon" type="string">
@@ -340,9 +357,9 @@ See the command extension point
                <documentation>
                   The icon that will be used as a display for the icon
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="resource"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="id" type="string" use="required">
@@ -386,9 +403,9 @@ See the command extension point
                <documentation>
                   This handler will handle called when a command has been requested.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.AbstractToolCommandHandler"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="menuPath" type="string">
@@ -403,9 +420,9 @@ See the command extension point
 
    <element name="cursor">
       <annotation>
-         <appInfo>
+         <appinfo>
             <meta.element icon="image"/>
-         </appInfo>
+         </appinfo>
          <documentation>
             A user defined cursor that will be displayed when the tool is active.  See org.eclipse.swt.graphics.Cursor for more information.  The attributes of this element correspond to the constructor arguments.
          </documentation>
@@ -418,9 +435,9 @@ See the command extension point
 
 In previous versions of eclipse there were some problems showing color PNG cursors on linux and OS-X.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="resource"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="hotspotX" type="string">
@@ -504,9 +521,9 @@ The system cursors can be accessed using one of the following constants: default
 
    <element name="property">
       <annotation>
-         <appInfo>
+         <appinfo>
             <meta.element labelAttribute="target"/>
-         </appInfo>
+         </appinfo>
          <documentation>
             Declares the property and the expected value that a condition element operates on.
 
@@ -519,9 +536,9 @@ TODO: Need to place a link here to a spot where valid propertyNames are declared
                <documentation>
                   The value that the property is expected to match
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute deprecated="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
@@ -530,9 +547,9 @@ TODO: Need to place a link here to a spot where valid propertyNames are declared
                   The id of the property extension to use.
 See net.refractions.udig.ui.objectProperty
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute deprecated="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="propertyId" type="string" use="required">
@@ -557,9 +574,9 @@ It is the id of the property element which is a grandchild of the ObjectProperty
 
    <element name="adaptsTo">
       <annotation>
-         <appInfo>
+         <appinfo>
             <meta.element labelAttribute="target"/>
-         </appInfo>
+         </appinfo>
          <documentation>
             If the selection can adapt to object of type target then this enablement is considered true.
          </documentation>
@@ -570,9 +587,9 @@ It is the id of the property element which is a grandchild of the ObjectProperty
                <documentation>
                   The name of the class that the selection must be able to adapt to.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -597,9 +614,9 @@ It is the id of the property element which is a grandchild of the ObjectProperty
 
    <element name="toolCursor">
       <annotation>
-         <appInfo>
+         <appinfo>
             <meta.element labelAttribute="id" icon="image"/>
-         </appInfo>
+         </appinfo>
          <documentation>
             Defines a cursor that can be reused by several tools, tools will refer to this cursor via the id listed here.
 
@@ -625,9 +642,9 @@ It is undefined what happens when two tool cursors are defined with the same id;
                <documentation>
                   The cursor image. The background of the image must be blank (Alpha value of 0).
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="resource"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="hotspotX" type="string">
@@ -650,24 +667,24 @@ It is undefined what happens when two tool cursors are defined with the same id;
    <element name="toolApplicability" type="string">
       <annotation>
          <documentation>
-            Indicates what &quot;Applicability&quot; this tool is part of.  For example the edit tools would be part of the
+            Indicates what &quot;Applicability&quot; this tool is part of.
          </documentation>
       </annotation>
    </element>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="since"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          0.1.1
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="examples"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          An example use of the condition element:
 
@@ -683,27 +700,27 @@ This will equate to true if the current layer&apos;s geometry type is multipolyo
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="apiInfo"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          [Enter API information here.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="implementation"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          [Enter information about supplied implementation of this extension point.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="copyright"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          Refractions Research Inc.
       </documentation>

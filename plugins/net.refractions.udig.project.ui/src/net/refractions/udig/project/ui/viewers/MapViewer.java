@@ -9,13 +9,11 @@ import net.refractions.udig.project.ui.internal.RenderManagerDynamic;
 import net.refractions.udig.project.ui.internal.TiledRenderManagerDynamic;
 import net.refractions.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneSWT;
 import net.refractions.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneTiledSWT;
-import net.refractions.udig.project.ui.internal.tool.ToolContext;
-import net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
-import net.refractions.udig.project.ui.tool.ModalTool;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -24,7 +22,10 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.part.WorkbenchPart;
+import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartSite;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
 /**
@@ -33,8 +34,12 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * In order to facilitate experimentation with a range of GIS widgets
  * we have created a JFace "viewer" for working with a Map.
  * </p>
+ * This component implements MapPart allowing your view to make use of eclipse
+ * delegate facilities.
+ * 
  * @author Jody Garnett
  * @since 1.1.0
+ * @version 1.2.3
  */
 public class MapViewer implements MapPart {
     /**
@@ -46,13 +51,26 @@ public class MapViewer implements MapPart {
      * This is the current map.
      */
     protected Map map;
-    private WorkbenchPart part;
+    
+    /**
+     * This is the workbench part displaying the map;
+     * it should implement MapPart or I will cry.
+     */
+    private IWorkbenchPart part;
+    
+    /** context menu or view menu or something nice for the user to look at */
     private Menu menu;
-    private ModalTool activeTool;
-    private ToolContextImpl toolcontext;
+    
+    /** Allows a tool to communicate with stuff - ie a "tool site" */
+    //private ToolContextImpl toolcontext;
+    
+    /** Draws the map */
     private RenderManager renderManager;
     
+    /** Preferred scales like open layers (used for zoom in, zoom out etc...) */
     private double[] resolutions;
+
+    private MapPart mapPart;
     
     /**
      * Creates a map viewer on a newly-created viewport pane under the given
@@ -104,8 +122,9 @@ public class MapViewer implements MapPart {
      * </p>
      * @param part Editor or View workbench part
      */
-    public void init( WorkbenchPart part ){
+    public void init( IWorkbenchPart part ){
         this.part = part;
+        this.mapPart = (MapPart) part;
     }
     
     /**
@@ -199,6 +218,19 @@ public class MapViewer implements MapPart {
     public Menu getMenu(){
         return menu;        
     }
+    public IStatusLineManager getStatusLineManager() {
+    	IWorkbenchPartSite site = part.getSite();
+    	if( site instanceof IViewSite){
+    		IViewSite viewSite = (IViewSite) site;
+    		return viewSite.getActionBars().getStatusLineManager();
+    	}
+    	else if ( site instanceof IEditorSite){
+    		IEditorSite editorSite = (IEditorSite) site;
+    		return editorSite.getActionBars().getStatusLineManager();
+    	}
+    	throw new NullPointerException( "Unable to determine StatusLineManager");
+    }
+
     /**
      * Will open the menu provided by getMenu().
      * <p>
@@ -229,31 +261,44 @@ public class MapViewer implements MapPart {
      * </p>
      * @param tool
      */
-    public void setModalTool( ModalTool tool ) {
-        if (activeTool != null) {
-            // ask the current tool to stop listening etc...
-            activeTool.setActive(false);
-            activeTool = null;
-        }
-        if( tool == null ){
-            return;
-        }
-        activeTool = tool;
-        activeTool.setContext(getToolContext());
-        activeTool.setActive(true);
-    }
+//    public void setModalTool( ModalTool tool ) {
+//        IToolManager tools = ApplicationGIS.getToolManager();
+//        
+//        if (activeTool != null) {
+//            // ask the current tool to stop listening etc...
+//            activeTool.setActive(false);
+//            activeTool = null;
+//        }
+//        if(tools.getActiveTool() != null ){
+//        	ModalTool globalTool = (ModalTool) tools.getActiveTool();
+//        	globalTool.setActive(false);
+//        }
+//        
+//        if( tool == null ){
+//            return;
+//        }
+//        activeTool = tool;
+//        activeTool.setContext(getToolContext());
+//        activeTool.setActive(true); // this should register itself with the tool manager
+//        
+//        
+//        // this was normally handled by the ToolProxy which we cannot get a hold of
+//        String currentCursorID = activeTool.getCursorID();
+//		Cursor toolCursor = tools.findToolCursor(currentCursorID);
+//		getToolContext().getViewportPane().setCursor(toolCursor);
+//    }
 
     /**
-     * @return tool context (used to teach tools about our MapViewer facilities.
+     * @return tool context (used to teach tools about our MapViewer facilities)
      */
-    protected synchronized ToolContext getToolContext(){
-        if( toolcontext == null ){
-            toolcontext = new ToolContextImpl();
-            toolcontext.setMapInternal(map);        
-            toolcontext.setRenderManagerInternal(map.getRenderManagerInternal());            
-        }
-        return toolcontext;
-    }
+//    protected synchronized ToolContext getToolContext(){
+//        if( toolcontext == null ){
+//            toolcontext = new ToolContextImpl();
+//            toolcontext.setMapInternal(map);        
+//            toolcontext.setRenderManagerInternal(map.getRenderManagerInternal());            
+//        }
+//        return toolcontext;
+//    }
     
     public void setFont( Control control ) {
         Display display = control.getDisplay();
@@ -343,9 +388,12 @@ public class MapViewer implements MapPart {
             }
         } );
     }
-
-
-
-      
+//    /**
+//     * Get the MapEditDomain
+//     * @return
+//     */
+//    public MapEditDomain getEditDomain() {
+//        return editDomain;
+//    }
 
 }

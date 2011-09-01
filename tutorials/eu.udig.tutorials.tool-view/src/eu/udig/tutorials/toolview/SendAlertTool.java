@@ -1,4 +1,4 @@
-package eu.udig.tutorials.alertapp;
+package eu.udig.tutorials.toolview;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -42,7 +42,7 @@ import com.vividsolutions.jts.geom.Envelope;
  */
 public class SendAlertTool extends SimpleTool {
 
-	public final static String EXTENSION_ID = "eu.udig.tutorials.alert-app.sendalerttool";
+	public final static String EXTENSION_ID = "eu.udig.tutorials.tool-view.sendalerttool";
 	
 	/**
 	 * Animation of a circle zooming to a point.

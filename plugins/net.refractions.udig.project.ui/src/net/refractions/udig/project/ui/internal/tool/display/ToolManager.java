@@ -54,8 +54,10 @@ import net.refractions.udig.project.ui.internal.tool.ToolContext;
 import net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl;
 import net.refractions.udig.project.ui.tool.IContextMenuContributionTool;
 import net.refractions.udig.project.ui.tool.IToolManager;
+import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.tool.Tool;
 import net.refractions.udig.project.ui.tool.ToolConstants;
+import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.ui.IDropAction;
 import net.refractions.udig.ui.IDropHandlerListener;
 import net.refractions.udig.ui.UDIGDragDropUtilities;
@@ -115,7 +117,7 @@ import org.opengis.filter.Filter;
  * <p>
  * The tool manager is a used by the MapEditor to populate the
  * menu and action bars. It is responsible for processing the tools
- * extention point and making action contributions as needed.
+ * extension point and making action contributions as needed.
  * <p>
  * New for uDig 1.1:
  * <ul>
@@ -154,6 +156,7 @@ public class ToolManager implements IToolManager {
      */
     List<MenuToolCategory> menuCategories = new LinkedList<MenuToolCategory>();
     /**
+     * 
      * I think these are the tools that lurk in the background updating state
      * like the status bar.
      */
@@ -170,20 +173,37 @@ public class ToolManager implements IToolManager {
     protected java.util.Map<String, CursorProxy> cursorsCache = new HashMap<String, CursorProxy>();
 
     /**
-     * Current active tool; this represents the *state* of the editor.
+     * Proxy for the active tool (ie statue of the editor).
      * <p>
      * The category of this tool will behave a little like a persepctive; since
      * the nature of the editor changes complety with the current tool. As such
      * the Edit menu may change what actions are available based on what subject
      * matter this tool is working on.
      */
-    protected ToolProxy activeModalToolProxy;
+    private ToolProxy activeModalToolProxy;
+    
+    /**
+     * Current active tool; this represents the state of the editor.
+     * <p>
+     * This is considered an internal detail of ToolManager.
+     */
+    private ModalTool activeTool;
     
     /**
      * Default modal tool. This tool is set during initialisation of
      * tools by ToolProxy.DEFAULT_ID.
      */
     ToolProxy defaultModalToolProxy;
+    
+    /**
+     * This is responsible for tracking the active tool; it is a facility provided
+     * by GEF. We are not using GEF tools directly; simply borrowing some of their
+     * infrastructure to support a nice visual palette.
+     * <p.
+     * The *id* of the current tool in the editDomain is used to determine the 
+     * active tool for the map.
+     */
+    MapEditDomain editDomain;
     
     Lock redoLock=new ReentrantLock();
     Lock undoLock=new ReentrantLock();
@@ -213,21 +233,14 @@ public class ToolManager implements IToolManager {
      * Construct <code>ToolManager</code>.
      */
     public ToolManager() {
-    	
-//    	instance = this;
-
         processCategories();
         processTools();
         removeEmptyCategories();
         Collections.sort(categoryIds, new CategorySorter());
         setCommandHandlers();
-
+        editDomain = new MapEditDomain(null);
     }
     
-//    protected ToolManager getInstance(){
-//    	return instance;
-//    }
-
     /**
      * Populates the categories with their associated tools
      */
@@ -488,12 +501,12 @@ public class ToolManager implements IToolManager {
     /**
      * This method is called to perform tools initialisation when
      * the map editor is selected.
-     * 
      */
     public void setCurrentEditor( MapPart editor ) {
     	
-        if( editor==currentEditor )
+        if( editor==currentEditor ){
             return;
+        }
         
         currentEditor = editor;
         if (editor != null) {
@@ -604,30 +617,52 @@ public class ToolManager implements IToolManager {
      */
     @SuppressWarnings("unchecked")
     void setActiveTool( MapPart editor ) {
-        if (!editor.getMap().eAdapters().contains(getCommandListener(editor)))
-            editor.getMap().eAdapters().add(getCommandListener(editor));
+        // ensure we are listening to this MapPart's Map
+        Map map = editor.getMap();
+        Adapter listener = getCommandListener(editor);
+        if (!map.eAdapters().contains(listener)){
+            map.eAdapters().add(listener);
+        }
+        
+        // Define the tool context allowing tools to interact with this map
         ToolContext tools = new ToolContextImpl();
-        tools.setMapInternal(editor.getMap());
-
-        setContext(modalCategories, tools);
+        tools.setMapInternal(map);
+        
+        // Provide each tool with the new tool context
+        //
+        setContext(modalCategories, tools); // if active a modal tool is supposed to register listeners
         setContext(actionCategories, tools);
         setContext(menuCategories, tools);
-
         for( ToolProxy tool : backgroundTools ) {
             tool.setContext(tools);
         }
-        for( Iterator iter = registeredToolActions.iterator(); iter.hasNext(); )
-            ((IAction) iter.next()).setEnabled(true);
+        for( IAction action : registeredToolActions){
+            action.setEnabled(true);
+        }
 
-        setCommandActions(editor.getMap(), editor);
-        editor.setSelectionProvider(activeModalToolProxy.getSelectionProvider());
+        setCommandActions(map, editor);
+        
+        // wire in the current activeModalTool
+        if( activeModalToolProxy != null ){
+            if( !activeModalToolProxy.isActive() ){
+                // work around to allow the 1st modal tool to be active
+                if( activeTool == null ){
+                    activeTool = activeModalToolProxy.getModalTool(); 
+                }
+                activeModalToolProxy.getModalTool().setActive(true);                
+            }
+            editor.setSelectionProvider(activeModalToolProxy.getSelectionProvider());
+        }
     }
-
-    private void setContext( List categories, ToolContext tools ) {
-        for( Iterator iter = categories.iterator(); iter.hasNext(); ) {
-            ToolCategory category = (ToolCategory) iter.next();
-            for( Iterator titer = category.iterator(); titer.hasNext(); ) {
-                ToolProxy tool = (ToolProxy) titer.next();
+    /**
+     * Go through List of ToolCategory and update each Tool with the new tool context.
+     * @param categories
+     * @param tools
+     */
+    private void setContext( List<? extends ToolCategory> categories, ToolContext tools ) {
+        for(  ToolCategory category : categories ) {
+            for(ModalItem item : category.items ) {
+                ToolProxy tool = (ToolProxy) item;
                 tool.setContext(tools);
             }
         }
@@ -1421,20 +1456,29 @@ public class ToolManager implements IToolManager {
         }
         return commandListener;
     }
-
+    /**
+     * Hook up the usual actions (UNDO,REDO,BACKWARDS_HISTORY,FORWARD_HISTORY) to the provided
+     * editor.
+     * 
+     * @param map
+     * @param editor
+     */
     void setCommandActions( Map map, MapPart editor ) {
         if (map.getCommandStack().canRedo())
             getREDOAction().setEnabled(true);
         else
             getREDOAction().setEnabled(false);
+
         if (map.getCommandStack().canUndo())
             getUNDOAction().setEnabled(true);
         else
             getUNDOAction().setEnabled(false);
+        
         if (map.getNavCommandStack().hasBackHistory())
             getBACKWARD_HISTORYAction().setEnabled(true);
         else
             getBACKWARD_HISTORYAction().setEnabled(false);
+        
         if (map.getNavCommandStack().hasForwardHistory())
             getFORWARD_HISTORYAction().setEnabled(true);
         else
@@ -1779,7 +1823,14 @@ public class ToolManager implements IToolManager {
     }
     
     
-
+    /**
+     * Get the MapEditDomain
+     * 
+     * @return
+     */
+    public MapEditDomain getEditDomain() {
+        return editDomain;
+    }
 
     /**
      *  (non-Javadoc)
@@ -1794,12 +1845,78 @@ public class ToolManager implements IToolManager {
      * 
      * @return
      */
-    protected ToolProxy getActiveToolProxy(){
+    public ToolProxy getActiveToolProxy(){
     	return activeModalToolProxy;
     }
     
-    
+    /**
+     * Sets the current active modal tool; please note that the provided
+     * tool must be visible / enabled and available in the user interface
+     * for this operation to work.
+     * 
+     * @param activeModalToolProxy
+     */
+	public void setActiveModalToolProxy(ToolProxy modalToolProxy) {
+		if( modalToolProxy == null ){
+			// we will have to use the default then
+			modalToolProxy = defaultModalToolProxy;
+		}
+		if(activeModalToolProxy != null && activeModalToolProxy.getId() == modalToolProxy.getId() ){
+		    return; // no change required
+		}
+		this.activeModalToolProxy = modalToolProxy;
+		setActiveModalTool( modalToolProxy.getModalTool() );
+	} 
+	/**
+	 * This method goes through the steps of deactivating the current tool
+	 * and activating the new one.
+	 * 
+	 * @param modalTool
+	 */
+    private void setActiveModalTool( ModalTool modalTool ) {
+        if (modalTool == null) {
+            // we cannot run with out a tool; so we will sue the default!
+            modalTool = defaultModalToolProxy.getModalTool();
+        }
+        if (activeTool == modalTool) {
+            return; // no change required!
+        }
 
+        if (activeTool != null) {
+            // ask the current tool to stop listening etc...
+            activeTool.setActive(false);
+            activeTool = null;
+        }
+        
+        if( modalTool.getContext() == null ){
+            // the tool cannot be activated as it has not been connected to the map yet
+            // Could we perform activeTool.setContext( toolContext )?
+            return;
+        }
+        
+        try {
+            activeTool = modalTool;
+            
+            activeTool.setActive(true); // this should register itself with the tool manager
+
+            // this was normally handled by the ToolProxy which we cannot get a hold of
+            String currentCursorID = activeTool.getCursorID();
+			Cursor toolCursor = findToolCursor(currentCursorID);
+			
+			activeTool.getContext().getViewportPane().setCursor(toolCursor);
+        }
+        catch (Throwable eek){
+            System.err.println("Trouble activating "+modalTool+":"+eek);
+            try {
+                activeTool.setActive(false); // hope it does a better cleaning up
+            }
+            catch (Throwable t){
+                // no it did not do a better job cleaning up
+            }
+            activeTool = defaultModalToolProxy.getModalTool();
+            activeTool.setActive(true);
+        }
+    }
 //    
 //    static class CopyAction extends Action {
 //        final Set<Transfer> transfers = UDIGDragDropUtilities.getTransfers();
