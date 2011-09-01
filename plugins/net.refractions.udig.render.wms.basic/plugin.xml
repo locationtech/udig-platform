@@ -51,7 +51,6 @@
             id="net.refractions.udig.catalog.wmsc.wmscpreloadtiles"
             name="Preload all WMS-C Tiles"
             targetClass="net.refractions.udig.catalog.internal.wmsc.WMSCGeoResourceImpl">
-         <enablement></enablement>
       </operation>
    </extension>   
 </plugin>

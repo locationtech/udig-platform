@@ -32,7 +32,6 @@ public class Messages extends NLS {
 	public static String WFSRegistryWizardPage_label_password_text;
 	public static String WFSRegistryWizardPage_label_username_tooltip;
 	public static String WFSRegistryWizardPage_label_username_text;
-	public static String WFSRegistryWizardPage_7;
 	public static String WFSRegistryWizardPage_label_url_tooltip;
 	public static String WFSRegistryWizardPage_label_url_text;
 	public static String UDIGWFSDataStoreFactory_error_usernameAndPassword;

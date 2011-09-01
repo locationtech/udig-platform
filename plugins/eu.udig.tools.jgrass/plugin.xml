@@ -140,7 +140,6 @@
             id="eu.udig.tools.jgrass.profile.fromfeature"
             name="%feature.profile"
             targetClass="net.refractions.udig.project.ILayer">
-         <enablement></enablement>
       </operation>
       <category
             id="eu.udig.tools.jgrass.toolscategory"
@@ -153,7 +152,6 @@
             id="eu.udig.tools.jgrass.copypath.CopyPathOp"
             name="%copy.file.path"
             targetClass="java.io.File">
-         <enablement></enablement>
       </operation>
    </extension>
    <extension
