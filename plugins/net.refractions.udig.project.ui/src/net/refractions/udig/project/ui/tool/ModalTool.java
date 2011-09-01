@@ -114,6 +114,20 @@ public interface ModalTool extends Tool {
      * Called when tool button is pressed. If active is set to true the tool is Registered with the
      * source Component so that it receives events and will begin operating If active is set to
      * false the tool is set as inactive and deregistered with the component.
+     * <p>
+     * Here is a sample implementation:
+     * <pre><code>    public void setActive( boolean active ) {
+     *         this.active=active;
+     *         setStatusBarMessage(active);
+     *         if (!active) {
+     *             deregisterMouseListeners();
+     *         } else {
+     *             if(isEnabled()){
+     *                 registerMouseListeners();
+     *             }
+     *         }
+     *     }</code></pre>
+     * Use {@code getContext().getViewportPane() } to obtain the control to listen to.
      * 
      * @param active if true the tool is Registered with the source Component so that it receives
      *        events and will begin operating. if false the tool is set as inactive and deregistered

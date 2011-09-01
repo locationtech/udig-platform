@@ -139,7 +139,7 @@ public class OverviewMapViewer {
         };
         mapviewer.getViewport().addDrawCommand(rectDrawCommand);
         //add tool to the location box
-        mapviewer.setModalTool(new LocationBoxMoveTool( mainMapViewportPane ));
+        //mapviewer.setModalTool(new LocationBoxMoveTool( mainMapViewportPane ));
     }
     
     /**

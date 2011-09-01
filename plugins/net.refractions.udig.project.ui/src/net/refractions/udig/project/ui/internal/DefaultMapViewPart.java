@@ -15,6 +15,7 @@ import net.refractions.udig.project.internal.commands.CreateMapCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.IToolManager;
+import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.ui.UDIGDragDropUtilities;
 import net.refractions.udig.ui.UDIGDragDropUtilities.DropTargetDescriptor;
@@ -39,6 +40,8 @@ import org.eclipse.ui.part.ViewPart;
  * view should acquire a the toolbar when the view has focus.  Init map can be overridden to further configure the map.
  * 
  * @author jeichar
+ * 
+ * @version 1.3.0
  */
 public abstract class DefaultMapViewPart extends ViewPart implements MapPart, IDropTargetProvider {
 
@@ -51,6 +54,8 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
 	private DropTargetDescriptor dropTarget;
 
 	private IToolManager toolManager;
+
+	private MapEditDomain editDomain;
 
 	/**
 	 * Returns the map that is to be displayed in the view.
@@ -73,6 +78,7 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
 
 	@Override
 	public final void createPartControl(Composite parent) {
+		editDomain = new MapEditDomain(null);
 		try {
 			IProgressMonitor monitor = getViewSite().getActionBars().getStatusLineManager().getProgressMonitor();
 			viewer = new MapViewer(parent, SWT.DOUBLE_BUFFERED);

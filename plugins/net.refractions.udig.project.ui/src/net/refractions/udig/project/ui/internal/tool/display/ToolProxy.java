@@ -57,7 +57,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * editors are concerned.
  * 
  * @author Jesse Eichar
- * @version $Revision: 1.9 $
+ * @version 1.3.0
  */
 public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
  
@@ -119,7 +119,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
      * 
      * @param extension The Tool extension
      * @param tool The configuration element which describes the tool
-     * @param newParam TODO
+     * @param toolManager ToolManager responsible for this tool
      */
     public ToolProxy( IExtension extension, IConfigurationElement tool, ToolManager toolManager ) {
         super();
@@ -162,11 +162,21 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         ImageDescriptor icon;
         if (iconID == null) {
             icon = null;
-        }else{
+        } else {
             icon = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid, iconID);
+            
+            if( "icons/etool16/pan_mode.gif".equals( iconID )){
+                String largeIconID = iconID.replace("etool16","etool24");
+                
+                ImageDescriptor large = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid, largeIconID);
+                setLargeImageDescriptor( large );
+            }
+            else {
+                setLargeImageDescriptor( icon );
+            }
         }
         setImageDescriptor(icon);
-    
+        
         this.element = tool;
         setName(name);
         setToolTipText(toolTip);
@@ -237,7 +247,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         if (type == BACKGROUND) {
             getTool().setContext(toolContext);
             
-        } else if ( type == MODAL && toolManager.activeModalToolProxy == this) {
+        } else if ( type == MODAL && toolManager.getActiveToolProxy() == this) {
         	ModalTool modalTool =  getModalTool();
         	
         	modalTool.setContext(toolContext);
@@ -422,72 +432,103 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         }
     }
 
-    /** 
-     * (non-Javadoc)
-     * @see net.refractions.udig.project.ui.tool.ActionTool#run()
+    /**
+     * Called when the user clicks on the button or otherwise "Activates" the
+     * tool represented here.
      */
     @Override
     public void run() {
-    	if (runModeless() && isEnabled )
-    		return;
-
-       PlatformGIS.syncInDisplayThread(new Runnable(){
-            public void run() {
-                enableModalTool();
+        if( isModeless() ){
+            runModeless();
+            if( isEnabled() ){
+                return;
             }
-        });
+            // the original code followed through into the activation
+            // code I am not sure as to the logic? it may of been an accident of implementation
+        }
+        else {
+            // we are going to carefully activate in this display thread
+            // (so the user interface buttons can be updated)
+            PlatformGIS.syncInDisplayThread(new Runnable(){
+                public void run() {
+                    runModal();
+                }
+            });
+        }
+    }
+    
+    /**
+     * This method is responsible for for ensuring that this ToolProxy is activated and that the
+     * tool manager knows about it.
+     */
+    @Override
+    protected void runModal() {
+        // activate the current tool
+        // (we expect this will update the tool manager)
+        setActive(true);
+        
+        // a bit of quality assurance here 
+        // while we expect the above setActive method to update
+        // that active item we will double check now
+        ToolProxy activeToolProxy = getActiveItem();
+    	if (activeToolProxy == this){
+    	    // good that worked then
+    	}
+    	else {
+    	    // okay we will chagne the active item ourself
+    	    if(activeToolProxy != null ){
+                activeToolProxy.setActive(false);    	        
+    	    }
+    	    // this is the current active item from the tool manager
+            setActiveItem(this);
+    	}
     }
 
-    private void enableModalTool() {
-        ToolProxy activeToolProxy = (ToolProxy)getActiveItem();
-    	if (activeToolProxy != null)
-    		activeToolProxy.setActive(false);
-    	
-    	setActive(true);
-     	setActiveItem(this);
+    /**
+     * We will call runModeless() if type == ACTION; if not runModal is used.
+     */
+    @Override
+    protected boolean isModeless() {
+        return type == ACTION;
     }
-
 	/**
+	 * Runs getModelessTool() safely in the display thread.
      * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#runModeless()
      */
-    protected boolean runModeless() {
-        if (type == ACTION) {
-            PlatformGIS.run(new ISafeRunnable(){
-
-                public void run() throws Exception {
-                    getModelessTool().run();
-                }
-
-                public void handleException( Throwable exception ) {
-                    ProjectUIPlugin
-                            .log("Error occured while executing tool: " + getId(), exception); //$NON-NLS-1$
-                }
-
-            });
-            return true;
+    protected void runModeless() {
+        if (type != ACTION) {
+            throw new IllegalStateException("runModeless expects ACTION");
         }
-
-        return false;
+        PlatformGIS.run(new ISafeRunnable(){
+            public void run() throws Exception {
+                getModelessTool().run();
+            }
+            public void handleException( Throwable exception ) {
+                ProjectUIPlugin
+                        .log("Error occured while executing tool: " + getId(), exception); //$NON-NLS-1$
+            }
+        });
     }
 
     /**
      * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#setActive(boolean)
      */
     public void setActive( boolean active ) {
-    	if (toolContext == null)
-    		return;
-    	
-    	setChecked(active);
+    	if (toolContext == null){
+    		return; // cannot be active as the map is not ready yet
+    	}
+    	setChecked(active); // will check this in each menu / toolbar contribution 
     	
     	if (getTool() instanceof ModalTool) {
-    		ModalTool modalTool = (ModalTool)getTool();
-    		
-    		getModalTool().setActive(active);
-    		
-    		if (active){
-    			String currentCursorID = modalTool.getCursorID();
-    			toolContext.getViewportPane().setCursor(
-    					ApplicationGIS.getToolManager().findToolCursor(currentCursorID));
+            if( isActive() != active ){
+                ModalTool modalTool = getModalTool();
+                modalTool.setActive(active);
+                if (active){
+                    // allow tool manager to update the activeTool cursor etc..
+                    toolManager.setActiveModalToolProxy(this);
+//                  String currentCursorID = modalTool.getCursorID();
+//                  toolContext.getViewportPane().setCursor(toolManager.findToolCursor(currentCursorID));
+                }
     		}
     	}
     }
@@ -523,17 +564,18 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     }
 
     /**
+     * 
      * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#getActiveItem()
      */
-    protected ModalItem getActiveItem() {
-        return toolManager.activeModalToolProxy;
+    protected ToolProxy getActiveItem() {
+        return toolManager.getActiveToolProxy();
     }
 
     /**
      * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#setActiveItem(net.refractions.udig.project.ui.internal.tool.display.ModalItem)
      */
     protected void setActiveItem( ModalItem modalItem ) {
-    	toolManager.activeModalToolProxy = (ToolProxy)modalItem;
+    	toolManager.setActiveModalToolProxy( (ToolProxy)modalItem );
     }
 
 
