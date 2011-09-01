@@ -3,7 +3,6 @@
 
 <product name="Tool View" uid="eu.udig.tutorials.tool-view.Product" id="eu.udig.tutorials.tool-view.product" application="eu.udig.tutorials.tool-view.application" version="1.0" useFeatures="false" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
@@ -25,10 +24,8 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
       <plugin id="com.ibm.icu"/>
@@ -143,11 +140,6 @@
       <plugin id="org.eclipse.core.net.nl_it" fragment="true"/>
       <plugin id="org.eclipse.core.net.nl_ko" fragment="true"/>
       <plugin id="org.eclipse.core.net.win32.x86" fragment="true"/>
-      <plugin id="org.eclipse.core.net.win32.x86.nl_de" fragment="true"/>
-      <plugin id="org.eclipse.core.net.win32.x86.nl_es" fragment="true"/>
-      <plugin id="org.eclipse.core.net.win32.x86.nl_fr" fragment="true"/>
-      <plugin id="org.eclipse.core.net.win32.x86.nl_it" fragment="true"/>
-      <plugin id="org.eclipse.core.net.win32.x86.nl_ko" fragment="true"/>
       <plugin id="org.eclipse.core.net.win32.x86_64" fragment="true"/>
       <plugin id="org.eclipse.core.runtime"/>
       <plugin id="org.eclipse.core.runtime.compatibility.auth"/>
