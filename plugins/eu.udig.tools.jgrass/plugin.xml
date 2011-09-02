@@ -140,12 +140,19 @@
             id="eu.udig.tools.jgrass.profile.fromfeature"
             name="%feature.profile"
             targetClass="net.refractions.udig.project.ILayer">
-         <enablement></enablement>
       </operation>
       <category
             id="eu.udig.tools.jgrass.toolscategory"
             name="JGrass Tools">
       </category>
+      <operation
+            categoryId="eu.udig.tools.jgrass.toolscategory"
+            class="eu.udig.tools.jgrass.copypath.CopyPathOp"
+            enablesFor="1"
+            id="eu.udig.tools.jgrass.copypath.CopyPathOp"
+            name="%copy.file.path"
+            targetClass="java.io.File">
+      </operation>
    </extension>
    <extension
          point="org.eclipse.ui.importWizards">

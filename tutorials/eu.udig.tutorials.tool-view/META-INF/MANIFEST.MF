@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Alert App
-Bundle-SymbolicName: eu.udig.tutorials.alert-app;singleton:=true
+Bundle-Name: Tool View
+Bundle-SymbolicName: eu.udig.tutorials.tool-view;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: eu.udig.tutorials.alertapp.Activator
+Bundle-Activator: eu.udig.tutorials.toolview.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.project.ui;bundle-version="1.2.0",
@@ -20,4 +20,4 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.mapgraphic;bundle-version="1.2.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: eu.udig.tutorials.alertapp
+Export-Package: eu.udig.tutorials.toolview

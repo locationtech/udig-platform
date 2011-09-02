@@ -98,12 +98,10 @@ public class ShpServiceImpl extends IService {
             }
         }
         if (!params.containsKey(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key)) {
-            params.put(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key, ShpPlugin.getDefault()
-                    .isUseSpatialIndex());
+            params.put(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key, ShpPlugin.getDefault().isUseSpatialIndex());
         }
         if (!params.containsKey(ShapefileDataStoreFactory.DBFCHARSET.key)) {
-            params.put(ShapefileDataStoreFactory.DBFCHARSET.key, ShpPlugin.getDefault()
-                    .defaultCharset());
+            params.put(ShapefileDataStoreFactory.DBFCHARSET.key, ShpPlugin.getDefault().defaultCharset());
         }
     }
 
@@ -133,7 +131,9 @@ public class ShpServiceImpl extends IService {
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null)
             return false;
-        return adaptee.isAssignableFrom(ShapefileDataStore.class) || super.canResolve(adaptee);
+        return adaptee.isAssignableFrom(ShapefileDataStore.class) || //
+                adaptee.isAssignableFrom(File.class) || //
+                super.canResolve(adaptee);
     }
 
     public void dispose( IProgressMonitor monitor ) {
@@ -147,8 +147,8 @@ public class ShpServiceImpl extends IService {
                 resolve.dispose(subProgressMonitor);
                 subProgressMonitor.done();
             } catch (Throwable e) {
-                ErrorManager.get().displayException(e,
-                        "Error disposing members of service: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
+                ErrorManager.get()
+                        .displayException(e, "Error disposing members of service: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
             }
         }
     }
@@ -251,8 +251,7 @@ public class ShpServiceImpl extends IService {
                 dsInstantiationLock.unlock();
             }
             IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
-            ResolveChangeEvent event = new ResolveChangeEvent(this,
-                    IResolveChangeEvent.Type.POST_CHANGE, delta);
+            ResolveChangeEvent event = new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, delta);
             fire(event);
         }
         return ds;
@@ -279,11 +278,8 @@ public class ShpServiceImpl extends IService {
                 final String finalName = name;
                 IRunnableWithProgress runnable = new IRunnableWithProgress(){
 
-                    public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                            InterruptedException {
-                        monitor
-                                .beginTask(
-                                        Messages.ShpPreferencePage_createindex + " " + finalName, IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+                    public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
+                        monitor.beginTask(Messages.ShpPreferencePage_createindex + " " + finalName, IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                         index(ds, ds.getTypeNames()[0]);
                         monitor.done();
                     }
@@ -298,8 +294,7 @@ public class ShpServiceImpl extends IService {
                         ShpPlugin.log("", e); //$NON-NLS-1$
                     }
                 } else {
-                    PlatformGIS.runInProgressDialog(Messages.ShpServiceImpl_indexing
-                            + " " + finalName, true, runnable, false); //$NON-NLS-1$
+                    PlatformGIS.runInProgressDialog(Messages.ShpServiceImpl_indexing + " " + finalName, true, runnable, false); //$NON-NLS-1$
                 }
             }
         } finally {
@@ -312,8 +307,7 @@ public class ShpServiceImpl extends IService {
         FeatureReader<SimpleFeatureType, SimpleFeature> reader = null;
         try {
             // smack Datastore to generate indices
-            reader = ds.getFeatureReader(new DefaultQuery(typename, Filter.INCLUDE, new String[0]),
-                    Transaction.AUTO_COMMIT);
+            reader = ds.getFeatureReader(new DefaultQuery(typename, Filter.INCLUDE, new String[0]), Transaction.AUTO_COMMIT);
         } catch (Exception e) {
             ShpPlugin.log("", e); //$NON-NLS-1$
         } finally {

@@ -1,4 +1,4 @@
-package eu.udig.tutorials.alertapp;
+package eu.udig.tutorials.toolview;
 
 import java.awt.Color;
 import java.awt.Shape;
@@ -17,7 +17,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 public class ShowAlertsMapGraphic implements MapGraphic {
 	
 	public static final String ALERTS_KEY = "ALERTS";
-	public static final String EXTENSION_ID = "eu.udig.tutorials.alert-app.showalertmapgraphic";
+	public static final String EXTENSION_ID = "eu.udig.tutorials.tool-view.showalertmapgraphic";
 
 	@Override
 	public void draw(MapGraphicContext context) {

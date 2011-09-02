@@ -230,17 +230,7 @@
          name="catalogPerspectiveContributions"
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
-         <viewShortcut id="net.refractions.udig.catalog.ui.CatalogView"/>
-         <viewShortcut id="net.refractions.udig.catalog.ui.Search"/>
-         <view
-               closeable="true"
-               standalone="true"
-               moveable="true"
-               visible="true"
-               showTitle="true"
-               relative="net.refractions.udig.catalog.ui.CatalogView"
-               relationship="stack"
-               id="net.refractions.udig.catalog.ui.CatalogView"/>
+         <viewShortcut id="net.refractions.udig.catalog.ui.Search"/>  
 		 <view
                closeable="true"
                standalone="true"

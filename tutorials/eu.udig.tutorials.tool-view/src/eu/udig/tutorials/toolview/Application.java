@@ -1,4 +1,4 @@
-package eu.udig.tutorials.alertapp;
+package eu.udig.tutorials.toolview;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;

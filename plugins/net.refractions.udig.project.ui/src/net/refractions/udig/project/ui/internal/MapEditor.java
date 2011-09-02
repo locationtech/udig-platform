@@ -52,6 +52,7 @@ import net.refractions.udig.project.ui.internal.commands.draw.DrawFeatureCommand
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.IToolManager;
+import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.ui.CRSChooserDialog;
 import net.refractions.udig.ui.IBlockingSelection;
@@ -79,6 +80,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.StatusLineLayoutData;
@@ -1237,6 +1239,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
     private boolean draggingEnabled;
     private volatile boolean visible = false;
+	private MapEditDomain editDomain;
 
     /**
      * Opens the map's context menu.
@@ -1380,5 +1383,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     RenderManager getRenderManager() {
         return viewer.getRenderManager();
     }
-
+    public IStatusLineManager getStatusLineManager() {
+    	return statusLineManager;
+    }
 }

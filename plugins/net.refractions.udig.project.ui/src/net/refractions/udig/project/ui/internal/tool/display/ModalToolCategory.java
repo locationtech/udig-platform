@@ -29,6 +29,7 @@ import net.refractions.udig.project.ui.tool.IToolManager;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.ToolBar;
@@ -41,9 +42,20 @@ import org.eclipse.swt.widgets.ToolItem;
  * @since 0.9.0
  */
 public class ModalToolCategory extends ToolCategory {
-
+    
+    /** Alternate: displayed as a menu contribution */
     private CurrentModalToolContribution contribution;
+
+    /** Alternate: displayed as a palette container */
+    private PaletteContainer container;
+
+    /** Handler created for this category; should cycle between tools */
     private IHandler handler;
+
+    /**
+     * Optional default selection provided used for all tools in this category As an example
+     * selection tools may be able to just report the selection fromt he current layer
+     */
     private IMapEditorSelectionProvider selectionProviderInstance;
 
     /**
@@ -84,7 +96,20 @@ public class ModalToolCategory extends ToolCategory {
     public AbstractToolbarContributionItem getContribution() {
         return contribution;
     }
-
+    /**
+     * Hooks the provided container up to this cateogry; so that it can update
+     * in response to key presses
+     * 
+     * @param container
+     */
+    public void hook( PaletteContainer container ){
+        this.container = container;
+    }
+    
+    public void container( PaletteContainer container ){
+        this.container = container;
+    }
+    
     public void contribute( IToolBarManager manager ) {
         CurrentContributionItem old = contribution;
         contribution = new CurrentModalToolContribution();
@@ -187,8 +212,13 @@ public class ModalToolCategory extends ToolCategory {
 		 */
 		@Override
 		protected boolean isActiveItem() {
-			return getTools().contains(((ToolManager)manager).activeModalToolProxy);
+			return getTools().contains( ((ToolManager)manager).getActiveToolProxy());
 		}
+    }
+
+    /** As an alternative to a contirbution; we can use a palette container */
+    public PaletteContainer getContainer() {
+        return container;
     }
 
 }

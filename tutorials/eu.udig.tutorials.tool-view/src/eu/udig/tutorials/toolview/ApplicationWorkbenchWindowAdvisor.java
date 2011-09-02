@@ -1,4 +1,4 @@
-package eu.udig.tutorials.alertapp;
+package eu.udig.tutorials.toolview;
 
 import net.refractions.udig.ui.UDIGDragDropUtilities;
 

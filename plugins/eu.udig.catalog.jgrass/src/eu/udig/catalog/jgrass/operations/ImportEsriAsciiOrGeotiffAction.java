@@ -142,7 +142,7 @@ public class ImportEsriAsciiOrGeotiffAction
                                     /*
                                      * import the file
                                      */
-                                    CoordinateReferenceSystem jGrassCrs = mapsetResource.getJGrassCrs();
+                                    CoordinateReferenceSystem jGrassCrs = mapsetResource.getLocationCrs();
                                     GridCoverage2D geodata = null;
                                     CoordinateReferenceSystem fileCrs = null;
                                     if (mapFile.getName().toLowerCase().endsWith(".asc")) {

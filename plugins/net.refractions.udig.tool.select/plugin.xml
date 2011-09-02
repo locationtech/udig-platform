@@ -18,21 +18,47 @@
             hotspotX="10"
             image="icons/pointers/select_source.png"
             id="bbox_cursor"/>
+              <enablement>
+                  	<and>
+                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+	                     <or>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                     </or>
+                     </and>
+                  </enablement>
          </modalTool>
-                     <modalTool
-                           categoryId="net.refractions.udig.tool.category.selection"
-                           class="net.refractions.udig.tool.select.ArrowSelection"
-                           icon="icons/etool16/select_feature_mode.gif"
-                           id="net.refractions.udig.tools.ArrowSelect"
-                           name="%selection.arrow.name"
-                           onToolbar="false"
-                           toolCursorId="selectFeatureCursor"
-                           tooltip="%selection.arrow.tooltip">
+          <modalTool
+                   categoryId="net.refractions.udig.tool.category.selection"
+                   class="net.refractions.udig.tool.select.ArrowSelection"
+                   icon="icons/etool16/select_feature_mode.gif"
+                   id="net.refractions.udig.tools.ArrowSelect"
+                   name="%selection.arrow.name"
+                   onToolbar="false"
+                   toolCursorId="selectFeatureCursor"
+                   tooltip="%selection.arrow.tooltip">
    			<cursor
             hotspotY="10"
             hotspotX="10"
             image="icons/pointers/select_feature_cursor.gif"
             id="arrow_cursor"/>
+               <enablement>
+                  	<and>
+                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+	                     <or>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                     </or>
+                     </and>
+                  </enablement>
          </modalTool>
                 <actionTool
                      categoryId="net.refractions.udig.tool.category.zoom"
