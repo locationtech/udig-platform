@@ -9,7 +9,10 @@ import net.refractions.udig.project.ui.tool.ModalTool;
 
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditDomain;
+import org.eclipse.gef.palette.PaletteContainer;
+import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteListener;
+import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.ui.IEditorPart;
@@ -26,7 +29,6 @@ import org.eclipse.ui.IEditorPart;
  * @version 1.3.0
  */
 public class MapEditDomain extends DefaultEditDomain {
-    //MapViewer mapViewer;
 
 	private PaletteListener paletteListener = new PaletteListener() {
 		public void activeToolChanged(PaletteViewer viewer, ToolEntry tool) {
@@ -53,16 +55,6 @@ public class MapEditDomain extends DefaultEditDomain {
 	public MapEditDomain(IEditorPart editorPart) {
 		super(editorPart);
 	}
-
-//	/**
-//	 * Provided a viewer that the MapEditDomain can report tool changes to.
-//	 * 
-//	 * @param mapViewer
-//	 */
-//	public void setMapViewer(MapViewer mapViewer) {
-//		this.mapViewer = mapViewer;
-//	}
-
 	@Override
 	public void setPaletteViewer(PaletteViewer palette) {
 		PaletteViewer current = getPaletteViewer();
@@ -74,4 +66,39 @@ public class MapEditDomain extends DefaultEditDomain {
 			palette.addPaletteListener(paletteListener);
 		}
 	}
+	/**
+	 * Helper class used to activate a tool by id.
+	 * <p>
+	 * Used to allow MapTools top easily update the palette.
+	 * @param id
+	 */
+    public void setActiveTool( String id ) {
+        PaletteViewer paletteViewer = getPaletteViewer();
+        if( id != null && id.equals( paletteViewer.getActiveTool().getId() ) ){
+            return; // no change
+        }
+        ToolEntry entry = findToolEntry( paletteViewer.getPaletteRoot(), id );
+        if( entry != null ){
+            paletteViewer.setActiveTool( entry );
+        }
+    }
+    private ToolEntry findToolEntry( PaletteContainer container, String id ) {
+        if( id == null ) return null;
+        for( Object item : container.getChildren() ) {
+            PaletteEntry entry = (PaletteEntry) item;
+            if( entry instanceof ToolEntry ){
+                if( id.equals( entry.getId() )){
+                    return (ToolEntry) entry;
+                }
+            }
+            else if( entry instanceof PaletteContainer){
+                ToolEntry find = findToolEntry((PaletteContainer) entry, id);
+                if( find != null){
+                    return find;
+                }
+            }
+        }
+        return null; // not found!
+    }
+    
 }
