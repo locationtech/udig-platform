@@ -46,6 +46,7 @@ import org.geotools.brewer.color.ColorBrewer;
  * 
  * @author jeichar
  * @since 1.1
+ * @version 1.2.3
  */
 public class PlatformGIS {
 

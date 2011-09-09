@@ -376,4 +376,13 @@
              label="%charset">
        </keyword>
     </extension>
+    <extension
+          point="org.eclipse.ui.services">
+       <serviceFactory
+             factoryClass="net.refractions.udig.internal.limit.LimitServiceFactory">
+          <service
+                serviceClass="net.refractions.udig.limit.ILimitService">
+          </service>
+       </serviceFactory>
+    </extension>
 </plugin>
