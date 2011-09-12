@@ -25,7 +25,74 @@ public class LimitServiceFactory extends AbstractServiceFactory {
 		if (ILimitService.class.equals(serviceInterface)) {
 			return new LimitServiceImpl();
 		}
+		
+		
+
+/*
+		IWorkbenchLocationService wls = (IWorkbenchLocationService) locator
+				.getService(IWorkbenchLocationService.class);
+		final IWorkbench wb = wls.getWorkbench();
+		if (wb == null) {
+			return null;
+		}
+		final IWorkbenchWindow window = wls.getWorkbenchWindow();
+		final IWorkbenchPartSite site = wls.getPartSite();
+		Object parent = parentLocator.getService(serviceInterface);
+
+		if (parent == null) {
+			
+			// return top level services
+			if (IProgressService.class.equals(serviceInterface)) {
+				return wb.getProgressService();
+			}
+			if (IWorkbenchSiteProgressService.class.equals(serviceInterface)) {
+				if (site instanceof PartSite) {
+					return ((PartSite) site).getSiteProgressService();
+				}
+			}
+			if (IPartService.class.equals(serviceInterface)) {
+				if (window != null) {
+					return window.getPartService();
+				}
+			}
+			if (IPageService.class.equals(serviceInterface)) {
+				if (window != null) {
+					return window;
+				}
+			}
+			if (ISelectionService.class.equals(serviceInterface)) {
+				if (window != null) {
+					return window.getSelectionService();
+				}
+			}
+			return null;
+		}
+		
+		
+
+		if (ISelectionService.class.equals(serviceInterface)) {
+			if (parent instanceof WindowSelectionService && window != null
+					&& window.getActivePage() != null) {
+				return new SlaveSelectionService(window.getActivePage());
+			}
+			return new SlaveSelectionService((ISelectionService) parent);
+		}
+
+		if (IProgressService.class.equals(serviceInterface)) {
+			if (site instanceof PartSite) {
+				return ((PartSite) site).getSiteProgressService();
+			}
+		}
+		if (IPartService.class.equals(serviceInterface)) {
+			return new SlavePartService((IPartService) parent);
+		}
+		if (IPageService.class.equals(serviceInterface)) {
+			return new SlavePageService((IPageService) parent);
+		}*/
+
+		
 		return null;
+	
 	}
 
 }

@@ -1066,4 +1066,15 @@
            </action>
         </actionSet>
      </extension>
+     <extension
+           id="net.refractions.udig.project.ui.limit.views"
+           name="Limit Views"
+           point="org.eclipse.ui.views">
+        <view
+              class="net.refractions.udig.project.ui.limit.LimitView"
+              id="net.refractions.udig.project.ui.limit.limitView"
+              name="Limit"
+              restorable="true">
+        </view>
+     </extension>
    </plugin>
