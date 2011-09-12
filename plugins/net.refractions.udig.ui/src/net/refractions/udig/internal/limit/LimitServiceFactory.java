@@ -21,8 +21,11 @@ public class LimitServiceFactory extends AbstractServiceFactory {
 	@Override
 	public ILimitService create(Class serviceInterface, IServiceLocator parentLocator,
 			IServiceLocator locator) {
-		// TODO: need to check serviceInterface to ensure they are asking for a ILimitService
-		return new LimitServiceImpl();
+		
+		if (ILimitService.class.equals(serviceInterface)) {
+			return new LimitServiceImpl();
+		}
+		return null;
 	}
 
 }
