@@ -1,11 +1,19 @@
 package net.refractions.udig.project.ui.limit;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import net.refractions.udig.limit.ILimitStrategy;
+import net.refractions.udig.ui.PlatformGIS;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
@@ -18,27 +26,67 @@ import org.eclipse.ui.part.ViewPart;
  */
 public class LimitView extends ViewPart {
 
-    private Text text;
+    //private Text text;
     //private ISelectionListener selectionListener;
-    private Text description;
+    //private Text description;
 
+    /*
+     * A list of all the strategies and their labels
+     */
+    private Map<String,ILimitStrategy> strategyList = new HashMap<String,ILimitStrategy>();
+    
 	/**
-	 * 
+	 * Limit View constructor adds the default strategy
 	 */
 	public LimitView() {
-		// TODO Auto-generated constructor stub
+        // add the default strategy
+        this.addLimitStrategy("All", PlatformGIS.getLimitService().defaultStrategy());
+		
 	}
 
 	@Override
 	public void createPartControl(Composite parent) {
         GridLayout layout = new GridLayout();
-        layout.numColumns = 4;
+        layout.numColumns = 2;
         parent.setLayout( layout );
-        Label label = new Label(parent, SWT.RIGHT );
-        label.setLayoutData( new GridData(SWT.RIGHT,SWT.TOP,true,false ) );
-        label.setText("Limit:");
+        Label label = new Label(parent, SWT.LEFT );
+        label.setLayoutData( new GridData(SWT.LEFT,SWT.TOP,false,false ) );
+        label.setText("Limit: ");
         
-        text = new Text(parent, SWT.DEFAULT | SWT.READ_ONLY | SWT.WRAP );
+        // get the current strategy
+        ILimitStrategy currentStrategy = PlatformGIS.getLimitService().currentStrategy();
+        
+        final Combo combo = new Combo(parent, SWT.NULL);
+        for (String comboLabel: this.strategyList.keySet()) {
+        	combo.add(comboLabel);
+        	// select the current strategy
+        	if (currentStrategy.getClass().equals(this.strategyList.get(comboLabel).getClass())) {
+        		combo.select(combo.indexOf(comboLabel));
+        	}
+        }
+        combo.setLayoutData( new GridData(SWT.LEFT,SWT.TOP,true,false ) );
+        
+        
+        combo.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+              System.out.println("Selected index: " + combo.getSelectionIndex() + ", selected item: " + combo.getItem(combo.getSelectionIndex()) + ", text content in the text field: " + combo.getText());
+            }
+
+            public void widgetDefaultSelected(SelectionEvent e) {
+              System.out.println("Default selected index: " + combo.getSelectionIndex() + ", selected item: " + (combo.getSelectionIndex() == -1 ? "<null>" : combo.getItem(combo.getSelectionIndex())) + ", text content in the text field: " + combo.getText());
+              /*String text = combo.getText();
+              if(combo.indexOf(text) < 0) { // Not in the list yet. 
+                combo.add(text);
+                // Re-sort
+                String[] items = combo.getItems();
+                Arrays.sort(items);
+                combo.setItems(items);
+              }*/
+            }
+          });
+        
+        
+        /*text = new Text(parent, SWT.DEFAULT | SWT.READ_ONLY | SWT.WRAP );
         text.setTextLimit(70);
         text.setLayoutData( new GridData(SWT.LEFT,SWT.TOP,true,true, 3,1 ) );
         
@@ -56,7 +104,6 @@ public class LimitView extends ViewPart {
         ISelectionService selectionService = getSite().getWorkbenchWindow().getSelectionService();
         selectionService.addPostSelectionListener(selectionListener);*/
 
-
 	}
 
 	@Override
@@ -71,4 +118,17 @@ public class LimitView extends ViewPart {
 		super.init(site, memento);
 	}
 
+	/**
+	 * Adds a Limit Strategy to the view
+	 * @param label
+	 * @param strategy
+	 * @return boolean true if strategy was added
+	 */
+	public boolean addLimitStrategy(String label, ILimitStrategy strategy) {
+		if (!this.strategyList.containsKey(label) && !this.strategyList.containsValue(strategy)) {
+			this.strategyList.put(label, strategy);
+			return true;
+		}
+		return false;
+	}
 }

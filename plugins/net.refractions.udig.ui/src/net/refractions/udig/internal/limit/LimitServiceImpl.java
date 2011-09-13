@@ -18,30 +18,42 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  */
 public class LimitServiceImpl implements ILimitService {
 
-	private ILimitStrategy limitStrategy;
+	private ILimitStrategy defaultStrategy;
+	private ILimitStrategy currentStrategy;
 	
 	public LimitServiceImpl() {
-		this.limitStrategy = new LimitStrategyAll();
+		this.defaultStrategy = new LimitStrategyAll();
+		this.currentStrategy = new LimitStrategyAll();
 	}
 	
 	@Override
 	public ReferencedEnvelope getExtent() {
-		return this.limitStrategy.getExtent();
+		return this.currentStrategy.getExtent();
 	}
 
 	@Override
 	public void setStrategy(ILimitStrategy limitStrategy) {
-		this.limitStrategy = limitStrategy;
+		this.currentStrategy = limitStrategy;
 
 	}
 	
 	@Override
 	public Geometry getLimit() {
-		return this.limitStrategy.getLimit();
+		return this.currentStrategy.getLimit();
 	}
 
 	@Override
 	public CoordinateReferenceSystem getCrs() {
-		return this.limitStrategy.getCrs();
+		return this.currentStrategy.getCrs();
+	}
+
+	@Override
+	public ILimitStrategy currentStrategy() {
+		return this.currentStrategy;
+	}
+
+	@Override
+	public ILimitStrategy defaultStrategy() {
+		return this.defaultStrategy;
 	}
 }

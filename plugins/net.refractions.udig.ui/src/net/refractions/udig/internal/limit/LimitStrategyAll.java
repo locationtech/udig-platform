@@ -3,7 +3,6 @@
  */
 package net.refractions.udig.internal.limit;
 
-import net.refractions.udig.core.internal.GeometryBuilder;
 import net.refractions.udig.limit.ILimitStrategy;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;

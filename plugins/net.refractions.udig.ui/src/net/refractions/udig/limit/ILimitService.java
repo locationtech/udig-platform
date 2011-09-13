@@ -24,6 +24,18 @@ public interface ILimitService {
 	public void setStrategy(ILimitStrategy limitStrategy);
 	
 	/**
+	 * Get the default Limit Strategy
+	 * @return limitStrategy the default LimitStrategy
+	 */
+	public ILimitStrategy defaultStrategy();
+	
+	/**
+	 * Get the current Limit Strategy
+	 * @return limitStrategy the current LimitStrategy
+	 */
+	public ILimitStrategy currentStrategy();
+	
+	/**
 	 * Returns the Geometry of the Limit
 	 * @return
 	 */

@@ -24,6 +24,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.refractions.udig.internal.ui.UiPlugin;
+import net.refractions.udig.limit.ILimitService;
 import net.refractions.udig.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -39,6 +40,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.services.ServiceLocator;
+import org.eclipse.ui.internal.services.WorkbenchServiceRegistry;
 import org.geotools.brewer.color.ColorBrewer;
 
 /**
@@ -52,6 +55,7 @@ public class PlatformGIS {
 
     private static ColorBrewer colorBrewer;
     private static ExecutorService executor = Executors.newCachedThreadPool();
+    private static ILimitService limitService;
     /**
      * Runs the given runnable in a separate thread, providing it a progress monitor. Exceptions
      * thrown by the runnable are logged, and not rethrown.
@@ -433,4 +437,14 @@ public class PlatformGIS {
             display.asyncExec(runnable);
         }
     }
+    
+    public static ILimitService getLimitService() {
+		if (limitService == null) {
+	    	ServiceLocator locator = new ServiceLocator();
+			limitService = (ILimitService)WorkbenchServiceRegistry.getRegistry().getService(ILimitService.class
+					, WorkbenchServiceRegistry.GLOBAL_PARENT, locator);
+		}
+		return limitService;
+    }
+    
 }
