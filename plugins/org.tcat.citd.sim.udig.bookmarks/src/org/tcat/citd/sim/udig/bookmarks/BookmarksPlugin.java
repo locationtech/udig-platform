@@ -122,7 +122,7 @@ public class BookmarksPlugin extends AbstractUIPlugin {
                     CoordinateReferenceSystem crs;
                     String crsString = bmarkNode.get(KEY_CRS, ""); //$NON-NLS-1$
                     try {
-                        crs = CRS.decode(crsString);
+                        crs = CRS.parseWKT(crsString);
                     } catch (NoSuchAuthorityCodeException e) {
                         crs = DefaultGeographicCRS.WGS84;
                     } catch (FactoryException e) {
