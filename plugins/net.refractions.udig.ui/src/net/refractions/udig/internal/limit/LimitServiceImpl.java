@@ -11,49 +11,43 @@ import org.opengis.geometry.Geometry;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
- * This is the default implemtnation of LimitService; it delegates to the
+ * This is the default implementation of LimitService; it delegates to the
  * internal strategy object.
  * 
  * @author pfeiffp
  */
 public class LimitServiceImpl implements ILimitService {
 
-	private ILimitStrategy defaultStrategy;
-	private ILimitStrategy currentStrategy;
+	private ILimitStrategy limitStrategy;
 	
 	public LimitServiceImpl() {
-		this.defaultStrategy = new LimitStrategyAll();
-		this.currentStrategy = new LimitStrategyAll();
+		this.limitStrategy = new LimitStrategyAll();
 	}
 	
 	@Override
 	public ReferencedEnvelope getExtent() {
-		return this.currentStrategy.getExtent();
+		return this.limitStrategy.getExtent();
 	}
 
 	@Override
 	public void setStrategy(ILimitStrategy limitStrategy) {
-		this.currentStrategy = limitStrategy;
+		this.limitStrategy = limitStrategy;
 
 	}
 	
 	@Override
 	public Geometry getLimit() {
-		return this.currentStrategy.getLimit();
+		return this.limitStrategy.getLimit();
 	}
 
 	@Override
 	public CoordinateReferenceSystem getCrs() {
-		return this.currentStrategy.getCrs();
+		return this.limitStrategy.getCrs();
 	}
 
 	@Override
 	public ILimitStrategy currentStrategy() {
-		return this.currentStrategy;
+		return this.limitStrategy;
 	}
 
-	@Override
-	public ILimitStrategy defaultStrategy() {
-		return this.defaultStrategy;
-	}
 }

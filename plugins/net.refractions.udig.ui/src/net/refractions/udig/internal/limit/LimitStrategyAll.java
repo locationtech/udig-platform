@@ -16,6 +16,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  */
 public class LimitStrategyAll implements ILimitStrategy {
 
+	private static String name = "All";
+	
 	@Override
 	public ReferencedEnvelope getExtent() {
 //		ReferencedEnvelope bbox = new ReferencedEnvelope();
@@ -33,6 +35,11 @@ public class LimitStrategyAll implements ILimitStrategy {
 	@Override
 	public CoordinateReferenceSystem getCrs() {
 		return null;
+	}
+
+	@Override
+	public String getName() {
+		return name;
 	}
 	
 	

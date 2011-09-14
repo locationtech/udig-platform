@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.refractions.udig.limit.ILimitStrategy;
+import net.refractions.udig.project.ui.internal.limit.LimitStrategyMapCrs;
+import net.refractions.udig.project.ui.internal.limit.LimitStrategyScreen;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.swt.SWT;
@@ -20,7 +22,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
 
 /**
- * This is the view that allows a uses to select the method to define the limit
+ * This is the view that allows a user to select the method to define the limit
  * @author pfeiffp
  *
  */
@@ -36,11 +38,14 @@ public class LimitView extends ViewPart {
     private Map<String,ILimitStrategy> strategyList = new HashMap<String,ILimitStrategy>();
     
 	/**
-	 * Limit View constructor adds the default strategy
+	 * Limit View constructor adds the known strategies
 	 */
 	public LimitView() {
-        // add the default strategy
-        this.addLimitStrategy("All", PlatformGIS.getLimitService().defaultStrategy());
+		// add the default strategy
+		this.addLimitStrategy(PlatformGIS.getLimitService().currentStrategy());
+        // add other strategies
+        this.addLimitStrategy(new LimitStrategyScreen());
+        this.addLimitStrategy(new LimitStrategyMapCrs());
 		
 	}
 
@@ -70,6 +75,10 @@ public class LimitView extends ViewPart {
         combo.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
               System.out.println("Selected index: " + combo.getSelectionIndex() + ", selected item: " + combo.getItem(combo.getSelectionIndex()) + ", text content in the text field: " + combo.getText());
+              ILimitStrategy testStrategy = strategyList.get(combo.getItem(combo.getSelectionIndex()));
+              testStrategy.getExtent();
+              testStrategy.getCrs();
+              testStrategy.getLimit();
             }
 
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -120,13 +129,12 @@ public class LimitView extends ViewPart {
 
 	/**
 	 * Adds a Limit Strategy to the view
-	 * @param label
 	 * @param strategy
 	 * @return boolean true if strategy was added
 	 */
-	public boolean addLimitStrategy(String label, ILimitStrategy strategy) {
-		if (!this.strategyList.containsKey(label) && !this.strategyList.containsValue(strategy)) {
-			this.strategyList.put(label, strategy);
+	public boolean addLimitStrategy(ILimitStrategy strategy) {
+		if (!this.strategyList.containsKey(strategy.getName()) && !this.strategyList.containsValue(strategy)) {
+			this.strategyList.put(strategy.getName(), strategy);
 			return true;
 		}
 		return false;
