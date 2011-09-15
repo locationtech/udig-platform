@@ -36,7 +36,10 @@ public interface ILimitService {
 	 */
 	public Geometry getLimit();
 	
+	/**
+	 * Returns the Coordinate Reference System
+	 * @return crs
+	 */
 	public CoordinateReferenceSystem getCrs();
 	
-
 }

@@ -3,6 +3,7 @@ package net.refractions.udig.project.ui.limit;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.refractions.udig.limit.ILimitService;
 import net.refractions.udig.limit.ILimitStrategy;
 import net.refractions.udig.project.ui.internal.limit.LimitStrategyMapCrs;
 import net.refractions.udig.project.ui.internal.limit.LimitStrategyScreen;
@@ -37,6 +38,8 @@ public class LimitView extends ViewPart {
      */
     private Map<String,ILimitStrategy> strategyList = new HashMap<String,ILimitStrategy>();
     
+    private static ILimitService limitService = PlatformGIS.getLimitService();
+    
 	/**
 	 * Limit View constructor adds the known strategies
 	 */
@@ -59,7 +62,7 @@ public class LimitView extends ViewPart {
         label.setText("Limit: ");
         
         // get the current strategy
-        ILimitStrategy currentStrategy = PlatformGIS.getLimitService().currentStrategy();
+        ILimitStrategy currentStrategy = limitService.currentStrategy();
         
         final Combo combo = new Combo(parent, SWT.NULL);
         for (String comboLabel: this.strategyList.keySet()) {
@@ -75,10 +78,11 @@ public class LimitView extends ViewPart {
         combo.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
               System.out.println("Selected index: " + combo.getSelectionIndex() + ", selected item: " + combo.getItem(combo.getSelectionIndex()) + ", text content in the text field: " + combo.getText());
-              ILimitStrategy testStrategy = strategyList.get(combo.getItem(combo.getSelectionIndex()));
-              testStrategy.getExtent();
-              testStrategy.getCrs();
-              testStrategy.getLimit();
+              ILimitStrategy selectedStrategy = strategyList.get(combo.getItem(combo.getSelectionIndex()));
+              System.out.println("extent:" + selectedStrategy.getExtent());
+              System.out.println("crs:" + selectedStrategy.getCrs());
+              System.out.println("limit:" + selectedStrategy.getLimit());
+              limitService.setStrategy(selectedStrategy);
             }
 
             public void widgetDefaultSelected(SelectionEvent e) {

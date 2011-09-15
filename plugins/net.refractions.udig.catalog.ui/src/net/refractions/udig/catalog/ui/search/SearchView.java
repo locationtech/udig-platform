@@ -1,7 +1,6 @@
 package net.refractions.udig.catalog.ui.search;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -28,6 +27,8 @@ import net.refractions.udig.catalog.ui.ResolveTitlesDecorator;
 import net.refractions.udig.catalog.ui.StatusLineMessageBoardAdapter;
 import net.refractions.udig.catalog.ui.internal.Messages;
 import net.refractions.udig.internal.ui.UiPlugin;
+import net.refractions.udig.limit.ILimitService;
+import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.SearchPart;
 import net.refractions.udig.ui.UDIGDragDropUtilities;
 
@@ -58,7 +59,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.actions.ActionFactory;
@@ -335,7 +335,14 @@ public class SearchView extends SearchPart {
         filter.text = text.getText();
         filter.bbox = new Envelope();
         if (bbox.getSelection()) {
-            try {
+        	ILimitService limitService = PlatformGIS.getLimitService();
+        	try {
+        		filter.bbox = limitService.getExtent();
+        		System.out.println(filter.bbox);
+        	} catch (Throwable t) {
+        		CatalogUIPlugin.log("Unable to create search:"+t, t); //$NON-NLS-1$
+        	}
+            /*try {
                 IEditorPart editor = getSite().getPage().getActiveEditor();
                 if (editor != null) {
                     Object obj = editor.getEditorInput();
@@ -359,7 +366,7 @@ public class SearchView extends SearchPart {
                 }
             } catch (Throwable t) {
                 CatalogUIPlugin.log("Unable to create search:"+t, t); //$NON-NLS-1$
-            }
+            }*/
         }
         return filter;
     }

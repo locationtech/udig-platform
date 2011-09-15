@@ -26,7 +26,6 @@ public class LimitStrategyScreen implements ILimitStrategy {
 	public ReferencedEnvelope getExtent() {
 		IMap currentMap = ApplicationGIS.getActiveMap();
 		if (!currentMap.equals(ApplicationGIS.NO_MAP)) {
-			System.out.println(currentMap.getViewportModel().getBounds());
 			return currentMap.getViewportModel().getBounds();
 		}
 		return null;
@@ -45,7 +44,6 @@ public class LimitStrategyScreen implements ILimitStrategy {
 	public CoordinateReferenceSystem getCrs() {
 		IMap currentMap = ApplicationGIS.getActiveMap();
 		if (!currentMap.equals(ApplicationGIS.NO_MAP)) {
-			System.out.println(currentMap.getViewportModel().getCRS());
 			return currentMap.getViewportModel().getCRS();
 		}
 		return null;
