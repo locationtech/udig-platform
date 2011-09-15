@@ -48,8 +48,10 @@ public class LimitStrategyMapCrs implements ILimitStrategy {
 					}
 				};
 				PlatformGIS.runInProgressDialog( "Getting World Bounds", true, operation, false );
+				System.out.println(crsExtent);
 				return crsExtent;
 			}
+			System.out.println(crsExtent);
 			return crsExtent;
 		}
 		return null;

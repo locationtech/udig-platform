@@ -21,16 +21,12 @@ public class LimitStrategyAll implements ILimitStrategy {
 	
 	@Override
 	public ReferencedEnvelope getExtent() {
-//		ReferencedEnvelope bbox = new ReferencedEnvelope();
-//		return bbox;
 		return null;
 	}
 
 	@Override
 	public Geometry getLimit() {
 		return null;
-//		GeometryBuilder geometryBuilder = GeometryBuilder.create();
-//		return geometryBuilder.safeCreateGeometry(Geometry.class, );
 	}
 
 	@Override

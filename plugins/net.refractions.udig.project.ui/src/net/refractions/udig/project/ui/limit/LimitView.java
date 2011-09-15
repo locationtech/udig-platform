@@ -29,15 +29,14 @@ import org.eclipse.ui.part.ViewPart;
  */
 public class LimitView extends ViewPart {
 
-    //private Text text;
-    //private ISelectionListener selectionListener;
-    //private Text description;
-
     /*
      * A list of all the strategies and their labels
      */
     private Map<String,ILimitStrategy> strategyList = new HashMap<String,ILimitStrategy>();
     
+    /*
+     * the limit service
+     */
     private static ILimitService limitService = PlatformGIS.getLimitService();
     
 	/**
@@ -77,46 +76,14 @@ public class LimitView extends ViewPart {
         
         combo.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
-              System.out.println("Selected index: " + combo.getSelectionIndex() + ", selected item: " + combo.getItem(combo.getSelectionIndex()) + ", text content in the text field: " + combo.getText());
               ILimitStrategy selectedStrategy = strategyList.get(combo.getItem(combo.getSelectionIndex()));
-              System.out.println("extent:" + selectedStrategy.getExtent());
-              System.out.println("crs:" + selectedStrategy.getCrs());
-              System.out.println("limit:" + selectedStrategy.getLimit());
               limitService.setStrategy(selectedStrategy);
             }
 
             public void widgetDefaultSelected(SelectionEvent e) {
               System.out.println("Default selected index: " + combo.getSelectionIndex() + ", selected item: " + (combo.getSelectionIndex() == -1 ? "<null>" : combo.getItem(combo.getSelectionIndex())) + ", text content in the text field: " + combo.getText());
-              /*String text = combo.getText();
-              if(combo.indexOf(text) < 0) { // Not in the list yet. 
-                combo.add(text);
-                // Re-sort
-                String[] items = combo.getItems();
-                Arrays.sort(items);
-                combo.setItems(items);
-              }*/
             }
-          });
-        
-        
-        /*text = new Text(parent, SWT.DEFAULT | SWT.READ_ONLY | SWT.WRAP );
-        text.setTextLimit(70);
-        text.setLayoutData( new GridData(SWT.LEFT,SWT.TOP,true,true, 3,1 ) );
-        
-        label = new Label(parent, SWT.RIGHT );
-        label.setLayoutData( new GridData(SWT.RIGHT,SWT.TOP,true,false ) );
-        label.setText("Content:");
-        
-        description = new Text(parent, SWT.V_SCROLL | SWT.H_SCROLL | SWT.MULTI );
-        GridData gridData = new GridData(SWT.DEFAULT,SWT.DEFAULT,true,true, 3,3 );
-        gridData.widthHint = 500;
-        gridData.heightHint = 200;
-        description.setLayoutData( gridData );
-        
-        /*selectionListener = new WorkbenchSelectionListener();
-        ISelectionService selectionService = getSite().getWorkbenchWindow().getSelectionService();
-        selectionService.addPostSelectionListener(selectionListener);*/
-
+        });
 	}
 
 	@Override
