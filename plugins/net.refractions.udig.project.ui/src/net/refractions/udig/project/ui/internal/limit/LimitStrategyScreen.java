@@ -8,8 +8,10 @@ import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.ApplicationGIS;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.geometry.Geometry;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
 
 /**
  * Returns an empty ReferencedEnvelope so that zoom to extent goes to all
@@ -32,10 +34,13 @@ public class LimitStrategyScreen implements ILimitStrategy {
 
 	@Override
 	public Geometry getLimit() {
+		ReferencedEnvelope extent = this.getExtent();
+		if (extent != null) {
+			return new GeometryFactory().toGeometry(extent);
+		}
 		return null;
-		//return new Geometry(this.getExtent());
 	}
-
+	
 	@Override
 	public CoordinateReferenceSystem getCrs() {
 		IMap currentMap = ApplicationGIS.getActiveMap();

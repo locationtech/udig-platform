@@ -7,8 +7,9 @@ import net.refractions.udig.limit.ILimitService;
 import net.refractions.udig.limit.ILimitStrategy;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.geometry.Geometry;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+
+import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * This is the default implementation of LimitService; it delegates to the

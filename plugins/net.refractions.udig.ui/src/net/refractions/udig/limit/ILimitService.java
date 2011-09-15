@@ -1,8 +1,9 @@
 package net.refractions.udig.limit;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.geometry.Geometry;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+
+import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * A service that can get the area extent, 
