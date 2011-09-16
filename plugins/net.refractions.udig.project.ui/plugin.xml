@@ -1072,8 +1072,9 @@
            point="org.eclipse.ui.views">
         <view
               class="net.refractions.udig.project.ui.limit.LimitView"
-              id="net.refractions.udig.project.ui.limit.limitView"
+              id="net.refractions.udig.project.ui.limit.Limit"
               name="Limit"
+              relative="net.refractions.udig.project.ui.layerManager"
               restorable="true">
         </view>
      </extension>

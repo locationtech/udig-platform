@@ -11,6 +11,7 @@ import net.refractions.udig.ui.PlatformGIS;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -25,6 +26,7 @@ public class LimitStrategyMapCrs implements ILimitStrategy {
 
 	private static String name = "Map CRS";
 	private static ReferencedEnvelope crsExtent = new ReferencedEnvelope();
+	private static CoordinateReferenceSystem crs;
 	
 	@Override
 	public ReferencedEnvelope getExtent() {
@@ -40,6 +42,7 @@ public class LimitStrategyMapCrs implements ILimitStrategy {
 						try {
 							monitor.beginTask("Message!!!", 100);
 							crsExtent = currentMap.getBounds(monitor);
+							crsExtent = crsExtent.transform(DefaultGeographicCRS.WGS84, true);
 						} catch (Throwable t) {
 							CatalogUIPlugin.log("Unable to get world bounds:"+t, t); //$NON-NLS-1$
 						} finally {
@@ -48,10 +51,8 @@ public class LimitStrategyMapCrs implements ILimitStrategy {
 					}
 				};
 				PlatformGIS.runInProgressDialog( "Getting World Bounds", true, operation, false );
-				System.out.println(crsExtent);
 				return crsExtent;
 			}
-			System.out.println(crsExtent);
 			return crsExtent;
 		}
 		return null;
@@ -68,9 +69,14 @@ public class LimitStrategyMapCrs implements ILimitStrategy {
 
 	@Override
 	public CoordinateReferenceSystem getCrs() {
-		IMap currentMap = ApplicationGIS.getActiveMap();
+		final IMap currentMap = ApplicationGIS.getActiveMap();
 		if (!currentMap.equals(ApplicationGIS.NO_MAP)) {
-			return currentMap.getViewportModel().getCRS();
+			crs = currentMap.getViewportModel().getCRS();
+			if (crs.getDomainOfValidity() == null) {
+				// fall back to world extent which is converted to default CRS because it uses function getBounds
+				return DefaultGeographicCRS.WGS84;
+			}
+			return crs;
 		}
 		return null;
 	}

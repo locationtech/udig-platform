@@ -338,7 +338,6 @@ public class SearchView extends SearchPart {
         	ILimitService limitService = PlatformGIS.getLimitService();
         	try {
         		filter.bbox = limitService.getExtent();
-        		System.out.println("Filter:" + filter.bbox);
         	} catch (Throwable t) {
         		CatalogUIPlugin.log("Unable to create search:"+t, t); //$NON-NLS-1$
         	}
