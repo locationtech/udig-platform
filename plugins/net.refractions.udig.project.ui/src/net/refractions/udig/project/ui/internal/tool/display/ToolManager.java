@@ -46,6 +46,7 @@ import net.refractions.udig.project.internal.commands.CreateMapCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
 import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.internal.Messages;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
@@ -73,6 +74,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.gef.palette.PaletteContainer;
+import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
@@ -194,17 +197,7 @@ public class ToolManager implements IToolManager {
      * tools by ToolProxy.DEFAULT_ID.
      */
     ToolProxy defaultModalToolProxy;
-    
-    /**
-     * This is responsible for tracking the active tool; it is a facility provided
-     * by GEF. We are not using GEF tools directly; simply borrowing some of their
-     * infrastructure to support a nice visual palette.
-     * <p.
-     * The *id* of the current tool in the editDomain is used to determine the 
-     * active tool for the map.
-     */
-    MapEditDomain editDomain;
-    
+
     Lock redoLock=new ReentrantLock();
     Lock undoLock=new ReentrantLock();
     Lock forwardLock=new ReentrantLock();
@@ -238,7 +231,6 @@ public class ToolManager implements IToolManager {
         removeEmptyCategories();
         Collections.sort(categoryIds, new CategorySorter());
         setCommandHandlers();
-        editDomain = new MapEditDomain(null);
     }
     
     /**
@@ -507,7 +499,6 @@ public class ToolManager implements IToolManager {
         if( editor==currentEditor ){
             return;
         }
-        
         currentEditor = editor;
         if (editor != null) {
             if (editor != null) {
@@ -652,6 +643,13 @@ public class ToolManager implements IToolManager {
                 activeModalToolProxy.getModalTool().setActive(true);                
             }
             editor.setSelectionProvider(activeModalToolProxy.getSelectionProvider());
+            if( editor instanceof MapEditorWithPalette){
+                // temporary cast while we sort out if MapPart can own an MapEditDomain
+                MapEditorWithPalette editor2 = (MapEditorWithPalette) editor;
+                MapEditDomain editDomain = editor2.getEditDomain();
+                editDomain.setActiveTool( activeModalToolProxy.getId() );
+            }
+
         }
     }
     /**
@@ -1820,16 +1818,6 @@ public class ToolManager implements IToolManager {
 
     private OperationMenuFactory getOperationMenuFactory() {
         return UiPlugin.getDefault().getOperationMenuFactory();
-    }
-    
-    
-    /**
-     * Get the MapEditDomain
-     * 
-     * @return
-     */
-    public MapEditDomain getEditDomain() {
-        return editDomain;
     }
 
     /**

@@ -141,54 +141,6 @@ public class MapToolPaletteFactory {
         };
         Collections.sort(categories,sorter );
         
-//        List<PaletteContainer> children = new ArrayList<PaletteContainer>( categories );
-//
-//        // sort stuff into an initial order - every day I am a shuffling
-//        for( PaletteContainer child : categories ){
-//            String id = child.getId();
-//            if( "net.refractions.udig.tool.category.zoom".equals(id) ){
-//                PaletteContainer move = children.get(0);
-//                if( move != child ){
-//                    children.remove( move );
-//                    children.remove( child );
-//                    
-//                    children.add(0, child );
-//                    children.add(move);
-//                }
-//                ((PaletteDrawer)child).setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
-//            }
-//            else if( "net.refractions.udig.tool.category.pan".equals(id) ){
-//                PaletteContainer move = children.get(1);
-//                if( move != child ){
-//                    children.remove( move );
-//                    children.remove( child );
-//                    
-//                    children.add(1, child );
-//                    children.add(move);
-//                }
-//                ((PaletteDrawer)child).setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
-//            }
-//            else if( "net.refractions.udig.tool.category.info".equals(id) ){
-//                PaletteContainer move = children.get(2);
-//                if( move != child ){
-//                    children.remove( move );
-//                    children.remove( child );
-//                    
-//                    children.add(2, child );
-//                    children.add(move);
-//                }
-//            }
-//            else if( "net.refractions.udig.tool.category.selection".equals(id) ){
-//                PaletteContainer move = children.get(3);
-//                if( move != child ){
-//                    children.remove( move );
-//                    children.remove( child );
-//                    
-//                    children.add(3, child );
-//                    children.add(move);
-//                }
-//            }
-//        }
         // try and prevent tool category order from changing
         root.setUserModificationPermission( PaletteContainer.PERMISSION_NO_MODIFICATION );
         root.setChildren(categories);

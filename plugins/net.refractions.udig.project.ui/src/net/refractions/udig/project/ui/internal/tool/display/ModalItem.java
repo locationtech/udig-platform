@@ -25,6 +25,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.internal.ui.operations.OperationCategory;
 import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.internal.MapToolEntry;
 import net.refractions.udig.project.ui.internal.MapToolPaletteFactory;
@@ -119,19 +120,25 @@ public abstract class ModalItem implements ILazyOpListener {
 
         ToolManager tools = (ToolManager) ApplicationGIS.getToolManager();
         MapPart currentEditor = tools.currentEditor;
-        if( currentEditor != null ){
-            MapEditDomain editDomain = tools.getEditDomain();
-            PaletteViewer paletteViewer = editDomain.getPaletteViewer();
-            
-            for( MapToolEntry entry : this.mapToolEntries ){
-                
-                if(paletteViewer.getEditPartRegistry().get(entry) != null ){ 
-                    paletteViewer.setActiveTool( entry );
-                    
-                    EditPart part = (EditPart) paletteViewer.getEditPartRegistry().get( entry );
-                    
-                    paletteViewer.reveal( part );
-                    break;
+        if (currentEditor != null) {
+            if (currentEditor instanceof MapEditorWithPalette) {
+                MapEditorWithPalette editor2 = (MapEditorWithPalette) currentEditor;
+
+                MapEditDomain editDomain = editor2.getEditDomain();
+
+                PaletteViewer paletteViewer = editDomain.getPaletteViewer();
+                if( paletteViewer != null ){
+                    for( MapToolEntry entry : this.mapToolEntries ) {
+    
+                        if (paletteViewer.getEditPartRegistry().get(entry) != null) {
+                            paletteViewer.setActiveTool(entry);
+    
+                            EditPart part = (EditPart) paletteViewer.getEditPartRegistry().get(entry);
+    
+                            paletteViewer.reveal(part);
+                            break;
+                        }
+                    }
                 }
             }
         }
