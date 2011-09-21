@@ -1,60 +1,28 @@
 package net.refractions.udig.tools.edit.impl;
-import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.GeneralPath;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.swt.SWT;
-import org.opengis.filter.spatial.BBOX;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
-
-import net.refractions.udig.tool.edit.internal.Messages;
 import net.refractions.udig.tools.edit.AbstractEditTool;
 import net.refractions.udig.tools.edit.Activator;
 import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.DefaultEditToolBehaviour;
 import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
 import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.EnablementBehaviour;
-import net.refractions.udig.tools.edit.activator.AdvancedBehaviourCommandHandlerActivator;
 import net.refractions.udig.tools.edit.activator.ClearCurrentSelectionActivator;
-import net.refractions.udig.tools.edit.activator.DeleteGlobalActionSetterActivator;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator;
 import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
-import net.refractions.udig.tools.edit.activator.GridActivator;
 import net.refractions.udig.tools.edit.activator.ResetHandlerActivator;
 import net.refractions.udig.tools.edit.activator.SetRenderingFilter;
-import net.refractions.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
-import net.refractions.udig.tools.edit.behaviour.AcceptBehaviour;
-import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
 import net.refractions.udig.tools.edit.behaviour.BufferGeometryBehaviour;
-import net.refractions.udig.tools.edit.behaviour.CreateShapeBehaviour;
-import net.refractions.udig.tools.edit.behaviour.CursorControlBehaviour;
 import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
-import net.refractions.udig.tools.edit.behaviour.DrawCreateVertexSnapAreaBehaviour;
-import net.refractions.udig.tools.edit.behaviour.MoveGeometryBehaviour;
-import net.refractions.udig.tools.edit.behaviour.MoveVertexBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SelectFeatureBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SelectVertexBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SelectVertexOnMouseDownBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SetSnapSizeBehaviour;
-import net.refractions.udig.tools.edit.behaviour.StartEditingBehaviour;
 import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
 import net.refractions.udig.tools.edit.behaviour.accept.DeselectEditShapeAcceptBehaviour;
 import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
 import net.refractions.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviour;
 import net.refractions.udig.tools.edit.support.ShapeType;
-import net.refractions.udig.tools.edit.behaviour.CreateShapeBehaviour.ShapeFactory;
+
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Polygon;
 
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
