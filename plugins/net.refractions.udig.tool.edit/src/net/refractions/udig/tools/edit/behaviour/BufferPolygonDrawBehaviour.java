@@ -174,6 +174,10 @@ public class BufferPolygonDrawBehaviour extends AbstractBufferPolygonBehaviour{
                 switch( event.getType() ) {    
                 case NAV_COMMAND:
                 	paint(handler);
+                	
+                	if(drawCommand==null){
+                		resetBuffer(handler);
+                	}
                     break;
                 default:
                     break;
