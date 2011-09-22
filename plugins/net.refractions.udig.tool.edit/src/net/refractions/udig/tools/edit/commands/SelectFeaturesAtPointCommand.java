@@ -190,6 +190,7 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
               true);
         }
         
+        
         while (reader.hasNext()){
           SimpleFeature nextFeature = reader.next();
             for( SelectionStrategy selectionStrategy : strategies ) {

@@ -67,32 +67,26 @@ public class MemoryCatalog extends ISearch {
         this.services = services;
     }
 
-    @Override
     public <T> boolean canResolve( Class<T> adaptee ) {
         return false;
     }
 
-    @Override
     public Status getStatus() {
         return Status.CONNECTED;
     }
 
-    @Override
     public Throwable getMessage() {
         return null;
     }
 
-    @Override
     public URL getIdentifier() {
         return id.toURL();
     }
 
-    @Override
     public ID getID() {
         return id;
     }
 
-    @Override
     public String getTitle() {
         return title;
     }
