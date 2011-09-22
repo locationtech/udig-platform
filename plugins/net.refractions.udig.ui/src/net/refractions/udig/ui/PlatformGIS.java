@@ -39,6 +39,7 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.services.ServiceLocator;
 import org.eclipse.ui.internal.services.WorkbenchServiceRegistry;
@@ -55,7 +56,7 @@ public class PlatformGIS {
 
     private static ColorBrewer colorBrewer;
     private static ExecutorService executor = Executors.newCachedThreadPool();
-    private static IBoundaryService boundaryService;
+    //private static IBoundaryService boundaryService;
     /**
      * Runs the given runnable in a separate thread, providing it a progress monitor. Exceptions
      * thrown by the runnable are logged, and not rethrown.
@@ -439,12 +440,14 @@ public class PlatformGIS {
     }
     
     public static IBoundaryService getBoundaryService() {
-		if (boundaryService == null) {
-	    	ServiceLocator locator = new ServiceLocator();
-			boundaryService = (IBoundaryService)WorkbenchServiceRegistry.getRegistry().getService(IBoundaryService.class
-					, WorkbenchServiceRegistry.GLOBAL_PARENT, locator);
-		}
-		return boundaryService;
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        return (IBoundaryService) workbench.getService(IBoundaryService.class);
+//		if (boundaryService == null) {
+//	    	ServiceLocator locator = new ServiceLocator();
+//			boundaryService = (IBoundaryService)WorkbenchServiceRegistry.getRegistry().getService(IBoundaryService.class
+//					, WorkbenchServiceRegistry.GLOBAL_PARENT, locator);
+//		}
+//		return boundaryService;
     }
     
 }

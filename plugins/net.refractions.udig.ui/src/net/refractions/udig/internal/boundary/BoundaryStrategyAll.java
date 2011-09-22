@@ -40,15 +40,11 @@ public class BoundaryStrategyAll implements IBoundaryStrategy {
 	}
 
 	@Override
-	public Boolean enableZoomToExtent() {
+	public Boolean enableTool(String toolId) {
+		if (toolId.equalsIgnoreCase("Search")) {
+			return false;
+		}
 		return true;
 	}
-
-	@Override
-	public Boolean enableSearchCatalog() {
-		return false;
-	}
-	
-	
 
 }

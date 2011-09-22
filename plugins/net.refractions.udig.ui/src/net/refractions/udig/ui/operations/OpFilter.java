@@ -41,7 +41,9 @@ public interface OpFilter {
         public void removeListener( IOpFilterListener listener ) {
         }
         
-        
+        public String toString() {
+            return "TRUE";
+        }
         
     };
     OpFilter FALSE = new OpFilter(){
@@ -62,6 +64,9 @@ public interface OpFilter {
         }
 
         public void removeListener( IOpFilterListener listener ) {
+        }
+        public String toString() {
+            return "FALSE";
         }
         
     };

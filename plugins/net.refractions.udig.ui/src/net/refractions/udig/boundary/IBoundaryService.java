@@ -1,5 +1,6 @@
 package net.refractions.udig.boundary;
 
+import org.eclipse.swt.widgets.Listener;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -32,14 +33,35 @@ public interface IBoundaryService {
 	
 	/**
 	 * Returns the Geometry of the Boundary
-	 * @return
+	 * @return Geometry
 	 */
 	public Geometry getBoundary();
 	
 	/**
 	 * Returns the Coordinate Reference System
-	 * @return crs
+	 * @return CoordinateReferenceSystem
 	 */
 	public CoordinateReferenceSystem getCrs();
+	
+	/**
+	 * Returns true if the tool should be enabled under the current strategy
+	 * @param toolId
+	 * @return Boolean
+	 */
+	public Boolean enableTool(String toolId);
+
+	/**
+	 * Used to update listeners with the name of the current strategy (example "All").
+	 * <p>
+	 * The listener is an SWT listener with the widget making the change; and the data
+	 * value being the name of the current strategy.
+	 * @param watcher
+	 */
+    public void addListener( Listener listener );
+    /**
+     * Remove the provided listener.
+     * @param watcher
+     */
+    public void removeListener( Listener listener );
 	
 }

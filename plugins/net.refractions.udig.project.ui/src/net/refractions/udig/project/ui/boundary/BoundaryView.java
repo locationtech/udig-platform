@@ -1,5 +1,6 @@
 package net.refractions.udig.project.ui.boundary;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,11 +22,19 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jfree.chart.renderer.category.WaterfallBarRenderer;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /**
  * This is the view that allows a user to select the method to define the boundary
@@ -38,23 +47,49 @@ public class BoundaryView extends ViewPart {
      * A list of all the strategies and their labels
      */
     private Map<String,IBoundaryStrategy> strategyList = new HashMap<String,IBoundaryStrategy>();
-    
-    /*
-     * the boundary service
-     */
-    private static IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+    private Listener serviceWatcher = new Listener(){
+        public void handleEvent( Event event ) {
+            String name; 
+            if( event.data instanceof String){
+                name = (String) event.data;
+            }
+            else {
+                IBoundaryStrategy currentStrategy = PlatformGIS.getBoundaryService().currentStrategy();
+                name = currentStrategy.getName();
+            }
+            final int index = Arrays.asList( combo.getItems() ).indexOf(name);
+            PlatformGIS.asyncInDisplayThread(new Runnable(){
+                @Override
+                public void run() {
+                    combo.select( index );
+                }
+            }, true);
+        }
+    };
+    private Combo combo;
     
 	/**
 	 * Boundary View constructor adds the known strategies
 	 */
 	public BoundaryView() {
-		// add the default strategy
-		this.addBoundaryStrategy(PlatformGIS.getBoundaryService().currentStrategy());
+	}
+
+	   
+    @Override
+    public void init(IViewSite site, IMemento memento) throws PartInitException {
+        super.init(site, memento);
+        // this is where you read your memento to remember
+        // anything the user told you from last time
+        // add the default strategy
+        
+        // This is a workaround to boot strap the strategy choices
+        // (we will do an extension point later)
+        
+        this.addBoundaryStrategy(PlatformGIS.getBoundaryService().currentStrategy());
         // add other strategies
         this.addBoundaryStrategy(new BoundaryStrategyScreen());
-        this.addBoundaryStrategy(new BoundaryStrategyMapCrs());
-		
-	}
+        this.addBoundaryStrategy(new BoundaryStrategyMapCrs());     
+    }
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -66,9 +101,11 @@ public class BoundaryView extends ViewPart {
         label.setText("Boundary: ");
         
         // get the current strategy
+        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
         IBoundaryStrategy currentStrategy = boundaryService.currentStrategy();
+        boundaryService.addListener(serviceWatcher);
         
-        final Combo combo = new Combo(parent, SWT.NULL);
+        combo = new Combo(parent, SWT.NULL);
         for (String comboLabel: this.strategyList.keySet()) {
         	combo.add(comboLabel);
         	// select the current strategy
@@ -81,9 +118,11 @@ public class BoundaryView extends ViewPart {
         
         combo.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
-              IBoundaryStrategy selectedStrategy = strategyList.get(combo.getItem(combo.getSelectionIndex()));
+              String item = combo.getItem(combo.getSelectionIndex());
+              IBoundaryStrategy selectedStrategy = strategyList.get(item);
+              
+              IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
               boundaryService.setStrategy(selectedStrategy);
-              enableFunctions(selectedStrategy);
             }
 
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -94,14 +133,7 @@ public class BoundaryView extends ViewPart {
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-
-	}
-	
-	@Override
-	public void init(IViewSite site, IMemento memento) throws PartInitException {
-		// TODO Auto-generated method stub
-		super.init(site, memento);
+	    combo.setFocus();
 	}
 
 	/**
@@ -116,29 +148,15 @@ public class BoundaryView extends ViewPart {
 		}
 		return false;
 	}
-	
-	private void enableFunctions(IBoundaryStrategy selectedStrategy) {
-		
-		IMap activeMap = ApplicationGIS.getActiveMap();
-		IProject activeProject = ApplicationGIS.getActiveProject();
-		IToolManager toolManager = ApplicationGIS.getToolManager();
-		IAction zoomExtentTool = toolManager.getToolAction("net.refractions.udig.tools.ZoomExtent", "net.refractions.udig.tool.category.zoom" );
-		
-		if (zoomExtentTool != null) {
-			System.out.println(zoomExtentTool);
-			zoomExtentTool.setEnabled(selectedStrategy.enableZoomToExtent());
-		} else {
-			System.out.println("zoom tool not found");
-		}
-		if (selectedStrategy.enableSearchCatalog()) {
-			System.out.println("search enabled");
-		} else {
-			System.out.println("search disabled");
-		}
-		if (selectedStrategy.enableZoomToExtent()) {
-			System.out.println("zoom enabled");
-		} else {
-			System.out.println("zoom disabled");
-		}
+	@Override
+	public void dispose() {
+	    super.dispose();
+	    if( serviceWatcher != null ){
+	        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+	        if( boundaryService != null ){
+	            boundaryService.removeListener( serviceWatcher );
+	        }
+	        serviceWatcher = null;
+	    }
 	}
 }

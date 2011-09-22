@@ -55,15 +55,12 @@ public class BoundaryStrategyScreen implements IBoundaryStrategy {
 	}
 
 	@Override
-	public Boolean enableZoomToExtent() {
-		return false;
-	}
-
-	@Override
-	public Boolean enableSearchCatalog() {
+	public Boolean enableTool(String toolId) {
+		if (toolId.equals("net.refractions.udig.tools.ZoomExtent")) {
+			return false;
+		}
 		return true;
 	}
-	
 	
 
 }

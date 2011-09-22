@@ -582,7 +582,8 @@ public class ToolManager implements IToolManager {
                 OpFilter enablesFor = item.getEnablesFor();
                 ILayer selectedLayer = map.getEditManager().getSelectedLayer();
 
-                assert enablesFor instanceof LazyOpFilter;
+                // JG: I don't trust asserts in production code!
+                // assert enablesFor instanceof LazyOpFilter;
                 
                 if( !(enablesFor instanceof LazyOpFilter) ){
                     enablesFor = new LazyOpFilter(item, enablesFor);

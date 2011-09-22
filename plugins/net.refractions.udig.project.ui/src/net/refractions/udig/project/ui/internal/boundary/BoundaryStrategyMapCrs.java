@@ -87,12 +87,7 @@ public class BoundaryStrategyMapCrs implements IBoundaryStrategy {
 	}
 
 	@Override
-	public Boolean enableZoomToExtent() {
-		return true;
-	}
-
-	@Override
-	public Boolean enableSearchCatalog() {
+	public Boolean enableTool(String toolId) {
 		return true;
 	}
 	

@@ -48,6 +48,9 @@ public class Not implements OpFilter {
         filter.removeListener(listener);
     }
 
-
+    @Override
+    public String toString() {
+        return "NOT "+filter;
+    }
     
 }

@@ -39,19 +39,11 @@ public interface IBoundaryStrategy {
 	public String getName();
 	
 	/**
-	 * Returns true if the zoom to extent tool should be enabled when this strategy is selected. 
+	 * Returns true if the tool should be enabled when this strategy is selected. 
 	 * By default this should return true. Set this to false if a function will not be affected by this strategy.
 	 * An example of this is Zoom to extent when the boundary is screen.
 	 * @return Boolean
 	 */
-	public Boolean enableZoomToExtent();
-	
-	/**
-	 * Returns true if restrict to boundary should be enabled in catalog search when this strategy is selected. 
-	 * By default this should return true. Set this to false if a function will not be affected by this strategy.
-	 * An example of this is use boundary in catalog search when the boundary is "All".
-	 * @return Boolean
-	 */
-	public Boolean enableSearchCatalog();
+	public Boolean enableTool(String toolId);
 	
 }

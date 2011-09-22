@@ -385,4 +385,15 @@
           </service>
        </serviceFactory>
     </extension>
+    <extension
+          id="net.refractions.udig.ui.boundary"
+          point="net.refractions.udig.ui.objectProperty">
+       <object
+             targetClass="java.lang.Object">
+          <property
+                class="net.refractions.udig.internal.boundary.BoundaryStrategyPropertyValue"
+                id="boundaryStrategy">
+          </property>
+       </object>
+    </extension>
 </plugin>
