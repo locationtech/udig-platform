@@ -2,9 +2,14 @@ package net.refractions.udig.tools.edit.impl;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.swt.SWT;
+import org.opengis.filter.spatial.Intersects;
+
+import net.refractions.udig.tool.edit.internal.Messages;
 import net.refractions.udig.tools.edit.AbstractEditTool;
 import net.refractions.udig.tools.edit.Activator;
 import net.refractions.udig.tools.edit.Behaviour;
+import net.refractions.udig.tools.edit.DefaultEditToolBehaviour;
 import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
 import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.EnablementBehaviour;
@@ -12,8 +17,17 @@ import net.refractions.udig.tools.edit.activator.ClearCurrentSelectionActivator;
 import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
 import net.refractions.udig.tools.edit.activator.ResetHandlerActivator;
 import net.refractions.udig.tools.edit.activator.SetRenderingFilter;
-import net.refractions.udig.tools.edit.behaviour.BufferGeometryBehaviour;
+import net.refractions.udig.tools.edit.behaviour.AddVertexWhileCreatingBehaviour;
+import net.refractions.udig.tools.edit.behaviour.BufferPolygonCursorControlBehaviour;
+import net.refractions.udig.tools.edit.behaviour.BufferPolygonDrawBehaviour;
+import net.refractions.udig.tools.edit.behaviour.BufferUpdateBehaviour;
+import net.refractions.udig.tools.edit.behaviour.CursorControlBehaviour;
 import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
+import net.refractions.udig.tools.edit.behaviour.DrawCreateVertexSnapAreaBehaviour;
+import net.refractions.udig.tools.edit.behaviour.InsertVertexOnEdgeBehaviour;
+import net.refractions.udig.tools.edit.behaviour.SelectFeatureBehaviour;
+import net.refractions.udig.tools.edit.behaviour.SetSnapSizeBehaviour;
+import net.refractions.udig.tools.edit.behaviour.StartEditingBehaviour;
 import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
 import net.refractions.udig.tools.edit.behaviour.accept.DeselectEditShapeAcceptBehaviour;
 import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
@@ -21,6 +35,9 @@ import net.refractions.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviou
 import net.refractions.udig.tools.edit.support.ShapeType;
 
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.LinearRing;
+import com.vividsolutions.jts.geom.MultiLineString;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
@@ -66,13 +83,15 @@ public class SmartBufferTool extends AbstractEditTool {
 
     @Override
     protected void initAcceptBehaviours( List<Behaviour> acceptBehaviours ) {
+    	List<Behaviour> defaults = DefaultEditToolBehaviour.createDefaultAcceptBehaviour(LineString.class);
+        acceptBehaviours.addAll(defaults);
 
         acceptBehaviours.add( new DeselectEditShapeAcceptBehaviour() );
         
         acceptBehaviours.add( new AcceptChangesBehaviour(Polygon.class, true){
             @Override
             public boolean isValid( EditToolHandler handler ) {
-                return super.isValid(handler) && handler.getCurrentGeom().getShapeType()==ShapeType.POLYGON;
+            	return super.isValid(handler) && handler.getCurrentGeom().getShapeType()==ShapeType.POLYGON;
             }
         });
         
@@ -85,8 +104,16 @@ public class SmartBufferTool extends AbstractEditTool {
 
     @Override
     protected void initEventBehaviours( EditToolConfigurationHelper helper ) {
-        
-        helper.add(new BufferGeometryBehaviour(getContext()));
+    	//helper.add( new DrawCreateVertexSnapAreaBehaviour());
+    	
+    	helper.add( new AddVertexWhileCreatingBehaviour());
+    	
+    	BufferUpdateBehaviour bufferUpdateBehaviour = new BufferUpdateBehaviour();
+    	helper.add(bufferUpdateBehaviour);
+    	helper.add(new BufferPolygonCursorControlBehaviour(bufferUpdateBehaviour));
+    	helper.add(new BufferPolygonDrawBehaviour(bufferUpdateBehaviour));
+    	
+    	//helper.add( new SetSnapSizeBehaviour());
         helper.done();
     }
 
