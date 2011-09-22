@@ -1,24 +1,25 @@
 package net.refractions.udig.limit;
 
 import static org.junit.Assert.*;
-import net.refractions.udig.internal.limit.LimitServiceFactory;
+import net.refractions.udig.boundary.IBoundaryService;
+import net.refractions.udig.internal.boundary.BoundaryServiceFactory;
 
 import org.junit.Test;
 
 public class LimitServiceTest {
 
-	private LimitServiceFactory limitFactory = new LimitServiceFactory();
-	private ILimitService limitService = limitFactory.create(ILimitService.class, null, null);
+	private BoundaryServiceFactory limitFactory = new BoundaryServiceFactory();
+	private IBoundaryService boundaryService = limitFactory.create(IBoundaryService.class, null, null);
 	
 	@Test
 	public void testFactory() {
 		//System.out.println(this.limitService.getClass().toString());
-		assertNotNull(this.limitService);
+		assertNotNull(this.boundaryService);
 	}
 
 	@Test
 	public void testGetExtent() {
-		assertNull(this.limitService.getExtent());
+		assertNull(this.boundaryService.getExtent());
 	}
 	
 	@Test
@@ -28,12 +29,12 @@ public class LimitServiceTest {
 
 	@Test
 	public void testGetLimit() {
-		assertNull(this.limitService.getLimit());
+		assertNull(this.boundaryService.getBoundary());
 	}
 
 	@Test
 	public void testGetCrs() {
-		assertNull(this.limitService.getCrs());
+		assertNull(this.boundaryService.getCrs());
 	}
 
 }

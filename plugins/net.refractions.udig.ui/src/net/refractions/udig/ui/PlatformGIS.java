@@ -23,8 +23,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.limit.ILimitService;
 import net.refractions.udig.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -55,7 +55,7 @@ public class PlatformGIS {
 
     private static ColorBrewer colorBrewer;
     private static ExecutorService executor = Executors.newCachedThreadPool();
-    private static ILimitService limitService;
+    private static IBoundaryService boundaryService;
     /**
      * Runs the given runnable in a separate thread, providing it a progress monitor. Exceptions
      * thrown by the runnable are logged, and not rethrown.
@@ -438,13 +438,13 @@ public class PlatformGIS {
         }
     }
     
-    public static ILimitService getLimitService() {
-		if (limitService == null) {
+    public static IBoundaryService getBoundaryService() {
+		if (boundaryService == null) {
 	    	ServiceLocator locator = new ServiceLocator();
-			limitService = (ILimitService)WorkbenchServiceRegistry.getRegistry().getService(ILimitService.class
+			boundaryService = (IBoundaryService)WorkbenchServiceRegistry.getRegistry().getService(IBoundaryService.class
 					, WorkbenchServiceRegistry.GLOBAL_PARENT, locator);
 		}
-		return limitService;
+		return boundaryService;
     }
     
 }

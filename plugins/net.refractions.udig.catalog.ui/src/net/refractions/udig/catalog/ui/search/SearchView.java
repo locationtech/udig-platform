@@ -6,6 +6,7 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
+import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.ICatalogInfo;
@@ -27,7 +28,6 @@ import net.refractions.udig.catalog.ui.ResolveTitlesDecorator;
 import net.refractions.udig.catalog.ui.StatusLineMessageBoardAdapter;
 import net.refractions.udig.catalog.ui.internal.Messages;
 import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.limit.ILimitService;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.SearchPart;
 import net.refractions.udig.ui.UDIGDragDropUtilities;
@@ -335,9 +335,9 @@ public class SearchView extends SearchPart {
         filter.text = text.getText();
         filter.bbox = new Envelope();
         if (bbox.getSelection()) {
-        	ILimitService limitService = PlatformGIS.getLimitService();
+        	IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
         	try {
-        		filter.bbox = limitService.getExtent();
+        		filter.bbox = boundaryService.getExtent();
         	} catch (Throwable t) {
         		CatalogUIPlugin.log("Unable to create search:"+t, t); //$NON-NLS-1$
         	}

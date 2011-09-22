@@ -379,9 +379,9 @@
     <extension
           point="org.eclipse.ui.services">
        <serviceFactory
-             factoryClass="net.refractions.udig.internal.limit.LimitServiceFactory">
+             factoryClass="net.refractions.udig.internal.boundary.BoundaryServiceFactory">
           <service
-                serviceClass="net.refractions.udig.limit.ILimitService">
+                serviceClass="net.refractions.udig.boundary.IBoundaryService">
           </service>
        </serviceFactory>
     </extension>

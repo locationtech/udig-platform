@@ -1,9 +1,9 @@
 /**
  * 
  */
-package net.refractions.udig.internal.limit;
+package net.refractions.udig.internal.boundary;
 
-import net.refractions.udig.limit.ILimitStrategy;
+import net.refractions.udig.boundary.IBoundaryStrategy;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -15,7 +15,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * @author pfeiffp
  *
  */
-public class LimitStrategyAll implements ILimitStrategy {
+public class BoundaryStrategyAll implements IBoundaryStrategy {
 
 	private static String name = "All";
 	
@@ -25,7 +25,7 @@ public class LimitStrategyAll implements ILimitStrategy {
 	}
 
 	@Override
-	public Geometry getLimit() {
+	public Geometry getBoundary() {
 		return null;
 	}
 
@@ -37,6 +37,16 @@ public class LimitStrategyAll implements ILimitStrategy {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public Boolean enableZoomToExtent() {
+		return true;
+	}
+
+	@Override
+	public Boolean enableSearchCatalog() {
+		return false;
 	}
 	
 	

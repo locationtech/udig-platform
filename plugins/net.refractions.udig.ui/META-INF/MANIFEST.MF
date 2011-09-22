@@ -16,10 +16,10 @@ Require-Bundle: org.eclipse.ui;visibility:=reexport,
  org.eclipse.update.ui
 Bundle-ActivationPolicy: lazy
 Export-Package: net.refractions.udig,
- net.refractions.udig.internal.limit;x-friends:="net.refractions.udig.ui.tests",
+ net.refractions.udig.boundary,
+ net.refractions.udig.internal.boundary;x-friends:="net.refractions.udig.ui.tests",
  net.refractions.udig.internal.ui,
  net.refractions.udig.internal.ui.operations,
- net.refractions.udig.limit,
  net.refractions.udig.ui,
  net.refractions.udig.ui.action,
  net.refractions.udig.ui.export,

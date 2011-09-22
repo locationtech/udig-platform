@@ -1,4 +1,4 @@
-package net.refractions.udig.limit;
+package net.refractions.udig.boundary;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -11,7 +11,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * @author Paul Pfeiffer
  *
  */
-public interface ILimitService {
+public interface IBoundaryService {
 	
 	/**
 	 * Get the extent of the current set area
@@ -19,22 +19,22 @@ public interface ILimitService {
 	public ReferencedEnvelope getExtent();
 
 	/**
-	 * Sets the current Limit Strategy that will be used to get extent
-	 * @param limitStrategy
+	 * Sets the current Boundary Strategy that will be used to get extent
+	 * @param boundaryStrategy
 	 */
-	public void setStrategy(ILimitStrategy limitStrategy);
+	public void setStrategy(IBoundaryStrategy boundaryStrategy);
 	
 	/**
-	 * Get the current Limit Strategy
-	 * @return limitStrategy the current LimitStrategy
+	 * Get the current Boundary Strategy
+	 * @return boundaryStrategy
 	 */
-	public ILimitStrategy currentStrategy();
+	public IBoundaryStrategy currentStrategy();
 	
 	/**
-	 * Returns the Geometry of the Limit
+	 * Returns the Geometry of the Boundary
 	 * @return
 	 */
-	public Geometry getLimit();
+	public Geometry getBoundary();
 	
 	/**
 	 * Returns the Coordinate Reference System

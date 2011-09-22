@@ -1,9 +1,9 @@
 /**
  * 
  */
-package net.refractions.udig.project.ui.internal.limit;
+package net.refractions.udig.project.ui.internal.boundary;
 
-import net.refractions.udig.limit.ILimitStrategy;
+import net.refractions.udig.boundary.IBoundaryStrategy;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.ApplicationGIS;
 
@@ -18,7 +18,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
  * @author pfeiffp
  *
  */
-public class LimitStrategyScreen implements ILimitStrategy {
+public class BoundaryStrategyScreen implements IBoundaryStrategy {
 
 	private static String name = "Screen";
 	
@@ -32,7 +32,7 @@ public class LimitStrategyScreen implements ILimitStrategy {
 	}
 
 	@Override
-	public Geometry getLimit() {
+	public Geometry getBoundary() {
 		ReferencedEnvelope extent = this.getExtent();
 		if (extent != null) {
 			return new GeometryFactory().toGeometry(extent);
@@ -52,6 +52,16 @@ public class LimitStrategyScreen implements ILimitStrategy {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public Boolean enableZoomToExtent() {
+		return false;
+	}
+
+	@Override
+	public Boolean enableSearchCatalog() {
+		return true;
 	}
 	
 	
