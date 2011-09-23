@@ -1071,6 +1071,7 @@
            name="Limit Views"
            point="org.eclipse.ui.views">
         <view
+              allowMultiple="true"
               class="net.refractions.udig.project.ui.boundary.BoundaryView"
               id="net.refractions.udig.project.ui.boundaryView"
               name="Boundary"

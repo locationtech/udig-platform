@@ -89,12 +89,17 @@ public class BoundaryServiceImpl implements IBoundaryService {
     }
 
     @Override
-    public IBoundaryStrategy currentStrategy() {
+    public IBoundaryStrategy getCurrentStrategy() {
         return this.boundaryStrategy;
     }
 
     @Override
     public Boolean enableTool( String toolId ) {
         return this.boundaryStrategy.enableTool(toolId);
+    }
+    
+    @Override
+    public IBoundaryStrategy getDefault() {
+        return new BoundaryStrategyAll();
     }
 }

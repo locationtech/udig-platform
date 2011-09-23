@@ -29,7 +29,7 @@ public interface IBoundaryService {
 	 * Get the current Boundary Strategy
 	 * @return boundaryStrategy
 	 */
-	public IBoundaryStrategy currentStrategy();
+	public IBoundaryStrategy getCurrentStrategy();
 	
 	/**
 	 * Returns the Geometry of the Boundary
@@ -63,5 +63,11 @@ public interface IBoundaryService {
      * @param watcher
      */
     public void removeListener( Listener listener );
+
+    /**
+     * The boundary strategy to use by default (defaults to "All").
+     * @return the strategy to use by default
+     */
+    public IBoundaryStrategy getDefault();
 	
 }

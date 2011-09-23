@@ -1,162 +1,225 @@
 package net.refractions.udig.project.ui.boundary;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.boundary.IBoundaryStrategy;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.internal.boundary.BoundaryStrategyAll;
 import net.refractions.udig.project.ui.internal.boundary.BoundaryStrategyMapCrs;
 import net.refractions.udig.project.ui.internal.boundary.BoundaryStrategyScreen;
-import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.ui.PlatformGIS;
 
-import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.jfree.chart.renderer.category.WaterfallBarRenderer;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /**
  * This is the view that allows a user to select the method to define the boundary
+ * 
  * @author pfeiffp
- *
  */
 public class BoundaryView extends ViewPart {
 
     /*
-     * A list of all the strategies and their labels
+     * A list of all the strategies
      */
-    private Map<String,IBoundaryStrategy> strategyList = new HashMap<String,IBoundaryStrategy>();
+    private List<IBoundaryStrategy> strategyList = new ArrayList<IBoundaryStrategy>();
+
+    /**
+     * Listens to the global IBoundaryService and updates our view
+     * if anything changes!
+     */
     private Listener serviceWatcher = new Listener(){
+        private IBoundaryStrategy selectedStrategy = null;
         public void handleEvent( Event event ) {
-            String name; 
-            if( event.data instanceof String){
-                name = (String) event.data;
+            String name;
+            IBoundaryStrategy currentStrategy;
+            if (event.data instanceof IBoundaryStrategy) {
+                currentStrategy = (IBoundaryStrategy) event.data;
+            } else {
+                currentStrategy = PlatformGIS.getBoundaryService().getCurrentStrategy();
             }
-            else {
-                IBoundaryStrategy currentStrategy = PlatformGIS.getBoundaryService().currentStrategy();
-                name = currentStrategy.getName();
-            }
-            final int index = Arrays.asList( combo.getItems() ).indexOf(name);
-            PlatformGIS.asyncInDisplayThread(new Runnable(){
-                @Override
-                public void run() {
-                    combo.select( index );
-                }
-            }, true);
+            setSelected( currentStrategy );
         }
     };
-    private Combo combo;
     
-	/**
-	 * Boundary View constructor adds the known strategies
-	 */
-	public BoundaryView() {
-	}
+    // private Combo combo;
+    private ComboViewer comboViewer;
 
-	   
+    /**
+     * Listens to the user and changes the global IBoundaryService to the
+     * indicated strategy.
+     */
+    private ISelectionChangedListener comboListener = new ISelectionChangedListener(){
+        @Override
+        public void selectionChanged( SelectionChangedEvent event ) {
+            IStructuredSelection selectedStrategy = (IStructuredSelection) event.getSelection();
+            IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+            boundaryService.setStrategy((IBoundaryStrategy) selectedStrategy.getFirstElement());
+        }
+    };
+
+    /**
+     * Boundary View constructor adds the known strategies
+     */
+    public BoundaryView() {
+    }
+    /**
+     * This will update the combo viewer (carefully unhooking events while
+     * the viewer is updated).
+     * 
+     * @param selected
+     */
+    public void setSelected( IBoundaryStrategy selected ){
+        if (selected == null) {
+            selected = PlatformGIS.getBoundaryService().getDefault();
+        }
+        if( comboViewer == null || comboViewer.getControl().isDisposed()){
+            listenService( false );
+            return; // the view has shutdown!
+        }
+        IBoundaryStrategy current = getSelected();
+        if( current == selected ){
+            return; // already selected
+        }
+        try {
+            listenCombo( false );
+            comboViewer.setSelection(new StructuredSelection(selected));
+        }
+        finally {
+            listenCombo( true );
+        }
+    }
+    /**
+     * Access the IBoundaryStrategy selected by the user
+     * @return IBoundaryStrategy selected by the user
+     */
+    public IBoundaryStrategy getSelected() {
+        if( comboViewer.getSelection() instanceof IStructuredSelection){
+            IStructuredSelection selection = (IStructuredSelection) comboViewer.getSelection();
+            return (IBoundaryStrategy) selection.getFirstElement();
+        }
+        return null;
+    }
+
+    protected void listenCombo( boolean listen ) {
+        if (comboViewer == null || comboViewer.getControl().isDisposed()) {
+            return; // run away!
+        }
+        if (listen) {
+            comboViewer.addSelectionChangedListener(comboListener);
+        } else {
+            comboViewer.removeSelectionChangedListener(comboListener);
+        }
+    }
+    
+    protected void listenService( boolean listen ){
+        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        if( listen ){
+            boundaryService.addListener(serviceWatcher);
+        }
+        else {
+            boundaryService.removeListener(serviceWatcher);
+        }
+    }
     @Override
-    public void init(IViewSite site, IMemento memento) throws PartInitException {
+    public void init( IViewSite site, IMemento memento ) throws PartInitException {
         super.init(site, memento);
         // this is where you read your memento to remember
         // anything the user told you from last time
         // add the default strategy
-        
+
         // This is a workaround to boot strap the strategy choices
         // (we will do an extension point later)
-        
-        this.addBoundaryStrategy(PlatformGIS.getBoundaryService().currentStrategy());
+
+        this.addBoundaryStrategy(PlatformGIS.getBoundaryService().getCurrentStrategy());
         // add other strategies
         this.addBoundaryStrategy(new BoundaryStrategyScreen());
-        this.addBoundaryStrategy(new BoundaryStrategyMapCrs());     
+        this.addBoundaryStrategy(new BoundaryStrategyMapCrs());
     }
 
-	@Override
-	public void createPartControl(Composite parent) {
+    @Override
+    public void createPartControl( Composite parent ) {
         GridLayout layout = new GridLayout();
         layout.numColumns = 2;
-        parent.setLayout( layout );
-        Label label = new Label(parent, SWT.LEFT );
-        label.setLayoutData( new GridData(SWT.LEFT,SWT.TOP,false,false ) );
+        parent.setLayout(layout);
+        Label label = new Label(parent, SWT.LEFT);
+        label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
         label.setText("Boundary: ");
-        
+
         // get the current strategy
         IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        IBoundaryStrategy currentStrategy = boundaryService.currentStrategy();
-        boundaryService.addListener(serviceWatcher);
-        
-        combo = new Combo(parent, SWT.NULL);
-        for (String comboLabel: this.strategyList.keySet()) {
-        	combo.add(comboLabel);
-        	// select the current strategy
-        	if (currentStrategy.getClass().equals(this.strategyList.get(comboLabel).getClass())) {
-        		combo.select(combo.indexOf(comboLabel));
-        	}
-        }
-        combo.setLayoutData( new GridData(SWT.LEFT,SWT.TOP,true,false ) );
-        
-        
-        combo.addSelectionListener(new SelectionListener() {
-            public void widgetSelected(SelectionEvent e) {
-              String item = combo.getItem(combo.getSelectionIndex());
-              IBoundaryStrategy selectedStrategy = strategyList.get(item);
-              
-              IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-              boundaryService.setStrategy(selectedStrategy);
-            }
+        IBoundaryStrategy currentStrategy = boundaryService.getCurrentStrategy();
+        listenService( true );
 
-            public void widgetDefaultSelected(SelectionEvent e) {
-              System.out.println("Default selected index: " + combo.getSelectionIndex() + ", selected item: " + (combo.getSelectionIndex() == -1 ? "<null>" : combo.getItem(combo.getSelectionIndex())) + ", text content in the text field: " + combo.getText());
+        // eclipse combo viewer
+        comboViewer = new ComboViewer(parent, SWT.READ_ONLY);
+        comboViewer.setContentProvider(new ArrayContentProvider());
+        comboViewer.setLabelProvider(new LabelProvider(){
+            @Override
+            public String getText( Object element ) {
+                if (element instanceof IBoundaryStrategy) {
+                    IBoundaryStrategy comboStrategy = (IBoundaryStrategy) element;
+                    return comboStrategy.getName();
+                }
+                return super.getText(element);
             }
         });
-	}
 
-	@Override
-	public void setFocus() {
-	    combo.setFocus();
-	}
+        comboViewer.setInput(strategyList);
+        // set the current strategy
+        comboViewer.setSelection(new StructuredSelection(currentStrategy));
+        
+        // now that we are configured we can start to listen!
+        listenCombo( true );
+    }
+    
+    @Override
+    public void setFocus() {
+        comboViewer.getControl().setFocus();
+    }
 
-	/**
-	 * Adds a Boundary Strategy to the view
-	 * @param strategy
-	 * @return boolean true if strategy was added
-	 */
-	public boolean addBoundaryStrategy(IBoundaryStrategy strategy) {
-		if (!this.strategyList.containsKey(strategy.getName()) && !this.strategyList.containsValue(strategy)) {
-			this.strategyList.put(strategy.getName(), strategy);
-			return true;
-		}
-		return false;
-	}
-	@Override
-	public void dispose() {
-	    super.dispose();
-	    if( serviceWatcher != null ){
-	        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-	        if( boundaryService != null ){
-	            boundaryService.removeListener( serviceWatcher );
-	        }
-	        serviceWatcher = null;
-	    }
-	}
+    /**
+     * Adds a Boundary Strategy to the view
+     * 
+     * @param strategy
+     * @return boolean true if strategy was added
+     */
+    public boolean addBoundaryStrategy( IBoundaryStrategy strategy ) {
+        if (!this.strategyList.contains(strategy)) {
+            this.strategyList.add(strategy);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public void dispose() {
+        super.dispose();
+        if( comboViewer != null) {
+            comboViewer.removeSelectionChangedListener(comboListener);
+        }
+        if (serviceWatcher != null) {
+            IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+            if (boundaryService != null) {
+                boundaryService.removeListener(serviceWatcher);
+            }
+            serviceWatcher = null;
+        }
+    }
 }
