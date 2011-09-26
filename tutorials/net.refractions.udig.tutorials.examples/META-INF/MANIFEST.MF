@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Examples Plug-in
 Bundle-SymbolicName: net.refractions.udig.tutorials.examples;singleton:=true
 Bundle-Version: 1.2.0.qualifier
-Bundle-Activator: net.refractions.udig.code.examples.Activator
+Bundle-Activator: net.refractions.udig.tutorials.examples.Activator
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
