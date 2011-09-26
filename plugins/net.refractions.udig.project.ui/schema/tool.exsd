@@ -247,6 +247,25 @@ If this attribute is not used then the selectionProvider attribute in the catego
                </appinfo>
             </annotation>
          </attribute>
+         <attribute name="preferencePageId" type="string">
+            <annotation>
+               <documentation>
+                  The id of the preference page used to conviger this tool, if null the parent tool preference page will be used.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="toolOptions" type="string">
+            <annotation>
+               <documentation>
+                  Tools are responsible for declaring the option page used by the MapEditor.  
+
+If that iattribute s null then the default blank option page is used.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.options.AbstractMapEditorOptionsPage:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 
