@@ -101,6 +101,30 @@
                   </enablement>
                </modalTool>
                <modalTool
+                     categoryId="net.refractions.udig.tool.edit.create"
+                     class="net.refractions.udig.tools.edit.impl.SmartBufferTool"
+                     icon="icons/etool16/new_smartbuffer_mode.gif"
+                     id="net.refractions.udig.tools.pointBufferEdit"
+                     name="%edit.buffer.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.buffer.tooltip">
+                  <enablement>
+                     <and>
+                        <or>
+                           <property
+                                 expectedValue="com.vividsolutions.jts.geom.MultiPolygon"
+                                 propertyId="net.refractions.udig.project.ui.GeometryType">
+                           </property>
+                           <property
+                                 expectedValue="com.vividsolutions.jts.geom.Polygon"
+                                 propertyId="net.refractions.udig.project.ui.GeometryType">
+                           </property>
+                        </or>
+                     </and>
+                  </enablement>
+               </modalTool>
+               <modalTool
                      categoryId="net.refractions.udig.tool.edit.edit"
                      class="net.refractions.udig.tools.edit.impl.SelectionTool"
                      icon="icons/etool16/edit_vertex_mode.gif"
@@ -440,6 +464,12 @@
             class="net.refractions.udig.tools.edit.preferences.PerformancelPreferences"
             id="net.refractions.udig.tool.edit.preference.performance"
             name="%preferences.edit.tool.performance.name"/>
+      <page
+            category="net.refractions.udig.tools.edit.preferences"
+            class="net.refractions.udig.tools.edit.preferences.SmartBufferPreferences"
+            id="net.refractions.udig.tool.edit.preference.smartbuffer"
+            name="%preferences.edit.tool.smartbuffer.name">
+      </page>
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
