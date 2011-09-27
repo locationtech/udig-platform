@@ -14,7 +14,7 @@
 	
 	<target name="load_m2_deps" >
 		<artifact:dependencies filesetId="dependency.fileset" sourcesFilesetId="sources.dependency.fileset" versionsId="dependency.versions" useScope="runtime" cacheDependencyRefs="false">
-			<pom file="${basedir}/../net.refractions.udig.libs/pom.xml"/>
+			<pom file="${basedir}/../net.refractions.udig.libs/pom-libs.xml"/>
 		</artifact:dependencies>
 	</target>
 
