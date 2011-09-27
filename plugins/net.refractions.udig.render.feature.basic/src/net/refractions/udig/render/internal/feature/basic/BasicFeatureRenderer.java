@@ -13,6 +13,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.logging.ConsoleHandler;
@@ -41,12 +42,18 @@ import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
+import org.geotools.data.crs.ForceCoordinateSystemFeatureResults;
+import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.SchemaException;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.DefaultMapContext;
 import org.geotools.map.DefaultMapLayer;
+import org.geotools.map.FeatureLayer;
+import org.geotools.map.Layer;
+import org.geotools.map.MapContent;
 import org.geotools.map.MapContext;
 import org.geotools.map.MapLayer;
+import org.geotools.map.MapViewport;
 import org.geotools.renderer.GTRenderer;
 import org.geotools.renderer.RenderListener;
 import org.geotools.renderer.lite.MetaBufferEstimator;
@@ -75,9 +82,9 @@ public class BasicFeatureRenderer extends RendererImpl {
 
     private GTRenderer renderer = null;
 
-    protected MapContext map = null;
+    protected MapContent map = null;
 
-    protected MapLayer[] layers = null;
+    protected Layer[] layers = null;
 
     protected BasicRenderListener listener = new BasicRenderListener();
 
@@ -120,7 +127,7 @@ public class BasicFeatureRenderer extends RendererImpl {
             // (in order to filter out the features being edited at the moment)
             //
             Query featureQuery = getContext().getFeatureQuery();
-            layers[0].setQuery(featureQuery);
+            ((FeatureLayer)layers[0]).setQuery(featureQuery);
         } catch (Exception e) {
             // do nothing.
         }
@@ -147,27 +154,37 @@ public class BasicFeatureRenderer extends RendererImpl {
                     0));
         }
         Style style = getStyle(styleBlackboard, featureSource);
-
-        layers = new MapLayer[1];
+        layers = new Layer[1];
         CoordinateReferenceSystem layerCRS = layer.getCRS();
         CoordinateReferenceSystem dataCRS = featureSource.getSchema()
                 .getCoordinateReferenceSystem();
 
         if (!layerCRS.equals(dataCRS)) {
             // need to force the coordinate reference system to match the layer definition
-            // FeatureCollection<SimpleFeatureType, SimpleFeature> reprojectingFc = new
-            // ForceCoordinateSystemFeatureResults(featureSource.getFeatures(), layer.getCRS());
-            // layers[0] = new DefaultMapLayer(reprojectingFc, style, "Test"); //$NON-NLS-1$
-            layers[0] = new DefaultMapLayer(featureSource, style, "Test"); //$NON-NLS-1$
-            DefaultQuery query = new DefaultQuery();
+            FeatureLayer featureLayer = new FeatureLayer(featureSource, style, layer.getName()); //$NON-NLS-1$
+            Query query = new Query();
             query.setTypeName(featureSource.getSchema().getTypeName());
             query.setCoordinateSystem(layerCRS);
-            layers[0].setQuery(query);
-        } else {
-            layers[0] = new DefaultMapLayer(featureSource, style, "Test"); //$NON-NLS-1$
+            featureLayer.setQuery(query);
+            
+            // double check the implementation is respecting our layer CRS
+            FeatureCollection<SimpleFeatureType, SimpleFeature> features = featureSource.getFeatures( query );
+            CoordinateReferenceSystem queryCRS = features.getSchema().getCoordinateReferenceSystem();
+            if(queryCRS.equals(layerCRS)){
+                layers[0] = featureLayer;
+            } else {
+                // workaround!
+                FeatureCollection<SimpleFeatureType, SimpleFeature> reprojectingFc = new ForceCoordinateSystemFeatureResults(
+                        features, layerCRS);
+                layers[0] = new FeatureLayer(reprojectingFc, style, layer.getName());
+            }
         }
-        map = new DefaultMapContext(layers, getContext().getCRS());
-
+        else {
+            layers[0] = new FeatureLayer(featureSource, style, layer.getName());
+        }
+        map = new MapContent();
+        map.getViewport().setCoordinateReferenceSystem(getContext().getCRS());
+        map.layers().addAll( Arrays.asList(layers));
     }
 
     protected Style getStyle( StyleBlackboard styleBlackboard,
@@ -345,7 +362,8 @@ public class BasicFeatureRenderer extends RendererImpl {
 
             validBounds=getContext().worldBounds(paintArea);
 
-            map.setAreaOfInterest(validBounds, getContext().getViewportModel().getCRS());
+            MapViewport mapViewport = new MapViewport( validBounds );
+            map.setViewport( mapViewport);
 
             GTRenderer geotToolsRenderer = getRenderer();
 
@@ -419,7 +437,7 @@ public class BasicFeatureRenderer extends RendererImpl {
              * ShapefileDataStore and its FeatureListenerManager).
              */
             if (map != null) {
-                map.clearLayerList();
+                map.layers().clear();
             }
 
             getContext().setStatus(endStatus);
@@ -453,7 +471,7 @@ public class BasicFeatureRenderer extends RendererImpl {
             // renderer.removeRenderListener(StreamingRenderer.DEFAULT_LISTENER);
             renderer.addRenderListener(listener);
         }
-        renderer.setContext(map);
+        renderer.setMapContent(map);
         return renderer;
     }
 
