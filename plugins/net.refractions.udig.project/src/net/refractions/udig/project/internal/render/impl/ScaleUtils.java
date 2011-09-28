@@ -502,13 +502,18 @@ public final class ScaleUtils {
 		public final IMapDisplay display;
 		public final double previousZoom;
 		public final double zoomChange;
+		public final double requiredCloseness;
 		public final Coordinate fixedPoint;
 		public final boolean alwayUsePreferredZoomLevels;
 		public final boolean alwaysChangeZoom;
 
+		/**
+		 *
+		 * @param requiredCloseness see calculateClosestScale for a description of this parameter
+		 */
 		public CalculateZoomLevelParameter(ViewportModel model,
 				IMapDisplay display, double previousZoom, double zoomChange, Coordinate fixedPoint,
-				boolean alwayUsePreferredZoomLevels, boolean alwaysChangeZoom) {
+				boolean alwayUsePreferredZoomLevels, boolean alwaysChangeZoom, double requiredCloseness) {
 			this.model = model;
 			this.display = display;
 			this.previousZoom = previousZoom;
@@ -516,6 +521,7 @@ public final class ScaleUtils {
 			this.fixedPoint = fixedPoint;
 			this.alwayUsePreferredZoomLevels = alwayUsePreferredZoomLevels;
 			this.alwaysChangeZoom = alwaysChangeZoom;
+			this.requiredCloseness = requiredCloseness;
 		}
 	}
 	public static double calculateZoomLevel(CalculateZoomLevelParameter params) {
@@ -544,27 +550,48 @@ public final class ScaleUtils {
 		}
 	}
 
-
 	private static Pair<Double, ReferencedEnvelope> calculateScaleFromZoom(double zoom,
 			ReferencedEnvelope baseEnv, CalculateZoomLevelParameter params) {
 		AffineTransform transformer = ScaleUtils.createScaleTransformWithFixedPoint(zoom,params.fixedPoint);
 		ReferencedEnvelope transformedEnvelope = new ReferencedEnvelope(transformEnvelope(baseEnv, transformer),baseEnv.getCoordinateReferenceSystem());
 		Double scale = ScaleUtils.calculateScaleDenominator(transformedEnvelope, params.display.getDisplaySize(), params.display.getDPI());
 		// if there is a close match in preferred scale round to that scale
-		Double closest = calculateClosestScale(params.model.getPreferredScaleDenominators(), scale);
+		Double closest = calculateClosestScale(params.model.getPreferredScaleDenominators(), scale, params.requiredCloseness);
 		if(Math.abs(closest - scale)/scale < 0.01) {
 			scale = closest;
 		}
 		return Pair.create(scale, transformedEnvelope);
 	}
 
-	public static Double calculateClosestScale(SortedSet<Double> scaleDenominators, Double scale) {
+	/**
+	 * Find the scale in the set of scaleDenominators that is closest to scale.
+	 *
+	 * @param scaleDenominators the options that can be chosen
+	 * @param scale the desired scale
+	 * @param requiredCloseness the nearness required to the next zoom level before the algorithm will allow zooming in to the next leve.
+	 * 						    for example when zooming you might want the scale to be 70% of the way to the next closest level before zooming
+	 * 							in to that level.  This is useful when zooming to a set of features.  If the zoom is 50% like normal then the zoom will not 
+	 * 							show all features.
+	 * 							values are 0-1 where 1 means the chosen scale will always be less than scale and 0 means the chosen scale will always be greater
+	 * 							Usually this is set in the preferences.  see zoomClosenessPreference.
+	 * @return
+	 */
+	public static Double calculateClosestScale(SortedSet<Double> scaleDenominators, double scale, double requiredCloseness) {
 		SortedSet<Double> tail = scaleDenominators.tailSet(scale);
 		SortedSet<Double> head = scaleDenominators.headSet(scale);
-		Double next = first(tail,Double.MAX_VALUE);
-		Double last = last(head,Double.MAX_VALUE);
-		Double closest = Math.abs(next - scale) > Math.abs(last - scale) ? last : next;
-		return closest;
+		Double distantZoom = first(tail,Double.MAX_VALUE);
+		Double closeZoom = last(head,Double.MIN_VALUE);
+		if(Math.abs(distantZoom - Double.MAX_VALUE) < 0.0001) {
+			return closeZoom;
+		}
+		if(Math.abs(closeZoom - Double.MIN_VALUE) < 0.0001) {
+			return distantZoom;
+		}
+		if((distantZoom - scale) < (distantZoom - closeZoom)*requiredCloseness) {
+			return distantZoom;
+		} else {
+			return closeZoom;
+		}
 	}
 
 	private static class ZoomCalculation {
@@ -612,5 +639,9 @@ public final class ScaleUtils {
 	private static Double last(SortedSet<Double> set, Double defaultVal) {
 		if(set.isEmpty()) return defaultVal;
 		else return set.last();
+	}
+
+	public static double zoomClosenessPreference() {
+		return ProjectPlugin.getPlugin().getPreferenceStore().getDouble(PreferenceConstants.P_ZOOM_REQUIRED_CLOSENESS);
 	}
 }
