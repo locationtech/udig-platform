@@ -10,6 +10,8 @@ import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.project.internal.Map;
+import net.refractions.udig.project.internal.ProjectPlugin;
+import net.refractions.udig.project.preferences.PreferenceConstants;
 import net.refractions.udig.project.ui.internal.DefaultMapViewPart;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -28,9 +30,10 @@ public class View extends DefaultMapViewPart {
 	@Override
 	protected void createResources(List<IGeoResource> resources, 
 			IProgressMonitor monitor) throws IOException {
+		
 		@SuppressWarnings("nls")
-        URL url = FileLocator.find(Activator.getDefault().getBundle(), new Path("data/face.shp"), Collections.emptyMap());
-		IService r = CatalogPlugin.getDefault().getLocalCatalog().acquire(FileLocator.resolve(url), monitor);
+        URL url = FileLocator.resolve(FileLocator.find(Activator.getDefault().getBundle(), new Path("data/face.shp"), Collections.emptyMap()));
+		IService r = CatalogPlugin.getDefault().getLocalCatalog().acquire(url, monitor);
 		resources.add(r.resources(monitor).get(0));
 	}
 	

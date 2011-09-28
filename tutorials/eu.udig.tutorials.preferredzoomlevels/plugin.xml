@@ -36,7 +36,7 @@
                minimized="false"
                relative="org.eclipse.ui.editorss"
                relationship="left"
-               id="eu.udig.tutorials.preferred-zoom-levels.view">
+               id="eu.udig.tutorials.preferredzoomlevels.view">
          </view>
       </perspectiveExtension>
    </extension>
@@ -52,6 +52,16 @@
             </command>
          </menu>
       </menuContribution>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.ui.tool">
+      <actionTool
+            class="eu.udig.tutorials.preferredzoomlevels.ZoomToFeatures"
+            id="eu.udig.tutorials.preferredzoomlevels.zoomToFeatures"
+            name="ZoomToFeatures"
+            onToolbar="true">
+         <enablement></enablement>
+      </actionTool>
    </extension>
 
 </plugin>
