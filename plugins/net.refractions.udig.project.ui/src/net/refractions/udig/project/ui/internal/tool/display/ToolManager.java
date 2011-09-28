@@ -77,14 +77,17 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuCreator;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.action.SubCoolBarManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -221,6 +224,8 @@ public class ToolManager implements IToolManager {
     private volatile IAction cutAction;
     
     private AdapterImpl commandListener;
+    
+    private List<ContributionItem> optionsContribution = new ArrayList<ContributionItem>();
 
     /**
      * Construct <code>ToolManager</code>.
@@ -264,8 +269,9 @@ public class ToolManager implements IToolManager {
             }
         }
         
-        if( activeModalToolProxy  == null )
+        if( activeModalToolProxy  == null ){
         	activeModalToolProxy = defaultModalToolProxy;
+        }
     }
 
 	private String getCategoryIdAttribute(IConfigurationElement element) {
@@ -1853,7 +1859,31 @@ public class ToolManager implements IToolManager {
 		    return; // no change required
 		}
 		this.activeModalToolProxy = modalToolProxy;
+		
+		// connect the tools to the map area
 		setActiveModalTool( modalToolProxy.getModalTool() );
+		
+		// add tool options to the status area
+		IStatusLineManager statusLine = currentEditor.getStatusLineManager();
+		
+		if(statusLine != null ){
+            
+		    //remove old
+            for(ContributionItem contribution : optionsContribution){
+                statusLine.remove(contribution.getId());
+            } 
+            
+            //get the new contributions
+            optionsContribution = modalToolProxy.getOptionsContribution();
+            
+            //set all new contributions
+            for(ContributionItem contribution : optionsContribution){
+                statusLine.appendToGroup(StatusLineManager.BEGIN_GROUP, contribution);
+                contribution.setVisible(true);
+            }       
+            
+            statusLine.update(true);
+		}
 	} 
 	/**
 	 * This method goes through the steps of deactivating the current tool

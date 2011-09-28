@@ -32,6 +32,7 @@ import net.refractions.udig.project.ui.internal.MapToolPaletteFactory;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.project.ui.tool.IToolContext;
 import net.refractions.udig.project.ui.tool.IToolManager;
+import net.refractions.udig.project.ui.tool.options.AbstractToolOptionsContributionItem;
 import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.graphics.Glyph;
@@ -44,6 +45,7 @@ import org.eclipse.gef.internal.ui.palette.editparts.ToolEntryEditPart;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.palette.PaletteViewer;
+import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
@@ -82,8 +84,13 @@ public abstract class ModalItem implements ILazyOpListener {
     protected OpFilter enablement;
     protected List<OperationCategory> operationCategories;
     protected boolean isEnabled = true;
+    
+    private Lock enabledLock=new ReentrantLock();
+    private String preferencePageId;
 
     private ImageDescriptor largeImageDescriptor;
+
+    private List<ContributionItem> optionsContribution = new ArrayList<ContributionItem>();
 
     /**
      * Gets the image descriptor of the item.
@@ -416,7 +423,7 @@ public abstract class ModalItem implements ILazyOpListener {
                 }
             });
     }
-    private Lock enabledLock=new ReentrantLock();
+    
     protected void internalSetEnabled( boolean isEnabled2 ) {
         enabledLock.lock();
         try {
@@ -438,4 +445,40 @@ public abstract class ModalItem implements ILazyOpListener {
         }
         return Collections.unmodifiableList(operationCategories);
     }
+    
+    /**
+     * Sets the Preference Page Id of the item
+     * 
+     * @param id the new Preference Page Id
+     */
+    public void setPreferencePageId( String id ) {
+        this.preferencePageId = id;
+    }
+    /**
+     * Gets the Preference Page Id of the item
+     * 
+     * @return the Preference Page Id of the item.
+     */
+    public String getPreferencePageId() {
+        return preferencePageId;
+    }
+    
+    /**
+     * Sets the tool option class of the item, the class is not instantiated until  the 
+     * <code>getOptionPage()</code> method is called.
+     * 
+     * @param id the new Preference Page Id
+     */
+    public void addOptionsContribution( ContributionItem optionsPage ) {
+        this.optionsContribution.add(optionsPage);
+    }
+    /**
+     * Gets the tool option page of the item
+     * 
+     * @return the AbstractMapEditorOptionsPage of the item.
+     */
+    public List<ContributionItem> getOptionsContribution() {
+        return optionsContribution;
+    }
+
 }

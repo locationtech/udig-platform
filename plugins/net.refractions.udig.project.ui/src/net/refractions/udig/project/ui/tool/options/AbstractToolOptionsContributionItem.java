@@ -14,6 +14,9 @@
  */
 package net.refractions.udig.project.ui.tool.options;
 
+import org.eclipse.jface.action.ContributionItem;
+import org.eclipse.swt.widgets.Composite;
+
 /**
  * TODO Purpose of 
  * <p>
@@ -24,6 +27,12 @@ package net.refractions.udig.project.ui.tool.options;
  * @author leviputna
  * @since 1.2.0
  */
-public abstract class AbstractMapEditorOptionsPage {
+public abstract class AbstractToolOptionsContributionItem extends ContributionItem{
+    
+    /**
+     * The default implementation of this <code>IContributionItem</code>
+     * method does nothing. Subclasses may override.
+     */
+    abstract public void fill(Composite parent);
 
 }

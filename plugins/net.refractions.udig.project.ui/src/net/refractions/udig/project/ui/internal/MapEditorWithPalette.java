@@ -50,10 +50,12 @@ import net.refractions.udig.project.ui.commands.IDrawCommand;
 import net.refractions.udig.project.ui.controls.ScaleRatioLabel;
 import net.refractions.udig.project.ui.internal.commands.draw.DrawFeatureCommand;
 import net.refractions.udig.project.ui.internal.tool.display.ToolManager;
+import net.refractions.udig.project.ui.internal.tool.display.ToolProxy;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.project.ui.tool.ModalTool;
+import net.refractions.udig.project.ui.tool.Tool;
 import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.ui.CRSChooserDialog;
@@ -117,6 +119,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
@@ -133,6 +136,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.SubActionBars2;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -463,6 +467,26 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         control.setFont(new Font(control.getDisplay(), data));
         */
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * Displays a the current CRS and allows to change it
@@ -665,6 +689,11 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                     label = new StatusBarButton(StatusBarButton.CRS_ITEM_ID, full);
                     bar.appendToGroup(StatusLineManager.MIDDLE_GROUP, label);
                     label.setVisible(true);
+                    
+//                    StatusBarToolOptionsPage label2 = new StatusBarToolOptionsPage("An Id",editor);
+//                    bar.appendToGroup(StatusLineManager.BEGIN_GROUP, label2);
+//                    label2.setVisible(true);
+                    
                     bar.update(true);
                     return;
                 }
