@@ -7,7 +7,7 @@
 	<property name="libs_src_dir" value="${lib}${file.separator}sources" />
 	
 	<property environment="env" />
-
+	
 	<target name="clean" depends="teradata-clean" description="deletes external libraries folder">
 		<delete dir="${lib}" />
 	</target>
