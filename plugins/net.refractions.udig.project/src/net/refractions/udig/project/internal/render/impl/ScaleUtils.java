@@ -310,6 +310,7 @@ public final class ScaleUtils {
 		CoordinateReferenceSystem crs = bounds.getCoordinateReferenceSystem();
 
 		int width = displaySize.width;
+		int height = displaySize.height;
 		boolean isLatLong = isLatLong(crs);
 
 		if (isLatLong) {
@@ -325,8 +326,13 @@ public final class ScaleUtils {
 			double refWidthMeters = fromCrsToMeter(bounds.getWidth(), crs);
 			double displayMeterDistancePixels = refWidthMeters * dpi / 2.54
 					* 100.0;
-			double scaleDenominator = displayMeterDistancePixels / width;
-			return scaleDenominator;
+			double widthScaleDenominator = displayMeterDistancePixels / width;
+			double refHeightMeters = ScaleUtils.fromCrsToMeter(bounds.getHeight(), crs);
+			double displayMeterHeightPixels = refHeightMeters * dpi / 2.54
+			    * 100.0;
+			double heightScaleDenominator = displayMeterHeightPixels / height;
+			
+			return Math.sqrt(heightScaleDenominator*heightScaleDenominator + widthScaleDenominator*widthScaleDenominator);
 		}
 	}
 
