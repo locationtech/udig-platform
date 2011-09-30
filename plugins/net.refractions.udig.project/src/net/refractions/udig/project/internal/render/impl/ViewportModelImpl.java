@@ -8,6 +8,7 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -363,23 +364,18 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         return bounds;
     }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated NOT
-     */
-    public void setBounds( ReferencedEnvelope newBounds ) {
+    public void setBounds( ReferencedEnvelope newBounds) {
+    	setBounds(newBounds, false);
+    }
+    public void setBounds( ReferencedEnvelope newBounds, boolean forceContainBBoxZoom ) {
         setCRS(newBounds.getCoordinateReferenceSystem());
-        setBounds((Envelope) newBounds);
+        setBoundsInternal(newBounds,forceContainBBoxZoom);
     }
 
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @uml.property name="bounds"
-     * @generated NOT
-     */
     public void setBounds( Envelope newBounds) {
+    	setBoundsInternal(newBounds, false);
+    }
+    public void setBoundsInternal( Envelope newBounds, boolean forceContainBBoxZoom) {
     	Envelope finalBounds = newBounds;
     	if(getDefaultPreferredScaleDenominators() != getPreferredScaleDenominators() && validState()) {
     		IMapDisplay mapDisplay = getRenderManagerInternal().getMapDisplay();
@@ -390,9 +386,18 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     			referenced = new ReferencedEnvelope(newBounds,getCRS());
     		}
 			double scale = ScaleUtils.calculateScaleDenominator(referenced, mapDisplay.getDisplaySize(), mapDisplay.getDPI());
-			scale = ScaleUtils.calculateClosestScale(getPreferredScaleDenominators(),scale);
+			scale = ScaleUtils.calculateClosestScale(getPreferredScaleDenominators(),scale,ScaleUtils.zoomClosenessPreference());
 			
 			finalBounds = ScaleUtils.calculateBoundsFromScale(scale, mapDisplay.getDisplaySize(), mapDisplay.getDPI(), referenced);
+			if(forceContainBBoxZoom && !finalBounds.contains(newBounds)) {
+				Iterator<Double> tail = getPreferredScaleDenominators().tailSet(scale).iterator();
+				// the tail will include scale because scale is one of the elements in the set.  So drop that
+				tail.next();
+				Double nextLargest = tail.next();
+				if(nextLargest != null) {
+					finalBounds = ScaleUtils.calculateBoundsFromScale(nextLargest, mapDisplay.getDisplaySize(), mapDisplay.getDPI(), referenced);
+				}
+			}
     	}
     	
         Envelope oldBounds = bounds == null ? new Envelope() : bounds;
@@ -1391,5 +1396,4 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     public boolean isBoundsChanging() {
         return this.boundsChanging;
     }
-
 }

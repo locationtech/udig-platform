@@ -108,18 +108,33 @@ public class ID implements Serializable {
         } catch (URISyntaxException e) {
         }
         file = DataUtilities.urlToFile(url);
-        if (file != null) {
-            if (uri != null && uri.isAbsolute() && "file".equals(uri.getScheme())) { //$NON-NLS-1$
-                try {
-                    file = new File(uri);
-                } catch (Throwable t) {
-                    file = null;
-                    if (CatalogPlugin.getDefault().isDebugging()) {
-                        t.printStackTrace();
-                    }
-                }
-            }
-        }
+		if (file != null) {
+			if (uri != null && uri.isAbsolute()
+					&& "file".equals(uri.getScheme())) { //$NON-NLS-1$
+				try {
+					if (uri.getFragment() != null) {
+						// a fragment means the service is the file. so 
+						// canonicalize the file for id or we will have problems
+						// comparing
+						file = file.getCanonicalFile();
+						file = new File(file.getCanonicalPath().substring(0, file.getCanonicalPath().length() - uri.getFragment().length() - 1));
+						URI canonicalURI = file.toURI();
+						this.uri = new URI(canonicalURI.getScheme(),
+								canonicalURI.getRawSchemeSpecificPart(),
+								this.uri.getFragment());
+						this.url = uri.toURL();
+						file = null;
+					} else {
+						file = new File(uri);
+					}
+				} catch (Throwable t) {
+					file = null;
+					if (CatalogPlugin.getDefault().isDebugging()) {
+						t.printStackTrace();
+					}
+				}
+			}
+		}
         if (file != null) {
             try {
                 id = file.getCanonicalPath();

@@ -152,7 +152,7 @@ public class ProfileView extends ViewPart {
 
             try {
                 BufferedWriter bW = new BufferedWriter(new FileWriter(path));
-                bW.write("Progressive\tElevation");
+                bW.write("Progressive\tElevation\n");
                 for( int j = 0; j < data[0].length; j++ ) {
                     for( int i = 0; i < data.length; i++ ) {
                         bW.write(data[i][j] + "\t");

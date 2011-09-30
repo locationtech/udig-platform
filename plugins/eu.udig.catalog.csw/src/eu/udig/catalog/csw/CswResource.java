@@ -38,7 +38,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.data.wfs.WFSDataStore;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.data.wms.xml.WMSSchema;
-import org.geotools.xml.wfs.WFSSchema;
+import org.geotools.data.wfs.v1_0_0.xml.WFSSchema;
 
 import com.vividsolutions.jts.geom.Envelope;
 
