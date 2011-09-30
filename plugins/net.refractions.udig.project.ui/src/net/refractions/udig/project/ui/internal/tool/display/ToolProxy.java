@@ -334,7 +334,6 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
                                 
                                 if(toolElement.getAttribute("class") != null){
                                     try {
-                                        System.out.println(toolElement.toString());
                                         String contributionId = toolElement.getAttribute("id");
                                         
                                         Object optionsContribution = toolElement.createExecutableExtension("class");
