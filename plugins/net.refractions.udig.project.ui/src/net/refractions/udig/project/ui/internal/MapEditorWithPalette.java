@@ -457,26 +457,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         control.setFont(new Font(control.getDisplay(), data));
         */
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     /**
      * Displays a the current CRS and allows to change it
