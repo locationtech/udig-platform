@@ -46,6 +46,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.ISafeRunnable;
+import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.custom.BusyIndicator;
@@ -135,6 +136,11 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
             name = Messages.ToolProxy_unnamed; 
         String toolTip = tool.getAttribute("tooltip"); //$NON-NLS-1$
         String iconID = tool.getAttribute("icon"); //$NON-NLS-1$
+        
+        String preferencePageId = tool.getAttribute("preferencePageId"); //$NON-NLS-1$
+        //setup attributes used by status bare tool options
+        setPreferencePageId(preferencePageId);
+        
 
         defaultCursorID = tool.getAttribute("toolCursorId"); //$NON-NLS-1$
         
@@ -198,6 +204,8 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         if (id.equals(DEFAULT_ID)) {
         	toolManager.defaultModalToolProxy = this;
         }
+        
+        
     }
 
     private List<OperationCategory> parseOperationCategories(IConfigurationElement toolElement) {
@@ -318,6 +326,29 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
                                     ProjectUIPlugin.log("Error loading tool", e); //$NON-NLS-1$
                                 }
                             }
+                            
+                            
+                            IConfigurationElement[] toolElementChildren = element.getChildren();
+                            
+                            for ( IConfigurationElement toolElement : toolElementChildren){
+                                
+                                if(toolElement.getAttribute("class") != null){
+                                    try {
+                                        String contributionId = toolElement.getAttribute("id");
+                                        
+                                        Object optionsContribution = toolElement.createExecutableExtension("class");
+                                        ContributionItem contributionItem = (ContributionItem) optionsContribution;
+                                        contributionItem.setId(contributionId);
+                                        
+                                        addOptionsContribution((ContributionItem) optionsContribution);
+                                    } catch (CoreException e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    }
+                                }
+                                
+                            }
+
 
                         }
                     });

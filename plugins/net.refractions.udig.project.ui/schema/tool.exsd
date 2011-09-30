@@ -139,6 +139,7 @@ This declaration can be overridden by the selectionProvider attribute of a parti
             <element ref="cursor" minOccurs="0" maxOccurs="1"/>
             <element ref="enablement" minOccurs="0" maxOccurs="1"/>
             <element ref="operationCategory" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="toolOption" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="tooltip" type="string">
             <annotation>
@@ -245,6 +246,13 @@ If this attribute is not used then the selectionProvider attribute in the catego
                <appinfo>
                   <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.selection.provider.AbstractMapEditorSelectionProvider"/>
                </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="preferencePageId" type="string">
+            <annotation>
+               <documentation>
+                  The id of the preference page used to conviger this tool, if null the parent tool preference page will be used.
+               </documentation>
             </annotation>
          </attribute>
       </complexType>
@@ -670,6 +678,35 @@ It is undefined what happens when two tool cursors are defined with the same id;
             Indicates what &quot;Applicability&quot; this tool is part of.
          </documentation>
       </annotation>
+   </element>
+
+   <element name="toolOption">
+      <annotation>
+         <documentation>
+            Allows a tool to contribute a ContributionItem to the status area when the tool is active. This ContributionItem can be used to control tool options; we ask that this facility be used to provide quick access to tool preferences (as defined by preferencePageId).
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  id used by the status bar to refer to this cursor.
+
+id are used to add and remove the option contribution from the status bar, if multiple option contributions exist with the same id they may be added and removes twice.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string">
+            <annotation>
+               <documentation>
+                  We recommend the use of AbstractToolOptionsContributionItem which provides easy access to the tool preference settings.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.eclipse.jface.action.ContributionItem:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
    </element>
 
    <annotation>
