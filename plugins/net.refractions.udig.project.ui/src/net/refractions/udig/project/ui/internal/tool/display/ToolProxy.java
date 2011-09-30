@@ -333,19 +333,20 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
                             
                             for ( IConfigurationElement toolElement : toolElementChildren){
                                 
-                                
-                                try {
-                                    System.out.println(toolElement.toString());
-                                    String contributionId = toolElement.getAttribute("id");
-                                    
-                                    Object optionsContribution = toolElement.createExecutableExtension("class");
-                                    ContributionItem contributionItem = (ContributionItem) optionsContribution;
-                                    contributionItem.setId(contributionId);
-                                    
-                                    addOptionsContribution((ContributionItem) optionsContribution);
-                                } catch (CoreException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
+                                if(toolElement.getAttribute("class") != null){
+                                    try {
+                                        System.out.println(toolElement.toString());
+                                        String contributionId = toolElement.getAttribute("id");
+                                        
+                                        Object optionsContribution = toolElement.createExecutableExtension("class");
+                                        ContributionItem contributionItem = (ContributionItem) optionsContribution;
+                                        contributionItem.setId(contributionId);
+                                        
+                                        addOptionsContribution((ContributionItem) optionsContribution);
+                                    } catch (CoreException e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    }
                                 }
                                 
                             }

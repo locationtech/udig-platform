@@ -15,24 +15,27 @@
 package net.refractions.udig.project.ui.tool.options;
 
 import org.eclipse.jface.action.ContributionItem;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * TODO Purpose of 
- * <p>
- * <ul>
- * <li></li>
- * </ul>
- * </p>
+ * This object is used when creating tool options, it provide access to the 
+ * preference store so that tool options can update preferences 
+ * when changes.
+ * 
+ * TODO Provide a method to load / and update preferences. 
  * @author leviputna
  * @since 1.2.0
  */
 public abstract class AbstractToolOptionsContributionItem extends ContributionItem{
+    
+    private IPreferenceStore store;
     
     /**
      * The default implementation of this <code>IContributionItem</code>
      * method does nothing. Subclasses may override.
      */
     abstract public void fill(Composite parent);
+
 
 }

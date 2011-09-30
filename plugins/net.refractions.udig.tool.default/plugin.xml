@@ -44,14 +44,9 @@
                id="net.refractions.udig.tools.Pan"
                name="%pan.tool.name"
                onToolbar="true"
-               optionsPage="net.refractions.udig.tools.options.PanToolOptionsContribution"
                toolCursorId="move"
                toolOptions="net.refractions.udig.tools.options.PanOptionsPage"
                tooltip="%pan.tool.tooltip">
-            <toolOption
-                  class="net.refractions.udig.tools.options.PanToolOptionsContribution"
-                  id="pan">
-            </toolOption>
          </modalTool>
          <backgroundTool
                name="ScrollZoom"

@@ -58,6 +58,7 @@ import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.tool.Tool;
 import net.refractions.udig.project.ui.tool.ToolConstants;
+import net.refractions.udig.project.ui.tool.options.PreferencesShortcutToolOptionsContributionItem;
 import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.ui.IDropAction;
 import net.refractions.udig.ui.IDropHandlerListener;
@@ -517,7 +518,9 @@ public class ToolManager implements IToolManager {
             disable(actionCategories);
             disable(menuCategories);
             disable(modalCategories);
-        }    	
+        }   
+        
+        
     }
     /**
      * Churn through the category disabling all tools.
@@ -547,9 +550,11 @@ public class ToolManager implements IToolManager {
     class EditManagerListener implements IEditManagerListener{
     	
     	public void setCurrentMap(IMap map){
+    	   
     	}
 
         public void changed( EditManagerEvent event ) {
+            
             if (selectedLayerListener != this) {
                 event.getSource().removeListener(this);
                 return;
@@ -645,6 +650,8 @@ public class ToolManager implements IToolManager {
                 // work around to allow the 1st modal tool to be active
                 if( activeTool == null ){
                     activeTool = activeModalToolProxy.getModalTool(); 
+                    // add tool options to the status area
+                    initToolOptionsContribution(editor.getStatusLineManager(), activeModalToolProxy);
                 }
                 activeModalToolProxy.getModalTool().setActive(true);                
             }
@@ -1374,6 +1381,7 @@ public class ToolManager implements IToolManager {
     private IAction actionCLOSE;
     private IAction actionSAVE;
     private IAction actionCLOSE_ALL;
+    private PreferencesShortcutToolOptionsContributionItem preferencesShortcutToolOptions;
 
     /**
      * Contributes the common global actions.
@@ -1864,11 +1872,30 @@ public class ToolManager implements IToolManager {
 		setActiveModalTool( modalToolProxy.getModalTool() );
 		
 		// add tool options to the status area
-		IStatusLineManager statusLine = currentEditor.getStatusLineManager();
-		
-		if(statusLine != null ){
+        initToolOptionsContribution(currentEditor.getStatusLineManager(), getActiveToolProxy());
+	} 
+	
+	/**
+	 * This method goes through the steps of deactivating the current tool option contribution and 
+	 * activating the new tool option contribution.
+	 * 
+	 * @param statusLine
+	 * @param modalToolProxy
+	 */
+	private void initToolOptionsContribution(IStatusLineManager statusLine, ToolProxy modalToolProxy){
+	    if(statusLine != null ){
             
-		    //remove old
+            if(preferencesShortcutToolOptions == null || preferencesShortcutToolOptions.isDisposed()){
+                preferencesShortcutToolOptions = new PreferencesShortcutToolOptionsContributionItem();
+                statusLine.appendToGroup(StatusLineManager.BEGIN_GROUP, preferencesShortcutToolOptions);
+                preferencesShortcutToolOptions.setVisible(true);
+            }else{
+                preferencesShortcutToolOptions.update();
+            }
+            
+            //TODO, cache contributions instead of destroying them and recreating them
+            
+            //remove old tool contribution
             for(ContributionItem contribution : optionsContribution){
                 statusLine.remove(contribution.getId());
             } 
@@ -1883,8 +1910,9 @@ public class ToolManager implements IToolManager {
             }       
             
             statusLine.update(true);
-		}
-	} 
+        }
+	}
+	
 	/**
 	 * This method goes through the steps of deactivating the current tool
 	 * and activating the new one.
@@ -1896,6 +1924,7 @@ public class ToolManager implements IToolManager {
             // we cannot run with out a tool; so we will sue the default!
             modalTool = defaultModalToolProxy.getModalTool();
         }
+
         if (activeTool == modalTool) {
             return; // no change required!
         }
