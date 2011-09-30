@@ -33,7 +33,7 @@ public abstract class AbstractToolOptionsContributionItem extends ContributionIt
     
     /**
      * The default implementation of this <code>IContributionItem</code>
-     * method does nothing. Subclasses may override.
+     * Subclasses must override to provide config to tool options UI.
      */
     abstract public void fill(Composite parent);
 
