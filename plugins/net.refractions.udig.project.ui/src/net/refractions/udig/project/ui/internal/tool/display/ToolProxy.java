@@ -36,7 +36,6 @@ import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.tool.Tool;
 import net.refractions.udig.project.ui.tool.ToolConstants;
 import net.refractions.udig.project.ui.tool.ToolLifecycleListener;
-import net.refractions.udig.project.ui.tool.options.AbstractToolOptionsContributionItem;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.operations.EnablementUtil;
 import net.refractions.udig.ui.operations.LazyOpFilter;
