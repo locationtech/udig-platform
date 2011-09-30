@@ -1887,9 +1887,8 @@ public class ToolManager implements IToolManager {
                 preferencesShortcutToolOptions = new PreferencesShortcutToolOptionsContributionItem();
                 statusLine.appendToGroup(StatusLineManager.BEGIN_GROUP, preferencesShortcutToolOptions);
                 preferencesShortcutToolOptions.setVisible(true);
-            }else{
-                preferencesShortcutToolOptions.update();
             }
+            preferencesShortcutToolOptions.update(modalToolProxy);
             
             //TODO, cache contributions instead of destroying them and recreating them
             
