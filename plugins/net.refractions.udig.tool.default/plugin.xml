@@ -45,7 +45,6 @@
                name="%pan.tool.name"
                onToolbar="true"
                toolCursorId="move"
-               toolOptions="net.refractions.udig.tools.options.PanOptionsPage"
                tooltip="%pan.tool.tooltip">
          </modalTool>
          <backgroundTool
