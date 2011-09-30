@@ -49,11 +49,9 @@ import net.refractions.udig.project.ui.UDIGEditorInput;
 import net.refractions.udig.project.ui.commands.IDrawCommand;
 import net.refractions.udig.project.ui.controls.ScaleRatioLabel;
 import net.refractions.udig.project.ui.internal.commands.draw.DrawFeatureCommand;
-import net.refractions.udig.project.ui.internal.tool.display.ToolManager;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.ui.CRSChooserDialog;
@@ -75,13 +73,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.gef.DefaultEditDomain;
-import org.eclipse.gef.EditDomain;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.palette.FlyoutPaletteComposite.FlyoutPreferences;
-import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
-import org.eclipse.gef.ui.views.palette.PalettePage;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.GroupMarker;
@@ -665,6 +659,11 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                     label = new StatusBarButton(StatusBarButton.CRS_ITEM_ID, full);
                     bar.appendToGroup(StatusLineManager.MIDDLE_GROUP, label);
                     label.setVisible(true);
+                    
+//                    StatusBarToolOptionsPage label2 = new StatusBarToolOptionsPage("An Id",editor);
+//                    bar.appendToGroup(StatusLineManager.BEGIN_GROUP, label2);
+//                    label2.setVisible(true);
+                    
                     bar.update(true);
                     return;
                 }
