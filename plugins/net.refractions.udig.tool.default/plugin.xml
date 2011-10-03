@@ -37,15 +37,20 @@
          </modalTool>
          <modalTool
                categoryId="net.refractions.udig.tool.category.pan"
-               class="net.refractions.udig.tools.internal.Pan"
+               class="net.refractions.udig.tools.internal.PanTool"
                commandHandler="net.refractions.udig.tools.internal.PanHandler"
                commandIds="net.refractions.udig.tools.panRightCommand,net.refractions.udig.tools.panLeftCommand,net.refractions.udig.tools.panUpCommand,net.refractions.udig.tools.panDownCommand"
                icon="icons/etool16/pan_mode.gif"
                id="net.refractions.udig.tools.Pan"
                name="%pan.tool.name"
                onToolbar="true"
+               preferencePageId="net.refractions.udig.tool.default.navPage"
                toolCursorId="move"
                tooltip="%pan.tool.tooltip">
+            <toolOption
+                  class="net.refractions.udig.tools.internal.PanTool$OptionContribtionItem"
+                  id="panOptions">
+            </toolOption>
          </modalTool>
          <backgroundTool
                name="ScrollZoom"
@@ -129,26 +134,6 @@
                      name="Middle Mouse Pan"
                      tooltip="Pan holding the middle mouse down.">
                </backgroundTool>
-               <modalTool
-                     categoryId="net.refractions.udig.tool.category.pan"
-                     class="net.refractions.udig.tools.internal.FixedScalePan"
-                     icon="icons/etool16/pan_mode.gif"
-                     id="net.refractions.udig.tools.FixedScalePan"
-                     name="%FixedScalePan.name"
-                     onToolbar="true"
-                     toolCursorId="move"
-                     tooltip="%FixedScalePan.tooltip">
-               </modalTool>
-               <modalTool
-                     categoryId="net.refractions.udig.tool.category.pan"
-                     class="net.refractions.udig.tools.internal.ScrollPanTool"
-                     icon="icons/etool16/pan_mode.gif"
-                     id="net.refractions.udig.tools.ScrollPan"
-                     name="%ScrollPanTool.name"
-                     onToolbar="true"
-                     toolCursorId="move"
-                     tooltip="%ScrollPanTool.tooltip">
-               </modalTool>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -232,4 +217,19 @@
             schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
             sequence="F5"/>
    </extension>
+      <extension
+            point="org.eclipse.ui.preferencePages">
+         <page
+               category="net.refractions.udig.project.ui.preferences.tool"
+               class="net.refractions.udig.tools.internal.NavigationToolPreferencePage"
+               id="net.refractions.udig.tool.default.navPage"
+               name="%navPage.name">
+         </page>
+      </extension>
+      <extension
+            point="org.eclipse.equinox.preferences.preferences">
+         <initializer
+               class="net.refractions.udig.tools.internal.NavigationPreferenceInitializer">
+         </initializer>
+      </extension>
 </plugin>

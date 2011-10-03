@@ -14,13 +14,27 @@
  */
 package net.refractions.udig.project.ui.tool.options;
 
+import java.awt.SystemColor;
+
+import net.refractions.udig.project.ui.controls.ScaleRatioLabel;
 import net.refractions.udig.project.ui.internal.tool.display.ToolProxy;
 
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.jface.action.ContributionItem;
+import org.eclipse.jface.action.StatusLineLayoutData;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.FontMetrics;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowData;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -44,9 +58,11 @@ public class PreferencesShortcutToolOptionsContributionItem extends Contribution
 
     final String defultPreferencePage = "net.refractions.udig.tools.edit.preferences";
 
-    private ToolBar toolBar;
-    private ToolItem button;
+    //private ToolBar toolBar;
+    private Label icon;
     private ToolProxy activeTool;
+    private Link link;
+
     private Listener listener = new Listener(){
         @Override
         public void handleEvent( Event event ) {
@@ -70,20 +86,64 @@ public class PreferencesShortcutToolOptionsContributionItem extends Contribution
             }
         }
     };
+    private Composite group;
 
     @Override
     public void fill( Composite parent ) {
-        toolBar = new ToolBar(parent, SWT.NONE);
-        button = new ToolItem(toolBar, SWT.PUSH);
-        button.addListener(SWT.Selection, listener);
-        toolBar.pack();
-        //new Label(parent, SWT.SEPARATOR);
+        Label separator = new Label(parent, SWT.SEPARATOR);
+        
+        group = new Composite(parent, SWT.NO_SCROLL|SWT.NO_TRIM );
+        // group.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_BLUE));
+        StatusLineLayoutData statusLineLayoutData = new StatusLineLayoutData();
+        statusLineLayoutData.widthHint = SWT.DEFAULT;
+        statusLineLayoutData.heightHint = ScaleRatioLabel.STATUS_LINE_HEIGHT;
+        group.setLayoutData(statusLineLayoutData);
+
+        GridLayout gridLayout = new GridLayout(2,false);
+        gridLayout.horizontalSpacing=0;
+        gridLayout.marginTop=0;
+        gridLayout.marginBottom=0;
+        gridLayout.marginHeight=0;
+        gridLayout.marginLeft=0;
+        gridLayout.marginRight=0;
+        gridLayout.marginWidth=0;
+        group.setLayout(gridLayout);
+        
+        icon = new Label( group, SWT.HORIZONTAL );
+        icon.addListener(SWT.Selection, listener);
+        GridData layoutData  = new GridData(SWT.RIGHT,SWT.CENTER,false,true);
+        layoutData.widthHint=16;
+        layoutData.heightHint=16;
+//        GridData layoutData = data;
+//        layoutData.heightHint=ScaleRatioLabel.STATUS_LINE_HEIGHT;
+        layoutData.horizontalIndent=0;
+//        layoutData.verticalIndent=0;        
+        icon.setLayoutData( layoutData);
+        
+        link = new Link(group, SWT.CENTER );
+        link.addListener(SWT.Selection,listener);
+        layoutData  = new GridData(SWT.RIGHT,SWT.CENTER,false,true);
+//        layoutData.heightHint=ScaleRatioLabel.STATUS_LINE_HEIGHT;
+        layoutData.horizontalIndent=0;
+//        layoutData.verticalIndent=0;        
+        link.setLayoutData(layoutData);
         refreshButton();
     }
     private void refreshButton() {
-        if( activeTool != null && button != null ){
-            button.setImage(activeTool.getImage());
-            button.setToolTipText(activeTool.getName() + " Preferences");
+        if( activeTool != null ){
+            if( icon != null && !icon.isDisposed() ){
+                icon.setImage(activeTool.getImage());
+                icon.setToolTipText(activeTool.getToolTipText());
+            }
+            if( link != null && !link.isDisposed() ){
+                String preferencePageId = activeTool.getPreferencePageId();
+                if( preferencePageId == null ){
+                    preferencePageId = defultPreferencePage;
+                }
+                String text = "<a href=\""+preferencePageId+"\">"+activeTool.getName()+"</a>";
+                link.setText(text);
+                link.setToolTipText(activeTool.getToolTipText());
+            }
         }
     }
     /**
@@ -98,15 +158,24 @@ public class PreferencesShortcutToolOptionsContributionItem extends Contribution
     }
 
     public boolean isDisposed() {
-        return toolBar.isDisposed();
+        return group == null || group.isDisposed();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-
-        toolBar.dispose();
-        button.dispose();
+        if( icon != null ){
+            icon.dispose();
+            icon = null;
+        }
+        if( link != null ){
+            link.dispose();
+            link = null;
+        }
+        if( group != null ){
+            group.dispose();
+            group = null;
+        }
         activeTool = null;
     }
 
