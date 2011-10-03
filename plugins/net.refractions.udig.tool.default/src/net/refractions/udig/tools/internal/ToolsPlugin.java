@@ -18,7 +18,7 @@ public class ToolsPlugin extends AbstractUIPlugin {
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
 	
-    static private final String ID = "net.refractions.udig.tools";  //$NON-NLS-1$
+    static public final String ID = "net.refractions.udig.tools";  //$NON-NLS-1$
 	/**
 	 * The constructor.
 	 */

@@ -26,6 +26,10 @@ public class Messages extends NLS {
 	public static String CursorPosition_not_a_number;
 	public static String CursorPosition_transformError;
 	public static String CursorPosition_tooltip;
+    public static String Navigation_Description;
+    public static String Navigation_Title;
+    public static String Navigation_Scale;
+    public static String Navigation_Tiled;
 	public static String ScrollZoom_scroll_zoom;
 	static {
 		// initialize resource bundle
