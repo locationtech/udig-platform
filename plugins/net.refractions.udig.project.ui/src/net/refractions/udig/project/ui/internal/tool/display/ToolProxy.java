@@ -257,7 +257,6 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
             
         } else if ( type == MODAL && toolManager.getActiveToolProxy() == this) {
         	ModalTool modalTool =  getModalTool();
-        	
         	modalTool.setContext(toolContext);
             String currentCursorID = modalTool.getCursorID();
             toolContext.getViewportPane().setCursor(
