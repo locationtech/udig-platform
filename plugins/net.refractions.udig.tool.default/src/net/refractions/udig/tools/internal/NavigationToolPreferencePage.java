@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2004, Refractions Research Inc.
+ * (C) 2011, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -14,14 +14,9 @@
  */
 package net.refractions.udig.tools.internal;
 
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.preferences.PreferenceConstants;
-
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -31,8 +26,8 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  * @author Jody Garnett (LISAsoft)
  */
 public class NavigationToolPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-    public static final String SCALE = "scale";
-    public static final String TILED = "titled";
+    public static final String SCALE = "scale"; //$NON-NLS-1$
+    public static final String TILED = "titled"; //$NON-NLS-1$
 
     private BooleanFieldEditor scale;
 
@@ -42,13 +37,14 @@ public class NavigationToolPreferencePage extends FieldEditorPreferencePage impl
         super(GRID);
         IPreferenceStore store = ToolsPlugin.getDefault().getPreferenceStore();
         setPreferenceStore(store);
-        setDescription("Navigation");
+        setTitle(Messages.Navigation_Title);
+        setDescription(Messages.Navigation_Description);
     }
 
     protected void createFieldEditors() {
-        scale = new BooleanFieldEditor(SCALE, "Fixed Scale", getFieldEditorParent());
+        scale = new BooleanFieldEditor(SCALE, Messages.Navigation_Scale, getFieldEditorParent());
         addField(scale);
-        tiled = new BooleanFieldEditor(TILED, "Tiled", getFieldEditorParent());
+        tiled = new BooleanFieldEditor(TILED, Messages.Navigation_Tiled, getFieldEditorParent());
         addField(tiled);
     }
 
