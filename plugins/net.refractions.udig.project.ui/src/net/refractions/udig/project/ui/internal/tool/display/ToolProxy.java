@@ -119,34 +119,35 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
      * Creates an new instance of MapViewport.ToolAction
      * 
      * @param extension The Tool extension
-     * @param tool The configuration element which describes the tool
+     * @param definition The configuration element which describes the tool
      * @param toolManager ToolManager responsible for this tool
      */
-    public ToolProxy( IExtension extension, IConfigurationElement tool, ToolManager toolManager ) {
+    public ToolProxy( IExtension extension, IConfigurationElement definition, ToolManager toolManager ) {
         super();
         
         this.toolManager = toolManager;
         
-        categoryId = tool.getAttribute("categoryId"); //$NON-NLS-1$
-        String type = tool.getName();
+        categoryId = definition.getAttribute("categoryId"); //$NON-NLS-1$
+        String type = definition.getName();
         String pluginid = extension.getNamespaceIdentifier() ;
-        String id = tool.getAttribute("id"); //$NON-NLS-1$
-        String name = tool.getAttribute("name"); //$NON-NLS-1$
+        String id = definition.getAttribute("id"); //$NON-NLS-1$
+        String name = definition.getAttribute("name"); //$NON-NLS-1$
         if (name == null)
             name = Messages.ToolProxy_unnamed; 
-        String toolTip = tool.getAttribute("tooltip"); //$NON-NLS-1$
-        String iconID = tool.getAttribute("icon"); //$NON-NLS-1$
+        String toolTip = definition.getAttribute("tooltip"); //$NON-NLS-1$
+        String iconID = definition.getAttribute("icon"); //$NON-NLS-1$
+        String largeIconID = definition.getAttribute("largeIcon"); //$NON-NLS-1$
         
-        String preferencePageId = tool.getAttribute("preferencePageId"); //$NON-NLS-1$
+        String preferencePageId = definition.getAttribute("preferencePageId"); //$NON-NLS-1$
         //setup attributes used by status bare tool options
         setPreferencePageId(preferencePageId);
         
 
-        defaultCursorID = tool.getAttribute("toolCursorId"); //$NON-NLS-1$
+        defaultCursorID = definition.getAttribute("toolCursorId"); //$NON-NLS-1$
         
         //FIXME For compatibility. To BE REMOVED later.
         if(defaultCursorID == null){
-        	IConfigurationElement[] children = tool.getChildren("cursor"); //$NON-NLS-1$
+        	IConfigurationElement[] children = definition.getChildren("cursor"); //$NON-NLS-1$
         	if(children.length > 0){
         		CursorProxy cursorProxy = new CursorProxy(children[0]);
         		toolManager.cursorsCache.put(cursorProxy.getID(), cursorProxy);
@@ -156,34 +157,33 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         	}
         }
         
-        OpFilter parseEnablement = EnablementUtil.parseEnablement( extension.getNamespaceIdentifier()+"."+tool.getName(), tool.getChildren("enablement")); //$NON-NLS-1$ //$NON-NLS-2$;
+        OpFilter parseEnablement = EnablementUtil.parseEnablement( extension.getNamespaceIdentifier()+"."+definition.getName(), definition.getChildren("enablement")); //$NON-NLS-1$ //$NON-NLS-2$;
         enablement = new LazyOpFilter(this, parseEnablement); 
-        operationCategories = parseOperationCategories(tool);
+        operationCategories = parseOperationCategories(definition);
         
-        String bool = tool.getAttribute("hasCustomControl"); //$NON-NLS-1$
+        String bool = definition.getAttribute("hasCustomControl"); //$NON-NLS-1$
         hasControl = ((bool != null) && bool.equalsIgnoreCase("true")) ? true : false; //$NON-NLS-1$
-        bool = tool.getAttribute("onToolbar"); //$NON-NLS-1$
+        bool = definition.getAttribute("onToolbar"); //$NON-NLS-1$
         onToolbar = ((bool != null) && bool.equalsIgnoreCase("true")) ? true : false; //$NON-NLS-1$
-        menuPath = tool.getAttribute("menuPath"); //$NON-NLS-1$
+        menuPath = definition.getAttribute("menuPath"); //$NON-NLS-1$
         ImageDescriptor icon;
         if (iconID == null) {
             icon = null;
         } else {
             icon = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid, iconID);
-            
-            if( "icons/etool16/pan_mode.gif".equals( iconID )){
-                String largeIconID = iconID.replace("etool16","etool24");
-                
-                ImageDescriptor large = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid, largeIconID);
-                setLargeImageDescriptor( large );
-            }
-            else {
-                setLargeImageDescriptor( icon );
-            }
+            setImageDescriptor(icon);
         }
-        setImageDescriptor(icon);
         
-        this.element = tool;
+        if (largeIconID == null ) {
+            // default to normal size so we have something
+            setLargeImageDescriptor( icon );
+        }
+        else {
+            ImageDescriptor largeIcon = icon = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid, largeIconID);
+            setLargeImageDescriptor( largeIcon );
+        }
+        
+        this.element = definition;
         setName(name);
         setToolTipText(toolTip);
         setId(id);
@@ -193,9 +193,9 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
             this.type = BACKGROUND;
         else if (type.equals("actionTool")) //$NON-NLS-1$
             this.type = ACTION;
-        handlerType = tool.getAttribute(HandlerProxy.ID);
+        handlerType = definition.getAttribute(HandlerProxy.ID);
 
-        String unparsedCommandIds = tool.getAttribute("commandIds"); //$NON-NLS-1$
+        String unparsedCommandIds = definition.getAttribute("commandIds"); //$NON-NLS-1$
         if (unparsedCommandIds != null && unparsedCommandIds.length() > 0)
             commandIds = unparsedCommandIds.split(","); //$NON-NLS-1$
         else

@@ -141,6 +141,45 @@ This declaration can be overridden by the selectionProvider attribute of a parti
             <element ref="operationCategory" minOccurs="0" maxOccurs="unbounded"/>
             <element ref="toolOption" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  The human readable, display, name of the tool.
+
+For internationalization you should consider using %toolName.name%, where toolName.name is an entry in plugin.propertiers
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="icon" type="string">
+            <annotation>
+               <documentation>
+                  icon used to represent the tool in a palette, toolbar or menu. The icon should be 16x16 and conform to the Eclipse User Interface Guidelines.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="largeIcon" type="string">
+            <annotation>
+               <documentation>
+                  icon used to represent the tool in a palette when the use has requested Large Icons.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A unique id for tool extension
+               </documentation>
+            </annotation>
+         </attribute>
          <attribute name="tooltip" type="string">
             <annotation>
                <documentation>
@@ -163,39 +202,10 @@ For internationalization you should consider using %toolName.tooltip%, where too
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="icon" type="string">
-            <annotation>
-               <documentation>
-                  The icon that will be used to represent the tool in a toolbar or menu.
-               </documentation>
-               <appinfo>
-                  <meta.attribute kind="resource"/>
-               </appinfo>
-            </annotation>
-         </attribute>
-         <attribute name="id" type="string" use="required">
-            <annotation>
-               <documentation>
-                  A unique id for tool extension
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="name" type="string">
-            <annotation>
-               <documentation>
-                  The human readable, display, name of the tool.
-
-For internationalization you should consider using %toolName.name%, where toolName.name is an entry in plugin.propertiers
-               </documentation>
-               <appinfo>
-                  <meta.attribute translatable="true"/>
-               </appinfo>
-            </annotation>
-         </attribute>
          <attribute name="onToolbar" type="boolean" use="default" value="true">
             <annotation>
                <documentation>
-                  True if the the tool will appear on the Toolbar.
+                  Mark the tool as suitable for the toolbar or palette.
                </documentation>
             </annotation>
          </attribute>
