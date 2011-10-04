@@ -290,6 +290,8 @@ public class Messages extends NLS {
 		try {
 			field = Messages.class.getDeclaredField(fieldName);
 			return (String) field.get(null);
+		} catch(NoSuchFieldException ignore){
+		    return null; // not available (example tooltip or description not available)
 		} catch (Exception e) {
 			UiPlugin.log("Error loading key " + fieldName, e); //$NON-NLS-1$
 		}

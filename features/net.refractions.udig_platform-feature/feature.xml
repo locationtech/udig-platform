@@ -2,7 +2,7 @@
 <feature
       id="net.refractions.udig_platform"
       label="net.refractions.udig_platform-feature"
-      version="1.2.2.qualifier"
+      version="1.2.3.qualifier"
       provider-name="Refractions Research">
 
    <description url="http://udig.refractions.net/confluence/display/DEV/1+GIS+Platform">
