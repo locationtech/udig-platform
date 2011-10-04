@@ -27,12 +27,9 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * TODO Purpose of 
- * <p>
- * <ul>
- * <li></li>
- * </ul>
- * </p>
+ * Provides a tool option contribution to the map status bar allowing users to 
+ * change the snapping preferences.
+ * 
  * @author leviputna
  * @since 1.2.0
  */
