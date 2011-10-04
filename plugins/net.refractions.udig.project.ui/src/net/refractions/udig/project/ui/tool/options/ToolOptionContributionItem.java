@@ -24,6 +24,7 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -69,12 +70,20 @@ public abstract class ToolOptionContributionItem extends ContributionItem
                 if (selection != selectionPref) {
                     getPreferenceStore().setValue(preferenceString, selection);
                 }
+            }else if (e.widget instanceof Combo) {
+                Combo combo = (Combo) e.widget;
+                String selection = behaviour[combo.getSelectionIndex()];
+                String selectionPref = getPreferenceStore().getString(preferenceString);
+                if (selection != selectionPref) {
+                    getPreferenceStore().setValue(preferenceString, selection);
+                }
             }
         }
         @Override
         public void widgetDefaultSelected( SelectionEvent e ) {
         }
     };
+    private String[] behaviour;
 
     protected void setPreferenceStore( IPreferenceStore store ) {
         this.store = store;
@@ -124,6 +133,16 @@ public abstract class ToolOptionContributionItem extends ContributionItem
         fields.put(button, preferenceString);
         // normally we would use button.setData but ContributionItems gets stored there
         button.addSelectionListener(selectionListener);
+    }
+    
+    public void addField( String preferenceString, Combo combo, String[] behaviour ) {
+        if (preferenceString == null) {
+            throw new NullPointerException("PreferenceString required");
+        }
+        this.behaviour = behaviour;
+        fields.put(combo, preferenceString);
+        combo.addSelectionListener(selectionListener);
+        
     }
 
     /**
@@ -175,12 +194,16 @@ public abstract class ToolOptionContributionItem extends ContributionItem
      * @param preferenceStore
      */
     protected void update( IPreferenceStore preferenceStore ) {
+        
         for( Control control : fields.keySet() ) {
+            
             if (control == null || control.isDisposed()) {
                 continue;
             }
+
             String preferenceString = fields.get(control);
             if (preferenceString == null) continue;
+            
             if (control instanceof Button) {
                 Button button = (Button) control;
                 boolean selection = button.getSelection();
@@ -188,6 +211,19 @@ public abstract class ToolOptionContributionItem extends ContributionItem
                 if (selection != selectionPref) {
                     button.setSelection(selectionPref);
                 }
+            } else if (control instanceof Combo) {
+                
+                Combo combo = (Combo) control;
+            
+//                String selection = behaviour[combo.getSelectionIndex()];
+//                
+                String selectionPref = getPreferenceStore().getString(preferenceString);
+                //if (selection != selectionPref) {
+                    for(int i = 0; i < behaviour.length; i++){
+                        if(selectionPref.equals(behaviour[i]))
+                            combo.select(i);
+                    }
+               // }
             }
         }
     }
