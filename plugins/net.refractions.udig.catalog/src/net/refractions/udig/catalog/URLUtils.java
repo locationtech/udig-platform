@@ -54,6 +54,29 @@ public class URLUtils {
             return false;
         }
         boolean sameProtocol = url2.getProtocol().equalsIgnoreCase(url1.getProtocol());
+        
+        if("file".equals(url2.getProtocol())) {
+        	// take into account file links on linux and osx
+        	try {
+				String path1 = urlToFile(url1).getCanonicalPath();
+				String path2 = urlToFile(url2).getCanonicalPath();
+				
+				if(stripRef) {
+					if(url1.getRef()!=null) {
+						path1 = path1.substring(0, path1.length() - url1.getRef().length() - 1);
+					}
+					if(url2.getRef()!=null) {
+						path2 = path2.substring(0, path2.length() - url2.getRef().length() - 1);
+					}
+				}
+				
+				return path1.equals(path2);
+			} catch (IOException e) {
+				CatalogPlugin.log("Unable to compare 2 file URLs as files because of an exception.", e);
+			}
+        	
+        }
+        
         boolean sameHost = ((url2.getHost() == null || "".equals(url2.getHost())) || (url2.getHost() != null && url2.getHost().equalsIgnoreCase(url1.getHost()))); //$NON-NLS-1$
         boolean samePath = ((url2.getPath() == null || "".equals(url2.getPath())) || (url2.getPath() != null && url2.getPath().equalsIgnoreCase(url1.getPath()))); //$NON-NLS-1$
         boolean sameQuery = ((url2.getQuery() == null || "".equals(url2.getQuery())) || (url2.getQuery() != null && url2.getQuery().equalsIgnoreCase(url1.getQuery()))); //$NON-NLS-1$

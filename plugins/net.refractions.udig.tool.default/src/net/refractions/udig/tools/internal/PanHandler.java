@@ -31,7 +31,7 @@ import org.eclipse.core.commands.ExecutionException;
  */
 public class PanHandler extends AbstractHandler implements IToolHandler {
     
-    private static Pan TOOL;
+    private static PanTool TOOL;
     private String id;
     private static final String LEFT = "net.refractions.udig.tools.panLeftCommand"; //$NON-NLS-1$
     private static final String RIGHT = "net.refractions.udig.tools.panRightCommand"; //$NON-NLS-1$
@@ -40,7 +40,7 @@ public class PanHandler extends AbstractHandler implements IToolHandler {
     private static NavigationUpdateThread PANNER=NavigationUpdateThread.getUpdater();
     
     public void setTool( Tool tool ) {
-        TOOL=(Pan) tool;
+        TOOL=(PanTool) tool;
     }
 
     /**
