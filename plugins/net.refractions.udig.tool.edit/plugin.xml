@@ -108,10 +108,17 @@
                      class="net.refractions.udig.tools.edit.impl.SmartBufferTool"
                      icon="icons/etool16/new_smartbuffer_mode.gif"
                      id="net.refractions.udig.tools.pointBufferEdit"
+                     largeIcon="icons/etool24/new_smartbuffer_mode.png"
                      name="%edit.buffer.name"
                      onToolbar="true"
+                     preferencePageId="net.refractions.udig.tool.edit.preference.smartbuffer"
                      toolCursorId="arrowCursor"
                      tooltip="%edit.buffer.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif">
+                  </cursor>
                   <enablement>
                      <and>
                         <or>
