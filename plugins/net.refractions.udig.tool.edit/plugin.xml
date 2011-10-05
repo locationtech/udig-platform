@@ -9,6 +9,7 @@
                      class="net.refractions.udig.tools.edit.impl.PolygonTool"
                      icon="icons/etool16/new_polygon_mode.gif"
                      id="net.refractions.udig.tools.polygonEdit"
+                     largeIcon="icons/etool24/new_polygon_mode.png"
                      name="%edit.polygon.name"
                      onToolbar="true"
                      toolCursorId="arrowCursor"
@@ -26,12 +27,17 @@
 	                     </or>
                      </and>
                   </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
                </modalTool>
                <modalTool
                      categoryId="net.refractions.udig.tool.edit.create"
                      class="net.refractions.udig.tools.edit.impl.LineTool"
                      icon="icons/etool16/new_line_mode.gif"
                      id="net.refractions.udig.tools.lineEdit"
+                     largeIcon="icons/etool24/new_line_mode.png"
                      name="%edit.line.name"
                      onToolbar="true"
                      toolCursorId="arrowCursor"
@@ -49,6 +55,10 @@
 	                     </or>
                      </and>
                   </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
                </modalTool>
                <!-- 
                <modalTool
@@ -82,6 +92,7 @@
                      class="net.refractions.udig.tools.edit.impl.PointTool"
                      icon="icons/etool16/new_point_mode.gif"
                      id="net.refractions.udig.tools.pointEdit"
+                     largeIcon="icons/etool24/new_point_mode.png"
                      name="%edit.point.name"
                      onToolbar="true"
                      toolCursorId="arrowCursor"
@@ -99,12 +110,17 @@
 	                     </or>
                      </and>
                   </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
                </modalTool>
                <modalTool
                      categoryId="net.refractions.udig.tool.edit.edit"
                      class="net.refractions.udig.tools.edit.impl.SelectionTool"
                      icon="icons/etool16/edit_vertex_mode.gif"
                      id="net.refractions.udig.tools.selectionTool"
+                     largeIcon="icons/etool24/edit_vertex_mode.png"
                      name="%edit.selection.name"
                      onToolbar="true"
                      toolCursorId="arrowCursor"
@@ -122,12 +138,17 @@
 	                     </or>
                      </and>
                   </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
                </modalTool>
                <modalTool
                      categoryId="net.refractions.udig.tool.edit.edit"
                      class="net.refractions.udig.tools.edit.impl.InsertVertexTool"
                      icon="icons/etool16/add_vertext_mode.gif"
                      id="net.refractions.udig.tools.addVertexTool"
+                     largeIcon="icons/etool24/add_vertext_mode.png"
                      name="%edit.vertex.add.name"
                      onToolbar="true"
                      toolCursorId="addVertexCursor"
@@ -144,12 +165,17 @@
 	                     </or>
                      </and>
                   </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
                </modalTool>
                <modalTool
                      categoryId="net.refractions.udig.tool.edit.edit"
                      class="net.refractions.udig.tools.edit.impl.RemoveVertexTool"
                      icon="icons/etool16/remove_vertext_mode.gif"
                      id="net.refractions.udig.tools.removeVertexTool"
+                     largeIcon="icons/etool24/remove_vertext_mode.png"
                      name="%edit.vertex.remove.name"
                      onToolbar="true"
                      toolCursorId="deleteVertexCursor"
@@ -172,6 +198,7 @@
                      class="net.refractions.udig.tools.edit.impl.HoleTool"
                      icon="icons/etool16/hole_vertex_mode.gif"
                      id="net.refractions.udig.tools.holeEdit"
+                     largeIcon="icons/etool24/hole_vertex_mode.png"
                      name="%edit.hole.name"
                      onToolbar="true"
                      toolCursorId="arrowCursor"
@@ -189,12 +216,17 @@
 	                     </or>
                      </and>
                   </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
                </modalTool>
 			   <modalTool
             categoryId="net.refractions.udig.tool.edit.create"
             class="net.refractions.udig.tools.edit.impl.FillDifferenceTool"
             icon="icons/etool16/difference_feature_mode.gif"
             id="net.refractions.udig.tools.differenceTool"
+            largeIcon="icons/etool24/difference_feature_mode.png"
             name="%edit.difference.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
@@ -212,12 +244,17 @@
 	                     </or>
                      </and>
                   </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
                </modalTool>
                <modalTool
                      categoryId="net.refractions.udig.tool.edit.create"
                      class="net.refractions.udig.tools.edit.impl.RectangleTool"
                      icon="icons/etool16/new_rectangle_mode.gif"
                      id="net.refractions.udig.tool.edit.createRectangle"
+                     largeIcon="icons/etool24/new_rectangle_mode.png"
                      name="%edit.rectangle.name"
                      onToolbar="true"
                      toolCursorId="arrowCursor"
@@ -237,12 +274,17 @@
 	                     </or>
 					</and>
                   </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
                 </modalTool>
                <modalTool
                      categoryId="net.refractions.udig.tool.edit.create"
                      class="net.refractions.udig.tools.edit.impl.EllipseTool"
                      icon="icons/etool16/new_circle_mode.gif"
                      id="net.refractions.udig.tool.edit.createEllipse"
+                     largeIcon="icons/etool24/new_circle_mode.png"
                      name="%edit.ellipse.name"
                      onToolbar="true"
                      toolCursorId="arrowCursor"
@@ -262,12 +304,17 @@
 	                     </or>
                      </and>
                   </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
                 </modalTool>
                 <modalTool
                       categoryId="net.refractions.udig.tool.edit.feature"
                       class="net.refractions.udig.tools.edit.impl.DeleteTool"
                       icon="icons/etool16/delete_feature_mode.gif"
                       id="net.refractions.udig.tools.deleteTool"
+                      largeIcon="icons/etool24/delete_feature_mode.png"
                       name="%edit.delete.name"
                       onToolbar="true"
                       toolCursorId="deleteCursor"

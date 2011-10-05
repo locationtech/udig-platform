@@ -16,6 +16,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = ProjectPlugin.getPlugin()
 				.getPreferenceStore();
+        store.setDefault(PreferenceConstants.P_ZOOM_REQUIRED_CLOSENESS, 0.7);
         store.setDefault(PreferenceConstants.P_REMOVE_LAYERS, true);
         store.setDefault(PreferenceConstants.P_WARN_IRREVERSIBLE_COMMAND, true);
         store.setDefault(PreferenceConstants.P_ANTI_ALIASING, true);

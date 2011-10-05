@@ -38,6 +38,8 @@ public class SetViewportBBoxCommand extends AbstractNavCommand {
 
 	private CoordinateReferenceSystem crs;
 
+	private boolean forceContainBBoxZoom;
+
     /**
      * Creates a new instance of SetViewportBBoxCommand.  The bbox is expected to be the same as the viewport model.
      * 
@@ -64,8 +66,7 @@ public class SetViewportBBoxCommand extends AbstractNavCommand {
      *            {@linkplain ViewportModel#getViewportAspectRatio()}.
      */
     public SetViewportBBoxCommand(ReferencedEnvelope bbox) {
-        this.newbbox = bbox;
-        crs=((ReferencedEnvelope)bbox).getCoordinateReferenceSystem();
+        this(bbox,false);
     }
 
     /**
@@ -76,8 +77,13 @@ public class SetViewportBBoxCommand extends AbstractNavCommand {
      * @param crs The crs of the provided bounds.
      */
 	public SetViewportBBoxCommand(Envelope bounds, CoordinateReferenceSystem crs) {
-		this(bounds);
-		this.crs = crs;
+		this(new ReferencedEnvelope(bounds,crs));
+	}
+
+	public SetViewportBBoxCommand(ReferencedEnvelope bbox, boolean forceContainBBoxZoom) {
+        this.newbbox = bbox;
+        crs=((ReferencedEnvelope)bbox).getCoordinateReferenceSystem();
+        this.forceContainBBoxZoom = forceContainBBoxZoom;
 	}
 
 	/**
@@ -109,7 +115,7 @@ public class SetViewportBBoxCommand extends AbstractNavCommand {
 		}else{
 			crs = model.getCRS();
 		}
-		model.setBounds(new ReferencedEnvelope(newbbox,crs));
+		model.setBounds(new ReferencedEnvelope(newbbox,crs), forceContainBBoxZoom);
 	}
 
 	/**

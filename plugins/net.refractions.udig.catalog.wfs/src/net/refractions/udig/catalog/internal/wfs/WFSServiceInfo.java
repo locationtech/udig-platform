@@ -9,7 +9,7 @@ import net.refractions.udig.catalog.wfs.internal.Messages;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.wfs.WFSDataStore;
-import org.geotools.xml.wfs.WFSSchema;
+import org.geotools.data.wfs.v1_0_0.xml.WFSSchema;
 
 /**
  * Description of WFSService.

@@ -338,7 +338,7 @@ public class ShpServiceImpl extends IService {
      * @see net.refractions.udig.catalog.IResolve#getIdentifier()
      */
     public URL getIdentifier() {
-        return url;
+        return id.toURL();
     }
     @Override
     public ID getID() {
