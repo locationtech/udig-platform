@@ -145,6 +145,10 @@
                         </or>
                      </and>
                   </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SmartBufferToolOptionContributionItem"
+                        id="smartBufferOption">
+                  </toolOption>
                </modalTool>
                <modalTool
                      categoryId="net.refractions.udig.tool.edit.edit"

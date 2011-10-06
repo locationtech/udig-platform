@@ -78,6 +78,8 @@ public class DrawGeomsActivator implements Activator {
 
         this.handler = handler;
         command = new DrawEditGeomsCommand(handler);
+        //handler.getCurrentEditBlackboard().getBuffer();
+        System.out.println(handler.toString());
 
         StyleStrategy colorizationStrategy = command.getColorizationStrategy();
         colorizationStrategy.setFill(new IProvider<Color>(){
