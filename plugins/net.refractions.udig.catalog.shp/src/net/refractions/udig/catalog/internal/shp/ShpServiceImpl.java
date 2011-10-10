@@ -1,7 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+ *    (C) 2004-2011, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -63,10 +63,10 @@ import org.opengis.filter.Filter;
  * 
  * @author David Zwiers, Refractions Research
  * @since 0.6
+ * @version 1.2
  */
 public class ShpServiceImpl extends IService {
-
-    private URL url;
+    //private URL url;
     private ID id;
     private Map<String, Serializable> params = null;
 
@@ -77,11 +77,14 @@ public class ShpServiceImpl extends IService {
      * @param arg2
      */
     public ShpServiceImpl( URL url, Map<String, Serializable> params ) {
-        this.url = url;
+        //this.url = url;
+        if( url == null ){
+            throw new NullPointerException("ShpService requres a URL");
+        }
         try {
             id = new ID(url);
         } catch (Throwable t) {
-            t.printStackTrace();
+            throw new IllegalArgumentException("Unable to create ID from:"+url,t);
         }
         this.params = params;
         Serializable memorymapped = params.get("memory mapped buffer"); //$NON-NLS-1$

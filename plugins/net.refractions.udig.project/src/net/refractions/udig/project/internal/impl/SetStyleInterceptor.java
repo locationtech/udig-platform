@@ -30,7 +30,11 @@ public class SetStyleInterceptor implements LayerInterceptor {
 
     public void run( Layer layer ) {
         if( layer.getStyleBlackboard().getContent().isEmpty()){
-            SetDefaultStyleProcessor defaultStyleProcessor = createDefaultStyles(layer.getGeoResource(), layer);
+            IGeoResource geoResource = layer.getGeoResource();
+            if( geoResource == null ){
+                throw new NullPointerException("Layer requires GeoResource to determine default style");
+            }
+            SetDefaultStyleProcessor defaultStyleProcessor = createDefaultStyles(geoResource, layer);
             defaultStyleProcessor.run();
         }
     }

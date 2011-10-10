@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2004, Refractions Research Inc.
+ * (C) 2004-2011, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -29,6 +29,7 @@ import net.refractions.udig.core.internal.CorePlugin;
  * 
  * @author Jesse
  * @since 1.1.0
+ * @version 1.2
  */
 public class URLUtils {
 
@@ -58,8 +59,10 @@ public class URLUtils {
         if("file".equals(url2.getProtocol())) {
         	// take into account file links on linux and osx
         	try {
-				String path1 = urlToFile(url1).getCanonicalPath();
-				String path2 = urlToFile(url2).getCanonicalPath();
+				File file1 = urlToFile(url1);
+                String path1 = file1.getCanonicalPath();
+				File file2 = urlToFile(url2);
+                String path2 = file2.getCanonicalPath();
 				
 				if(stripRef) {
 					if(url1.getRef()!=null) {

@@ -383,8 +383,8 @@ public class CatalogImpl extends ICatalog {
     public List<IResolve> find( ID id, IProgressMonitor monitor ) {
         URL query = id.toURL();
         Set<IResolve> found = new LinkedHashSet<IResolve>();
-
-        ID id1 = new ID(query);
+        
+        //ID id1 = new ID(query);
 
         // first pass 1.1- use urlEquals on CONNECTED service for subset check
         for( IService service : services ) {
@@ -396,7 +396,7 @@ public class CatalogImpl extends ICatalog {
                     found.add(service);
                     found.addAll(friends(service));
                 } else {
-                    IResolve res = getChildById(service, id1, true, monitor);
+                    IResolve res = getChildById(service, id, true, monitor);
                     if (res != null) {
                         found.add(res);
                         found.addAll(friends(res));
@@ -416,7 +416,7 @@ public class CatalogImpl extends ICatalog {
                     found.add(service);
                     found.addAll(friends(service));
                 } else {
-                    IResolve res = getChildById(service, id1, true, monitor);
+                    IResolve res = getChildById(service, id, true, monitor);
                     if (res != null) {
                         found.add(res);
                         found.addAll(friends(res));
@@ -437,7 +437,7 @@ public class CatalogImpl extends ICatalog {
                     found.add(service);
                     found.addAll(friends(service));
                 } else {
-                    IResolve res = getChildById(service, id1, true, monitor);
+                    IResolve res = getChildById(service, id, true, monitor);
                     if (res != null) {
                         found.add(res);
                         found.addAll(friends(res));

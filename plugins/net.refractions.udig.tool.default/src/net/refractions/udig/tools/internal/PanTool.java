@@ -87,7 +87,6 @@ public class PanTool extends AbstractModalTool implements ModalTool {
     };
     private ScrollStrategy strategy;
     IPropertyChangeListener prefListener = new IPropertyChangeListener(){
-        @Override
         public void propertyChange( PropertyChangeEvent event ) {
             String property = event.getProperty();
             if( NavigationToolPreferencePage.SCALE.equals( property ) ||
