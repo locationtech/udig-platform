@@ -28,4 +28,4 @@ Export-Package: net.refractions.udig.tool.edit,
  net.refractions.udig.tools.edit.preferences,
  net.refractions.udig.tools.edit.support,
  net.refractions.udig.tools.edit.validator
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -12,4 +12,4 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.project.ui;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Export-Package: org.tcat.citd.sim.udig.bookmarks
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

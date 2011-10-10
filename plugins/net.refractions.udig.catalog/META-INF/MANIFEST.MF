@@ -18,4 +18,4 @@ Require-Bundle: org.eclipse.core.runtime,
  net.refractions.udig.core;visibility:=reexport,
  net.refractions.udig.ui
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

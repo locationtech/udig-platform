@@ -12,4 +12,4 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.catalog.ui,
  net.refractions.udig.libs
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
