@@ -60,9 +60,9 @@
                icon="icons/etool16/zoom_boundary_co.gif"
                id="net.refractions.udig.tools.ZoomExtent"
                menuPath="navigate/zoom.ext"
-               name="%zoom.boundary.name"
+               name="%zoom.all.name"
                onToolbar="true"
-               tooltip="%zoom.boundary.tooltip">
+               tooltip="%zoom.all.tooltip">
             <enablement>
                <not>
                   <property
