@@ -14,23 +14,20 @@
  */
 package net.refractions.udig.catalog.wmsc.server;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.zip.GZIPInputStream;
 
 import net.refractions.udig.catalog.internal.wms.WmsPlugin;
 
 import org.geotools.data.ows.AbstractGetCapabilitiesRequest;
+import org.geotools.data.ows.HTTPClient;
+import org.geotools.data.ows.HTTPResponse;
 import org.geotools.data.ows.Request;
 import org.geotools.data.ows.Response;
+import org.geotools.data.ows.SimpleHttpClient;
 import org.geotools.ows.ServiceException;
 
 
@@ -56,12 +53,16 @@ public class TiledWebMapServer {
     /** URL of WMSC Service */
     private URL service;
 
+    /** interacts with the backend through HTTP */
+    private final HTTPClient httpClient;
+    
     /**
      * Creates a new service with the given url
      * @param serverURL
      */
     public TiledWebMapServer( URL serverURL ) {
         this.service = serverURL;
+        this.httpClient = new SimpleHttpClient();
     }
     
     /**
@@ -74,16 +75,43 @@ public class TiledWebMapServer {
      * @param checkForUpdate
      */
     public TiledWebMapServer( URL serverURL, String caps_xml, boolean checkForUpdate) {        
-    	this.service = serverURL;
-    	this.getCaps_xml = caps_xml;
+        this(serverURL);
+        this.getCaps_xml = caps_xml;
     	
     	// build a capabilities object from the given xml
     	WMSCCapabilities capabilities = null;
     	try {
-	        InputStream is = new ByteArrayInputStream(caps_xml.getBytes());
+	        final InputStream is = new ByteArrayInputStream(caps_xml.getBytes());
 	        WMSCCapabilitiesResponse response;
-	
-	        response = new WMSCCapabilitiesResponse("txt/xml", is);  //$NON-NLS-1$
+	        
+	        HTTPResponse mock = new HTTPResponse(){
+                
+                @Override
+                public InputStream getResponseStream() throws IOException {
+                    return is;
+                }
+                
+                @Override
+                public String getResponseHeader( String header ) {
+                    return null;
+                }
+                
+                @Override
+                public String getContentType() {
+                    return "text/xml"; //$NON-NLS-1$
+                }
+                
+                @Override
+                public void dispose() {
+                    try {
+                        is.close();
+                    } catch (Exception e) {
+                        // ignore.
+                    }
+                }
+            };
+	        
+	        response = new WMSCCapabilitiesResponse(mock);
 	        capabilities = (WMSCCapabilities) response.getCapabilities(); 
     	} catch (Exception e) {
     		log("Restore from cached capabilities failed", e);  //$NON-NLS-1$
@@ -256,9 +284,9 @@ public class TiledWebMapServer {
             // not used?
         }
 
-        public Response createResponse( String contentType, InputStream inputStream )
+        public Response createResponse( HTTPResponse response )
                 throws ServiceException, IOException {
-            return new WMSCCapabilitiesResponse(contentType, inputStream);
+            return new WMSCCapabilitiesResponse(response);
         }
     }
 
@@ -275,60 +303,30 @@ public class TiledWebMapServer {
         URL finalURL = request.getFinalURL();
         if( finalURL.getHost() == null ){
             //System.out.prinln("Poor WMS-C configuration - no host provided by "+ finalURL );
-            throw new NullPointerException("No host provided by "+finalURL );
+            throw new NullPointerException("No host provided by "+finalURL ); //$NON-NLS-1$
         }
-        HttpURLConnection connection = (HttpURLConnection) finalURL.openConnection();
 
-        connection.addRequestProperty("Accept-Encoding", "gzip"); //$NON-NLS-1$ //$NON-NLS-2$
+        final HTTPResponse httpResponse;
 
         if (request.requiresPost()) {
-            connection.setRequestMethod("POST"); //$NON-NLS-1$
-            connection.setDoOutput(true);
-            connection.setRequestProperty("Content-type", request.getPostContentType()); //$NON-NLS-1$
 
-            OutputStream outputStream = connection.getOutputStream();
+            final String postContentType = request.getPostContentType();
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             request.performPostOutput(out);
-
             InputStream in = new ByteArrayInputStream(out.toByteArray());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-            PrintStream stream = new PrintStream(outputStream);
-
-            String postText = ""; //$NON-NLS-1$
-
-            while( reader.ready() ) {
-                String input = reader.readLine();
-                postText = postText + input;
-                stream.println(input);
+            try {
+                httpResponse = httpClient.post(finalURL, in, postContentType);
+            } finally {
+                in.close();
             }
-
-            System.out.println(postText);
-
-            out.close();
-            in.close();
-
-            outputStream.flush();
-            outputStream.close();
-            stream.flush();
-            stream.close();
         } else {
-            connection.setRequestMethod("GET"); //$NON-NLS-1$
+            httpResponse = httpClient.get(finalURL);
         }
 
-        InputStream inputStream = connection.getInputStream();
-
-        if (connection.getContentEncoding() != null
-                && connection.getContentEncoding().indexOf("gzip") != -1) { //$NON-NLS-1$
-            inputStream = new GZIPInputStream(inputStream);
-        }
-
-        String contentType = connection.getContentType();
-
-        return request.createResponse(contentType, inputStream);
-        
-        
+        final Response response = request.createResponse(httpResponse);
+        return response;
     }
 
     /**
