@@ -11,8 +11,15 @@ import net.refractions.udig.ui.PlatformGIS;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.opengis.geometry.BoundingBox;
+import org.opengis.geometry.Envelope;
+import org.opengis.metadata.extent.Extent;
+import org.opengis.metadata.extent.GeographicExtent;
+import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -32,8 +39,24 @@ public class BoundaryStrategyMapCrs implements IBoundaryStrategy {
 	public ReferencedEnvelope getExtent() {
 		final IMap currentMap = ApplicationGIS.getActiveMap();
 		if (!currentMap.equals(ApplicationGIS.NO_MAP)) {
-			crsExtent = (ReferencedEnvelope)currentMap.getViewportModel().getCRS().getDomainOfValidity();
-			if (crsExtent == null) {
+			CoordinateReferenceSystem worldCRS = currentMap.getViewportModel().getCRS();
+//			Extent valid = worldCRS.getDomainOfValidity();
+//			for( GeographicExtent geographic : valid.getGeographicElements() ){
+//			   // this is all handled by getEnvelope
+//			}
+			Envelope envelope = CRS.getEnvelope(worldCRS);
+			if( envelope instanceof BoundingBox){
+			    crsExtent = ReferencedEnvelope.reference( (BoundingBox) envelope);
+			    if( crsExtent.getCoordinateReferenceSystem() != worldCRS ){
+			        try {
+                        crsExtent = crsExtent.transform(worldCRS, true);
+                    } catch (Exception e) {
+                        // cannot compute!
+                        crsExtent = null;
+                    }
+			    }
+			}
+            if (crsExtent == null) {
 				// fall back to world extent
 				IRunnableWithProgress operation = new IRunnableWithProgress() {
 					@Override

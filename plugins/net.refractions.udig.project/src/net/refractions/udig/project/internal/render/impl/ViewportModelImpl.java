@@ -770,11 +770,12 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             
             // check the limit service
             IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-            if (boundaryService.getExtent() != null) {
-            	bounds2 = new ReferencedEnvelope(boundaryService.getExtent());
+            ReferencedEnvelope extent = boundaryService.getExtent();
+            
+            if (extent != null && !extent.isNull() && !extent.isEmpty()) {
+            	bounds2 = new ReferencedEnvelope(extent);
             } else {
-            	
-	            boolean hasVisibleLayer = false;
+                boolean hasVisibleLayer = false;
 	            // search the map for visible layers and construct a bounds from those layers.
 	            // otherwise default to what the map's extent is.
 	            List<ILayer> layers = getMap().getMapLayers();
@@ -785,8 +786,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 	                    hasVisibleLayer = true;
 	                    bounds2.expandToInclude(ScaleUtils.fitToMinAndMax(layerBounds, layer));
 	                }
-	            }
-	
+	            }	
 	            if (!hasVisibleLayer) {
 	                bounds2 = getMap().getBounds(ProgressManager.instance().get());
 	            }
