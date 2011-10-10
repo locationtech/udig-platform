@@ -53,7 +53,7 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 
 	/** list of wizard page extension* */
 	private List<UDIGConnectionFactoryDescriptor> descriptors;
-
+	
 	/** the viewer to select * */
 	private WizardViewer viewer;
 
@@ -94,7 +94,7 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 	 *            The descriptor to be selected.
 	 */
 	public void setSelection(List<UDIGConnectionFactoryDescriptor> descriptors) {
-		selected = new StructuredSelection(descriptors);
+	    selected = new StructuredSelection(descriptors);
 		if (viewer != null) {
 			// only set first in viewer
 			if (!selected.isEmpty()) {
@@ -116,10 +116,9 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 			}
 
 			// if there is only one choice, we are also done
-			if (descriptors != null && descriptors.size() == 1)
-
+			if (descriptors != null && descriptors.size() == 1){
 				return true;
-
+			}
 			return false;
 		}
 
@@ -143,8 +142,17 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 		Composite comp = new Composite(parent, SWT.NONE);
         comp.setLayout(new FillLayout());
 		
+        DataSourceSelectionState state = (DataSourceSelectionState) getState();
+        List<UDIGConnectionFactoryDescriptor> descriptorList;
+        if (state.getShortlist() != null) {
+            descriptorList = state.getShortlist();
+        }
+        else {
+            descriptorList = getDescriptors();
+        }
+        
 		viewer = new WizardViewer(comp, SWT.SINGLE | SWT.BORDER);
-		viewer.setInput(getDescriptors().toArray());
+		viewer.setInput(descriptorList.toArray());
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
 				IWizardContainer container = getContainer();
@@ -160,7 +168,6 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 		viewer.addSelectionChangedListener(this);
 
 		// check the state for an initial selection
-		DataSourceSelectionState state = (DataSourceSelectionState) getState();
 		if (state.getDescriptor() != null){
 			viewer.setSelection(new StructuredSelection(state.getDescriptor()));
 		}
@@ -223,8 +230,7 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 	}
 
 	public List<UDIGConnectionFactoryDescriptor> getDescriptors() {
-        
-		List<UDIGConnectionFactoryDescriptor> connectionFactoryDescriptors = ConnectionFactoryManager.instance().getConnectionFactoryDescriptors();
+        List<UDIGConnectionFactoryDescriptor> connectionFactoryDescriptors = ConnectionFactoryManager.instance().getConnectionFactoryDescriptors();
         return connectionFactoryDescriptors;
 	}	
 	
@@ -236,7 +242,6 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 	}
 
 	private static class WizardViewer extends TableViewer {
-
 		public WizardViewer(Composite parent, int style) {
 			super(parent, style);
 
@@ -244,8 +249,7 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 			setLabelProvider(new LabelProvider() {
 				public String getText(Object object) {
 					UDIGConnectionFactoryDescriptor descriptor = (UDIGConnectionFactoryDescriptor) object;
-
-					return descriptor.getLabel(0);
+				    return descriptor.getLabel(0);
 				}
 
 				public Image getImage(Object object) {

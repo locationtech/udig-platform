@@ -166,7 +166,9 @@ public class UDIGDropHandler extends DropTargetAdapter {
         for( Transfer transfer : t ) {
             if (event.data != null){
                 actions = findDropActions(event.data, event);
-                if( !actions.isEmpty() ) break;
+                if( !actions.isEmpty() ) {
+                    break;
+                }
             }
             TransferData[] types = transfer.getSupportedTypes();
             for( TransferData data : types ) {
@@ -206,7 +208,13 @@ public class UDIGDropHandler extends DropTargetAdapter {
     protected List<IDropAction> filterActions(DropTargetEvent event, List<IDropAction> actions) {
 		return actions;
 	}
-
+    /**
+     * Go through and determine if we have any IDropActions based on the provided event.
+     * 
+     * @param data
+     * @param event
+     * @return
+     */
 	private List<IDropAction> findDropActions( Object data, DropTargetEvent event ) {
         if (UiPlugin.isDebugging(Trace.DND)) {
             System.out.println("Find drop called on " + data + "(" + data.getClass() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
