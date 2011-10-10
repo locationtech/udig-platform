@@ -64,12 +64,20 @@
                class="net.refractions.udig.tools.internal.ZoomExtent"
                commandHandler="net.refractions.udig.tools.internal.ZoomHandler"
                commandIds="net.refractions.udig.tool.default.zoom.all"
-               icon="icons/etool16/zoom_extent_co.gif"
+               icon="icons/etool16/zoom_boundary_co.gif"
                id="net.refractions.udig.tools.ZoomExtent"
                menuPath="navigate/zoom.ext"
                name="%zoom.all.name"
                onToolbar="true"
                tooltip="%zoom.all.tooltip">
+            <enablement>
+               <not>
+                  <property
+                        expectedValue="Screen"
+                        propertyId="boundaryStrategy">
+                  </property>
+               </not>
+            </enablement>
          </actionTool>
 
          <backgroundTool
@@ -169,7 +177,8 @@
             categoryId="net.refractions.udig.tools.toolCategory"
             description="%zoom.all.tooltip"
             id="net.refractions.udig.tool.default.zoom.all"
-            name="%zoom.command.all.name"/>
+            name="%zoom.command.all.name">
+      </command>
       <command
             categoryId="net.refractions.udig.tools.toolCategory"
             description="%refresh.tooltip"

@@ -21,6 +21,7 @@ import net.refractions.udig.core.internal.CorePlugin;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
+import org.geotools.data.shapefile.ShapefileDataStore;
 
 /**
  * Methods to help manage adapters
@@ -28,9 +29,16 @@ import org.eclipse.core.runtime.Platform;
  * @since 1.1.0
  */
 public class AdapterUtil {
-    public static final AdapterUtil instance=new AdapterUtil();
     
-    private AdapterUtil(){}
+    /**
+     * Singleton AdapterUtil field: <code>AdapterUtil.instance.adaptTo(
+     * ShapefileDataStore.class, object, monitor)</code>
+     */
+    public static final AdapterUtil instance = new AdapterUtil();
+    /**
+     * Please use singleton: <code>AdapterUtil.instance</code>
+     */
+	private AdapterUtil(){}
     
     /**
      * Determines if a class can be adapted based on its string representation.  

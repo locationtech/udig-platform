@@ -14,6 +14,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Map;
@@ -22,13 +23,13 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.render.RenderManager;
 import net.refractions.udig.project.internal.render.RenderPackage;
 import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.internal.render.impl.ScaleUtils.CalculateZoomLevelParameter;
 import net.refractions.udig.project.preferences.PreferenceConstants;
 import net.refractions.udig.project.render.IViewportModelListener;
 import net.refractions.udig.project.render.ViewportModelEvent;
 import net.refractions.udig.project.render.ViewportModelEvent.EventType;
 import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 import net.refractions.udig.project.render.displayAdapter.MapDisplayEvent;
+import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.ProgressManager;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -764,23 +765,31 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         try {
             if (!validState())
                 return;
-
+            
             ReferencedEnvelope bounds2 = new ReferencedEnvelope(getCRS());
-            boolean hasVisibleLayer = false;
-            // search the map for visible layers and construct a bounds from those layers.
-            // otherwise default to what the map's extent is.
-            List<ILayer> layers = getMap().getMapLayers();
-            for( ILayer layer : layers ) {
-                ReferencedEnvelope layerBounds = layer.getBounds(ProgressManager.instance().get(),
-                        getCRS());
-                if (layer.isVisible() && !layerBounds.isNull()) {
-                    hasVisibleLayer = true;
-                    bounds2.expandToInclude(ScaleUtils.fitToMinAndMax(layerBounds, layer));
-                }
-            }
-
-            if (!hasVisibleLayer) {
-                bounds2 = getMap().getBounds(ProgressManager.instance().get());
+            
+            // check the limit service
+            IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+            if (boundaryService.getExtent() != null) {
+            	bounds2 = new ReferencedEnvelope(boundaryService.getExtent());
+            } else {
+            	
+	            boolean hasVisibleLayer = false;
+	            // search the map for visible layers and construct a bounds from those layers.
+	            // otherwise default to what the map's extent is.
+	            List<ILayer> layers = getMap().getMapLayers();
+	            for( ILayer layer : layers ) {
+	                ReferencedEnvelope layerBounds = layer.getBounds(ProgressManager.instance().get(),
+	                        getCRS());
+	                if (layer.isVisible() && !layerBounds.isNull()) {
+	                    hasVisibleLayer = true;
+	                    bounds2.expandToInclude(ScaleUtils.fitToMinAndMax(layerBounds, layer));
+	                }
+	            }
+	
+	            if (!hasVisibleLayer) {
+	                bounds2 = getMap().getBounds(ProgressManager.instance().get());
+	            }
             }
 
             if (bounds2.getCoordinateReferenceSystem() == null || getCRS() == null

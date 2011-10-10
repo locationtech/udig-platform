@@ -1066,4 +1066,18 @@
            </action>
         </actionSet>
      </extension>
+     <extension
+           id="net.refractions.udig.project.ui.limit.views"
+           name="Limit Views"
+           point="org.eclipse.ui.views">
+        <view
+              allowMultiple="true"
+              class="net.refractions.udig.project.ui.boundary.BoundaryView"
+              icon="icons/eview16/boundary_view.gif"
+              id="net.refractions.udig.project.ui.boundaryView"
+              name="Boundary"
+              relative="net.refractions.udig.project.ui.layerManager"
+              restorable="true">
+        </view>
+     </extension>
    </plugin>

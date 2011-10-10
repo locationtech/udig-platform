@@ -376,4 +376,24 @@
              label="%charset">
        </keyword>
     </extension>
+    <extension
+          point="org.eclipse.ui.services">
+       <serviceFactory
+             factoryClass="net.refractions.udig.internal.boundary.BoundaryServiceFactory">
+          <service
+                serviceClass="net.refractions.udig.boundary.IBoundaryService">
+          </service>
+       </serviceFactory>
+    </extension>
+    <extension
+          id="net.refractions.udig.ui.boundary"
+          point="net.refractions.udig.ui.objectProperty">
+       <object
+             targetClass="java.lang.Object">
+          <property
+                class="net.refractions.udig.internal.boundary.BoundaryStrategyPropertyValue"
+                id="boundaryStrategy">
+          </property>
+       </object>
+    </extension>
 </plugin>
