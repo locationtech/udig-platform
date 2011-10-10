@@ -1073,6 +1073,7 @@
         <view
               allowMultiple="true"
               class="net.refractions.udig.project.ui.boundary.BoundaryView"
+              icon="icons/eview16/boundary_view.gif"
               id="net.refractions.udig.project.ui.boundaryView"
               name="Boundary"
               relative="net.refractions.udig.project.ui.layerManager"
