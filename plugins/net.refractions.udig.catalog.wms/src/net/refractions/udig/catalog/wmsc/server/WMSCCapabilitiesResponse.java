@@ -25,6 +25,7 @@ import java.util.logging.Level;
 
 import org.geotools.data.ows.Capabilities;
 import org.geotools.data.ows.GetCapabilitiesResponse;
+import org.geotools.data.ows.HTTPResponse;
 import org.geotools.ows.ServiceException;
 import org.geotools.xml.DocumentFactory;
 import org.geotools.xml.handlers.DocumentHandler;
@@ -51,14 +52,18 @@ public class WMSCCapabilitiesResponse extends GetCapabilitiesResponse {
      * @throws ServiceException
      * @throws IOException
      */
-    public WMSCCapabilitiesResponse( String contentType, InputStream inputStream )
+    public WMSCCapabilitiesResponse( HTTPResponse response )
             throws ServiceException, IOException {
-        super(contentType, inputStream);
+        super(response);
         
         // first store the getcaps as a string so we can persist it, then create a 
         // new inpuststream from it to convert into a getCaps object.
-        getCaps_xml = convertStreamToString(inputStream);
-        inputStream = new ByteArrayInputStream(getCaps_xml.getBytes());
+        try{
+        getCaps_xml = convertStreamToString(response.getResponseStream());
+        }finally{
+            response.dispose();
+        }
+        InputStream inputStream = new ByteArrayInputStream(getCaps_xml.getBytes());
         
         try {
             Map<String, Object> hints = new HashMap<String, Object>();

@@ -29,6 +29,7 @@ import net.refractions.udig.catalog.internal.wms.WmsPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.ows.AbstractRequest;
+import org.geotools.data.ows.HTTPResponse;
 import org.geotools.data.ows.Response;
 import org.geotools.ows.ServiceException;
 
@@ -343,9 +344,9 @@ public class WMSTile implements Tile {
             super(url, null);
             this.url = url;
         }
-        public Response createResponse( String contentType, InputStream inputStream )
+        public Response createResponse( HTTPResponse response )
                 throws ServiceException, IOException {
-            return new Response(contentType, inputStream){
+            return new Response(response){
             };
         }
 
