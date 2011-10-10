@@ -578,6 +578,9 @@ See net.refractions.udig.ui.objectProperty
 
 It is the id of the property element which is a grandchild of the ObjectProperty element.
                </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="net.refractions.udig.ui.objectProperty/object/property/@id"/>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="expectedValue" type="string" use="required">

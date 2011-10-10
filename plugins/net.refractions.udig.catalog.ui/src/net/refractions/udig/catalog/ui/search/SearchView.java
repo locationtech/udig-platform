@@ -1,12 +1,12 @@
 package net.refractions.udig.catalog.ui.search;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
+import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.ICatalogInfo;
@@ -28,6 +28,7 @@ import net.refractions.udig.catalog.ui.ResolveTitlesDecorator;
 import net.refractions.udig.catalog.ui.StatusLineMessageBoardAdapter;
 import net.refractions.udig.catalog.ui.internal.Messages;
 import net.refractions.udig.internal.ui.UiPlugin;
+import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.SearchPart;
 import net.refractions.udig.ui.UDIGDragDropUtilities;
 
@@ -58,7 +59,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.actions.ActionFactory;
@@ -135,7 +135,7 @@ public class SearchView extends SearchPart {
         text.setEditable(true);
         text.addSelectionListener(new SelectionListener(){
             public void widgetDefaultSelected( SelectionEvent e ) {
-                search(createQuery()); // seach according to filter
+                search(createQuery()); // search according to filter
             }
             public void widgetSelected( SelectionEvent e ) {
                 quick(text.getText());
@@ -335,31 +335,12 @@ public class SearchView extends SearchPart {
         filter.text = text.getText();
         filter.bbox = new Envelope();
         if (bbox.getSelection()) {
-            try {
-                IEditorPart editor = getSite().getPage().getActiveEditor();
-                if (editor != null) {
-                    Object obj = editor.getEditorInput();
-                    Class< ? extends Object> mapType = obj.getClass();
-                    Method get = mapType.getMethod("getExtent", new Class[0]); //$NON-NLS-1$
-                    Object value = get.invoke(obj, new Object[0]);
-                    filter.bbox = (Envelope) value;
-                    double minx = filter.bbox.getMinX();
-                    double miny = filter.bbox.getMinY();
-                    double maxx = filter.bbox.getMaxX();
-                    double maxy = filter.bbox.getMaxY();
-                    if (minx < -180)
-                        minx = -180;
-                    if (maxx > 180)
-                        maxx = 180;
-                    if (miny < -90)
-                        miny = -90;
-                    if (maxy > 90)
-                        maxy = 90;
-                    filter.bbox=new Envelope(minx, maxx, miny,maxy);
-                }
-            } catch (Throwable t) {
-                CatalogUIPlugin.log("Unable to create search:"+t, t); //$NON-NLS-1$
-            }
+        	IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        	try {
+        		filter.bbox = boundaryService.getExtent();
+        	} catch (Throwable t) {
+        		CatalogUIPlugin.log("Unable to create search:"+t, t); //$NON-NLS-1$
+        	}
         }
         return filter;
     }

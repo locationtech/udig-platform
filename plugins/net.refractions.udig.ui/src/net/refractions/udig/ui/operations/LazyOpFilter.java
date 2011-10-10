@@ -41,7 +41,7 @@ public class LazyOpFilter implements OpFilter {
     
     private IOpFilterListener changeListener = new IOpFilterListener(){
 
-        public void notifyChange( Object changed ) {
+        public void notifyChange( Object changedLayer ) {
             boolean notify=false;
             boolean newResult=false;
 
@@ -51,14 +51,21 @@ public class LazyOpFilter implements OpFilter {
                     UiPlugin.log("Warning listener called even though not enabled", new Exception()); //$NON-NLS-1$
                     return;
                 }
-                Boolean removed = cache.get(changed);
-                if (removed != null) {
-                    cache.remove(changed);
-                    if (listener != null) {
-                        newResult = acceptInternal(changed, removed);
-                        if (newResult != removed.booleanValue())
-                            notify=true;
+                if( opFilter.canCacheResult() ){
+                    Boolean removed = cache.get(changedLayer);
+                    if (removed != null) {
+                        cache.remove(changedLayer);
+                        if (listener != null) {
+                            newResult = acceptInternal(changedLayer, removed);
+                            if (newResult != removed.booleanValue()){
+                                notify=true;
+                            }
+                        }
                     }
+                }
+                else {
+                    notify = true;
+                    newResult = accept( changedLayer );
                 }
             }finally{
                 lock.unlock();
@@ -70,7 +77,13 @@ public class LazyOpFilter implements OpFilter {
     };
     private boolean enabled;
 
+    /**
+     * Executor used to run enablement calculation in a background thread.
+     */
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+    /**
+     * Default value to use while enablement worker is running.
+     */
     public static final boolean DEFAULT_RETURN_VALUE = true;
 
     public LazyOpFilter( final ILazyOpListener listener, final OpFilter opFilter ) {
@@ -82,7 +95,9 @@ public class LazyOpFilter implements OpFilter {
         blocking = opFilter.isBlocking();
         enabled=false;
     }
-
+    /**
+     * Will safely run the enablement worker (protected by a lock).
+     */
     public boolean accept( final Object object ) {
         lock.lock();
         try{
@@ -95,7 +110,7 @@ public class LazyOpFilter implements OpFilter {
             lock.unlock();
         }
     }
-
+    /** Method used by accept; must be protected by lock */
     private boolean acceptInternal( final Object object, boolean defaultReturnValue ) {
         if (worker != null) {
             worker.cancel();
@@ -118,7 +133,9 @@ public class LazyOpFilter implements OpFilter {
 
         return result;
     }
-
+    /**
+     * Internal worker used to check enablement.
+     */
     private class Worker implements Runnable {
         private final Object object;
         private volatile boolean cancelled;
@@ -144,15 +161,22 @@ public class LazyOpFilter implements OpFilter {
         }
 
     }
-
+    /**
+     * Listener; used to report on worker progress
+     */
     public void addListener( IOpFilterListener listener ) {
         throw new UnsupportedOperationException();
     }
-
+    /**
+     * Subclass must override?
+     */
     public boolean canCacheResult() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Subclass must override?
+     */
     public boolean isBlocking() {
         throw new UnsupportedOperationException();
     }
@@ -170,5 +194,9 @@ public class LazyOpFilter implements OpFilter {
             lock.unlock();
         }
     }
-    
+
+    @Override
+    public String toString() {
+        return "LazyOpFilter "+this.opFilter;
+    }
 }

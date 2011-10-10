@@ -69,5 +69,16 @@ public class And implements OpFilter {
             filter.removeListener(listener);
         }
     }
+    @Override
+    public String toString() {
+        StringBuilder build = new StringBuilder();
+        build.append("AND (");
+        for( OpFilter filter : filters ) {
+            build.append( filter );
+            build.append(",");
+        }
+        build.setCharAt(build.length()-1, ')');
+        return build.toString();
+    }
 
 }
