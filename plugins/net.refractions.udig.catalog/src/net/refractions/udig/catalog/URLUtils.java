@@ -56,26 +56,26 @@ public class URLUtils {
         }
         boolean sameProtocol = url2.getProtocol().equalsIgnoreCase(url1.getProtocol());
         
-        if("file".equals(url2.getProtocol())) {
-        	// take into account file links on linux and osx
-        	try {
-				File file1 = urlToFile(url1);
-                String path1 = file1.getCanonicalPath();
-				File file2 = urlToFile(url2);
-                String path2 = file2.getCanonicalPath();
-				
-				if(stripRef) {
-					if(url1.getRef()!=null) {
-						path1 = path1.substring(0, path1.length() - url1.getRef().length() - 1);
-					}
-					if(url2.getRef()!=null) {
-						path2 = path2.substring(0, path2.length() - url2.getRef().length() - 1);
-					}
-				}
-				
-				return path1.equals(path2);
+        if ("file".equals(url2.getProtocol()) && "file".equals(url1)) {
+            // take into account file links on linux and osx
+            File file1 = urlToFile(url1);
+            File file2 = urlToFile(url2);
+            try {
+                if (file1 != null && file2 != null) {
+                    String path1 = file1.getCanonicalPath();
+                    String path2 = file2.getCanonicalPath();
+                    if (stripRef) {
+                        if (url1.getRef() != null) {
+                            path1 = path1.substring(0, path1.length() - url1.getRef().length() - 1);
+                        }
+                        if (url2.getRef() != null) {
+                            path2 = path2.substring(0, path2.length() - url2.getRef().length() - 1);
+                        }
+                    }
+                    return path1.equals(path2);
+                }
 			} catch (IOException e) {
-				CatalogPlugin.log("Unable to compare 2 file URLs as files because of an exception.", e);
+				CatalogPlugin.log("Unable to compare file URLS "+file1+" and "+file2+" files because of an exception.", e);
 			}
         	
         }
