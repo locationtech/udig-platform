@@ -1,15 +1,19 @@
-package net.refractions.udig.project.ui.boundary;
+package net.refractions.udig.ui.boundary;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.core.internal.ExtensionPointProcessor;
+import net.refractions.udig.core.internal.ExtensionPointUtil;
 import net.refractions.udig.internal.boundary.BoundaryStrategyAll;
-import net.refractions.udig.project.ui.internal.boundary.BoundaryStrategyMapCrs;
-import net.refractions.udig.project.ui.internal.boundary.BoundaryStrategyScreen;
+import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.ui.PlatformGIS;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -30,11 +34,17 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
 
 /**
- * This is the view that allows a user to select the method to define the boundary
+ * Allows a user to select the BoundaryStrategy to define the boundary
+ * <p>
+ * This view processes the "boundary" extension point in order to obtain the list
+ * of options to display to the user. Each boundary may optionally provide a "page" used
+ * to further refine the limit used for the boundary.
  * 
  * @author pfeiffp
  */
 public class BoundaryView extends ViewPart {
+    /** This is the boundary extension point processed to get BoundaryStrategy entries */
+    private static final String EXT_ID = "net.refractions.udig.ui.boundary";
 
     /*
      * A list of all the strategies
@@ -46,7 +56,7 @@ public class BoundaryView extends ViewPart {
      * if anything changes!
      */
     private Listener serviceWatcher = new Listener(){
-        private IBoundaryStrategy selectedStrategy = null;
+        //private IBoundaryStrategy selectedStrategy = null;
         public void handleEvent( Event event ) {
             String name;
             IBoundaryStrategy currentStrategy;
@@ -145,13 +155,33 @@ public class BoundaryView extends ViewPart {
         // anything the user told you from last time
         // add the default strategy
 
-        // This is a workaround to boot strap the strategy choices
+        // Ensure we have at least the current strategy
+        
+        final IBoundaryStrategy current = PlatformGIS.getBoundaryService().getCurrentStrategy();
+        final String currentClassName = current != null ? current.getClass().getName() : null;
+        
         // (we will do an extension point later)
-
-        this.addBoundaryStrategy(PlatformGIS.getBoundaryService().getCurrentStrategy());
+        ExtensionPointProcessor processBoundaryItems = new ExtensionPointProcessor(){
+            @Override
+            public void process( IExtension extension, IConfigurationElement element ) throws Exception {
+               //String id = element.getAttribute("id");
+               //String name = element.getAttribute("name");
+               String className = element.getAttribute("class");
+               if( currentClassName != null && currentClassName.equals( className )){
+                   strategyList.add( current );
+               }
+               else {
+                   IBoundaryStrategy strategy = (IBoundaryStrategy) element.createExecutableExtension("class");
+                   strategyList.add(strategy);
+               }
+            }
+        };
+        ExtensionPointUtil.process( UiPlugin.getDefault(), EXT_ID,  processBoundaryItems );
+        
+        //this.addBoundaryStrategy();
         // add other strategies
-        this.addBoundaryStrategy(new BoundaryStrategyScreen());
-        this.addBoundaryStrategy(new BoundaryStrategyMapCrs());
+        //this.addBoundaryStrategy(new BoundaryStrategyScreen());
+        //this.addBoundaryStrategy(new BoundaryStrategyMapCrs());
     }
 
     @Override

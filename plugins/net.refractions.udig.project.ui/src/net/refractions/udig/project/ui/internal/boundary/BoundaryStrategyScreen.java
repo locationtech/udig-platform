@@ -18,7 +18,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
  * @author pfeiffp
  *
  */
-public class BoundaryStrategyScreen implements IBoundaryStrategy {
+public class BoundaryStrategyScreen extends IBoundaryStrategy {
 
 	private static String name = "Screen";
 	
@@ -53,14 +53,5 @@ public class BoundaryStrategyScreen implements IBoundaryStrategy {
 	public String getName() {
 		return name;
 	}
-
-	@Override
-	public Boolean enableTool(String toolId) {
-		if (toolId.equals("net.refractions.udig.tools.ZoomExtent")) {
-			return false;
-		}
-		return true;
-	}
-	
 
 }

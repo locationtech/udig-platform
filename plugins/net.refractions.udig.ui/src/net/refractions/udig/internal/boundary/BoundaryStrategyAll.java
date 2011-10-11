@@ -15,7 +15,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * @author pfeiffp
  *
  */
-public class BoundaryStrategyAll implements IBoundaryStrategy {
+public class BoundaryStrategyAll extends IBoundaryStrategy {
 
 	private static String name = "All";
 	
@@ -37,14 +37,6 @@ public class BoundaryStrategyAll implements IBoundaryStrategy {
 	@Override
 	public String getName() {
 		return name;
-	}
-
-	@Override
-	public Boolean enableTool(String toolId) {
-		if (toolId.equalsIgnoreCase("Search")) {
-			return false;
-		}
-		return true;
 	}
 
 }

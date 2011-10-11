@@ -65,6 +65,7 @@ public class BoundaryServiceImpl implements IBoundaryService {
 
     public BoundaryServiceImpl() {
         this.boundaryStrategy = new BoundaryStrategyAll();
+        // process the extension point here to get the list of 
     }
 
     @Override
@@ -91,11 +92,6 @@ public class BoundaryServiceImpl implements IBoundaryService {
     @Override
     public IBoundaryStrategy getCurrentStrategy() {
         return this.boundaryStrategy;
-    }
-
-    @Override
-    public Boolean enableTool( String toolId ) {
-        return this.boundaryStrategy.enableTool(toolId);
     }
     
     @Override

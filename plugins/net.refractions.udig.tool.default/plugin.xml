@@ -64,7 +64,7 @@
                class="net.refractions.udig.tools.internal.ZoomExtent"
                commandHandler="net.refractions.udig.tools.internal.ZoomHandler"
                commandIds="net.refractions.udig.tool.default.zoom.all"
-               icon="icons/etool16/zoom_boundary_co.gif"
+               icon="icons/etool16/zoom_extent_co.gif"
                id="net.refractions.udig.tools.ZoomExtent"
                menuPath="navigate/zoom.ext"
                name="%zoom.all.name"
@@ -242,5 +242,5 @@
          <initializer
                class="net.refractions.udig.tools.internal.NavigationPreferenceInitializer">
          </initializer>
-      </extension>
+      </extension>      
 </plugin>

@@ -1065,19 +1065,18 @@
                  tooltip="%project.action.open.tooltip">
            </action>
         </actionSet>
-     </extension>
+     </extension>     
      <extension
-           id="net.refractions.udig.project.ui.limit.views"
-           name="Limit Views"
-           point="org.eclipse.ui.views">
-        <view
-              allowMultiple="true"
-              class="net.refractions.udig.project.ui.boundary.BoundaryView"
-              icon="icons/eview16/boundary_view.gif"
-              id="net.refractions.udig.project.ui.boundaryView"
-              name="Boundary"
-              relative="net.refractions.udig.project.ui.layerManager"
-              restorable="true">
-        </view>
-     </extension>
+            point="net.refractions.udig.ui.boundary">
+         <boundary
+               class="net.refractions.udig.project.ui.internal.boundary.BoundaryStrategyScreen"
+               id="net.refractions.udig.tool.default.boundaryScreen"
+               name="%boundary.screen.name">
+         </boundary>
+         <boundary
+               class="net.refractions.udig.project.ui.internal.boundary.BoundaryStrategyMapCrs"
+               id="net.refractions.udig.project.ui.boundaryCRS"
+               name="%boundary.crs.name">
+         </boundary>
+      </extension>
    </plugin>

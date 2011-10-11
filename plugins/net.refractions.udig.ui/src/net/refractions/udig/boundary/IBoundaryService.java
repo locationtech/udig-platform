@@ -42,13 +42,6 @@ public interface IBoundaryService {
 	 * @return CoordinateReferenceSystem
 	 */
 	public CoordinateReferenceSystem getCrs();
-	
-	/**
-	 * Returns true if the tool should be enabled under the current strategy
-	 * @param toolId
-	 * @return Boolean
-	 */
-	public Boolean enableTool(String toolId);
 
 	/**
 	 * Used to update listeners with the name of the current strategy (example "All").

@@ -29,7 +29,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
  * @author pfeiffp
  *
  */
-public class BoundaryStrategyMapCrs implements IBoundaryStrategy {
+public class BoundaryStrategyMapCrs extends IBoundaryStrategy {
 
 	private static String name = "Map CRS";
 	private static ReferencedEnvelope crsExtent = new ReferencedEnvelope();
@@ -108,12 +108,5 @@ public class BoundaryStrategyMapCrs implements IBoundaryStrategy {
 	public String getName() {
 		return name;
 	}
-
-	@Override
-	public Boolean enableTool(String toolId) {
-		return true;
-	}
-	
-	
 
 }
