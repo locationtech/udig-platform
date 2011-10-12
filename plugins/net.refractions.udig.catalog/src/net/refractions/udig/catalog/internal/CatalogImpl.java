@@ -635,7 +635,9 @@ public class CatalogImpl extends ICatalog {
             monitor2 = new NullProgressMonitor();
 
         if (roughMatch) {
-            if (new ID(id.toURL()).equals(new ID(handle.getIdentifier()))) {
+            URL url1 = id.toURL();
+            URL url2 = handle.getIdentifier();
+            if (new ID(url1).equals(new ID(url2))) {
                 return handle;
             }
         } else {
@@ -648,6 +650,7 @@ public class CatalogImpl extends ICatalog {
             if (children == null || children.isEmpty())
                 return null;
 
+            String name = handle.getID().toFile().getName();
             monitor2.beginTask(Messages.CatalogImpl_monitorTask2, children.size());
             for( IResolve child : children ) {
                 IResolve found = getChildById(child, id, roughMatch, null);

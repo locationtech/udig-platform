@@ -56,14 +56,20 @@ public class URLUtils {
         }
         boolean sameProtocol = url2.getProtocol().equalsIgnoreCase(url1.getProtocol());
         
-        if ("file".equals(url2.getProtocol()) && "file".equals(url1)) {
+        if ("file".equals(url2.getProtocol()) && "file".equals(url1.getProtocol())) {
             // take into account file links on linux and osx
             File file1 = urlToFile(url1);
             File file2 = urlToFile(url2);
             try {
                 if (file1 != null && file2 != null) {
                     String path1 = file1.getCanonicalPath();
+                    if (file1.isDirectory() && !path1.endsWith("/")) {
+                        path1 = path1 + "/";
+                    }
                     String path2 = file2.getCanonicalPath();
+                    if (file2.isDirectory() && !path2.endsWith("/")) {
+                        path2 = path2 + "/";
+                    }
                     if (stripRef) {
                         if (url1.getRef() != null) {
                             path1 = path1.substring(0, path1.length() - url1.getRef().length() - 1);

@@ -330,6 +330,9 @@ public class JGrassMapsetGeoResource implements IResolveFolder {
         try {
             URL locationUrl = new File(locationPath).toURI().toURL();
             String locationUrlString = URLUtils.urlToString(locationUrl, false);
+            if (!locationUrlString.endsWith("/")) {
+                locationUrlString = locationUrlString + "/";
+            }
             return new URL(locationUrlString + "#/" + mapsetName);
         } catch (MalformedURLException e) {
             throw (Error) new AssertionError("Url should always work this is a bug").initCause(e);
