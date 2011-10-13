@@ -25,4 +25,4 @@ Require-Bundle: org.junit,
  net.refractions.udig.project.edit
 Bundle-ActivationPolicy: lazy
 Import-Package: org.junit
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

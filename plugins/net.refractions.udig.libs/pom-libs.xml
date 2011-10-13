@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.refractions.udig</groupId>
     <artifactId>libs</artifactId>
-    <version>1.2.x</version>
+    <version>1.2.3</version>
     <name>uDig - User-friendly Desktop Internet GIS</name>
     <packaging>pom</packaging>
     
