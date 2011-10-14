@@ -5,6 +5,11 @@
 	<artifactId>udig-tycho</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
 	<properties>
 		<!-- osgi.os>win32</osgi.os>
 		<osgi.ws>win32</osgi.ws>
@@ -12,6 +17,7 @@
 		<tycho-version>0.13.0</tycho-version>
 		<tycho-provider>org.eclipse.tycho</tycho-provider>
 	</properties>
+	
 	<profiles>
 		<profile>
 			<id>udigProfile</id>
