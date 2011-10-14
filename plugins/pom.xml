@@ -99,6 +99,8 @@
     <module>net.refractions.udig.tool.select</module>
     <!-- module>net.refractions.udig.tool.select.tests</module -->
     <module>net.refractions.udig.ui</module>
+    <module>net.refractions.udig.unstable</module>
+
     <!-- module>net.refractions.udig.ui.tests</module -->
     <module>net.refractions.udig.validation</module>
     <!-- module>net.refractions.udig.validation.test</module -->

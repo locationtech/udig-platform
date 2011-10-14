@@ -35,7 +35,6 @@
     <module>net.refractions.udig_sdk.source-feature</module>
     <module>net.refractions.udig_tutorials-feature</module>
     <module>net.refractions.udig_tutorials.source-feature</module>
-    <module>net.refractions.udig_unstable</module>
     <module>net.refractions.udig_unstable-feature</module>
     <!-- module>org.ossim-feature</module -->
   </modules>

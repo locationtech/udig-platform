@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="net.refractions.udig"
-      label="net.refractions.udig-feature"
-      version="1.2.3.qualifier"
+      id="net.refractions.udig-feature"
+      label="uDig Feature"
+      version="1.3.0.qualifier"
       provider-name="udig.refractions.net"
       plugin="net.refractions.udig">
 

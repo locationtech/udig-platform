@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.ossim"
-      label="org.ossim-feature"
-      version="1.0.1">
+      id="org.ossim-feature"
+      label="OSSIM Feature"
+      version="1.3.0.qualifier"
+      provider-name="ossim.org">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
