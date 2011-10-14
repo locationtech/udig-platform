@@ -3,17 +3,16 @@ package net.refractions.udig.ui.boundary;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.refractions.udig.boundary.BoundaryProxy;
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.boundary.IBoundaryStrategy;
 import net.refractions.udig.core.internal.ExtensionPointProcessor;
 import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.internal.boundary.BoundaryStrategyAll;
 import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -72,6 +71,12 @@ public class BoundaryView extends ViewPart {
     // private Combo combo;
     private ComboViewer comboViewer;
 
+    /*
+     *  The initial strategy - stored as a BoundaryProxy so that the setting the 
+     *  inital selection on the combo works
+     */
+    private BoundaryProxy initialStrategy = null;
+    
     /**
      * Listens to the user and changes the global IBoundaryService to the
      * indicated strategy.
@@ -148,6 +153,7 @@ public class BoundaryView extends ViewPart {
             boundaryService.removeListener(serviceWatcher);
         }
     }
+    
     @Override
     public void init( IViewSite site, IMemento memento ) throws PartInitException {
         super.init(site, memento);
@@ -160,28 +166,20 @@ public class BoundaryView extends ViewPart {
         final IBoundaryStrategy current = PlatformGIS.getBoundaryService().getCurrentStrategy();
         final String currentClassName = current != null ? current.getClass().getName() : null;
         
-        // (we will do an extension point later)
+        // extension point processing
         ExtensionPointProcessor processBoundaryItems = new ExtensionPointProcessor(){
             @Override
             public void process( IExtension extension, IConfigurationElement element ) throws Exception {
-               //String id = element.getAttribute("id");
-               //String name = element.getAttribute("name");
+               BoundaryProxy strategy = new BoundaryProxy(element);
+               strategyList.add(strategy);
                String className = element.getAttribute("class");
                if( currentClassName != null && currentClassName.equals( className )){
-                   strategyList.add( current );
-               }
-               else {
-                   IBoundaryStrategy strategy = (IBoundaryStrategy) element.createExecutableExtension("class");
-                   strategyList.add(strategy);
+                   initialStrategy = strategy;
                }
             }
         };
         ExtensionPointUtil.process( UiPlugin.getDefault(), EXT_ID,  processBoundaryItems );
         
-        //this.addBoundaryStrategy();
-        // add other strategies
-        //this.addBoundaryStrategy(new BoundaryStrategyScreen());
-        //this.addBoundaryStrategy(new BoundaryStrategyMapCrs());
     }
 
     @Override
@@ -193,9 +191,7 @@ public class BoundaryView extends ViewPart {
         label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
         label.setText("Boundary: ");
 
-        // get the current strategy
-        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        IBoundaryStrategy currentStrategy = boundaryService.getCurrentStrategy();
+        // start listening
         listenService( true );
 
         // eclipse combo viewer
@@ -214,7 +210,9 @@ public class BoundaryView extends ViewPart {
 
         comboViewer.setInput(strategyList);
         // set the current strategy
-        comboViewer.setSelection(new StructuredSelection(currentStrategy));
+        if (initialStrategy != null)  {
+            comboViewer.setSelection(new StructuredSelection(initialStrategy));
+        }
         
         // now that we are configured we can start to listen!
         listenCombo( true );
