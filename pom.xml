@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.refractions</groupId>
+	<artifactId>udig-tycho</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<properties>
+		<!-- osgi.os>win32</osgi.os>
+		<osgi.ws>win32</osgi.ws>
+		<osgi.arch>x86</osgi.arch -->
+		<tycho-version>0.13.0</tycho-version>
+		<tycho-provider>org.eclipse.tycho</tycho-provider>
+	</properties>
+	<profiles>
+		<profile>
+			<id>udigProfile</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<repositories>
+				<!-- repository>
+					<id>central</id>
+					<url>http://central</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository -->
+				<repository>
+					<id>indigo-local</id>
+					<layout>p2</layout>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>daily</updatePolicy>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>daily</updatePolicy>
+					</snapshots>
+					<!-- url>file:///D:/java/eclipse_extras/eclipse-indigo-p2/</url -->
+					<url>file:///home/broadbc/workspace/udig_tycho_stuff/eclipse-indigo-p2</url>
+				</repository>
+				<repository>
+					<id>indigo-web</id>
+					<layout>p2</layout>
+					<url>http://download.eclipse.org/releases/indigo/</url>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>indigo-delta</id>
+					<layout>p2</layout>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>daily</updatePolicy>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>daily</updatePolicy>
+					</snapshots>
+					<!-- url>file:///D:/java/eclipse_extras/delta-p2</url -->
+					<url>file:///home/broadbc/workspace/udig_tycho_stuff/indigo-delta-p2</url>
+				</repository>
+			</repositories>
+			<!-- pluginRepositories>
+				<pluginRepository>
+					<id>central</id>
+					<url>http://central</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories -->
+		</profile>
+	</profiles>
+	
+	
+	<!-- dependencies>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+	</dependencies -->
+	
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>${tycho-provider}</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>${tycho-provider}</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<!-- pomDependencies>consider</pomDependencies -->
+					<environments>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>carbon</ws>
+							<arch>x86</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>${tycho-provider}</groupId>
+				<artifactId>tycho-compiler-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<modules>
+		<module>plugins</module>
+		<module>features</module>
+		<module>tutorials</module>
+	</modules>
+</project>
