@@ -110,6 +110,31 @@
     <module>net.refractions.udig_tutorials.source</module>
     <module>org.apache.log4j</module>
     <module>org.tcat.citd.sim.udig.bookmarks</module>
+    <!-- tutorials -->
+        <module>com.csvreader</module>
+    <module>eu.udig.tutorials.preferredzoomlevels</module>
+    <module>eu.udig.tutorials.tool-view</module>
+    <!-- module>net.refractions.udig.tests.tutorials.tests</module -->
+    <module>net.refractions.udig.tutorials.catalog.csv</module>
+    <module>net.refractions.udig.tutorials.customapp</module>
+    <module>net.refractions.udig.tutorials.distancetool</module>
+    <module>net.refractions.udig.tutorials.examples</module>
+    <module>net.refractions.udig.tutorials.featureeditor</module>
+    <module>net.refractions.udig.tutorials.genericprojectelement</module>
+    <module>net.refractions.udig.tutorials.mapgraphic</module>
+    <module>net.refractions.udig.tutorials.raster</module>
+    <module>net.refractions.udig.tutorials.rcp</module>
+    <module>net.refractions.udig.tutorials.rcp-feature</module>
+    <module>net.refractions.udig.tutorials.render.csv</module>
+    <module>net.refractions.udig.tutorials.shpexport</module>
+    <module>net.refractions.udig.tutorials.style.color</module>
+    <module>net.refractions.udig.tutorials.template</module>
+    <module>net.refractions.udig.tutorials.tool.coordinate</module>
+    <module>net.refractions.udig.tutorials.tool.coverage</module>
+    <module>net.refractions.udig.tutorials.tracking</module>
+    <module>net.refractions.udig.tutorials.urladapter</module>
+    <module>net.refractions.udig.tutorials.workbench</module>
+    <module>net.refractions.udig_tutorials.custom-feature</module>
   </modules>
 
 
