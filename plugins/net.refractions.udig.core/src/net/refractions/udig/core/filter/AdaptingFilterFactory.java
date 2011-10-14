@@ -15,6 +15,7 @@ import org.opengis.filter.PropertyIsGreaterThanOrEqualTo;
 import org.opengis.filter.PropertyIsLessThan;
 import org.opengis.filter.PropertyIsLessThanOrEqualTo;
 import org.opengis.filter.PropertyIsLike;
+import org.opengis.filter.PropertyIsNil;
 import org.opengis.filter.PropertyIsNotEqualTo;
 import org.opengis.filter.PropertyIsNull;
 import org.opengis.filter.spatial.BBOX;
@@ -242,6 +243,11 @@ public class AdaptingFilterFactory {
 
         public AdaptingTOverlaps visit( TOverlaps filter, Object arg1 ) {
             return new AdaptingTOverlaps( filter );
+        }
+
+        @Override
+        public Object visit( PropertyIsNil filter, Object arg1 ) {
+            return new AdaptingPropertyIsNil( filter );
         }        
     }
 }
