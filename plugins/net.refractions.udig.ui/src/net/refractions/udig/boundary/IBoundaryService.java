@@ -1,5 +1,20 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2011, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.boundary;
 
+ 
 import java.util.List;
 
 import org.eclipse.swt.widgets.Listener;
@@ -9,8 +24,17 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * A service that can get the area extent, future: listen for updates to the area and notify
- * listeners of the update
+ * Service for the boundary extent with events to indicate when this value is updated by the user.
+ * <p>
+ * To determien the current boundary:
+ * <pre>
+ * IBoundaryService service = PlatformGIS.getBoundaryService();
+ * ReferencedEnvelope extent = service.getExtent();</pre>
+ * 
+ * Example of changing the strategy uesd for determining the boundary extent:
+ * <pre>
+ * BoundaryProxy proxy = service.findProxy("net.refractions.udig.ui.boundaryAll");
+ * service.setProxy( proxy );</pre>
  * 
  * @author Paul Pfeiffer
  */
@@ -26,7 +50,7 @@ public interface IBoundaryService {
      * 
      * @param boundaryStrategy
      */
-    public void setStrategy( BoundaryProxy boundaryStrategy );
+    public void setProxy( BoundaryProxy boundaryStrategy );
 
     /**
      * Get the current Boundary Strategy
@@ -81,7 +105,7 @@ public interface IBoundaryService {
     public List<BoundaryProxy> getProxyList();
 
     /**
-     * Returns the IBoundaryStrategy with the supplied id
+     * Returns the IBoundaryStrategy with the supplied id.
      * 
      * @param id
      * @return IBoundaryStrategy or null if it cannot be found

@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2011, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.ui.boundary;
 
 import net.refractions.udig.boundary.BoundaryProxy;
@@ -27,22 +41,20 @@ import org.eclipse.ui.part.ViewPart;
 /**
  * Allows a user to select the BoundaryStrategy to define the boundary
  * <p>
- * This view processes the "boundary" extension point in order to obtain the list
- * of options to display to the user. Each boundary may optionally provide a "page" used
- * to further refine the limit used for the boundary.
+ * This view processes the "boundary" extension point in order to obtain the list of options to
+ * display to the user. Each boundary may optionally provide a "page" used to further refine the
+ * limit used for the boundary.
  * 
  * @author pfeiffp
  * @sinve 1.3.0
  */
 public class BoundaryView extends ViewPart {
 
-
     /**
-     * Listens to the global IBoundaryService and updates our view
-     * if anything changes!
+     * Listens to the global IBoundaryService and updates our view if anything changes!
      */
     private Listener serviceWatcher = new Listener(){
-        //private IBoundaryStrategy selectedStrategy = null;
+        // private IBoundaryStrategy selectedStrategy = null;
         public void handleEvent( Event event ) {
             String name;
             IBoundaryStrategy currentStrategy;
@@ -51,29 +63,28 @@ public class BoundaryView extends ViewPart {
             } else {
                 currentStrategy = PlatformGIS.getBoundaryService().getProxy();
             }
-            setSelected( currentStrategy );
+            setSelected(currentStrategy);
         }
     };
-    
+
     // private Combo combo;
     private ComboViewer comboViewer;
 
     /*
-     *  The initial strategy - stored as a BoundaryProxy so that the setting the 
-     *  inital selection on the combo works
+     * The initial strategy - stored as a BoundaryProxy so that the setting the inital selection on
+     * the combo works
      */
     private BoundaryProxy initialStrategy = null;
-    
+
     /**
-     * Listens to the user and changes the global IBoundaryService to the
-     * indicated strategy.
+     * Listens to the user and changes the global IBoundaryService to the indicated strategy.
      */
     private ISelectionChangedListener comboListener = new ISelectionChangedListener(){
         @Override
         public void selectionChanged( SelectionChangedEvent event ) {
             IStructuredSelection selectedStrategy = (IStructuredSelection) event.getSelection();
             IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-            boundaryService.setStrategy((BoundaryProxy) selectedStrategy.getFirstElement());
+            boundaryService.setProxy((BoundaryProxy) selectedStrategy.getFirstElement());
         }
     };
 
@@ -83,37 +94,36 @@ public class BoundaryView extends ViewPart {
     public BoundaryView() {
     }
     /**
-     * This will update the combo viewer (carefully unhooking events while
-     * the viewer is updated).
+     * This will update the combo viewer (carefully unhooking events while the viewer is updated).
      * 
      * @param selected
      */
-    public void setSelected( IBoundaryStrategy selected ){
+    public void setSelected( IBoundaryStrategy selected ) {
         if (selected == null) {
             selected = PlatformGIS.getBoundaryService().getDefault();
         }
-        if( comboViewer == null || comboViewer.getControl().isDisposed()){
-            listenService( false );
+        if (comboViewer == null || comboViewer.getControl().isDisposed()) {
+            listenService(false);
             return; // the view has shutdown!
         }
         IBoundaryStrategy current = getSelected();
-        if( current == selected ){
+        if (current == selected) {
             return; // already selected
         }
         try {
-            listenCombo( false );
+            listenCombo(false);
             comboViewer.setSelection(new StructuredSelection(selected));
-        }
-        finally {
-            listenCombo( true );
+        } finally {
+            listenCombo(true);
         }
     }
     /**
      * Access the IBoundaryStrategy selected by the user
+     * 
      * @return IBoundaryStrategy selected by the user
      */
     public IBoundaryStrategy getSelected() {
-        if( comboViewer.getSelection() instanceof IStructuredSelection){
+        if (comboViewer.getSelection() instanceof IStructuredSelection) {
             IStructuredSelection selection = (IStructuredSelection) comboViewer.getSelection();
             return (IBoundaryStrategy) selection.getFirstElement();
         }
@@ -130,26 +140,25 @@ public class BoundaryView extends ViewPart {
             comboViewer.removeSelectionChangedListener(comboListener);
         }
     }
-    
-    protected void listenService( boolean listen ){
+
+    protected void listenService( boolean listen ) {
         IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        if( listen ){
+        if (listen) {
             boundaryService.addListener(serviceWatcher);
-        }
-        else {
+        } else {
             boundaryService.removeListener(serviceWatcher);
         }
     }
-    
+
     @Override
     public void init( IViewSite site, IMemento memento ) throws PartInitException {
         super.init(site, memento);
         // this is where you read your memento to remember
         // anything the user told you from last time
-        //this.addBoundaryStrategy();
+        // this.addBoundaryStrategy();
         // add other strategies
-        //this.addBoundaryStrategy(new BoundaryStrategyScreen());
-        //this.addBoundaryStrategy(new BoundaryStrategyMapCrs());
+        // this.addBoundaryStrategy(new BoundaryStrategyScreen());
+        // this.addBoundaryStrategy(new BoundaryStrategyMapCrs());
     }
 
     @Override
@@ -164,7 +173,7 @@ public class BoundaryView extends ViewPart {
         // get the current strategy
         IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
         IBoundaryStrategy currentStrategy = boundaryService.getProxy();
-        listenService( true );
+        listenService(true);
 
         // eclipse combo viewer
         comboViewer = new ComboViewer(parent, SWT.READ_ONLY);
@@ -182,14 +191,15 @@ public class BoundaryView extends ViewPart {
         comboViewer.setInput(boundaryService.getProxyList());
         // set the current strategy
         comboViewer.setSelection(new StructuredSelection(boundaryService.getDefault()));
-        /*if (initialStrategy != null)  {
-            comboViewer.setSelection(new StructuredSelection(initialStrategy));
-        }*/
-        
+        /*
+         * if (initialStrategy != null) { comboViewer.setSelection(new
+         * StructuredSelection(initialStrategy)); }
+         */
+
         // now that we are configured we can start to listen!
-        listenCombo( true );
+        listenCombo(true);
     }
-    
+
     @Override
     public void setFocus() {
         comboViewer.getControl().setFocus();
@@ -198,7 +208,7 @@ public class BoundaryView extends ViewPart {
     @Override
     public void dispose() {
         super.dispose();
-        if( comboViewer != null) {
+        if (comboViewer != null) {
             comboViewer.removeSelectionChangedListener(comboListener);
         }
         if (serviceWatcher != null) {
