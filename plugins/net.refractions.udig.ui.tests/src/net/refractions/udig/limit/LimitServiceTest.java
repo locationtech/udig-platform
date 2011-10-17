@@ -29,7 +29,7 @@ public class LimitServiceTest {
 
 	@Test
 	public void testGetLimit() {
-		assertNull(this.boundaryService.getBoundary());
+		assertNull(this.boundaryService.getGeometry());
 	}
 
 	@Test
