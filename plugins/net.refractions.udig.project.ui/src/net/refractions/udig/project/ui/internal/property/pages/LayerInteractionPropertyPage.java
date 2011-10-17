@@ -15,7 +15,14 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IWorkbenchPropertyPage;
 import org.eclipse.ui.dialogs.PropertyPage;
+import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
+import org.geotools.geometry.jts.Geometries;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.GeometryDescriptor;
 import org.postgis.MultiPolygon;
+
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.Polygon;
 
 
 /**
@@ -31,20 +38,31 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
     protected Control createContents( Composite parent ) {
         final Layer layer = (Layer) getElement();
         
-        // http://comments.gmane.org/gmane.comp.gis.udig.devel/6560
-        // says Layer -> FeatureType -> GeometryAttributeType (based on GeoResource)
-        //Boolean test = layer.getGeoResource();
+        boolean isPolygon = false;
+        boolean isRaster = false;
+        SimpleFeatureType schema = layer.getSchema();
         
-        //System.out.println(layer.getGeoResource().getTitle());
-        
-        
-        /*IBlackboard test = layer.getBlackboard();
-        Set<String> keylist = test.keySet();
-        for (String key: keylist) {
-            System.out.println(key);
+        // check if layer is polygon
+        if( schema != null ){
+            GeometryDescriptor geomDescriptor = schema.getGeometryDescriptor();
+            if( geomDescriptor != null ){
+                Class< ? extends Geometry > binding = (Class< ? extends Geometry>) geomDescriptor.getType().getBinding();
+                switch( Geometries.getForBinding( binding ) ){
+                case MULTIPOLYGON:
+                case POLYGON:
+                        isPolygon = true;
+                break;
+                default:
+                }
+            }
+        } 
+        // check if raster layer
+        else {
+            if( layer.canAdaptTo(AbstractGridCoverage2DReader.class)){
+                isRaster = true;
+            }
         }
-        //Glyph icon = (Glyph)test.get("generated icon");*/
-
+        
         
         Composite interactionPage = new Composite(parent, SWT.NONE);
         
@@ -81,6 +99,7 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         infromationButton.setText("Information");
         infromationButton.setLocation(40, 40);
         infromationButton.pack();
+        infromationButton.setEnabled(true);
         infromationButton.setSelection(layer.isApplicable("information"));
         
         Button selectButton = new Button(toolsGroup, SWT.CHECK);
