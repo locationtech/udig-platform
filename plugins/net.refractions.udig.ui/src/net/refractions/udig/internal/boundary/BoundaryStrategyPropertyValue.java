@@ -30,7 +30,7 @@ public class BoundaryStrategyPropertyValue extends AbstractPropertyValue
 	@Override
 	public boolean isTrue(Object object, String value) {
 	    IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-		String name = boundaryService.getCurrentStrategy().getName();
+		String name = boundaryService.getProxy().getName();
         return name.equals(value);
 	}
 

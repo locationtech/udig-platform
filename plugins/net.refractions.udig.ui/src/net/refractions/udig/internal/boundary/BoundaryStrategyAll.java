@@ -25,7 +25,7 @@ public class BoundaryStrategyAll extends IBoundaryStrategy {
 	}
 
 	@Override
-	public Geometry getBoundary() {
+	public Geometry getGeometry() {
 		return null;
 	}
 

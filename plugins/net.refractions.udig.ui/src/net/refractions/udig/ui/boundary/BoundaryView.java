@@ -1,18 +1,10 @@
 package net.refractions.udig.ui.boundary;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.refractions.udig.boundary.BoundaryProxy;
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.boundary.IBoundaryStrategy;
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.ui.PlatformGIS;
 
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -40,15 +32,10 @@ import org.eclipse.ui.part.ViewPart;
  * to further refine the limit used for the boundary.
  * 
  * @author pfeiffp
+ * @sinve 1.3.0
  */
 public class BoundaryView extends ViewPart {
-    /** This is the boundary extension point processed to get BoundaryStrategy entries */
-    private static final String EXT_ID = "net.refractions.udig.ui.boundary";
 
-    /*
-     * A list of all the strategies
-     */
-    private List<IBoundaryStrategy> strategyList = new ArrayList<IBoundaryStrategy>();
 
     /**
      * Listens to the global IBoundaryService and updates our view
@@ -62,7 +49,7 @@ public class BoundaryView extends ViewPart {
             if (event.data instanceof IBoundaryStrategy) {
                 currentStrategy = (IBoundaryStrategy) event.data;
             } else {
-                currentStrategy = PlatformGIS.getBoundaryService().getCurrentStrategy();
+                currentStrategy = PlatformGIS.getBoundaryService().getProxy();
             }
             setSelected( currentStrategy );
         }
@@ -86,7 +73,7 @@ public class BoundaryView extends ViewPart {
         public void selectionChanged( SelectionChangedEvent event ) {
             IStructuredSelection selectedStrategy = (IStructuredSelection) event.getSelection();
             IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-            boundaryService.setStrategy((IBoundaryStrategy) selectedStrategy.getFirstElement());
+            boundaryService.setStrategy((BoundaryProxy) selectedStrategy.getFirstElement());
         }
     };
 
@@ -159,27 +146,10 @@ public class BoundaryView extends ViewPart {
         super.init(site, memento);
         // this is where you read your memento to remember
         // anything the user told you from last time
-        // add the default strategy
-
-        // Ensure we have at least the current strategy
-        
-        final IBoundaryStrategy current = PlatformGIS.getBoundaryService().getCurrentStrategy();
-        final String currentClassName = current != null ? current.getClass().getName() : null;
-        
-        // extension point processing
-        ExtensionPointProcessor processBoundaryItems = new ExtensionPointProcessor(){
-            @Override
-            public void process( IExtension extension, IConfigurationElement element ) throws Exception {
-               BoundaryProxy strategy = new BoundaryProxy(element);
-               strategyList.add(strategy);
-               String className = element.getAttribute("class");
-               if( currentClassName != null && currentClassName.equals( className )){
-                   initialStrategy = strategy;
-               }
-            }
-        };
-        ExtensionPointUtil.process( UiPlugin.getDefault(), EXT_ID,  processBoundaryItems );
-        
+        //this.addBoundaryStrategy();
+        // add other strategies
+        //this.addBoundaryStrategy(new BoundaryStrategyScreen());
+        //this.addBoundaryStrategy(new BoundaryStrategyMapCrs());
     }
 
     @Override
@@ -191,7 +161,9 @@ public class BoundaryView extends ViewPart {
         label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
         label.setText("Boundary: ");
 
-        // start listening
+        // get the current strategy
+        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        IBoundaryStrategy currentStrategy = boundaryService.getProxy();
         listenService( true );
 
         // eclipse combo viewer
@@ -207,12 +179,12 @@ public class BoundaryView extends ViewPart {
                 return super.getText(element);
             }
         });
-
-        comboViewer.setInput(strategyList);
+        comboViewer.setInput(boundaryService.getProxyList());
         // set the current strategy
-        if (initialStrategy != null)  {
+        comboViewer.setSelection(new StructuredSelection(boundaryService.getDefault()));
+        /*if (initialStrategy != null)  {
             comboViewer.setSelection(new StructuredSelection(initialStrategy));
-        }
+        }*/
         
         // now that we are configured we can start to listen!
         listenCombo( true );
@@ -223,19 +195,6 @@ public class BoundaryView extends ViewPart {
         comboViewer.getControl().setFocus();
     }
 
-    /**
-     * Adds a Boundary Strategy to the view
-     * 
-     * @param strategy
-     * @return boolean true if strategy was added
-     */
-    public boolean addBoundaryStrategy( IBoundaryStrategy strategy ) {
-        if (!this.strategyList.contains(strategy)) {
-            this.strategyList.add(strategy);
-            return true;
-        }
-        return false;
-    }
     @Override
     public void dispose() {
         super.dispose();

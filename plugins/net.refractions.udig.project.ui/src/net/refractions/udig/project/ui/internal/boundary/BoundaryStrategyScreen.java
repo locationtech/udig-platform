@@ -32,7 +32,7 @@ public class BoundaryStrategyScreen extends IBoundaryStrategy {
 	}
 
 	@Override
-	public Geometry getBoundary() {
+	public Geometry getGeometry() {
 		ReferencedEnvelope extent = this.getExtent();
 		if (extent != null) {
 			return new GeometryFactory().toGeometry(extent);
