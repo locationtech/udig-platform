@@ -100,7 +100,7 @@ public class BoundaryServiceImpl implements IBoundaryService {
         }
     }
     
-    private BoundaryProxy currentStrategy;
+    private BoundaryProxy currentProxy;
 
     public BoundaryServiceImpl() {
         
@@ -123,37 +123,37 @@ public class BoundaryServiceImpl implements IBoundaryService {
 
     @Override
     public ReferencedEnvelope getExtent() {
-        return this.currentStrategy.getExtent();
+        return this.currentProxy.getExtent();
     }
 
     @Override
-    public void setProxy( BoundaryProxy strategy ) {
-        if( this.currentStrategy == strategy ){
+    public void setProxy( BoundaryProxy proxy ) {
+        if( this.currentProxy == proxy ){
             return; // no change
         }
-        if( this.currentStrategy != null ){
-            this.currentStrategy.removeListener(watcher);
+        if( this.currentProxy != null ){
+            this.currentProxy.removeListener(watcher);
         }
-        this.currentStrategy = strategy;
-        if( this.currentStrategy != null ){
-            this.currentStrategy.addListener(watcher);
+        this.currentProxy = proxy;
+        if( this.currentProxy != null ){
+            this.currentProxy.addListener(watcher);
         }
-        notifyListeners(strategy.getName());
+        notifyListeners(proxy.getName());
     }
 
     @Override
     public Geometry getGeometry() {
-        return this.currentStrategy.getGeometry();
+        return this.currentProxy.getGeometry();
     }
 
     @Override
     public CoordinateReferenceSystem getCrs() {
-        return this.currentStrategy.getCrs();
+        return this.currentProxy.getCrs();
     }
 
     @Override
     public BoundaryProxy getProxy() {
-        return this.currentStrategy;
+        return this.currentProxy;
     }
     
     @Override

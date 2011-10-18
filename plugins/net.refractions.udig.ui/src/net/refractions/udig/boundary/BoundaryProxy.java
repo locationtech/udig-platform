@@ -42,7 +42,7 @@ public class BoundaryProxy extends IBoundaryStrategy {
     /**
      * Boundary strategy to be lazy loaded
      */
-    private IBoundaryStrategy proxy = null;
+    private IBoundaryStrategy strategy = null;
 
     /** Identifier provided by the configuration element id attribute */
     private String id;
@@ -82,15 +82,15 @@ public class BoundaryProxy extends IBoundaryStrategy {
      * @return IBoundaryStrategy
      */
     public IBoundaryStrategy getStrategy(){
-        if (proxy == null) {
+        if (strategy == null) {
             try {
-                proxy = (IBoundaryStrategy)configElement.createExecutableExtension("class");
+                strategy = (IBoundaryStrategy)configElement.createExecutableExtension("class");
             } catch (CoreException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-        return proxy;
+        return strategy;
     }
     
     /**
