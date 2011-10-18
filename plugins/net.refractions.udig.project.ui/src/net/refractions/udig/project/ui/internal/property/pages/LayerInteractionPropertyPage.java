@@ -14,6 +14,7 @@
  */
 package net.refractions.udig.project.ui.internal.property.pages;
 
+import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.Layer;
 
 import org.eclipse.swt.SWT;
@@ -47,8 +48,6 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
     private Button editButton;
     private Button backgroundButton;
     private Button boundaryButton;
-    
-    private static String BOUNDARY_CATEGORY_ID = "boundary";
     
     /*
      * (non-Javadoc)
@@ -174,8 +173,20 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         if( visibleButton.getSelection() != layer.isVisible() ){
             layer.setVisible(visibleButton.getSelection());
         }
-        if( boundaryButton.getSelection() != layer.isApplicable(BOUNDARY_CATEGORY_ID) ){
-            layer.setApplicable(BOUNDARY_CATEGORY_ID, boundaryButton.getSelection());
+        if( backgroundButton.getSelection() != layer.isApplicable( ILayer.ID_BACKGROUND )){
+            layer.setApplicable(ILayer.ID_BACKGROUND, backgroundButton.getSelection());
+        }
+        if( informationButton.getSelection() != layer.isApplicable( ILayer.ID_INFO )){
+            layer.setApplicable(ILayer.ID_INFO, informationButton.getSelection());
+        }
+        if( selectButton.getSelection() != layer.isSelectable() ){
+            layer.setSelectable(selectButton.getSelection());
+        }
+        if( editButton.getSelection() != layer.isApplicable( ILayer.ID_EDIT )){
+            layer.setApplicable(ILayer.ID_EDIT, editButton.getSelection());
+        }
+        if( boundaryButton.getSelection() != layer.isApplicable( ILayer.ID_BOUNDARY )){
+            layer.setApplicable(ILayer.ID_BOUNDARY, boundaryButton.getSelection());
         }
     }
     
@@ -210,15 +221,57 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
             }
         }
         
-        // enable / disable buttons
-        boundaryButton.setEnabled(isPolygon);
-        
-        // set values
+        // set values and enable / disable buttons
         visibleButton.setSelection(layer.isVisible());
-        informationButton.setSelection(layer.isApplicable("information"));
-        selectButton.setSelection(layer.isSelectable());
-        editButton.setSelection(layer.isApplicable("editable"));
-        boundaryButton.setSelection(layer.isApplicable(BOUNDARY_CATEGORY_ID));
+        
+        // set background layer
+        backgroundButton.setSelection(layer.isApplicable(ILayer.ID_BACKGROUND));
+        layerButton.setSelection(!layer.isApplicable(ILayer.ID_BACKGROUND));
+        if (layer.isApplicable(ILayer.ID_BACKGROUND)) {
+            
+            // enable background layer options if applicable
+            boundaryButton.setEnabled(isPolygon);
+            if (isPolygon) {
+                boundaryButton.setSelection(layer.isApplicable(ILayer.ID_BOUNDARY));
+            }
+            else {
+                boundaryButton.setSelection(false);
+            }
+            
+            // disable non background layer options
+            informationButton.setEnabled(false);
+            informationButton.setSelection(false);
+            selectButton.setEnabled(false);
+            selectButton.setSelection(false);
+            editButton.setEnabled(false);
+            editButton.setSelection(false);
+        }
+        else {
+            // set non background layer options
+            // check if raster layer
+            if (isRaster) {
+                // enable raster options
+                informationButton.setEnabled(true);
+                informationButton.setSelection(layer.isApplicable(ILayer.ID_INFO));
+                // disable non raster options
+                selectButton.setEnabled(false);
+                selectButton.setSelection(false);
+                editButton.setEnabled(false);
+                editButton.setSelection(false);
+            }
+            else {
+                informationButton.setEnabled(true);
+                informationButton.setSelection(layer.isApplicable(ILayer.ID_INFO));
+                selectButton.setEnabled(true);
+                selectButton.setSelection(layer.isSelectable());
+                editButton.setEnabled(true);
+                editButton.setSelection(layer.isApplicable(ILayer.ID_EDIT));
+            }
+            
+            // disable background layer options
+            boundaryButton.setEnabled(false);
+            boundaryButton.setSelection(false);
+        }
         
     }
 }
