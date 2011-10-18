@@ -42,7 +42,7 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
 
     private Button visibleButton;
     private Button layerButton;
-    private Button infromationButton;
+    private Button informationButton;
     private Button selectButton;
     private Button editButton;
     private Button backgroundButton;
@@ -111,11 +111,11 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         layerButton.setLocation(20, 20);
         layerButton.pack();
 
-        infromationButton = new Button(toolsGroup, SWT.CHECK);
-        infromationButton.setText("Information");
-        infromationButton.setLocation(40, 40);
-        infromationButton.pack();
-        infromationButton.setEnabled(true);
+        informationButton = new Button(toolsGroup, SWT.CHECK);
+        informationButton.setText("Information");
+        informationButton.setLocation(40, 40);
+        informationButton.pack();
+        informationButton.setEnabled(true);
 
         selectButton = new Button(toolsGroup, SWT.CHECK);
         selectButton.setText("Select");
@@ -203,9 +203,15 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
                 isRaster = true;
             }
         }
+        
+        // enable / disable buttons
+        boundaryButton.setEnabled(isPolygon);
+        
+        // set values
         visibleButton.setSelection(layer.isVisible());
-        infromationButton.setSelection(layer.isApplicable("information"));
+        informationButton.setSelection(layer.isApplicable("information"));
         selectButton.setSelection(layer.isSelectable());
         editButton.setSelection(layer.isApplicable("editable"));
+        
     }
 }
