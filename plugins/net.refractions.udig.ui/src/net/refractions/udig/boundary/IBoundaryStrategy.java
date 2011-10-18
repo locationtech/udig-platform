@@ -34,14 +34,17 @@ import com.vividsolutions.jts.geom.Geometry;
 public abstract class IBoundaryStrategy {
 
     /**
-     * Returns the extent Should return an empty envelope for an "All" extent
+     * Returns the extent of the current boundary. 
+     * Should return null for an "All" extent
      * 
      * @return ReferencedEnvelope
      */
     public abstract ReferencedEnvelope getExtent();
 
     /**
-     * Returns a geometry of the current boundary selected
+     * Returns a geometry of the current boundary selected.
+     * Returning a null geometry specifies no boundary and by default will
+     * be treated as a world extent
      * 
      * @return Geometry
      */

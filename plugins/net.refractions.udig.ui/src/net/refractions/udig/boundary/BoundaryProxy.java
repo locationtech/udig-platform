@@ -42,7 +42,7 @@ public class BoundaryProxy extends IBoundaryStrategy {
     /**
      * Boundary strategy to be lazy loaded
      */
-    private IBoundaryStrategy proxy = null;
+    private IBoundaryStrategy strategy = null;
 
     /** Identifier provided by the configuration element id attribute */
     private String id;
@@ -59,17 +59,17 @@ public class BoundaryProxy extends IBoundaryStrategy {
     
     @Override
     public ReferencedEnvelope getExtent() {
-        return getProxy().getExtent();
+        return getStrategy().getExtent();
     }
 
     @Override
     public Geometry getGeometry() {
-        return getProxy().getGeometry();
+        return getStrategy().getGeometry();
     }
 
     @Override
     public CoordinateReferenceSystem getCrs() {
-        return getProxy().getCrs();
+        return getStrategy().getCrs();
     }
 
     @Override
@@ -81,16 +81,16 @@ public class BoundaryProxy extends IBoundaryStrategy {
      * Gets the boundary strategy and creates it if it doesn't exist
      * @return IBoundaryStrategy
      */
-    private IBoundaryStrategy getProxy(){
-        if (proxy == null) {
+    public IBoundaryStrategy getStrategy(){
+        if (strategy == null) {
             try {
-                proxy = (IBoundaryStrategy)configElement.createExecutableExtension("class");
+                strategy = (IBoundaryStrategy)configElement.createExecutableExtension("class");
             } catch (CoreException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-        return proxy;
+        return strategy;
     }
     
     /**
@@ -102,18 +102,18 @@ public class BoundaryProxy extends IBoundaryStrategy {
     }
 
     public void addListener( Listener listener ) {
-        getProxy().addListener(listener);
+        getStrategy().addListener(listener);
     }
 
     public void removeListener( Listener listener ) {
-        getProxy().removeListener(listener);
+        getStrategy().removeListener(listener);
     }
     
     /**
      * Notifies listener that the value of the filter has changed.
      */
     protected void notifyListeners(Object changed) {
-        getProxy().notifyListeners(changed);
+        getStrategy().notifyListeners(changed);
     }
 
     @Override
