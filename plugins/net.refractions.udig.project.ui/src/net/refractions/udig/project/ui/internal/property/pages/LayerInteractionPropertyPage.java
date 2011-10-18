@@ -47,6 +47,9 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
     private Button editButton;
     private Button backgroundButton;
     private Button boundaryButton;
+    
+    private static String BOUNDARY_CATEGORY_ID = "boundary";
+    
     /*
      * (non-Javadoc)
      * @see
@@ -171,10 +174,13 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         if( visibleButton.getSelection() != layer.isVisible() ){
             layer.setVisible(visibleButton.getSelection());
         }
+        if( boundaryButton.getSelection() != layer.isApplicable(BOUNDARY_CATEGORY_ID) ){
+            layer.setApplicable(BOUNDARY_CATEGORY_ID, boundaryButton.getSelection());
+        }
     }
     
     
-    /** Grabs the layer and fills in the curren page. */
+    /** Grabs the layer and fills in the current page. */
     private void loadLayer() {
         final Layer layer = (Layer) getElement();
 
@@ -212,6 +218,7 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         informationButton.setSelection(layer.isApplicable("information"));
         selectButton.setSelection(layer.isSelectable());
         editButton.setSelection(layer.isApplicable("editable"));
+        boundaryButton.setSelection(layer.isApplicable(BOUNDARY_CATEGORY_ID));
         
     }
 }
