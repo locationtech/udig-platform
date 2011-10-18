@@ -59,17 +59,17 @@ public class BoundaryProxy extends IBoundaryStrategy {
     
     @Override
     public ReferencedEnvelope getExtent() {
-        return getProxy().getExtent();
+        return getStrategy().getExtent();
     }
 
     @Override
     public Geometry getGeometry() {
-        return getProxy().getGeometry();
+        return getStrategy().getGeometry();
     }
 
     @Override
     public CoordinateReferenceSystem getCrs() {
-        return getProxy().getCrs();
+        return getStrategy().getCrs();
     }
 
     @Override
@@ -81,7 +81,7 @@ public class BoundaryProxy extends IBoundaryStrategy {
      * Gets the boundary strategy and creates it if it doesn't exist
      * @return IBoundaryStrategy
      */
-    private IBoundaryStrategy getProxy(){
+    public IBoundaryStrategy getStrategy(){
         if (proxy == null) {
             try {
                 proxy = (IBoundaryStrategy)configElement.createExecutableExtension("class");
@@ -102,18 +102,18 @@ public class BoundaryProxy extends IBoundaryStrategy {
     }
 
     public void addListener( Listener listener ) {
-        getProxy().addListener(listener);
+        getStrategy().addListener(listener);
     }
 
     public void removeListener( Listener listener ) {
-        getProxy().removeListener(listener);
+        getStrategy().removeListener(listener);
     }
     
     /**
      * Notifies listener that the value of the filter has changed.
      */
     protected void notifyListeners(Object changed) {
-        getProxy().notifyListeners(changed);
+        getStrategy().notifyListeners(changed);
     }
 
     @Override
