@@ -21,8 +21,11 @@ package eu.udig.catalog.jgrass.core;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
+import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolve;
@@ -189,6 +192,20 @@ public class JGrassMapGeoResource extends IGeoResource {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public ID getID() {
+        File mapFile = jGrassMapEnvironment.getMapFile();
+        try {
+            URL identifier = getIdentifier();
+            URI uri = identifier.toURI();
+            String asciiString = uri.toASCIIString();
+            return new ID(asciiString, identifier, mapFile, uri, "grass");
+            // return new ID(getIdentifier());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return new ID(mapFile, "grass");
     }
 
     public IService service( IProgressMonitor monitor ) throws IOException {
