@@ -26,16 +26,6 @@
 			</activation>
 			<repositories>
 				<!-- repository>
-					<id>central</id>
-					<url>http://central</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-				</repository -->
-				<repository>
 					<id>indigo-local</id>
 					<layout>p2</layout>
 					<releases>
@@ -46,9 +36,8 @@
 						<enabled>true</enabled>
 						<updatePolicy>daily</updatePolicy>
 					</snapshots>
-					<!-- url>file:///D:/java/eclipse_extras/eclipse-indigo-p2/</url -->
-					<url>file:///home/broadbc/workspace/udig_tycho_stuff/eclipse-indigo-p2</url>
-				</repository>
+					<url>file:///Users/cliffbroadbent/java/eclipse-indigo-p2</url>
+				</repository -->
 				<repository>
 					<id>indigo-web</id>
 					<layout>p2</layout>
@@ -62,7 +51,7 @@
 						<updatePolicy>never</updatePolicy>
 					</snapshots>
 				</repository>
-				<repository>
+				<!-- repository>
 					<id>indigo-delta</id>
 					<layout>p2</layout>
 					<releases>
@@ -73,33 +62,11 @@
 						<enabled>true</enabled>
 						<updatePolicy>daily</updatePolicy>
 					</snapshots>
-					<!-- url>file:///D:/java/eclipse_extras/delta-p2</url -->
-					<url>file:///home/broadbc/workspace/udig_tycho_stuff/indigo-delta-p2</url>
-				</repository>
+					<url>file:///Users/cliffbroadbent/java/eclipse-indigo-delta-p2</url>
+				</repository -->
 			</repositories>
-			<!-- pluginRepositories>
-				<pluginRepository>
-					<id>central</id>
-					<url>http://central</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-				</pluginRepository>
-			</pluginRepositories -->
 		</profile>
 	</profiles>
-	
-	
-	<!-- dependencies>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1.1</version>
-		</dependency>
-	</dependencies -->
 	
 	
 	<build>
@@ -151,6 +118,5 @@
 	<modules>
 		<module>plugins</module>
 		<module>features</module>
-		<module>tutorials</module>
 	</modules>
 </project>

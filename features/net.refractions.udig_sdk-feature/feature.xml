@@ -18,30 +18,6 @@
    </license>
 
    <includes
-         id="net.refractions.udig_platform.source"
-         version="0.0.0"/>
-
-   <includes
-         id="net.refractions.udig_application.source"
-         version="0.0.0"/>
-
-   <includes
-         id="net.refractions.udig_printing.source"
-         version="0.0.0"/>
-
-   <includes
-         id="net.refractions.udig"
-         version="0.0.0"/>
-
-   <includes
-         id="net.refractions.udig_base.source"
-         version="0.0.0"/>
-
-   <includes
-         id="net.refractions.udig.libs.source_feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.rcp.source"
          version="0.0.0"/>
 
@@ -58,15 +34,35 @@
          version="0.0.0"/>
 
    <includes
-         id="net.refractions.udig_tutorials"
+         id="net.refractions.udig-feature"
          version="0.0.0"/>
 
    <includes
-         id="net.refractions.udig_tutorials.source"
+         id="net.refractions.udig.libs.source-feature"
          version="0.0.0"/>
 
    <includes
-         id="net.refractions.udig_language"
+         id="net.refractions.udig_application.source-feature"
+         version="0.0.0"/>
+
+   <includes
+         id="net.refractions.udig_base.source-feature"
+         version="0.0.0"/>
+
+   <includes
+         id="net.refractions.udig_platform.source-feature"
+         version="0.0.0"/>
+
+   <includes
+         id="net.refractions.udig_printing.source-feature"
+         version="0.0.0"/>
+
+   <includes
+         id="net.refractions.udig_tutorials.source-feature"
+         version="0.0.0"/>
+
+   <includes
+         id="net.refractions.udig_tutorials-feature"
          version="0.0.0"/>
 
    <plugin

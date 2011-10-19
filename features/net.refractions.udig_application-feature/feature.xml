@@ -32,7 +32,7 @@ GNU Lesser General Public License for more details.
    </url>
 
    <includes
-         id="eu.udig.teradata.feature"
+         id="eu.udig.teradata-feature"
          version="0.0.0"/>
 
    <plugin

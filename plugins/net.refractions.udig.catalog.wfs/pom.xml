@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>net.refractions</groupId>
-  <artifactId>net.refractions.udig.tutorials.mapgraphic</artifactId>
+  <artifactId>net.refractions.udig.catalog.wfs</artifactId>
   <version>1.2.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>
