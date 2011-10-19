@@ -71,6 +71,20 @@ public interface ILayer extends Comparable<ILayer> {
      */
     public static final int WORKING = 5;
 
+    /** id of the visible boolean on the layer blackboard */
+    public static final String ID_VISIBLE = "interaction_visible";
+    /** id of the background boolean on the layer blackboard */
+    public static final String ID_BACKGROUND = "interaction_background";
+    /** id of the information boolean on the layer blackboard */
+    public static final String ID_INFO = "interaction_information";
+    /** id of the selectable boolean on the layer blackboard */
+    public static final String ID_SELECT = "interaction_select";
+    /** id of the editable boolean on the layer blackboard */
+    public static final String ID_EDIT = "interaction_edit";
+    /** id of the boundary boolean on the layer blackboard */
+    public static final String ID_BOUNDARY = "interaction_boundary";
+    
+    
     /** Listen to changes on this layer.  Each listener can only be added once*/
     public void addListener( ILayerListener listener );
 

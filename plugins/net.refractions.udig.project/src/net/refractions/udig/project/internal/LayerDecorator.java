@@ -879,4 +879,5 @@ public class LayerDecorator implements Layer, InternalEObject {
     public int eDerivedOperationID( int baseOperationID, Class< ? > baseClass ) {   
         return interalObject.eDerivedOperationID(baseOperationID, baseClass);
     }
+
 }
