@@ -83,10 +83,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.model.WorkbenchAdapter;
+import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureListener;
 import org.geotools.data.FeatureSource;
+import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
@@ -524,6 +526,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
         newid = CorePlugin.createSafeURL(spec);
         setID(newid);
+        
     }
 
     public ID getResourceID(){
@@ -978,21 +981,29 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     oldGlyph, glyph));
     }
 
+    private boolean selectableIsDefault = true;
+    
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @generated
+     * @generated not
      */
     public boolean isSelectable() {
+        if (selectableIsDefault) {
+            setSelectable(this.getGeoResource(FeatureSource.class) != null);
+        }
         return selectable;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @generated
+     * @generated not
      */
     public void setSelectable( boolean newSelectable ) {
+        if (selectableIsDefault) {
+            selectableIsDefault = false;
+        }
         boolean oldSelectable = selectable;
         selectable = newSelectable;
         if (eNotificationRequired())
@@ -1638,18 +1649,51 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @see net.refractions.udig.project.internal.Layer#isApplicable(java.lang.String)
      */
     public boolean isApplicable( String toolsetID ) {
-        if (getProperties().get(toolsetID) == null)
-            return true;
-        return (Boolean) getProperties().get(toolsetID);
+        // special cases handled as fields
+        if (ID_VISIBLE.equals( toolsetID )){
+            return isVisible();
+        }
+        else if (ID_SELECT.equals( toolsetID )){
+            return isSelectable();
+        }
+        // check the blackboard 
+        Boolean applicable = (Boolean) getBlackboard().get(toolsetID);
+        if (applicable == null) {
+            // not available create a good default for people to see
+            if( ID_INFO.equals(toolsetID)){
+                return true; // info is supported by most layers
+            }
+            // wont hit this code yet because value comes from isSelectable
+            /*else if( ID_SELECT.equals(toolsetID)){
+                IGeoResource found = this.getGeoResource(FeatureSource.class);
+                return found != null;
+            }*/ 
+            else if( ID_EDIT.equals(toolsetID)){
+                IGeoResource found = this.getGeoResource(FeatureStore.class);
+                return found != null;
+            }
+            return false;
+        }
+        else {
+            return applicable;
+        }
     }
 
     /**
      * @see net.refractions.udig.project.internal.Layer#setApplicable(java.lang.String, boolean)
      */
     public void setApplicable( String toolsetID, boolean applicable ) {
-        getProperties().put(toolsetID, applicable);
-        // XXX just to send an event needs to change.
-        setSelectable(isSelectable());
+        if (ID_VISIBLE.equals( toolsetID )){
+            setVisible(applicable);
+        }
+        else if (ID_SELECT.equals( toolsetID )){
+            setSelectable(applicable);
+        }
+        else {
+            getBlackboard().put(toolsetID, applicable );
+            // XXX just to send an event needs to change.
+            //setSelectable(isSelectable());
+        }
     }
 
     /**
