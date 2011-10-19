@@ -83,6 +83,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.model.WorkbenchAdapter;
+import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureListener;
@@ -525,6 +526,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
         newid = CorePlugin.createSafeURL(spec);
         setID(newid);
+        
     }
 
     public ID getResourceID(){
@@ -979,21 +981,29 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     oldGlyph, glyph));
     }
 
+    private boolean selectableIsDefault = true;
+    
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @generated
+     * @generated not
      */
     public boolean isSelectable() {
+        if (selectableIsDefault) {
+            setSelectable(this.getGeoResource(FeatureSource.class) != null);
+        }
         return selectable;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @generated
+     * @generated not
      */
     public void setSelectable( boolean newSelectable ) {
+        if (selectableIsDefault) {
+            selectableIsDefault = false;
+        }
         boolean oldSelectable = selectable;
         selectable = newSelectable;
         if (eNotificationRequired())
@@ -1653,10 +1663,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
             if( ID_INFO.equals(toolsetID)){
                 return true; // info is supported by most layers
             }
-            else if( ID_SELECT.equals(toolsetID)){
+            // wont hit this code yet because value comes from isSelectable
+            /*else if( ID_SELECT.equals(toolsetID)){
                 IGeoResource found = this.getGeoResource(FeatureSource.class);
                 return found != null;
-            }
+            }*/ 
             else if( ID_EDIT.equals(toolsetID)){
                 IGeoResource found = this.getGeoResource(FeatureStore.class);
                 return found != null;
@@ -1681,7 +1692,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         else {
             getBlackboard().put(toolsetID, applicable );
             // XXX just to send an event needs to change.
-            setSelectable(isSelectable());
+            //setSelectable(isSelectable());
         }
     }
 
