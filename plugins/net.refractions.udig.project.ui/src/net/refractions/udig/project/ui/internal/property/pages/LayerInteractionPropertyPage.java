@@ -16,6 +16,7 @@ package net.refractions.udig.project.ui.internal.property.pages;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.ui.internal.Messages;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -92,19 +93,19 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         interactionPage.setLayout(layout);
 
         Group generalGroup = new Group(interactionPage, SWT.SHADOW_ETCHED_IN);
-        generalGroup.setText("General");
+        generalGroup.setText(Messages.LayerInteraction_General);
 
         visibleButton = new Button(generalGroup, SWT.CHECK);
-        visibleButton.setText("Visible");
+        visibleButton.setText(Messages.LayerInteraction_Visible);
         visibleButton.setLocation(40, 20);
         visibleButton.pack();
         visibleButton.addSelectionListener(defaultSelectionListener());
 
         Group toolsGroup = new Group(interactionPage, SWT.SHADOW_ETCHED_IN);
-        toolsGroup.setText("Tools");
+        toolsGroup.setText(Messages.LayerInteraction_Tools);
 
         layerButton = new Button(toolsGroup, SWT.RADIO);
-        layerButton.setText("Layer");
+        layerButton.setText(Messages.LayerInteraction_Layer);
         layerButton.setLocation(20, 20);
         layerButton.pack();
         layerButton.addSelectionListener(new SelectionListener(){
@@ -117,25 +118,25 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         });
 
         informationButton = new Button(toolsGroup, SWT.CHECK);
-        informationButton.setText("Information");
+        informationButton.setText(Messages.LayerInteraction_Information);
         informationButton.setLocation(40, 40);
         informationButton.pack();
         informationButton.addSelectionListener(defaultSelectionListener());
 
         selectButton = new Button(toolsGroup, SWT.CHECK);
-        selectButton.setText("Select");
+        selectButton.setText(Messages.LayerInteraction_Select);
         selectButton.setLocation(40, 60);
         selectButton.pack();
         selectButton.addSelectionListener(defaultSelectionListener());
 
         editButton = new Button(toolsGroup, SWT.CHECK);
-        editButton.setText("Edit");
+        editButton.setText(Messages.LayerInteraction_Edit);
         editButton.setLocation(40, 80);
         editButton.pack();
         editButton.addSelectionListener(defaultSelectionListener());
 
         backgroundButton = new Button(toolsGroup, SWT.RADIO);
-        backgroundButton.setText("Background");
+        backgroundButton.setText(Messages.LayerInteraction_Background);
         backgroundButton.setLocation(20, 100);
         backgroundButton.pack();
         backgroundButton.addSelectionListener(new SelectionListener(){
@@ -148,7 +149,7 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         });
 
         boundaryButton = new Button(toolsGroup, SWT.CHECK);
-        boundaryButton.setText("Boundary");
+        boundaryButton.setText(Messages.LayerInteraction_Boundary);
         boundaryButton.setLocation(40, 120);
         boundaryButton.pack();
         boundaryButton.addSelectionListener(defaultSelectionListener());
