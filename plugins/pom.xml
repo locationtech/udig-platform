@@ -13,6 +13,7 @@
   <artifactId>plugins</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+
   <modules>
     <module>com.lowagie.itext</module>
     <module>com.mapquest</module>
@@ -138,6 +139,5 @@
     <module>net.refractions.udig.tutorials.workbench</module>
     <module>net.refractions.udig_tutorials.custom-feature</module>
   </modules>
-
 
 </project>

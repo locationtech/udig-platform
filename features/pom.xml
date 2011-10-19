@@ -17,7 +17,7 @@
   <modules>
     <module>eu.udig.teradata-feature</module>
     <module>net.refractions.udig-feature</module>
-	<module>net.refractions.udig-product</module>
+    <module>net.refractions.udig-product</module>
     <!-- module>net.refractions.udig-site</module>
     <module>net.refractions.udig-site.community</module -->
     <module>net.refractions.udig.libs.source-feature</module>
@@ -38,14 +38,5 @@
     <module>net.refractions.udig_unstable-feature</module>
     <!-- module>org.ossim-feature</module -->
   </modules>
-  <!-- build>
-    <plugins>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-maven-plugin</artifactId>
-        <version>0.13.0</version>
-        <extensions>true</extensions>
-      </plugin>
-    </plugins>
-  </build -->
+
 </project>

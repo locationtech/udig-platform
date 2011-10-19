@@ -11,9 +11,6 @@
 	</prerequisites>
 
 	<properties>
-		<!-- osgi.os>win32</osgi.os>
-		<osgi.ws>win32</osgi.ws>
-		<osgi.arch>x86</osgi.arch -->
 		<tycho-version>0.13.0</tycho-version>
 		<tycho-provider>org.eclipse.tycho</tycho-provider>
 	</properties>
@@ -25,19 +22,6 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<repositories>
-				<!-- repository>
-					<id>indigo-local</id>
-					<layout>p2</layout>
-					<releases>
-						<enabled>true</enabled>
-						<updatePolicy>daily</updatePolicy>
-					</releases>
-					<snapshots>
-						<enabled>true</enabled>
-						<updatePolicy>daily</updatePolicy>
-					</snapshots>
-					<url>file:///Users/cliffbroadbent/java/eclipse-indigo-p2</url>
-				</repository -->
 				<repository>
 					<id>indigo-web</id>
 					<layout>p2</layout>
@@ -51,19 +35,6 @@
 						<updatePolicy>never</updatePolicy>
 					</snapshots>
 				</repository>
-				<!-- repository>
-					<id>indigo-delta</id>
-					<layout>p2</layout>
-					<releases>
-						<enabled>true</enabled>
-						<updatePolicy>daily</updatePolicy>
-					</releases>
-					<snapshots>
-						<enabled>true</enabled>
-						<updatePolicy>daily</updatePolicy>
-					</snapshots>
-					<url>file:///Users/cliffbroadbent/java/eclipse-indigo-delta-p2</url>
-				</repository -->
 			</repositories>
 		</profile>
 	</profiles>
