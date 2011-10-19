@@ -11,7 +11,7 @@
 
   <groupId>net.refractions</groupId>
   <artifactId>plugins</artifactId>
-  <version>0.0.1-SNAPSHOT</version> 
+  <version>1.3.0-SNAPSHOT</version> 
   <packaging>pom</packaging>
 
   <modules>
