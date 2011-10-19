@@ -24,6 +24,7 @@ import java.util.List;
 import net.miginfocom.swt.MigLayout;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -33,6 +34,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 
 import eu.udig.omsbox.OmsBoxPlugin;
 import eu.udig.omsbox.core.FieldData;
@@ -88,15 +90,22 @@ public class ModuleGui {
         CTabItem tab = new CTabItem(folder, SWT.NONE);
         tab.setText("description");
 
-        Browser browser = new Browser(folder, SWT.NONE);
-        GridData layoutData = new GridData(GridData.FILL_BOTH);
-        browser.setLayoutData(layoutData);
-
-        String className = mainModuleDescription.getClassName();
         try {
+            Browser browser = new Browser(folder, SWT.NONE);
+            GridData layoutData = new GridData(GridData.FILL_BOTH);
+            browser.setLayoutData(layoutData);
+
+            String className = mainModuleDescription.getClassName();
             String moduleDocumentationPath = OmsBoxUtils.getModuleDocumentationPath(className);
             browser.setUrl("file:" + moduleDocumentationPath);
             tab.setControl(browser);
+        } catch (SWTError e) {
+            e.printStackTrace();
+            
+            Label problemLabel = new Label(folder, SWT.NONE);
+            problemLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+            problemLabel.setText("An error occurred while loading the documentation.");
+            tab.setControl(problemLabel);
         } catch (Exception e) {
             e.printStackTrace();
         }

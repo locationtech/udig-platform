@@ -16,4 +16,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: net.refractions.udig.legend,
  net.refractions.udig.legend.ui,
  net.refractions.udig.legend.ui.actions
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

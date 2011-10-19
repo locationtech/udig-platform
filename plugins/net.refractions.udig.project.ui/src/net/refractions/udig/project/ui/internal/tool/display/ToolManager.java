@@ -46,6 +46,7 @@ import net.refractions.udig.project.internal.commands.CreateMapCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
 import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.internal.Messages;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
@@ -57,6 +58,7 @@ import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.tool.Tool;
 import net.refractions.udig.project.ui.tool.ToolConstants;
+import net.refractions.udig.project.ui.tool.options.PreferencesShortcutToolOptionsContributionItem;
 import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.ui.IDropAction;
 import net.refractions.udig.ui.IDropHandlerListener;
@@ -74,14 +76,17 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuCreator;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.action.SubCoolBarManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -194,17 +199,7 @@ public class ToolManager implements IToolManager {
      * tools by ToolProxy.DEFAULT_ID.
      */
     ToolProxy defaultModalToolProxy;
-    
-    /**
-     * This is responsible for tracking the active tool; it is a facility provided
-     * by GEF. We are not using GEF tools directly; simply borrowing some of their
-     * infrastructure to support a nice visual palette.
-     * <p.
-     * The *id* of the current tool in the editDomain is used to determine the 
-     * active tool for the map.
-     */
-    MapEditDomain editDomain;
-    
+
     Lock redoLock=new ReentrantLock();
     Lock undoLock=new ReentrantLock();
     Lock forwardLock=new ReentrantLock();
@@ -228,6 +223,8 @@ public class ToolManager implements IToolManager {
     private volatile IAction cutAction;
     
     private AdapterImpl commandListener;
+    
+    private List<ContributionItem> optionsContribution = new ArrayList<ContributionItem>();
 
     /**
      * Construct <code>ToolManager</code>.
@@ -238,7 +235,6 @@ public class ToolManager implements IToolManager {
         removeEmptyCategories();
         Collections.sort(categoryIds, new CategorySorter());
         setCommandHandlers();
-        editDomain = new MapEditDomain(null);
     }
     
     /**
@@ -272,8 +268,9 @@ public class ToolManager implements IToolManager {
             }
         }
         
-        if( activeModalToolProxy  == null )
+        if( activeModalToolProxy  == null ){
         	activeModalToolProxy = defaultModalToolProxy;
+        }
     }
 
 	private String getCategoryIdAttribute(IConfigurationElement element) {
@@ -507,7 +504,6 @@ public class ToolManager implements IToolManager {
         if( editor==currentEditor ){
             return;
         }
-        
         currentEditor = editor;
         if (editor != null) {
             if (editor != null) {
@@ -520,7 +516,9 @@ public class ToolManager implements IToolManager {
             disable(actionCategories);
             disable(menuCategories);
             disable(modalCategories);
-        }    	
+        }   
+        
+        
     }
     /**
      * Churn through the category disabling all tools.
@@ -550,9 +548,11 @@ public class ToolManager implements IToolManager {
     class EditManagerListener implements IEditManagerListener{
     	
     	public void setCurrentMap(IMap map){
+    	   
     	}
 
         public void changed( EditManagerEvent event ) {
+            
             if (selectedLayerListener != this) {
                 event.getSource().removeListener(this);
                 return;
@@ -591,7 +591,8 @@ public class ToolManager implements IToolManager {
                 OpFilter enablesFor = item.getEnablesFor();
                 ILayer selectedLayer = map.getEditManager().getSelectedLayer();
 
-                assert enablesFor instanceof LazyOpFilter;
+                // JG: I don't trust asserts in production code!
+                // assert enablesFor instanceof LazyOpFilter;
                 
                 if( !(enablesFor instanceof LazyOpFilter) ){
                     enablesFor = new LazyOpFilter(item, enablesFor);
@@ -648,10 +649,19 @@ public class ToolManager implements IToolManager {
                 // work around to allow the 1st modal tool to be active
                 if( activeTool == null ){
                     activeTool = activeModalToolProxy.getModalTool(); 
+                    // add tool options to the status area
+                    initToolOptionsContribution(editor.getStatusLineManager(), activeModalToolProxy);
                 }
                 activeModalToolProxy.getModalTool().setActive(true);                
             }
             editor.setSelectionProvider(activeModalToolProxy.getSelectionProvider());
+            if( editor instanceof MapEditorWithPalette){
+                // temporary cast while we sort out if MapPart can own an MapEditDomain
+                MapEditorWithPalette editor2 = (MapEditorWithPalette) editor;
+                MapEditDomain editDomain = editor2.getEditDomain();
+                editDomain.setActiveTool( activeModalToolProxy.getId() );
+            }
+
         }
     }
     /**
@@ -1370,6 +1380,7 @@ public class ToolManager implements IToolManager {
     private IAction actionCLOSE;
     private IAction actionSAVE;
     private IAction actionCLOSE_ALL;
+    private PreferencesShortcutToolOptionsContributionItem preferencesShortcutToolOptions;
 
     /**
      * Contributes the common global actions.
@@ -1821,16 +1832,6 @@ public class ToolManager implements IToolManager {
     private OperationMenuFactory getOperationMenuFactory() {
         return UiPlugin.getDefault().getOperationMenuFactory();
     }
-    
-    
-    /**
-     * Get the MapEditDomain
-     * 
-     * @return
-     */
-    public MapEditDomain getEditDomain() {
-        return editDomain;
-    }
 
     /**
      *  (non-Javadoc)
@@ -1865,8 +1866,51 @@ public class ToolManager implements IToolManager {
 		    return; // no change required
 		}
 		this.activeModalToolProxy = modalToolProxy;
+		
+		// connect the tools to the map area
 		setActiveModalTool( modalToolProxy.getModalTool() );
+		
+		// add tool options to the status area
+        initToolOptionsContribution(currentEditor.getStatusLineManager(), getActiveToolProxy());
 	} 
+	
+	/**
+	 * This method goes through the steps of deactivating the current tool option contribution and 
+	 * activating the new tool option contribution.
+	 * 
+	 * @param statusLine
+	 * @param modalToolProxy
+	 */
+	private void initToolOptionsContribution(IStatusLineManager statusLine, ToolProxy modalToolProxy){
+	    if(statusLine != null ){
+            
+            if(preferencesShortcutToolOptions == null || preferencesShortcutToolOptions.isDisposed()){
+                preferencesShortcutToolOptions = new PreferencesShortcutToolOptionsContributionItem();
+                statusLine.appendToGroup(StatusLineManager.BEGIN_GROUP, preferencesShortcutToolOptions);
+                preferencesShortcutToolOptions.setVisible(true);
+            }
+            preferencesShortcutToolOptions.update(modalToolProxy);
+            
+            //TODO, cache contributions instead of destroying them and recreating them
+            
+            //remove old tool contribution
+            for(ContributionItem contribution : optionsContribution){
+                statusLine.remove(contribution.getId());
+            } 
+            
+            //get the new contributions
+            optionsContribution = modalToolProxy.getOptionsContribution();
+            
+            //set all new contributions
+            for(ContributionItem contribution : optionsContribution){
+                statusLine.appendToGroup(StatusLineManager.BEGIN_GROUP, contribution);
+                contribution.setVisible(true);
+            }       
+            
+            statusLine.update(true);
+        }
+	}
+	
 	/**
 	 * This method goes through the steps of deactivating the current tool
 	 * and activating the new one.
@@ -1878,6 +1922,7 @@ public class ToolManager implements IToolManager {
             // we cannot run with out a tool; so we will sue the default!
             modalTool = defaultModalToolProxy.getModalTool();
         }
+
         if (activeTool == modalTool) {
             return; // no change required!
         }

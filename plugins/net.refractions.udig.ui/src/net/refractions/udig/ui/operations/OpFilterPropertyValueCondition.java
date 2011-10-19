@@ -67,8 +67,9 @@ class OpFilterPropertyValueCondition implements OpFilter {
     private boolean accepted( Object object ) {
         if( object==null)
             return false;
-        if ( getTargetObject(object)!=null && !getTargetObject(object).isAssignableFrom(object.getClass()) )
+        if ( getTargetObject(object)!=null && !getTargetObject(object).isAssignableFrom(object.getClass()) ){
             return false;
+        }
 
         PropertyValue v = getValue();
         if( v==null )
@@ -127,4 +128,13 @@ class OpFilterPropertyValueCondition implements OpFilter {
         getValue().removeListener(listener);
     }
 
+    @Override
+    public String toString() {
+        if( propertyValueInstance == null ){
+            return "PropertyValue "+propertyElement.getAttribute("class");
+        }
+        else {
+            return propertyValueInstance.getClass().getSimpleName();
+        }
+    }
 }

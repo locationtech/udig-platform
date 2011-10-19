@@ -1,0 +1,210 @@
+<class-diagram version="1.0.3" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
+  realizations="true" associations="true" dependencies="true" nesting-relationships="true">  
+  <class id="1" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.tool.select.TableView" 
+    project="net.refractions.udig.tool.select" 
+    file="/net.refractions.udig.tool.select/src/net/refractions/udig/tool/select/TableView.java" binary="false">    
+    <position height="-1" width="-1" x="262" y="96"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.tool.select.FeatureTypeCellModifier" 
+    project="net.refractions.udig.tool.select" 
+    file="/net.refractions.udig.tool.select/src/net/refractions/udig/tool/select/FeatureTypeCellModifier.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="472" y="96"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="3" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.ui.FeatureTableControl" 
+    project="net.refractions.udig.ui" 
+    file="/net.refractions.udig.ui/src/net/refractions/udig/ui/FeatureTableControl.java" binary="false">    
+    <position height="-1" width="-1" x="275" y="388"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="4" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.ui.FeatureTableLabelProvider" 
+    project="net.refractions.udig.ui" 
+    file="/net.refractions.udig.ui/src/net/refractions/udig/ui/FeatureTableLabelProvider.java" binary="false">    
+    <position height="-1" width="-1" x="285" y="640"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="5" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.ui.FeatureTableSelectionProvider.Abort" 
+    project="net.refractions.udig.ui" 
+    file="/net.refractions.udig.ui/src/net/refractions/udig/ui/FeatureTableSelectionProvider.java" binary="false">    
+    <position height="-1" width="-1" x="898" y="449"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="6" corner="BOTTOM_RIGHT" language="java" 
+    name="net.refractions.udig.ui.FeatureTableSelectionProvider.SelectionLoader" project="net.refractions.udig.ui" 
+    file="/net.refractions.udig.ui/src/net/refractions/udig/ui/FeatureTableSelectionProvider.java" binary="false">    
+    <position height="-1" width="-1" x="702" y="448"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="7" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.ui.FeatureTableSelectionProvider" 
+    project="net.refractions.udig.ui" 
+    file="/net.refractions.udig.ui/src/net/refractions/udig/ui/FeatureTableSelectionProvider.java" binary="false">    
+    <position height="-1" width="-1" x="702" y="603"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="8" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.ui.FeatureTableContentProvider" 
+    project="net.refractions.udig.ui" 
+    file="/net.refractions.udig.ui/src/net/refractions/udig/ui/FeatureTableContentProvider.java" binary="false">    
+    <position height="-1" width="-1" x="699" y="270"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="9" corner="BOTTOM_RIGHT" language="java" 
+    name="net.refractions.udig.ui.FeatureTableContentProvider.ContentUpdater" project="net.refractions.udig.ui" 
+    file="/net.refractions.udig.ui/src/net/refractions/udig/ui/FeatureTableContentProvider.java" binary="false">    
+    <position height="-1" width="-1" x="868" y="158"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="10" corner="BOTTOM_RIGHT" language="java" 
+    name="net.refractions.udig.ui.FeatureTableContentProvider.ContentLoader" project="net.refractions.udig.ui" 
+    file="/net.refractions.udig.ui/src/net/refractions/udig/ui/FeatureTableContentProvider.java" binary="false">    
+    <position height="-1" width="-1" x="693" y="156"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="11" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.ui.FeatureCollectionSelection" 
+    project="net.refractions.udig.ui" 
+    file="/net.refractions.udig.ui/src/net/refractions/udig/ui/FeatureCollectionSelection.java" binary="false">    
+    <position height="-1" width="-1" x="721" y="62"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="12" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.ui.FidSelection" 
+    project="net.refractions.udig.ui" file="/net.refractions.udig.ui/src/net/refractions/udig/ui/FidSelection.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="406" y="735"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="13" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.ui.FIDComparator" 
+    project="net.refractions.udig.ui" file="/net.refractions.udig.ui/src/net/refractions/udig/ui/FIDComparator.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="582" y="694"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <nesting>    
+    <end type="SOURCE" nodeId="8"/>    
+    <end type="TARGET" nodeId="10"/>  
+  </nesting>  
+  <dependency>    
+    <end type="SOURCE" nodeId="1"/>    
+    <end type="TARGET" nodeId="2"/>  
+  </dependency>  
+  <association>    
+    <end type="SOURCE" nodeId="3" navigable="false">      
+      <attribute name="selectionProvider"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="4" navigable="false">      
+      <attribute name="owningFeatureTableControl"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting>    
+    <end type="SOURCE" nodeId="7"/>    
+    <end type="TARGET" nodeId="5"/>  
+  </nesting>  
+  <dependency>    
+    <end type="SOURCE" nodeId="3"/>    
+    <end type="TARGET" nodeId="4"/>  
+  </dependency>  
+  <association>    
+    <end type="SOURCE" nodeId="8" navigable="false">      
+      <attribute name="owningFeatureTableControl"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency>    
+    <end type="SOURCE" nodeId="6"/>    
+    <end type="TARGET" nodeId="5"/>  
+  </dependency>  
+  <dependency>    
+    <end type="SOURCE" nodeId="3"/>    
+    <end type="TARGET" nodeId="13"/>  
+  </dependency>  
+  <association>    
+    <end type="SOURCE" nodeId="7" navigable="false">      
+      <attribute name="owner"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency>    
+    <end type="SOURCE" nodeId="10"/>    
+    <end type="TARGET" nodeId="8"/>  
+  </dependency>  
+  <dependency>    
+    <end type="SOURCE" nodeId="3"/>    
+    <end type="TARGET" nodeId="8"/>  
+  </dependency>  
+  <dependency>    
+    <end type="SOURCE" nodeId="6"/>    
+    <end type="TARGET" nodeId="8"/>  
+  </dependency>  
+  <nesting>    
+    <end type="SOURCE" nodeId="7"/>    
+    <end type="TARGET" nodeId="6"/>  
+  </nesting>  
+  <association>    
+    <end type="SOURCE" nodeId="1" navigable="false">      
+      <attribute name="table"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting>    
+    <end type="SOURCE" nodeId="8"/>    
+    <end type="TARGET" nodeId="9"/>  
+  </nesting>  
+  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+    <attributes public="true" package="false" protected="false" private="false"/>    
+    <operations public="false" package="false" protected="false" private="false"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

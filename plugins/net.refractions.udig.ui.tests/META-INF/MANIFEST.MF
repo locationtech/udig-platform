@@ -25,4 +25,4 @@ Bundle-ClassPath: lib/jmock-2.3.0-RC2.jar,
  lib/hamcrest-core-1.1.jar,
  lib/hamcrest-library-1.1.jar,
  lib/objenesis-1.0.jar
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

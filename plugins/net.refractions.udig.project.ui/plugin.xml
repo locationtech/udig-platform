@@ -231,6 +231,11 @@
             name="%layer.crs.propertypage"
             objectClass="net.refractions.udig.project.internal.Layer">
       </page>
+      <page
+            class="net.refractions.udig.project.ui.internal.property.pages.LayerInteractionPropertyPage"
+            id="net.refractions.udig.project.ui.property.layer.interaction"
+            name="Interaction">
+      </page>
    </extension>
 
       <extension
@@ -1065,5 +1070,18 @@
                  tooltip="%project.action.open.tooltip">
            </action>
         </actionSet>
-     </extension>
+     </extension>     
+     <extension
+            point="net.refractions.udig.ui.boundary">
+         <boundary
+               class="net.refractions.udig.project.ui.internal.boundary.BoundaryStrategyScreen"
+               id="net.refractions.udig.tool.default.boundaryScreen"
+               name="%boundary.screen.name">
+         </boundary>
+         <boundary
+               class="net.refractions.udig.project.ui.internal.boundary.BoundaryStrategyMapCrs"
+               id="net.refractions.udig.project.ui.boundaryCRS"
+               name="%boundary.crs.name">
+         </boundary>
+      </extension>
    </plugin>

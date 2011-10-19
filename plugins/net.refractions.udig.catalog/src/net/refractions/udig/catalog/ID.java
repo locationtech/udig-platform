@@ -1,3 +1,19 @@
+/*
+ *    uDig - User Friendly Desktop Internet GIS client
+ *    http://udig.refractions.net
+ *    (C) 2008-2011, Refractions Research Inc.
+ *
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation;
+ *    version 2.1 of the License.
+ *
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *    Lesser General Public License for more details.
+ *
+ */
 package net.refractions.udig.catalog;
 
 import java.io.File;
@@ -109,20 +125,48 @@ public class ID implements Serializable {
         }
         file = DataUtilities.urlToFile(url);
         if (file != null) {
-            if (uri != null && uri.isAbsolute() && "file".equals(uri.getScheme())) { //$NON-NLS-1$
-                try {
-                    file = new File(uri);
-                } catch (Throwable t) {
-                    file = null;
-                    if (CatalogPlugin.getDefault().isDebugging()) {
-                        t.printStackTrace();
-                    }
-                }
-            }
-        }
-        if (file != null) {
+			if (uri != null && uri.isAbsolute()
+					&& "file".equals(uri.getScheme())) { //$NON-NLS-1$
+				try {
+					String fragment = uri.getFragment();
+                    if (fragment != null) {
+						// a fragment means the service is the file. so 
+						// canonicalize the file for id or we will have problems
+						// comparing (for example symbolic links)
+                        String canonicalPath = file.getCanonicalPath();
+						File canonicalFile = file.getCanonicalFile();
+						canonicalFile = new File(canonicalPath.substring(0, canonicalPath.length() - fragment.length() - 1));
+						URI canonicalURI = canonicalFile.toURI();
+						this.uri = new URI(canonicalURI.toASCIIString()+"#"+fragment);
+						// this results in "re"encoding messing up use of spaces
+//						this.uri = new URI(canonicalURI.getScheme(),
+//								canonicalURI.getRawSchemeSpecificPart(),
+//								this.uri.getFragment());
+						this.url = uri.toURL();
+				        id = canonicalPath;
+				        this.file = canonicalFile;
+						//file = null;
+//                        try {
+//                            file = new File(uri);
+//                        } catch (Throwable t) {
+//                            System.err.println("Unable to determine file for:" + uri);
+//                            // t.printStackTrace();
+//                            file = DataUtilities.urlToFile(url);
+//                        }
+					} else {
+					    //file = new File(uri);
+					}
+				} catch (Throwable t) {
+					//file = null;
+					System.err.println("Trouble matching file for:"+ uri );
+					//file = DataUtilities.urlToFile(url);
+				}
+			}
+		}
+        if (id == null && file != null) {
             try {
-                id = file.getCanonicalPath();
+                String canonicalPath = file.getCanonicalPath();
+                id = canonicalPath;
             } catch (IOException e) {
             }
         }
@@ -149,6 +193,7 @@ public class ID implements Serializable {
             }
         }
         if (uri.isAbsolute() && "file".equals(uri.getScheme())) { //$NON-NLS-1$
+            // Do you need to consider fragments as with the ID(URL) constructor?
             file = new File(uri);
         } else {
             file = null; // not a file?

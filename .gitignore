@@ -10,3 +10,8 @@ tutorials/net.refractions.udig.tests.tutorials.tests/bin/
 plugins/eu.udig.mapquest.apiwrapper/bin/
 plugins/eu.udig.*/bin/
 plugins/eu.udig.libs.teradata/gtlib
+plugins/net.refractions.udig.libs/src/org/
+target
+javaCompiler...args
+build.xml
+workspace

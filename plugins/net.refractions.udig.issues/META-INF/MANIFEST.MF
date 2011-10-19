@@ -18,4 +18,4 @@ Export-Package: net.refractions.udig.issues,
  net.refractions.udig.issues.internal.datastore;x-friends:="net.refractions.udig.issues.test",
  net.refractions.udig.issues.internal.view;x-friends:="net.refractions.udig.issues.test",
  net.refractions.udig.issues.listeners
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

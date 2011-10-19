@@ -1,6 +1,9 @@
 package net.refractions.udig.project.ui.preferences;
 
 
+/**
+ * Constants used to access project preferences.
+ */
 public interface PreferenceConstants {
 
     /**

@@ -1,7 +1,10 @@
 package net.refractions.udig.catalog.ui.workflow;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ui.ConnectionFactoryManager;
@@ -33,6 +36,8 @@ public class DataSourceSelectionState extends State {
      */
     private boolean validateService;
 
+    private ArrayList<UDIGConnectionFactoryDescriptor> shortlist;
+
     /**
      * Create new Instance
      * @param validateServices indicates whether the service should be probed for its members and metadata.
@@ -55,22 +60,46 @@ public class DataSourceSelectionState extends State {
         
         // determine if any connection factory can process the context object
         descriptor = null;
+        shortlist = new ArrayList<UDIGConnectionFactoryDescriptor>();
         for( UDIGConnectionFactoryDescriptor d : descriptors ) {
             UDIGConnectionFactory factory = d.getConnectionFactory();
             try {
                 if (factory.canProcess(context)) {
-                    // if we already have a descriptor, we have a conflict
-                    if (descriptor != null) {
-                        descriptor = null;
-                        return;
-                    }
-                    descriptor = d; // record the fact we can connect to this page
+                    shortlist.add( d );
                 }
             } catch (Throwable t) {
                 // log and keep going
                 CatalogPlugin.log(t.getLocalizedMessage(), t);
             }
         }
+        // if we already have a descriptor, we have a conflict
+        if( shortlist.isEmpty() ){
+            descriptor = null;            
+        }
+        else if( shortlist.size() == 1 ){
+            // record the fact we can connect to this page
+            descriptor = shortlist.get(0);
+        }        
+        else {
+            // ignore generic datastore for now
+            if( true ){
+                for( Iterator<UDIGConnectionFactoryDescriptor> i= shortlist.iterator(); i.hasNext();){
+                    UDIGConnectionFactoryDescriptor d = i.next();
+                    String id = d.getId();
+                    if( "net.refractions.udig.catalog.geotools.connection.dataStore".equals(id)){
+                        i.remove();
+                    }
+                }
+                if( shortlist.size() == 1 ){
+                    // record the fact we can connect to this page
+                    descriptor = shortlist.get(0);
+                    return;
+                }
+            }
+            descriptor = null;
+            return; // we need to ask the user (prompt with shortlist)
+        }
+ 
         if( descriptor != null ){
             CatalogPlugin.log("Drag and Drop of "+descriptor.getId() + " from "+context, null );
         }
@@ -116,4 +145,8 @@ public class DataSourceSelectionState extends State {
 	public String getName() {
 		return Messages.DataSourceSelectionState_name; 
 	}
+
+    public List<UDIGConnectionFactoryDescriptor> getShortlist() {
+        return shortlist;
+    }
 }

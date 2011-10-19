@@ -35,14 +35,14 @@ import org.eclipse.ui.IStartup;
 public class AddToCatalog implements IStartup {
 
     public void earlyStartup() {
-        ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
-        IService service = localCatalog.getById(IService.class, LocalProcessService.SERVICE_ID, ProgressManager.instance().get());
-        if( service !=null ){
-            return; // already available
-        }
-        // create a "builtin" instance and register it in the catalog        
-        service = new LocalProcessService();
-        localCatalog.add(service);        
+//        ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
+//        IService service = localCatalog.getById(IService.class, LocalProcessService.SERVICE_ID, ProgressManager.instance().get());
+//        if( service !=null ){
+//            return; // already available
+//        }
+//        // create a "builtin" instance and register it in the catalog        
+//        service = new LocalProcessService();
+//        localCatalog.add(service);        
     }
 
 }

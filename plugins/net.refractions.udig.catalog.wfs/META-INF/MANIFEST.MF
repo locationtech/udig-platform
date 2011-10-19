@@ -15,4 +15,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: net.refractions.udig.catalog.internal.wfs;x-friends:="net.refractions.udig.catalog.tests.wfs",
  net.refractions.udig.catalog.internal.wfs.ui;x-friends:="net.refractions.udig.context,net.refractions.udig.catalog.tests.wfs",
  net.refractions.udig.catalog.wfs.internal;x-friends:="net.refractions.udig.catalog.tests.wfs"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

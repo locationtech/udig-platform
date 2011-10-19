@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.tools.edit; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.2.3.qualifier
 Bundle-Activator: net.refractions.udig.tools.edit.EditPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
@@ -28,4 +28,4 @@ Export-Package: net.refractions.udig.tool.edit,
  net.refractions.udig.tools.edit.preferences,
  net.refractions.udig.tools.edit.support,
  net.refractions.udig.tools.edit.validator
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

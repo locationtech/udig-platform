@@ -83,4 +83,8 @@ class WMSServiceInfo extends IServiceInfo {
                 ? Messages.WMSServiceImpl_broken 
                 : service.getIdentifier().toString()) : caps.getService().getTitle();
     }
+    
+    public double getMetric() {
+        return 0.9;
+    }
 }

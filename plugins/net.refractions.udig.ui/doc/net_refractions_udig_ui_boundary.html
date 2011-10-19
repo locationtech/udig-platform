@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Boundary</title>
+<style type="text/css">@import url("file:/Users/jody/java/370/eclipse-modeling/configuration/org.eclipse.osgi/bundles/390/1/.cp/book.css");</style>
+<style type="text/css">@import url("file:/Users/jody/java/370/eclipse-modeling/configuration/org.eclipse.osgi/bundles/402/1/.cp/schema.css");</style>
+</HEAD>
+<BODY>
+<H1 style="text-align:center">Boundary</H1>
+<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Identifier: </h6>net.refractions.udig.ui.boundary<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Since: </h6>1.3.0
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Description: </h6>Define a new boundary to be used application wide as a limit. The use of the current boundary is context specific examples include as a target for Zoom To Extent or as a filter when displaying features in a TableView.
+
+Use of the boundary is optional and placed under use control; the default value is considered to be All resulting in no boundary being defined.<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Configuration Markup:</h6>
+<p></p>
+<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.boundary">boundary</a>*)&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST extension</p>
+<p class="code SchemaDtdAttlist">point&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p><p class="code SchemaDtdAttlist">name&nbsp;&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>id</b> - identifier of boundary contribution used in log messages</li>
+<li><b>name</b> - Human readible name of Boundary Contribution may be used in displayed error messages</li>
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.boundary">boundary</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST boundary</p>
+<p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">name&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">class&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">page&nbsp;&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<p class="ConfigMarkupElementDesc">
+Boundary used as an optional limit for search, feature display and zoom to extent.</p>
+<br>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>id</b> - machine readible identifier suitable as a reference for logging or persistence.</li>
+<li><b>name</b> - Boundary name displayed to a user in for example the BoundaryView.</li>
+<li><b>class</b> - Implementation of IBoundaryStrategy used to supply a ReferencedEnvelope to any operations that require it.</li>
+<li><b>page</b> - Optional Page to be displayed in the Boundary View (or as a pop up) if the user wishes to configure the details of the current boundary.
+
+We make use of IPageBookViewPage although the abstract class Page is a recommended starting place.</li>
+</ul>
+<br><h6 class="CaptionFigColumn SchemaHeader">Examples: </h6>We have a couple good examples if you would like to review some sample code before getting started: BoundaryStrategyScreen, BoundaryStrategyMapCrs and BoundaryStrategyAll.
+
+To use the current boundary you can make use of the workbench BoundaryService as follows:
+<pre class="Example"><span class="code SchemaTag">
+IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+ReferencedEnvelope extent = boundaryService.getExtent();
+</span></pre>
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">API Information: </h6>Contributors are asked to porvide an implementation of IBoundaryStrategy; as an option they may also provide a Page for futher confiuration options.
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Supplied Implementation: </h6>Please note the use of a Page is optional; if a page is not provided the user will simply be able to choose from a list; and the Page area will be filled in with a short description.
+<p></p>
+
+<br>
+<p class="note SchemaCopyright">
+(c) 2011 Refractions Research and others
+
+</p>
+</BODY>
+</HTML>

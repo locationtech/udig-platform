@@ -216,7 +216,7 @@ public class CatalogPlugin extends Plugin {
                         availableCatalogs.add((ISearch) element.createExecutableExtension("class")); //$NON-NLS-1$                 
                     }
                 });
-        return availableCatalogs;
+    	return availableCatalogs;
     }
 
     public void storeToPreferences( IProgressMonitor monitor ) throws BackingStoreException,
@@ -297,21 +297,23 @@ public class CatalogPlugin extends Plugin {
      * 
      * @return Returns the catalogs found ... local one is slot[0].
      */
-    public synchronized ISearch[] getCatalogs() {
-        if (catalogs == null) {
-            // look up all catalogs and populate catalogs
-            catalogs = loadCatalogs();
-        }
-        if (catalogs == null || catalogs.isEmpty()) {
-            return new ISearch[]{local};
-        } else {
-            List<ISearch> c = new ArrayList<ISearch>();
-            c.add(local);
-            c.addAll(catalogs);
-            return c.toArray(new ISearch[c.size()]);
-        }
-    }
+	public synchronized ISearch[] getCatalogs() {
+		if (catalogs == null) {
+			// look up all catalogs and populate catalogs
+			catalogs = loadCatalogs();
+		}
+		List<ISearch> c = new ArrayList<ISearch>();
+		c.add(local);
+		c.addAll(catalogs);
+		return c.toArray(new ISearch[c.size()]);
+	}
 
+    public synchronized void addSearchCatalog(ISearch searchCatalog) {
+    	// force init
+    	getCatalogs();
+    	
+    	catalogs.add(searchCatalog);
+    }
     /**
      * @return the local catalog. Equivalent to getCatalogs()[0]
      */

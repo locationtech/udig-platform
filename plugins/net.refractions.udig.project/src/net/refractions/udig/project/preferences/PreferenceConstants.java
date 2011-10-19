@@ -1,5 +1,7 @@
 package net.refractions.udig.project.preferences;
 
+import net.refractions.udig.project.internal.render.impl.ScaleUtils;
+
 /**
  * Constant definitions for plug-in preferences
  */
@@ -98,4 +100,11 @@ public class PreferenceConstants {
      * If the property is <code>true</code> then no duplicate layers are possible.
      */
     public static final String P_CHECK_DUPLICATE_LAYERS = "P_CHECK_DUPLICATE_LAYERS"; //$NON-NLS-1$
+
+    /**
+     * Controls the point at which zooming to the next level of closeness occurs.
+     *
+     * @see ScaleUtils#calculateClosestScale
+     */
+	public static final String P_ZOOM_REQUIRED_CLOSENESS = "P_ZOOM_REQUIRED_CLOSENESS";
 }

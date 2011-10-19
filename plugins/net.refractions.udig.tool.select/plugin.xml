@@ -9,6 +9,7 @@
                   class="net.refractions.udig.tool.select.BBoxSelection"
                   icon="icons/etool16/selection_mode.gif"
                   id="net.refractions.udig.tools.BBoxSelect"
+                  largeIcon="icons/etool24/selection_mode.png"
                   name="%selection.bbox.name"
                   onToolbar="true"
                   toolCursorId="bboxCursor"
@@ -33,14 +34,15 @@
                   </enablement>
          </modalTool>
           <modalTool
-                   categoryId="net.refractions.udig.tool.category.selection"
-                   class="net.refractions.udig.tool.select.ArrowSelection"
-                   icon="icons/etool16/select_feature_mode.gif"
-                   id="net.refractions.udig.tools.ArrowSelect"
-                   name="%selection.arrow.name"
-                   onToolbar="false"
-                   toolCursorId="selectFeatureCursor"
-                   tooltip="%selection.arrow.tooltip">
+                categoryId="net.refractions.udig.tool.category.selection"
+                class="net.refractions.udig.tool.select.ArrowSelection"
+                icon="icons/etool16/select_feature_mode.gif"
+                id="net.refractions.udig.tools.ArrowSelect"
+                largeIcon="icons/etool24/select_feature_mode.png"
+                name="%selection.arrow.name"
+                onToolbar="false"
+                toolCursorId="selectFeatureCursor"
+                tooltip="%selection.arrow.tooltip">
    			<cursor
             hotspotY="10"
             hotspotX="10"

@@ -28,7 +28,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -81,6 +80,8 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
@@ -383,8 +384,8 @@ public class CatalogImpl extends ICatalog {
     public List<IResolve> find( ID id, IProgressMonitor monitor ) {
         URL query = id.toURL();
         Set<IResolve> found = new LinkedHashSet<IResolve>();
-
-        ID id1 = new ID(query);
+        
+        //ID id1 = new ID(query);
 
         // first pass 1.1- use urlEquals on CONNECTED service for subset check
         for( IService service : services ) {
@@ -396,7 +397,7 @@ public class CatalogImpl extends ICatalog {
                     found.add(service);
                     found.addAll(friends(service));
                 } else {
-                    IResolve res = getChildById(service, id1, true, monitor);
+                    IResolve res = getChildById(service, id, true, monitor);
                     if (res != null) {
                         found.add(res);
                         found.addAll(friends(res));
@@ -416,7 +417,7 @@ public class CatalogImpl extends ICatalog {
                     found.add(service);
                     found.addAll(friends(service));
                 } else {
-                    IResolve res = getChildById(service, id1, true, monitor);
+                    IResolve res = getChildById(service, id, true, monitor);
                     if (res != null) {
                         found.add(res);
                         found.addAll(friends(res));
@@ -437,7 +438,7 @@ public class CatalogImpl extends ICatalog {
                     found.add(service);
                     found.addAll(friends(service));
                 } else {
-                    IResolve res = getChildById(service, id1, true, monitor);
+                    IResolve res = getChildById(service, id, true, monitor);
                     if (res != null) {
                         found.add(res);
                         found.addAll(friends(res));
@@ -634,7 +635,9 @@ public class CatalogImpl extends ICatalog {
             monitor2 = new NullProgressMonitor();
 
         if (roughMatch) {
-            if (new ID(id.toURL()).equals(new ID(handle.getIdentifier()))) {
+            URL url1 = id.toURL();
+            URL url2 = handle.getIdentifier();
+            if (new ID(url1).equals(new ID(url2))) {
                 return handle;
             }
         } else {
@@ -812,6 +815,7 @@ public class CatalogImpl extends ICatalog {
             if (bounds == null) {
                 return true; // bounds are unknown!
             }
+            bounds = bounds.transform(DefaultGeographicCRS.WGS84, true);
             return bbox.intersects(bounds);
         } catch (Throwable e) {
             CatalogPlugin.log(null, e);

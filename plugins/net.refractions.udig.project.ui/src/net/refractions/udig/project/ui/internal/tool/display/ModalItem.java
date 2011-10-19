@@ -25,12 +25,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.internal.ui.operations.OperationCategory;
 import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.internal.MapToolEntry;
-import net.refractions.udig.project.ui.internal.MapToolPaletteFactory;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.graphics.Glyph;
@@ -39,10 +37,8 @@ import net.refractions.udig.ui.operations.OpFilter;
 
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gef.internal.ui.palette.editparts.ToolEntryEditPart;
-import org.eclipse.gef.palette.PaletteContainer;
-import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.palette.PaletteViewer;
+import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
@@ -81,8 +77,13 @@ public abstract class ModalItem implements ILazyOpListener {
     protected OpFilter enablement;
     protected List<OperationCategory> operationCategories;
     protected boolean isEnabled = true;
+    
+    private Lock enabledLock=new ReentrantLock();
+    private String preferencePageId;
 
     private ImageDescriptor largeImageDescriptor;
+
+    private List<ContributionItem> optionsContribution = new ArrayList<ContributionItem>();
 
     /**
      * Gets the image descriptor of the item.
@@ -119,19 +120,25 @@ public abstract class ModalItem implements ILazyOpListener {
 
         ToolManager tools = (ToolManager) ApplicationGIS.getToolManager();
         MapPart currentEditor = tools.currentEditor;
-        if( currentEditor != null ){
-            MapEditDomain editDomain = tools.getEditDomain();
-            PaletteViewer paletteViewer = editDomain.getPaletteViewer();
-            
-            for( MapToolEntry entry : this.mapToolEntries ){
-                
-                if(paletteViewer.getEditPartRegistry().get(entry) != null ){ 
-                    paletteViewer.setActiveTool( entry );
-                    
-                    EditPart part = (EditPart) paletteViewer.getEditPartRegistry().get( entry );
-                    
-                    paletteViewer.reveal( part );
-                    break;
+        if (currentEditor != null) {
+            if (currentEditor instanceof MapEditorWithPalette) {
+                MapEditorWithPalette editor2 = (MapEditorWithPalette) currentEditor;
+
+                MapEditDomain editDomain = editor2.getEditDomain();
+
+                PaletteViewer paletteViewer = editDomain.getPaletteViewer();
+                if( paletteViewer != null ){
+                    for( MapToolEntry entry : this.mapToolEntries ) {
+    
+                        if (paletteViewer.getEditPartRegistry().get(entry) != null) {
+                            paletteViewer.setActiveTool(entry);
+    
+                            EditPart part = (EditPart) paletteViewer.getEditPartRegistry().get(entry);
+    
+                            paletteViewer.reveal(part);
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -354,6 +361,7 @@ public abstract class ModalItem implements ILazyOpListener {
      */
     public void setLargeImageDescriptor( ImageDescriptor imageDescriptor ) {
         this.largeImageDescriptor = imageDescriptor;
+        IMAGES.remove(getId()+"Large");
     }
     
     /**
@@ -409,7 +417,7 @@ public abstract class ModalItem implements ILazyOpListener {
                 }
             });
     }
-    private Lock enabledLock=new ReentrantLock();
+    
     protected void internalSetEnabled( boolean isEnabled2 ) {
         enabledLock.lock();
         try {
@@ -431,4 +439,40 @@ public abstract class ModalItem implements ILazyOpListener {
         }
         return Collections.unmodifiableList(operationCategories);
     }
+    
+    /**
+     * Sets the Preference Page Id of the item
+     * 
+     * @param id the new Preference Page Id
+     */
+    public void setPreferencePageId( String id ) {
+        this.preferencePageId = id;
+    }
+    /**
+     * Gets the Preference Page Id of the item
+     * 
+     * @return the Preference Page Id of the item.
+     */
+    public String getPreferencePageId() {
+        return preferencePageId;
+    }
+    
+    /**
+     * Sets the tool option class of the item, the class is not instantiated until  the 
+     * <code>getOptionPage()</code> method is called.
+     * 
+     * @param id the new Preference Page Id
+     */
+    public void addOptionsContribution( ContributionItem optionsPage ) {
+        this.optionsContribution.add(optionsPage);
+    }
+    /**
+     * Gets the tool option page of the item
+     * 
+     * @return the AbstractMapEditorOptionsPage of the item.
+     */
+    public List<ContributionItem> getOptionsContribution() {
+        return optionsContribution;
+    }
+
 }
