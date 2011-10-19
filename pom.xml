@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  uDig - User-friendly Desktop Internet GIS 
+
+  http://udig.refractions.net
+  (C) 2011 Refractions Research Inc.
+  
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation;
+  version 2.1 of the License.
+  
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.refractions</groupId>
 	<artifactId>udig-tycho</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.3.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	
+	<description>
+		This is the base uDig pom that controls the version numbers
+		used by the nightly build process.
+	</description>
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
@@ -14,7 +33,25 @@
 		<tycho-version>0.13.0</tycho-version>
 		<tycho-provider>org.eclipse.tycho</tycho-provider>
 	</properties>
-	
+    <!--
+
+The build currently does not use much in the way of profiles.
+
+The following are defined:
+
+  -PudigProfile (on by default) defines the appropriate p2 update repository
+
+To build on the command line:
+   mvn install
+
+If you run into any problems (to list debug and stack trace)
+   mvn -e -X install
+
+Please note the Tycho maven plugin used to build RCP projects is a a work in progress; you
+will do better to review the stack trace with a checkout of the Tycho code in hand as the
+error messages are often misleading and evil.
+
+    -->	
 	<profiles>
 		<profile>
 			<id>udigProfile</id>
