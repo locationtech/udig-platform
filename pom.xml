@@ -35,28 +35,31 @@
     </properties>
     <!--
 To run a normal build on the command line:
-   mvn install
+   mvn install -Dall
 
 If you run into any problems (to list debug and stack trace)
-   mvn -e -X install
+   mvn -Dall -e -X install
 
 Please note the Tycho maven plugin used to build RCP projects is a a work in progress; you
 will do better to review the stack trace with a checkout of the Tycho code in hand as the
 error messages are often misleading and evil.
 
+To quickly build the product:
+   mvn install
+
 The build supports the use of profiles - to run a normal build with tests:
-  mvn install -Ptest
+  mvn install -Dall -Ptest
 
 The following profiles are defined:
 
   -PudigProfile (on by default)
   defines the appropriate p2 update repository
   
-  -Ppending (on by default)
+  -Ppending (included by -Dall)
   gathers the plugins that are not included in the default product
 
-  -Ptutorial (on by default)
-  gathers the tutorial content that is included in the SDK
+  -Psdk (included by -Dall)
+  gathers the tutorials and source code for the software developers kit
   
   -Planguage
   includes the udig_language feature. Not enabled by default as we are sorting out

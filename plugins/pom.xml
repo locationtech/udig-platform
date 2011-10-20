@@ -46,11 +46,12 @@
              </modules>
         </profile>
         <profile>
-            <id>tutorial</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+            <id>sdk</id>
+               <activation>
+                 <property><name>all</name></property>
+               </activation>
             <modules>
+                <!-- TUTORIALS -->
                 <module>com.csvreader</module>
                 <module>eu.udig.tutorials.preferredzoomlevels</module>
                 <module>eu.udig.tutorials.tool-view</module>
@@ -76,13 +77,20 @@
                 <module>net.refractions.udig.tutorials.urladapter</module>
                 <module>net.refractions.udig.tutorials.workbench</module>
                 <module>net.refractions.udig_tutorials.custom-feature</module>
+                <!-- SDK -->
+                <module>net.refractions.udig_sdk.source</module>
+                <module>net.refractions.udig_tutorials.source</module>
+                <module>net.refractions.udig_platform.source</module>
+                <module>net.refractions.udig_printing.source</module>
+                <module>net.refractions.udig.libs.source</module>
+                <module>net.refractions.udig_application.source</module>
              </modules>
         </profile>
         <profile>
             <id>pending</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+               <activation>
+                 <property><name>all</name></property>
+               </activation>
             <modules>
                 <module>eu.udig.catalog.csw</module>
                 <module>net.refractions.udig.graph</module>
@@ -133,7 +141,6 @@
     <module>net.refractions.udig.libs</module>
     <module>net.refractions.udig.libs.db2</module>
     <module>net.refractions.udig.libs.oracle</module>
-    <module>net.refractions.udig.libs.source</module>
     <module>net.refractions.udig.location</module>
     <module>net.refractions.udig.mapgraphic</module>
     <module>net.refractions.udig.printing.model</module>
@@ -159,12 +166,7 @@
     <module>net.refractions.udig.ui</module>
     <module>net.refractions.udig.unstable</module>
     <module>net.refractions.udig.validation</module>
-    <module>net.refractions.udig_application.source</module>
     <module>net.refractions.udig_base</module>
-    <module>net.refractions.udig_platform.source</module>
-    <module>net.refractions.udig_printing.source</module>
-    <module>net.refractions.udig_sdk.source</module>
-    <module>net.refractions.udig_tutorials.source</module>
     <module>org.apache.log4j</module>
     <module>org.tcat.citd.sim.udig.bookmarks</module>
   </modules>

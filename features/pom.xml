@@ -35,11 +35,13 @@
              </modules>
         </profile>
         <profile>
-            <id>tutorial</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+            <id>sdk</id>
+               <activation>
+                 <property><name>all</name></property>
+               </activation>
             <modules>
+                <module>net.refractions.udig_sdk-feature</module>
+                <module>net.refractions.udig_sdk.source-feature</module>
                 <module>net.refractions.udig_tutorials-feature</module>
                 <module>net.refractions.udig_tutorials.source-feature</module>
              </modules>
@@ -60,8 +62,6 @@
     <module>net.refractions.udig_platform.source-feature</module>
     <module>net.refractions.udig_printing-feature</module>
     <module>net.refractions.udig_printing.source-feature</module>
-    <module>net.refractions.udig_sdk-feature</module>
-    <module>net.refractions.udig_sdk.source-feature</module>
     <module>net.refractions.udig_unstable-feature</module>
   </modules>
 
