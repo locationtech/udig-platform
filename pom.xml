@@ -34,16 +34,7 @@
         <tycho-provider>org.eclipse.tycho</tycho-provider>
     </properties>
     <!--
-
-The build currently makes limited use of profiles:
-
-The following are defined:
-
-  -PudigProfile (on by default) defines the appropriate p2 update repository
-
-  -Ptest includes test plugins (this is optional as so many tests fail)
-
-To build on the command line:
+To run a normal build on the command line:
    mvn install
 
 If you run into any problems (to list debug and stack trace)
@@ -52,6 +43,33 @@ If you run into any problems (to list debug and stack trace)
 Please note the Tycho maven plugin used to build RCP projects is a a work in progress; you
 will do better to review the stack trace with a checkout of the Tycho code in hand as the
 error messages are often misleading and evil.
+
+The build supports the use of profiles - to run a normal build with tests:
+  mvn install -Ptest
+
+The following profiles are defined:
+
+  -PudigProfile (on by default)
+  defines the appropriate p2 update repository
+  
+  -Ppending (on by default)
+  gathers the plugins that are not included in the default product
+
+  -Ptutorial (on by default)
+  gathers the tutorial content that is included in the SDK
+  
+  -Planguage
+  includes the udig_language feature. Not enabled by default as we are sorting out
+  how to use the bable project. 
+
+  -Ptest
+   includes test plugins (this is optional as so many tests fail)
+
+  -Psite
+  inlcudes the udig and communit sites
+  
+  -Possim
+  includes the ossim feaure (this may be dead code)
 
     -->    
     <profiles>
