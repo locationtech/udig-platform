@@ -26,8 +26,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.tcat.citd.sim.udig.bookmarks.Bookmark;
 import org.tcat.citd.sim.udig.bookmarks.BookmarkCommandFactory;
-import org.tcat.citd.sim.udig.bookmarks.BookmarkManager;
 import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
+import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
 import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
 import org.tcat.citd.sim.udig.bookmarks.internal.MapWrapper;
 import org.tcat.citd.sim.udig.bookmarks.internal.Messages;
@@ -105,7 +105,7 @@ public class BookmarkAction extends Action
     @SuppressWarnings("unused")
     private IViewPart view;
     private IStructuredSelection selection;
-    private BookmarkManager bmManager;
+    private IBookmarkService bmManager;
 
     /**
      * Default Constructor
@@ -136,7 +136,7 @@ public class BookmarkAction extends Action
                                 Messages.BookmarkAction_dialogtitle_removebookmarks,
                                 Messages.BookmarkAction_dialogprompt_removeallbookmarks)) {
                     if (bmManager == null) {
-                        bmManager = BookmarksPlugin.getDefault().getBookmarkManager();
+                        bmManager = BookmarksPlugin.getBookmarkService();
                     }
                     bmManager.empty();
                     refreshView();
@@ -152,7 +152,7 @@ public class BookmarkAction extends Action
                                         Messages.BookmarkAction_dialogprompt_removemapbookmarks)) {
                             MapReference map = (MapReference) selection.getFirstElement();
                             if (bmManager == null) {
-                                bmManager = BookmarksPlugin.getDefault().getBookmarkManager();
+                                bmManager = BookmarksPlugin.getBookmarkService();
                             }
                             bmManager.removeMap(map);
                         }
@@ -163,7 +163,7 @@ public class BookmarkAction extends Action
                                         Messages.BookmarkAction_dialogtitle_removebookmarks,
                                         Messages.BookmarkAction_dialogprompt_removeselectedmaps)) {
                             if (bmManager == null) {
-                                bmManager = BookmarksPlugin.getDefault().getBookmarkManager();
+                                bmManager = BookmarksPlugin.getBookmarkService();
                             }
                             List wrappedMaps = selection.toList();
                             Collection maps = MapWrapper.unwrap(wrappedMaps);
@@ -184,7 +184,7 @@ public class BookmarkAction extends Action
                 // ){ //$NON-NLS-1$
                 // ProjectWrapper wrapper = (ProjectWrapper)selection.getFirstElement();
                 // if(bmManager == null){
-                // bmManager = BookmarksPlugin.getDefault().getBookmarkManager();
+                // bmManager = BookmarksPlugin.getBookmarkService();
                 // }
                 // // bmManager.removeProject(wrapper.getProject());
                 // }
@@ -196,7 +196,7 @@ public class BookmarkAction extends Action
                 // Messages..BOOKMARK_ACTION_DIALOGPROMPT_REMOVESELECTEDPROJECTS)
                 // ){ //$NON-NLS-1$
                 // if(bmManager == null){
-                // bmManager = BookmarksPlugin.getDefault().getBookmarkManager();
+                // bmManager = BookmarksPlugin.getBookmarkService();
                 // }
                 // List wrappedProjects = selection.toList();
                 // Collection<IProject> projects = ProjectWrapper.unwrap(wrappedProjects);
@@ -216,7 +216,7 @@ public class BookmarkAction extends Action
                                         Messages.BookmarkAction_dialogprompt_removeselectedbookmarks)) {
                             List bookmarks = selection.toList();
                             if (bmManager == null) {
-                                bmManager = BookmarksPlugin.getDefault().getBookmarkManager();
+                                bmManager = BookmarksPlugin.getBookmarkService();
                             }
                             bmManager.removeBookmarks(bookmarks);
                         }
@@ -229,7 +229,7 @@ public class BookmarkAction extends Action
                         ) {
                             Bookmark bookmark = (Bookmark) selection.getFirstElement();
                             if (bmManager == null) {
-                                bmManager = BookmarksPlugin.getDefault().getBookmarkManager();
+                                bmManager = BookmarksPlugin.getBookmarkService();
                             }
                             bmManager.removeBookmark(bookmark);
                         }
@@ -261,7 +261,7 @@ public class BookmarkAction extends Action
                     if (dialog.getReturnCode() == Window.OK) {
                         String name = dialog.getValue();
                         bookmark.setName(name);
-                        bmManager = BookmarksPlugin.getDefault().getBookmarkManager();
+                        bmManager = BookmarksPlugin.getBookmarkService();
                         bmManager.addBookmark(bookmark);
                         refreshView();
                     }
@@ -314,7 +314,7 @@ public class BookmarkAction extends Action
             this.view = viewPart;
         }
         if (bmManager == null) {
-            bmManager = BookmarksPlugin.getDefault().getBookmarkManager();
+            bmManager = BookmarksPlugin.getBookmarkService();
         }
     }
 

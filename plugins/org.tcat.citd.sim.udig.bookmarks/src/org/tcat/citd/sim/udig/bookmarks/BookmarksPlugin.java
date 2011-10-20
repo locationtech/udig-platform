@@ -52,8 +52,6 @@ public class BookmarksPlugin extends AbstractUIPlugin {
     // The shared instance.
     private static BookmarksPlugin plugin;
 
-    private BookmarkManager bmManager;
-
     /**
      * The constructor.
      */
@@ -101,18 +99,6 @@ public class BookmarksPlugin extends AbstractUIPlugin {
     }
 
     /**
-     * Returns the bookmark manager for this plug-in.
-     * 
-     * @return the bookmark manager
-     */
-    public BookmarkManager getBookmarkManager() {
-        if (bmManager == null) {
-            bmManager = new BookmarkManager();
-        }
-        return bmManager;
-    }
-
-    /**
      * Restore the bookmarks from the plugin's preference store
      * @throws BackingStoreException
      */
@@ -147,7 +133,7 @@ public class BookmarksPlugin extends AbstractUIPlugin {
                     }
                     ReferencedEnvelope bounds = new ReferencedEnvelope(env, crs);
                     Bookmark bmark = new Bookmark(bounds, new MapReference(mapURI, projectURI, mapName), URI.decode(bmarkName));
-                    getBookmarkManager().addBookmark(bmark);
+                    getBookmarkService().addBookmark(bmark);
                 }
             }
         }
@@ -165,7 +151,7 @@ public class BookmarksPlugin extends AbstractUIPlugin {
         Preferences node = root.node(InstanceScope.SCOPE).node(
                 getBundle().getSymbolicName() + ".bookmarks"); //$NON-NLS-1$
         clearPreferences(node);
-        BookmarkManager mgr = getBookmarkManager();
+        IBookmarkService mgr = getBookmarkService();
         for( URI project : mgr.getProjects() ) {
             String projectString = project.toString();
             String encPStr = URI.encodeSegment(projectString, true);

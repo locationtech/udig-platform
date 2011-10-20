@@ -39,15 +39,6 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="7" corner="BOTTOM_RIGHT" language="java" name="org.tcat.citd.sim.udig.bookmarks.BookmarkManager" 
-    project="org.tcat.citd.sim.udig.bookmarks" 
-    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/BookmarkManager.java" binary="false">    
-    <position height="-1" width="-1" x="891" y="397"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
-    </display>  
-  </class>  
   <class id="8" corner="BOTTOM_RIGHT" language="java" name="org.tcat.citd.sim.udig.bookmarks.internal.ProjectWrapper" 
     project="org.tcat.citd.sim.udig.bookmarks" 
     file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/internal/ProjectWrapper.java" 
@@ -102,7 +93,7 @@
     name="org.tcat.citd.sim.udig.bookmarks.internal.actions.BookmarkAction" project="org.tcat.citd.sim.udig.bookmarks" 
     file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/internal/actions/BookmarkAction.java" 
     binary="false">    
-    <position height="-1" width="-1" x="891" y="803"/>    
+    <position height="-1" width="-1" x="1254" y="805"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -118,12 +109,31 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
+  <interface id="15" corner="BOTTOM_RIGHT" language="java" name="org.tcat.citd.sim.udig.bookmarks.IBookmarkService" 
+    project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/IBookmarkService.java" binary="false">    
+    <position height="-1" width="-1" x="894" y="803"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="16" corner="BOTTOM_RIGHT" language="java" 
+    name="org.tcat.citd.sim.udig.bookmarks.internal.BookmarkServiceImpl" project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/internal/BookmarkServiceImpl.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="890" y="389"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
   <association>    
-    <end type="SOURCE" nodeId="9" navigable="false">      
-      <attribute name="plugin"/>      
+    <end type="SOURCE" nodeId="11" navigable="false">      
+      <attribute name="labelProvider"/>      
       <multiplicity minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" nodeId="9" navigable="true"/>    
+    <end type="TARGET" nodeId="14" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association>    
@@ -135,19 +145,11 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association>    
-    <end type="SOURCE" nodeId="11" navigable="false">      
-      <attribute name="labelProvider"/>      
+    <end type="SOURCE" nodeId="12" navigable="false">      
+      <attribute name="target"/>      
       <multiplicity minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" nodeId="14" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association>    
-    <end type="SOURCE" nodeId="13" navigable="false">      
-      <attribute name="bmManager"/>      
-      <multiplicity minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" nodeId="7" navigable="true"/>    
+    <end type="TARGET" nodeId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association>    
@@ -159,19 +161,11 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association>    
-    <end type="SOURCE" nodeId="6" navigable="false">      
-      <attribute name="bManager"/>      
+    <end type="SOURCE" nodeId="10" navigable="false">      
+      <attribute name="instance"/>      
       <multiplicity minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" nodeId="7" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association>    
-    <end type="SOURCE" nodeId="12" navigable="false">      
-      <attribute name="target"/>      
-      <multiplicity minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" nodeId="1" navigable="true"/>    
+    <end type="TARGET" nodeId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association>    
@@ -183,11 +177,31 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association>    
-    <end type="SOURCE" nodeId="10" navigable="false">      
-      <attribute name="instance"/>      
+    <end type="SOURCE" nodeId="16" navigable="false">      
+      <attribute name="mapReferences"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" nodeId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="9" navigable="false">      
+      <attribute name="plugin"/>      
       <multiplicity minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" nodeId="10" navigable="true"/>    
+    <end type="TARGET" nodeId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization>    
+    <end type="SOURCE" nodeId="16"/>    
+    <end type="TARGET" nodeId="15"/>  
+  </realization>  
+  <association>    
+    <end type="SOURCE" nodeId="6" navigable="false">      
+      <attribute name="bManager"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="15" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
