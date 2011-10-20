@@ -97,7 +97,15 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
 
     protected TileCache tempCache;
 
-
+    /**
+     * For context specific label painters; if null
+     * then the label painter on the blackboard is used.
+     * 
+     * @see #getLabelPainter()
+     * @see #setLabelPainterLocal(ILabelPainter)
+     */
+    private ILabelPainter labelPainterLocal;
+    
     //private ILabelPainter labelPainter;
     
     public RenderContextImpl() {
@@ -447,6 +455,29 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
         return true;
     }
 
+    
+    
+    /**
+     * Sets the label painter to use with the context and only this context.  
+     * 
+     * <p>This method
+     * assumes there is are multiple label painters for 
+     * the map and this applies only to this context.  
+     * It is used in the tiled rendering system - each tile has
+     * its own label painter.
+     * </p>
+     * <p>
+     * This is used to draw the labels for features.
+     * </p>
+     *
+     * @param labelPainter
+     */
+    public void setLabelPainterLocal(ILabelPainter labelPainter) {
+        this.labelPainterLocal = labelPainter;
+    }
+    
+
+    
     /**
      * Gets the label painter.  
      * <p>
@@ -456,7 +487,11 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
      * </p>
      * 
      */
-    public synchronized ILabelPainter getLabelPainter() {     
+    public synchronized ILabelPainter getLabelPainter() { 
+        if (labelPainterLocal != null){
+            return labelPainterLocal;
+        }
+        
         ILabelPainter labelPainter = (ILabelPainter) getMap().getBlackboard().get(LABEL_PAINTER);
         if (labelPainter == null){
             //create a new one and put it on the blackboard for others to use
@@ -468,7 +503,9 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
     }
 
     /**
-     * Sets the label painter to use with the context.
+     * Sets the label painter to use with the context.  This method
+     * assumes there is a single label painter for 
+     * then entire map.
      * <p>
      * This is used to draw the labels for features.
      * </p>
