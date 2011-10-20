@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2006, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package org.tcat.citd.sim.udig.bookmarks;
 
 import org.eclipse.core.runtime.Platform;
@@ -6,6 +20,8 @@ import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
@@ -21,10 +37,11 @@ import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * The main plugin class to be used in the desktop.
+ * Plugin callback object for the bookmark plugin.
  */
 public class BookmarksPlugin extends AbstractUIPlugin {
-
+    public static String ID = "org.tcat.citd.sim.udig.bookmarks";
+    
     private static final String KEY_NAME = "name"; //$NON-NLS-1$
     private static final String KEY_MINX = "minx"; //$NON-NLS-1$
     private static final String KEY_MINY = "miny"; //$NON-NLS-1$
@@ -177,5 +194,15 @@ public class BookmarksPlugin extends AbstractUIPlugin {
             Preferences child = node.node(name);
             child.removeNode();
         }
+    }
+    
+    /** Access the IBookmarkService for the current workbench */
+    public static IBookmarkService getBookmarkService() {
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        IBookmarkService bookmarkService = (IBookmarkService) workbench.getService(IBookmarkService.class);
+        if( bookmarkService == null ){
+            throw new NullPointerException("You forgot to do your factory extension point Paul");
+        }
+        return bookmarkService;
     }
 }

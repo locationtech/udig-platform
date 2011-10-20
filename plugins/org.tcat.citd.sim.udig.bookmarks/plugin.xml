@@ -115,4 +115,13 @@
                tooltip="%Bookmarks.actions.Remove.tt2"/>
       </objectContribution>
    </extension>
+   <extension
+         point="org.eclipse.ui.services">
+      <serviceFactory
+            factoryClass="org.tcat.citd.sim.udig.bookmarks.internal.BookmarkServiceFactory">
+         <service
+               serviceClass="org.tcat.citd.sim.udig.bookmarks.IBookmarkService">
+         </service>
+      </serviceFactory>
+   </extension>
 </plugin>
