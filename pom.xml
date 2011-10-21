@@ -91,10 +91,25 @@ Includes the ossim feaure (this may be dead code)
                         <updatePolicy>never</updatePolicy>
                     </releases>
                     <snapshots>
-                        <enabled>true</enabled>
+                        <enabled>false</enabled>
                         <updatePolicy>never</updatePolicy>
                     </snapshots>
                 </repository>
+
+                <repository>
+                    <id>indigo-babel-web</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/babel/update-site/R0.9.0/indigo/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </snapshots>
+                </repository>
+
             </repositories>
         </profile>
     </profiles>

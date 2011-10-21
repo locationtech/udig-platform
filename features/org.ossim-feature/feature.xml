@@ -26,7 +26,7 @@
       <import plugin="net.refractions.udig.project"/>
       <import plugin="net.refractions.udig.style.sld"/>
       <import plugin="net.refractions.udig.ui"/>
-      <import feature="net.refractions.udig_application" version="1.0.1"/>
+      <import feature="net.refractions.udig_application-feature" version="1.0.1"/>
    </requires>
 
    <plugin

@@ -4,5 +4,5 @@ Bundle-SymbolicName: net.refractions.udig_application.source;singleton:=true
 Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Bundle-ManifestVersion: 2
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.pde.core;resolution:=optional
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
