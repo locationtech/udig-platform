@@ -127,10 +127,10 @@
    <extension
          point="net.refractions.udig.ui.boundary">
       <boundary
-            class="org.tcat.citd.sim.udig.bookmarks.BoundaryStrategyBookmark"
+            class="org.tcat.citd.sim.udig.bookmarks.BookmarkBoundaryStrategy"
             id="org.tcat.citd.sim.udig.bookmarks.boundary"
             name="Bookmark"
-            page="org.tcat.citd.sim.udig.bookmarks.internal.ui.BoundaryPageBookmark">
+            page="org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarkBoundaryPage">
       </boundary>
    </extension>
 </plugin>

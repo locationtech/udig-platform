@@ -21,6 +21,7 @@ import net.refractions.udig.internal.ui.UiPlugin;
 
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.ui.part.IPageBookViewPage;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -29,7 +30,7 @@ import com.vividsolutions.jts.geom.Geometry;
 /**
  * Defines the changing functionality of the Boundary service.
  * 
- * @author pfeiffp
+ * @author paul.pfeiffer
  */
 public abstract class IBoundaryStrategy {
 
@@ -113,9 +114,20 @@ public abstract class IBoundaryStrategy {
                     listener.handleEvent( event );
                 }
             } catch (Exception e) {
-                e.printStackTrace();
                 UiPlugin.trace(UiPlugin.ID, listener.getClass(), e.getMessage(), e );
             }
         }
+    }
+    
+    /**
+     * Creates a Page (used for extra selection like the bookmark strategy).
+     * <p>
+     * Please note this is provided by the extension point information via BoundaryProxy.
+     * As such this method is expected to return null.
+     * 
+     * @return Page if it exists otherwise null
+     */
+    public IPageBookViewPage createPage() {
+        return null;
     }
 }

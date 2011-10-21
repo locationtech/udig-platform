@@ -14,24 +14,24 @@
  */
 package org.tcat.citd.sim.udig.bookmarks;
 
+import net.refractions.udig.boundary.IBoundaryStrategy;
+
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
-import net.refractions.udig.boundary.IBoundaryStrategy;
-
 /**
- * 
+ * Advertise the currently selected bookmark as a Boundary for use in
+ * catalog services and others.
  * 
  * @author paul.pfeiffer
  * @version 1.3.0
  */
-public class BoundaryStrategyBookmark extends IBoundaryStrategy {
-
+public class BookmarkBoundaryStrategy extends IBoundaryStrategy {
+    public static String ID = "org.tcat.citd.sim.udig.bookmarks.boundary";
     
-    //IBookmarkService bookmarkService = BookmarksPlugin.getBookmarkService();
     private IBookmark currentBookmark = null;
     
     @Override
