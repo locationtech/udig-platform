@@ -129,7 +129,8 @@
       <boundary
             class="org.tcat.citd.sim.udig.bookmarks.BoundaryStrategyBookmark"
             id="org.tcat.citd.sim.udig.bookmarks.boundary"
-            name="Bookmark">
+            name="Bookmark"
+            page="org.tcat.citd.sim.udig.bookmarks.internal.ui.BoundaryPageBookmark">
       </boundary>
    </extension>
 </plugin>
