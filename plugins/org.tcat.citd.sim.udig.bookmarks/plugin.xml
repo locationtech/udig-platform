@@ -124,4 +124,12 @@
          </service>
       </serviceFactory>
    </extension>
+   <extension
+         point="net.refractions.udig.ui.boundary">
+      <boundary
+            class="org.tcat.citd.sim.udig.bookmarks.BoundaryStrategyBookmark"
+            id="org.tcat.citd.sim.udig.bookmarks.boundary"
+            name="Bookmark">
+      </boundary>
+   </extension>
 </plugin>

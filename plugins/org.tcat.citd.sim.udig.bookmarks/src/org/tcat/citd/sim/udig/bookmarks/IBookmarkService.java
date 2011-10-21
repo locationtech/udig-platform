@@ -27,7 +27,7 @@ import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
  * </p>
  * 
  * @author paul.pfeiffer
- * @since 1.3.0
+ * @version 1.3.0
  */
 public interface IBookmarkService {
 
