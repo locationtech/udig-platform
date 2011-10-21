@@ -27,6 +27,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.tcat.citd.sim.udig.bookmarks.Bookmark;
 import org.tcat.citd.sim.udig.bookmarks.BookmarkCommandFactory;
 import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
+import org.tcat.citd.sim.udig.bookmarks.IBookmark;
 import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
 import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
 import org.tcat.citd.sim.udig.bookmarks.internal.MapWrapper;
@@ -268,7 +269,7 @@ public class BookmarkAction extends Action
                     ((BookmarksView) view).selectReveal(new StructuredSelection(bookmark));
                 }
             } else if (RENAME_BOOKMARK_ACTION_ID.equals(action.getId())) {
-                Bookmark bookmark = (Bookmark) selection.getFirstElement();
+                IBookmark bookmark = (IBookmark) selection.getFirstElement();
                 InputDialog dialog = new InputDialog(
                         Display.getCurrent().getActiveShell(),
                         Messages.BookmarkAction_dialogtitle_renamebookmark,

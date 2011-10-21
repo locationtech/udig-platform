@@ -23,6 +23,7 @@ import net.refractions.udig.project.internal.Project;
 
 import org.eclipse.emf.common.util.URI;
 import org.tcat.citd.sim.udig.bookmarks.Bookmark;
+import org.tcat.citd.sim.udig.bookmarks.IBookmark;
 import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
 
 /**
@@ -107,6 +108,19 @@ public class BookmarkServiceImpl implements IBookmarkService {
             mapsHash.put(map.getMapID(), new Vector<Bookmark>());
         }
         Vector<Bookmark> bookmarks = mapsHash.get(map.getMapID());
+        return bookmarks;
+    }
+
+    @Override
+    public Collection<IBookmark> getBookmarks() {
+        Collection<IBookmark> bookmarks = new Vector<IBookmark>();
+        for (URI project : getProjects()) {
+            for (MapReference map : getMaps(project)) {
+                for (IBookmark  bookmark : getBookmarks(map)) {
+                    bookmarks.add(bookmark);
+                }
+            }
+        }
         return bookmarks;
     }
 
@@ -202,4 +216,5 @@ public class BookmarkServiceImpl implements IBookmarkService {
         }
         return ref;
     }
+
 }

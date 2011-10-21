@@ -7,6 +7,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.tcat.citd.sim.udig.bookmarks.Bookmark;
 import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
+import org.tcat.citd.sim.udig.bookmarks.IBookmark;
 import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
 
 /**
@@ -60,7 +61,7 @@ public class BookmarksLabelProvider extends LabelProvider {
             IBookmarkService bManager = (BookmarkServiceImpl) obj;
             name = bManager.getName();
         } else if (obj instanceof Bookmark) {
-            Bookmark bookmark = (Bookmark) obj;
+            IBookmark bookmark = (IBookmark) obj;
             name = bookmark.getName();
         } else if (obj instanceof ProjectWrapper) {
             ProjectWrapper project = (ProjectWrapper) obj;

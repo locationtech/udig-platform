@@ -72,6 +72,13 @@ public interface IBookmarkService {
      * @return A vector of Bookmark objects
      */
     public Collection<Bookmark> getBookmarks( MapReference map );
+    
+    /**
+     * Returns a list of all bookmarks
+     * 
+     * @return A collection of bookmarks
+     */
+    public Collection<IBookmark> getBookmarks();
 
     /**
      * Get the name of this bookmark manager for display It's just a static string for now

@@ -159,7 +159,7 @@ public class BookmarksPlugin extends AbstractUIPlugin {
             for( MapReference map : mgr.getMaps(project) ) {
                 Preferences mapNode = projectNode.node(URI.encodeSegment(map.getMapID().toString(), true));
                 mapNode.put(KEY_NAME, map.getName());
-                for( Bookmark bookmark : mgr.getBookmarks(map) ) {
+                for( IBookmark bookmark : mgr.getBookmarks(map) ) {
                     Preferences bmarkNode = mapNode.node(URI.encodeSegment(bookmark.getName(), true));
                     ReferencedEnvelope bounds = bookmark.getEnvelope();
                     bmarkNode.putDouble(KEY_MINX, bounds.getMinX());

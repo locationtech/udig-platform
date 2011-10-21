@@ -27,7 +27,7 @@ import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
  * @author cole.markham
  * @since 1.0.0
  */
-public class Bookmark {
+public class Bookmark implements IBookmark {
     private ReferencedEnvelope envelope;
     private MapReference mapID;
     private String name;
@@ -45,15 +45,17 @@ public class Bookmark {
         this.name = name;
     }
 
-    /**
-     * @return Returns the envelope.
+    /* (non-Javadoc)
+     * @see org.tcat.citd.sim.udig.bookmarks.IBookmark#getEnvelope()
      */
+    @Override
     public ReferencedEnvelope getEnvelope() {
         return envelope;
     }
-    /**
-     * @param envelope The envelope to set.
+    /* (non-Javadoc)
+     * @see org.tcat.citd.sim.udig.bookmarks.IBookmark#setEnvelope(org.geotools.geometry.jts.ReferencedEnvelope)
      */
+    @Override
     public void setEnvelope( ReferencedEnvelope envelope ) {
         this.envelope = envelope;
     }
@@ -72,9 +74,10 @@ public class Bookmark {
         this.mapID = map;
     }
 
-    /**
-     * @return Returns the name.
+    /* (non-Javadoc)
+     * @see org.tcat.citd.sim.udig.bookmarks.IBookmark#getName()
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -84,9 +87,10 @@ public class Bookmark {
         return this.getName();
     }
 
-    /**
-     * @param name The name to set.
+    /* (non-Javadoc)
+     * @see org.tcat.citd.sim.udig.bookmarks.IBookmark#setName(java.lang.String)
      */
+    @Override
     public void setName( String name ) {
         this.name = name;
     }
