@@ -185,7 +185,7 @@ public class ProfileTool extends SimpleTool {
             Point lastPoint = points.get(points.size() - 1);
             Coordinate end = getContext().pixelToWorld(lastPoint.x, lastPoint.y);
 
-            final List<ProfilePoint> profile = CoverageUtilities.doProfile(begin, end, rasterMapResource);
+            final List<ProfilePoint> profile = CoverageUtilities.doProfile(rasterMapResource, begin, end);
             begin = end;
 
             Display.getDefault().syncExec(new Runnable(){
@@ -195,7 +195,8 @@ public class ProfileTool extends SimpleTool {
                         if (!Double.isNaN(elevation)) {
                             chartView.addToSeries(latestProgessiveDistance + profilePoint.getProgressive(), elevation);
                         } else {
-//                            chartView.addToSeries(latestProgessiveDistance + profilePoint.getProgressive(), Double.NaN);
+                            // chartView.addToSeries(latestProgessiveDistance +
+                            // profilePoint.getProgressive(), Double.NaN);
                         }
                     }
                     ProfilePoint last = profile.get(profile.size() - 1);

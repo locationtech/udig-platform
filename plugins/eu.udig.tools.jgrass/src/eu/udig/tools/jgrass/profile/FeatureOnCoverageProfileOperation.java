@@ -108,7 +108,7 @@ public class FeatureOnCoverageProfileOperation implements IOp {
                     for( int i = 0; i < coordinates.length - 1; i++ ) {
                         Coordinate begin = coordinates[i];
                         Coordinate end = coordinates[i + 1];
-                        List<ProfilePoint> tmpProfile = CoverageUtilities.doProfile(begin, end, coverage);
+                        List<ProfilePoint> tmpProfile = CoverageUtilities.doProfile(coverage, begin, end);
                         profile.add(tmpProfile);
                     }
 
