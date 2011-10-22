@@ -6,17 +6,103 @@
   <parent>
     <artifactId>udig-tycho</artifactId>
     <groupId>net.refractions</groupId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
   </parent>
 
   <groupId>net.refractions</groupId>
   <artifactId>plugins</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.3.0-SNAPSHOT</version> 
   <packaging>pom</packaging>
+
+   <profiles>
+        <profile>
+            <id>test</id>
+            <modules>
+                <module>net.refractions.udig.catalog.tests</module>
+                <module>net.refractions.udig.catalog.tests.geotiff</module>
+                <module>net.refractions.udig.catalog.tests.ui</module>
+                <module>net.refractions.udig.catalog.tests.wfs</module>
+                <module>net.refractions.udig.catalog.tests.wms</module>
+                <module>net.refractions.udig.libs.tests</module>
+                <module>net.refractions.udig.location.test</module>
+                <module>net.refractions.udig.project.tests</module>
+                <module>net.refractions.udig.project.tests.ui</module>
+                <module>net.refractions.udig.render.feature.basic.test</module>
+                <module>net.refractions.udig.render.wms.basic.test</module>
+                <module>net.refractions.udig.style.tests</module>
+                <module>net.refractions.udig.tests.catalog.wmt</module>
+                <module>net.refractions.udig.tool.default.tests</module>
+                <module>net.refractions.udig.tool.edit.tests</module>
+                <module>net.refractions.udig.tool.info.tests</module>
+                <module>net.refractions.udig.tool.select.tests</module>
+                <module>net.refractions.udig.ui.tests</module>
+                <module>net.refractions.udig.validation.test</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>language</id>
+            <modules>
+                <module>net.refractions.udig_language-feature</module>
+             </modules>
+        </profile>
+        <profile>
+            <id>sdk</id>
+               <activation>
+                 <property><name>all</name></property>
+               </activation>
+            <modules>
+                <!-- TUTORIALS -->
+                <module>com.csvreader</module>
+                <module>eu.udig.tutorials.preferredzoomlevels</module>
+                <module>eu.udig.tutorials.tool-view</module>
+                <!-- test commented out for now -->
+                <!--module>net.refractions.udig.tests.tutorials.tests</module -->
+                <module>net.refractions.udig.tutorials.catalog.csv</module>
+                <module>net.refractions.udig.tutorials.customapp</module>
+                <module>net.refractions.udig.tutorials.distancetool</module>
+                <module>net.refractions.udig.tutorials.examples</module>
+                <module>net.refractions.udig.tutorials.featureeditor</module>
+                <module>net.refractions.udig.tutorials.genericprojectelement</module>
+                <module>net.refractions.udig.tutorials.mapgraphic</module>
+                <module>net.refractions.udig.tutorials.raster</module>
+                <module>net.refractions.udig.tutorials.rcp</module>
+                <module>net.refractions.udig.tutorials.rcp-feature</module>
+                <module>net.refractions.udig.tutorials.render.csv</module>
+                <module>net.refractions.udig.tutorials.shpexport</module>
+                <module>net.refractions.udig.tutorials.style.color</module>
+                <module>net.refractions.udig.tutorials.template</module>
+                <module>net.refractions.udig.tutorials.tool.coordinate</module>
+                <module>net.refractions.udig.tutorials.tool.coverage</module>
+                <module>net.refractions.udig.tutorials.tracking</module>
+                <module>net.refractions.udig.tutorials.urladapter</module>
+                <module>net.refractions.udig.tutorials.workbench</module>
+                <module>net.refractions.udig_tutorials.custom-feature</module>
+                <!-- SDK -->
+                <module>net.refractions.udig_sdk.source</module>
+                <module>net.refractions.udig_tutorials.source</module>
+                <module>net.refractions.udig_platform.source</module>
+                <module>net.refractions.udig_printing.source</module>
+                <module>net.refractions.udig.libs.source</module>
+                <module>net.refractions.udig_application.source</module>
+             </modules>
+        </profile>
+        <profile>
+            <id>pending</id>
+               <activation>
+                 <property><name>all</name></property>
+               </activation>
+            <modules>
+                <module>eu.udig.catalog.csw</module>
+                <module>net.refractions.udig.graph</module>
+                <module>net.refractions.udig.issues</module>
+                <!-- module>net.refractions.udig.issues.test</module-->
+             </modules>
+        </profile>
+  </profiles>
+  
   <modules>
     <module>com.lowagie.itext</module>
     <module>com.mapquest</module>
-    <module>eu.udig.catalog.csw</module>
     <module>eu.udig.catalog.jgrass</module>
     <module>eu.udig.catalog.teradata</module>
     <module>eu.udig.libs.teradata</module>
@@ -40,11 +126,6 @@
     <module>net.refractions.udig.catalog.postgis</module>
     <module>net.refractions.udig.catalog.rasterings</module>
     <module>net.refractions.udig.catalog.shp</module>
-    <!-- module>net.refractions.udig.catalog.tests</module>
-    <module>net.refractions.udig.catalog.tests.geotiff</module>
-    <module>net.refractions.udig.catalog.tests.ui</module>
-    <module>net.refractions.udig.catalog.tests.wfs</module>
-    <module>net.refractions.udig.catalog.tests.wms</module -->
     <module>net.refractions.udig.catalog.ui</module>
     <module>net.refractions.udig.catalog.wfs</module>
     <module>net.refractions.udig.catalog.wms</module>
@@ -53,91 +134,41 @@
     <module>net.refractions.udig.context</module>
     <module>net.refractions.udig.core</module>
     <module>net.refractions.udig.feature.editor</module>
-    <module>net.refractions.udig.graph</module>
     <module>net.refractions.udig.help</module>
-    <module>net.refractions.udig.issues</module>
-    <!-- module>net.refractions.udig.issues.test</module -->
     <module>net.refractions.udig.jai</module>
     <module>net.refractions.udig.jai.macosx</module>
     <module>net.refractions.udig.legend</module>
     <module>net.refractions.udig.libs</module>
     <module>net.refractions.udig.libs.db2</module>
     <module>net.refractions.udig.libs.oracle</module>
-    <module>net.refractions.udig.libs.source</module>
-<!-- module>net.refractions.udig.libs.tests</module -->
     <module>net.refractions.udig.location</module>
-    <!-- module>net.refractions.udig.location.test</module -->
     <module>net.refractions.udig.mapgraphic</module>
     <module>net.refractions.udig.printing.model</module>
     <module>net.refractions.udig.printing.model.edit</module>
     <module>net.refractions.udig.printing.ui</module>
     <module>net.refractions.udig.project</module>
     <module>net.refractions.udig.project.edit</module>
-    <!-- module>net.refractions.udig.project.tests</module>
-    <module>net.refractions.udig.project.tests.ui</module -->
     <module>net.refractions.udig.project.ui</module>
     <module>net.refractions.udig.project.ui.editor</module>
     <module>net.refractions.udig.render.feature.basic</module>
-    <!-- module>net.refractions.udig.render.feature.basic.test</module -->
     <module>net.refractions.udig.render.feature.shapefile</module>
     <module>net.refractions.udig.render.gridcoverage.basic</module>
     <module>net.refractions.udig.render.wms.basic</module>
-    <!-- module>net.refractions.udig.render.wms.basic.test</module -->
     <module>net.refractions.udig.render.wmt.basic</module>
     <module>net.refractions.udig.socket</module>
     <module>net.refractions.udig.style</module>
     <module>net.refractions.udig.style.sld</module>
-    <!-- module>net.refractions.udig.style.tests</module -->
     <module>net.refractions.udig.style.wms</module>
-    <!-- module>net.refractions.udig.tests.catalog.wmt</module -->
     <module>net.refractions.udig.tool.default</module>
-    <!-- module>net.refractions.udig.tool.default.tests</module -->
     <module>net.refractions.udig.tool.edit</module>
-    <!-- module>net.refractions.udig.tool.edit.tests</module -->
     <module>net.refractions.udig.tool.info</module>
-    <!-- module>net.refractions.udig.tool.info.tests</module -->
     <module>net.refractions.udig.tool.select</module>
-    <!-- module>net.refractions.udig.tool.select.tests</module -->
     <module>net.refractions.udig.ui</module>
     <module>net.refractions.udig.unstable</module>
-
-    <!-- module>net.refractions.udig.ui.tests</module -->
     <module>net.refractions.udig.validation</module>
-    <!-- module>net.refractions.udig.validation.test</module -->
-    <module>net.refractions.udig_application.source</module>
     <module>net.refractions.udig_base</module>
-    <module>net.refractions.udig_platform.source</module>
-    <module>net.refractions.udig_printing.source</module>
-    <module>net.refractions.udig_sdk.source</module>
-    <module>net.refractions.udig_tutorials.source</module>
     <module>org.apache.log4j</module>
     <module>org.tcat.citd.sim.udig.bookmarks</module>
-    <!-- tutorials -->
-        <module>com.csvreader</module>
-    <module>eu.udig.tutorials.preferredzoomlevels</module>
-    <module>eu.udig.tutorials.tool-view</module>
-    <!-- module>net.refractions.udig.tests.tutorials.tests</module -->
-    <module>net.refractions.udig.tutorials.catalog.csv</module>
-    <module>net.refractions.udig.tutorials.customapp</module>
-    <module>net.refractions.udig.tutorials.distancetool</module>
-    <module>net.refractions.udig.tutorials.examples</module>
-    <module>net.refractions.udig.tutorials.featureeditor</module>
-    <module>net.refractions.udig.tutorials.genericprojectelement</module>
-    <module>net.refractions.udig.tutorials.mapgraphic</module>
-    <module>net.refractions.udig.tutorials.raster</module>
-    <module>net.refractions.udig.tutorials.rcp</module>
-    <module>net.refractions.udig.tutorials.rcp-feature</module>
-    <module>net.refractions.udig.tutorials.render.csv</module>
-    <module>net.refractions.udig.tutorials.shpexport</module>
-    <module>net.refractions.udig.tutorials.style.color</module>
-    <module>net.refractions.udig.tutorials.template</module>
-    <module>net.refractions.udig.tutorials.tool.coordinate</module>
-    <module>net.refractions.udig.tutorials.tool.coverage</module>
-    <module>net.refractions.udig.tutorials.tracking</module>
-    <module>net.refractions.udig.tutorials.urladapter</module>
-    <module>net.refractions.udig.tutorials.workbench</module>
-    <module>net.refractions.udig_tutorials.custom-feature</module>
   </modules>
-
 
 </project>

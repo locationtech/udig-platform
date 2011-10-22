@@ -122,6 +122,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jts-1.12.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/miglayout-3.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.17.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.fes-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/net.opengis.ows-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wfs-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wps-8-SNAPSHOT.jar"/>

@@ -619,7 +619,9 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
         }
         
     }
-    
+    /**
+     * Set of results collected for display in a SearchPart (such as the info view)
+     */
     public static class ResultSet{
         SearchPart owner; 
         List<Object> results=new CopyOnWriteArrayList<Object>();

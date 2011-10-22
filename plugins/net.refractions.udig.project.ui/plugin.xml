@@ -231,6 +231,11 @@
             name="%layer.crs.propertypage"
             objectClass="net.refractions.udig.project.internal.Layer">
       </page>
+      <page
+            class="net.refractions.udig.project.ui.internal.property.pages.LayerInteractionPropertyPage"
+            id="net.refractions.udig.project.ui.property.layer.interaction"
+            name="Interaction">
+      </page>
    </extension>
 
       <extension

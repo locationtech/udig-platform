@@ -18,7 +18,7 @@
    </license>
 
    <includes
-         id="net.refractions.udig_base"
+         id="net.refractions.udig_base-feature"
          version="0.0.0"/>
 
    <plugin
@@ -30,13 +30,6 @@
 
    <plugin
          id="net.refractions.udig.catalog.arcgrid"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="net.refractions.udig.catalog.cgdi"
          download-size="0"
          install-size="0"
          version="0.0.0"

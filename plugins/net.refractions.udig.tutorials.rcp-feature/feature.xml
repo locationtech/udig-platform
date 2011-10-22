@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="net.refractions.udig.tutorials.rcp_feature"
+      id="net.refractions.udig.tutorials.rcp-feature"
       label="Rcp_feature Feature"
       version="1.2.0.qualifier"
       provider-name="student">
