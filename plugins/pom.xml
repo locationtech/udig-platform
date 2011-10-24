@@ -40,12 +40,6 @@
             </modules>
         </profile>
         <profile>
-            <id>language</id>
-            <modules>
-                <module>net.refractions.udig_language-feature</module>
-             </modules>
-        </profile>
-        <profile>
             <id>sdk</id>
                <activation>
                  <property><name>all</name></property>
