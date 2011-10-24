@@ -25,3 +25,4 @@ Export-Package: eu.udig.omsbox,
  eu.udig.omsbox.view,
  eu.udig.omsbox.view.actions,
  eu.udig.omsbox.view.widgets
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

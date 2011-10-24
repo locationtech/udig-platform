@@ -61,14 +61,10 @@ Gathers the tutorials and source code for the software developers kit
 Gathers the plugins that are not included in the default product 
   -Ppending (included by -Dall)
 
-Includes the udig_language feature. Not enabled by default as we are sorting out 
-how to use the bable project. 
-   -Planguage
-
 Includes test plugins (this is optional as so many tests fail)
   -Ptest
 
-Inlcudes the udig and communit sites
+Includes the udig and community sites
    -Psite
 
 Includes the ossim feaure (this may be dead code) 
@@ -91,10 +87,25 @@ Includes the ossim feaure (this may be dead code)
                         <updatePolicy>never</updatePolicy>
                     </releases>
                     <snapshots>
-                        <enabled>true</enabled>
+                        <enabled>false</enabled>
                         <updatePolicy>never</updatePolicy>
                     </snapshots>
                 </repository>
+
+                <repository>
+                    <id>indigo-babel-web</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/babel/update-site/R0.9.0/indigo/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </snapshots>
+                </repository>
+
             </repositories>
         </profile>
     </profiles>
