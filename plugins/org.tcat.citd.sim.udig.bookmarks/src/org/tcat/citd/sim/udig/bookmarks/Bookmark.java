@@ -1,10 +1,24 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2006, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package org.tcat.citd.sim.udig.bookmarks;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
 
 /**
- * Representation of a bookmark.
+ * Bookmark of the current MapViewport
  * <p>
  * A <code>Bookmark</code> consists of the <code>IMap</code> object it is associated with, the
  * <code>Envelope</code> that decscribes the bounds, and a user-defined name.
@@ -13,7 +27,7 @@ import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
  * @author cole.markham
  * @since 1.0.0
  */
-public class Bookmark {
+public class Bookmark implements IBookmark {
     private ReferencedEnvelope envelope;
     private MapReference mapID;
     private String name;
@@ -31,15 +45,17 @@ public class Bookmark {
         this.name = name;
     }
 
-    /**
-     * @return Returns the envelope.
+    /* (non-Javadoc)
+     * @see org.tcat.citd.sim.udig.bookmarks.IBookmark#getEnvelope()
      */
+    @Override
     public ReferencedEnvelope getEnvelope() {
         return envelope;
     }
-    /**
-     * @param envelope The envelope to set.
+    /* (non-Javadoc)
+     * @see org.tcat.citd.sim.udig.bookmarks.IBookmark#setEnvelope(org.geotools.geometry.jts.ReferencedEnvelope)
      */
+    @Override
     public void setEnvelope( ReferencedEnvelope envelope ) {
         this.envelope = envelope;
     }
@@ -58,9 +74,10 @@ public class Bookmark {
         this.mapID = map;
     }
 
-    /**
-     * @return Returns the name.
+    /* (non-Javadoc)
+     * @see org.tcat.citd.sim.udig.bookmarks.IBookmark#getName()
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -70,9 +87,10 @@ public class Bookmark {
         return this.getName();
     }
 
-    /**
-     * @param name The name to set.
+    /* (non-Javadoc)
+     * @see org.tcat.citd.sim.udig.bookmarks.IBookmark#setName(java.lang.String)
      */
+    @Override
     public void setName( String name ) {
         this.name = name;
     }
