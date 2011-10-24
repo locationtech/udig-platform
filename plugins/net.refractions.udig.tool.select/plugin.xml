@@ -127,4 +127,19 @@
                name="Table View"
                viewId="net.refractions.udig.tool.select.TableView"/>
       </extension>
+      <extension
+            point="org.eclipse.ui.viewActions">
+         <viewContribution
+               id="net.refractions.udig.tool.select.tableContribution"
+               targetID="net.refractions.udig.tool.select.TableView">
+            <action
+                  class="net.refractions.udig.tool.select.BoundaryActionDelegate"
+                  icon="icons/etool16/boundary_filter_obj.png"
+                  id="net.refractions.udig.tool.select.boundaryaction"
+                  label="Boundary Filter"
+                  style="toggle"
+                  toolbarPath="additions">
+            </action>
+         </viewContribution>
+      </extension>
 </plugin>

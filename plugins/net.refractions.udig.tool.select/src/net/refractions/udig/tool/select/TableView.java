@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.core.IBlockingProvider;
 import net.refractions.udig.core.IProvider;
 import net.refractions.udig.core.StaticBlockingProvider;
@@ -127,9 +128,11 @@ import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.Schema;
 import org.geotools.filter.FilterAttributeExtractor;
 import org.geotools.filter.IllegalFilterException;
+import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
 import org.opengis.feature.Feature;
 import org.opengis.feature.FeatureVisitor;
@@ -139,12 +142,18 @@ import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
+import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.Id;
+import org.opengis.filter.IncludeFilter;
 import org.opengis.filter.identity.FeatureId;
 import org.opengis.filter.spatial.BBOX;
+import org.opengis.filter.spatial.Intersects;
 import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.operation.MathTransform;
 
 import com.vividsolutions.jts.geom.Envelope;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
 
 /**
  * Table view for selected Layer, may choose
@@ -172,6 +181,10 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
 
     protected static final String ANY = Messages.TableView_search_any;
     protected static final String CQL = "CQL";
+    
+    /** filter the content by the current boundary */
+    private boolean boundaryFilter = false;
+
 
     /** Used to show the current feature source */
     FeatureTableControl table;
@@ -289,6 +302,8 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
 
 	private Text searchWidget;
 
+    private Listener boundaryServiceListener;
+
     /**
      * Construct <code>SelectView</code>.
      * <p>
@@ -344,6 +359,22 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
             }
             
         });
+        
+        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        
+        boundaryServiceListener = new Listener(){
+
+            @Override
+            public void handleEvent( Event event ) {
+                System.out.println(event);
+                if(isBoundaryFilter())
+                    reloadFeatures(layer);
+            }
+            
+        };
+        
+        boundaryService.addListener(boundaryServiceListener);
+        
         table.addLoadingListener(new IFeatureTableLoadingListener(){
 
             public void loadingStarted( IProgressMonitor monitor ) {
@@ -384,6 +415,15 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         getSite().setSelectionProvider( this );
 
         ApplicationGIS.getToolManager().registerActionsWithPart(this);
+    }
+    
+    public boolean isBoundaryFilter() {
+        return boundaryFilter;
+    }
+
+    public void setBoundaryFilter( boolean boundaryFilter ) {
+        this.boundaryFilter = boundaryFilter;
+        reloadFeatures(layer);
     }
 
 
@@ -786,6 +826,12 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
     public void dispose() {
         if( table!=null)
             table.dispose();
+        
+        if( boundaryServiceListener!=null){
+            IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+            boundaryService.removeListener(boundaryServiceListener);
+        }
+        
         super.dispose();
         if( activePartListener!=null )
             page.removePartListener(activePartListener);
@@ -938,8 +984,30 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
             }
         }
     }
+    
+    private Filter addBoundaryFilter(Filter filter){
+        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        Geometry geometry = boundaryService.getGeometry();
+        
+        //if the geometry is null we need to perform the default behavior. 
+        if(geometry == null)
+            return filter;
+        
+        FilterFactory2 factory = (FilterFactory2) CommonFactoryFinder.getFilterFactory(GeoTools
+                .getDefaultHints());
+        
+        String geomProperty = layer.getSchema().getGeometryDescriptor().getName()
+                .getLocalPart();
+        
+        Intersects boundaryFilter = factory.intersects(factory.property(geomProperty), factory.literal(geometry));
+        
+        return factory.and(filter, boundaryFilter);
+    }
 
     protected void reloadFeatures( final ILayer notifierLayer ) {
+        
+        
+        
         try {
         reloadNeeded = false;   
         updates.clear();
@@ -972,13 +1040,27 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                 layer.getMap().sendCommandASync(composite);
             }
         };
+        
         final SimpleFeatureType schema = notifierLayer.getSchema();
+        Filter filter = Filter.INCLUDE;
         final  FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = notifierLayer.getResource(FeatureSource.class, null);
         final List<String> queryAtts = obtainQueryAttributesForFeatureTable(schema);
+
+        //if the filter action is true, filter our results by the Boundary service
+        if(isBoundaryFilter())
+            filter = addBoundaryFilter(filter);
         
-        final Query query=new DefaultQuery(schema.getName().getLocalPart(), Filter.INCLUDE, queryAtts.toArray(new String[0]));
+          final Query query = new DefaultQuery(schema.getName().getLocalPart(), filter, queryAtts.toArray(new String[0]));
+          FeatureCollection<SimpleFeatureType, SimpleFeature>  featuresF = featureSource.getFeatures(query);        
+          //AdaptableFeatureCollection adaptableCollection = new AdaptableFeatureCollection(features);
+          
+          
+          
+          
+          final FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featuresF;
+        //final Query query = new DefaultQuery(schema.getName().getLocalPart(), Filter.INCLUDE, queryAtts.toArray(new String[0]));
         
-        final FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featureSource.getFeatures(query);
+        //final FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featureSource.getFeatures(query);
 //        final FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featureSource.getFeatures();
         
         Display.getDefault().asyncExec(new Runnable(){
@@ -1033,6 +1115,8 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
             });
         }
     }
+
+    
 
     private List<String> obtainQueryAttributesForFeatureTable( final SimpleFeatureType schema ) {
         final List<String> queryAtts=new ArrayList<String>();
