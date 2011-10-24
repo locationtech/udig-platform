@@ -45,6 +45,7 @@
 
    <features>
       <feature id="net.refractions.udig-feature" version="1.3.0.qualifier"/>
+      <feature id="net.refractions.udig_language-feature" version="1.3.0.qualifier"/>
    </features>
 
    <configurations>

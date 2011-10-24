@@ -23,12 +23,6 @@
              </modules>
         </profile>
         <profile>
-            <id>language</id>
-            <modules>
-                <module>net.refractions.udig_language-feature</module>
-             </modules>
-        </profile>
-        <profile>
             <id>ossim</id>
             <modules>
                 <module>org.ossim-feature</module>
@@ -52,6 +46,7 @@
     <module>eu.udig.teradata-feature</module>
     <module>net.refractions.udig-feature</module>
     <module>net.refractions.udig-product</module>
+    <module>net.refractions.udig_language-feature</module>
     <module>net.refractions.udig.libs.source-feature</module>
     <module>net.refractions.udig.rcp_feature</module>
     <module>net.refractions.udig_application-feature</module>
