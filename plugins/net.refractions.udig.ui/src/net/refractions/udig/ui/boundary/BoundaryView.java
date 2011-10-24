@@ -14,14 +14,13 @@
  */
 package net.refractions.udig.ui.boundary;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.boundary.BoundaryProxy;
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -45,9 +44,8 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.IPageBookViewPage;
 import org.eclipse.ui.part.IPageSite;
-import org.eclipse.ui.part.Page;
+import org.eclipse.ui.part.MessagePage;
 import org.eclipse.ui.part.PageBook;
-import org.eclipse.ui.part.PageSite;
 import org.eclipse.ui.part.ViewPart;
 
 /**
@@ -82,12 +80,6 @@ public class BoundaryView extends ViewPart {
     // private Combo combo;
     private ComboViewer comboViewer;
 
-    /*
-     * The initial strategy - stored as a BoundaryProxy so that the setting the inital selection on
-     * the combo works
-     */
-    private BoundaryProxy initialStrategy = null;
-
     /**
      * Listens to the user and changes the global IBoundaryService to the indicated strategy.
      */
@@ -102,15 +94,12 @@ public class BoundaryView extends ViewPart {
     };
 
     private PageBook pagebook;
-    private List<IPageBookViewPage> pages = new ArrayList<IPageBookViewPage>();
-    private Map<BoundaryProxy,Control> controls = new HashMap<BoundaryProxy, Control>();
+    private Map<BoundaryProxy,PageRecord> pages = new HashMap<BoundaryProxy, PageRecord>();
 
-    /*
-     * The component to add the page to (from the strategy if supplied)
-     */
-    private IPageSite getPageSite() {
-        return null;
-    }
+    private Composite placeholder;
+    
+    //private List<IPageBookViewPage> pages = new ArrayList<IPageBookViewPage>();
+    //private Map<BoundaryProxy,Control> controls = new HashMap<BoundaryProxy, Control>();
 
     /**
      * Boundary View constructor adds the known strategies
@@ -123,7 +112,7 @@ public class BoundaryView extends ViewPart {
         IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
         boundaryService.setProxy(selected);
     }
-
+    
     /**
      * This will update the combo viewer and pagebook (carefully unhooking events while the viewer is updated).
      * 
@@ -158,45 +147,54 @@ public class BoundaryView extends ViewPart {
                 break;
             }
         }
+        
         // Check if we already created the control for selected
-        Control selectedControl = controls.get(selected);
+        PageRecord record = pages.get(selected);
+        if( record == null ){
+            // record has not been created yet
+            IPageBookViewPage page = selected.createPage();
+            if( page == null ){
+                MessagePage messagePage = new MessagePage();
+                
+                record = new PageRecord( this, messagePage);
+                
+                messagePage.init( record.getSite() );
+                
+                messagePage.createControl( pagebook );
+                messagePage.setMessage( selected.getName() );
+            }
+            else {
+                record = new PageRecord( this, page );    
+                try {
+                    page.init( record.getSite() );
+                } catch (PartInitException e) {
+                    UiPlugin.log(getClass(), "initPage", e); //$NON-NLS-1$
+                }
+                page.createControl( pagebook );
+            }
+            pages.put(selected, record );
+        }
+        Control selectedControl = record.getControl();
         
         if( selectedControl == null ){
-            if (false){
-                IPageBookViewPage page = selected.createPage();
-                if( page != null ){
-                    pages.add( page );                    
-                    try {
-                        page.init( getPageSite() );
-                    } catch (PartInitException e) {
-                        page.dispose();
-                        pages.remove(page);
-                        return; // die die die
-                    }
-                    page.createControl(pagebook);
-                    Control control = page.getControl();
-                    
-                    controls.put( selected, control );
-
-                    selectedControl = control;
-                }
-            }
-            if( true ){
+            // this is not expected to be null!
+            if( placeholder == null ){
                 // placeholder just so we see something!
-                String name = current.getName();
-                
                 Composite content  = new Composite(pagebook, SWT.NULL);
                 content.setLayout(new FillLayout());
     
                 Label label = new Label( content, SWT.LEFT | SWT.TOP | SWT.WRAP );
-                label.setText(name);
+                label.setText("Current boundary used for filtering content.");
                 
-                controls.put( selected, content );
-                selectedControl = content;
+                placeholder = content;
             }
+            selectedControl = placeholder;
         }
-        if( selectedControl != null ){
-            pagebook.showPage(selectedControl); // done!
+        
+        if( currentControl != selectedControl ){
+            if( selectedControl != null ){
+                pagebook.showPage(selectedControl); // done!
+            }
         }
     }
     /**
@@ -267,7 +265,6 @@ public class BoundaryView extends ViewPart {
 
         // get the current strategy
         IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        IBoundaryStrategy currentStrategy = boundaryService.getProxy();
         listenService(true);
 
         // eclipse combo viewer
@@ -287,13 +284,6 @@ public class BoundaryView extends ViewPart {
         // set the current strategy
         comboViewer.setSelection(new StructuredSelection(boundaryService.getDefault()));
 
-        //pageContainer = new PageSite(this.getViewSite());
-        
-/*        Label testLabel = new Label(pageContainer, SWT.LEFT);
-        testLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
-        testLabel.setText("Testing: ");
-        testLabel.pack();
-*/        
         // now that we are configured we can start to listen!
         listenCombo(true);
         
@@ -314,6 +304,13 @@ public class BoundaryView extends ViewPart {
     public void dispose() {
         super.dispose();
         // clean up any page stuffs
+        if( pages != null && !pages.isEmpty() ){
+            for( PageRecord record : pages.values() ){
+                record.dispose();
+            }
+            pages.clear();
+            pages = null;
+        }
         if (comboViewer != null) {
             comboViewer.removeSelectionChangedListener(comboListener);
         }

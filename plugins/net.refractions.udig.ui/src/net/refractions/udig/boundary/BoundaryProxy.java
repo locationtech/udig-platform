@@ -109,7 +109,7 @@ public class BoundaryProxy extends IBoundaryStrategy {
         } catch (Throwable t) {
             blame("Page " + id + " not available", t);
         }
-        if (page != null) {
+        if (page == null) {
             String name = configElement.getAttribute("page");
             if (name != null && !name.isEmpty()) {
                 try {
