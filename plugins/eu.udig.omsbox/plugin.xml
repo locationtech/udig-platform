@@ -89,6 +89,11 @@
             id="eu.udig.omsbox.processingregion.ProcessingRegionMapGraphic"
             name="Processing Region">
       </mapGraphic>
+      <mapGraphic
+            class="eu.udig.omsbox.processingregion.BoundaryLayerDecorator"
+            id="eu.udig.omsbox.processingregion.boundaryLayerDecorator"
+            name="Boundary">
+      </mapGraphic>
    </extension>
    <extension
          point="net.refractions.udig.project.style">
