@@ -4,7 +4,7 @@
       label="%feature.name"
       version="1.3.0.qualifier"
       provider-name="udig.refractions.net"
-      plugin="net.refractions.udig_unstable">
+      plugin="net.refractions.udig.unstable">
 
    <description>
       %feature.description
