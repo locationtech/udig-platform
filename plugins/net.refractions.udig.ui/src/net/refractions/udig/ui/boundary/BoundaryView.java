@@ -17,6 +17,7 @@ package net.refractions.udig.ui.boundary;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.refractions.udig.boundary.BoundaryListener;
 import net.refractions.udig.boundary.BoundaryProxy;
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.boundary.IBoundaryStrategy;
@@ -36,14 +37,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.IPageBookViewPage;
-import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.MessagePage;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
@@ -63,13 +61,12 @@ public class BoundaryView extends ViewPart {
     /**
      * Listens to the global IBoundaryService and updates our view if anything changes!
      */
-    private Listener serviceWatcher = new Listener(){
+    private BoundaryListener serviceWatcher = new BoundaryListener(){
         // private IBoundaryStrategy selectedStrategy = null;
-        public void handleEvent( Event event ) {
-            String name;
+        public void handleEvent( BoundaryListener.Event event ) {
             BoundaryProxy currentStrategy;
-            if (event.data instanceof BoundaryProxy) {
-                currentStrategy = (BoundaryProxy) event.data;
+            if (event.source instanceof BoundaryProxy) {
+                currentStrategy = (BoundaryProxy) event.source;
             } else {
                 currentStrategy = PlatformGIS.getBoundaryService().getProxy();
             }
