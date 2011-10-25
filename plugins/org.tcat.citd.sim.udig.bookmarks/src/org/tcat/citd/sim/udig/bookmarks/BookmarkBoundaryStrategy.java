@@ -14,6 +14,7 @@
  */
 package org.tcat.citd.sim.udig.bookmarks;
 
+import net.refractions.udig.boundary.BoundaryListener;
 import net.refractions.udig.boundary.IBoundaryStrategy;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -80,7 +81,7 @@ public class BookmarkBoundaryStrategy extends IBoundaryStrategy {
         if (!bookmark.equals(currentBookmark)) {
             currentBookmark = bookmark;
             // notify everything that is listening for a strategy change
-            this.notifyListeners(this);
+            this.notifyListeners( new BoundaryListener.Event(this));
         }
     }
 
