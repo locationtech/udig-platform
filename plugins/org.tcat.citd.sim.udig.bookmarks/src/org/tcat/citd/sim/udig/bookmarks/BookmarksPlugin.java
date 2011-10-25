@@ -41,7 +41,7 @@ import com.vividsolutions.jts.geom.Envelope;
  */
 public class BookmarksPlugin extends AbstractUIPlugin {
     public static String ID = "org.tcat.citd.sim.udig.bookmarks";
-    
+
     private static final String KEY_NAME = "name"; //$NON-NLS-1$
     private static final String KEY_MINX = "minx"; //$NON-NLS-1$
     private static final String KEY_MINY = "miny"; //$NON-NLS-1$
@@ -73,7 +73,6 @@ public class BookmarksPlugin extends AbstractUIPlugin {
      */
     @Override
     public void stop( BundleContext context ) throws Exception {
-        storeToPreferences();
         super.stop(context);
         plugin = null;
     }
@@ -100,6 +99,7 @@ public class BookmarksPlugin extends AbstractUIPlugin {
 
     /**
      * Restore the bookmarks from the plugin's preference store
+     * 
      * @throws BackingStoreException
      */
     public void restoreFromPreferences() throws BackingStoreException {
@@ -111,11 +111,11 @@ public class BookmarksPlugin extends AbstractUIPlugin {
         for( String projectId : node.childrenNames() ) {
             URI projectURI = URI.createURI(URI.decode(projectId));
             Preferences projectNode = node.node(projectId);
-            for( String mapId : projectNode.childrenNames() ){
+            for( String mapId : projectNode.childrenNames() ) {
                 URI mapURI = URI.createURI(URI.decode(mapId));
                 Preferences mapNode = projectNode.node(mapId);
                 String mapName = mapNode.get(KEY_NAME, null);
-                for( String bmarkName : mapNode.childrenNames() ){
+                for( String bmarkName : mapNode.childrenNames() ) {
                     Preferences bmarkNode = mapNode.node(bmarkName);
                     double minx = bmarkNode.getDouble(KEY_MINX, 0.0);
                     double miny = bmarkNode.getDouble(KEY_MINY, 0.0);
@@ -132,8 +132,9 @@ public class BookmarksPlugin extends AbstractUIPlugin {
                         crs = DefaultGeographicCRS.WGS84;
                     }
                     ReferencedEnvelope bounds = new ReferencedEnvelope(env, crs);
-                    Bookmark bmark = new Bookmark(bounds, new MapReference(mapURI, projectURI, mapName), URI.decode(bmarkName));
-                    getBookmarkService().addBookmark(bmark);
+                    Bookmark bmark = new Bookmark(bounds, new MapReference(mapURI, projectURI,
+                            mapName), URI.decode(bmarkName));
+                    getBookmarkService().load(bmark);
                 }
             }
         }
@@ -146,21 +147,26 @@ public class BookmarksPlugin extends AbstractUIPlugin {
      * @throws BackingStoreException
      */
     public void storeToPreferences() throws BackingStoreException {
+        IBookmarkService mgr = getBookmarkService();
+        if (mgr == null) {
+            return; // nothing to save!
+        }
         IPreferencesService prefs = Platform.getPreferencesService();
         IEclipsePreferences root = prefs.getRootNode();
         Preferences node = root.node(InstanceScope.SCOPE).node(
                 getBundle().getSymbolicName() + ".bookmarks"); //$NON-NLS-1$
         clearPreferences(node);
-        IBookmarkService mgr = getBookmarkService();
         for( URI project : mgr.getProjects() ) {
             String projectString = project.toString();
             String encPStr = URI.encodeSegment(projectString, true);
             Preferences projectNode = node.node(encPStr);
             for( MapReference map : mgr.getMaps(project) ) {
-                Preferences mapNode = projectNode.node(URI.encodeSegment(map.getMapID().toString(), true));
+                Preferences mapNode = projectNode.node(URI.encodeSegment(map.getMapID().toString(),
+                        true));
                 mapNode.put(KEY_NAME, map.getName());
                 for( IBookmark bookmark : mgr.getBookmarks(map) ) {
-                    Preferences bmarkNode = mapNode.node(URI.encodeSegment(bookmark.getName(), true));
+                    Preferences bmarkNode = mapNode
+                            .node(URI.encodeSegment(bookmark.getName(), true));
                     ReferencedEnvelope bounds = bookmark.getEnvelope();
                     bmarkNode.putDouble(KEY_MINX, bounds.getMinX());
                     bmarkNode.putDouble(KEY_MINY, bounds.getMinY());
@@ -181,14 +187,12 @@ public class BookmarksPlugin extends AbstractUIPlugin {
             child.removeNode();
         }
     }
-    
+
     /** Access the IBookmarkService for the current workbench */
     public static IBookmarkService getBookmarkService() {
         IWorkbench workbench = PlatformUI.getWorkbench();
-        IBookmarkService bookmarkService = (IBookmarkService) workbench.getService(IBookmarkService.class);
-        if( bookmarkService == null ){
-            throw new NullPointerException("You forgot to do your factory extension point Paul");
-        }
+        IBookmarkService bookmarkService = (IBookmarkService) workbench
+                .getService(IBookmarkService.class);
         return bookmarkService;
     }
 }

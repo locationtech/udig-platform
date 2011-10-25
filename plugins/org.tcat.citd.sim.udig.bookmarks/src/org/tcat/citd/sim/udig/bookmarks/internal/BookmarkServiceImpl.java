@@ -21,8 +21,13 @@ import java.util.Vector;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Project;
 
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
+import org.osgi.service.prefs.BackingStoreException;
 import org.tcat.citd.sim.udig.bookmarks.Bookmark;
+import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
 import org.tcat.citd.sim.udig.bookmarks.IBookmark;
 import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
 
@@ -48,9 +53,21 @@ public class BookmarkServiceImpl implements IBookmarkService {
         mapsHash = new HashMap<URI, Vector<Bookmark>>();
         mapReferences = new HashMap<URI, MapReference>();
     }
-
+    
     @Override
     public void addBookmark( Bookmark bookmark ) {
+        load( bookmark );
+        try {
+            BookmarksPlugin.getDefault().storeToPreferences();
+        } catch (BackingStoreException e) {
+            ILog log = BookmarksPlugin.getDefault().getLog();
+            IStatus status = new Status( IStatus.WARNING,BookmarksPlugin.ID,"Unable to save to BookmarksPlugin");
+            log.log(status);
+        }
+    }
+    
+    @Override
+    public void load( Bookmark bookmark ) {
         if (bookmark.getName() == null || bookmark.getName() == "") { //$NON-NLS-1$
             bookmark.setName(Messages.BookmarkManager_bookmarkdefaultname + (++count));
         }

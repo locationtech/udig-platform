@@ -32,6 +32,12 @@ import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
 public interface IBookmarkService {
 
     /**
+     * Used to load a bookmark into the list; does not trigger a
+     * save to preferences.
+     * @param bookmark
+     */
+    public void load( Bookmark bookmark ); 
+    /**
      * Add the given bookmark.
      * 
      * @param bookmark
