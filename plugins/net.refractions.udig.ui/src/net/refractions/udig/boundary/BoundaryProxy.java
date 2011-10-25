@@ -18,12 +18,9 @@ import net.refractions.udig.internal.ui.UiPlugin;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.part.IPageBookViewPage;
-import org.eclipse.ui.part.Page;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -144,18 +141,18 @@ public class BoundaryProxy extends IBoundaryStrategy {
         return id;
     }
 
-    public void addListener( Listener listener ) {
+    public void addListener( BoundaryListener listener ) {
         getStrategy().addListener(listener);
     }
 
-    public void removeListener( Listener listener ) {
+    public void removeListener( BoundaryListener listener ) {
         getStrategy().removeListener(listener);
     }
     
     /**
      * Notifies listener that the value of the filter has changed.
      */
-    protected void notifyListeners(Object changed) {
+    protected void notifyListeners(BoundaryListener.Event changed) {
         getStrategy().notifyListeners(changed);
     }
 
