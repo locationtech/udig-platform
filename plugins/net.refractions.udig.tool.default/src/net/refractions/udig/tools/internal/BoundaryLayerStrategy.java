@@ -21,6 +21,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
 import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.ApplicationGIS;
 
@@ -31,11 +32,12 @@ import net.refractions.udig.project.ui.ApplicationGIS;
  * @author leviputna
  * @since 1.2.3
  */
-public class NavigationBoundaryStrategy extends IBoundaryStrategy {
+public class BoundaryLayerStrategy extends IBoundaryStrategy {
 
     private static String name = "Layer";
     private CoordinateReferenceSystem crs;
     private Geometry geometry;
+    private ILayer activeLayer;
 
     /**
      * Set the CRS of the current boundary
@@ -47,12 +49,27 @@ public class NavigationBoundaryStrategy extends IBoundaryStrategy {
     }
 
     /**
+     * @return the activeLayer
+     */
+    public ILayer getActiveLayer() {
+        return activeLayer;
+    }
+
+    /**
+     * @param activeLayer the activeLayer to set
+     */
+    public void setActiveLayer( ILayer activeLayer ) {
+        this.activeLayer = activeLayer;
+    }
+
+    /**
      * Set the geometry to be used as the boundary
      * 
      * @param geometry The geometry to use as the boundary must be type Polygon or Multy Polygon
      */
     public void setGeometry( Geometry geometry ) {
         this.geometry = geometry;
+        notifyListeners(this);
     }
 
     /*

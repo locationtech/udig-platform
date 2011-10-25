@@ -30,7 +30,7 @@ import net.refractions.udig.project.command.factory.EditCommandFactory;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.render.impl.ViewportModelImpl;
-import net.refractions.udig.tools.internal.NavigationBoundaryStrategy;
+import net.refractions.udig.tools.internal.BoundaryLayerStrategy;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -83,8 +83,21 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
      * @see net.refractions.udig.project.command.MapCommand#run()
      */
     public void run( IProgressMonitor monitor ) throws Exception {
-        ILayer selectedLayer = getMap().getEditManager().getSelectedLayer();
         
+        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        IBoundaryStrategy boundaryStrategy = boundaryService.findProxy(BOUNDARYSERVICE_ID)
+                .getStrategy();
+        
+        ILayer selectedLayer = null;
+        
+        if (boundaryStrategy instanceof BoundaryLayerStrategy) {
+            BoundaryLayerStrategy navigationBoundaryStrategy = (BoundaryLayerStrategy) boundaryStrategy;
+            selectedLayer = navigationBoundaryStrategy.getActiveLayer();
+        }
+        
+        if(selectedLayer == null)
+            return;
+
         if(!selectedLayer.isApplicable(ILayer.ID_BOUNDARY))
             return;
         
@@ -143,12 +156,10 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
         IBoundaryStrategy boundaryStrategy = boundaryService.findProxy(BOUNDARYSERVICE_ID)
                 .getStrategy();
 
-        if (boundaryStrategy instanceof NavigationBoundaryStrategy) {
-            NavigationBoundaryStrategy navigationBoundaryStrategy = (NavigationBoundaryStrategy) boundaryStrategy;
+        if (boundaryStrategy instanceof BoundaryLayerStrategy) {
+            BoundaryLayerStrategy navigationBoundaryStrategy = (BoundaryLayerStrategy) boundaryStrategy;
             navigationBoundaryStrategy.setCrs(crs);
             navigationBoundaryStrategy.setGeometry(newBoundary);
-        }else{
-            //TODO log errors
         }
 
     }

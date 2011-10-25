@@ -37,6 +37,21 @@
                tooltip="%zoom.tool.tooltip">
          </modalTool>
          <modalTool
+               categoryId="net.refractions.udig.tool.category.zoom"
+               class="net.refractions.udig.tools.internal.BoundaryLayerNavigationTool"
+               commandHandler="net.refractions.udig.tools.internal.BoundaryNavigationToolFeedback"
+               icon="icons/etool16/boundary_mode.png"
+               id="net.refractions.udig.tool.default.modalTool1"
+               name="%zoom.set.name"
+               onToolbar="true"
+               toolCursorId="bondatySelectCursor"
+               tooltip="%zoom.set.tooltip">
+            <toolOption
+                  class="net.refractions.udig.tools.internal.BoundaryLayerNavigationTool$OptionContribtionItem"
+                  id="setBoundaryToolOptions">
+            </toolOption>
+         </modalTool>
+         <modalTool
                categoryId="net.refractions.udig.tool.category.pan"
                class="net.refractions.udig.tools.internal.PanTool"
                commandHandler="net.refractions.udig.tools.internal.PanHandler"
@@ -59,17 +74,6 @@
                class="net.refractions.udig.tools.internal.ScrollZoom"
                id="net.refractions.udig.tools.ScrollZoom">
          </backgroundTool>
-         <modalTool
-               categoryId="net.refractions.udig.tool.category.pan"
-               class="net.refractions.udig.tools.internal.BoundaryNavigationTool"
-               commandHandler="net.refractions.udig.tools.internal.BoundaryNavigationToolFeedback"
-               icon="icons/etool16/boundary_mode.png"
-               id="net.refractions.udig.tool.default.modalTool1"
-               name="%zoom.set.name"
-               onToolbar="true"
-               toolCursorId="bondatySelectCursor"
-               tooltip="%zoom.set.tooltip">
-         </modalTool>
          <actionTool
                categoryId="net.refractions.udig.tool.category.zoom"
                class="net.refractions.udig.tools.internal.ZoomExtent"
@@ -269,7 +273,7 @@
       <extension
             point="net.refractions.udig.ui.boundary">
          <boundary
-               class="net.refractions.udig.tools.internal.NavigationBoundaryStrategy"
+               class="net.refractions.udig.tools.internal.BoundaryLayerStrategy"
                id="net.refractions.udig.tool.default.BoundaryLayerService"
                name="Boundary Layer">
          </boundary>

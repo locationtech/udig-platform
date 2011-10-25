@@ -16,24 +16,52 @@ package net.refractions.udig.tools.internal;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
+import org.eclipse.jface.action.ContributionItem;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.PlatformUI;
+import org.hsqldb.lib.ArrayUtil;
 
+import net.refractions.udig.boundary.BoundaryProxy;
+import net.refractions.udig.boundary.IBoundaryService;
+import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.IMapListener;
+import net.refractions.udig.project.MapEvent;
 import net.refractions.udig.project.command.MapCommand;
+import net.refractions.udig.project.internal.render.ViewportModel;
+import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.project.ui.tool.AbstractModalTool;
 import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.tool.SimpleTool;
+import net.refractions.udig.project.ui.tool.options.ToolOptionContributionItem;
 import net.refractions.udig.tool.commands.SetBoundaryLayerCommand;
+import net.refractions.udig.ui.PlatformGIS;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
@@ -49,7 +77,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * @author leviputna
  * @since 1.2.3
  */
-public class BoundaryNavigationTool extends SimpleTool implements ModalTool {
+public class BoundaryLayerNavigationTool extends SimpleTool implements ModalTool {
 
     private SelectionBoxCommand shapeCommand;
     private boolean selecting;
@@ -64,7 +92,7 @@ public class BoundaryNavigationTool extends SimpleTool implements ModalTool {
     /**
      * 
      */
-    public BoundaryNavigationTool() {
+    public BoundaryLayerNavigationTool() {
         super(MOUSE | MOTION);
     }
 
@@ -164,58 +192,108 @@ public class BoundaryNavigationTool extends SimpleTool implements ModalTool {
         context.getViewportPane().repaint();
     }
 
-    // private void addKeyboardListener() {
-    // Control control = getContext().getViewportPane().getControl();
-    // //control.addKeyListener(this);
-    //
-    // control.addKeyListener(new KeyAdapter(){
-    // @Override
-    // public void keyPressed( KeyEvent e ) {
-    // updateCursor(e);
-    // }
-    //
-    // @Override
-    // public void keyReleased( KeyEvent e ) {
-    // updateCursor(e);
-    // }
-    // });
-    // }
-
-    // private void removeKeyboardListener() {
-    // Control control = getContext().getViewportPane().getControl();
-    // control.removeKeyListener(this);
-    // }
-
     private void updateCursor( MapMouseEvent e ) {
 
         if (e.isAltDown()) {
-            System.out.println("Box");
             setCursorID(CURSORBOXID);
         } else {
-            System.out.println("point");
             setCursorID(CURSORPOINTID);
         }
 
     }
 
-    // @Override
-    // public void keyPressed( KeyEvent e ) {
-    // updateCursor(e);
-    // }
-    //
-    //
-    //
-    // @Override
-    // public void keyReleased( KeyEvent e ) {
-    // updateCursor(e);
-    // }
-
     /**
      * @see net.refractions.udig.project.ui.tool.Tool#dispose()
      */
     public void dispose() {
-        // removeKeyboardListener();
         super.dispose();
     }
+
+    public static class OptionContribtionItem extends ContributionItem {
+
+        private ComboViewer comboViewer;
+        private IMap map;
+        private List<ILayer> boundaryLayers = new ArrayList<ILayer>();
+
+        private static String BOUNDARYSERVICE_ID = "net.refractions.udig.tool.default.BoundaryLayerService";
+        
+        /**
+         * Listens to the user and changes the global IBoundaryService to the indicated strategy.
+         */
+        private ISelectionChangedListener comboListener = new ISelectionChangedListener(){
+            @Override
+            public void selectionChanged( SelectionChangedEvent event ) {
+                IStructuredSelection selectedStrategy = (IStructuredSelection) event.getSelection();
+                ILayer layer = (ILayer) selectedStrategy.getFirstElement();
+                setActiveLayer(layer);
+                System.out.println(layer.getName());
+            }
+        };
+        
+        public void fill( Composite parent ) {
+            map = ApplicationGIS.getActiveMap();
+            
+            setCombo(parent);
+            listenCombo(true);
+            // set the current strategy
+            comboViewer.setSelection(new StructuredSelection(boundaryLayers.get(0)));
+        }
+        
+        private void setCombo(Composite parent){
+            comboViewer = new ComboViewer(parent, SWT.READ_ONLY);
+            comboViewer.setContentProvider(new ArrayContentProvider());
+            
+            comboViewer.setLabelProvider(new LabelProvider(){
+                @Override
+                public String getText( Object element ) {
+                    if (element instanceof ILayer) {
+                        ILayer layer = (ILayer) element;
+                        return layer.getName();
+                    }
+                    return super.getText(element);
+                }
+            });
+            
+            comboViewer.setInput(getBoundaryLayers());
+        }
+
+        private void setActiveLayer( ILayer activeLayer ) {
+            IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+            IBoundaryStrategy boundaryStrategy = boundaryService.findProxy(BOUNDARYSERVICE_ID)
+                    .getStrategy();
+
+            if (boundaryStrategy instanceof BoundaryLayerStrategy) {
+                BoundaryLayerStrategy navigationBoundaryStrategy = (BoundaryLayerStrategy) boundaryStrategy;
+                navigationBoundaryStrategy.setActiveLayer(activeLayer);
+            }
+        }
+        
+        protected void listenCombo( boolean listen ) {
+            if (comboViewer == null || comboViewer.getControl().isDisposed()) {
+                return;
+            }
+            if (listen) {
+                comboViewer.addSelectionChangedListener(comboListener);
+            } else {
+                comboViewer.removeSelectionChangedListener(comboListener);
+            }
+        }
+
+        private List<ILayer> getBoundaryLayers() {
+
+            List<ILayer> layers = map.getMapLayers();
+            boundaryLayers.clear();
+
+            for( Iterator<ILayer> i = layers.iterator(); i.hasNext(); ) {
+                ILayer layer = i.next();
+
+                if (layer.isApplicable(ILayer.ID_BOUNDARY)) {
+                    boundaryLayers.add(layer);
+                }
+            }
+            return boundaryLayers;
+        }
+
+    };
 
 }
