@@ -56,7 +56,7 @@ public class PlatformGIS {
 
     private static ColorBrewer colorBrewer;
     private static ExecutorService executor = Executors.newCachedThreadPool();
-    //private static IBoundaryService boundaryService;
+
     /**
      * Runs the given runnable in a separate thread, providing it a progress monitor. Exceptions
      * thrown by the runnable are logged, and not rethrown.
@@ -442,12 +442,6 @@ public class PlatformGIS {
     public static IBoundaryService getBoundaryService() {
         IWorkbench workbench = PlatformUI.getWorkbench();
         return (IBoundaryService) workbench.getService(IBoundaryService.class);
-//		if (boundaryService == null) {
-//	    	ServiceLocator locator = new ServiceLocator();
-//			boundaryService = (IBoundaryService)WorkbenchServiceRegistry.getRegistry().getService(IBoundaryService.class
-//					, WorkbenchServiceRegistry.GLOBAL_PARENT, locator);
-//		}
-//		return boundaryService;
     }
     
 }

@@ -36,14 +36,7 @@
                 <module>net.refractions.udig.tool.info.tests</module>
                 <module>net.refractions.udig.tool.select.tests</module>
                 <module>net.refractions.udig.ui.tests</module>
-                <module>net.refractions.udig.validation.test</module>
             </modules>
-        </profile>
-        <profile>
-            <id>language</id>
-            <modules>
-                <module>net.refractions.udig_language-feature</module>
-             </modules>
         </profile>
         <profile>
             <id>sdk</id>
@@ -96,6 +89,8 @@
                 <module>net.refractions.udig.graph</module>
                 <module>net.refractions.udig.issues</module>
                 <!-- module>net.refractions.udig.issues.test</module-->
+		<module>net.refractions.udig.validation</module>
+		<!-- module>net.refractions.udig.validation.test</module -->		
              </modules>
         </profile>
   </profiles>
@@ -165,7 +160,6 @@
     <module>net.refractions.udig.tool.select</module>
     <module>net.refractions.udig.ui</module>
     <module>net.refractions.udig.unstable</module>
-    <module>net.refractions.udig.validation</module>
     <module>net.refractions.udig_base</module>
     <module>org.apache.log4j</module>
     <module>org.tcat.citd.sim.udig.bookmarks</module>

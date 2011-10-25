@@ -6,8 +6,9 @@ import java.util.HashMap;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.tcat.citd.sim.udig.bookmarks.Bookmark;
-import org.tcat.citd.sim.udig.bookmarks.BookmarkManager;
 import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
+import org.tcat.citd.sim.udig.bookmarks.IBookmark;
+import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
 
 /**
  * Provide labels with images to the bookmarks view
@@ -16,6 +17,7 @@ import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
  * 
  * @author cole.markham
  * @since 1.0.0
+ * @version 1.3.0
  */
 public class BookmarksLabelProvider extends LabelProvider {
     private HashMap<Class, Image> table;
@@ -37,7 +39,7 @@ public class BookmarksLabelProvider extends LabelProvider {
             table.put(ProjectWrapper.class, image);
             image = BookmarksPlugin.getDefault().getImageDescriptor(
                     "icons/obj16/bookmarkmanager_obj.gif").createImage(); //$NON-NLS-1$
-            table.put(BookmarkManager.class, image);
+            table.put(IBookmarkService.class, image);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,11 +57,11 @@ public class BookmarksLabelProvider extends LabelProvider {
     @Override
     public String getText( Object obj ) {
         String name;
-        if (obj instanceof BookmarkManager) {
-            BookmarkManager bManager = (BookmarkManager) obj;
+        if (obj instanceof IBookmarkService) {
+            IBookmarkService bManager = (BookmarkServiceImpl) obj;
             name = bManager.getName();
         } else if (obj instanceof Bookmark) {
-            Bookmark bookmark = (Bookmark) obj;
+            IBookmark bookmark = (IBookmark) obj;
             name = bookmark.getName();
         } else if (obj instanceof ProjectWrapper) {
             ProjectWrapper project = (ProjectWrapper) obj;

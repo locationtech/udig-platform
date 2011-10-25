@@ -7,7 +7,6 @@ import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -20,8 +19,8 @@ import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.tcat.citd.sim.udig.bookmarks.Bookmark;
-import org.tcat.citd.sim.udig.bookmarks.BookmarkManager;
 import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
+import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
 import org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView;
 
 /**
@@ -41,7 +40,7 @@ public class BookmarksContentProvider
 
     private IWorkbenchPart currentPart;
 
-    private BookmarkManager bManager;
+    private IBookmarkService bManager;
 
     private MapReference currentMap;
 
@@ -50,7 +49,7 @@ public class BookmarksContentProvider
      */
     public BookmarksContentProvider() {
         viewers = new HashMap<Viewer, Object>();
-        bManager = BookmarksPlugin.getDefault().getBookmarkManager();
+        bManager = BookmarksPlugin.getBookmarkService();
         currentPart = null;
         currentMap = null;
         

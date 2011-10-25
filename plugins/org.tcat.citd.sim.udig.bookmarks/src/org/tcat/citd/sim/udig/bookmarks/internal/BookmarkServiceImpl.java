@@ -1,4 +1,18 @@
-package org.tcat.citd.sim.udig.bookmarks;
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2011, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
+package org.tcat.citd.sim.udig.bookmarks.internal;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,19 +21,25 @@ import java.util.Vector;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Project;
 
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
-import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
-import org.tcat.citd.sim.udig.bookmarks.internal.Messages;
+import org.osgi.service.prefs.BackingStoreException;
+import org.tcat.citd.sim.udig.bookmarks.Bookmark;
+import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
+import org.tcat.citd.sim.udig.bookmarks.IBookmark;
+import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
 
 /**
  * This class provides a bookmark repository and associated management functions.
  * <p>
  * </p>
  * 
- * @author cole.markham
- * @since 1.0.0
+ * @author paul.pfeiffer
+ * @version 1.3.0
  */
-public class BookmarkManager {
+public class BookmarkServiceImpl implements IBookmarkService {
     private HashMap<URI, Vector<MapReference>> projectsHash;
     private HashMap<URI, Vector<Bookmark>> mapsHash;
     private HashMap<URI, MapReference> mapReferences;
@@ -28,18 +48,26 @@ public class BookmarkManager {
     /**
      * 
      */
-    public BookmarkManager() {
+    public BookmarkServiceImpl() {
         projectsHash = new HashMap<URI, Vector<MapReference>>();
         mapsHash = new HashMap<URI, Vector<Bookmark>>();
         mapReferences = new HashMap<URI, MapReference>();
     }
-
-    /**
-     * Add the given bookmark.
-     * 
-     * @param bookmark
-     */
+    
+    @Override
     public void addBookmark( Bookmark bookmark ) {
+        load( bookmark );
+        try {
+            BookmarksPlugin.getDefault().storeToPreferences();
+        } catch (BackingStoreException e) {
+            ILog log = BookmarksPlugin.getDefault().getLog();
+            IStatus status = new Status( IStatus.WARNING,BookmarksPlugin.ID,"Unable to save to BookmarksPlugin");
+            log.log(status);
+        }
+    }
+    
+    @Override
+    public void load( Bookmark bookmark ) {
         if (bookmark.getName() == null || bookmark.getName() == "") { //$NON-NLS-1$
             bookmark.setName(Messages.BookmarkManager_bookmarkdefaultname + (++count));
         }
@@ -67,51 +95,31 @@ public class BookmarkManager {
         }
     }
 
-    /**
-     * Empties the list of bookmarks
-     */
+    @Override
     public void empty() {
         projectsHash.clear();
         mapsHash.clear();
     }
 
-    /**
-     * Returns whether the list is empty
-     * 
-     * @return whether this list is empty
-     */
+    @Override
     public boolean isEmpty() {
         boolean isEmpty = mapsHash.isEmpty();
         return isEmpty;
     }
 
-    /**
-     * Returns the list of projects as an array of objects
-     * 
-     * @return array of IProject objects
-     */
+    @Override
     public Collection<URI> getProjects() {
         Vector<URI> projects = new Vector<URI>(this.projectsHash.keySet());
         return projects;
     }
 
-    /**
-     * Returns the list of maps which are contained in the specified project
-     * 
-     * @param project The project for which the maps will be returned
-     * @return array of MapReference objects
-     */
+    @Override
     public Collection<MapReference> getMaps( URI project ) {
         Vector<MapReference> maps = projectsHash.get(project);
         return maps;
     }
 
-    /**
-     * Return the list of bookmarks associated with the specified map
-     * 
-     * @param map The map for which the bookmarks will be returned
-     * @return A vector of Bookmark objects
-     */
+    @Override
     public Collection<Bookmark> getBookmarks( MapReference map ) {
         if (!mapsHash.containsKey(map.getMapID())) {
             mapsHash.put(map.getMapID(), new Vector<Bookmark>());
@@ -120,11 +128,20 @@ public class BookmarkManager {
         return bookmarks;
     }
 
-    /**
-     * Get the name of this bookmark manager for display It's just a static string for now
-     * 
-     * @return the name
-     */
+    @Override
+    public Collection<IBookmark> getBookmarks() {
+        Collection<IBookmark> bookmarks = new Vector<IBookmark>();
+        for (URI project : getProjects()) {
+            for (MapReference map : getMaps(project)) {
+                for (IBookmark  bookmark : getBookmarks(map)) {
+                    bookmarks.add(bookmark);
+                }
+            }
+        }
+        return bookmarks;
+    }
+
+    @Override
     public String getName() {
         return Messages.BookmarkManager_name_bookmarkmanager;
     }
@@ -134,11 +151,7 @@ public class BookmarkManager {
         return this.getName();
     }
 
-    /**
-     * Remove the given bookmark.
-     * 
-     * @param bookmark
-     */
+    @Override
     public void removeBookmark( Bookmark bookmark ) {
         MapReference map = bookmark.getMap();
         mapsHash.get(map.getMapID()).remove(bookmark);
@@ -152,11 +165,7 @@ public class BookmarkManager {
         }
     }
 
-    /**
-     * Remove all of the bookmarks in the given list.
-     * 
-     * @param elements
-     */
+    @Override
     public void removeBookmarks( Collection elements ) {
         for( Object element : elements ) {
             if (element instanceof Bookmark) {
@@ -166,11 +175,7 @@ public class BookmarkManager {
         }
     }
 
-    /**
-     * Remove the map and all it's associated bookmarks
-     * 
-     * @param map
-     */
+    @Override
     public void removeMap( MapReference map ) {
         mapsHash.remove(map.getMapID());
         URI projectID = map.getProjectID();
@@ -183,11 +188,7 @@ public class BookmarkManager {
         }
     }
 
-    /**
-     * Remove all of the maps in the given list and their associated bookmarks.
-     * 
-     * @param elements
-     */
+    @Override
     public void removeMaps( Collection elements ) {
         for( Object element : elements ) {
             if (element instanceof MapReference) {
@@ -197,11 +198,7 @@ public class BookmarkManager {
         }
     }
 
-    /**
-     * Remove the project and all it's associated maps and bookmarks
-     * 
-     * @param project
-     */
+    @Override
     public void removeProject( URI project ) {
         Vector<MapReference> maps = projectsHash.get(project);
         projectsHash.remove(project);
@@ -210,11 +207,7 @@ public class BookmarkManager {
         }
     }
 
-    /**
-     * Remove all of the projects in the given list and their associated maps and bookmarks.
-     * 
-     * @param elements
-     */
+    @Override
     public void removeProjects( Collection elements ) {
         for( Object element : elements ) {
             if (element instanceof URI) {
@@ -224,21 +217,21 @@ public class BookmarkManager {
         }
     }
 
-    /**
-     * @param map
-     * @return the MapReference singleton for the given IMap
-     */
+    @Override
     public MapReference getMapReference( IMap map ) {
         MapReference ref = null;
         if (!mapReferences.containsKey(map.getID())) {
             // HACK: fix this when IProject has a getID() method
             Project project = (Project) map.getProject();
-            URI projectURI = project.eResource().getURI();
-            ref = new MapReference(map.getID(), projectURI, map.getName());
-            mapReferences.put(map.getID(), ref);
+            if (project != null) {
+                URI projectURI = project.eResource().getURI();
+                ref = new MapReference(map.getID(), projectURI, map.getName());
+                mapReferences.put(map.getID(), ref);
+            }
         } else {
             ref = mapReferences.get(map.getID());
         }
         return ref;
     }
+
 }

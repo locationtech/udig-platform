@@ -17,7 +17,6 @@ package net.refractions.udig.boundary;
  
 import java.util.List;
 
-import org.eclipse.swt.widgets.Listener;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -81,13 +80,13 @@ public interface IBoundaryService {
      * 
      * @param watcher
      */
-    public void addListener( Listener listener );
+    public void addListener( BoundaryListener listener );
     /**
      * Remove the provided listener.
      * 
      * @param watcher
      */
-    public void removeListener( Listener listener );
+    public void removeListener( BoundaryListener listener );
 
     /**
      * The boundary strategy to use by default (defaults to "All").

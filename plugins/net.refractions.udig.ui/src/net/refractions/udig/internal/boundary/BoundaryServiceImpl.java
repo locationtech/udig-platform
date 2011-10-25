@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import net.refractions.udig.boundary.BoundaryListener;
 import net.refractions.udig.boundary.BoundaryProxy;
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.core.internal.ExtensionPointProcessor;
@@ -28,8 +29,6 @@ import net.refractions.udig.internal.ui.UiPlugin;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -56,18 +55,18 @@ public class BoundaryServiceImpl implements IBoundaryService {
      */
     protected List<BoundaryProxy> proxyList = new ArrayList<BoundaryProxy>();
 
-    protected Listener watcher = new Listener(){
-        public void handleEvent( Event event ) {
+    protected BoundaryListener watcher = new BoundaryListener(){
+        public void handleEvent( BoundaryListener.Event event ) {
             notifyListeners(event);
         }
     };
     /*
      * A list of listeners to be notified when the Strategy changes
      */
-    protected Set<Listener> listeners = new CopyOnWriteArraySet<Listener>();
+    protected Set<BoundaryListener> listeners = new CopyOnWriteArraySet<BoundaryListener>();
     
     @Override
-    public void addListener( Listener listener ) {
+    public void addListener( BoundaryListener listener ) {
         if( listener == null ){
             throw new NullPointerException("BoundaryService listener required to be non null");
         }
@@ -75,26 +74,23 @@ public class BoundaryServiceImpl implements IBoundaryService {
     }
 
     @Override
-    public void removeListener( Listener listener ) {
+    public void removeListener( BoundaryListener listener ) {
         listeners.add(listener);
     }
     
     /**
      * Notifies listener that the value of the filter has changed.
      */
-    private void notifyListeners(Object changed) {
-        Event event = null;
-        for( Listener listener : listeners ) {
+    private void notifyListeners(BoundaryListener.Event event) {
+        for( BoundaryListener listener : listeners ) {
             if( event == null ){
-                event = new Event();
-                event.data = changed;
+                event = new BoundaryListener.Event(getProxy());
             }
             try {
                 if( listener != null ){
                     listener.handleEvent( event );
                 }
             } catch (Exception e) {
-                e.printStackTrace();
                 UiPlugin.trace(UiPlugin.ID, listener.getClass(), e.getMessage(), e );
             }
         }
@@ -138,7 +134,9 @@ public class BoundaryServiceImpl implements IBoundaryService {
         if( this.currentProxy != null ){
             this.currentProxy.addListener(watcher);
         }
-        notifyListeners(proxy.getName());
+        BoundaryListener.Event event = new BoundaryListener.Event(proxy);
+        // we are not filling in event.geometry here as we only changed strategy
+        notifyListeners(event);
     }
 
     @Override
