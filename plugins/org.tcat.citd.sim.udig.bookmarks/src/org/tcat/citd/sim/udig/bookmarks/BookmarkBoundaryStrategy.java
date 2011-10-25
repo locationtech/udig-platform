@@ -76,8 +76,12 @@ public class BookmarkBoundaryStrategy extends IBoundaryStrategy {
     /**
      * @param currentBookmark the currentBookmark to set
      */
-    public void setCurrentBookmark( IBookmark currentBookmark ) {
-        this.currentBookmark = currentBookmark;
+    public void setCurrentBookmark( IBookmark bookmark ) {
+        if (!bookmark.equals(currentBookmark)) {
+            currentBookmark = bookmark;
+            // notify everything that is listening for a strategy change
+            this.notifyListeners(this);
+        }
     }
 
 }

@@ -19,11 +19,15 @@ import java.util.List;
 
 import net.refractions.udig.boundary.BoundaryProxy;
 import net.refractions.udig.boundary.IBoundaryService;
+import net.refractions.udig.boundary.IBoundaryStrategy;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -49,6 +53,21 @@ public class BookmarkBoundaryPage extends Page {
     private Composite page;
     private BoundaryProxy strategy;
     private ComboViewer comboViewer;
+
+    private ISelectionChangedListener comboListener = new ISelectionChangedListener(){
+        @Override
+        public void selectionChanged( SelectionChangedEvent event ) {
+            IStructuredSelection selectedBookmark = (IStructuredSelection) event.getSelection();
+            IBookmark selected = (IBookmark) selectedBookmark.getFirstElement();
+            
+            IBoundaryService service = PlatformGIS.getBoundaryService();
+            IBoundaryStrategy bookmarkStrategy = service.findProxy(BookmarkBoundaryStrategy.ID).getStrategy();
+            
+            if (bookmarkStrategy instanceof BookmarkBoundaryStrategy) {
+                ((BookmarkBoundaryStrategy) bookmarkStrategy).setCurrentBookmark(selected);
+            }
+        }
+    };
 
     public BookmarkBoundaryPage() {
         // careful don't do any work here
@@ -97,7 +116,9 @@ public class BookmarkBoundaryPage extends Page {
             }
         });
         comboViewer.setInput((List<IBookmark>)bookmarkService.getBookmarks());
-                
+        
+        comboViewer.addSelectionChangedListener(comboListener);
+        
         if (strategy != null ){
             // add any listeners to strategy
             
