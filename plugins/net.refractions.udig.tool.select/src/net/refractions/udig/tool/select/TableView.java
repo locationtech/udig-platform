@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import net.refractions.udig.boundary.BoundaryListener;
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.core.IBlockingProvider;
 import net.refractions.udig.core.IProvider;
@@ -305,7 +306,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
 
 	private Text searchWidget;
 
-    private Listener boundaryServiceListener;
+    private BoundaryListener boundaryServiceListener;
 
     /**
      * Construct <code>SelectView</code>.
@@ -365,7 +366,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         
         IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
         
-        boundaryServiceListener = new Listener(){
+        boundaryServiceListener = new BoundaryListener(){
             @Override
             public void handleEvent( Event event ) {
                 if(isBoundaryFilter()){
