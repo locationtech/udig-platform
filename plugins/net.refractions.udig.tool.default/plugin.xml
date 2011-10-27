@@ -37,21 +37,6 @@
                tooltip="%zoom.tool.tooltip">
          </modalTool>
          <modalTool
-               categoryId="net.refractions.udig.tool.category.zoom"
-               class="net.refractions.udig.tools.internal.BoundaryLayerNavigationTool"
-               commandHandler="net.refractions.udig.tools.internal.BoundaryNavigationToolFeedback"
-               icon="icons/etool16/boundary_mode.png"
-               id="net.refractions.udig.tool.default.modalTool1"
-               name="%zoom.set.name"
-               onToolbar="true"
-               toolCursorId="bondatySelectCursor"
-               tooltip="%zoom.set.tooltip">
-            <toolOption
-                  class="net.refractions.udig.tools.internal.BoundaryLayerNavigationTool$OptionContribtionItem"
-                  id="setBoundaryToolOptions">
-            </toolOption>
-         </modalTool>
-         <modalTool
                categoryId="net.refractions.udig.tool.category.pan"
                class="net.refractions.udig.tools.internal.PanTool"
                commandHandler="net.refractions.udig.tools.internal.PanHandler"
@@ -159,18 +144,6 @@
                      name="Middle Mouse Pan"
                      tooltip="Pan holding the middle mouse down.">
                </backgroundTool>
-               <toolCursor
-                     hotspotX="9"
-                     hotspotY="6"
-                     id="bondatySelectCursor"
-                     image="icons/pointers/boundary_select_sorce.png">
-               </toolCursor>
-               <toolCursor
-                     hotspotX="11"
-                     hotspotY="11"
-                     id="bondatyBoxSelectCursor"
-                     image="icons/pointers/boundary_box_select_sorce.png">
-               </toolCursor>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -270,12 +243,4 @@
                class="net.refractions.udig.tools.internal.NavigationPreferenceInitializer">
          </initializer>
       </extension>
-      <extension
-            point="net.refractions.udig.ui.boundary">
-         <boundary
-               class="net.refractions.udig.tools.internal.BoundaryLayerStrategy"
-               id="net.refractions.udig.tool.default.BoundaryLayerService"
-               name="Boundary Layer">
-         </boundary>
-      </extension>      
 </plugin>

@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.tools.internal;
+package net.refractions.udig.tool.select.internal;
 
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -20,7 +20,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.jface.action.ContributionItem;
+import net.refractions.udig.boundary.IBoundaryService;
+import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
+import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import net.refractions.udig.project.ui.tool.ModalTool;
+import net.refractions.udig.project.ui.tool.SimpleTool;
+import net.refractions.udig.project.ui.tool.options.ToolOptionContributionItem;
+import net.refractions.udig.tool.select.SelectPlugin;
+import net.refractions.udig.tool.select.commands.SetBoundaryLayerCommand;
+import net.refractions.udig.ui.PlatformGIS;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -30,38 +43,8 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.ui.PlatformUI;
-import org.hsqldb.lib.ArrayUtil;
-
-import net.refractions.udig.boundary.BoundaryProxy;
-import net.refractions.udig.boundary.IBoundaryService;
-import net.refractions.udig.boundary.IBoundaryStrategy;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IMapListener;
-import net.refractions.udig.project.MapEvent;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.AbstractModalTool;
-import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.project.ui.tool.SimpleTool;
-import net.refractions.udig.project.ui.tool.options.ToolOptionContributionItem;
-import net.refractions.udig.tool.commands.SetBoundaryLayerCommand;
-import net.refractions.udig.ui.PlatformGIS;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
@@ -77,7 +60,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * @author leviputna
  * @since 1.2.3
  */
-public class BoundaryLayerNavigationTool extends SimpleTool implements ModalTool {
+public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool {
 
     private SelectionBoxCommand shapeCommand;
     private boolean selecting;
@@ -92,7 +75,7 @@ public class BoundaryLayerNavigationTool extends SimpleTool implements ModalTool
     /**
      * 
      */
-    public BoundaryLayerNavigationTool() {
+    public BoundaryLayerSelectionTool() {
         super(MOUSE | MOTION);
     }
 
@@ -209,7 +192,7 @@ public class BoundaryLayerNavigationTool extends SimpleTool implements ModalTool
         super.dispose();
     }
 
-    public static class OptionContribtionItem extends ContributionItem {
+    public static class OptionContribtionItem extends ToolOptionContributionItem {
 
         private ComboViewer comboViewer;
         private IMap map;
@@ -226,17 +209,26 @@ public class BoundaryLayerNavigationTool extends SimpleTool implements ModalTool
                 IStructuredSelection selectedStrategy = (IStructuredSelection) event.getSelection();
                 ILayer layer = (ILayer) selectedStrategy.getFirstElement();
                 setActiveLayer(layer);
-                System.out.println(layer.getName());
             }
         };
         
-        public void fill( Composite parent ) {
+        @Override
+        protected IPreferenceStore fillFields( Composite parent ) {
+            
             map = ApplicationGIS.getActiveMap();
             
+            Button check = new Button(parent,  SWT.CHECK );
+            check.setText("Zoom to selection");
+            addField( SelectionToolPreferencePage.ZOOM_TO_SELECTION, check );
+
             setCombo(parent);
             listenCombo(true);
             // set the current strategy
-            comboViewer.setSelection(new StructuredSelection(boundaryLayers.get(0)));
+            if(!boundaryLayers.isEmpty()){
+                comboViewer.setSelection(new StructuredSelection(boundaryLayers.get(0)));
+            }
+            
+            return SelectPlugin.getDefault().getPreferenceStore();
         }
         
         private void setCombo(Composite parent){

@@ -991,6 +991,9 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
         Geometry geometry = boundaryService.getGeometry();
         
+        if(boundaryService.getExtent() == null)
+            return filter;
+        
         if(geometry == null){
             // note we could make a BBOX query here and go faster
             geometry = JTS.toGeometry( boundaryService.getExtent());

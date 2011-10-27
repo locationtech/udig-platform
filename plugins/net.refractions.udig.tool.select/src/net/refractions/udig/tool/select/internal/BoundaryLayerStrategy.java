@@ -12,18 +12,16 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.tools.internal;
+package net.refractions.udig.tool.select.internal;
+
+import net.refractions.udig.boundary.BoundaryListener;
+import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.project.ILayer;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-
-import net.refractions.udig.boundary.IBoundaryStrategy;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
 
 /**
  * This service is set by the Boundary Navigation Tool and provides a filter service based on the
@@ -46,13 +44,9 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
      */
     public void setCrs( CoordinateReferenceSystem crs ) {
         this.crs = crs;
-    }
-
-    /**
-     * @return the activeLayer
-     */
-    public ILayer getActiveLayer() {
-        return activeLayer;
+        
+        BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryLayerStrategy.this);
+        notifyListeners(boundaryEvent);
     }
 
     /**
@@ -60,6 +54,9 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
      */
     public void setActiveLayer( ILayer activeLayer ) {
         this.activeLayer = activeLayer;
+        
+        BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryLayerStrategy.this);
+        notifyListeners(boundaryEvent);
     }
 
     /**
@@ -69,7 +66,16 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
      */
     public void setGeometry( Geometry geometry ) {
         this.geometry = geometry;
-        notifyListeners(this);
+        
+        BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryLayerStrategy.this);
+        notifyListeners(boundaryEvent);
+    }
+    
+    /**
+     * @return the activeLayer
+     */
+    public ILayer getActiveLayer() {
+        return activeLayer;
     }
 
     /*
@@ -78,7 +84,7 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
      */
     @Override
     public ReferencedEnvelope getExtent() {
-        if (geometry != null) return (ReferencedEnvelope) geometry.getEnvelopeInternal();
+        if (geometry != null) return new ReferencedEnvelope(geometry.getEnvelopeInternal(), crs);
         return null;
     }
 

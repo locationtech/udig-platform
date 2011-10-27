@@ -12,25 +12,22 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.tool.commands;
+package net.refractions.udig.tool.select.commands;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.boundary.BoundaryProxy;
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.boundary.IBoundaryStrategy;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.command.factory.EditCommandFactory;
-import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.render.impl.ViewportModelImpl;
-import net.refractions.udig.tools.internal.BoundaryLayerStrategy;
+import net.refractions.udig.tool.select.SelectPlugin;
+import net.refractions.udig.tool.select.internal.BoundaryLayerStrategy;
+import net.refractions.udig.tool.select.internal.SelectionToolPreferencePage;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -41,11 +38,9 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -83,39 +78,39 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
      * @see net.refractions.udig.project.command.MapCommand#run()
      */
     public void run( IProgressMonitor monitor ) throws Exception {
-        
+
         IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
         IBoundaryStrategy boundaryStrategy = boundaryService.findProxy(BOUNDARYSERVICE_ID)
                 .getStrategy();
-        
+
         ILayer selectedLayer = null;
-        
+
         if (boundaryStrategy instanceof BoundaryLayerStrategy) {
             BoundaryLayerStrategy navigationBoundaryStrategy = (BoundaryLayerStrategy) boundaryStrategy;
             selectedLayer = navigationBoundaryStrategy.getActiveLayer();
         }
-        
-        if(selectedLayer == null)
-            return;
 
-        if(!selectedLayer.isApplicable(ILayer.ID_BOUNDARY))
-            return;
-        
+        if (selectedLayer == null) return;
+
+        if (!selectedLayer.isApplicable(ILayer.ID_BOUNDARY)) return;
+
         selectedLayer.getCRS();
         SimpleFeatureCollection featureCollection = getFeaturesInBbox(selectedLayer, bbox, monitor);
 
         bounds = featureCollection.getBounds();
 
-        if(featureCollection.isEmpty())
-            return;
-        
+        if (featureCollection.isEmpty()) return;
+
         Geometry newBoundary = unionGeometry(featureCollection);
         CoordinateReferenceSystem crs = featureCollection.getSchema()
                 .getCoordinateReferenceSystem();
         updateBoundaryService(newBoundary, crs);
 
-        ViewportModelImpl vmi = (ViewportModelImpl) selectedLayer.getMap().getViewportModel();
-        vmi.zoomToBox(bounds);
+        if (SelectPlugin.getDefault().getPreferenceStore()
+                .getBoolean(SelectionToolPreferencePage.ZOOM_TO_SELECTION)) {
+            ViewportModelImpl vmi = (ViewportModelImpl) selectedLayer.getMap().getViewportModel();
+            vmi.zoomToBox(bounds);
+        }
 
     }
 

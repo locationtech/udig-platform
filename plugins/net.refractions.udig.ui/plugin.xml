@@ -78,7 +78,7 @@
       <view
             category="catalog"
             class="net.refractions.udig.ui.boundary.BoundaryView"
-            icon="icons/eview16/boundary_view.gif"
+            icon="icons/eview16/boundary_view.png"
             id="net.refractions.udig.ui.viewBoundary"
             name="%boundary.name"
             restorable="true">
