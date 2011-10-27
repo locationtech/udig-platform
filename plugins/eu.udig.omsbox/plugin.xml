@@ -91,6 +91,7 @@
       </mapGraphic>
       <mapGraphic
             class="eu.udig.omsbox.processingregion.BoundaryLayerDecorator"
+            icon="icons/boundary_mode.png"
             id="eu.udig.omsbox.processingregion.boundaryLayerDecorator"
             name="Boundary">
       </mapGraphic>
