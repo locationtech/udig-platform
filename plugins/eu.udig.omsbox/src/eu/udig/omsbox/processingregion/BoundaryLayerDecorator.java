@@ -55,9 +55,9 @@ public class BoundaryLayerDecorator implements MapGraphic {
         context.getLayer().setStatus(ILayer.WORKING);
 
         // initialize the graphics handle
-        ViewportGraphics g = context.getGraphics();
-        if (g instanceof AWTGraphics) {
-            AWTGraphics awtG = (AWTGraphics) g;
+        ViewportGraphics graphic = context.getGraphics();
+        if (graphic instanceof AWTGraphics) {
+            AWTGraphics awtG = (AWTGraphics) graphic;
             Graphics2D g2D = awtG.g;
             // setting rendering hints
             @SuppressWarnings("unchecked")
@@ -70,13 +70,13 @@ public class BoundaryLayerDecorator implements MapGraphic {
 
         // get the boundary
         IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        Geometry geometry = boundaryService.getGeometry();
-        if (geometry != null) {
+        Geometry multiGeometry = boundaryService.getGeometry();
+        if (multiGeometry != null) {
         
             // draw the rectangle around the active region green:143
             //float[] rgba = style.backgroundColor.getColorComponents(null);
             //g.setColor(new Color(rgba[0], rgba[1], rgba[2], style.bAlpha));
-            g.setColor(new Color((float)0.5, (float)0.5, (float)0.5, (float)0.5));
+            graphic.setColor(new Color((float)0.5, (float)0.5, (float)0.5, (float)0.5));
     
             // Point xyRes = new Point((urPoint.x - ulPoint.x) / style.cols, (llPoint.y - ulPoint.y) /
             // style.rows);
@@ -91,30 +91,38 @@ public class BoundaryLayerDecorator implements MapGraphic {
             path.lineTo(0, screenHeight);
             path.closePath();
             
-            // draw the boundary
-            Coordinate[] coordinates = geometry.getCoordinates();
-            
-            // move to the first point
-            Point point = null;
-            if (coordinates.length > 0) {
-                point = context.worldToPixel(coordinates[0]);
-                path.moveTo(point.x, point.y);
-            }
-            // draw all points
-            for (int i=0; i<coordinates.length; i++) {
-                point = context.worldToPixel(coordinates[i]);
-                path.lineTo(point.x, point.y);
-            }
-            
-            path.closePath();
+            // if multi geometry - loop through each geometry
+            for (int g=multiGeometry.getNumGeometries(); g>0; g--) {
+                Geometry geometry = multiGeometry.getGeometryN(g);
+                
+                // draw the boundary
+                Coordinate[] coordinates = geometry.getCoordinates();
+                
+                //geometry.
+                
+                // move to the first point
+                Point point = null;
+                if (coordinates.length > 0) {
+                    point = context.worldToPixel(coordinates[0]);
+                    path.moveTo(point.x, point.y);
+                }
+                // draw all points
+                for (int c=0; c<coordinates.length; c++) {
+                    point = context.worldToPixel(coordinates[c]);
+                    path.lineTo(point.x, point.y);
+                }
+                
+                path.closePath();
     
-            g.fill(path);
+            }
+            
+            graphic.fill(path);
     
             //rgba = style.foregroundColor.getColorComponents(null);
             //g.setColor(new Color(rgba[0], rgba[1], rgba[2], style.fAlpha));
-            g.setColor(new Color((float)0.5, (float)0.5, (float)0.5, (float)0.75));
-            g.setStroke(ViewportGraphics.LINE_SOLID, 2);
-            g.draw(path);
+            graphic.setColor(new Color((float)0.5, (float)0.5, (float)0.5, (float)0.75));
+            graphic.setStroke(ViewportGraphics.LINE_SOLID, 2);
+            graphic.draw(path);
             
         }
 
