@@ -22,19 +22,18 @@ import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import java.util.Collections;
 
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.mapgraphic.MapGraphic;
 import net.refractions.udig.mapgraphic.MapGraphicContext;
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IStyleBlackboard;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.graphics.AWTGraphics;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * <p>
@@ -73,6 +72,8 @@ public class BoundaryLayerDecorator implements MapGraphic {
         Geometry multiGeometry = boundaryService.getGeometry();
         if (multiGeometry != null) {
         
+            Geometry innerPolygons = null; 
+            Polygon polygon = null;
             // draw the rectangle around the active region green:143
             //float[] rgba = style.backgroundColor.getColorComponents(null);
             //g.setColor(new Color(rgba[0], rgba[1], rgba[2], style.bAlpha));
@@ -92,28 +93,41 @@ public class BoundaryLayerDecorator implements MapGraphic {
             path.closePath();
             
             // if multi geometry - loop through each geometry
-            for (int g=multiGeometry.getNumGeometries(); g>0; g--) {
+            for (int g=0; g<multiGeometry.getNumGeometries(); g++) {
                 Geometry geometry = multiGeometry.getGeometryN(g);
-                
-                // draw the boundary
-                Coordinate[] coordinates = geometry.getCoordinates();
-                
-                //geometry.
-                
-                // move to the first point
-                Point point = null;
-                if (coordinates.length > 0) {
-                    point = context.worldToPixel(coordinates[0]);
-                    path.moveTo(point.x, point.y);
+                if (geometry.getGeometryType().equals("Polygon")){
+                    polygon = (Polygon) geometry;
+                    
+                    // get the exterior rings
+                    LineString exterior = polygon.getExteriorRing();
+                    
+                    // collects the internal holes if there are any
+                    for (int i=0; i<polygon.getNumInteriorRing(); i++) {
+                        if (innerPolygons == null) {
+                            innerPolygons = polygon.getInteriorRingN(i);
+                        }
+                        else {
+                            innerPolygons = innerPolygons.union(polygon.getInteriorRingN(i));
+                        }
+                        
+                    }
+                    
+                    // draw the exterior
+                    Coordinate[] coordinates = exterior.getCoordinates();
+                    
+                    // move to the first point
+                    Point point = null;
+                    if (coordinates.length > 0) {
+                        point = context.worldToPixel(coordinates[0]);
+                        path.moveTo(point.x, point.y);
+                    }
+                    // draw all points
+                    for (int c=0; c<coordinates.length; c++) {
+                        point = context.worldToPixel(coordinates[c]);
+                        path.lineTo(point.x, point.y);
+                    }
+                    path.closePath();
                 }
-                // draw all points
-                for (int c=0; c<coordinates.length; c++) {
-                    point = context.worldToPixel(coordinates[c]);
-                    path.lineTo(point.x, point.y);
-                }
-                
-                path.closePath();
-    
             }
             
             graphic.fill(path);
@@ -123,6 +137,36 @@ public class BoundaryLayerDecorator implements MapGraphic {
             graphic.setColor(new Color((float)0.5, (float)0.5, (float)0.5, (float)0.75));
             graphic.setStroke(ViewportGraphics.LINE_SOLID, 2);
             graphic.draw(path);
+            
+            
+            
+            // draw inner rings / holes
+            if (innerPolygons != null) {
+                for (int g=0; g<innerPolygons.getNumGeometries(); g++) {
+                    path.reset();
+                    Geometry geometry = innerPolygons.getGeometryN(g);
+                    
+                    // draw the boundary
+                    Coordinate[] coordinates = geometry.getCoordinates();
+                    
+                    // move to the first point
+                    Point point = null;
+                    if (coordinates.length > 0) {
+                        point = context.worldToPixel(coordinates[0]);
+                        path.moveTo(point.x, point.y);
+                    }
+                    // draw all points
+                    for (int c=0; c<coordinates.length; c++) {
+                        point = context.worldToPixel(coordinates[c]);
+                        path.lineTo(point.x, point.y);
+                    }
+                    path.closePath();
+                    graphic.setColor(new Color((float)0.5, (float)0.5, (float)0.5, (float)0.5));
+                    graphic.fill(path);
+                    graphic.setColor(new Color((float)0.5, (float)0.5, (float)0.5, (float)0.75));
+                    graphic.draw(path);
+                }
+            }
             
         }
 
