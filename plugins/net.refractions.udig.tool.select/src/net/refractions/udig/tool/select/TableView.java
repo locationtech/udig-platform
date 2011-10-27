@@ -1329,10 +1329,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         updatingLayerFilter=true;
         try{
             StructuredSelection structuredSelection;
-            if( feature!=null )
-                structuredSelection = new StructuredSelection(feature);
-            else
-                structuredSelection = new StructuredSelection();
+            structuredSelection = new StructuredSelection(feature);
     
             setSelection(structuredSelection);
         }finally{

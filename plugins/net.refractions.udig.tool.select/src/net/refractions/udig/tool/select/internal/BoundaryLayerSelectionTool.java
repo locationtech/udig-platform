@@ -69,9 +69,6 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
     private String CURSORPOINTID = "bondatySelectCursor";
     private String CURSORBOXID = "bondatyBoxSelectCursor";
 
-    /** This is the "previous" square so we can refresh the screen correctly */
-    private Rectangle previous;
-
     /**
      * 
      */
