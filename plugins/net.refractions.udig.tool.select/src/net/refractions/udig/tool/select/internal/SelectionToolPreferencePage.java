@@ -26,14 +26,10 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 /**
- * TODO Purpose of 
- * <p>
- * <ul>
- * <li></li>
- * </ul>
- * </p>
+ * This  preference page provides access to all preference relating to selection tools.
+ * 
  * @author leviputna
- * @since 1.2.0
+ * @since 1.3.0
  */
 public class SelectionToolPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
