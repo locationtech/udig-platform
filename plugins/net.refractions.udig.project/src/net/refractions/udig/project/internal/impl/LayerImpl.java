@@ -1648,19 +1648,19 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see net.refractions.udig.project.internal.Layer#isApplicable(java.lang.String)
      */
-    public boolean isApplicable( String toolsetID ) {
+    public boolean isApplicable( Interaction interaction ) {
         // special cases handled as fields
-        if (ID_VISIBLE.equals( toolsetID )){
+        if (Interaction.VISIBLE.equals( interaction )){
             return isVisible();
         }
-        else if (ID_SELECT.equals( toolsetID )){
+        else if (Interaction.SELECT.equals( interaction )){
             return isSelectable();
         }
         // check the blackboard 
-        Boolean applicable = (Boolean) getBlackboard().get(toolsetID);
+        Boolean applicable = (Boolean) getBlackboard().get(interaction.getKey());
         if (applicable == null) {
             // not available create a good default for people to see
-            if( ID_INFO.equals(toolsetID)){
+            if( Interaction.INFO.equals(interaction)){
                 return true; // info is supported by most layers
             }
             // wont hit this code yet because value comes from isSelectable
@@ -1668,7 +1668,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 IGeoResource found = this.getGeoResource(FeatureSource.class);
                 return found != null;
             }*/ 
-            else if( ID_EDIT.equals(toolsetID)){
+            else if( Interaction.EDIT.equals(interaction)){
                 IGeoResource found = this.getGeoResource(FeatureStore.class);
                 return found != null;
             }
@@ -1682,15 +1682,15 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see net.refractions.udig.project.internal.Layer#setApplicable(java.lang.String, boolean)
      */
-    public void setApplicable( String toolsetID, boolean applicable ) {
-        if (ID_VISIBLE.equals( toolsetID )){
+    public void setApplicable( Interaction interaction, boolean applicable ) {
+        if (Interaction.VISIBLE.equals( interaction )){
             setVisible(applicable);
         }
-        else if (ID_SELECT.equals( toolsetID )){
+        else if (Interaction.SELECT.equals( interaction )){
             setSelectable(applicable);
         }
         else {
-            getBlackboard().put(toolsetID, applicable );
+            getBlackboard().put(interaction.getKey(), applicable );
             // XXX just to send an event needs to change.
             //setSelectable(isSelectable());
         }

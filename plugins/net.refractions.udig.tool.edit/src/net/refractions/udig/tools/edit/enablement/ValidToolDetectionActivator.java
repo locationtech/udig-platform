@@ -16,6 +16,7 @@ package net.refractions.udig.tools.edit.enablement;
 
 import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILayer.Interaction;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
@@ -60,7 +61,7 @@ public class ValidToolDetectionActivator implements EnablementBehaviour {
         }
         if (!selectedLayer.hasResource(FeatureStore.class)) {
             return Messages.ValidToolDetectionActivator_warning1;
-        } else if (!selectedLayer.isApplicable(EditPlugin.ID)) {
+        } else if (!selectedLayer.isApplicable(ILayer.Interaction.EDIT)) {
             return openQuestion(handler, Messages.ValidToolDetectionActivator_question,
                     selectedLayer);
         } else {
@@ -90,7 +91,7 @@ public class ValidToolDetectionActivator implements EnablementBehaviour {
 
                 if (decision) {
                     UndoableMapCommand command = handler.getContext().getBasicCommandFactory()
-                            .createSetApplicabilityCommand(layer, EditPlugin.ID, true);
+                            .createSetApplicabilityCommand(layer, Interaction.EDIT, true);
                     handler.getContext().sendASyncCommand(command);
                 } else {
                     warning[0]=Messages.ValidToolDetectionActivator_warning2;

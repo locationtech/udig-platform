@@ -15,6 +15,7 @@
 package net.refractions.udig.project.internal.commands;
 
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILayer.Interaction;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.internal.Layer;
@@ -32,11 +33,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class SetApplicabilityCommand extends AbstractCommand implements UndoableMapCommand {
 
     private boolean newValue;
-    private String applicabilityId;
+    private Interaction applicabilityId;
     private ILayer layer;
     private boolean oldValue;
 
-    public SetApplicabilityCommand( ILayer layer, String applicabilityId, boolean newValue ) {
+    public SetApplicabilityCommand( ILayer layer, Interaction applicabilityId, boolean newValue ) {
         this.layer=layer;
         this.applicabilityId=applicabilityId;
         this.newValue=newValue;

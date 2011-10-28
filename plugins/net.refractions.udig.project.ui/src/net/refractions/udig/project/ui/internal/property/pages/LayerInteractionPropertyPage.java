@@ -193,11 +193,11 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
     protected void setApplyButton(){
         boolean changed = (
                 visibleButton.getSelection() != layer.isVisible()
-                || backgroundButton.getSelection() != layer.isApplicable( ILayer.ID_BACKGROUND )
-                || informationButton.getSelection() != layer.isApplicable( ILayer.ID_INFO )
+                || backgroundButton.getSelection() != layer.isApplicable( ILayer.Interaction.BACKGROUND )
+                || informationButton.getSelection() != layer.isApplicable( ILayer.Interaction.INFO )
                 || selectButton.getSelection() != layer.isSelectable()
-                || editButton.getSelection() != layer.isApplicable( ILayer.ID_EDIT )
-                || boundaryButton.getSelection() != layer.isApplicable( ILayer.ID_BOUNDARY ) 
+                || editButton.getSelection() != layer.isApplicable( ILayer.Interaction.EDIT )
+                || boundaryButton.getSelection() != layer.isApplicable( ILayer.Interaction.BOUNDARY ) 
         );
         
         this.getApplyButton().setEnabled(changed);
@@ -211,20 +211,20 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         if( visibleButton.getSelection() != layer.isVisible() ){
             layer.setVisible(visibleButton.getSelection());
         }
-        if( backgroundButton.getSelection() != layer.isApplicable( ILayer.ID_BACKGROUND )){
-            layer.setApplicable(ILayer.ID_BACKGROUND, backgroundButton.getSelection());
+        if( backgroundButton.getSelection() != layer.isApplicable( ILayer.Interaction.BACKGROUND )){
+            layer.setApplicable(ILayer.Interaction.BACKGROUND, backgroundButton.getSelection());
         }
-        if( informationButton.getSelection() != layer.isApplicable( ILayer.ID_INFO )){
-            layer.setApplicable(ILayer.ID_INFO, informationButton.getSelection());
+        if( informationButton.getSelection() != layer.isApplicable( ILayer.Interaction.INFO )){
+            layer.setApplicable(ILayer.Interaction.INFO, informationButton.getSelection());
         }
         if( selectButton.getSelection() != layer.isSelectable() ){
             layer.setSelectable(selectButton.getSelection());
         }
-        if( editButton.getSelection() != layer.isApplicable( ILayer.ID_EDIT )){
-            layer.setApplicable(ILayer.ID_EDIT, editButton.getSelection());
+        if( editButton.getSelection() != layer.isApplicable( ILayer.Interaction.EDIT )){
+            layer.setApplicable(ILayer.Interaction.EDIT, editButton.getSelection());
         }
-        if( boundaryButton.getSelection() != layer.isApplicable( ILayer.ID_BOUNDARY )){
-            layer.setApplicable(ILayer.ID_BOUNDARY, boundaryButton.getSelection());
+        if( boundaryButton.getSelection() != layer.isApplicable( ILayer.Interaction.BOUNDARY )){
+            layer.setApplicable(ILayer.Interaction.BOUNDARY, boundaryButton.getSelection());
         }
     }
     
@@ -235,9 +235,9 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         visibleButton.setSelection(layer.isVisible());
         
         // set background layer
-        backgroundButton.setSelection(layer.isApplicable(ILayer.ID_BACKGROUND));
-        layerButton.setSelection(!layer.isApplicable(ILayer.ID_BACKGROUND));
-        setBackgroundLayer(layer.isApplicable(ILayer.ID_BACKGROUND));
+        backgroundButton.setSelection(layer.isApplicable(ILayer.Interaction.BACKGROUND));
+        layerButton.setSelection(!layer.isApplicable(ILayer.Interaction.BACKGROUND));
+        setBackgroundLayer(layer.isApplicable(ILayer.Interaction.BACKGROUND));
     }
     
     /*
@@ -284,7 +284,7 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
     private void setPolygonLayer() {
         boundaryButton.setEnabled(isPolygon);
         if (isPolygon) {
-            boundaryButton.setSelection(layer.isApplicable(ILayer.ID_BOUNDARY));
+            boundaryButton.setSelection(layer.isApplicable(ILayer.Interaction.BOUNDARY));
         }
         else {
             boundaryButton.setSelection(false);
@@ -297,15 +297,15 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
     private void setRasterLayer() {
         if (isRaster) {
             // enable raster options
-            enableButton(informationButton, layer.isApplicable(ILayer.ID_INFO));
+            enableButton(informationButton, layer.isApplicable(ILayer.Interaction.INFO));
             // disable non raster options
             disableButton(selectButton);
             disableButton(editButton);
         }
         else {
-            enableButton(informationButton, layer.isApplicable(ILayer.ID_INFO));
+            enableButton(informationButton, layer.isApplicable(ILayer.Interaction.INFO));
             enableButton(selectButton, layer.isSelectable());
-            enableButton(editButton, layer.isApplicable(ILayer.ID_EDIT));
+            enableButton(editButton, layer.isApplicable(ILayer.Interaction.EDIT));
         }
         
     }

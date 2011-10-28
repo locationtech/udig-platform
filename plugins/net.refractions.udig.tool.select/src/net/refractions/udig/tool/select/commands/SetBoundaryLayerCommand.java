@@ -92,7 +92,7 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
 
         if (selectedLayer == null) return;
 
-        if (!selectedLayer.isApplicable(ILayer.ID_BOUNDARY)) return;
+        if (!selectedLayer.isApplicable(ILayer.Interaction.BOUNDARY)) return;
 
         selectedLayer.getCRS();
         SimpleFeatureCollection featureCollection = getFeaturesInBbox(selectedLayer, bbox, monitor);

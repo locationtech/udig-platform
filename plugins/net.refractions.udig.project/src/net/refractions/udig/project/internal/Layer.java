@@ -188,12 +188,12 @@ public interface Layer
      */
     void setStatusMessage( String message );
     /**
-     * Set toolset applicability.
+     * Set interaction applicability.
      * 
-     * @param toolCategoryId ID of toolset being considered
-     * @param isApplicable true if layer is to be used with indicated toolset
+     * @param interaction of the layer being considered
+     * @param isApplicable true if layer is to be used with indicated interaction
      */
-    public void setApplicable( String toolCategoryId, boolean isApplicable );
+    public void setApplicable( Interaction interaction, boolean isApplicable );
 
     /**
      * Indicates this layer is capable of selectable.

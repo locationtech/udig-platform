@@ -276,7 +276,7 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
             for( Iterator<ILayer> i = layers.iterator(); i.hasNext(); ) {
                 ILayer layer = i.next();
 
-                if (layer.isApplicable(ILayer.ID_BOUNDARY)) {
+                if (layer.isApplicable(ILayer.Interaction.BOUNDARY)) {
                     boundaryLayers.add(layer);
                 }
             }

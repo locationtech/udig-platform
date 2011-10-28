@@ -206,15 +206,15 @@ public class LayerDecorator implements Layer, InternalEObject {
     /*
      * @see net.refractions.udig.project.Layer#isApplicable(java.lang.String)
      */
-    public boolean isApplicable( String toolsetID ) {
-        return layer.isApplicable(toolsetID);
+    public boolean isApplicable( Interaction interaction ) {
+        return layer.isApplicable(interaction);
     }
 
     /*
      * @see net.refractions.udig.project.Layer#setApplicable(java.lang.String, boolean)
      */
-    public void setApplicable( String toolsetID, boolean isApplicable ) {
-        layer.setApplicable(toolsetID, isApplicable);
+    public void setApplicable( Interaction interaction, boolean isApplicable ) {
+        layer.setApplicable(interaction, isApplicable);
     }
 
     /*

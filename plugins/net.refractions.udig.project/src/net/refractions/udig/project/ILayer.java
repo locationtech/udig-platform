@@ -71,19 +71,50 @@ public interface ILayer extends Comparable<ILayer> {
      */
     public static final int WORKING = 5;
 
-    /** id of the visible boolean on the layer blackboard */
-    public static final String ID_VISIBLE = "interaction_visible";
-    /** id of the background boolean on the layer blackboard */
-    public static final String ID_BACKGROUND = "interaction_background";
-    /** id of the information boolean on the layer blackboard */
-    public static final String ID_INFO = "interaction_information";
-    /** id of the selectable boolean on the layer blackboard */
-    public static final String ID_SELECT = "interaction_select";
-    /** id of the editable boolean on the layer blackboard */
-    public static final String ID_EDIT = "interaction_edit";
-    /** id of the boundary boolean on the layer blackboard */
-    public static final String ID_BOUNDARY = "interaction_boundary";
+//    /** id of the visible interaction boolean on the layer blackboard */
+//    public static final String ID_VISIBLE = "interaction_visible";
+//    /** id of the background interaction boolean on the layer blackboard */
+//    public static final String ID_BACKGROUND = "interaction_background";
+//    /** id of the information interaction boolean on the layer blackboard */
+//    public static final String ID_INFO = "interaction_information";
+//    /** id of the selectable interaction boolean on the layer blackboard */
+//    public static final String ID_SELECT = "interaction_select";
+//    /** id of the editable interaction boolean on the layer blackboard */
+//    public static final String ID_EDIT = "interaction_edit";
+//    /** id of the boundary interaction boolean on the layer blackboard */
+//    public static final String ID_BOUNDARY = "interaction_boundary";
     
+    public static enum Interaction {
+        VISIBLE("interaction_visible"),
+        BACKGROUND("interaction_background"),
+        INFO ("interaction_information"),
+        SELECT ("interaction_select"),
+        EDIT ("interaction_edit"),
+        BOUNDARY ("interaction_boundary")
+        ;
+        
+        private String key;
+        
+        private Interaction(String k) {
+            key = k;
+        }
+        
+        public String getKey() {
+            return key;
+        }
+        
+        public static Interaction getInteraction(String toolCategoryId) {
+            if (toolCategoryId.equals(ProjectBlackboardConstants.LAYER__EDIT_APPLICABILITY)
+                    || toolCategoryId.equals(ProjectBlackboardConstants.LAYER__FEATURES_ADD_APPLICABILITY)
+                    || toolCategoryId.equals(ProjectBlackboardConstants.LAYER__FEATURES_MODIFY_APPLICABILITY)
+                    || toolCategoryId.equals(ProjectBlackboardConstants.LAYER__FEATURES_REMOVE_APPLICABILITY)) {
+                return Interaction.EDIT;
+            } else {
+                return Interaction.EDIT;
+            }
+            
+        }
+    }
     
     /** Listen to changes on this layer.  Each listener can only be added once*/
     public void addListener( ILayerListener listener );
@@ -249,7 +280,7 @@ public interface ILayer extends Comparable<ILayer> {
     public String getStatusMessage();
 
     /**
-     * Check toolset applicability.
+     * Check layer interaction applicability.
      * <p>
      * Note: some layers may not ever be applicable for certaint toolsets. Sometimes this is can be
      * determined quickly from a layer property like "selectable" for the selection toolset. Other
@@ -257,10 +288,10 @@ public interface ILayer extends Comparable<ILayer> {
      * </p>
      * 
      * @see isSelectable
-     * @param toolCategoryId
+     * @param interaction
      * @return
      */
-    public boolean isApplicable( String toolCategoryId );
+    public boolean isApplicable( Interaction interaction );
 
     /**
      * Gets the name from the associated metadata.
