@@ -1659,26 +1659,34 @@ public class LayerImpl extends EObjectImpl implements Layer {
         // check the blackboard 
         Boolean applicable = (Boolean) getBlackboard().get(interaction.getKey());
         if (applicable == null) {
-            // not available create a good default for people to see
-            if( Interaction.INFO.equals(interaction)){
-                return true; // info is supported by most layers
-            }
-            // wont hit this code yet because value comes from isSelectable
-            /*else if( ID_SELECT.equals(toolsetID)){
-                IGeoResource found = this.getGeoResource(FeatureSource.class);
-                return found != null;
-            }*/ 
-            else if( Interaction.EDIT.equals(interaction)){
-                IGeoResource found = this.getGeoResource(FeatureStore.class);
-                return found != null;
-            }
-            return false;
+            applicable = getDefaultApplicable( interaction );
+            getBlackboard().put( interaction.getKey(), applicable);
         }
-        else {
-            return applicable;
-        }
+        return applicable;
     }
-
+    
+    /**
+     * Logic to sort out a good default value for the request interaction.
+     * @param interaction
+     * @return <code>true</code> if the interaction defaults to on
+     */
+    protected boolean getDefaultApplicable(  Interaction interaction ){
+     // not available create a good default for people to see
+        if( Interaction.INFO.equals(interaction)){
+            return true; // info is supported by most layers
+        }
+        // wont hit this code yet because value comes from isSelectable
+        /*else if( ID_SELECT.equals(toolsetID)){
+            IGeoResource found = this.getGeoResource(FeatureSource.class);
+            return found != null;
+        }*/ 
+        else if( Interaction.EDIT.equals(interaction)){
+            IGeoResource found = this.getGeoResource(FeatureStore.class);
+            return found != null;
+        }
+        return false;
+    }
+    
     /**
      * @see net.refractions.udig.project.internal.Layer#setApplicable(java.lang.String, boolean)
      */
@@ -1691,8 +1699,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
         }
         else {
             getBlackboard().put(interaction.getKey(), applicable );
-            // XXX just to send an event needs to change.
-            //setSelectable(isSelectable());
+            // XXX just to send an event needs to change when we have EMF set up
+            setSelectable(isSelectable());
         }
     }
 
