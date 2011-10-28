@@ -35,7 +35,7 @@ public class BoundaryStrategyPropertyValue extends AbstractPropertyValue<Object>
             // that the value persisted is now changed
             // (the value is the name of the current IBoundaryStrategy)
             //
-            notifyListeners( event.source.getName() );
+            notifyListeners( event );
         }
     };
     

@@ -91,7 +91,7 @@ public class BoundaryServiceImpl implements IBoundaryService {
                     listener.handleEvent(event);
                 }
             } catch (Exception e) {
-                UiPlugin.trace(UiPlugin.ID, listener.getClass(), e.getMessage(), e);
+                UiPlugin.log(getClass(), "notifyListeners", e);
             }
         }
     }
