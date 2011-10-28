@@ -71,19 +71,12 @@ public interface ILayer extends Comparable<ILayer> {
      */
     public static final int WORKING = 5;
 
-//    /** id of the visible interaction boolean on the layer blackboard */
-//    public static final String ID_VISIBLE = "interaction_visible";
-//    /** id of the background interaction boolean on the layer blackboard */
-//    public static final String ID_BACKGROUND = "interaction_background";
-//    /** id of the information interaction boolean on the layer blackboard */
-//    public static final String ID_INFO = "interaction_information";
-//    /** id of the selectable interaction boolean on the layer blackboard */
-//    public static final String ID_SELECT = "interaction_select";
-//    /** id of the editable interaction boolean on the layer blackboard */
-//    public static final String ID_EDIT = "interaction_edit";
-//    /** id of the boundary interaction boolean on the layer blackboard */
-//    public static final String ID_BOUNDARY = "interaction_boundary";
-    
+    /**
+     * The set of layer interaction properties
+     * 
+     * @author paul.pfeiffer
+     * @version 1.3.0
+     */
     public static enum Interaction {
         VISIBLE("interaction_visible"),
         BACKGROUND("interaction_background"),
@@ -99,10 +92,19 @@ public interface ILayer extends Comparable<ILayer> {
             key = k;
         }
         
+        /**
+         * Get the key that is used to store and retrieve values from the layer blackboard
+         * @return key
+         */
         public String getKey() {
             return key;
         }
         
+        /**
+         * Gets the layer interaction property relevant to the supplied tool category id
+         * @param toolCategoryId
+         * @return interaction
+         */
         public static Interaction getInteraction(String toolCategoryId) {
             if (toolCategoryId.equals(ProjectBlackboardConstants.LAYER__EDIT_APPLICABILITY)
                     || toolCategoryId.equals(ProjectBlackboardConstants.LAYER__FEATURES_ADD_APPLICABILITY)
@@ -112,7 +114,6 @@ public interface ILayer extends Comparable<ILayer> {
             } else {
                 return Interaction.EDIT;
             }
-            
         }
     }
     

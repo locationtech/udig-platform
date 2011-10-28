@@ -91,7 +91,7 @@ public class ValidToolDetectionActivator implements EnablementBehaviour {
 
                 if (decision) {
                     UndoableMapCommand command = handler.getContext().getBasicCommandFactory()
-                            .createSetApplicabilityCommand(layer, Interaction.EDIT, true);
+                            .createSetApplicabilityCommand(layer, ILayer.Interaction.EDIT, true);
                     handler.getContext().sendASyncCommand(command);
                 } else {
                     warning[0]=Messages.ValidToolDetectionActivator_warning2;
