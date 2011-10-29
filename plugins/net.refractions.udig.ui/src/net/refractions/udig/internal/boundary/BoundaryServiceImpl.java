@@ -75,17 +75,19 @@ public class BoundaryServiceImpl implements IBoundaryService {
 
     @Override
     public void removeListener( BoundaryListener listener ) {
-        listeners.add(listener);
+        if (listeners.contains(listener)) {
+            listeners.remove(listener);
+        }
     }
 
-    /**
+    /*
      * Notifies listener that the value of the filter has changed.
      */
     private void notifyListeners( BoundaryListener.Event event ) {
+        if (event == null) {
+            event = new BoundaryListener.Event(getProxy());
+        }
         for( BoundaryListener listener : listeners ) {
-            if (event == null) {
-                event = new BoundaryListener.Event(getProxy());
-            }
             try {
                 if (listener != null) {
                     listener.handleEvent(event);

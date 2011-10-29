@@ -12,39 +12,35 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.boundary;
+package org.tcat.citd.sim.udig.bookmarks;
 
-import java.util.EventObject;
-
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
-import com.vividsolutions.jts.geom.Geometry;
+import java.util.Collection;
 
 /**
- * Quick listener to <code>BoundaryService</code> providing notification
- * of changes to the extent represented (bounds, geometry, crs).
- * <p>
+ * Quick listener to <code>BookmarkService</code> providing notification of changes to 
+ * the list of bookmarks
+ * 
  * @see java.util.EventListener
  */
-public interface BoundaryListener {
+public interface BookmarkListener {
     /**
-     * Captures a change to the bounds published by BoundaryService.
+     * Captures a change to the bookmarks
+     * 
      * @author paul.pfeiffer
+     * @version 1.3.0
      */
-    public static class Event extends EventObject{
-        private static final long serialVersionUID = -3438046080794276022L;
-        public IBoundaryStrategy source;
-        public Geometry geometry;
-        public ReferencedEnvelope bounds;
-        public Event( IBoundaryStrategy source ){
-            super(source);
+    public static class Event {
+        public Collection<IBookmark> source;
+        public Event( Collection<IBookmark> source ) {
+            this.source = source;
         }
     }
-    
+
     /**
-     * BoundaryListener event notification.
+     * BookmarkListener event notification.
      * 
      * @param event the event which occurred
      */
     void handleEvent( Event event );
+
 }
