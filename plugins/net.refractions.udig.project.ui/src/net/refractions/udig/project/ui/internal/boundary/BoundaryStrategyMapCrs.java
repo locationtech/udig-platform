@@ -23,6 +23,7 @@ import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.geometry.BoundingBox;
 import org.opengis.geometry.Envelope;
+import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.metadata.extent.GeographicBoundingBox;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -43,7 +44,18 @@ public class BoundaryStrategyMapCrs extends IBoundaryStrategy {
 	@Override
 	public ReferencedEnvelope getExtent() {
 		final IMap currentMap = ApplicationGIS.getActiveMap();
-		if (!currentMap.equals(ApplicationGIS.NO_MAP)) {
+		return calcualteExtent(currentMap);
+	}
+
+    /**
+     * Returns the extent of a map
+     * @param currentMap
+     * @return 
+     * @throws MismatchedDimensionException
+     */
+	public static ReferencedEnvelope calcualteExtent( final IMap currentMap )
+            throws MismatchedDimensionException {
+        if (!currentMap.equals(ApplicationGIS.NO_MAP)) {
 			CoordinateReferenceSystem worldCRS = currentMap.getViewportModel().getCRS();
 			try {
                 if( worldCRS.getIdentifiers() == null || worldCRS.getIdentifiers().isEmpty()){
@@ -87,7 +99,7 @@ public class BoundaryStrategyMapCrs extends IBoundaryStrategy {
             return extent;
 		}
 		return null;
-	}
+    }
 
 	@Override
 	public Geometry getGeometry() {
