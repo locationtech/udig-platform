@@ -105,7 +105,7 @@ public interface IBookmarkService {
      * 
      * @param elements
      */
-    public void removeBookmarks( Collection elements ); 
+    public void removeBookmarks( Collection<IBookmark> elements ); 
 
     /**
      * Remove the map and all it's associated bookmarks
@@ -119,7 +119,7 @@ public interface IBookmarkService {
      * 
      * @param elements
      */
-    public void removeMaps( Collection elements ); 
+    public void removeMaps( Collection<MapReference> elements ); 
     
     /**
      * Remove the project and all it's associated maps and bookmarks
@@ -133,12 +133,27 @@ public interface IBookmarkService {
      * 
      * @param elements
      */
-    public void removeProjects( Collection elements ); 
+    public void removeProjects( Collection<URI> elements ); 
 
     /**
      * @param map
      * @return the MapReference singleton for the given IMap
      */
     public MapReference getMapReference( IMap map ); 
+
+    /**
+     * Adds the supplied listener.
+     * 
+     * @param listener
+     */
+    
+    public void addListener( BookmarkListener listener );
+    
+    /**
+     * Remove the provided listener.
+     * 
+     * @param listener
+     */
+    public void removeListener( BookmarkListener listener );
 
 }

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.refractions.udig.boundary.BoundaryProxy;
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.boundary.IBoundaryStrategy;
 import net.refractions.udig.project.ILayer;
@@ -56,7 +57,7 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
 
     private Envelope bbox = null;
     private ReferencedEnvelope bounds;
-    private static String BOUNDARYSERVICE_ID = "net.refractions.udig.tool.default.BoundaryLayerService";
+    private static String BOUNDARY_LAYER_ID = "net.refractions.udig.tool.default.BoundaryLayerService";
 
     /**
      * Creates a new instance of SetConndaryCommand
@@ -79,16 +80,13 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
      */
     public void run( IProgressMonitor monitor ) throws Exception {
 
-        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        IBoundaryStrategy boundaryStrategy = boundaryService.findProxy(BOUNDARYSERVICE_ID)
-                .getStrategy();
-
         ILayer selectedLayer = null;
-
-        if (boundaryStrategy instanceof BoundaryLayerStrategy) {
-            BoundaryLayerStrategy navigationBoundaryStrategy = (BoundaryLayerStrategy) boundaryStrategy;
-            selectedLayer = navigationBoundaryStrategy.getActiveLayer();
-        }
+        
+        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        BoundaryProxy boundaryLayerProxy = boundaryService.findProxy(BOUNDARY_LAYER_ID);
+        
+        BoundaryLayerStrategy boundaryLayerStrategy = (BoundaryLayerStrategy)boundaryLayerProxy.getStrategy();
+        selectedLayer = boundaryLayerStrategy.getActiveLayer();
 
         if (selectedLayer == null) return;
 
@@ -148,13 +146,15 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
     private void updateBoundaryService( Geometry newBoundary, CoordinateReferenceSystem crs )
             throws IOException {
         IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        IBoundaryStrategy boundaryStrategy = boundaryService.findProxy(BOUNDARYSERVICE_ID)
-                .getStrategy();
-
-        if (boundaryStrategy instanceof BoundaryLayerStrategy) {
-            BoundaryLayerStrategy navigationBoundaryStrategy = (BoundaryLayerStrategy) boundaryStrategy;
-            navigationBoundaryStrategy.setCrs(crs);
-            navigationBoundaryStrategy.setGeometry(newBoundary);
+        BoundaryProxy boundaryLayerProxy = boundaryService.findProxy(BOUNDARY_LAYER_ID);
+        
+        BoundaryLayerStrategy boundaryLayerStrategy = (BoundaryLayerStrategy)boundaryLayerProxy.getStrategy();
+        boundaryLayerStrategy.setCrs(crs);
+        boundaryLayerStrategy.setGeometry(newBoundary);
+        
+        // if the current stragegy does not equal the bounary layer strategy set it
+        if (!boundaryService.getProxy().equals(boundaryLayerProxy)) {
+            boundaryService.setProxy(boundaryLayerProxy);
         }
 
     }

@@ -15,6 +15,7 @@
 
 package org.tcat.citd.sim.udig.bookmarks.internal.ui;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.refractions.udig.boundary.BoundaryProxy;
@@ -28,14 +29,15 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.Page;
 import org.tcat.citd.sim.udig.bookmarks.BookmarkBoundaryStrategy;
+import org.tcat.citd.sim.udig.bookmarks.BookmarkListener;
 import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
 import org.tcat.citd.sim.udig.bookmarks.IBookmark;
 import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
@@ -69,11 +71,43 @@ public class BookmarkBoundaryPage extends Page {
         }
     };
 
+    /*
+     * Listens to the workbench IBookmarkService and updates our view if anything changes!
+     */
+    private BookmarkListener serviceWatcher = new BookmarkListener(){
+        
+        public void handleEvent( BookmarkListener.Event event ) {
+            // must be run in the UI thread to be able to call setSelected
+            PlatformGIS.asyncInDisplayThread(new Runnable(){
+                
+                @Override
+                public void run() {
+                    IBookmark currentBookmark = getSelected();
+                    Collection<IBookmark> bookmarks = BookmarksPlugin.getBookmarkService().getBookmarks();
+                    comboViewer.setInput(bookmarks);
+                    // check if the current bookmark still exists
+                    if (bookmarks.contains(currentBookmark)) {
+                        setSelected(currentBookmark);
+                    }
+                    else {
+                        // this may need to reset the strategy but at this stage 
+                        // the bookmarkBoundaryStrategy holds on to the current bookmark
+                        // even when it is deleted
+                        setSelected(null);
+                    }
+                    
+                }
+            }, true);
+        }
+        
+    };
+
     public BookmarkBoundaryPage() {
         // careful don't do any work here
     }
     
     // We would overrride init if we needed to (remmeber to call super)
+    @Override
     public void init(IPageSite pageSite){
         super.init(pageSite); // provides access to stuff
         IBoundaryService service = PlatformGIS.getBoundaryService();
@@ -102,6 +136,7 @@ public class BookmarkBoundaryPage extends Page {
         label.pack();
         
         IBookmarkService bookmarkService = BookmarksPlugin.getBookmarkService();
+        listenService(true);
         
         comboViewer = new ComboViewer(page, SWT.READ_ONLY);
         comboViewer.setContentProvider(new ArrayContentProvider());
@@ -115,7 +150,8 @@ public class BookmarkBoundaryPage extends Page {
                 return super.getText(element);
             }
         });
-        comboViewer.setInput((List<IBookmark>)bookmarkService.getBookmarks());
+        List<IBookmark> bookmarks = (List<IBookmark>)bookmarkService.getBookmarks();
+        comboViewer.setInput(bookmarks);
         
         comboViewer.addSelectionChangedListener(comboListener);
         
@@ -125,12 +161,54 @@ public class BookmarkBoundaryPage extends Page {
         }
     }
     
-    public void listen( boolean listen ){
-        if( listen ){
-            // add listeners to ui stuff
+    /*
+     * This will update the combo viewer (carefully unhooking events while the viewer is updated).
+     * 
+     * @param selected
+     */
+    private void setSelected( IBookmark selected ) {
+//        if (selected == null) {
+//            return;
+//        }
+        
+        boolean disposed = comboViewer.getControl().isDisposed();
+        if (comboViewer == null || disposed) {
+            listenService(false);
+            return; // the view has shutdown!
         }
-        else {
-            // remove listeners from ui stuff
+        
+        IBookmark current = getSelected();
+        // check combo
+        if (current != selected) {
+            try {
+                //listenCombo(false);
+                comboViewer.setSelection(new StructuredSelection(selected), true);
+            } finally {
+                //listenCombo(true);
+            }
+        }
+
+    }
+    
+    /*
+     * Get the Bookmark selected by the user
+     * 
+     * @return Ibookmark selected by the user
+     */
+    private IBookmark getSelected() {
+        if (comboViewer.getSelection() instanceof IStructuredSelection) {
+            IStructuredSelection selection = (IStructuredSelection) comboViewer.getSelection();
+            return (IBookmark) selection.getFirstElement();
+        }
+        return null;
+    }
+
+    protected void listenService( boolean listen ){
+        IBookmarkService bookmarkService = BookmarksPlugin.getBookmarkService();
+        if (listen) {
+            bookmarkService.addListener(serviceWatcher);
+        } else {
+            bookmarkService.removeListener(serviceWatcher);
         }
     }
 
