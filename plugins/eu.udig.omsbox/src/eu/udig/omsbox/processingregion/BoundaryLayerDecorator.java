@@ -22,10 +22,14 @@ import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import java.util.Collections;
 
+import org.geotools.geometry.jts.ReferencedEnvelope;
+
+import net.refractions.udig.boundary.BoundaryListener;
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.mapgraphic.MapGraphic;
 import net.refractions.udig.mapgraphic.MapGraphicContext;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.graphics.AWTGraphics;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
@@ -50,10 +54,37 @@ public class BoundaryLayerDecorator implements MapGraphic {
     public BoundaryLayerDecorator() {
     }
 
+    /*
+     * Listens to the global IBoundaryService and updates the decorator if anything changes!
+     */
+    private BoundaryListener serviceWatcher = new BoundaryListener(){
+        
+        public void handleEvent( BoundaryListener.Event event ) {
+            ReferencedEnvelope view = ApplicationGIS.getActiveMap().getViewportModel().getBounds();
+            
+            for (ILayer layer: ApplicationGIS.getActiveMap().getMapLayers()) {
+                if (layer.findGeoResource(BoundaryLayerDecorator.class) != null) {
+                    ApplicationGIS.getActiveMap().getRenderManager().refresh(layer, view);
+                }
+            }
+         }
+    };
+
+    protected void listenService( boolean listen ) {
+        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        if (listen) {
+            boundaryService.addListener(serviceWatcher);
+        } else {
+            boundaryService.removeListener(serviceWatcher);
+        }
+    }
+
     public void draw( MapGraphicContext context ) {
         context.getLayer().setStatus(ILayer.WORKING);
 
-        // initialize the graphics handle
+        listenService(true);
+        
+        // initialise the graphics handle
         ViewportGraphics graphic = context.getGraphics();
         if (graphic instanceof AWTGraphics) {
             AWTGraphics awtG = (AWTGraphics) graphic;
@@ -78,9 +109,6 @@ public class BoundaryLayerDecorator implements MapGraphic {
             //float[] rgba = style.backgroundColor.getColorComponents(null);
             //g.setColor(new Color(rgba[0], rgba[1], rgba[2], style.bAlpha));
             graphic.setColor(new Color((float)0.5, (float)0.5, (float)0.5, (float)0.5));
-    
-            // Point xyRes = new Point((urPoint.x - ulPoint.x) / style.cols, (llPoint.y - ulPoint.y) /
-            // style.rows);
     
             int screenWidth = screen.width;
             int screenHeight = screen.height;
@@ -112,7 +140,6 @@ public class BoundaryLayerDecorator implements MapGraphic {
                         
                     }
                     
-                    // draw the exterior
                     Coordinate[] coordinates = exterior.getCoordinates();
                     
                     // move to the first point
@@ -135,7 +162,7 @@ public class BoundaryLayerDecorator implements MapGraphic {
             //rgba = style.foregroundColor.getColorComponents(null);
             //g.setColor(new Color(rgba[0], rgba[1], rgba[2], style.fAlpha));
             graphic.setColor(new Color((float)0.5, (float)0.5, (float)0.5, (float)0.75));
-            graphic.setStroke(ViewportGraphics.LINE_SOLID, 2);
+            graphic.setStroke(ViewportGraphics.LINE_SOLID, 1);
             graphic.draw(path);
             
             
@@ -146,7 +173,6 @@ public class BoundaryLayerDecorator implements MapGraphic {
                     path.reset();
                     Geometry geometry = innerPolygons.getGeometryN(g);
                     
-                    // draw the boundary
                     Coordinate[] coordinates = geometry.getCoordinates();
                     
                     // move to the first point
@@ -169,10 +195,13 @@ public class BoundaryLayerDecorator implements MapGraphic {
             }
             
         }
-
         context.getLayer().setStatus(ILayer.DONE);
         context.getLayer().setStatusMessage("Layer rendered");
 
+    }
+    
+    public void dispose() {
+        listenService(false);
     }
 
 }

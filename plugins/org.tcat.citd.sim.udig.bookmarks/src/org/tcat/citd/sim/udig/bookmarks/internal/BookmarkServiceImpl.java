@@ -16,8 +16,11 @@ package org.tcat.citd.sim.udig.bookmarks.internal;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArraySet;
 
+import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Project;
 
@@ -27,6 +30,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.osgi.service.prefs.BackingStoreException;
 import org.tcat.citd.sim.udig.bookmarks.Bookmark;
+import org.tcat.citd.sim.udig.bookmarks.BookmarkListener;
 import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
 import org.tcat.citd.sim.udig.bookmarks.IBookmark;
 import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
@@ -44,6 +48,11 @@ public class BookmarkServiceImpl implements IBookmarkService {
     private HashMap<URI, Vector<Bookmark>> mapsHash;
     private HashMap<URI, MapReference> mapReferences;
     private int count = 0;
+    
+    /**
+     * A list of listeners to be notified when the Strategy changes
+     */
+    protected Set<BookmarkListener> listeners = new CopyOnWriteArraySet<BookmarkListener>();
 
     /**
      * 
@@ -64,6 +73,8 @@ public class BookmarkServiceImpl implements IBookmarkService {
             IStatus status = new Status( IStatus.WARNING,BookmarksPlugin.ID,"Unable to save to BookmarksPlugin");
             log.log(status);
         }
+        Set<IBookmark> bookmarks = new CopyOnWriteArraySet<IBookmark>();
+        notifyListeners(new BookmarkListener.Event(bookmarks));
     }
     
     @Override
@@ -99,6 +110,7 @@ public class BookmarkServiceImpl implements IBookmarkService {
     public void empty() {
         projectsHash.clear();
         mapsHash.clear();
+        notifyListeners(new BookmarkListener.Event(null));
     }
 
     @Override
@@ -134,7 +146,9 @@ public class BookmarkServiceImpl implements IBookmarkService {
         for (URI project : getProjects()) {
             for (MapReference map : getMaps(project)) {
                 for (IBookmark  bookmark : getBookmarks(map)) {
-                    bookmarks.add(bookmark);
+                    if (!bookmarks.contains(bookmark)) {
+                        bookmarks.add(bookmark);
+                    }
                 }
             }
         }
@@ -163,16 +177,19 @@ public class BookmarkServiceImpl implements IBookmarkService {
                 projectsHash.remove(projectID);
             }
         }
+        Set<IBookmark> bookmarks = new CopyOnWriteArraySet<IBookmark>();
+        notifyListeners(new BookmarkListener.Event(bookmarks));
     }
 
     @Override
-    public void removeBookmarks( Collection elements ) {
+    public void removeBookmarks( Collection<IBookmark> elements ) {
         for( Object element : elements ) {
             if (element instanceof Bookmark) {
                 Bookmark bmark = (Bookmark) element;
                 this.removeBookmark(bmark);
             }
         }
+        notifyListeners(new BookmarkListener.Event(elements));
     }
 
     @Override
@@ -186,16 +203,18 @@ public class BookmarkServiceImpl implements IBookmarkService {
                 projectsHash.remove(projectID);
             }
         }
+        notifyListeners(new BookmarkListener.Event(null));
     }
 
     @Override
-    public void removeMaps( Collection elements ) {
+    public void removeMaps( Collection<MapReference> elements ) {
         for( Object element : elements ) {
             if (element instanceof MapReference) {
                 MapReference map = (MapReference) element;
                 this.removeMap(map);
             }
         }
+        notifyListeners(new BookmarkListener.Event(null));
     }
 
     @Override
@@ -205,16 +224,18 @@ public class BookmarkServiceImpl implements IBookmarkService {
         for( MapReference map : maps ) {
             maps.remove(map);
         }
+        notifyListeners(new BookmarkListener.Event(null));
     }
 
     @Override
-    public void removeProjects( Collection elements ) {
+    public void removeProjects( Collection<URI> elements ) {
         for( Object element : elements ) {
             if (element instanceof URI) {
                 URI project = (URI) element;
                 this.removeProject(project);
             }
         }
+        notifyListeners(new BookmarkListener.Event(null));
     }
 
     @Override
@@ -232,6 +253,39 @@ public class BookmarkServiceImpl implements IBookmarkService {
             ref = mapReferences.get(map.getID());
         }
         return ref;
+    }
+
+    @Override
+    public void addListener( BookmarkListener listener ) {
+        if (listener == null) {
+            throw new NullPointerException("BookmarkService listener required to be non null");
+        }
+        listeners.add(listener);
+    }
+
+    @Override
+    public void removeListener( BookmarkListener listener ) {
+        if (listeners.contains(listener)) {
+            listeners.remove(listener);
+        }
+    }
+
+    /*
+     * Notifies listener that the value of the filter has changed.
+     */
+    private void notifyListeners( BookmarkListener.Event event ) {
+        if (event == null) {
+            event = new BookmarkListener.Event(getBookmarks());
+        }
+        for( BookmarkListener listener : listeners ) {
+            try {
+                if (listener != null) {
+                    listener.handleEvent(event);
+                }
+            } catch (Exception e) {
+                UiPlugin.log(getClass(), "notifyListeners", e);
+            }
+        }
     }
 
 }
