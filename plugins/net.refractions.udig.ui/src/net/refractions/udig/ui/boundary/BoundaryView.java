@@ -64,13 +64,22 @@ public class BoundaryView extends ViewPart {
     private BoundaryListener serviceWatcher = new BoundaryListener(){
         // private IBoundaryStrategy selectedStrategy = null;
         public void handleEvent( BoundaryListener.Event event ) {
-            BoundaryProxy currentStrategy;
-            if (event.source instanceof BoundaryProxy) {
-                currentStrategy = (BoundaryProxy) event.source;
-            } else {
-                currentStrategy = PlatformGIS.getBoundaryService().getProxy();
-            }
-            setSelected(currentStrategy);            
+            final BoundaryListener.Event boundaryEvent = event;
+            // must be run in the UI thread to be able to call setSelected
+            PlatformGIS.asyncInDisplayThread(new Runnable(){
+                
+                @Override
+                public void run() {
+                    BoundaryProxy currentStrategy;
+                    if (boundaryEvent.source instanceof BoundaryProxy) {
+                        currentStrategy = (BoundaryProxy) boundaryEvent.source;
+                    } else {
+                        currentStrategy = PlatformGIS.getBoundaryService().getProxy();
+                    }
+                    setSelected(currentStrategy);            
+                    
+                }
+            }, true);
         }
     };
 
@@ -120,7 +129,8 @@ public class BoundaryView extends ViewPart {
             selected = PlatformGIS.getBoundaryService().getDefault();
         }
         
-        if (comboViewer == null || comboViewer.getControl().isDisposed()) {
+        boolean disposed = comboViewer.getControl().isDisposed();
+        if (comboViewer == null || disposed) {
             listenService(false);
             return; // the view has shutdown!
         }
@@ -130,7 +140,7 @@ public class BoundaryView extends ViewPart {
         if (current != selected) {
             try {
                 listenCombo(false);
-                comboViewer.setSelection(new StructuredSelection(selected));
+                comboViewer.setSelection(new StructuredSelection(selected), true);
             } finally {
                 listenCombo(true);
             }
@@ -279,7 +289,11 @@ public class BoundaryView extends ViewPart {
         });
         comboViewer.setInput(boundaryService.getProxyList());
         // set the current strategy
-        comboViewer.setSelection(new StructuredSelection(boundaryService.getDefault()));
+        BoundaryProxy proxy = boundaryService.getProxy();
+        if (proxy == null) {
+            proxy = boundaryService.getDefault();
+        }
+        comboViewer.setSelection(new StructuredSelection(proxy));
 
         // now that we are configured we can start to listen!
         listenCombo(true);
