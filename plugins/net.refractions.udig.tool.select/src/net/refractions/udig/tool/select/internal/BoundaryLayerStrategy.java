@@ -14,11 +14,18 @@
  */
 package net.refractions.udig.tool.select.internal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.refractions.udig.boundary.BoundaryListener;
 import net.refractions.udig.boundary.IBoundaryStrategy;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ui.ApplicationGIS;
 
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -35,7 +42,8 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
     private static String name = "Layer";
     private CoordinateReferenceSystem crs;
     private Geometry geometry;
-    private ILayer activeLayer;
+    private ILayer activeLayer = null;
+    private SimpleFeatureCollection features = null;
 
     /**
      * Set the CRS of the current boundary
@@ -44,16 +52,6 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
      */
     public void setCrs( CoordinateReferenceSystem crs ) {
         this.crs = crs;
-        
-        BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryLayerStrategy.this);
-        notifyListeners(boundaryEvent);
-    }
-
-    /**
-     * @param activeLayer the activeLayer to set
-     */
-    public void setActiveLayer( ILayer activeLayer ) {
-        this.activeLayer = activeLayer;
         
         BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryLayerStrategy.this);
         notifyListeners(boundaryEvent);
@@ -71,13 +69,6 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
         notifyListeners(boundaryEvent);
     }
     
-    /**
-     * @return the activeLayer
-     */
-    public ILayer getActiveLayer() {
-        return activeLayer;
-    }
-
     /*
      * (non-Javadoc)
      * @see net.refractions.udig.boundary.IBoundaryStrategy#getExtent()
@@ -115,4 +106,88 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
         return name;
     }
 
+    /**
+     * Gets a list of Boundary Layers from the active map
+     * The list is in z-order
+     * @return List<ILayer>
+     */
+    public List<ILayer> getBoundaryLayers() {
+
+        List<ILayer> layers = ApplicationGIS.getActiveMap().getMapLayers(); // immutable must copy
+        List<ILayer> boundaryLayers = new ArrayList<ILayer>();
+        
+        for (ILayer layer: layers) {
+            if (layer.isApplicable(ILayer.Interaction.BOUNDARY)) {
+                boundaryLayers.add(layer);
+            }
+        }
+        return boundaryLayers;
+    }
+    
+    /**
+     * @return the activeLayer
+     */
+    public ILayer getActiveLayer() {
+        return activeLayer;
+    }
+
+    /**
+     * Sets the active layer and notifies listeners
+     * @param activeLayer the activeLayer to set
+     */
+    public void setActiveLayer( ILayer activeLayer ) {
+        this.activeLayer = activeLayer;
+        
+        BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryLayerStrategy.this);
+        notifyListeners(boundaryEvent);
+    }
+    
+    /**
+     * Sets the Active layer to be the next available boundary layer and notifies listeners. 
+     * If the active layer has not been set it will choose the first layer. 
+     * No change if the active layer is the last layer (z-order) or there are no boundary layers.
+     * @return ILayer the new active layer or null if no boundary layers exist
+     */
+    public ILayer selectNextLayer() {
+        List<ILayer> layers = getBoundaryLayers();
+        
+        // if no active layer set to first layer
+        if (activeLayer == null) {
+            if (layers.size() > 0) {
+                ILayer layer = layers.get(0);
+                setActiveLayer(layer); // also triggers event
+                return layer;
+            }
+            return null;
+        }
+        
+        // set active layer to next in list 
+        int index = layers.indexOf(activeLayer);
+        if (index < layers.size()-1) {
+            setActiveLayer(layers.get(index+1)); // also triggers event
+        }
+        return activeLayer;
+    }
+    
+    /**
+     * Gets the features that have been selected
+     * @return List of SimpleFeature
+     */
+    public List<SimpleFeature> getFeatures() {
+        List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
+        SimpleFeatureIterator featuresIterator = features.features();
+        while (featuresIterator.hasNext()) {
+            featureList.add(featuresIterator.next());
+        }
+        return featureList;
+    }
+
+    /**
+     * Sets the current features selected
+     * @param featureCollection
+     */
+    public void setFeatures(SimpleFeatureCollection featureCollection) {
+        features = featureCollection;
+    }
+    
 }

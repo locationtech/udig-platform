@@ -183,7 +183,8 @@
          <boundary
                class="net.refractions.udig.tool.select.internal.BoundaryLayerStrategy"
                id="net.refractions.udig.tool.default.BoundaryLayerService"
-               name="Boundary Layer">
+               name="Boundary Layer"
+               page="net.refractions.udig.tool.select.internal.BoundaryLayerPage">
          </boundary>
       </extension>
 </plugin>

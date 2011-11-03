@@ -16,15 +16,12 @@ package net.refractions.udig.tool.select.internal;
 
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import net.refractions.udig.boundary.BoundaryListener;
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.boundary.IBoundaryStrategy;
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.project.ui.tool.ModalTool;
@@ -192,10 +189,8 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
     public static class OptionContribtionItem extends ToolOptionContributionItem {
 
         private ComboViewer comboViewer;
-        private IMap map;
-        private List<ILayer> boundaryLayers = new ArrayList<ILayer>();
 
-        private static String BOUNDARYSERVICE_ID = "net.refractions.udig.tool.default.BoundaryLayerService";
+        private static String BOUNDARY_LAYER_ID = "net.refractions.udig.tool.default.BoundaryLayerService";
         
         /**
          * Listens to the user and changes the global IBoundaryService to the indicated strategy.
@@ -209,21 +204,39 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
             }
         };
         
+        /**
+         * Watches for a change in boundary layer and sets the combo to the new layer
+         */
+        protected BoundaryListener watcher = new BoundaryListener(){
+            public void handleEvent( BoundaryListener.Event event ) {
+                ILayer layer = getBoundaryLayerStrategy().getActiveLayer();
+                //comboViewer.setSelection(new StructuredSelection(layer));
+                setSelected(layer);
+            }
+        };
+
         @Override
         protected IPreferenceStore fillFields( Composite parent ) {
-            
-            map = ApplicationGIS.getActiveMap();
             
             Button check = new Button(parent,  SWT.CHECK );
             check.setText("Zoom to selection");
             addField( SelectionToolPreferencePage.ZOOM_TO_SELECTION, check );
 
             setCombo(parent);
-            listenCombo(true);
-            // set the current strategy
-            if(!boundaryLayers.isEmpty()){
-                comboViewer.setSelection(new StructuredSelection(boundaryLayers.get(0)));
+            listenBoundaryLayer(true);
+            
+            // set the list of layers and the active layer
+            List<ILayer> layers = getBoundaryLayerStrategy().getBoundaryLayers();
+            ILayer activeLayer = getBoundaryLayerStrategy().getActiveLayer();
+            comboViewer.setInput(layers);
+            if(!layers.isEmpty()){
+                comboViewer.setInput(layers);
+                if (activeLayer == null) {
+                    activeLayer = layers.get(0);
+                }
             }
+            setSelected(activeLayer);
+            listenCombo(true);
             
             return SelectPlugin.getDefault().getPreferenceStore();
         }
@@ -246,17 +259,6 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
             comboViewer.setInput(getBoundaryLayers());
         }
 
-        private void setActiveLayer( ILayer activeLayer ) {
-            IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-            IBoundaryStrategy boundaryStrategy = boundaryService.findProxy(BOUNDARYSERVICE_ID)
-                    .getStrategy();
-
-            if (boundaryStrategy instanceof BoundaryLayerStrategy) {
-                BoundaryLayerStrategy navigationBoundaryStrategy = (BoundaryLayerStrategy) boundaryStrategy;
-                navigationBoundaryStrategy.setActiveLayer(activeLayer);
-            }
-        }
-        
         protected void listenCombo( boolean listen ) {
             if (comboViewer == null || comboViewer.getControl().isDisposed()) {
                 return;
@@ -268,19 +270,83 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
             }
         }
 
-        private List<ILayer> getBoundaryLayers() {
-
-            List<ILayer> layers = map.getMapLayers();
-            boundaryLayers.clear();
-
-            for( Iterator<ILayer> i = layers.iterator(); i.hasNext(); ) {
-                ILayer layer = i.next();
-
-                if (layer.isApplicable(ILayer.Interaction.BOUNDARY)) {
-                    boundaryLayers.add(layer);
+        protected void listenBoundaryLayer( boolean listen ) {
+            BoundaryLayerStrategy boundaryLayerStrategy = getBoundaryLayerStrategy();
+            if (boundaryLayerStrategy == null) {
+                return;
+            }
+            if (listen) {
+                boundaryLayerStrategy.addListener(watcher);
+            } else {
+                boundaryLayerStrategy.removeListener(watcher);
+            }
+        }
+        
+        /*
+         * This will update the combo viewer (carefully unhooking events while the viewer is updated).
+         * 
+         * @param selected
+         */
+        private void setSelected( ILayer selected ) {
+            
+            boolean disposed = comboViewer.getControl().isDisposed();
+            if (comboViewer == null || disposed) {
+                listenBoundaryLayer(false);
+                return; // the view has shutdown!
+            }
+            
+            ILayer current = getSelected();
+            // check combo
+            if (current != selected) {
+                try {
+                    listenCombo(false);
+                    comboViewer.setSelection(new StructuredSelection(selected), true);
+                } finally {
+                    listenCombo(true);
                 }
             }
-            return boundaryLayers;
+
+        }
+
+        /*
+         * Get the Boundary Layer currently selected in this tool
+         * 
+         * @return ILayer currently selected in this tool
+         */
+        private ILayer getSelected() {
+            if (comboViewer.getSelection() instanceof IStructuredSelection) {
+                IStructuredSelection selection = (IStructuredSelection) comboViewer.getSelection();
+                return (ILayer) selection.getFirstElement();
+            }
+            return null;
+        }
+
+        /*
+         * Sets the active layer in the boundary layer strategy
+         */
+        private void setActiveLayer( ILayer activeLayer ) {
+            getBoundaryLayerStrategy().setActiveLayer(activeLayer);
+        }
+        
+        /*
+         * returns a BoundaryLayerStrategy object for quick access
+         */
+        private BoundaryLayerStrategy getBoundaryLayerStrategy() {
+            IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+            IBoundaryStrategy boundaryStrategy = boundaryService.findProxy(BOUNDARY_LAYER_ID)
+                    .getStrategy();
+
+            if (boundaryStrategy instanceof BoundaryLayerStrategy) {
+                return (BoundaryLayerStrategy) boundaryStrategy;
+            }
+            return null;
+        }
+        
+        /*
+         * gets a list of boundary layers via the boundary strategy
+         */
+        private List<ILayer> getBoundaryLayers() {
+            return getBoundaryLayerStrategy().getBoundaryLayers();
         }
 
     };

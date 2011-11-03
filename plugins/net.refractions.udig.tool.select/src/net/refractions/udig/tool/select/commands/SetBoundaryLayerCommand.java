@@ -80,21 +80,25 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
      */
     public void run( IProgressMonitor monitor ) throws Exception {
 
-        ILayer selectedLayer = null;
+        ILayer selectedLayer = getBoundaryLayerStrategy().getActiveLayer();
         
-        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        BoundaryProxy boundaryLayerProxy = boundaryService.findProxy(BOUNDARY_LAYER_ID);
-        
-        BoundaryLayerStrategy boundaryLayerStrategy = (BoundaryLayerStrategy)boundaryLayerProxy.getStrategy();
-        selectedLayer = boundaryLayerStrategy.getActiveLayer();
-
-        if (selectedLayer == null) return;
+        if (selectedLayer == null) {
+            List<ILayer> boundaryLayers = getBoundaryLayerStrategy().getBoundaryLayers();
+            if (boundaryLayers.isEmpty()) {
+                return;
+            }
+            else {
+                selectedLayer = boundaryLayers.get(0);
+            }
+        }
 
         if (!selectedLayer.isApplicable(ILayer.Interaction.BOUNDARY)) return;
 
         selectedLayer.getCRS();
         SimpleFeatureCollection featureCollection = getFeaturesInBbox(selectedLayer, bbox, monitor);
 
+        getBoundaryLayerStrategy().setFeatures(featureCollection);
+        
         bounds = featureCollection.getBounds();
 
         if (featureCollection.isEmpty()) return;
@@ -108,10 +112,27 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
                 .getBoolean(SelectionToolPreferencePage.ZOOM_TO_SELECTION)) {
             ViewportModelImpl vmi = (ViewportModelImpl) selectedLayer.getMap().getViewportModel();
             vmi.zoomToBox(bounds);
+            
+            // move to next boundary layer
+            getBoundaryLayerStrategy().selectNextLayer();
         }
 
     }
 
+    /*
+     * returns a BoundaryLayerStrategy object for quick access
+     */
+    private BoundaryLayerStrategy getBoundaryLayerStrategy() {
+        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        IBoundaryStrategy boundaryStrategy = boundaryService.findProxy(BOUNDARY_LAYER_ID)
+                .getStrategy();
+
+        if (boundaryStrategy instanceof BoundaryLayerStrategy) {
+            return (BoundaryLayerStrategy) boundaryStrategy;
+        }
+        return null;
+    }
+    
     private SimpleFeatureCollection getFeaturesInBbox( ILayer layer, Envelope bbox,
             IProgressMonitor monitor ) throws IOException {
 
