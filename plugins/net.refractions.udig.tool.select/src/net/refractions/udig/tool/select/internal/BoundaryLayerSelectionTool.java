@@ -24,8 +24,9 @@ import net.refractions.udig.boundary.IBoundaryStrategy;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
+import net.refractions.udig.project.ui.tool.AbstractModalTool;
 import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.project.ui.tool.SimpleTool;
 import net.refractions.udig.project.ui.tool.options.ToolOptionContributionItem;
 import net.refractions.udig.tool.select.SelectPlugin;
 import net.refractions.udig.tool.select.commands.SetBoundaryLayerCommand;
@@ -57,7 +58,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * @author leviputna
  * @since 1.2.3
  */
-public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool {
+public class BoundaryLayerSelectionTool extends AbstractModalTool implements ModalTool {
 
     private SelectionBoxCommand shapeCommand;
     private boolean selecting;
@@ -65,6 +66,8 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
 
     private String CURSORPOINTID = "bondatySelectCursor";
     private String CURSORBOXID = "bondatyBoxSelectCursor";
+
+    boolean showContextOnRightClick = false;
 
     /**
      * 
@@ -76,10 +79,15 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
     /**
      * @see net.refractions.udig.project.ui.tool.AbstractTool#mousePressed(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      */
-    public void onMousePressed( MapMouseEvent e ) {
+    public void mousePressed( MapMouseEvent e ) {
         shapeCommand = new SelectionBoxCommand();
 
-        if (((e.button & MapMouseEvent.BUTTON1) != 0)) {
+        if (e.button == MapMouseEvent.BUTTON3 && showContextOnRightClick) {
+            ((ViewportPane) e.source).getMapEditor().openContextMenu();
+            return;
+        }
+
+        if ((e.button == MapMouseEvent.BUTTON1) || (e.button == MapMouseEvent.BUTTON3)) {
             updateCursor(e);
             start = e.getPoint();
 
@@ -105,7 +113,7 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
     /**
      * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseReleased(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      */
-    public void onMouseReleased( MapMouseEvent e ) {
+    public void mouseReleased( MapMouseEvent e ) {
         if (selecting) {
             Envelope bounds = getBounds(e);
             sendSelectionCommand(e, bounds);
@@ -128,11 +136,12 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
     /**
      * @see net.refractions.udig.project.ui.tool.SimpleTool#onMouseDragged(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
      */
-    protected void onMouseDragged( MapMouseEvent e ) {
+    public void mouseDragged( MapMouseEvent e ) {
         if (selecting) {
             Point end = e.getPoint();
 
-            if (start == null) return;
+            if (start == null)
+                return;
             shapeCommand.setShape(new Rectangle(Math.min(start.x, end.x), Math.min(start.y, end.y),
                     Math.abs(start.x - end.x), Math.abs(start.y - end.y)));
             context.getViewportPane().repaint();
@@ -146,7 +155,7 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
      */
     protected void sendSelectionCommand( MapMouseEvent e, Envelope bounds ) {
 
-        SetBoundaryLayerCommand command = new SetBoundaryLayerCommand(bounds);
+        SetBoundaryLayerCommand command = new SetBoundaryLayerCommand(e, bounds);
 
         getContext().sendASyncCommand(command);
 
@@ -191,7 +200,7 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
         private ComboViewer comboViewer;
 
         private static String BOUNDARY_LAYER_ID = "net.refractions.udig.tool.default.BoundaryLayerService";
-        
+
         /**
          * Listens to the user and changes the global IBoundaryService to the indicated strategy.
          */
@@ -203,33 +212,49 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
                 setActiveLayer(layer);
             }
         };
-        
+
         /**
          * Watches for a change in boundary layer and sets the combo to the new layer
          */
         protected BoundaryListener watcher = new BoundaryListener(){
             public void handleEvent( BoundaryListener.Event event ) {
-                ILayer layer = getBoundaryLayerStrategy().getActiveLayer();
-                //comboViewer.setSelection(new StructuredSelection(layer));
-                setSelected(layer);
+                PlatformGIS.asyncInDisplayThread(new Runnable(){
+
+                    @Override
+                    public void run() {
+                        ILayer activeLayer = getBoundaryLayerStrategy().getActiveLayer();
+                        List<ILayer> layers = getBoundaryLayerStrategy().getBoundaryLayers();
+                        comboViewer.setInput(layers);
+                        // check if the current layer still exists
+                        if (layers.contains(activeLayer)) {
+                            setSelected(activeLayer);
+                        } else {
+                            setSelected(null);
+                        }
+                    }
+                }, true);
             }
         };
 
         @Override
         protected IPreferenceStore fillFields( Composite parent ) {
-            
-            Button check = new Button(parent,  SWT.CHECK );
-            check.setText("Zoom to selection");
-            addField( SelectionToolPreferencePage.ZOOM_TO_SELECTION, check );
 
+            Button nav = new Button(parent, SWT.CHECK);
+            nav.setText("Layer Navigation");
+            addField(SelectionToolPreferencePage.NAVIGATE_SELECTION, nav);
+
+            Button zoom = new Button(parent, SWT.CHECK);
+            zoom.setText("Zoom to selection");
+            addField(SelectionToolPreferencePage.ZOOM_TO_SELECTION, zoom);
+                        
             setCombo(parent);
             listenBoundaryLayer(true);
-            
+
             // set the list of layers and the active layer
             List<ILayer> layers = getBoundaryLayerStrategy().getBoundaryLayers();
             ILayer activeLayer = getBoundaryLayerStrategy().getActiveLayer();
             comboViewer.setInput(layers);
-            if(!layers.isEmpty()){
+            if (!layers.isEmpty()) {
                 comboViewer.setInput(layers);
                 if (activeLayer == null) {
                     activeLayer = layers.get(0);
@@ -237,14 +262,14 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
             }
             setSelected(activeLayer);
             listenCombo(true);
-            
+
             return SelectPlugin.getDefault().getPreferenceStore();
         }
-        
-        private void setCombo(Composite parent){
+
+        private void setCombo( Composite parent ) {
             comboViewer = new ComboViewer(parent, SWT.READ_ONLY);
             comboViewer.setContentProvider(new ArrayContentProvider());
-            
+
             comboViewer.setLabelProvider(new LabelProvider(){
                 @Override
                 public String getText( Object element ) {
@@ -255,7 +280,7 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
                     return super.getText(element);
                 }
             });
-            
+
             comboViewer.setInput(getBoundaryLayers());
         }
 
@@ -281,20 +306,20 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
                 boundaryLayerStrategy.removeListener(watcher);
             }
         }
-        
+
         /*
-         * This will update the combo viewer (carefully unhooking events while the viewer is updated).
-         * 
+         * This will update the combo viewer (carefully unhooking events while the viewer is
+         * updated).
          * @param selected
          */
         private void setSelected( ILayer selected ) {
-            
+
             boolean disposed = comboViewer.getControl().isDisposed();
             if (comboViewer == null || disposed) {
                 listenBoundaryLayer(false);
                 return; // the view has shutdown!
             }
-            
+
             ILayer current = getSelected();
             // check combo
             if (current != selected) {
@@ -310,7 +335,6 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
 
         /*
          * Get the Boundary Layer currently selected in this tool
-         * 
          * @return ILayer currently selected in this tool
          */
         private ILayer getSelected() {
@@ -327,7 +351,7 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
         private void setActiveLayer( ILayer activeLayer ) {
             getBoundaryLayerStrategy().setActiveLayer(activeLayer);
         }
-        
+
         /*
          * returns a BoundaryLayerStrategy object for quick access
          */
@@ -341,7 +365,7 @@ public class BoundaryLayerSelectionTool extends SimpleTool implements ModalTool 
             }
             return null;
         }
-        
+
         /*
          * gets a list of boundary layers via the boundary strategy
          */

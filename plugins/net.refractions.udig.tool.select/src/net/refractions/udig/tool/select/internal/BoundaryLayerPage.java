@@ -126,7 +126,7 @@ public class BoundaryLayerPage extends Page {
         page.setLayout(layout);
 
         Label comboLabel = new Label(page, SWT.LEFT);
-        comboLabel.setText("Select From:");
+        comboLabel.setText("Layer:");
         comboLabel.pack();
         
         listenStrategy(true);

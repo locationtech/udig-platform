@@ -26,6 +26,7 @@ import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.render.impl.ViewportModelImpl;
+import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tool.select.SelectPlugin;
 import net.refractions.udig.tool.select.internal.BoundaryLayerStrategy;
 import net.refractions.udig.tool.select.internal.SelectionToolPreferencePage;
@@ -57,6 +58,7 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
 
     private Envelope bbox = null;
     private ReferencedEnvelope bounds;
+    private MapMouseEvent mouseEvent;
     private static String BOUNDARY_LAYER_ID = "net.refractions.udig.tool.default.BoundaryLayerService";
 
     /**
@@ -64,8 +66,9 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
      * 
      * @param bbox
      */
-    public SetBoundaryLayerCommand( Envelope bbox ) {
+    public SetBoundaryLayerCommand( MapMouseEvent e, Envelope bbox ) {
         this.bbox = bbox;
+        this.mouseEvent = e;
     }
 
     /**
@@ -80,17 +83,30 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
      */
     public void run( IProgressMonitor monitor ) throws Exception {
 
-        ILayer selectedLayer = getBoundaryLayerStrategy().getActiveLayer();
+        // Get Preference
+        boolean zoomToSelection = SelectPlugin.getDefault().getPreferenceStore()
+                .getBoolean(SelectionToolPreferencePage.ZOOM_TO_SELECTION);
+        boolean navigateLayer = SelectPlugin.getDefault().getPreferenceStore()
+                .getBoolean(SelectionToolPreferencePage.NAVIGATE_SELECTION);
         
-        if (selectedLayer == null) {
-            List<ILayer> boundaryLayers = getBoundaryLayerStrategy().getBoundaryLayers();
-            if (boundaryLayers.isEmpty()) {
-                return;
-            }
-            else {
-                selectedLayer = boundaryLayers.get(0);
-            }
+        ILayer selectedLayer;
+        if((mouseEvent.button == MapMouseEvent.BUTTON3) && navigateLayer){
+            selectedLayer = getBoundaryLayerStrategy().selectPreviousLayer();
+            navigateLayer = false; //don't navigate to next layer we have already moved back one layer
         }
+        else {
+            selectedLayer = getBoundaryLayerStrategy().getActiveLayer();
+        }
+            
+//        if (selectedLayer == null) {
+//            List<ILayer> boundaryLayers = getBoundaryLayerStrategy().getBoundaryLayers();
+//            if (boundaryLayers.isEmpty()) {
+//                return;
+//            }
+//            else {
+//                selectedLayer = boundaryLayers.get(0);
+//            }
+//        }
 
         if (!selectedLayer.isApplicable(ILayer.Interaction.BOUNDARY)) return;
 
@@ -108,15 +124,13 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
                 .getCoordinateReferenceSystem();
         updateBoundaryService(newBoundary, crs);
 
-        if (SelectPlugin.getDefault().getPreferenceStore()
-                .getBoolean(SelectionToolPreferencePage.ZOOM_TO_SELECTION)) {
+        if (zoomToSelection) {
             ViewportModelImpl vmi = (ViewportModelImpl) selectedLayer.getMap().getViewportModel();
             vmi.zoomToBox(bounds);
             
         }
         
-        if (SelectPlugin.getDefault().getPreferenceStore()
-                .getBoolean(SelectionToolPreferencePage.ZOOM_TO_SELECTION)) {
+        if ((mouseEvent.button == MapMouseEvent.BUTTON1) && navigateLayer){
             // move to next boundary layer
             getBoundaryLayerStrategy().selectNextLayer();
        }

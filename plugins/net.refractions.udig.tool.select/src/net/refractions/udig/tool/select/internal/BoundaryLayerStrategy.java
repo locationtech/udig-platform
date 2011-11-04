@@ -51,8 +51,8 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
     public void setCrs( CoordinateReferenceSystem crs ) {
         this.crs = crs;
         
-        BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryLayerStrategy.this);
-        notifyListeners(boundaryEvent);
+//        BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryLayerStrategy.this);
+//        notifyListeners(boundaryEvent);
     }
 
     /**
@@ -126,7 +126,12 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
      * @return the activeLayer
      */
     public ILayer getActiveLayer() {
-        
+        if (activeLayer == null) {
+            List<ILayer> layers = getBoundaryLayers();
+            if (layers.size() > 0) {
+                return layers.get(0);
+            }
+        }
         return activeLayer;
     }
 
@@ -150,15 +155,8 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
     public ILayer selectNextLayer() {
         List<ILayer> layers = getBoundaryLayers();
         
-        // if no active layer set to first layer
-        if (activeLayer == null) {
-            if (layers.size() > 0) {
-                ILayer layer = layers.get(0);
-                setActiveLayer(layer); // also triggers event
-                return layer;
-            }
-            return null;
-        }
+        activeLayer = getActiveLayer();
+        
         
         // set active layer to next in list 
         int index = layers.indexOf(activeLayer);
@@ -166,6 +164,31 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
             setActiveLayer(layers.get(index+1)); // also triggers event
         }
         return activeLayer;
+    }
+    
+    /**
+     * Sets the active layer to the previous boundary layer in z-order.
+     * Returns the new layer or the first if no previous available.
+     * Returns null if there are no boundary layers
+     * 
+     * @return ILayer the previous layer 
+     */
+    public ILayer selectPreviousLayer() {
+        if (activeLayer == null) {
+            return null;
+        }
+        
+        List<ILayer> layers = getBoundaryLayers();
+        int index = layers.indexOf(activeLayer);
+        if (index > 0) {
+            ILayer previousLayer = layers.get(index-1);
+            setActiveLayer(previousLayer); // also triggers event
+            return previousLayer;
+        }
+        if (layers.size()>0) {
+            return layers.get(0);
+        }
+        return null;
     }
     
 //    /**
