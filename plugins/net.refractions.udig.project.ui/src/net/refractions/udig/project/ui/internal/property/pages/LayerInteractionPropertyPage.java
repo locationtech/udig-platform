@@ -235,9 +235,10 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         visibleButton.setSelection(layer.isVisible());
         
         // set background layer
-        backgroundButton.setSelection(layer.isApplicable(ILayer.Interaction.BACKGROUND));
-        layerButton.setSelection(!layer.isApplicable(ILayer.Interaction.BACKGROUND));
-        setBackgroundLayer(layer.isApplicable(ILayer.Interaction.BACKGROUND));
+        boolean isBackgroundLayer = layer.isApplicable(ILayer.Interaction.BACKGROUND);
+		backgroundButton.setSelection(isBackgroundLayer);
+        layerButton.setSelection(!isBackgroundLayer);
+        setBackgroundLayer(isBackgroundLayer);
     }
     
     /*
