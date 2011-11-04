@@ -77,6 +77,9 @@
    <extension
          point="net.refractions.udig.project.persister">
       <persister class="net.refractions.udig.project.internal.ColorPersister"/>
+      <persister
+            class="net.refractions.udig.project.internal.TextPersister">
+      </persister>
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
