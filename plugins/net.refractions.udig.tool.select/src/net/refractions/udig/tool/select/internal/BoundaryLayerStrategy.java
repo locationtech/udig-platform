@@ -22,10 +22,7 @@ import net.refractions.udig.boundary.IBoundaryStrategy;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ui.ApplicationGIS;
 
-import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -43,7 +40,8 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
     private CoordinateReferenceSystem crs;
     private Geometry geometry;
     private ILayer activeLayer = null;
-    private SimpleFeatureCollection features = null;
+//    private ILayer featureLayer = null;
+//    private SimpleFeatureCollection features = null;
 
     /**
      * Set the CRS of the current boundary
@@ -128,6 +126,7 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
      * @return the activeLayer
      */
     public ILayer getActiveLayer() {
+        
         return activeLayer;
     }
 
@@ -169,25 +168,27 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
         return activeLayer;
     }
     
-    /**
-     * Gets the features that have been selected
-     * @return List of SimpleFeature
-     */
-    public List<SimpleFeature> getFeatures() {
-        List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
-        SimpleFeatureIterator featuresIterator = features.features();
-        while (featuresIterator.hasNext()) {
-            featureList.add(featuresIterator.next());
-        }
-        return featureList;
-    }
-
-    /**
-     * Sets the current features selected
-     * @param featureCollection
-     */
-    public void setFeatures(SimpleFeatureCollection featureCollection) {
-        features = featureCollection;
-    }
+//    /**
+//     * Gets the features that have been selected
+//     * @return List of SimpleFeature
+//     */
+//    public List<SimpleFeature> getFeatures() {
+//        List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
+//        if (features != null) {
+//            SimpleFeatureIterator featuresIterator = features.features();
+//            while (featuresIterator.hasNext()) {
+//                featureList.add(featuresIterator.next());
+//            }
+//        }
+//        return featureList;
+//    }
+//
+//    /**
+//     * Sets the current features selected
+//     * @param featureCollection
+//     */
+//    public void setFeatures(SimpleFeatureCollection featureCollection) {
+//        features = featureCollection;
+//    }
     
 }

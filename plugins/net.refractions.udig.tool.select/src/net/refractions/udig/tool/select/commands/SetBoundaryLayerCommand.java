@@ -97,7 +97,7 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
         selectedLayer.getCRS();
         SimpleFeatureCollection featureCollection = getFeaturesInBbox(selectedLayer, bbox, monitor);
 
-        getBoundaryLayerStrategy().setFeatures(featureCollection);
+//        getBoundaryLayerStrategy().setFeatures(featureCollection);
         
         bounds = featureCollection.getBounds();
 
@@ -113,10 +113,13 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
             ViewportModelImpl vmi = (ViewportModelImpl) selectedLayer.getMap().getViewportModel();
             vmi.zoomToBox(bounds);
             
+        }
+        
+        if (SelectPlugin.getDefault().getPreferenceStore()
+                .getBoolean(SelectionToolPreferencePage.ZOOM_TO_SELECTION)) {
             // move to next boundary layer
             getBoundaryLayerStrategy().selectNextLayer();
-        }
-
+       }
     }
 
     /*

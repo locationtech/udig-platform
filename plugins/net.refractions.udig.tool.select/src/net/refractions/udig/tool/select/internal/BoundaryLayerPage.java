@@ -15,7 +15,6 @@
 
 package net.refractions.udig.tool.select.internal;
 
-import java.util.Collection;
 import java.util.List;
 
 import net.refractions.udig.boundary.BoundaryListener;
@@ -30,7 +29,6 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
@@ -39,8 +37,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.Page;
-import org.opengis.feature.Property;
-import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * A page to add to the Boundary View used for additional configuration of the boundary.
@@ -55,7 +51,7 @@ public class BoundaryLayerPage extends Page {
     private Composite page;
     private BoundaryProxy strategy;
     private ComboViewer comboViewer;
-    private ListViewer listViewer;
+//    private ListViewer listViewer;
     
     private static String BOUNDARY_LAYER_ID = "net.refractions.udig.tool.default.BoundaryLayerService";
 
@@ -89,7 +85,7 @@ public class BoundaryLayerPage extends Page {
                     else {
                         setSelected(null);
                     }
-                    listViewer.setInput(getBoundaryLayerStrategy().getFeatures());
+//                    listViewer.setInput(getBoundaryLayerStrategy().getFeatures());
                 }
             }, true);
         }
@@ -155,36 +151,36 @@ public class BoundaryLayerPage extends Page {
         
         comboViewer.addSelectionChangedListener(comboListener);
         
-        // list of current Boundary features
-        Label listLabel = new Label(page, SWT.LEFT);
-        listLabel.setText("Current Features:");
-        listLabel.pack();
-        
-        listViewer = new ListViewer(page, SWT.READ_ONLY);
-        listViewer.setContentProvider(new ArrayContentProvider());
-        listViewer.setLabelProvider(new LabelProvider(){
-            @Override
-            public String getText( Object element ) {
-                if (element instanceof SimpleFeature) {
-                    SimpleFeature feature = (SimpleFeature) element;
-                    Collection<Property> properties = feature.getProperties();
-                    String name = new String();
-                    for (Property property : properties) {
-                        String propertyName = property.getName().getLocalPart();
-                        if(propertyName.toLowerCase().contains("name")) {
-                            name = property.getValue().toString();
-                            System.out.println(name);
-                            continue;
-                        }
-                            
-                    }
-                    return name;
-                }
-                return super.getText(element);
-            }
-        });
-        List<SimpleFeature> features = getBoundaryLayerStrategy().getFeatures(); 
-        listViewer.setInput(features);
+//        // list of current Boundary features
+//        Label listLabel = new Label(page, SWT.LEFT);
+//        listLabel.setText("Current Features:");
+//        listLabel.pack();
+//        
+//        listViewer = new ListViewer(page, SWT.READ_ONLY);
+//        listViewer.setContentProvider(new ArrayContentProvider());
+//        listViewer.setLabelProvider(new LabelProvider(){
+//            @Override
+//            public String getText( Object element ) {
+//                if (element instanceof SimpleFeature) {
+//                    SimpleFeature feature = (SimpleFeature) element;
+//                    Collection<Property> properties = feature.getProperties();
+//                    String name = new String();
+//                    for (Property property : properties) {
+//                        String propertyName = property.getName().getLocalPart();
+//                        if(propertyName.toLowerCase().contains("name")) {
+//                            name = property.getValue().toString();
+//                            System.out.println(name);
+//                            continue;
+//                        }
+//                            
+//                    }
+//                    return name;
+//                }
+//                return super.getText(element);
+//            }
+//        });
+//        List<SimpleFeature> features = getBoundaryLayerStrategy().getFeatures(); 
+//        listViewer.setInput(features);
     }
     
     /*
