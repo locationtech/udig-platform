@@ -37,7 +37,7 @@ public class SelectionToolPreferencePage extends FieldEditorPreferencePage imple
     public static final String ZOOM_TO_SELECTION = "boundaryZoomToSelection"; //$NON-NLS-1$
     public static final String NAVIGATE_SELECTION = "boundaryNavigateSelection"; //$NON-NLS-1$
 
-    private BooleanFieldEditor zoomToSelection;
+//    private BooleanFieldEditor zoomToSelection;
     private BooleanFieldEditor navigateSelection;
     
     public SelectionToolPreferencePage() {
@@ -55,11 +55,11 @@ public class SelectionToolPreferencePage extends FieldEditorPreferencePage imple
         boundarySelection.setText(Messages.Group_Boundary);
         boundarySelection.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING | GridData.FILL_HORIZONTAL));
         
-        zoomToSelection = new BooleanFieldEditor(ZOOM_TO_SELECTION, Messages.Zoom_To_Selection, getFieldEditorParent());
-        addField(zoomToSelection);
+//        zoomToSelection = new BooleanFieldEditor(ZOOM_TO_SELECTION, Messages.Zoom_To_Selection, getFieldEditorParent());
+//        addField(zoomToSelection);
         
         navigateSelection = new BooleanFieldEditor(NAVIGATE_SELECTION, Messages.Navigate_Selection, getFieldEditorParent());
-        addField(zoomToSelection);
+        addField(navigateSelection);
     }
     
     @Override

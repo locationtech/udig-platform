@@ -240,12 +240,12 @@ public class BoundaryLayerSelectionTool extends AbstractModalTool implements Mod
         protected IPreferenceStore fillFields( Composite parent ) {
 
             Button nav = new Button(parent, SWT.CHECK);
-            nav.setText("Layer Navigation");
+            nav.setText("Navigate");
             addField(SelectionToolPreferencePage.NAVIGATE_SELECTION, nav);
 
-            Button zoom = new Button(parent, SWT.CHECK);
-            zoom.setText("Zoom to selection");
-            addField(SelectionToolPreferencePage.ZOOM_TO_SELECTION, zoom);
+//            Button zoom = new Button(parent, SWT.CHECK);
+//            zoom.setText("Zoom to selection");
+//            addField(SelectionToolPreferencePage.ZOOM_TO_SELECTION, zoom);
                         
             setCombo(parent);
             listenBoundaryLayer(true);

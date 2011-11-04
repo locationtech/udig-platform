@@ -84,29 +84,25 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
     public void run( IProgressMonitor monitor ) throws Exception {
 
         // Get Preference
-        boolean zoomToSelection = SelectPlugin.getDefault().getPreferenceStore()
-                .getBoolean(SelectionToolPreferencePage.ZOOM_TO_SELECTION);
+//        boolean zoomToSelection = SelectPlugin.getDefault().getPreferenceStore()
+//                .getBoolean(SelectionToolPreferencePage.ZOOM_TO_SELECTION);
         boolean navigateLayer = SelectPlugin.getDefault().getPreferenceStore()
                 .getBoolean(SelectionToolPreferencePage.NAVIGATE_SELECTION);
         
+        ILayer oldLayer = getBoundaryLayerStrategy().getActiveLayer();
         ILayer selectedLayer;
         if((mouseEvent.button == MapMouseEvent.BUTTON3) && navigateLayer){
             selectedLayer = getBoundaryLayerStrategy().selectPreviousLayer();
-            navigateLayer = false; //don't navigate to next layer we have already moved back one layer
+//            navigateLayer = false; //don't navigate to next layer we have already moved back one layer
+        }
+        else if ((mouseEvent.button == MapMouseEvent.BUTTON1) && navigateLayer) {
+            // move to next boundary layer
+            selectedLayer = getBoundaryLayerStrategy().selectNextLayer();
         }
         else {
-            selectedLayer = getBoundaryLayerStrategy().getActiveLayer();
+            selectedLayer = oldLayer;
         }
             
-//        if (selectedLayer == null) {
-//            List<ILayer> boundaryLayers = getBoundaryLayerStrategy().getBoundaryLayers();
-//            if (boundaryLayers.isEmpty()) {
-//                return;
-//            }
-//            else {
-//                selectedLayer = boundaryLayers.get(0);
-//            }
-//        }
 
         if (!selectedLayer.isApplicable(ILayer.Interaction.BOUNDARY)) return;
 
@@ -115,25 +111,26 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
 
 //        getBoundaryLayerStrategy().setFeatures(featureCollection);
         
-        bounds = featureCollection.getBounds();
+        
 
-        if (featureCollection.isEmpty()) return;
+        if (featureCollection.isEmpty()) {
+            getBoundaryLayerStrategy().setActiveLayer(oldLayer);
+            return;
+        }
+        
+        bounds = featureCollection.getBounds();
 
         Geometry newBoundary = unionGeometry(featureCollection);
         CoordinateReferenceSystem crs = featureCollection.getSchema()
                 .getCoordinateReferenceSystem();
         updateBoundaryService(newBoundary, crs);
 
-        if (zoomToSelection) {
+        if (navigateLayer) {
             ViewportModelImpl vmi = (ViewportModelImpl) selectedLayer.getMap().getViewportModel();
             vmi.zoomToBox(bounds);
             
         }
         
-        if ((mouseEvent.button == MapMouseEvent.BUTTON1) && navigateLayer){
-            // move to next boundary layer
-            getBoundaryLayerStrategy().selectNextLayer();
-       }
     }
 
     /*
