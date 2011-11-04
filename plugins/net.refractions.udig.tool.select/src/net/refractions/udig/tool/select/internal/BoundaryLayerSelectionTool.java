@@ -91,7 +91,7 @@ public class BoundaryLayerSelectionTool extends AbstractModalTool implements Mod
             updateCursor(e);
             start = e.getPoint();
 
-            if (e.isAltDown()) {
+            if (e.isShiftDown()) {
                 selecting = true;
 
                 shapeCommand.setValid(true);
