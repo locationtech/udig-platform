@@ -224,6 +224,9 @@ public class BoundaryLayerSelectionTool extends AbstractModalTool implements Mod
                     public void run() {
                         ILayer activeLayer = getBoundaryLayerStrategy().getActiveLayer();
                         List<ILayer> layers = getBoundaryLayerStrategy().getBoundaryLayers();
+                        if( comboViewer == null || comboViewer.getControl() == null || comboViewer.getControl().isDisposed()){
+                            return;
+                        }
                         comboViewer.setInput(layers);
                         // check if the current layer still exists
                         if (layers.contains(activeLayer)) {

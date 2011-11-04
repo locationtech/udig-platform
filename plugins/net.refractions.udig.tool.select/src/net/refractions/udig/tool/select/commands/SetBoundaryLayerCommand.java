@@ -22,10 +22,12 @@ import net.refractions.udig.boundary.BoundaryProxy;
 import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.boundary.IBoundaryStrategy;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.render.impl.ViewportModelImpl;
+import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tool.select.SelectPlugin;
 import net.refractions.udig.tool.select.internal.BoundaryLayerStrategy;
@@ -38,14 +40,17 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Queries the current boundary layer for selection and updates the BoundaryLayerBoundaryService
@@ -86,53 +91,81 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
         // Get Preference
 //        boolean zoomToSelection = SelectPlugin.getDefault().getPreferenceStore()
 //                .getBoolean(SelectionToolPreferencePage.ZOOM_TO_SELECTION);
-        boolean navigateLayer = SelectPlugin.getDefault().getPreferenceStore()
+        boolean isNavigate = SelectPlugin.getDefault().getPreferenceStore()
                 .getBoolean(SelectionToolPreferencePage.NAVIGATE_SELECTION);
         
-        ILayer oldLayer = getBoundaryLayerStrategy().getActiveLayer();
-        ILayer selectedLayer;
-        if((mouseEvent.button == MapMouseEvent.BUTTON3) && navigateLayer){
-            selectedLayer = getBoundaryLayerStrategy().selectPreviousLayer();
-//            navigateLayer = false; //don't navigate to next layer we have already moved back one layer
+        BoundaryLayerStrategy strategy = getBoundaryLayerStrategy();
+        ILayer activeLayer = strategy.getActiveLayer();
+        ILayer previousLayer = strategy.getPreviousLayer();
+        ILayer nextLayer = strategy.getNextLayer();
+        
+        ILayer selectedLayer = activeLayer;
+        
+        // change the layer we are looking at based on navigation
+        Geometry geometry = strategy.getGeometry();
+        Polygon testLocation = JTS.toGeometry(this.bbox);
+        if(isNavigate && (mouseEvent.button == MapMouseEvent.BUTTON3)){
+            if( previousLayer != null ){
+                selectedLayer = previousLayer;
+            }
+            else {
+                // end of the world!
+                updateBoundaryService(null, null);
+                bounds = getMap().getBounds(null);
+                ViewportModelImpl vmi = (ViewportModelImpl) getMap().getViewportModel();
+                vmi.zoomToBox(bounds);
+                return;
+            }
         }
-        else if ((mouseEvent.button == MapMouseEvent.BUTTON1) && navigateLayer) {
-            // move to next boundary layer
-            selectedLayer = getBoundaryLayerStrategy().selectNextLayer();
+        else if (isNavigate && (mouseEvent.button == MapMouseEvent.BUTTON1)) {
+            selectedLayer = nextLayer != null ? nextLayer : activeLayer;
+            if( activeLayer != null ){
+                // please stay on the active layer until you have a geometry
+                if( geometry == null || !geometry.contains( testLocation)){
+                    // we need a selected geometry before we let people navigate away
+                    selectedLayer = activeLayer;
+                }
+            }
         }
-        else {
-            selectedLayer = oldLayer;
+        
+        if( selectedLayer == null){
+            return; // nothing to do!
         }
-        if( selectedLayer == null ){
-            // no boundary layer is avaiable - sorry!
-            // should update the statusLineManager
-            return;
+        if (!selectedLayer.isApplicable(ILayer.Interaction.BOUNDARY)){
+            return; // eek!
         }
-
-        if (!selectedLayer.isApplicable(ILayer.Interaction.BOUNDARY)) return;
-
-        selectedLayer.getCRS();
+        // use the bbox to see if we hit anything!
         SimpleFeatureCollection featureCollection = getFeaturesInBbox(selectedLayer, bbox, monitor);
-
-//        getBoundaryLayerStrategy().setFeatures(featureCollection);
         
         if (featureCollection.isEmpty()) {
-            getBoundaryLayerStrategy().setActiveLayer(oldLayer);
-            return;
-        }
-        
+            // the user did not click on anything useful (so sad)!
+            // see if they were trying to click around on the active layer instead!
+            if( selectedLayer == activeLayer){
+                return; // give up no change to boundary stuffs
+            }
+            else {
+                // quickly test to see if they clicked on a neighbour
+                SimpleFeatureCollection testCollection = getFeaturesInBbox(activeLayer, bbox, monitor);
+                if(!testCollection.isEmpty() ){
+                    // okay let us go to neighbour
+                    selectedLayer = activeLayer;
+                    featureCollection = testCollection;
+                }
+                else {
+                    return; // user really did not find anything to click on
+                }
+            }
+        }        
         bounds = featureCollection.getBounds();
-
         Geometry newBoundary = unionGeometry(featureCollection);
-        CoordinateReferenceSystem crs = featureCollection.getSchema()
-                .getCoordinateReferenceSystem();
-        updateBoundaryService(newBoundary, crs);
-
-        if (navigateLayer) {
-            ViewportModelImpl vmi = (ViewportModelImpl) selectedLayer.getMap().getViewportModel();
-            vmi.zoomToBox(bounds);
-            
-        }
         
+        updateBoundaryService(selectedLayer,newBoundary );
+
+        if (isNavigate) {
+            IMap map = selectedLayer.getMap();
+            ViewportModelImpl vmi = (ViewportModelImpl) map.getViewportModel();
+            vmi.zoomToBox(bounds);
+        }
     }
 
     /*
@@ -180,19 +213,19 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
         return combined.union();
     }
 
-    private void updateBoundaryService( Geometry newBoundary, CoordinateReferenceSystem crs )
+    private void updateBoundaryService( ILayer layer, Geometry newBoundary )
             throws IOException {
         IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
         BoundaryProxy boundaryLayerProxy = boundaryService.findProxy(BOUNDARY_LAYER_ID);
         
         BoundaryLayerStrategy boundaryLayerStrategy = (BoundaryLayerStrategy)boundaryLayerProxy.getStrategy();
+        boundaryLayerStrategy.setActiveLayer(layer);
         boundaryLayerStrategy.setGeometry(newBoundary);
         
         // if the current stragegy does not equal the bounary layer strategy set it
         if (!boundaryService.getProxy().equals(boundaryLayerProxy)) {
             boundaryService.setProxy(boundaryLayerProxy);
         }
-
     }
 
     /**

@@ -60,13 +60,32 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
      */
     public void setGeometry( Geometry geometry ) {
         ILayer victim = getActiveLayer();
-        IBlackboard blackboard = victim.getBlackboard();
-        blackboard.put(BOUNDARY_GEOMETRY, geometry );
-        
-        // record a WKT note in the mapblackboard for a rainy day
-        IBlackboard mapBlackboard = victim.getMap().getBlackboard();
-        String wkt = geometry.toText();
-        mapBlackboard.put(BOUNDARY_GEOMETRY, wkt );
+        IBlackboard mapBlackboard;
+        if( victim != null ){
+            IBlackboard blackboard = victim.getBlackboard();
+            if( geometry != null ){
+                blackboard.put(BOUNDARY_GEOMETRY, geometry );            
+            }
+            else {
+                blackboard.remove(BOUNDARY_GEOMETRY);
+            }
+            mapBlackboard = victim.getMap().getBlackboard();
+        }
+        else {
+            IMap activeMap = ApplicationGIS.getActiveMap();
+            if( activeMap == null){
+                return;
+            }
+            mapBlackboard = activeMap.getBlackboard();
+        }
+        if( geometry != null ){
+            // record a WKT note in the mapblackboard for a rainy day
+            String wkt = geometry.toText();
+            mapBlackboard.put(BOUNDARY_GEOMETRY, wkt );
+        }
+        else {
+            mapBlackboard.remove(BOUNDARY_GEOMETRY );            
+        }
         
         BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryLayerStrategy.this);
         notifyListeners(boundaryEvent);
@@ -78,9 +97,10 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
      */
     @Override
     public ReferencedEnvelope getExtent() {
-        if (getGeometry() != null){
+        Geometry geometry = getGeometry();
+        if (geometry != null){
             CoordinateReferenceSystem crs = getCrs();
-            return new ReferencedEnvelope(getGeometry().getEnvelopeInternal(), crs);
+            return new ReferencedEnvelope(geometry.getEnvelopeInternal(), crs);
         }
         return null;
     }
@@ -92,6 +112,9 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
     @Override
     public Geometry getGeometry() {
         ILayer victim = getActiveLayer();
+        if( victim == null ){
+            return null;
+        }
         IBlackboard blackboard = victim.getBlackboard();
         Geometry geometry = (Geometry) blackboard.get(BOUNDARY_GEOMETRY );
         return geometry;
@@ -150,12 +173,12 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
         }
         
         // fine we will assume the last boundary layer for this map
-        List<ILayer> layers = getBoundaryLayers();
-        if (layers.size() > 0) {
-            ILayer defaultLayer = layers.get(0);
-            setActiveLayer(defaultLayer);
-            return defaultLayer;
-        }
+//        List<ILayer> layers = getBoundaryLayers();
+//        if (layers.size() > 0) {
+//            ILayer defaultLayer = layers.get(0);
+//            setActiveLayer(defaultLayer);
+//            return defaultLayer;
+//        }
         return null; // not found!
     }
 
@@ -195,57 +218,56 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
      * @param activeLayer the activeLayer to set
      */
     public void setActiveLayer( ILayer activeLayer ) {
-        IMap map = activeLayer.getMap();
-        // mark this one as the "boundaryLayer" for the map
-        String layerId = activeLayer.getID().toExternalForm();
-        map.getBlackboard().put(BOUNDARY_LAYER, layerId );
-        
+        IMap map;
+        if( activeLayer != null ){
+            map = activeLayer.getMap();
+            String layerId = activeLayer.getID().toExternalForm();
+            // mark this one as the "boundaryLayer" for the map
+            map.getBlackboard().put(BOUNDARY_LAYER, layerId );
+        }
+        else {
+            map = ApplicationGIS.getActiveMap();
+            if( map == null){
+                return;
+            }
+            map.getBlackboard().remove(BOUNDARY_LAYER);
+        }        
         BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryLayerStrategy.this);
         notifyListeners(boundaryEvent);
     }
     
     /**
-     * Sets the Active layer to be the next available boundary layer and notifies listeners. 
-     * If the active layer has not been set it will choose the first layer. 
-     * No change if the active layer is the last layer (z-order) or there are no boundary layers.
-     * @return ILayer the new active layer or null if no boundary layers exist
+     * Look up the "next" layer in the map layer list; only boundary layers are considered.
+     * 
+     * @return The next layer; or null if it is not available.
      */
-    public ILayer selectNextLayer() {
+    public ILayer getNextLayer() {
         List<ILayer> layers = getBoundaryLayers();
-        
         ILayer activeLayer = getActiveLayer();
         
-        
-        // set active layer to next in list 
         int index = layers.indexOf(activeLayer);
         if (index < layers.size()-1) {
-            setActiveLayer(layers.get(index+1)); // also triggers event
+            return layers.get(index+1);
         }
-        return activeLayer;
+        return null; // nothing to see here move along
     }
     
     /**
-     * Sets the active layer to the previous boundary layer in z-order.
-     * Returns the new layer or the first if no previous available.
-     * Returns null if there are no boundary layers
+     * Look up the the previous layer in the map layer list; only boundary
+     * layers are considered.
      * 
-     * @return ILayer the previous layer 
+     * @return The previous layer if available; or null if we are already the "last" layer
      */
-    public ILayer selectPreviousLayer() {
+    public ILayer getPreviousLayer() {
         ILayer activeLayer = getActiveLayer();
         if (activeLayer == null) {
-            return null;
-        }
-        
+            return null; // nothing to see here move along
+        }        
         List<ILayer> layers = getBoundaryLayers();
         int index = layers.indexOf(activeLayer);
         if (index > 0) {
-            ILayer previousLayer = layers.get(index-1);
-            setActiveLayer(previousLayer); // also triggers event
+            ILayer previousLayer = layers.get( index-1 );
             return previousLayer;
-        }
-        if (layers.size()>0) {
-            return layers.get(0);
         }
         return null;
     }

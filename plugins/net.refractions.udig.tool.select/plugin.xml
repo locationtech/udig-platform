@@ -187,4 +187,10 @@
                page="net.refractions.udig.tool.select.internal.BoundaryLayerPage">
          </boundary>
       </extension>
+      <extension
+            point="org.eclipse.core.runtime.preferences">
+         <initializer
+               class="net.refractions.udig.tool.select.SelectionToolPreferenceInitializer">
+         </initializer>
+      </extension>
 </plugin>
