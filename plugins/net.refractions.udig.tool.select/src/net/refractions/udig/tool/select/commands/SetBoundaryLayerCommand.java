@@ -102,7 +102,11 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
         else {
             selectedLayer = oldLayer;
         }
-            
+        if( selectedLayer == null ){
+            // no boundary layer is avaiable - sorry!
+            // should update the statusLineManager
+            return;
+        }
 
         if (!selectedLayer.isApplicable(ILayer.Interaction.BOUNDARY)) return;
 
@@ -111,8 +115,6 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
 
 //        getBoundaryLayerStrategy().setFeatures(featureCollection);
         
-        
-
         if (featureCollection.isEmpty()) {
             getBoundaryLayerStrategy().setActiveLayer(oldLayer);
             return;
@@ -184,7 +186,6 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
         BoundaryProxy boundaryLayerProxy = boundaryService.findProxy(BOUNDARY_LAYER_ID);
         
         BoundaryLayerStrategy boundaryLayerStrategy = (BoundaryLayerStrategy)boundaryLayerProxy.getStrategy();
-        boundaryLayerStrategy.setCrs(crs);
         boundaryLayerStrategy.setGeometry(newBoundary);
         
         // if the current stragegy does not equal the bounary layer strategy set it
