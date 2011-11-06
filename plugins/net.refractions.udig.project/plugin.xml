@@ -151,6 +151,9 @@
          <property
                class="net.refractions.udig.project.internal.property.FeatureStoreResourceProperty"
                id="FeatureStoreResourceProperty"/>
+         <property
+               class="net.refractions.udig.project.internal.property.LayerInteractionProperty"
+               id="InteractionProperty"/>               
       </object>
    </extension>
    <extension
