@@ -5,3 +5,4 @@ Bundle-SymbolicName: net.refractions.udig.help; singleton:=true
 Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui.cheatsheets;visibility:=reexport
