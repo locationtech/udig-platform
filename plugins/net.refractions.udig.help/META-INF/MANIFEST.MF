@@ -10,5 +10,13 @@ Require-Bundle: org.apache.ant,
  org.eclipse.help.appserver,
  org.eclipse.help.base,
  org.eclipse.help.ui,
- org.eclipse.help.webapp
-Eclipse-LazyStart: true
+ org.eclipse.help.webapp,
+ org.eclipse.ui.intro;bundle-version="3.4.100",
+ org.eclipse.ui.cheatsheets;bundle-version="3.4.100",
+ net.refractions.udig.style.sld;bundle-version="1.2.0",
+ net.refractions.udig.project.ui;bundle-version="1.2.0",
+ net.refractions.udig.project.ui.editor;bundle-version="1.2.0",
+ net.refractions.udig.catalog.ui;bundle-version="1.2.0",
+ net.refractions.udig.tool.default;bundle-version="1.2.0"
+Import-Package: net.refractions.udig.catalog.internal.ui,
+ net.refractions.udig.project.ui.internal

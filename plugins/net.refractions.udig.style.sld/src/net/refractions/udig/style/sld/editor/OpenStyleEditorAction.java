@@ -59,7 +59,6 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
         }
         this.workbenchWindow = window;
         setActionDefinitionId("net.refractions.style.sld.editor"); //$NON-NLS-1$
-
         // setToolTipText(WorkbenchMessages.OpenPreferences_toolTip);
         // window.getWorkbench().getHelpSystem().setHelp(this,
         // IWorkbenchHelpContextIds.OPEN_PREFERENCES_ACTION);

@@ -10,9 +10,11 @@ export TARGET=${BASE}/target
 export VERSION=1.2.2
 export BUILD=${BASE}/build
 
-# net.refractions.udig.libs "qualifier" for SDK
+# net.refractions.udig.libs "qualifier" for SDK (used to update libs source reference
+# example: TAG=1.2.2
+# example: QUALIFIER=1.2.2.201107241506
 export TAG=1.2.2
-export QUALIFIER=1.2.2
+export QUALIFIER=1.2.2.201107241506
 
 # Build Resources
 export JRE=${BASE}/jre
