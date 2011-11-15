@@ -53,10 +53,10 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-process-raster-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-property-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-8-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-render-8-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-render-8-SNAPSHOT.jar" sourcepath="/Users/jody/java/geotools/trunk/modules/library/render/src"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-renderer-8-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-svg-8-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-svg-8-SNAPSHOT.jar" sourcepath="/Users/jody/java/geotools/trunk/modules/plugin/svg/src"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-swing-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-validation-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-wfs-8-SNAPSHOT.jar"/>
@@ -140,7 +140,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/stringtemplate-3.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/vecmath-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ws-commons-util-1.0.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/xercesImpl-2.4.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xml-apis-1.3.04.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xml-apis-xerces-2.7.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-client-3.0.jar"/>
