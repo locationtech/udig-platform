@@ -27,7 +27,7 @@
          </appinfo>
       </annotation>
       <complexType>
-         <choice minOccurs="1" maxOccurs="unbounded">
+         <choice minOccurs="0" maxOccurs="unbounded">
             <element ref="category"/>
             <element ref="modalTool"/>
             <element ref="backgroundTool"/>
@@ -53,6 +53,9 @@
                <documentation>
                   
                </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -233,7 +236,7 @@ See the command extension point.
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="identifier" basedOn="net.refractions.udig.project.ui.tool/modalTool/cursor/@id"/>
+                  <meta.attribute kind="identifier" basedOn="net.refractions.udig.project.ui.tool/toolCursor/@id"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -544,32 +547,9 @@ The system cursors can be accessed using one of the following constants: default
          </appinfo>
          <documentation>
             Declares the property and the expected value that a condition element operates on.
-
-TODO: Need to place a link here to a spot where valid propertyNames are declared.
          </documentation>
       </annotation>
       <complexType>
-         <attribute name="target" type="string">
-            <annotation>
-               <documentation>
-                  The value that the property is expected to match
-               </documentation>
-               <appinfo>
-                  <meta.attribute deprecated="true"/>
-               </appinfo>
-            </annotation>
-         </attribute>
-         <attribute name="name" type="string">
-            <annotation>
-               <documentation>
-                  The id of the property extension to use.
-See net.refractions.udig.ui.objectProperty
-               </documentation>
-               <appinfo>
-                  <meta.attribute deprecated="true"/>
-               </appinfo>
-            </annotation>
-         </attribute>
          <attribute name="propertyId" type="string" use="required">
             <annotation>
                <documentation>
@@ -588,6 +568,26 @@ It is the id of the property element which is a grandchild of the ObjectProperty
                <documentation>
                   The value that the property is expected to match
                </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  The id of the property extension to use. Please use propertyId.
+               </documentation>
+               <appinfo>
+                  <meta.attribute deprecated="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="target" type="string">
+            <annotation>
+               <documentation>
+                  The value that the property is expected to match. Please use expectedValue.
+               </documentation>
+               <appinfo>
+                  <meta.attribute deprecated="true"/>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -683,14 +683,6 @@ It is undefined what happens when two tool cursors are defined with the same id;
             </annotation>
          </attribute>
       </complexType>
-   </element>
-
-   <element name="toolApplicability" type="string">
-      <annotation>
-         <documentation>
-            Indicates what &quot;Applicability&quot; this tool is part of.
-         </documentation>
-      </annotation>
    </element>
 
    <element name="toolOption">

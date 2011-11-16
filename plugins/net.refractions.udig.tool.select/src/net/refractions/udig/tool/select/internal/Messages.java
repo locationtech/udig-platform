@@ -39,6 +39,7 @@ public class Messages extends NLS {
     public static String Select_Description;
     public static String Zoom_To_Selection;
     public static String Group_Boundary;
+    public static String Navigate_Selection;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
