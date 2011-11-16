@@ -34,7 +34,7 @@
    </plugins>
 
    <features>
-      <feature id="net.refractions.udig_sdk"/>
+      <feature id="net.refractions.udig_sdk-feature" version="1.3.0.qualifier"/>
    </features>
 
 
