@@ -176,7 +176,13 @@ public class UDIGDNDProcessor {
                 }
             }
         }
-
+        /** Processes the configuration element; checking if the provided IDropAction can accept the provided data (if so it is added to actions
+         * for later).
+         * @param element
+         * @param concreteTarget
+         * @param concreteData
+         * @throws CoreException
+         */
         private void addAction( IConfigurationElement element, Object concreteTarget, List<Object> concreteData ) throws CoreException {
             if( concreteData.isEmpty() )
                 throw new IllegalArgumentException("Data cannot be null"); //$NON-NLS-1$

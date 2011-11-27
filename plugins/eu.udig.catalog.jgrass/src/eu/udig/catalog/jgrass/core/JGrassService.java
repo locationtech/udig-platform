@@ -52,8 +52,10 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.gce.grassraster.JGrassConstants;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import eu.udig.catalog.jgrass.JGrassPlugin;
+import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 
 /**
  * <p>
@@ -77,21 +79,27 @@ public class JGrassService extends IService {
     /** the resources members field */
     private volatile List<IResolve> mapsetMembers = null;
 
-    /** error messahe field */
+    /** error message field */
     private Throwable msg = null;
 
     private ID id;
+
+    private File locationFolderFile;
+
+    private CoordinateReferenceSystem locationCrs;
 
     public JGrassService( Map<String, Serializable> params ) {
         this.params = params;
 
         // get the file url from the connection parameters
         url = (URL) this.params.get(JGrassServiceExtension.KEY);
-        try {
-            id = new ID(url);
-        } catch (Throwable t) {
-            t.printStackTrace();
+        id = new ID(url);
+
+        locationFolderFile = URLUtils.urlToFile(url);
+        if (!locationFolderFile.isDirectory()) {
+            throw new IllegalArgumentException("The GRASS location has to be a folder: " + locationFolderFile.getAbsolutePath());
         }
+        locationCrs = JGrassCatalogUtilities.getLocationCrs(locationFolderFile.getAbsolutePath());
     }
 
     @Override
@@ -133,12 +141,7 @@ public class JGrassService extends IService {
             return adaptee.cast(members(monitor));
         }
         if (adaptee.isAssignableFrom(File.class)) {
-            // turn the url into a file and be sure that it is a folder
-            File locationFolderFile = URLUtils.urlToFile(url);
-            if (locationFolderFile.isDirectory()) {
-                return adaptee.cast(locationFolderFile);
-            } else
-                return super.resolve(adaptee, monitor);
+            return adaptee.cast(locationFolderFile);
         }
         // bad call to resolve
         return super.resolve(adaptee, monitor);
@@ -148,19 +151,20 @@ public class JGrassService extends IService {
         // seed the potentially null field
         members(monitor);
         List<JGrassMapGeoResource> children = new ArrayList<JGrassMapGeoResource>();
-        collectChildren(this, children);
+        collectChildren(this, children, monitor);
 
         return children;
     }
 
-    private void collectChildren( IResolve resolve, List<JGrassMapGeoResource> children ) throws IOException {
-        List<IResolve> resolves = resolve.members(new NullProgressMonitor());
+    private void collectChildren( IResolve resolve, List<JGrassMapGeoResource> children, IProgressMonitor monitor )
+            throws IOException {
+        List<IResolve> resolves = resolve.members(monitor);
 
         if (resolve instanceof JGrassMapGeoResource && resolves.isEmpty()) {
             children.add((JGrassMapGeoResource) resolve);
         } else {
             for( IResolve resolve2 : resolves ) {
-                collectChildren(resolve2, children);
+                collectChildren(resolve2, children, monitor);
             }
         }
     }
@@ -208,48 +212,31 @@ public class JGrassService extends IService {
      */
     private Map<String, String> loadMapsets( IProgressMonitor monitor ) {
         try {
-            // resolve to a file
-            File file = resolve(File.class, monitor);
-            if (file == null) {
-                return null;
-            }
-
             Map<String, String> props = new HashMap<String, String>();
 
             // list the mapsets inside the location folder
-            String[] mapsets = file.list();
-            if (mapsets == null) {
+            File[] mapsetFiles = locationFolderFile.listFiles();
+            if (mapsetFiles == null) {
                 msg = new Throwable("Either dir does not exist or is not a directory");
                 return null;
             }
 
             // store the mapset name and the absolute path to it
-            for( String mapsetName : mapsets ) {
-                if (mapsetName.equals(JGrassConstants.PERMANENT_MAPSET)) {
+            File permanentMapsetFile = null;
+            for( File mapsetFile : mapsetFiles ) {
+                if (mapsetFile.getName().equals(JGrassConstants.PERMANENT_MAPSET)) {
+                    permanentMapsetFile = mapsetFile;
                     continue;
                 }
-                String mapsetPath = file.getAbsolutePath() + File.separator + mapsetName;
-                File mapsetFile = new File(mapsetPath);
                 // the folder has contain the region definition file to be
                 // consistent
-                File windInMapsetFile = new File(mapsetPath + File.separator + JGrassConstants.WIND);
+                File windInMapsetFile = new File(mapsetFile, JGrassConstants.WIND);
                 if (mapsetFile.exists() && mapsetFile.isDirectory() && windInMapsetFile.exists()) {
-                    // if (!windInMapsetFile.exists()) {
-                    // windInMapsetFile = new File(mapsetPath + File.separator
-                    // + JGrassConstans.WIND.toLowerCase());
-                    // if (!windInMapsetFile.exists()) {
-                    // msg = new Throwable(
-                    // "Couldn't find a suitable region file in the mapset. Check your Location.");
-                    // return null;
-                    // }
-                    // }
-
-                    props.put(mapsetName, mapsetFile.getAbsolutePath());
+                    props.put(mapsetFile.getName(), mapsetFile.getAbsolutePath());
                 }
             }
-            if (props.size() == 0) {
-                props.put(JGrassConstants.PERMANENT_MAPSET, file.getAbsolutePath() + File.separator
-                        + JGrassConstants.PERMANENT_MAPSET);
+            if (props.size() == 0 && permanentMapsetFile != null) {
+                props.put(JGrassConstants.PERMANENT_MAPSET, permanentMapsetFile.getAbsolutePath());
             }
 
             // clear message, everything is ok
@@ -270,6 +257,15 @@ public class JGrassService extends IService {
 
     public ID getID() {
         return id;
+    }
+
+    /**
+     * Getter for the location {@link CoordinateReferenceSystem}.
+     * 
+     * @return the location crs.
+     */
+    public CoordinateReferenceSystem getLocationCrs() {
+        return locationCrs;
     }
 
     public static URL createId( String locationPath ) {
@@ -300,8 +296,7 @@ public class JGrassService extends IService {
     }
 
     public File getFile() {
-        File serviceFile = URLUtils.urlToFile(getIdentifier());
-        return serviceFile;
+        return locationFolderFile;
     }
 
     public File getPermanetMapsetFile() {

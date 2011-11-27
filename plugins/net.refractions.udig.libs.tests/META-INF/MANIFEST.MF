@@ -4,6 +4,6 @@ Bundle-Name: Libs Tests
 Bundle-SymbolicName: net.refractions.udig.libs.tests
 Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: udig.refractions.net
-Require-Bundle: org.junit4,
- net.refractions.udig.libs,
- org.eclipse.core.runtime
+Require-Bundle: net.refractions.udig.libs,
+ org.junit4;bundle-version="4.8.1"
+Export-Package: net.refractions.udig.libs.tests

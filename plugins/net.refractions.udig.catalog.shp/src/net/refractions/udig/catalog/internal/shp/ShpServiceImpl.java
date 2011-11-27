@@ -1,7 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+ *    (C) 2004-2011, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -63,10 +63,10 @@ import org.opengis.filter.Filter;
  * 
  * @author David Zwiers, Refractions Research
  * @since 0.6
+ * @version 1.2
  */
 public class ShpServiceImpl extends IService {
-
-    private URL url;
+    //private URL url;
     private ID id;
     private Map<String, Serializable> params = null;
 
@@ -77,11 +77,14 @@ public class ShpServiceImpl extends IService {
      * @param arg2
      */
     public ShpServiceImpl( URL url, Map<String, Serializable> params ) {
-        this.url = url;
+        //this.url = url;
+        if( url == null ){
+            throw new NullPointerException("ShpService requres a URL");
+        }
         try {
             id = new ID(url);
         } catch (Throwable t) {
-            t.printStackTrace();
+            throw new IllegalArgumentException("Unable to create ID from:"+url,t);
         }
         this.params = params;
         Serializable memorymapped = params.get("memory mapped buffer"); //$NON-NLS-1$
@@ -98,12 +101,10 @@ public class ShpServiceImpl extends IService {
             }
         }
         if (!params.containsKey(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key)) {
-            params.put(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key, ShpPlugin.getDefault()
-                    .isUseSpatialIndex());
+            params.put(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key, ShpPlugin.getDefault().isUseSpatialIndex());
         }
         if (!params.containsKey(ShapefileDataStoreFactory.DBFCHARSET.key)) {
-            params.put(ShapefileDataStoreFactory.DBFCHARSET.key, ShpPlugin.getDefault()
-                    .defaultCharset());
+            params.put(ShapefileDataStoreFactory.DBFCHARSET.key, ShpPlugin.getDefault().defaultCharset());
         }
     }
 
@@ -133,7 +134,9 @@ public class ShpServiceImpl extends IService {
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null)
             return false;
-        return adaptee.isAssignableFrom(ShapefileDataStore.class) || super.canResolve(adaptee);
+        return adaptee.isAssignableFrom(ShapefileDataStore.class) || //
+                adaptee.isAssignableFrom(File.class) || //
+                super.canResolve(adaptee);
     }
 
     public void dispose( IProgressMonitor monitor ) {
@@ -147,8 +150,8 @@ public class ShpServiceImpl extends IService {
                 resolve.dispose(subProgressMonitor);
                 subProgressMonitor.done();
             } catch (Throwable e) {
-                ErrorManager.get().displayException(e,
-                        "Error disposing members of service: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
+                ErrorManager.get()
+                        .displayException(e, "Error disposing members of service: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
             }
         }
     }
@@ -251,8 +254,7 @@ public class ShpServiceImpl extends IService {
                 dsInstantiationLock.unlock();
             }
             IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
-            ResolveChangeEvent event = new ResolveChangeEvent(this,
-                    IResolveChangeEvent.Type.POST_CHANGE, delta);
+            ResolveChangeEvent event = new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, delta);
             fire(event);
         }
         return ds;
@@ -279,11 +281,8 @@ public class ShpServiceImpl extends IService {
                 final String finalName = name;
                 IRunnableWithProgress runnable = new IRunnableWithProgress(){
 
-                    public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                            InterruptedException {
-                        monitor
-                                .beginTask(
-                                        Messages.ShpPreferencePage_createindex + " " + finalName, IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+                    public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
+                        monitor.beginTask(Messages.ShpPreferencePage_createindex + " " + finalName, IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                         index(ds, ds.getTypeNames()[0]);
                         monitor.done();
                     }
@@ -298,8 +297,7 @@ public class ShpServiceImpl extends IService {
                         ShpPlugin.log("", e); //$NON-NLS-1$
                     }
                 } else {
-                    PlatformGIS.runInProgressDialog(Messages.ShpServiceImpl_indexing
-                            + " " + finalName, true, runnable, false); //$NON-NLS-1$
+                    PlatformGIS.runInProgressDialog(Messages.ShpServiceImpl_indexing + " " + finalName, true, runnable, false); //$NON-NLS-1$
                 }
             }
         } finally {
@@ -312,8 +310,7 @@ public class ShpServiceImpl extends IService {
         FeatureReader<SimpleFeatureType, SimpleFeature> reader = null;
         try {
             // smack Datastore to generate indices
-            reader = ds.getFeatureReader(new DefaultQuery(typename, Filter.INCLUDE, new String[0]),
-                    Transaction.AUTO_COMMIT);
+            reader = ds.getFeatureReader(new DefaultQuery(typename, Filter.INCLUDE, new String[0]), Transaction.AUTO_COMMIT);
         } catch (Exception e) {
             ShpPlugin.log("", e); //$NON-NLS-1$
         } finally {
@@ -344,7 +341,7 @@ public class ShpServiceImpl extends IService {
      * @see net.refractions.udig.catalog.IResolve#getIdentifier()
      */
     public URL getIdentifier() {
-        return url;
+        return id.toURL();
     }
     @Override
     public ID getID() {

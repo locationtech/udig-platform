@@ -176,4 +176,16 @@ public class UDIGConnectionFactoryDescriptor {
     public int getWizardPageCount() {
         return wizardPages.size();
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder build = new StringBuilder( factory.getClass().getSimpleName() );
+        build.append(" Info");
+        if( !wizardPages.isEmpty() ){
+            build.append(" '");
+            build.append( getLabel(0) );
+            build.append("'");
+        }
+        return build.toString();
+    }
 }

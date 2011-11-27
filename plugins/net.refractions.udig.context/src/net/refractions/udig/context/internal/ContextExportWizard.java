@@ -24,12 +24,12 @@ import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 import org.geotools.data.ResourceInfo;
 import org.geotools.data.ServiceInfo;
-import org.geotools.data.ows.FeatureSetDescription;
 import org.geotools.data.ows.Layer;
 import org.geotools.data.ows.StyleImpl;
-import org.geotools.data.ows.WFSCapabilities;
 import org.geotools.data.ows.WMSCapabilities;
 import org.geotools.data.wfs.WFSDataStore;
+import org.geotools.data.wfs.v1_0_0.FeatureSetDescription;
+import org.geotools.data.wfs.v1_0_0.WFSCapabilities;
 import org.geotools.data.wms.WebMapServer;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.metadata.Identifier;
@@ -155,7 +155,7 @@ public class ContextExportWizard extends Wizard implements IExportWizard {
         
         String title = wms.getCapabilities().getService().getTitle();
         int hidden = layer.isVisible() ? 1 : 0;
-        int info = layer.isApplicable("info") ? 1 : 0; //$NON-NLS-1$
+        int info = layer.isApplicable(ILayer.Interaction.INFO) ? 1 : 0;
         String get = caps.getRequest().getGetCapabilities().getGet().toExternalForm();
 System.out.println(get); if (get.endsWith("&")) get = get.substring(0,get.length()-1); //$NON-NLS-1$
         append( 4, out, "<Layer hidden=\""+ hidden +"\" queryable=\""+info+"\">" ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$

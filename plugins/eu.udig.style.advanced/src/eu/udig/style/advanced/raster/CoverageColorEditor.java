@@ -35,6 +35,7 @@ import net.refractions.udig.project.internal.Layer;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -50,6 +51,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Scale;
+import org.eclipse.swt.widgets.Text;
 import org.geotools.coverage.grid.GridCoverage2D;
 
 /**
@@ -76,6 +78,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
     private GridCoverage2D gridCoverage;
 
     private double[] minMax = null;
+    private Text novaluesText;
 
     public CoverageColorEditor( Composite parent, int style ) {
         super(parent, style);
@@ -131,6 +134,48 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         buttonComposite.setLayoutData(gridDataBC);
         buttonComposite.setLayout(new GridLayout(8, true));
 
+        Button selectAllButton = new Button(buttonComposite, SWT.PUSH);
+        GridData selectAllGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        selectAllGD.horizontalSpan = 3;
+        selectAllButton.setLayoutData(selectAllGD);
+        selectAllButton.setText("Select all");
+        selectAllButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                for( CoverageRule cRule : listOfRules ) {
+                    cRule.setActive(true);
+                }
+                redoLayout();
+            }
+        });
+
+        Button unselectAllButton = new Button(buttonComposite, SWT.PUSH);
+        GridData unselectAllGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        unselectAllGD.horizontalSpan = 3;
+        unselectAllButton.setLayoutData(unselectAllGD);
+        unselectAllButton.setText("Unselect all");
+        unselectAllButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                for( CoverageRule cRule : listOfRules ) {
+                    cRule.setActive(false);
+                }
+                redoLayout();
+            }
+        });
+
+        Button invertSelectionButton = new Button(buttonComposite, SWT.PUSH);
+        GridData invertSelectionGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        invertSelectionGD.horizontalSpan = 2;
+        invertSelectionButton.setLayoutData(invertSelectionGD);
+        invertSelectionButton.setText("Invert selection");
+        invertSelectionButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                for( CoverageRule cRule : listOfRules ) {
+                    cRule.setActive(!cRule.isActive());
+                }
+                redoLayout();
+            }
+        });
+
         GridData resetGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         resetGD.horizontalSpan = 8;
         resetColormapButton = new Button(buttonComposite, SWT.NONE);
@@ -157,6 +202,39 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         predefinedRulesCombo.addSelectionListener(this);
 
         createRulesComposite();
+
+        GridLayout novaluesLayout = new GridLayout();
+        novaluesLayout.numColumns = 4;
+        GridData novaluesGD = new GridData();
+        novaluesGD.horizontalSpan = 4;
+        novaluesGD.verticalAlignment = GridData.CENTER;
+        novaluesGD.grabExcessHorizontalSpace = true;
+        novaluesGD.horizontalAlignment = GridData.FILL;
+        Group novaluesGroup = new Group(this, SWT.NONE);
+        novaluesGroup.setLayoutData(novaluesGD);
+        novaluesGroup.setLayout(novaluesLayout);
+        novaluesGroup.setText("Novalues to ignore");
+        novaluesText = new Text(novaluesGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        novaluesText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        novaluesText.setText("-9999.0");
+        Button addNovalueRulesButton = new Button(novaluesGroup, SWT.PUSH);
+        addNovalueRulesButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        addNovalueRulesButton.setText("Add rules for novalues");
+        addNovalueRulesButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                double[] nvArray = getExtraNovalues();
+                if (nvArray.length > 0) {
+                    for( double nv : nvArray ) {
+                        Color fromColor = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
+                        Color toColor = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
+                        CoverageRule rule = new CoverageRule(new double[]{nv, nv}, fromColor, toColor, 0.0, true);
+                        listOfRules.add(0, rule);
+                        redoLayout();
+                    }
+                }
+            }
+        });
+
         createAlphaGroup();
         // setSize(new Point(395, 331));
     }
@@ -286,6 +364,8 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                 // System.out.println(((double[]) gridCoverage.getProperty("minimum"))[0]);
                 // System.out.println(((double[]) gridCoverage.getProperty("maximum"))[0]);
 
+                double[] nvArray = getExtraNovalues();
+
                 RenderedImage renderedImage = gridCoverage.getRenderedImage();
                 RectIter iter = RectIterFactory.create(renderedImage, null);
                 double min = Double.MAX_VALUE;
@@ -294,6 +374,17 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                     do {
                         double value = iter.getSampleDouble();
                         if (!Double.isNaN(value)) {
+                            boolean jump = false;
+                            for( int i = 0; i < nvArray.length; i++ ) {
+                                if (value - nvArray[i] < 10E-6) {
+                                    jump = true;
+                                    break;
+                                }
+                            }
+                            if (jump) {
+                                continue;
+                            }
+
                             if (value < min) {
                                 min = value;
                             }
@@ -338,6 +429,27 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
 
             }
         }
+    }
+
+    private double[] getExtraNovalues() {
+        List<Double> novaluesList = new ArrayList<Double>();
+        String novaluesStr = novaluesText.getText();
+        if (novaluesStr != null && novaluesStr.length() > 0) {
+            String[] nvSplit = novaluesStr.split(",");
+            for( String nvStr : nvSplit ) {
+                try {
+                    double nv = Double.parseDouble(nvStr.trim());
+                    novaluesList.add(nv);
+                } catch (Exception ex) {
+                    // ignore numbers that are not ok
+                }
+            }
+        }
+        double[] nvArray = new double[novaluesList.size()];
+        for( int i = 0; i < nvArray.length; i++ ) {
+            nvArray[i] = novaluesList.get(i);
+        }
+        return nvArray;
     }
 
     /**

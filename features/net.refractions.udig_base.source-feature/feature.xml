@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="net.refractions.udig_base.source"
+      id="net.refractions.udig_base.source-feature"
       label="net.refractions.udig_base.source"
-      version="1.2.0.qualifier"
+      version="1.3.0.qualifier"
       provider-name="Udig.Refractions.net">
 
    <description url="http://www.example.com/description">

@@ -14,4 +14,4 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.catalog.rasterings
 Bundle-ActivationPolicy: lazy
 Export-Package: net.refractions.udig.catalog.internal.geotiff;x-friends:="net.refractions.udig.catalog.test.geotiff"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

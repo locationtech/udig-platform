@@ -23,6 +23,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.ui.internal.Messages;
 
@@ -38,7 +39,10 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.services.ServiceLocator;
+import org.eclipse.ui.internal.services.WorkbenchServiceRegistry;
 import org.geotools.brewer.color.ColorBrewer;
 
 /**
@@ -46,11 +50,13 @@ import org.geotools.brewer.color.ColorBrewer;
  * 
  * @author jeichar
  * @since 1.1
+ * @version 1.2.3
  */
 public class PlatformGIS {
 
     private static ColorBrewer colorBrewer;
     private static ExecutorService executor = Executors.newCachedThreadPool();
+
     /**
      * Runs the given runnable in a separate thread, providing it a progress monitor. Exceptions
      * thrown by the runnable are logged, and not rethrown.
@@ -432,4 +438,10 @@ public class PlatformGIS {
             display.asyncExec(runnable);
         }
     }
+    
+    public static IBoundaryService getBoundaryService() {
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        return (IBoundaryService) workbench.getService(IBoundaryService.class);
+    }
+    
 }

@@ -77,6 +77,9 @@
    <extension
          point="net.refractions.udig.project.persister">
       <persister class="net.refractions.udig.project.internal.ColorPersister"/>
+      <persister
+            class="net.refractions.udig.project.internal.TextPersister">
+      </persister>
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
@@ -148,6 +151,9 @@
          <property
                class="net.refractions.udig.project.internal.property.FeatureStoreResourceProperty"
                id="FeatureStoreResourceProperty"/>
+         <property
+               class="net.refractions.udig.project.internal.property.LayerInteractionProperty"
+               id="InteractionProperty"/>               
       </object>
    </extension>
    <extension

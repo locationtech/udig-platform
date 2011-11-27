@@ -15,4 +15,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: net.refractions.udig.context,
  net.refractions.udig.context.internal,
  net.refractions.udig.ui.dialogs
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

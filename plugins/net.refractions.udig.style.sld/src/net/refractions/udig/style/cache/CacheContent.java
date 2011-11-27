@@ -22,6 +22,7 @@ import java.net.URL;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.IService;
 import net.refractions.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -29,7 +30,7 @@ import org.eclipse.ui.IMemento;
 import org.geotools.styling.Style;
 
 /**
- * CacheContent is responsible for cache control.
+ * Used to indicate if we are caching content (in memory or otherwise).
  * <p>
  * To start out with we will simply have a boolean flag; we may
  * wish to provide a threshold of memory use.
@@ -101,7 +102,11 @@ public final class CacheContent extends StyleContent {
                 return isCaching;
             }
         }
-        ID serviceID = resource.service(null).getID();        
+        IService service = resource.service(null);
+        if( service == null ){
+            return null; // cannot determine sevice at this time!
+        }
+        ID serviceID = service.getID();        
 //        if( serviceID.isWFS() ){
 //            return true; // we want to cache for WFS
 //        }

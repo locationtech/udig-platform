@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -83,10 +84,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.model.WorkbenchAdapter;
+import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureListener;
 import org.geotools.data.FeatureSource;
+import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
@@ -524,6 +527,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
         newid = CorePlugin.createSafeURL(spec);
         setID(newid);
+        
     }
 
     public ID getResourceID(){
@@ -978,21 +982,29 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     oldGlyph, glyph));
     }
 
+    private boolean selectableIsDefault = true;
+    
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @generated
+     * @generated not
      */
     public boolean isSelectable() {
+        if (selectableIsDefault) {
+            setSelectable(this.getGeoResource(FeatureSource.class) != null);
+        }
         return selectable;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @generated
+     * @generated not
      */
     public void setSelectable( boolean newSelectable ) {
+        if (selectableIsDefault) {
+            selectableIsDefault = false;
+        }
         boolean oldSelectable = selectable;
         selectable = newSelectable;
         if (eNotificationRequired())
@@ -1637,19 +1649,179 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see net.refractions.udig.project.internal.Layer#isApplicable(java.lang.String)
      */
-    public boolean isApplicable( String toolsetID ) {
-        if (getProperties().get(toolsetID) == null)
-            return true;
-        return (Boolean) getProperties().get(toolsetID);
+    public boolean isApplicable( Interaction interaction ) {
+        // special cases handled as fields
+        if (Interaction.VISIBLE.equals( interaction )){
+            return isVisible();
+        }
+        else if (Interaction.SELECT.equals( interaction )){
+            return isSelectable();
+        }
+        // check the blackboard 
+        // layer blackboard is not persisted; store on the map blackboard for now
+        String key = interaction.getKey();
+		Boolean applicable = (Boolean) getBlackboard().get(key);
+        if (applicable == null) {
+        	// look for a default from the last time the user used this map
+        	applicable = isMapApplicable( key );
+        	if( applicable != null ){
+        		// use value from last time
+        		getBlackboard().put( key, applicable);
+        	}
+        	else {
+	        	// create a new default value from scratch
+	            applicable = getDefaultApplicable( interaction );
+	            getBlackboard().put( key, applicable);
+	        }
+        }
+        return applicable;
     }
-
+    
+    /**
+     * Logic to sort out a good default value for the request interaction.
+     * @param interaction
+     * @return <code>true</code> if the interaction defaults to on
+     */
+    protected boolean getDefaultApplicable(  Interaction interaction ){
+     // not available create a good default for people to see
+        if( Interaction.INFO.equals(interaction)){
+            return true; // info is supported by most layers
+        }
+        // wont hit this code yet because value comes from isSelectable
+        /*else if( ID_SELECT.equals(toolsetID)){
+            IGeoResource found = this.getGeoResource(FeatureSource.class);
+            return found != null;
+        }*/ 
+        else if( Interaction.EDIT.equals(interaction)){
+            IGeoResource found = this.getGeoResource(FeatureStore.class);
+            return found != null;
+        }
+        return false;
+    }
+    /**
+     * Check the map blackboard to see is a previous run has specified
+     * an applicable value for us to use. We can use this as a default;
+     * when re-loading the map.
+     * 
+     * @param key
+     * @param applicable
+     * @return true or false (if the value was available previously) or null if it was unknown.
+     */
+    protected Boolean isMapApplicable( String key ){
+    	IBlackboard mapBlackboard = getMap().getBlackboard();
+    	String text = mapBlackboard.getString( key );
+    	if( text == null ){
+    		return null;
+    	}
+    	String token = this.getID().toString();
+    	List<String> values;
+    	if( text.indexOf('\n')==-1){
+    		values = new ArrayList<String>();
+    		values.add(text);
+    	}
+    	else {
+    		values = new ArrayList<String>(Arrays.asList( text.split("\n")));
+    	}
+    	for( String line : values ){
+    		if( line.startsWith(token) ){
+    			// match!
+    			if(line.endsWith("=true")){
+    				return true;
+    			}
+    			else if(line.endsWith("=false")){
+        			return false;    				
+    			}
+    			else {
+    				break;
+    			}
+    		}
+    	}
+    	return null;
+    }
+    
+    /**
+     * Will record a list of layers that have the key set to true; this will
+     * be used as a default when the map is re-loaded.
+     * 
+     * @param key
+     * @param applicable
+     */
+    protected void setMapApplicable( String key, boolean applicable ){
+    	IBlackboard mapBlackboard = getMap().getBlackboard();
+    	String text = mapBlackboard.getString( key);
+    	String token = this.getID().toString();
+    	List<String> values;
+    	if( text == null ){
+    		values = new ArrayList<String>();
+    	}
+    	else if( text.indexOf('\n') == -1 ){
+    		values = new ArrayList<String>();
+    		values.add( text );
+    	}
+    	else {
+    		values = new ArrayList<String>(Arrays.asList( text.split("\n")));
+    	}
+    	boolean updated = false;
+    	for( int index=0; index < values.size(); index++){
+    		String line = values.get(index);
+    		if( line.startsWith(token) ){
+    			if( applicable ){
+    				if( line.endsWith("=true")){
+    					return; // no change needed
+    				}
+    				values.set(index, token+"=true");
+    				updated = true;
+    			}
+    			else {
+    				if( line.endsWith("=false")){
+    					return; // no change needed
+    				}
+    				values.set(index, token+"=false");
+    				updated = true;    				
+    			}
+    		}
+    	}
+    	if( updated == false ){
+    		if( applicable){
+    			values.add( token + "=true");
+    		}
+    		else {
+    			values.add( token + "=false");
+    		}
+    	}
+		StringBuilder build = new StringBuilder();
+		for( String aToken : values ){
+			if( aToken.length() == 0 ){
+				continue;
+			}
+			build.append(aToken);
+			build.append("\n");
+		}
+		String updatedText = build.substring(0, build.length()-1);
+		mapBlackboard.putString(key, updatedText );        		
+    }
+    
     /**
      * @see net.refractions.udig.project.internal.Layer#setApplicable(java.lang.String, boolean)
      */
-    public void setApplicable( String toolsetID, boolean applicable ) {
-        getProperties().put(toolsetID, applicable);
-        // XXX just to send an event needs to change.
-        setSelectable(isSelectable());
+    public void setApplicable( Interaction interaction, boolean applicable ) {
+        if (Interaction.VISIBLE.equals( interaction )){
+            setVisible(applicable);
+        }
+        else if (Interaction.SELECT.equals( interaction )){
+            setSelectable(applicable);
+        }
+        else {
+        	// layer blackboard is not persisted; store on the map blackboard for now
+            String key = interaction.getKey();
+			getBlackboard().put(key, applicable );
+            
+            // save a default for next time!
+            setMapApplicable(key, applicable);
+            
+            // XXX just to send an event needs to change when we have EMF set up
+        	setSelectable(isSelectable());
+        }
     }
 
     /**

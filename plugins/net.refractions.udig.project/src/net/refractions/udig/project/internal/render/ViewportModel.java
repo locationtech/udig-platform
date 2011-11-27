@@ -147,6 +147,18 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @generated
      */
     void setBounds( ReferencedEnvelope value );
+    /**
+     * Set the bounds of the viewport model
+     * @param value the new desired bounds
+     * @param forceContainBBoxZoom Whether or not the {@link #setBounds(ReferencedEnvelope)} will always contain the
+     * 				envelope after execution.  In normal execution this is not an issue but if
+     * 				{@link #setPreferredScaleDenominators(SortedSet)} has been called then this does matter because
+     * 				zoom to features will not necessary contain all the features.  When taking into account
+     * 				preferredScaleDenominators setting the bounds the closest scale to the desired scale is chosen.
+     * 				This can mean that the scale chosen will not be able to fit the entire bounds.  This is fine
+     * 				when zooming but in other cases it is not acceptable
+     */
+    void setBounds( ReferencedEnvelope value, boolean forceContainBBoxZoom);
 
     /**
      * Sets the value of the '{@link net.refractions.udig.project.internal.render.ViewportModel#getBounds <em>Bounds</em>}'

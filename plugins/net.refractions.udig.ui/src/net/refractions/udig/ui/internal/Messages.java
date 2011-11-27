@@ -175,28 +175,28 @@ public class Messages extends NLS {
     
     public static String cancel_label;
     public static String cancel_image;
-    public static String cancel_description;
-    public static String cancel_tooltip;
+//    public static String cancel_description;
+//    public static String cancel_tooltip;
     
     public static String orientation_horizontal_label;
     public static String orientation_horizontal_image;
-    public static String orientation_horizontal_description;
-    public static String orientation_horizontal_tooltip;
+//    public static String orientation_horizontal_description;
+//    public static String orientation_horizontal_tooltip;
     
     public static String orientation_vertical_label;
     public static String orientation_vertical_image;
-    public static String orientation_vertical_description;
-    public static String orientation_vertical_tooltip;
+//    public static String orientation_vertical_description;
+//    public static String orientation_vertical_tooltip;
     
     public static String orientation_single_label;
     public static String orientation_single_image;
-    public static String orientation_single_description;
-    public static String orientation_single_tooltip;
+//    public static String orientation_single_description;
+//    public static String orientation_single_tooltip;
     
     public static String orientation_automatic_label;
     public static String orientation_automatic_image;
-    public static String orientation_automatic_description;
-    public static String orientation_automatic_tooltip;
+//    public static String orientation_automatic_description;
+//    public static String orientation_automatic_tooltip;
     
     public static String addAttributeAction_label;
 
@@ -290,6 +290,8 @@ public class Messages extends NLS {
 		try {
 			field = Messages.class.getDeclaredField(fieldName);
 			return (String) field.get(null);
+		} catch(NoSuchFieldException ignore){
+		    return null; // not available (example tooltip or description not available)
 		} catch (Exception e) {
 			UiPlugin.log("Error loading key " + fieldName, e); //$NON-NLS-1$
 		}

@@ -31,6 +31,8 @@ import net.refractions.udig.project.internal.Project;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.MapEditor;
 import net.refractions.udig.project.ui.internal.MapEditorInput;
+import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
+import net.refractions.udig.project.ui.internal.MapPart;
 
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -46,6 +48,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListDialog;
 
@@ -53,6 +56,8 @@ import org.eclipse.ui.dialogs.ListDialog;
  * Creates a Page using the current map
  * 
  * @author Richard Gould
+ * 
+ * @version 1.3.0
  */
 public class CreatePageAction implements IEditorActionDelegate {
 
@@ -66,9 +71,8 @@ public class CreatePageAction implements IEditorActionDelegate {
                     Messages.CreatePageAction_printError_text);
         }
 
-        MapEditor mapEditor = (MapEditor) activeEditor;
-        Point partSize = mapEditor.getComposite().getSize();
-
+        MapPart mapEditor = (MapPart) activeEditor;
+        
         Template template = getPageTemplate();
 
         if (template == null) {
@@ -91,7 +95,22 @@ public class CreatePageAction implements IEditorActionDelegate {
 
         project.getElementsInternal().add(map);
 
-        Page page = createPage(template, map, project, partSize);
+        //Point size = //mapEditor.getComposite().getSize();
+        Point partSize;
+        if( mapEditor instanceof MapEditor ){
+        	MapEditor part = (MapEditor) mapEditor;
+        	partSize = part.getComposite().getSize();
+        }
+        else if( mapEditor instanceof MapEditorWithPalette){
+        	MapEditorWithPalette part = (MapEditorWithPalette) mapEditor;
+        	partSize = part.getComposite().getSize();
+        }
+        else {
+        	//java.awt.Dimension size = map.getRenderManager().getMapDisplay().getDisplaySize();
+        	//Point partSize = new Point(size.width,size.height);
+        	partSize = new Point(500,500);
+        }
+        Page page = createPage(template, map, project, partSize );
 
         ApplicationGIS.openProjectElement(page, false);
     }

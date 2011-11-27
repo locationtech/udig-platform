@@ -31,6 +31,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILayer.Interaction;
 import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.LayerEvent;
@@ -610,7 +611,7 @@ public class EditBlackboardUtil {
      */
     private static boolean isEditable( ILayer layer ) {
         return layer != null && layer.hasResource(FeatureStore.class)
-                && layer.isApplicable("editing") && layer.isVisible(); //$NON-NLS-1$
+                && layer.isApplicable(Interaction.EDIT) && layer.isVisible(); //$NON-NLS-1$
     }
     @SuppressWarnings("unchecked")
     private synchronized static void enableViewportListener( ViewportModel model ) {

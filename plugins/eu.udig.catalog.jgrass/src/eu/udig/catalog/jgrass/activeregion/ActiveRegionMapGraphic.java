@@ -200,7 +200,7 @@ public class ActiveRegionMapGraphic implements MapGraphic {
                     style.rows = activeRegionWindow.getRows();
                     style.cols = activeRegionWindow.getCols();
 
-                    CoordinateReferenceSystem jGrassCrs = jGrassMapsetGeoResource.getJGrassCrs();
+                    CoordinateReferenceSystem jGrassCrs = jGrassMapsetGeoResource.getLocationCrs();
                     String code = null;
                     try {
                         Integer epsg = CRS.lookupEpsgCode(jGrassCrs, true);

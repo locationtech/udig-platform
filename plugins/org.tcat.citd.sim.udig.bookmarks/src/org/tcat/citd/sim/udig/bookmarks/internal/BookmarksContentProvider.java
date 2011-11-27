@@ -4,11 +4,12 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.ui.PlatformGIS;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -18,8 +19,8 @@ import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.tcat.citd.sim.udig.bookmarks.Bookmark;
-import org.tcat.citd.sim.udig.bookmarks.BookmarkManager;
 import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
+import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
 import org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView;
 
 /**
@@ -39,7 +40,7 @@ public class BookmarksContentProvider
 
     private IWorkbenchPart currentPart;
 
-    private BookmarkManager bManager;
+    private IBookmarkService bManager;
 
     private MapReference currentMap;
 
@@ -48,9 +49,10 @@ public class BookmarksContentProvider
      */
     public BookmarksContentProvider() {
         viewers = new HashMap<Viewer, Object>();
-        bManager = BookmarksPlugin.getDefault().getBookmarkManager();
+        bManager = BookmarksPlugin.getBookmarkService();
         currentPart = null;
         currentMap = null;
+        
     }
 
     public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
@@ -175,19 +177,20 @@ public class BookmarksContentProvider
     public void partActivated( IWorkbenchPart part ) {
         if (part == currentPart)
             return;
-        if (part instanceof MapEditor) {
-            currentPart = part;
-            IMap map = ((MapPart) part).getMap();
+        
+        IMap map = null;
+        if (part instanceof BookmarksView){
+            //get the current active map
+            map = ApplicationGIS.getActiveMap();
+        }
+        if (map == null && part instanceof IAdaptable){
+            map = (IMap)((IAdaptable)part).getAdapter(Map.class);
+        }
+        
+        if (map != null){
+            currentPart = part;   
             MapReference ref = bManager.getMapReference(map);
             setCurrentMap(ref);
-            refresh(viewers.keySet(), true);
-        } else if (part instanceof BookmarksView) {
-            currentPart = part;
-            IMap map = ApplicationGIS.getActiveMap();
-            if (map != ApplicationGIS.NO_MAP) {
-                setCurrentMap(bManager.getMapReference(map));
-            } else
-                setCurrentMap(null);
             refresh(viewers.keySet(), true);
         }
     }

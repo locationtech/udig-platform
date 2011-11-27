@@ -17,7 +17,7 @@
  */
 package eu.udig.style.advanced.points.widgets;
 
-import static eu.udig.style.advanced.utils.Utilities.*;
+import static eu.udig.style.advanced.utils.Utilities.ff;
 
 import java.awt.Color;
 
@@ -36,12 +36,11 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
-import org.geotools.styling.Font;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.expression.Expression;
 
-import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
+import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
 import eu.udig.style.advanced.utils.Alignments;
@@ -122,7 +121,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         labelEnableButton.setText("enable/disable labelling");
         labelEnableButton.setSelection(widgetEnabled);
         labelEnableButton.addSelectionListener(this);
-        
+
         // header
         new Label(mainComposite, SWT.NONE);
         Label valueLabel = new Label(mainComposite, SWT.NONE);
@@ -131,7 +130,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         Label fieldsLabel = new Label(mainComposite, SWT.NONE);
         fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
         fieldsLabel.setText("Field based");
-        
+
         // label name
         Label labelNameLabel = new Label(mainComposite, SWT.NONE);
         labelNameLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -158,7 +157,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         } else {
             labelNameText.setText("");
         }
-        
+
         // label alpha
         Label labelOpactityLabel = new Label(mainComposite, SWT.NONE);
         labelOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -187,7 +186,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
                 labelOpacityAttributecombo.select(index);
             }
         }
-        
+
         // rotation
         Label rotationLabel = new Label(mainComposite, SWT.NONE);
         rotationLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -334,7 +333,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         yDisplacementSpinner.setSelection((int) (10 * tmpYdisplacement));
         yDisplacementSpinner.setDigits(1);
         yDisplacementSpinner.addSelectionListener(this);
-        
+
         // vendor options
         Group vendorOptionsGroup = new Group(mainComposite, SWT.SHADOW_ETCHED_IN);
         GridData vendorOptionsGD = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -387,7 +386,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         } else {
             spaceAroundText.setText("");
         }
-        
+
         checkEnablements();
     }
 
@@ -519,20 +518,49 @@ public class PointLabelsParametersComposite extends ParameterComposite {
 
         checkEnablements();
     }
-    
-    private void checkEnablements(){
+
+    private void checkEnablements() {
         boolean comboIsNone = comboIsNone(labelNameAttributecombo);
-        labelNameText.setEnabled(comboIsNone);
-        comboIsNone = comboIsNone(rotationAttributecombo);
-        rotationSpinner.setEnabled(comboIsNone);
-        comboIsNone = comboIsNone(labelOpacityAttributecombo);
-        labelOpacitySpinner.setEnabled(comboIsNone);
+        boolean selected = labelEnableButton.getSelection();
+        if (!selected) {
+            setEnabled(false);
+        } else {
+            labelNameText.setEnabled(comboIsNone);
+            comboIsNone = comboIsNone(rotationAttributecombo);
+            rotationSpinner.setEnabled(comboIsNone);
+            comboIsNone = comboIsNone(labelOpacityAttributecombo);
+            labelOpacitySpinner.setEnabled(comboIsNone);
+        }
+    }
+
+    private void setEnabled( boolean enable ) {
+        labelOpacitySpinner.setEnabled(enable);
+        labelOpacityAttributecombo.setEnabled(enable);
+        haloColorButton.setEnabled(enable);
+        haloColorEditor.setEnabled(enable);
+        haloRadiusSpinner.setEnabled(enable);
+        anchorVerticalCombo.setEnabled(enable);
+        anchorHorizontalCombo.setEnabled(enable);
+        xDisplacementSpinner.setEnabled(enable);
+        yDisplacementSpinner.setEnabled(enable);
+        rotationSpinner.setEnabled(enable);
+        rotationAttributecombo.setEnabled(enable);
+        maxDisplacementText.setEnabled(enable);
+        autoWrapText.setEnabled(enable);
+        spaceAroundText.setEnabled(enable);
+        fontEditor.setEnabled(enable);
+        fontButton.setEnabled(enable);
+        fontColorEditor.setEnabled(enable);
+        fontColorButton.setEnabled(enable);
+        labelNameAttributecombo.setEnabled(enable);
+        labelNameText.setEnabled(enable);
     }
 
     public void widgetSelected( SelectionEvent e ) {
         Object source = e.getSource();
         if (source.equals(labelEnableButton)) {
             boolean selected = labelEnableButton.getSelection();
+            setEnabled(selected);
             notifyListeners(String.valueOf(selected), false, STYLEEVENTTYPE.LABELENABLE);
         } else if (source.equals(labelNameAttributecombo)) {
             int index = labelNameAttributecombo.getSelectionIndex();
@@ -591,21 +619,21 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         } else if (source.equals(labelOpacitySpinner)) {
             int opacity = labelOpacitySpinner.getSelection();
             String opacityStr = String.valueOf(opacity);
-            
+
             notifyListeners(opacityStr, false, STYLEEVENTTYPE.LABELOPACITY);
         } else if (source.equals(labelOpacityAttributecombo)) {
             int index = labelOpacityAttributecombo.getSelectionIndex();
             String opacityField = labelOpacityAttributecombo.getItem(index);
-            
+
             notifyListeners(opacityField, true, STYLEEVENTTYPE.LABELOPACITY);
-        }else if (source.equals(xDisplacementSpinner) || source.equals(yDisplacementSpinner)) {
+        } else if (source.equals(xDisplacementSpinner) || source.equals(yDisplacementSpinner)) {
             double x = Utilities.getDoubleSpinnerSelection(xDisplacementSpinner);
             double y = Utilities.getDoubleSpinnerSelection(yDisplacementSpinner);
 
             String displacementStr = x + "," + y; //$NON-NLS-1$
             notifyListeners(displacementStr, false, STYLEEVENTTYPE.LABELDISPLACEMENT);
         }
-        
+
         checkEnablements();
     }
 

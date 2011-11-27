@@ -22,4 +22,4 @@ Export-Package: net.refractions.udig.mapgraphic,
  net.refractions.udig.mapgraphic.northarrow,
  net.refractions.udig.mapgraphic.scalebar,
  net.refractions.udig.mapgraphic.style
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

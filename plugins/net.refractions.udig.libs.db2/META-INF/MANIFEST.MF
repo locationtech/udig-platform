@@ -9,4 +9,4 @@ Bundle-ClassPath: libs/db2jcc_license_cu.jar,
 Eclipse-RegisterBuddy: net.refractions.udig.libs
 Require-Bundle: net.refractions.udig.libs,
  org.eclipse.ui
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

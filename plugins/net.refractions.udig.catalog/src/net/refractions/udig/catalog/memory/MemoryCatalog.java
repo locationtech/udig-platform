@@ -62,32 +62,31 @@ public class MemoryCatalog extends ISearch {
         this.services = services;
     }
 
-    @Override
     public <T> boolean canResolve( Class<T> adaptee ) {
         return false;
     }
+<<<<<<< HEAD
     
     @Override
+=======
+
+>>>>>>> afc42c861639b7fbc9ef13c4695ba2a4dfb389ea
     public Status getStatus() {
         return Status.CONNECTED;
     }
 
-    @Override
     public Throwable getMessage() {
         return null;
     }
 
-    @Override
     public URL getIdentifier() {
         return id.toURL();
     }
 
-    @Override
     public ID getID() {
         return id;
     }
 
-    @Override
     public String getTitle() {
         return title;
     }

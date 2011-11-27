@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.project.ui; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.3.0.qualifier
 Bundle-Activator: net.refractions.udig.project.ui.internal.ProjectUIPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
@@ -15,11 +15,13 @@ Export-Package: net.refractions.udig.project.internal.ui.wizard,
  net.refractions.udig.project.ui.internal,
  net.refractions.udig.project.ui.internal.actions,
  net.refractions.udig.project.ui.internal.adapters,
+ net.refractions.udig.project.ui.internal.boundary,
  net.refractions.udig.project.ui.internal.commands,
  net.refractions.udig.project.ui.internal.commands.draw,
  net.refractions.udig.project.ui.internal.dialogs,
  net.refractions.udig.project.ui.internal.dragdrop,
  net.refractions.udig.project.ui.internal.properties,
+ net.refractions.udig.project.ui.internal.property.pages,
  net.refractions.udig.project.ui.internal.render.displayAdapter.impl,
  net.refractions.udig.project.ui.internal.tool,
  net.refractions.udig.project.ui.internal.tool.display,
@@ -31,6 +33,7 @@ Export-Package: net.refractions.udig.project.internal.ui.wizard,
  net.refractions.udig.project.ui.render.displayAdapter,
  net.refractions.udig.project.ui.render.glass,
  net.refractions.udig.project.ui.tool,
+ net.refractions.udig.project.ui.tool.options,
  net.refractions.udig.project.ui.tool.selection.provider,
  net.refractions.udig.project.ui.viewers,
  net.refractions.udig.project.ui.wizard.export,

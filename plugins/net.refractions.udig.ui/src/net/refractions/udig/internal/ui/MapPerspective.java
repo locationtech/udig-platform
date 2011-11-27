@@ -17,6 +17,7 @@
 package net.refractions.udig.internal.ui;
 
 
+import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 
@@ -46,8 +47,13 @@ public class MapPerspective implements IPerspectiveFactory {
         String editorArea = layout.getEditorArea();
         
         layout.addView( "net.refractions.udig.project.ui.projectExplorer", IPageLayout.LEFT, 0.25f, editorArea ); //$NON-NLS-1$
-        layout.addView( "net.refractions.udig.project.ui.layerManager", IPageLayout.BOTTOM, 0.25f, //$NON-NLS-1$
-                "net.refractions.udig.project.ui.projectExplorer" ); //$NON-NLS-1$
+        //layout.addView( "net.refractions.udig.project.ui.layerManager", IPageLayout.BOTTOM, 0.25f, //$NON-NLS-1$
+        //        "net.refractions.udig.project.ui.projectExplorer" ); //$NON-NLS-1$
+        
+        IFolderLayout folder = layout.createFolder("net.refractions.udig.mapPerspective.selection", IPageLayout.BOTTOM, 0.25f, //$NON-NLS-1$
+                "net.refractions.udig.project.ui.projectExplorer");
+        folder.addView("net.refractions.udig.project.ui.layerManager");
+        folder.addView("net.refractions.udig.ui.viewBoundary");
         
         layout.addView("net.refractions.udig.catalog.ui.CatalogView", IPageLayout.BOTTOM, 0.65f, editorArea);         //$NON-NLS-1$
         layout.addActionSet("net.refractions.udig.helpMenuItems");

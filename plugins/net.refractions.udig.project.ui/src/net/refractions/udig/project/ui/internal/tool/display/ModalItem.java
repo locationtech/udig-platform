@@ -19,22 +19,32 @@ package net.refractions.udig.project.ui.internal.tool.display;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.internal.ui.operations.OperationCategory;
+import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
+import net.refractions.udig.project.ui.internal.MapPart;
+import net.refractions.udig.project.ui.internal.MapToolEntry;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.graphics.Glyph;
 import net.refractions.udig.ui.operations.ILazyOpListener;
 import net.refractions.udig.ui.operations.OpFilter;
 
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.ui.palette.PaletteViewer;
+import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 
 /**
+ * Item used to represent one mode in a group.
  * <p>
  * Responsibilities:
  * <ul>
@@ -46,6 +56,7 @@ import org.eclipse.swt.graphics.Image;
  * 
  * @author jeichar
  * @since 0.9.0
+ * @version 1.3.0
  */
 public abstract class ModalItem implements ILazyOpListener {
 
@@ -55,6 +66,7 @@ public abstract class ModalItem implements ILazyOpListener {
 //            .getSystemCursor(SWT.CURSOR_ARROW);
     
     private List<CurrentContributionItem> contributions = new ArrayList<CurrentContributionItem>();
+    private CopyOnWriteArrayList<MapToolEntry> mapToolEntries = new CopyOnWriteArrayList<MapToolEntry>();
     
     protected String[] commandIds;
     protected String handlerType;
@@ -65,6 +77,13 @@ public abstract class ModalItem implements ILazyOpListener {
     protected OpFilter enablement;
     protected List<OperationCategory> operationCategories;
     protected boolean isEnabled = true;
+    
+    private Lock enabledLock=new ReentrantLock();
+    private String preferencePageId;
+
+    private ImageDescriptor largeImageDescriptor;
+
+    private List<ContributionItem> optionsContribution = new ArrayList<ContributionItem>();
 
     /**
      * Gets the image descriptor of the item.
@@ -76,6 +95,14 @@ public abstract class ModalItem implements ILazyOpListener {
     }
 
     /**
+     * Gets the large image descriptor of the item.
+     * 
+     * @return the image descripor of the item; may be null if not provided
+     */
+    public ImageDescriptor getLargeImageDescriptor() {
+        return largeImageDescriptor;
+    }
+    /**
      * Marks each contribution item as selected.
      * 
      * @param checked the selected value of each contribution.
@@ -85,26 +112,76 @@ public abstract class ModalItem implements ILazyOpListener {
         for( CurrentContributionItem item : contributions ) {
             if (item.isDisposed()) {
                 toRemove.add(item);
-            } else
+            } else {
                 item.setSelection(checked, this);
+            }
         }
         contributions.removeAll(toRemove);
+
+        ToolManager tools = (ToolManager) ApplicationGIS.getToolManager();
+        MapPart currentEditor = tools.currentEditor;
+        if (currentEditor != null) {
+            if (currentEditor instanceof MapEditorWithPalette) {
+                MapEditorWithPalette editor2 = (MapEditorWithPalette) currentEditor;
+
+                MapEditDomain editDomain = editor2.getEditDomain();
+
+                PaletteViewer paletteViewer = editDomain.getPaletteViewer();
+                if( paletteViewer != null ){
+                    for( MapToolEntry entry : this.mapToolEntries ) {
+    
+                        if (paletteViewer.getEditPartRegistry().get(entry) != null) {
+                            paletteViewer.setActiveTool(entry);
+    
+                            EditPart part = (EditPart) paletteViewer.getEditPartRegistry().get(entry);
+    
+                            paletteViewer.reveal(part);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
+     * Responsible for activating this modal item.
+     * <p>
+     * This method is overriden by the one subclass ModalTool (so that the tool manager
+     * is kept informed on what tool is active).
+     * 
      * @see net.refractions.udig.project.ui.tool.ActionTool#run()
      */
-    public void run() {        
-        if (runModeless() && isEnabled )
-            return;
-        
-        ModalItem activeModalItem = getActiveItem();
-        if (activeModalItem != null)
-        	activeModalItem.setActive(false);
-        
+    public void run() {
+        if( isModeless() ){
+            runModeless();
+            if (isEnabled() ){
+                return; // we are already enabled!
+            }
+            // not sure about the isEnabled check?
+            // do we really need to progress and try and
+            // activate this one?
+        }
+        else {
+            runModal();
+        }
+        // go ahead and activate
         setActive(true);
-        setActiveItem(this);
-
+        
+        // a bit of quality assurance here 
+        // while we expect the above setActive method to update
+        // that active item we will double check now
+        ModalItem activeModalItem = getActiveItem();
+        if( activeModalItem == this ){
+            // good that worked then
+        }
+        else {
+            // okay we will change the active item ourself
+            if (activeModalItem != null){
+                activeModalItem.setActive(false);
+            }
+            setActiveItem( this );
+        }
     }
 
     /**
@@ -126,12 +203,29 @@ public abstract class ModalItem implements ILazyOpListener {
     protected abstract void setActiveItem( ModalItem item );
 
     /**
-     * If the current Item is modeless then runModelss runs the item and return true.
+     * Indicate if this modal item needs {@link #runModeless()}.
      * 
-     * @return true if the item is modeless.
+     * @return true to use {@link #runModeless()}
      */
-    protected abstract boolean runModeless();
-
+    protected boolean isModeless(){
+        return false;
+    }
+    
+    /**
+     * Called if {@link #isModeless() is true; used to run this item as a
+     * "fire and forget" action that does not effect the current active item.
+     */
+    protected abstract void runModeless();
+    
+    /**
+     * Called if {@link #isModeless()} is false; used to run this item as a modal item
+     * (resulting it in it being the active item).
+     * <p>
+     * Implementations should take responsible for ensuring the item isActiveItem()
+     * after this method is called.
+     */
+    protected abstract void runModal();
+    
     /**
      * disposes of any resources held by the item.
      */
@@ -171,6 +265,14 @@ public abstract class ModalItem implements ILazyOpListener {
     
     public void clearContributions() {
         contributions.clear();
+    }
+    /**
+     * Provides access to the list of MapToolEntry that are notified when enablement changes.
+     * 
+     * @return A copy on write array of the MapToolEntry to notify for enablement
+     */
+    public CopyOnWriteArrayList<MapToolEntry> getMapToolEntries() {
+        return mapToolEntries;
     }
 
     /**
@@ -253,6 +355,16 @@ public abstract class ModalItem implements ILazyOpListener {
     }
 
     /**
+     * Sets the images descriptor of the item.
+     * 
+     * @param imageDescriptor the new image descriptor.
+     */
+    public void setLargeImageDescriptor( ImageDescriptor imageDescriptor ) {
+        this.largeImageDescriptor = imageDescriptor;
+        IMAGES.remove(getId()+"Large");
+    }
+    
+    /**
      * Gets the icon image of the tool
      * 
      * @return the icon image of the tool.
@@ -305,13 +417,16 @@ public abstract class ModalItem implements ILazyOpListener {
                 }
             });
     }
-    private Lock enabledLock=new ReentrantLock();
+    
     protected void internalSetEnabled( boolean isEnabled2 ) {
         enabledLock.lock();
         try {
             this.isEnabled = isEnabled2;
             for( CurrentContributionItem contrib : getContributions() ) {
                 contrib.setEnabled(isEnabled2);
+            }
+            for( MapToolEntry entry : mapToolEntries ){
+                entry.setVisible(isEnabled2);
             }
         } finally {
             enabledLock.unlock();
@@ -324,4 +439,40 @@ public abstract class ModalItem implements ILazyOpListener {
         }
         return Collections.unmodifiableList(operationCategories);
     }
+    
+    /**
+     * Sets the Preference Page Id of the item
+     * 
+     * @param id the new Preference Page Id
+     */
+    public void setPreferencePageId( String id ) {
+        this.preferencePageId = id;
+    }
+    /**
+     * Gets the Preference Page Id of the item
+     * 
+     * @return the Preference Page Id of the item.
+     */
+    public String getPreferencePageId() {
+        return preferencePageId;
+    }
+    
+    /**
+     * Sets the tool option class of the item, the class is not instantiated until  the 
+     * <code>getOptionPage()</code> method is called.
+     * 
+     * @param id the new Preference Page Id
+     */
+    public void addOptionsContribution( ContributionItem optionsPage ) {
+        this.optionsContribution.add(optionsPage);
+    }
+    /**
+     * Gets the tool option page of the item
+     * 
+     * @return the AbstractMapEditorOptionsPage of the item.
+     */
+    public List<ContributionItem> getOptionsContribution() {
+        return optionsContribution;
+    }
+
 }

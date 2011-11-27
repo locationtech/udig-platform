@@ -8,11 +8,13 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import net.refractions.udig.boundary.IBoundaryService;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Map;
@@ -21,13 +23,13 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.render.RenderManager;
 import net.refractions.udig.project.internal.render.RenderPackage;
 import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.internal.render.impl.ScaleUtils.CalculateZoomLevelParameter;
 import net.refractions.udig.project.preferences.PreferenceConstants;
 import net.refractions.udig.project.render.IViewportModelListener;
 import net.refractions.udig.project.render.ViewportModelEvent;
 import net.refractions.udig.project.render.ViewportModelEvent.EventType;
 import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 import net.refractions.udig.project.render.displayAdapter.MapDisplayEvent;
+import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.ProgressManager;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -363,23 +365,18 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         return bounds;
     }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated NOT
-     */
-    public void setBounds( ReferencedEnvelope newBounds ) {
+    public void setBounds( ReferencedEnvelope newBounds) {
+    	setBounds(newBounds, false);
+    }
+    public void setBounds( ReferencedEnvelope newBounds, boolean forceContainBBoxZoom ) {
         setCRS(newBounds.getCoordinateReferenceSystem());
-        setBounds((Envelope) newBounds);
+        setBoundsInternal(newBounds,forceContainBBoxZoom);
     }
 
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @uml.property name="bounds"
-     * @generated NOT
-     */
     public void setBounds( Envelope newBounds) {
+    	setBoundsInternal(newBounds, false);
+    }
+    public void setBoundsInternal( Envelope newBounds, boolean forceContainBBoxZoom) {
     	Envelope finalBounds = newBounds;
     	if(getDefaultPreferredScaleDenominators() != getPreferredScaleDenominators() && validState()) {
     		IMapDisplay mapDisplay = getRenderManagerInternal().getMapDisplay();
@@ -390,9 +387,18 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     			referenced = new ReferencedEnvelope(newBounds,getCRS());
     		}
 			double scale = ScaleUtils.calculateScaleDenominator(referenced, mapDisplay.getDisplaySize(), mapDisplay.getDPI());
-			scale = ScaleUtils.calculateClosestScale(getPreferredScaleDenominators(),scale);
+			scale = ScaleUtils.calculateClosestScale(getPreferredScaleDenominators(),scale,ScaleUtils.zoomClosenessPreference());
 			
 			finalBounds = ScaleUtils.calculateBoundsFromScale(scale, mapDisplay.getDisplaySize(), mapDisplay.getDPI(), referenced);
+			if(forceContainBBoxZoom && !finalBounds.contains(newBounds)) {
+				Iterator<Double> tail = getPreferredScaleDenominators().tailSet(scale).iterator();
+				// the tail will include scale because scale is one of the elements in the set.  So drop that
+				tail.next();
+				Double nextLargest = tail.next();
+				if(nextLargest != null) {
+					finalBounds = ScaleUtils.calculateBoundsFromScale(nextLargest, mapDisplay.getDisplaySize(), mapDisplay.getDPI(), referenced);
+				}
+			}
     	}
     	
         Envelope oldBounds = bounds == null ? new Envelope() : bounds;
@@ -759,23 +765,31 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         try {
             if (!validState())
                 return;
-
+            
             ReferencedEnvelope bounds2 = new ReferencedEnvelope(getCRS());
-            boolean hasVisibleLayer = false;
-            // search the map for visible layers and construct a bounds from those layers.
-            // otherwise default to what the map's extent is.
-            List<ILayer> layers = getMap().getMapLayers();
-            for( ILayer layer : layers ) {
-                ReferencedEnvelope layerBounds = layer.getBounds(ProgressManager.instance().get(),
-                        getCRS());
-                if (layer.isVisible() && !layerBounds.isNull()) {
-                    hasVisibleLayer = true;
-                    bounds2.expandToInclude(ScaleUtils.fitToMinAndMax(layerBounds, layer));
-                }
-            }
-
-            if (!hasVisibleLayer) {
-                bounds2 = getMap().getBounds(ProgressManager.instance().get());
+            
+            // check the limit service
+            IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+            ReferencedEnvelope extent = boundaryService.getExtent();
+            
+            if (extent != null && !extent.isNull() && !extent.isEmpty()) {
+            	bounds2 = new ReferencedEnvelope(extent);
+            } else {
+                boolean hasVisibleLayer = false;
+	            // search the map for visible layers and construct a bounds from those layers.
+	            // otherwise default to what the map's extent is.
+	            List<ILayer> layers = getMap().getMapLayers();
+	            for( ILayer layer : layers ) {
+	                ReferencedEnvelope layerBounds = layer.getBounds(ProgressManager.instance().get(),
+	                        getCRS());
+	                if (layer.isVisible() && !layerBounds.isNull()) {
+	                    hasVisibleLayer = true;
+	                    bounds2.expandToInclude(ScaleUtils.fitToMinAndMax(layerBounds, layer));
+	                }
+	            }	
+	            if (!hasVisibleLayer) {
+	                bounds2 = getMap().getBounds(ProgressManager.instance().get());
+	            }
             }
 
             if (bounds2.getCoordinateReferenceSystem() == null || getCRS() == null
@@ -1391,5 +1405,4 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     public boolean isBoundsChanging() {
         return this.boundsChanging;
     }
-
 }

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.ui">
+<schema targetNamespace="net.refractions.udig.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
          <meta.schema plugin="net.refractions.udig.ui" id="Operation" name="Operation"/>
@@ -11,6 +11,11 @@
    </annotation>
 
    <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
             <element ref="category" minOccurs="0" maxOccurs="unbounded"/>
@@ -251,21 +256,31 @@ For example if the menuPath=layer/additions then the operation will appear the l
    <element name="property">
       <annotation>
          <documentation>
-            See objectProperty.exsd
-
-Declares the propertyName that a condition element operates on.
-
-TODO: Need to place a link here to a spot where valid propertyNames are declared.
+            Declares the propertyName that a condition element operates on.
          </documentation>
       </annotation>
       <complexType>
-         <attribute name="name" type="string">
+         <attribute name="propertyId" type="string" use="required">
             <annotation>
                <documentation>
                   The id of the property extension to use.
-See net.refractions.udig.ui.objectProperty
-
-It is the id of the property element which is a grandchild of the ObjectProperty element.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="identifier" basedOn="net.refractions.udig.ui.objectProperty/object/property/@id"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="expectedValue" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The value that the property is expected to match.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  The id of the property extension to use: please use propertyId.
                </documentation>
                <appInfo>
                   <meta.attribute deprecated="true"/>
@@ -275,28 +290,11 @@ It is the id of the property element which is a grandchild of the ObjectProperty
          <attribute name="target" type="string">
             <annotation>
                <documentation>
-                  The value that &quot;property&quot; is compared to.
+                  The value that &quot; property&quot; is compared to: please use expectedValue.
                </documentation>
                <appInfo>
                   <meta.attribute deprecated="true"/>
                </appInfo>
-            </annotation>
-         </attribute>
-         <attribute name="propertyId" type="string" use="required">
-            <annotation>
-               <documentation>
-                  The id of the property extension to use.
-See net.refractions.udig.ui.objectProperty
-
-It is the id of the property element which is a grandchild of the ObjectProperty element.
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="expectedValue" type="string" use="required">
-            <annotation>
-               <documentation>
-                  The value that the property is expected to match
-               </documentation>
             </annotation>
          </attribute>
       </complexType>
@@ -338,13 +336,5 @@ It is the id of the property element which is a grandchild of the ObjectProperty
       </documentation>
    </annotation>
 
-   <annotation>
-      <appInfo>
-         <meta.section type="copyright"/>
-      </appInfo>
-      <documentation>
-         
-      </documentation>
-   </annotation>
 
 </schema>

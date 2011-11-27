@@ -8,4 +8,4 @@ Require-Bundle: net.refractions.udig.project.ui,
  net.refractions.udig.mapgraphic,
  org.eclipse.core.runtime
 Export-Package: net.refractions.udig.graph.internal;x-internal:=true
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

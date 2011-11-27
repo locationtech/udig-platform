@@ -46,6 +46,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.ISafeRunnable;
+import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.custom.BusyIndicator;
@@ -57,7 +58,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * editors are concerned.
  * 
  * @author Jesse Eichar
- * @version $Revision: 1.9 $
+ * @version 1.3.0
  */
 public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
  
@@ -118,29 +119,35 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
      * Creates an new instance of MapViewport.ToolAction
      * 
      * @param extension The Tool extension
-     * @param tool The configuration element which describes the tool
-     * @param newParam TODO
+     * @param definition The configuration element which describes the tool
+     * @param toolManager ToolManager responsible for this tool
      */
-    public ToolProxy( IExtension extension, IConfigurationElement tool, ToolManager toolManager ) {
+    public ToolProxy( IExtension extension, IConfigurationElement definition, ToolManager toolManager ) {
         super();
         
         this.toolManager = toolManager;
         
-        categoryId = tool.getAttribute("categoryId"); //$NON-NLS-1$
-        String type = tool.getName();
+        categoryId = definition.getAttribute("categoryId"); //$NON-NLS-1$
+        String type = definition.getName();
         String pluginid = extension.getNamespaceIdentifier() ;
-        String id = tool.getAttribute("id"); //$NON-NLS-1$
-        String name = tool.getAttribute("name"); //$NON-NLS-1$
+        String id = definition.getAttribute("id"); //$NON-NLS-1$
+        String name = definition.getAttribute("name"); //$NON-NLS-1$
         if (name == null)
             name = Messages.ToolProxy_unnamed; 
-        String toolTip = tool.getAttribute("tooltip"); //$NON-NLS-1$
-        String iconID = tool.getAttribute("icon"); //$NON-NLS-1$
+        String toolTip = definition.getAttribute("tooltip"); //$NON-NLS-1$
+        String iconID = definition.getAttribute("icon"); //$NON-NLS-1$
+        String largeIconID = definition.getAttribute("largeIcon"); //$NON-NLS-1$
+        
+        String preferencePageId = definition.getAttribute("preferencePageId"); //$NON-NLS-1$
+        //setup attributes used by status bare tool options
+        setPreferencePageId(preferencePageId);
+        
 
-        defaultCursorID = tool.getAttribute("toolCursorId"); //$NON-NLS-1$
+        defaultCursorID = definition.getAttribute("toolCursorId"); //$NON-NLS-1$
         
         //FIXME For compatibility. To BE REMOVED later.
         if(defaultCursorID == null){
-        	IConfigurationElement[] children = tool.getChildren("cursor"); //$NON-NLS-1$
+        	IConfigurationElement[] children = definition.getChildren("cursor"); //$NON-NLS-1$
         	if(children.length > 0){
         		CursorProxy cursorProxy = new CursorProxy(children[0]);
         		toolManager.cursorsCache.put(cursorProxy.getID(), cursorProxy);
@@ -150,24 +157,33 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         	}
         }
         
-        OpFilter parseEnablement = EnablementUtil.parseEnablement( extension.getNamespaceIdentifier()+"."+tool.getName(), tool.getChildren("enablement")); //$NON-NLS-1$ //$NON-NLS-2$;
+        OpFilter parseEnablement = EnablementUtil.parseEnablement( extension.getNamespaceIdentifier()+"."+definition.getName(), definition.getChildren("enablement")); //$NON-NLS-1$ //$NON-NLS-2$;
         enablement = new LazyOpFilter(this, parseEnablement); 
-        operationCategories = parseOperationCategories(tool);
+        operationCategories = parseOperationCategories(definition);
         
-        String bool = tool.getAttribute("hasCustomControl"); //$NON-NLS-1$
+        String bool = definition.getAttribute("hasCustomControl"); //$NON-NLS-1$
         hasControl = ((bool != null) && bool.equalsIgnoreCase("true")) ? true : false; //$NON-NLS-1$
-        bool = tool.getAttribute("onToolbar"); //$NON-NLS-1$
+        bool = definition.getAttribute("onToolbar"); //$NON-NLS-1$
         onToolbar = ((bool != null) && bool.equalsIgnoreCase("true")) ? true : false; //$NON-NLS-1$
-        menuPath = tool.getAttribute("menuPath"); //$NON-NLS-1$
+        menuPath = definition.getAttribute("menuPath"); //$NON-NLS-1$
         ImageDescriptor icon;
         if (iconID == null) {
             icon = null;
-        }else{
+        } else {
             icon = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid, iconID);
+            setImageDescriptor(icon);
         }
-        setImageDescriptor(icon);
-    
-        this.element = tool;
+        
+        if (largeIconID == null ) {
+            // default to normal size so we have something
+            setLargeImageDescriptor( icon );
+        }
+        else {
+            ImageDescriptor largeIcon = icon = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid, largeIconID);
+            setLargeImageDescriptor( largeIcon );
+        }
+        
+        this.element = definition;
         setName(name);
         setToolTipText(toolTip);
         setId(id);
@@ -177,9 +193,9 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
             this.type = BACKGROUND;
         else if (type.equals("actionTool")) //$NON-NLS-1$
             this.type = ACTION;
-        handlerType = tool.getAttribute(HandlerProxy.ID);
+        handlerType = definition.getAttribute(HandlerProxy.ID);
 
-        String unparsedCommandIds = tool.getAttribute("commandIds"); //$NON-NLS-1$
+        String unparsedCommandIds = definition.getAttribute("commandIds"); //$NON-NLS-1$
         if (unparsedCommandIds != null && unparsedCommandIds.length() > 0)
             commandIds = unparsedCommandIds.split(","); //$NON-NLS-1$
         else
@@ -188,6 +204,8 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         if (id.equals(DEFAULT_ID)) {
         	toolManager.defaultModalToolProxy = this;
         }
+        
+        
     }
 
     private List<OperationCategory> parseOperationCategories(IConfigurationElement toolElement) {
@@ -237,9 +255,8 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         if (type == BACKGROUND) {
             getTool().setContext(toolContext);
             
-        } else if ( type == MODAL && toolManager.activeModalToolProxy == this) {
+        } else if ( type == MODAL && toolManager.getActiveToolProxy() == this) {
         	ModalTool modalTool =  getModalTool();
-        	
         	modalTool.setContext(toolContext);
             String currentCursorID = modalTool.getCursorID();
             toolContext.getViewportPane().setCursor(
@@ -308,6 +325,29 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
                                     ProjectUIPlugin.log("Error loading tool", e); //$NON-NLS-1$
                                 }
                             }
+                            
+                            
+                            IConfigurationElement[] toolElementChildren = element.getChildren();
+                            
+                            for ( IConfigurationElement toolElement : toolElementChildren){
+                                
+                                if(toolElement.getAttribute("class") != null){
+                                    try {
+                                        String contributionId = toolElement.getAttribute("id");
+                                        
+                                        Object optionsContribution = toolElement.createExecutableExtension("class");
+                                        ContributionItem contributionItem = (ContributionItem) optionsContribution;
+                                        contributionItem.setId(contributionId);
+                                        
+                                        addOptionsContribution((ContributionItem) optionsContribution);
+                                    } catch (CoreException e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    }
+                                }
+                                
+                            }
+
 
                         }
                     });
@@ -422,72 +462,103 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         }
     }
 
-    /** 
-     * (non-Javadoc)
-     * @see net.refractions.udig.project.ui.tool.ActionTool#run()
+    /**
+     * Called when the user clicks on the button or otherwise "Activates" the
+     * tool represented here.
      */
     @Override
     public void run() {
-    	if (runModeless() && isEnabled )
-    		return;
-
-       PlatformGIS.syncInDisplayThread(new Runnable(){
-            public void run() {
-                enableModalTool();
+        if( isModeless() ){
+            runModeless();
+            if( isEnabled() ){
+                return;
             }
-        });
+            // the original code followed through into the activation
+            // code I am not sure as to the logic? it may of been an accident of implementation
+        }
+        else {
+            // we are going to carefully activate in this display thread
+            // (so the user interface buttons can be updated)
+            PlatformGIS.syncInDisplayThread(new Runnable(){
+                public void run() {
+                    runModal();
+                }
+            });
+        }
+    }
+    
+    /**
+     * This method is responsible for for ensuring that this ToolProxy is activated and that the
+     * tool manager knows about it.
+     */
+    @Override
+    protected void runModal() {
+        // activate the current tool
+        // (we expect this will update the tool manager)
+        setActive(true);
+        
+        // a bit of quality assurance here 
+        // while we expect the above setActive method to update
+        // that active item we will double check now
+        ToolProxy activeToolProxy = getActiveItem();
+    	if (activeToolProxy == this){
+    	    // good that worked then
+    	}
+    	else {
+    	    // okay we will chagne the active item ourself
+    	    if(activeToolProxy != null ){
+                activeToolProxy.setActive(false);    	        
+    	    }
+    	    // this is the current active item from the tool manager
+            setActiveItem(this);
+    	}
     }
 
-    private void enableModalTool() {
-        ToolProxy activeToolProxy = (ToolProxy)getActiveItem();
-    	if (activeToolProxy != null)
-    		activeToolProxy.setActive(false);
-    	
-    	setActive(true);
-     	setActiveItem(this);
+    /**
+     * We will call runModeless() if type == ACTION; if not runModal is used.
+     */
+    @Override
+    protected boolean isModeless() {
+        return type == ACTION;
     }
-
 	/**
+	 * Runs getModelessTool() safely in the display thread.
      * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#runModeless()
      */
-    protected boolean runModeless() {
-        if (type == ACTION) {
-            PlatformGIS.run(new ISafeRunnable(){
-
-                public void run() throws Exception {
-                    getModelessTool().run();
-                }
-
-                public void handleException( Throwable exception ) {
-                    ProjectUIPlugin
-                            .log("Error occured while executing tool: " + getId(), exception); //$NON-NLS-1$
-                }
-
-            });
-            return true;
+    protected void runModeless() {
+        if (type != ACTION) {
+            throw new IllegalStateException("runModeless expects ACTION");
         }
-
-        return false;
+        PlatformGIS.run(new ISafeRunnable(){
+            public void run() throws Exception {
+                getModelessTool().run();
+            }
+            public void handleException( Throwable exception ) {
+                ProjectUIPlugin
+                        .log("Error occured while executing tool: " + getId(), exception); //$NON-NLS-1$
+            }
+        });
     }
 
     /**
      * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#setActive(boolean)
      */
     public void setActive( boolean active ) {
-    	if (toolContext == null)
-    		return;
-    	
-    	setChecked(active);
+    	if (toolContext == null){
+    		return; // cannot be active as the map is not ready yet
+    	}
+    	setChecked(active); // will check this in each menu / toolbar contribution 
     	
     	if (getTool() instanceof ModalTool) {
-    		ModalTool modalTool = (ModalTool)getTool();
-    		
-    		getModalTool().setActive(active);
-    		
-    		if (active){
-    			String currentCursorID = modalTool.getCursorID();
-    			toolContext.getViewportPane().setCursor(
-    					ApplicationGIS.getToolManager().findToolCursor(currentCursorID));
+            if( isActive() != active ){
+                ModalTool modalTool = getModalTool();
+                modalTool.setActive(active);
+                if (active){
+                    // allow tool manager to update the activeTool cursor etc..
+                    toolManager.setActiveModalToolProxy(this);
+//                  String currentCursorID = modalTool.getCursorID();
+//                  toolContext.getViewportPane().setCursor(toolManager.findToolCursor(currentCursorID));
+                }
     		}
     	}
     }
@@ -523,17 +594,18 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     }
 
     /**
+     * 
      * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#getActiveItem()
      */
-    protected ModalItem getActiveItem() {
-        return toolManager.activeModalToolProxy;
+    protected ToolProxy getActiveItem() {
+        return toolManager.getActiveToolProxy();
     }
 
     /**
      * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#setActiveItem(net.refractions.udig.project.ui.internal.tool.display.ModalItem)
      */
     protected void setActiveItem( ModalItem modalItem ) {
-    	toolManager.activeModalToolProxy = (ToolProxy)modalItem;
+    	toolManager.setActiveModalToolProxy( (ToolProxy)modalItem );
     }
 
 

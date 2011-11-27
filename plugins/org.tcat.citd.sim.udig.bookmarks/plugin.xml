@@ -115,4 +115,22 @@
                tooltip="%Bookmarks.actions.Remove.tt2"/>
       </objectContribution>
    </extension>
+   <extension
+         point="org.eclipse.ui.services">
+      <serviceFactory
+            factoryClass="org.tcat.citd.sim.udig.bookmarks.internal.BookmarkServiceFactory">
+         <service
+               serviceClass="org.tcat.citd.sim.udig.bookmarks.IBookmarkService">
+         </service>
+      </serviceFactory>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.boundary">
+      <boundary
+            class="org.tcat.citd.sim.udig.bookmarks.BookmarkBoundaryStrategy"
+            id="org.tcat.citd.sim.udig.bookmarks.boundary"
+            name="Bookmark"
+            page="org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarkBoundaryPage">
+      </boundary>
+   </extension>
 </plugin>

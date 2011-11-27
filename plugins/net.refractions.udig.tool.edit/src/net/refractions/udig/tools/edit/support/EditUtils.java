@@ -31,6 +31,7 @@ import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.mapgraphic.grid.GridMapGraphic;
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILayer.Interaction;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ProjectBlackboardConstants;
 import net.refractions.udig.project.command.AbstractCommand;
@@ -501,7 +502,7 @@ public class EditUtils {
      */
     private Coordinate searchLayer( ILayer layer, IToolContext context, Point centerPoint  ) {
         if (!layer.hasResource(FeatureSource.class) || 
-                !layer.isApplicable(EditPlugin.ID) 
+                !layer.isApplicable(Interaction.EDIT) 
                 || !layer.isVisible() )
             return null;
         

@@ -5,6 +5,7 @@ Bundle-SymbolicName: net.refractions.udig.help; singleton:=true
 Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
+<<<<<<< HEAD
 Require-Bundle: org.apache.ant,
  org.apache.lucene,
  org.eclipse.help.appserver,
@@ -20,3 +21,6 @@ Require-Bundle: org.apache.ant,
  net.refractions.udig.tool.default;bundle-version="1.2.0"
 Import-Package: net.refractions.udig.catalog.internal.ui,
  net.refractions.udig.project.ui.internal
+=======
+Require-Bundle: org.eclipse.ui.cheatsheets;visibility:=reexport
+>>>>>>> afc42c861639b7fbc9ef13c4695ba2a4dfb389ea

@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 import net.refractions.udig.render.internal.feature.basic.BasicFeatureRenderer;
 
+import org.geotools.map.MapContext;
 import org.geotools.renderer.GTRenderer;
 import org.geotools.renderer.shape.ShapefileRenderer;
 
@@ -30,7 +31,7 @@ public class ShapefileFeatureRenderer extends BasicFeatureRenderer {
     @Override
     protected GTRenderer getRenderer() {
         if (renderer == null) {
-            renderer = new ShapefileRenderer(map);
+            renderer = new ShapefileRenderer();
             HashMap<String, Object> rendererHints = new HashMap<String, Object>();
             rendererHints.put("optimizedDataLoadingEnabled", true); //$NON-NLS-1$
             renderer.setRendererHints(rendererHints);
@@ -42,7 +43,7 @@ public class ShapefileFeatureRenderer extends BasicFeatureRenderer {
                     RenderingHints.VALUE_ANTIALIAS_ON);
             renderer.setJava2DHints(hints);
         }
-        renderer.setContext(map);
+        renderer.setMapContent(map);
         return renderer;
     }
 

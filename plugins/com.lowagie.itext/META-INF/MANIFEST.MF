@@ -25,7 +25,6 @@ Export-Package:
  com.lowagie.tools
 Bundle-SymbolicName: com.lowagie.itext
 Bundle-Name: Lowagie Itext
-Bundle-RequiredExecutionEnvironment: J2SE-1.4
 Bundle-Vendor: itext.lowagie.com
 Bundle-ClassPath: lib/iText-2.1.7.jar,
  lib/itextasian-1.5.2.jar

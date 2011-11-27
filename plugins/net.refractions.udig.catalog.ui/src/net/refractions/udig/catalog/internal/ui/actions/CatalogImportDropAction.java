@@ -98,7 +98,8 @@ public class CatalogImportDropAction extends IDropAction {
         p = new PageProcessor(data);
         ExtensionPointUtil.process(CatalogUIPlugin.getDefault(), UDIGConnectionFactory.XPID, p);
 
-        return !p.ids.isEmpty();
+        Set<String> found = p.ids;
+        return !found.isEmpty();
     }
 
     @Override
