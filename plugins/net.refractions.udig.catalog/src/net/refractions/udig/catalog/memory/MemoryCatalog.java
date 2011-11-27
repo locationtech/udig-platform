@@ -65,12 +65,7 @@ public class MemoryCatalog extends ISearch {
     public <T> boolean canResolve( Class<T> adaptee ) {
         return false;
     }
-<<<<<<< HEAD
-    
     @Override
-=======
-
->>>>>>> afc42c861639b7fbc9ef13c4695ba2a4dfb389ea
     public Status getStatus() {
         return Status.CONNECTED;
     }

@@ -10,8 +10,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.project.ui;visibility:=reexport
 Bundle-ActivationPolicy: lazy
-<<<<<<< HEAD
 Export-Package: net.refractions.udig.project.ui.editor
-=======
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
->>>>>>> afc42c861639b7fbc9ef13c4695ba2a4dfb389ea
