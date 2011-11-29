@@ -11,32 +11,58 @@
 
   <groupId>net.refractions</groupId>
   <artifactId>features</artifactId>
-  <version>0.0.1-SNAPSHOT</version> 
+  <version>1.3.0-SNAPSHOT</version> 
   <packaging>pom</packaging>
 
+   <profiles>
+	
+        <profile>
+            <id>site</id>
+            <modules>
+                <module>net.refractions.udig-site</module>
+                <module>net.refractions.udig-site.community</module>
+             </modules>
+        </profile>
+
+        <profile>
+            <id>ossim</id>
+            <modules>
+                <module>org.ossim-feature</module>
+             </modules>
+        </profile>
+
+        <profile>
+            <id>sdk</id>
+               <activation>
+                 <property><name>all</name></property>
+               </activation>
+            <modules>
+				<module>net.refractions.udig_sdk-product</module>
+                <module>net.refractions.udig_sdk-feature</module>
+                <module>net.refractions.udig_sdk.source-feature</module>
+                <module>net.refractions.udig_tutorials-feature</module>
+                <module>net.refractions.udig_tutorials.source-feature</module>
+
+    			<module>net.refractions.udig.libs.source-feature</module>
+    			<module>net.refractions.udig_application.source-feature</module>
+    			<module>net.refractions.udig_base.source-feature</module>
+    			<module>net.refractions.udig_platform.source-feature</module>
+    			<module>net.refractions.udig_printing.source-feature</module>
+             </modules>
+        </profile>
+
+  </profiles>
+    
   <modules>
     <module>eu.udig.teradata-feature</module>
     <module>net.refractions.udig-feature</module>
     <module>net.refractions.udig-product</module>
-    <!-- module>net.refractions.udig-site</module>
-    <module>net.refractions.udig-site.community</module -->
-    <module>net.refractions.udig.libs.source-feature</module>
+    <module>net.refractions.udig_language-feature</module>
     <module>net.refractions.udig.rcp_feature</module>
     <module>net.refractions.udig_application-feature</module>
-    <module>net.refractions.udig_application.source-feature</module>
     <module>net.refractions.udig_base-feature</module>
-    <module>net.refractions.udig_base.source-feature</module>
-    <!-- module>net.refractions.udig_language-feature</module -->
     <module>net.refractions.udig_platform-feature</module>
-    <module>net.refractions.udig_platform.source-feature</module>
     <module>net.refractions.udig_printing-feature</module>
-    <module>net.refractions.udig_printing.source-feature</module>
-    <module>net.refractions.udig_sdk-feature</module>
-    <module>net.refractions.udig_sdk.source-feature</module>
-    <module>net.refractions.udig_tutorials-feature</module>
-    <module>net.refractions.udig_tutorials.source-feature</module>
-    <module>net.refractions.udig_unstable-feature</module>
-    <!-- module>org.ossim-feature</module -->
   </modules>
 
 </project>

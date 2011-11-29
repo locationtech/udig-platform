@@ -17,16 +17,21 @@
  */
 package eu.udig.tools.jgrass.profile;
 
+import static java.lang.Math.abs;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.project.ILayer;
+import net.refractions.udig.style.sld.SLD;
+import net.refractions.udig.ui.ExceptionDetailsDialog;
+import net.refractions.udig.ui.operations.IOp;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.data.FeatureSource;
@@ -43,12 +48,6 @@ import com.vividsolutions.jts.geom.Geometry;
 import eu.udig.tools.jgrass.JGrassToolsPlugin;
 import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities;
 import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.ProfilePoint;
-
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.style.sld.SLD;
-import net.refractions.udig.ui.ExceptionDetailsDialog;
-import net.refractions.udig.ui.operations.IOp;
 
 /**
  * Operation to create a profile of a line feature over a coverage.
@@ -104,27 +103,15 @@ public class FeatureOnCoverageProfileOperation implements IOp {
                     Geometry geometry = (Geometry) lineFeature.getDefaultGeometry();
                     Coordinate[] coordinates = geometry.getCoordinates();
 
-                    List<List<ProfilePoint>> profile = new ArrayList<List<ProfilePoint>>();
-                    for( int i = 0; i < coordinates.length - 1; i++ ) {
-                        Coordinate begin = coordinates[i];
-                        Coordinate end = coordinates[i + 1];
-                        List<ProfilePoint> tmpProfile = CoverageUtilities.doProfile(begin, end, coverage);
-                        profile.add(tmpProfile);
-                    }
+                    List<ProfilePoint> profile = CoverageUtilities.doProfile(coverage, coordinates);
 
-                    double latestProgessiveDistance = 0;
-                    for( List<ProfilePoint> profilesList : profile ) {
-                        for( ProfilePoint profilePoint : profilesList ) {
-                            double elevation = profilePoint.getElevation();
-                            if (!Double.isNaN(elevation)) {
-                                chartView.addToSeries(latestProgessiveDistance + profilePoint.getProgressive(), elevation);
-                            } else {
-                                chartView.addToSeries(latestProgessiveDistance + profilePoint.getProgressive(), 0.0);
-                            }
+                    for( ProfilePoint profilePoint : profile ) {
+                        double elevation = profilePoint.getElevation();
+                        if (!Double.isNaN(elevation)) {
+                            chartView.addToSeries(profilePoint.getProgressive(), elevation);
+                        } else {
+                            chartView.addToSeries(profilePoint.getProgressive(), 0.0);
                         }
-                        ProfilePoint last = profilesList.get(profilesList.size() - 1);
-                        chartView.addStopLine(latestProgessiveDistance + last.getProgressive());
-                        latestProgessiveDistance = latestProgessiveDistance + last.getProgressive();
                     }
 
                 } catch (Exception e) {

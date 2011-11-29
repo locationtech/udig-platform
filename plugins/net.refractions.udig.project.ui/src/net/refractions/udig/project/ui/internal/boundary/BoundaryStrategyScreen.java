@@ -14,10 +14,16 @@
  */
 package net.refractions.udig.project.ui.internal.boundary;
 
+import net.refractions.udig.boundary.BoundaryListener;
 import net.refractions.udig.boundary.IBoundaryStrategy;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.render.IViewportModel;
+import net.refractions.udig.project.render.IViewportModelListener;
+import net.refractions.udig.project.render.ViewportModelEvent;
 import net.refractions.udig.project.ui.ApplicationGIS;
 
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -32,6 +38,31 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 public class BoundaryStrategyScreen extends IBoundaryStrategy {
 
 	private static String name = "Screen";
+	
+    protected IViewportModelListener watcher = new IViewportModelListener(){
+        @Override
+        public void changed( ViewportModelEvent viewportEvent ) {
+            BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryStrategyScreen.this);            
+            if( viewportEvent.getType() == ViewportModelEvent.EventType.BOUNDS ){                
+                boundaryEvent.bounds = (ReferencedEnvelope) viewportEvent.getNewValue();
+            }
+            else {
+                boundaryEvent.bounds = viewportEvent.getSource().getBounds();
+            }
+            notifyListeners( boundaryEvent);
+        }
+    };
+    
+    
+    
+	public BoundaryStrategyScreen() {
+	    listenToViewport();
+	}
+	
+    private void listenToViewport() {
+        IViewportModel viewportModel = ApplicationGIS.getActiveMap().getViewportModel();
+	    viewportModel.addViewportModelListener(watcher);
+    }
 	
 	@Override
 	public ReferencedEnvelope getExtent() {

@@ -16,115 +16,149 @@
   Lesser General Public License for more details.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.refractions</groupId>
-	<artifactId>udig-tycho</artifactId>
-	<version>1.3.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
-	<description>
-		This is the base uDig pom that controls the version numbers
-		used by the nightly build process.
-	</description>
-	<prerequisites>
-		<maven>3.0</maven>
-	</prerequisites>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.refractions</groupId>
+    <artifactId>udig-tycho</artifactId>
+    <version>1.3.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <description>
+        This is the base uDig pom that controls the version numbers
+        used by the nightly build process.
+    </description>
+    <prerequisites>
+        <maven>3.0</maven>
+    </prerequisites>
 
-	<properties>
-		<tycho-version>0.13.0</tycho-version>
-		<tycho-provider>org.eclipse.tycho</tycho-provider>
-	</properties>
+    <properties>
+        <tycho-version>0.13.0</tycho-version>
+        <tycho-provider>org.eclipse.tycho</tycho-provider>
+    </properties>
     <!--
-
-The build currently does not use much in the way of profiles.
-
-The following are defined:
-
-  -PudigProfile (on by default) defines the appropriate p2 update repository
-
-To build on the command line:
-   mvn install
+To run a normal build on the command line:
+   mvn install -Dall
 
 If you run into any problems (to list debug and stack trace)
-   mvn -e -X install
+   mvn -Dall -e -X install
 
 Please note the Tycho maven plugin used to build RCP projects is a a work in progress; you
 will do better to review the stack trace with a checkout of the Tycho code in hand as the
 error messages are often misleading and evil.
 
-    -->	
-	<profiles>
-		<profile>
-			<id>udigProfile</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>indigo-web</id>
-					<layout>p2</layout>
-					<url>http://download.eclipse.org/releases/indigo/</url>
-					<releases>
-						<enabled>true</enabled>
-						<updatePolicy>never</updatePolicy>
-					</releases>
-					<snapshots>
-						<enabled>true</enabled>
-						<updatePolicy>never</updatePolicy>
-					</snapshots>
-				</repository>
-			</repositories>
-		</profile>
-	</profiles>
-	
-	
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>${tycho-provider}</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<extensions>true</extensions>
-			</plugin>
-			<plugin>
-				<groupId>${tycho-provider}</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<resolver>p2</resolver>
-					<!-- pomDependencies>consider</pomDependencies -->
-					<environments>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>macosx</os>
-							<ws>carbon</ws>
-							<arch>x86</arch>
-						</environment>
-					</environments>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>${tycho-provider}</groupId>
-				<artifactId>tycho-compiler-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	<modules>
-		<module>plugins</module>
-		<module>features</module>
-	</modules>
+To quickly build the product:
+   mvn install
+
+The build supports the use of profiles - to run a normal build with tests:
+  mvn install -Dall -Ptest
+
+The following profiles are defined:
+
+Defines the appropriate p2 update repository
+  -PudigProfile (on by default)
+
+Gathers the tutorials and source code for the software developers kit
+  -Psdk (included by -Dall)
+
+Gathers the plugins that are not included in the default product 
+  -Ppending (included by -Dall)
+
+Includes test plugins (this is optional as so many tests fail)
+  -Ptest
+
+Includes the udig and community sites
+   -Psite
+
+Includes the ossim feaure (this may be dead code) 
+  -Possim
+
+    -->    
+    <profiles>
+        <profile>
+            <id>udigProfile</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>indigo-web</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/releases/indigo/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </snapshots>
+                </repository>
+
+                <repository>
+                    <id>indigo-babel-web</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/babel/update-site/R0.9.0/indigo/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </snapshots>
+                </repository>
+
+            </repositories>
+        </profile>
+    </profiles>
+    
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>${tycho-provider}</groupId>
+                <artifactId>tycho-maven-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <extensions>true</extensions>
+            </plugin>
+            <plugin>
+                <groupId>${tycho-provider}</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+                <version>${tycho-version}</version>
+                <configuration>
+                    <resolver>p2</resolver>
+                    <!-- pomDependencies>consider</pomDependencies -->
+                    <environments>
+                        <environment>
+                            <os>win32</os>
+                            <ws>win32</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>linux</os>
+                            <ws>gtk</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>macosx</os>
+                            <ws>carbon</ws>
+                            <arch>x86</arch>
+                        </environment>
+                    </environments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>${tycho-provider}</groupId>
+                <artifactId>tycho-compiler-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <modules>
+        <module>plugins</module>
+        <module>features</module>
+    </modules>
 </project>

@@ -14,9 +14,13 @@
  */
 package net.refractions.udig.boundary;
 
+import net.refractions.udig.internal.ui.UiPlugin;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.swt.widgets.Listener;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.ui.part.IPageBookViewPage;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -46,7 +50,7 @@ public class BoundaryProxy extends IBoundaryStrategy {
 
     /** Identifier provided by the configuration element id attribute */
     private String id;
-    
+
     /**
      * Creates a new instance of the 
      * 
@@ -81,16 +85,52 @@ public class BoundaryProxy extends IBoundaryStrategy {
      * Gets the boundary strategy and creates it if it doesn't exist
      * @return IBoundaryStrategy
      */
-    public IBoundaryStrategy getStrategy(){
+    public synchronized IBoundaryStrategy getStrategy(){
         if (strategy == null) {
             try {
                 strategy = (IBoundaryStrategy)configElement.createExecutableExtension("class");
             } catch (CoreException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                String name = configElement.getAttribute("class");
+                blame( "Strategy "+name+" not available ("+id+")", e );
             }
         }
         return strategy;
+    }
+    
+    @Override
+    public synchronized IPageBookViewPage createPage() {
+        IPageBookViewPage page = null;
+        try {
+            // check if the page has supplied some crazy dynamic page thing
+            page = getStrategy().createPage();
+        } catch (Throwable t) {
+            blame("Page " + id + " not available", t);
+        }
+        if (page == null) {
+            String name = configElement.getAttribute("page");
+            if (name != null && !name.isEmpty()) {
+                try {
+                    page = (IPageBookViewPage) configElement.createExecutableExtension("page");
+                } catch (CoreException e) {
+                    blame("Page " + name + " not available (" + id + ")", e);
+                }
+            }
+        }
+        return page;
+    }
+    
+    /**
+     * Blame the contributor for the following problem
+     * 
+     * @param message Example "bad dog"
+     * @param t Throwable causing the problem (optional and may be null)
+     */
+    public void blame( String message, Throwable t ){
+        String contributorId = configElement.getContributor().getName();
+        String msg = message == null ? t.getMessage() : message + t.getMessage();        
+        IStatus status = new Status(IStatus.WARNING,contributorId, msg,t);
+        
+        UiPlugin.getDefault().getLog().log( status );        
     }
     
     /**
@@ -101,18 +141,18 @@ public class BoundaryProxy extends IBoundaryStrategy {
         return id;
     }
 
-    public void addListener( Listener listener ) {
+    public void addListener( BoundaryListener listener ) {
         getStrategy().addListener(listener);
     }
 
-    public void removeListener( Listener listener ) {
+    public void removeListener( BoundaryListener listener ) {
         getStrategy().removeListener(listener);
     }
     
     /**
      * Notifies listener that the value of the filter has changed.
      */
-    protected void notifyListeners(Object changed) {
+    protected void notifyListeners(BoundaryListener.Event changed) {
         getStrategy().notifyListeners(changed);
     }
 

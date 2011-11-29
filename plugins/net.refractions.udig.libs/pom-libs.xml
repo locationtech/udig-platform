@@ -492,12 +492,13 @@
             <version>2.7.1</version>
             <scope>provided</scope>
         </dependency>-->
-		<!--<dependency>
+        
+		<dependency>
             <groupId>xerces</groupId>
             <artifactId>xercesImpl</artifactId>
-            <version>2.7.1</version>
+            <version>2.4.0</version>
             <scope>provided</scope>
-        </dependency>-->
+        </dependency>
 
 		<!-- the following is provided by the eclipse modeling target platform -->
 		<dependency>

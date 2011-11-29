@@ -6,6 +6,7 @@
  */
 package net.refractions.udig.project.internal.impl;
 
+import java.io.Serializable;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -50,6 +51,8 @@ import org.osgi.framework.Bundle;
 import com.sun.org.apache.bcel.internal.generic.BALOAD;
 
 /**
+ * A blackboard that saves its state out as an EObject.
+ * 
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -66,7 +69,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     HashMap<String, BlackboardEntry> blackboard = new HashMap<String, BlackboardEntry>();
 
     /** persisters */
-    ArrayList<IPersister<Object>> persisters;
+    ArrayList<IPersister<?>> persisters;
 
     /** providers * */
     ArrayList<IProvider<Object>> providers;
@@ -220,7 +223,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         // look up the entry
         BlackboardEntry entry = blackboard.get(key);
         if (entry != null) {
-
             if (entry.getObject() != null) {
                 return entry.getObject();
             } else {
@@ -232,34 +234,17 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                         return null;
                     }
                     XMLMemento memento = XMLMemento.createReadRoot(new StringReader(memento2));
-                    IPersister persister = findPersister(entry, memento);
+                    IPersister<Object> persister = (IPersister<Object>) findPersister(entry, memento);
                     if (persister != null) {
                         object = persister.load(memento);
                         entry.setObject(object);
                         entry.setObjectClass(object.getClass());
                     } else {
-                        // do not check serializability here as this causes problems
-                        // // try serializability
-                        // if (entry.getObjectClass() != null
-                        // && entry.getObjectClass().isAssignableFrom(Serializable.class)) {
-                        // ByteArrayInputStream bin = new ByteArrayInputStream(memento2
-                        // .getBytes());
-                        // ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(
-                        // bin));
-                        // object = in.readObject();
-                        // in.close();
-                        //
-                        // entry.setObject(object);
-                        // entry.setObjectClass(object.getClass());
-                        // } else {
-                        // // either object not serializable, or type can not
-                        // // derminated
-                        // }
-
+                    	// real object which cannot be saved between runs
                     }
                 } catch (Exception e) {
                     String msg = "Error loading content: " + entry.getObjectClass(); //$NON-NLS-1$
-                    IStatus status = new Status(IStatus.WARNING, "", 0, msg, e); //$NON-NLS-1$
+                    IStatus status = new Status(IStatus.WARNING, ProjectPlugin.ID, 0, msg, e); //$NON-NLS-1$
                     ProjectPlugin.getPlugin().getLog().log(status);
                 }
 
@@ -324,7 +309,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      */
     public void put( String key, Object value ) {
         if (key == null) {
-            return; // top you fool!
+            return; // stop you fool!
         }
         if (value == null) {
             this.remove(key);
@@ -342,7 +327,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         entry.setObject(value);
 
         // find the persister to save the state
-        IPersister<Object> persister = findPersister(entry, null);
+        @SuppressWarnings("unchecked")
+		IPersister<Object> persister = (IPersister<Object>) findPersister(entry, null);
         try {
             if (persister != null) {
                 XMLMemento memento = XMLMemento.createWriteRoot("blackboardContent"); //$NON-NLS-1$
@@ -353,19 +339,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                 memento.save(writer);
                 entry.setMemento(writer.getBuffer().toString());
             } else {
-                // do not check for serializability as it may cause problems if children
-                // elements
-                // are not serializable
-                // if (value instanceof Serializable) {
-                // ByteArrayOutputStream bout = new ByteArrayOutputStream();
-                //
-                // ObjectOutputStream out = new ObjectOutputStream(new
-                // BufferedOutputStream(bout));
-                // out.writeObject(value);
-                //
-                // entry.setMemento(new String(bout.toByteArray()));
-                // out.close();
-                // }
+            	// this is a "real" object that cannot be shared between runs
             }
         } catch (Exception e) {
             String msg = "Error persisting content: " + value.getClass(); //$NON-NLS-1$
@@ -513,11 +487,11 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
 
     @SuppressWarnings("unchecked")
-    private IPersister<Object> findPersister( BlackboardEntry entry, XMLMemento memento ) {
+    private IPersister<?> findPersister( BlackboardEntry entry, XMLMemento memento ) {
         if (persisters == null) {
             synchronized (this) {
                 if (persisters == null) {
-                    persisters = new ArrayList<IPersister<Object>>();
+                    persisters = new ArrayList<IPersister<?>>();
                     PersisterProcessor p = new PersisterProcessor(persisters);
                     ExtensionPointUtil.process(ProjectPlugin.getPlugin(), IPersister.XPID, p);
                 }
@@ -525,9 +499,9 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         }
 
         // look for a class closest down in the class hierarchy
-        ArrayList<IPersister<Object>> possible = new ArrayList<IPersister<Object>>();
+        ArrayList<IPersister<?>> possible = new ArrayList<IPersister<?>>();
 
-        for( IPersister<Object> persister : persisters ) {
+        for( IPersister<?> persister : persisters ) {
             Class< ? > persistenceTarget = persister.getPersistee();
             if (persistenceTarget == null) {
                 continue; // this persister does not seem to be set up correctly
@@ -573,8 +547,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
             return null;
         }
 
-        Collections.sort(possible, new Comparator<IPersister<Object>>(){
-            public int compare( IPersister<Object> p1, IPersister<Object> p2 ) {
+        Collections.sort(possible, new Comparator<IPersister<?>>(){
+            public int compare( IPersister<?> p1, IPersister<?> p2 ) {
                 if (p1.getPersistee().equals(p2.getPersistee())) {
                     return 0;
                 }
@@ -617,17 +591,16 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     static class PersisterProcessor implements ExtensionPointProcessor {
 
-        List persisters;
+        List<IPersister<?>> persisters;
 
-        PersisterProcessor( List persisters ) {
+        PersisterProcessor( List<IPersister<?>> persisters ) {
             this.persisters = persisters;
         }
 
-        @SuppressWarnings("unchecked")
         public void process( IExtension extension, IConfigurationElement element ) throws Exception {
 
             try {
-                IPersister persister = (IPersister) element.createExecutableExtension("class"); //$NON-NLS-1$
+                IPersister<?> persister = (IPersister<?>) element.createExecutableExtension("class"); //$NON-NLS-1$
 
                 if (persister != null) {
                     persister.setExtension(extension);

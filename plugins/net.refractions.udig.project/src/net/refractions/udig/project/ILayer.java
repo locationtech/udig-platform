@@ -71,6 +71,60 @@ public interface ILayer extends Comparable<ILayer> {
      */
     public static final int WORKING = 5;
 
+    /**
+     * The set of layer interaction properties.
+     * <p>
+     * We have not decided yet if tools should check that the layer supports the required
+     * interaction; or if it can be handled by a tool category.
+     * 
+     * @author paul.pfeiffer
+     * @version 1.3.0
+     */
+    public static enum Interaction {
+        VISIBLE("interaction_visible"),
+        BACKGROUND("interaction_background"),
+        INFO ("interaction_information"),
+        SELECT ("interaction_select"),
+        EDIT ("interaction_edit"),
+        BOUNDARY ("interaction_boundary");
+        
+        private String key;
+        
+        private Interaction(String k) {
+            key = k;
+        }
+        
+        /**
+         * Get the key that is used to store and retrieve values from the layer blackboard
+         * @return key
+         */
+        public String getKey() {
+            return key;
+        }
+        
+        /**
+         * Gets the layer interaction property relevant to the supplied key (or toolCategoryId).
+         * 
+         * @param layerInteraction
+         * @return interaction
+         */
+        public static Interaction getInteraction(String layerInteraction) {
+            // check for deprecated ProjectBlackboardConstants
+            if (layerInteraction.equals(ProjectBlackboardConstants.LAYER__EDIT_APPLICABILITY)
+                    || layerInteraction.equals(ProjectBlackboardConstants.LAYER__FEATURES_ADD_APPLICABILITY)
+                    || layerInteraction.equals(ProjectBlackboardConstants.LAYER__FEATURES_MODIFY_APPLICABILITY)
+                    || layerInteraction.equals(ProjectBlackboardConstants.LAYER__FEATURES_REMOVE_APPLICABILITY)) {
+                return Interaction.EDIT;
+            }
+            for( Interaction interaction : Interaction.values() ){
+                if( layerInteraction.equals( interaction.getKey() ) ){
+                    return interaction;
+                }
+            }
+            return null;
+        }
+    }
+    
     /** Listen to changes on this layer.  Each listener can only be added once*/
     public void addListener( ILayerListener listener );
 
@@ -235,7 +289,7 @@ public interface ILayer extends Comparable<ILayer> {
     public String getStatusMessage();
 
     /**
-     * Check toolset applicability.
+     * Check layer interaction applicability.
      * <p>
      * Note: some layers may not ever be applicable for certaint toolsets. Sometimes this is can be
      * determined quickly from a layer property like "selectable" for the selection toolset. Other
@@ -243,10 +297,10 @@ public interface ILayer extends Comparable<ILayer> {
      * </p>
      * 
      * @see isSelectable
-     * @param toolCategoryId
+     * @param interaction
      * @return
      */
-    public boolean isApplicable( String toolCategoryId );
+    public boolean isApplicable( Interaction interaction );
 
     /**
      * Gets the name from the associated metadata.

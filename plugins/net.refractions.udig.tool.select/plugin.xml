@@ -62,6 +62,21 @@
                      </and>
                   </enablement>
          </modalTool>
+          <modalTool
+                categoryId="net.refractions.udig.tool.category.selection"
+                class="net.refractions.udig.tool.select.internal.BoundaryLayerSelectionTool"
+                icon="icons/etool16/boundary_mode.png"
+                id="net.refractions.udig.tool.selection.boundary"
+                largeIcon="icons/etool24/boundary_mode.png"
+                name="%selection.boundary.name"
+                onToolbar="true"
+                toolCursorId="bondatySelectCursor"
+                tooltip="%selection.boundary.tooltip">
+             <toolOption
+                   class="net.refractions.udig.tool.select.internal.BoundaryLayerSelectionTool$OptionContribtionItem"
+                   id="setBoundaryToolOptions">
+             </toolOption>
+          </modalTool>
                 <actionTool
                      categoryId="net.refractions.udig.tool.category.zoom"
                      class="net.refractions.udig.tool.select.internal.ZoomSelection"
@@ -87,6 +102,18 @@
                      hotspotY="10"
                      id="selectFeatureCursor"
                      image="icons/pointers/select_feature_cursor.gif"/>
+               <toolCursor
+                     hotspotX="9"
+                     hotspotY="6"
+                     id="bondatySelectCursor"
+                     image="icons/pointers/boundary_select_sorce.png">
+               </toolCursor>
+               <toolCursor
+                     hotspotX="11"
+                     hotspotY="11"
+                     id="bondatyBoxSelectCursor"
+                     image="icons/pointers/boundary_box_select_sorce.png">
+               </toolCursor>
    </extension>
 
    <extension
@@ -126,5 +153,44 @@
                id="net.refractions.udig.tool.select.view"
                name="Table View"
                viewId="net.refractions.udig.tool.select.TableView"/>
+      </extension>
+      <extension
+            point="org.eclipse.ui.viewActions">
+         <viewContribution
+               id="net.refractions.udig.tool.select.tableContribution"
+               targetID="net.refractions.udig.tool.select.TableView">
+            <action
+                  class="net.refractions.udig.tool.select.BoundaryActionDelegate"
+                  icon="icons/etool16/boundary_filter_obj.png"
+                  id="net.refractions.udig.tool.select.boundaryaction"
+                  label="Boundary Filter"
+                  style="toggle"
+                  toolbarPath="additions">
+            </action>
+         </viewContribution>
+      </extension>
+      <extension
+            point="org.eclipse.ui.preferencePages">
+         <page
+               category="net.refractions.udig.project.ui.preferences.tool"
+               class="net.refractions.udig.tool.select.internal.SelectionToolPreferencePage"
+               id="net.refractions.udig.tool.select.page"
+               name="Selection">
+         </page>
+      </extension>
+      <extension
+            point="net.refractions.udig.ui.boundary">
+         <boundary
+               class="net.refractions.udig.tool.select.internal.BoundaryLayerStrategy"
+               id="net.refractions.udig.tool.default.BoundaryLayerService"
+               name="Boundary Layer"
+               page="net.refractions.udig.tool.select.internal.BoundaryLayerPage">
+         </boundary>
+      </extension>
+      <extension
+            point="org.eclipse.core.runtime.preferences">
+         <initializer
+               class="net.refractions.udig.tool.select.SelectionToolPreferenceInitializer">
+         </initializer>
       </extension>
 </plugin>

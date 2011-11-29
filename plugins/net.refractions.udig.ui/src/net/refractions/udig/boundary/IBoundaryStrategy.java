@@ -19,8 +19,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import net.refractions.udig.internal.ui.UiPlugin;
 
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
+import org.eclipse.ui.part.IPageBookViewPage;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -29,7 +28,7 @@ import com.vividsolutions.jts.geom.Geometry;
 /**
  * Defines the changing functionality of the Boundary service.
  * 
- * @author pfeiffp
+ * @author paul.pfeiffer
  */
 public abstract class IBoundaryStrategy {
 
@@ -65,10 +64,10 @@ public abstract class IBoundaryStrategy {
      */
     public abstract String getName();
 
-    /*
+    /**
      * A list of listeners to be notified when the Strategy changes
      */
-    protected Set<Listener> listeners = new CopyOnWriteArraySet<Listener>();
+    protected Set<BoundaryListener> listeners = new CopyOnWriteArraySet<BoundaryListener>();
     
     /**
      * Allows notification of changes to the boundary represented by the
@@ -81,7 +80,7 @@ public abstract class IBoundaryStrategy {
      * 
      * @param listener
      */
-    public void addListener( Listener listener ) {
+    public void addListener( BoundaryListener listener ) {
         if( listener == null ){
             throw new NullPointerException("BoundaryService listener required to be non null");
         }
@@ -94,28 +93,40 @@ public abstract class IBoundaryStrategy {
      * 
      * @param listener
      */
-    public void removeListener( Listener listener ) {
+    public void removeListener( BoundaryListener listener ) {
         listeners.remove(listener);
     }
     
     /**
      * Notifies listener that the value of the filter has changed.
+     * <p>
+     * 
+     * @param data Geometry supplied to listeners using event.data
      */
-    protected void notifyListeners(Object changed) {
-        Event event = null;
-        for( Listener listener : listeners ) {
+    protected void notifyListeners(BoundaryListener.Event event) {
+        for( BoundaryListener listener : listeners ) {
             if( event == null ){
-                event = new Event();
-                event.data = changed;
+                event = new BoundaryListener.Event(this);
             }
             try {
                 if( listener != null ){
                     listener.handleEvent( event );
                 }
             } catch (Exception e) {
-                e.printStackTrace();
                 UiPlugin.trace(UiPlugin.ID, listener.getClass(), e.getMessage(), e );
             }
         }
+    }
+    
+    /**
+     * Creates a Page (used for extra selection like the bookmark strategy).
+     * <p>
+     * Please note this is provided by the extension point information via BoundaryProxy.
+     * As such this method is expected to return null.
+     * 
+     * @return Page if it exists otherwise null
+     */
+    public IPageBookViewPage createPage() {
+        return null;
     }
 }

@@ -242,5 +242,5 @@
          <initializer
                class="net.refractions.udig.tools.internal.NavigationPreferenceInitializer">
          </initializer>
-      </extension>      
+      </extension>
 </plugin>

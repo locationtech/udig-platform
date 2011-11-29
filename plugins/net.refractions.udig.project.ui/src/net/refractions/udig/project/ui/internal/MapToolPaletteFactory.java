@@ -59,42 +59,54 @@ public class MapToolPaletteFactory {
         // Normal GEF Tools (SelectionTool etc...)
         // PaletteContainer controlGroup = createControlGroup(root);
         // categories.add(controlGroup);
-        int open = 0;
+        PaletteToolbar navigation = new PaletteToolbar("Navigation");
+//        navigation.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
+//        navigation.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
+        navigation.setUserModificationPermission(PaletteContainer.PERMISSION_NO_MODIFICATION);
+//        navigation.setShowDefaultIcon(false);
+        
         for( ModalToolCategory category : toolManager.getModalToolCategories() ) {
-            open++;                
 
             // Simple PaletteDrawer (no icon for the tool category at this time)
-            String name = category.getName();
-            name = fixLabel(name);
+            String shortcut = shortcut(category.getName());
+            String name = fixLabel(category.getName());
             
             PaletteContainer container;
-            
-            PaletteDrawer drawer = new PaletteDrawer(name);
-            drawer.setId( category.getId() );
-
-            if( category == toolManager.getActiveCategory()){
-                drawer.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
+            if( category.getId().equals("net.refractions.udig.tool.category.zoom") ||
+                    category.getId().equals("net.refractions.udig.tool.category.pan")){
+                container = navigation;
             }
             else {
-                drawer.setInitialState(PaletteDrawer.INITIAL_STATE_CLOSED);
+                PaletteDrawer drawer = new PaletteDrawer(name);
+                drawer.setId( category.getId() );
+                if( category == toolManager.getActiveCategory()){
+                    drawer.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
+                }
+                else {
+                    drawer.setInitialState(PaletteDrawer.INITIAL_STATE_CLOSED);
+                }
+                drawer.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
+                drawer.setUserModificationPermission(PaletteContainer.PERMISSION_NO_MODIFICATION);
+                drawer.setShowDefaultIcon(false);
+                if( shortcut != null ){
+                    drawer.setDescription( "("+shortcut+")" );
+                }
+                container = drawer;
             }
-            drawer.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
-            drawer.setUserModificationPermission(PaletteContainer.PERMISSION_NO_MODIFICATION);
-            
-            drawer.setShowDefaultIcon(false);
-            
-            container = drawer;
-        
             category.container( container ); // hook up so container can cycle tools on keypress
             for( ModalItem modalItem : category ) {
                 String label = fixLabel(modalItem.getName());
-                ToolEntry tool = new MapToolEntry(label, modalItem, category.getId());
+                String keypress = shortcut(modalItem.getName());
+                ToolEntry tool = new MapToolEntry(label, modalItem, keypress, category.getId());
                 
                 //set the default tool
                 if(modalItem.getId().equals(DEFAULT_ID)){
                     root.setDefaultEntry(tool);
-                }                
+                }         
                 container.add(tool);
+            }
+            if( container == navigation){
+                continue; // don't add navigation container multiple times
             }
             categories.add(container);
         }
@@ -140,18 +152,24 @@ public class MapToolPaletteFactory {
             }
         };
         Collections.sort(categories,sorter );
-        
+        categories.add(0,navigation);
         // try and prevent tool category order from changing
         root.setUserModificationPermission( PaletteContainer.PERMISSION_NO_MODIFICATION );
         root.setChildren(categories);
         return root;
     }
+    
+    static String shortcut( String label ){
+        int cut = label.indexOf("&");
+        String shortcut = cut == -1 ? null : label.substring(cut+1,cut+2);
+        return shortcut;
+    }
 
     /** Trim funny symbols as the world tool from the label displayed */
     static String fixLabel( String label ) {
         label = label.replace("&", ""); // remove reference to keyboard short cut
-        //label = label.replace("Tools", "");
-        //label = label.replace("Tool", "");
+        label = label.replace("Tools", "");
+        label = label.replace("Tool", "");
         return label;
     }
 

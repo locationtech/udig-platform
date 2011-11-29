@@ -2,6 +2,8 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension
+         id="net.refractions.udig.tool.edit.tools"
+         name="Edit Tools"
          point="net.refractions.udig.project.ui.tool">
 
                <modalTool
@@ -20,10 +22,13 @@
                         image="icons/pointers/edit_source.gif"/>
                   <enablement>
                   	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property
+                               expectedValue="com.vividsolutions.jts.geom.MultiPolygon"
+                               propertyId="GeometryType"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -48,10 +53,11 @@
                         image="icons/pointers/edit_source.gif"/>
                   <enablement>
                   	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -76,12 +82,13 @@
                         image="icons/pointers/edit_source.gif"/>
                   <enablement>
                   	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -103,10 +110,11 @@
                         image="icons/pointers/edit_source.gif"/>
                   <enablement>
                   	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -127,14 +135,15 @@
                      tooltip="%edit.selection.tooltip">
                   <enablement>
                   	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -155,13 +164,14 @@
                      tooltip="%edit.vertex.add.tooltip">
                   <enablement>
                   	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -182,13 +192,14 @@
                      tooltip="%edit.vertex.remove.tooltip">
                   <enablement>
                 	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -209,10 +220,11 @@
                         image="icons/pointers/edit_source.gif"/>
                   <enablement>
                   	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -237,10 +249,11 @@
                         image="icons/pointers/edit_source.gif"/>
                   <enablement>
                   	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -265,12 +278,13 @@
                         image="icons/pointers/edit_source.gif"/>
                   <enablement>
                   	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
 	                     </or>
 					</and>
                   </enablement>
@@ -295,12 +309,13 @@
                         image="icons/pointers/edit_source.gif"/>
                   <enablement>
                   	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -325,14 +340,15 @@
                         image="icons/pointers/delete_select_source.gif"/>
                   <enablement>
                   	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -344,7 +360,11 @@
                      menuPath="edit/additions"
                      name="%clear.selection.name"
                      onToolbar="false"
-                     tooltip="%clear.selection.tooltip"/>
+                     tooltip="%clear.selection.tooltip">
+                  <enablement>
+                    <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+                  </enablement>                     
+               </actionTool>
                <category
                      commandId="net.refractions.udig.tool.edit.editCategoryCommand"
                      id="net.refractions.udig.tool.edit.edit"
@@ -459,7 +479,11 @@
             enablesFor="2"
             id="net.refractions.udig.tool.edit.difference"
             name="%difference.name"
-            targetClass="net.refractions.udig.project.ILayer"/>
+            targetClass="net.refractions.udig.project.ILayer">
+          <enablement>
+		        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	      </enablement>   
+      </operation>
       <operation
             class="net.refractions.udig.tool.edit.SplitLineOp"
             enablesFor="+"

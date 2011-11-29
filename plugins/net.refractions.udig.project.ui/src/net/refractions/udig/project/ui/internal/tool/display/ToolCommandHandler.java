@@ -34,13 +34,14 @@ import org.eclipse.swt.graphics.Cursor;
  * <p>
  * This handler checks in two places:
  * <ul>
- * <li>It checks the category contributions; in order to hunt down a menu or toolbar contributino to run
+ * <li>It checks the category contributions; in order to hunt down a menu or toolbar contribution to run
  * </li>
  * <li>It checks the category ToolP
  * The handler for tool commands.
  * 
  * @author jeichar
  * @since 0.9.0
+ * @version 1.3.0
  */
 public class ToolCommandHandler extends AbstractHandler {
 
@@ -70,7 +71,9 @@ public class ToolCommandHandler extends AbstractHandler {
             for( Object child : category.getContainer().getChildren() ){
                 if( child instanceof MapToolEntry ){
                     MapToolEntry entry = (MapToolEntry) child;                    
-                    String toolId = entry.getId();
+                    if( !category.getId().equals( entry.getCategoryId() )){
+                        continue; // tool is not from our category
+                    }
                     ToolProxy proxy = entry.getMapToolProxy();
                     
                     if( !proxy.isEnabled() ){

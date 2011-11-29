@@ -146,7 +146,16 @@ public class Messages extends NLS {
 	public static String MultiTargetOp_name;
 	public static String ToolbarDropDownItem_chooseTool;
 	public static String LayerApplicabilityMenuCreator_ApplicabilityMenuName;
-	public static String DeleteFeature_confirmation_text;
+	public static String LayerInteraction_Background;
+    public static String LayerInteraction_Boundary;
+    public static String LayerInteraction_Edit;
+    public static String LayerInteraction_General;
+    public static String LayerInteraction_Information;
+    public static String LayerInteraction_Layer;
+    public static String LayerInteraction_Select;
+    public static String LayerInteraction_Tools;
+    public static String LayerInteraction_Visible;
+    public static String DeleteFeature_confirmation_text;
 	public static String DeleteFeature_confirmation_title;
 	public static String EventJob_job_title;
 	public static String ViewportPaneJava_resize_title;
