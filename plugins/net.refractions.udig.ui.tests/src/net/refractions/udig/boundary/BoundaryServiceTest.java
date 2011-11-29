@@ -40,24 +40,30 @@ public class BoundaryServiceTest {
 	
 	@Test
 	public void testCRSStrategy() {
-        boundaryService.setProxy(boundaryService.findProxy("net.refractions.udig.project.ui.boundaryCRS"));
-        String id = boundaryService.getProxy().getId();
-        assertEquals("net.refractions.udig.project.ui.boundaryCRS", id);
-        
-        assertNull(boundaryService.getExtent());
-        assertNull(boundaryService.getGeometry());
-        assertNull(boundaryService.getCrs());
+	    BoundaryProxy boundary = boundaryService.findProxy("net.refractions.udig.project.ui.boundaryCRS");
+	    if( boundary != null ){
+            boundaryService.setProxy(boundary);
+            String id = boundaryService.getProxy().getId();
+            assertEquals("net.refractions.udig.project.ui.boundaryCRS", id);
+            
+            assertNull(boundaryService.getExtent());
+            assertNull(boundaryService.getGeometry());
+            assertNull(boundaryService.getCrs());
+	    }
 	}
 
 	@Test
 	public void testScreenStrategy() {
-        boundaryService.setProxy(boundaryService.findProxy("net.refractions.udig.tool.default.boundaryScreen"));
-        String id = boundaryService.getProxy().getId();
-        assertEquals("net.refractions.udig.tool.default.boundaryScreen", id);
-        
-        assertNull(boundaryService.getExtent());
-        assertNull(boundaryService.getGeometry());
-        assertNull(boundaryService.getCrs());
+        BoundaryProxy boundary = boundaryService.findProxy("net.refractions.udig.tool.default.boundaryScreen");
+        if( boundary != null ){
+            boundaryService.setProxy(boundary);
+            String id = boundaryService.getProxy().getId();
+            assertEquals("net.refractions.udig.tool.default.boundaryScreen", id);
+            
+            assertNull(boundaryService.getExtent());
+            assertNull(boundaryService.getGeometry());
+            assertNull(boundaryService.getCrs());
+        }
 	}
 	
 }

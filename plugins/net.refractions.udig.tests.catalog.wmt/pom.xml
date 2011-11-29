@@ -10,5 +10,5 @@
   <groupId>net.refractions</groupId>
   <artifactId>net.refractions.udig.tests.catalog.wmt</artifactId>
   <version>1.3.0.qualifier</version>
-  <packaging>eclipse-plugin</packaging>
+  <packaging>eclipse-test-plugin</packaging>
 </project>

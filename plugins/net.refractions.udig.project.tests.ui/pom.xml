@@ -10,5 +10,5 @@
   <groupId>net.refractions</groupId>
   <artifactId>net.refractions.udig.project.tests.ui</artifactId>
   <version>1.2.0-SNAPSHOT</version>
-  <packaging>eclipse-plugin</packaging>
+  <packaging>eclipse-test-plugin</packaging>
 </project>

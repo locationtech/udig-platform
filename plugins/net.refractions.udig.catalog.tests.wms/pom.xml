@@ -8,7 +8,7 @@
     <version>1.3.0-SNAPSHOT</version>
   </parent>
   <groupId>net.refractions</groupId>
-  <artifactId>net.refractions.udig.catalog.test.geotiff</artifactId>
+  <artifactId>net.refractions.udig.catalog.tests.wms</artifactId>
   <version>1.2.0-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
 </project>
