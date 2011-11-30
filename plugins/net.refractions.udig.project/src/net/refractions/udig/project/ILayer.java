@@ -86,7 +86,7 @@ public interface ILayer extends Comparable<ILayer> {
         INFO ("interaction_information"),
         SELECT ("interaction_select"),
         EDIT ("interaction_edit"),
-        BOUNDARY ("interaction_boundary");
+        AOI ("interaction_aoi");
         
         private String key;
         

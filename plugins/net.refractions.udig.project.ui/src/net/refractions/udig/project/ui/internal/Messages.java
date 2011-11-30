@@ -147,7 +147,7 @@ public class Messages extends NLS {
 	public static String ToolbarDropDownItem_chooseTool;
 	public static String LayerApplicabilityMenuCreator_ApplicabilityMenuName;
 	public static String LayerInteraction_Background;
-    public static String LayerInteraction_Boundary;
+    public static String LayerInteraction_AOI;
     public static String LayerInteraction_Edit;
     public static String LayerInteraction_General;
     public static String LayerInteraction_Information;

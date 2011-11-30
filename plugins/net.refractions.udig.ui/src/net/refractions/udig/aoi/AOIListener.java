@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.boundary;
+package net.refractions.udig.aoi;
 
 import java.util.EventObject;
 
@@ -21,28 +21,28 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * Quick listener to <code>BoundaryService</code> providing notification
+ * Quick listener to <code>AOIService</code> (Area of Interest) providing notification
  * of changes to the extent represented (bounds, geometry, crs).
  * <p>
  * @see java.util.EventListener
  */
-public interface BoundaryListener {
+public interface AOIListener {
     /**
-     * Captures a change to the bounds published by BoundaryService.
+     * Captures a change to the bounds published by AOIService.
      * @author paul.pfeiffer
      */
     public static class Event extends EventObject{
         private static final long serialVersionUID = -3438046080794276022L;
-        public IBoundaryStrategy source;
+        public IAOIStrategy source;
         public Geometry geometry;
         public ReferencedEnvelope bounds;
-        public Event( IBoundaryStrategy source ){
+        public Event( IAOIStrategy source ){
             super(source);
         }
     }
     
     /**
-     * BoundaryListener event notification.
+     * AOIListener event notification.
      * 
      * @param event the event which occurred
      */

@@ -18,9 +18,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.boundary.BoundaryProxy;
-import net.refractions.udig.boundary.IBoundaryService;
-import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.aoi.AOIProxy;
+import net.refractions.udig.aoi.IAOIService;
+import net.refractions.udig.aoi.IAOIStrategy;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.AbstractCommand;
@@ -30,7 +30,7 @@ import net.refractions.udig.project.internal.render.impl.ViewportModelImpl;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tool.select.SelectPlugin;
-import net.refractions.udig.tool.select.internal.BoundaryLayerStrategy;
+import net.refractions.udig.tool.select.internal.AOILayerStrategy;
 import net.refractions.udig.tool.select.internal.SelectionToolPreferencePage;
 import net.refractions.udig.ui.PlatformGIS;
 
@@ -53,25 +53,25 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
 
 /**
- * Queries the current boundary layer for selection and updates the BoundaryLayerBoundaryService
+ * Queries the current AOI layer (Area of Interest) for selection and updates the AOILayerStrategy
  * 
- * @see net.refractions.udig.tools.internal.BoundaryLayerBoundaryService
+ * @see net.refractions.udig.tools.internal.AOILayerStrategy
  * @author leviputna
  * @since 1.2.3
  */
-public class SetBoundaryLayerCommand extends AbstractCommand implements UndoableMapCommand {
+public class SetAOILayerCommand extends AbstractCommand implements UndoableMapCommand {
 
     private Envelope bbox = null;
     private ReferencedEnvelope bounds;
     private MapMouseEvent mouseEvent;
-    private static String BOUNDARY_LAYER_ID = "net.refractions.udig.tool.default.BoundaryLayerService";
+    private static String AOI_LAYER_ID = "net.refractions.udig.tool.select.internal.aoiLayer";
 
     /**
      * Creates a new instance of SetConndaryCommand
      * 
      * @param bbox
      */
-    public SetBoundaryLayerCommand( MapMouseEvent e, Envelope bbox ) {
+    public SetAOILayerCommand( MapMouseEvent e, Envelope bbox ) {
         this.bbox = bbox;
         this.mouseEvent = e;
     }
@@ -94,7 +94,7 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
         boolean isNavigate = SelectPlugin.getDefault().getPreferenceStore()
                 .getBoolean(SelectionToolPreferencePage.NAVIGATE_SELECTION);
         
-        BoundaryLayerStrategy strategy = getBoundaryLayerStrategy();
+        AOILayerStrategy strategy = getAOILayerStrategy();
         ILayer activeLayer = strategy.getActiveLayer();
         ILayer previousLayer = strategy.getPreviousLayer();
         ILayer nextLayer = strategy.getNextLayer();
@@ -110,7 +110,7 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
             }
             else {
                 // end of the world!
-                updateBoundaryService(null, null);
+                updateAOIService(null, null);
                 bounds = getMap().getBounds(null);
                 ViewportModelImpl vmi = (ViewportModelImpl) getMap().getViewportModel();
                 vmi.zoomToBox(bounds);
@@ -131,7 +131,7 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
         if( selectedLayer == null){
             return; // nothing to do!
         }
-        if (!selectedLayer.isApplicable(ILayer.Interaction.BOUNDARY)){
+        if (!selectedLayer.isApplicable(ILayer.Interaction.AOI)){
             return; // eek!
         }
         // use the bbox to see if we hit anything!
@@ -141,7 +141,7 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
             // the user did not click on anything useful (so sad)!
             // see if they were trying to click around on the active layer instead!
             if( selectedLayer == activeLayer){
-                return; // give up no change to boundary stuffs
+                return; // give up no change to AOI stuffs
             }
             else {
                 // quickly test to see if they clicked on a neighbour
@@ -157,9 +157,9 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
             }
         }        
         bounds = featureCollection.getBounds();
-        Geometry newBoundary = unionGeometry(featureCollection);
+        Geometry newAOI = unionGeometry(featureCollection);
         
-        updateBoundaryService(selectedLayer,newBoundary );
+        updateAOIService(selectedLayer,newAOI );
 
         if (isNavigate) {
             IMap map = selectedLayer.getMap();
@@ -169,15 +169,15 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
     }
 
     /*
-     * returns a BoundaryLayerStrategy object for quick access
+     * returns an AOILayerStrategy object for quick access
      */
-    private BoundaryLayerStrategy getBoundaryLayerStrategy() {
-        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        IBoundaryStrategy boundaryStrategy = boundaryService.findProxy(BOUNDARY_LAYER_ID)
+    private AOILayerStrategy getAOILayerStrategy() {
+        IAOIService aOIService = PlatformGIS.getAOIService();
+        IAOIStrategy aOIStrategy = aOIService.findProxy(AOI_LAYER_ID)
                 .getStrategy();
 
-        if (boundaryStrategy instanceof BoundaryLayerStrategy) {
-            return (BoundaryLayerStrategy) boundaryStrategy;
+        if (aOIStrategy instanceof AOILayerStrategy) {
+            return (AOILayerStrategy) aOIStrategy;
         }
         return null;
     }
@@ -213,18 +213,18 @@ public class SetBoundaryLayerCommand extends AbstractCommand implements Undoable
         return combined.union();
     }
 
-    private void updateBoundaryService( ILayer layer, Geometry newBoundary )
+    private void updateAOIService( ILayer layer, Geometry newAOI )
             throws IOException {
-        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        BoundaryProxy boundaryLayerProxy = boundaryService.findProxy(BOUNDARY_LAYER_ID);
+        IAOIService aOIService = PlatformGIS.getAOIService();
+        AOIProxy aoiLayerProxy = aOIService.findProxy(AOI_LAYER_ID);
         
-        BoundaryLayerStrategy boundaryLayerStrategy = (BoundaryLayerStrategy)boundaryLayerProxy.getStrategy();
-        boundaryLayerStrategy.setActiveLayer(layer);
-        boundaryLayerStrategy.setGeometry(newBoundary);
+        AOILayerStrategy aOILayerStrategy = (AOILayerStrategy)aoiLayerProxy.getStrategy();
+        aOILayerStrategy.setActiveLayer(layer);
+        aOILayerStrategy.setGeometry(newAOI);
         
         // if the current stragegy does not equal the bounary layer strategy set it
-        if (!boundaryService.getProxy().equals(boundaryLayerProxy)) {
-            boundaryService.setProxy(boundaryLayerProxy);
+        if (!aOIService.getProxy().equals(aoiLayerProxy)) {
+            aOIService.setProxy(aoiLayerProxy);
         }
     }
 

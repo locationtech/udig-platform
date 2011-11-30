@@ -17,8 +17,8 @@ package net.refractions.udig.tool.select.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.boundary.BoundaryListener;
-import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.aoi.AOIListener;
+import net.refractions.udig.aoi.IAOIStrategy;
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
@@ -34,16 +34,16 @@ import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 
 /**
- * This service is set by the Boundary Navigation Tool and provides a filter service based on the
- * selection of boundary layer features.
+ * This service is set by the AOI Navigation Tool and provides a filter service based on the
+ * selection of AOI layer features.
  * 
  * @author leviputna
  * @since 1.2.3
  */
-public class BoundaryLayerStrategy extends IBoundaryStrategy {
+public class AOILayerStrategy extends IAOIStrategy {
 
-    private static final String BOUNDARY_GEOMETRY = "boundaryGeometry";
-    private static final String BOUNDARY_LAYER = "boundaryLayer";
+    private static final String AOI_GEOMETRY = "aoiGeometry";
+    private static final String AOI_LAYER = "aoiLayer";
     private static String name = "Layer";    
     /**
      * This layer is looked up by id on the layer blackboard
@@ -54,9 +54,9 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
 //    private SimpleFeatureCollection features = null;
 
     /**
-     * Set the geometry to be used as the boundary
+     * Set the geometry to be used as the AOI
      * 
-     * @param geometry The geometry to use as the boundary must be type Polygon or Multy Polygon
+     * @param geometry The geometry to use as the AOI must be type Polygon or Multy Polygon
      */
     public void setGeometry( Geometry geometry ) {
         ILayer victim = getActiveLayer();
@@ -64,10 +64,10 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
         if( victim != null ){
             IBlackboard blackboard = victim.getBlackboard();
             if( geometry != null ){
-                blackboard.put(BOUNDARY_GEOMETRY, geometry );            
+                blackboard.put(AOI_GEOMETRY, geometry );            
             }
             else {
-                blackboard.remove(BOUNDARY_GEOMETRY);
+                blackboard.remove(AOI_GEOMETRY);
             }
             mapBlackboard = victim.getMap().getBlackboard();
         }
@@ -81,19 +81,19 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
         if( geometry != null ){
             // record a WKT note in the mapblackboard for a rainy day
             String wkt = geometry.toText();
-            mapBlackboard.put(BOUNDARY_GEOMETRY, wkt );
+            mapBlackboard.put(AOI_GEOMETRY, wkt );
         }
         else {
-            mapBlackboard.remove(BOUNDARY_GEOMETRY );            
+            mapBlackboard.remove(AOI_GEOMETRY );            
         }
         
-        BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryLayerStrategy.this);
-        notifyListeners(boundaryEvent);
+        AOIListener.Event aoiEvent = new AOIListener.Event( AOILayerStrategy.this);
+        notifyListeners(aoiEvent);
     }
     
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.boundary.IBoundaryStrategy#getExtent()
+     * @see net.refractions.udig.aoi.IAOIStrategy#getExtent()
      */
     @Override
     public ReferencedEnvelope getExtent() {
@@ -107,7 +107,7 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.boundary.IBoundaryStrategy#getBoundary()
+     * @see net.refractions.udig.aoi.IAOIStrategy#getAOI()
      */
     @Override
     public Geometry getGeometry() {
@@ -116,13 +116,13 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
             return null;
         }
         IBlackboard blackboard = victim.getBlackboard();
-        Geometry geometry = (Geometry) blackboard.get(BOUNDARY_GEOMETRY );
+        Geometry geometry = (Geometry) blackboard.get(AOI_GEOMETRY );
         return geometry;
     }
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.boundary.IBoundaryStrategy#getCrs()
+     * @see net.refractions.udig.aoi.IAOIStrategy#getCrs()
      */
     @Override
     public CoordinateReferenceSystem getCrs() {
@@ -135,7 +135,7 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.boundary.IBoundaryStrategy#getName()
+     * @see net.refractions.udig.aoi.IAOIStrategy#getName()
      */
     @Override
     public String getName() {
@@ -143,21 +143,21 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
     }
 
     /**
-     * Gets a list of Boundary Layers from the active map
+     * Gets a list of AOI Layers from the active map
      * The list is in z-order
      * @return List<ILayer>
      */
-    public List<ILayer> getBoundaryLayers() {
+    public List<ILayer> getAOILayers() {
 
         List<ILayer> layers = ApplicationGIS.getActiveMap().getMapLayers(); // immutable must copy
-        List<ILayer> boundaryLayers = new ArrayList<ILayer>();
+        List<ILayer> aoiLayers = new ArrayList<ILayer>();
         
         for (ILayer layer: layers) {
-            if (layer.isApplicable(ILayer.Interaction.BOUNDARY)) {
-                boundaryLayers.add(layer);
+            if (layer.isApplicable(ILayer.Interaction.AOI)) {
+                aoiLayers.add(layer);
             }
         }
-        return boundaryLayers;
+        return aoiLayers;
     }
     
     /**
@@ -166,14 +166,14 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
     public ILayer getActiveLayer() {
         IMap map = ApplicationGIS.getActiveMap();
         
-        // check if this map has a boundary layer marked already
+        // check if this map has a AOI layer marked already
         ILayer layer = restoreFromMapBlackboard(map);
         if( layer != null ){
             return layer;
         }
         
-        // fine we will assume the last boundary layer for this map
-//        List<ILayer> layers = getBoundaryLayers();
+        // fine we will assume the last AOI layer for this map
+//        List<ILayer> layers = getAOILayers();
 //        if (layers.size() > 0) {
 //            ILayer defaultLayer = layers.get(0);
 //            setActiveLayer(defaultLayer);
@@ -183,23 +183,23 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
     }
 
     private ILayer restoreFromMapBlackboard( IMap map ) {
-        String layerId = (String) map.getBlackboard().get(BOUNDARY_LAYER);
+        String layerId = (String) map.getBlackboard().get(AOI_LAYER);
         if( layerId != null ){
             for( ILayer layer : map.getMapLayers() ){
                 if( layerId.equals( layer.getID().toExternalForm())){
                     // we found a match!
                     // test if it has a geometry already
                     IBlackboard blackboard = layer.getBlackboard();
-                    if( blackboard.get(BOUNDARY_GEOMETRY) == null ){
+                    if( blackboard.get(AOI_GEOMETRY) == null ){
                         // try and restore from WKT
-                        String wkt = map.getBlackboard().getString(BOUNDARY_GEOMETRY);
+                        String wkt = map.getBlackboard().getString(AOI_GEOMETRY);
                         if( wkt != null ){
                             // we got one!
                             GeometryFactory gf = JTSFactoryFinder.getGeometryFactory(null);
                             WKTReader reader = new WKTReader(gf);
                             try {
                                 Geometry geometry = reader.read(wkt);
-                                blackboard.put(BOUNDARY_GEOMETRY, geometry );
+                                blackboard.put(AOI_GEOMETRY, geometry );
                             } catch (ParseException e) {
                                 // no can do!
                             }
@@ -222,27 +222,27 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
         if( activeLayer != null ){
             map = activeLayer.getMap();
             String layerId = activeLayer.getID().toExternalForm();
-            // mark this one as the "boundaryLayer" for the map
-            map.getBlackboard().put(BOUNDARY_LAYER, layerId );
+            // mark this one as the "AOILayer" for the map
+            map.getBlackboard().put(AOI_LAYER, layerId );
         }
         else {
             map = ApplicationGIS.getActiveMap();
             if( map == null){
                 return;
             }
-            map.getBlackboard().remove(BOUNDARY_LAYER);
+            map.getBlackboard().remove(AOI_LAYER);
         }        
-        BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryLayerStrategy.this);
-        notifyListeners(boundaryEvent);
+        AOIListener.Event aoiEvent = new AOIListener.Event( AOILayerStrategy.this);
+        notifyListeners(aoiEvent);
     }
     
     /**
-     * Look up the "next" layer in the map layer list; only boundary layers are considered.
+     * Look up the "next" layer in the map layer list; only AOI layers are considered.
      * 
      * @return The next layer; or null if it is not available.
      */
     public ILayer getNextLayer() {
-        List<ILayer> layers = getBoundaryLayers();
+        List<ILayer> layers = getAOILayers();
         ILayer activeLayer = getActiveLayer();
         
         int index = layers.indexOf(activeLayer);
@@ -253,7 +253,7 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
     }
     
     /**
-     * Look up the the previous layer in the map layer list; only boundary
+     * Look up the the previous layer in the map layer list; only AOI
      * layers are considered.
      * 
      * @return The previous layer if available; or null if we are already the "last" layer
@@ -263,7 +263,7 @@ public class BoundaryLayerStrategy extends IBoundaryStrategy {
         if (activeLayer == null) {
             return null; // nothing to see here move along
         }        
-        List<ILayer> layers = getBoundaryLayers();
+        List<ILayer> layers = getAOILayers();
         int index = layers.indexOf(activeLayer);
         if (index > 0) {
             ILayer previousLayer = layers.get( index-1 );

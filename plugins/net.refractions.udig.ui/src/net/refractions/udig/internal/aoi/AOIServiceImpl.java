@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.internal.boundary;
+package net.refractions.udig.internal.aoi;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.boundary.BoundaryListener;
-import net.refractions.udig.boundary.BoundaryProxy;
-import net.refractions.udig.boundary.IBoundaryService;
+import net.refractions.udig.aoi.AOIListener;
+import net.refractions.udig.aoi.AOIProxy;
+import net.refractions.udig.aoi.IAOIService;
 import net.refractions.udig.core.internal.ExtensionPointProcessor;
 import net.refractions.udig.core.internal.ExtensionPointUtil;
 import net.refractions.udig.internal.ui.UiPlugin;
@@ -35,46 +35,46 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * This is the default implementation of BoundaryService; it delegates to the internal strategy
+ * This is the default implementation of AOIService; it delegates to the internal strategy
  * object.
  * 
  * @author pfeiffp
  */
-public class BoundaryServiceImpl implements IBoundaryService {
+public class AOIServiceImpl implements IAOIService {
 
-    /** This is the boundary extension point processed to get BoundaryStrategy entries */
-    private static final String EXT_ID = "net.refractions.udig.ui.boundary";
+    /** This is the AOI extension point processed to get AOIStrategy entries */
+    private static final String EXT_ID = "net.refractions.udig.ui.aoi";
 
     /**
      * the id of the all strategy (ie the default)
      */
-    public static final String STRATEGY_ALL_ID = "net.refractions.udig.ui.boundaryAll";
+    public static final String STRATEGY_ALL_ID = "net.refractions.udig.ui.aoiAll";
 
     /*
      * A list of all the strategies
      */
-    protected List<BoundaryProxy> proxyList = new ArrayList<BoundaryProxy>();
+    protected List<AOIProxy> proxyList = new ArrayList<AOIProxy>();
 
-    protected BoundaryListener watcher = new BoundaryListener(){
-        public void handleEvent( BoundaryListener.Event event ) {
+    protected AOIListener watcher = new AOIListener(){
+        public void handleEvent( AOIListener.Event event ) {
             notifyListeners(event);
         }
     };
     /*
      * A list of listeners to be notified when the Strategy changes
      */
-    protected Set<BoundaryListener> listeners = new CopyOnWriteArraySet<BoundaryListener>();
+    protected Set<AOIListener> listeners = new CopyOnWriteArraySet<AOIListener>();
 
     @Override
-    public void addListener( BoundaryListener listener ) {
+    public void addListener( AOIListener listener ) {
         if (listener == null) {
-            throw new NullPointerException("BoundaryService listener required to be non null");
+            throw new NullPointerException("AOIService listener required to be non null");
         }
         listeners.add(listener);
     }
 
     @Override
-    public void removeListener( BoundaryListener listener ) {
+    public void removeListener( AOIListener listener ) {
         if (listeners.contains(listener)) {
             listeners.remove(listener);
         }
@@ -83,11 +83,11 @@ public class BoundaryServiceImpl implements IBoundaryService {
     /*
      * Notifies listener that the value of the filter has changed.
      */
-    private void notifyListeners( BoundaryListener.Event event ) {
+    private void notifyListeners( AOIListener.Event event ) {
         if (event == null) {
-            event = new BoundaryListener.Event(getProxy());
+            event = new AOIListener.Event(getProxy());
         }
-        for( BoundaryListener listener : listeners ) {
+        for( AOIListener listener : listeners ) {
             try {
                 if (listener != null) {
                     listener.handleEvent(event);
@@ -98,16 +98,16 @@ public class BoundaryServiceImpl implements IBoundaryService {
         }
     }
 
-    private BoundaryProxy currentProxy;
+    private AOIProxy currentProxy;
 
-    public BoundaryServiceImpl() {
+    public AOIServiceImpl() {
 
         // process the extension point here to get the list of Strategies
-        ExtensionPointProcessor processBoundaryItems = new ExtensionPointProcessor(){
+        ExtensionPointProcessor processAOIItems = new ExtensionPointProcessor(){
             @Override
             public void process( IExtension extension, IConfigurationElement element )
                     throws Exception {
-                BoundaryProxy proxy = new BoundaryProxy(element);
+                AOIProxy proxy = new AOIProxy(element);
                 proxyList.add(proxy);
                 /*
                  * String className = element.getAttribute("class"); if( currentClassName != null &&
@@ -115,7 +115,7 @@ public class BoundaryServiceImpl implements IBoundaryService {
                  */
             }
         };
-        ExtensionPointUtil.process(UiPlugin.getDefault(), EXT_ID, processBoundaryItems);
+        ExtensionPointUtil.process(UiPlugin.getDefault(), EXT_ID, processAOIItems);
 
         this.setProxy(this.getDefault());
     }
@@ -126,7 +126,7 @@ public class BoundaryServiceImpl implements IBoundaryService {
     }
 
     @Override
-    public void setProxy( BoundaryProxy proxy ) {
+    public void setProxy( AOIProxy proxy ) {
         if (this.currentProxy == proxy) {
             return; // no change
         }
@@ -137,7 +137,7 @@ public class BoundaryServiceImpl implements IBoundaryService {
         if (this.currentProxy != null) {
             this.currentProxy.addListener(watcher);
         }
-        BoundaryListener.Event event = new BoundaryListener.Event(proxy);
+        AOIListener.Event event = new AOIListener.Event(proxy);
         // we are not filling in event.geometry here as we only changed strategy
         notifyListeners(event);
     }
@@ -153,25 +153,25 @@ public class BoundaryServiceImpl implements IBoundaryService {
     }
 
     @Override
-    public BoundaryProxy getProxy() {
+    public AOIProxy getProxy() {
         return this.currentProxy;
     }
 
     @Override
-    public BoundaryProxy getDefault() {
+    public AOIProxy getDefault() {
         return this.findProxy(STRATEGY_ALL_ID);
     }
 
     @Override
-    public List<BoundaryProxy> getProxyList() {
+    public List<AOIProxy> getProxyList() {
         return Collections.unmodifiableList(proxyList);
     }
 
     @Override
-    public BoundaryProxy findProxy( String id ) {
-        for( BoundaryProxy boundaryProxy : proxyList ) {
-            if (boundaryProxy.getId().equals(id)) {
-                return boundaryProxy;
+    public AOIProxy findProxy( String id ) {
+        for( AOIProxy aOIProxy : proxyList ) {
+            if (aOIProxy.getId().equals(id)) {
+                return aOIProxy;
             }
         }
         return null;

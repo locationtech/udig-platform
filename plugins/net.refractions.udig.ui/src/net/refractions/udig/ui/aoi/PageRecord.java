@@ -1,4 +1,4 @@
-package net.refractions.udig.ui.boundary;
+package net.refractions.udig.ui.aoi;
 
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IViewPart;
