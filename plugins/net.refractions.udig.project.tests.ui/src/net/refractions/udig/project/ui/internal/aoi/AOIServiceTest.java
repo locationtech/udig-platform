@@ -1,8 +1,9 @@
-package net.refractions.udig.aoi;
+package net.refractions.udig.project.ui.internal.aoi;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import net.refractions.udig.aoi.AOIProxy;
 import net.refractions.udig.aoi.IAOIService;
 import net.refractions.udig.internal.aoi.AOIServiceFactory;
 
@@ -29,10 +30,24 @@ public class AOIServiceTest {
 	}
 
 	@Test
-	public void testAllStrategy() {
-        aOIService.setProxy(aOIService.findProxy("net.refractions.udig.ui.aoiAll"));
+	public void testCRSStrategy() {
+        AOIProxy proxy = aOIService.findProxy("net.refractions.udig.project.ui.crsAOI");
+        aOIService.setProxy(proxy);
         String id = aOIService.getProxy().getId();
-        assertEquals("net.refractions.udig.ui.aoiAll", id);
+        assertEquals("net.refractions.udig.project.ui.crsAOI", id);
+        
+        assertNull(aOIService.getExtent());
+        assertNull(aOIService.getGeometry());
+        assertNull(aOIService.getCrs());
+	}
+
+	@Test
+	public void testScreenStrategy() {
+        
+	    AOIProxy proxy = aOIService.findProxy("net.refractions.udig.project.ui.screenAOI");
+        aOIService.setProxy(proxy);
+        String id = aOIService.getProxy().getId();
+        assertEquals("net.refractions.udig.project.ui.screenAOI", id);
         
         assertNull(aOIService.getExtent());
         assertNull(aOIService.getGeometry());
