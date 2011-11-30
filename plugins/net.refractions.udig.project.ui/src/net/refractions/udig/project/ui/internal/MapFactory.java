@@ -545,7 +545,7 @@ public class MapFactory {
             if (PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
                     .getActiveEditor() != null) {
                 if (PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                        .getActiveEditor() instanceof MapEditor) {
+                        .getActiveEditor() instanceof MapPart) {
                     return true;
                 }
             }

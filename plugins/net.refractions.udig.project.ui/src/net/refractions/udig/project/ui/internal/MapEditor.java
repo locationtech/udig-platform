@@ -875,7 +875,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         return true;
     }
 
-    void setDirty( boolean dirty ) {
+    public void setDirty( boolean dirty ) {
         if (dirty == this.dirty)
             return;
 
@@ -1386,4 +1386,15 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     public IStatusLineManager getStatusLineManager() {
     	return statusLineManager;
     }
+    //
+    // helper method for ToolManager
+    @Override
+    public boolean isTesting() {
+        return this.isTesting;
+    }
+    @Override
+    public void setTesting( boolean testing ) {
+        this.isTesting = testing;
+    }
+
 }

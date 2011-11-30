@@ -100,7 +100,7 @@ public class ApplicationGISInternal {
                 new StructuredSelection(feature));
     }
 
-    public static MapEditor getActiveEditor() {
+    public static MapEditorPart getActiveEditor() {
         try {
             final ArrayList<IEditorPart> editor = new ArrayList<IEditorPart>();
 
@@ -130,8 +130,8 @@ public class ApplicationGISInternal {
 
             PlatformGIS.syncInDisplayThread(runnable);
 
-            if (!editor.isEmpty() && editor.get(0) instanceof MapEditor) {
-                return (MapEditor) editor.get(0);
+            if (!editor.isEmpty() && editor.get(0) instanceof MapEditorPart) {
+                return (MapEditorPart) editor.get(0);
             }
         } catch (Exception e) {
             return null;
@@ -139,11 +139,11 @@ public class ApplicationGISInternal {
 
         return null;
     }
-    public static MapEditor findMapEditor( final IMap map ) {
+    public static MapEditorPart findMapEditor( final IMap map ) {
         if (map == null)
             throw new NullPointerException("Map cannot be null"); //$NON-NLS-1$
 
-        final MapEditor[] result = new MapEditor[1];
+        final MapEditorPart[] result = new MapEditorPart[1];
         PlatformGIS.syncInDisplayThread(new Runnable(){
             public void run() {
                 IWorkbenchWindow win = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
@@ -155,8 +155,8 @@ public class ApplicationGISInternal {
                 IEditorReference[] refs = page.getEditorReferences();
                 for( IEditorReference reference : refs ) {
                     IEditorPart e = reference.getEditor(false);
-                    if (e instanceof MapEditor) {
-                        MapEditor me = (MapEditor) e;
+                    if (e instanceof MapEditorPart) {
+                        MapEditorPart me = (MapEditorPart) e;
                         if (map.equals(me.getMap())) {
                             result[0] = me;
                             return;

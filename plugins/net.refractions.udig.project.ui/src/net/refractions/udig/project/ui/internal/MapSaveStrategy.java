@@ -35,12 +35,13 @@ import net.refractions.udig.project.internal.StyleBlackboard;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
 
 public final class MapSaveStrategy extends CatalogExport {
 	private final ExportResourceSelectionState state;
-	private MapEditor editor;
+	private MapEditorPart editor;
 
-	public MapSaveStrategy(ExportResourceSelectionState state, MapEditor editor) {
+	public MapSaveStrategy(ExportResourceSelectionState state, MapEditorPart editor) {
 		super(false);
 		this.state = state;
 		this.editor = editor;
@@ -71,7 +72,7 @@ public final class MapSaveStrategy extends CatalogExport {
 					editor.setDirty(false);
 				} catch (IOException e) {
 					ProjectUIPlugin.log("failed committing transaction", e); //$NON-NLS-1$
-					MessageDialog.openError(editor.getSite().getShell(), Messages.MapSaveStrategy_error_title, Messages.MapSaveStrategy_error_messages);
+					MessageDialog.openError(null, Messages.MapSaveStrategy_error_title, Messages.MapSaveStrategy_error_messages);
 				}
 				return result;
 			}

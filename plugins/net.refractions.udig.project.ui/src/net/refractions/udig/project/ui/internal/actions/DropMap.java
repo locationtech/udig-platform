@@ -27,6 +27,7 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.LayersView;
 import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.ui.IDropAction;
@@ -75,7 +76,7 @@ public class DropMap extends IDropAction {
                 return false;
             }
             // layer droppe in map if special too
-            if( getData() instanceof ILayer && getDestination() instanceof MapEditor){
+            if( getData() instanceof ILayer && getDestination() instanceof MapEditorPart){
                 return false;
             }
             

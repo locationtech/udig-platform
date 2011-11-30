@@ -7,12 +7,12 @@ import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
 
 public class ToolManagerTest extends TestCase {
 
     private Map map;
-    private MapEditor editor;
+    private MapEditorPart editor;
 
     protected void setUp() throws Exception {
         super.setUp();

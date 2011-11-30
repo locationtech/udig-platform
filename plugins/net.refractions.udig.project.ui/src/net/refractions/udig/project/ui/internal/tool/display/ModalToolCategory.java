@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.MapEditor;
 import net.refractions.udig.project.ui.internal.MapEditorSelectionProvider;
+import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.IToolManager;
@@ -172,10 +172,12 @@ public class ModalToolCategory extends ToolCategory {
         protected void runCurrentTool( ) {
             super.runCurrentTool();
             IMapEditorSelectionProvider provider = ((ToolProxy)currentTool).getSelectionProvider();
-            MapEditor editor = ApplicationGISInternal.getActiveEditor();
-            if( editor!=null && editor.getSite()!=null && provider!=editor.getSite().getSelectionProvider() )
+            MapPart editor = ApplicationGISInternal.getActiveEditor();
+            
+            //if( editor!=null && editor.getSite()!=null && provider!=editor.getSite().getSelectionProvider() )
+            if( editor != null ){
                 editor.setSelectionProvider(provider);
-
+            }
         }
         
         /**
