@@ -12,15 +12,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.ui.boundary;
+package net.refractions.udig.ui.aoi;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.boundary.BoundaryListener;
-import net.refractions.udig.boundary.BoundaryProxy;
-import net.refractions.udig.boundary.IBoundaryService;
-import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.aoi.AOIListener;
+import net.refractions.udig.aoi.AOIProxy;
+import net.refractions.udig.aoi.IAOIService;
+import net.refractions.udig.aoi.IAOIStrategy;
 import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.ui.PlatformGIS;
 
@@ -47,34 +47,34 @@ import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
 
 /**
- * Allows a user to select the BoundaryStrategy to define the boundary
+ * Allows a user to select the AOIStrategy to define the AOI (Area of Interest)
  * <p>
- * This view processes the "boundary" extension point in order to obtain the list of options to
- * display to the user. Each boundary may optionally provide a "page" used to further refine the
- * limit used for the boundary.
+ * This view processes the "AOI" extension point in order to obtain the list of options to
+ * display to the user. Each AOIStrategy may optionally provide a "page" used to further refine the
+ * limit used for the AOI.
  * 
  * @author pfeiffp
  * @sinve 1.3.0
  */
-public class BoundaryView extends ViewPart {
+public class AOIView extends ViewPart {
 
     /**
-     * Listens to the global IBoundaryService and updates our view if anything changes!
+     * Listens to the global IAOIService and updates our view if anything changes!
      */
-    private BoundaryListener serviceWatcher = new BoundaryListener(){
-        // private IBoundaryStrategy selectedStrategy = null;
-        public void handleEvent( BoundaryListener.Event event ) {
-            final BoundaryListener.Event boundaryEvent = event;
+    private AOIListener serviceWatcher = new AOIListener(){
+        // private IAOIStrategy selectedStrategy = null;
+        public void handleEvent( AOIListener.Event event ) {
+            final AOIListener.Event aoiEvent = event;
             // must be run in the UI thread to be able to call setSelected
             PlatformGIS.asyncInDisplayThread(new Runnable(){
                 
                 @Override
                 public void run() {
-                    BoundaryProxy currentStrategy;
-                    if (boundaryEvent.source instanceof BoundaryProxy) {
-                        currentStrategy = (BoundaryProxy) boundaryEvent.source;
+                    AOIProxy currentStrategy;
+                    if (aoiEvent.source instanceof AOIProxy) {
+                        currentStrategy = (AOIProxy) aoiEvent.source;
                     } else {
-                        currentStrategy = PlatformGIS.getBoundaryService().getProxy();
+                        currentStrategy = PlatformGIS.getAOIService().getProxy();
                     }
                     setSelected(currentStrategy);            
                     
@@ -87,36 +87,36 @@ public class BoundaryView extends ViewPart {
     private ComboViewer comboViewer;
 
     /**
-     * Listens to the user and changes the global IBoundaryService to the indicated strategy.
+     * Listens to the user and changes the global IAOIService to the indicated strategy.
      */
     private ISelectionChangedListener comboListener = new ISelectionChangedListener(){
         @Override
         public void selectionChanged( SelectionChangedEvent event ) {
             IStructuredSelection selectedStrategy = (IStructuredSelection) event.getSelection();
-            BoundaryProxy selected = (BoundaryProxy) selectedStrategy.getFirstElement();
+            AOIProxy selected = (AOIProxy) selectedStrategy.getFirstElement();
             
-            publishBoundaryStrategy(selected);
+            publishAOIStrategy(selected);
         }
     };
 
     private PageBook pagebook;
-    private Map<BoundaryProxy,PageRecord> pages = new HashMap<BoundaryProxy, PageRecord>();
+    private Map<AOIProxy,PageRecord> pages = new HashMap<AOIProxy, PageRecord>();
 
     private Composite placeholder;
     
     //private List<IPageBookViewPage> pages = new ArrayList<IPageBookViewPage>();
-    //private Map<BoundaryProxy,Control> controls = new HashMap<BoundaryProxy, Control>();
+    //private Map<AOIProxy,Control> controls = new HashMap<AOIProxy, Control>();
 
     /**
-     * Boundary View constructor adds the known strategies
+     * AOI View constructor adds the known strategies
      */
-    public BoundaryView() {
+    public AOIView() {
     }
     
 
-    private void publishBoundaryStrategy( BoundaryProxy selected ) {
-        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        boundaryService.setProxy(selected);
+    private void publishAOIStrategy( AOIProxy selected ) {
+        IAOIService aOIService = PlatformGIS.getAOIService();
+        aOIService.setProxy(selected);
     }
     
     /**
@@ -124,9 +124,9 @@ public class BoundaryView extends ViewPart {
      * 
      * @param selected
      */
-    public void setSelected( BoundaryProxy selected ) {
+    public void setSelected( AOIProxy selected ) {
         if (selected == null) {
-            selected = PlatformGIS.getBoundaryService().getDefault();
+            selected = PlatformGIS.getAOIService().getDefault();
         }
         
         boolean disposed = comboViewer.getControl().isDisposed();
@@ -135,7 +135,7 @@ public class BoundaryView extends ViewPart {
             return; // the view has shutdown!
         }
         
-        BoundaryProxy current = getSelected();
+        AOIProxy current = getSelected();
         // check combo
         if (current != selected) {
             try {
@@ -191,7 +191,7 @@ public class BoundaryView extends ViewPart {
                 content.setLayout(new FillLayout());
     
                 Label label = new Label( content, SWT.LEFT | SWT.TOP | SWT.WRAP );
-                label.setText("Current boundary used for filtering content.");
+                label.setText("Current Area of Interest used for filtering content.");
                 
                 placeholder = content;
             }
@@ -205,14 +205,14 @@ public class BoundaryView extends ViewPart {
         }
     }
     /**
-     * Access the IBoundaryStrategy selected by the user
+     * Access the IAOIStrategy selected by the user
      * 
-     * @return IBoundaryStrategy selected by the user
+     * @return IAOIStrategy selected by the user
      */
-    public BoundaryProxy getSelected() {
+    public AOIProxy getSelected() {
         if (comboViewer.getSelection() instanceof IStructuredSelection) {
             IStructuredSelection selection = (IStructuredSelection) comboViewer.getSelection();
-            return (BoundaryProxy) selection.getFirstElement();
+            return (AOIProxy) selection.getFirstElement();
         }
         return null;
     }
@@ -229,11 +229,11 @@ public class BoundaryView extends ViewPart {
     }
 
     protected void listenService( boolean listen ) {
-        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        IAOIService aOIService = PlatformGIS.getAOIService();
         if (listen) {
-            boundaryService.addListener(serviceWatcher);
+            aOIService.addListener(serviceWatcher);
         } else {
-            boundaryService.removeListener(serviceWatcher);
+            aOIService.removeListener(serviceWatcher);
         }
     }
 
@@ -243,10 +243,10 @@ public class BoundaryView extends ViewPart {
         
         // this is where you read your memento to remember
         // anything the user told you from last time
-        // this.addBoundaryStrategy();
+        // this.addAOIStrategy();
         if( memento != null ){
-//            String id = memento.getString("boundary");
-//            IBoundaryService service = PlatformGIS.getBoundaryService();
+//            String id = memento.getString("AOI");
+//            IAOIService service = PlatformGIS.getAOIService();
 //            this.initialStrategy = service.findProxy(id);
         }
     }
@@ -255,10 +255,10 @@ public class BoundaryView extends ViewPart {
     public void saveState( IMemento memento ) {
         super.saveState(memento);
         
-        IBoundaryService service = PlatformGIS.getBoundaryService();
+        IAOIService service = PlatformGIS.getAOIService();
         String id = service.getProxy().getId();
         
-        memento.putString("boundary", id );
+        memento.putString("AOI", id );
     }
 
     @Override
@@ -268,10 +268,10 @@ public class BoundaryView extends ViewPart {
         parent.setLayout(layout);
         Label label = new Label(parent, SWT.LEFT);
         label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
-        label.setText("Boundary: ");
+        label.setText("Area of Interest: ");
 
         // get the current strategy
-        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        IAOIService aOIService = PlatformGIS.getAOIService();
         listenService(true);
 
         // eclipse combo viewer
@@ -280,18 +280,18 @@ public class BoundaryView extends ViewPart {
         comboViewer.setLabelProvider(new LabelProvider(){
             @Override
             public String getText( Object element ) {
-                if (element instanceof IBoundaryStrategy) {
-                    IBoundaryStrategy comboStrategy = (IBoundaryStrategy) element;
+                if (element instanceof IAOIStrategy) {
+                    IAOIStrategy comboStrategy = (IAOIStrategy) element;
                     return comboStrategy.getName();
                 }
                 return super.getText(element);
             }
         });
-        comboViewer.setInput(boundaryService.getProxyList());
+        comboViewer.setInput(aOIService.getProxyList());
         // set the current strategy
-        BoundaryProxy proxy = boundaryService.getProxy();
+        AOIProxy proxy = aOIService.getProxy();
         if (proxy == null) {
-            proxy = boundaryService.getDefault();
+            proxy = aOIService.getDefault();
         }
         comboViewer.setSelection(new StructuredSelection(proxy));
 
@@ -326,9 +326,9 @@ public class BoundaryView extends ViewPart {
             comboViewer.removeSelectionChangedListener(comboListener);
         }
         if (serviceWatcher != null) {
-            IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-            if (boundaryService != null) {
-                boundaryService.removeListener(serviceWatcher);
+            IAOIService aOIService = PlatformGIS.getAOIService();
+            if (aOIService != null) {
+                aOIService.removeListener(serviceWatcher);
             }
             serviceWatcher = null;
         }

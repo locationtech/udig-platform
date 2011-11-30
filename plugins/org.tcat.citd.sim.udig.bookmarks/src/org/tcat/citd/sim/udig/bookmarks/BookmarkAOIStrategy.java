@@ -14,8 +14,8 @@
  */
 package org.tcat.citd.sim.udig.bookmarks;
 
-import net.refractions.udig.boundary.BoundaryListener;
-import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.aoi.AOIListener;
+import net.refractions.udig.aoi.IAOIStrategy;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -24,14 +24,14 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
 /**
- * Advertise the currently selected bookmark as a Boundary for use in
+ * Advertise the currently selected bookmark as a AOI (Area of Interest) for use in
  * catalog services and others.
  * 
  * @author paul.pfeiffer
  * @version 1.3.0
  */
-public class BookmarkBoundaryStrategy extends IBoundaryStrategy {
-    public static String ID = "org.tcat.citd.sim.udig.bookmarks.boundary";
+public class BookmarkAOIStrategy extends IAOIStrategy {
+    public static String ID = "org.tcat.citd.sim.udig.bookmarks.bookmarkAOIStrategy";
     
     private IBookmark currentBookmark = null;
     
@@ -81,7 +81,7 @@ public class BookmarkBoundaryStrategy extends IBoundaryStrategy {
         if (!bookmark.equals(currentBookmark)) {
             currentBookmark = bookmark;
             // notify everything that is listening for a strategy change
-            this.notifyListeners( new BoundaryListener.Event(this));
+            this.notifyListeners( new AOIListener.Event(this));
         }
     }
 

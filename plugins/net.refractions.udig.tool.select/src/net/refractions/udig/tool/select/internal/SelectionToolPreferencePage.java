@@ -34,8 +34,8 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 public class SelectionToolPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
     
-    public static final String ZOOM_TO_SELECTION = "boundaryZoomToSelection"; //$NON-NLS-1$
-    public static final String NAVIGATE_SELECTION = "boundaryNavigateSelection"; //$NON-NLS-1$
+    public static final String ZOOM_TO_SELECTION = "aoiZoomToSelection"; //$NON-NLS-1$
+    public static final String NAVIGATE_SELECTION = "aoiNavigateSelection"; //$NON-NLS-1$
 
 //    private BooleanFieldEditor zoomToSelection;
     private BooleanFieldEditor navigateSelection;
@@ -51,9 +51,9 @@ public class SelectionToolPreferencePage extends FieldEditorPreferencePage imple
     @Override
     protected void createFieldEditors() {
         
-        Label boundarySelection = new Label (getFieldEditorParent(), SWT.HORIZONTAL | SWT.BOLD | SWT.TITLE);
-        boundarySelection.setText(Messages.Group_Boundary);
-        boundarySelection.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING | GridData.FILL_HORIZONTAL));
+        Label aoiSelection = new Label (getFieldEditorParent(), SWT.HORIZONTAL | SWT.BOLD | SWT.TITLE);
+        aoiSelection.setText(Messages.Group_AOI);
+        aoiSelection.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING | GridData.FILL_HORIZONTAL));
         
 //        zoomToSelection = new BooleanFieldEditor(ZOOM_TO_SELECTION, Messages.Zoom_To_Selection, getFieldEditorParent());
 //        addField(zoomToSelection);

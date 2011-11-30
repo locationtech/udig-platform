@@ -14,7 +14,7 @@
  */
 package eu.udig.omsbox.processingregion;
 
-import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.aoi.IAOIStrategy;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IStyleBlackboard;
 
@@ -27,12 +27,12 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import eu.udig.omsbox.OmsBoxPlugin;
 
 /**
- * Strategy to provide a Boundary from the processing region
+ * Strategy to provide an AOI (Area of Interest) from the processing region
  * 
  * @author paul.pfeiffer
  * @version 1.3.0
  */
-public class ProcessingRegionBoundaryStrategy extends IBoundaryStrategy {
+public class ProcessingRegionAOIStrategy extends IAOIStrategy {
 
     private static String name = "Processing Region";
     

@@ -12,19 +12,19 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.internal.boundary;
+package net.refractions.udig.internal.aoi;
 
-import net.refractions.udig.boundary.IBoundaryService;
+import net.refractions.udig.aoi.IAOIService;
 
 import org.eclipse.ui.services.AbstractServiceFactory;
 import org.eclipse.ui.services.IServiceLocator;
 
 /**
- * Responsible for creating our internal BoundaryServiceImpl.
+ * Responsible for creating our internal AOIServiceImpl (Area of Interest).
  * 
  * @author pfeiffp
  */
-public class BoundaryServiceFactory extends AbstractServiceFactory {
+public class AOIServiceFactory extends AbstractServiceFactory {
 
     /*
      * (non-Javadoc)
@@ -32,11 +32,11 @@ public class BoundaryServiceFactory extends AbstractServiceFactory {
      * org.eclipse.ui.services.IServiceLocator, org.eclipse.ui.services.IServiceLocator)
      */
     @Override
-    public IBoundaryService create( Class serviceInterface, IServiceLocator parentLocator,
+    public IAOIService create( Class serviceInterface, IServiceLocator parentLocator,
             IServiceLocator locator ) {
 
-        if (IBoundaryService.class.equals(serviceInterface)) {
-            return new BoundaryServiceImpl();
+        if (IAOIService.class.equals(serviceInterface)) {
+            return new AOIServiceImpl();
         }
 
         return null;

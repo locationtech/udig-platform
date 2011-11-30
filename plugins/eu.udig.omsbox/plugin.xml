@@ -90,10 +90,10 @@
             name="Processing Region">
       </mapGraphic>
       <mapGraphic
-            class="eu.udig.omsbox.processingregion.BoundaryLayerDecorator"
-            icon="icons/boundary_mode.png"
-            id="eu.udig.omsbox.processingregion.boundaryLayerDecorator"
-            name="Boundary">
+            class="eu.udig.omsbox.processingregion.AOILayerDecorator"
+            icon="icons/aoi_mode.png"
+            id="eu.udig.omsbox.processingregion.aoiLayerDecorator"
+            name="Area of Interest">
       </mapGraphic>
    </extension>
    <extension
@@ -140,11 +140,11 @@
       </toolCursor>
    </extension>
    <extension
-         point="net.refractions.udig.ui.boundary">
-      <boundary
-            class="eu.udig.omsbox.processingregion.ProcessingRegionBoundaryStrategy"
-            id="eu.udig.omsbox.processingregion.boundary"
+         point="net.refractions.udig.ui.aoi">
+      <aoi
+            class="eu.udig.omsbox.processingregion.ProcessingRegionAOIStrategy"
+            id="eu.udig.omsbox.processingregion.aoi"
             name="Processing Region">
-      </boundary>
+      </aoi>
    </extension>
 </plugin>

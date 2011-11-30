@@ -12,9 +12,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.internal.boundary;
+package net.refractions.udig.internal.aoi;
 
-import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.aoi.IAOIStrategy;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -26,7 +26,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * @author pfeiffp
  *
  */
-public class BoundaryStrategyAll extends IBoundaryStrategy {
+public class AOIStrategyAll extends IAOIStrategy {
 
 	private static String name = "All";
 	

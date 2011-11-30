@@ -24,8 +24,8 @@ import java.util.Collections;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
-import net.refractions.udig.boundary.BoundaryListener;
-import net.refractions.udig.boundary.IBoundaryService;
+import net.refractions.udig.aoi.AOIListener;
+import net.refractions.udig.aoi.IAOIService;
 import net.refractions.udig.mapgraphic.MapGraphic;
 import net.refractions.udig.mapgraphic.MapGraphicContext;
 import net.refractions.udig.project.ILayer;
@@ -41,29 +41,29 @@ import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * <p>
- * Class representing the rendered Boundary
+ * Class representing the rendered AOI (Area of Interest)
  * </p>
  * 
  * @author paul.pfeiffer
  * @version 1.3.0
  */
-public class BoundaryLayerDecorator implements MapGraphic {
+public class AOILayerDecorator implements MapGraphic {
 
-    public static final String ID = "eu.udig.omsbox.processingregion.boundaryLayerDecorator";
+    public static final String ID = "eu.udig.omsbox.processingregion.aoiLayerDecorator";
 
-    public BoundaryLayerDecorator() {
+    public AOILayerDecorator() {
     }
 
     /*
-     * Listens to the global IBoundaryService and updates the decorator if anything changes!
+     * Listens to the global IAOIService and updates the decorator if anything changes!
      */
-    private BoundaryListener serviceWatcher = new BoundaryListener(){
+    private AOIListener serviceWatcher = new AOIListener(){
         
-        public void handleEvent( BoundaryListener.Event event ) {
+        public void handleEvent( AOIListener.Event event ) {
             ReferencedEnvelope view = ApplicationGIS.getActiveMap().getViewportModel().getBounds();
             
             for (ILayer layer: ApplicationGIS.getActiveMap().getMapLayers()) {
-                if (layer.findGeoResource(BoundaryLayerDecorator.class) != null) {
+                if (layer.findGeoResource(AOILayerDecorator.class) != null) {
                     ApplicationGIS.getActiveMap().getRenderManager().refresh(layer, view);
                 }
             }
@@ -71,11 +71,11 @@ public class BoundaryLayerDecorator implements MapGraphic {
     };
 
     protected void listenService( boolean listen ) {
-        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        IAOIService aOIService = PlatformGIS.getAOIService();
         if (listen) {
-            boundaryService.addListener(serviceWatcher);
+            aOIService.addListener(serviceWatcher);
         } else {
-            boundaryService.removeListener(serviceWatcher);
+            aOIService.removeListener(serviceWatcher);
         }
     }
 
@@ -98,9 +98,9 @@ public class BoundaryLayerDecorator implements MapGraphic {
 
         Dimension screen = context.getMapDisplay().getDisplaySize();
 
-        // get the boundary
-        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        Geometry multiGeometry = boundaryService.getGeometry();
+        // get the AOI
+        IAOIService aOIService = PlatformGIS.getAOIService();
+        Geometry multiGeometry = aOIService.getGeometry();
         if (multiGeometry != null) {
         
             Geometry innerPolygons = null; 

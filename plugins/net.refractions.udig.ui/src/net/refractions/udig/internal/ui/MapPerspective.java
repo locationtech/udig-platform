@@ -53,7 +53,7 @@ public class MapPerspective implements IPerspectiveFactory {
         IFolderLayout folder = layout.createFolder("net.refractions.udig.mapPerspective.selection", IPageLayout.BOTTOM, 0.25f, //$NON-NLS-1$
                 "net.refractions.udig.project.ui.projectExplorer");
         folder.addView("net.refractions.udig.project.ui.layerManager");
-        folder.addView("net.refractions.udig.ui.viewBoundary");
+        folder.addView("net.refractions.udig.ui.aoiView");
         
         layout.addView("net.refractions.udig.catalog.ui.CatalogView", IPageLayout.BOTTOM, 0.65f, editorArea);         //$NON-NLS-1$
         layout.addActionSet("net.refractions.udig.helpMenuItems");
