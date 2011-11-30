@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import net.refractions.udig.boundary.IBoundaryService;
+import net.refractions.udig.aoi.IAOIService;
 import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.ui.internal.Messages;
 
@@ -439,9 +439,13 @@ public class PlatformGIS {
         }
     }
     
-    public static IBoundaryService getBoundaryService() {
+    /**
+     * Gets the Area of Interest workbench service
+     * @return
+     */
+    public static IAOIService getAOIService() {
         IWorkbench workbench = PlatformUI.getWorkbench();
-        return (IBoundaryService) workbench.getService(IBoundaryService.class);
+        return (IAOIService) workbench.getService(IAOIService.class);
     }
     
 }

@@ -3,12 +3,12 @@
 <schema targetNamespace="net.refractions.udig.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.ui" id="boundary" name="Boundary"/>
+         <meta.schema plugin="net.refractions.udig.ui" id="aoi" name="Area of Interest"/>
       </appInfo>
       <documentation>
-         Define a new boundary to be used application wide as a limit. The use of the current boundary is context specific examples include as a target for Zoom To Extent or as a filter when displaying features in a TableView.
+         Define a new Area of Interest to be used application wide as a limit. The use of the current AOI is context specific examples include as a target for Zoom To Extent or as a filter when displaying features in a TableView.
 
-Use of the boundary is optional and placed under use control; the default value is considered to be All resulting in no boundary being defined.
+Use of the AOI is optional and placed under use control; the default value is considered to be All resulting in no AOI being defined.
       </documentation>
    </annotation>
 
@@ -20,7 +20,7 @@ Use of the boundary is optional and placed under use control; the default value 
       </annotation>
       <complexType>
          <sequence>
-            <element ref="boundary" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="aoi" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -32,14 +32,14 @@ Use of the boundary is optional and placed under use control; the default value 
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-                  identifier of boundary contribution used in log messages
+                  identifier of Area of Interest contribution used in log messages
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  Human readible name of Boundary Contribution may be used in displayed error messages
+                  Human readible name of Area of Interest Contribution may be used in displayed error messages
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -49,10 +49,10 @@ Use of the boundary is optional and placed under use control; the default value 
       </complexType>
    </element>
 
-   <element name="boundary">
+   <element name="aoi">
       <annotation>
          <documentation>
-            Boundary used as an optional limit for search, feature display and zoom to extent.
+            Area of Interest used as an optional limit for search, feature display and zoom to extent.
          </documentation>
       </annotation>
       <complexType>
@@ -66,7 +66,7 @@ Use of the boundary is optional and placed under use control; the default value 
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
-                  Boundary name displayed to a user in for example the BoundaryView.
+                  Area of Interest name displayed to a user in for example the AOIView.
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -76,17 +76,17 @@ Use of the boundary is optional and placed under use control; the default value 
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  Implementation of IBoundaryStrategy used to supply a ReferencedEnvelope to any operations that require it.
+                  Implementation of IAOIStrategy used to supply a ReferencedEnvelope to any operations that require it.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.boundary.IBoundaryStrategy:"/>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.aoi.IAOIStrategy:"/>
                </appInfo>
             </annotation>
          </attribute>
          <attribute name="page" type="string">
             <annotation>
                <documentation>
-                  Optional Page to be displayed in the Boundary View (or as a pop up) if the user wishes to configure the details of the current boundary.
+                  Optional Page to be displayed in the AOI View (or as a pop up) if the user wishes to configure the details of the current Area of Interest.
 
 We make use of IPageBookViewPage although the abstract class Page is a recommended starting place.
                </documentation>
@@ -112,12 +112,12 @@ We make use of IPageBookViewPage although the abstract class Page is a recommend
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         We have a couple good examples if you would like to review some sample code before getting started: BoundaryStrategyScreen, BoundaryStrategyMapCrs and BoundaryStrategyAll.
+         We have a couple good examples if you would like to review some sample code before getting started: ScreenAOIStrategy, MapCrsAOIStrategy and AOIStrategyAll.
 
-To use the current boundary you can make use of the workbench BoundaryService as follows:
+To use the current AOI you can make use of the workbench AOIService as follows:
 &lt;pre&gt;
-IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-ReferencedEnvelope extent = boundaryService.getExtent();
+IAOIService aoiService = PlatformGIS.getAOIService();
+ReferencedEnvelope extent = aoiService.getExtent();
 &lt;/pre&gt;
       </documentation>
    </annotation>
@@ -127,7 +127,7 @@ ReferencedEnvelope extent = boundaryService.getExtent();
          <meta.section type="apiinfo"/>
       </appInfo>
       <documentation>
-         Contributors are asked to porvide an implementation of IBoundaryStrategy; as an option they may also provide a Page for futher confiuration options.
+         Contributors are asked to porvide an implementation of IAOIStrategy; as an option they may also provide a Page for futher confiuration options.
       </documentation>
    </annotation>
 

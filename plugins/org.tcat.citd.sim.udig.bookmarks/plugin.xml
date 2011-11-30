@@ -125,12 +125,12 @@
       </serviceFactory>
    </extension>
    <extension
-         point="net.refractions.udig.ui.boundary">
-      <boundary
-            class="org.tcat.citd.sim.udig.bookmarks.BookmarkBoundaryStrategy"
-            id="org.tcat.citd.sim.udig.bookmarks.boundary"
+         point="net.refractions.udig.ui.aoi">
+      <aoi
+            class="org.tcat.citd.sim.udig.bookmarks.BookmarkAOIStrategy"
+            id="org.tcat.citd.sim.udig.bookmarks.bookmarkAOIStrategy"
             name="Bookmark"
-            page="org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarkBoundaryPage">
-      </boundary>
+            page="org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarkAOIPage">
+      </aoi>
    </extension>
 </plugin>

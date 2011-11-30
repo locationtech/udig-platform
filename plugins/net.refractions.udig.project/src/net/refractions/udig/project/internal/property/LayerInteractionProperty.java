@@ -16,7 +16,7 @@ import net.refractions.udig.ui.operations.PropertyValue;
  * <li>INFO: interaction_information</li>
  * <li>SELECT: interaction_select</li>
  * <li>EDIT: interaction_edit</li>
- * <li>BOUNDARY: interaction_boundary</li>
+ * <li>AOI: interaction_aoi</li>
  * </ul>
  * @author Jody Garnett (LISAsoft)
  * @since 1.3.0

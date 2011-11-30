@@ -12,9 +12,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.project.ui.internal.boundary;
+package net.refractions.udig.project.ui.internal.aoi;
 
-import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.aoi.IAOIStrategy;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.ApplicationGIS;
 
@@ -37,7 +37,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
  * @author pfeiffp
  *
  */
-public class BoundaryStrategyMapCrs extends IBoundaryStrategy {
+public class MapCrsAOIStrategy extends IAOIStrategy {
 
 	private static String name = "Map CRS";
 	

@@ -12,10 +12,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.project.ui.internal.boundary;
+package net.refractions.udig.project.ui.internal.aoi;
 
-import net.refractions.udig.boundary.BoundaryListener;
-import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.aoi.AOIListener;
+import net.refractions.udig.aoi.IAOIStrategy;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.render.IViewportModelListener;
@@ -35,27 +35,27 @@ import com.vividsolutions.jts.geom.GeometryFactory;
  * @author pfeiffp
  *
  */
-public class BoundaryStrategyScreen extends IBoundaryStrategy {
+public class ScreenAOIStrategy extends IAOIStrategy {
 
 	private static String name = "Screen";
 	
     protected IViewportModelListener watcher = new IViewportModelListener(){
         @Override
         public void changed( ViewportModelEvent viewportEvent ) {
-            BoundaryListener.Event boundaryEvent = new BoundaryListener.Event( BoundaryStrategyScreen.this);            
+            AOIListener.Event aoiEvent = new AOIListener.Event( ScreenAOIStrategy.this);            
             if( viewportEvent.getType() == ViewportModelEvent.EventType.BOUNDS ){                
-                boundaryEvent.bounds = (ReferencedEnvelope) viewportEvent.getNewValue();
+                aoiEvent.bounds = (ReferencedEnvelope) viewportEvent.getNewValue();
             }
             else {
-                boundaryEvent.bounds = viewportEvent.getSource().getBounds();
+                aoiEvent.bounds = viewportEvent.getSource().getBounds();
             }
-            notifyListeners( boundaryEvent);
+            notifyListeners( aoiEvent);
         }
     };
     
     
     
-	public BoundaryStrategyScreen() {
+	public ScreenAOIStrategy() {
 	    listenToViewport();
 	}
 	

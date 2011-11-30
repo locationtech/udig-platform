@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.boundary;
+package net.refractions.udig.aoi;
 
 import net.refractions.udig.internal.ui.UiPlugin;
 
@@ -27,26 +27,26 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * Allows lazy loading of IBoundaryStrategy (with extra information from the extension
- * point such as name and title.
+ * Allows lazy loading of IAOIStrategy (Area of Interest)
+ * Has extra information from the extension point such as name and title.
  * <p>
- * Note this is a true proxy implementing IBoundaryStrategy; it does provide additional information
- * in the form of {@link #getId()} which may be used as an identifier when refering to a boundary strategy.
+ * Note this is a true proxy implementing IAOIStrategy; it does provide additional information
+ * in the form of {@link #getId()} which may be used as an identifier when refering to an AOI strategy.
  * 
  * @author Paul
  * @since 1.3.0
  */
-public class BoundaryProxy extends IBoundaryStrategy {
+public class AOIProxy extends IAOIStrategy {
 
     /**
-     * Configuration from extension registry for this boundary strategy
+     * Configuration from extension registry for this AOI strategy
      */
     private IConfigurationElement configElement = null;
     
     /**
-     * Boundary strategy to be lazy loaded
+     * AOI strategy to be lazy loaded
      */
-    private IBoundaryStrategy strategy = null;
+    private IAOIStrategy strategy = null;
 
     /** Identifier provided by the configuration element id attribute */
     private String id;
@@ -54,9 +54,9 @@ public class BoundaryProxy extends IBoundaryStrategy {
     /**
      * Creates a new instance of the 
      * 
-     * @param config The configuration of the boundary strategy
+     * @param config The configuration of the AOI strategy
      */
-    public BoundaryProxy(IConfigurationElement config) {
+    public AOIProxy(IConfigurationElement config) {
         configElement = config;
         id = configElement.getAttribute("id");
     }
@@ -82,13 +82,13 @@ public class BoundaryProxy extends IBoundaryStrategy {
     }
     
     /**
-     * Gets the boundary strategy and creates it if it doesn't exist
-     * @return IBoundaryStrategy
+     * Gets the AOI strategy and creates it if it doesn't exist
+     * @return IAOIStrategy
      */
-    public synchronized IBoundaryStrategy getStrategy(){
+    public synchronized IAOIStrategy getStrategy(){
         if (strategy == null) {
             try {
-                strategy = (IBoundaryStrategy)configElement.createExecutableExtension("class");
+                strategy = (IAOIStrategy)configElement.createExecutableExtension("class");
             } catch (CoreException e) {
                 String name = configElement.getAttribute("class");
                 blame( "Strategy "+name+" not available ("+id+")", e );
@@ -141,18 +141,18 @@ public class BoundaryProxy extends IBoundaryStrategy {
         return id;
     }
 
-    public void addListener( BoundaryListener listener ) {
+    public void addListener( AOIListener listener ) {
         getStrategy().addListener(listener);
     }
 
-    public void removeListener( BoundaryListener listener ) {
+    public void removeListener( AOIListener listener ) {
         getStrategy().removeListener(listener);
     }
     
     /**
      * Notifies listener that the value of the filter has changed.
      */
-    protected void notifyListeners(BoundaryListener.Event changed) {
+    protected void notifyListeners(AOIListener.Event changed) {
         getStrategy().notifyListeners(changed);
     }
 
@@ -172,7 +172,7 @@ public class BoundaryProxy extends IBoundaryStrategy {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        BoundaryProxy other = (BoundaryProxy) obj;
+        AOIProxy other = (AOIProxy) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

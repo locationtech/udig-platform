@@ -17,10 +17,10 @@ package net.refractions.udig.tool.select.internal;
 
 import java.util.List;
 
-import net.refractions.udig.boundary.BoundaryListener;
-import net.refractions.udig.boundary.BoundaryProxy;
-import net.refractions.udig.boundary.IBoundaryService;
-import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.aoi.AOIListener;
+import net.refractions.udig.aoi.AOIProxy;
+import net.refractions.udig.aoi.IAOIService;
+import net.refractions.udig.aoi.IAOIStrategy;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.ui.PlatformGIS;
 
@@ -39,44 +39,44 @@ import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.Page;
 
 /**
- * A page to add to the Boundary View used for additional configuration of the boundary.
+ * A page to add to the AOI View (Area of Interest) used for additional configuration of the AOI.
  * <p>
- * Has a combo to select a BoundaryLayer from and displays the current boundary/s selected. 
+ * Has a combo to select a AOILayer from and displays the current AOI/s selected. 
  * 
  * @author paul.pfeiffer
  * @version 1.3.0
  */
-public class BoundaryLayerPage extends Page {
+public class AOILayerPage extends Page {
 
     private Composite page;
-    private BoundaryProxy strategy;
+    private AOIProxy strategy;
     private ComboViewer comboViewer;
 //    private ListViewer listViewer;
     
-    private static String BOUNDARY_LAYER_ID = "net.refractions.udig.tool.default.BoundaryLayerService";
+    private static String AOI_LAYER_ID = "net.refractions.udig.tool.select.internal.aoiLayer";
 
     private ISelectionChangedListener comboListener = new ISelectionChangedListener(){
         @Override
         public void selectionChanged( SelectionChangedEvent event ) {
             IStructuredSelection selectedLayer = (IStructuredSelection) event.getSelection();
             ILayer selected = (ILayer) selectedLayer.getFirstElement();
-            getBoundaryLayerStrategy().setActiveLayer(selected);
+            getAOILayerStrategy().setActiveLayer(selected);
         }
     };
 
     /*
-     * Listens to the boundaryLayerStrategy and updates our view if anything changes!
+     * Listens to the AOILayerStrategy and updates our view if anything changes!
      */
-    private BoundaryListener layerWatcher = new BoundaryListener(){
+    private AOIListener layerWatcher = new AOIListener(){
         
-        public void handleEvent( BoundaryListener.Event event ) {
+        public void handleEvent( AOIListener.Event event ) {
             // must be run in the UI thread to be able to call setSelected
             PlatformGIS.asyncInDisplayThread(new Runnable(){
                 
                 @Override
                 public void run() {
-                    ILayer activeLayer = getBoundaryLayerStrategy().getActiveLayer();
-                    List<ILayer> layers = getBoundaryLayerStrategy().getBoundaryLayers();
+                    ILayer activeLayer = getAOILayerStrategy().getActiveLayer();
+                    List<ILayer> layers = getAOILayerStrategy().getAOILayers();
                     if( comboViewer == null || comboViewer.getControl() == null || comboViewer.getControl().isDisposed()){
                         return; // we are shut down or hidden
                     }
@@ -88,14 +88,14 @@ public class BoundaryLayerPage extends Page {
                     else {
                         setSelected(null);
                     }
-//                    listViewer.setInput(getBoundaryLayerStrategy().getFeatures());
+//                    listViewer.setInput(getAOILayerStrategy().getFeatures());
                 }
             }, true);
         }
         
     };
 
-    public BoundaryLayerPage() {
+    public AOILayerPage() {
         // careful don't do any work here
     }
     
@@ -106,15 +106,15 @@ public class BoundaryLayerPage extends Page {
     }
     
     /*
-     * returns a BoundaryLayerStrategy object for quick access
+     * returns a AOILayerStrategy object for quick access
      */
-    private BoundaryLayerStrategy getBoundaryLayerStrategy() {
-        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        IBoundaryStrategy boundaryStrategy = boundaryService.findProxy(BOUNDARY_LAYER_ID)
+    private AOILayerStrategy getAOILayerStrategy() {
+        IAOIService aOIService = PlatformGIS.getAOIService();
+        IAOIStrategy aOIStrategy = aOIService.findProxy(AOI_LAYER_ID)
                 .getStrategy();
 
-        if (boundaryStrategy instanceof BoundaryLayerStrategy) {
-            return (BoundaryLayerStrategy) boundaryStrategy;
+        if (aOIStrategy instanceof AOILayerStrategy) {
+            return (AOILayerStrategy) aOIStrategy;
         }
         return null;
     }
@@ -146,15 +146,15 @@ public class BoundaryLayerPage extends Page {
                 return super.getText(element);
             }
         });
-        List<ILayer> layers = getBoundaryLayerStrategy().getBoundaryLayers();
+        List<ILayer> layers = getAOILayerStrategy().getAOILayers();
         comboViewer.setInput(layers);
         
-        ILayer activeLayer = getBoundaryLayerStrategy().getActiveLayer();
+        ILayer activeLayer = getAOILayerStrategy().getActiveLayer();
         setSelected(activeLayer);
         
         comboViewer.addSelectionChangedListener(comboListener);
         
-//        // list of current Boundary features
+//        // list of current AOI features
 //        Label listLabel = new Label(page, SWT.LEFT);
 //        listLabel.setText("Current Features:");
 //        listLabel.pack();
@@ -182,7 +182,7 @@ public class BoundaryLayerPage extends Page {
 //                return super.getText(element);
 //            }
 //        });
-//        List<SimpleFeature> features = getBoundaryLayerStrategy().getFeatures(); 
+//        List<SimpleFeature> features = getAOILayerStrategy().getFeatures(); 
 //        listViewer.setInput(features);
     }
     
@@ -213,7 +213,7 @@ public class BoundaryLayerPage extends Page {
     }
     
     /*
-     * Get the Boundary Layer selected by the user
+     * Get the AOI Layer selected by the user
      * 
      * @return ILayer selected by the user
      */
@@ -234,11 +234,11 @@ public class BoundaryLayerPage extends Page {
     }
 
     protected void listenStrategy( boolean listen ){
-        BoundaryLayerStrategy boundaryLayerStrategy = getBoundaryLayerStrategy();
+        AOILayerStrategy aOILayerStrategy = getAOILayerStrategy();
         if (listen) {
-            boundaryLayerStrategy.addListener(layerWatcher);
+            aOILayerStrategy.addListener(layerWatcher);
         } else {
-            boundaryLayerStrategy.removeListener(layerWatcher);
+            aOILayerStrategy.removeListener(layerWatcher);
         }
     }
     
