@@ -93,7 +93,7 @@ public class FeatureTypeEditorTest extends TestCase {
         dialog.close();
     }
 
-    public void testLabels() throws Exception {
+    public void labels() throws Exception {
 
         assertTrue(dialog.getShell().isVisible());
 
@@ -108,7 +108,7 @@ public class FeatureTypeEditorTest extends TestCase {
         assertEquals("String", items[1].getText(1)); //$NON-NLS-1$
     }
 
-    public void testCellModifierGetValue() throws Exception {
+    public void XtestCellModifierGetValue() throws Exception {
         TreeViewer testingGetViewer = editor.testingGetViewer();
         testingGetViewer.editElement(featureType.getDescriptor(0), 0);
         testingGetViewer.cancelEditing();
@@ -135,7 +135,7 @@ public class FeatureTypeEditorTest extends TestCase {
         assertEquals(stringindex, cellModifier.getValue(featureType.getDescriptor(1), "1")); //$NON-NLS-1$ 
     }
 
-    public void testCellModifierModify() throws Exception {
+    public void XtestCellModifierModify() throws Exception {
         TreeViewer testingGetViewer = editor.testingGetViewer();
 
         ICellModifier cellModifier = testingGetViewer.getCellModifier();
@@ -161,7 +161,7 @@ public class FeatureTypeEditorTest extends TestCase {
 		return attributeType;
 	}
 
-    public void testGetCreateAttributeAction() throws Exception {
+    public void XtestGetCreateAttributeAction() throws Exception {
         IAction action = editor.getCreateAttributeAction();
 
         assertNotNull( action.getId() );
@@ -182,7 +182,7 @@ public class FeatureTypeEditorTest extends TestCase {
 
     }
 
-    public void testSetFeatureType() throws Exception {
+    public void XtestSetFeatureType() throws Exception {
         editor.setFeatureType(null);
 
         SimpleFeatureTypeBuilder builder = (SimpleFeatureTypeBuilder) editor.testingGetViewer().getInput();
@@ -197,10 +197,10 @@ public class FeatureTypeEditorTest extends TestCase {
         editor.setFeatureType(this.featureType);
         assertEquals(featureTypeName, editor.testingGetNameText().getText() ); 
 
-        testLabels();
+        labels();
     }
 
-    public void testGetDeleteAction() throws Exception {
+    public void XtestGetDeleteAction() throws Exception {
         IAction action = editor.getDeleteAction();
 
         assertNotNull( action.getId() );
@@ -233,7 +233,7 @@ public class FeatureTypeEditorTest extends TestCase {
 
     }
     
-    public void testCreateLabel() throws Exception {
+    public void XtestCreateLabel() throws Exception {
         SimpleFeatureTypeBuilder builder = (SimpleFeatureTypeBuilder) editor.testingGetViewer().getInput();
         
         Text text=editor.testingGetNameText();
@@ -257,9 +257,9 @@ public class FeatureTypeEditorTest extends TestCase {
         assertEquals(new Point(0,text.getText().length()), text.getSelection());
     }
     
-    public void testCloseOpenDialog() throws Exception {
+    public void XtestCloseOpenDialog() throws Exception {
         dialog.close();
         dialog.open();
-        testLabels();
+        labels();
     }
 }
