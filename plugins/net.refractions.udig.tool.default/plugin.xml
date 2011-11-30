@@ -74,7 +74,7 @@
                <not>
                   <property
                         expectedValue="Screen"
-                        propertyId="boundaryStrategy">
+                        propertyId="aoiStrategy">
                   </property>
                </not>
             </enablement>

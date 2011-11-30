@@ -24,13 +24,13 @@ import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * TODO Purpose of 
- * Sets the boundary filter used by the TableView.
+ * Sets the AOI (Area of Interest) filter used by the TableView.
  * 
- * @see TableView.setBoundaryFilter();
+ * @see TableView.setAOIFilter();
  * @author leviputna
  * @since 1.2.0
  */
-public class BoundaryActionDelegate extends Action implements IViewActionDelegate {
+public class AOIActionDelegate extends Action implements IViewActionDelegate {
     
     private TableView view;
     private IStructuredSelection selection;
@@ -73,7 +73,7 @@ public class BoundaryActionDelegate extends Action implements IViewActionDelegat
     
     private void filterTable(boolean filter) {
         if (view != null) {
-            view.setBoundaryFilter(filter);
+            view.setAOIFilter(filter);
         }
     }
 

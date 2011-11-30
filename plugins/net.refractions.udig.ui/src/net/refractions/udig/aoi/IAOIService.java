@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.boundary;
+package net.refractions.udig.aoi;
 
  
 import java.util.List;
@@ -23,21 +23,21 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * Service for the boundary extent with events to indicate when this value is updated by the user.
+ * Service for the AOI (Area of Interest) extent with events to indicate when this value is updated by the user.
  * <p>
- * To determien the current boundary:
+ * To determien the current AOI:
  * <pre>
- * IBoundaryService service = PlatformGIS.getBoundaryService();
+ * IAOIService service = PlatformGIS.getAOIService();
  * ReferencedEnvelope extent = service.getExtent();</pre>
  * 
- * Example of changing the strategy uesd for determining the boundary extent:
+ * Example of changing the strategy uesd for determining the AOI extent:
  * <pre>
- * BoundaryProxy proxy = service.findProxy("net.refractions.udig.ui.boundaryAll");
+ * AOIProxy proxy = service.findProxy("net.refractions.udig.ui.aoiAll");
  * service.setProxy( proxy );</pre>
  * 
  * @author Paul Pfeiffer
  */
-public interface IBoundaryService {
+public interface IAOIService {
 
     /**
      * Get the extent of the current set area
@@ -45,21 +45,21 @@ public interface IBoundaryService {
     public ReferencedEnvelope getExtent();
 
     /**
-     * Sets the current Boundary Strategy that will be used to get extent
+     * Sets the current AOI Strategy that will be used to get extent
      * 
-     * @param boundaryStrategy
+     * @param aoiStrategy
      */
-    public void setProxy( BoundaryProxy boundaryStrategy );
+    public void setProxy( AOIProxy aoiStrategy );
 
     /**
-     * Get the current Boundary Strategy
+     * Get the current AOI Strategy
      * 
-     * @return BoundaryProxy
+     * @return AOIProxy
      */
-    public BoundaryProxy getProxy();
+    public AOIProxy getProxy();
 
     /**
-     * Returns the Geometry of the Boundary
+     * Returns the Geometry of the AOI
      * 
      * @return Geometry
      */
@@ -80,35 +80,35 @@ public interface IBoundaryService {
      * 
      * @param watcher
      */
-    public void addListener( BoundaryListener listener );
+    public void addListener( AOIListener listener );
     /**
      * Remove the provided listener.
      * 
      * @param watcher
      */
-    public void removeListener( BoundaryListener listener );
+    public void removeListener( AOIListener listener );
 
     /**
-     * The boundary strategy to use by default (defaults to "All").
+     * The AOI strategy to use by default (defaults to "All").
      * 
      * @return the strategy to use by default
      */
-    public BoundaryProxy getDefault();
+    public AOIProxy getDefault();
 
     /**
-     * Get the list of BoundaryProxy (you can use getProxy() to access the implementation used if
+     * Get the list of AOIProxy (you can use getProxy() to access the implementation used if
      * you are interested).
      * 
-     * @return the list of BoundaryProxy
+     * @return the list of AOIProxy
      */
-    public List<BoundaryProxy> getProxyList();
+    public List<AOIProxy> getProxyList();
 
     /**
-     * Returns the IBoundaryStrategy with the supplied id.
+     * Returns the IAOIStrategy with the supplied id.
      * 
      * @param id
-     * @return IBoundaryStrategy or null if it cannot be found
+     * @return IAOIStrategy or null if it cannot be found
      */
-    public BoundaryProxy findProxy( String id );
+    public AOIProxy findProxy( String id );
 
 }

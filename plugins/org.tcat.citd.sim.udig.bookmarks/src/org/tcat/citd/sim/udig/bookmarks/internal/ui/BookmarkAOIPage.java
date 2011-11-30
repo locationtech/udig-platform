@@ -18,9 +18,9 @@ package org.tcat.citd.sim.udig.bookmarks.internal.ui;
 import java.util.Collection;
 import java.util.List;
 
-import net.refractions.udig.boundary.BoundaryProxy;
-import net.refractions.udig.boundary.IBoundaryService;
-import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.aoi.AOIProxy;
+import net.refractions.udig.aoi.IAOIService;
+import net.refractions.udig.aoi.IAOIStrategy;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -36,24 +36,24 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.Page;
-import org.tcat.citd.sim.udig.bookmarks.BookmarkBoundaryStrategy;
+import org.tcat.citd.sim.udig.bookmarks.BookmarkAOIStrategy;
 import org.tcat.citd.sim.udig.bookmarks.BookmarkListener;
 import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
 import org.tcat.citd.sim.udig.bookmarks.IBookmark;
 import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
 
 /**
- * A page to add to the Boundary View used for additional configuration of the boundary.
+ * A page to add to the AOI (Area of Interest) View used for additional configuration of the AOI.
  * <p>
- * Idea:add a combo to select a bookmark and use the current bookmark as the boundary. 
+ * Idea:add a combo to select a bookmark and use the current bookmark as the AOI. 
  * 
  * @author jody
  * @version 1.3.0
  */
-public class BookmarkBoundaryPage extends Page {
+public class BookmarkAOIPage extends Page {
 
     private Composite page;
-    private BoundaryProxy strategy;
+    private AOIProxy strategy;
     private ComboViewer comboViewer;
 
     private ISelectionChangedListener comboListener = new ISelectionChangedListener(){
@@ -62,11 +62,11 @@ public class BookmarkBoundaryPage extends Page {
             IStructuredSelection selectedBookmark = (IStructuredSelection) event.getSelection();
             IBookmark selected = (IBookmark) selectedBookmark.getFirstElement();
             
-            IBoundaryService service = PlatformGIS.getBoundaryService();
-            IBoundaryStrategy bookmarkStrategy = service.findProxy(BookmarkBoundaryStrategy.ID).getStrategy();
+            IAOIService service = PlatformGIS.getAOIService();
+            IAOIStrategy bookmarkStrategy = service.findProxy(BookmarkAOIStrategy.ID).getStrategy();
             
-            if (bookmarkStrategy instanceof BookmarkBoundaryStrategy) {
-                ((BookmarkBoundaryStrategy) bookmarkStrategy).setCurrentBookmark(selected);
+            if (bookmarkStrategy instanceof BookmarkAOIStrategy) {
+                ((BookmarkAOIStrategy) bookmarkStrategy).setCurrentBookmark(selected);
             }
         }
     };
@@ -91,7 +91,7 @@ public class BookmarkBoundaryPage extends Page {
                     }
                     else {
                         // this may need to reset the strategy but at this stage 
-                        // the bookmarkBoundaryStrategy holds on to the current bookmark
+                        // the bookmarkAOIStrategy holds on to the current bookmark
                         // even when it is deleted
                         setSelected(null);
                     }
@@ -102,7 +102,7 @@ public class BookmarkBoundaryPage extends Page {
         
     };
 
-    public BookmarkBoundaryPage() {
+    public BookmarkAOIPage() {
         // careful don't do any work here
     }
     
@@ -110,15 +110,15 @@ public class BookmarkBoundaryPage extends Page {
     @Override
     public void init(IPageSite pageSite){
         super.init(pageSite); // provides access to stuff
-        IBoundaryService service = PlatformGIS.getBoundaryService();
-        strategy = service.findProxy(BookmarkBoundaryStrategy.ID);        
+        IAOIService service = PlatformGIS.getAOIService();
+        strategy = service.findProxy(BookmarkAOIStrategy.ID);        
     }
     
-    protected BookmarkBoundaryStrategy getStrategy(){
+    protected BookmarkAOIStrategy getStrategy(){
         if( strategy == null ){
             return null;
         }
-        return (BookmarkBoundaryStrategy) strategy.getStrategy();
+        return (BookmarkAOIStrategy) strategy.getStrategy();
     }
     
 

@@ -6,7 +6,7 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
-import net.refractions.udig.boundary.IBoundaryService;
+import net.refractions.udig.aoi.IAOIService;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.ICatalogInfo;
@@ -335,9 +335,9 @@ public class SearchView extends SearchPart {
         filter.text = text.getText();
         filter.bbox = new Envelope();
         if (bbox.getSelection()) {
-        	IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        	IAOIService aOIService = PlatformGIS.getAOIService();
         	try {
-        		filter.bbox = boundaryService.getExtent();
+        		filter.bbox = aOIService.getExtent();
         	} catch (Throwable t) {
         		CatalogUIPlugin.log("Unable to create search:"+t, t); //$NON-NLS-1$
         	}

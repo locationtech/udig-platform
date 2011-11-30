@@ -18,9 +18,9 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.List;
 
-import net.refractions.udig.boundary.BoundaryListener;
-import net.refractions.udig.boundary.IBoundaryService;
-import net.refractions.udig.boundary.IBoundaryStrategy;
+import net.refractions.udig.aoi.AOIListener;
+import net.refractions.udig.aoi.IAOIService;
+import net.refractions.udig.aoi.IAOIStrategy;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
@@ -29,7 +29,7 @@ import net.refractions.udig.project.ui.tool.AbstractModalTool;
 import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.tool.options.ToolOptionContributionItem;
 import net.refractions.udig.tool.select.SelectPlugin;
-import net.refractions.udig.tool.select.commands.SetBoundaryLayerCommand;
+import net.refractions.udig.tool.select.commands.SetAOILayerCommand;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -48,31 +48,31 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * Provides Boundary Navigation functionality for MapViewport, allows the selection and navigation
- * of background layers that are marked as boundary layers.
+ * Provides AOI Navigation functionality for MapViewport, allows the selection and navigation
+ * of background layers that are marked as AOI layers.
  * <p>
- * Each time you select a feature from a boundary layer the tool will move to the next available
- * boundary layer in the stack allowing you to make a selection.
+ * Each time you select a feature from a AOI layer the tool will move to the next available
+ * AOI layer in the stack allowing you to make a selection.
  * </p>
  * 
  * @author leviputna
  * @since 1.2.3
  */
-public class BoundaryLayerSelectionTool extends AbstractModalTool implements ModalTool {
+public class AOILayerSelectionTool extends AbstractModalTool implements ModalTool {
 
     private SelectionBoxCommand shapeCommand;
     private boolean selecting;
     private Point start;
 
-    private String CURSORPOINTID = "bondatySelectCursor";
-    private String CURSORBOXID = "bondatyBoxSelectCursor";
+    private String CURSORPOINTID = "aoiSelectCursor";
+    private String CURSORBOXID = "aoiBoxSelectCursor";
 
     boolean showContextOnRightClick = false;
 
     /**
      * 
      */
-    public BoundaryLayerSelectionTool() {
+    public AOILayerSelectionTool() {
         super(MOUSE | MOTION);
     }
 
@@ -155,7 +155,7 @@ public class BoundaryLayerSelectionTool extends AbstractModalTool implements Mod
      */
     protected void sendSelectionCommand( MapMouseEvent e, Envelope bounds ) {
 
-        SetBoundaryLayerCommand command = new SetBoundaryLayerCommand(e, bounds);
+        SetAOILayerCommand command = new SetAOILayerCommand(e, bounds);
 
         getContext().sendASyncCommand(command);
 
@@ -199,10 +199,10 @@ public class BoundaryLayerSelectionTool extends AbstractModalTool implements Mod
 
         private ComboViewer comboViewer;
 
-        private static String BOUNDARY_LAYER_ID = "net.refractions.udig.tool.default.BoundaryLayerService";
+        private static String AOI_LAYER_ID = "net.refractions.udig.tool.select.internal.aoiLayer";
 
         /**
-         * Listens to the user and changes the global IBoundaryService to the indicated strategy.
+         * Listens to the user and changes the global IAOIService to the indicated strategy.
          */
         private ISelectionChangedListener comboListener = new ISelectionChangedListener(){
             @Override
@@ -214,16 +214,16 @@ public class BoundaryLayerSelectionTool extends AbstractModalTool implements Mod
         };
 
         /**
-         * Watches for a change in boundary layer and sets the combo to the new layer
+         * Watches for a change in AOI layer and sets the combo to the new layer
          */
-        protected BoundaryListener watcher = new BoundaryListener(){
-            public void handleEvent( BoundaryListener.Event event ) {
+        protected AOIListener watcher = new AOIListener(){
+            public void handleEvent( AOIListener.Event event ) {
                 PlatformGIS.asyncInDisplayThread(new Runnable(){
 
                     @Override
                     public void run() {
-                        ILayer activeLayer = getBoundaryLayerStrategy().getActiveLayer();
-                        List<ILayer> layers = getBoundaryLayerStrategy().getBoundaryLayers();
+                        ILayer activeLayer = getAOILayerStrategy().getActiveLayer();
+                        List<ILayer> layers = getAOILayerStrategy().getAOILayers();
                         if( comboViewer == null || comboViewer.getControl() == null || comboViewer.getControl().isDisposed()){
                             return;
                         }
@@ -251,11 +251,11 @@ public class BoundaryLayerSelectionTool extends AbstractModalTool implements Mod
 //            addField(SelectionToolPreferencePage.ZOOM_TO_SELECTION, zoom);
                         
             setCombo(parent);
-            listenBoundaryLayer(true);
+            listenAOILayer(true);
 
             // set the list of layers and the active layer
-            List<ILayer> layers = getBoundaryLayerStrategy().getBoundaryLayers();
-            ILayer activeLayer = getBoundaryLayerStrategy().getActiveLayer();
+            List<ILayer> layers = getAOILayerStrategy().getAOILayers();
+            ILayer activeLayer = getAOILayerStrategy().getActiveLayer();
             comboViewer.setInput(layers);
             if (!layers.isEmpty()) {
                 comboViewer.setInput(layers);
@@ -284,7 +284,7 @@ public class BoundaryLayerSelectionTool extends AbstractModalTool implements Mod
                 }
             });
 
-            comboViewer.setInput(getBoundaryLayers());
+            comboViewer.setInput(getAOILayers());
         }
 
         protected void listenCombo( boolean listen ) {
@@ -298,15 +298,15 @@ public class BoundaryLayerSelectionTool extends AbstractModalTool implements Mod
             }
         }
 
-        protected void listenBoundaryLayer( boolean listen ) {
-            BoundaryLayerStrategy boundaryLayerStrategy = getBoundaryLayerStrategy();
-            if (boundaryLayerStrategy == null) {
+        protected void listenAOILayer( boolean listen ) {
+            AOILayerStrategy aOILayerStrategy = getAOILayerStrategy();
+            if (aOILayerStrategy == null) {
                 return;
             }
             if (listen) {
-                boundaryLayerStrategy.addListener(watcher);
+                aOILayerStrategy.addListener(watcher);
             } else {
-                boundaryLayerStrategy.removeListener(watcher);
+                aOILayerStrategy.removeListener(watcher);
             }
         }
 
@@ -319,7 +319,7 @@ public class BoundaryLayerSelectionTool extends AbstractModalTool implements Mod
 
             boolean disposed = comboViewer.getControl().isDisposed();
             if (comboViewer == null || disposed) {
-                listenBoundaryLayer(false);
+                listenAOILayer(false);
                 return; // the view has shutdown!
             }
 
@@ -337,7 +337,7 @@ public class BoundaryLayerSelectionTool extends AbstractModalTool implements Mod
         }
 
         /*
-         * Get the Boundary Layer currently selected in this tool
+         * Get the AOI Layer currently selected in this tool
          * @return ILayer currently selected in this tool
          */
         private ILayer getSelected() {
@@ -349,31 +349,31 @@ public class BoundaryLayerSelectionTool extends AbstractModalTool implements Mod
         }
 
         /*
-         * Sets the active layer in the boundary layer strategy
+         * Sets the active layer in the AOI layer strategy
          */
         private void setActiveLayer( ILayer activeLayer ) {
-            getBoundaryLayerStrategy().setActiveLayer(activeLayer);
+            getAOILayerStrategy().setActiveLayer(activeLayer);
         }
 
         /*
-         * returns a BoundaryLayerStrategy object for quick access
+         * returns a AOILayerStrategy object for quick access
          */
-        private BoundaryLayerStrategy getBoundaryLayerStrategy() {
-            IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-            IBoundaryStrategy boundaryStrategy = boundaryService.findProxy(BOUNDARY_LAYER_ID)
+        private AOILayerStrategy getAOILayerStrategy() {
+            IAOIService aOIService = PlatformGIS.getAOIService();
+            IAOIStrategy aOIStrategy = aOIService.findProxy(AOI_LAYER_ID)
                     .getStrategy();
 
-            if (boundaryStrategy instanceof BoundaryLayerStrategy) {
-                return (BoundaryLayerStrategy) boundaryStrategy;
+            if (aOIStrategy instanceof AOILayerStrategy) {
+                return (AOILayerStrategy) aOIStrategy;
             }
             return null;
         }
 
         /*
-         * gets a list of boundary layers via the boundary strategy
+         * gets a list of AOI layers via the AOI strategy
          */
-        private List<ILayer> getBoundaryLayers() {
-            return getBoundaryLayerStrategy().getBoundaryLayers();
+        private List<ILayer> getAOILayers() {
+            return getAOILayerStrategy().getAOILayers();
         }
 
     };

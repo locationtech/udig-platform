@@ -1072,16 +1072,16 @@
         </actionSet>
      </extension>     
      <extension
-            point="net.refractions.udig.ui.boundary">
-         <boundary
-               class="net.refractions.udig.project.ui.internal.boundary.BoundaryStrategyScreen"
-               id="net.refractions.udig.tool.default.boundaryScreen"
-               name="%boundary.screen.name">
-         </boundary>
-         <boundary
-               class="net.refractions.udig.project.ui.internal.boundary.BoundaryStrategyMapCrs"
-               id="net.refractions.udig.project.ui.boundaryCRS"
-               name="%boundary.crs.name">
-         </boundary>
-      </extension>
+           point="net.refractions.udig.ui.aoi">
+        <aoi
+              class="net.refractions.udig.project.ui.internal.aoi.ScreenAOIStrategy"
+              id="net.refractions.udig.project.ui.screenAOI"
+              name="%aoi.screen.name">
+        </aoi>
+        <aoi
+              class="net.refractions.udig.project.ui.internal.aoi.MapCrsAOIStrategy"
+              id="net.refractions.udig.project.ui.crsAOI"
+              name="%aoi.crs.name">
+        </aoi>
+     </extension>
    </plugin>

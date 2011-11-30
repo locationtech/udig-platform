@@ -1,35 +1,35 @@
 <class-diagram version="1.0.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
-  <interface id="1" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.boundary.IBoundaryService" 
-    project="net.refractions.udig.ui" 
-    file="/net.refractions.udig.ui/src/net/refractions/udig/boundary/IBoundaryService.java" binary="false">    
+  <interface id="1" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.aoi.IBoundaryService" 
+    project="net.refractions.udig.ui" file="/net.refractions.udig.ui/src/net/refractions/udig/aoi/IBoundaryService.java" 
+    binary="false">    
     <position height="211" width="205" x="40" y="-4"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </interface>  
-  <class id="2" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.internal.boundary.BoundaryServiceImpl" 
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.internal.aoi.BoundaryServiceImpl" 
     project="net.refractions.udig.ui" 
-    file="/net.refractions.udig.ui/src/net/refractions/udig/internal/boundary/BoundaryServiceImpl.java" binary="false">    
+    file="/net.refractions.udig.ui/src/net/refractions/udig/internal/aoi/BoundaryServiceImpl.java" binary="false">    
     <position height="-1" width="-1" x="145" y="449"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="3" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.boundary.BoundaryProxy" 
-    project="net.refractions.udig.ui" 
-    file="/net.refractions.udig.ui/src/net/refractions/udig/boundary/BoundaryProxy.java" binary="false">    
+  <class id="3" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.aoi.BoundaryProxy" 
+    project="net.refractions.udig.ui" file="/net.refractions.udig.ui/src/net/refractions/udig/aoi/BoundaryProxy.java" 
+    binary="false">    
     <position height="-1" width="-1" x="471" y="448"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="4" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.boundary.IBoundaryStrategy" 
+  <class id="4" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.aoi.IBoundaryStrategy" 
     project="net.refractions.udig.ui" 
-    file="/net.refractions.udig.ui/src/net/refractions/udig/boundary/IBoundaryStrategy.java" binary="false">    
+    file="/net.refractions.udig.ui/src/net/refractions/udig/aoi/IBoundaryStrategy.java" binary="false">    
     <position height="-1" width="-1" x="472" y="96"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
