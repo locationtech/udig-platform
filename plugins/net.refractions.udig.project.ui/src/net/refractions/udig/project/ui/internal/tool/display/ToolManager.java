@@ -103,6 +103,7 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IKeyBindingService;
+import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -1219,15 +1220,20 @@ public class ToolManager implements IToolManager {
         deleteLock.lock();
         try{
             if (deleteAction == null) {
-                deleteAction = new Action(){
+                 deleteAction = new Action(){
                     @Override
                     public void run() {
-                        Delete delete=new Delete();
-                        ISelection s = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService().getSelection();
-                        delete.selectionChanged(this, s);
-                        delete.run(this);                }
+                        IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+                        ISelectionService selectionService = workbenchWindow.getSelectionService();
+                        ISelection selection = selectionService.getSelection();
+                        
+                        Delete delete=new Delete( false );
+                        delete.selectionChanged(this, selection);
+                        delete.run(this);
+                    }
                 };
                 deleteAction.setActionDefinitionId("org.eclipse.ui.edit.delete"); //$NON-NLS-1$
+                
                 IWorkbenchAction actionTemplate = ActionFactory.DELETE.create(PlatformUI.getWorkbench().getActiveWorkbenchWindow());
                 deleteAction.setText(actionTemplate.getText());
                 deleteAction.setToolTipText(actionTemplate.getToolTipText());

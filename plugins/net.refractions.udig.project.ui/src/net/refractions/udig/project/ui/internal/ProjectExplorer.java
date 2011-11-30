@@ -31,6 +31,7 @@ import net.refractions.udig.project.internal.provider.LoadingPlaceHolder;
 import net.refractions.udig.project.ui.AdapterFactoryLabelProviderDecorator;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.UDIGAdapterFactoryContentProvider.InputChangedListener;
+import net.refractions.udig.project.ui.internal.actions.Delete;
 import net.refractions.udig.project.ui.internal.actions.OpenProject;
 import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.ui.UDIGDragDropUtilities;
@@ -72,6 +73,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IKeyBindingService;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -80,6 +82,7 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
@@ -121,8 +124,6 @@ public class ProjectExplorer extends ViewPart
 
     private UDIGAdapterFactoryContentProvider contentProvider;
 
-    private IAction deleteAction;
-
     private Action linkAction;
 
     /**
@@ -134,7 +135,6 @@ public class ProjectExplorer extends ViewPart
         explorer = this;
 
         projectRegistry = ProjectPlugin.getPlugin().getProjectRegistry();
-
     }
 
     /**
@@ -215,7 +215,7 @@ public class ProjectExplorer extends ViewPart
                 treeViewer));
         treeViewer.setInput(projectRegistry);
 
-        // FIXME
+        // Limit the projects view to only show Maps and Pages (and not go any deeper)
         ViewerFilter[] filters = new ViewerFilter[1];
         filters[0] = new ViewerFilter(){
             public boolean select( Viewer viewer, Object parentElement, Object element ) {
@@ -327,22 +327,24 @@ public class ProjectExplorer extends ViewPart
 
         });
     }
-
+    /**
+     * We use this method to contribute some global actions from the ToolManager and
+     * hook up a custom delete action that is willing to delete a project.
+     */
     private void setGlobalActions() {
-        IToolManager toolManager = ApplicationGIS.getToolManager();
         IActionBars actionBars = getViewSite().getActionBars();
+        
+        // register with the tool manager so the projects view will pass keybindings
+        // over to the editor
+        IToolManager toolManager = ApplicationGIS.getToolManager();
         toolManager.contributeGlobalActions(this, actionBars);
         toolManager.registerActionsWithPart(this);
-        actionBars
-                .setGlobalActionHandler(ActionFactory.DELETE.getId(), getDeleteAction(actionBars));
+        
+        // except for the delete key we want that one for us
+        IKeyBindingService keyBindings = getSite().getKeyBindingService();
 
-    }
-
-    private IAction getDeleteAction( IActionBars actionBars ) {
-        if (deleteAction == null) {
-            deleteAction = ApplicationGIS.getToolManager().getDELETEAction();
-        }
-        return deleteAction;
+        actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), delAction );
+        keyBindings.registerAction(delAction);
     }
 
     /**
@@ -416,6 +418,26 @@ public class ProjectExplorer extends ViewPart
         }
 
     };
+
+    private IAction delAction = new Action(){
+        Delete delete = new Delete(true);
+        {
+            setActionDefinitionId("org.eclipse.ui.edit.delete"); //$NON-NLS-1$
+            
+            IWorkbenchAction actionTemplate = ActionFactory.DELETE.create(PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+            setText(actionTemplate.getText());
+            setToolTipText(actionTemplate.getToolTipText());
+            setImageDescriptor(actionTemplate.getImageDescriptor());
+            setDescription(actionTemplate.getDescription());
+            setDisabledImageDescriptor(actionTemplate.getDisabledImageDescriptor());
+        }
+        @Override
+        public void run() {
+            delete.selectionChanged(this, treeViewer.getSelection() );
+            delete.run(this);
+        }
+    };
+    
 
     protected void removeEditorListener() {
         getSite().getPage().removePartListener(editorListener);
@@ -507,8 +529,8 @@ public class ProjectExplorer extends ViewPart
         if (addOpenAction) {
             manager.add(getOpenAction());
         }
-        manager.add(getOpenProjectAction());
-        manager.add(getDeleteAction(getViewSite().getActionBars()));
+        manager.add( getOpenProjectAction() );
+        manager.add( delAction );
 
         manager.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         // LayerApplicabilityMenuCreator creator = getApplicabilityMenu();

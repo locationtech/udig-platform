@@ -130,8 +130,11 @@ public class DeleteTest extends AbstractProjectUITestCase {
         assertFalse( new File(projecturi.toFileString()).exists() );
 	}
 
-	class DeleteAccessor extends Delete{
-		public void runDoDelete(Project project, boolean deleteProjectFiles, int returncode){
+	class DeleteAccessor extends Delete {
+		public DeleteAccessor() {
+            super(true);
+        }
+        public void runDoDelete(Project project, boolean deleteProjectFiles, int returncode){
 			doDelete(project, deleteProjectFiles, returncode);
 		}
 		public void runDoDelete(ProjectElement element, boolean deleteProjectFiles, int returncode){

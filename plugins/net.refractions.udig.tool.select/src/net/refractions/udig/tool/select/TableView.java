@@ -1212,7 +1212,9 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         }
         
     }
-    
+    /**
+     * Delete Action used to delete the currently selected feature.
+     */
     private class DeleteAction extends Action{
         public DeleteAction(){
             setActionDefinitionId("org.eclipse.ui.edit.delete"); //$NON-NLS-1$

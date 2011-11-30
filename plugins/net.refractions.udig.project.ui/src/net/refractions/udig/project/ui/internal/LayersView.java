@@ -686,27 +686,21 @@ public class LayersView extends ViewPart
             }
         });
     }
-
+    /**
+     * We use this method to contribute some global actions from the ToolManager and
+     * hook up a custom delete action that is willing to delete a layer.
+     */
     private void setGlobalActions() {
-        IToolManager toolManager = ApplicationGIS.getToolManager();
         IActionBars actionBars = getViewSite().getActionBars();
+        
+        IToolManager toolManager = ApplicationGIS.getToolManager();
         toolManager.contributeGlobalActions(this, actionBars);
         toolManager.registerActionsWithPart(this);
-        IKeyBindingService service = getSite().getKeyBindingService();
-        Action action = new Action(){
-            Delete delete = new Delete();
-
-            @Override
-            public void run() {
-                delete.selectionChanged(this, viewer.getSelection());
-                delete.run(this);
-            }
-        };
-
-        action.setActionDefinitionId("org.eclipse.ui.edit.delete"); //$NON-NLS-1$
-        actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), action);
-        service.registerAction(action);
-
+        
+        IKeyBindingService keyBindings = getSite().getKeyBindingService();
+        IAction delAction = getDeleteAction();
+        actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), delAction);
+        keyBindings.registerAction(delAction);
     }
 
     /**
@@ -837,7 +831,7 @@ public class LayersView extends ViewPart
             deleteAction = new Action(){
                 @Override
                 public void run() {
-                    Delete delete = new Delete();
+                    Delete delete = new Delete(false);
                     ISelection s = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                             .getSelectionService().getSelection();
                     delete.selectionChanged(this, s);
