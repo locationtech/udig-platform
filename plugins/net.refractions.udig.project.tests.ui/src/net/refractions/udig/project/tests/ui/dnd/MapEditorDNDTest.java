@@ -20,6 +20,8 @@ import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
 import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
+import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 import net.refractions.udig.ui.IDropAction;
 import net.refractions.udig.ui.IDropHandlerListener;
 import net.refractions.udig.ui.UDIGDragDropUtilities;
@@ -44,7 +46,7 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
 		
 		UDIGControlDropListener dropper = UDIGDragDropUtilities.getEditorDropListener();
 		handler = dropper.getHandler();
-		handler.setTarget(new MapEditor());
+		handler.setTarget(new MapEditorWithPalette());
 		done = false;
 	}
     
@@ -88,7 +90,7 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
 		}
         
 
-        MapEditor activeEditor = ApplicationGISInternal.getActiveEditor();
+        MapEditorPart activeEditor = ApplicationGISInternal.getActiveEditor();
         UDIGDropHandler dropHandler = activeEditor.getDropHandler();
         dropHandler.setTarget(activeEditor);
         dropHandler.setViewerLocation(ViewerDropLocation.NONE);

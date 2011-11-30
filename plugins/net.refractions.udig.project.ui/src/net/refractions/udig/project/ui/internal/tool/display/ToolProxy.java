@@ -318,7 +318,8 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
                                     if(tool instanceof ModalTool){
                                     	IMapEditorSelectionProvider selectionProvider = getSelectionProvider();
-                                    	((ModalTool)tool).setSelectionProvider(selectionProvider);
+                                    	ModalTool modalTool = (ModalTool) tool;
+                                    	modalTool.setSelectionProvider(selectionProvider);
                                     }
 
                                 } catch (CoreException e) {
@@ -646,10 +647,13 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
                 }
                 ToolManager m = (ToolManager) ApplicationGIS.getToolManager();
                 ModalToolCategory cat = m.findModalCategory(getCategoryId());
-                if (cat != null)
+                if (cat != null){
                     selectionProviderInstance = cat.getSelectionProvider();
-                else
+                }
+                else {
+                    // default just provides the Map as the selection
                     selectionProviderInstance = new MapEditorSelectionProvider();
+                }
             } finally {
                 selectionProviderLock.unlock();
             }

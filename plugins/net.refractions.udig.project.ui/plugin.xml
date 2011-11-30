@@ -497,7 +497,7 @@
         <destination class="net.refractions.udig.project.ui.internal.LayersView"/>
         <acceptedType
               adapt="false"
-              class="net.refractions.udig.project.ui.internal.MapEditor"/>
+              class="net.refractions.udig.project.ui.internal.MapEditorPart"/>
      </action>
      <action
            class="net.refractions.udig.project.ui.internal.dragdrop.MoveLayerDropActionLayer"

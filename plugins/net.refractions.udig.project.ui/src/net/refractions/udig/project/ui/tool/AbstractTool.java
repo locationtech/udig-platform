@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
@@ -161,11 +161,10 @@ public abstract class AbstractTool
             final IToolContext context=this.context;
             display.asyncExec(new Runnable(){
                 public void run() {
-                    MapEditor editor = ApplicationGISInternal.findMapEditor(context.getMap());
+                    MapEditorPart editor = ApplicationGISInternal.findMapEditor(context.getMap());
                     if( editor !=null  && !editor.isDragging() ){
                         editor.setDragging(true);
                     }
-     
                 }
             });
         }
@@ -198,11 +197,10 @@ public abstract class AbstractTool
             final IToolContext context=this.context;
             display.asyncExec(new Runnable(){
                 public void run() {
-                    MapEditor editor = ApplicationGISInternal.findMapEditor(context.getMap());
-                    if( editor !=null && editor.isDragging() ){
+                    MapEditorPart editor = ApplicationGISInternal.findMapEditor(context.getMap());
+                    if( editor !=null  && editor.isDragging() ){
                         editor.setDragging(false);
                     }
-     
                 }
             });
         }

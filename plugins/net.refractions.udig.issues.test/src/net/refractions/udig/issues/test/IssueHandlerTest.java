@@ -14,6 +14,7 @@ import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.project.tests.ui.ViewPart1;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
@@ -133,7 +134,7 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
         TestIssue issue = new TestIssue(){
             @Override
             public String getEditorID() {
-                return MapEditor.ID;
+                return MapEditorWithPalette.ID;
           
             }
             
@@ -145,7 +146,7 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
         IssueHandler handler = IssueHandler.createHandler(issue);
         handler.restoreEditor();
 
-        assertEquals( MapEditor.class, getActiveWindow().getActivePage().getActiveEditor().getClass());
+        assertEquals( MapEditorWithPalette.class, getActiveWindow().getActivePage().getActiveEditor().getClass());
         assertEquals( map, ((MapPart)getActiveWindow().getActivePage().getActiveEditor()).getMap());
     }
     

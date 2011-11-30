@@ -14,7 +14,7 @@
  */
 package net.refractions.udig.tutorials.examples;
 
-import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPage;
@@ -36,16 +36,16 @@ public class ListenToActiveMap {
 	private IPartListener2 activeMapListener=new IPartListener2(){
 
 		public void partActivated(IWorkbenchPartReference partRef) {
-			if( partRef.getId().equals(MapEditor.ID) ){
+		    if( partRef.getId().equals(MapEditorWithPalette.ID) ){
 				// ok this is a map and the map is actually activated (focus has been given to the editor.
-				// coud also use the following check instead of comparing IDs:
+				// could also use the following check instead of comparing IDs:
 				// partRef.getPart(false) instanceof MapEditor
 			}
 			
 		}
 
 		public void partBroughtToTop(IWorkbenchPartReference partRef) {
-			if( partRef.getId().equals(MapEditor.ID) ){
+			if( partRef.getId().equals(MapEditorWithPalette.ID) ){
 				// The "active" map editor has changed.  The "top" editor is the active one.
 				// coud also use the following check instead of comparing IDs:
 				// partRef.getPart(false) instanceof MapEditor
@@ -54,7 +54,7 @@ public class ListenToActiveMap {
 		}
 
 		public void partClosed(IWorkbenchPartReference partRef) {
-			if( partRef.getId().equals(MapEditor.ID) ){
+			if( partRef.getId().equals(MapEditorWithPalette.ID)  ){
 				// a map editor has closed it is not necessarilly the active one.  You 
 				// need to do your own checks for that.
 			}
@@ -62,7 +62,7 @@ public class ListenToActiveMap {
 		}
 
 		public void partDeactivated(IWorkbenchPartReference partRef) {
-			if( partRef.getId().equals(MapEditor.ID) ){
+			if( partRef.getId().equals(MapEditorWithPalette.ID)  ){
 				// This doesn't necessarily mean that the active map has changed
 				// Just that the editor no longer has focus.
 			}
@@ -71,7 +71,7 @@ public class ListenToActiveMap {
 		}
 
 		public void partHidden(IWorkbenchPartReference partRef) {
-			if( partRef.getId().equals(MapEditor.ID) ){
+			if( partRef.getId().equals(MapEditorWithPalette.ID)  ){
 				// The "active" map has been hidden there is now a new active map
 				// the method partBroughtToTop will be called so wait for that method before actually
 				// changing current map.
@@ -81,14 +81,14 @@ public class ListenToActiveMap {
 		}
 
 		public void partInputChanged(IWorkbenchPartReference partRef) {
-			if( partRef.getId().equals(MapEditor.ID) ){
+			if( partRef.getId().equals(MapEditorWithPalette.ID)  ){
 				// This should never be called 
 			}
 			
 		}
 
 		public void partOpened(IWorkbenchPartReference partRef) {
-			if( partRef.getId().equals(MapEditor.ID) ){
+			if( partRef.getId().equals(MapEditorWithPalette.ID)  ){
 				// A map has been openned and will probably be the active map.
 			}
 			
@@ -97,7 +97,7 @@ public class ListenToActiveMap {
 		}
 
 		public void partVisible(IWorkbenchPartReference partRef) {
-			if( partRef.getId().equals(MapEditor.ID) ){
+			if( partRef.getId().equals(MapEditorWithPalette.ID)  ){
 				// a map is visible but not necessarily the active map.
 			}
 			

@@ -107,7 +107,7 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
         compContext.addListener(contextListener);
         
         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(LayersView.ID);
-        ApplicationGISInternal.getActiveEditor().isTesting=true;
+        ApplicationGISInternal.getActiveEditor().setTesting(true);
 
     }
     

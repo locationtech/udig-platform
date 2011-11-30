@@ -35,6 +35,7 @@ import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.project.tests.ui.ViewPart1;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import opendap.servlet.GetDirHandler;
@@ -293,7 +294,7 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
             }
                 @Override
                 public String getEditorID() {
-                    return MapEditor.ID;
+                    return MapEditorWithPalette.ID;
               
                 }
                 

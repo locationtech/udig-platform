@@ -46,6 +46,7 @@ import net.refractions.udig.project.internal.commands.CreateMapCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
 import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
 import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.internal.Messages;
@@ -116,6 +117,8 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
+import org.eclipse.ui.part.EditorPart;
+import org.eclipse.ui.part.ViewPart;
 import org.opengis.filter.Filter;
 
 /**
@@ -1380,7 +1383,17 @@ public class ToolManager implements IToolManager {
     SubActionBars2 getActionBars() {
         if (ApplicationGISInternal.getActiveMap() == ApplicationGIS.NO_MAP)
             return null;
-        return ApplicationGISInternal.getActiveEditor().getActionbar();
+        MapPart active = ApplicationGISInternal.getActiveEditor();
+
+        if( active instanceof MapEditorPart){
+            MapEditorPart editor = (MapEditorPart) active;
+            return (SubActionBars2) editor.getMapEditorSite().getActionBars();
+        }
+        else if( active instanceof ViewPart){
+            ViewPart view = (ViewPart) active;
+            return (SubActionBars2) view.getViewSite().getActionBars();
+        }
+        return null;
     }
     
     private IAction actionCLOSE;
@@ -1427,15 +1440,15 @@ public class ToolManager implements IToolManager {
 
     void dispose() {
         for( ToolCategory category : modalCategories ) {
-            category.dispose(ApplicationGISInternal.getActiveEditor().getEditorSite()
+            category.dispose(ApplicationGISInternal.getActiveEditor().getMapEditorSite()
                     .getActionBars());
         }
         for( ToolCategory category : actionCategories ) {
-            category.dispose(ApplicationGISInternal.getActiveEditor().getEditorSite()
+            category.dispose(ApplicationGISInternal.getActiveEditor().getMapEditorSite()
                     .getActionBars());
         }
         for( ToolCategory category : menuCategories ) {
-            category.dispose(ApplicationGISInternal.getActiveEditor().getEditorSite()
+            category.dispose(ApplicationGISInternal.getActiveEditor().getMapEditorSite()
                     .getActionBars());
         }
         for( ToolProxy tool : backgroundTools ) {
@@ -1875,6 +1888,7 @@ public class ToolManager implements IToolManager {
 		
 		// connect the tools to the map area
 		setActiveModalTool( modalToolProxy.getModalTool() );
+		currentEditor.setSelectionProvider(modalToolProxy.getSelectionProvider());
 		
 		// add tool options to the status area
         initToolOptionsContribution(currentEditor.getStatusLineManager(), getActiveToolProxy());
@@ -1948,7 +1962,7 @@ public class ToolManager implements IToolManager {
         try {
             activeTool = modalTool;
             
-            activeTool.setActive(true); // this should register itself with the tool manager
+            activeTool.setActive(true);// this should register itself with the tool manager
 
             // this was normally handled by the ToolProxy which we cannot get a hold of
             String currentCursorID = activeTool.getCursorID();
@@ -1959,7 +1973,7 @@ public class ToolManager implements IToolManager {
         catch (Throwable eek){
             System.err.println("Trouble activating "+modalTool+":"+eek);
             try {
-                activeTool.setActive(false); // hope it does a better cleaning up
+                activeTool.setActive(false); // hope it does a better at cleaning up
             }
             catch (Throwable t){
                 // no it did not do a better job cleaning up
@@ -2116,7 +2130,7 @@ public class ToolManager implements IToolManager {
             Object selection = firstSelectedElement();
 
             if (contents != null) {
-                MapEditor activeEditor = ApplicationGISInternal.getActiveEditor();
+                MapEditorPart activeEditor = ApplicationGISInternal.getActiveEditor();
                 final Map finalMap;
                 final UDIGDropHandler finalDropHandler;
                 if( selection instanceof Map){
@@ -2132,12 +2146,12 @@ public class ToolManager implements IToolManager {
                     }
                     finalMap = (Map) command.getCreatedMap();
                     finalDropHandler = new UDIGDropHandler();
-                }else{
+                } else {
                     finalDropHandler = activeEditor.getDropHandler();
                     finalMap = activeEditor.getMap();
                 }
                 
-                final MapEditor finalActiveEditor = activeEditor;
+                final MapEditorPart finalActiveEditor = activeEditor;
                 ILayer selectedLayer = finalMap.getEditManager().getSelectedLayer();
                 if( selectedLayer==null ){
                     finalDropHandler.setTarget(finalMap);
@@ -2168,7 +2182,6 @@ public class ToolManager implements IToolManager {
                 });
                 finalDropHandler.setViewerLocation(ViewerDropLocation.ON);
                 finalDropHandler.performDrop(contents, null);
-                
             }
         }
         private Object firstSelectedElement() {

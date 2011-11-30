@@ -302,7 +302,7 @@ public class FeatureEditorExtensionProcessor {
         public void partClosed( IWorkbenchPartReference partRef ) {
             if (partRef.getPart(false) instanceof IUDIGView) {
                 views.remove(partRef.getPart(false));
-            } else if (partRef.getPart(false) instanceof MapEditor) {
+            } else if (partRef.getPart(false) instanceof MapPart) {
 
                 MapPart editor = (MapPart) partRef.getPart(false);
                 synchronized (this) {
@@ -366,7 +366,7 @@ public class FeatureEditorExtensionProcessor {
                     UiPlugin.log(udigview + " threw an exception", e); //$NON-NLS-1$
                 }
 
-            } else if (partRef.getPart(false) instanceof MapEditor) {
+            } else if (partRef.getPart(false) instanceof MapPart) {
 
                 MapPart editor = (MapPart) partRef.getPart(false);
                 synchronized (this) {

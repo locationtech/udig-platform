@@ -18,7 +18,7 @@ package net.refractions.udig.project.ui.internal.properties;
 
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
 import net.refractions.udig.project.ui.internal.Messages;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
@@ -87,7 +87,7 @@ public class GeometryPropertyDescriptor extends PropertyDescriptor {
                 button.addListener(SWT.MouseUp, new Listener(){
 
                     public void handleEvent( Event event ) {
-                        MapEditor editor = (MapEditor) PlatformUI.getWorkbench()
+                        MapEditorPart editor = (MapEditorPart) PlatformUI.getWorkbench()
                                 .getActiveWorkbenchWindow().getActivePage().getActiveEditor();
                         Map map = editor.getMap();
                         Envelope env = geometry.getEnvelopeInternal();
