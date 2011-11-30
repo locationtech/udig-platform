@@ -70,6 +70,7 @@
                 largeIcon="icons/etool24/aoi_mode.png"
                 name="%selection.aoi.name"
                 onToolbar="true"
+                preferencePageId="net.refractions.udig.tool.select.page"
                 toolCursorId="aoiSelectCursor"
                 tooltip="%selection.aoi.tooltip">
              <toolOption
@@ -175,7 +176,7 @@
                category="net.refractions.udig.project.ui.preferences.tool"
                class="net.refractions.udig.tool.select.internal.SelectionToolPreferencePage"
                id="net.refractions.udig.tool.select.page"
-               name="Selection">
+               name="%selection.page">
          </page>
       </extension>
       <extension
