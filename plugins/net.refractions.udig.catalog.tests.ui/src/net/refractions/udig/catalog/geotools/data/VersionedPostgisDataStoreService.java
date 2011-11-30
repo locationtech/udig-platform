@@ -4,17 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.Serializable;
-import java.net.URL;
 import java.util.List;
-import java.util.Map;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IRepository;
-import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.geotools.Activator;
@@ -23,14 +19,9 @@ import net.refractions.udig.catalog.internal.ServiceFactoryImpl;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataAccess;
 import org.geotools.data.DataStore;
-import org.geotools.data.FeatureSource;
-import org.geotools.data.Query;
 import org.geotools.data.postgis.VersionedPostgisDataStore;
-import org.geotools.data.postgis.VersionedPostgisDataStoreFactory;
-import org.geotools.data.postgis.WrappingPostgisFeatureSource;
-import org.geotools.feature.NameImpl;
 import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.Ignore;
 import org.opengis.feature.type.Name;
 
 /**
@@ -66,7 +57,7 @@ public class VersionedPostgisDataStoreService {
      *
      * @throws Exception
      */
-    @Test
+    @Ignore
     public void testDataStoreServiceExtension() throws Exception {
         // DataStoreServiceExtension extension = new DataStoreServiceExtension();
         f = FixtureUtils.newFixture("test-fixture/versioned.properties");

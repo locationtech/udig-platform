@@ -7,6 +7,7 @@ import java.util.List;
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -51,19 +52,19 @@ public class FeatureWrapperTest {
 		wrapped=new FeatureWrapper(original,type2, new Geometry[]{newPoint}, new String[]{"geom2"}); //$NON-NLS-1$
 	}
 	
-	@Test
+	@Ignore
 	public void testGetAttributeInt() {
 		assertEquals(newPoint, wrapped.getAttribute(0));
 		assertEquals(name, wrapped.getAttribute(1));
 	}
 
-	@Test
+	@Ignore
 	public void testGetAttributeString() {
 		assertEquals(newPoint, wrapped.getAttribute("geom2")); //$NON-NLS-1$
 		assertEquals(name, wrapped.getAttribute("name")); //$NON-NLS-1$
 	}
 
-	@Test
+	@Ignore
 	public void testGetAttributes() {
 		List<Object> atts=wrapped.getAttributes();
 		
@@ -81,17 +82,17 @@ public class FeatureWrapperTest {
 		assertEquals(name, atts.get(1));
 }
 
-	@Test
+	@Ignore
 	public void testGetDefaultGeometry() {
 		assertEquals(newPoint, wrapped.getDefaultGeometry());
 	}
 
-	@Test
+	@Ignore
 	public void testGetFeatureType() {
 		assertEquals(type2, wrapped.getFeatureType());
 	}
 
-	@Test
+	@Ignore
 	public void testGetNumberOfAttributes() {
 		assertEquals(2, wrapped.getAttributeCount());
 	}

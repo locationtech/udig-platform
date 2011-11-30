@@ -1,6 +1,8 @@
 package net.refractions.udig.catalog.geotools.data;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -24,7 +26,7 @@ import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.Ignore;
 import org.opengis.feature.type.Name;
 
 /**
@@ -52,7 +54,7 @@ public class GeoToolsDataStoreService {
         local = CatalogPlugin.getDefault().getLocal();
 
     }
-    @Test
+    @Ignore
     public void testDataStoreServiceExtension() throws Exception {
         // DataStoreServiceExtension extension = new DataStoreServiceExtension();
         DataStoreServiceExtension serviceExtension = serviceFactory.serviceImplementation(DataStoreServiceExtension.class);

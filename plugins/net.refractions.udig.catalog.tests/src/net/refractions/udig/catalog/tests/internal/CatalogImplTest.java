@@ -29,7 +29,7 @@ import org.eclipse.core.runtime.Platform;
  */
 public class CatalogImplTest extends TestCase {
 
-    public void testUrlEquals() throws Exception {
+    public void xtestUrlEquals() throws Exception {
         if (Platform.getOS() == Platform.OS_WIN32) {
             assertTrue(URLUtils.urlEquals(new URL("file://c:\\java/udig/"), //$NON-NLS-1$
                     new URL("file:/C:\\java\\udig"), false)); //$NON-NLS-1$
