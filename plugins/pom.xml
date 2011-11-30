@@ -51,6 +51,7 @@
                 <!-- test commented out for now -->
                 <!--module>net.refractions.udig.tests.tutorials.tests</module -->
                 <module>net.refractions.udig.tutorials.catalog.csv</module>
+                <module>net.refractions.udig.tutorials.catalog.tests.csv</module>
                 <module>net.refractions.udig.tutorials.customapp</module>
                 <module>net.refractions.udig.tutorials.distancetool</module>
                 <module>net.refractions.udig.tutorials.examples</module>
