@@ -1,4 +1,4 @@
-package net.refractions.udig.boundary;
+package net.refractions.udig.aoi;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
