@@ -31,6 +31,7 @@ import net.refractions.udig.project.internal.Project;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.MapEditor;
 import net.refractions.udig.project.ui.internal.MapEditorInput;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
 import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 import net.refractions.udig.project.ui.internal.MapPart;
 
@@ -65,7 +66,7 @@ public class CreatePageAction implements IEditorActionDelegate {
         IEditorPart activeEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage().getActiveEditor();
         IEditorInput input = activeEditor.getEditorInput();
-        if (!(activeEditor instanceof MapEditor) && !(input instanceof MapEditorInput)) {
+        if (!(activeEditor instanceof MapEditorPart) && !(input instanceof MapEditorInput)) {
             MessageDialog.openError(Display.getDefault().getActiveShell(),
                     Messages.CreatePageAction_printError_title,
                     Messages.CreatePageAction_printError_text);
@@ -97,8 +98,8 @@ public class CreatePageAction implements IEditorActionDelegate {
 
         //Point size = //mapEditor.getComposite().getSize();
         Point partSize;
-        if( mapEditor instanceof MapEditor ){
-        	MapEditor part = (MapEditor) mapEditor;
+        if( mapEditor instanceof MapEditorPart ){
+            MapEditorPart part = (MapEditorPart) mapEditor;
         	partSize = part.getComposite().getSize();
         }
         else if( mapEditor instanceof MapEditorWithPalette){

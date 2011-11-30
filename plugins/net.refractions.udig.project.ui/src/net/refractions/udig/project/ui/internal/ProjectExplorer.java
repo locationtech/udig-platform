@@ -390,7 +390,7 @@ public class ProjectExplorer extends ViewPart
     IPartListener2 editorListener = new IPartListener2(){
 
         public void partActivated( IWorkbenchPartReference partRef ) {
-            if (isLinkedWithEditor() && partRef.getPart(false) instanceof MapEditor) {
+            if (isLinkedWithEditor() && partRef.getPart(false) instanceof MapPart) {
                 MapPart editor = (MapPart) partRef.getPart(false);
                 setSelection(Collections.singleton(editor.getMap()), true);
             }

@@ -27,6 +27,7 @@ import net.refractions.udig.project.internal.commands.DeleteLayersCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.LayersView;
 import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
 import net.refractions.udig.ui.IDropAction;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -44,7 +45,7 @@ public class MoveLayerDropAction extends IDropAction {
         Layer layer = toLayer(this);
         if (layer==null ) return false;
         Object destination2 = getDestination();
-        if (destination2 instanceof LayersView || destination2 instanceof MapEditor) {
+        if (destination2 instanceof LayersView || destination2 instanceof MapEditorPart) {
             destination2=ApplicationGIS.getActiveMap();
         }
         return layer.getMap()!=destination2;
@@ -70,7 +71,7 @@ public class MoveLayerDropAction extends IDropAction {
     public void perform( IProgressMonitor monitor ) {
         Object data2 = getData();
         IMap map;
-        if (getDestination() instanceof LayersView || getDestination() instanceof MapEditor) {
+        if (getDestination() instanceof LayersView || getDestination() instanceof MapEditorPart) {
             map=ApplicationGIS.getActiveMap();
         }else{
             map=(Map) getDestination();

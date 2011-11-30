@@ -29,7 +29,11 @@ import net.refractions.udig.browser.BrowserPlugin;
 import net.refractions.udig.browser.internal.Messages;
 import net.refractions.udig.catalog.ui.FileConnectionFactory;
 import net.refractions.udig.internal.ui.UDIGDropHandler;
+import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
 import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
+import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
@@ -385,7 +389,8 @@ public class BrowserContainerView extends ViewPart {
                         event.doit=false;
 
                         UDIGDropHandler dropHandler = new UDIGDropHandler();
-                        dropHandler.setTarget(getEditor());
+                        MapEditorPart editor = ApplicationGISInternal.getActiveEditor();
+                        dropHandler.setTarget(editor);
                         dropHandler.performDrop(url, null);
                     }
                 }
@@ -417,22 +422,7 @@ public class BrowserContainerView extends ViewPart {
         }
         return changeListener;
     }
-    
-    IEditorPart getEditor() {
-        IWorkbenchPage[] array = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages();
-        IEditorPart part = null;
-        for(int i = 0; i < array.length; i++) {
-            if(array[i].getActiveEditor() != null) {
-                part = array[i].getActiveEditor();
-                break;
-            }
-        }
-        if(part == null) {
-            part = new MapEditor();
-        }
-        return part;
-    }
-    
+
     /**
      *
      * @param name

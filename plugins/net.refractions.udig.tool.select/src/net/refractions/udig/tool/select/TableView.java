@@ -208,7 +208,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
      */
     private ISelectionListener workbenchSelectionListener = new ISelectionListener(){
         public void selectionChanged( IWorkbenchPart part, ISelection selection ) {
-            if (part instanceof MapEditor) {
+            if (part instanceof MapPart) {
                 editorActivated((MapPart) part);
                 return; // we already have sorted out map / layer
             }
@@ -405,7 +405,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         
         page = getSite().getPage();
         
-        if( page.getActiveEditor() instanceof MapEditor ){            
+        if( page.getActiveEditor() instanceof MapPart ){            
             editorActivated( (MapPart) page.getActiveEditor() );
         }
         

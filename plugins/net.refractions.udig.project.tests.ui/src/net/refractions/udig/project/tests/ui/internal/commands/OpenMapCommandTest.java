@@ -18,6 +18,7 @@ import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.commands.OpenProjectElementCommand;
 import net.refractions.udig.project.ui.internal.MapEditor;
 import net.refractions.udig.project.ui.internal.MapEditorInput;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -79,7 +80,7 @@ public class OpenMapCommandTest extends AbstractProjectUITestCase {
 		assertEquals(map,ApplicationGIS.getActiveMap());
 		
 		
-		MapEditor mapEditor = (MapEditor)PlatformUI.getWorkbench()
+		MapEditorPart mapEditor = (MapEditorPart) PlatformUI.getWorkbench()
 			.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		assertNotNull(mapEditor);
 		
