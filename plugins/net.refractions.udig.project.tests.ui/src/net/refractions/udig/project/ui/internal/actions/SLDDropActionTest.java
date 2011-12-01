@@ -154,7 +154,7 @@ public class SLDDropActionTest extends TestCase {
         assertTrue(isTestStyle(map.getEditManager().getSelectedLayer(), expectedName));
     }
 
-    public void testDropOnMapIntegration() throws Exception {
+    public void xtestDropOnMapIntegration() throws Exception {
         map.getEditManagerInternal().setSelectedLayer(map.getLayersInternal().get(3));
         handler.setTarget(map);
         handler.performDrop(sldFile, null);

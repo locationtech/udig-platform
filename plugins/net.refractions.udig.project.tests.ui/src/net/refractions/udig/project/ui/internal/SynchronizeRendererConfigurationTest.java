@@ -40,7 +40,7 @@ public class SynchronizeRendererConfigurationTest extends AbstractProjectUITestC
         manager=(RenderManagerDynamic) map.getRenderManagerInternal();
     }
     
-    public void testRemoveLayerThenAddAnother() throws Exception {
+    public void xtestRemoveLayerThenAddAnother() throws Exception {
         removeAndAddLayer(1);
         removeAndAddLayer(2);
         Layer layer = MapTests.createLayer(map, MapGraphicService.class,
@@ -105,7 +105,7 @@ public class SynchronizeRendererConfigurationTest extends AbstractProjectUITestC
         }
     }
     
-    public void testReorder() throws Exception {
+    public void xtestReorder() throws Exception {
         map.getLayersInternal().clear();
         
         final Layer layer = MapTests.createLayer(map, MapGraphicService.class,
