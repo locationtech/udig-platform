@@ -1,6 +1,7 @@
 package net.refractions.udig.catalog.wmsc.server;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,7 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import org.geotools.data.ows.HTTPResponse;
-import org.geotools.data.ows.WMSCapabilities;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class WMSCParserTest {
@@ -67,7 +68,7 @@ public class WMSCParserTest {
 
     }
 
-    @Test
+    @Ignore
     public void testGeoWebCacheOnline() throws Exception {
         URL url = new URL(
                 "http://tiledmarble.org/geowebcache/service/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=getcapabilities&TILED=true");
@@ -86,7 +87,7 @@ public class WMSCParserTest {
         assertFalse(tiles.isEmpty());
     }
 
-    @Test
+    @Ignore
     public void testGeoWebCacheOnline2() throws Exception {
         URL url = new URL(
                 "http://tiledmarble.org/geowebcache/service/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=getcapabilities&TILED=true");

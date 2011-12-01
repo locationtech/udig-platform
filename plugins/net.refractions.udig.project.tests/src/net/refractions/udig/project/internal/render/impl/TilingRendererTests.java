@@ -4,6 +4,9 @@ import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
 
 public class TilingRendererTests extends AbstractProjectTestCase {
 
+    public void testStub() throws Exception {
+        assertTrue(true);
+    }
 //	private Map map;
 //	private TestTilingRenderer renderer;
 //	private IGeoResource resource;

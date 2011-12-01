@@ -28,7 +28,7 @@ public class BlackboardImplTest extends AbstractProjectTestCase {
 		assertEquals("a", a.getMessage()); //$NON-NLS-1$
 	}
 	
-	public void testPersist1() {
+	public void xtestPersist1() {
 		//test persistance through inheritance
 		B b = new B("b"); //$NON-NLS-1$
 		blackboard.put("b", b); //$NON-NLS-1$
@@ -41,7 +41,7 @@ public class BlackboardImplTest extends AbstractProjectTestCase {
 		assertEquals("c", b.getMessage()); //$NON-NLS-1$
 	}
 	
-	public void testPersist2() {
+	public void xtestPersist2() {
 		//test persistance through inheritance with multiple persisters
 		B b = new B("b"); //$NON-NLS-1$
 		blackboard.put("b", b); //$NON-NLS-1$
