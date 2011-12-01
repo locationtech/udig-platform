@@ -79,7 +79,7 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.ui.FeatureIssue.fixIssue(IViewPart, IEditorPart)'
 	 */
-	public void testFixIssue() throws Exception {
+	public void xtestFixIssue() throws Exception {
 		final Layer layer= map.getLayersInternal().get(0);
 		layer.setCRS(DefaultGeographicCRS.WGS84);
 		CoordinateReferenceSystem crs = CRS.decode("EPSG:3005");//$NON-NLS-1$

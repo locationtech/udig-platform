@@ -50,7 +50,7 @@ public class IssueFixerTest extends AbstractProjectUITestCase {
         assertEquals(Resolution.RESOLVED, issue1.getResolution());
     }
     
-    public void testExtension() {
+    public void xtestExtension() {
         fixerMemento.putString(DummyIssueFixer.KEY_FIXABLE, "TRUE"); //$NON-NLS-1$
         issue1.setFixerMemento(fixerMemento);
         issue1.setResolution(Resolution.UNRESOLVED);
