@@ -18,7 +18,7 @@
         <profile>
             <id>test</id>
             <modules>
-                <module>net.refractions.udig.catalog.tests</module>
+                <!-- module>net.refractions.udig.catalog.tests</module>
                 <module>net.refractions.udig.catalog.tests.geotiff</module>
                 <module>net.refractions.udig.catalog.tests.ui</module>
                 <module>net.refractions.udig.catalog.tests.wfs</module>
@@ -34,7 +34,7 @@
                 <module>net.refractions.udig.tool.default.tests</module>
                 <module>net.refractions.udig.tool.edit.tests</module>
                 <module>net.refractions.udig.tool.info.tests</module>
-                <module>net.refractions.udig.tool.select.tests</module>
+                <module>net.refractions.udig.tool.select.tests</module -->
                 <module>net.refractions.udig.ui.tests</module>
             </modules>
         </profile>
