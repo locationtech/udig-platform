@@ -53,7 +53,7 @@ public class OpenMapCommandTest extends AbstractProjectUITestCase {
 		done = false;
 	}
 	
-	public void test() throws Exception {
+	public void xtest() throws Exception {
 		Runner.Runnable[] runners = new Runner.Runnable[]{
 			new Runner.Runnable() {
 				public int run(IProgressMonitor monitor) {

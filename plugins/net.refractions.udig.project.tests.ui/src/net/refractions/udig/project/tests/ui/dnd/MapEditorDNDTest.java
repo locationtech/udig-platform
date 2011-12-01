@@ -55,7 +55,7 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         super.tearDown();
     }
 	
-	public void testSingle() throws Exception {
+	public void xtestSingle() throws Exception {
 		Object data = getDataSingleResource();
 		
 		handler.performDrop(data, null);
@@ -111,7 +111,7 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         }
 	}
     
-    public void testHTMLTableDrop() throws Exception {
+    public void xtestHTMLTableDrop() throws Exception {
     	URL url=FileLocator.toFileURL(CatalogTestsUIPlugin.getDefault().getBundle().getEntry("data/lakes.shp")); //$NON-NLS-1$
     	String data="<td class='confluenceTd'> <span class=\"nobr\"><a href=\""+url.toString()+"\" title=\"Visit page outside Confluence\" rel=\"nofollow\">DM Solutions WMS<sup><img class=\"rendericon\" src=\"/confluence/images/icons/linkext7.gif\" height=\"7\" width=\"7\" align=\"absmiddle\" alt=\"\" border=\"0\"/></sup></a></span> </td>";  //$NON-NLS-1$//$NON-NLS-2$
 
@@ -154,7 +154,7 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         
     }
 
-    public void testMulti() throws Exception {
+    public void xtestMulti() throws Exception {
         URL[] urls  = new URL[]{
         	FileLocator.toFileURL(CatalogTestsUIPlugin.getDefault().getBundle().getEntry("data/streams.shp")), //$NON-NLS-1$
         	FileLocator.toFileURL(CatalogTestsUIPlugin.getDefault().getBundle().getEntry("data/lakes.shp")) //$NON-NLS-1$
@@ -249,7 +249,7 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         assertEquals("Should only be one map open", 1,ApplicationGIS.getOpenMaps().size()); //$NON-NLS-1$
     }
 
-    public void testMultiGeoResources() throws Exception {
+    public void xtestMultiGeoResources() throws Exception {
         Object data = new Object[]{ 
                 MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures("test1", 2), true), //$NON-NLS-1$
                 MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures("test2", 2), true) //$NON-NLS-1$

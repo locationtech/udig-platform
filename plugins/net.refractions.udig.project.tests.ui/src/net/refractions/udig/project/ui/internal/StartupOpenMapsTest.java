@@ -16,7 +16,7 @@ public class StartupOpenMapsTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.StartupOpenMaps.earlyStartup()'
      */
-    public void testEarlyStartup() throws Exception{
+    public void xtestEarlyStartup() throws Exception{
         assertNotSame("There should be no maps open", ApplicationGIS.NO_MAP, ApplicationGIS.getActiveMap()); //$NON-NLS-1$
         StartupOpenMaps startup=new StartupOpenMaps();
         URL url = CatalogTestsUIPlugin.getDefault().getBundle()

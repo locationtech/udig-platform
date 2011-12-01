@@ -94,7 +94,7 @@ public class DeleteTest extends AbstractProjectUITestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.ui.internal.actions.Delete.operate(Project)'
 	 */
-	public void testOperateProject() throws Exception {
+	public void xtestOperateProject() throws Exception {
 		
 		DeleteAccessor deleteAction=new DeleteAccessor();
 		URI projecturi=project.eResource().getURI();
