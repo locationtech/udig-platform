@@ -60,7 +60,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-swing-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-validation-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-wfs-8-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wms-8-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wms-8-SNAPSHOT.jar" sourcepath="/Users/jody/java/geotools/trunk/modules/extension/wms/src/main/java"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-wps-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xml-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-core-8-SNAPSHOT.jar"/>
