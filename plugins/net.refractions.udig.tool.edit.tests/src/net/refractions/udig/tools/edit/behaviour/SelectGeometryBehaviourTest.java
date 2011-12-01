@@ -15,6 +15,7 @@ import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
 import net.refractions.udig.project.ui.internal.tool.ToolContext;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
@@ -125,6 +126,8 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
      * Test method for 'net.refractions.udig.tools.edit.mode.MoveVertexMode.run(EditToolHandler, MapMouseEvent, EventType)'
      */
     public void testRun() throws Exception {
+        if( EditTestControl.DISABLE ) return;
+        
         SelectFeatureBehaviour mode=new SelectFeatureBehaviour(new Class[]{Point.class}, BBOX.class);
         
         Listener l=new Listener();

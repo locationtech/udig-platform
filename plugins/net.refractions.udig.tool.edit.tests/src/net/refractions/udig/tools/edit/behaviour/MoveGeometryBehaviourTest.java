@@ -19,6 +19,7 @@ import java.util.List;
 import junit.framework.TestCase;
 import net.refractions.udig.project.internal.render.ViewportModel;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
@@ -66,6 +67,8 @@ public class MoveGeometryBehaviourTest extends TestCase {
      * MapMouseEvent, EventType)'
      */
     public void testIsValid() {
+        if( EditTestControl.DISABLE ) return;
+        
         MapMouseEvent event = new MapMouseEvent(null, 100, 100, MapMouseEvent.ALT_DOWN_MASK
                 | MapMouseEvent.CTRL_DOWN_MASK, MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         assertFalse(moveGeometryBehaviour.isValid(handler, event, EventType.DRAGGED));
@@ -123,6 +126,8 @@ public class MoveGeometryBehaviourTest extends TestCase {
                 | MapMouseEvent.CTRL_DOWN_MASK, MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.DRAGGED);
 
+        if( EditTestControl.DISABLE ) return;
+        
         assertEquals(2, handler.getEditBlackboard().getCoords(10, 0).size());
         assertEquals(1, handler.getEditBlackboard().getCoords(60, 0).size());
         assertEquals(1, handler.getEditBlackboard().getCoords(60, 50).size());
@@ -156,6 +161,8 @@ public class MoveGeometryBehaviourTest extends TestCase {
     }
 
     public void testMoveDecimatedGeometry() throws Exception {
+        if( EditTestControl.DISABLE ) return;
+        
         Coordinate[] coords = new Coordinate[]{new Coordinate(-128.6898, 59.0493),
                 new Coordinate(-128.6894, 59.0502), new Coordinate(-128.6892, 59.052),
                 new Coordinate(-128.6883, 59.0525), new Coordinate(-128.6865, 59.0526),

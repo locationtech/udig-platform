@@ -7,6 +7,8 @@ import java.awt.geom.PathIterator;
 
 import javax.swing.JFrame;
 
+import net.refractions.udig.tools.edit.EditTestControl;
+
 import junit.framework.TestCase;
 
 /**
@@ -42,7 +44,8 @@ public class ControlPointPathIteratorTest extends TestCase {
     public void testDraw() throws Exception {
         ControlPointPathIterator pathIterator = new ControlPointPathIterator(editGeom, true, 5, 5);
         
-
+        if( EditTestControl.DISABLE ) return;
+        
         assertCorrectPath(pathIterator, false);
 
         show( new ControlPointPathIterator(editGeom, false, 5, 5) );
