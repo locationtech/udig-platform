@@ -557,7 +557,6 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
     public void search( final Object newFilter ) {        
         if ( newFilter== null) {
             stopSearch();     
-            System.out.println("blah");
             //book.showPage( promptPage );
             return;
         }        

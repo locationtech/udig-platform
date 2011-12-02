@@ -499,7 +499,7 @@ public class SearchView extends SearchPart {
     
     
     public void setAOIFilter( boolean filter ) {
-        aoiFilter = filter;
+        aoiFilter = filter; 
         search(createQuery());
     }
     
