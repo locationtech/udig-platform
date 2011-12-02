@@ -12,6 +12,7 @@
    <extension-point id="objectProperty" name="%objectProperty.point" schema="schema/objectProperty.exsd"/>
    <extension-point id="workbenchConfigurations" name="%workbenchConfigurations" schema="schema/workbenchConfigurations.exsd"/>
    <extension-point id="menuBuilders" name="%menuBuilders" schema="schema/menuBuilders.exsd"/>
+   <extension-point id="boundary" name="Boundary" schema="schema/boundary.exsd"/>
 
    <extension
          point="org.eclipse.core.runtime.preferences">
@@ -73,6 +74,13 @@
             category="org.eclipse.ui"
             class="org.eclipse.ui.ExtensionFactory:progressView"
             id="org.eclipse.ui.views.ProgressView">
+      </view>
+      <view
+            category="catalog"
+            class="net.refractions.udig.ui.boundary.BoundaryView"
+            id="net.refractions.udig.ui.viewBoundary"
+            name="%boundary.name"
+            restorable="true">
       </view>
    </extension>
 	<extension
@@ -375,5 +383,35 @@
              id="charset"
              label="%charset">
        </keyword>
+    </extension>
+    <extension
+          point="org.eclipse.ui.services">
+       <serviceFactory
+             factoryClass="net.refractions.udig.internal.boundary.BoundaryServiceFactory">
+          <service
+                serviceClass="net.refractions.udig.boundary.IBoundaryService">
+          </service>
+       </serviceFactory>
+    </extension>
+    <extension
+          id="net.refractions.udig.ui.boundaryStrategy"
+          name="Default Boundary"
+          point="net.refractions.udig.ui.boundary">
+       <boundary
+             class="net.refractions.udig.internal.boundary.BoundaryStrategyAll"
+             id="net.refractions.udig.ui.boundaryAll"
+             name="All">
+       </boundary>
+    </extension>
+    <extension
+          id="net.refractions.udig.ui.boundaryProperty"
+          point="net.refractions.udig.ui.objectProperty">
+       <object
+             targetClass="java.lang.Object">
+          <property
+                class="net.refractions.udig.internal.boundary.BoundaryStrategyPropertyValue"
+                id="boundaryStrategy">
+          </property>
+       </object>
     </extension>
 </plugin>

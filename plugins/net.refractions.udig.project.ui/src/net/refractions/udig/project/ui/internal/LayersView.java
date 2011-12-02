@@ -627,11 +627,13 @@ public class LayersView extends ViewPart
          */
         labelProvider.addListener(labelProviderListener);
 
-        if (getSite().getPage().getActiveEditor() != null
-                && getSite().getPage().getActiveEditor() instanceof MapEditor) {
-            setCurrentMap(((MapPart) getSite().getPage().getActiveEditor()).getMap());
-
+        if (getSite().getPage().getActiveEditor() != null && getSite().getPage().getActiveEditor() instanceof IAdaptable){
+            Object obj = ((IAdaptable)getSite().getPage().getActiveEditor()).getAdapter(Map.class);
+            if (obj != null){
+                setCurrentMap((Map)obj);
+            }
         }
+                
         viewer.setSorter(new ViewerLayerSorter());
 
         // sets the layer visibility to match the check box setting.

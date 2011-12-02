@@ -420,7 +420,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
                             .log(
                                     "Error creating class: " + element.getAttribute("class") + " part of layer interceptor: " + attribute, e); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
                 } catch (Throwable t) {
-                    ProjectPlugin.log("error running interceptor: " + attribute, t); //$NON-NLS-1$
+                    ProjectPlugin.log("Error running interceptor: " + attribute, t); //$NON-NLS-1$
                 }
             }
         }

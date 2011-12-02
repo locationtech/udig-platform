@@ -49,8 +49,9 @@ public class PropertyParser implements FilterParser {
             IConfigurationElement[] children = configurationElement.getChildren("property"); //$NON-NLS-1$
             for( IConfigurationElement child : children ) {
                 String currentPropertyID = child.getAttribute("id"); //$NON-NLS-1$
-                currentPropertyID=child.getNamespaceIdentifier()+"."+currentPropertyID; //$NON-NLS-1$
-                if( currentPropertyID.equals(desiredPropertyId)){
+                String currentPropertyID2=child.getNamespaceIdentifier()+"."+currentPropertyID; //$NON-NLS-1$
+                
+                if( currentPropertyID.equals(desiredPropertyId) || currentPropertyID2.equals(desiredPropertyId)){
                     propertyElement = child;
                     targetClass = configurationElement.getAttribute("targetClass"); //$NON-NLS-1$
                     // try the deprecated one if the required new one is not there

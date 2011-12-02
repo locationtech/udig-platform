@@ -17,6 +17,11 @@ package net.refractions.udig.ui.operations;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+
+import net.refractions.udig.internal.ui.UiPlugin;
+
 /**
  * Abstract class that can be used as a superclass for PropertyValue implementations. 
  * 
@@ -40,7 +45,11 @@ public abstract class AbstractPropertyValue<T> implements PropertyValue<T> {
      */
     public void notifyListeners(Object changed) {
         for( IOpFilterListener listener : listeners ) {
-            listener.notifyChange(changed);
+            try {
+                listener.notifyChange(changed);
+            } catch (Exception e) {
+                UiPlugin.trace(UiPlugin.ID, listener.getClass(), e.getMessage(), e );
+            }
         }
     }
 

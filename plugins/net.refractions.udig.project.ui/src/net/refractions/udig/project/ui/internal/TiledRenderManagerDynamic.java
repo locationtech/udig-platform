@@ -920,7 +920,9 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             newMap.addDeepAdapter(selectionListener);
         }
         NotificationChain change = super.basicSetMapInternal(newMap, msgs);
-        getMapInternal().addDeepAdapter(this.visibilityChangedListener);
+        if (getMapInternal() != null){
+            getMapInternal().addDeepAdapter(this.visibilityChangedListener);
+        }
         
         return change;
     }

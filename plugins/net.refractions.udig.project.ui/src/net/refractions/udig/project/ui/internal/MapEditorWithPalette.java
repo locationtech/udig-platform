@@ -49,11 +49,9 @@ import net.refractions.udig.project.ui.UDIGEditorInput;
 import net.refractions.udig.project.ui.commands.IDrawCommand;
 import net.refractions.udig.project.ui.controls.ScaleRatioLabel;
 import net.refractions.udig.project.ui.internal.commands.draw.DrawFeatureCommand;
-import net.refractions.udig.project.ui.internal.tool.display.ToolManager;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
 import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.viewers.MapEditDomain;
 import net.refractions.udig.project.ui.viewers.MapViewer;
 import net.refractions.udig.ui.CRSChooserDialog;
@@ -154,6 +152,19 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     /** The id of the MapViewport View */
     public final static String ID = "net.refractions.udig.project.ui.mapEditor"; //$NON-NLS-1$
     final MapEditorWithPalette editor = this;
+    
+    /**
+     * This is responsible for tracking the active tool; it is a facility provided
+     * by GEF. We are not using GEF tools directly; simply borrowing some of their
+     * infrastructure to support a nice visual palette.
+     * <p>
+     * The *id* of the current tool in the editDomain is used to determine the 
+     * active tool for the map.
+     * <p>
+     * Holds onto the paletteViewer while delegating to ToolManager
+     */
+    private MapEditDomain editDomain;
+
     final StatusLineManager statusLineManager = new StatusLineManager();
     private MapEditorSite mapEditorSite;
     private boolean dirty = false;
@@ -648,6 +659,11 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                     label = new StatusBarButton(StatusBarButton.CRS_ITEM_ID, full);
                     bar.appendToGroup(StatusLineManager.MIDDLE_GROUP, label);
                     label.setVisible(true);
+                    
+//                    StatusBarToolOptionsPage label2 = new StatusBarToolOptionsPage("An Id",editor);
+//                    bar.appendToGroup(StatusLineManager.BEGIN_GROUP, label2);
+//                    label2.setVisible(true);
+                    
                     bar.update(true);
                     return;
                 }
@@ -948,13 +964,10 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
      */
     public void createPartControl( final Composite parent ) {
         ShutdownTaskList.instance().addPreShutdownTask(shutdownTask);
-
-        ToolManager tools = (ToolManager) ApplicationGIS.getToolManager();
-        MapEditDomain domain = tools.getEditDomain();
-        if( domain == null ){
-            throw new NullPointerException("MapEditDomain is required from ToolManager");
-        }      
-		setEditDomain( domain );
+        if( editDomain == null ){
+            editDomain = new MapEditDomain(this);
+        }
+        setEditDomain( editDomain );
         
         // super class sets up the splitter; it needs the setEditDomain to be defined
         // prior to the method being called (so the FlyoutPaletteComposite split can latch on)
@@ -1003,18 +1016,15 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         } else {
             viewer = new MapViewer(composite, SWT.MULTI | SWT.NO_BACKGROUND);
         }
-        
         // we need an edit domain for GEF
         // This represents the "Current Tool" for the Palette
         // We should not duplicate the idea of current tools so we may
         // need to delegate to getEditDomain; and just use the MapEditTool *id*
-        ToolManager tools = (ToolManager) ApplicationGIS.getToolManager();
-        setEditDomain( tools.getEditDomain());
+        // editDomain = new MapEditDomain(this);
+        // setEditDomain( editDomain );
 
         // allow the viewer to open our context menu; work with our selection proivder etc
         viewer.init(this);
-        
-        //viewer.setModalTool( (ModalTool) ApplicationGIS.getToolManager().getActiveTool());
         
         // if a map was provided as input we can ask the viewer to use it
         Map input = (Map) ((UDIGEditorInput) getEditorInput()).getProjectElement();
@@ -1042,19 +1052,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
         getSite().getPage().addPartListener(partlistener);
         registerFeatureFlasher();
-        /*
-        if (getMap().getRenderManager() == null){
-            if (!istiled) {
-                getMap().setRenderManagerInternal(new RenderManagerDynamic());
-            } else {
-                getMap().setRenderManagerInternal(new TiledRenderManagerDynamic());
-            }
-        }
-
-        setRenderManager(getMap().getRenderManagerInternal());
-        viewer.getViewport().setRenderManager(getRenderManager());
-        getRenderManager().setMapDisplay(viewer.getViewport());
-        */
         viewer.getViewport().addPaneListener(getMap().getViewportModelInternal());
 
         layerSelectionListener = new LayerSelectionListener(new LayerSelectionListener.Callback(){
@@ -1473,6 +1470,9 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
     public IStatusLineManager getStatusLineManager() {
     	return statusLineManager;
+    }
+    public MapEditDomain getEditDomain(){
+        return editDomain;
     }
 
 }

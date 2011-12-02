@@ -57,4 +57,15 @@ public class Or implements OpFilter{
         }
     }
 
+    @Override
+    public String toString() {
+        StringBuilder build = new StringBuilder();
+        build.append("OR (");
+        for( OpFilter filter : filters ) {
+            build.append( filter );
+            build.append(",");
+        }
+        build.setCharAt(build.length()-1, ')');
+        return build.toString();
+    }
 }

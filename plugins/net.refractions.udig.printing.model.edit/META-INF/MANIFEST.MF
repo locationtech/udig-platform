@@ -15,4 +15,4 @@ Require-Bundle: net.refractions.udig.printing.model;visibility:=reexport,
  net.refractions.udig.ui
 Bundle-ActivationPolicy: lazy
 Export-Package: net.refractions.udig.printing.model.provider
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

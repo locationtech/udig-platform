@@ -16,4 +16,3 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Export-Package: net.refractions.udig.browser,
  net.refractions.udig.browser.ui
-Bundle-RequiredExecutionEnvironment: J2SE-1.5

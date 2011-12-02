@@ -24,7 +24,7 @@ import net.refractions.udig.project.ui.tool.IToolContext;
  * 
  * @author Jesse
  */
-public class PanMiddleMouse extends Pan {
+public class PanMiddleMouse extends PanTool {
 
 	public PanMiddleMouse() {
 	}

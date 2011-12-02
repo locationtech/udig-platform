@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2004, Refractions Research Inc.
+ * (C) 2004-2011, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -29,6 +29,7 @@ import net.refractions.udig.core.internal.CorePlugin;
  * 
  * @author Jesse
  * @since 1.1.0
+ * @version 1.2
  */
 public class URLUtils {
 
@@ -54,6 +55,37 @@ public class URLUtils {
             return false;
         }
         boolean sameProtocol = url2.getProtocol().equalsIgnoreCase(url1.getProtocol());
+        
+        if ("file".equals(url2.getProtocol()) && "file".equals(url1.getProtocol())) {
+            // take into account file links on linux and osx
+            File file1 = urlToFile(url1);
+            File file2 = urlToFile(url2);
+            try {
+                if (file1 != null && file2 != null) {
+                    String path1 = file1.getCanonicalPath();
+                    if (file1.isDirectory() && !path1.endsWith("/")) {
+                        path1 = path1 + "/";
+                    }
+                    String path2 = file2.getCanonicalPath();
+                    if (file2.isDirectory() && !path2.endsWith("/")) {
+                        path2 = path2 + "/";
+                    }
+                    if (stripRef) {
+                        if (url1.getRef() != null) {
+                            path1 = path1.substring(0, path1.length() - url1.getRef().length() - 1);
+                        }
+                        if (url2.getRef() != null) {
+                            path2 = path2.substring(0, path2.length() - url2.getRef().length() - 1);
+                        }
+                    }
+                    return path1.equals(path2);
+                }
+			} catch (IOException e) {
+				CatalogPlugin.log("Unable to compare file URLS "+file1+" and "+file2+" files because of an exception.", e);
+			}
+        	
+        }
+        
         boolean sameHost = ((url2.getHost() == null || "".equals(url2.getHost())) || (url2.getHost() != null && url2.getHost().equalsIgnoreCase(url1.getHost()))); //$NON-NLS-1$
         boolean samePath = ((url2.getPath() == null || "".equals(url2.getPath())) || (url2.getPath() != null && url2.getPath().equalsIgnoreCase(url1.getPath()))); //$NON-NLS-1$
         boolean sameQuery = ((url2.getQuery() == null || "".equals(url2.getQuery())) || (url2.getQuery() != null && url2.getQuery().equalsIgnoreCase(url1.getQuery()))); //$NON-NLS-1$
