@@ -44,6 +44,7 @@ import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -56,7 +57,9 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -118,10 +121,10 @@ public class SearchView extends SearchPart {
 
         if (splitter.getOrientation() == SWT.HORIZONTAL) {
             label.setText(Messages.SearchView_prompt); 
-            bbox.setText(Messages.SearchView_bbox);             
+            //bbox.setText(Messages.SearchView_bbox);             
         } else {
             label.setText(""); //$NON-NLS-1$
-            bbox.setText(""); //$NON-NLS-1$
+            //bbox.setText(""); //$NON-NLS-1$
         }
         parent.layout();
     }
@@ -143,10 +146,10 @@ public class SearchView extends SearchPart {
         });
 
         // Create bbox button
-        bbox = new Button(aParent, SWT.CHECK);
-        bbox.setText(Messages.SearchView_bbox); 
-        bbox.setToolTipText(Messages.SearchView_bboxTooltip); 
-        bbox.setSelection(true);
+//        bbox = new Button(aParent, SWT.CHECK);
+//        bbox.setText(Messages.SearchView_bbox); 
+//        bbox.setToolTipText(Messages.SearchView_bboxTooltip); 
+//        bbox.setSelection(true);
 
         super.createPartControl(aParent);
 
@@ -170,13 +173,13 @@ public class SearchView extends SearchPart {
         FormData dText = new FormData(); // bind to top, label, bbox
         dText.top = new FormAttachment(1);
         dText.left = new FormAttachment(label, 5);
-        dText.right = new FormAttachment(bbox, -5);
+        dText.right = new FormAttachment(100);
         text.setLayoutData(dText);
 
         FormData dBbox = new FormData(); // text & right
         dBbox.right = new FormAttachment(100);
         dBbox.top = new FormAttachment(text, 0, SWT.CENTER);
-        bbox.setLayoutData(dBbox);
+        //bbox.setLayoutData(dBbox);
 
         FormData dsashForm = new FormData(100, 100); // text & bottom
         dsashForm.right = new FormAttachment(100); // bind to right of form
@@ -278,6 +281,8 @@ public class SearchView extends SearchPart {
         }// end refresh
     };
 
+    private boolean aoiFilter;
+
     private void createContextMenu() {
         final MenuManager contextMenu = new MenuManager();
 
@@ -334,7 +339,9 @@ public class SearchView extends SearchPart {
         Query filter = new Query();
         filter.text = text.getText();
         filter.bbox = new Envelope();
-        if (bbox.getSelection()) {
+        //if (bbox.getSelection()) {
+        boolean aoiFilter2 = isAOIFilter();
+        if (aoiFilter2) {
         	IAOIService aOIService = PlatformGIS.getAOIService();
         	try {
         		filter.bbox = aOIService.getExtent();
@@ -489,6 +496,17 @@ public class SearchView extends SearchPart {
             }
         }
     }
+    
+    
+    public void setAOIFilter( boolean filter ) {
+        aoiFilter = filter; 
+        search(createQuery());
+    }
+    
+    public boolean isAOIFilter() {
+        return aoiFilter;
+    }
+
 }
 
 class Info {
