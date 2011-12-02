@@ -63,10 +63,12 @@ public class URLUtils {
             try {
                 if (file1 != null && file2 != null) {
                     String path1 = file1.getCanonicalPath();
+                    path1 = path1.replaceAll("\\\\", "/");
                     if (file1.isDirectory() && !path1.endsWith("/")) {
                         path1 = path1 + "/";
                     }
                     String path2 = file2.getCanonicalPath();
+                    path2 = path2.replaceAll("\\\\", "/");
                     if (file2.isDirectory() && !path2.endsWith("/")) {
                         path2 = path2 + "/";
                     }

@@ -2,35 +2,101 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 <toc label="Live Users Guide">
             
-            
-        <topic label="uDig Overview" href="http://udig.refractions.net/confluence/display/EN/uDig Overview">
-        
-                </topic>
-            
-        <topic label="Getting Started" href="http://udig.refractions.net/confluence/display/EN/Getting Started">
-                    
-        <topic label="Quickstart" href="http://udig.refractions.net/confluence/display/EN/Quickstart">
-        
-                </topic>
-                    
-        <topic label="Walkthrough 1" href="http://udig.refractions.net/confluence/display/EN/Walkthrough 1">
-        
-                </topic>
-                    
-        <topic label="Walkthrough 2" href="http://udig.refractions.net/confluence/display/EN/Walkthrough 2">
-        
-                </topic>
+        <topic label="Community" href="http://udig.refractions.net/confluence/display/EN/Community">
         
                             
-        <topic label="Introduction to the Spatial Toolbox" href="http://udig.refractions.net/confluence/display/EN/Introduction to the Spatial Toolbox">
+        <topic label="Axios uDig Extensions" href="http://udig.refractions.net/confluence/display/EN/Axios uDig Extensions">
+        
+                            
+        <topic label="Editing Tools" href="http://udig.refractions.net/confluence/display/EN/Editing Tools">
+        
+                            
+        <topic label="Arc Tool" href="http://udig.refractions.net/confluence/display/EN/Arc Tool">
         
                 </topic>
                     
+        <topic label="Merge Tool" href="http://udig.refractions.net/confluence/display/EN/Merge Tool">
+        
+                </topic>
+                    
+        <topic label="Parallel Tool" href="http://udig.refractions.net/confluence/display/EN/Parallel Tool">
+        
+                </topic>
+                    
+        <topic label="Split Tool (Axios Tools)" href="http://udig.refractions.net/confluence/display/EN/Split Tool (Axios Tools)">
+        
+                </topic>
+                    
+        <topic label="Trim Line Tool" href="http://udig.refractions.net/confluence/display/EN/Trim Line Tool">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Image Georeferencing view" href="http://udig.refractions.net/confluence/display/EN/Image Georeferencing view">
+        
+                </topic>
+                    
+        <topic label="Spatial Operations" href="http://udig.refractions.net/confluence/display/EN/Spatial Operations">
+        
+                            
+        <topic label="Buffer Operation" href="http://udig.refractions.net/confluence/display/EN/Buffer Operation">
+        
+                </topic>
+                    
+        <topic label="Clip Operation" href="http://udig.refractions.net/confluence/display/EN/Clip Operation">
+        
+                </topic>
+                    
+        <topic label="Dissolve Operation" href="http://udig.refractions.net/confluence/display/EN/Dissolve Operation">
+        
+                </topic>
+                    
+        <topic label="Fill Operation" href="http://udig.refractions.net/confluence/display/EN/Fill Operation">
+        
+                </topic>
+                    
+        <topic label="Hole Cut Operation" href="http://udig.refractions.net/confluence/display/EN/Hole Cut Operation">
+        
+                </topic>
+                    
+        <topic label="Intersect Operation" href="http://udig.refractions.net/confluence/display/EN/Intersect Operation">
+        
+                </topic>
+                    
+        <topic label="Polygon to Line Operation" href="http://udig.refractions.net/confluence/display/EN/Polygon to Line Operation">
+        
+                </topic>
+                    
+        <topic label="Spatial Join Operation" href="http://udig.refractions.net/confluence/display/EN/Spatial Join Operation">
+        
+                </topic>
+                    
+        <topic label="Split Operation" href="http://udig.refractions.net/confluence/display/EN/Split Operation">
+        
+                </topic>
+        </topic>
+        </topic>
+                    
+        <topic label="Jody" href="http://udig.refractions.net/confluence/display/EN/Jody">
+        
+                            
+        <topic label="North Arrow" href="http://udig.refractions.net/confluence/display/EN/North Arrow">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Using the WPS plugin" href="http://udig.refractions.net/confluence/display/EN/Using the WPS plugin">
+        
+                </topic>
         </topic>
             
         <topic label="Concepts" href="http://udig.refractions.net/confluence/display/EN/Concepts">
         
                             
+        <topic label="Boundary" href="http://udig.refractions.net/confluence/display/EN/Boundary">
+        
+                </topic>
+                    
         <topic label="Common Query Language" href="http://udig.refractions.net/confluence/display/EN/Common Query Language">
         
                 </topic>
@@ -54,6 +120,10 @@
         
                 </topic>
         </topic>
+                    
+        <topic label="Georeference" href="http://udig.refractions.net/confluence/display/EN/Georeference">
+        
+                </topic>
                     
         <topic label="Geospatial" href="http://udig.refractions.net/confluence/display/EN/Geospatial">
         
@@ -203,94 +273,9 @@
         <topic label="Tasks" href="http://udig.refractions.net/confluence/display/EN/Tasks">
         
                             
-        <topic label="Change a Layers Style" href="http://udig.refractions.net/confluence/display/EN/Change a Layers Style">
-        
-                </topic>
-                    
-        <topic label="Closing an editor" href="http://udig.refractions.net/confluence/display/EN/Closing an editor">
-        
-                </topic>
-                    
-        <topic label="Creating a Project" href="http://udig.refractions.net/confluence/display/EN/Creating a Project">
+        <topic label="Installation and Configuration" href="http://udig.refractions.net/confluence/display/EN/Installation and Configuration">
         
                             
-        <topic label="Using the Context menu" href="http://udig.refractions.net/confluence/display/EN/Using the Context menu">
-        
-                </topic>
-                    
-        <topic label="Using the File menu" href="http://udig.refractions.net/confluence/display/EN/Using the File menu">
-        
-                </topic>
-                    
-        <topic label="Using the New button" href="http://udig.refractions.net/confluence/display/EN/Using the New button">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Exiting the workbench" href="http://udig.refractions.net/confluence/display/EN/Exiting the workbench">
-        
-                </topic>
-                    
-        <topic label="Georeferencing an Image" href="http://udig.refractions.net/confluence/display/EN/Georeferencing an Image">
-        
-                </topic>
-                    
-        <topic label="Handling Shapefiles with different Character Sets" href="http://udig.refractions.net/confluence/display/EN/Handling Shapefiles with different Character Sets">
-        
-                </topic>
-                    
-        <topic label="Importing" href="http://udig.refractions.net/confluence/display/EN/Importing">
-        
-                            
-        <topic label="Importing data" href="http://udig.refractions.net/confluence/display/EN/Importing data">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Pan" href="http://udig.refractions.net/confluence/display/EN/Pan">
-        
-                </topic>
-                    
-        <topic label="Performing simple analysis" href="http://udig.refractions.net/confluence/display/EN/Performing simple analysis">
-        
-                            
-        <topic label="Feature count" href="http://udig.refractions.net/confluence/display/EN/Feature count">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Printing the current Map" href="http://udig.refractions.net/confluence/display/EN/Printing the current Map">
-        
-                </topic>
-                    
-        <topic label="Rearranging the main toolbar" href="http://udig.refractions.net/confluence/display/EN/Rearranging the main toolbar">
-        
-                </topic>
-                    
-        <topic label="Rearranging views and editors" href="http://udig.refractions.net/confluence/display/EN/Rearranging views and editors">
-        
-                            
-        <topic label="Drop cursors" href="http://udig.refractions.net/confluence/display/EN/Drop cursors">
-        
-                </topic>
-                    
-        <topic label="Maximizing" href="http://udig.refractions.net/confluence/display/EN/Maximizing">
-        
-                </topic>
-                    
-        <topic label="Rearranging tabbed views" href="http://udig.refractions.net/confluence/display/EN/Rearranging tabbed views">
-        
-                </topic>
-                    
-        <topic label="Rearranging views" href="http://udig.refractions.net/confluence/display/EN/Rearranging views">
-        
-                </topic>
-                    
-        <topic label="Tiling editors" href="http://udig.refractions.net/confluence/display/EN/Tiling editors">
-        
-                </topic>
-        </topic>
-                    
         <topic label="Running uDig" href="http://udig.refractions.net/confluence/display/EN/Running uDig">
         
                 </topic>
@@ -319,17 +304,105 @@
                 </topic>
         </topic>
                     
-        <topic label="Using Layer Operations" href="http://udig.refractions.net/confluence/display/EN/Using Layer Operations">
+        <topic label="Working with the Update Manager" href="http://udig.refractions.net/confluence/display/EN/Working with the Update Manager">
         
                             
-        <topic label="Layer Summary" href="http://udig.refractions.net/confluence/display/EN/Layer Summary">
+        <topic label="Keeping up to date" href="http://udig.refractions.net/confluence/display/EN/Keeping up to date">
         
-                </topic>
-                    
-        <topic label="Validation" href="http://udig.refractions.net/confluence/display/EN/Validation">
+                            
+        <topic label="Finding new plugins" href="http://udig.refractions.net/confluence/display/EN/Finding new plugins">
         
                 </topic>
         </topic>
+        </topic>
+        </topic>
+                    
+        <topic label="Working with Boundary" href="http://udig.refractions.net/confluence/display/EN/Working with Boundary">
+        
+                            
+        <topic label="Configure table view to list the contents of a polygon" href="http://udig.refractions.net/confluence/display/EN/Configure table view to list the contents of a polygon">
+        
+                </topic>
+                    
+        <topic label="Configure table view to list the contents of the screen" href="http://udig.refractions.net/confluence/display/EN/Configure table view to list the contents of the screen">
+        
+                </topic>
+                    
+        <topic label="Show the boundary on the map" href="http://udig.refractions.net/confluence/display/EN/Show the boundary on the map">
+        
+                </topic>
+                    
+        <topic label="Use a bookmark as the boundary" href="http://udig.refractions.net/confluence/display/EN/Use a bookmark as the boundary">
+        
+                </topic>
+                    
+        <topic label="Use a Coordinate Reference System as the boundary" href="http://udig.refractions.net/confluence/display/EN/Use a Coordinate Reference System as the boundary">
+        
+                </topic>
+                    
+        <topic label="Use a processing region as the boundary" href="http://udig.refractions.net/confluence/display/EN/Use a processing region as the boundary">
+        
+                </topic>
+                    
+        <topic label="Use polygon as the boundary" href="http://udig.refractions.net/confluence/display/EN/Use polygon as the boundary">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Working with Data" href="http://udig.refractions.net/confluence/display/EN/Working with Data">
+        
+                            
+        <topic label="Adding Features from a DB2" href="http://udig.refractions.net/confluence/display/EN/Adding Features from a DB2">
+        
+                            
+        <topic label="DB2 Preferences" href="http://udig.refractions.net/confluence/display/EN/DB2 Preferences">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Adding features from a Shapefile" href="http://udig.refractions.net/confluence/display/EN/Adding features from a Shapefile">
+        
+                </topic>
+                    
+        <topic label="Adding features from ArcSDE" href="http://udig.refractions.net/confluence/display/EN/Adding features from ArcSDE">
+        
+                </topic>
+                    
+        <topic label="Adding features from Oracle" href="http://udig.refractions.net/confluence/display/EN/Adding features from Oracle">
+        
+                </topic>
+                    
+        <topic label="Adding features from PostGIS" href="http://udig.refractions.net/confluence/display/EN/Adding features from PostGIS">
+        
+                </topic>
+                    
+        <topic label="Adding features from WFS" href="http://udig.refractions.net/confluence/display/EN/Adding features from WFS">
+        
+                </topic>
+                    
+        <topic label="Adding layers from WMS" href="http://udig.refractions.net/confluence/display/EN/Adding layers from WMS">
+        
+                </topic>
+                    
+        <topic label="Georeference an Image" href="http://udig.refractions.net/confluence/display/EN/Georeference an Image">
+        
+                </topic>
+                    
+        <topic label="Handling Shapefiles with different Character Sets" href="http://udig.refractions.net/confluence/display/EN/Handling Shapefiles with different Character Sets">
+        
+                </topic>
+                    
+        <topic label="Options for importing data" href="http://udig.refractions.net/confluence/display/EN/Options for importing data">
+        
+                            
+        <topic label="Importing data" href="http://udig.refractions.net/confluence/display/EN/Importing data">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Set raster transparent color" href="http://udig.refractions.net/confluence/display/EN/Set raster transparent color">
+        
+                </topic>
                     
         <topic label="Using Resource Operations" href="http://udig.refractions.net/confluence/display/EN/Using Resource Operations">
         
@@ -350,44 +423,9 @@
         
                 </topic>
         </topic>
-                    
-        <topic label="Using the Catalog view" href="http://udig.refractions.net/confluence/display/EN/Using the Catalog view">
-        
-                </topic>
-                    
-        <topic label="Using the help system" href="http://udig.refractions.net/confluence/display/EN/Using the help system">
-        
-                            
-        <topic label="Accessing context sensitive help" href="http://udig.refractions.net/confluence/display/EN/Accessing context sensitive help">
-        
-                </topic>
         </topic>
                     
-        <topic label="Using the Layers view" href="http://udig.refractions.net/confluence/display/EN/Using the Layers view">
-        
-                            
-        <topic label="Deleting a layer" href="http://udig.refractions.net/confluence/display/EN/Deleting a layer">
-        
-                </topic>
-                    
-        <topic label="Zooming to a layer" href="http://udig.refractions.net/confluence/display/EN/Zooming to a layer">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Using the Projects view" href="http://udig.refractions.net/confluence/display/EN/Using the Projects view">
-        
-                </topic>
-                    
-        <topic label="Using the Search view" href="http://udig.refractions.net/confluence/display/EN/Using the Search view">
-        
-                </topic>
-                    
-        <topic label="Using the Table View" href="http://udig.refractions.net/confluence/display/EN/Using the Table View">
-        
-                </topic>
-                    
-        <topic label="Using Tools" href="http://udig.refractions.net/confluence/display/EN/Using Tools">
+        <topic label="Working with Features" href="http://udig.refractions.net/confluence/display/EN/Working with Features">
         
                             
         <topic label="Advanced Tool Mode" href="http://udig.refractions.net/confluence/display/EN/Advanced Tool Mode">
@@ -436,6 +474,10 @@
         <topic label="Rectangle Tool" href="http://udig.refractions.net/confluence/display/EN/Rectangle Tool">
         
                 </topic>
+                    
+        <topic label="Smart Buffer Tool" href="http://udig.refractions.net/confluence/display/EN/Smart Buffer Tool">
+        
+                </topic>
         </topic>
                     
         <topic label="Vertex Tools" href="http://udig.refractions.net/confluence/display/EN/Vertex Tools">
@@ -463,62 +505,90 @@
         </topic>
         </topic>
                     
-        <topic label="Working with data" href="http://udig.refractions.net/confluence/display/EN/Working with data">
+        <topic label="Working with Layers" href="http://udig.refractions.net/confluence/display/EN/Working with Layers">
         
                             
         <topic label="Adding a layer" href="http://udig.refractions.net/confluence/display/EN/Adding a layer">
         
                 </topic>
                     
-        <topic label="Adding Features from a DB2" href="http://udig.refractions.net/confluence/display/EN/Adding Features from a DB2">
+        <topic label="Change a Layers Style" href="http://udig.refractions.net/confluence/display/EN/Change a Layers Style">
+        
+                </topic>
+                    
+        <topic label="Configure a boundary layer" href="http://udig.refractions.net/confluence/display/EN/Configure a boundary layer">
+        
+                </topic>
+                    
+        <topic label="Create Layer from Query" href="http://udig.refractions.net/confluence/display/EN/Create Layer from Query">
+        
+                </topic>
+                    
+        <topic label="Feature count" href="http://udig.refractions.net/confluence/display/EN/Feature count">
+        
+                </topic>
+                    
+        <topic label="Using Layer Operations" href="http://udig.refractions.net/confluence/display/EN/Using Layer Operations">
         
                             
-        <topic label="DB2 Preferences" href="http://udig.refractions.net/confluence/display/EN/DB2 Preferences">
+        <topic label="Layer Summary" href="http://udig.refractions.net/confluence/display/EN/Layer Summary">
+        
+                </topic>
+                    
+        <topic label="Validation" href="http://udig.refractions.net/confluence/display/EN/Validation">
         
                 </topic>
         </topic>
-                    
-        <topic label="Adding features from a Shapefile" href="http://udig.refractions.net/confluence/display/EN/Adding features from a Shapefile">
-        
-                </topic>
-                    
-        <topic label="Adding features from ArcSDE" href="http://udig.refractions.net/confluence/display/EN/Adding features from ArcSDE">
-        
-                </topic>
-                    
-        <topic label="Adding features from Oracle" href="http://udig.refractions.net/confluence/display/EN/Adding features from Oracle">
-        
-                </topic>
-                    
-        <topic label="Adding features from PostGIS" href="http://udig.refractions.net/confluence/display/EN/Adding features from PostGIS">
-        
-                </topic>
-                    
-        <topic label="Adding features from WFS" href="http://udig.refractions.net/confluence/display/EN/Adding features from WFS">
-        
-                </topic>
-                    
-        <topic label="Adding layers from WMS" href="http://udig.refractions.net/confluence/display/EN/Adding layers from WMS">
-        
-                </topic>
-                    
-        <topic label="Set raster transparent color" href="http://udig.refractions.net/confluence/display/EN/Set raster transparent color">
-        
-                </topic>
         </topic>
                     
-        <topic label="Working with fast views" href="http://udig.refractions.net/confluence/display/EN/Working with fast views">
-        
-                </topic>
-                    
-        <topic label="Working with Projects" href="http://udig.refractions.net/confluence/display/EN/Working with Projects">
+        <topic label="Working with Maps" href="http://udig.refractions.net/confluence/display/EN/Working with Maps">
         
                             
         <topic label="Creating a new Map" href="http://udig.refractions.net/confluence/display/EN/Creating a new Map">
         
                 </topic>
                     
+        <topic label="Map Navigation" href="http://udig.refractions.net/confluence/display/EN/Map Navigation">
+        
+                            
+        <topic label="Pan" href="http://udig.refractions.net/confluence/display/EN/Pan">
+        
+                </topic>
+                    
+        <topic label="Zoom" href="http://udig.refractions.net/confluence/display/EN/Zoom">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Printing the current Map" href="http://udig.refractions.net/confluence/display/EN/Printing the current Map">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Working with Projects" href="http://udig.refractions.net/confluence/display/EN/Working with Projects">
+        
+                            
         <topic label="Creating a new Project" href="http://udig.refractions.net/confluence/display/EN/Creating a new Project">
+        
+                </topic>
+                    
+        <topic label="Creating a Project" href="http://udig.refractions.net/confluence/display/EN/Creating a Project">
+        
+                </topic>
+                    
+        <topic label="Using new to add a Map to a Project" href="http://udig.refractions.net/confluence/display/EN/Using new to add a Map to a Project">
+        
+                </topic>
+                    
+        <topic label="Using the Context menu to add a Map to a Project" href="http://udig.refractions.net/confluence/display/EN/Using the Context menu to add a Map to a Project">
+        
+                </topic>
+                    
+        <topic label="Using the File menu to add a new Map" href="http://udig.refractions.net/confluence/display/EN/Using the File menu to add a new Map">
+        
+                </topic>
+                    
+        <topic label="Using the Projects view" href="http://udig.refractions.net/confluence/display/EN/Using the Projects view">
         
                 </topic>
         </topic>
@@ -535,21 +605,85 @@
                 </topic>
         </topic>
                     
-        <topic label="Working with the Update Manager" href="http://udig.refractions.net/confluence/display/EN/Working with the Update Manager">
+        <topic label="Working with uDig" href="http://udig.refractions.net/confluence/display/EN/Working with uDig">
         
                             
-        <topic label="Keeping up to date" href="http://udig.refractions.net/confluence/display/EN/Keeping up to date">
-        
-                            
-        <topic label="Finding new plugins" href="http://udig.refractions.net/confluence/display/EN/Finding new plugins">
+        <topic label="Closing an editor" href="http://udig.refractions.net/confluence/display/EN/Closing an editor">
         
                 </topic>
-        </topic>
+                    
+        <topic label="Exiting the workbench" href="http://udig.refractions.net/confluence/display/EN/Exiting the workbench">
+        
+                </topic>
+                    
+        <topic label="Rearranging the main toolbar" href="http://udig.refractions.net/confluence/display/EN/Rearranging the main toolbar">
+        
+                </topic>
+                    
+        <topic label="Rearranging views and editors" href="http://udig.refractions.net/confluence/display/EN/Rearranging views and editors">
+        
+                            
+        <topic label="Drop cursors" href="http://udig.refractions.net/confluence/display/EN/Drop cursors">
+        
+                </topic>
+                    
+        <topic label="Maximizing" href="http://udig.refractions.net/confluence/display/EN/Maximizing">
+        
+                </topic>
+                    
+        <topic label="Rearranging tabbed views" href="http://udig.refractions.net/confluence/display/EN/Rearranging tabbed views">
+        
+                </topic>
+                    
+        <topic label="Rearranging views" href="http://udig.refractions.net/confluence/display/EN/Rearranging views">
+        
+                </topic>
+                    
+        <topic label="Tiling editors" href="http://udig.refractions.net/confluence/display/EN/Tiling editors">
+        
+                </topic>
         </topic>
                     
-        <topic label="Zoom" href="http://udig.refractions.net/confluence/display/EN/Zoom">
+        <topic label="Using the Catalog view" href="http://udig.refractions.net/confluence/display/EN/Using the Catalog view">
         
                 </topic>
+                    
+        <topic label="Using the help system" href="http://udig.refractions.net/confluence/display/EN/Using the help system">
+        
+                            
+        <topic label="Accessing context sensitive help" href="http://udig.refractions.net/confluence/display/EN/Accessing context sensitive help">
+        
+                </topic>
+                    
+        <topic label="Using with Cheat Sheets" href="http://udig.refractions.net/confluence/display/EN/Using with Cheat Sheets">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Using the Layers view" href="http://udig.refractions.net/confluence/display/EN/Using the Layers view">
+        
+                            
+        <topic label="Deleting a layer" href="http://udig.refractions.net/confluence/display/EN/Deleting a layer">
+        
+                </topic>
+                    
+        <topic label="Zooming to a layer" href="http://udig.refractions.net/confluence/display/EN/Zooming to a layer">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Using the Search view" href="http://udig.refractions.net/confluence/display/EN/Using the Search view">
+        
+                </topic>
+                    
+        <topic label="Using the Table View" href="http://udig.refractions.net/confluence/display/EN/Using the Table View">
+        
+                </topic>
+                    
+        <topic label="Working with fast views" href="http://udig.refractions.net/confluence/display/EN/Working with fast views">
+        
+                </topic>
+        </topic>
         </topic>
             
         <topic label="Reference" href="http://udig.refractions.net/confluence/display/EN/Reference">
@@ -682,6 +816,10 @@
         
                 </topic>
                     
+        <topic label="Boundary View" href="http://udig.refractions.net/confluence/display/EN/Boundary View">
+        
+                </topic>
+                    
         <topic label="Catalog view" href="http://udig.refractions.net/confluence/display/EN/Catalog view">
         
                 </topic>
@@ -800,10 +938,6 @@
         <topic label="Map Decoration page" href="http://udig.refractions.net/confluence/display/EN/Map Decoration page">
         
                             
-        <topic label="Active Region Decoration" href="http://udig.refractions.net/confluence/display/EN/Active Region Decoration">
-        
-                </topic>
-                    
         <topic label="Grid Decoration" href="http://udig.refractions.net/confluence/display/EN/Grid Decoration">
         
                 </topic>
@@ -825,6 +959,10 @@
                 </topic>
                     
         <topic label="Scalebar Decoration" href="http://udig.refractions.net/confluence/display/EN/Scalebar Decoration">
+        
+                </topic>
+                    
+        <topic label="The Processing Region" href="http://udig.refractions.net/confluence/display/EN/The Processing Region">
         
                 </topic>
         </topic>
@@ -912,7 +1050,19 @@
                     
         <topic label="Properties dialog" href="http://udig.refractions.net/confluence/display/EN/Properties dialog">
         
+                            
+        <topic label="Interaction Properties page" href="http://udig.refractions.net/confluence/display/EN/Interaction Properties page">
+        
                 </topic>
+                    
+        <topic label="Projection page" href="http://udig.refractions.net/confluence/display/EN/Projection page">
+        
+                </topic>
+                    
+        <topic label="Summary page" href="http://udig.refractions.net/confluence/display/EN/Summary page">
+        
+                </topic>
+        </topic>
                     
         <topic label="Send Log dialog" href="http://udig.refractions.net/confluence/display/EN/Send Log dialog">
         
@@ -940,6 +1090,38 @@
         
                 </topic>
             
+        <topic label="Home" href="http://udig.refractions.net/confluence/display/EN/Home">
+        
+        <!-- HOME -->                     
+        <topic label="Contents" href="http://udig.refractions.net/confluence/display/EN/Contents">
+        
+                </topic>
+        </topic>
+            
+        <topic label="Getting Started" href="http://udig.refractions.net/confluence/display/EN/Getting Started">
+        
+                            
+        <topic label="Introduction to the Spatial Toolbox" href="http://udig.refractions.net/confluence/display/EN/Introduction to the Spatial Toolbox">
+        
+                </topic>
+                    
+        <topic label="Quickstart" href="http://udig.refractions.net/confluence/display/EN/Quickstart">
+        
+                </topic>
+                    
+        <topic label="Quickstart Draft" href="http://udig.refractions.net/confluence/display/EN/Quickstart Draft">
+        
+                </topic>
+                    
+        <topic label="Walkthrough 1" href="http://udig.refractions.net/confluence/display/EN/Walkthrough 1">
+        
+                </topic>
+                    
+        <topic label="Walkthrough 2" href="http://udig.refractions.net/confluence/display/EN/Walkthrough 2">
+        
+                </topic>
+        </topic>
+            
         <topic label="What is new" href="http://udig.refractions.net/confluence/display/EN/What is new">
         
                             
@@ -947,94 +1129,10 @@
         
                 </topic>
         </topic>
-        
-        <topic label="Community" href="http://udig.refractions.net/confluence/display/EN/Community">
-        
-                            
-        <topic label="Axios uDig Extensions" href="http://udig.refractions.net/confluence/display/EN/Axios uDig Extensions">
-        
-                            
-        <topic label="Editing Tools" href="http://udig.refractions.net/confluence/display/EN/Editing Tools">
-        
-                            
-        <topic label="Arc Tool" href="http://udig.refractions.net/confluence/display/EN/Arc Tool">
+            
+        <topic label="uDig Overview" href="http://udig.refractions.net/confluence/display/EN/uDig Overview">
         
                 </topic>
-                    
-        <topic label="Merge Tool" href="http://udig.refractions.net/confluence/display/EN/Merge Tool">
-        
-                </topic>
-                    
-        <topic label="Parallel Tool" href="http://udig.refractions.net/confluence/display/EN/Parallel Tool">
-        
-                </topic>
-                    
-        <topic label="Split Tool (Axios Tools)" href="http://udig.refractions.net/confluence/display/EN/Split Tool (Axios Tools)">
-        
-                </topic>
-                    
-        <topic label="Trim Line Tool" href="http://udig.refractions.net/confluence/display/EN/Trim Line Tool">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Image Georeferencing view" href="http://udig.refractions.net/confluence/display/EN/Image Georeferencing view">
-        
-                </topic>
-                    
-        <topic label="Spatial Operations" href="http://udig.refractions.net/confluence/display/EN/Spatial Operations">
-        
-                            
-        <topic label="Buffer Operation" href="http://udig.refractions.net/confluence/display/EN/Buffer Operation">
-        
-                </topic>
-                    
-        <topic label="Clip Operation" href="http://udig.refractions.net/confluence/display/EN/Clip Operation">
-        
-                </topic>
-                    
-        <topic label="Dissolve Operation" href="http://udig.refractions.net/confluence/display/EN/Dissolve Operation">
-        
-                </topic>
-                    
-        <topic label="Fill Operation" href="http://udig.refractions.net/confluence/display/EN/Fill Operation">
-        
-                </topic>
-                    
-        <topic label="Hole Cut Operation" href="http://udig.refractions.net/confluence/display/EN/Hole Cut Operation">
-        
-                </topic>
-                    
-        <topic label="Intersect Operation" href="http://udig.refractions.net/confluence/display/EN/Intersect Operation">
-        
-                </topic>
-                    
-        <topic label="Polygon to Line Operation" href="http://udig.refractions.net/confluence/display/EN/Polygon to Line Operation">
-        
-                </topic>
-                    
-        <topic label="Spatial Join Operation" href="http://udig.refractions.net/confluence/display/EN/Spatial Join Operation">
-        
-                </topic>
-                    
-        <topic label="Split Operation" href="http://udig.refractions.net/confluence/display/EN/Split Operation">
-        
-                </topic>
-        </topic>
-        </topic>
-                    
-        <topic label="Jody" href="http://udig.refractions.net/confluence/display/EN/Jody">
-        
-                            
-        <topic label="North Arrow" href="http://udig.refractions.net/confluence/display/EN/North Arrow">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Using the WPS plugin" href="http://udig.refractions.net/confluence/display/EN/Using the WPS plugin">
-        
-                </topic>
-        </topic>
     </toc>
-<!-- Document generated by Confluence on Jul 12, 2011 07:37 -->
+<!-- Document generated by Confluence on Nov 10, 2011 20:47 -->
 <!-- spacedesc: Users Guide v.5 (3411) -->

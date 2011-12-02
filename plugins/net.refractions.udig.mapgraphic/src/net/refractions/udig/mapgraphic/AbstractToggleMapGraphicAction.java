@@ -22,7 +22,6 @@ import java.util.List;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.mapgraphic.internal.MapGraphicService;
 import net.refractions.udig.project.ILayer;

@@ -9,6 +9,8 @@ import org.osgi.framework.BundleContext;
  */
 public class TestsPlugin extends AbstractUIPlugin {
 
+    public static String ID = "net.refractions.udig.ui.tests";
+    
 	//The shared instance.
 	private static TestsPlugin plugin;
 	

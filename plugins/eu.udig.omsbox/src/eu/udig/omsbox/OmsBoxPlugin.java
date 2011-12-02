@@ -20,7 +20,9 @@ import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
@@ -178,6 +180,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
     }
 
     public static final String LAST_CHOSEN_FOLDER = "last_chosen_folder_key";
+
     /**
      * Utility method for file dialogs to retrieve the last folder.
      * 
@@ -311,6 +314,14 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
         return file.getAbsolutePath();
     }
 
+    /**
+     * Looks up the ProcessingRegion decorator for the current Map.
+     * <p>
+     * You can use this to find the ProcessingRegion (which is storied
+     * on the StyleBlackboard for this layer).
+     * 
+     * @return layer for processing region (if found);
+     */
     public ILayer getProcessingRegionMapGraphic() {
 
         /*
@@ -345,8 +356,9 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
                 }
             }
             return processingRegionLayer;
-        } catch (IOException e1) {
-            e1.printStackTrace();
+        } catch (IOException eek) {
+            IStatus status = new Status(IStatus.WARNING,PLUGIN_ID,"unable to locate processing region decorator", eek);
+            getDefault().getLog().log( status );
             return null;
         }
 

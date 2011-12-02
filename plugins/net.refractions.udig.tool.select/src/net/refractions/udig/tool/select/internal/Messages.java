@@ -35,6 +35,11 @@ public class Messages extends NLS {
     public static String TableView_search_any;
     public static String TableView_zoomToolText;
     public static String TableView_zoomToolToolTip;
+    public static String Select_Title;
+    public static String Select_Description;
+    public static String Zoom_To_Selection;
+    public static String Group_Boundary;
+    public static String Navigate_Selection;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

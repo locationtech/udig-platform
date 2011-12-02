@@ -650,7 +650,6 @@ public class CatalogImpl extends ICatalog {
             if (children == null || children.isEmpty())
                 return null;
 
-            String name = handle.getID().toFile().getName();
             monitor2.beginTask(Messages.CatalogImpl_monitorTask2, children.size());
             for( IResolve child : children ) {
                 IResolve found = getChildById(child, id, roughMatch, null);

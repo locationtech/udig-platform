@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Omsbox
 Bundle-SymbolicName: eu.udig.omsbox;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.0
 Bundle-Activator: eu.udig.omsbox.OmsBoxPlugin
 Bundle-Vendor: HydroloGIS S.r.l.
 Require-Bundle: org.eclipse.ui,
@@ -25,3 +25,4 @@ Export-Package: eu.udig.omsbox,
  eu.udig.omsbox.view,
  eu.udig.omsbox.view.actions,
  eu.udig.omsbox.view.widgets
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
