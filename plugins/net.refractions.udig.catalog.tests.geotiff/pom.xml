@@ -41,8 +41,7 @@
 	</profiles>
 
 	<properties>
-		<tycho.test.jvmArgs>-Xmx128m -XX:MaxPermSize=256m -Dsdtcore.headless
-			${tycho.test.OSspecific}</tycho.test.jvmArgs>
+		<tycho.test.jvmArgs>-Xmx128m -XX:MaxPermSize=256m -Dsdtcore.headless ${tycho.test.OSspecific}</tycho.test.jvmArgs>
 	</properties>
 
 

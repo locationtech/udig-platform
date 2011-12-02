@@ -12,6 +12,7 @@ import org.geotools.data.ows.HTTPResponse;
 import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class WMSCParserTest {
 
     private static class MockHttpResponse implements HTTPResponse{

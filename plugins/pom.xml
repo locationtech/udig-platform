@@ -21,11 +21,11 @@
                 <module>net.refractions.udig.catalog.tests</module>
                 <module>net.refractions.udig.catalog.tests.geotiff</module>
                 <module>net.refractions.udig.catalog.tests.ui</module>
-                <!-- module>net.refractions.udig.catalog.tests.wfs</module>
+                <module>net.refractions.udig.catalog.tests.wfs</module>
                 <module>net.refractions.udig.catalog.tests.wms</module>
                 <module>net.refractions.udig.libs.tests</module>
                 <module>net.refractions.udig.location.test</module>
-                <module>net.refractions.udig.project.tests</module>
+                <!-- module>net.refractions.udig.project.tests</module>
                 <module>net.refractions.udig.project.tests.ui</module>
 
                 <module>net.refractions.udig.render.feature.basic.test</module>
