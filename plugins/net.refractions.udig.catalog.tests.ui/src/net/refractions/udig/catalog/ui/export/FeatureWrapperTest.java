@@ -18,6 +18,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 
+@Ignore
 public class FeatureWrapperTest {
 
 	private SimpleFeatureType type1;
