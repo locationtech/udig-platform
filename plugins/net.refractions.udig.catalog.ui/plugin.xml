@@ -388,5 +388,20 @@
        <factory class="net.refractions.udig.catalog.memory.NewServiceConnectionFactory"
        			 id = "net.refractions.udig.catalog.import.memory"/>
   </extension>
+  <extension
+        point="org.eclipse.ui.viewActions">
+     <viewContribution
+           id="net.refractions.udig.catalog.ui.searchContribution"
+           targetID="net.refractions.udig.catalog.ui.Search">
+        <action
+              class="net.refractions.udig.catalog.ui.AOIViewActionDelegate"
+              icon="icons/etool16/aoi_filter_obj.png"
+              id="net.refractions.udig.catalog.ui.aoiAction"
+              label="AOI Filter"
+              style="toggle"
+              toolbarPath="additions">
+        </action>
+     </viewContribution>
+  </extension>
   
 </plugin>
