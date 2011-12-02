@@ -243,7 +243,13 @@
              commandId="org.eclipse.ui.navigate.forward"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
-             sequence="ALT+ARROW_RIGHT"/>    
+             sequence="ALT+ARROW_RIGHT"/>
+       <key
+             commandId="org.eclipse.ui.help.helpContents"
+             contextId="org.eclipse.ui.contexts.dialogAndWindow"
+             schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+             sequence="F1">
+       </key>    
        </extension>
     <extension
           id="net.refractions.udig.ui.tip.default"
