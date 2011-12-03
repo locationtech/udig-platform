@@ -36,6 +36,7 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
+import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.render.IViewportModelListener;
 import net.refractions.udig.project.render.ViewportModelEvent;
 import net.refractions.udig.project.ui.AdapterFactoryLabelProviderDecorator;
@@ -125,6 +126,11 @@ public class LayersView extends ViewPart
         }
         if (currentMap != null) {
             currentMap.removeDeepAdapter(checkboxContextListener);
+
+            IViewportModel viewportModel = currentMap.getViewportModel();    
+            if (viewportModel != null) {
+                viewportModel.removeViewportModelListener(zoomListener);
+            }
         }
 
         labelProvider.dispose();
