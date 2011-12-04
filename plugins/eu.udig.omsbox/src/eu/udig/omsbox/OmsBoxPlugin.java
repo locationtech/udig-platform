@@ -1,6 +1,7 @@
 package eu.udig.omsbox;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import java.util.Set;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.libs.internal.Activator;
 import net.refractions.udig.mapgraphic.internal.MapGraphicService;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
@@ -234,22 +234,24 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
                 sb.append(pluginPath + File.separator + "bin");
             }
             // add udig libs
-            Bundle udigLibsBundle = Platform.getBundle(Activator.ID);
+            Bundle udigLibsBundle = Platform.getBundle("net.refractions.udig.libs");
             String udigLibsFolderPath = getPath(udigLibsBundle, "lib");
             if (udigLibsFolderPath != null) {
                 sb.append(File.pathSeparator);
                 sb.append(udigLibsFolderPath);
                 sb.append(File.separator);
                 sb.append("*");
-            }
 
-            // add this plugins libs
-            String libsFolderPath = getPath(omsBundle, "libs");
-            if (libsFolderPath   != null) {
-                sb.append(File.pathSeparator);
-                sb.append(libsFolderPath);
-                sb.append(File.separator);
-                sb.append("*");
+                File libsPluginPath = new File(udigLibsFolderPath).getParentFile();
+                File[] toolsJararray = libsPluginPath.listFiles(new FilenameFilter(){
+                    public boolean accept( File dir, String name ) {
+                        return name.startsWith("tools_") && name.endsWith(".jar");
+                    }
+                });
+                if (toolsJararray.length == 1) {
+                    sb.append(File.pathSeparator);
+                    sb.append(toolsJararray[0]);
+                }
             }
 
             // add loaded jars
@@ -357,8 +359,8 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
             }
             return processingRegionLayer;
         } catch (IOException eek) {
-            IStatus status = new Status(IStatus.WARNING,PLUGIN_ID,"unable to locate processing region decorator", eek);
-            getDefault().getLog().log( status );
+            IStatus status = new Status(IStatus.WARNING, PLUGIN_ID, "unable to locate processing region decorator", eek);
+            getDefault().getLog().log(status);
             return null;
         }
 
