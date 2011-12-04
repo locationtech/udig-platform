@@ -153,7 +153,11 @@
                id="FeatureStoreResourceProperty"/>
          <property
                class="net.refractions.udig.project.internal.property.LayerInteractionProperty"
-               id="InteractionProperty"/>               
+               id="InteractionProperty"/>
+         <property
+               class="net.refractions.udig.project.internal.property.FeatureSourceResourceProperty"
+               id="FeatureSourceResourceProperty">
+         </property>               
       </object>
    </extension>
    <extension

@@ -20,17 +20,6 @@
             image="icons/pointers/select_source.png"
             id="bbox_cursor"/>
               <enablement>
-                  	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
-	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
-	                     </or>
-                     </and>
                   </enablement>
          </modalTool>
           <modalTool
@@ -50,7 +39,7 @@
             id="arrow_cursor"/>
                <enablement>
                   	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureSourceResourceProperty" expectedValue=""/>                  	
 	                     <or>
 	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
 	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
