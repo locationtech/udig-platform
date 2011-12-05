@@ -17,7 +17,7 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchPart;
 
-public interface IToolManager {
+public interface system {
     
     public final String XPID = "net.refractions.udig.project.ui.toolManagers"; //$NON-NLS-1$
     /**
