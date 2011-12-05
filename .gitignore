@@ -11,6 +11,11 @@ plugins/eu.udig.mapquest.apiwrapper/bin/
 plugins/eu.udig.*/bin/
 plugins/eu.udig.libs.teradata/gtlib
 plugins/net.refractions.udig.libs/src/org/
+plugins/net.refractions.udig_application.source/bin
+plugins/net.refractions.udig_platform.source/bin
+plugins/net.refractions.udig_printing.source/bin
+plugins/net.refractions.udig_sdk.source/bin
+plugins/net.refractions.udig_tutorials.source/bin
 target
 javaCompiler...args
 build.xml

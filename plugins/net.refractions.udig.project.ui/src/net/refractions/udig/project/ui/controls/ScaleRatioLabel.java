@@ -56,7 +56,7 @@ public class ScaleRatioLabel extends ContributionItem implements KeyListener, Fo
     /** Listens to viewport changes and updates the displayed scale accordingly */
     IViewportModelListener listener = new IViewportModelListener(){
         public void changed( ViewportModelEvent event ) {
-            if (event.getType() == EventType.CRS || event.getType() == EventType.BOUNDS) {
+            if (event.getType() == EventType.CRS || event.getType() == EventType.BOUNDS || event.getType() == EventType.PREFERRED_SCALE_DENOMINATORS) {
                 Display display = PlatformUI.getWorkbench().getDisplay();
                 if (display == null)
                     display = Display.getDefault();

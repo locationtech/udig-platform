@@ -1280,6 +1280,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.VIEWPORT_MODEL__PREFERRED_SCALE_DENOMINATORS,
                     oldPreferredScaleDenominators, preferredScaleDenominators));
+        
+        notifyListeners(new ViewportModelEvent(this, EventType.PREFERRED_SCALE_DENOMINATORS, oldPreferredScaleDenominators, preferredScaleDenominators));
     }
 
     /**

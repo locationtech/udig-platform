@@ -31,7 +31,12 @@ public class ViewportModelEvent extends UDIGEvent{
         /**
          * Indicates the Bounds of the ViewportModel has changed.
          */
-        BOUNDS
+        BOUNDS, 
+
+        /**
+         * Indicates that Preferred Map Scales configuration has changed.
+         */
+        PREFERRED_SCALE_DENOMINATORS
     }
 
     private final EventType type;

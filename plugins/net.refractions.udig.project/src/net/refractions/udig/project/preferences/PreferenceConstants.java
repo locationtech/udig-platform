@@ -107,4 +107,10 @@ public class PreferenceConstants {
      * @see ScaleUtils#calculateClosestScale
      */
 	public static final String P_ZOOM_REQUIRED_CLOSENESS = "P_ZOOM_REQUIRED_CLOSENESS";
+
+	/**
+	 * Property to read and write preferred map scales from/to preferences store. The List of 
+	 * scale denominators is a  separated list.
+	 */
+	public static final String P_DEFAULT_PREFERRED_SCALES = "P_DEFAULT_PREFERRED_SCALES"; //$NON-NLS-1$
 }
