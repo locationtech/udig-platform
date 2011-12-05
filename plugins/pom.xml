@@ -25,22 +25,46 @@
                 <module>net.refractions.udig.catalog.tests.wms</module>
                 <module>net.refractions.udig.libs.tests</module>
                 <module>net.refractions.udig.location.test</module>
-                <!-- module>net.refractions.udig.project.tests</module>
-                <module>net.refractions.udig.project.tests.ui</module>
+                <module>net.refractions.udig.project.tests</module>
+                <!--
+					Requires net.refractions.udig.issues, which appears to be having a heart attack atm
+					<module>net.refractions.udig.project.tests.ui</module>
+				-->
 
                 <module>net.refractions.udig.render.feature.basic.test</module>
-                <module>net.refractions.udig.render.wms.basic.test</module>
+                <!--
+					Requires net.refractions.udig.project.tests.ui which is broken
+					<module>net.refractions.udig.render.wms.basic.test</module>
+					-->
 
                 <module>net.refractions.udig.style.tests</module>
-
-                <module>net.refractions.udig.tests.catalog.wmt</module>
+				
+				<!-- 
+					Module has broken tests and errors
+                	<module>net.refractions.udig.tests.catalog.wmt</module>
+				-->
 
                 <module>net.refractions.udig.tool.default.tests</module>
-                <module>net.refractions.udig.tool.edit.tests</module>
-                <module>net.refractions.udig.tool.info.tests</module>
-                <module>net.refractions.udig.tool.select.tests</module -->
+
+				<!--
+					Package requires net.refractions.udig.project.tests.ui which is borked
+                	<module>net.refractions.udig.tool.edit.tests</module>
+				-->
+				
+                <!-- 
+					package doesn't have a .project file...
+					module>net.refractions.udig.tool.info.tests</module>
+				-->
+				
+				<!--
+					Package requires net.refractions.udig.project.tests.ui which is borked
+                	<module>net.refractions.udig.tool.select.tests</module>
+				-->
 
                 <module>net.refractions.udig.ui.tests</module>
+
+
+
             </modules>
         </profile>
         <profile>

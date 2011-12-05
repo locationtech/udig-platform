@@ -60,8 +60,9 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
+				<groupId>${tycho-provider}</groupId>
 				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
 				<configuration>
 					<environments combine.self="override">
 					</environments>

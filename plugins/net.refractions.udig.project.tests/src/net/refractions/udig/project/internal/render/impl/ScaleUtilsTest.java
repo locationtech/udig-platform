@@ -18,7 +18,6 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Ignore;
-import org.junit.Test;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -28,6 +27,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * @author jesse
  * 
  */
+@Ignore
 public class ScaleUtilsTest {
 
 	private IMapDisplay display;

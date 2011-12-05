@@ -1,8 +1,11 @@
 package net.refractions.udig.project.internal;
 
+import org.junit.Ignore;
+
 import net.refractions.udig.project.interceptor.LayerInterceptor;
 
-public class TestLayerCreatednterceptor implements LayerInterceptor {
+@Ignore
+public class TestLayerCreatedInterceptor implements LayerInterceptor {
     public static Layer layerCreated;
 
     public void run( Layer layer ) {

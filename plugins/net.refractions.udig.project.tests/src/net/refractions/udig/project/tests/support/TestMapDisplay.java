@@ -15,13 +15,15 @@
 package net.refractions.udig.project.tests.support;
 
 import java.awt.Dimension;
+import org.junit.Ignore;
 
 import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 
+@Ignore
 public class TestMapDisplay implements IMapDisplay {
 
 	private Dimension size;
-
+	
 	public TestMapDisplay(Dimension displaySize) {
 		size=displaySize;
 	}

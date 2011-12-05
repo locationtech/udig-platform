@@ -85,7 +85,7 @@
                id="net.refractions.udig.project.tests.ui.layerRemoved1"
                name="TestLayerRemovedInterceptor"/>
          <layerCreated
-               class="net.refractions.udig.project.internal.TestLayerCreatednterceptor"
+               class="net.refractions.udig.project.internal.TestLayerCreatedInterceptor"
                id="net.refractions.udig.project.tests.layerCreated1"
                name="TestLayerCreatedInterceptor"/>
       </extension>
