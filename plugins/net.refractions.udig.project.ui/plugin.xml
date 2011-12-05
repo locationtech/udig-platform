@@ -234,7 +234,8 @@
       <page
             class="net.refractions.udig.project.ui.internal.property.pages.LayerInteractionPropertyPage"
             id="net.refractions.udig.project.ui.property.layer.interaction"
-            name="Interaction">
+            name="Interaction"
+            objectClass="net.refractions.udig.project.internal.Layer">
       </page>
    </extension>
 
