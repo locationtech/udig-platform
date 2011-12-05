@@ -6,7 +6,9 @@ import net.refractions.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
+import org.junit.Ignore;
 
+@Ignore
 public class TestSelectProject implements IOp {
 
     public void op( Display display, Object target, IProgressMonitor monitor ) throws Exception {

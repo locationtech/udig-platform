@@ -5,7 +5,9 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.junit.Ignore;
 
+@Ignore
 public class TestsUIPlugin extends AbstractUIPlugin {
 
 
