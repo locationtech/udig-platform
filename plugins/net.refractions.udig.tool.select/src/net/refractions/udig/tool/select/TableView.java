@@ -31,6 +31,7 @@ import net.refractions.udig.core.IProvider;
 import net.refractions.udig.core.StaticBlockingProvider;
 import net.refractions.udig.core.filter.AdaptingFilter;
 import net.refractions.udig.core.filter.AdaptingFilterFactory;
+import net.refractions.udig.internal.ui.UDIGDropHandler;
 import net.refractions.udig.project.EditManagerEvent;
 import net.refractions.udig.project.IEditManagerListener;
 import net.refractions.udig.project.ILayer;
@@ -61,6 +62,8 @@ import net.refractions.udig.project.ui.tool.ToolsConstants;
 import net.refractions.udig.tool.select.internal.Messages;
 import net.refractions.udig.tool.select.internal.ZoomSelection;
 import net.refractions.udig.ui.FeatureTableControl;
+import net.refractions.udig.ui.IDropAction;
+import net.refractions.udig.ui.IDropHandlerListener;
 import net.refractions.udig.ui.IFeatureTableLoadingListener;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.ProgressManager;
@@ -245,6 +248,8 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                         layerSelected(selectedLayer);
                     }
                 });
+                
+                //todo add layer event
             }
         }
     };
@@ -417,6 +422,25 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         getSite().setSelectionProvider( this );
 
         ApplicationGIS.getToolManager().registerActionsWithPart(this);
+        
+        UDIGDropHandler finalDropHandler = new UDIGDropHandler();
+        finalDropHandler.setTarget(this);
+        
+        finalDropHandler.addListener(new IDropHandlerListener(){
+
+            public void done( IDropAction action, Throwable error ) {
+                   System.out.println("---");
+            }
+
+            public void noAction( Object data ) {
+                System.out.println("---");
+            }
+
+            public void starting( IDropAction action ) {
+                System.out.println("---");
+            }
+            
+        });
     }
     
     public boolean isAOIFilter() {
@@ -578,6 +602,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         IAction action = deleteAction;
         getViewSite().getActionBars().setGlobalActionHandler(ActionFactory.DELETE.getId(), action);
         service.registerAction(action);
+        
 
     }
 
@@ -673,11 +698,12 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         public void refresh( LayerEvent event ) {
             final ILayer notifierLayer = event.getSource();
             assert layer == notifierLayer;
-
+            System.out.println("ET = " + event.getType());
             switch( event.getType() ) {
             case EDIT_EVENT:
                 if (!editing) {
                     if (event.getNewValue() == null) {
+                        reloadFeatures(notifierLayer);
                         return;
                     }
                     updates.add((FeatureEvent) event.getNewValue());
