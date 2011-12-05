@@ -26,40 +26,37 @@
                 <module>net.refractions.udig.libs.tests</module>
                 <module>net.refractions.udig.location.test</module>
                 <module>net.refractions.udig.project.tests</module>
-                <!--
-					Requires net.refractions.udig.issues, which appears to be having a heart attack atm
-					<module>net.refractions.udig.project.tests.ui</module>
-				-->
-
+                <module>net.refractions.udig.project.tests.ui</module>
+                
                 <module>net.refractions.udig.render.feature.basic.test</module>
                 <!--
-					Requires net.refractions.udig.project.tests.ui which is broken
-					<module>net.refractions.udig.render.wms.basic.test</module>
-					-->
+                    Requires net.refractions.udig.project.tests.ui which is broken
+                    <module>net.refractions.udig.render.wms.basic.test</module>
+                    -->
 
                 <module>net.refractions.udig.style.tests</module>
-				
-				<!-- 
-					Module has broken tests and errors
-                	<module>net.refractions.udig.tests.catalog.wmt</module>
-				-->
+                
+                <!-- 
+                    Module has broken tests and errors
+                    <module>net.refractions.udig.tests.catalog.wmt</module>
+                -->
 
                 <module>net.refractions.udig.tool.default.tests</module>
 
-				<!--
-					Package requires net.refractions.udig.project.tests.ui which is borked
-                	<module>net.refractions.udig.tool.edit.tests</module>
-				-->
-				
+                <!--
+                    Package requires net.refractions.udig.project.tests.ui which is borked
+                    <module>net.refractions.udig.tool.edit.tests</module>
+                -->
+                
                 <!-- 
-					package doesn't have a .project file...
-					module>net.refractions.udig.tool.info.tests</module>
-				-->
-				
-				<!--
-					Package requires net.refractions.udig.project.tests.ui which is borked
-                	<module>net.refractions.udig.tool.select.tests</module>
-				-->
+                    package doesn't have a .project file...
+                    module>net.refractions.udig.tool.info.tests</module>
+                -->
+                
+                <!--
+                    Package requires net.refractions.udig.project.tests.ui which is borked
+                    <module>net.refractions.udig.tool.select.tests</module>
+                -->
 
                 <module>net.refractions.udig.ui.tests</module>
 
@@ -117,10 +114,9 @@
             <modules>
                 <module>eu.udig.catalog.csw</module>
                 <module>net.refractions.udig.graph</module>
-                <module>net.refractions.udig.issues</module>
                 <!-- module>net.refractions.udig.issues.test</module-->
-		<module>net.refractions.udig.validation</module>
-		<!-- module>net.refractions.udig.validation.test</module -->		
+        <module>net.refractions.udig.validation</module>
+        <!-- module>net.refractions.udig.validation.test</module -->        
              </modules>
         </profile>
   </profiles>
@@ -160,6 +156,7 @@
     <module>net.refractions.udig.core</module>
     <module>net.refractions.udig.feature.editor</module>
     <module>net.refractions.udig.help</module>
+    <module>net.refractions.udig.issues</module>
     <module>net.refractions.udig.jai</module>
     <module>net.refractions.udig.jai.macosx</module>
     <module>net.refractions.udig.legend</module>
