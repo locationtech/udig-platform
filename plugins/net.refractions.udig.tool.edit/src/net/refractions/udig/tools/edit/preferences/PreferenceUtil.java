@@ -184,7 +184,7 @@ public class PreferenceUtil {
     }
 
     public void setSnapBehaviour( SnapBehaviour behaviour ) {
-        store.putValue(PreferenceConstants.P_SNAP_BEHAVIOUR, behaviour.toString());
+        store.setValue(PreferenceConstants.P_SNAP_BEHAVIOUR, behaviour.toString());
     }
 
     /**
