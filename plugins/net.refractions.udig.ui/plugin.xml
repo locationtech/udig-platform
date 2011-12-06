@@ -245,7 +245,7 @@
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
              sequence="ALT+ARROW_RIGHT"/>
        <key
-             commandId="org.eclipse.ui.help.helpContents"
+             commandId="org.eclipse.ui.help.dynamicHelp"
              contextId="org.eclipse.ui.contexts.dialogAndWindow"
              schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
              sequence="F1">
