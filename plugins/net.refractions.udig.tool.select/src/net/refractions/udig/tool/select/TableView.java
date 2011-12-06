@@ -422,25 +422,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         getSite().setSelectionProvider( this );
 
         ApplicationGIS.getToolManager().registerActionsWithPart(this);
-        
-        UDIGDropHandler finalDropHandler = new UDIGDropHandler();
-        finalDropHandler.setTarget(this);
-        
-        finalDropHandler.addListener(new IDropHandlerListener(){
 
-            public void done( IDropAction action, Throwable error ) {
-                   System.out.println("---");
-            }
-
-            public void noAction( Object data ) {
-                System.out.println("---");
-            }
-
-            public void starting( IDropAction action ) {
-                System.out.println("---");
-            }
-            
-        });
     }
     
     public boolean isAOIFilter() {
@@ -698,7 +680,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         public void refresh( LayerEvent event ) {
             final ILayer notifierLayer = event.getSource();
             assert layer == notifierLayer;
-            System.out.println("ET = " + event.getType());
+            
             switch( event.getType() ) {
             case EDIT_EVENT:
                 if (!editing) {
