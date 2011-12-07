@@ -17,6 +17,9 @@
    <profiles>
         <profile>
             <id>test</id>
+            <activation>
+              <property><name>all</name></property>
+            </activation>
             <modules>
                 <module>net.refractions.udig.catalog.tests</module>
                 <module>net.refractions.udig.catalog.tests.geotiff</module>
@@ -42,8 +45,9 @@
                 <module>net.refractions.udig.tool.default.tests</module>
 				<module>net.refractions.udig.tool.edit.tests</module>
                 <!-- 
-					Errors in tests, still working to fix this
-					module>net.refractions.udig.tool.info.tests</module>
+					Java errors in tests... Looks like not updated after udig/geotools
+					modules were refractored.
+					<module>net.refractions.udig.tool.info.tests</module>
 				-->
 				<!--
 					Module has errors - SWTException: Failed to execute runnable - assertion failed
@@ -57,18 +61,19 @@
 
         <profile>
             <id>sdk</id>
-               <activation>
-                 <property><name>all</name></property>
-               </activation>
+            <activation>
+				<property><name>all</name></property>
+            </activation>
             <modules>
                 <!-- TUTORIALS -->
                 <module>com.csvreader</module>
                 <module>eu.udig.tutorials.preferredzoomlevels</module>
                 <module>eu.udig.tutorials.tool-view</module>
                 <!-- test commented out for now -->
-                <!--module>net.refractions.udig.tests.tutorials.tests</module -->
+                <!--module>net.refractions.udig.tutorials.tests</module -->
                 <module>net.refractions.udig.tutorials.catalog.csv</module>
                 <module>net.refractions.udig.tutorials.catalog.tests.csv</module>
+
                 <module>net.refractions.udig.tutorials.customapp</module>
                 <module>net.refractions.udig.tutorials.distancetool</module>
                 <module>net.refractions.udig.tutorials.examples</module>

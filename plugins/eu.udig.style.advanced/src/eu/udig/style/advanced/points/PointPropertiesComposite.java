@@ -430,6 +430,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.BORDER);
         tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 
+        //TODO PointCharacterChooserComposite is loading in the ui this is holding up the dialog desplay
         fontParametersComposite = new PointCharacterChooserComposite(tabFolder);
         fontParametersComposite.init(ruleWrapper);
         fontParametersComposite.addListener(this);
