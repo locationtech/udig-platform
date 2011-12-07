@@ -2,6 +2,7 @@ package net.refractions.udig.tools.edit.validator;
 
 import junit.framework.TestCase;
 import net.refractions.udig.tool.edit.internal.Messages;
+import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 import net.refractions.udig.tools.edit.support.EditGeom;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
@@ -24,6 +25,8 @@ public class LegalShapeValidatorTest extends TestCase {
     }
 
     public void testLine() throws Exception {
+        if( EditTestControl.DISABLE ) return;
+        
         EditGeom line = bb.newGeom("line", ShapeType.LINE); //$NON-NLS-1$
         PrimitiveShape shell = line.getShell();
         

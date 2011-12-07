@@ -30,6 +30,7 @@ import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
 import net.refractions.udig.project.ui.internal.FeatureEditorLoader;
 import net.refractions.udig.project.ui.internal.MapEditor;
 import net.refractions.udig.project.ui.internal.MapEditorInput;
+import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 import net.refractions.udig.project.ui.internal.tool.ToolContext;
 import net.refractions.udig.ui.ProgressManager;
 
@@ -105,7 +106,7 @@ public class FeatureIssue extends AbstractIssue {
     
     @Override
     public String getEditorID() {
-    	return MapEditor.ID;
+    	return MapEditorWithPalette.ID;
     }
     
     @Override

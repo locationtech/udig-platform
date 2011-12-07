@@ -289,7 +289,7 @@ public class LayerImplTest extends TestCase {
     }
     
     @SuppressWarnings("unchecked")
-    public void testGetBounds() throws Exception {
+    public void xtestGetBounds() throws Exception {
         IGeoResource resource = CatalogTests.createGeoResource("resource", 0, false); //$NON-NLS-1$
         FeatureStore<SimpleFeatureType, SimpleFeature> fs = resource.resolve(FeatureStore.class, null);
         FeatureCollection<SimpleFeatureType, SimpleFeature> collection = FeatureCollections.newCollection();

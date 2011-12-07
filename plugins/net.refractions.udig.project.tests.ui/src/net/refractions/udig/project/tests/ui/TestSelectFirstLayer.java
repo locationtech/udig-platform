@@ -29,12 +29,14 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionDelegate;
+import org.junit.Ignore;
 
 /**
  * Selects the first layer in the map
  * @author Jesse
  * @since 1.1.0
  */
+@Ignore
 public class TestSelectFirstLayer extends ActionDelegate implements IWorkbenchWindowActionDelegate {
 
     @Override

@@ -1,9 +1,12 @@
 package net.refractions.udig.project.tests;
 
+import org.junit.Ignore;
+
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IResourceCachingInterceptor;
 
+@Ignore
 public class TestInterceptorCaching implements IResourceCachingInterceptor {
    
     

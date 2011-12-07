@@ -2,11 +2,11 @@ package net.refractions.udig.tool.info.tests;
 
 import java.awt.Dimension;
 
-import net.refractions.udig.AbstractProjectUITest;
+import net.refractions.udig.AbstractProjectUITestCase;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.tests.support.MapTests;
 
-public class BetterWMSTest extends AbstractProjectUITest {
+public class BetterWMSTest extends AbstractProjectUITestCase {
 
 	@Override
 	protected void setUp() throws Exception {

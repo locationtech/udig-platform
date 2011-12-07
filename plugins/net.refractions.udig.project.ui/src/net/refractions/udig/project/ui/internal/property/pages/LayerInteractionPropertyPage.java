@@ -48,7 +48,7 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
     private Button selectButton;
     private Button editButton;
     private Button backgroundButton;
-    private Button boundaryButton;
+    private Button aoiButton;
     private Layer layer;
     private boolean isPolygon = false;
     private boolean isRaster = false;
@@ -148,11 +148,11 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
             }
         });
 
-        boundaryButton = new Button(toolsGroup, SWT.CHECK);
-        boundaryButton.setText(Messages.LayerInteraction_Boundary);
-        boundaryButton.setLocation(40, 120);
-        boundaryButton.pack();
-        boundaryButton.addSelectionListener(defaultSelectionListener());
+        aoiButton = new Button(toolsGroup, SWT.CHECK);
+        aoiButton.setText(Messages.LayerInteraction_AOI);
+        aoiButton.setLocation(40, 120);
+        aoiButton.pack();
+        aoiButton.addSelectionListener(defaultSelectionListener());
 
         loadLayer();
         return interactionPage;
@@ -197,7 +197,7 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
                 || informationButton.getSelection() != layer.isApplicable( ILayer.Interaction.INFO )
                 || selectButton.getSelection() != layer.isSelectable()
                 || editButton.getSelection() != layer.isApplicable( ILayer.Interaction.EDIT )
-                || boundaryButton.getSelection() != layer.isApplicable( ILayer.Interaction.BOUNDARY ) 
+                || aoiButton.getSelection() != layer.isApplicable( ILayer.Interaction.AOI ) 
         );
         
         this.getApplyButton().setEnabled(changed);
@@ -223,8 +223,8 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         if( editButton.getSelection() != layer.isApplicable( ILayer.Interaction.EDIT )){
             layer.setApplicable(ILayer.Interaction.EDIT, editButton.getSelection());
         }
-        if( boundaryButton.getSelection() != layer.isApplicable( ILayer.Interaction.BOUNDARY )){
-            layer.setApplicable(ILayer.Interaction.BOUNDARY, boundaryButton.getSelection());
+        if( aoiButton.getSelection() != layer.isApplicable( ILayer.Interaction.AOI )){
+            layer.setApplicable(ILayer.Interaction.AOI, aoiButton.getSelection());
         }
     }
     
@@ -235,9 +235,10 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         visibleButton.setSelection(layer.isVisible());
         
         // set background layer
-        backgroundButton.setSelection(layer.isApplicable(ILayer.Interaction.BACKGROUND));
-        layerButton.setSelection(!layer.isApplicable(ILayer.Interaction.BACKGROUND));
-        setBackgroundLayer(layer.isApplicable(ILayer.Interaction.BACKGROUND));
+        boolean isBackgroundLayer = layer.isApplicable(ILayer.Interaction.BACKGROUND);
+		backgroundButton.setSelection(isBackgroundLayer);
+        layerButton.setSelection(!isBackgroundLayer);
+        setBackgroundLayer(isBackgroundLayer);
     }
     
     /*
@@ -274,7 +275,7 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
             setRasterLayer();
             
             // disable background layer options
-            disableButton(boundaryButton);
+            disableButton(aoiButton);
         }
     }
 
@@ -282,12 +283,12 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
      * Sets polygon layer options based on layer properties
      */
     private void setPolygonLayer() {
-        boundaryButton.setEnabled(isPolygon);
+        aoiButton.setEnabled(isPolygon);
         if (isPolygon) {
-            boundaryButton.setSelection(layer.isApplicable(ILayer.Interaction.BOUNDARY));
+            aoiButton.setSelection(layer.isApplicable(ILayer.Interaction.AOI));
         }
         else {
-            boundaryButton.setSelection(false);
+            aoiButton.setSelection(false);
         }
     }
     

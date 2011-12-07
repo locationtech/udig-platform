@@ -2,35 +2,101 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 <toc label="Users Guide">
             
-            
-        <topic label="uDig Overview" href="EN/uDig Overview.html">
-        
-                </topic>
-            
-        <topic label="Getting Started" href="EN/Getting Started.html">
-                    
-        <topic label="Quickstart" href="EN/Quickstart.html">
-        
-                </topic>
-                    
-        <topic label="Walkthrough 1" href="EN/Walkthrough 1.html">
-        
-                </topic>
-                    
-        <topic label="Walkthrough 2" href="EN/Walkthrough 2.html">
-        
-                </topic>
+        <topic label="Community" href="EN/Community.html">
         
                             
-        <topic label="Introduction to the Spatial Toolbox" href="EN/Introduction to the Spatial Toolbox.html">
+        <topic label="Axios uDig Extensions" href="EN/Axios uDig Extensions.html">
+        
+                            
+        <topic label="Editing Tools" href="EN/Editing Tools.html">
+        
+                            
+        <topic label="Arc Tool" href="EN/Arc Tool.html">
         
                 </topic>
                     
+        <topic label="Merge Tool" href="EN/Merge Tool.html">
+        
+                </topic>
+                    
+        <topic label="Parallel Tool" href="EN/Parallel Tool.html">
+        
+                </topic>
+                    
+        <topic label="Split Tool (Axios Tools)" href="EN/Split Tool (Axios Tools).html">
+        
+                </topic>
+                    
+        <topic label="Trim Line Tool" href="EN/Trim Line Tool.html">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Image Georeferencing view" href="EN/Image Georeferencing view.html">
+        
+                </topic>
+                    
+        <topic label="Spatial Operations" href="EN/Spatial Operations.html">
+        
+                            
+        <topic label="Buffer Operation" href="EN/Buffer Operation.html">
+        
+                </topic>
+                    
+        <topic label="Clip Operation" href="EN/Clip Operation.html">
+        
+                </topic>
+                    
+        <topic label="Dissolve Operation" href="EN/Dissolve Operation.html">
+        
+                </topic>
+                    
+        <topic label="Fill Operation" href="EN/Fill Operation.html">
+        
+                </topic>
+                    
+        <topic label="Hole Cut Operation" href="EN/Hole Cut Operation.html">
+        
+                </topic>
+                    
+        <topic label="Intersect Operation" href="EN/Intersect Operation.html">
+        
+                </topic>
+                    
+        <topic label="Polygon to Line Operation" href="EN/Polygon to Line Operation.html">
+        
+                </topic>
+                    
+        <topic label="Spatial Join Operation" href="EN/Spatial Join Operation.html">
+        
+                </topic>
+                    
+        <topic label="Split Operation" href="EN/Split Operation.html">
+        
+                </topic>
+        </topic>
+        </topic>
+                    
+        <topic label="Jody" href="EN/Jody.html">
+        
+                            
+        <topic label="North Arrow" href="EN/North Arrow.html">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Using the WPS plugin" href="EN/Using the WPS plugin.html">
+        
+                </topic>
         </topic>
             
         <topic label="Concepts" href="EN/Concepts.html">
         
                             
+        <topic label="Area of Interest" href="EN/Area of Interest.html">
+        
+                </topic>
+                    
         <topic label="Common Query Language" href="EN/Common Query Language.html">
         
                 </topic>
@@ -54,6 +120,10 @@
         
                 </topic>
         </topic>
+                    
+        <topic label="Georeference" href="EN/Georeference.html">
+        
+                </topic>
                     
         <topic label="Geospatial" href="EN/Geospatial.html">
         
@@ -203,94 +273,9 @@
         <topic label="Tasks" href="EN/Tasks.html">
         
                             
-        <topic label="Change a Layers Style" href="EN/Change a Layers Style.html">
-        
-                </topic>
-                    
-        <topic label="Closing an editor" href="EN/Closing an editor.html">
-        
-                </topic>
-                    
-        <topic label="Creating a Project" href="EN/Creating a Project.html">
+        <topic label="Installation and Configuration" href="EN/Installation and Configuration.html">
         
                             
-        <topic label="Using the Context menu" href="EN/Using the Context menu.html">
-        
-                </topic>
-                    
-        <topic label="Using the File menu" href="EN/Using the File menu.html">
-        
-                </topic>
-                    
-        <topic label="Using the New button" href="EN/Using the New button.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Exiting the workbench" href="EN/Exiting the workbench.html">
-        
-                </topic>
-                    
-        <topic label="Georeferencing an Image" href="EN/Georeferencing an Image.html">
-        
-                </topic>
-                    
-        <topic label="Handling Shapefiles with different Character Sets" href="EN/Handling Shapefiles with different Character Sets.html">
-        
-                </topic>
-                    
-        <topic label="Importing" href="EN/Importing.html">
-        
-                            
-        <topic label="Importing data" href="EN/Importing data.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Pan" href="EN/Pan.html">
-        
-                </topic>
-                    
-        <topic label="Performing simple analysis" href="EN/Performing simple analysis.html">
-        
-                            
-        <topic label="Feature count" href="EN/Feature count.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Printing the current Map" href="EN/Printing the current Map.html">
-        
-                </topic>
-                    
-        <topic label="Rearranging the main toolbar" href="EN/Rearranging the main toolbar.html">
-        
-                </topic>
-                    
-        <topic label="Rearranging views and editors" href="EN/Rearranging views and editors.html">
-        
-                            
-        <topic label="Drop cursors" href="EN/Drop cursors.html">
-        
-                </topic>
-                    
-        <topic label="Maximizing" href="EN/Maximizing.html">
-        
-                </topic>
-                    
-        <topic label="Rearranging tabbed views" href="EN/Rearranging tabbed views.html">
-        
-                </topic>
-                    
-        <topic label="Rearranging views" href="EN/Rearranging views.html">
-        
-                </topic>
-                    
-        <topic label="Tiling editors" href="EN/Tiling editors.html">
-        
-                </topic>
-        </topic>
-                    
         <topic label="Running uDig" href="EN/Running uDig.html">
         
                 </topic>
@@ -319,17 +304,105 @@
                 </topic>
         </topic>
                     
-        <topic label="Using Layer Operations" href="EN/Using Layer Operations.html">
+        <topic label="Working with the Update Manager" href="EN/Working with the Update Manager.html">
         
                             
-        <topic label="Layer Summary" href="EN/Layer Summary.html">
+        <topic label="Keeping up to date" href="EN/Keeping up to date.html">
         
-                </topic>
-                    
-        <topic label="Validation" href="EN/Validation.html">
+                            
+        <topic label="Finding new plugins" href="EN/Finding new plugins.html">
         
                 </topic>
         </topic>
+        </topic>
+        </topic>
+                    
+        <topic label="Working with AOI" href="EN/Working with AOI.html">
+        
+                            
+        <topic label="Configure table view to list the contents of a polygon" href="EN/Configure table view to list the contents of a polygon.html">
+        
+                </topic>
+                    
+        <topic label="Configure table view to list the contents of the screen" href="EN/Configure table view to list the contents of the screen.html">
+        
+                </topic>
+                    
+        <topic label="Show the AOI on the map" href="EN/Show the AOI on the map.html">
+        
+                </topic>
+                    
+        <topic label="Use a bookmark as the AOI" href="EN/Use a bookmark as the AOI.html">
+        
+                </topic>
+                    
+        <topic label="Use a Coordinate Reference System as the AOI" href="EN/Use a Coordinate Reference System as the AOI.html">
+        
+                </topic>
+                    
+        <topic label="Use a processing region as the AOI" href="EN/Use a processing region as the AOI.html">
+        
+                </topic>
+                    
+        <topic label="Use polygon as the AOI" href="EN/Use polygon as the AOI.html">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Working with Data" href="EN/Working with Data.html">
+        
+                            
+        <topic label="Adding Features from a DB2" href="EN/Adding Features from a DB2.html">
+        
+                            
+        <topic label="DB2 Preferences" href="EN/DB2 Preferences.html">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Adding features from a Shapefile" href="EN/Adding features from a Shapefile.html">
+        
+                </topic>
+                    
+        <topic label="Adding features from ArcSDE" href="EN/Adding features from ArcSDE.html">
+        
+                </topic>
+                    
+        <topic label="Adding features from Oracle" href="EN/Adding features from Oracle.html">
+        
+                </topic>
+                    
+        <topic label="Adding features from PostGIS" href="EN/Adding features from PostGIS.html">
+        
+                </topic>
+                    
+        <topic label="Adding features from WFS" href="EN/Adding features from WFS.html">
+        
+                </topic>
+                    
+        <topic label="Adding layers from WMS" href="EN/Adding layers from WMS.html">
+        
+                </topic>
+                    
+        <topic label="Georeference an Image" href="EN/Georeference an Image.html">
+        
+                </topic>
+                    
+        <topic label="Handling Shapefiles with different Character Sets" href="EN/Handling Shapefiles with different Character Sets.html">
+        
+                </topic>
+                    
+        <topic label="Options for importing data" href="EN/Options for importing data.html">
+        
+                            
+        <topic label="Importing data" href="EN/Importing data.html">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Set raster transparent color" href="EN/Set raster transparent color.html">
+        
+                </topic>
                     
         <topic label="Using Resource Operations" href="EN/Using Resource Operations.html">
         
@@ -350,44 +423,9 @@
         
                 </topic>
         </topic>
-                    
-        <topic label="Using the Catalog view" href="EN/Using the Catalog view.html">
-        
-                </topic>
-                    
-        <topic label="Using the help system" href="EN/Using the help system.html">
-        
-                            
-        <topic label="Accessing context sensitive help" href="EN/Accessing context sensitive help.html">
-        
-                </topic>
         </topic>
                     
-        <topic label="Using the Layers view" href="EN/Using the Layers view.html">
-        
-                            
-        <topic label="Deleting a layer" href="EN/Deleting a layer.html">
-        
-                </topic>
-                    
-        <topic label="Zooming to a layer" href="EN/Zooming to a layer.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Using the Projects view" href="EN/Using the Projects view.html">
-        
-                </topic>
-                    
-        <topic label="Using the Search view" href="EN/Using the Search view.html">
-        
-                </topic>
-                    
-        <topic label="Using the Table View" href="EN/Using the Table View.html">
-        
-                </topic>
-                    
-        <topic label="Using Tools" href="EN/Using Tools.html">
+        <topic label="Working with Features" href="EN/Working with Features.html">
         
                             
         <topic label="Advanced Tool Mode" href="EN/Advanced Tool Mode.html">
@@ -436,6 +474,10 @@
         <topic label="Rectangle Tool" href="EN/Rectangle Tool.html">
         
                 </topic>
+                    
+        <topic label="Smart Buffer Tool" href="EN/Smart Buffer Tool.html">
+        
+                </topic>
         </topic>
                     
         <topic label="Vertex Tools" href="EN/Vertex Tools.html">
@@ -463,62 +505,90 @@
         </topic>
         </topic>
                     
-        <topic label="Working with data" href="EN/Working with data.html">
+        <topic label="Working with Layers" href="EN/Working with Layers.html">
         
                             
         <topic label="Adding a layer" href="EN/Adding a layer.html">
         
                 </topic>
                     
-        <topic label="Adding Features from a DB2" href="EN/Adding Features from a DB2.html">
+        <topic label="Change a Layers Style" href="EN/Change a Layers Style.html">
+        
+                </topic>
+                    
+        <topic label="Configure a AOI layer" href="EN/Configure a AOI layer.html">
+        
+                </topic>
+                    
+        <topic label="Create Layer from Query" href="EN/Create Layer from Query.html">
+        
+                </topic>
+                    
+        <topic label="Feature count" href="EN/Feature count.html">
+        
+                </topic>
+                    
+        <topic label="Using Layer Operations" href="EN/Using Layer Operations.html">
         
                             
-        <topic label="DB2 Preferences" href="EN/DB2 Preferences.html">
+        <topic label="Layer Summary" href="EN/Layer Summary.html">
+        
+                </topic>
+                    
+        <topic label="Validation" href="EN/Validation.html">
         
                 </topic>
         </topic>
-                    
-        <topic label="Adding features from a Shapefile" href="EN/Adding features from a Shapefile.html">
-        
-                </topic>
-                    
-        <topic label="Adding features from ArcSDE" href="EN/Adding features from ArcSDE.html">
-        
-                </topic>
-                    
-        <topic label="Adding features from Oracle" href="EN/Adding features from Oracle.html">
-        
-                </topic>
-                    
-        <topic label="Adding features from PostGIS" href="EN/Adding features from PostGIS.html">
-        
-                </topic>
-                    
-        <topic label="Adding features from WFS" href="EN/Adding features from WFS.html">
-        
-                </topic>
-                    
-        <topic label="Adding layers from WMS" href="EN/Adding layers from WMS.html">
-        
-                </topic>
-                    
-        <topic label="Set raster transparent color" href="EN/Set raster transparent color.html">
-        
-                </topic>
         </topic>
                     
-        <topic label="Working with fast views" href="EN/Working with fast views.html">
-        
-                </topic>
-                    
-        <topic label="Working with Projects" href="EN/Working with Projects.html">
+        <topic label="Working with Maps" href="EN/Working with Maps.html">
         
                             
         <topic label="Creating a new Map" href="EN/Creating a new Map.html">
         
                 </topic>
                     
+        <topic label="Map Navigation" href="EN/Map Navigation.html">
+        
+                            
+        <topic label="Pan" href="EN/Pan.html">
+        
+                </topic>
+                    
+        <topic label="Zoom" href="EN/Zoom.html">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Printing the current Map" href="EN/Printing the current Map.html">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Working with Projects" href="EN/Working with Projects.html">
+        
+                            
         <topic label="Creating a new Project" href="EN/Creating a new Project.html">
+        
+                </topic>
+                    
+        <topic label="Creating a Project" href="EN/Creating a Project.html">
+        
+                </topic>
+                    
+        <topic label="Using new to add a Map to a Project" href="EN/Using new to add a Map to a Project.html">
+        
+                </topic>
+                    
+        <topic label="Using the Context menu to add a Map to a Project" href="EN/Using the Context menu to add a Map to a Project.html">
+        
+                </topic>
+                    
+        <topic label="Using the File menu to add a new Map" href="EN/Using the File menu to add a new Map.html">
+        
+                </topic>
+                    
+        <topic label="Using the Projects view" href="EN/Using the Projects view.html">
         
                 </topic>
         </topic>
@@ -535,21 +605,85 @@
                 </topic>
         </topic>
                     
-        <topic label="Working with the Update Manager" href="EN/Working with the Update Manager.html">
+        <topic label="Working with uDig" href="EN/Working with uDig.html">
         
                             
-        <topic label="Keeping up to date" href="EN/Keeping up to date.html">
-        
-                            
-        <topic label="Finding new plugins" href="EN/Finding new plugins.html">
+        <topic label="Closing an editor" href="EN/Closing an editor.html">
         
                 </topic>
-        </topic>
+                    
+        <topic label="Exiting the workbench" href="EN/Exiting the workbench.html">
+        
+                </topic>
+                    
+        <topic label="Rearranging the main toolbar" href="EN/Rearranging the main toolbar.html">
+        
+                </topic>
+                    
+        <topic label="Rearranging views and editors" href="EN/Rearranging views and editors.html">
+        
+                            
+        <topic label="Drop cursors" href="EN/Drop cursors.html">
+        
+                </topic>
+                    
+        <topic label="Maximizing" href="EN/Maximizing.html">
+        
+                </topic>
+                    
+        <topic label="Rearranging tabbed views" href="EN/Rearranging tabbed views.html">
+        
+                </topic>
+                    
+        <topic label="Rearranging views" href="EN/Rearranging views.html">
+        
+                </topic>
+                    
+        <topic label="Tiling editors" href="EN/Tiling editors.html">
+        
+                </topic>
         </topic>
                     
-        <topic label="Zoom" href="EN/Zoom.html">
+        <topic label="Using the Catalog view" href="EN/Using the Catalog view.html">
         
                 </topic>
+                    
+        <topic label="Using the help system" href="EN/Using the help system.html">
+        
+                            
+        <topic label="Accessing context sensitive help" href="EN/Accessing context sensitive help.html">
+        
+                </topic>
+                    
+        <topic label="Using with Cheat Sheets" href="EN/Using with Cheat Sheets.html">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Using the Layers view" href="EN/Using the Layers view.html">
+        
+                            
+        <topic label="Deleting a layer" href="EN/Deleting a layer.html">
+        
+                </topic>
+                    
+        <topic label="Zooming to a layer" href="EN/Zooming to a layer.html">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Using the Search view" href="EN/Using the Search view.html">
+        
+                </topic>
+                    
+        <topic label="Using the Table View" href="EN/Using the Table View.html">
+        
+                </topic>
+                    
+        <topic label="Working with fast views" href="EN/Working with fast views.html">
+        
+                </topic>
+        </topic>
         </topic>
             
         <topic label="Reference" href="EN/Reference.html">
@@ -678,6 +812,10 @@
         <topic label="Views and editors" href="EN/Views and editors.html">
         
                             
+        <topic label="AOI View" href="EN/AOI View.html">
+        
+                </topic>
+                    
         <topic label="Bookmarks View" href="EN/Bookmarks View.html">
         
                 </topic>
@@ -800,10 +938,6 @@
         <topic label="Map Decoration page" href="EN/Map Decoration page.html">
         
                             
-        <topic label="Active Region Decoration" href="EN/Active Region Decoration.html">
-        
-                </topic>
-                    
         <topic label="Grid Decoration" href="EN/Grid Decoration.html">
         
                 </topic>
@@ -825,6 +959,10 @@
                 </topic>
                     
         <topic label="Scalebar Decoration" href="EN/Scalebar Decoration.html">
+        
+                </topic>
+                    
+        <topic label="The Processing Region" href="EN/The Processing Region.html">
         
                 </topic>
         </topic>
@@ -912,7 +1050,19 @@
                     
         <topic label="Properties dialog" href="EN/Properties dialog.html">
         
+                            
+        <topic label="Interaction Properties page" href="EN/Interaction Properties page.html">
+        
                 </topic>
+                    
+        <topic label="Projection page" href="EN/Projection page.html">
+        
+                </topic>
+                    
+        <topic label="Summary page" href="EN/Summary page.html">
+        
+                </topic>
+        </topic>
                     
         <topic label="Send Log dialog" href="EN/Send Log dialog.html">
         
@@ -940,6 +1090,38 @@
         
                 </topic>
             
+        <topic label="Home" href="EN/Home.html">
+        
+        <!-- HOME -->                     
+        <topic label="Contents" href="EN/Contents.html">
+        
+                </topic>
+        </topic>
+            
+        <topic label="Getting Started" href="EN/Getting Started.html">
+        
+                            
+        <topic label="Introduction to the Spatial Toolbox" href="EN/Introduction to the Spatial Toolbox.html">
+        
+                </topic>
+                    
+        <topic label="Quickstart" href="EN/Quickstart.html">
+        
+                </topic>
+                    
+        <topic label="Quickstart Draft" href="EN/Quickstart Draft.html">
+        
+                </topic>
+                    
+        <topic label="Walkthrough 1" href="EN/Walkthrough 1.html">
+        
+                </topic>
+                    
+        <topic label="Walkthrough 2" href="EN/Walkthrough 2.html">
+        
+                </topic>
+        </topic>
+            
         <topic label="What is new" href="EN/What is new.html">
         
                             
@@ -948,93 +1130,9 @@
                 </topic>
         </topic>
             
-        <topic label="Community" href="EN/Community.html">
-        
-                            
-        <topic label="Axios uDig Extensions" href="EN/Axios uDig Extensions.html">
-        
-                            
-        <topic label="Editing Tools" href="EN/Editing Tools.html">
-        
-                            
-        <topic label="Arc Tool" href="EN/Arc Tool.html">
+        <topic label="uDig Overview" href="EN/uDig Overview.html">
         
                 </topic>
-                    
-        <topic label="Merge Tool" href="EN/Merge Tool.html">
-        
-                </topic>
-                    
-        <topic label="Parallel Tool" href="EN/Parallel Tool.html">
-        
-                </topic>
-                    
-        <topic label="Split Tool (Axios Tools)" href="EN/Split Tool (Axios Tools).html">
-        
-                </topic>
-                    
-        <topic label="Trim Line Tool" href="EN/Trim Line Tool.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Image Georeferencing view" href="EN/Image Georeferencing view.html">
-        
-                </topic>
-                    
-        <topic label="Spatial Operations" href="EN/Spatial Operations.html">
-        
-                            
-        <topic label="Buffer Operation" href="EN/Buffer Operation.html">
-        
-                </topic>
-                    
-        <topic label="Clip Operation" href="EN/Clip Operation.html">
-        
-                </topic>
-                    
-        <topic label="Dissolve Operation" href="EN/Dissolve Operation.html">
-        
-                </topic>
-                    
-        <topic label="Fill Operation" href="EN/Fill Operation.html">
-        
-                </topic>
-                    
-        <topic label="Hole Cut Operation" href="EN/Hole Cut Operation.html">
-        
-                </topic>
-                    
-        <topic label="Intersect Operation" href="EN/Intersect Operation.html">
-        
-                </topic>
-                    
-        <topic label="Polygon to Line Operation" href="EN/Polygon to Line Operation.html">
-        
-                </topic>
-                    
-        <topic label="Spatial Join Operation" href="EN/Spatial Join Operation.html">
-        
-                </topic>
-                    
-        <topic label="Split Operation" href="EN/Split Operation.html">
-        
-                </topic>
-        </topic>
-        </topic>
-                    
-        <topic label="Jody" href="EN/Jody.html">
-        
-                            
-        <topic label="North Arrow" href="EN/North Arrow.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Using the WPS plugin" href="EN/Using the WPS plugin.html">
-        
-                </topic>
-        </topic>
     </toc>
-<!-- Document generated by Confluence on Jul 12, 2011 07:37 -->
+<!-- Document generated by Confluence on Dec 01, 2011 20:52 -->
 <!-- spacedesc: Users Guide v.5 (3411) -->

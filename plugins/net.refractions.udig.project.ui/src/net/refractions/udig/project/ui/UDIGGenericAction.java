@@ -34,32 +34,31 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
- * Calls implemented operate method on the each element of selection
+ * Calls implemented operate method on the each element of selection.
  * 
  * @see Rename
  * @author jeichar
  * @since 0.6.0
  */
 public abstract class UDIGGenericAction extends WorkbenchWindowActionDelegate {
-
-    private IStructuredSelection selection;
-
     /**
      * @see org.eclipse.ui.IActionDelegate#run(org.eclipse.jface.action.IAction)
      */
     public void run( IAction action ) {
-
-        if( selection.isEmpty() ){
+        ISelection sel = getSelection();
+        if( sel == null || sel.isEmpty() || !(sel instanceof IStructuredSelection)){
             return;
         }
+        IStructuredSelection selection = (IStructuredSelection) sel;
         
         /*
-         * TODO: Optimization for a set of objects in selection of the same nature. The goal: run an
+         * Optimization for a set of objects in selection of the same nature. The goal: run an
          * operation once over all selected objects.
          */
         ArrayList<Layer> layers = new ArrayList<Layer>(selection.size());
         
         Object firstElem = selection.iterator().next();
+        
         Object stateData; 
         if (firstElem instanceof Project) {
             stateData = showErrorMessage(selection.size(), (Project) firstElem);
@@ -69,15 +68,15 @@ public abstract class UDIGGenericAction extends WorkbenchWindowActionDelegate {
             stateData = showErrorMessage(selection.size(), (Layer) firstElem);
         } else if (firstElem instanceof SimpleFeature) {
             stateData = showErrorMessage(selection.size(), (SimpleFeature) firstElem);
-        }else if (firstElem instanceof AdaptingFilter) {
-            AdaptingFilter f = (AdaptingFilter) firstElem;
+        } else if (firstElem instanceof AdaptingFilter) {
+            AdaptingFilter<?> f = (AdaptingFilter<?>) firstElem;
             ILayer layer = (ILayer) f.getAdapter(ILayer.class);
             stateData = showErrorMessage(selection.size(), layer,f);
-        }else{
+        } else {
             stateData = null;
         }
         
-        for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
+        for( Iterator<?> iter = selection.iterator(); iter.hasNext(); ) {
             Object element = iter.next();
 
             if (element instanceof Project) {
@@ -89,11 +88,10 @@ public abstract class UDIGGenericAction extends WorkbenchWindowActionDelegate {
             } else if (element instanceof SimpleFeature) {
                 operate((SimpleFeature) element, stateData);
             }else if (element instanceof AdaptingFilter) {
-                AdaptingFilter f = (AdaptingFilter) element;
+                AdaptingFilter<?> f = (AdaptingFilter<?>) element;
                 ILayer layer = (ILayer) f.getAdapter(ILayer.class);
                 operate(layer,f, stateData);
             }
-
         }
 
         if (!layers.isEmpty()) {
@@ -205,15 +203,6 @@ public abstract class UDIGGenericAction extends WorkbenchWindowActionDelegate {
      */
     protected void operate( Project project, Object context ) {
         // do nothing
-    }
-
-    /**
-     * @see org.eclipse.emf.common.ui.action.WorkbenchWindowActionDelegate#selectionChanged(org.eclipse.jface.action.IAction,
-     *      org.eclipse.jface.viewers.ISelection)
-     */
-    public void selectionChanged( IAction action, ISelection selection ) {
-        if (selection instanceof IStructuredSelection)
-            this.selection = (IStructuredSelection) selection;
     }
 
 }

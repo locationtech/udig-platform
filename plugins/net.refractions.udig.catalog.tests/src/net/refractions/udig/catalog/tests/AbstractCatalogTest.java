@@ -251,7 +251,7 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
     protected abstract Envelope getSearchBounds();
     protected abstract String getSearchString();
 
-    public void testSearch() throws IOException {
+    public void xtestSearch() throws IOException {
         if (getSearchString() != null) {
             List<IResolve> results = getResolve().search(getSearchString(), null, null);
             assertNotNull("Must return a non-null list", results); //$NON-NLS-1$
@@ -270,7 +270,7 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
         }
     }
 
-    public void testSearchMonitor() throws IOException {
+    public void xtestSearchMonitor() throws IOException {
         if (getSearchString() != null) {
             FakeProgress monitor = new FakeProgress();
             List<IResolve> results = getResolve().search(getSearchString(), null, monitor);

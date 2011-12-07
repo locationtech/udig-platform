@@ -120,7 +120,6 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
 	        
 	        initMap(createdMap);
 	        
-	        
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(-1);

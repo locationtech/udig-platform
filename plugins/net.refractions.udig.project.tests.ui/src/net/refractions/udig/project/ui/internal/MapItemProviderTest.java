@@ -98,7 +98,7 @@ public class MapItemProviderTest extends AbstractProjectUITestCase {
         content.dispose();
     }
 
-    public void testMapItemProviderAddLayer() throws Exception {
+    public void xtestMapItemProviderAddLayer() throws Exception {
         content.inputChanged(viewer, null, map);
         content.getChildren(map);
         UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition(){

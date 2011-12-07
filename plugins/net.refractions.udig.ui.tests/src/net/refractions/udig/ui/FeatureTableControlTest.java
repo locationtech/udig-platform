@@ -145,7 +145,7 @@ public class FeatureTableControlTest extends TestCase {
         table.assertInternallyConsistent();
     }
     
-    public void testUpdate() throws Exception {
+    public void XtestUpdate() throws Exception {
 
         TableViewer viewer = (TableViewer) table.getViewer();
 
@@ -166,7 +166,7 @@ public class FeatureTableControlTest extends TestCase {
     }
 
     @SuppressWarnings("unchecked")
-    public void testSetFeatures() {
+    public void XtestSetFeatures() {
     	FeatureCollection<SimpleFeatureType, SimpleFeature> newFeatures = FeatureCollections.newCollection();
         newFeatures.add(feature1);
         table.setFeatures(newFeatures);
@@ -192,7 +192,7 @@ public class FeatureTableControlTest extends TestCase {
 
     }
 
-    public void testClear() {
+    public void XtestClear() {
         table.clear();
         while( Display.getCurrent().readAndDispatch() );
         Table t = table.getViewer().getTable();
@@ -223,7 +223,7 @@ public class FeatureTableControlTest extends TestCase {
     }
 
     @SuppressWarnings("unchecked")
-    public void testGetSelection() throws Exception {
+    public void XtestGetSelection() throws Exception {
 
         SimpleFeatureType featureType = feature1.getFeatureType();
         List<SimpleFeature> newFeatures = new ArrayList<SimpleFeature>();
@@ -313,7 +313,7 @@ public class FeatureTableControlTest extends TestCase {
         }, false);
     }
 
-    public void testSort() {
+    public void XtestSort() {
         TableColumn column = table.getViewer().getTable().getColumn(0);
         table.sort(new FIDComparator(SWT.DOWN), SWT.UP, column);
         while( Display.getCurrent().readAndDispatch() );
@@ -366,7 +366,7 @@ public class FeatureTableControlTest extends TestCase {
         assertEquals(tree.getItem(2).getBackground(), selectedBackColor);
     }
 
-    public void testUserSelection() throws Exception {
+    public void XtestUserSelection() throws Exception {
 
         // test normal click
         doEventBasedSelection(1, 0, 1);

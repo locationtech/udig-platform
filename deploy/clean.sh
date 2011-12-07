@@ -3,4 +3,4 @@ echo "Clean"
 
 export BUILD=build
 
-rm -rf ${BUILD}/win32
+rm -rf ${BUILD}/*

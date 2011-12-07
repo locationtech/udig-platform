@@ -25,7 +25,7 @@ import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.internal.Project;
 import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
 import net.refractions.udig.project.ui.internal.MapFactory;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
@@ -85,8 +85,8 @@ public class PlatformGIS {
                 public void run() {
                     try {
                         IEditorPart editor=PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-                        if( editor instanceof MapEditor ){
-                            l.add(((MapPart)editor).getMap());
+                        if( editor instanceof MapEditorPart ){
+                            l.add(((MapEditorPart)editor).getMap());
                         }
                     }
                     catch(NullPointerException e) {
@@ -120,8 +120,8 @@ public class PlatformGIS {
                 for ( IWorkbenchPage wPage : wPages ) {
                     IEditorReference[] editors = wPage.getEditorReferences();
                     for ( IEditorReference editor : editors ) {
-                        if( editor.getEditor(false) instanceof MapEditor ){
-                            maps.add(((MapPart)editor.getEditor(false)).getMap());
+                        if( editor.getEditor(false) instanceof MapEditorPart ){
+                            maps.add(((MapEditorPart)editor.getEditor(false)).getMap());
                         }
                     }
                 }

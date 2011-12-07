@@ -6,6 +6,7 @@ import net.refractions.udig.project.command.CommandManager;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.tools.edit.EditState;
+import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 import net.refractions.udig.tools.edit.support.EditGeom;
 import net.refractions.udig.tools.edit.support.Point;
@@ -79,6 +80,8 @@ public class SetGeomCommandTest extends TestCase {
      */
     public void testRun() throws Exception {
         IEditManager editManager = handler.getContext().getEditManager();
+        
+        if( EditTestControl.DISABLE ) return;
         
         assertEquals("Does the ID match",feature.getID(), editManager.getEditFeature().getID());
 		assertEquals("Is the feature equal",feature, editManager.getEditFeature());

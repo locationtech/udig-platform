@@ -14,6 +14,7 @@ import net.refractions.udig.project.IMapCompositionListener;
 import net.refractions.udig.project.IMapListener;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.command.MapCommand;
+import net.refractions.udig.project.internal.LayerFactory;
 import net.refractions.udig.project.render.IRenderManager;
 import net.refractions.udig.project.render.IViewportModel;
 
@@ -77,7 +78,8 @@ public class TestMap implements IMap {
 		return null;
 	}
 
-	public ReferencedEnvelope getBounds(IProgressMonitor monitor) throws IOException {
+	// public ReferencedEnvelope getBounds(IProgressMonitor monitor) throws IOException {
+	public ReferencedEnvelope getBounds(IProgressMonitor monitor) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -129,6 +131,24 @@ public class TestMap implements IMap {
 	}
 
 	public IProject getProject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <E> List<E> getElements(Class<E> type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<?> getElements() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LayerFactory getLayerFactory() {
 		// TODO Auto-generated method stub
 		return null;
 	}

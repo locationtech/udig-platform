@@ -19,6 +19,7 @@ import java.util.List;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.internal.impl.LayerImpl;
 
+import org.junit.Ignore;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
@@ -27,6 +28,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * @author jones
  * @since 1.1.0
  */
+@Ignore
 public class TestLayer extends LayerImpl {
 
     private List<IGeoResource> resources;

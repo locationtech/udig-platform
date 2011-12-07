@@ -10,6 +10,7 @@ import net.refractions.udig.project.command.UndoableCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.UDIGEditorInput;
 import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
 import net.refractions.udig.project.ui.internal.Messages;
 import net.refractions.udig.project.ui.internal.ProjectExplorer;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
@@ -84,8 +85,8 @@ public class OpenProjectElementCommand implements UndoableCommand {
             ProjectExplorer explorer = ProjectExplorer.getProjectExplorer();
             explorer.setSelection(Collections.singleton(input.getProjectElement()), true);
 
-            if( part instanceof MapEditor ){
-                MapEditor mapEditor=(MapEditor) part;
+            if( part instanceof MapEditorPart ){
+                MapEditorPart mapEditor=(MapEditorPart) part;
                 while( !mapEditor.getComposite().isVisible() || !mapEditor.getComposite().isEnabled() ){
                     if( !Display.getCurrent().readAndDispatch() ){
                         Thread.sleep(300);

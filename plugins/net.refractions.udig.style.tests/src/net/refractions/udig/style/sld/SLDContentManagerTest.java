@@ -13,7 +13,7 @@ import org.junit.Test;
  * @since 1.1.0
  */
 public class SLDContentManagerTest {
-
+    @Test
     public void testDefault(){
         StyleBuilder styleBuilder = new StyleBuilder();
         SLDContentManager manager = new SLDContentManager();

@@ -2,10 +2,10 @@ package net.refractions.udig.project.ui.internal;
 
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
-import net.refractions.udig.project.ui.viewers.MapEditDomain;
 
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * WorkbenchPart that supports map editing (for an example a IViewpart or IEditorPart that has a map in it).

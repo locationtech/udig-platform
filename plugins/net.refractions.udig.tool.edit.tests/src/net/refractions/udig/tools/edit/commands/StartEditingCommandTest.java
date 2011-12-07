@@ -105,9 +105,21 @@ public class StartEditingCommandTest extends TestCase {
         editFeature = handler.getContext().getEditManager().getEditFeature();
         
         assertEquals("feature id", feature.getID(), editFeature.getID());
-        assertEquals(feature, editFeature);
+        assertFeatureEqual("edit feature",feature, editFeature);
         assertEquals(layer, handler.getContext().getEditManager().getEditLayer());
         
+    }
+    
+    public void assertFeatureEqual( String msg, SimpleFeature expected, SimpleFeature actual ){
+        if( expected == null ){
+            assertNull( msg, actual );
+        }
+        assertEquals( msg, expected.getID(), actual.getID() );
+        assertEquals( msg, expected.getIdentifier(), actual.getIdentifier() );
+
+        // assertEquals( msg, expected.getFeatureType(), actual.getFeatureType() );    
+        //FeatureTypes.equals( expected, actual );
+        //assertEquals( msg, expected, actual );
     }
 
 }

@@ -396,14 +396,16 @@ public class ProcessingRegion {
 
         double originalXres = sourceRegion.getNSResolution();
         double originalYres = sourceRegion.getWEResolution();
+        double originalWest = sourceRegion.getWest();
+        double originalSouth = sourceRegion.getSouth();
 
-        double newWest = sourceEnvelope.getMinX();
-        double deltaX = newWest % originalXres;
-        newWest = newWest - deltaX;
+        double envWest = sourceEnvelope.getMinX();
+        double deltaX = (envWest - originalWest) % originalXres;
+        double newWest = envWest - deltaX;
 
-        double newSouth = sourceEnvelope.getMinY();
-        double deltaY = newSouth % originalYres;
-        newSouth = newSouth - deltaY;
+        double envSouth = sourceEnvelope.getMinY();
+        double deltaY = (envSouth - originalSouth) % originalYres;
+        double newSouth = envSouth - deltaY;
 
         double newWidth = sourceEnvelope.getWidth();
         double deltaW = newWidth % originalXres;

@@ -8,12 +8,15 @@
  */
 package net.refractions.udig.project.internal.command.navigation;
 
+import java.awt.Rectangle;
+
 import net.refractions.udig.project.command.MapCommand;
 import net.refractions.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Increases or decreases the size of the viewport(in world space) by a constant factor, zoom. The
@@ -25,8 +28,9 @@ import com.vividsolutions.jts.geom.Coordinate;
  */
 public class ZoomCommand extends AbstractNavCommand {
 
-    private double zoomfactor;
+    private double zoomfactor = 1.0;
     private Coordinate fixedPoint;
+    private Envelope envelope;
 
     /**
      * Creates a new instance of ZoomCommand
@@ -42,6 +46,20 @@ public class ZoomCommand extends AbstractNavCommand {
         this.zoomfactor = zoomfactor;
     }
 
+    /**
+     * Creates a {@link ZoomCommand} that zooms to a given {@link Envelope}.
+     * 
+     * @param envelope the {@link Envelope} to zoom to.
+     */
+    public ZoomCommand( Envelope envelope ) {
+        this.envelope = envelope;
+    }
+
+    /**
+     * @param fixedPoint the point that will remain fixed after zoom. 
+     *              If set it will be considered together with the 
+     *              zoomfactor set in the constructor.
+     */
     public void setFixedPoint( Coordinate fixedPoint ) {
         this.fixedPoint = fixedPoint;
     }
@@ -57,7 +75,11 @@ public class ZoomCommand extends AbstractNavCommand {
      * @see net.refractions.udig.project.internal.command.navigation.AbstractNavCommand#runImpl()
      */
     protected void runImpl( IProgressMonitor monitor ) {
-        model.zoom(zoomfactor, fixedPoint);
+        if (envelope!=null) {
+            model.zoomToBox(envelope);
+        }else{
+            model.zoom(zoomfactor, fixedPoint);
+        }
     }
 
     /**

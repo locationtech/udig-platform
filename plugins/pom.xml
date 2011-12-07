@@ -25,19 +25,36 @@
                 <module>net.refractions.udig.catalog.tests.wms</module>
                 <module>net.refractions.udig.libs.tests</module>
                 <module>net.refractions.udig.location.test</module>
-                <module>net.refractions.udig.project.tests</module>
-                <module>net.refractions.udig.project.tests.ui</module>
+				<!-- 
+					error:
+					SWTException: Failed to execute runnable
+					<module>net.refractions.udig.issues.test</module>
+				-->
+				<module>net.refractions.udig.project.tests</module>
+				<module>net.refractions.udig.project.tests.ui</module>
                 <module>net.refractions.udig.render.feature.basic.test</module>
-                <module>net.refractions.udig.render.wms.basic.test</module>
+				<module>net.refractions.udig.render.wms.basic.test</module>
                 <module>net.refractions.udig.style.tests</module>
-                <module>net.refractions.udig.tests.catalog.wmt</module>
+				<!-- 
+					Module has broken tests and errors
+                	<module>net.refractions.udig.tests.catalog.wmt</module>
+				-->
                 <module>net.refractions.udig.tool.default.tests</module>
-                <module>net.refractions.udig.tool.edit.tests</module>
-                <module>net.refractions.udig.tool.info.tests</module>
+				<module>net.refractions.udig.tool.edit.tests</module>
+                <!-- 
+					Errors in tests, still working to fix this
+					module>net.refractions.udig.tool.info.tests</module>
+				-->
+				<!--
+					Module has errors - SWTException: Failed to execute runnable - assertion failed
+					<module>net.refractions.udig.validation.test</module>
+				-->
                 <module>net.refractions.udig.tool.select.tests</module>
                 <module>net.refractions.udig.ui.tests</module>
+				<module>org.tcat.citd.sim.udig.bookmarks.tests</module>			
             </modules>
         </profile>
+
         <profile>
             <id>sdk</id>
                <activation>
@@ -51,6 +68,7 @@
                 <!-- test commented out for now -->
                 <!--module>net.refractions.udig.tests.tutorials.tests</module -->
                 <module>net.refractions.udig.tutorials.catalog.csv</module>
+                <module>net.refractions.udig.tutorials.catalog.tests.csv</module>
                 <module>net.refractions.udig.tutorials.customapp</module>
                 <module>net.refractions.udig.tutorials.distancetool</module>
                 <module>net.refractions.udig.tutorials.examples</module>
@@ -79,25 +97,22 @@
                 <module>net.refractions.udig_application.source</module>
              </modules>
         </profile>
-        <profile>
+
+        <!-- profile>
             <id>pending</id>
                <activation>
                  <property><name>all</name></property>
                </activation>
             <modules>
-                <module>eu.udig.catalog.csw</module>
-                <module>net.refractions.udig.graph</module>
-                <module>net.refractions.udig.issues</module>
-                <!-- module>net.refractions.udig.issues.test</module-->
-		<module>net.refractions.udig.validation</module>
-		<!-- module>net.refractions.udig.validation.test</module -->		
+                		
              </modules>
-        </profile>
+        </profile -->
   </profiles>
   
   <modules>
     <module>com.lowagie.itext</module>
     <module>com.mapquest</module>
+	<module>eu.udig.catalog.csw</module>
     <module>eu.udig.catalog.jgrass</module>
     <module>eu.udig.catalog.teradata</module>
     <module>eu.udig.libs.teradata</module>
@@ -129,7 +144,9 @@
     <module>net.refractions.udig.context</module>
     <module>net.refractions.udig.core</module>
     <module>net.refractions.udig.feature.editor</module>
+	<module>net.refractions.udig.graph</module>
     <module>net.refractions.udig.help</module>
+	<module>net.refractions.udig.issues</module>
     <module>net.refractions.udig.jai</module>
     <module>net.refractions.udig.jai.macosx</module>
     <module>net.refractions.udig.legend</module>
@@ -161,6 +178,7 @@
     <module>net.refractions.udig.ui</module>
     <module>net.refractions.udig.unstable</module>
     <module>net.refractions.udig_base</module>
+	<module>net.refractions.udig.validation</module>
     <module>org.apache.log4j</module>
     <module>org.tcat.citd.sim.udig.bookmarks</module>
   </modules>

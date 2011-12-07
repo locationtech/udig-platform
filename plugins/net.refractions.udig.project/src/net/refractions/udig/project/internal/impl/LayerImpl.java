@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -1657,10 +1658,21 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return isSelectable();
         }
         // check the blackboard 
-        Boolean applicable = (Boolean) getBlackboard().get(interaction.getKey());
+        // layer blackboard is not persisted; store on the map blackboard for now
+        String key = interaction.getKey();
+		Boolean applicable = (Boolean) getBlackboard().get(key);
         if (applicable == null) {
-            applicable = getDefaultApplicable( interaction );
-            getBlackboard().put( interaction.getKey(), applicable);
+        	// look for a default from the last time the user used this map
+        	applicable = isMapApplicable( key );
+        	if( applicable != null ){
+        		// use value from last time
+        		getBlackboard().put( key, applicable);
+        	}
+        	else {
+	        	// create a new default value from scratch
+	            applicable = getDefaultApplicable( interaction );
+	            getBlackboard().put( key, applicable);
+	        }
         }
         return applicable;
     }
@@ -1686,6 +1698,108 @@ public class LayerImpl extends EObjectImpl implements Layer {
         }
         return false;
     }
+    /**
+     * Check the map blackboard to see is a previous run has specified
+     * an applicable value for us to use. We can use this as a default;
+     * when re-loading the map.
+     * 
+     * @param key
+     * @param applicable
+     * @return true or false (if the value was available previously) or null if it was unknown.
+     */
+    protected Boolean isMapApplicable( String key ){
+    	IBlackboard mapBlackboard = getMap().getBlackboard();
+    	String text = mapBlackboard.getString( key );
+    	if( text == null ){
+    		return null;
+    	}
+    	String token = this.getID().toString();
+    	List<String> values;
+    	if( text.indexOf('\n')==-1){
+    		values = new ArrayList<String>();
+    		values.add(text);
+    	}
+    	else {
+    		values = new ArrayList<String>(Arrays.asList( text.split("\n")));
+    	}
+    	for( String line : values ){
+    		if( line.startsWith(token) ){
+    			// match!
+    			if(line.endsWith("=true")){
+    				return true;
+    			}
+    			else if(line.endsWith("=false")){
+        			return false;    				
+    			}
+    			else {
+    				break;
+    			}
+    		}
+    	}
+    	return null;
+    }
+    
+    /**
+     * Will record a list of layers that have the key set to true; this will
+     * be used as a default when the map is re-loaded.
+     * 
+     * @param key
+     * @param applicable
+     */
+    protected void setMapApplicable( String key, boolean applicable ){
+    	IBlackboard mapBlackboard = getMap().getBlackboard();
+    	String text = mapBlackboard.getString( key);
+    	String token = this.getID().toString();
+    	List<String> values;
+    	if( text == null ){
+    		values = new ArrayList<String>();
+    	}
+    	else if( text.indexOf('\n') == -1 ){
+    		values = new ArrayList<String>();
+    		values.add( text );
+    	}
+    	else {
+    		values = new ArrayList<String>(Arrays.asList( text.split("\n")));
+    	}
+    	boolean updated = false;
+    	for( int index=0; index < values.size(); index++){
+    		String line = values.get(index);
+    		if( line.startsWith(token) ){
+    			if( applicable ){
+    				if( line.endsWith("=true")){
+    					return; // no change needed
+    				}
+    				values.set(index, token+"=true");
+    				updated = true;
+    			}
+    			else {
+    				if( line.endsWith("=false")){
+    					return; // no change needed
+    				}
+    				values.set(index, token+"=false");
+    				updated = true;    				
+    			}
+    		}
+    	}
+    	if( updated == false ){
+    		if( applicable){
+    			values.add( token + "=true");
+    		}
+    		else {
+    			values.add( token + "=false");
+    		}
+    	}
+		StringBuilder build = new StringBuilder();
+		for( String aToken : values ){
+			if( aToken.length() == 0 ){
+				continue;
+			}
+			build.append(aToken);
+			build.append("\n");
+		}
+		String updatedText = build.substring(0, build.length()-1);
+		mapBlackboard.putString(key, updatedText );        		
+    }
     
     /**
      * @see net.refractions.udig.project.internal.Layer#setApplicable(java.lang.String, boolean)
@@ -1698,9 +1812,15 @@ public class LayerImpl extends EObjectImpl implements Layer {
             setSelectable(applicable);
         }
         else {
-            getBlackboard().put(interaction.getKey(), applicable );
+        	// layer blackboard is not persisted; store on the map blackboard for now
+            String key = interaction.getKey();
+			getBlackboard().put(key, applicable );
+            
+            // save a default for next time!
+            setMapApplicable(key, applicable);
+            
             // XXX just to send an event needs to change when we have EMF set up
-            setSelectable(isSelectable());
+        	setSelectable(isSelectable());
         }
     }
 
@@ -1991,6 +2111,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
             }
         }
         getMap().getRenderManager().refresh(this, transformedbounds);
+
+        //edit event
+        fireLayerChange(new LayerEvent(LayerImpl.this, LayerEvent.EventType.EDIT_EVENT, null, null));
 
     }
 

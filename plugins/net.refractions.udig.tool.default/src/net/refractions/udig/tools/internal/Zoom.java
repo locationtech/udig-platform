@@ -18,11 +18,7 @@ package net.refractions.udig.tools.internal;
 
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.Arrays;
 
-import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.internal.command.navigation.NavComposite;
-import net.refractions.udig.project.internal.command.navigation.SetViewportCenterCommand;
 import net.refractions.udig.project.internal.command.navigation.ZoomCommand;
 import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.ui.commands.DrawCommandFactory;
@@ -31,6 +27,8 @@ import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
 import net.refractions.udig.project.ui.tool.AbstractModalTool;
 import net.refractions.udig.project.ui.tool.ModalTool;
+
+import org.geotools.geometry.jts.ReferencedEnvelope;
 
 /**
  * This class Provides zoom box and click functionality.
@@ -186,15 +184,14 @@ public class Zoom extends AbstractModalTool implements ModalTool {
 	}
 
     private void zoomin( IViewportModel m, Rectangle r ) {
-    	ZoomCommand cmd = new ZoomCommand(getContext().getMapDisplay().getDisplaySize().getWidth() / r.width);
-    	cmd.setFixedPoint(m.pixelToWorld(r.x + r.width / 2, r.y + r.height / 2));
+        ReferencedEnvelope worldBounds = getContext().worldBounds(r);
+        ZoomCommand cmd = new ZoomCommand(worldBounds);
         getContext().sendASyncCommand(cmd);
     }
 
     private void zoomout( IViewportModel m, Rectangle r ) {
-    	ZoomCommand cmd = new ZoomCommand((r.width / getContext().getMapDisplay().getDisplaySize().getWidth()));
-    	cmd.setFixedPoint(m.pixelToWorld(
-                r.x + r.width / 2, r.y + r.height / 2));
+        ReferencedEnvelope worldBounds = getContext().worldBounds(r);
+        ZoomCommand cmd = new ZoomCommand(worldBounds);
         getContext().sendASyncCommand(cmd);
     }
 

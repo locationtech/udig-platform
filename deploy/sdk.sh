@@ -40,7 +40,7 @@ then
         mv ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_${TAG}.qualifier \
            ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_${QUALIFIER}
         
-        cp ${BASE}/udig-1.2.x.html ${BUILD}/sdk/udig_sdk/udig-${VERSION}.html
+        cp ${BASE}/udig-1.3.x.html ${BUILD}/sdk/udig_sdk/udig-${VERSION}.html
         
         echo "Assemble ${BUILD}/udig-${VERSION}-sdk.zip "
         cd ${BUILD}/sdk

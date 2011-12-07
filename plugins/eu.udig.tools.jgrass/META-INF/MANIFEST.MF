@@ -16,3 +16,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xsd;bundle-version="2.7.0"
 Eclipse-LazyStart: true
 Bundle-ClassPath: .
+Export-Package: eu.udig.tools.jgrass.profile.borrowedfromjgrasstools

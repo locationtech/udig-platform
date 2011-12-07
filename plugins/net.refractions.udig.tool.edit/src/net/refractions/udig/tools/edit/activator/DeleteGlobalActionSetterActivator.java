@@ -58,7 +58,7 @@ public class DeleteGlobalActionSetterActivator implements Activator {
         IActionBars2 actionBars = handler.getContext().getActionBars();
         if( actionBars==null )
             return;
-        IWorkbenchPart part=ApplicationGISInternal.getActiveEditor();
+        IWorkbenchPart part=(IWorkbenchPart) ApplicationGISInternal.getActiveEditor();
         
         if( part == null ) return;
         

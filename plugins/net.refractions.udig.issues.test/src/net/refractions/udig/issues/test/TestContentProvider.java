@@ -3,7 +3,9 @@ package net.refractions.udig.issues.test;
 import net.refractions.udig.issues.IIssuesContentProvider;
 
 import org.eclipse.jface.viewers.Viewer;
+import org.junit.Ignore;
 
+@Ignore
 public class TestContentProvider {
 
     public static class Provider1 implements IIssuesContentProvider {

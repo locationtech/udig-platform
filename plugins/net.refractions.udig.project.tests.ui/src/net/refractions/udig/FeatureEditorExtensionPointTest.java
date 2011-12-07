@@ -22,7 +22,7 @@ public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
     
     
     @SuppressWarnings("deprecation")
-    public void testGetEditWithMenu() throws Exception{
+    public void xtestGetEditWithMenu() throws Exception{
         FeatureEditorExtensionProcessor processor=new FeatureEditorExtensionProcessor();
         IContributionItem item=processor.getEditWithFeatureMenu(new StructuredSelection());
         assertTrue(item instanceof GroupMarker);
@@ -80,7 +80,7 @@ public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
     }
     
     @SuppressWarnings("deprecation")
-    public void testOpenMemory()throws Exception{
+    public void xtestOpenMemory()throws Exception{
         FeatureEditorExtensionProcessor processor=new FeatureEditorExtensionProcessor();
         SimpleFeatureTypeBuilder builder=new SimpleFeatureTypeBuilder();
         

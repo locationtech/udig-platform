@@ -22,20 +22,38 @@ public class MapToolEntry extends ToolEntry {
     private String categoryId;
     private ModalItem item;
 
-	public MapToolEntry( String label, ModalItem item, String categoryId) {
-        super( label, item.getToolTipText(), item.getImageDescriptor(), item.getLargeImageDescriptor());
+	public MapToolEntry( String label, ModalItem item, String shortcut, String categoryId) {
+        super( label, description( item.getToolTipText(), shortcut), item.getImageDescriptor(), item.getLargeImageDescriptor());
         setId(item.getId());
         this.categoryId = categoryId;
         this.item = item;
         item.getMapToolEntries().add( this ); // register for enablement
 	}
 
+	static String description( String tooltip, String shortcut ){
+	    if( shortcut == null){
+	        return tooltip;
+	    }
+	    StringBuilder build = new StringBuilder();
+	    if( tooltip != null){
+	        build.append(tooltip);
+	        build.append(" ");
+	    }
+	    build.append("(");
+	    build.append( shortcut );
+	    build.append(")");
+	    return build.toString();
+	}
     public ModalTool getMapTool() {
         IToolManager tools = ApplicationGIS.getToolManager();
         ModalTool tool = (ModalTool) tools.findTool(getId());
         return tool;
     }
 
+    public String getCategoryId() {
+        return categoryId;
+    }
+    
     public ToolProxy getMapToolProxy(){
         return (ToolProxy) item;
     }

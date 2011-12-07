@@ -20,6 +20,7 @@ import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
 
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.Ignore;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.MathTransform;
 
@@ -28,6 +29,7 @@ import org.opengis.referencing.operation.MathTransform;
  * @author jones
  * @since 1.1.0
  */
+@Ignore
 public class TestEditBlackboard extends EditBlackboard {
     public static final MathTransform IDENTITY;
     static {

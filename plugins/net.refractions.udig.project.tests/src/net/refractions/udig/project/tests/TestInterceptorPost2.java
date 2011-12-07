@@ -4,9 +4,11 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IResourceInterceptor;
 
 import org.geotools.data.FeatureSource;
+import org.junit.Ignore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
+@Ignore
 public class TestInterceptorPost2 implements
 		IResourceInterceptor<FeatureSource<SimpleFeatureType, SimpleFeature>> {
 	public static volatile int runs = 0;

@@ -96,7 +96,9 @@ public class LayerApplicabilityMenuCreator {
             Layer layer = (Layer) selection.getFirstElement();
             ModalToolCategory modalToolCategory = category;
             if( category!=null ){
-                menuItem.setSelection(layer.isApplicable(Interaction.getInteraction(modalToolCategory.getId())));
+                Interaction key = Interaction.getInteraction(modalToolCategory.getId());
+                boolean interaction = layer.isApplicable(key);
+                menuItem.setSelection(interaction);
                 menuItem.setText(modalToolCategory.getName());
             }
         }

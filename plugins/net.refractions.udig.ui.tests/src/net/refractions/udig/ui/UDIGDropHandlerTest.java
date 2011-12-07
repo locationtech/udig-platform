@@ -132,7 +132,7 @@ public class UDIGDropHandlerTest extends TestCase {
         assertEquals(dropDestination, AlwaysAcceptDropAction.dropDestination);
     }
 
-    public void testPerformDropListItemsManyActions() throws Exception {
+    public void XtestPerformDropListItemsManyActions() throws Exception {
         ArrayList<Object> data = new ArrayList<Object>();
         String data1 = "Data1"; //$NON-NLS-1$
         data.add(data1); 
@@ -290,7 +290,7 @@ public class UDIGDropHandlerTest extends TestCase {
     }
 
 
-    public void testPerformDropListButOnlySomeAreAcceptable() throws Exception {
+    public void XtestPerformDropListButOnlySomeAreAcceptable() throws Exception {
         ArrayList<Data> data = new ArrayList<Data>();
         Data data1 = new Data(11);
         data.add(data1); 
@@ -308,7 +308,7 @@ public class UDIGDropHandlerTest extends TestCase {
         assertEquals(data3, AlwaysAcceptDropAction.allDrops.get(1));
     }
 
-    public void testMixedDrop() throws Exception {
+    public void XtestMixedDrop() throws Exception {
         ArrayList<Object> data = new ArrayList<Object>();
         Double data1 = Double.valueOf(11);
         data.add(data1); 

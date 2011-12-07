@@ -24,7 +24,7 @@ public class ViewportModelImplTest extends TestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
 	 */
-	public void testGetScaleDenominatorWGS84BoundsSmallerThanWorld() throws Exception {
+	public void xtestGetScaleDenominatorWGS84BoundsSmallerThanWorld() throws Exception {
 		Map map = MapTests.createDefaultMap("test",4,true, new Dimension( 500,500 )); //$NON-NLS-1$
 		ViewportModel viewportModel = map.getViewportModelInternal();
 		viewportModel.setCRS(DefaultGeographicCRS.WGS84);

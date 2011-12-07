@@ -31,6 +31,7 @@ import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.junit.Ignore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -44,6 +45,7 @@ import org.opengis.filter.identity.FeatureId;
  * @author Jesse
  * @since 1.1.0
  */
+@Ignore
 public class TestFeatureStore implements SimpleFeatureStore {
 
     public Name getName() {

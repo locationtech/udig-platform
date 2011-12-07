@@ -14,6 +14,8 @@
  */
 package net.refractions.udig.project.tests.ui;
 
+import org.junit.Ignore;
+
 import net.refractions.udig.project.interceptor.LayerInterceptor;
 import net.refractions.udig.project.internal.Layer;
 
@@ -23,6 +25,7 @@ import net.refractions.udig.project.internal.Layer;
  * @author Jesse
  * @since 1.1.0
  */
+@Ignore
 public class TestLayerAddedInterceptor implements LayerInterceptor {
 
     public void run( Layer layer ) {

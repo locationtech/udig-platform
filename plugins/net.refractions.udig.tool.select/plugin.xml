@@ -20,17 +20,6 @@
             image="icons/pointers/select_source.png"
             id="bbox_cursor"/>
               <enablement>
-                  	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
-	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
-	                     </or>
-                     </and>
                   </enablement>
          </modalTool>
           <modalTool
@@ -50,7 +39,7 @@
             id="arrow_cursor"/>
                <enablement>
                   	<and>
-                        <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>                  	
+                        <property propertyId="FeatureSourceResourceProperty" expectedValue=""/>                  	
 	                     <or>
 	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
 	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
@@ -64,17 +53,18 @@
          </modalTool>
           <modalTool
                 categoryId="net.refractions.udig.tool.category.selection"
-                class="net.refractions.udig.tool.select.internal.BoundaryLayerSelectionTool"
-                icon="icons/etool16/boundary_mode.png"
-                id="net.refractions.udig.tool.selection.boundary"
-                largeIcon="icons/etool24/boundary_mode.png"
-                name="%selection.boundary.name"
+                class="net.refractions.udig.tool.select.internal.AOILayerSelectionTool"
+                icon="icons/etool16/aoi_mode.png"
+                id="net.refractions.udig.tool.selection.aoi"
+                largeIcon="icons/etool24/aoi_mode.png"
+                name="%selection.aoi.name"
                 onToolbar="true"
-                toolCursorId="bondatySelectCursor"
-                tooltip="%selection.boundary.tooltip">
+                preferencePageId="net.refractions.udig.tool.select.page"
+                toolCursorId="aoiSelectCursor"
+                tooltip="%selection.aoi.tooltip">
              <toolOption
-                   class="net.refractions.udig.tool.select.internal.BoundaryLayerSelectionTool$OptionContribtionItem"
-                   id="setBoundaryToolOptions">
+                   class="net.refractions.udig.tool.select.internal.AOILayerSelectionTool$OptionContribtionItem"
+                   id="setAOIToolOptions">
              </toolOption>
           </modalTool>
                 <actionTool
@@ -105,14 +95,14 @@
                <toolCursor
                      hotspotX="9"
                      hotspotY="6"
-                     id="bondatySelectCursor"
-                     image="icons/pointers/boundary_select_sorce.png">
+                     id="aoiSelectCursor"
+                     image="icons/pointers/aoi_select_sorce.png">
                </toolCursor>
                <toolCursor
                      hotspotX="11"
                      hotspotY="11"
-                     id="bondatyBoxSelectCursor"
-                     image="icons/pointers/boundary_box_select_sorce.png">
+                     id="aoiBoxSelectCursor"
+                     image="icons/pointers/aoi_box_select_sorce.png">
                </toolCursor>
    </extension>
 
@@ -160,10 +150,10 @@
                id="net.refractions.udig.tool.select.tableContribution"
                targetID="net.refractions.udig.tool.select.TableView">
             <action
-                  class="net.refractions.udig.tool.select.BoundaryActionDelegate"
-                  icon="icons/etool16/boundary_filter_obj.png"
-                  id="net.refractions.udig.tool.select.boundaryaction"
-                  label="Boundary Filter"
+                  class="net.refractions.udig.tool.select.AOIActionDelegate"
+                  icon="icons/etool16/aoi_filter_obj.png"
+                  id="net.refractions.udig.tool.select.aoiAction"
+                  label="AOI Filter"
                   style="toggle"
                   toolbarPath="additions">
             </action>
@@ -175,15 +165,22 @@
                category="net.refractions.udig.project.ui.preferences.tool"
                class="net.refractions.udig.tool.select.internal.SelectionToolPreferencePage"
                id="net.refractions.udig.tool.select.page"
-               name="Selection">
+               name="%selection.page">
          </page>
       </extension>
       <extension
-            point="net.refractions.udig.ui.boundary">
-         <boundary
-               class="net.refractions.udig.tool.select.internal.BoundaryLayerStrategy"
-               id="net.refractions.udig.tool.default.BoundaryLayerService"
-               name="Boundary Layer">
-         </boundary>
+            point="org.eclipse.core.runtime.preferences">
+         <initializer
+               class="net.refractions.udig.tool.select.SelectionToolPreferenceInitializer">
+         </initializer>
+      </extension>
+      <extension
+            point="net.refractions.udig.ui.aoi">
+         <aoi
+               class="net.refractions.udig.tool.select.internal.AOILayerStrategy"
+               id="net.refractions.udig.tool.select.internal.aoiLayer"
+               name="Area of Interest Layer"
+               page="net.refractions.udig.tool.select.internal.AOILayerPage">
+         </aoi>
       </extension>
 </plugin>

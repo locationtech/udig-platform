@@ -15,11 +15,13 @@ import org.geotools.data.QueryCapabilities;
 import org.geotools.data.ResourceInfo;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.junit.Ignore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.Name;
 import org.opengis.filter.Filter;
 
+@Ignore
 public class TestInterceptorPost implements IResourceInterceptor<Object> {
     public static volatile int runs=0;
     public static boolean changeType=false;

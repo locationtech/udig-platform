@@ -22,6 +22,8 @@ import net.refractions.udig.tools.edit.support.SnapBehaviour;
 
 import org.eclipse.jface.action.StatusLineLayoutData;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -55,15 +57,16 @@ public class SnappingToolOptionContributionItem extends ToolOptionContributionIt
     
     @Override
     protected IPreferenceStore fillFields( Composite parent ) {
+
         combo = new Combo(parent,  SWT.READ_ONLY);
         combo.setItems(lables);
         StatusLineLayoutData data = new StatusLineLayoutData();
         data.heightHint=SWT.DEFAULT;
         data.widthHint=100;
         combo.setLayoutData(data);
-       
+        
         addField( PreferenceConstants.P_SNAP_BEHAVIOUR, combo , behaviour);
+        
         return EditPlugin.getDefault().getPreferenceStore();
     }
-
 }

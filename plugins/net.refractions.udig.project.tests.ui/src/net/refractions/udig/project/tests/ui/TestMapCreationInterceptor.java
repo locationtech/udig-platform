@@ -14,6 +14,8 @@
  */
 package net.refractions.udig.project.tests.ui;
 
+import org.junit.Ignore;
+
 import net.refractions.udig.project.interceptor.MapInterceptor;
 import net.refractions.udig.project.internal.Map;
 
@@ -23,6 +25,7 @@ import net.refractions.udig.project.internal.Map;
  * @author Jesse
  * @since 1.1.0
  */
+@Ignore
 public class TestMapCreationInterceptor implements MapInterceptor {
 
     public void run( Map map ) {

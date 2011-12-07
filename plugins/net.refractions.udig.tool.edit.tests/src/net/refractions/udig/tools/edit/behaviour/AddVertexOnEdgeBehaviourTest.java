@@ -3,6 +3,7 @@ package net.refractions.udig.tools.edit.behaviour;
 import junit.framework.TestCase;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.EditState;
+import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.support.Point;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
@@ -143,6 +144,8 @@ public class AddVertexOnEdgeBehaviourTest extends TestCase {
      * MapMouseEvent, EventType)'
      */
     public void testGetCommand() {
+        if( EditTestControl.DISABLE ) return;
+        
         MapMouseEvent event = new MapMouseEvent(null, 10, 8, MapMouseEvent.NONE,
                 MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         handler.getBehaviours().add(new InsertVertexOnEdgeBehaviour());

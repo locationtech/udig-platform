@@ -26,6 +26,7 @@ import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.Behaviour;
 import net.refractions.udig.tools.edit.EditState;
+import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
@@ -125,6 +126,8 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
     }
     
     public void testDrawPolygon(){
+        if( EditTestControl.DISABLE ) return;
+        
         handler.getMouseTracker().setDragStarted(Point.valueOf(0,10));
         
         MapMouseEvent event=new MapMouseEvent(null, 10,10,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
@@ -155,6 +158,8 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
     }
     
     public void testCutHole() throws Exception {
+        if( EditTestControl.DISABLE ) return;
+        
         EditBlackboard editBlackboard = handler.getEditBlackboard();
         EditGeom geom = editBlackboard.getGeoms().get(0);
         editBlackboard.addPoint(0,0,geom.getShell());
