@@ -12,8 +12,8 @@
 	</parent>
 
 	<groupId>net.refractions</groupId>
-	<artifactId>net.refractions.udig.validation.test</artifactId>
-	<version>1.2.0-SNAPSHOT</version>
+	<artifactId>org.tcat.citd.sim.udig.bookmarks.tests</artifactId>
+	<version>1.0.0.qualifier</version>
 
 	<packaging>eclipse-test-plugin</packaging>
 
