@@ -1,9 +1,16 @@
 package eu.udig.style.advanced.points.widgets;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.refractions.udig.ui.PlatformGIS;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.SelectionEvent;
@@ -15,11 +22,19 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.geotools.data.Query;
+import org.geotools.feature.FeatureCollection;
 import org.geotools.renderer.style.FontCache;
+import org.opengis.feature.Feature;
+import org.opengis.feature.FeatureVisitor;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
 
 import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
@@ -39,7 +54,7 @@ public class PointCharacterChooserComposite extends ParameterComposite implement
     private static final int CHARACTERS = 0x10000;
     private static final int PLUS_SIGN = 0x2b;
     private static final int COLUMNS = 8;
-    private static final int FONT_SIZE = 10;
+    private static final int FONT_SIZE = 12;
 
     private Combo fontCombo;
     private Table table;
@@ -77,9 +92,11 @@ public class PointCharacterChooserComposite extends ParameterComposite implement
         Label fontLabel = new Label(mainComposite, SWT.NONE);
         fontLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
         fontLabel.setText("Font:"); //$NON-NLS-1$
+        
         fontCombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         fontCombo.setItems(getScalableFonts());
         fontCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
         String characterPath = pointSymbolizerWrapper.getMarkName();
         if (characterPath != null && characterPath.matches("ttf://.+#.+")) { //$NON-NLS-1$
             String[] fontElements = characterPath.substring(6).split("#"); //$NON-NLS-1$
@@ -99,7 +116,7 @@ public class PointCharacterChooserComposite extends ParameterComposite implement
         fontCombo.addSelectionListener(this);
         fontName = fontCombo.getItem(fontCombo.getSelectionIndex());
 
-        table = new Table(mainComposite, SWT.BORDER | SWT.V_SCROLL | SWT.SIMPLE);
+        table = new Table(mainComposite, SWT.VIRTUAL | SWT.BORDER | SWT.V_SCROLL | SWT.SIMPLE);
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
         gridData.horizontalSpan = 2;
         gridData.heightHint = 300;
@@ -108,25 +125,65 @@ public class PointCharacterChooserComposite extends ParameterComposite implement
         table.setRedraw(false);
         Font font = new Font(Display.getCurrent(), fontName, FONT_SIZE, SWT.NORMAL);
         table.setFont(font);
+        
+        
+        
+        table.addListener (SWT.SetData, new Listener () {
+            java.awt.Font awtFont = (new java.awt.Font(fontName, java.awt.Font.PLAIN, FONT_SIZE));
+            
+            @Override
+            public void handleEvent( Event event ) {
+
+                final TableItem item = (TableItem) event.item;
+                final int index = table.indexOf (item);
+                final int ch =  + FIRST_CHAR;
+                
+                //set a loading message
+                item.setText(0,"..."); //$NON-NLS-1$ 
+                
+                
+                Job load = new Job("Loading font icon") {
+                    
+                    @Override
+                    protected IStatus run(IProgressMonitor monitor) {
+                        
+                        Display.getDefault().syncExec(new Runnable() {
+                           
+                            public void run() {
+                                
+                                int character = ch + (index * COLUMNS);
+
+                                for( int cel = 0; cel < COLUMNS; cel++ ) {
+                                    
+                                    if(character < CHARACTERS){
+                                        if (character > 0xFF && !awtFont.canDisplay(character)) {
+                                            item.setText(cel,""); //$NON-NLS-1$
+                                        } else {
+                                            item.setText(cel, characterString[character]);
+                                        }
+                                    }
+                                    
+                                    character++;
+                                }
+                            }
+                            
+                        });
+
+                        return Status.OK_STATUS;
+                    }
+                };
+
+                load.schedule();
+ 
+            }
+        });
 
         for( int i = 0; i < COLUMNS; i++ ) {
             new TableColumn(table, SWT.NONE);
         }
-
-        java.awt.Font awtFont = (new java.awt.Font(fontName, java.awt.Font.PLAIN, FONT_SIZE));
-        TableItem tableItem = new TableItem(table, SWT.NONE);
+       
         initializeCharacterStringArray();
-        for( int ch = FIRST_CHAR; ch < CHARACTERS; ch++ ) {
-            int col = ch % COLUMNS;
-            if (col == 0) {
-                tableItem = new TableItem(table, SWT.NONE);
-            }
-            if (ch > 0xFF && !awtFont.canDisplay(ch)) {
-                tableItem.setText(col, ""); //$NON-NLS-1$                
-            } else {
-                tableItem.setText(col, characterString[ch]);
-            }
-        }
+        table.setItemCount(CHARACTERS / COLUMNS); 
 
         table.getColumn(0).pack();
         int width = table.getColumn(0).getWidth();
@@ -137,7 +194,7 @@ public class PointCharacterChooserComposite extends ParameterComposite implement
         // Set redraw back to true so that the table
         // will paint appropriately
         table.setRedraw(true);
-
+//
         tableCursor = new TableCursor(table, SWT.NONE);
         tableCursor.setBackground(Display.getCurrent()
                 .getSystemColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
@@ -203,23 +260,8 @@ public class PointCharacterChooserComposite extends ParameterComposite implement
         table.setRedraw(false);
         Font font = new Font(Display.getCurrent(), fontName, FONT_SIZE, SWT.NORMAL);
         table.setFont(font);
-        tableCursor.removeSelectionListener(this);
-        tableCursor.setFont(font);
-        tableCursor.addSelectionListener(this);
-        java.awt.Font awtFont = (new java.awt.Font(fontName, java.awt.Font.PLAIN, FONT_SIZE));
-        TableItem[] tableItem = table.getItems();
-        int row = 0;
-        for( int ch = FIRST_CHAR; ch < CHARACTERS; ch++ ) {
-            int col = ch % COLUMNS;
-            if (col == 0) {
-                row++;
-            }
-            if (ch > 0xFF && !awtFont.canDisplay(ch)) {
-                tableItem[row].setText(col, ""); //$NON-NLS-1$
-            } else {
-                tableItem[row].setText(col, characterString[ch]);
-            }
-        }
+        table.setItemCount(CHARACTERS / COLUMNS); 
+
         table.setRedraw(true);
     }
 
