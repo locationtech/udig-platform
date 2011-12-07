@@ -17,6 +17,8 @@ package net.refractions.udig.catalog.wmsc.server;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -28,9 +30,13 @@ import javax.imageio.ImageIO;
 import net.refractions.udig.catalog.internal.wms.WmsPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.ows.AbstractOpenWebService;
 import org.geotools.data.ows.AbstractRequest;
+import org.geotools.data.ows.HTTPClient;
 import org.geotools.data.ows.HTTPResponse;
+import org.geotools.data.ows.Request;
 import org.geotools.data.ows.Response;
+import org.geotools.data.ows.SimpleHttpClient;
 import org.geotools.ows.ServiceException;
 
 import com.vividsolutions.jts.geom.Envelope;
@@ -53,7 +59,7 @@ public class WMSTile implements Tile {
     private String position; // pos = x_y tile position within tilerange grid for this scale
     private static String ID_DIVIDER = "_"; //$NON-NLS-1$
     private WMSTileSet tileset;
-    private TiledWebMapServer server;
+    private AbstractOpenWebService server;
     private BufferedImage image;
     private Object imageLock = new Object();
     private Envelope bounds;
@@ -66,7 +72,7 @@ public class WMSTile implements Tile {
      */
     private int state = OK;
 
-    public WMSTile( TiledWebMapServer server, WMSTileSet tileset, Envelope bounds, double scale ) {
+    public WMSTile( AbstractOpenWebService server, WMSTileSet tileset, Envelope bounds, double scale ) {
         this.server = server;
         this.tileset = tileset;
         this.bounds = bounds;
@@ -223,12 +229,11 @@ public class WMSTile implements Tile {
             createErrorImage();
             return false;
         }
-        String baseUrl = server.buildBaseTileRequestURL();
+        //String baseUrl = server.buildBaseTileRequestURL();
         Envelope env = getBounds();
         URL req = null;
         try {
-            String version = server.getCapabilities().getVersion();
-            req = new URL(baseUrl + "version="+version+"&"+tileset.createQueryString(env));
+            req = new URL(server.getInfo().getSource()+"&version="+server.getCapabilities().getVersion()+"&"+tileset.createQueryString(env)); //$NON-NLS-1$
         } catch (MalformedURLException e2) {
             WmsPlugin.log("error building request URL:", e2); //$NON-NLS-1$
             return false;
@@ -261,7 +266,7 @@ public class WMSTile implements Tile {
             }
             InputStream inputStream = null;
             try {
-                inputStream = server.issueRequest(request).getInputStream();
+                inputStream = issueRequest(request).getInputStream();
                 // simulate latency if testing
                 if (testing) {
                     Random rand = new Random();
@@ -312,6 +317,37 @@ public class WMSTile implements Tile {
         // if we get here, something prevented us from setting an image
         return false;
     }
+    
+    public Response issueRequest( Request request ) throws IOException, ServiceException {
+        URL finalURL = request.getFinalURL();
+        if( finalURL.getHost() == null ) {
+            //System.out.prinln("Poor WMS-C configuration - no host provided by "+ finalURL );
+            throw new NullPointerException("No host provided by "+finalURL ); //$NON-NLS-1$
+        }
+
+        final HTTPClient httpClient = server.getHTTPClient();
+        final HTTPResponse httpResponse;
+
+        if (request.requiresPost()) {
+
+            final String postContentType = request.getPostContentType();
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            request.performPostOutput(out);
+            InputStream in = new ByteArrayInputStream(out.toByteArray());
+
+            try {
+                httpResponse = httpClient.post(finalURL, in, postContentType);
+            } finally {
+                in.close();
+            }
+        } else {
+            httpResponse = httpClient.get(finalURL);
+        }
+
+        final Response response = request.createResponse(httpResponse);
+        return response;
+    }
 
     private BufferedImage createErrorImage() {
         BufferedImage bf = new BufferedImage(tileset.getWidth(), tileset.getHeight(),
@@ -323,11 +359,11 @@ public class WMSTile implements Tile {
         return bf;
     }
 
-    public TiledWebMapServer getServer() {
+    public AbstractOpenWebService getServer() {
         return server;
     }
 
-    public void setServer( TiledWebMapServer server ) {
+    public void setServer( AbstractOpenWebService server ) {
         this.server = server;
     }
 

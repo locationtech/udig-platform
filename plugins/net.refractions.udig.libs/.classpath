@@ -43,7 +43,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-spatialite-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jp2k-8-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-main-8-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-main-8-SNAPSHOT.jar" sourcepath="/gt-main"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-opengis-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-postgis-versioned-8-SNAPSHOT.jar"/>
@@ -60,7 +60,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-swing-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-validation-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-wfs-8-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wms-8-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wms-8-SNAPSHOT.jar" sourcepath="/gt-wms"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-wps-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xml-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-core-8-SNAPSHOT.jar"/>

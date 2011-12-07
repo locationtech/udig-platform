@@ -26,7 +26,6 @@ import java.util.concurrent.locks.Lock;
 
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.internal.wms.WmsPlugin;
 import net.refractions.udig.catalog.wmsc.server.Capability;
 import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
@@ -36,6 +35,7 @@ import net.refractions.udig.catalog.wmsc.server.WMSTileSet;
 import net.refractions.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.ows.ServiceException;
 
 /**
  * A WMS-C Service. See Specifications:
@@ -212,7 +212,11 @@ public class WMSCServiceImpl extends IService {
 
                         // this constructor will grab the capabilities when
                         // first needed
-                        wmsc = new TiledWebMapServer(this.url);
+                        try {
+                            wmsc = new TiledWebMapServer(this.url);
+                        } catch (ServiceException e) {
+                            WmsPlugin.log("Creating Tile Web Server failed", e); //$NON-NLS-1$
+                        }
                         String xml = wmsc.getCapabilitiesXml();
                         getPersistentProperties().put(CAPABILITIES_KEY, xml);
                     }

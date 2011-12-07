@@ -15,19 +15,30 @@
 package net.refractions.udig.catalog.wmsc.server;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 import net.refractions.udig.catalog.internal.wms.WmsPlugin;
 
+import org.geotools.data.ResourceInfo;
+import org.geotools.data.ServiceInfo;
 import org.geotools.data.ows.AbstractGetCapabilitiesRequest;
-import org.geotools.data.ows.HTTPClient;
+import org.geotools.data.ows.AbstractOpenWebService;
 import org.geotools.data.ows.HTTPResponse;
-import org.geotools.data.ows.Request;
 import org.geotools.data.ows.Response;
-import org.geotools.data.ows.SimpleHttpClient;
+import org.geotools.data.ows.Specification;
+import org.geotools.data.ows.WMSCapabilities;
+import org.geotools.data.wms.WMS1_1_1;
+import org.geotools.data.wms.WebMapServer;
 import org.geotools.ows.ServiceException;
 
 
@@ -40,29 +51,27 @@ import org.geotools.ows.ServiceException;
  * @author Emily Gouge, Graham Davis (Refractions Research, Inc)
  * @since 1.1.0
  */
-public class TiledWebMapServer {
-
+public class TiledWebMapServer extends AbstractOpenWebService<WMSCCapabilities,TileSet> {
+    
     /** Capabilities document */
     private WMSCCapabilities capabilities = null;
     
     /** Error connecting */
     private Exception couldNotConnect;
     
+    /**
+     * Raw caps XML
+     */
     private String getCaps_xml;
 
-    /** URL of WMSC Service */
-    private URL service;
-
-    /** interacts with the backend through HTTP */
-    private final HTTPClient httpClient;
-    
     /**
      * Creates a new service with the given url
      * @param serverURL
+     * @throws IOException 
+     * @throws ServiceException 
      */
-    public TiledWebMapServer( URL serverURL ) {
-        this.service = serverURL;
-        this.httpClient = new SimpleHttpClient();
+    public TiledWebMapServer( URL serverURL ) throws ServiceException, IOException {
+        super(serverURL);
     }
     
     /**
@@ -73,18 +82,20 @@ public class TiledWebMapServer {
      * @param serverURL
      * @param caps_xml
      * @param checkForUpdate
+     * @throws IOException 
+     * @throws ServiceException 
      */
-    public TiledWebMapServer( URL serverURL, String caps_xml, boolean checkForUpdate) {        
+    public TiledWebMapServer( URL serverURL, String caps_xml, boolean checkForUpdate) throws ServiceException, IOException {        
         this(serverURL);
         this.getCaps_xml = caps_xml;
-    	
-    	// build a capabilities object from the given xml
-    	WMSCCapabilities capabilities = null;
-    	try {
-	        final InputStream is = new ByteArrayInputStream(caps_xml.getBytes());
-	        WMSCCapabilitiesResponse response;
-	        
-	        HTTPResponse mock = new HTTPResponse(){
+
+        // build a capabilities object from the given xml
+        WMSCCapabilities capabilities = null;
+        try {
+            final InputStream is = new ByteArrayInputStream(caps_xml.getBytes());
+            WMSCCapabilitiesResponse response;
+            
+            HTTPResponse mock = new HTTPResponse(){
                 
                 @Override
                 public InputStream getResponseStream() throws IOException {
@@ -110,18 +121,18 @@ public class TiledWebMapServer {
                     }
                 }
             };
-	        
-	        response = new WMSCCapabilitiesResponse(mock);
-	        capabilities = (WMSCCapabilities) response.getCapabilities(); 
-    	} catch (Exception e) {
-    		log("Restore from cached capabilities failed", e);  //$NON-NLS-1$
-    	}
-    	
-    	// try getting a new capabilities and see if its updatesequence is higher
+            
+            response = new WMSCCapabilitiesResponse(mock);
+            capabilities = (WMSCCapabilities) response.getCapabilities(); 
+        } catch (Exception e) {
+            log("Restore from cached capabilities failed", e);  //$NON-NLS-1$
+        }
+        
+        // try getting a new capabilities and see if its updatesequence is higher
         if (checkForUpdate) {
-        	WMSCCapabilities newCaps;
+            WMSCCapabilities newCaps;
             try {
-            	newCaps = readCapabilities();                
+                newCaps = readCapabilities();         
                 if (capabilities == null){
                     capabilities = newCaps;
                 }else if (newCaps == null){
@@ -147,7 +158,7 @@ public class TiledWebMapServer {
             } catch (Exception ex) {
                 // TODO: Do something with this error
                 ex.printStackTrace();
-            }        	
+            }           
         }
         
         this.capabilities = capabilities;
@@ -175,7 +186,7 @@ public class TiledWebMapServer {
             }
             else {
                 throw (IOException)
-                    new IOException("Could not connect to " + internalServiceURL()).initCause(couldNotConnect); //$NON-NLS-1$
+                    new IOException("Could not connect to " + getInfo().getSource()).initCause(couldNotConnect); //$NON-NLS-1$
             }
         }
         return capabilities;
@@ -194,6 +205,7 @@ public class TiledWebMapServer {
             WmsPlugin.log(msg, t);
         }
     }
+    
     /**
      * Makes a getCapabilities request and parses the response into a WMSCCapabilities 
      * object.  Also stores the resulting getcaps xml.
@@ -203,10 +215,6 @@ public class TiledWebMapServer {
      * @throws IOException
      */
     private WMSCCapabilities readCapabilities() throws Exception {
-        String me = internalServiceURL();
-
-        URL serverURL = new URL(me);
-        
         //create a request
         CapabilitiesRequest r = new CapabilitiesRequest(serverURL);
         log("WMSC GetCapabilities: " + r.getFinalURL(), null);  //$NON-NLS-1$
@@ -222,29 +230,7 @@ public class TiledWebMapServer {
         //return the parsed document
         return (WMSCCapabilities) cr.getCapabilities();
     }
-    
-    /**
-     * Produce an initial "internal" URL out of the service information.
-     *
-     * @return
-     */
-    private String internalServiceURL() {
-        //String me = service.getProtocol() + "://" + service.getHost() + ":" + service.getPort() //$NON-NLS-1$ //$NON-NLS-2$
-        //    + "" + service.getPath(); //$NON-NLS-1$
-        
-        StringBuffer me = new StringBuffer();
-        me.append( service.getProtocol() );
-        me.append( "://" ); //$NON-NLS-1$
-        me.append( service.getHost() );
-        if( service.getPort() != -1 ){
-            me.append( ":" );  //$NON-NLS-1$
-            me.append( service.getPort() ); 
-        }
-        me.append( service.getPath() );
-        
-        return me.toString();
-    }   
-    
+
     /**
      * Get the getCapabilities xml string. If there was an error parsing it
      * during creation, it will return null (and it should have thrown an
@@ -289,57 +275,131 @@ public class TiledWebMapServer {
             return new WMSCCapabilitiesResponse(response);
         }
     }
+    
+    public URL getService() {
+        return serverURL;
+    }
 
-    /**
-     * Issues a request to the server and returns that server's response. It asks the server to send
-     * the response gzipped to provide a faster transfer time.
-     * 
-     * @param request the request to be issued
-     * @return a response from the server, which is created according to the specific Request
-     * @throws IOException if there was a problem communicating with the server
-     * @throws ServiceException if the server responds with an exception or returns bad content
-     */
-    public Response issueRequest( Request request ) throws IOException, ServiceException {
-        URL finalURL = request.getFinalURL();
-        if( finalURL.getHost() == null ){
-            //System.out.prinln("Poor WMS-C configuration - no host provided by "+ finalURL );
-            throw new NullPointerException("No host provided by "+finalURL ); //$NON-NLS-1$
-        }
+    @Override
+    protected ServiceInfo createInfo() {
+        return new WMSCInfo();
+    }
 
-        final HTTPResponse httpResponse;
-
-        if (request.requiresPost()) {
-
-            final String postContentType = request.getPostContentType();
-
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            request.performPostOutput(out);
-            InputStream in = new ByteArrayInputStream(out.toByteArray());
-
-            try {
-                httpResponse = httpClient.post(finalURL, in, postContentType);
-            } finally {
-                in.close();
-            }
-        } else {
-            httpResponse = httpClient.get(finalURL);
-        }
-
-        final Response response = request.createResponse(httpResponse);
-        return response;
+    @Override
+    protected ResourceInfo createInfo( TileSet arg0 ) {
+        return null;
     }
 
     /**
-     * Build the base request URL for this server
-     *
-     * @return
+     * Sets up the specifications/versions that this server is capable of
+     * communicating with.
      */
-    public String buildBaseTileRequestURL() {
-        return internalServiceURL() + "?"; //$NON-NLS-1$
-    } 
-    
-    public URL getService() {
-    	return service;
+    protected void setupSpecifications() {
+        specs = new Specification[1];
+        specs[0] = new WMS1_1_1();
+    }
+
+    protected class WMSCInfo implements ServiceInfo {
+        
+        private Set<String> keywords;
+        private Icon icon;
+
+        WMSCInfo(){
+            keywords = new HashSet<String>();
+            if (capabilities==null){
+                try {
+                    getCapabilities();
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            if( capabilities.getService() != null ){
+              String array[] = capabilities.getService().getKeywordList();
+              if( array != null ){
+                  keywords.addAll( Arrays.asList( array ));                  
+              }
+            }
+            keywords.add("WMSC"); //$NON-NLS-1$
+            keywords.add( serverURL.toString() );
+            
+            URL globe2 = WebMapServer.class.getResource("Globe2.png"); //$NON-NLS-1$
+            icon = new ImageIcon( globe2 );
+        }
+        
+        public String getDescription() {
+            String description = null;
+            if (capabilities != null && capabilities.getService() != null) {
+                description = capabilities.getService().get_abstract();
+            }
+            if( description == null ) {
+                description = "Tiled Map Server "+ serverURL; //$NON-NLS-1$
+            }
+            return description;
+        }
+
+        public Icon getIcon() {
+            return icon;
+        }
+
+        public Set<String> getKeywords() {
+            return keywords;
+        }
+
+        public URI getPublisher() {
+            try {
+                return capabilities.getService().getContactInformation().getContactInfo().getOnLineResource().getLinkage();
+            }
+            catch( NullPointerException publisherNotAvailable ){               
+            }
+            try {
+                return new URI( serverURL.getProtocol()+":"+serverURL.getHost() );
+            } catch (URISyntaxException e) {
+            }
+            return null;
+        }
+
+        /**
+         * We are a Web Map Service:
+         * @return WMSSchema.NAMESPACE;
+         */
+        public URI getSchema() {
+            return WMSCSchema.NAMESPACE;
+        }
+
+        /**
+         * The source of this WMS is the capabilities document.
+         * <p>
+         * We make an effort here to look in the capabilities document
+         * provided for the unambiguous capabilities URI. This covers
+         * the case where the capabilities document has been cached
+         * on disk and we are restoring a WebMapServer instance.
+         */
+        public URI getSource() {
+            try {
+                URL source = getService();
+                return source.toURI();
+            }
+            catch( NullPointerException huh ){                
+            }
+            catch (URISyntaxException e) {
+            }
+            try {
+                return serverURL.toURI();
+            } catch (URISyntaxException e) {
+                return null;
+            }
+        }
+
+        public String getTitle() {
+            if (capabilities != null && capabilities.getService() != null) {
+                return capabilities.getService().getTitle();
+            } else if (serverURL == null) {
+                return "Unavailable";
+            } else {
+                return serverURL.toString();
+            }
+        }
     }
 
 }

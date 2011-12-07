@@ -3,6 +3,7 @@ package net.refractions.udig.catalog.wmsc.server;
 import java.util.List;
 import java.util.Map;
 
+import org.geotools.data.ows.AbstractOpenWebService;
 import org.geotools.data.ows.CRSEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -79,6 +80,12 @@ public interface TileSet {
 	 *        "0.5 0.25 0.125")
 	 */
 	public abstract void setResolutions(String res);
+
+	/**
+	 * Sets the server for this tileset
+	 * @param server
+	 */
+	public abstract void setServer(AbstractOpenWebService server);
 
 	/**
 	 * @return the number of zoom levels supported by the tile set
@@ -176,6 +183,6 @@ public interface TileSet {
 	/**
 	 * @return server
 	 */
-	public abstract TiledWebMapServer getServer();
+	public abstract AbstractOpenWebService getServer();
 
 }

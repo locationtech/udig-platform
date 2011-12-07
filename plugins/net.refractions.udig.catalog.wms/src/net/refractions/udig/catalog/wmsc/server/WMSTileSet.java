@@ -19,8 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.internal.wms.WmsPlugin;
-
+import org.geotools.data.ows.AbstractOpenWebService;
 import org.geotools.data.ows.CRSEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
@@ -47,8 +46,8 @@ public class WMSTileSet implements TileSet {
     /** a unique identifies */
     private int id;
     
-    /** the TiledWebMapServer **/
-    private TiledWebMapServer server;
+    /** the AbstractOpenWebService **/
+    private AbstractOpenWebService server;
 
 	/** Coordinate Reference System of the Tiles */
     private CoordinateReferenceSystem crs;
@@ -508,11 +507,11 @@ public class WMSTileSet implements TileSet {
         this.id = sb.toString().hashCode();
     }
     
-    public TiledWebMapServer getServer() {
+    public AbstractOpenWebService getServer() {
 		return server;
 	}
 
-	public void setServer(TiledWebMapServer server) {
+	public void setServer(AbstractOpenWebService server) {
 		this.server = server;
 	}    
 
