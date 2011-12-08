@@ -318,14 +318,12 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
                 if(paintLabels){
                     RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                     g.setRenderingHints(hints);
-                    Dimension displaySize = getContext().getMapDisplay().getDisplaySize();
+                    Dimension displaySize = getContext().getImageSize();
                     cache.end(g, new Rectangle(displaySize));
                 }
-
                 //update the context with the new image
                 ((RenderContextImpl)getContext()).setImage(copy);
                 
-
             } catch (IllegalStateException e) {
                 stopRendering();
                 return;
@@ -436,13 +434,15 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
      */
     public void addChild(AbstractRenderMetrics metrics){
         synchronized (childrenRenderers) {
-        Renderer render = metrics.createRenderer();
-        render.setContext(metrics.getRenderContext());
-        RenderExecutor executor = createRenderExecutor(render);
-        RenderInfo ri = new RenderInfo(executor, metrics);
-        childrenRenderers.add(ri);
+            Renderer render = metrics.createRenderer();
+            render.setContext(metrics.getRenderContext());
+            RenderExecutor executor = createRenderExecutor(render);
+            RenderInfo ri = new RenderInfo(executor, metrics);
+            childrenRenderers.add(ri);
         }
     }
+    
+  
     
     /**
      * Adds a set of children, creating renderers and render executors for the children

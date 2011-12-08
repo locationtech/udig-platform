@@ -26,7 +26,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.opengis.geometry.MismatchedReferenceSystemException;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
@@ -135,7 +134,7 @@ public class RenderJob extends Job {
         if( mapDisplay==null ){
         	return;
         }
-		Dimension displaySize = mapDisplay.getDisplaySize();
+		Dimension displaySize = context2.getImageSize();
         Graphics2D graphics=context2.getImage().createGraphics();
         try{
             context2.getLabelPainter().endLayer(layerId, graphics, new Rectangle(0,0,displaySize.width, displaySize.height));
