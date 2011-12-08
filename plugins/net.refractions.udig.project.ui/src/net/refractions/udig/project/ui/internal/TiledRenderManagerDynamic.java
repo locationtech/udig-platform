@@ -280,7 +280,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         Tile tile = new Tile(key, newRE, getTileSize());
         tile.setStateChangedListener(tileStateListener);
         importantTiles.add(tile);
-        ((RenderContextImpl)newRE.getContext()).setLabelPainter(new UDIGLabelCache(new LabelCacheImpl()));
+        ((RenderContextImpl)newRE.getContext()).setLabelPainterLocal(newRE.getContext().getLabelPainter());
         return tile;
     }
  
@@ -989,7 +989,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             for( Iterator<AbstractRenderMetrics> iterator = newconfig.iterator(); iterator.hasNext(); ) {
                 AbstractRenderMetrics abstractRenderMetrics = (AbstractRenderMetrics) iterator.next();
                 //setup label painter
-                ((RenderContextImpl)abstractRenderMetrics.getRenderContext()).setLabelPainter(tilelabelpainter);
+                ((RenderContextImpl)abstractRenderMetrics.getRenderContext()).setLabelPainterLocal(tilelabelpainter);
             }
         }else{
             //we have an existing configuration; lets recycle as many of the contexts as possible
@@ -1011,7 +1011,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                     //this is in the new configuration but not the only one therefore we need to add it
                     addList.add(metric);
                     //setup label painter
-                    ((RenderContextImpl)metric.getRenderContext()).setLabelPainter(tilelabelpainter);
+                    ((RenderContextImpl)metric.getRenderContext()).setLabelPainterLocal(tilelabelpainter);
                 }
             }
             
@@ -1076,6 +1076,8 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         context.setRenderManagerInternal(this);
         context.setImageBounds(bounds);
         context.setImageSize(new Dimension(getTileSize(), getTileSize()));
+        
+        ((CompositeRenderContextImpl)context).setLabelPainterLocal(new UDIGLabelCache(new LabelCacheImpl()));
         renderer.setContext(context);
         
         renderer.setName(Messages.RenderManagerDynamic_allLayers);

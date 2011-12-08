@@ -304,5 +304,5 @@ public class CompositeRenderContextImpl extends RenderContextImpl implements Com
         }
         return true;
     }
-	
+
 } // CompositeRenderContextImpl
