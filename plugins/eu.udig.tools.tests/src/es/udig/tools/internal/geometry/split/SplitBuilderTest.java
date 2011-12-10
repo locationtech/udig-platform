@@ -31,7 +31,7 @@ import org.junit.Test;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 
-import eu.udig.tools.internal.geometry.split.SplitBuilder;
+import eu.udig.tools.geometry.split.SplitBuilder;
 
 /**
  * @author Aritz Davila (www.axios.es)

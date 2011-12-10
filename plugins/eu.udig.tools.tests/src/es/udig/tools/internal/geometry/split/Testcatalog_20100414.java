@@ -35,7 +35,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Polygon;
 
-import eu.udig.tools.internal.geometry.split.SplitUtil;
+import eu.udig.tools.geometry.split.SplitUtil;
 
 /**
  * Test the SplitStrategy class
