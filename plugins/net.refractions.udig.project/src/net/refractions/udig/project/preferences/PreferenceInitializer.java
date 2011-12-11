@@ -1,5 +1,6 @@
 package net.refractions.udig.project.preferences;
 
+import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -19,18 +20,16 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
     public static final String P_DEFAULT_FEATURE_EDITOR_VALUE = "net.refractions.udig.tool.select.view"; //$NON-NLS-1$
 
-    private static final SortedSet<Double> scales = new TreeSet<Double>();
-
-    static {
-        scales.add(1000.0);
-        scales.add(2500.0);
-        scales.add(5000.0);
-        scales.add(10000.0);
-        scales.add(20000.0);
-        scales.add(50000.0);
-        scales.add(100000.0);
-        scales.add(1000000.0);
-    }
+    private static final SortedSet<Double> scales = new TreeSet<Double>(Arrays.asList(new Double[]{
+            Double.valueOf(1000.0),
+            Double.valueOf(2500.0),
+            Double.valueOf(5000.0),
+            Double.valueOf(10000.0),
+            Double.valueOf(20000.0),
+            Double.valueOf(50000.0),
+            Double.valueOf(100000.0),
+            Double.valueOf(1000000.0) 
+    }));
 
     public void initializeDefaultPreferences() {
         IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();

@@ -387,7 +387,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     			referenced = new ReferencedEnvelope(newBounds,getCRS());
     		}
 			double scale = ScaleUtils.calculateScaleDenominator(referenced, mapDisplay.getDisplaySize(), mapDisplay.getDPI());
-			scale = ScaleUtils.calculateClosestScale(getPreferredScaleDenominators(),scale,ScaleUtils.zoomClosenessPreference());
+			// TODO REVIEW (fgdrf) : when zoom out and max. preferred map scale is smaller than the new scale nothing would happen
+//			scale = ScaleUtils.calculateClosestScale(getPreferredScaleDenominators(),scale,ScaleUtils.zoomClosenessPreference());
 			
 			finalBounds = ScaleUtils.calculateBoundsFromScale(scale, mapDisplay.getDisplaySize(), mapDisplay.getDPI(), referenced);
 			if(forceContainBBoxZoom && !finalBounds.contains(newBounds)) {

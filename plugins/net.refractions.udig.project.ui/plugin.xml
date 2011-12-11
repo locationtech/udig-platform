@@ -1085,4 +1085,11 @@
                name="%boundary.crs.name">
          </boundary>
       </extension>
+      <extension
+           point="net.refractions.udig.project.mapInterceptor">
+        <mapCreation
+              class="net.refractions.udig.project.ui.internal.MapPreferredScalesInterceptor"
+              id="net.refractions.udig.project.ui.internal.MapPreferredScalesInterceptor">
+        </mapCreation>
+      </extension>      
    </plugin>

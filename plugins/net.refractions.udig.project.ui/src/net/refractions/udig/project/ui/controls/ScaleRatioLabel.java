@@ -15,7 +15,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.StatusLineLayoutData;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
@@ -56,7 +55,7 @@ public class ScaleRatioLabel extends ContributionItem implements KeyListener, Fo
     /** Listens to viewport changes and updates the displayed scale accordingly */
     IViewportModelListener listener = new IViewportModelListener(){
         public void changed( ViewportModelEvent event ) {
-            if (event.getType() == EventType.CRS || event.getType() == EventType.BOUNDS || event.getType() == EventType.PREFERRED_SCALE_DENOMINATORS) {
+            if (event.getType() == EventType.CRS || event.getType() == EventType.BOUNDS) {
                 Display display = PlatformUI.getWorkbench().getDisplay();
                 if (display == null)
                     display = Display.getDefault();
@@ -144,10 +143,10 @@ public class ScaleRatioLabel extends ContributionItem implements KeyListener, Fo
             }
         });
         data = new StatusLineLayoutData();
+        data.widthHint = 100;
+        data.heightHint = STATUS_LINE_HEIGHT;
         combo.setLayoutData(data);
         updateScale();
-        data.widthHint = 80;
-        data.heightHint = STATUS_LINE_HEIGHT;
         this.mapPart.setFont(combo);
         
     }

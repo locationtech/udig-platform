@@ -173,6 +173,7 @@ public class Messages extends NLS {
 	public static String MapPreferencePage_map_preferences_description;
 	public static String MapPreferencePage_warnIrreversible;
 	public static String MapPreferencePage_pref_remove_layer_label;
+	public static String MapPreferencePage_defaultPreferredScales;
 	public static String MapPreferences_backgroundColor;
 	public static String MapPreferences_errorMessage;
 	public static String MapPreferences_defaultCRS;

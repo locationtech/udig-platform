@@ -561,11 +561,12 @@ public final class ScaleUtils {
 		AffineTransform transformer = ScaleUtils.createScaleTransformWithFixedPoint(zoom,params.fixedPoint);
 		ReferencedEnvelope transformedEnvelope = new ReferencedEnvelope(transformEnvelope(baseEnv, transformer),baseEnv.getCoordinateReferenceSystem());
 		Double scale = ScaleUtils.calculateScaleDenominator(transformedEnvelope, params.display.getDisplaySize(), params.display.getDPI());
-		// if there is a close match in preferred scale round to that scale
-		Double closest = calculateClosestScale(params.model.getPreferredScaleDenominators(), scale, params.requiredCloseness);
-		if(Math.abs(closest - scale)/scale < 0.01) {
-			scale = closest;
-		}
+//		// if there is a close match in preferred scale round to that scale
+		// TODO REVIEW (fgdrf) : when zoom out and max. preferred map scale is smaller than the new scale nothing would happen
+//		Double closest = calculateClosestScale(params.model.getPreferredScaleDenominators(), scale, params.requiredCloseness);
+//		if(Math.abs(closest - scale)/scale < 0.01) {
+//			scale = closest;
+//		}
 		return Pair.create(scale, transformedEnvelope);
 	}
 
