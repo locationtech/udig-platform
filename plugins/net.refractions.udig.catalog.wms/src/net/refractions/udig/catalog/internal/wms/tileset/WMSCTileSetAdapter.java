@@ -124,8 +124,6 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
 
             String resolutions = ProjectUIPlugin.getDefault().getPreferenceStore()
                     .getString(PreferenceConstants.P_TILESET_RESOLUTIONS + info.getName());
-
-            System.out.println(resolutions);
             
             /*
              * If we have no resolutions to try - we wont.
