@@ -58,11 +58,12 @@ public final class ScaleUtils {
 	 * Calculate the resolution of a for a tile given a tile scale in pixels.
 	 * @param bounds The full bounds of a WMS layer
 	 * @param scale The tile scale (viewport_scale * tile.width)
+	 * @param tileWidth The tile width in pixels
 	 * @return the resolution
 	 */
-	public static double calculateResolutionFromScale(ReferencedEnvelope bounds, double scale) {
+	public static double calculateResolutionFromScale(ReferencedEnvelope bounds, double scale, int tileWidth) {
 	    if (isLatLong(bounds.getCoordinateReferenceSystem())){
-	        return  (DEFAULT_PIXEL_SIZE_METER * DEGREES_PER_METER) * (scale * DEGREES_PER_METER);
+	        return  (DEFAULT_PIXEL_SIZE_METER * DEGREES_PER_METER) * ( (scale*tileWidth) * DEGREES_PER_METER);
 	    } else {
 	        return DEFAULT_PIXEL_SIZE_METER * scale;
 	    }

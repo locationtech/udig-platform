@@ -1,12 +1,15 @@
 package net.refractions.udig.project.internal.element.extensible.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.refractions.udig.project.internal.render.impl.ScaleUtils;
 
+import org.geotools.data.ows.CRSEnvelope;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.junit.Test;
 
 public class ScaleUtilsTest {
@@ -34,6 +37,20 @@ public class ScaleUtilsTest {
 		
 		assertEquals(100.0, ScaleUtils.calculateClosestScale(SCALES, 51.0, .7),0.0001);
 		assertEquals(10.0, ScaleUtils.calculateClosestScale(SCALES, 30.0, .7),0.0001);
-		
+	}
+	
+	@Test
+	public void calculateResolutions(){
+	    ReferencedEnvelope envelope = new ReferencedEnvelope(new CRSEnvelope("WGS84(DD)", //$NON-NLS-1$ 
+	            143.83482400000003, -43.648056, 148.47914100000003, -39.573891));
+
+	    assertEquals(0.009015193399753197, ScaleUtils.calculateResolutionFromScale(envelope, 1000000.0, 256),0.0001);
+	    assertEquals(9.015193399753199E-4, ScaleUtils.calculateResolutionFromScale(envelope, 100000.0, 256),0.0001);
+	    assertEquals(4.5075966998765993E-4, ScaleUtils.calculateResolutionFromScale(envelope, 50000.0, 256),0.0001);
+	    assertEquals(1.8030386799506394E-4, ScaleUtils.calculateResolutionFromScale(envelope, 20000.0, 256),0.0001);
+	    assertEquals(9.015193399753197E-5, ScaleUtils.calculateResolutionFromScale(envelope, 10000.0, 256),0.0001);
+	    assertEquals(4.5075966998765985E-5, ScaleUtils.calculateResolutionFromScale(envelope, 5000.0, 256),0.0001);
+	    assertEquals(2.2537983499382992E-5, ScaleUtils.calculateResolutionFromScale(envelope, 2500.0, 256),0.0001);
+	    assertEquals(9.015193399753199E-6, ScaleUtils.calculateResolutionFromScale(envelope, 1000.0, 256),0.0001);
 	}
 }

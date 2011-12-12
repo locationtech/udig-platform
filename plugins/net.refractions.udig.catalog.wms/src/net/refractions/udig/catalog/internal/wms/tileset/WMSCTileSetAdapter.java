@@ -100,6 +100,12 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             double minY = info.getBounds().getMinimum(1);
             double maxY = info.getBounds().getMaximum(1);
 
+            System.out.println(srs);
+            System.out.println(minX);
+            System.out.println(minY);
+            System.out.println(maxX);
+            System.out.println(maxY);
+            
             CRSEnvelope bbox = new CRSEnvelope(srs, minX, minY, maxX, maxY);
             tileset.setBoundingBox(bbox);
             tileset.setCoorindateReferenceSystem(srs);
@@ -125,6 +131,8 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             String resolutions = ProjectUIPlugin.getDefault().getPreferenceStore()
                     .getString(PreferenceConstants.P_TILESET_RESOLUTIONS + info.getName());
 
+            System.out.println(resolutions);
+            
             /*
              * If we have no resolutions to try - we wont.
              */
