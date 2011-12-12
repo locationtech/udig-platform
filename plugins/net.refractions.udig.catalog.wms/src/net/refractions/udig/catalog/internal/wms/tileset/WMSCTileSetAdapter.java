@@ -99,12 +99,6 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             double maxX = info.getBounds().getMaximum(0);
             double minY = info.getBounds().getMinimum(1);
             double maxY = info.getBounds().getMaximum(1);
-
-            System.out.println(srs);
-            System.out.println(minX);
-            System.out.println(minY);
-            System.out.println(maxX);
-            System.out.println(maxY);
             
             CRSEnvelope bbox = new CRSEnvelope(srs, minX, minY, maxX, maxY);
             tileset.setBoundingBox(bbox);

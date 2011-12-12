@@ -166,11 +166,7 @@ public class TileSetControl extends FieldEditorPreferencePage {
             defaultScales.toArray(scales);
             for( int i = scales.length - 1; i >= 0; i-- ) {
                 Double scale = scales[i];
-       
                 Double calculatedScale = ScaleUtils.calculateResolutionFromScale(resourceBounds,scale,width.getSize());
-                
-                System.out.println(scale + " - " + calculatedScale);
-                
                 getList().add(calculatedScale.toString());
             }
 
