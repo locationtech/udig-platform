@@ -12,7 +12,6 @@ import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.catalog.internal.wms.WMSGeoResourceImpl;
 import net.refractions.udig.catalog.tests.wmsc.Activator;
 
 import org.junit.Test;
@@ -44,7 +43,7 @@ public class WMSTileSetResolverTest {
 
         ID id = new ID(new ID(url), "tasmania");
 
-        WMSGeoResourceImpl resource = (WMSGeoResourceImpl)catalog.getById(IGeoResource.class, id, null);
+        IGeoResource resource = (IGeoResource)catalog.getById(IGeoResource.class, id, null);
         assertNotNull( resource );
 
         TileSet ts = resource.resolve(TileSet.class, null);

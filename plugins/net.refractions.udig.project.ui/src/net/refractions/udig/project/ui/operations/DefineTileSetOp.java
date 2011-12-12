@@ -50,46 +50,14 @@ public class DefineTileSetOp implements IOp {
      * @param resource
      * @throws IOException
      */
-    private void op( final Display display, IProgressMonitor monitor, IGeoResource resource )
-            throws IOException {
-        IGeoResourceInfo info = resource.getInfo(monitor);
-        Envelope bounds = info.getBounds();
-        final List<SummaryData> data=new ArrayList<SummaryData>(); 
-        String crs;
-        if (info.getCRS() != null)
-            crs = info.getCRS().getName().toString();
-        else
-            crs = Messages.MultiTargetOp_unknown; 
-        crs=crs.replace('\n', ' ');
-
-        try {
-            data.add(new SummaryData( Messages.MultiTargetOp_name, info.getName()));
-            data.add(new SummaryData( Messages.MultiTargetOp_title, info.getTitle()));
-            data.add(new SummaryData( Messages.MultiTargetOp_bounds, LayerSummary.parseBounds(bounds) ));
-            data.add(new SummaryData( Messages.MultiTargetOp_crs, crs));
-            data.add(new SummaryData( Messages.MultiTargetOp_featuresource, resource.canResolve(FeatureSource.class)));
-            data.add(new SummaryData( Messages.MultiTargetOp_featurestore, resource.canResolve(FeatureStore.class)));
-            data.add(new SummaryData( Messages.MultiTargetOp_wms, resource.canResolve(WebMapServer.class)));
-            boolean first=false;
-            for( String word : info.getKeywords() ) {
-                if( first )
-                    data.add(new SummaryData( Messages.MultiTargetOp_keywords, word));
-                else
-                    data.add(new SummaryData( null , word ));
-            }
-        } catch (Exception e) {
-            display.asyncExec(new Runnable(){
-                public void run() {
-                    MessageDialog.openError(display.getActiveShell(), Messages.MultiTargetOp_resource_summary, 
-                            Messages.MultiTargetOp_error); 
-                }
-            });
-            ProjectUIPlugin.log(null, e);
-
-        }
+    private void op( final Display display, final IProgressMonitor monitor, final IGeoResource resource )
+            throws IOException {        
+        /**
+         * display the dialog
+         */
         display.asyncExec(new Runnable(){
             public void run() {
-                Dialog d=new TileSetDialog(display.getActiveShell(), Messages.MultiTargetOp_resource_summary);
+                Dialog d=new TileSetDialog(display.getActiveShell(), resource);
                 d.setBlockOnOpen(true);
                 d.open();
             }

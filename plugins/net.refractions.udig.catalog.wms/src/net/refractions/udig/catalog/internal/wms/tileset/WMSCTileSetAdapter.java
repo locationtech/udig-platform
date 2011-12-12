@@ -4,31 +4,56 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
-import net.refractions.udig.catalog.internal.wms.WMSGeoResourceImpl;
 import net.refractions.udig.catalog.internal.wmsc.WMSCServiceImpl;
 import net.refractions.udig.catalog.wmsc.server.TileSet;
 import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
 import net.refractions.udig.catalog.wmsc.server.WMSTileSet;
-import net.refractions.udig.render.wms.basic.WMSPlugin;
-import net.refractions.udig.render.wms.basic.preferences.PreferenceConstants;
+import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import net.refractions.udig.project.ui.preferences.PreferenceConstants;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.ows.AbstractOpenWebService;
 import org.geotools.data.ows.CRSEnvelope;
+import org.geotools.data.ows.Layer;
+import org.geotools.data.ows.StyleImpl;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.referencing.CRS;
 
+/**
+ * An object to allow a IGeoResource to adapt to a TileSet, thus allowing any wms service the
+ * ability to masquerade as a tile cache.
+ * 
+ * @author jhudson
+ * @since 1.2.0
+ */
 public class WMSCTileSetAdapter implements IResolveAdapterFactory {
 
     @Override
     public boolean canAdapt( IResolve resolve, Class< ? extends Object> adapter ) {
+
         if (adapter.isAssignableFrom(TileSet.class)) {
+
+            IGeoResource fs = (IGeoResource) resolve;
+
+            try {
+                IGeoResourceInfo info = fs.getInfo(null);
+
+                boolean enabled = ProjectUIPlugin.getDefault().getPreferenceStore()
+                        .getBoolean(PreferenceConstants.P_TILESET_ON_OFF + info.getName());
+
+                if (!enabled) {
+                    return false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             return true;
         }
 
@@ -39,9 +64,7 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
     public Object adapt( IResolve resolve, Class< ? extends Object> adapter,
             IProgressMonitor monitor ) throws IOException {
 
-        System.out.println("++++++++++++++++");
-        
-        AbstractOpenWebService server = null;
+        AbstractOpenWebService< ? , ? > server = null;
 
         if (resolve.canResolve(WebMapServer.class)) {
             server = resolve.resolve(WebMapServer.class, monitor);
@@ -49,17 +72,24 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
         if (resolve.canResolve(TiledWebMapServer.class)) {
             server = resolve.resolve(TiledWebMapServer.class, monitor);
         }
-        
-        System.out.println("++++++++++++++++"); //$NON-NLS-1$
+
+        /*
+         * if there is no server for the tiles to come from, we can't/wont continue
+         */
+        if (server == null) {
+            return null;
+        }
 
         if (adapter.isAssignableFrom(TileSet.class)) {
-            
-            WMSGeoResourceImpl fs = (WMSGeoResourceImpl) resolve;
+
+            IGeoResource fs = (IGeoResource) resolve;
             IGeoResourceInfo info = fs.getInfo(monitor);
 
-            URL caps = new URL(server.getInfo().getSource()+"version="+server.getCapabilities().getVersion()+"&request=GetCapabilities"); //$NON-NLS-1$
+            URL caps = new URL(
+                    server.getInfo().getSource()
+                            + "version=" + server.getCapabilities().getVersion() + "&request=GetCapabilities"); //$NON-NLS-1$ //$NON-NLS-2$
             String srs = CRS.toSRS(info.getCRS());
-            
+
             Map<String, Serializable> params = new HashMap<String, Serializable>();
             params.put(WMSCServiceImpl.WMSC_URL_KEY, caps);
 
@@ -73,30 +103,58 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             CRSEnvelope bbox = new CRSEnvelope(srs, minX, minY, maxX, maxY);
             tileset.setBoundingBox(bbox);
             tileset.setCoorindateReferenceSystem(srs);
-            
-            tileset.setWidth(128);
-            tileset.setHeight(128);
 
-            String img = getImageFormat();
-            
-            tileset.setFormat("image/png");
-            tileset.setLayers("tasmania");
-            tileset.setResolutions("156543.03390625 78271.516953125 39135.7584765625 19567.87923828125 9783.939619140625 4891.9698095703125 2445.9849047851562 1222.9924523925781 611.4962261962891 305.74811309814453 152.87405654907226 76.43702827453613 38.218514137268066 19.109257068634033 9.554628534317017 4.777314267158508 2.388657133579254 1.194328566789627 0.5971642833948135 0.29858214169740677 0.14929107084870338 0.07464553542435169 0.037322767712175846 0.018661383856087923 0.009330691928043961 0.004665345964021981");
-            tileset.setStyles("");
+            int width = ProjectUIPlugin.getDefault().getPreferenceStore()
+                    .getInt(PreferenceConstants.P_TILESET_WIDTH + info.getName());
+
+            int height = ProjectUIPlugin.getDefault().getPreferenceStore()
+                    .getInt(PreferenceConstants.P_TILESET_HEIGHT + info.getName());
+
+            tileset.setWidth(width);
+            tileset.setHeight(height);
+
+            String imageType = ProjectUIPlugin.getDefault().getPreferenceStore()
+                    .getString(PreferenceConstants.P_TILESET_IMAGE_TYPE + info.getName());
+            tileset.setFormat(imageType);
+
+            /*
+             * The layer ID
+             */
+            tileset.setLayers(info.getName());
+
+            String resolutions = ProjectUIPlugin.getDefault().getPreferenceStore()
+                    .getString(PreferenceConstants.P_TILESET_RESOLUTIONS + info.getName());
+
+            /*
+             * If we have no resolutions to try - we wont.
+             */
+            if ("".equals(resolutions)) { //$NON-NLS-1$
+                return null;
+            }
+
+            tileset.setResolutions(resolutions);
+
+            /*
+             * The styles
+             */
+            String style = ""; //$NON-NLS-1$
+            if (resolve.canResolve(Layer.class)) {
+                Layer layer = resolve.resolve(Layer.class, monitor);
+                StringBuilder sb = new StringBuilder(""); //$NON-NLS-1$
+                for( StyleImpl layerStyle : layer.getStyles() ) {
+                    sb.append(layerStyle.getName());
+                }
+                style = sb.toString();
+            }
+            tileset.setStyles(style);
+
+            /*
+             * The server is where tiles can be retrieved
+             */
             tileset.setServer(server);
 
             return tileset;
         }
         return null;
-    }
-    
-    private String getImageFormat( ) {
-        String str = "";
-        if (WMSPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_USE_DEFAULT_ORDER)) {
-            str = WMSPlugin.getDefault().getPreferenceStore().getDefaultString(PreferenceConstants.P_IMAGE_TYPE_ORDER);
-        } else {
-            str = WMSPlugin.getDefault().getPreferenceStore().getString(PreferenceConstants.P_IMAGE_TYPE_ORDER);
-        }
-        return str;
     }
 }

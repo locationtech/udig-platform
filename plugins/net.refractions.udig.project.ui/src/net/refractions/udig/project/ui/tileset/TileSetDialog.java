@@ -14,6 +14,14 @@
  */
 package net.refractions.udig.project.ui.tileset;
 
+import java.io.IOException;
+
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.IGeoResourceInfo;
+import net.refractions.udig.project.ui.internal.Messages;
+import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import net.refractions.udig.project.ui.preferences.PreferenceConstants;
+
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
@@ -21,25 +29,37 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+ 
 
 /**
  * Displays a set of summary information in a Table
  * 
- * @author Jesse
- * @since 1.1.0
+ * @author jhudson
+ * @since 1.2.0
  */
 public class TileSetDialog extends Dialog {
 
     private String title;
-    private TileSetControl control;
+    private TileSetControl tileControlPage;
+    private String resourceName;
 
     /**
      * @param parentShell
      */
-    public TileSetDialog( Shell parentShell, String title ) {
+    public TileSetDialog( Shell parentShell, IGeoResource resource ) {
         super(parentShell);
-        this.title=title;
-        this.control=new TileSetControl();
+        IGeoResourceInfo info = null;
+        try {
+            info = resource.getInfo(null);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        if (info != null){
+            this.resourceName = info.getName();
+            this.title = Messages.TileSetOp_title + " " + info.getName(); //$NON-NLS-1$
+            this.tileControlPage = new TileSetControl(info.getName(), info.getBounds());
+        }
         setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL | getDefaultOrientation());
     }
 
@@ -51,16 +71,34 @@ public class TileSetDialog extends Dialog {
 
     @Override
     protected Point getInitialSize() {
-        return new Point(600,400);
+        return new Point(300,390);
     }
 
     @Override
     protected void createButtonsForButtonBar( Composite parent ) {
         createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+        createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, true);
     }
 
     @Override
     protected Control createDialogArea( Composite parent ) {
-        return control.createControl(parent);
+        if (tileControlPage.getControl() == null){
+            tileControlPage.createControl(parent);
+        }
+        
+        String resolutions = ProjectUIPlugin.getDefault().getPreferenceStore()
+                .getString(PreferenceConstants.P_TILESET_RESOLUTIONS + resourceName);
+
+        if ("".equals(resolutions)) { //$NON-NLS-1$
+            tileControlPage.loadDefaults();
+        }
+        
+        return tileControlPage.getControl();
+    }
+
+    @Override
+    protected void okPressed() {
+        tileControlPage.performOk();
+        super.okPressed();
     }
 }

@@ -849,7 +849,7 @@
                name="%Add.Category">
                </category> 
          <operation
-               categoryId="net.refractions.udig.catalog.ui.operation.defineTileset"
+               categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
                class="net.refractions.udig.project.ui.operations.DefineTileSetOp"
                id="net.refractions.udig.project.ui.defineTileset"
                name="%tilesetDefine"

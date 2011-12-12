@@ -176,7 +176,6 @@ public class WMSTileSet implements TileSet {
     public void setResolutions( String res ) {
         this.resolutions = res;
         String[] sres = resolutions.split(" "); //$NON-NLS-1$
-
         double[] dres = new double[sres.length];
         for( int i = 0; i < sres.length; i++ ) {
             dres[i] = Double.parseDouble(sres[i]);
