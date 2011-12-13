@@ -13,6 +13,7 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
 import net.refractions.udig.catalog.tests.wmsc.Activator;
+import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.junit.Test;
 
@@ -21,32 +22,48 @@ public class WMSTileSetResolverTest {
     @Test
     public void testResolver() throws Exception {
         Activator instance = Activator.getDefault();
-        assertNotNull("Run as a JUnit Plug-in Test", instance );
+        assertNotNull("Run as a JUnit Plug-in Test", instance);
 
-        //get the service factory 
+        // get the service factory
         IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
 
-        //create the service
-        URL url = new URL("http://localhost:8080/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities");
+        // create the service
+        URL url = new URL(
+                "http://localhost:8080/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities");
         List<IService> services = factory.createService(url);
 
-        //ensure the service was created
+        // ensure the service was created
         assertNotNull(services);
-        assertEquals(1, services.size() );
+        assertEquals(1, services.size());
 
-        //ensure the right type of service was created
+        // ensure the right type of service was created
         IService service = services.get(0);
-        assertNotNull( service );
+        assertNotNull(service);
 
         ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-        catalog.add( service ); // we can now find this service!
+        catalog.add(service); // we can now find this service!
 
         ID id = new ID(new ID(url), "tasmania");
 
-        IGeoResource resource = (IGeoResource)catalog.getById(IGeoResource.class, id, null);
-        assertNotNull( resource );
+        /*
+         * setup the properties so this adapter is enabled
+         */
+        ProjectUIPlugin.getDefault().getPreferenceStore().setValue("tilesetOnOfftasmania", true);
+
+        /*
+         * set the resolutions - as they are never calculated from the dialog
+         */
+        ProjectUIPlugin
+                .getDefault()
+                .getPreferenceStore()
+                .setValue(
+                        "tilesetResolutionstasmania",
+                        "0.009015193399753197 9.015193399753199E-4 4.5075966998765993E-4 1.8030386799506394E-4 9.015193399753197E-5 4.5075966998765985E-5 2.2537983499382992E-5 9.015193399753199E-6");
+
+        IGeoResource resource = (IGeoResource) catalog.getById(IGeoResource.class, id, null);
+        assertNotNull(resource);
 
         TileSet ts = resource.resolve(TileSet.class, null);
-        assertNotNull( ts );
+        assertNotNull(ts);
     }
 }

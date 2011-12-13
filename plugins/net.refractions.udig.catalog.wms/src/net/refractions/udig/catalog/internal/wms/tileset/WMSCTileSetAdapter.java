@@ -38,7 +38,7 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
     public boolean canAdapt( IResolve resolve, Class< ? extends Object> adapter ) {
 
         if (adapter.isAssignableFrom(TileSet.class)) {
-
+            
             IGeoResource fs = (IGeoResource) resolve;
 
             try {
@@ -110,11 +110,24 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             int height = ProjectUIPlugin.getDefault().getPreferenceStore()
                     .getInt(PreferenceConstants.P_TILESET_HEIGHT + info.getName());
 
+            if (width == 0){
+                width = 256;
+            }
+            
+            if (height == 0){
+                height = 256;
+            }
+            
             tileset.setWidth(width);
             tileset.setHeight(height);
 
             String imageType = ProjectUIPlugin.getDefault().getPreferenceStore()
                     .getString(PreferenceConstants.P_TILESET_IMAGE_TYPE + info.getName());
+            
+            if ("".equals(imageType) || imageType == null){ //$NON-NLS-1$
+                imageType = "image/png"; //$NON-NLS-1$
+            }
+            
             tileset.setFormat(imageType);
 
             /*

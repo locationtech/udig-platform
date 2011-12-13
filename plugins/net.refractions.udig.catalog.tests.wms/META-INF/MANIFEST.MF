@@ -8,6 +8,7 @@ Require-Bundle: org.junit,
  net.refractions.udig.libs,
  net.refractions.udig.catalog,
  net.refractions.udig.catalog.wms,
- net.refractions.udig.render.wms.basic;bundle-version="1.2.0"
+ net.refractions.udig.render.wms.basic,
+ net.refractions.udig.project.ui
 Bundle-Activator: net.refractions.udig.catalog.tests.wmsc.Activator
 Bundle-ActivationPolicy: lazy
