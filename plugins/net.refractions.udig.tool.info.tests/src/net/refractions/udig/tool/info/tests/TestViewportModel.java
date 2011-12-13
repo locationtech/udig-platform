@@ -37,7 +37,7 @@ import com.vividsolutions.jts.geom.Envelope;
 public class TestViewportModel implements ViewportModel {
 
 	private Dimension displaySize;
-	private Envelope bbox;
+	private ReferencedEnvelope bbox;
 	private CoordinateReferenceSystem crs;
 
 	TestViewportModel() {
@@ -50,7 +50,7 @@ public class TestViewportModel implements ViewportModel {
 	 * @param bbox
 	 * @param crs
 	 */
-	public TestViewportModel(Dimension displaySize, Envelope bbox, CoordinateReferenceSystem crs) {
+	public TestViewportModel(Dimension displaySize, ReferencedEnvelope bbox, CoordinateReferenceSystem crs) {
 		super();
 		this.displaySize = displaySize;
 		this.bbox = bbox;
@@ -64,7 +64,7 @@ public class TestViewportModel implements ViewportModel {
 		return 0;
 	}
 
-	public Envelope getBounds() {
+	public ReferencedEnvelope getBounds() {
 		return this.bbox;
 	}
 

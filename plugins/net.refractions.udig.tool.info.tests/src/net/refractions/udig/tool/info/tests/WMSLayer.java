@@ -12,6 +12,7 @@ import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.IStyleBlackboard;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -20,6 +21,7 @@ import org.geotools.data.ows.Layer;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.filter.Filter;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.FeatureType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
@@ -136,7 +138,7 @@ public class WMSLayer implements ILayer {;
 		return null;
 	}
 
-	public FeatureType getSchema() {
+	public SimpleFeatureType getSchema() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -151,7 +153,7 @@ public class WMSLayer implements ILayer {;
 		return null;
 	}
 
-	public IBlackboard getStyleBlackboard() {
+	public IStyleBlackboard getStyleBlackboard() {
 		// TODO Auto-generated method stub
 		return null;
 	}
