@@ -6,10 +6,13 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.management.ServiceNotFoundException;
+
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
+import net.refractions.udig.catalog.internal.wms.WmsPlugin;
 import net.refractions.udig.catalog.internal.wmsc.WMSCServiceImpl;
 import net.refractions.udig.catalog.wmsc.server.TileSet;
 import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
@@ -38,7 +41,7 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
     public boolean canAdapt( IResolve resolve, Class< ? extends Object> adapter ) {
 
         if (adapter.isAssignableFrom(TileSet.class)) {
-            
+
             IGeoResource fs = (IGeoResource) resolve;
 
             try {
@@ -77,6 +80,7 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
          * if there is no server for the tiles to come from, we can't/wont continue
          */
         if (server == null) {
+            WmsPlugin.log("Tileset must have a service defined, serive is null", new ServiceNotFoundException());
             return null;
         }
 
@@ -85,9 +89,20 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             IGeoResource fs = (IGeoResource) resolve;
             IGeoResourceInfo info = fs.getInfo(monitor);
 
-            URL caps = new URL(
-                    server.getInfo().getSource()
-                            + "version=" + server.getCapabilities().getVersion() + "&request=GetCapabilities"); //$NON-NLS-1$ //$NON-NLS-2$
+            String source = server.getInfo().getSource().toString();
+            String version = server.getCapabilities().getVersion();
+            
+            if (source == null || "".equals(source)){
+                WmsPlugin.log("Tileset must have a service URL defined, source is null", new ServiceNotFoundException());
+                return null;
+            }
+            
+            if (version == null || "".equals(version)){
+                WmsPlugin.log("Tileset must have a service version defined, version is null", new ServiceNotFoundException());
+                return null;
+            }
+  
+            URL caps = new URL(source + "version=" + version + "&request=GetCapabilities"); //$NON-NLS-1$ //$NON-NLS-2$
             String srs = CRS.toSRS(info.getCRS());
 
             Map<String, Serializable> params = new HashMap<String, Serializable>();
@@ -99,7 +114,7 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             double maxX = info.getBounds().getMaximum(0);
             double minY = info.getBounds().getMinimum(1);
             double maxY = info.getBounds().getMaximum(1);
-            
+
             CRSEnvelope bbox = new CRSEnvelope(srs, minX, minY, maxX, maxY);
             tileset.setBoundingBox(bbox);
             tileset.setCoorindateReferenceSystem(srs);
@@ -110,24 +125,24 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             int height = ProjectUIPlugin.getDefault().getPreferenceStore()
                     .getInt(PreferenceConstants.P_TILESET_HEIGHT + info.getName());
 
-            if (width == 0){
+            if (width == 0) {
                 width = 256;
             }
-            
-            if (height == 0){
+
+            if (height == 0) {
                 height = 256;
             }
-            
+
             tileset.setWidth(width);
             tileset.setHeight(height);
 
             String imageType = ProjectUIPlugin.getDefault().getPreferenceStore()
                     .getString(PreferenceConstants.P_TILESET_IMAGE_TYPE + info.getName());
-            
-            if ("".equals(imageType) || imageType == null){ //$NON-NLS-1$
+
+            if (imageType == null || "".equals(imageType)) { //$NON-NLS-1$
                 imageType = "image/png"; //$NON-NLS-1$
             }
-            
+
             tileset.setFormat(imageType);
 
             /*
@@ -137,11 +152,12 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
 
             String resolutions = ProjectUIPlugin.getDefault().getPreferenceStore()
                     .getString(PreferenceConstants.P_TILESET_RESOLUTIONS + info.getName());
-            
+
             /*
              * If we have no resolutions to try - we wont.
              */
             if ("".equals(resolutions)) { //$NON-NLS-1$
+                WmsPlugin.log("Tileset must have resolutions based on the maps scale, resolutions are null", new ServiceNotFoundException());
                 return null;
             }
 
