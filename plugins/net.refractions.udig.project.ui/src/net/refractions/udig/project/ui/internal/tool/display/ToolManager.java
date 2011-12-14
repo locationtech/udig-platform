@@ -1127,15 +1127,13 @@ public class ToolManager implements IToolManager {
         copyLock.lock();
         try{
             if (copyAction == null) {
-                    if (copyAction == null) {
-                        copyAction = new CopyAction();
-                        IAction template = ActionFactory.COPY.create(part.getSite().getWorkbenchWindow());
-                        copyAction.setText(template.getText());
-                        copyAction.setToolTipText(template.getToolTipText());
-                        copyAction.setImageDescriptor(template.getImageDescriptor());
-                        copyAction.setId(template.getId());
-                        copyAction.setActionDefinitionId("org.eclipse.ui.edit.copy"); //$NON-NLS-1$
-                    }
+                copyAction = new CopyAction();
+                IAction template = ActionFactory.COPY.create(part.getSite().getWorkbenchWindow());
+                copyAction.setText(template.getText());
+                copyAction.setToolTipText(template.getToolTipText());
+                copyAction.setImageDescriptor(template.getImageDescriptor());
+                copyAction.setId(template.getId());
+                copyAction.setActionDefinitionId("org.eclipse.ui.edit.copy"); //$NON-NLS-1$
             }
             if (copyAction instanceof CopyAction) {
                 ((CopyAction) copyAction).setPart(part);
