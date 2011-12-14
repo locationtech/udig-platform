@@ -263,7 +263,7 @@ public abstract class AbstractTool
 	 * @see net.refractions.udig.project.ui.tool.Tool#setEnabled(boolean)
 	 */
 	public void setEnabled(boolean enabled) {
-		boolean oldValue = enabled; 
+		boolean oldValue = this.enabled; 
 		this.enabled = enabled;
 		
 		if(isNotify && oldValue != enabled){
