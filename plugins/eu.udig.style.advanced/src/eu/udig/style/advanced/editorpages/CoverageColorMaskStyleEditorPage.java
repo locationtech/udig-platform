@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.geotools.coverage.grid.GridCoverage2D;
 
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.utils.StolenColorEditor;
 
 /**
@@ -62,11 +63,11 @@ public class CoverageColorMaskStyleEditorPage extends StyleEditorPage implements
         Group colorMaskGroup = new Group(parent, SWT.SHADOW_ETCHED_IN);
         colorMaskGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         colorMaskGroup.setLayout(new GridLayout(2, false));
-        colorMaskGroup.setText("Color mask");
+        colorMaskGroup.setText(Messages.CoverageColorMaskStyleEditorPage_0);
 
         colorMaskButton = new Button(colorMaskGroup, SWT.CHECK);
         colorMaskButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        colorMaskButton.setText("Enable color mask");
+        colorMaskButton.setText(Messages.CoverageColorMaskStyleEditorPage_1);
         colorMaskButton.addSelectionListener(this);
 
         maskColorEditor = new StolenColorEditor(colorMaskGroup);

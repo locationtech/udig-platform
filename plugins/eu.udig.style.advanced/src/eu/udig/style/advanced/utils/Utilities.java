@@ -735,7 +735,7 @@ public class Utilities {
         switch( type ) {
         case POINT:
         case POLYGON:
-            labelPlacement = sf.createPointPlacement(sf.createAnchorPoint(ff.literal(0.5), ff.literal(0.5)),
+            labelPlacement = sf.createPointPlacement(sf.createAnchorPoint(ff.literal(0.0), ff.literal(0.0)),
                     sf.createDisplacement(ff.literal(0.0), ff.literal(0.0)), ff.literal(0.0));
             break;
         case LINE:

@@ -87,11 +87,11 @@ public class ParameterComposite extends SelectionAdapter implements KeyListener,
 
     @SuppressWarnings("nls")
     protected String[] getOffset( String text ) {
-        String[] defaultOffset = new String[]{"0.0", "0.0"};
+        String[] defaultOffset = new String[]{"0.0", "0.0"}; //$NON-NLS-1$ //$NON-NLS-2$
         if (text.indexOf(',') == -1) {
             return defaultOffset;
         }
-        String[] split = text.split(",");
+        String[] split = text.split(","); //$NON-NLS-1$
         if (split.length != 2) {
             return defaultOffset;
         }
