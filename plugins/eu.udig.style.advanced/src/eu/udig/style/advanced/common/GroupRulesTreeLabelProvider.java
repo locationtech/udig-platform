@@ -30,6 +30,7 @@ import org.eclipse.swt.graphics.Image;
 
 import eu.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import eu.udig.style.advanced.internal.Messages;
 
 /**
  * A tree view label provider for {@link FeatureTypeStyleWrapper}s with {@link RuleWrapper} childs.
@@ -66,7 +67,7 @@ public class GroupRulesTreeLabelProvider extends LabelProvider {
             FeatureTypeStyleWrapper ftsW = (FeatureTypeStyleWrapper) element;
             String name = ftsW.getName();
             if (name == null || name.length() == 0) {
-                name = "default group";
+                name = Messages.GroupRulesTreeLabelProvider_0;
                 name = checkSameNameFeatureTypeStyle(ftsW.getParent().getFeatureTypeStylesWrapperList(), name);
                 ftsW.setName(name);
             }
@@ -75,7 +76,7 @@ public class GroupRulesTreeLabelProvider extends LabelProvider {
             RuleWrapper ruleWrapper = (RuleWrapper) element;
             String name = ruleWrapper.getName();
             if (name == null || name.length() == 0) {
-                name = "default rule";
+                name = Messages.GroupRulesTreeLabelProvider_1;
                 name = checkSameNameRule(ruleWrapper.getParent().getRulesWrapperList(), name);
                 ruleWrapper.setName(name);
             }

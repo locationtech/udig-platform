@@ -11,7 +11,7 @@ import eu.udig.style.advanced.utils.ImageCache;
 public class StylePlugin extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "eu.udig.style.advanced";
+    public static final String PLUGIN_ID = "eu.udig.style.advanced"; //$NON-NLS-1$
 
     // The shared instance
     private static StylePlugin plugin;

@@ -47,6 +47,7 @@ import org.opengis.feature.type.Name;
 import eu.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.utils.Utilities;
 
 /**
@@ -272,7 +273,7 @@ public abstract class PropertiesEditor {
                 }
             }
         } else {
-            MessageDialog.openWarning(mainComposite.getShell(), "Warning", "No rule or group selected.");
+            MessageDialog.openWarning(mainComposite.getShell(), Messages.PropertiesEditor_0, Messages.PropertiesEditor_1);
             return;
         }
     }

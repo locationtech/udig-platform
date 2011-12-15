@@ -29,6 +29,7 @@ import org.opengis.filter.Filter;
 
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import eu.udig.style.advanced.internal.Messages;
 
 /**
  * A composite that holds filters.
@@ -65,7 +66,7 @@ public class FiltersComposite extends ParameterComposite {
         // rule name
         Label nameLabel = new Label(mainComposite, SWT.NONE);
         nameLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        nameLabel.setText("Filter string");
+        nameLabel.setText(Messages.FiltersComposite_0);
         filterText = new Text(mainComposite, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.LEAD | SWT.BORDER);
         GridData nameTextGD = new GridData(SWT.FILL, SWT.FILL, true, true);
         nameTextGD.widthHint = 100;
@@ -76,17 +77,17 @@ public class FiltersComposite extends ParameterComposite {
             if (filter != null) {
                 filterText.setText(filter.toString());
             } else {
-                filterText.setText("");
+                filterText.setText(""); //$NON-NLS-1$
             }
         } catch (Exception e) {
-            filterText.setText("");
+            filterText.setText(""); //$NON-NLS-1$
             e.printStackTrace();
         }
         filterText.addFocusListener(this);
 
         filterApplyButton = new Button(mainComposite, SWT.PUSH);
         filterApplyButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
-        filterApplyButton.setText("Apply filter");
+        filterApplyButton.setText(Messages.FiltersComposite_3);
         filterApplyButton.addSelectionListener(this);
 
     }
@@ -102,10 +103,10 @@ public class FiltersComposite extends ParameterComposite {
             if (filter != null) {
                 filterText.setText(filter.toString());
             } else {
-                filterText.setText("");
+                filterText.setText(""); //$NON-NLS-1$
             }
         } catch (Exception e) {
-            filterText.setText("");
+            filterText.setText(""); //$NON-NLS-1$
             e.printStackTrace();
         }
 
