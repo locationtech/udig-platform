@@ -54,6 +54,8 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.coverage.grid.GridCoverage2D;
 
+import eu.udig.style.advanced.internal.Messages;
+
 /**
  * The composite holding the raster map style logic.
  * 
@@ -105,11 +107,11 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         gridData.grabExcessHorizontalSpace = true;
         gridData.verticalAlignment = GridData.CENTER;
         addRuleButton = new Button(this, SWT.NONE);
-        addRuleButton.setText("+");
+        addRuleButton.setText("+"); //$NON-NLS-1$
         addRuleButton.setLayoutData(gridData);
         addRuleButton.addSelectionListener(this);
         removeRuleButton = new Button(this, SWT.NONE);
-        removeRuleButton.setText("-");
+        removeRuleButton.setText("-"); //$NON-NLS-1$
         removeRuleButton.setLayoutData(gridData1);
         removeRuleButton.addSelectionListener(this);
         moveRuleUpButton = new Button(this, SWT.UP | SWT.ARROW);
@@ -138,7 +140,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         GridData selectAllGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         selectAllGD.horizontalSpan = 3;
         selectAllButton.setLayoutData(selectAllGD);
-        selectAllButton.setText("Select all");
+        selectAllButton.setText(Messages.CoverageColorEditor_2);
         selectAllButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 for( CoverageRule cRule : listOfRules ) {
@@ -152,7 +154,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         GridData unselectAllGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         unselectAllGD.horizontalSpan = 3;
         unselectAllButton.setLayoutData(unselectAllGD);
-        unselectAllButton.setText("Unselect all");
+        unselectAllButton.setText(Messages.CoverageColorEditor_3);
         unselectAllButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 for( CoverageRule cRule : listOfRules ) {
@@ -166,7 +168,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         GridData invertSelectionGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         invertSelectionGD.horizontalSpan = 2;
         invertSelectionButton.setLayoutData(invertSelectionGD);
-        invertSelectionButton.setText("Invert selection");
+        invertSelectionButton.setText(Messages.CoverageColorEditor_4);
         invertSelectionButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 for( CoverageRule cRule : listOfRules ) {
@@ -179,7 +181,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         GridData resetGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         resetGD.horizontalSpan = 8;
         resetColormapButton = new Button(buttonComposite, SWT.NONE);
-        resetColormapButton.setText("reset colormap");
+        resetColormapButton.setText(Messages.CoverageColorEditor_5);
         resetColormapButton.setLayoutData(resetGD);
         resetColormapButton.addSelectionListener(this);
 
@@ -188,7 +190,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         GridData rulesLabelGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         rulesLabelGD.horizontalSpan = 3;
         predefinedRulesLabel.setLayoutData(rulesLabelGD);
-        predefinedRulesLabel.setText("Set from predefined table");
+        predefinedRulesLabel.setText(Messages.CoverageColorEditor_6);
 
         predefinedRulesCombo = new Combo(buttonComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData comboGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -213,13 +215,13 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         Group novaluesGroup = new Group(this, SWT.NONE);
         novaluesGroup.setLayoutData(novaluesGD);
         novaluesGroup.setLayout(novaluesLayout);
-        novaluesGroup.setText("Novalues to ignore");
+        novaluesGroup.setText(Messages.CoverageColorEditor_7);
         novaluesText = new Text(novaluesGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         novaluesText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        novaluesText.setText("-9999.0");
+        novaluesText.setText("-9999.0"); //$NON-NLS-1$
         Button addNovalueRulesButton = new Button(novaluesGroup, SWT.PUSH);
         addNovalueRulesButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        addNovalueRulesButton.setText("Add rules for novalues");
+        addNovalueRulesButton.setText(Messages.CoverageColorEditor_9);
         addNovalueRulesButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 double[] nvArray = getExtraNovalues();
@@ -292,7 +294,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         alphaGroup = new Group(this, SWT.NONE);
         alphaGroup.setLayoutData(gridData5);
         alphaGroup.setLayout(gridLayout1);
-        alphaGroup.setText("alpha");
+        alphaGroup.setText(Messages.CoverageColorEditor_10);
         alphaScale = new Scale(alphaGroup, SWT.NONE);
         alphaScale.setLayoutData(gridData6);
         alphaScale.setMinimum(0);
@@ -300,11 +302,11 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         alphaScale.setPageIncrement(10);
         alphaScale.setSelection(100);
         alphaLabel = new Label(alphaGroup, SWT.NONE);
-        alphaLabel.setText(alphaScale.getSelection() + "");
+        alphaLabel.setText(alphaScale.getSelection() + ""); //$NON-NLS-1$
         alphaScale.addListener(SWT.Selection, new Listener(){
             public void handleEvent( Event event ) {
                 int perspectiveValue = alphaScale.getSelection();
-                alphaLabel.setText(perspectiveValue + "");
+                alphaLabel.setText(perspectiveValue + ""); //$NON-NLS-1$
             }
         });
     }
@@ -435,7 +437,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         List<Double> novaluesList = new ArrayList<Double>();
         String novaluesStr = novaluesText.getText();
         if (novaluesStr != null && novaluesStr.length() > 0) {
-            String[] nvSplit = novaluesStr.split(",");
+            String[] nvSplit = novaluesStr.split(","); //$NON-NLS-1$
             for( String nvStr : nvSplit ) {
                 try {
                     double nv = Double.parseDouble(nvStr.trim());

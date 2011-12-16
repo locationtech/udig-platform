@@ -42,6 +42,7 @@ import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import eu.udig.style.advanced.common.styleattributeclasses.PolygonSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.utils.StolenColorEditor;
 import eu.udig.style.advanced.utils.Utilities;
 
@@ -100,7 +101,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         GridData fillEnableButtonGD = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
         fillEnableButtonGD.horizontalSpan = 3;
         fillEnableButton.setLayoutData(fillEnableButtonGD);
-        fillEnableButton.setText("enable/disable fill");
+        fillEnableButton.setText(Messages.PolygonFillParametersComposite_0);
         fillEnableButton.setSelection(widgetEnabled);
         fillEnableButton.addSelectionListener(this);
 
@@ -110,7 +111,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         // fill color
         Label colorLabel = new Label(mainComposite, SWT.RADIO);
         colorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        colorLabel.setText("color");
+        colorLabel.setText(Messages.PolygonFillParametersComposite_1);
 
         String color = polygonSymbolizerWrapper.getFillColor();
         Color tmpColor = null;
@@ -140,7 +141,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         // graphics fill
         Label graphicsFillLabel = new Label(mainComposite, SWT.RADIO);
         graphicsFillLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        graphicsFillLabel.setText("graphics");
+        graphicsFillLabel.setText(Messages.PolygonFillParametersComposite_2);
 
         Composite pathComposite = new Composite(mainComposite, SWT.NONE);
         GridData pathCompositeGD = new GridData(SWT.FILL, SWT.FILL, true, false);
@@ -176,7 +177,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         // well known marks
         Label wkmLabel = new Label(mainComposite, SWT.RADIO);
         wkmLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        wkmLabel.setText("well known mark");
+        wkmLabel.setText(Messages.PolygonFillParametersComposite_3);
 
         wkmarkNameCombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData wkmarkNameComboGD = new GridData(SWT.FILL, SWT.FILL, false, false);
@@ -208,7 +209,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         wkmWidthSpinner.setMaximum(200);
         wkmWidthSpinner.setMinimum(0);
         wkmWidthSpinner.setIncrement(1);
-        wkmWidthSpinner.setToolTipText("Width");
+        wkmWidthSpinner.setToolTipText(Messages.PolygonFillParametersComposite_4);
 
         String wkMarkWidth = polygonSymbolizerWrapper.getWkMarkWidthFill();
         Double tmpWidth = isDouble(wkMarkWidth);
@@ -226,7 +227,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         wkmSizeSpinner.setMaximum(1000);
         wkmSizeSpinner.setMinimum(0);
         wkmSizeSpinner.setIncrement(1);
-        wkmSizeSpinner.setToolTipText("Size");
+        wkmSizeSpinner.setToolTipText(Messages.PolygonFillParametersComposite_5);
 
         String wkMarkSize = polygonSymbolizerWrapper.getWkMarkSizeFill();
         Double tmpSize = isDouble(wkMarkSize);
@@ -256,15 +257,15 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         new Label(mainComposite, SWT.NONE);
         Label valueLabel = new Label(mainComposite, SWT.NONE);
         valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        valueLabel.setText("Manual");
+        valueLabel.setText(Messages.PolygonFillParametersComposite_6);
         Label fieldsLabel = new Label(mainComposite, SWT.NONE);
         fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        fieldsLabel.setText("Field based");
+        fieldsLabel.setText(Messages.PolygonFillParametersComposite_7);
 
         // border alpha
         Label fillOpactityLabel = new Label(mainComposite, SWT.NONE);
         fillOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        fillOpactityLabel.setText("opacity");
+        fillOpactityLabel.setText(Messages.PolygonFillParametersComposite_8);
         fillOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
         fillOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         fillOpacitySpinner.setMaximum(100);
@@ -325,7 +326,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         try {
             graphicsPathText.setText(polygonSymbolizerWrapper.getFillExternalGraphicFillPath());
         } catch (MalformedURLException e1) {
-            graphicsPathText.setText("");
+            graphicsPathText.setText(""); //$NON-NLS-1$
         }
 
         String wkMarkNameFill = polygonSymbolizerWrapper.getWkMarkNameFill();
@@ -433,7 +434,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
             try {
                 String text = graphicsPathText.getText();
                 File graphicsFile = new File(text);
-                if (graphicsFile.exists() || text.toLowerCase().startsWith("http")) {
+                if (graphicsFile.exists() || text.toLowerCase().startsWith("http")) { //$NON-NLS-1$
                     text = graphicsFile.toURI().toURL().toExternalForm();
                     notifyListeners(text, false, STYLEEVENTTYPE.GRAPHICSPATHFILL);
                 }
@@ -446,7 +447,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
     private void doWkmGraphics() {
         int selectionIndex = wkmarkNameCombo.getSelectionIndex();
         String name = wkmarkNameCombo.getItem(selectionIndex);
-        if (name.equals("")) {
+        if (name.equals("")) { //$NON-NLS-1$
             return;
         }
         name = Utilities.markNamesToDef.get(name);

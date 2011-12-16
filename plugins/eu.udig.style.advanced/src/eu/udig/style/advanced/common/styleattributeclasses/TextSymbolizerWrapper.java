@@ -415,7 +415,7 @@ public class TextSymbolizerWrapper extends SymbolizerWrapper {
 
     public void setMaxDisplacementVO( String maxDisplacementVO ) {
         this.maxDisplacementVO = maxDisplacementVO;
-        if (maxDisplacementVO == null || maxDisplacementVO.equals("")) {
+        if (maxDisplacementVO == null || maxDisplacementVO.equals("")) { //$NON-NLS-1$
             textSymbolizer.getOptions().remove(VendorOptions.VENDOROPTION_MAXDISPLACEMENT.toString());
         } else {
             textSymbolizer.getOptions().put(VendorOptions.VENDOROPTION_MAXDISPLACEMENT.toString(), maxDisplacementVO);
@@ -424,7 +424,7 @@ public class TextSymbolizerWrapper extends SymbolizerWrapper {
 
     public void setRepeatVO( String repeatVO ) {
         this.repeatVO = repeatVO;
-        if (repeatVO == null || repeatVO.equals("") || geomType != SLD.LINE) {
+        if (repeatVO == null || repeatVO.equals("") || geomType != SLD.LINE) { //$NON-NLS-1$
             textSymbolizer.getOptions().remove(VendorOptions.VENDOROPTION_REPEAT.toString());
         } else {
             textSymbolizer.getOptions().put(VendorOptions.VENDOROPTION_REPEAT.toString(), repeatVO);
@@ -433,7 +433,7 @@ public class TextSymbolizerWrapper extends SymbolizerWrapper {
 
     public void setAutoWrapVO( String autoWrapVO ) {
         this.autoWrapVO = autoWrapVO;
-        if (autoWrapVO == null || autoWrapVO.equals("")) {
+        if (autoWrapVO == null || autoWrapVO.equals("")) { //$NON-NLS-1$
             textSymbolizer.getOptions().remove(VendorOptions.VENDOROPTION_AUTOWRAP.toString());
         } else {
             textSymbolizer.getOptions().put(VendorOptions.VENDOROPTION_AUTOWRAP.toString(), autoWrapVO);
@@ -442,7 +442,7 @@ public class TextSymbolizerWrapper extends SymbolizerWrapper {
 
     public void setSpaceAroundVO( String spaceAroundVO ) {
         this.spaceAroundVO = spaceAroundVO;
-        if (spaceAroundVO == null || spaceAroundVO.equals("")) {
+        if (spaceAroundVO == null || spaceAroundVO.equals("")) { //$NON-NLS-1$
             textSymbolizer.getOptions().remove(VendorOptions.VENDOROPTION_SPACEAROUND.toString());
         } else {
             textSymbolizer.getOptions().put(VendorOptions.VENDOROPTION_SPACEAROUND.toString(), spaceAroundVO);
@@ -451,7 +451,7 @@ public class TextSymbolizerWrapper extends SymbolizerWrapper {
 
     public void setFollowLineVO( String followLineVO ) {
         this.followLineVO = followLineVO;
-        if (followLineVO == null || followLineVO.equals("") || geomType != SLD.LINE) {
+        if (followLineVO == null || followLineVO.equals("") || geomType != SLD.LINE) { //$NON-NLS-1$
             textSymbolizer.getOptions().remove(VendorOptions.VENDOROPTION_FOLLOWLINE.toString());
         } else {
             textSymbolizer.getOptions().put(VendorOptions.VENDOROPTION_FOLLOWLINE.toString(), followLineVO);
@@ -460,7 +460,7 @@ public class TextSymbolizerWrapper extends SymbolizerWrapper {
 
     public void setMaxAngleDeltaVO( String maxAngleDeltaVO ) {
         this.maxAngleDeltaVO = maxAngleDeltaVO;
-        if (maxAngleDeltaVO == null || maxAngleDeltaVO.equals("") || geomType != SLD.LINE) {
+        if (maxAngleDeltaVO == null || maxAngleDeltaVO.equals("") || geomType != SLD.LINE) { //$NON-NLS-1$
             textSymbolizer.getOptions().remove(VendorOptions.VENDOROPTION_MAXANGLEDELTA.toString());
         } else {
             textSymbolizer.getOptions().put(VendorOptions.VENDOROPTION_MAXANGLEDELTA.toString(), maxAngleDeltaVO);

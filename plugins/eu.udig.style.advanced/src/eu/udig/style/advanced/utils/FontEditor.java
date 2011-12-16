@@ -24,6 +24,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import eu.udig.style.advanced.internal.Messages;
+
 /**
  * <p>
  * A "button" with an icon/text that pops up the font window.
@@ -55,7 +57,7 @@ public class FontEditor {
         fFont = new Font[1];
         fColor = new Color[1];
 
-        fButton.setText("set font");
+        fButton.setText(Messages.FontEditor_0);
         labelFontDialog = new FontDialog(new Shell());
         labelFontDialog.setText("Choose a Font"); //$NON-NLS-1$
 

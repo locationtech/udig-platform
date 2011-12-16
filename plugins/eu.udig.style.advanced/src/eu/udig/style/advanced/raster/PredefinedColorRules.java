@@ -52,12 +52,12 @@ public class PredefinedColorRules {
      * The rainbow colormap is the only one that has to exist.
      */
     public final static String[][] rainbow = new String[][]{ //
-    {"255", "255", "0"}, //
-            {"0", "255", "0"}, //
-            {"0", "255", "255"}, //
-            {"0", "0", "255"}, //
-            {"255", "0", "255"}, //
-            {"255", "0", "0"}};
+    {"255", "255", "0"}, // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            {"0", "255", "0"}, // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            {"0", "255", "255"}, // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            {"0", "0", "255"}, // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            {"255", "0", "255"}, // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            {"255", "0", "0"}}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     /**
      * Reads and returns the {@link HashMap map} holding all predefined color rules.
@@ -97,22 +97,22 @@ public class PredefinedColorRules {
          */
         try {
             // create the rainbow colortable, which has to exist
-            colorRules.put("rainbow", rainbow);
+            colorRules.put("rainbow", rainbow); //$NON-NLS-1$
 
             File colorTablesFolder = null;
             Bundle bundle = Platform.getBundle(StylePlugin.PLUGIN_ID);
             if (bundle != null) {
-                URL queriesUrl = bundle.getResource("colortables");
+                URL queriesUrl = bundle.getResource("colortables"); //$NON-NLS-1$
                 String colorTablesFolderPath = FileLocator.toFileURL(queriesUrl).getPath();
                 colorTablesFolder = new File(colorTablesFolderPath);
             } else {
-                File baseFolder = new File("..");
+                File baseFolder = new File(".."); //$NON-NLS-1$
                 File[] listFiles = baseFolder.listFiles();
 
                 for( File folder : listFiles ) {
                     String name = folder.getName().toLowerCase();
-                    if (name.startsWith("eu.hydrologis.jgrass.libs") && !name.contains("external") && !name.contains("scripting")) {
-                        colorTablesFolder = new File(folder, "colortables");
+                    if (name.startsWith("eu.hydrologis.jgrass.libs") && !name.contains("external") && !name.contains("scripting")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        colorTablesFolder = new File(folder, "colortables"); //$NON-NLS-1$
                     }
                 }
 
@@ -121,23 +121,23 @@ public class PredefinedColorRules {
                 File[] files = colorTablesFolder.listFiles();
                 for( File file : files ) {
                     String name = file.getName();
-                    if (name.toLowerCase().endsWith(".clr")) {
+                    if (name.toLowerCase().endsWith(".clr")) { //$NON-NLS-1$
                         BufferedReader bR = new BufferedReader(new FileReader(file));
                         List<String[]> lines = new ArrayList<String[]>();
                         String line = null;
                         int cols = 0;
                         while( (line = bR.readLine()) != null ) {
-                            if (line.startsWith("#")) {
+                            if (line.startsWith("#")) { //$NON-NLS-1$
                                 continue;
                             }
-                            String[] lineSplit = line.trim().split("\\s+");
+                            String[] lineSplit = line.trim().split("\\s+"); //$NON-NLS-1$
                             cols = lineSplit.length;
                             lines.add(lineSplit);
                         }
                         bR.close();
                         String[][] linesArray = (String[][]) lines.toArray(new String[lines.size()][cols]);
                         String ruleName = FilenameUtils.getBaseName(file.getName());
-                        ruleName = ruleName.replaceAll("\\_", " ");
+                        ruleName = ruleName.replaceAll("\\_", " "); //$NON-NLS-1$ //$NON-NLS-2$
                         colorRules.put(ruleName, linesArray);
                     }
                 }
@@ -198,7 +198,7 @@ public class PredefinedColorRules {
              * and the color rule has to be "v1 r1 g1 b1 v2 r2 g2 b2". 
              */
             if (colorRules[0].length != 8) {
-                throw new IOException("The colortable can have records of 3 or 8 columns. Check your colortables.");
+                throw new IOException("The colortable can have records of 3 or 8 columns. Check your colortables."); //$NON-NLS-1$
             }
 
             for( int i = 0; i < colorRules.length; i++ ) {
