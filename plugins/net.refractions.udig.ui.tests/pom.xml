@@ -38,6 +38,65 @@
 			</properties>
 		</profile>
 
+
+		<profile>
+			<id>coverage</id>
+			<activation>
+				<property>
+					<name>coverage</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<dependencies>
+							<dependency>
+								<groupId>emma</groupId>
+								<artifactId>emma_ant</artifactId>
+								<version>2.0.5312</version>
+							</dependency>
+							<dependency>
+								<groupId>emma</groupId>
+								<artifactId>emma</artifactId>
+								<version>2.0.5312</version>
+							</dependency>
+						</dependencies>
+						<executions>
+							<execution>
+								<id>emma-report</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<taskdef resource="emma_ant.properties" />
+										<echo>Process emma report...</echo>
+										<emma enabled="true">
+											<report>
+												<infileset dir="${project.build.directory}/emma"
+													includes="*.es" />
+												<txt outfile="${project.build.directory}/emma/coverage.txt" />
+												<xml outfile="${project.build.directory}/emma/coverage.xml" />
+												<html outfile="${project.build.directory}/emma/coverage.html" />
+												<!-- Could also generate an HTML report, if you want... -->
+											</report>
+										</emma>
+										<loadfile property="emma.txt"
+											srcFile="${project.build.directory}/emma/coverage.txt"
+											failonerror="false" />
+										<echo>${emma.txt}</echo>
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		
 	</profiles>
 
 	<properties>

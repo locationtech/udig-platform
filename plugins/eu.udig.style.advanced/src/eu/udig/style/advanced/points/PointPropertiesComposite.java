@@ -37,6 +37,7 @@ import eu.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrappe
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.SymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.points.widgets.PointBoderParametersComposite;
 import eu.udig.style.advanced.points.widgets.PointFillParametersComposite;
 import eu.udig.style.advanced.points.widgets.PointCharacterChooserComposite;
@@ -48,9 +49,9 @@ import static eu.udig.style.advanced.utils.Utilities.*;
 @SuppressWarnings("nls")
 public class PointPropertiesComposite extends SelectionAdapter implements ModifyListener, IStyleChangesListener {
 
-    private static final String[] POINT_STYLE_TYPES = {"Simple Style", "Graphics Based Style", "Font Based Style"};
+    private static final String[] POINT_STYLE_TYPES = {Messages.PointPropertiesComposite_0, Messages.PointPropertiesComposite_1, Messages.PointPropertiesComposite_2};
     private static final String[] WK_MARK_NAMES = wkMarkNames;
-    private static final String TTF_PREFIX = "ttf://";
+    private static final String TTF_PREFIX = "ttf://"; //$NON-NLS-1$
     
     private RuleWrapper ruleWrapper;
 
@@ -105,7 +106,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
     public void setRule( RuleWrapper ruleWrapper ) {
         this.ruleWrapper = ruleWrapper;
 
-        System.out.println("setting rule: " + ruleWrapper.getName());
+        System.out.println("setting rule: " + ruleWrapper.getName()); //$NON-NLS-1$
 
         if (mainComposite == null) {
             init();
@@ -140,7 +141,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
             try {
                 graphicsPathText.setText(pointSymbolizerWrapper.getExternalGraphicPath());
             } catch (MalformedURLException e) {
-                graphicsPathText.setText("");
+                graphicsPathText.setText(""); //$NON-NLS-1$
             }
             graphicsPathText.addModifyListener(this);
         } else if (markName != null && markName.toLowerCase().startsWith(TTF_PREFIX)) {
@@ -209,8 +210,8 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
                     pointPropertiesEditor.refreshPreviewCanvasOnStyle();
                 } else if (selectionIndex == 1) {
                     try {
-                        URL iconUrl = Platform.getBundle(StylePlugin.PLUGIN_ID).getResource("icons/delete.png");
-                        String iconPath = "";
+                        URL iconUrl = Platform.getBundle(StylePlugin.PLUGIN_ID).getResource("icons/delete.png"); //$NON-NLS-1$
+                        String iconPath = ""; //$NON-NLS-1$
                         try {
                             iconPath = FileLocator.toFileURL(iconUrl).getPath();
                         } catch (IOException ex) {
@@ -304,7 +305,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Group propertiesGroup = new Group(simplePointComposite, SWT.SHADOW_ETCHED_IN);
         propertiesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         propertiesGroup.setLayout(new GridLayout(1, false));
-        propertiesGroup.setText("Style Properties");
+        propertiesGroup.setText(Messages.PointPropertiesComposite_8);
 
         TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.BORDER);
         tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -315,7 +316,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Composite generalParametersInternalComposite = generalParametersCompositeSIMPLE.getComposite();
 
         TabItem tabItem1 = new TabItem(tabFolder, SWT.NULL);
-        tabItem1.setText("General");
+        tabItem1.setText(Messages.PointPropertiesComposite_9);
         tabItem1.setControl(generalParametersInternalComposite);
 
         // BORDER GROUP
@@ -325,7 +326,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Composite borderParametersInternalComposite = borderParametersComposite.getComposite();
 
         TabItem tabItem2 = new TabItem(tabFolder, SWT.NULL);
-        tabItem2.setText("Border  ");
+        tabItem2.setText(Messages.PointPropertiesComposite_10);
         tabItem2.setControl(borderParametersInternalComposite);
 
         // Fill GROUP
@@ -335,7 +336,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Composite fillParametersInternalComposite = fillParametersComposite.getComposite();
 
         TabItem tabItem3 = new TabItem(tabFolder, SWT.NULL);
-        tabItem3.setText("Fill   ");
+        tabItem3.setText(Messages.PointPropertiesComposite_11);
         tabItem3.setControl(fillParametersInternalComposite);
 
         // Label GROUP
@@ -345,7 +346,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Composite labelParametersInternalComposite = labelsParametersComposite.getComposite();
 
         TabItem tabItem4 = new TabItem(tabFolder, SWT.NULL);
-        tabItem4.setText("Labels  ");
+        tabItem4.setText(Messages.PointPropertiesComposite_12);
         tabItem4.setControl(labelParametersInternalComposite);
         
         // Filter GROUP
@@ -355,7 +356,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Composite filtersInternalComposite = filtersComposite.getComposite();
 
         TabItem tabItem5 = new TabItem(tabFolder, SWT.NULL);
-        tabItem5.setText("Filter  ");
+        tabItem5.setText(Messages.PointPropertiesComposite_13);
         tabItem5.setControl(filtersInternalComposite);
     }
 
@@ -376,24 +377,24 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Group pathGroup = new Group(graphicsPointComposite, SWT.NONE);
         pathGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         pathGroup.setLayout(new GridLayout(2, false));
-        pathGroup.setText("Graphics path");
+        pathGroup.setText(Messages.PointPropertiesComposite_14);
         graphicsPathText = new Text(pathGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         graphicsPathText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         try {
             graphicsPathText.setText(pointSymbolizerWrapper.getExternalGraphicPath());
         } catch (MalformedURLException e1) {
-            graphicsPathText.setText("");
+            graphicsPathText.setText(""); //$NON-NLS-1$
         }
         graphicsPathText.addModifyListener(this);
         Button pathButton = new Button(pathGroup, SWT.PUSH);
         pathButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        pathButton.setText("...");
+        pathButton.setText("..."); //$NON-NLS-1$
         pathButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
             public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
                 FileDialog fileDialog = new FileDialog(graphicsPathText.getShell(), SWT.OPEN);
                 String path = fileDialog.open();
                 if (path == null || path.length() < 1) {
-                    graphicsPathText.setText("");
+                    graphicsPathText.setText(""); //$NON-NLS-1$
                 } else {
                     graphicsPathText.setText(path);
                 }
@@ -404,7 +405,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Group genericsGroup = new Group(graphicsPointComposite, SWT.NONE);
         genericsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         genericsGroup.setLayout(new GridLayout(1, true));
-        genericsGroup.setText("General properties");
+        genericsGroup.setText(Messages.PointPropertiesComposite_18);
 
         generalParametersCompositeGRAPHICS = new PointGeneralParametersComposite(genericsGroup, numericAttributesArrays);
         generalParametersCompositeGRAPHICS.init(ruleWrapper);
@@ -425,7 +426,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Group propertiesGroup = new Group(fontPointComposite, SWT.SHADOW_ETCHED_IN);
         propertiesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         propertiesGroup.setLayout(new GridLayout(1, false));
-        propertiesGroup.setText("Style Properties");
+        propertiesGroup.setText(Messages.PointPropertiesComposite_19);
 
         TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.BORDER);
         tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
@@ -437,7 +438,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Composite fontParametersInternalComposite = fontParametersComposite.getComposite();
 
         TabItem tabItem1 = new TabItem(tabFolder, SWT.NULL);
-        tabItem1.setText("Symbol");
+        tabItem1.setText(Messages.PointPropertiesComposite_20);
         tabItem1.setControl(fontParametersInternalComposite);
         
         generalParametersCompositeFONT = new PointGeneralParametersComposite(tabFolder, numericAttributesArrays);
@@ -446,7 +447,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Composite generalParametersInternalComposite = generalParametersCompositeFONT.getComposite();
 
         TabItem tabItem2 = new TabItem(tabFolder, SWT.NULL);
-        tabItem2.setText("General");
+        tabItem2.setText(Messages.PointPropertiesComposite_21);
         tabItem2.setControl(generalParametersInternalComposite);
 
         // BORDER GROUP
@@ -456,7 +457,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Composite borderParametersInternalComposite = fontBorderParametersComposite.getComposite();
 
         TabItem tabItem3 = new TabItem(tabFolder, SWT.NULL);
-        tabItem3.setText("Border  ");
+        tabItem3.setText(Messages.PointPropertiesComposite_22);
         tabItem3.setControl(borderParametersInternalComposite);
 
         // Fill GROUP
@@ -466,7 +467,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Composite fillParametersInternalComposite = fontFillParametersComposite.getComposite();
 
         TabItem tabItem4 = new TabItem(tabFolder, SWT.NULL);
-        tabItem4.setText("Fill   ");
+        tabItem4.setText(Messages.PointPropertiesComposite_23);
         tabItem4.setControl(fillParametersInternalComposite);
 
         // Label GROUP
@@ -476,7 +477,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Composite labelParametersInternalComposite = fontLabelsParametersComposite.getComposite();
 
         TabItem tabItem5 = new TabItem(tabFolder, SWT.NULL);
-        tabItem5.setText("Labels  ");
+        tabItem5.setText(Messages.PointPropertiesComposite_24);
         tabItem5.setControl(labelParametersInternalComposite);
         
         // Filter GROUP
@@ -486,7 +487,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         Composite filtersInternalComposite = fontFiltersComposite.getComposite();
 
         TabItem tabItem6 = new TabItem(tabFolder, SWT.NULL);
-        tabItem6.setText("Filter  ");
+        tabItem6.setText(Messages.PointPropertiesComposite_25);
         tabItem6.setControl(filtersInternalComposite);
     }
     
@@ -528,7 +529,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
 
     private void setNewGraphicPath() throws MalformedURLException {
         String path = graphicsPathText.getText();
-        if (! path.equals(""))
+        if (! path.equals("")) //$NON-NLS-1$
         {
             PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
                     PointSymbolizerWrapper.class);

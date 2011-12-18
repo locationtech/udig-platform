@@ -237,9 +237,7 @@ public class FeatureEditorExtensionProcessor {
      */
     public void startPartListener() {
         if (partListener == null) {
-            if (partListener == null) {
-                partListener = new FeatureEditorViewpartListener();
-            }
+            partListener = new FeatureEditorViewpartListener();
         }
         try {
             PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService().addPartListener(

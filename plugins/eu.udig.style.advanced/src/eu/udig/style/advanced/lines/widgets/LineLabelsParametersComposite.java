@@ -43,6 +43,7 @@ import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.utils.FontEditor;
 import eu.udig.style.advanced.utils.StolenColorEditor;
 import eu.udig.style.advanced.utils.Utilities;
@@ -116,7 +117,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         GridData labelEnableButtonGD = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
         labelEnableButtonGD.horizontalSpan = 3;
         labelEnableButton.setLayoutData(labelEnableButtonGD);
-        labelEnableButton.setText("enable/disable labelling");
+        labelEnableButton.setText(Messages.LineLabelsParametersComposite_0);
         labelEnableButton.setSelection(widgetEnabled);
         labelEnableButton.addSelectionListener(this);
 
@@ -124,15 +125,15 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         new Label(mainComposite, SWT.NONE);
         Label valueLabel = new Label(mainComposite, SWT.NONE);
         valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        valueLabel.setText("Manual");
+        valueLabel.setText(Messages.LineLabelsParametersComposite_1);
         Label fieldsLabel = new Label(mainComposite, SWT.NONE);
         fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        fieldsLabel.setText("Field based");
+        fieldsLabel.setText(Messages.LineLabelsParametersComposite_2);
 
         // label name
         Label labelNameLabel = new Label(mainComposite, SWT.NONE);
         labelNameLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        labelNameLabel.setText("label");
+        labelNameLabel.setText(Messages.LineLabelsParametersComposite_3);
 
         labelNameText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         GridData labelNameTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -153,13 +154,13 @@ public class LineLabelsParametersComposite extends ParameterComposite {
                 labelNameText.setText(labelName);
             }
         } else {
-            labelNameText.setText("");
+            labelNameText.setText(""); //$NON-NLS-1$
         }
 
         // label alpha
         Label labelOpactityLabel = new Label(mainComposite, SWT.NONE);
         labelOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        labelOpactityLabel.setText("opacity");
+        labelOpactityLabel.setText(Messages.LineLabelsParametersComposite_5);
         labelOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
         labelOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         labelOpacitySpinner.setMaximum(100);
@@ -188,7 +189,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         // font
         Label fontLabel = new Label(mainComposite, SWT.NONE);
         fontLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        fontLabel.setText("font");
+        fontLabel.setText(Messages.LineLabelsParametersComposite_6);
 
         fontEditor = new FontEditor(mainComposite);
         GridData fontButtonGD = new GridData(SWT.FILL, SWT.FILL, true, false);
@@ -205,7 +206,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         // font color
         Label fontColorLabel = new Label(mainComposite, SWT.NONE);
         fontColorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        fontColorLabel.setText("font color");
+        fontColorLabel.setText(Messages.LineLabelsParametersComposite_7);
 
         fontColorEditor = new StolenColorEditor(mainComposite, this);
         fontColorButton = fontColorEditor.getButton();
@@ -223,7 +224,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         // label halo
         Label haloLabel = new Label(mainComposite, SWT.NONE);
         haloLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        haloLabel.setText("halo");
+        haloLabel.setText(Messages.LineLabelsParametersComposite_8);
 
         haloColorEditor = new StolenColorEditor(mainComposite, this);
         haloColorButton = haloColorEditor.getButton();
@@ -254,7 +255,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         // perpend offset
         Label perpendicularOffsetLabel = new Label(mainComposite, SWT.NONE);
         perpendicularOffsetLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        perpendicularOffsetLabel.setText("perpendicular offset");
+        perpendicularOffsetLabel.setText(Messages.LineLabelsParametersComposite_9);
 
         perpendicularOffsetText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         GridData perpendicularOffsetTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -265,13 +266,13 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (perpendicularOffset != null) {
             perpendicularOffsetText.setText(perpendicularOffset);
         } else {
-            perpendicularOffsetText.setText("");
+            perpendicularOffsetText.setText(""); //$NON-NLS-1$
         }
 
         // initial gap
         Label initialGapLabel = new Label(mainComposite, SWT.NONE);
         initialGapLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        initialGapLabel.setText("initial gap");
+        initialGapLabel.setText(Messages.LineLabelsParametersComposite_11);
 
         initialGapText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         GridData initialGapTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -282,7 +283,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (initialGap != null) {
             initialGapText.setText(initialGap);
         } else {
-            initialGapText.setText("");
+            initialGapText.setText(""); //$NON-NLS-1$
         }
 
         Group vendorOptionsGroup = new Group(mainComposite, SWT.SHADOW_ETCHED_IN);
@@ -290,7 +291,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         vendorOptionsGD.horizontalSpan = 3;
         vendorOptionsGroup.setLayoutData(vendorOptionsGD);
         vendorOptionsGroup.setLayout(new GridLayout(2, false));
-        vendorOptionsGroup.setText("Vendor Options");
+        vendorOptionsGroup.setText(Messages.LineLabelsParametersComposite_13);
 
         // max displacement
         Label maxDisplacementLabel = new Label(vendorOptionsGroup, SWT.NONE);
@@ -304,7 +305,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (maxDisplacementVO != null) {
             maxDisplacementText.setText(maxDisplacementVO);
         } else {
-            maxDisplacementText.setText("");
+            maxDisplacementText.setText(""); //$NON-NLS-1$
         }
 
         // repeat
@@ -319,7 +320,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (repeatVO != null) {
             repeatText.setText(repeatVO);
         } else {
-            repeatText.setText("");
+            repeatText.setText(""); //$NON-NLS-1$
         }
 
         // autoWrap
@@ -334,7 +335,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (autoWrapVO != null) {
             autoWrapText.setText(autoWrapVO);
         } else {
-            autoWrapText.setText("");
+            autoWrapText.setText(""); //$NON-NLS-1$
         }
 
         // spaceAround
@@ -349,7 +350,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (spaceAroundVO != null) {
             spaceAroundText.setText(spaceAroundVO);
         } else {
-            spaceAroundText.setText("");
+            spaceAroundText.setText(""); //$NON-NLS-1$
         }
 
         // flollowLine
@@ -364,7 +365,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (flollowLineVO != null) {
             followLineText.setText(flollowLineVO);
         } else {
-            followLineText.setText("");
+            followLineText.setText(""); //$NON-NLS-1$
         }
 
         // maxAngleDelta
@@ -379,7 +380,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (maxAngleDeltaVO != null) {
             maxAngleDeltaText.setText(maxAngleDeltaVO);
         } else {
-            maxAngleDeltaText.setText("");
+            maxAngleDeltaText.setText(""); //$NON-NLS-1$
         }
 
         checkEnablements();
@@ -408,7 +409,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
                 labelNameText.setText(labelName);
             }
         } else {
-            labelNameText.setText("");
+            labelNameText.setText(""); //$NON-NLS-1$
         }
 
         FontData[] fontData = textSymbolizerWrapper.getFontData();
@@ -456,7 +457,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (perpendicularOffset != null) {
             perpendicularOffsetText.setText(perpendicularOffset);
         } else {
-            perpendicularOffsetText.setText("");
+            perpendicularOffsetText.setText(""); //$NON-NLS-1$
         }
 
         // initial gap
@@ -464,7 +465,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (initialGap != null) {
             initialGapText.setText(initialGap);
         } else {
-            initialGapText.setText("");
+            initialGapText.setText(""); //$NON-NLS-1$
         }
 
         // max displacement
@@ -472,7 +473,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (maxDisplacementVO != null) {
             maxDisplacementText.setText(maxDisplacementVO);
         } else {
-            maxDisplacementText.setText("");
+            maxDisplacementText.setText(""); //$NON-NLS-1$
         }
 
         // repeat
@@ -480,7 +481,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (repeatVO != null) {
             repeatText.setText(repeatVO);
         } else {
-            repeatText.setText("");
+            repeatText.setText(""); //$NON-NLS-1$
         }
 
         // autoWrap
@@ -488,7 +489,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (autoWrapVO != null) {
             autoWrapText.setText(autoWrapVO);
         } else {
-            autoWrapText.setText("");
+            autoWrapText.setText(""); //$NON-NLS-1$
         }
 
         // spaceAround
@@ -496,7 +497,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (spaceAroundVO != null) {
             spaceAroundText.setText(spaceAroundVO);
         } else {
-            spaceAroundText.setText("");
+            spaceAroundText.setText(Messages.LineLabelsParametersComposite_26);
         }
 
         // followline
@@ -504,7 +505,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (flollowLineVO != null) {
             followLineText.setText(flollowLineVO);
         } else {
-            followLineText.setText("false");
+            followLineText.setText(Messages.LineLabelsParametersComposite_27);
         }
 
         // maxAngleDelta
@@ -512,7 +513,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (maxAngleDeltaVO != null) {
             maxAngleDeltaText.setText(maxAngleDeltaVO);
         } else {
-            maxAngleDeltaText.setText("");
+            maxAngleDeltaText.setText(Messages.LineLabelsParametersComposite_28);
         }
 
         checkEnablements();

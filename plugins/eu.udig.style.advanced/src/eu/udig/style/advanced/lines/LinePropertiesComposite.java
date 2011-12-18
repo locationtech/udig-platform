@@ -46,6 +46,7 @@ import eu.udig.style.advanced.common.IStyleChangesListener;
 import eu.udig.style.advanced.common.styleattributeclasses.LineSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.lines.widgets.LineGeneralParametersComposite;
 import eu.udig.style.advanced.lines.widgets.LineLabelsParametersComposite;
 import eu.udig.style.advanced.utils.Utilities;
@@ -89,7 +90,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
     public void setRule( RuleWrapper ruleWrapper ) {
         this.ruleWrapper = ruleWrapper;
 
-        System.out.println("setting rule: " + ruleWrapper.getName());
+        System.out.println("setting rule: " + ruleWrapper.getName()); //$NON-NLS-1$
 
         if (mainComposite == null) {
             init();
@@ -155,7 +156,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         Group propertiesGroup = new Group(simplePolygonComposite, SWT.SHADOW_ETCHED_IN);
         propertiesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         propertiesGroup.setLayout(new GridLayout(1, false));
-        propertiesGroup.setText("Style Properties");
+        propertiesGroup.setText(Messages.LinePropertiesComposite_1);
 
         TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.BORDER);
         tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -166,7 +167,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         Composite generalParametersInternalComposite = generalParametersComposite.getComposite();
 
         TabItem tabItem1 = new TabItem(tabFolder, SWT.NULL);
-        tabItem1.setText("General");
+        tabItem1.setText(Messages.LinePropertiesComposite_2);
         tabItem1.setControl(generalParametersInternalComposite);
 
         // BORDER GROUP
@@ -176,7 +177,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         Composite borderParametersInternalComposite = borderParametersComposite.getComposite();
 
         TabItem tabItem2 = new TabItem(tabFolder, SWT.NULL);
-        tabItem2.setText("Border  ");
+        tabItem2.setText(Messages.LinePropertiesComposite_3);
         tabItem2.setControl(borderParametersInternalComposite);
 
         // Label GROUP
@@ -186,7 +187,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         Composite labelParametersInternalComposite = labelsParametersComposite.getComposite();
 
         TabItem tabItem3 = new TabItem(tabFolder, SWT.NULL);
-        tabItem3.setText("Labels  ");
+        tabItem3.setText(Messages.LinePropertiesComposite_4);
         tabItem3.setControl(labelParametersInternalComposite);
 
         // Filter GROUP
@@ -196,7 +197,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         Composite filtersInternalComposite = filtersComposite.getComposite();
 
         TabItem tabItem4 = new TabItem(tabFolder, SWT.NULL);
-        tabItem4.setText("Filter  ");
+        tabItem4.setText(Messages.LinePropertiesComposite_5);
         tabItem4.setControl(filtersInternalComposite);
 
     }

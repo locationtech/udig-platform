@@ -1,4 +1,7 @@
 package eu.udig.style.advanced.utils;
+
+import eu.udig.style.advanced.internal.Messages;
+
 /**
  * Enumeration of possible vendor options.
  * 
@@ -6,13 +9,13 @@ package eu.udig.style.advanced.utils;
  */
 @SuppressWarnings("nls")
 public enum VendorOptions {
-    VENDOROPTION_MAXDISPLACEMENT("maxDisplacement", "max displacement pixels"), //
-    VENDOROPTION_AUTOWRAP("autoWrap", "auto wrap pixels"), //
-    VENDOROPTION_SPACEAROUND("spaceAround", "space around pixels"), //
-    VENDOROPTION_REPEAT("repeat", "repeat every pixels"), //
-    VENDOROPTION_MAXANGLEDELTA("maxAngleDelta", "max angle allowed"), //
-    VENDOROPTION_FOLLOWLINE("followLine", "follow line"), //
-    VENDOROPTION_OTHER("other", "other");
+    VENDOROPTION_MAXDISPLACEMENT("maxDisplacement", Messages.VendorOptions_1), // //$NON-NLS-1$
+    VENDOROPTION_AUTOWRAP("autoWrap", Messages.VendorOptions_3), // //$NON-NLS-1$
+    VENDOROPTION_SPACEAROUND("spaceAround", Messages.VendorOptions_5), // //$NON-NLS-1$
+    VENDOROPTION_REPEAT("repeat", Messages.VendorOptions_7), // //$NON-NLS-1$
+    VENDOROPTION_MAXANGLEDELTA("maxAngleDelta", Messages.VendorOptions_9), // //$NON-NLS-1$
+    VENDOROPTION_FOLLOWLINE("followLine", Messages.VendorOptions_11), // //$NON-NLS-1$
+    VENDOROPTION_OTHER("other", Messages.VendorOptions_13); //$NON-NLS-1$
 
     private String defString = null;
     private String guiString = null;

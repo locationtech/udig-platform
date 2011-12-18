@@ -35,18 +35,18 @@ import eu.udig.style.advanced.StylePlugin;
 @SuppressWarnings("nls")
 public class ImageCache {
 
-    public static final String ADD = "icons/add.gif";
-    public static final String ADDGROUP = "icons/addgroup.gif";
-    public static final String APPLY = "icons/apply.gif";
-    public static final String DELETE = "icons/delete.gif";
-    public static final String DELETEALL = "icons/deleteall.gif";
-    public static final String DOWN = "icons/down.gif";
-    public static final String IMPORT = "icons/import.gif";
-    public static final String OPEN = "icons/open.gif";
-    public static final String UP = "icons/up.gif";
-    public static final String SAVE = "icons/save.gif";
-    public static final String SAVEALL = "icons/saveall.gif";
-    public static final String ONECLICKEXPORT = "icons/export.gif";
+    public static final String ADD = "icons/add.gif"; //$NON-NLS-1$
+    public static final String ADDGROUP = "icons/addgroup.gif"; //$NON-NLS-1$
+    public static final String APPLY = "icons/apply.gif"; //$NON-NLS-1$
+    public static final String DELETE = "icons/delete.gif"; //$NON-NLS-1$
+    public static final String DELETEALL = "icons/deleteall.gif"; //$NON-NLS-1$
+    public static final String DOWN = "icons/down.gif"; //$NON-NLS-1$
+    public static final String IMPORT = "icons/import.gif"; //$NON-NLS-1$
+    public static final String OPEN = "icons/open.gif"; //$NON-NLS-1$
+    public static final String UP = "icons/up.gif"; //$NON-NLS-1$
+    public static final String SAVE = "icons/save.gif"; //$NON-NLS-1$
+    public static final String SAVEALL = "icons/saveall.gif"; //$NON-NLS-1$
+    public static final String ONECLICKEXPORT = "icons/export.gif"; //$NON-NLS-1$
 
     private static ImageCache imageCache;
 

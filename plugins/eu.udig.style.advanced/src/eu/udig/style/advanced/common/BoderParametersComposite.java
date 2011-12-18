@@ -41,6 +41,7 @@ import org.opengis.filter.expression.Expression;
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import eu.udig.style.advanced.common.styleattributeclasses.LineSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.utils.StolenColorEditor;
 import eu.udig.style.advanced.utils.Utilities;
 
@@ -102,7 +103,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         GridData borderEnableButtonGD = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
         borderEnableButtonGD.horizontalSpan = 3;
         borderEnableButton.setLayoutData(borderEnableButtonGD);
-        borderEnableButton.setText("enable/disable border");
+        borderEnableButton.setText(Messages.BoderParametersComposite_0);
         borderEnableButton.setSelection(widgetEnabled);
         borderEnableButton.addSelectionListener(this);
 
@@ -110,15 +111,15 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         new Label(mainComposite, SWT.NONE);
         Label valueLabel = new Label(mainComposite, SWT.NONE);
         valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        valueLabel.setText("Manual");
+        valueLabel.setText(Messages.BoderParametersComposite_1);
         Label fieldsLabel = new Label(mainComposite, SWT.NONE);
         fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        fieldsLabel.setText("Field based");
+        fieldsLabel.setText(Messages.BoderParametersComposite_2);
 
         // border width
         Label borderWidthLabel = new Label(mainComposite, SWT.NONE);
         borderWidthLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        borderWidthLabel.setText("width");
+        borderWidthLabel.setText(Messages.BoderParametersComposite_3);
         borderWidthSpinner = new Spinner(mainComposite, SWT.BORDER);
         borderWidthSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         borderWidthSpinner.setMaximum(500);
@@ -149,7 +150,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         // border alpha
         Label borderOpactityLabel = new Label(mainComposite, SWT.NONE);
         borderOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        borderOpactityLabel.setText("opacity");
+        borderOpactityLabel.setText(Messages.BoderParametersComposite_4);
         borderOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
         borderOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         borderOpacitySpinner.setMaximum(100);
@@ -179,7 +180,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         // border color
         Label borderColorLabel = new Label(mainComposite, SWT.NONE);
         borderColorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        borderColorLabel.setText("color");
+        borderColorLabel.setText(Messages.BoderParametersComposite_5);
         String color = lineSymbolizerWrapper.getStrokeColor();
         Color tmpColor;
         try {
@@ -208,7 +209,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         // graphics fill
         Label graphicsFillLabel = new Label(mainComposite, SWT.RADIO);
         graphicsFillLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        graphicsFillLabel.setText("graphics");
+        graphicsFillLabel.setText(Messages.BoderParametersComposite_6);
 
         Composite pathComposite = new Composite(mainComposite, SWT.NONE);
         GridData pathCompositeGD = new GridData(SWT.FILL, SWT.FILL, true, false);
@@ -223,7 +224,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         try {
             graphicsPathText.setText(lineSymbolizerWrapper.getStrokeExternalGraphicStrokePath());
         } catch (MalformedURLException e1) {
-            graphicsPathText.setText("");
+            graphicsPathText.setText(""); //$NON-NLS-1$
         }
         graphicsPathText.addModifyListener(this);
         Button pathButton = new Button(pathComposite, SWT.PUSH);
@@ -246,7 +247,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         Label dashLabel = new Label(mainComposite, SWT.NONE);
         GridData dashLabelGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         dashLabel.setLayoutData(dashLabelGD);
-        dashLabel.setText("dash");
+        dashLabel.setText(Messages.BoderParametersComposite_8);
         dashText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         GridData dashGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         dashGD.horizontalSpan = 2;
@@ -264,7 +265,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         Label dashOffsetLabel = new Label(mainComposite, SWT.NONE);
         GridData dashOffsetLabelGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         dashOffsetLabel.setLayoutData(dashOffsetLabelGD);
-        dashOffsetLabel.setText("dash offset");
+        dashOffsetLabel.setText(Messages.BoderParametersComposite_9);
         dashOffsetText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         GridData dashOffsetGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         dashOffsetGD.horizontalSpan = 2;
@@ -282,7 +283,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         // line cap
         Label linCapLabel = new Label(mainComposite, SWT.NONE);
         linCapLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        linCapLabel.setText("line cap");
+        linCapLabel.setText(Messages.BoderParametersComposite_10);
         lineCapCombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData lineCapGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         lineCapGD.horizontalSpan = 2;
@@ -301,7 +302,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         // line join
         Label linJoinLabel = new Label(mainComposite, SWT.NONE);
         linJoinLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        linJoinLabel.setText("line join");
+        linJoinLabel.setText(Messages.BoderParametersComposite_11);
         lineJoinCombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData lineJoinGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         lineJoinGD.horizontalSpan = 2;
@@ -368,7 +369,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         try {
             graphicsPathText.setText(lineSymbolizerWrapper.getStrokeExternalGraphicStrokePath());
         } catch (MalformedURLException e) {
-            graphicsPathText.setText("");
+            graphicsPathText.setText(""); //$NON-NLS-1$
         }
 
         // border alpha
@@ -392,7 +393,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         if (dashArray != null) {
             dashText.setText(dash);
         } else {
-            dashText.setText("");
+            dashText.setText(""); //$NON-NLS-1$
         }
         // dash offset
         String dashOffset = lineSymbolizerWrapper.getDashOffset();
@@ -400,7 +401,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
         if (dashOffsetDouble != null) {
             dashOffsetText.setText(dashOffset);
         } else {
-            dashOffsetText.setText("");
+            dashOffsetText.setText(""); //$NON-NLS-1$
         }
 
         // line cap
@@ -509,7 +510,7 @@ public class BoderParametersComposite extends ParameterComposite implements Modi
             try {
                 String text = graphicsPathText.getText();
                 File graphicsFile = new File(text);
-                if (graphicsFile.exists() || text.toLowerCase().startsWith("http")) {
+                if (graphicsFile.exists() || text.toLowerCase().startsWith("http")) { //$NON-NLS-1$
                     text = graphicsFile.toURI().toURL().toExternalForm();
 
                     // FIXME bring those to gui
