@@ -40,6 +40,7 @@ import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import eu.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import eu.udig.style.advanced.internal.Messages;
 
 /**
  * A composite that holds widgets for font and character selection.
@@ -142,7 +143,7 @@ public class PointCharacterChooserComposite extends ParameterComposite implement
                 item.setText(0,"..."); //$NON-NLS-1$ 
                 
                 
-                Job load = new Job("Loading font icon") {
+                Job load = new Job(Messages.PointCharacterChooserComposite_0) {
                     
                     @Override
                     protected IStatus run(IProgressMonitor monitor) {

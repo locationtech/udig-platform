@@ -97,11 +97,11 @@ public class CoverageRule {
      */
     public String ruleToString() {
         StringBuffer rule = new StringBuffer();
-        rule.append(fromToValues[0] + ":");
-        rule.append(fromColor.getRed() + ":" + fromColor.getGreen() + ":" + fromColor.getBlue()
-                + " ");
-        rule.append(fromToValues[1] + ":");
-        rule.append(toColor.getRed() + ":" + toColor.getGreen() + ":" + toColor.getBlue() + " ");
+        rule.append(fromToValues[0] + ":"); //$NON-NLS-1$
+        rule.append(fromColor.getRed() + ":" + fromColor.getGreen() + ":" + fromColor.getBlue() //$NON-NLS-1$ //$NON-NLS-2$
+                + " "); //$NON-NLS-1$
+        rule.append(fromToValues[1] + ":"); //$NON-NLS-1$
+        rule.append(toColor.getRed() + ":" + toColor.getGreen() + ":" + toColor.getBlue() + " "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         return rule.toString();
     }
 

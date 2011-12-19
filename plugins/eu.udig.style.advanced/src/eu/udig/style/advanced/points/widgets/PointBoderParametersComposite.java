@@ -36,6 +36,7 @@ import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import eu.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.utils.StolenColorEditor;
 
 /**
@@ -87,7 +88,7 @@ public class PointBoderParametersComposite extends ParameterComposite {
         GridData borderEnableButtonGD = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
         borderEnableButtonGD.horizontalSpan = 3;
         borderEnableButton.setLayoutData(borderEnableButtonGD);
-        borderEnableButton.setText("enable/disable border");
+        borderEnableButton.setText(Messages.PointBoderParametersComposite_0);
         borderEnableButton.setSelection(widgetEnabled);
         borderEnableButton.addSelectionListener(this);
 
@@ -95,15 +96,15 @@ public class PointBoderParametersComposite extends ParameterComposite {
         new Label(mainComposite, SWT.NONE);
         Label valueLabel = new Label(mainComposite, SWT.NONE);
         valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        valueLabel.setText("Manual");
+        valueLabel.setText(Messages.PointBoderParametersComposite_1);
         Label fieldsLabel = new Label(mainComposite, SWT.NONE);
         fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        fieldsLabel.setText("Field based");
+        fieldsLabel.setText(Messages.PointBoderParametersComposite_2);
 
         // border width
         Label borderWidthLabel = new Label(mainComposite, SWT.NONE);
         borderWidthLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        borderWidthLabel.setText("width");
+        borderWidthLabel.setText(Messages.PointBoderParametersComposite_3);
         borderWidthSpinner = new Spinner(mainComposite, SWT.BORDER);
         borderWidthSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         borderWidthSpinner.setMaximum(500);
@@ -134,7 +135,7 @@ public class PointBoderParametersComposite extends ParameterComposite {
         // border alpha
         Label borderOpactityLabel = new Label(mainComposite, SWT.NONE);
         borderOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        borderOpactityLabel.setText("opacity");
+        borderOpactityLabel.setText(Messages.PointBoderParametersComposite_4);
         borderOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
         borderOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         borderOpacitySpinner.setMaximum(100);
@@ -163,7 +164,7 @@ public class PointBoderParametersComposite extends ParameterComposite {
         // border color
         Label borderColorLabel = new Label(mainComposite, SWT.NONE);
         borderColorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        borderColorLabel.setText("color");
+        borderColorLabel.setText(Messages.PointBoderParametersComposite_5);
         Color tmpColor;
         try {
             tmpColor = Color.decode(symbolizersWrapper.getStrokeColor());

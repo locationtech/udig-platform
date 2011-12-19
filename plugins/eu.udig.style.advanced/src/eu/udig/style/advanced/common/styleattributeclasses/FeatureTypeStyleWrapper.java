@@ -28,6 +28,8 @@ import java.util.List;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Rule;
 
+import eu.udig.style.advanced.internal.Messages;
+
 /**
  * A wrapper for the {@link FeatureTypeStyle} object to ease gui use.
  * 
@@ -61,7 +63,7 @@ public class FeatureTypeStyleWrapper {
 
     public String getName() {
         int indexOf = parent.getStyle().featureTypeStyles().indexOf(featureTypeStyle);
-        name = "group " + indexOf;
+        name = Messages.FeatureTypeStyleWrapper_0 + indexOf;
         featureTypeStyle.setName(name);
         return name;
     }
@@ -99,7 +101,7 @@ public class FeatureTypeStyleWrapper {
             } else if (symbolizerWrapperClass.isAssignableFrom(PolygonSymbolizerWrapper.class)) {
                 tmpRule = createDefaultPolygonRule();
             } else {
-                throw new IllegalArgumentException("Unsupported symbolizer.");
+                throw new IllegalArgumentException("Unsupported symbolizer."); //$NON-NLS-1$
             }
         }
 

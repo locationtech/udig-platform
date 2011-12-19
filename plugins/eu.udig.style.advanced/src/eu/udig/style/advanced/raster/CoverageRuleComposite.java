@@ -74,7 +74,7 @@ public class CoverageRuleComposite implements MouseListener, SelectionListener, 
         fromLabelGD.verticalAlignment = GridData.FILL;
         fromLabelGD.widthHint = colorLabelWidth;
         fromLabel = new Label(parent, SWT.BORDER);
-        fromLabel.setText("");
+        fromLabel.setText(""); //$NON-NLS-1$
         fromLabel.setLayoutData(fromLabelGD);
         fromLabel.addMouseListener(this);
 
@@ -90,7 +90,7 @@ public class CoverageRuleComposite implements MouseListener, SelectionListener, 
         dummyLabelGD.verticalAlignment = GridData.CENTER;
         dummyLabelGD.widthHint = 5;
         Label dummylabel = new Label(parent, SWT.NONE);
-        dummylabel.setText("-");
+        dummylabel.setText("-"); //$NON-NLS-1$
         dummylabel.setLayoutData(dummyLabelGD);
 
         GridData toLabelGD = new GridData();
@@ -98,7 +98,7 @@ public class CoverageRuleComposite implements MouseListener, SelectionListener, 
         toLabelGD.verticalAlignment = GridData.FILL;
         toLabelGD.widthHint = colorLabelWidth;
         toLabel = new Label(parent, SWT.BORDER);
-        toLabel.setText("");
+        toLabel.setText(""); //$NON-NLS-1$
         toLabel.setLayoutData(toLabelGD);
         toLabel.addMouseListener(this);
 
@@ -122,7 +122,7 @@ public class CoverageRuleComposite implements MouseListener, SelectionListener, 
         alphaGD.widthHint = alphaTextWidth;
         alphaText = new Text(parent, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         alphaText.setLayoutData(alphaGD);
-        alphaText.setText("1.0");
+        alphaText.setText("1.0"); //$NON-NLS-1$
 
         alphaText.addKeyListener(this);
         fromValueText.addKeyListener(this);
@@ -139,13 +139,13 @@ public class CoverageRuleComposite implements MouseListener, SelectionListener, 
         enableRuleCheckButton.setSelection(this.rule.isActive());
         String value = null;
         if (this.rule.getFromToValues()[0] != this.rule.getFromToValues()[0]) {
-            value = "";
+            value = ""; //$NON-NLS-1$
         } else {
             value = String.valueOf(this.rule.getFromToValues()[0]);
         }
         fromValueText.setText(value);
         if (this.rule.getFromToValues()[1] != this.rule.getFromToValues()[1]) {
-            value = "";
+            value = ""; //$NON-NLS-1$
         } else {
             value = String.valueOf(this.rule.getFromToValues()[1]);
         }
@@ -213,13 +213,13 @@ public class CoverageRuleComposite implements MouseListener, SelectionListener, 
             try {
                 tmp[0] = Double.parseDouble(fromValueText.getText());
             } catch (NumberFormatException ne) {
-                fromValueText.setText("0");
+                fromValueText.setText("0"); //$NON-NLS-1$
                 return;
             }
             try {
                 tmp[1] = Double.parseDouble(toValueText.getText());
             } catch (NumberFormatException ne) {
-                toValueText.setText("0");
+                toValueText.setText("0"); //$NON-NLS-1$
                 return;
             }
             rule.setFromToValues(tmp);
@@ -227,7 +227,7 @@ public class CoverageRuleComposite implements MouseListener, SelectionListener, 
                 double alpha = Double.parseDouble(alphaText.getText());
                 rule.setOpacity(alpha);
             } catch (NumberFormatException ne) {
-                alphaText.setText("1.0");
+                alphaText.setText("1.0"); //$NON-NLS-1$
                 return;
             }
         }

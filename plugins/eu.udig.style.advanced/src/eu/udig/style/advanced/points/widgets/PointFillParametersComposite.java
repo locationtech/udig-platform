@@ -36,6 +36,7 @@ import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import eu.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.utils.StolenColorEditor;
 
 /**
@@ -84,7 +85,7 @@ public class PointFillParametersComposite extends ParameterComposite {
         GridData fillEnableButtonGD = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
         fillEnableButtonGD.horizontalSpan = 3;
         fillEnableButton.setLayoutData(fillEnableButtonGD);
-        fillEnableButton.setText("enable/disable fill");
+        fillEnableButton.setText(Messages.PointFillParametersComposite_0);
         fillEnableButton.setSelection(widgetEnabled);
         fillEnableButton.addSelectionListener(this);
 
@@ -92,15 +93,15 @@ public class PointFillParametersComposite extends ParameterComposite {
         new Label(mainComposite, SWT.NONE);
         Label valueLabel = new Label(mainComposite, SWT.NONE);
         valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        valueLabel.setText("Manual");
+        valueLabel.setText(Messages.PointFillParametersComposite_1);
         Label fieldsLabel = new Label(mainComposite, SWT.NONE);
         fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        fieldsLabel.setText("Field based");
+        fieldsLabel.setText(Messages.PointFillParametersComposite_2);
 
         // border alpha
         Label fillOpactityLabel = new Label(mainComposite, SWT.NONE);
         fillOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        fillOpactityLabel.setText("opacity");
+        fillOpactityLabel.setText(Messages.PointFillParametersComposite_3);
         fillOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
         fillOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         fillOpacitySpinner.setMaximum(100);
@@ -129,7 +130,7 @@ public class PointFillParametersComposite extends ParameterComposite {
         // fill color
         Label fillColorLabel = new Label(mainComposite, SWT.NONE);
         fillColorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        fillColorLabel.setText("color");
+        fillColorLabel.setText(Messages.PointFillParametersComposite_4);
         Color tmpColor = null;;
         try {
             tmpColor = Color.decode(pointSymbolizerWrapper.getFillColor());

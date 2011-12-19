@@ -43,6 +43,7 @@ import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.utils.Alignments;
 import eu.udig.style.advanced.utils.FontEditor;
 import eu.udig.style.advanced.utils.StolenColorEditor;
@@ -118,7 +119,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         GridData labelEnableButtonGD = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
         labelEnableButtonGD.horizontalSpan = 3;
         labelEnableButton.setLayoutData(labelEnableButtonGD);
-        labelEnableButton.setText("enable/disable labelling");
+        labelEnableButton.setText(Messages.PointLabelsParametersComposite_0);
         labelEnableButton.setSelection(widgetEnabled);
         labelEnableButton.addSelectionListener(this);
 
@@ -126,15 +127,15 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         new Label(mainComposite, SWT.NONE);
         Label valueLabel = new Label(mainComposite, SWT.NONE);
         valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        valueLabel.setText("Manual");
+        valueLabel.setText(Messages.PointLabelsParametersComposite_1);
         Label fieldsLabel = new Label(mainComposite, SWT.NONE);
         fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        fieldsLabel.setText("Field based");
+        fieldsLabel.setText(Messages.PointLabelsParametersComposite_2);
 
         // label name
         Label labelNameLabel = new Label(mainComposite, SWT.NONE);
         labelNameLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        labelNameLabel.setText("label");
+        labelNameLabel.setText(Messages.PointLabelsParametersComposite_3);
 
         labelNameText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         GridData labelNameTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -155,13 +156,13 @@ public class PointLabelsParametersComposite extends ParameterComposite {
                 labelNameText.setText(labelName);
             }
         } else {
-            labelNameText.setText("");
+            labelNameText.setText(""); //$NON-NLS-1$
         }
 
         // label alpha
         Label labelOpactityLabel = new Label(mainComposite, SWT.NONE);
         labelOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        labelOpactityLabel.setText("opacity");
+        labelOpactityLabel.setText(Messages.PointLabelsParametersComposite_5);
         labelOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
         labelOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         labelOpacitySpinner.setMaximum(100);
@@ -190,7 +191,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         // rotation
         Label rotationLabel = new Label(mainComposite, SWT.NONE);
         rotationLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        rotationLabel.setText("rotation");
+        rotationLabel.setText(Messages.PointLabelsParametersComposite_6);
         rotationSpinner = new Spinner(mainComposite, SWT.BORDER);
         rotationSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         rotationSpinner.setMaximum(360);
@@ -219,7 +220,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         // font
         Label fontLabel = new Label(mainComposite, SWT.NONE);
         fontLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        fontLabel.setText("font");
+        fontLabel.setText(Messages.PointLabelsParametersComposite_7);
 
         fontEditor = new FontEditor(mainComposite);
         GridData fontButtonGD = new GridData(SWT.FILL, SWT.FILL, true, false);
@@ -236,7 +237,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         // font color
         Label fontColorLabel = new Label(mainComposite, SWT.NONE);
         fontColorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        fontColorLabel.setText("font color");
+        fontColorLabel.setText(Messages.PointLabelsParametersComposite_8);
 
         fontColorEditor = new StolenColorEditor(mainComposite, this);
         fontColorButton = fontColorEditor.getButton();
@@ -254,7 +255,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         // label halo
         Label haloLabel = new Label(mainComposite, SWT.NONE);
         haloLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        haloLabel.setText("halo");
+        haloLabel.setText(Messages.PointLabelsParametersComposite_9);
 
         haloColorEditor = new StolenColorEditor(mainComposite, this);
         haloColorButton = haloColorEditor.getButton();
@@ -285,7 +286,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         // anchor
         Label anchorLabel = new Label(mainComposite, SWT.NONE);
         anchorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        anchorLabel.setText("anchor");
+        anchorLabel.setText(Messages.PointLabelsParametersComposite_10);
 
         anchorVerticalCombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         anchorVerticalCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -306,7 +307,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         // displacement
         Label displacementLabel = new Label(mainComposite, SWT.NONE);
         displacementLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        displacementLabel.setText("displacement");
+        displacementLabel.setText(Messages.PointLabelsParametersComposite_11);
 
         String displacementX = textSymbolizerWrapper.getDisplacementX();
         String displacementY = textSymbolizerWrapper.getDisplacementY();
@@ -340,7 +341,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         vendorOptionsGD.horizontalSpan = 3;
         vendorOptionsGroup.setLayoutData(vendorOptionsGD);
         vendorOptionsGroup.setLayout(new GridLayout(2, false));
-        vendorOptionsGroup.setText("Vendor Options");
+        vendorOptionsGroup.setText(Messages.PointLabelsParametersComposite_12);
 
         // max displacement
         Label maxDisplacementLabel = new Label(vendorOptionsGroup, SWT.NONE);
@@ -354,7 +355,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         if (maxDisplacementVO != null) {
             maxDisplacementText.setText(maxDisplacementVO);
         } else {
-            maxDisplacementText.setText("");
+            maxDisplacementText.setText(""); //$NON-NLS-1$
         }
 
         // autoWrap
@@ -369,7 +370,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         if (autoWrapVO != null) {
             autoWrapText.setText(autoWrapVO);
         } else {
-            autoWrapText.setText("");
+            autoWrapText.setText(""); //$NON-NLS-1$
         }
 
         // spaceAround
@@ -384,7 +385,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         if (spaceAroundVO != null) {
             spaceAroundText.setText(spaceAroundVO);
         } else {
-            spaceAroundText.setText("");
+            spaceAroundText.setText(""); //$NON-NLS-1$
         }
 
         checkEnablements();
@@ -413,7 +414,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
                 labelNameText.setText(labelName);
             }
         } else {
-            labelNameText.setText("");
+            labelNameText.setText(""); //$NON-NLS-1$
         }
 
         FontData[] fontData = textSymbolizerWrapper.getFontData();
@@ -497,7 +498,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         if (maxDisplacementVO != null) {
             maxDisplacementText.setText(maxDisplacementVO);
         } else {
-            maxDisplacementText.setText("");
+            maxDisplacementText.setText(""); //$NON-NLS-1$
         }
 
         // autoWrap
@@ -505,7 +506,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         if (autoWrapVO != null) {
             autoWrapText.setText(autoWrapVO);
         } else {
-            autoWrapText.setText("");
+            autoWrapText.setText(""); //$NON-NLS-1$
         }
 
         // spaceAround
@@ -513,7 +514,7 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         if (spaceAroundVO != null) {
             spaceAroundText.setText(spaceAroundVO);
         } else {
-            spaceAroundText.setText("");
+            spaceAroundText.setText(""); //$NON-NLS-1$
         }
 
         checkEnablements();
