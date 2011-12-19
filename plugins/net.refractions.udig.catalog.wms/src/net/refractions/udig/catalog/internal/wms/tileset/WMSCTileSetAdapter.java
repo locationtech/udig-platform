@@ -31,7 +31,7 @@ import net.refractions.udig.catalog.internal.wmsc.WMSCServiceImpl;
 import net.refractions.udig.catalog.wmsc.server.TileSet;
 import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
 import net.refractions.udig.catalog.wmsc.server.WMSTileSet;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import net.refractions.udig.project.internal.render.impl.ScaleUtils;
 import net.refractions.udig.project.ui.preferences.PreferenceConstants;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -40,6 +40,7 @@ import org.geotools.data.ows.CRSEnvelope;
 import org.geotools.data.ows.Layer;
 import org.geotools.data.ows.StyleImpl;
 import org.geotools.data.wms.WebMapServer;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 
 /**
@@ -56,19 +57,13 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
 
         if (adapter.isAssignableFrom(TileSet.class)) {
 
-            IGeoResource fs = (IGeoResource) resolve;
+            IGeoResource resource = (IGeoResource) resolve;
 
-            try {
-                IGeoResourceInfo info = fs.getInfo(null);
+            Boolean enabled = (Boolean) resource
+                    .getPersistentProperty(PreferenceConstants.P_TILESET_ON_OFF);
 
-                boolean enabled = ProjectUIPlugin.getDefault().getPreferenceStore()
-                        .getBoolean(PreferenceConstants.P_TILESET_ON_OFF + info.getName());
-
-                if (!enabled) {
-                    return false;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (enabled==null || !enabled) {
+                return false;
             }
 
             return true;
@@ -94,28 +89,31 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
          * if there is no server for the tiles to come from, we can't/wont continue
          */
         if (server == null) {
-            WmsPlugin.log("Tileset must have a service defined, serive is null", new ServiceNotFoundException());
+            WmsPlugin
+                    .log("Tileset must have a service defined, serive is null", new ServiceNotFoundException()); //$NON-NLS-1$
             return null;
         }
 
         if (adapter.isAssignableFrom(TileSet.class)) {
 
-            IGeoResource fs = (IGeoResource) resolve;
-            IGeoResourceInfo info = fs.getInfo(monitor);
+            IGeoResource resource = (IGeoResource) resolve;
+            IGeoResourceInfo info = resource.getInfo(monitor);
 
             String source = server.getInfo().getSource().toString();
             String version = server.getCapabilities().getVersion();
-            
-            if (source == null || "".equals(source)){
-                WmsPlugin.log("Tileset must have a service URL defined, source is null", new ServiceNotFoundException());
+
+            if (source == null || "".equals(source)) { //$NON-NLS-1$
+                WmsPlugin
+                        .log("Tileset must have a service URL defined, source is null", new ServiceNotFoundException()); //$NON-NLS-1$
                 return null;
             }
-            
-            if (version == null || "".equals(version)){
-                WmsPlugin.log("Tileset must have a service version defined, version is null", new ServiceNotFoundException());
+
+            if (version == null || "".equals(version)) { //$NON-NLS-1$
+                WmsPlugin
+                        .log("Tileset must have a service version defined, version is null", new ServiceNotFoundException()); //$NON-NLS-1$
                 return null;
             }
-  
+
             URL caps = new URL(source + "version=" + version + "&request=GetCapabilities"); //$NON-NLS-1$ //$NON-NLS-2$
             String srs = CRS.toSRS(info.getCRS());
 
@@ -133,28 +131,27 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             tileset.setBoundingBox(bbox);
             tileset.setCoorindateReferenceSystem(srs);
 
-            int width = ProjectUIPlugin.getDefault().getPreferenceStore()
-                    .getInt(PreferenceConstants.P_TILESET_WIDTH + info.getName());
-
-            int height = ProjectUIPlugin.getDefault().getPreferenceStore()
-                    .getInt(PreferenceConstants.P_TILESET_HEIGHT + info.getName());
+            Integer width = (Integer) resource
+                    .getPersistentProperty(PreferenceConstants.P_TILESET_WIDTH);
+            Integer height = (Integer) resource
+                    .getPersistentProperty(PreferenceConstants.P_TILESET_HEIGHT);
 
             if (width == 0) {
-                width = 256;
+                width = PreferenceConstants.DEFAULT_TILE_SIZE;
             }
 
             if (height == 0) {
-                height = 256;
+                height = PreferenceConstants.DEFAULT_TILE_SIZE;
             }
 
             tileset.setWidth(width);
             tileset.setHeight(height);
 
-            String imageType = ProjectUIPlugin.getDefault().getPreferenceStore()
-                    .getString(PreferenceConstants.P_TILESET_IMAGE_TYPE + info.getName());
+            String imageType = (String) resource
+                    .getPersistentProperty(PreferenceConstants.P_TILESET_IMAGE_TYPE);
 
             if (imageType == null || "".equals(imageType)) { //$NON-NLS-1$
-                imageType = "image/png"; //$NON-NLS-1$
+                imageType = PreferenceConstants.DEFAULT_IMAGE_TYPE;
             }
 
             tileset.setFormat(imageType);
@@ -164,14 +161,17 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
              */
             tileset.setLayers(info.getName());
 
-            String resolutions = ProjectUIPlugin.getDefault().getPreferenceStore()
-                    .getString(PreferenceConstants.P_TILESET_RESOLUTIONS + info.getName());
+            String scales = (String) resource
+                    .getPersistentProperty(PreferenceConstants.P_TILESET_SCAlES);
+
+            String resolutions = workoutResolutions(scales, new ReferencedEnvelope(bbox), width);
 
             /*
              * If we have no resolutions to try - we wont.
              */
             if ("".equals(resolutions)) { //$NON-NLS-1$
-                WmsPlugin.log("Tileset must have resolutions based on the maps scale, resolutions are null", new ServiceNotFoundException());
+                WmsPlugin
+                        .log("Tileset must have resolutions based on the maps scale, resolutions are null", new ServiceNotFoundException()); //$NON-NLS-1$
                 return null;
             }
 
@@ -199,5 +199,25 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             return tileset;
         }
         return null;
+    }
+
+    /**
+     * From a list of scales turn them into a list of resolutions
+     * 
+     * @param rawScales
+     * @param bounds
+     * @param tileWidth
+     * @return space separated String of resolutions based on the scale values of the WMSTileSet
+     */
+    private String workoutResolutions( String rawScales, ReferencedEnvelope bounds, int tileWidth ) {
+        String[] scales = rawScales.split(" "); //$NON-NLS-1$
+        StringBuffer sb = new StringBuffer();
+        for( String scale : scales ) {
+            Double scaleDouble = Double.parseDouble(scale);
+            Double calculatedScale = ScaleUtils.calculateResolutionFromScale(bounds, scaleDouble,
+                    tileWidth);
+            sb.append(calculatedScale + " "); //$NON-NLS-1$
+        }
+        return sb.toString();
     }
 }
