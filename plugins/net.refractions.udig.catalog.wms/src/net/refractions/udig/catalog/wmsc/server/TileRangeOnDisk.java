@@ -54,7 +54,7 @@ public class TileRangeOnDisk extends AbstractTileRange {
      * @param requestTileWorkQueue Queue of worker threads that can be used to fetch tiles
      * @param writeTileWorkQueue Queue used to write tiles out to disk
 	 */
-	public TileRangeOnDisk(AbstractOpenWebService server, TileSet tileset,
+	public TileRangeOnDisk(AbstractOpenWebService<?,?> server, TileSet tileset,
 			Envelope bounds, Map<String, Tile> tiles, TileWorkerQueue requestTileWorkQueue,
 			TileWorkerQueue writeTileWorkQueue) {
 		this(server, tileset, bounds, tiles, requestTileWorkQueue, writeTileWorkQueue,
@@ -74,7 +74,7 @@ public class TileRangeOnDisk extends AbstractTileRange {
      * @param writeTileWorkQueue
      * @param tileImageReadWriter
      */
-    public TileRangeOnDisk(AbstractOpenWebService server, TileSet tileset,
+    public TileRangeOnDisk(AbstractOpenWebService<?,?> server, TileSet tileset,
             Envelope bounds, Map<String, Tile> tiles, TileWorkerQueue requestTileWorkQueue,
             TileWorkerQueue writeTileWorkQueue, TileImageReadWriter tileImageReadWriter) {
         super(server, tileset, bounds, tiles, requestTileWorkQueue);

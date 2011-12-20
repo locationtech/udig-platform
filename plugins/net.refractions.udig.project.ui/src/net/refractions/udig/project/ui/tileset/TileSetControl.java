@@ -114,22 +114,21 @@ public class TileSetControl extends FieldEditorPreferencePage {
     
     @Override
     public boolean performOk() {
-        
         //checkbox
         resource.storePersistentProperty(PreferenceConstants.P_TILESET_ON_OFF, checkbox.getBooleanValue());
-        
+
         //width
         resource.storePersistentProperty(PreferenceConstants.P_TILESET_WIDTH, width.getSize());
-        
+
         //height
         resource.storePersistentProperty(PreferenceConstants.P_TILESET_HEIGHT, height.getSize());
-         
+
         //image type
         resource.storePersistentProperty(PreferenceConstants.P_TILESET_IMAGE_TYPE, height.getSize());
-        
+
         //scales
         resource.storePersistentProperty(PreferenceConstants.P_TILESET_SCAlES, height.getSize());
-                
+
 //        width.store();
 //        height.store();
 //        imageType.store();
@@ -197,6 +196,7 @@ public class TileSetControl extends FieldEditorPreferencePage {
 
             setEnabled(false, getFieldEditorParent());
         }
+
         /**
          * Check if this zoom level has already been added
          * 

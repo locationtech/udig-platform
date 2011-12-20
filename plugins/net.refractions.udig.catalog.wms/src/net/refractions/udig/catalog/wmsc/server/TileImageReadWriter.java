@@ -21,9 +21,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Date;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.FileUtils;
 import org.geotools.data.ows.AbstractOpenWebService;
 
 /**
@@ -39,7 +41,7 @@ public class TileImageReadWriter {
 	private static final String baseSubTileFolder = "tilecache"; //$NON-NLS-1$
 	private URL server;
 	
-	public TileImageReadWriter(AbstractOpenWebService service, String baseDir) {
+	public TileImageReadWriter(AbstractOpenWebService<?,?> service, String baseDir) {
         try {
             server = service.getInfo().getSource().toURL();
         } catch (MalformedURLException e) {
@@ -154,7 +156,15 @@ public class TileImageReadWriter {
 	 */
 	public boolean readTile(Tile tile, String filetype) {
 		BufferedInputStream bis = null;
-		BufferedImage image = null; 
+		BufferedImage image = null;
+		
+		/*
+		 * check if the tile should be updated from the server
+		 */
+		//if (11FileUtils.isFileOlder(getTileFile(tile, filetype), new Date(System.currentTimeMillis()))){
+        //    return false;
+        //}
+
 		try {
 			// lock on the tile so we aren't trying to write to it as it is being read
 			Object lock = tile.getTileLock();

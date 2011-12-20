@@ -45,7 +45,7 @@ public interface PreferenceConstants {
     /**
      * Default tileset size
      */
-    public static final Integer DEFAULT_TILE_SIZE = 256;
+    public static final Integer DEFAULT_TILE_SIZE = 512;
     
     /**
      * The default Tileset image type
