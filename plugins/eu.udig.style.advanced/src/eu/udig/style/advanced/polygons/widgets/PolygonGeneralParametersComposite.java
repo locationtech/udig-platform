@@ -32,6 +32,7 @@ import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import eu.udig.style.advanced.common.styleattributeclasses.PolygonSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.utils.Utilities;
 
 /**
@@ -75,7 +76,7 @@ public class PolygonGeneralParametersComposite extends ParameterComposite {
         // rule name
         Label nameLabel = new Label(mainComposite, SWT.NONE);
         nameLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        nameLabel.setText("Rule name");
+        nameLabel.setText(Messages.PolygonGeneralParametersComposite_0);
         nameText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         GridData nameTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         nameTextGD.horizontalSpan = 2;
@@ -86,7 +87,7 @@ public class PolygonGeneralParametersComposite extends ParameterComposite {
         Label offsetLabel = new Label(mainComposite, SWT.NONE);
         GridData offsetLabelGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         offsetLabel.setLayoutData(offsetLabelGD);
-        offsetLabel.setText("offset (x, y)");
+        offsetLabel.setText(Messages.PolygonGeneralParametersComposite_1);
 
         String xOffset = polygonSymbolizerWrapper.getxOffset();
         String yOffset = polygonSymbolizerWrapper.getyOffset();
@@ -118,7 +119,7 @@ public class PolygonGeneralParametersComposite extends ParameterComposite {
         Label maxScaleLabel = new Label(mainComposite, SWT.NONE);
         GridData maxScaleLabelGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         maxScaleLabel.setLayoutData(maxScaleLabelGD);
-        maxScaleLabel.setText("maximum scale");
+        maxScaleLabel.setText(Messages.PolygonGeneralParametersComposite_2);
         maxScaleText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         GridData maxScaleTextSIMPLEGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         maxScaleTextSIMPLEGD.horizontalSpan = 2;
@@ -129,7 +130,7 @@ public class PolygonGeneralParametersComposite extends ParameterComposite {
         Label minScaleLabel = new Label(mainComposite, SWT.NONE);
         GridData minScaleLabelGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         minScaleLabel.setLayoutData(minScaleLabelGD);
-        minScaleLabel.setText("minimum scale");
+        minScaleLabel.setText(Messages.PolygonGeneralParametersComposite_3);
         minScaleText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         GridData mainScaleTextSIMPLEGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         mainScaleTextSIMPLEGD.horizontalSpan = 2;
@@ -163,13 +164,13 @@ public class PolygonGeneralParametersComposite extends ParameterComposite {
         // scale
         Double maxScaleDouble = isDouble(ruleWrapper.getMaxScale());
         if (maxScaleDouble == null || Double.isInfinite(maxScaleDouble)) {
-            maxScaleText.setText("");
+            maxScaleText.setText(""); //$NON-NLS-1$
         } else {
             maxScaleText.setText(String.valueOf(maxScaleDouble));
         }
         Double minScaleDouble = isDouble(ruleWrapper.getMinScale());
         if (minScaleDouble == null || minScaleDouble == 0) {
-            minScaleText.setText("");
+            minScaleText.setText(""); //$NON-NLS-1$
         } else {
             minScaleText.setText(String.valueOf(minScaleDouble));
         }
@@ -181,7 +182,7 @@ public class PolygonGeneralParametersComposite extends ParameterComposite {
             double x = Utilities.getDoubleSpinnerSelection(xOffsetSpinner);
             double y = Utilities.getDoubleSpinnerSelection(yOffsetSpinner);
             
-            String offsetStr = x + "," + y;
+            String offsetStr = x + "," + y; //$NON-NLS-1$
             notifyListeners(offsetStr, false, STYLEEVENTTYPE.OFFSET);
         }
     }

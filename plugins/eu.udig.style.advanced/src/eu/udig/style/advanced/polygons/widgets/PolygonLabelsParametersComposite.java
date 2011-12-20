@@ -43,6 +43,7 @@ import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.utils.FontEditor;
 import eu.udig.style.advanced.utils.StolenColorEditor;
 import eu.udig.style.advanced.utils.Utilities;
@@ -113,14 +114,14 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
         GridData labelEnableButtonGD = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
         labelEnableButtonGD.horizontalSpan = 3;
         labelEnableButton.setLayoutData(labelEnableButtonGD);
-        labelEnableButton.setText("enable/disable labelling");
+        labelEnableButton.setText(Messages.PolygonLabelsParametersComposite_0);
         labelEnableButton.setSelection(widgetEnabled);
         labelEnableButton.addSelectionListener(this);
 
         // label name
         Label labelNameLabel = new Label(mainComposite, SWT.NONE);
         labelNameLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        labelNameLabel.setText("label");
+        labelNameLabel.setText(Messages.PolygonLabelsParametersComposite_1);
 
         labelNameText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         GridData labelNameTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -141,13 +142,13 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
                 labelNameText.setText(labelName);
             }
         } else {
-            labelNameText.setText("");
+            labelNameText.setText(""); //$NON-NLS-1$
         }
 
         // label alpha
         Label labelOpactityLabel = new Label(mainComposite, SWT.NONE);
         labelOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        labelOpactityLabel.setText("opacity");
+        labelOpactityLabel.setText(Messages.PolygonLabelsParametersComposite_3);
         labelOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
         labelOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         labelOpacitySpinner.setMaximum(100);
@@ -176,7 +177,7 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
         // rotation
         Label rotationLabel = new Label(mainComposite, SWT.NONE);
         rotationLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        rotationLabel.setText("rotation");
+        rotationLabel.setText(Messages.PolygonLabelsParametersComposite_4);
         rotationSpinner = new Spinner(mainComposite, SWT.BORDER);
         rotationSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         rotationSpinner.setMaximum(360);
@@ -205,7 +206,7 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
         // font
         Label fontLabel = new Label(mainComposite, SWT.NONE);
         fontLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        fontLabel.setText("font");
+        fontLabel.setText(Messages.PolygonLabelsParametersComposite_5);
 
         fontEditor = new FontEditor(mainComposite);
         GridData fontButtonGD = new GridData(SWT.FILL, SWT.FILL, true, false);
@@ -222,7 +223,7 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
         // font color
         Label fontColorLabel = new Label(mainComposite, SWT.NONE);
         fontColorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        fontColorLabel.setText("font color");
+        fontColorLabel.setText(Messages.PolygonLabelsParametersComposite_6);
 
         fontColorEditor = new StolenColorEditor(mainComposite, this);
         fontColorButton = fontColorEditor.getButton();
@@ -240,7 +241,7 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
         // label halo
         Label haloLabel = new Label(mainComposite, SWT.NONE);
         haloLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        haloLabel.setText("halo");
+        haloLabel.setText(Messages.PolygonLabelsParametersComposite_7);
 
         haloColorEditor = new StolenColorEditor(mainComposite, this);
         haloColorButton = haloColorEditor.getButton();
@@ -274,7 +275,7 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
         vendorOptionsGD.horizontalSpan = 3;
         vendorOptionsGroup.setLayoutData(vendorOptionsGD);
         vendorOptionsGroup.setLayout(new GridLayout(2, false));
-        vendorOptionsGroup.setText("Vendor Options");
+        vendorOptionsGroup.setText(Messages.PolygonLabelsParametersComposite_8);
 
         // max displacement
         Label maxDisplacementLabel = new Label(vendorOptionsGroup, SWT.NONE);
@@ -288,7 +289,7 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
         if (maxDisplacementVO != null) {
             maxDisplacementText.setText(maxDisplacementVO);
         } else {
-            maxDisplacementText.setText("");
+            maxDisplacementText.setText(""); //$NON-NLS-1$
         }
 
         // autoWrap
@@ -303,7 +304,7 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
         if (autoWrapVO != null) {
             autoWrapText.setText(autoWrapVO);
         } else {
-            autoWrapText.setText("");
+            autoWrapText.setText(""); //$NON-NLS-1$
         }
 
         // spaceAround
@@ -318,7 +319,7 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
         if (spaceAroundVO != null) {
             spaceAroundText.setText(spaceAroundVO);
         } else {
-            spaceAroundText.setText("");
+            spaceAroundText.setText(""); //$NON-NLS-1$
         }
 
         checkEnablements();
@@ -348,7 +349,7 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
                 labelNameText.setText(labelName);
             }
         } else {
-            labelNameText.setText("");
+            labelNameText.setText(""); //$NON-NLS-1$
         }
 
         FontData[] fontData = textSymbolizerWrapper.getFontData();
@@ -411,7 +412,7 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
         if (maxDisplacementVO != null) {
             maxDisplacementText.setText(maxDisplacementVO);
         } else {
-            maxDisplacementText.setText("");
+            maxDisplacementText.setText(""); //$NON-NLS-1$
         }
 
         // autoWrap
@@ -419,7 +420,7 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
         if (autoWrapVO != null) {
             autoWrapText.setText(autoWrapVO);
         } else {
-            autoWrapText.setText("");
+            autoWrapText.setText(""); //$NON-NLS-1$
         }
 
         // spaceAround
@@ -427,7 +428,7 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
         if (spaceAroundVO != null) {
             spaceAroundText.setText(spaceAroundVO);
         } else {
-            spaceAroundText.setText("");
+            spaceAroundText.setText(""); //$NON-NLS-1$
         }
 
         checkEnablements();

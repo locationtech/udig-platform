@@ -685,9 +685,12 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
             case EDIT_EVENT:
                 if (!editing) {
                     if (event.getNewValue() == null) {
+                        // there are now bounds associated with this event so we are going to have to reload everyone!
                         reloadFeatures(notifierLayer);
                         return;
                     }
+                    // okay we will add these bounds to the list of "updates" and updateTable can fetch everything
+                    // when we are back to being "active"
                     updates.add((FeatureEvent) event.getNewValue());
                     if (active) {
                         updateTable(notifierLayer);
@@ -909,10 +912,12 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                     Envelope bounds = event.getBounds();
                     switch( event.getEventType() ) {
                     case FeatureEvent.FEATURES_ADDED:
-                        if( addedBounds==null ){
-                            addedBounds=new Envelope(bounds);
-                        }else{
-                            addedBounds.expandToInclude(bounds);
+                        if( bounds != null ){
+                            if( addedBounds==null ){
+                                addedBounds=new Envelope(bounds);
+                            }else{
+                                addedBounds.expandToInclude(bounds);
+                            }
                         }
                         break;
                     case FeatureEvent.FEATURES_REMOVED:
@@ -923,14 +928,14 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                         return;
                         
                     case FeatureEvent.FEATURES_CHANGED:
-                        if( event.getBounds()==null )
+                        if (event.getBounds() == null) {
                             return;
-                        if( modifiedBounds==null ){
-                            modifiedBounds=new Envelope(bounds);
-                        }else{
+                        }
+                        if (modifiedBounds == null) {
+                            modifiedBounds = new Envelope(bounds);
+                        } else {
                             modifiedBounds.expandToInclude(bounds);
                         }
-                        
                         break;
 
                     default:
@@ -939,6 +944,17 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                 }
                 updates.clear();
             }
+            // check if we actually go something out of all that
+            if( addedBounds == null && modifiedBounds == null){
+                // fine we did not get anything we will need to reload
+                if( active ){
+                    reloadFeatures(notifierLayer);
+                }else{
+                    reloadNeeded=true;
+                }
+                return;
+            }
+            // okay now we will do a query for everything in the added or modified bounds
             FeatureSource<SimpleFeatureType, SimpleFeature> source = notifierLayer.getResource(FeatureSource.class, ProgressManager.instance().get());
             SimpleFeatureType schema=source.getSchema();
             
@@ -949,7 +965,6 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
             String name = schema.getGeometryDescriptor().getName().getLocalPart();
 			// add new features
             if( addedBounds!=null ){
-            	
             	double minx=addedBounds.getMinX();
 				double miny=addedBounds.getMinY();
 				double maxx=addedBounds.getMaxX();

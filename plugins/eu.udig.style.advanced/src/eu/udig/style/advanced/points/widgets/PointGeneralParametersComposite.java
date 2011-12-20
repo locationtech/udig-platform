@@ -33,6 +33,7 @@ import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import eu.udig.style.advanced.common.ParameterComposite;
 import eu.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.utils.Utilities;
 
 /**
@@ -77,7 +78,7 @@ public class PointGeneralParametersComposite extends ParameterComposite {
         // rule name
         Label nameLabel = new Label(mainComposite, SWT.NONE);
         nameLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        nameLabel.setText("Rule name");
+        nameLabel.setText(Messages.PointGeneralParametersComposite_0);
         nameText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         GridData nameTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         nameTextGD.horizontalSpan = 2;
@@ -89,15 +90,15 @@ public class PointGeneralParametersComposite extends ParameterComposite {
         new Label(mainComposite, SWT.NONE);
         Label valueLabel = new Label(mainComposite, SWT.NONE);
         valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        valueLabel.setText("Manual");
+        valueLabel.setText(Messages.PointGeneralParametersComposite_1);
         Label fieldsLabel = new Label(mainComposite, SWT.NONE);
         fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-        fieldsLabel.setText("Field based");
+        fieldsLabel.setText(Messages.PointGeneralParametersComposite_2);
 
         // size
         Label sizeLabel = new Label(mainComposite, SWT.NONE);
         sizeLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        sizeLabel.setText("size");
+        sizeLabel.setText(Messages.PointGeneralParametersComposite_3);
         sizeSpinner = new Spinner(mainComposite, SWT.BORDER);
         sizeSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         sizeSpinner.setMaximum(200);
@@ -124,7 +125,7 @@ public class PointGeneralParametersComposite extends ParameterComposite {
 
         Label rotationLabel = new Label(mainComposite, SWT.NONE);
         rotationLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        rotationLabel.setText("rotation");
+        rotationLabel.setText(Messages.PointGeneralParametersComposite_4);
         rotationSpinner = new Spinner(mainComposite, SWT.BORDER);
         rotationSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         rotationSpinner.setMaximum(360);
@@ -153,7 +154,7 @@ public class PointGeneralParametersComposite extends ParameterComposite {
         Label offsetLabel = new Label(mainComposite, SWT.NONE);
         GridData offsetLabelGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         offsetLabel.setLayoutData(offsetLabelGD);
-        offsetLabel.setText("offset (x, y)");
+        offsetLabel.setText(Messages.PointGeneralParametersComposite_5);
 
         String xOffset = pointSymbolizerWrapper.getxOffset();
         String yOffset = pointSymbolizerWrapper.getyOffset();
@@ -185,7 +186,7 @@ public class PointGeneralParametersComposite extends ParameterComposite {
         Label maxScaleLabel = new Label(mainComposite, SWT.NONE);
         GridData maxScaleLabelGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         maxScaleLabel.setLayoutData(maxScaleLabelGD);
-        maxScaleLabel.setText("maximum scale");
+        maxScaleLabel.setText(Messages.PointGeneralParametersComposite_6);
         maxScaleText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         GridData maxScaleTextSIMPLEGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         maxScaleTextSIMPLEGD.horizontalSpan = 2;
@@ -196,7 +197,7 @@ public class PointGeneralParametersComposite extends ParameterComposite {
         Label minScaleLabel = new Label(mainComposite, SWT.NONE);
         GridData minScaleLabelGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         minScaleLabel.setLayoutData(minScaleLabelGD);
-        minScaleLabel.setText("minimum scale");
+        minScaleLabel.setText(Messages.PointGeneralParametersComposite_7);
         minScaleText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         GridData mainScaleTextSIMPLEGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         mainScaleTextSIMPLEGD.horizontalSpan = 2;
@@ -257,13 +258,13 @@ public class PointGeneralParametersComposite extends ParameterComposite {
         // scale
         Double maxScaleDouble = isDouble(ruleWrapper.getMaxScale());
         if (maxScaleDouble == null || Double.isInfinite(maxScaleDouble)) {
-            maxScaleText.setText("");
+            maxScaleText.setText(""); //$NON-NLS-1$
         } else {
             maxScaleText.setText(String.valueOf(maxScaleDouble));
         }
         Double minScaleDouble = isDouble(ruleWrapper.getMinScale());
         if (minScaleDouble == null || minScaleDouble == 0) {
-            minScaleText.setText("");
+            minScaleText.setText(""); //$NON-NLS-1$
         } else {
             minScaleText.setText(String.valueOf(minScaleDouble));
         }
@@ -305,7 +306,7 @@ public class PointGeneralParametersComposite extends ParameterComposite {
             double x = Utilities.getDoubleSpinnerSelection(xOffsetSpinner);
             double y = Utilities.getDoubleSpinnerSelection(yOffsetSpinner);
 
-            String offsetStr = x + "," + y;
+            String offsetStr = x + "," + y; //$NON-NLS-1$
             notifyListeners(offsetStr, false, STYLEEVENTTYPE.OFFSET);
         }
         checkEnablements();

@@ -2111,10 +2111,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             }
         }
         getMap().getRenderManager().refresh(this, transformedbounds);
-
-        //edit event
-        fireLayerChange(new LayerEvent(LayerImpl.this, LayerEvent.EventType.EDIT_EVENT, null, null));
-
     }
 
     /**

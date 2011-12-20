@@ -60,6 +60,7 @@ import eu.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapp
 import eu.udig.style.advanced.common.styleattributeclasses.PolygonSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.utils.ImageCache;
 import eu.udig.style.advanced.utils.Utilities;
 
@@ -103,7 +104,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         GridLayout rulesAndPreviewGroupLayout = new GridLayout(2, false);
         rulesAndPreviewGroupLayout.marginTop = 0;
         rulesAndPreviewGroup.setLayout(rulesAndPreviewGroupLayout);
-        rulesAndPreviewGroup.setText("Rules list");
+        rulesAndPreviewGroup.setText(Messages.PolygonPropertiesEditor_0);
 
         Composite canvasComposite = new Composite(rulesAndPreviewGroup, SWT.NONE);
         canvasComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -147,7 +148,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         GridData styleViewerGroupGD = new GridData(SWT.FILL, SWT.FILL, true, true);
         styleViewerGroup.setLayoutData(styleViewerGroupGD);
         styleViewerGroup.setLayout(new GridLayout(10, false));
-        styleViewerGroup.setText("Style list");
+        styleViewerGroup.setText(Messages.PolygonPropertiesEditor_1);
 
         Composite styleManagerComposite = new Composite(styleViewerGroup, SWT.NONE);
         GridData styleManagerCompositeGD = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -179,7 +180,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         } else {
             // if it came here, nothing to select
             Label l = new Label(propertiesComposite, SWT.SHADOW_ETCHED_IN);
-            l.setText("No rule selected");
+            l.setText(Messages.PolygonPropertiesEditor_2);
             propertiesStackLayout.topControl = l;
         }
 
@@ -241,7 +242,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
             private void showEmptyLabel() {
                 Label emptyLabel = new Label(propertiesComposite, SWT.NONE);
                 emptyLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-                emptyLabel.setText("No rule selected");
+                emptyLabel.setText(Messages.PolygonPropertiesEditor_3);
                 propertiesStackLayout.topControl = emptyLabel;
                 propertiesComposite.layout();
             }
@@ -261,13 +262,13 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         final Button addGroupButton = new Button(rulesGroup, SWT.PUSH);
         addGroupButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         addGroupButton.setImage(addGroupImg);
-        addGroupButton.setToolTipText("Add a new group");
+        addGroupButton.setToolTipText(Messages.PolygonPropertiesEditor_4);
         addGroupButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 FeatureTypeStyle featureTypeStyle = Utilities.sf.createFeatureTypeStyle();
                 FeatureTypeStyleWrapper addedFeatureTypeStyle = styleWrapper.addFeatureTypeStyle(featureTypeStyle);
 
-                String tmpName = "New Group";
+                String tmpName = Messages.PolygonPropertiesEditor_5;
                 tmpName = Utilities.checkSameNameFeatureTypeStyle(styleWrapper.getFeatureTypeStylesWrapperList(), tmpName);
                 addedFeatureTypeStyle.setName(tmpName);
 
@@ -279,7 +280,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         final Button addButton = new Button(rulesGroup, SWT.PUSH);
         addButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         addButton.setImage(addImg);
-        addButton.setToolTipText("Add a new rule");
+        addButton.setToolTipText(Messages.PolygonPropertiesEditor_6);
         addButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 FeatureTypeStyleWrapper selectedFtsw = getSelectedFtsw();
@@ -290,12 +291,12 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
                     }
                 }
                 if (selectedFtsw == null) {
-                    MessageDialog.openWarning(addButton.getShell(), "Warning",
-                            "Please select a group to which to add a new rule.");
+                    MessageDialog.openWarning(addButton.getShell(), Messages.PolygonPropertiesEditor_7,
+                            Messages.PolygonPropertiesEditor_8);
                     return;
                 }
                 RuleWrapper addedRuleWrapper = selectedFtsw.addRule(null, PolygonSymbolizerWrapper.class);
-                String tmpName = "New Rule";
+                String tmpName = Messages.PolygonPropertiesEditor_9;
                 tmpName = Utilities.checkSameNameRule(addedRuleWrapper.getParent().getRulesWrapperList(), tmpName);
                 addedRuleWrapper.setName(tmpName);
 
@@ -308,7 +309,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         Button deleteButton = new Button(rulesGroup, SWT.PUSH);
         deleteButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         deleteButton.setImage(delImg);
-        deleteButton.setToolTipText("Delete the selected rule");
+        deleteButton.setToolTipText(Messages.PolygonPropertiesEditor_10);
         deleteButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 FeatureTypeStyleWrapper selectedFtsw = getSelectedFtsw();
@@ -318,7 +319,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
                 } else if (selectedRule != null) {
                     selectedRule.getParent().removeRule(selectedRule);
                 } else {
-                    MessageDialog.openWarning(addButton.getShell(), "Warning", "No rule or group selected.");
+                    MessageDialog.openWarning(addButton.getShell(), Messages.PolygonPropertiesEditor_11, Messages.PolygonPropertiesEditor_12);
                     return;
                 }
 
@@ -330,7 +331,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         Button deleteAllButton = new Button(rulesGroup, SWT.PUSH);
         deleteAllButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         deleteAllButton.setImage(delAllImg);
-        deleteAllButton.setToolTipText("Delete all rules");
+        deleteAllButton.setToolTipText(Messages.PolygonPropertiesEditor_13);
         deleteAllButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 styleWrapper.clear();
@@ -342,7 +343,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         Button upButton = new Button(rulesGroup, SWT.PUSH);
         upButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         upButton.setImage(upImg);
-        upButton.setToolTipText("Move rule up");
+        upButton.setToolTipText(Messages.PolygonPropertiesEditor_14);
         upButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 swap(true);
@@ -352,7 +353,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         Button downButton = new Button(rulesGroup, SWT.PUSH);
         downButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         downButton.setImage(downImg);
-        downButton.setToolTipText("Move rule down");
+        downButton.setToolTipText(Messages.PolygonPropertiesEditor_15);
         downButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 swap(false);
@@ -372,7 +373,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         final Button saveButton = new Button(rulesGroup, SWT.PUSH);
         saveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         saveButton.setImage(saveImg);
-        saveButton.setToolTipText("Save selected rule as style");
+        saveButton.setToolTipText(Messages.PolygonPropertiesEditor_16);
         saveButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 RuleWrapper selectedRule = getSelectedRule();
@@ -394,12 +395,12 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         final Button saveAllButton = new Button(rulesGroup, SWT.PUSH);
         saveAllButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         saveAllButton.setImage(saveAllImg);
-        saveAllButton.setToolTipText("Save all rules as style");
+        saveAllButton.setToolTipText(Messages.PolygonPropertiesEditor_17);
         saveAllButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
-                String newStyleName = "New Style";
-                InputDialog iDialog = new InputDialog(saveAllButton.getShell(), "Style name",
-                        "Please enter a name for the new style. Styles with same name are substituted.", newStyleName, null);
+                String newStyleName = Messages.PolygonPropertiesEditor_18;
+                InputDialog iDialog = new InputDialog(saveAllButton.getShell(), Messages.PolygonPropertiesEditor_19,
+                        Messages.PolygonPropertiesEditor_20, newStyleName, null);
                 iDialog.setBlockOnOpen(true);
                 int open = iDialog.open();
                 if (open == SWT.CANCEL) {
@@ -422,7 +423,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         Button deleteButton = new Button(rulesGroup, SWT.PUSH);
         deleteButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         deleteButton.setImage(delImg);
-        deleteButton.setToolTipText("Remove selected style");
+        deleteButton.setToolTipText(Messages.PolygonPropertiesEditor_21);
         deleteButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 StyleWrapper styleWrapper = polygonStyleManager.getCurrentSelectedStyle();
@@ -440,7 +441,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         Button loadButton = new Button(rulesGroup, SWT.PUSH);
         loadButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         loadButton.setImage(loadImg);
-        loadButton.setToolTipText("Load selected style into the rules list");
+        loadButton.setToolTipText(Messages.PolygonPropertiesEditor_22);
         loadButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 StyleWrapper styleWrapperToLoad = polygonStyleManager.getCurrentSelectedStyle();
@@ -461,7 +462,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         final Button exportButton = new Button(rulesGroup, SWT.PUSH);
         exportButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         exportButton.setImage(exportImg);
-        exportButton.setToolTipText("One click style export for file based layers");
+        exportButton.setToolTipText(Messages.PolygonPropertiesEditor_23);
         exportButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 IGeoResource geoResource = layer.getGeoResource();
@@ -474,8 +475,8 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
                         e1.printStackTrace();
                     }
                 } else {
-                    MessageDialog.openWarning(exportButton.getShell(), "Warning",
-                            "The selected layer doesn't seem to be file based.");
+                    MessageDialog.openWarning(exportButton.getShell(), Messages.PolygonPropertiesEditor_24,
+                            Messages.PolygonPropertiesEditor_25);
                 }
             }
         });
@@ -483,7 +484,7 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         final Button openFolderButton = new Button(rulesGroup, SWT.PUSH);
         openFolderButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         openFolderButton.setImage(openImg);
-        openFolderButton.setToolTipText("Open the style library folder");
+        openFolderButton.setToolTipText(Messages.PolygonPropertiesEditor_26);
         openFolderButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 File styleFolderFile = polygonStyleManager.getStyleFolderFile();

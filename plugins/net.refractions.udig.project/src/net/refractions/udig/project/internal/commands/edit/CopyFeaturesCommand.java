@@ -344,6 +344,10 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
         public int size() {
             return features.size();
         }
+        
+        public ReferencedEnvelope getBounds() {
+            return features.getBounds();
+        }
 
         Map<Iterator, FeatureIterator<SimpleFeature>> iterators = new HashMap<Iterator, FeatureIterator<SimpleFeature>>();
 

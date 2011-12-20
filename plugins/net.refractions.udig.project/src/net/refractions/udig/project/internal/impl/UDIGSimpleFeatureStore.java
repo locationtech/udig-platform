@@ -2,10 +2,12 @@ package net.refractions.udig.project.internal.impl;
 
 import java.awt.RenderingHints.Key;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.ProjectBlackboardConstants;
 import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Messages;
@@ -13,6 +15,7 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.DataUtilities;
+import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureListener;
 import org.geotools.data.FeatureReader;
 import org.geotools.data.FeatureSource;
@@ -23,6 +26,7 @@ import org.geotools.data.ResourceInfo;
 import org.geotools.data.Transaction;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
@@ -30,6 +34,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.Name;
 import org.opengis.filter.Filter;
+import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.Id;
 import org.opengis.filter.identity.FeatureId;
 
@@ -77,6 +82,8 @@ public class UDIGSimpleFeatureStore implements SimpleFeatureStore, UDIGStore {
     public void removeFeatures( Filter filter ) throws IOException {
         setTransactionInternal();
         wrapped.removeFeatures(filter);
+        
+        fireLayerEditEvent( FeatureEvent.Type.REMOVED, null, filter );
     }
 
     @Deprecated
@@ -84,24 +91,29 @@ public class UDIGSimpleFeatureStore implements SimpleFeatureStore, UDIGStore {
             throws IOException {
         setTransactionInternal();
         wrapped.modifyFeatures(descriptors, values, filter);
+        fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, filter );
     }
     
     public void modifyFeatures( Name[] names, Object[] values, Filter filter ) throws IOException {
         setTransactionInternal();
         wrapped.modifyFeatures(names, values, filter);
+        fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, filter );
     }
     
     public void modifyFeatures( Name name, Object value, Filter filter ) throws IOException {
         setTransactionInternal();
         wrapped.modifyFeatures(name, value, filter);
+        fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, filter );
     }
     public void modifyFeatures( String name, Object value, Filter filter ) throws IOException {
         setTransactionInternal();
         wrapped.modifyFeatures(name, value, filter);
+        fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, filter );        
     } 
     public void modifyFeatures( String names[], Object values[], Filter filter ) throws IOException {
         setTransactionInternal();
         wrapped.modifyFeatures(names, values, filter);
+        fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, filter );        
     }
     
     @Deprecated
@@ -125,12 +137,31 @@ public class UDIGSimpleFeatureStore implements SimpleFeatureStore, UDIGStore {
             }
         }
         wrapped.modifyFeatures(attribute, value, selectFilter);
+        fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, selectFilter );
     }
-
+    /**
+     * Used to force the layer to send out an LayerEditEvent (and refresh!); we are faking the correct FeatureEventType
+     * we expected from the wrapped GeoTools datastore. This is defensive programming as we are not trusting
+     * the implementations to provide good events.
+     * @param type
+     * @param bounds
+     * @param filter
+     */
+    public void fireLayerEditEvent( FeatureEvent.Type type, ReferencedEnvelope bounds, Filter filter){
+        // issue edit event for TableView and any other interested parties
+        if( type == null ){
+            type = FeatureEvent.Type.CHANGED;
+        }
+        FeatureEvent featureEvent = new FeatureEvent( this, type, bounds, filter);
+        ((LayerImpl)layer).fireLayerChange(new LayerEvent(layer, LayerEvent.EventType.EDIT_EVENT, null, featureEvent)); 
+        layer.refresh(bounds);
+    }
+    
     public void setFeatures( FeatureReader<SimpleFeatureType, SimpleFeature> features )
             throws IOException {
         setTransactionInternal();
         wrapped.setFeatures(features);
+        fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, Filter.INCLUDE );
     }
 
     public void setTransaction( Transaction transaction ) {
@@ -238,7 +269,21 @@ public class UDIGSimpleFeatureStore implements SimpleFeatureStore, UDIGStore {
     public List<FeatureId> addFeatures( FeatureCollection<SimpleFeatureType, SimpleFeature> features )
             throws IOException {
         setTransactionInternal();
-        return wrapped.addFeatures(features);
+        List<FeatureId> ids = wrapped.addFeatures(features);
+        
+        FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
+        Id filter = ff.id( new HashSet<FeatureId>( ids ) );
+        
+        ReferencedEnvelope bounds;
+        bounds = features.getBounds();
+
+        if( bounds != null ){
+            fireLayerEditEvent( FeatureEvent.Type.ADDED, bounds, filter );
+        }
+        else {
+            fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, Filter.INCLUDE );
+        }
+        return ids;
     }
 
     public boolean sameSource( Object source ) {
