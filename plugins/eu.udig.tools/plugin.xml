@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+   </extension>
+   <extension
+         point="net.refractions.udig.project.ui.tool">
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+   </extension>
+   <extension
+         point="org.eclipse.ui.helpSupport">
+      <config
+            class="eu.udig.tools.AbstractHelpUI1">
+      </config>
+   </extension>
+
+</plugin>
