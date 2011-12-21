@@ -802,9 +802,5 @@
                  </executions>
              </plugin>
          </plugins>
-     </build>
- </project>
-\ No newline at end of file
-		</plugins>
-	</build>
+    </build>
 </project>
