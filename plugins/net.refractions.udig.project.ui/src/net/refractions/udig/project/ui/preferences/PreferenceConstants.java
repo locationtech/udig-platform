@@ -20,7 +20,7 @@ public interface PreferenceConstants {
     /**
      * Preference to store the resolutions for this tileset
      */
-    public static final String P_TILESET_SCAlES = "tilesetScales"; //$NON-NLS-1$
+    public static final String P_TILESET_SCALES = "tilesetScales"; //$NON-NLS-1$
     
     /**
      * Preference to store the tile width

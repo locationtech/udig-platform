@@ -19,7 +19,6 @@ import java.io.IOException;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.project.ui.preferences.PreferenceConstants;
 
 import org.eclipse.swt.widgets.Composite;
@@ -52,9 +51,9 @@ public class TileSetPropertyPage extends PropertyPage implements IWorkbenchPrope
             this.tileControlPage = new TileSetControl(resource);
         }
         tileControlPage.createControl(parent);
-        
+
         String scales = (String) resource
-                .getPersistentProperty(PreferenceConstants.P_TILESET_SCAlES);
+                .getPersistentProperties().get(PreferenceConstants.P_TILESET_SCALES);
 
         if ("".equals(scales)) { //$NON-NLS-1$
             tileControlPage.loadDefaults();
@@ -62,7 +61,7 @@ public class TileSetPropertyPage extends PropertyPage implements IWorkbenchPrope
 
         return tileControlPage.getControl();
     }
-    
+
     @Override
     protected void performApply() {
         tileControlPage.performOk();

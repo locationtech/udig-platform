@@ -1,6 +1,7 @@
 package net.refractions.udig.project.internal.impl;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -123,6 +124,13 @@ public class LayerResource extends IGeoResource {
 
     public String getTitle() {
         return geoResource.getTitle();
+    }
+
+    /**
+     * @see net.refractions.udig.catalog.IGeoResource#getPersistentProperties()
+     */
+    public Map<String, Serializable> getPersistentProperties() {
+        return geoResource.getPersistentProperties();
     }
 
     /**

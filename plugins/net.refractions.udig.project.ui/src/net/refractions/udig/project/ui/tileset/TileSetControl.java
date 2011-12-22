@@ -14,8 +14,10 @@
  */
 package net.refractions.udig.project.ui.tileset;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 
 import net.refractions.udig.catalog.IGeoResource;
@@ -67,11 +69,11 @@ public class TileSetControl extends FieldEditorPreferencePage {
                 Messages.TileSet_dialog_heigth, getFieldEditorParent());
         imageType =  new ImageTypeFieldEditor(PreferenceConstants.P_TILESET_IMAGE_TYPE,
                 Messages.TileSet_dialog_image_type, getFieldEditorParent());
-        editor = new ZoomItemListEditor(PreferenceConstants.P_TILESET_SCAlES,
+        editor = new ZoomItemListEditor(PreferenceConstants.P_TILESET_SCALES,
                 Messages.TileSet_dialog_zoom_desc, getFieldEditorParent());
 
-        Boolean enabled = (Boolean) resource
-                .getPersistentProperty(PreferenceConstants.P_TILESET_ON_OFF);
+        Map<String, Serializable> m = resource.getPersistentProperties();
+        Boolean enabled = (Boolean) m.get(PreferenceConstants.P_TILESET_ON_OFF);
 
         if (enabled == null){
             enabled = true;
@@ -115,24 +117,30 @@ public class TileSetControl extends FieldEditorPreferencePage {
     @Override
     public boolean performOk() {
         //checkbox
-        resource.storePersistentProperty(PreferenceConstants.P_TILESET_ON_OFF, checkbox.getBooleanValue());
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_ON_OFF, checkbox.getBooleanValue());
 
         //width
-        resource.storePersistentProperty(PreferenceConstants.P_TILESET_WIDTH, width.getSize());
+        resource.getPersistentProperties()
+        .put(PreferenceConstants.P_TILESET_WIDTH, width.getSize());
 
         //height
-        resource.storePersistentProperty(PreferenceConstants.P_TILESET_HEIGHT, height.getSize());
+        resource.getPersistentProperties()
+        .put(PreferenceConstants.P_TILESET_HEIGHT, height.getSize());
 
         //image type
-        resource.storePersistentProperty(PreferenceConstants.P_TILESET_IMAGE_TYPE, height.getSize());
+        resource.getPersistentProperties()
+        .put(PreferenceConstants.P_TILESET_IMAGE_TYPE, imageType.getStringValue());
 
         //scales
-        resource.storePersistentProperty(PreferenceConstants.P_TILESET_SCAlES, height.getSize());
+        resource.getPersistentProperties()
+        .put(PreferenceConstants.P_TILESET_SCALES, editor.getAsListString());
 
 //        width.store();
 //        height.store();
 //        imageType.store();
 //        editor.store();
+        
+        resource.
         return true;
                 //super.performOk();
     }
@@ -195,6 +203,10 @@ public class TileSetControl extends FieldEditorPreferencePage {
             }
 
             setEnabled(false, getFieldEditorParent());
+        }
+        
+        public String getAsListString(){
+            return createList(getList().getItems());
         }
 
         /**

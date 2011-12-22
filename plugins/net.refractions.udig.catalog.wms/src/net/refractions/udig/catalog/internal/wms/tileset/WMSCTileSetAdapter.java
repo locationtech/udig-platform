@@ -59,8 +59,8 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
 
             IGeoResource resource = (IGeoResource) resolve;
 
-            Boolean enabled = (Boolean) resource
-                    .getPersistentProperty(PreferenceConstants.P_TILESET_ON_OFF);
+            Boolean enabled = (Boolean) resource.getPersistentProperties()
+                    .get(PreferenceConstants.P_TILESET_ON_OFF);
 
             if (enabled==null || !enabled) {
                 return false;
@@ -132,9 +132,11 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             tileset.setCoorindateReferenceSystem(srs);
 
             Integer width = (Integer) resource
-                    .getPersistentProperty(PreferenceConstants.P_TILESET_WIDTH);
+                    .getPersistentProperties()
+                    .get(PreferenceConstants.P_TILESET_WIDTH);
             Integer height = (Integer) resource
-                    .getPersistentProperty(PreferenceConstants.P_TILESET_HEIGHT);
+                    .getPersistentProperties()
+                    .get(PreferenceConstants.P_TILESET_HEIGHT);
 
             if (width == 0) {
                 width = PreferenceConstants.DEFAULT_TILE_SIZE;
@@ -148,7 +150,8 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             tileset.setHeight(height);
 
             String imageType = (String) resource
-                    .getPersistentProperty(PreferenceConstants.P_TILESET_IMAGE_TYPE);
+                    .getPersistentProperties()
+                    .get(PreferenceConstants.P_TILESET_IMAGE_TYPE);
 
             if (imageType == null || "".equals(imageType)) { //$NON-NLS-1$
                 imageType = PreferenceConstants.DEFAULT_IMAGE_TYPE;
@@ -162,7 +165,8 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             tileset.setLayers(info.getName());
 
             String scales = (String) resource
-                    .getPersistentProperty(PreferenceConstants.P_TILESET_SCAlES);
+                    .getPersistentProperties()
+                    .get(PreferenceConstants.P_TILESET_SCALES);
 
             String resolutions = workoutResolutions(scales, new ReferencedEnvelope(bbox), width);
 
