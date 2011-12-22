@@ -9,8 +9,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
@@ -124,6 +124,13 @@ public class LayerResource extends IGeoResource {
 
     public String getTitle() {
         return geoResource.getTitle();
+    }
+    
+    /**
+     * @see net.refractions.udig.catalog.IGeoResource#getPersistentProperties()
+     */
+    public Map<String, Serializable> getPersistentProperties() {
+        return geoResource.getPersistentProperties();
     }
 
     /**
