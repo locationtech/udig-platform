@@ -49,6 +49,7 @@ import com.vividsolutions.jts.geom.Coordinate;
  * 
  * @author Emily Gouge
  * @since 1.2.0
+ * @deprecated PanTool with Tool Options now covers this case
  */
 public class ScrollPanTool extends AbstractModalTool implements ModalTool {
     private boolean dragging = false;
