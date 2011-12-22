@@ -36,7 +36,6 @@ import org.geotools.data.ows.HTTPClient;
 import org.geotools.data.ows.HTTPResponse;
 import org.geotools.data.ows.Request;
 import org.geotools.data.ows.Response;
-import org.geotools.data.ows.SimpleHttpClient;
 import org.geotools.ows.ServiceException;
 
 import com.vividsolutions.jts.geom.Envelope;
@@ -59,7 +58,7 @@ public class WMSTile implements Tile {
     private String position; // pos = x_y tile position within tilerange grid for this scale
     private static String ID_DIVIDER = "_"; //$NON-NLS-1$
     private WMSTileSet tileset;
-    private AbstractOpenWebService server;
+    private AbstractOpenWebService<?,?> server;
     private BufferedImage image;
     private Object imageLock = new Object();
     private Envelope bounds;
@@ -72,7 +71,7 @@ public class WMSTile implements Tile {
      */
     private int state = OK;
 
-    public WMSTile( AbstractOpenWebService server, WMSTileSet tileset, Envelope bounds, double scale ) {
+    public WMSTile( AbstractOpenWebService<?,?> server, WMSTileSet tileset, Envelope bounds, double scale ) {
         this.server = server;
         this.tileset = tileset;
         this.bounds = bounds;
@@ -359,11 +358,11 @@ public class WMSTile implements Tile {
         return bf;
     }
 
-    public AbstractOpenWebService getServer() {
+    public AbstractOpenWebService<?,?> getServer() {
         return server;
     }
 
-    public void setServer( AbstractOpenWebService server ) {
+    public void setServer( AbstractOpenWebService<?,?> server ) {
         this.server = server;
     }
 

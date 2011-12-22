@@ -99,7 +99,7 @@ public interface TileSet {
 	 * Sets the server for this tileset
 	 * @param server
 	 */
-	public abstract void setServer(AbstractOpenWebService server);
+	public abstract void setServer(AbstractOpenWebService<?,?> server);
 
 	/**
 	 * @return the number of zoom levels supported by the tile set
@@ -197,6 +197,6 @@ public interface TileSet {
 	/**
 	 * @return server
 	 */
-	public abstract AbstractOpenWebService getServer();
+	public abstract AbstractOpenWebService<?,?> getServer();
 
 }
