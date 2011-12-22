@@ -134,13 +134,6 @@ public class LayerResource extends IGeoResource {
     }
 
     /**
-     * @see net.refractions.udig.catalog.IGeoResource#getPersistentProperties()
-     */
-    public Map<String, Serializable> getPersistentProperties() {
-        return geoResource.getPersistentProperties();
-    }
-
-    /**
      * @see net.refractions.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
     public List<IResolve> members( IProgressMonitor monitor ) {

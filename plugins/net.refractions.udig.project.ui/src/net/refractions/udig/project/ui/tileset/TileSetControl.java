@@ -134,15 +134,7 @@ public class TileSetControl extends FieldEditorPreferencePage {
         //scales
         resource.getPersistentProperties()
         .put(PreferenceConstants.P_TILESET_SCALES, editor.getAsListString());
-
-//        width.store();
-//        height.store();
-//        imageType.store();
-//        editor.store();
-        
-        resource.
         return true;
-                //super.performOk();
     }
 
     /**
@@ -207,6 +199,21 @@ public class TileSetControl extends FieldEditorPreferencePage {
         
         public String getAsListString(){
             return createList(getList().getItems());
+        }
+
+        @Override
+        protected void doLoad() {
+            
+            String scales = (String) resource
+                    .getPersistentProperties().get(PreferenceConstants.P_TILESET_SCALES);
+            
+//            if (list != null) {
+//                String s = getPreferenceStore().getString(getPreferenceName());
+//                String[] array = parseString(s);
+//                for (int i = 0; i < array.length; i++) {
+//                    list.add(array[i]);
+//                }
+//            }
         }
 
         /**
