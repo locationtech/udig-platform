@@ -42,6 +42,10 @@ public class ServiceParameterPersister {
 	private static final String COLON_ENCODING = "@col@";
 	private static final String TYPE_QUALIFIER = "@type@"; //$NON-NLS-1$
     private static final String PROPERTIES_KEY = "_properties"; //$NON-NLS-1$
+    
+    private static final String TITLE_KEY = "title"; //$NON-NLS-1$
+    private static final String CHILD_PREFIX = "child_"; //$NON-NLS-1$
+    
     private static final String VALUE_ID = "value"; //$NON-NLS-1$
 	private static final String TYPE_ID = "type"; //$NON-NLS-1$
     private static final String ENCODING = "UTF-8"; //$NON-NLS-1$
@@ -76,18 +80,30 @@ public class ServiceParameterPersister {
 					
 					Map<String, Serializable> connectionParams = new HashMap<String, Serializable>();
 					String[] nodes = servicePref.childrenNames();
-                    for (String childName : nodes) {
-					    if( PROPERTIES_KEY.equals(childName)) {
-					        // slip properties entry
-					        continue;
-					    }
-						mapAsObject(servicePref, connectionParams, childName);
-					}
+                    
 					
-					Preferences propertiesPref = servicePref.node(PROPERTIES_KEY);
-					propertiesPref.flush();
-                    Map<String, Serializable> properties = restoreProperties(propertiesPref);
+					Map<String,Map<String, Serializable>> resourcePropertyMap = new HashMap<String, Map<String,Serializable>>();
+                    Map<String, Serializable> properties = new HashMap<String, Serializable>();
+                    
+					for (String childName : nodes) {
+					    if( PROPERTIES_KEY.equals(childName)) {
+							Preferences propertiesPref = servicePref.node(PROPERTIES_KEY);
+							propertiesPref.flush();
 
+							properties= restoreProperties(propertiesPref);
+					    }
+					    else if( childName.startsWith(CHILD_PREFIX)){
+					    	Preferences childPref = servicePref.node(childName);
+					    	childPref.flush();
+					    	Map<String, Serializable> childProperties = restoreProperties(childPref);
+					    	
+					    	String childID = childName.substring(CHILD_PREFIX.length() );
+					    	resourcePropertyMap.put(childID, childProperties);
+					    }
+					    else {
+					    	mapAsObject(servicePref, connectionParams, childName);
+					    }
+					}
 					locateService(url, connectionParams, properties);
 				} catch (Throwable t) {
 					CatalogPlugin.log(null, new Exception(t));
@@ -356,6 +372,15 @@ public class ServiceParameterPersister {
                     Preferences propertiesNode = serviceNode.node(PROPERTIES_KEY);                    
                     storeProperties( propertiesNode, persistentProperties );
                     propertiesNode.flush();
+                    
+                    for( IGeoResource child : service.resources(null)){
+                    	ID childID = child.getID();
+                    	Map<String, Serializable> childProperties = service.getPersistentProperties(childID);
+                    	
+                    	Preferences childNode = serviceNode.node(CHILD_PREFIX+childID.toString());
+                    	storeProperties( childNode, childProperties );
+                    	childNode.flush();
+                    }
                 } catch (Exception e) {
                     throw (RuntimeException) new RuntimeException( ).initCause( e );
                 }
