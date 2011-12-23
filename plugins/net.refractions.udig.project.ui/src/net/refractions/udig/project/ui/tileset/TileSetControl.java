@@ -28,12 +28,12 @@ import net.refractions.udig.project.ui.preferences.PreferenceConstants;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.ListEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
-import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
@@ -92,12 +92,6 @@ public class TileSetControl extends FieldEditorPreferencePage {
             scales = ""; //$NON-NLS-1$
         }
 
-        System.out.println("ENABLE: " + enabled);
-        System.out.println("HEIGHT: " + heightValue);
-        System.out.println("WIDTH : " + widthValue);
-        System.out.println("IMAGE : " + imageTypeValue);
-        System.out.println("SCALES: " + scales);
-
         checkbox = new TileSetBooleanFieldEditor(PreferenceConstants.P_TILESET_ON_OFF,
                 Messages.TileSet_dialog_onoff_desc, enabled, getFieldEditorParent());
         width = new SizeStringFieldEditor(PreferenceConstants.P_TILESET_WIDTH,
@@ -123,18 +117,6 @@ public class TileSetControl extends FieldEditorPreferencePage {
         addField(height);
         addField(imageType);
         addField(editor);
-    }
-
-    @Override
-    public void propertyChange( PropertyChangeEvent event ) {
-        super.propertyChange(event);
-        if (event.getSource().equals(checkbox)) {
-            boolean useDefault = checkbox.getBooleanValue();
-            editor.setEnabled(useDefault, getFieldEditorParent());
-            width.setEnabled(useDefault, getFieldEditorParent());
-            imageType.setEnabled(useDefault, getFieldEditorParent());
-            height.setEnabled(useDefault, getFieldEditorParent());
-        }
     }
 
     /**
@@ -240,18 +222,6 @@ public class TileSetControl extends FieldEditorPreferencePage {
             return createList(getList().getItems());
         }
 
-        @Override
-        protected void doLoad() {
-            String scales = (String) resource.getPersistentProperties().get(
-                    PreferenceConstants.P_TILESET_SCALES);
-            if (scales != null) {
-                String[] array = parseString(scales);
-                for( int i = 0; i < array.length; i++ ) {
-                    getList().add(array[i]);
-                }
-            }
-        }
-
         /**
          * Check if this zoom level has already been added
          * 
@@ -301,7 +271,7 @@ public class TileSetControl extends FieldEditorPreferencePage {
     }
 
     /**
-     * Object to represent tile-size input fields - defaults to 265
+     * Object to represent tile-size input fields - defaults to 256
      * 
      * @author jhudson
      * @since 1.2.0
@@ -324,6 +294,16 @@ public class TileSetControl extends FieldEditorPreferencePage {
                 boolean value, Composite fieldEditorParent ) {
             super(pTilesetOnOff, tileSet_dialog_onoff_desc, fieldEditorParent);
             getChangeControl(getFieldEditorParent()).setSelection(value);
+            this.getChangeControl(getFieldEditorParent()).addSelectionListener(
+                    new SelectionListener(){
+                        public void widgetSelected( SelectionEvent event ) {
+                            editor.setEnabled(getBooleanValue(), getFieldEditorParent());
+                            width.setEnabled(getBooleanValue(), getFieldEditorParent());
+                            imageType.setEnabled(getBooleanValue(), getFieldEditorParent());
+                            height.setEnabled(getBooleanValue(), getFieldEditorParent());
+                        }
+                        public void widgetDefaultSelected( SelectionEvent event ) {}
+                    });
         }
 
         @Override

@@ -51,7 +51,6 @@ public class TileSetPropertyPage extends PropertyPage implements IWorkbenchPrope
             this.tileControlPage = new TileSetControl(resource);
         }
         tileControlPage.createControl(parent);
-
         return tileControlPage.getControl();
     }
 
