@@ -131,18 +131,18 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
             tileset.setBoundingBox(bbox);
             tileset.setCoorindateReferenceSystem(srs);
 
-            Integer width = (Integer) resource
+            Integer width = Integer.parseInt((String) resource
                     .getPersistentProperties()
-                    .get(PreferenceConstants.P_TILESET_WIDTH);
-            Integer height = (Integer) resource
+                    .get(PreferenceConstants.P_TILESET_WIDTH));
+            Integer height = Integer.parseInt((String) resource
                     .getPersistentProperties()
-                    .get(PreferenceConstants.P_TILESET_HEIGHT);
+                    .get(PreferenceConstants.P_TILESET_HEIGHT));
 
-            if (width == 0) {
+            if (width == null) {
                 width = PreferenceConstants.DEFAULT_TILE_SIZE;
             }
 
-            if (height == 0) {
+            if (height == null) {
                 height = PreferenceConstants.DEFAULT_TILE_SIZE;
             }
 

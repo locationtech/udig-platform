@@ -52,13 +52,6 @@ public class TileSetPropertyPage extends PropertyPage implements IWorkbenchPrope
         }
         tileControlPage.createControl(parent);
 
-        String scales = (String) resource
-                .getPersistentProperties().get(PreferenceConstants.P_TILESET_SCALES);
-
-        if ("".equals(scales)) { //$NON-NLS-1$
-            tileControlPage.loadDefaults();
-        }
-
         return tileControlPage.getControl();
     }
 

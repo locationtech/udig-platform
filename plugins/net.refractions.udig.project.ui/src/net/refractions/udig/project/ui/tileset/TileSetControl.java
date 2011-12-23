@@ -28,8 +28,10 @@ import net.refractions.udig.project.ui.preferences.PreferenceConstants;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.ListEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
+import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Composite;
@@ -43,17 +45,16 @@ import org.eclipse.swt.widgets.Display;
  */
 public class TileSetControl extends FieldEditorPreferencePage {
 
-    //private String resourceName;
+    // private String resourceName;
     private ZoomItemListEditor editor;
     private SizeStringFieldEditor width;
     private SizeStringFieldEditor height;
     private ImageTypeFieldEditor imageType;
-    private BooleanFieldEditor checkbox;
+    private TileSetBooleanFieldEditor checkbox;
     private IGeoResource resource;
 
-    public TileSetControl( final IGeoResource resource) {
+    public TileSetControl( final IGeoResource resource ) {
         super(GRID);
-        //setPreferenceStore(store);
         setDescription(Messages.TileSet_dialog_description);
         noDefaultAndApplyButton();
         this.resource = resource;
@@ -61,29 +62,62 @@ public class TileSetControl extends FieldEditorPreferencePage {
 
     @Override
     protected void createFieldEditors() {
-        checkbox = new BooleanFieldEditor(PreferenceConstants.P_TILESET_ON_OFF,
-                Messages.TileSet_dialog_onoff_desc, getFieldEditorParent());
-        width = new SizeStringFieldEditor(PreferenceConstants.P_TILESET_WIDTH,
-                Messages.TileSet_dialog_width, getFieldEditorParent());
-        height = new SizeStringFieldEditor(PreferenceConstants.P_TILESET_HEIGHT,
-                Messages.TileSet_dialog_heigth, getFieldEditorParent());
-        imageType =  new ImageTypeFieldEditor(PreferenceConstants.P_TILESET_IMAGE_TYPE,
-                Messages.TileSet_dialog_image_type, getFieldEditorParent());
-        editor = new ZoomItemListEditor(PreferenceConstants.P_TILESET_SCALES,
-                Messages.TileSet_dialog_zoom_desc, getFieldEditorParent());
+        Map<String, Serializable> props = resource.getPersistentProperties();
 
-        Map<String, Serializable> m = resource.getPersistentProperties();
-        Boolean enabled = (Boolean) m.get(PreferenceConstants.P_TILESET_ON_OFF);
+        String heightValue = (String) props.get(PreferenceConstants.P_TILESET_HEIGHT);
+        if (heightValue == null) {
+            heightValue = PreferenceConstants.DEFAULT_TILE_SIZE.toString();
+        }
 
-        if (enabled == null){
+        String widthValue = (String) props.get(PreferenceConstants.P_TILESET_WIDTH);
+        if (widthValue == null) {
+            widthValue = PreferenceConstants.DEFAULT_TILE_SIZE.toString();
+        }
+
+        String imageTypeValue = (String) props.get(PreferenceConstants.P_TILESET_IMAGE_TYPE);
+
+        if (imageTypeValue == null) {
+            imageTypeValue = PreferenceConstants.DEFAULT_IMAGE_TYPE;
+        }
+
+        Boolean enabled = (Boolean) props.get(PreferenceConstants.P_TILESET_ON_OFF);
+
+        if (enabled == null) {
             enabled = true;
         }
+
+        String scales = (String) props.get(PreferenceConstants.P_TILESET_SCALES);
+
+        if (scales == null) {
+            scales = ""; //$NON-NLS-1$
+        }
+
+        System.out.println("ENABLE: " + enabled);
+        System.out.println("HEIGHT: " + heightValue);
+        System.out.println("WIDTH : " + widthValue);
+        System.out.println("IMAGE : " + imageTypeValue);
+        System.out.println("SCALES: " + scales);
+
+        checkbox = new TileSetBooleanFieldEditor(PreferenceConstants.P_TILESET_ON_OFF,
+                Messages.TileSet_dialog_onoff_desc, enabled, getFieldEditorParent());
+        width = new SizeStringFieldEditor(PreferenceConstants.P_TILESET_WIDTH,
+                Messages.TileSet_dialog_width, widthValue, getFieldEditorParent());
+        height = new SizeStringFieldEditor(PreferenceConstants.P_TILESET_HEIGHT,
+                Messages.TileSet_dialog_heigth, heightValue, getFieldEditorParent());
+        imageType = new ImageTypeFieldEditor(PreferenceConstants.P_TILESET_IMAGE_TYPE,
+                Messages.TileSet_dialog_image_type, imageTypeValue, getFieldEditorParent());
+        editor = new ZoomItemListEditor(PreferenceConstants.P_TILESET_SCALES,
+                Messages.TileSet_dialog_zoom_desc, scales, getFieldEditorParent());
 
         width.setEnabled(enabled, getFieldEditorParent());
         height.setEnabled(enabled, getFieldEditorParent());
         editor.setEnabled(enabled, getFieldEditorParent());
         imageType.setEnabled(enabled, getFieldEditorParent());
-        
+
+        if (scales == null || "".equals(scales)) { //$NON-NLS-1$
+            loadDefaults();
+        }
+
         addField(checkbox);
         addField(width);
         addField(height);
@@ -95,7 +129,7 @@ public class TileSetControl extends FieldEditorPreferencePage {
     public void propertyChange( PropertyChangeEvent event ) {
         super.propertyChange(event);
         if (event.getSource().equals(checkbox)) {
-            boolean useDefault = ((Boolean) event.getNewValue()).booleanValue();
+            boolean useDefault = checkbox.getBooleanValue();
             editor.setEnabled(useDefault, getFieldEditorParent());
             width.setEnabled(useDefault, getFieldEditorParent());
             imageType.setEnabled(useDefault, getFieldEditorParent());
@@ -111,29 +145,22 @@ public class TileSetControl extends FieldEditorPreferencePage {
         height.doLoadDefault();
         imageType.doLoadDefault();
         editor.doLoadDefault();
-        checkbox.loadDefault();
+        checkbox.doLoadDefault();
     }
-    
+
     @Override
     public boolean performOk() {
-        //checkbox
-        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_ON_OFF, checkbox.getBooleanValue());
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_ON_OFF,
+                checkbox.getBooleanValue());
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_WIDTH,
+                width.getStringValue());
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_HEIGHT,
+                height.getStringValue());
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_IMAGE_TYPE,
+                imageType.getStringValue());
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_SCALES,
+                editor.getAsListString());
 
-        //width
-        resource.getPersistentProperties()
-        .put(PreferenceConstants.P_TILESET_WIDTH, width.getSize());
-
-        //height
-        resource.getPersistentProperties()
-        .put(PreferenceConstants.P_TILESET_HEIGHT, height.getSize());
-
-        //image type
-        resource.getPersistentProperties()
-        .put(PreferenceConstants.P_TILESET_IMAGE_TYPE, imageType.getStringValue());
-
-        //scales
-        resource.getPersistentProperties()
-        .put(PreferenceConstants.P_TILESET_SCALES, editor.getAsListString());
         return true;
     }
 
@@ -145,10 +172,11 @@ public class TileSetControl extends FieldEditorPreferencePage {
      * @since 1.2.0
      */
     protected class ZoomItemListEditor extends ListEditor {
-        protected ZoomItemListEditor( String name, String labelText, Composite parent ) {
+        protected ZoomItemListEditor( String name, String labelText, String scales, Composite parent ) {
             super(name, labelText, parent);
             getUpButton().setVisible(false);
             getDownButton().setVisible(false);
+            loadScales(parseString(scales));
         }
 
         @Override
@@ -178,6 +206,17 @@ public class TileSetControl extends FieldEditorPreferencePage {
         }
 
         /**
+         * Load in an arbitrary string - should be scales
+         * 
+         * @param scales
+         */
+        private void loadScales( String[] scales ) {
+            for( String scale : scales ) {
+                getList().add(scale);
+            }
+        }
+
+        /**
          * Calculate the resolutions as might be found in the header of a WMS-C capabilities
          * document. Uses the viewport scales for default calculations.
          */
@@ -196,24 +235,21 @@ public class TileSetControl extends FieldEditorPreferencePage {
 
             setEnabled(false, getFieldEditorParent());
         }
-        
-        public String getAsListString(){
+
+        public String getAsListString() {
             return createList(getList().getItems());
         }
 
         @Override
         protected void doLoad() {
-            
-            String scales = (String) resource
-                    .getPersistentProperties().get(PreferenceConstants.P_TILESET_SCALES);
-            
-//            if (list != null) {
-//                String s = getPreferenceStore().getString(getPreferenceName());
-//                String[] array = parseString(s);
-//                for (int i = 0; i < array.length; i++) {
-//                    list.add(array[i]);
-//                }
-//            }
+            String scales = (String) resource.getPersistentProperties().get(
+                    PreferenceConstants.P_TILESET_SCALES);
+            if (scales != null) {
+                String[] array = parseString(scales);
+                for( int i = 0; i < array.length; i++ ) {
+                    getList().add(array[i]);
+                }
+            }
         }
 
         /**
@@ -252,9 +288,9 @@ public class TileSetControl extends FieldEditorPreferencePage {
      * @since 1.2.0
      */
     private class SizeStringFieldEditor extends StringFieldEditor {
-        public SizeStringFieldEditor( String name, String labelText, Composite parent ) {
+        public SizeStringFieldEditor( String name, String labelText, String value, Composite parent ) {
             super(name, labelText, parent);
-            getTextControl().setText(PreferenceConstants.DEFAULT_TILE_SIZE.toString());
+            getTextControl().setText(value);
         }
 
         @Override
@@ -262,18 +298,8 @@ public class TileSetControl extends FieldEditorPreferencePage {
             getTextControl().setText(PreferenceConstants.DEFAULT_TILE_SIZE.toString());
             setEnabled(false, getFieldEditorParent());
         }
-        
-        public int getSize() {
-            int retInt = PreferenceConstants.DEFAULT_TILE_SIZE;
-            try {
-                Integer.parseInt(getStringValue());
-            } catch (NumberFormatException nfe) {
-                nfe.printStackTrace();
-            }
-            return retInt;
-        }
     }
-    
+
     /**
      * Object to represent tile-size input fields - defaults to 265
      * 
@@ -281,15 +307,29 @@ public class TileSetControl extends FieldEditorPreferencePage {
      * @since 1.2.0
      */
     private class ImageTypeFieldEditor extends StringFieldEditor {
-        public ImageTypeFieldEditor( String name, String labelText, Composite parent ) {
+        public ImageTypeFieldEditor( String name, String labelText, String value, Composite parent ) {
             super(name, labelText, parent);
-            getTextControl().setText(PreferenceConstants.DEFAULT_IMAGE_TYPE);
+            getTextControl().setText(value);
         }
 
         @Override
         protected void doLoadDefault() {
             getTextControl().setText(PreferenceConstants.DEFAULT_IMAGE_TYPE);
             setEnabled(false, getFieldEditorParent());
+        }
+    }
+
+    private class TileSetBooleanFieldEditor extends BooleanFieldEditor {
+        public TileSetBooleanFieldEditor( String pTilesetOnOff, String tileSet_dialog_onoff_desc,
+                boolean value, Composite fieldEditorParent ) {
+            super(pTilesetOnOff, tileSet_dialog_onoff_desc, fieldEditorParent);
+            getChangeControl(getFieldEditorParent()).setSelection(value);
+        }
+
+        @Override
+        protected void doLoadDefault() {
+            setPresentsDefaultValue(true);
+            getChangeControl(getFieldEditorParent()).setSelection(false);
         }
     }
 }
