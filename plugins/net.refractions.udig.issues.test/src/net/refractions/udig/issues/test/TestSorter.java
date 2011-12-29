@@ -7,7 +7,9 @@ import net.refractions.udig.issues.IIssuesViewSorter;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.junit.Ignore;
 
+@Ignore
 public class TestSorter {
 
     public static class Sorter1 implements IIssuesViewSorter {

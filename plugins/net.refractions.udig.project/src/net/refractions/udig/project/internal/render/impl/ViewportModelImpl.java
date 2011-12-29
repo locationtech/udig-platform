@@ -14,7 +14,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.boundary.IBoundaryService;
+import net.refractions.udig.aoi.IAOIService;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Map;
@@ -769,8 +769,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             ReferencedEnvelope bounds2 = new ReferencedEnvelope(getCRS());
             
             // check the limit service
-            IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-            ReferencedEnvelope extent = boundaryService.getExtent();
+            IAOIService aOIService = PlatformGIS.getAOIService();
+            ReferencedEnvelope extent = aOIService.getExtent();
             
             if (extent != null && !extent.isNull() && !extent.isEmpty()) {
             	bounds2 = new ReferencedEnvelope(extent);

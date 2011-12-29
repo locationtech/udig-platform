@@ -48,8 +48,8 @@ import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.operation.linemerge.LineMerger;
 import com.vividsolutions.jts.operation.polygonize.Polygonizer;
 
+import eu.udig.tools.feature.utils.i18n.*;
 import eu.udig.tools.geometry.merge.MergeStrategy;
-import eu.udig.tools.internal.geotools.utils.i18n.*;
 
 /**
  * Geometry utility methods

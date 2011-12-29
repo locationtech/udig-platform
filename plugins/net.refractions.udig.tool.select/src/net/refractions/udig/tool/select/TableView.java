@@ -24,13 +24,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.boundary.BoundaryListener;
-import net.refractions.udig.boundary.IBoundaryService;
+import net.refractions.udig.aoi.AOIListener;
+import net.refractions.udig.aoi.IAOIService;
 import net.refractions.udig.core.IBlockingProvider;
 import net.refractions.udig.core.IProvider;
 import net.refractions.udig.core.StaticBlockingProvider;
 import net.refractions.udig.core.filter.AdaptingFilter;
 import net.refractions.udig.core.filter.AdaptingFilterFactory;
+import net.refractions.udig.internal.ui.UDIGDropHandler;
 import net.refractions.udig.project.EditManagerEvent;
 import net.refractions.udig.project.IEditManagerListener;
 import net.refractions.udig.project.ILayer;
@@ -61,6 +62,8 @@ import net.refractions.udig.project.ui.tool.ToolsConstants;
 import net.refractions.udig.tool.select.internal.Messages;
 import net.refractions.udig.tool.select.internal.ZoomSelection;
 import net.refractions.udig.ui.FeatureTableControl;
+import net.refractions.udig.ui.IDropAction;
+import net.refractions.udig.ui.IDropHandlerListener;
 import net.refractions.udig.ui.IFeatureTableLoadingListener;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.ProgressManager;
@@ -186,8 +189,8 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
     protected static final String ANY = Messages.TableView_search_any;
     protected static final String CQL = "CQL";
     
-    /** filter the content by the current boundary */
-    private boolean boundaryFilter = false;
+    /** filter the content by the current AOI */
+    private boolean aoiFilter = false;
 
 
     /** Used to show the current feature source */
@@ -208,7 +211,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
      */
     private ISelectionListener workbenchSelectionListener = new ISelectionListener(){
         public void selectionChanged( IWorkbenchPart part, ISelection selection ) {
-            if (part instanceof MapEditor) {
+            if (part instanceof MapPart) {
                 editorActivated((MapPart) part);
                 return; // we already have sorted out map / layer
             }
@@ -245,6 +248,8 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                         layerSelected(selectedLayer);
                     }
                 });
+                
+                //todo add layer event
             }
         }
     };
@@ -306,7 +311,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
 
 	private Text searchWidget;
 
-    private BoundaryListener boundaryServiceListener;
+    private AOIListener aoiServiceListener;
 
     /**
      * Construct <code>SelectView</code>.
@@ -364,18 +369,18 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
             
         });
         
-        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
+        IAOIService aOIService = PlatformGIS.getAOIService();
         
-        boundaryServiceListener = new BoundaryListener(){
+        aoiServiceListener = new AOIListener(){
             @Override
             public void handleEvent( Event event ) {
-                if(isBoundaryFilter()){
+                if(isAOIFilter()){
                     reloadFeatures(layer);
                 }
             }            
         };
         
-        boundaryService.addListener(boundaryServiceListener);
+        aOIService.addListener(aoiServiceListener);
         
         table.addLoadingListener(new IFeatureTableLoadingListener(){
 
@@ -405,7 +410,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         
         page = getSite().getPage();
         
-        if( page.getActiveEditor() instanceof MapEditor ){            
+        if( page.getActiveEditor() instanceof MapPart ){            
             editorActivated( (MapPart) page.getActiveEditor() );
         }
         
@@ -417,14 +422,15 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         getSite().setSelectionProvider( this );
 
         ApplicationGIS.getToolManager().registerActionsWithPart(this);
+
     }
     
-    public boolean isBoundaryFilter() {
-        return boundaryFilter;
+    public boolean isAOIFilter() {
+        return aoiFilter;
     }
 
-    public void setBoundaryFilter( boolean boundaryFilter ) {
-        this.boundaryFilter = boundaryFilter;
+    public void setAOIFilter( boolean aoiFilter ) {
+        this.aoiFilter = aoiFilter;
         reloadFeatures(layer);
     }
 
@@ -578,6 +584,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         IAction action = deleteAction;
         getViewSite().getActionBars().setGlobalActionHandler(ActionFactory.DELETE.getId(), action);
         service.registerAction(action);
+        
 
     }
 
@@ -673,13 +680,17 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         public void refresh( LayerEvent event ) {
             final ILayer notifierLayer = event.getSource();
             assert layer == notifierLayer;
-
+            
             switch( event.getType() ) {
             case EDIT_EVENT:
                 if (!editing) {
                     if (event.getNewValue() == null) {
+                        // there are now bounds associated with this event so we are going to have to reload everyone!
+                        reloadFeatures(notifierLayer);
                         return;
                     }
+                    // okay we will add these bounds to the list of "updates" and updateTable can fetch everything
+                    // when we are back to being "active"
                     updates.add((FeatureEvent) event.getNewValue());
                     if (active) {
                         updateTable(notifierLayer);
@@ -829,9 +840,9 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         if( table!=null)
             table.dispose();
         
-        if( boundaryServiceListener!=null){
-            IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-            boundaryService.removeListener(boundaryServiceListener);
+        if( aoiServiceListener!=null){
+            IAOIService aOIService = PlatformGIS.getAOIService();
+            aOIService.removeListener(aoiServiceListener);
         }
         
         super.dispose();
@@ -901,10 +912,12 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                     Envelope bounds = event.getBounds();
                     switch( event.getEventType() ) {
                     case FeatureEvent.FEATURES_ADDED:
-                        if( addedBounds==null ){
-                            addedBounds=new Envelope(bounds);
-                        }else{
-                            addedBounds.expandToInclude(bounds);
+                        if( bounds != null ){
+                            if( addedBounds==null ){
+                                addedBounds=new Envelope(bounds);
+                            }else{
+                                addedBounds.expandToInclude(bounds);
+                            }
                         }
                         break;
                     case FeatureEvent.FEATURES_REMOVED:
@@ -915,14 +928,14 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                         return;
                         
                     case FeatureEvent.FEATURES_CHANGED:
-                        if( event.getBounds()==null )
+                        if (event.getBounds() == null) {
                             return;
-                        if( modifiedBounds==null ){
-                            modifiedBounds=new Envelope(bounds);
-                        }else{
+                        }
+                        if (modifiedBounds == null) {
+                            modifiedBounds = new Envelope(bounds);
+                        } else {
                             modifiedBounds.expandToInclude(bounds);
                         }
-                        
                         break;
 
                     default:
@@ -931,6 +944,17 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                 }
                 updates.clear();
             }
+            // check if we actually go something out of all that
+            if( addedBounds == null && modifiedBounds == null){
+                // fine we did not get anything we will need to reload
+                if( active ){
+                    reloadFeatures(notifierLayer);
+                }else{
+                    reloadNeeded=true;
+                }
+                return;
+            }
+            // okay now we will do a query for everything in the added or modified bounds
             FeatureSource<SimpleFeatureType, SimpleFeature> source = notifierLayer.getResource(FeatureSource.class, ProgressManager.instance().get());
             SimpleFeatureType schema=source.getSchema();
             
@@ -941,7 +965,6 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
             String name = schema.getGeometryDescriptor().getName().getLocalPart();
 			// add new features
             if( addedBounds!=null ){
-            	
             	double minx=addedBounds.getMinX();
 				double miny=addedBounds.getMinY();
 				double maxx=addedBounds.getMaxX();
@@ -987,24 +1010,24 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         }
     }
     
-    private Filter addBoundaryFilter(Filter filter, CoordinateReferenceSystem dataCRS){
-        IBoundaryService boundaryService = PlatformGIS.getBoundaryService();
-        Geometry geometry = boundaryService.getGeometry();
+    private Filter addAOIFilter(Filter filter, CoordinateReferenceSystem dataCRS){
+        IAOIService aOIService = PlatformGIS.getAOIService();
+        Geometry geometry = aOIService.getGeometry();
         
-        if(boundaryService.getExtent() == null)
+        if(aOIService.getExtent() == null)
             return filter;
         
         if(geometry == null){
             // note we could make a BBOX query here and go faster
-            geometry = JTS.toGeometry( boundaryService.getExtent());
+            geometry = JTS.toGeometry( aOIService.getExtent());
             if(geometry == null){
                 return filter; // no change!
             }
         }
-        CoordinateReferenceSystem boundaryCRS = boundaryService.getCrs();
-        if( boundaryCRS != null && !CRS.equalsIgnoreMetadata(boundaryCRS, dataCRS )){
+        CoordinateReferenceSystem aoiCRS = aOIService.getCrs();
+        if( aoiCRS != null && !CRS.equalsIgnoreMetadata(aoiCRS, dataCRS )){
             try {
-                MathTransform transform = CRS.findMathTransform( boundaryCRS, dataCRS);
+                MathTransform transform = CRS.findMathTransform( aoiCRS, dataCRS);
                 geometry = JTS.transform(geometry, transform);
             }
             catch( TransformException outOfBounds ){
@@ -1017,9 +1040,9 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         FilterFactory2 ff = (FilterFactory2) CommonFactoryFinder.getFilterFactory(null);
         
         String geomProperty = layer.getSchema().getGeometryDescriptor().getLocalName();
-        Filter boundaryFilter = ff.intersects(ff.property(geomProperty), ff.literal(geometry));
+        Filter aoiFilter = ff.intersects(ff.property(geomProperty), ff.literal(geometry));
         
-        return ff.and(boundaryFilter, filter );
+        return ff.and(aoiFilter, filter );
     }
 
     protected void reloadFeatures( final ILayer notifierLayer ) {
@@ -1064,9 +1087,9 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         final  FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = notifierLayer.getResource(FeatureSource.class, null);
         final List<String> queryAtts = obtainQueryAttributesForFeatureTable(schema);
 
-        //if the filter action is true, filter our results by the Boundary service
-        if(isBoundaryFilter()){
-            filter = addBoundaryFilter(filter, schema.getCoordinateReferenceSystem());
+        //if the filter action is true, filter our results by the AOI service
+        if(isAOIFilter()){
+            filter = addAOIFilter(filter, schema.getCoordinateReferenceSystem());
         }
           final Query query = new DefaultQuery(schema.getName().getLocalPart(), filter, queryAtts.toArray(new String[0]));
           FeatureCollection<SimpleFeatureType, SimpleFeature>  featuresF = featureSource.getFeatures(query);        
@@ -1212,7 +1235,9 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         }
         
     }
-    
+    /**
+     * Delete Action used to delete the currently selected feature.
+     */
     private class DeleteAction extends Action{
         public DeleteAction(){
             setActionDefinitionId("org.eclipse.ui.edit.delete"); //$NON-NLS-1$

@@ -38,7 +38,7 @@ public class Messages extends NLS {
     public static String Select_Title;
     public static String Select_Description;
     public static String Zoom_To_Selection;
-    public static String Group_Boundary;
+    public static String Group_AOI;
     public static String Navigate_Selection;
 	static {
 		// initialize resource bundle

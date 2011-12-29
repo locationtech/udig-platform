@@ -5,6 +5,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
 
 import junit.framework.TestCase;
+import net.refractions.udig.tools.edit.EditTestControl;
 
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.widgets.Display;
@@ -37,6 +38,8 @@ public class PathToPathIteratorAdapterTest extends TestCase {
         quadTo(40,40, 50, 10);//3
         close();//5
         
+        if( EditTestControl.DISABLE ) return;
+
         PathToPathIteratorAdapter pi=new PathToPathIteratorAdapter(p);
         PathIterator i = gp.getPathIterator(new AffineTransform());
         

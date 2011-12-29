@@ -115,7 +115,7 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
             if (dashArray != null) {
                 dash = getDashString(dashArray);
             } else {
-                dash = "";
+                dash = ""; //$NON-NLS-1$
             }
             // dashoffset
             dashOffset = stroke.getDashOffset().evaluate(null, String.class);

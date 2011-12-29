@@ -17,11 +17,11 @@ import net.refractions.udig.project.internal.EditManager;
 import org.eclipse.jface.viewers.StructuredSelection;
 
 class SaveMapRunnable implements Runnable{
-    	private final MapEditor mapEditor;
+    	private final MapEditorPart mapEditor;
     	private final boolean[] success;
     	
 
-		public SaveMapRunnable(MapEditor mapEditor, boolean[] success) {
+		public SaveMapRunnable(MapEditorPart mapEditor, boolean[] success) {
 			super();
 			this.mapEditor = mapEditor;
 			this.success = success;

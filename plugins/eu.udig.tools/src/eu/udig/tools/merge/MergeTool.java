@@ -51,9 +51,7 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
 import eu.udig.tools.internal.i18n.Messages;
-import eu.udig.tools.internal.util.StatusBar;
-import eu.udig.tools.merge.internal.MergeContext;
-import eu.udig.tools.merge.internal.MergeEventBehaviour;
+import eu.udig.tools.internal.ui.util.StatusBar;
 import eu.udig.tools.merge.internal.view.MergeView;
 
 /**
@@ -70,8 +68,8 @@ public class MergeTool extends AbstractEditTool {
 
 	private MergeContext		mergeContext	= new MergeContext();
 
-	private static final String	EXTENSION_ID	= "es.axios.udig.ui.editingtools.merge.MergeTool";	//$NON-NLS-1$
-
+	private static final String	EXTENSION_ID	= "eu.udig.tools.merge.MergeTool";	//$NON-NLS-1$
+	
 	public String getExtensionID() {
 
 		return EXTENSION_ID;

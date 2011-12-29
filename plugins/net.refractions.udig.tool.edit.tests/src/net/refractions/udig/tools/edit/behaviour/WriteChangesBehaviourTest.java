@@ -10,6 +10,7 @@ import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.TestLayer;
+import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 import net.refractions.udig.tools.edit.support.EditGeom;
@@ -80,7 +81,8 @@ public class WriteChangesBehaviourTest extends TestCase {
      * Test method for 'net.refractions.udig.tools.edit.behaviour.SetEditFeatureBehaviour.run(EditToolHandler)'
      */
     public void testPolygon() throws Exception {
-
+        if( EditTestControl.DISABLE ) return;
+        
         AcceptChangesBehaviour behaviour;
         FeatureIterator<SimpleFeature> features;
         SimpleFeature next;
@@ -144,7 +146,8 @@ public class WriteChangesBehaviourTest extends TestCase {
      * Test method for 'net.refractions.udig.tools.edit.behaviour.SetEditFeatureBehaviour.run(EditToolHandler)'
      */
     public void testMultiPolygon() throws Exception {
-
+        if( EditTestControl.DISABLE ) return;
+        
         AcceptChangesBehaviour behaviour;
         FeatureIterator<SimpleFeature> features;
         SimpleFeature next;
@@ -207,6 +210,8 @@ public class WriteChangesBehaviourTest extends TestCase {
     }
 
     public void testLines() throws Exception {
+        if( EditTestControl.DISABLE ) return;
+        
         AcceptChangesBehaviour behaviour;
         FeatureIterator<SimpleFeature> features;
         SimpleFeature next;
@@ -260,6 +265,8 @@ public class WriteChangesBehaviourTest extends TestCase {
     }
     
     public void testMultiLine() throws Exception {
+        if( EditTestControl.DISABLE ) return;
+        
         AcceptChangesBehaviour behaviour;
         FeatureIterator<SimpleFeature> features;
         SimpleFeature next;
@@ -313,6 +320,8 @@ public class WriteChangesBehaviourTest extends TestCase {
     }
 
     public void testPoint() throws Exception {
+        if( EditTestControl.DISABLE ) return;
+        
         AcceptChangesBehaviour behaviour=new AcceptChangesBehaviour(Point.class, false);
 
         EditBlackboard bb = handler.getEditBlackboard();
@@ -399,6 +408,8 @@ public class WriteChangesBehaviourTest extends TestCase {
      * @throws Exception
      */
     public void testMultiPointOnBlackboard() throws Exception {
+        if( EditTestControl.DISABLE ) return;
+        
         EditBlackboard bb = handler.getEditBlackboard();
         EditGeom geom = bb.newGeom(feature.getID(), ShapeType.POINT);
         bb.addPoint(10,10,geom.getShell());

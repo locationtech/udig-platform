@@ -99,7 +99,7 @@ public class DrawingTest extends TestCase {
         }
     }
 
-    public void testPoint() throws Exception {
+    public void XtestPoint() throws Exception {
         Drawing d = Drawing.create();
         Display display = Display.getCurrent();
         GeometryFactory factory = new GeometryFactory();

@@ -11,29 +11,65 @@
 	<groupId>net.refractions</groupId>
 	<artifactId>net.refractions.udig.catalog.tests</artifactId>
 	<version>1.2.0-SNAPSHOT</version>
+	
 	<packaging>eclipse-test-plugin</packaging>
 
+	<profiles>
+		
+		<profile>
+			<id>Mac OS</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<properties>
+				<tycho.test.OSspecific>-XstartOnFirstThread</tycho.test.OSspecific>
+			</properties>
+		</profile>
+		
+		<profile>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<tycho.test.OSspecific />
+			</properties>
+		</profile>
+		
+	</profiles>
+	
+	<properties>
+		<tycho.test.jvmArgs>-Xmx128m -XX:MaxPermSize=256m -Dsdtcore.headless ${tycho.test.OSspecific}</tycho.test.jvmArgs>
+	</properties>
+	
+	
 	<build>
-
 		<plugins>
+			
 			<plugin>
-
-				<groupId>${tycho-provider}</groupId>
-				<artifactId>maven-osgi-test-plugin</artifactId>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-					<!-- testSuite>net.refractions.udig.libs.tests</testSuite> <testClass>net.refractions.udig.libs.tests.LibsTest</testClass> 
-						<testClass>net.refractions.udig.libs.tests.GeoToolsTest</testClass -->
-
-					<argLine>-debug</argLine>
-					<useUIHarness>false</useUIHarness>
-					<showEclipseLog>true</showEclipseLog>
-
+					<useUIHarness>true</useUIHarness>
+					<product>net.refractions.udig-product</product>
+					<application>org.eclipse.ui.ide.workbench</application>
+					<argLine>${tycho.test.jvmArgs}</argLine>
 				</configuration>
-
 			</plugin>
+			
+			<plugin>
+				<groupId>${tycho-provider}</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<environments combine.self="override">
+							</environments>
+				</configuration>
+			</plugin>
+			
 		</plugins>
-
 	</build>
 
 </project>

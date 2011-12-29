@@ -8,14 +8,16 @@ export BASE=`dirname $0`
 export INSTALLER=${BASE}/installer
 export TARGET=${BASE}/target
 #export TARGET=${BASE}/../features/net.refractions.udig-product/target/products/
-export VERSION=1.3.0
+export VERSION=1.3.1
 export BUILD=${BASE}/build
 
 # net.refractions.udig.libs "qualifier" for SDK (used to update libs source reference
 # example: TAG=1.2.3
 # example: QUALIFIER=1.2.2.201107241506
-export TAG=1.2.3
-export QUALIFIER=1.2.3.201107241506
+export TAG=1.3.1
+
+# grab the qualifier after doing your target export; it is based on todays date
+export QUALIFIER=1.3.1.201107241506
 
 # Build Resources
 export JRE=${BASE}/jre

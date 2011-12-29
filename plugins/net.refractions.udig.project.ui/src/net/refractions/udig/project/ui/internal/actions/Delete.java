@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -28,6 +29,7 @@ import net.refractions.udig.core.Pair;
 import net.refractions.udig.core.filter.AdaptingFilter;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.IProjectElement;
 import net.refractions.udig.project.command.MapCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.command.factory.EditCommandFactory;
@@ -52,10 +54,12 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -69,12 +73,90 @@ import org.opengis.feature.simple.SimpleFeature;
  * @since 0.3
  */
 public class Delete extends UDIGGenericAction {
-
+    
     /**
      * Indicates whether to run the commands synchronously or not.
      */
     private boolean runSync = false;
+    private boolean canDeleteProjectElements;
 
+    public Delete( boolean canDeleteProjectElements){
+        this.canDeleteProjectElements = canDeleteProjectElements;
+    }
+    /**
+     * Run has been overriden to ignore deleting maps.
+     * <p>
+     * This is due to UDIG-1836 where it is noted that the default selection
+     * provided by a MapEditor is a MapImpl (and thus 90% of the time hitting delete
+     * will result in the map being removed).
+     * <p>
+     * The ProjectExplorer view and LayerView make use of their own delete action and thus are
+     * not effected here.
+     * 
+     * @see org.eclipse.ui.IActionDelegate#run(org.eclipse.jface.action.IAction)
+     */
+    public void run( IAction action ) {
+        ISelection sel = getSelection();
+        if (sel == null || sel.isEmpty() || !(sel instanceof IStructuredSelection)) {
+            return; // nothing selected to delete
+        }
+        IStructuredSelection selection = (IStructuredSelection) sel;
+        
+        /*
+         * Optimization for a set of objects in selection of the same nature. The goal: run an
+         * operation once over all selected objects.
+         */
+        ArrayList<Layer> layers = new ArrayList<Layer>(selection.size());
+        
+        Object firstElem = selection.iterator().next();
+        
+        Pair<Boolean, Integer> stateData; 
+        
+        if (canDeleteProjectElements && firstElem instanceof Project) {
+            stateData = showErrorMessage(selection.size(), (Project) firstElem);
+        } else if (canDeleteProjectElements && firstElem instanceof IProjectElement) {
+            stateData = showErrorMessage(selection.size(), (ProjectElement) firstElem);
+        } else if (firstElem instanceof Layer) {
+            stateData = showErrorMessage(selection.size(), (Layer) firstElem);
+        } else if (firstElem instanceof SimpleFeature) {
+            stateData = showErrorMessage(selection.size(), (SimpleFeature) firstElem);
+        } else if (firstElem instanceof AdaptingFilter) {
+            AdaptingFilter<?> f = (AdaptingFilter<?>) firstElem;
+            ILayer layer = (ILayer) f.getAdapter(ILayer.class);
+            stateData = showErrorMessage(selection.size(), layer,f);
+        } else {
+            stateData = null;
+        }
+        
+        if( stateData == null || stateData.getRight() == Window.CANCEL ){
+            return; // thanks for playing
+        }
+        
+        for( Iterator<?> iter = selection.iterator(); iter.hasNext(); ) {
+            Object element = iter.next();
+
+            if (canDeleteProjectElements && element instanceof Project) {
+                operate((Project) element, stateData);
+            } else if (canDeleteProjectElements && element instanceof IProjectElement) {
+                operate((ProjectElement) element, stateData);
+            } else if (element instanceof Layer) {
+                layers.add((Layer) element);
+            } else if (element instanceof SimpleFeature) {
+                operate((SimpleFeature) element, stateData);
+            }else if (element instanceof AdaptingFilter) {
+                AdaptingFilter<?> f = (AdaptingFilter<?>) element;
+                ILayer layer = (ILayer) f.getAdapter(ILayer.class);
+                operate(layer,f, stateData);
+            }
+        }
+
+        if (!layers.isEmpty()) {
+            operate(layers.toArray(new Layer[layers.size()]), stateData);
+        }
+
+        // layers = null;
+    }
+    
     /**
      * @see net.refractions.udig.project.ui.UDIGGenericAction#operate(net.refractions.udig.project.Layer)
      */
@@ -93,14 +175,16 @@ public class Delete extends UDIGGenericAction {
      * @see net.refractions.udig.project.ui.UDIGGenericAction#operate(net.refractions.udig.project.internal.Layer[])
      */
     @Override
-    protected void operate( Layer[] layers, Object c ) {
-
+    protected void operate( Layer[] layers, Object context ) {
+        Pair<Boolean, Integer> pair = (Pair<Boolean, Integer>) context;
+        if( pair == null || pair.right() == Window.CANCEL){
+            return; // nothing to do
+        }
         if (layers != null && layers.length > 0) {
             /*
              * Layers can exist in different maps. For each map the standalone command should be
              * used to remove only layers that are contained in this map.
              */
-
             HashMap<IMap, List<Layer>> distributor = new HashMap<IMap, List<Layer>>();
 
             for( Layer layer : layers ) {
@@ -142,13 +226,30 @@ public class Delete extends UDIGGenericAction {
         if (element == null)
             return;
         Pair<Boolean, Integer> pair = (Pair<Boolean, Integer>) context;
+        if( pair == null || pair.right() == Window.CANCEL){
+            return; // nothing to do
+        }
         boolean deleteFiles = pair.left();
         int returnCode = pair.right();
         doDelete(element, deleteFiles, returnCode);
     }
+    
+    @Override
+    protected Pair<Boolean, Integer> showErrorMessage( int size, ILayer layer, AdaptingFilter firstElement ) {
+        return new Pair<Boolean, Integer>(false,Window.OK);
+    }
+    @Override
+    protected Pair<Boolean, Integer> showErrorMessage( int size, Layer firstElement ) {
+        return new Pair<Boolean, Integer>(false,Window.OK);
+    }
+    
+    @Override
+    protected Pair<Boolean, Integer> showErrorMessage( int size, SimpleFeature firstElement ) {
+        return new Pair<Boolean, Integer>(false,Window.OK);
+    }
 
     @Override
-    protected Object showErrorMessage( int size, ProjectElement element ) {
+    protected Pair<Boolean, Integer> showErrorMessage( int size, ProjectElement element ) {
         String deleteOne = Messages.Delete_deleteElement;
         String name = element.getName();
         String deleteMany = Messages.Delete_deleteMultipleElements;
@@ -156,15 +257,16 @@ public class Delete extends UDIGGenericAction {
     }
 
     @Override
-    protected Object showErrorMessage( int size, Project element ) {
+    protected Pair<Boolean, Integer> showErrorMessage( int size, Project element ) {
         String deleteOne = Messages.Delete_deleteProject;
         String name = element.getName();
         String deleteMany = Messages.Delete_deleteMultipleProjects;
         return dialog(size, deleteOne, name, deleteMany);
     }
 
-    private Object dialog( int size, String deleteOne, String name, String deleteMany ) {
+    private Pair<Boolean, Integer> dialog( int size, String deleteOne, String name, String deleteMany ) {
         String message;
+        
         if (size == 1) {
             message = MessageFormat.format(deleteOne, name);
         } else {
@@ -178,18 +280,23 @@ public class Delete extends UDIGGenericAction {
         // backwards
         boolean deleteFiles = dialog.getToggleState();
         int returnCode = dialog.getReturnCode();
-        if (returnCode == 0) {
+        if (returnCode == Window.OK) {
             if (deleteFiles != getDoDelete()) {
                 setDoDelete(deleteFiles);
             }
             return Pair.create(deleteFiles, returnCode);
         } else {
-            return null;
+            // Window.CANCEL
+            return Pair.create(null, returnCode);
         }
     }
 
     @Override
-    protected void operate( ILayer layer, AdaptingFilter filter, Object c ) {
+    protected void operate( ILayer layer, AdaptingFilter filter, Object context ) {
+        Pair<Boolean, Integer> pair = (Pair<Boolean, Integer>) context;
+        if( pair == null || pair.right() == Window.CANCEL){
+            return; // nothing to do
+        }
         layer.getMap().sendCommandASync(new DeleteManyFeaturesCommand(layer, filter));
     }
 
@@ -256,8 +363,9 @@ public class Delete extends UDIGGenericAction {
     @SuppressWarnings("unchecked")
     @Override
     protected void operate( Project project, Object context ) {
-        if (project == null || context == null)
+        if (project == null || context == null){
             return;
+        }
         Pair<Boolean, Integer> pair = (Pair<Boolean, Integer>) context;
         boolean deleteFiles = pair.left();
         int returnCode = pair.right();

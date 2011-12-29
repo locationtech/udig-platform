@@ -17,8 +17,7 @@ import net.refractions.udig.project.geoselection.IGeoSelectionChangedListener;
 import net.refractions.udig.project.geoselection.IGeoSelectionEntry;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.internal.MapPart;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
@@ -288,8 +287,8 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
         // }
 
         public void partActivated( IWorkbenchPartReference partRef ) {
-            if (partRef.getPart(false) instanceof MapEditor) {
-                Map activeMap = ((MapPart) partRef.getPart(false)).getMap();
+            if (partRef.getPart(false) instanceof MapEditorPart) {
+                Map activeMap = ((MapEditorPart) partRef.getPart(false)).getMap();
                 PlatformGeoSelectionManager.this.setCurrentMap(activeMap);
             }
         }
@@ -300,7 +299,7 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
         }
 
         public void partClosed( IWorkbenchPartReference partRef ) {
-            if (partRef.getPart(false) instanceof MapEditor) {
+            if (partRef.getPart(false) instanceof MapEditorPart) {
                 System.out.println("MapEditor is closed");
 
                 if(!PlatformUI.getWorkbench().isClosing()){

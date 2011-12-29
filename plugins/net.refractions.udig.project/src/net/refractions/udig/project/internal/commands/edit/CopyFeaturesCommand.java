@@ -27,11 +27,13 @@ import java.util.Set;
 
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.ProjectPlugin;
+import net.refractions.udig.project.internal.impl.LayerImpl;
 import net.refractions.udig.project.internal.render.ViewportModel;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -90,6 +92,7 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
     }
 
     public void run( IProgressMonitor monitor ) throws Exception {
+        
         if (sourceLayer == null || destinationLayer == null)
             return;
         previousEnvelope = getMap().getViewportModel().getBounds();
@@ -185,6 +188,7 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
             	targetLayer.refresh(env);
             }
             getMap().getRenderManager().refresh(targetLayer, env);
+            
         } catch (IOException e) {
             throw (RuntimeException) new RuntimeException().initCause(e);
         } finally {
@@ -212,6 +216,7 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
         } else {
         	return false;
         }
+       
     }
 
     private MathTransform createMathTransform( ILayer sourceLayer, ILayer targetLayer ) {
@@ -338,6 +343,10 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
         @Override
         public int size() {
             return features.size();
+        }
+        
+        public ReferencedEnvelope getBounds() {
+            return features.getBounds();
         }
 
         Map<Iterator, FeatureIterator<SimpleFeature>> iterators = new HashMap<Iterator, FeatureIterator<SimpleFeature>>();

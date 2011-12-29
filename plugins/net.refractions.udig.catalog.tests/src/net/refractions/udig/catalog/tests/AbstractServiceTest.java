@@ -11,12 +11,12 @@ import net.refractions.udig.catalog.IServiceInfo;
 public abstract class AbstractServiceTest extends AbstractResolveTest {
     protected abstract IService getResolve();
 
-    public void testInfo() throws IOException {
+    public void xtestInfo() throws IOException {
         IServiceInfo info = getResolve().getInfo(null);
         assertNotNull("Info is required", info); //$NON-NLS-1$
     }
 
-    public void testInfoMonitor() throws IOException {
+    public void xtestInfoMonitor() throws IOException {
         FakeProgress monitor = new FakeProgress();
         IServiceInfo info = getResolve().getInfo(monitor);
         assertNotNull("Info is required", info); //$NON-NLS-1$
@@ -36,13 +36,13 @@ public abstract class AbstractServiceTest extends AbstractResolveTest {
         assertTrue("Took too long ... blocking?", (start + BLOCK) >= System.currentTimeMillis()); //$NON-NLS-1$
     }
 
-    public void testResolve() throws IOException {
+    public void xtestResolve() throws IOException {
         IServiceInfo info = getResolve().resolve(IServiceInfo.class, null);
         if (!isLeaf())
             assertTrue("May not have null info", info != null); //$NON-NLS-1$
     }
 
-    public void testResolveMonitor() throws IOException {
+    public void xtestResolveMonitor() throws IOException {
         FakeProgress monitor = new FakeProgress();
 
         monitor = new FakeProgress();

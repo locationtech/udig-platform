@@ -61,9 +61,9 @@ import org.opengis.filter.Filter;
 import com.vividsolutions.jts.geom.Geometry;
 
 import eu.udig.tools.internal.i18n.Messages;
-import eu.udig.tools.internal.util.InfoMessage;
-import eu.udig.tools.internal.util.LayerUtil;
-import eu.udig.tools.merge.internal.MergeFeatureBuilder;
+import eu.udig.tools.internal.ui.util.InfoMessage;
+import eu.udig.tools.internal.ui.util.LayerUtil;
+import eu.udig.tools.merge.MergeFeatureBuilder;
 
 /**
  * Merge Controls for composite

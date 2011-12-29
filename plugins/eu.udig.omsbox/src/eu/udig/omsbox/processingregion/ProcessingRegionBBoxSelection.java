@@ -84,14 +84,15 @@ public class ProcessingRegionBBoxSelection extends SimpleTool implements ModalTo
                 if (style == null) {
                     style = ProcessingRegionStyleContent.createDefault();
                 }
-                ProcessingRegion processinRegion = new ProcessingRegion(style.west, style.east, style.south, style.north, style.rows,
-                        style.cols);
-                ProcessingRegion newProcessingRegion = ProcessingRegion.adaptActiveRegionToEnvelope(newRegionBounds, processinRegion);
+                ProcessingRegion processinRegion = new ProcessingRegion(style.west, style.east, style.south, style.north,
+                        style.rows, style.cols);
+                ProcessingRegion newProcessingRegion = ProcessingRegion.adaptActiveRegionToEnvelope(newRegionBounds,
+                        processinRegion);
 
-                style.north = (float) newProcessingRegion.getNorth();
-                style.south = (float) newProcessingRegion.getSouth();
-                style.east = (float) newProcessingRegion.getEast();
-                style.west = (float) newProcessingRegion.getWest();
+                style.north = newProcessingRegion.getNorth();
+                style.south = newProcessingRegion.getSouth();
+                style.east = newProcessingRegion.getEast();
+                style.west = newProcessingRegion.getWest();
                 style.rows = newProcessingRegion.getRows();
                 style.cols = newProcessingRegion.getCols();
 
@@ -99,6 +100,7 @@ public class ProcessingRegionBBoxSelection extends SimpleTool implements ModalTo
 
                 processingRegionLayer.refresh(null);
 
+                newRegionBounds = newProcessingRegion.getEnvelope();
                 sendSelectionCommand(e, newRegionBounds);
             }
         }

@@ -116,7 +116,7 @@ public class StartupOpenMaps implements IStartup {
             if (!proceed) {
                 return;
             }
-            int numEditors = p.getInt(MapEditor.ID);
+            int numEditors = p.getInt(MapEditorWithPalette.ID);
             if (numEditors == 0)
                 return;
             final String title = Messages.StartupOpenMaps_openMapDialogTitle;
@@ -139,13 +139,13 @@ public class StartupOpenMaps implements IStartup {
      */
     private void openLastOpenMaps( IProgressMonitor monitor ) {
         IPreferenceStore p = ProjectUIPlugin.getDefault().getPreferenceStore();
-        int numEditors = p.getInt(MapEditor.ID);
+        int numEditors = p.getInt(MapEditorWithPalette.ID);
         monitor.beginTask(Messages.StartupOpenMaps_openMapDialogTitle, numEditors * 2 + 2);
-        p.setValue(MapEditor.ID, 0);
+        p.setValue(MapEditorWithPalette.ID, 0);
 
         for( int i = 0; i < numEditors; i++ ) {
             monitor.worked(1);
-            String id = MapEditor.ID + ":" + i; //$NON-NLS-1$
+            String id = MapEditorWithPalette.ID + ":" + i; //$NON-NLS-1$
             String name = p.getString(id);
             if (name == null || name.equals("")) //$NON-NLS-1$
                 continue;

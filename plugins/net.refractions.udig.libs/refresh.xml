@@ -36,7 +36,7 @@
 		<echo message="Jars = ${listjars}" />
 	</target>
 
-	<target name="build" depends="load_m2_deps,load-teradata-deps">
+	<target name="build" depends="load_m2_deps,load-teradata-deps,tools">
 		<description>Download the jars - used by a manual "clean"</description>
 		<available property="already_downloaded" type="dir" file="${lib}" />
 
@@ -49,9 +49,6 @@
 			<fileset refid="dependency.fileset" />
 		</copy>
 		
-		<!-- compiler needed for omsbox, needs to be in the plugins folder, but *NOT* on the classpath  -->
-		<get src="http://udig.refractions.net/files/downloads/jre/tools_1.6.0_25.jar" dest="${lib}/tools_1.6.0_25.jar"/>
-
 		<!-- (flat) copy downloaded source JARs (sources) to plugin directory ${libs_src_dir} -->
 		<!--
 		<copy todir="${libs_src_dir}" flatten="true" verbose="true">
@@ -64,7 +61,19 @@
 		-->
 		<!-- <eclipse.refreshLocal resource="net.refractions.udig.libs/lib" depth="infinite"/>	-->
 	</target>
-
+	
+	<target name="check-tools">
+	    <available file="${basedir}${file.separator}tools_1.6.0_25.jar" property="tools.present"/>
+	</target>
+	
+	<target 
+		name="tools" 
+		description="load the tools jar if needed"
+		depends="check-tools" unless="tools.present">
+		<!-- compiler needed for omsbox, needs to be in the plugins folder, but *NOT* on the classpath  -->
+		<get src="http://udig.refractions.net/files/downloads/jre/tools_1.6.0_25.jar" dest="${basedir}${file.separator}tools_1.6.0_25.jar"/>
+	</target>
+	
 	<target name="create" unless="already_downloaded">
 		<description>creates the lib directory if needed</description>
 		<mkdir dir="${lib}" />
@@ -110,6 +119,7 @@
 	<property name="teradata.plugin" value="${basedir}${file.separator}..${file.separator}eu.udig.libs.teradata"/>
 	<property name="teradata.ant.file" value="${teradata.plugin}${file.separator}refresh.xml"/>
 	<property name="teradata.ant.properties" value="${teradata.plugin}${file.separator}copy.properties"/>
+	
 	<target name="check-teradata-libs">
 	    <available file="${teradata.ant.file}" property="teradata.present"/>
 	</target>

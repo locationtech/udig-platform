@@ -7,6 +7,7 @@ import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -207,7 +208,7 @@ public class BookmarksContentProvider
         if (part != currentPart)
             return;
         currentPart = null;
-        if (part instanceof MapEditor) {
+        if (part instanceof MapPart) {
             setCurrentMap(null);
         }
         refresh(viewers.keySet(), true);

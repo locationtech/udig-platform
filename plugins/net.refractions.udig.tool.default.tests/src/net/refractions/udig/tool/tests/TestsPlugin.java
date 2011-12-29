@@ -1,11 +1,13 @@
 package net.refractions.udig.tool.tests;
 
 import org.eclipse.core.runtime.Plugin;
+import org.junit.Ignore;
 import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
  */
+@Ignore
 public class TestsPlugin extends Plugin {
 
 	//The shared instance.

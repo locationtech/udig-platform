@@ -7,6 +7,9 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import java.util.SortedSet;
 
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Map;
@@ -20,9 +23,12 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.joda.time.DateTime;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -31,7 +37,7 @@ import com.vividsolutions.jts.geom.Envelope;
 public class TestViewportModel implements ViewportModel {
 
 	private Dimension displaySize;
-	private Envelope bbox;
+	private ReferencedEnvelope bbox;
 	private CoordinateReferenceSystem crs;
 
 	TestViewportModel() {
@@ -44,7 +50,7 @@ public class TestViewportModel implements ViewportModel {
 	 * @param bbox
 	 * @param crs
 	 */
-	public TestViewportModel(Dimension displaySize, Envelope bbox, CoordinateReferenceSystem crs) {
+	public TestViewportModel(Dimension displaySize, ReferencedEnvelope bbox, CoordinateReferenceSystem crs) {
 		super();
 		this.displaySize = displaySize;
 		this.bbox = bbox;
@@ -58,7 +64,7 @@ public class TestViewportModel implements ViewportModel {
 		return 0;
 	}
 
-	public Envelope getBounds() {
+	public ReferencedEnvelope getBounds() {
 		return this.bbox;
 	}
 
@@ -327,6 +333,136 @@ public class TestViewportModel implements ViewportModel {
         AffineTransform at = new AffineTransform(scaleX, 0.0d, 0.0d, -scaleY, tx, ty);
 
         return at;
+	}
+
+
+
+	@Override
+	public Object eInvoke(EOperation operation, EList<?> arguments)
+			throws InvocationTargetException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public SortedSet<Double> getDefaultPreferredScaleDenominators() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public boolean isBoundsChanging() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public SortedSet<Double> getPreferredScaleDenominators() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void setPreferredScaleDenominators(SortedSet<Double> value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void setBounds(ReferencedEnvelope value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void setBounds(ReferencedEnvelope value, boolean forceContainBBoxZoom) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public ViewportModel zoom(double zoom, Coordinate fixedPoint) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void setScale(double scaleDenominator, int dpi, int displayWidth,
+			int displayHeight) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void setIsBoundsChanging(boolean changing) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public List<DateTime> getAvailableTimesteps() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public DateTime getCurrentTimestep() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void setCurrentTimestep(DateTime value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public List<Double> getAvailableElevation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public Double getCurrentElevation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void setCurrentElevation(Double value) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

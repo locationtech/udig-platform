@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Community Plugins : Parallel Mode</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">	    
+    </head>
+
+    <body>
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#ffffff">
+		    <tr>
+			    <td valign="top" class="pagebody">
+				    <div class="pageheader">
+					    <span class="pagetitle">
+                            Community Plugins : Parallel Mode
+                                                    </span>
+				    </div>
+				    <h1><a name="ParallelMode-ParallelMode%28underdevelopment%29"></a>Parallel Mode (under development)</h1>
+
+<p><img src="download/attachments/10394/parallel_mode.gif" align="absmiddle" border="0"/> Applies a constraint to draw line segments parallel to another one</p>
+
+
+<p>The <em>Parallel Mode</em> allows you to select a reference segment and to draw only line segments parallel to that reference one.</p>
+
+<p>To select a reference segment, use the <em>Snap Area</em> as shown in <em>Figure 1</em>.  Whether you can select the reference segment from a Feature in the current Layer, in all Layers, or in the Grid, depends on the Snap Behaviour set as preference.</p>
+
+<p><img src="download/attachments/10394/modes_parallel1.png" align="absmiddle" border="0"/><br/>
+<b>Figure 1 Selecting a reference segment from a Feature in another Layer</b></p>
+
+<p>When you select a reference segment, it will blink a couple times and the orthogonal axes centered at the mouse location will rotate such that one of the axes is parallel to the reference segment and the other is orthogonal to it, as you can see in <em>Figure 2</em>.</p>
+
+<p><img src="download/attachments/10394/modes_parallel2.png" align="absmiddle" border="0"/><br/>
+<b>Figure 2 Parallel constraint applied and axes rotated</b></p>
+
+<p>From now on, given that you have a reference segment selected, you can add as many segments as desired, being sure that the segments added will be forced to be over the parallel line to the reference segment that passes through the last vertex and goes to the axis orthogonal to the reference segment.</p>
+
+<p>At any point you can select a different reference segment, always with the help of the <em>Snap Area</em>, as shown in <em>Figure 3</em>, and get the new constraint to keep adding vertexes, now forming segments parallel to the  new reference segment.</p>
+
+<p><img src="download/attachments/10394/modes_parallel3.png" align="absmiddle" border="0"/><br/>
+<b>Figure 3 Selecting another reference segment</b></p>
+
+<p>Keep selecting reference segments with and creating parallels as desired. <em>Figure 4</em> shows an example following the contour of a building.<br/>
+Remember you can double click to add a final vertex and finish the current geometry as usual in uDig, or select other <em>Edit Modes</em> at your convenience.</p>
+
+<p><img src="download/attachments/10394/modes_parallel4.png" align="absmiddle" border="0"/><br/>
+<b>Figure 4 Various consecutive segments added parallel to different reference segments</b></p>
+
+<div class='panelMacro'><table class='infoMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/information.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b>Tip</b><br />
+<p>When using the <em>Snap Area</em> behaviour, remember you could adjust the size of the snap area with the <b>mouse wheel</b> while pressing the <b><tt>ALT</tt></b> key.</p></td></tr></table></div>
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="download/attachments/10394/modes_parallel3.png">modes_parallel3.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="download/attachments/10394/modes_parallel2.png">modes_parallel2.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="download/attachments/10394/modes_parallel1.png">modes_parallel1.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="download/attachments/10394/modes_parallel4.png">modes_parallel4.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="download/attachments/10394/parallel_mode.gif">parallel_mode.gif</a> (image/gif)
+                                <br/>
+                                                    </div>
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td height="12" background="http://udig.refractions.net/confluence//images/border/border_bottom.gif"><img src="images/border/spacer.gif" width="1" height="1" border="0"/></td>
+			</tr>
+		    <tr>
+			    <td align="center"><font color="grey">Document generated by Confluence on May 26, 2008 04:58</font></td>
+		    </tr>
+	    </table>
+    </body>
+</html>

@@ -9,6 +9,7 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.EditState;
+import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 import net.refractions.udig.tools.edit.support.Point;
@@ -64,6 +65,8 @@ public class StartEditingBehaviourTest extends TestCase {
     }
 
     public void testRun() throws Exception {
+        if( EditTestControl.DISABLE ) return;
+        
         final TestHandler handler=new TestHandler();
         
         ILayer layer = handler.getContext().getMapLayers().get(0);

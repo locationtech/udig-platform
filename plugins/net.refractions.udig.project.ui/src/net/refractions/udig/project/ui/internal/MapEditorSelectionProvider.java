@@ -106,7 +106,7 @@ public class MapEditorSelectionProvider extends AdapterImpl implements IMapEdito
     }
 
     public void setActiveMap( IMap map2, final MapPart editor ) {
-        selection=new StructuredSelection(map2);
+        this.selection = new StructuredSelection(map2);
     }
 
     public Set<ISelectionChangedListener> getListeners() {

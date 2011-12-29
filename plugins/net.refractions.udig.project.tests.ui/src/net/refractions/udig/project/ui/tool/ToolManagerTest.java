@@ -37,7 +37,7 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
         firstLayer=map.getLayersInternal().get(0);
     }
 
-    public void testCUTPASTEFeatures() throws Exception {
+    public void xtestCUTPASTEFeatures() throws Exception {
         ApplicationGIS.openMap(map);
         UDIGTestUtil.inDisplayThreadWait(2000, new WaitCondition(){
 

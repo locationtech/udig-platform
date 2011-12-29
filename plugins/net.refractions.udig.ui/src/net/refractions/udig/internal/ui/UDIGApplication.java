@@ -61,6 +61,7 @@ import org.osgi.framework.Bundle;
  * @author Jesse Eichar, Refractions Research Inc.
  * @author Jody Garnett, Refractions Research Inc.
  * @since 0.3
+ * @version 1.2
  */
 public class UDIGApplication implements IApplication {
 

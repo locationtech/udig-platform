@@ -21,7 +21,9 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.Ignore;
 
+@Ignore
 public class ConnectionTest extends TestCase {
 	Shell shell;
 

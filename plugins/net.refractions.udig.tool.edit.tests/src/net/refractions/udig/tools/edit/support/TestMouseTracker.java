@@ -16,11 +16,14 @@ package net.refractions.udig.tools.edit.support;
 
 import java.util.Queue;
 
+import org.junit.Ignore;
+
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.MouseTracker;
 
+@Ignore
 public class TestMouseTracker extends MouseTracker{
     public TestMouseTracker( EditToolHandler handler2 ) {
         super(handler2);

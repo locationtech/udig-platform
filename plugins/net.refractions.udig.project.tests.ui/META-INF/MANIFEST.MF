@@ -22,6 +22,7 @@ Export-Package: net.refractions.udig;
    net.refractions.udig.project.ui.tool,
    org.eclipse.swt.graphics,
    org.eclipse.swt.widgets",
+ net.refractions.udig.project.tests;uses:="net.refractions.udig",
  net.refractions.udig.project.tests.ui;
   uses:="net.refractions.udig.ui.operations,
    org.eclipse.core.runtime,
@@ -39,7 +40,7 @@ Export-Package: net.refractions.udig;
    org.eclipse.swt.widgets,
    net.refractions.udig.project.ui.internal",
  net.refractions.udig.project.tests.ui.dnd;uses:="net.refractions.udig.project,net.refractions.udig.internal.ui,net.refractions.udig",
- net.refractions.udig.project.tests.ui.internal.commands;uses:="net.refractions.udig.catalog,net.refractions.udig.project.internal,net.refractions.udig",
+ net.refractions.udig.project.tests.ui.internal.commands;x-internal:=true;uses:="net.refractions.udig.catalog,net.refractions.udig.project.internal,net.refractions.udig",
  net.refractions.udig.project.ui;
   uses:="org.eclipse.core.runtime,
    org.eclipse.emf.common.notify.impl,
@@ -47,28 +48,23 @@ Export-Package: net.refractions.udig;
    net.refractions.udig,
    org.eclipse.emf.common.notify,
    net.refractions.udig.project.ui.commands",
- net.refractions.udig.project.ui.internal;uses:="junit.framework,net.refractions.udig",
- net.refractions.udig.project.ui.internal.actions;
+ net.refractions.udig.project.ui.internal;x-internal:=true;uses:="junit.framework,net.refractions.udig",
+ net.refractions.udig.project.ui.internal.actions;x-internal:=true;
   uses:="junit.framework,
    net.refractions.udig.project,
    net.refractions.udig.project.internal,
    net.refractions.udig",
- net.refractions.udig.project.ui.internal.render.displayAdapter.impl;uses:="net.refractions.udig.project.ui.render.displayAdapter,junit.framework",
+ net.refractions.udig.project.ui.internal.aoi;x-internal:=true,
+ net.refractions.udig.project.ui.internal.render.displayAdapter.impl;x-internal:=true;uses:="net.refractions.udig.project.ui.render.displayAdapter,junit.framework",
+ net.refractions.udig.project.ui.internal.tool.display;x-internal:=true,
  net.refractions.udig.project.ui.tool;uses:="net.refractions.udig"
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- net.refractions.udig.project,
- net.refractions.udig.project.edit,
- net.refractions.udig.project.ui,
- org.junit,
+Require-Bundle: net.refractions.udig.project.edit,
  net.refractions.udig.catalog.shp,
  net.refractions.udig.project.tests;visibility:=reexport,
- net.refractions.udig.ui,
  net.refractions.udig.catalog.ui,
- net.refractions.udig.catalog.tests,
  net.refractions.udig.catalog.tests.ui;visibility:=reexport,
  net.refractions.udig.mapgraphic,
- net.refractions.udig.ui.tests;visibility:=reexport,
- net.refractions.udig.issues
+ net.refractions.udig.issues,
+ org.eclipse.gef;bundle-version="3.7.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

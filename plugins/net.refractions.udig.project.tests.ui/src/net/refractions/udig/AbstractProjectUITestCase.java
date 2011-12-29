@@ -4,6 +4,7 @@ import net.refractions.udig.internal.ui.UDIGDropHandler;
 import net.refractions.udig.internal.ui.UDIGDropHandler.CompositeDropActionJob;
 import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
 import net.refractions.udig.project.ui.internal.MapEditor;
+import net.refractions.udig.project.ui.internal.MapEditorPart;
 import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
@@ -62,11 +63,11 @@ public class AbstractProjectUITestCase extends AbstractProjectTestCase {
             }
             assertFalse( "Error encountered loading", editor instanceof ErrorEditorPart);
 			
-            if (editor instanceof MapEditor) {
-                MapEditor mapEditor = (MapEditor) editor;
+            if (editor instanceof MapEditorPart) {
+                MapEditorPart mapEditor = (MapEditorPart) editor;
                 
                 if( mapEditor!=null ) {
-                    mapEditor.isTesting=true;
+                    mapEditor.setTesting(true);
                 }
             }
         }
@@ -80,9 +81,9 @@ public class AbstractProjectUITestCase extends AbstractProjectTestCase {
             	System.out.println("Error opening "+editor.getTitle());
             	continue;
             }
-        	MapEditor mapEditor = (MapEditor) editor;
+        	MapEditorPart mapEditor = (MapEditorPart) editor;
             if( mapEditor!=null ){
-                mapEditor.isTesting=true;
+                mapEditor.setTesting(true);
             }
         }
         while ( !activePage.closeAllEditors(false)  ||  activePage.getEditorReferences().length!=0);         

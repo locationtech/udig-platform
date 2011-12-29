@@ -25,6 +25,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.actions.ActionDelegate;
+import org.junit.Ignore;
 
 /**
  * Test RenderManager getRenderer
@@ -32,6 +33,7 @@ import org.eclipse.ui.actions.ActionDelegate;
  * @author Jesse
  * @since 1.1.0
  */
+@Ignore
 public class TestGetRenderers extends ActionDelegate implements IWorkbenchWindowActionDelegate {
 
 

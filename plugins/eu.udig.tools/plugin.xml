@@ -7,15 +7,38 @@
    </extension>
    <extension
          point="net.refractions.udig.project.ui.tool">
+      <modalTool
+            categoryId="net.refractions.udig.tool.edit.feature"
+            class="eu.udig.tools.split.SplitTool"
+            icon="icons/etool16/split_feature_mode.gif"
+            id="eu.udig.tools.split.SplitTool"
+            name="%plugin.name_split"
+            onToolbar="true"
+            tooltip="%plugin.tooltip_split">
+      </modalTool>
+      <modalTool
+            categoryId="net.refractions.udig.tool.edit.feature"
+            class="eu.udig.tools.merge.MergeTool"
+            icon="icons/etool16/merge_feature_mode.gif"
+            id="eu.udig.tools.merge.MergeTool"
+            name="%plugin.name_merge"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%plugin.tooltip_merge">
+      </modalTool>
    </extension>
    <extension
          point="org.eclipse.ui.views">
+      <view
+            class="eu.udig.tools.merge.internal.view.MergeView"
+            icon="icons/etool16/merge_feature_mode.gif"
+            id="eu.udig.tools.merge.internal.view.MergeView"
+            name="%plugin.name_merge"
+            restorable="false">
+      </view>
    </extension>
    <extension
-         point="org.eclipse.ui.helpSupport">
-      <config
-            class="eu.udig.tools.AbstractHelpUI1">
-      </config>
+         point="org.eclipse.help.toc">
    </extension>
 
 </plugin>

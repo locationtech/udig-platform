@@ -151,7 +151,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     
     /** The id of the MapViewport View */
     public final static String ID = "net.refractions.udig.project.ui.mapEditor"; //$NON-NLS-1$
-    final MapEditorWithPalette editor = this;
+    
+    //final MapEditorWithPalette editor = this;
     
     /**
      * This is responsible for tracking the active tool; it is a facility provided
@@ -930,7 +931,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         return true;
     }
 
-    void setDirty( boolean dirty ) {
+    public void setDirty( boolean dirty ) {
         if (dirty == this.dirty)
             return;
 
@@ -1280,7 +1281,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
             if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 registerFeatureFlasher();
                 IToolManager tools = ApplicationGIS.getToolManager();
-                tools.setCurrentEditor(editor);
+                tools.setCurrentEditor( MapEditorWithPalette.this );
                 //editor.viewer.setModalTool( (ModalTool) tools.getActiveTool() );
             }
         }
@@ -1474,5 +1475,13 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     public MapEditDomain getEditDomain(){
         return editDomain;
     }
-
+    // helper methods for Toolmanager
+    @Override
+    public boolean isTesting() {
+        return this.isTesting;
+    }
+    @Override
+    public void setTesting( boolean testing ) {
+        this.isTesting = testing;
+    }
 }

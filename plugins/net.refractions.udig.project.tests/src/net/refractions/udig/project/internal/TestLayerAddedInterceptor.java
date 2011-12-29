@@ -14,6 +14,8 @@
  */
 package net.refractions.udig.project.internal;
 
+import org.junit.Ignore;
+
 import net.refractions.udig.project.interceptor.LayerInterceptor;
 
 /**
@@ -22,6 +24,7 @@ import net.refractions.udig.project.interceptor.LayerInterceptor;
  * @author Jesse
  * @since 1.1.0
  */
+@Ignore
 public class TestLayerAddedInterceptor implements LayerInterceptor {
 
     public static Layer layerAdded;

@@ -16,6 +16,7 @@ package net.refractions.udig.project.tests.ui;
 
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
+import org.junit.Ignore;
 
 /**
  * A perpective for tests. 
@@ -24,6 +25,7 @@ import org.eclipse.ui.IPerspectiveFactory;
  * @author jones
  * @since 1.0.0
  */
+@Ignore
 public class TestPerspectiveFactory implements IPerspectiveFactory {
 
     public void createInitialLayout( IPageLayout layout ) {

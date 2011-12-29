@@ -14,6 +14,7 @@ import net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
+import net.refractions.udig.project.ui.render.glass.GlassPane;
 
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Control;
@@ -165,6 +166,24 @@ public class TestViewportPane implements ViewportPane {
 
 	public int getWidth() {
 		return displaySize.width;
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public GlassPane getGlass() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setGlass(GlassPane glass) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

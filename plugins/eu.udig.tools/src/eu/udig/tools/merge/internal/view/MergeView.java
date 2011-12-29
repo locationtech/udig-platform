@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.SelectionCommandFactory;
-import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.ui.AnimationUpdater;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.IUDIGView;
@@ -53,11 +51,11 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import eu.udig.tools.geometry.internal.util.GeometryUtil;
 import eu.udig.tools.internal.i18n.Messages;
-import eu.udig.tools.internal.util.DialogUtil;
-import eu.udig.tools.internal.util.StatusBar;
-import eu.udig.tools.merge.internal.MergeContext;
-import eu.udig.tools.merge.internal.MergeFeatureBuilder;
-import eu.udig.tools.merge.internal.MergeFeaturesCommand;
+import eu.udig.tools.internal.ui.util.DialogUtil;
+import eu.udig.tools.internal.ui.util.StatusBar;
+import eu.udig.tools.merge.MergeContext;
+import eu.udig.tools.merge.MergeFeatureBuilder;
+import eu.udig.tools.merge.MergeFeaturesCommand;
 
 /**
  * The view that will show the Merge UI.
@@ -67,12 +65,13 @@ import eu.udig.tools.merge.internal.MergeFeaturesCommand;
  */
 public class MergeView extends ViewPart implements IUDIGView {
 
+	public static final String	id				= "eu.udig.tools.merge.internal.view.MergeView";	//$NON-NLS-1$
+
 	private IToolContext		context			= null;
 	private MergeComposite		mergeComposite	= null;
 	private MergeFeatureBuilder	mergeBuilder	= null;
 	private SimpleFeature[]		sourceFeatures	= null;
 
-	public static final String	id				= "es.axios.udig.ui.editingtools.merge.ui.MergeView";	//$NON-NLS-1$
 
 	private CancelButtonAction	cancelButton	= null;
 	private FinishButtonAction	finishButton	= null;

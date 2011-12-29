@@ -30,6 +30,7 @@ import net.refractions.udig.project.ui.render.glass.GlassPane;
 
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Control;
+import org.junit.Ignore;
 
 /**
  * A dummy object for testing
@@ -37,6 +38,7 @@ import org.eclipse.swt.widgets.Control;
  * @author jones
  * @since 1.1.0
  */
+@Ignore
 public class TestViewportPane extends TestMapDisplay implements ViewportPane {
 
     public TestViewportPane( Dimension displaySize ) {

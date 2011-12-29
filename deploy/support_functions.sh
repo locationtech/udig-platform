@@ -42,7 +42,7 @@ function assemble() {
 function prepare_resources () {
 
     for opt in `find ../plugins/ -name .options` ; do cat $opt >> ${BUILD}/${PLATFORM}/udig/debug-options ; done
-    cp ${BASE}/udig-1.2.x.html ${BUILD}/${PLATFORM}/udig/udig-${VERSION}.html
+    cp ${BASE}/udig-1.3.x.html ${BUILD}/${PLATFORM}/udig/udig-${VERSION}.html
     cat ../plugins/net.refractions.udig.libs/.options >> ${BUILD}/${PLATFORM}/udig/.options
     if [[ $PLATFORM == linux* ]] ; then
         cp udig.sh ${BUILD}/${PLATFORM}/udig

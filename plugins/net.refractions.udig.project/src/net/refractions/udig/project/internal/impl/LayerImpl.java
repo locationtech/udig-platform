@@ -2111,7 +2111,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             }
         }
         getMap().getRenderManager().refresh(this, transformedbounds);
-
     }
 
     /**

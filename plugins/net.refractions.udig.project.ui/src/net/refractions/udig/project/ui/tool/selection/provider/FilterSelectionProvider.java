@@ -97,10 +97,12 @@ public class FilterSelectionProvider extends AbstractMapEditorSelectionProvider 
     			selection=new StructuredSelection(filter);
     			notifyListeners();
             }
-		}
-		
-		if(!map.getEditManager().containsListener(editManagerListener))
-			map.getEditManager().addListener(editManagerListener);
+	    }
+	
+        if(map != null && map.getEditManager() != null && 
+            !map.getEditManager().containsListener(editManagerListener)) {
+	        map.getEditManager().addListener(editManagerListener);
+        }
     }
 
 }

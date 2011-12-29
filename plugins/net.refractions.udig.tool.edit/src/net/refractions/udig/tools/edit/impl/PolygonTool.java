@@ -78,7 +78,6 @@ public class PolygonTool extends AbstractEditTool {
         cancelBehaviours.add(new DefaultCancelBehaviour());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void initEventBehaviours( EditToolConfigurationHelper helper ) {
         helper.add( new DrawCreateVertexSnapAreaBehaviour());

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Community Plugins : Modes for Create Geometry Tools</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">	    
+    </head>
+
+    <body>
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#ffffff">
+		    <tr>
+			    <td valign="top" class="pagebody">
+				    <div class="pageheader">
+					    <span class="pagetitle">
+                            Community Plugins : Modes for Create Geometry Tools
+                                                    </span>
+				    </div>
+				    <h1><a name="ModesforCreateGeometryTools-ModesforCreateGeometryTools%28underdevelopment%29"></a>Modes for Create Geometry Tools (under development)</h1>
+
+<p>Applying temporary constrains to vertex editing while creating a geometry</p>
+
+
+<div class='panelMacro'><table class='warningMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/forbidden.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b>Warning</b><br />
+<p>This is work in progress. There are a couple known issues to be solved yet. So, while you're welcome and encouraged to try this out, be aware that this functionality is not based on production code and feel free to send us your comments and bug reports to the uDig devel mailing list.</p></td></tr></table></div>
+
+
+<h2><a name="ModesforCreateGeometryTools-Intro"></a>Intro</h2>
+<p><b>uDig</b> is getting better for digitizing purposes, by expanding the editing possibilities while maintaining simple and consistent interactions. <br/>
+<em>Edit Modes</em> are a mean to apply <b>temporary constraints</b> to the allowable location of a vertex while creating a Geometry.</p>
+
+<p>This means that, while you're creating a <em>LineString</em> or a <em>Polygon</em>, you can modify the standard behaviour of the <em>Create Line Tool</em> or the <em>Create Polygon Tool</em> so uDig can assist you, for example, to allow only orthogonal line segments, to snap the vertex to be added up to the closest point on another line segment, to draw segments parallel to another one, etc.</p>
+<div class='panelMacro'><table class='infoMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/information.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td>
+<p>As this is work in progress, two new create tools have been incorporated to the create geometries drop down button on the uDig toolbar, as shown in <em>Figure 1</em> and <em>Figure 2</em>. They might well end up being merged on the standard <em>Create Line Tool</em>  and <em>Create Polygon Tool</em>. But by now you just have to select the <em>Advanced Line Tool</em> or <em>Advanced Polygon Tool</em> to use this new functionality.</p></td></tr></table></div>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<td class='confluenceTd'><img src="download/attachments/10361/modes_1.png" align="absmiddle" border="0"/></td>
+<td class='confluenceTd'><img src="download/attachments/10361/modes_1_poly.png" align="absmiddle" border="0"/></td>
+</tr>
+<tr>
+<td class='confluenceTd'><b>Figure 1</b> Select Advanced Line Tool to create LineStrings</td>
+<td class='confluenceTd'><b>Figure 2</b> Select Advanced Polygon Tool to create Polygons</td>
+</tr>
+</tbody></table>
+
+
+<h2><a name="ModesforCreateGeometryTools-Modes"></a>Modes</h2>
+<p>Once you selected one of the available geometry creation tools as shown above, you can start digitizing as usual.<br/>
+At any time, you can choose to select a <b>mode</b> from the <em>Modes Toolbar</em> (Figure 3). The <em>Modes Toolbar</em> contains a series of buttons. A single button may be active at a time. While active, this button will apply a constraint or an extra behaviour to the creation tool in use.</p>
+
+<p><img src="download/attachments/10361/modes_toolbar.png" align="absmiddle" border="0"/><br/>
+<b>Figure 3 Edit Modes Toolbar</b></p>
+
+<h3><a name="ModesforCreateGeometryTools-EditModesandSnappingBehaviour"></a>Edit Modes and Snapping Behaviour </h3>
+<p>Some <em>Edit Modes</em> use the snapping behaviour for different purposes. Depending on the mode chosen, whether it is for snapping the next vertex to another vertex, or for selecting a reference geometry to apply a constraint upon, the lookup of the <b>Snap Behaviour</b> will follow the preference set on the <b>Edit Tool</b> preference page accessible through the <em>Window-&gt;Preferences</em> menu option, as shown in <em>Figure 4</em>.</p>
+
+<p><img src="download/attachments/10361/modes_2.png" align="absmiddle" border="0"/><br/>
+<b>Figure 4 setting the snap behaviour preference</b></p>
+
+<h3><a name="ModesforCreateGeometryTools-AvailableModes"></a>Available Modes</h3>
+<p>The following edit modes are available while creating a new Geometry:</p>
+
+<ul><li><a href="Ortho Mode.html" title="Ortho Mode">Ortho Mode</a> &mdash; <span class="smalltext"><img src="download/attachments/10361/ortho_mode.gif" align="absmiddle" border="0"/> Applies a constraint to draw orthogonal lines to the map axis</span></li><li><a href="Parallel Mode.html" title="Parallel Mode">Parallel Mode</a> &mdash; <span class="smalltext"><img src="download/attachments/10361/parallel_mode.gif" align="absmiddle" border="0"/> Applies a constraint to draw line segments parallel to another one</span></li><li><a href="Snap to Line Mode.html" title="Snap to Line Mode">Snap to Line Mode</a> &mdash; <span class="smalltext"><img src="download/attachments/10361/snap_to_line_mode.gif" align="absmiddle" border="0"/> Snaps the vertex to add to the closest point over a line segment</span></li><li><a href="Snap to Vertex Mode.html" title="Snap to Vertex Mode">Snap to Vertex Mode</a> &mdash; <span class="smalltext"><img src="download/attachments/10361/snap_to_vertex_mode.gif" align="absmiddle" border="0"/> Snaps the vertex to add to the closest one in another Feature</span></li></ul>
+
+
+<h2><a name="ModesforCreateGeometryTools-Caveats"></a>Caveats</h2>
+<p>So you were warned at the top of the page that there were a couple known issues to be solved yet, and still got to this point, thanks. So these are those couple things that still need to be fixed:</p>
+
+<ul class="alternate" type="square">
+	<li>The <em>Modes Toolbar</em> should be visible only when one of the applicable  geometry creation tool is selected.</li>
+	<li>It is not possible to deactivate a <em>Mode</em> button in the <em>Modes Toolbar</em> without activating another mode.</li>
+	<li>There should be a way to identify the "applicability" of a mode depending on the <em>Edit Tool</em> selected.</li>
+	<li>The <em>Modes Toolbar</em> is missplaced, it should appear next to the edit tools toolbar.</li>
+	<li>An extension point needs to be defined so external plug ins can contribute extra modes.</li>
+</ul>
+
+
+<p>All this stuff is planned to be fixed in a later iteration so keep tuned.</p>
+
+
+
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="download/attachments/10361/modes_toolbar.png">modes_toolbar.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="download/attachments/10361/modes_2.png">modes_2.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="download/attachments/10361/modes_1_poly.png">modes_1_poly.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="download/attachments/10361/modes_1.png">modes_1.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="download/attachments/10361/snap_to_line_mode.gif">snap_to_line_mode.gif</a> (image/gif)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="download/attachments/10361/parallel_mode.gif">parallel_mode.gif</a> (image/gif)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="download/attachments/10361/ortho_mode.gif">ortho_mode.gif</a> (image/gif)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="download/attachments/10361/snap_to_vertex_mode.gif">snap_to_vertex_mode.gif</a> (image/gif)
+                                <br/>
+                                                    </div>
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td height="12" background="http://udig.refractions.net/confluence//images/border/border_bottom.gif"><img src="images/border/spacer.gif" width="1" height="1" border="0"/></td>
+			</tr>
+		    <tr>
+			    <td align="center"><font color="grey">Document generated by Confluence on May 26, 2008 04:58</font></td>
+		    </tr>
+	    </table>
+    </body>
+</html>

@@ -10,6 +10,7 @@ import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.TestMapDisplay;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.EditState;
+import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.EventBehaviour;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
@@ -219,6 +220,7 @@ public class MoveVertexBehaviorTest extends TestCase {
     }
     
     public void testPostSnapping() throws Exception {
+        if( EditTestControl.DISABLE ) return;
         
         EditGeom newGeom = editBlackboard.newGeom("id", null); //$NON-NLS-1$
         editBlackboard.addPoint(30,20, newGeom.getShell());

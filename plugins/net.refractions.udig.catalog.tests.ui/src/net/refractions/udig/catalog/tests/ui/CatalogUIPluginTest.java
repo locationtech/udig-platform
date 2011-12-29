@@ -23,6 +23,10 @@ public class CatalogUIPluginTest extends TestCase {
         
         
     }
+    
+    public void testStub() throws Exception {
+        assertTrue(true);
+    }
 //
 //    public void testHasCachedTitle() {
 //        fail("Not yet implemented"); // TODO

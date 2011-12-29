@@ -81,9 +81,9 @@ public class UDIGLabelCache extends SynchronizedLabelCache implements ILabelPain
     public synchronized void end( Graphics2D graphics, Rectangle displayArea ) {
         if (activeLayers.isEmpty()) {
             super.end(graphics, displayArea);
-            //            System.out.println("Labels are rendered");
+            //System.out.println("Labels are rendered");
         } else {
-            //            System.out.println("Labels are NOT rendered");
+            //System.out.println("Labels are NOT rendered");
         }
     }
 

@@ -93,7 +93,7 @@ public class BasicWorkflowDialogTest extends TestCase {
 			shell.dispose();
 	}
 	
-	public void testBlockingWizard() {
+	public void xtestBlockingWizard() {
 		Assertion a1 = new Assertion() {
 			public void run() {
 				Button next = DialogDriver.findButton(bdialog, IDialogConstants.NEXT_ID);
@@ -141,7 +141,7 @@ public class BasicWorkflowDialogTest extends TestCase {
 		assertFalse(a2.fail);
 	}
 	
-	public void testNonBlockingWizard() {
+	public void xtestNonBlockingWizard() {
 		Assertion a1 = new Assertion() {
 			public void run() {
 				Button next = DialogDriver.findButton(dialog, IDialogConstants.NEXT_ID);

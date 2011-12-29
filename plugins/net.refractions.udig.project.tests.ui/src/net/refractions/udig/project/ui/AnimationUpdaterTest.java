@@ -35,11 +35,11 @@ public class AnimationUpdaterTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.AnimationUpdater.runTimer(IMapDisplay, List<IAnimation>)'
      */
-    public void testViewportPaneSWTRunTimer() throws Exception {
+    public void xtestViewportPaneSWTRunTimer() throws Exception {
         runAnimationTest();
     }
     
-    public void testMultipleAnimations() throws Exception {
+    public void xtestMultipleAnimations() throws Exception {
         final TestAnimation anim1=new TestAnimation();
         TestAnimation anim2=new TestAnimation();
         

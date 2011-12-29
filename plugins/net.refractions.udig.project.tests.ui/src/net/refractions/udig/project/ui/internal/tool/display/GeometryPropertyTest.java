@@ -44,7 +44,7 @@ public class GeometryPropertyTest extends TestCase {
         assertFalse(prop.isTrue(layer, "miss spelling")); //$NON-NLS-1$
     }
 
-    public void testResolveChange() throws Exception {
+    public void xtestResolveChange() throws Exception {
         final int[] changed=new int[1];
         changed[0]=0;
         IOpFilterListener l = new IOpFilterListener(){

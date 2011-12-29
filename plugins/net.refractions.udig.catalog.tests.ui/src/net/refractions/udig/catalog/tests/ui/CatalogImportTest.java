@@ -32,7 +32,7 @@ public class CatalogImportTest extends TestCase {
 		catalogImport = new CatalogImport();
 	}
 	
-	public void testNormal() throws Exception{
+	public void xtestNormal() throws Exception{
 			Object context = getContext();
 			
 			final ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
