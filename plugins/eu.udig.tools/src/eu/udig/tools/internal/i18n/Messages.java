@@ -33,7 +33,7 @@ import org.eclipse.osgi.util.NLS;
  * @since 1.1.0
  */
 public class Messages extends NLS {
-	private static final String	BUNDLE_NAME	= "es.axios.udig.ui.editingtools.internal.i18n.messages";	//$NON-NLS-1$
+	private static final String	BUNDLE_NAME	= Messages.class.getPackage().getName()+".messages";	//$NON-NLS-1$
 	public static String		FeatureMergeWizard_feature_merge;
 	public static String		MergeFeaturesComposite_failed_creating_merge_feature;
 	public static String		MergeFeaturesComposite_feature;

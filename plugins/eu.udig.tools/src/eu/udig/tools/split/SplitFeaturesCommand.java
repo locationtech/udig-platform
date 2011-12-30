@@ -63,7 +63,6 @@ import eu.udig.tools.feature.split.SplitFeatureBuilder;
 import eu.udig.tools.feature.split.SplitFeatureBuilderFailException;
 import eu.udig.tools.feature.util.GeoToolsUtils;
 import eu.udig.tools.internal.i18n.Messages;
-import eu.udig.tools.internal.mediator.AppGISMediator;
 import eu.udig.tools.internal.ui.util.LayerUtil;
 import eu.udig.tools.internal.ui.util.MapUtil;
 
@@ -347,7 +346,7 @@ final class SplitFeaturesCommand extends AbstractCommand implements UndoableMapC
 
 		ProjectPlugin.log(className + " - Split original: " + splitterInMapCrs.toText()); //$NON-NLS-1$
 	
-		final EditCommandFactory cmdFac = AppGISMediator.getEditCommandFactory();
+		final EditCommandFactory cmdFac = EditCommandFactory.getInstance();
 		final FeatureIterator<SimpleFeature> featureToSplitIterator = featuresToSplit.features();
 		final CoordinateReferenceSystem mapCRS = handler.getContext().getCRS();
 
@@ -376,6 +375,7 @@ final class SplitFeaturesCommand extends AbstractCommand implements UndoableMapC
 			for (SimpleFeature feature : featuresThatSufferedSplit) {
 
 			    UndoableMapCommand command = cmdFac.createDeleteFeature(feature, selectedLayer);
+			    
 				undoableCommands.add(command);
 				ProjectPlugin.log(className + " - Delete original feature: " + ((Geometry) feature.getDefaultGeometry()).toText()); //$NON-NLS-1$
 			}
@@ -409,7 +409,7 @@ final class SplitFeaturesCommand extends AbstractCommand implements UndoableMapC
 
 		} finally {
 			if (featureToSplitIterator != null){
-				featuresToSplit.close(featureToSplitIterator);
+				featureToSplitIterator.close();
 			}
 		}
 	}

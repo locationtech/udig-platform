@@ -30,7 +30,7 @@ import net.refractions.udig.project.render.IViewportModel;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import eu.udig.tools.internal.mediator.AppGISMediator;
+import eu.udig.tools.internal.mediator.AppGISAdapter;
 
 /**
  * Map Util
@@ -70,7 +70,7 @@ public final class MapUtil {
 	public static ILayer addLayerToMap(IMap map, IGeoResource geoResource) {
 
 		int index = map.getMapLayers().size();
-		List<? extends ILayer> listLayer = AppGISMediator.addLayersToMap(map, Collections.singletonList(geoResource),
+		List<? extends ILayer> listLayer = AppGISAdapter.addLayersToMap(map, Collections.singletonList(geoResource),
 					index);
 
 		assert listLayer.size() == 1; // creates only one layer

@@ -12,19 +12,22 @@
             class="eu.udig.tools.split.SplitTool"
             icon="icons/etool16/split_feature_mode.gif"
             id="eu.udig.tools.split.SplitTool"
-            name="%plugin.name_split"
+            largeIcon="icons/etool24/split_24.png"
+            name="%eu.udig.tools.split.name"
             onToolbar="true"
-            tooltip="%plugin.tooltip_split">
+            toolCursorId="arrowCursor"
+            tooltip="%eu.udig.tools.split.tooltip">
       </modalTool>
       <modalTool
             categoryId="net.refractions.udig.tool.edit.feature"
             class="eu.udig.tools.merge.MergeTool"
             icon="icons/etool16/merge_feature_mode.gif"
             id="eu.udig.tools.merge.MergeTool"
-            name="%plugin.name_merge"
+            largeIcon="icons/etool24/merge_24.png"
+            name="%eu.udig.tools.merge.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
-            tooltip="%plugin.tooltip_merge">
+            tooltip="%eu.udig.tools.merge.tooltip">
       </modalTool>
    </extension>
    <extension

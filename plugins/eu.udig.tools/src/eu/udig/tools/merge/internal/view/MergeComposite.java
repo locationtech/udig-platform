@@ -63,7 +63,6 @@ import com.vividsolutions.jts.geom.Geometry;
 import eu.udig.tools.internal.i18n.Messages;
 import eu.udig.tools.internal.ui.util.InfoMessage;
 import eu.udig.tools.internal.ui.util.LayerUtil;
-import eu.udig.tools.merge.MergeFeatureBuilder;
 
 /**
  * Merge Controls for composite
@@ -75,7 +74,7 @@ import eu.udig.tools.merge.MergeFeatureBuilder;
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
  */
-public class MergeComposite extends Composite {
+class MergeComposite extends Composite {
 
 	private SashForm			sashForm				= null;
 	private Composite			compositeSourceFeatures	= null;

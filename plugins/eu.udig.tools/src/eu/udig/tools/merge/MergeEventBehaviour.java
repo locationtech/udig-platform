@@ -74,7 +74,7 @@ import eu.udig.tools.internal.ui.util.DialogUtil;
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
  */
-public class MergeEventBehaviour implements EventBehaviour {
+class MergeEventBehaviour implements EventBehaviour {
 
 	private MergeContext	mergeContext	= null;
 	private Envelope		lastEnvelope;
@@ -124,15 +124,15 @@ public class MergeEventBehaviour implements EventBehaviour {
 
 		IToolContext context = handler.getContext();
 
-		SelectionBoxCommand shapeCommand = this.mergeContext.getShapeCommand();
+		SelectionBoxCommand selectBoxCommand = this.mergeContext.getSelectionBoxCommand();
 		Point start = this.mergeContext.getBBoxStartPoint();
 		switch (eventType) {
 		case PRESSED:
 			// start drawing the bbox.
 			this.mergeContext.setBBoxStartPoint(e.getPoint());
-			shapeCommand.setValid(true);
-			shapeCommand.setShape(new Rectangle(e.getPoint().x, e.getPoint().y, 0, 0));
-			handler.getContext().sendASyncCommand(shapeCommand);
+			selectBoxCommand.setValid(true);
+			selectBoxCommand.setShape(new Rectangle(e.getPoint().x, e.getPoint().y, 0, 0));
+			handler.getContext().sendASyncCommand(selectBoxCommand);
 			break;
 		case DRAGGED:
 			// Dragged event is always preceded by the pressed event, but
@@ -141,8 +141,9 @@ public class MergeEventBehaviour implements EventBehaviour {
 			if (start == null) {
 				start = e.getPoint();
 			}
-			shapeCommand.setShape(new Rectangle(Math.min(start.x, e.x), Math.min(start.y, e.y),
-						Math.abs(e.x - start.x), Math.abs(start.y - e.y)));
+			selectBoxCommand.setShape(
+					new Rectangle(	Math.min(start.x, e.x), Math.min(start.y, e.y),
+									Math.abs(e.x - start.x), Math.abs(start.y - e.y)));
 			handler.getContext().getViewportPane().repaint();
 			break;
 		case RELEASED:
@@ -160,7 +161,10 @@ public class MergeEventBehaviour implements EventBehaviour {
 				bounds = new Envelope(c1, c2);
 			}
 
-			sendSelectionCommand(e, bounds, context, shapeCommand);
+			selectFeaturesUnderBBox(e, bounds, context);
+			selectBoxCommand.setValid(false);
+			context.getViewportPane().repaint();
+			
 			mergeContext.addEnvelope(bounds);
 			mergeContext.storeMouseLocation(e);
 			this.lastEnvelope = bounds;
@@ -171,7 +175,7 @@ public class MergeEventBehaviour implements EventBehaviour {
 		default:
 			break;
 		}
-		return null;
+		return null; // FIXME it looks like part of design was lost!
 	}
 
 	/**
@@ -186,6 +190,8 @@ public class MergeEventBehaviour implements EventBehaviour {
 	 * 
 	 * @param e
 	 * @param context
+	 * 
+	 * FIXME refactor create a command to lunch the view 
 	 */
 	private void viewLauncher(MapMouseEvent e, IToolContext context) {
 
@@ -210,9 +216,7 @@ public class MergeEventBehaviour implements EventBehaviour {
 				mergeContext.removeEnvelope(lastEnvelope);
 			} else {
 				// if a feature is removed from the view of the merge, and here
-				// is
-				// added
-				// again, update the list.
+				// is added again, update the list.
 				mergeContext.updateDeletedFeatureList(lastSelectedFeatures);
 			}
 			// exclude the deleted features from the allFeatures list.
@@ -300,32 +304,27 @@ public class MergeEventBehaviour implements EventBehaviour {
 	}
 
 	/**
-	 * Select the features under the bbox.
+	 * Selects the features under the bbox.
 	 * 
-	 * @param e
-	 * @param bounds
-	 * @param context
-	 * @param shapeCommand
+	 * @param e	mouse event
+	 * @param boundDrawn the bbox drawn by the usr
+	 * @param context 
 	 */
-	private void sendSelectionCommand(	MapMouseEvent e,
-										Envelope bounds,
-										IToolContext context,
-										SelectionBoxCommand shapeCommand) {
+	private void selectFeaturesUnderBBox(	MapMouseEvent e,
+											Envelope boundDrawn,
+											IToolContext context) {
 
 		MapCommand command;
 
 		if (e.isModifierDown(MapMouseEvent.MOD2_DOWN_MASK)) {
-			command = context.getSelectionFactory().createBBoxSelectionCommand(bounds, BBoxSelectionCommand.ADD);
+			command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn, BBoxSelectionCommand.ADD);
 		} else if (e.isControlDown()) {
-			command = context.getSelectionFactory().createBBoxSelectionCommand(bounds, BBoxSelectionCommand.SUBTRACT);
+			command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn, BBoxSelectionCommand.SUBTRACT);
 		} else {
-			command = context.getSelectionFactory().createBBoxSelectionCommand(bounds, BBoxSelectionCommand.NONE);
+			command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn, BBoxSelectionCommand.NONE);
 		}
 
 		context.sendASyncCommand(command);
-		shapeCommand.setValid(false);
-		context.getViewportPane().repaint();
-
 	}
 
 	public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {

@@ -31,8 +31,14 @@ import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Envelope;
 
+import eu.udig.tools.merge.internal.view.MergeView;
+
 /**
- * Store the necessary values for doing the merge operation.
+ * Stores the status values of merge interactions.
+ * 
+ * The inputs for the merge command are grabbed using different user interface techniques like
+ * feature selection by bbox drawing and merge feature definition using {@link MergeView}. Thus, this context
+ * object provides a site where the merge command's parameters are stored.
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
@@ -82,7 +88,7 @@ public class MergeContext {
 	 * 
 	 * @return the shapeCommand
 	 */
-	public SelectionBoxCommand getShapeCommand() {
+	public SelectionBoxCommand getSelectionBoxCommand() {
 
 		return shapeCommand;
 	}

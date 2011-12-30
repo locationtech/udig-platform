@@ -274,15 +274,19 @@ public class UDIGSimpleFeatureStore implements SimpleFeatureStore, UDIGStore {
         FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
         Id filter = ff.id( new HashSet<FeatureId>( ids ) );
         
-        ReferencedEnvelope bounds;
-        bounds = features.getBounds();
-
-        if( bounds != null ){
-            fireLayerEditEvent( FeatureEvent.Type.ADDED, bounds, filter );
-        }
-        else {
-            fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, Filter.INCLUDE );
-        }
+//        ReferencedEnvelope bounds;
+//        bounds = features.getBounds(); FIXME (mauro hack) this message throws java.lang.UnsupportedOperationException
+//
+//        if( bounds != null ){
+//            fireLayerEditEvent( FeatureEvent.Type.ADDED, bounds, filter );
+//        }
+//        else {
+//            fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, Filter.INCLUDE );
+//        }
+// replaced by the following sentence        
+        fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, Filter.INCLUDE );
+        
+        
         return ids;
     }
 

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.ui.AnimationUpdater;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.IUDIGView;
@@ -54,8 +55,6 @@ import eu.udig.tools.internal.i18n.Messages;
 import eu.udig.tools.internal.ui.util.DialogUtil;
 import eu.udig.tools.internal.ui.util.StatusBar;
 import eu.udig.tools.merge.MergeContext;
-import eu.udig.tools.merge.MergeFeatureBuilder;
-import eu.udig.tools.merge.MergeFeaturesCommand;
 
 /**
  * The view that will show the Merge UI.
@@ -270,11 +269,9 @@ public class MergeView extends ViewPart implements IUDIGView {
 	 */
 	private static void unselect(final IToolContext context) {
 
-	    throw new UnsupportedOperationException("createNoSelectCommand is not accessible");
-//	    
-//		UndoableMapCommand clearSelectionCommand = context.getSelectionFactory().createNoSelectCommand();
-//
-//		context.sendASyncCommand(clearSelectionCommand);
+		UndoableMapCommand clearSelectionCommand = context.getSelectionFactory().createNoSelectCommand();
+
+		context.sendASyncCommand(clearSelectionCommand);
 	}
 
 	/**
