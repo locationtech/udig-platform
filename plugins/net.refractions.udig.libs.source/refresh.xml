@@ -17,9 +17,9 @@
 		</java>
 		<loadproperties srcfile="${basedir}/dest.properties" />
 		<echo>copy into: ${libs_src_dir}</echo>
-		<echo>should be: ${basedir}/src/net.refractions.udig.libs_1.2.2.qualifier/lib </echo>
+		<echo>should be: ${basedir}/src/net.refractions.udig.libs_1.3.1.qualifier/lib </echo>
 		<!-- formally ${libs_src_dir} -->
-		<copy todir="${basedir}/src/net.refractions.udig.libs_1.2.2.qualifier/lib" verbose="true">
+		<copy todir="${basedir}/src/net.refractions.udig.libs_1.3.1.qualifier/lib" verbose="true">
 			<fileset refid="sources.dependency.fileset" />
 			<chainedmapper>
 				<mapper type="flatten" />

@@ -24,6 +24,8 @@ then
         echo "Extracting ${TARGET}/udig-${VERSION}-sdk.zip"
         unzip -q -d ${BUILD}/sdk ${TARGET}/udig-${VERSION}-sdk.zip
         
+        # mv ${BUILD}/sdk/udig-sdk ${BUILD}/sdk/udig_sdk
+        
         echo "Prepairing ${BUILD}/sdk"
         rm -rf ${BUILD}/sdk/udig_sdk/*.app
         rm ${BUILD}/sdk/udig_sdk/*.exe

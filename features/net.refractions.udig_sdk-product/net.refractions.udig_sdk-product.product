@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="uDig SDK" uid="udig-sdk" id="net.refractions.udig.sdk" application="net.refractions.udig.ui.application" version="1.2.2.qualifier" useFeatures="true" includeLaunchers="false">
+<product name="uDig SDK" uid="udig-sdk" id="net.refractions.udig.sdk" application="net.refractions.udig.ui.application" version="1.3.1.qualifier" useFeatures="true" includeLaunchers="false">
 
    <configIni use="default" path="/net.refractions.udig-feature/config.files/configuration/config.ini">
    </configIni>
