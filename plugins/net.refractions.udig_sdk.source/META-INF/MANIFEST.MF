@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Source Plug-in
-Bundle-SymbolicName: net.refractions.udig_sdk.source;singleton:=true
-Bundle-Version: 1.2.0.qualifier
-Bundle-Vendor: udig.refractions.net
-Require-Bundle: org.eclipse.pde.core;resolution:=optional
