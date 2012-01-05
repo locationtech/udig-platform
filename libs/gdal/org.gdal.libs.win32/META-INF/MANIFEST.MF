@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: GDAL native libraries for Windows 32bit
+Bundle-SymbolicName: org.gdal.libs.win32;singleton:=true
+Bundle-Version: 1.7.3
+Fragment-Host: net.refractions.udig.libs;bundle-version="1.3.0"
+Eclipse-PlatformFilter: (& (osgi.os=win32) (osgi.arch=x86))
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.gdal
+Import-Package: it.geosolutions.imageio.gdalframework,
+ org.geotools.coverageio.gdal.ecw
