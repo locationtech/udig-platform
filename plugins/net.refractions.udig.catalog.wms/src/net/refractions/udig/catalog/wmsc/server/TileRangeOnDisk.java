@@ -107,7 +107,7 @@ public class TileRangeOnDisk extends AbstractTileRange {
 	        for( Iterator<Entry<String, Tile>> iterator = tilesWaitingToLoad.entrySet().iterator(); iterator.hasNext(); ) {
 	            Entry<String, Tile> tileentry = (Entry<String, Tile>) iterator.next();
 	            Tile tile = tileentry.getValue();
-	            if (tileReadWriter.tileFileExists(tile, filetype)) {
+	            if (tileReadWriter.tileFileExists(tile, filetype) && !tileReadWriter.isTileStale(tile, filetype)) {
 	            	boolean success = tileReadWriter.readTile(tile, filetype);
 	            	if (success) {
 	            		tilesToRemove.put(tileentry.getKey(), tile);

@@ -15,10 +15,6 @@
 package net.refractions.udig.catalog.internal.wms.tileset;
 
 import java.io.IOException;
-import java.io.Serializable;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.management.ServiceNotFoundException;
 
@@ -27,7 +23,6 @@ import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
 import net.refractions.udig.catalog.internal.wms.WmsPlugin;
-import net.refractions.udig.catalog.internal.wmsc.WMSCServiceImpl;
 import net.refractions.udig.catalog.wmsc.server.TileSet;
 import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
 import net.refractions.udig.catalog.wmsc.server.WMSTileSet;
@@ -114,12 +109,7 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
                 return null;
             }
 
-            URL caps = new URL(source + "version=" + version + "&request=GetCapabilities"); //$NON-NLS-1$ //$NON-NLS-2$
             String srs = CRS.toSRS(info.getCRS());
-
-            Map<String, Serializable> params = new HashMap<String, Serializable>();
-            params.put(WMSCServiceImpl.WMSC_URL_KEY, caps);
-
             TileSet tileset = new WMSTileSet();
 
             double minX = info.getBounds().getMinimum(0);
@@ -189,11 +179,11 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
                 Layer layer = resolve.resolve(Layer.class, monitor);
                 StringBuilder sb = new StringBuilder(""); //$NON-NLS-1$
                 for( StyleImpl layerStyle : layer.getStyles() ) {
-                    sb.append(layerStyle.getName());
+                    sb.append(layerStyle.getName()+",");
                 }
                 style = sb.toString();
             }
-            tileset.setStyles(style);
+            tileset.setStyles(style.substring(0, style.length()-1));
 
             /*
              * The server is where tiles can be retrieved

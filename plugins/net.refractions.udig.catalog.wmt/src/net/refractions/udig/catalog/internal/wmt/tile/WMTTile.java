@@ -30,6 +30,8 @@ public abstract class WMTTile implements Tile{
     private BufferedImage image; //imageObject of the downloaded/cached tile
     private Object imageLock = new Object();
     private int state;
+
+    private String updateSequence;
     
     public WMTTile(ReferencedEnvelope extent, WMTTileName tileName) {
         this.extent = extent;
@@ -345,5 +347,15 @@ public abstract class WMTTile implements Tile{
             
             return zoomLevel == other.zoomLevel;
         }
+    }
+    
+    @Override
+    public String getUpdateSequence() {
+        return this.updateSequence;
+    }
+
+    @Override
+    public void setUpdateSequence( String updateSequence ) {
+        this.updateSequence = updateSequence;
     }
 }

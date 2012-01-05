@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Random;
 
@@ -58,7 +59,7 @@ public class WMSTile implements Tile {
     private String position; // pos = x_y tile position within tilerange grid for this scale
     private static String ID_DIVIDER = "_"; //$NON-NLS-1$
     private WMSTileSet tileset;
-    private AbstractOpenWebService<?,?> server;
+    private AbstractOpenWebService< ? , ? > server;
     private BufferedImage image;
     private Object imageLock = new Object();
     private Envelope bounds;
@@ -71,7 +72,13 @@ public class WMSTile implements Tile {
      */
     private int state = OK;
 
-    public WMSTile( AbstractOpenWebService<?,?> server, WMSTileSet tileset, Envelope bounds, double scale ) {
+    /**
+     * The time this Tile is allowed to be cached before being forced to refresh from the server
+     */
+    private String maxCacheAge;
+
+    public WMSTile( AbstractOpenWebService< ? , ? > server, WMSTileSet tileset, Envelope bounds,
+            double scale ) {
         this.server = server;
         this.tileset = tileset;
         this.bounds = bounds;
@@ -228,16 +235,18 @@ public class WMSTile implements Tile {
             createErrorImage();
             return false;
         }
-        //String baseUrl = server.buildBaseTileRequestURL();
+        // String baseUrl = server.buildBaseTileRequestURL();
         Envelope env = getBounds();
         URL req = null;
         try {
-            req = new URL(server.getInfo().getSource()+"&version="+server.getCapabilities().getVersion()+"&"+tileset.createQueryString(env)); //$NON-NLS-1$
+            URI rawURI = server.getInfo().getSource();
+            String baseUrl = rawURI.getScheme()
+                    + "://" + rawURI.getHost() + ":" + rawURI.getPort() + "" + rawURI.getPath() + "?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            req = new URL(
+                    baseUrl
+                            + "&version=" + server.getCapabilities().getVersion() + "&" + tileset.createQueryString(env)); //$NON-NLS-1$ //$NON-NLS-2$
         } catch (MalformedURLException e2) {
             WmsPlugin.log("error building request URL:", e2); //$NON-NLS-1$
-            return false;
-        } catch (IOException e) {
-            WmsPlugin.log("Error building request URL:", e); //$NON-NLS-1$
             return false;
         }
         GetMapRequest request = new GetMapRequest(req);
@@ -265,7 +274,10 @@ public class WMSTile implements Tile {
             }
             InputStream inputStream = null;
             try {
-                inputStream = issueRequest(request).getInputStream();
+                Response response = issueRequest(request);
+                String cacheControl = extractHeaderCacheControl(response);
+                setMaxCacheAge(cacheControl);
+                inputStream = response.getInputStream();
                 // simulate latency if testing
                 if (testing) {
                     Random rand = new Random();
@@ -316,12 +328,32 @@ public class WMSTile implements Tile {
         // if we get here, something prevented us from setting an image
         return false;
     }
-    
+
+    /**
+     * Extract the cache-control header from the servers response object in the form: 'max-age=3600,
+     * must-revalidate'
+     * 
+     * @param response
+     * @return
+     */
+    @SuppressWarnings("nls")
+    private String extractHeaderCacheControl( Response response ) {
+        String cacheControl = response.getHeader("Cache-Control");
+        if (cacheControl != null && !"".equals(cacheControl)) {
+            String[] split = cacheControl.split(",");
+            String maxAge = split[0];
+            if (maxAge != null && !"".equals(maxAge)) {
+                return maxAge.split("=")[1];
+            }
+        }
+        return null;
+    }
+
     public Response issueRequest( Request request ) throws IOException, ServiceException {
         URL finalURL = request.getFinalURL();
-        if( finalURL.getHost() == null ) {
-            //System.out.prinln("Poor WMS-C configuration - no host provided by "+ finalURL );
-            throw new NullPointerException("No host provided by "+finalURL ); //$NON-NLS-1$
+        if (finalURL.getHost() == null) {
+            // System.out.prinln("Poor WMS-C configuration - no host provided by "+ finalURL );
+            throw new NullPointerException("No host provided by " + finalURL); //$NON-NLS-1$
         }
 
         final HTTPClient httpClient = server.getHTTPClient();
@@ -345,6 +377,7 @@ public class WMSTile implements Tile {
         }
 
         final Response response = request.createResponse(httpResponse);
+        
         return response;
     }
 
@@ -358,12 +391,22 @@ public class WMSTile implements Tile {
         return bf;
     }
 
-    public AbstractOpenWebService<?,?> getServer() {
+    public AbstractOpenWebService< ? , ? > getServer() {
         return server;
     }
 
-    public void setServer( AbstractOpenWebService<?,?> server ) {
+    public void setServer( AbstractOpenWebService< ? , ? > server ) {
         this.server = server;
+    }
+
+    @Override
+    public void setMaxCacheAge( String maxCacheAge ) {
+        this.maxCacheAge = maxCacheAge;
+    }
+
+    @Override
+    public String getMaxCacheAge() {
+        return this.maxCacheAge;
     }
 
     /**
@@ -379,8 +422,8 @@ public class WMSTile implements Tile {
             super(url, null);
             this.url = url;
         }
-        public Response createResponse( HTTPResponse response )
-                throws ServiceException, IOException {
+        public Response createResponse( HTTPResponse response ) throws ServiceException,
+                IOException {
             return new Response(response){
             };
         }
