@@ -782,14 +782,7 @@
 							<excludeScope>provided</excludeScope>
 						</configuration>
 					</execution>
-				</executions>
-			</plugin>
-            <plugin>
-                 <groupId>org.apache.maven.plugins</groupId>
-                 <artifactId>maven-dependency-plugin</artifactId>
-                 <version>2.3</version>
-                 <executions>
-                     <execution>
+					<execution>
                          <id>copy-dependencies-sources</id>
                          <phase>install</phase>
                          <goals>
@@ -798,15 +791,15 @@
                          <configuration>
                              <classifier>sources</classifier>
                              <overWrite>true</overWrite>
-                             <outputDirectory>${basedir}/../net.refractions.udig.libs.source/src/net.refractions.udig.libs_1.3.1.qualifier/lib</outputDirectory>
+                             <outputDirectory>${basedir}/lib/sources</outputDirectory>
                              <overWriteReleases>true</overWriteReleases>
                              <overWriteSnapshots>true</overWriteSnapshots>
                              <excludeScope>provided</excludeScope>
                              <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
                          </configuration>
                      </execution>
-                 </executions>
-             </plugin>
+				</executions>
+			</plugin>
          </plugins>
     </build>
 </project>
