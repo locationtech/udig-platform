@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<geotools.version>8.0-M4</geotools.version>
+		<geotools.version>8-SNAPSHOT</geotools.version>
 		<imageio-ext.version>1.1.0</imageio-ext.version>
 		<jfreechart.version>1.0.13</jfreechart.version>
 	</properties>
@@ -782,14 +782,7 @@
 							<excludeScope>provided</excludeScope>
 						</configuration>
 					</execution>
-				</executions>
-			</plugin>
-            <plugin>
-                 <groupId>org.apache.maven.plugins</groupId>
-                 <artifactId>maven-dependency-plugin</artifactId>
-                 <version>2.3</version>
-                 <executions>
-                     <execution>
+					<execution>
                          <id>copy-dependencies-sources</id>
                          <phase>install</phase>
                          <goals>
@@ -805,8 +798,8 @@
                              <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
                          </configuration>
                      </execution>
-                 </executions>
-             </plugin>
+				</executions>
+			</plugin>
          </plugins>
     </build>
 </project>
