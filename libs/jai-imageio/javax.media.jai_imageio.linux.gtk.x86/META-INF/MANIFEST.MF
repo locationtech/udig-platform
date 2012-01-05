@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: javax.media.jai_imageio.linux.gtk.x86
+Bundle-Version: 1.0.0
+Fragment-Host: javax.media.jai_imageio;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Name: Java Advanced Imaging & Image I/O for Linux 32bit
+Bundle-Vendor: (& (osgi.ws=gtk) (osgi.os=linux) (osgi.arch=x86))
