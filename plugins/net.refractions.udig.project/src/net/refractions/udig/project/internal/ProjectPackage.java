@@ -1091,16 +1091,6 @@ public interface ProjectPackage extends EPackage {
     int MAP_DISPLAY = 28;
 
     /**
-     * The meta object id for the '<em>Feature Results</em>' data type.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.geotools.data.FeatureResults
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFeatureResults()
-     * @generated
-     */
-    int FEATURE_RESULTS = 29;
-
-    /**
      * The meta object id for the '<em>List</em>' data type.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
@@ -1108,7 +1098,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getList()
      * @generated
      */
-    int LIST = 30;
+    int LIST = 29;
 
     /**
      * The meta object id for the '<em>Affine Transform</em>' data type.
@@ -1118,7 +1108,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getAffineTransform()
      * @generated
      */
-    int AFFINE_TRANSFORM = 31;
+    int AFFINE_TRANSFORM = 30;
 
     /**
      * The meta object id for the '<em>Nav Command Stack</em>' data type.
@@ -1128,7 +1118,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getNavCommandStack()
      * @generated
      */
-    int NAV_COMMAND_STACK = 32;
+    int NAV_COMMAND_STACK = 31;
 
     /**
      * The meta object id for the '<em>IGeo Resource</em>' data type.
@@ -1138,7 +1128,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIGeoResource()
      * @generated
      */
-    int IGEO_RESOURCE = 33;
+    int IGEO_RESOURCE = 32;
 
     /**
      * The meta object id for the '<em>Filter</em>' data type.
@@ -1148,7 +1138,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFilter()
      * @generated
      */
-    int FILTER = 34;
+    int FILTER = 33;
 
     /**
      * The meta object id for the '<em>Coordinate Reference System</em>' data type. <!--
@@ -1158,7 +1148,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCoordinateReferenceSystem()
      * @generated
      */
-    int COORDINATE_REFERENCE_SYSTEM = 35;
+    int COORDINATE_REFERENCE_SYSTEM = 34;
 
     /**
      * The meta object id for the '<em>Command Stack</em>' data type.
@@ -1168,17 +1158,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCommandStack()
      * @generated
      */
-    int COMMAND_STACK = 36;
-
-    /**
-     * The meta object id for the '<em>Feature</em>' data type.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @see org.geotools.feature.SimpleFeature
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFeature()
-     * @generated
-     */
-    int FEATURE = 37;
+    int COMMAND_STACK = 35;
 
     /**
      * The meta object id for the '<em>Point</em>' data type.
@@ -1188,7 +1168,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getPoint()
      * @generated
      */
-    int POINT = 38;
+    int POINT = 36;
 
     /**
      * The meta object id for the '<em>Adapter</em>' data type.
@@ -1198,7 +1178,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getAdapter()
      * @generated
      */
-    int ADAPTER = 39;
+    int ADAPTER = 37;
 
     /**
      * The meta object id for the '<em>IProgress Monitor</em>' data type.
@@ -1208,7 +1188,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIProgressMonitor()
      * @generated
      */
-    int IPROGRESS_MONITOR = 40;
+    int IPROGRESS_MONITOR = 38;
 
     /**
      * The meta object id for the '<em>Query</em>' data type.
@@ -1218,7 +1198,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getQuery()
      * @generated
      */
-    int QUERY = 41;
+    int QUERY = 39;
 
     /**
      * The meta object id for the '<em>URL</em>' data type.
@@ -1228,7 +1208,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getURL()
      * @generated
      */
-    int URL = 42;
+    int URL = 40;
 
     /**
      * The meta object id for the '<em>Image Descriptor</em>' data type.
@@ -1238,7 +1218,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getImageDescriptor()
      * @generated
      */
-    int IMAGE_DESCRIPTOR = 43;
+    int IMAGE_DESCRIPTOR = 41;
 
     /**
      * The meta object id for the '<em>Edit Command</em>' data type.
@@ -1248,7 +1228,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditCommand()
      * @generated
      */
-    int EDIT_COMMAND = 44;
+    int EDIT_COMMAND = 42;
 
     /**
      * The meta object id for the '<em>Nav Command</em>' data type.
@@ -1258,7 +1238,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getNavCommand()
      * @generated
      */
-    int NAV_COMMAND = 45;
+    int NAV_COMMAND = 43;
 
     /**
      * The meta object id for the '<em>Envelope</em>' data type.
@@ -1268,7 +1248,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEnvelope()
      * @generated
      */
-    int ENVELOPE = 46;
+    int ENVELOPE = 44;
 
     /**
      * The meta object id for the '<em>Edit Manager Control Command</em>' data type. <!--
@@ -1277,7 +1257,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditManagerControlCommand()
      * @generated
      */
-    int EDIT_MANAGER_CONTROL_COMMAND = 47;
+    int EDIT_MANAGER_CONTROL_COMMAND = 45;
 
     /**
      * The meta object id for the '<em>Command</em>' data type.
@@ -1287,7 +1267,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCommand()
      * @generated
      */
-    int COMMAND = 48;
+    int COMMAND = 46;
 
     /**
      * The meta object id for the '<em>URI</em>' data type.
@@ -1297,7 +1277,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getURI()
      * @generated
      */
-    int URI = 49;
+    int URI = 47;
 
     /**
      * The meta object id for the '<em>Catalog Ref</em>' data type.
@@ -1307,7 +1287,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCatalogRef()
      * @generated
      */
-    int CATALOG_REF = 50;
+    int CATALOG_REF = 48;
 
     /**
      * The meta object id for the '<em>Colour Palette</em>' data type.
@@ -1317,7 +1297,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColourPalette()
      * @generated
      */
-    int COLOUR_PALETTE = 51;
+    int COLOUR_PALETTE = 49;
 
     /**
      * The meta object id for the '<em>Colour Scheme</em>' data type.
@@ -1327,7 +1307,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColourScheme()
      * @generated
      */
-    int COLOUR_SCHEME = 52;
+    int COLOUR_SCHEME = 50;
 
     /**
      * The meta object id for the '<em>Mutable Pico Container</em>' data type. <!--
@@ -1337,7 +1317,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMutablePicoContainer()
      * @generated
      */
-    int MUTABLE_PICO_CONTAINER = 53;
+    int MUTABLE_PICO_CONTAINER = 51;
 
     /**
      * The meta object id for the '<em>Referenced Envelope</em>' data type.
@@ -1347,7 +1327,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getReferencedEnvelope()
      * @generated
      */
-    int REFERENCED_ENVELOPE = 54;
+    int REFERENCED_ENVELOPE = 52;
 
     /**
      * The meta object id for the '<em>Feature Event</em>' data type.
@@ -1357,7 +1337,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFeatureEvent()
      * @generated
      */
-    int FEATURE_EVENT = 55;
+    int FEATURE_EVENT = 53;
 
     /**
      * The meta object id for the '<em>Simple Feature</em>' data type.
@@ -1367,7 +1347,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getSimpleFeature()
      * @generated
      */
-    int SIMPLE_FEATURE = 56;
+    int SIMPLE_FEATURE = 54;
 
     /**
      * The meta object id for the '<em>Illegal Argument Exception</em>' data type.
@@ -1377,7 +1357,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIllegalArgumentException()
      * @generated
      */
-    int ILLEGAL_ARGUMENT_EXCEPTION = 57;
+    int ILLEGAL_ARGUMENT_EXCEPTION = 55;
 
     /**
      * The meta object id for the '<em>IO Exception</em>' data type.
@@ -1387,7 +1367,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIOException()
      * @generated
      */
-    int IO_EXCEPTION = 58;
+    int IO_EXCEPTION = 56;
 
     /**
      * The meta object id for the '<em>Color</em>' data type.
@@ -1397,7 +1377,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColor()
      * @generated
      */
-    int COLOR = 59;
+    int COLOR = 57;
 
     /**
      * The meta object id for the '<em>Brewer Palette</em>' data type.
@@ -1407,7 +1387,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getBrewerPalette()
      * @generated
      */
-    int BREWER_PALETTE = 60;
+    int BREWER_PALETTE = 58;
 
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
@@ -2264,16 +2244,6 @@ public interface ProjectPackage extends EPackage {
     EDataType getMapDisplay();
 
     /**
-     * Returns the meta object for data type '{@link org.geotools.data.FeatureResults <em>Feature Results</em>}'.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for data type '<em>Feature Results</em>'.
-     * @see org.geotools.data.FeatureResults
-     * @model instanceClass="org.geotools.data.FeatureResults"
-     * @generated
-     */
-    EDataType getFeatureResults();
-
-    /**
      * Returns the meta object for data type '{@link java.util.List <em>List</em>}'. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -2343,16 +2313,6 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     EDataType getCommandStack();
-
-    /**
-     * Returns the meta object for data type '{@link org.geotools.feature.SimpleFeature <em>Feature</em>}'.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for data type '<em>Feature</em>'.
-     * @see org.geotools.feature.SimpleFeature
-     * @model instanceClass="org.geotools.feature.SimpleFeature"
-     * @generated
-     */
-    EDataType getFeature();
 
     /**
      * Returns the meta object for data type '{@link java.awt.Point <em>Point</em>}'. <!--
@@ -3354,16 +3314,6 @@ public interface ProjectPackage extends EPackage {
         EDataType MAP_DISPLAY = eINSTANCE.getMapDisplay();
 
         /**
-         * The meta object literal for the '<em>Feature Results</em>' data type.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see org.geotools.data.FeatureResults
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFeatureResults()
-         * @generated
-         */
-        EDataType FEATURE_RESULTS = eINSTANCE.getFeatureResults();
-
-        /**
          * The meta object literal for the '<em>List</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3432,16 +3382,6 @@ public interface ProjectPackage extends EPackage {
          * @generated
          */
         EDataType COMMAND_STACK = eINSTANCE.getCommandStack();
-
-        /**
-         * The meta object literal for the '<em>Feature</em>' data type.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see org.geotools.feature.SimpleFeature
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFeature()
-         * @generated
-         */
-        EDataType FEATURE = eINSTANCE.getFeature();
 
         /**
          * The meta object literal for the '<em>Point</em>' data type.

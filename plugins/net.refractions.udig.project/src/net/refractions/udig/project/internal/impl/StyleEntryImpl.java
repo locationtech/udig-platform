@@ -84,7 +84,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * 
      * @generated NOT
      */
-    private Class styleClass = STYLE_CLASS_EDEFAULT;
+    private Class styleClass = null; // no default style class provided
 
     /**
      * Indicates whether the entry is <em>selected</em>

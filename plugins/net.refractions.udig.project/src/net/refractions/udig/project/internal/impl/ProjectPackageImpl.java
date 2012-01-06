@@ -68,9 +68,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.brewer.color.BrewerPalette;
 import org.geotools.data.FeatureEvent;
-import org.geotools.data.FeatureResults;
 import org.geotools.data.Query;
-import org.geotools.feature.SimpleFeature;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
@@ -265,12 +263,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EDataType featureResultsEDataType = null;
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
     private EDataType listEDataType = null;
 
     /**
@@ -308,12 +300,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     private EDataType commandStackEDataType = null;
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    private EDataType featureEDataType = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1220,14 +1206,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EDataType getFeatureResults() {
-        return featureResultsEDataType;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
     public EDataType getList() {
         return listEDataType;
     }
@@ -1278,14 +1256,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      */
     public EDataType getCommandStack() {
         return commandStackEDataType;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public EDataType getFeature() {
-        return featureEDataType;
     }
 
     /**
@@ -1615,7 +1585,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         // Create data types
         coordinateEDataType = createEDataType(COORDINATE);
         mapDisplayEDataType = createEDataType(MAP_DISPLAY);
-        featureResultsEDataType = createEDataType(FEATURE_RESULTS);
         listEDataType = createEDataType(LIST);
         affineTransformEDataType = createEDataType(AFFINE_TRANSFORM);
         navCommandStackEDataType = createEDataType(NAV_COMMAND_STACK);
@@ -1623,7 +1592,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         filterEDataType = createEDataType(FILTER);
         coordinateReferenceSystemEDataType = createEDataType(COORDINATE_REFERENCE_SYSTEM);
         commandStackEDataType = createEDataType(COMMAND_STACK);
-        featureEDataType = createEDataType(FEATURE);
         pointEDataType = createEDataType(POINT);
         adapterEDataType = createEDataType(ADAPTER);
         iProgressMonitorEDataType = createEDataType(IPROGRESS_MONITOR);
@@ -2104,8 +2072,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 "Coordinate", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(mapDisplayEDataType, IMapDisplay.class,
                 "MapDisplay", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(featureResultsEDataType, FeatureResults.class,
-                "FeatureResults", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(listEDataType, List.class,
                 "List", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(affineTransformEDataType, AffineTransform.class,
@@ -2120,8 +2086,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 "CoordinateReferenceSystem", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(commandStackEDataType, CommandStack.class,
                 "CommandStack", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(featureEDataType, SimpleFeature.class,
-                "Feature", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(pointEDataType, Point.class,
                 "Point", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(adapterEDataType, Adapter.class,
@@ -2158,7 +2122,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 "ReferencedEnvelope", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(featureEventEDataType, FeatureEvent.class,
                 "FeatureEvent", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(simpleFeatureEDataType, org.opengis.feature.simple.SimpleFeature.class,
+        initEDataType(simpleFeatureEDataType, SimpleFeature.class,
                 "SimpleFeature", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(illegalArgumentExceptionEDataType, IllegalArgumentException.class,
                 "IllegalArgumentException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

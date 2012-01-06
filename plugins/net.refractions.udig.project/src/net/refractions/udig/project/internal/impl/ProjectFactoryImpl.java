@@ -59,9 +59,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.brewer.color.BrewerPalette;
 import org.geotools.data.FeatureEvent;
-import org.geotools.data.FeatureResults;
 import org.geotools.data.Query;
-import org.geotools.feature.SimpleFeature;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.ReferencingFactoryFinder;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
@@ -162,8 +160,6 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             return createCoordinateFromString(eDataType, initialValue);
         case ProjectPackage.MAP_DISPLAY:
             return createMapDisplayFromString(eDataType, initialValue);
-        case ProjectPackage.FEATURE_RESULTS:
-            return createFeatureResultsFromString(eDataType, initialValue);
         case ProjectPackage.LIST:
             return createListFromString(eDataType, initialValue);
         case ProjectPackage.AFFINE_TRANSFORM:
@@ -178,8 +174,6 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             return createCoordinateReferenceSystemFromString(eDataType, initialValue);
         case ProjectPackage.COMMAND_STACK:
             return createCommandStackFromString(eDataType, initialValue);
-        case ProjectPackage.FEATURE:
-            return createFeatureFromString(eDataType, initialValue);
         case ProjectPackage.POINT:
             return createPointFromString(eDataType, initialValue);
         case ProjectPackage.ADAPTER:
@@ -243,8 +237,6 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             return convertCoordinateToString(eDataType, instanceValue);
         case ProjectPackage.MAP_DISPLAY:
             return convertMapDisplayToString(eDataType, instanceValue);
-        case ProjectPackage.FEATURE_RESULTS:
-            return convertFeatureResultsToString(eDataType, instanceValue);
         case ProjectPackage.LIST:
             return convertListToString(eDataType, instanceValue);
         case ProjectPackage.AFFINE_TRANSFORM:
@@ -259,8 +251,6 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             return convertCoordinateReferenceSystemToString(eDataType, instanceValue);
         case ProjectPackage.COMMAND_STACK:
             return convertCommandStackToString(eDataType, instanceValue);
-        case ProjectPackage.FEATURE:
-            return convertFeatureToString(eDataType, instanceValue);
         case ProjectPackage.POINT:
             return convertPointToString(eDataType, instanceValue);
         case ProjectPackage.ADAPTER:
@@ -476,22 +466,6 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * @generated
      */
     public String convertNavCommandToString( EDataType eDataType, Object instanceValue ) {
-        return super.convertToString(eDataType, instanceValue);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public SimpleFeature createFeatureFromString( EDataType eDataType, String initialValue ) {
-        return (SimpleFeature) super.createFromString(eDataType, initialValue);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public String convertFeatureToString( EDataType eDataType, Object instanceValue ) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -724,15 +698,6 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public FeatureResults createFeatureResultsFromString( EDataType eDataType, String initialValue ) {
-        return (FeatureResults) super.createFromString(eDataType, initialValue);
-    }
-
-    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -745,14 +710,6 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * @generated
      */
     public String convertListToString( EDataType eDataType, Object instanceValue ) {
-        return super.convertToString(eDataType, instanceValue);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public String convertFeatureResultsToString( EDataType eDataType, Object instanceValue ) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -1018,10 +975,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public org.opengis.feature.simple.SimpleFeature createSimpleFeatureFromString(
-            EDataType eDataType, String initialValue ) {
-        return (org.opengis.feature.simple.SimpleFeature) super.createFromString(eDataType,
-                initialValue);
+    public SimpleFeature createSimpleFeatureFromString( EDataType eDataType, String initialValue ) {
+        return (SimpleFeature) super.createFromString(eDataType, initialValue);
     }
 
     /**
