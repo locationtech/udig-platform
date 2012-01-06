@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<geotools.version>8.0-M4</geotools.version>
+		<geotools.version>8-SNAPSHOT</geotools.version>
 		<imageio-ext.version>1.1.0</imageio-ext.version>
 		<jfreechart.version>1.0.13</jfreechart.version>
 	</properties>
