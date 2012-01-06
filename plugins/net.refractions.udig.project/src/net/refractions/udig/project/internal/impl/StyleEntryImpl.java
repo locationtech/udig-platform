@@ -23,12 +23,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
      * The default value of the '{@link #getID() <em>ID</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -79,16 +73,6 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
     protected static final Object STYLE_EDEFAULT = null;
 
     /**
-     * The default value of the '{@link #getStyleClass() <em>Style Class</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #getStyleClass()
-     * @generated
-     * @ordered
-     */
-    protected static final Class STYLE_CLASS_EDEFAULT = null;
-
-    /**
      * The cached style.
      * 
      * @generated NOT
@@ -106,8 +90,8 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * Indicates whether the entry is <em>selected</em>
      * @see StyleBlackboard#setSelected(String[])
      */
-    private volatile boolean selected=false;
-    
+    private volatile boolean selected = false;
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
@@ -120,8 +104,9 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     protected EClass eStaticClass() {
-        return ProjectPackage.eINSTANCE.getStyleEntry();
+        return ProjectPackage.Literals.STYLE_ENTRY;
     }
 
     /**
@@ -205,11 +190,13 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
+        switch( featureID ) {
         case ProjectPackage.STYLE_ENTRY__ID:
             return getID();
         case ProjectPackage.STYLE_ENTRY__MEMENTO:
@@ -219,15 +206,17 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
         case ProjectPackage.STYLE_ENTRY__STYLE_CLASS:
             return getStyleClass();
         }
-        return eDynamicGet(eFeature, resolve);
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void eSet( EStructuralFeature eFeature, Object newValue ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public void eSet( int featureID, Object newValue ) {
+        switch( featureID ) {
         case ProjectPackage.STYLE_ENTRY__ID:
             setID((String) newValue);
             return;
@@ -235,21 +224,23 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
             setMemento((String) newValue);
             return;
         case ProjectPackage.STYLE_ENTRY__STYLE:
-            setStyle((Object) newValue);
+            setStyle(newValue);
             return;
         case ProjectPackage.STYLE_ENTRY__STYLE_CLASS:
             setStyleClass((Class) newValue);
             return;
         }
-        eDynamicSet(eFeature, newValue);
+        super.eSet(featureID, newValue);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void eUnset( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public void eUnset( int featureID ) {
+        switch( featureID ) {
         case ProjectPackage.STYLE_ENTRY__ID:
             setID(ID_EDEFAULT);
             return;
@@ -260,18 +251,20 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
             setStyle(STYLE_EDEFAULT);
             return;
         case ProjectPackage.STYLE_ENTRY__STYLE_CLASS:
-            setStyleClass(STYLE_CLASS_EDEFAULT);
+            setStyleClass((Class) null);
             return;
         }
-        eDynamicUnset(eFeature);
+        super.eUnset(featureID);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public boolean eIsSet( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public boolean eIsSet( int featureID ) {
+        switch( featureID ) {
         case ProjectPackage.STYLE_ENTRY__ID:
             return ID_EDEFAULT == null ? iD != null : !ID_EDEFAULT.equals(iD);
         case ProjectPackage.STYLE_ENTRY__MEMENTO:
@@ -279,10 +272,9 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
         case ProjectPackage.STYLE_ENTRY__STYLE:
             return STYLE_EDEFAULT == null ? getStyle() != null : !STYLE_EDEFAULT.equals(getStyle());
         case ProjectPackage.STYLE_ENTRY__STYLE_CLASS:
-            return STYLE_CLASS_EDEFAULT == null ? getStyleClass() != null : !STYLE_CLASS_EDEFAULT
-                    .equals(getStyleClass());
+            return getStyleClass() != null;
         }
-        return eDynamicIsSet(eFeature);
+        return super.eIsSet(featureID);
     }
 
     /**
@@ -290,8 +282,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @generated NOT
      */
     public String toString() {
-        if (eIsProxy())
-            return super.toString();
+        if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (iD: "); //$NON-NLS-1$

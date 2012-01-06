@@ -7,6 +7,7 @@ package net.refractions.udig.project.internal.impl;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
+import java.io.IOException;
 import java.util.List;
 
 import net.refractions.udig.catalog.IGeoResource;
@@ -19,11 +20,15 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.IProjectElement;
+import net.refractions.udig.project.IStyleBlackboard;
 import net.refractions.udig.project.command.CommandStack;
 import net.refractions.udig.project.command.EditCommand;
+import net.refractions.udig.project.command.EditManagerControlCommand;
 import net.refractions.udig.project.command.MapCommand;
 import net.refractions.udig.project.command.NavCommand;
 import net.refractions.udig.project.command.NavCommandStack;
+import net.refractions.udig.project.element.ElementPackage;
+import net.refractions.udig.project.element.impl.ElementPackageImpl;
 import net.refractions.udig.project.internal.AbstractContext;
 import net.refractions.udig.project.internal.Blackboard;
 import net.refractions.udig.project.internal.BlackboardEntry;
@@ -45,6 +50,7 @@ import net.refractions.udig.project.internal.render.impl.RenderPackageImpl;
 import net.refractions.udig.project.render.IRenderManager;
 import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import net.refractions.udig.ui.palette.ColourPalette;
 import net.refractions.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -54,6 +60,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -61,7 +68,9 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.brewer.color.BrewerPalette;
 import org.geotools.data.FeatureEvent;
+import org.geotools.data.FeatureResults;
 import org.geotools.data.Query;
+import org.geotools.feature.SimpleFeature;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
@@ -76,12 +85,6 @@ import com.vividsolutions.jts.geom.Envelope;
  * @generated
  */
 public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -142,12 +145,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     private EClass iViewportModelEClass = null;
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass abstractContextEClass = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -231,12 +228,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass picoBlackboardEClass = null;
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
     private EClass blackboardEClass = null;
 
     /**
@@ -250,6 +241,13 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     private EClass iResolveChangeListenerEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass iStyleBlackboardEClass = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -411,11 +409,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EDataType defaultColorEDataType;
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
     private EDataType mutablePicoContainerEDataType = null;
 
     /**
@@ -429,6 +422,41 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     private EDataType featureEventEDataType = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EDataType simpleFeatureEDataType = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EDataType illegalArgumentExceptionEDataType = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EDataType ioExceptionEDataType = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EDataType colorEDataType = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EDataType brewerPaletteEDataType = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -455,20 +483,10 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
     private static boolean isInited = false;
 
     /**
-     * Creates, registers, and initializes the <b>Package</b> for this
-     * model, and for any others upon which it depends.  Simple
-     * dependencies are satisfied by calling this method on all
-     * dependent packages before doing anything else.  This method drives
-     * initialization for interdependent packages directly, in parallel
-     * with this package, itself.
-     * <p>Of this package and its interdependencies, all packages which
-     * have not yet been registered by their URI values are first created
-     * and registered.  The packages are then initialized in two steps:
-     * meta-model objects for all of the packages are created before any
-     * are initialized, since one package's meta-model objects may refer to
-     * those of another.
-     * <p>Invocation of this method will not affect any packages that have
-     * already been initialized.
+     * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+     * 
+     * <p>This method is used to initialize {@link ProjectPackage#eINSTANCE} when that field is accessed.
+     * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #eNS_URI
      * @see #createPackageContents()
@@ -481,12 +499,16 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
 
         // Obtain or create and register package
         ProjectPackageImpl theProjectPackage = (ProjectPackageImpl) (EPackage.Registry.INSTANCE
-                .getEPackage(eNS_URI) instanceof ProjectPackageImpl ? EPackage.Registry.INSTANCE
-                .getEPackage(eNS_URI) : new ProjectPackageImpl());
+                .get(eNS_URI) instanceof ProjectPackageImpl ? EPackage.Registry.INSTANCE
+                .get(eNS_URI) : new ProjectPackageImpl());
 
         isInited = true;
 
         // Obtain or create and register interdependencies
+        ElementPackageImpl theElementPackage = (ElementPackageImpl) (EPackage.Registry.INSTANCE
+                .getEPackage(ElementPackage.eNS_URI) instanceof ElementPackageImpl
+                ? EPackage.Registry.INSTANCE.getEPackage(ElementPackage.eNS_URI)
+                : ElementPackage.eINSTANCE);
         RenderPackageImpl theRenderPackage = (RenderPackageImpl) (EPackage.Registry.INSTANCE
                 .getEPackage(RenderPackage.eNS_URI) instanceof RenderPackageImpl
                 ? EPackage.Registry.INSTANCE.getEPackage(RenderPackage.eNS_URI)
@@ -494,15 +516,19 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
 
         // Create package meta-data objects
         theProjectPackage.createPackageContents();
+        theElementPackage.createPackageContents();
         theRenderPackage.createPackageContents();
 
         // Initialize created meta-data
         theProjectPackage.initializePackageContents();
+        theElementPackage.initializePackageContents();
         theRenderPackage.initializePackageContents();
 
         // Mark meta-data to indicate it can't be changed
         theProjectPackage.freeze();
 
+        // Update the registry and return the package
+        EPackage.Registry.INSTANCE.put(ProjectPackage.eNS_URI, theProjectPackage);
         return theProjectPackage;
     }
 
@@ -584,30 +610,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      */
     public EClass getIViewportModel() {
         return iViewportModelEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getAbstractContext() {
-        return abstractContextEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getAbstractContext_RenderManagerInternal() {
-        return (EReference) abstractContextEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getAbstractContext_MapInternal() {
-        return (EReference) abstractContextEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -841,6 +843,24 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      */
     public EAttribute getLayer_FeatureChanges() {
         return (EAttribute) layerEClass.getEStructuralFeatures().get(17);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getLayer_MinScaleDenominator() {
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(18);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getLayer_MaxScaleDenominator() {
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(19);
     }
 
     /**
@@ -1111,22 +1131,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EClass getPicoBlackboard() {
-        return picoBlackboardEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getPicoBlackboard_PicoContainer() {
-        return (EAttribute) picoBlackboardEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
     public EClass getBlackboard() {
         return blackboardEClass;
     }
@@ -1185,6 +1189,15 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      */
     public EClass getIResolveChangeListener() {
         return iResolveChangeListenerEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getIStyleBlackboard() {
+        return iStyleBlackboardEClass;
     }
 
     /**
@@ -1420,6 +1433,51 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EDataType getSimpleFeature() {
+        return simpleFeatureEDataType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EDataType getIllegalArgumentException() {
+        return illegalArgumentExceptionEDataType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EDataType getIOException() {
+        return ioExceptionEDataType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EDataType getColor() {
+        return colorEDataType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EDataType getBrewerPalette() {
+        return brewerPaletteEDataType;
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -1433,7 +1491,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      */
     private boolean isCreated = false;
 
-
     /**
      * Creates the meta-model objects for the package.  This method is
      * guarded to have no affect on any invocation but its first.
@@ -1441,8 +1498,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public void createPackageContents() {
-        if (isCreated)
-            return;
+        if (isCreated) return;
         isCreated = true;
 
         // Create classes and their features
@@ -1465,10 +1521,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         iRenderManagerEClass = createEClass(IRENDER_MANAGER);
 
         iViewportModelEClass = createEClass(IVIEWPORT_MODEL);
-
-        abstractContextEClass = createEClass(ABSTRACT_CONTEXT);
-        createEReference(abstractContextEClass, ABSTRACT_CONTEXT__RENDER_MANAGER_INTERNAL);
-        createEReference(abstractContextEClass, ABSTRACT_CONTEXT__MAP_INTERNAL);
 
         contextModelEClass = createEClass(CONTEXT_MODEL);
         createEReference(contextModelEClass, CONTEXT_MODEL__LAYERS);
@@ -1501,6 +1553,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEAttribute(layerEClass, LAYER__COLOUR_SCHEME);
         createEAttribute(layerEClass, LAYER__DEFAULT_COLOR);
         createEAttribute(layerEClass, LAYER__FEATURE_CHANGES);
+        createEAttribute(layerEClass, LAYER__MIN_SCALE_DENOMINATOR);
+        createEAttribute(layerEClass, LAYER__MAX_SCALE_DENOMINATOR);
 
         mapEClass = createEClass(MAP);
         createEReference(mapEClass, MAP__CONTEXT_MODEL);
@@ -1545,9 +1599,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
 
         iBlockingAdaptableEClass = createEClass(IBLOCKING_ADAPTABLE);
 
-        picoBlackboardEClass = createEClass(PICO_BLACKBOARD);
-        createEAttribute(picoBlackboardEClass, PICO_BLACKBOARD__PICO_CONTAINER);
-
         blackboardEClass = createEClass(BLACKBOARD);
         createEReference(blackboardEClass, BLACKBOARD__ENTRIES);
 
@@ -1558,6 +1609,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEAttribute(blackboardEntryEClass, BLACKBOARD_ENTRY__OBJECT);
 
         iResolveChangeListenerEClass = createEClass(IRESOLVE_CHANGE_LISTENER);
+
+        iStyleBlackboardEClass = createEClass(ISTYLE_BLACKBOARD);
 
         // Create data types
         coordinateEDataType = createEDataType(COORDINATE);
@@ -1586,10 +1639,14 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         catalogRefEDataType = createEDataType(CATALOG_REF);
         colourPaletteEDataType = createEDataType(COLOUR_PALETTE);
         colourSchemeEDataType = createEDataType(COLOUR_SCHEME);
-        defaultColorEDataType = createEDataType(DEFAULT_COLOR);
         mutablePicoContainerEDataType = createEDataType(MUTABLE_PICO_CONTAINER);
         referencedEnvelopeEDataType = createEDataType(REFERENCED_ENVELOPE);
         featureEventEDataType = createEDataType(FEATURE_EVENT);
+        simpleFeatureEDataType = createEDataType(SIMPLE_FEATURE);
+        illegalArgumentExceptionEDataType = createEDataType(ILLEGAL_ARGUMENT_EXCEPTION);
+        ioExceptionEDataType = createEDataType(IO_EXCEPTION);
+        colorEDataType = createEDataType(COLOR);
+        brewerPaletteEDataType = createEDataType(BREWER_PALETTE);
     }
 
     /**
@@ -1606,8 +1663,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      */
     @SuppressWarnings("unchecked")
     public void initializePackageContents() {
-        if (isInitialized)
-            return;
+        if (isInitialized) return;
         isInitialized = true;
 
         // Initialize package
@@ -1616,12 +1672,14 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         setNsURI(eNS_URI);
 
         // Obtain other dependent packages
-        RenderPackageImpl theRenderPackage = (RenderPackageImpl) EPackage.Registry.INSTANCE
+        RenderPackage theRenderPackage = (RenderPackage) EPackage.Registry.INSTANCE
                 .getEPackage(RenderPackage.eNS_URI);
 
+        // Create type parameters
+
+        // Set bounds for type parameters
+
         // Add supertypes to classes
-        abstractContextEClass.getESuperTypes().add(this.getCloneable());
-        abstractContextEClass.getESuperTypes().add(this.getIAbstractContext());
         editManagerEClass.getESuperTypes().add(this.getIEditManager());
         layerEClass.getESuperTypes().add(this.getILayer());
         layerEClass.getESuperTypes().add(this.getIAdaptable());
@@ -1632,13 +1690,12 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         projectEClass.getESuperTypes().add(this.getIProject());
         projectElementEClass.getESuperTypes().add(this.getIProjectElement());
         projectElementEClass.getESuperTypes().add(this.getIAdaptable());
-        styleBlackboardEClass.getESuperTypes().add(this.getIBlackboard());
+        styleBlackboardEClass.getESuperTypes().add(this.getIStyleBlackboard());
         styleBlackboardEClass.getESuperTypes().add(this.getCloneable());
-        picoBlackboardEClass.getESuperTypes().add(this.getIBlackboard());
         blackboardEClass.getESuperTypes().add(this.getIBlackboard());
 
         // Initialize classes and features; add operations and parameters
-        initEClass(comparableEClass, Comparable.class,
+        initEClass(comparableEClass, Object.class,
                 "Comparable", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
         initEClass(iMapEClass, IMap.class,
@@ -1668,19 +1725,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         initEClass(iViewportModelEClass, IViewportModel.class,
                 "IViewportModel", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-        initEClass(abstractContextEClass, AbstractContext.class,
-                "AbstractContext", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEReference(
-                getAbstractContext_RenderManagerInternal(),
-                theRenderPackage.getRenderManager(),
-                null,
-                "renderManagerInternal", null, 0, 1, AbstractContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEReference(
-                getAbstractContext_MapInternal(),
-                this.getMap(),
-                null,
-                "mapInternal", null, 0, 1, AbstractContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
         initEClass(contextModelEClass, ContextModel.class,
                 "ContextModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEReference(
@@ -1694,17 +1738,11 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 this.getMap_ContextModel(),
                 "map", null, 0, 1, ContextModel.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-        EOperation op = addEOperation(contextModelEClass, null, "lowerLayer"); //$NON-NLS-1$
-        addEParameter(op, this.getLayer(), "layer"); //$NON-NLS-1$
-
-        op = addEOperation(contextModelEClass, null, "raiseLayer"); //$NON-NLS-1$
-        addEParameter(op, this.getLayer(), "layer"); //$NON-NLS-1$
-
         initEClass(editManagerEClass, EditManager.class,
                 "EditManager", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEAttribute(
                 getEditManager_EditFeature(),
-                this.getFeature(),
+                this.getSimpleFeature(),
                 "editFeature", null, 0, 1, EditManager.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEReference(
                 getEditManager_MapInternal(),
@@ -1730,15 +1768,21 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 null,
                 "selectedLayer", null, 0, 1, EditManager.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(editManagerEClass, null, "setEditFeature"); //$NON-NLS-1$
-        addEParameter(op, this.getFeature(), "value"); //$NON-NLS-1$
-        addEParameter(op, this.getLayer(), "layer"); //$NON-NLS-1$
+        EOperation op = addEOperation(editManagerEClass, null,
+                "setEditFeature", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, this.getSimpleFeature(), "value", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, this.getLayer(), "layer", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEException(op, this.getIllegalArgumentException());
 
-        addEOperation(editManagerEClass, null, "startTransaction"); //$NON-NLS-1$
+        addEOperation(editManagerEClass, null, "startTransaction", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        addEOperation(editManagerEClass, null, "commitTransaction"); //$NON-NLS-1$
+        op = addEOperation(editManagerEClass, null,
+                "commitTransaction", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEException(op, this.getIOException());
 
-        addEOperation(editManagerEClass, null, "rollbackTransaction"); //$NON-NLS-1$
+        op = addEOperation(editManagerEClass, null,
+                "rollbackTransaction", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEException(op, this.getIOException());
 
         initEClass(layerEClass, Layer.class,
                 "Layer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -1759,7 +1803,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         initEAttribute(
                 getLayer_Zorder(),
                 ecorePackage.getEInt(),
-                "zorder", null, 0, 1, Layer.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+                "zorder", null, 0, 1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEAttribute(
                 getLayer_Status(),
                 ecorePackage.getEInt(),
@@ -1799,7 +1843,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         initEAttribute(
                 getLayer_CRS(),
                 this.getCoordinateReferenceSystem(),
-                "cRS", null, 0, 1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+                "cRS", null, 0, 1, Layer.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEReference(
                 getLayer_Properties(),
                 this.getIBlackboard(),
@@ -1811,18 +1855,27 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 "colourScheme", null, 0, 1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEAttribute(
                 getLayer_DefaultColor(),
-                getDefaultColor(),
+                this.getColor(),
                 "defaultColor", null, 0, 1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEAttribute(
                 getLayer_FeatureChanges(),
                 this.getFeatureEvent(),
                 "featureChanges", null, 0, -1, Layer.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getLayer_MinScaleDenominator(),
+                ecorePackage.getEDouble(),
+                "minScaleDenominator", null, 0, 1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getLayer_MaxScaleDenominator(),
+                ecorePackage.getEDouble(),
+                "maxScaleDenominator", null, 0, 1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(layerEClass, this.getQuery(), "getQuery"); //$NON-NLS-1$
-        addEParameter(op, ecorePackage.getEBoolean(), "selection"); //$NON-NLS-1$
+        op = addEOperation(layerEClass, this.getQuery(), "getQuery", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, ecorePackage.getEBoolean(), "selection", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(layerEClass, this.getCoordinateReferenceSystem(), "getCRS"); //$NON-NLS-1$
-        addEParameter(op, this.getIProgressMonitor(), "monitor"); //$NON-NLS-1$
+        op = addEOperation(layerEClass, this.getCoordinateReferenceSystem(),
+                "getCRS", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, this.getIProgressMonitor(), "monitor", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
         initEClass(mapEClass, Map.class,
                 "Map", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -1855,7 +1908,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 "viewportModelInternal", null, 0, 1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEAttribute(
                 getMap_ColorPalette(),
-                this.getColourPalette(),
+                this.getBrewerPalette(),
                 "colorPalette", null, 0, 1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEReference(
                 getMap_EditManagerInternal(),
@@ -1877,19 +1930,21 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 null,
                 "blackBoardInternal", null, 0, 1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(mapEClass, this.getReferencedEnvelope(), "getBounds"); //$NON-NLS-1$
-        addEParameter(op, this.getIProgressMonitor(), "monitor"); //$NON-NLS-1$
+        op = addEOperation(mapEClass, this.getReferencedEnvelope(),
+                "getBounds", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, this.getIProgressMonitor(), "monitor", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(mapEClass, ecorePackage.getEDouble(), "getAspectRatio"); //$NON-NLS-1$
-        addEParameter(op, this.getIProgressMonitor(), "monitor"); //$NON-NLS-1$
+        op = addEOperation(mapEClass, ecorePackage.getEDouble(),
+                "getAspectRatio", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, this.getIProgressMonitor(), "monitor", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        addEOperation(mapEClass, null, "redo"); //$NON-NLS-1$
+        addEOperation(mapEClass, null, "redo", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        addEOperation(mapEClass, null, "undo"); //$NON-NLS-1$
+        addEOperation(mapEClass, null, "undo", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        addEOperation(mapEClass, null, "backwardHistory"); //$NON-NLS-1$
+        addEOperation(mapEClass, null, "backwardHistory", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        addEOperation(mapEClass, null, "forewardHistory"); //$NON-NLS-1$
+        addEOperation(mapEClass, null, "forwardHistory", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
         initEClass(projectEClass, Project.class,
                 "Project", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -1928,11 +1983,13 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 null,
                 "projects", null, 0, -1, ProjectRegistry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(projectRegistryEClass, this.getProject(), "getProject"); //$NON-NLS-1$
-        addEParameter(op, this.getURI(), "uri"); //$NON-NLS-1$
+        op = addEOperation(projectRegistryEClass, this.getProject(),
+                "getProject", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, this.getURI(), "uri", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(projectRegistryEClass, this.getProject(), "getProject"); //$NON-NLS-1$
-        addEParameter(op, ecorePackage.getEString(), "projectPath"); //$NON-NLS-1$
+        op = addEOperation(projectRegistryEClass, this.getProject(),
+                "getProject", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, ecorePackage.getEString(), "projectPath", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
         initEClass(styleBlackboardEClass, StyleBlackboard.class,
                 "StyleBlackboard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -1942,27 +1999,36 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 null,
                 "content", null, 0, -1, StyleBlackboard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(styleBlackboardEClass, ecorePackage.getEJavaObject(), "get"); //$NON-NLS-1$
-        addEParameter(op, ecorePackage.getEString(), "styleId"); //$NON-NLS-1$
+        op = addEOperation(styleBlackboardEClass, ecorePackage.getEJavaObject(),
+                "get", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, ecorePackage.getEString(), "styleId", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(styleBlackboardEClass, ecorePackage.getEJavaObject(), "lookup"); //$NON-NLS-1$
-        addEParameter(op, ecorePackage.getEJavaClass(), "theClass"); //$NON-NLS-1$
+        op = addEOperation(styleBlackboardEClass, ecorePackage.getEJavaObject(),
+                "lookup", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        EGenericType g1 = createEGenericType(ecorePackage.getEJavaClass());
+        EGenericType g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        addEParameter(op, g1, "theClass", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(styleBlackboardEClass, ecorePackage.getEBoolean(), "contains"); //$NON-NLS-1$
-        addEParameter(op, ecorePackage.getEString(), "styleId"); //$NON-NLS-1$
+        op = addEOperation(styleBlackboardEClass, ecorePackage.getEBoolean(),
+                "contains", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, ecorePackage.getEString(), "styleId", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(styleBlackboardEClass, null, "put"); //$NON-NLS-1$
-        addEParameter(op, ecorePackage.getEString(), "styleId"); //$NON-NLS-1$
-        addEParameter(op, ecorePackage.getEJavaObject(), "style"); //$NON-NLS-1$
+        op = addEOperation(styleBlackboardEClass, null, "put", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, ecorePackage.getEString(), "styleId", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, ecorePackage.getEJavaObject(), "style", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(styleBlackboardEClass, null, "put"); //$NON-NLS-1$
-        addEParameter(op, this.getURL(), "url"); //$NON-NLS-1$
-        addEParameter(op, this.getIProgressMonitor(), "monitor"); //$NON-NLS-1$
+        op = addEOperation(styleBlackboardEClass, null, "put", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, this.getURL(), "url", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, this.getIProgressMonitor(), "monitor", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEException(op, this.getIOException());
 
-        op = addEOperation(styleBlackboardEClass, ecorePackage.getEJavaObject(), "remove"); //$NON-NLS-1$
-        addEParameter(op, ecorePackage.getEString(), "styleId"); //$NON-NLS-1$
+        op = addEOperation(styleBlackboardEClass, ecorePackage.getEJavaObject(),
+                "remove", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, ecorePackage.getEString(), "styleId", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        addEOperation(styleBlackboardEClass, ecorePackage.getEJavaObject(), "clone"); //$NON-NLS-1$
+        addEOperation(styleBlackboardEClass, ecorePackage.getEJavaObject(),
+                "clone", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
         initEClass(styleEntryEClass, StyleEntry.class,
                 "StyleEntry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -1983,7 +2049,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 ecorePackage.getEJavaClass(),
                 "styleClass", null, 0, 1, StyleEntry.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-        initEClass(cloneableEClass, Cloneable.class,
+        initEClass(cloneableEClass, Object.class,
                 "Cloneable", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
         initEClass(layerFactoryEClass, LayerFactory.class,
@@ -2030,11 +2096,16 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         initEClass(iResolveChangeListenerEClass, IResolveChangeListener.class,
                 "IResolveChangeListener", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
+        initEClass(iStyleBlackboardEClass, IStyleBlackboard.class,
+                "IStyleBlackboard", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
         // Initialize data types
         initEDataType(coordinateEDataType, Coordinate.class,
                 "Coordinate", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(mapDisplayEDataType, IMapDisplay.class,
                 "MapDisplay", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEDataType(featureResultsEDataType, FeatureResults.class,
+                "FeatureResults", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(listEDataType, List.class,
                 "List", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(affineTransformEDataType, AffineTransform.class,
@@ -2050,7 +2121,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         initEDataType(commandStackEDataType, CommandStack.class,
                 "CommandStack", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(featureEDataType, SimpleFeature.class,
-                "SimpleFeature", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+                "Feature", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(pointEDataType, Point.class,
                 "Point", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(adapterEDataType, Adapter.class,
@@ -2069,34 +2140,37 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 "NavCommand", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(envelopeEDataType, Envelope.class,
                 "Envelope", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEDataType(editManagerControlCommandEDataType, EditManagerControlCommand.class,
+                "EditManagerControlCommand", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(commandEDataType, MapCommand.class,
                 "Command", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class,
                 "URI", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(catalogRefEDataType, CatalogRef.class,
                 "CatalogRef", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(colourPaletteEDataType, BrewerPalette.class,
+        initEDataType(colourPaletteEDataType, ColourPalette.class,
                 "ColourPalette", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(colourSchemeEDataType, ColourScheme.class,
                 "ColourScheme", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(defaultColorEDataType, Color.class,
-                "DefaultColor", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(mutablePicoContainerEDataType, MutablePicoContainer.class,
                 "MutablePicoContainer", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(referencedEnvelopeEDataType, ReferencedEnvelope.class,
                 "ReferencedEnvelope", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(featureEventEDataType, FeatureEvent.class,
                 "FeatureEvent", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEDataType(simpleFeatureEDataType, org.opengis.feature.simple.SimpleFeature.class,
+                "SimpleFeature", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEDataType(illegalArgumentExceptionEDataType, IllegalArgumentException.class,
+                "IllegalArgumentException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEDataType(ioExceptionEDataType, IOException.class,
+                "IOException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEDataType(colorEDataType, Color.class,
+                "Color", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEDataType(brewerPaletteEDataType, BrewerPalette.class,
+                "BrewerPalette", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
         // Create resource
         createResource(eNS_URI);
-    }
-
-    /**
-     * @generated
-     */
-    private EClassifier getDefaultColor() {
-        return defaultColorEDataType ;
     }
 
 } // ProjectPackageImpl

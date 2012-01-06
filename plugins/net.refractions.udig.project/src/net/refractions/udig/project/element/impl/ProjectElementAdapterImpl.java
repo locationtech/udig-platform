@@ -40,13 +40,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  */
 public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectElementAdapter {
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -110,6 +103,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     protected EClass eStaticClass() {
         return ElementPackage.Literals.PROJECT_ELEMENT_ADAPTER;
     }
@@ -200,8 +194,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
                 msgs = ((InternalEObject) newProjectInternal).eInverseAdd(this,
                         ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
             msgs = basicSetProjectInternal(newProjectInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ElementPackage.PROJECT_ELEMENT_ADAPTER__PROJECT_INTERNAL, newProjectInternal,
@@ -237,6 +230,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
             NotificationChain msgs ) {
         switch( featureID ) {
@@ -254,6 +248,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
             NotificationChain msgs ) {
         switch( featureID ) {
@@ -268,13 +263,13 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Object eGet( int featureID, boolean resolve, boolean coreType ) {
         switch( featureID ) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__NAME:
             return getName();
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__PROJECT_INTERNAL:
-            if (resolve)
-                return getProjectInternal();
+            if (resolve) return getProjectInternal();
             return basicGetProjectInternal();
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__BACKING_OBJECT:
             return getBackingObject();
@@ -287,6 +282,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void eSet( int featureID, Object newValue ) {
         switch( featureID ) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__NAME:
@@ -307,6 +303,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void eUnset( int featureID ) {
         switch( featureID ) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__NAME:
@@ -327,6 +324,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean eIsSet( int featureID ) {
         switch( featureID ) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__NAME:
@@ -346,9 +344,9 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String toString() {
-        if (eIsProxy())
-            return super.toString();
+        if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: "); //$NON-NLS-1$
@@ -365,7 +363,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
         String extensionId = getBackingObject().getExtensionId();
         for( IConfigurationElement configurationElement : list ) {
             String id = configurationElement.getAttribute("id"); //$NON-NLS-1$
-            if (id != null && id.equals(extensionId )) {
+            if (id != null && id.equals(extensionId)) {
                 return configurationElement.getAttribute("fileExtension"); //$NON-NLS-1$
             }
         }
@@ -383,7 +381,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
         }
         return null;
     }
-    
+
     @SuppressWarnings("unchecked")
     public List getElements( Class type ) {
         return getBackingObject().getElements(type);

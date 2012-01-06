@@ -41,12 +41,6 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
             ComposeableAdapterFactory,
             IChangeNotifier {
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public static final String       copyright      = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
      * This keeps track of the root adapter factory that delegates to this adapter factory. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -60,14 +54,14 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * 
      * @generated
      */
-    protected IChangeNotifier        changeNotifier = new ChangeNotifier();
+    protected IChangeNotifier changeNotifier = new ChangeNotifier();
 
     /**
      * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    protected Collection             supportedTypes = new ArrayList();
+    protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
     /**
      * This constructs an instance.
@@ -95,6 +89,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Adapter createContextModelAdapter() {
         if (contextModelItemProvider == null) {
             contextModelItemProvider = new ContextModelItemProvider(this);
@@ -109,6 +104,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * 
      * @generated
      */
+    @Override
     public Adapter createLayerAdapter() {
         return new LayerItemProvider(this);
     }
@@ -119,6 +115,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * 
      * @generated
      */
+    @Override
     public Adapter createMapAdapter() {
         return new MapItemProvider(this);
     }
@@ -129,6 +126,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * 
      * @generated
      */
+    @Override
     public Adapter createProjectAdapter() {
         return new ProjectItemProvider(this);
     }
@@ -146,6 +144,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Adapter createProjectRegistryAdapter() {
         if (projectRegistryItemProvider == null) {
             projectRegistryItemProvider = new ProjectRegistryItemProvider(this);
@@ -167,6 +166,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Adapter createStyleBlackboardAdapter() {
         if (styleBlackboardItemProvider == null) {
             styleBlackboardItemProvider = new StyleBlackboardItemProvider(this);
@@ -189,6 +189,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * 
      * @generated
      */
+    @Override
     public Adapter createStyleEntryAdapter() {
         if (styleEntryItemProvider == null) {
             styleEntryItemProvider = new StyleEntryItemProvider(this);
@@ -210,6 +211,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Adapter createLayerFactoryAdapter() {
         if (layerFactoryItemProvider == null) {
             layerFactoryItemProvider = new LayerFactoryItemProvider(this);
@@ -232,6 +234,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * 
      * @generated
      */
+    @Override
     public Adapter createBlackboardAdapter() {
         if (blackboardItemProvider == null) {
             blackboardItemProvider = new BlackboardItemProvider(this);
@@ -253,6 +256,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Adapter createBlackboardEntryAdapter() {
         if (blackboardEntryItemProvider == null) {
             blackboardEntryItemProvider = new BlackboardEntryItemProvider(this);
@@ -274,6 +278,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Adapter createEditManagerAdapter() {
         if (editManagerItemProvider == null) {
             editManagerItemProvider = new EditManagerItemProvider(this);
@@ -306,6 +311,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isFactoryForType( Object type ) {
         return supportedTypes.contains(type) || super.isFactoryForType(type);
     }
@@ -317,30 +323,31 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * @generated NOT
      */
     public Adapter adapt( Notifier notifier, Object type ) {
-		EList<Adapter> adapters = notifier.eAdapters();
-		if (adapters instanceof SynchronizedEList) {
-			SynchronizedEList<Adapter> synchList = (SynchronizedEList<Adapter>) adapters;
-			synchList.lock();
-		}
-		try {
-			return super.adapt(notifier, this);
-		} finally {
-			if (adapters instanceof SynchronizedEList) {
-				SynchronizedEList<Adapter> synchList = (SynchronizedEList<Adapter>) adapters;
-				synchList.unlock();
-			}
+        EList<Adapter> adapters = notifier.eAdapters();
+        if (adapters instanceof SynchronizedEList) {
+            SynchronizedEList<Adapter> synchList = (SynchronizedEList<Adapter>) adapters;
+            synchList.lock();
+        }
+        try {
+            return super.adapt(notifier, this);
+        } finally {
+            if (adapters instanceof SynchronizedEList) {
+                SynchronizedEList<Adapter> synchList = (SynchronizedEList<Adapter>) adapters;
+                synchList.unlock();
+            }
 
-		}
-	}
+        }
+    }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Object adapt( Object object, Object type ) {
         if (isFactoryForType(type)) {
             Object adapter = super.adapt(object, type);
-            if (!(type instanceof Class) || (((Class) type).isInstance(adapter))) {
+            if (!(type instanceof Class< ? >) || (((Class< ? >) type).isInstance(adapter))) {
                 return adapter;
             }
         }

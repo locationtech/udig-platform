@@ -50,10 +50,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link net.refractions.udig.project.internal.impl.LayerFactoryImpl#getMap <em>Map</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.impl.LayerFactoryImpl#getMap <em>Map</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
@@ -66,7 +66,6 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected LayerFactoryImpl() {
@@ -75,163 +74,156 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
+    @Override
     protected EClass eStaticClass() {
-        return ProjectPackage.eINSTANCE.getLayerFactory();
+        return ProjectPackage.Literals.LAYER_FACTORY;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Map getMap() {
-        if (eContainerFeatureID != ProjectPackage.LAYER_FACTORY__MAP)
-            return null;
-        return (Map) eContainer;
+        if (eContainerFeatureID() != ProjectPackage.LAYER_FACTORY__MAP) return null;
+        return (Map) eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetMap( Map newMap, NotificationChain msgs ) {
+        msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.LAYER_FACTORY__MAP, msgs);
+        return msgs;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setMap( Map newMap ) {
-        if (newMap != eContainer
-                || (eContainerFeatureID != ProjectPackage.LAYER_FACTORY__MAP && newMap != null)) {
-            if (EcoreUtil.isAncestor(this, (EObject) newMap))
+        if (newMap != eInternalContainer()
+                || (eContainerFeatureID() != ProjectPackage.LAYER_FACTORY__MAP && newMap != null)) {
+            if (EcoreUtil.isAncestor(this, newMap))
                 throw new IllegalArgumentException(
                         "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
             NotificationChain msgs = null;
-            if (eContainer != null)
-                msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
             if (newMap != null)
                 msgs = ((InternalEObject) newMap).eInverseAdd(this,
                         ProjectPackage.MAP__LAYER_FACTORY, Map.class, msgs);
-            msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.LAYER_FACTORY__MAP,
-                    msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            msgs = basicSetMap(newMap, msgs);
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.LAYER_FACTORY__MAP, newMap, newMap));
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID, Class baseClass,
+    @Override
+    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
             NotificationChain msgs ) {
-        if (featureID >= 0) {
-            switch( eDerivedStructuralFeatureID(featureID, baseClass) ) {
-            case ProjectPackage.LAYER_FACTORY__MAP:
-                if (eContainer != null)
-                    msgs = eBasicRemoveFromContainer(msgs);
-                return eBasicSetContainer(otherEnd, ProjectPackage.LAYER_FACTORY__MAP, msgs);
-            default:
-                return eDynamicInverseAdd(otherEnd, featureID, baseClass, msgs);
-            }
+        switch( featureID ) {
+        case ProjectPackage.LAYER_FACTORY__MAP:
+            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            return basicSetMap((Map) otherEnd, msgs);
         }
-        if (eContainer != null)
-            msgs = eBasicRemoveFromContainer(msgs);
-        return eBasicSetContainer(otherEnd, featureID, msgs);
+        return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")
+    @Override
     public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            Class baseClass, NotificationChain msgs ) {
-        if (featureID >= 0) {
-            switch( eDerivedStructuralFeatureID(featureID, baseClass) ) {
-            case ProjectPackage.LAYER_FACTORY__MAP:
-                return eBasicSetContainer(null, ProjectPackage.LAYER_FACTORY__MAP, msgs);
-            default:
-                return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-            }
+            NotificationChain msgs ) {
+        switch( featureID ) {
+        case ProjectPackage.LAYER_FACTORY__MAP:
+            return basicSetMap(null, msgs);
         }
-        return eBasicSetContainer(null, featureID, msgs);
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain eBasicRemoveFromContainer( NotificationChain msgs ) {
-        if (eContainerFeatureID >= 0) {
-            switch( eContainerFeatureID ) {
-            case ProjectPackage.LAYER_FACTORY__MAP:
-                return eContainer.eInverseRemove(this, ProjectPackage.MAP__LAYER_FACTORY,
-                        Map.class, msgs);
-            default:
-                return eDynamicBasicRemoveFromContainer(msgs);
-            }
+    @Override
+    public NotificationChain eBasicRemoveFromContainerFeature( NotificationChain msgs ) {
+        switch( eContainerFeatureID() ) {
+        case ProjectPackage.LAYER_FACTORY__MAP:
+            return eInternalContainer().eInverseRemove(this, ProjectPackage.MAP__LAYER_FACTORY,
+                    Map.class, msgs);
         }
-        return eContainer.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - eContainerFeatureID, null,
-                msgs);
+        return super.eBasicRemoveFromContainerFeature(msgs);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
+        switch( featureID ) {
         case ProjectPackage.LAYER_FACTORY__MAP:
             return getMap();
         }
-        return eDynamicGet(eFeature, resolve);
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void eSet( EStructuralFeature eFeature, Object newValue ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public void eSet( int featureID, Object newValue ) {
+        switch( featureID ) {
         case ProjectPackage.LAYER_FACTORY__MAP:
             setMap((Map) newValue);
             return;
         }
-        eDynamicSet(eFeature, newValue);
+        super.eSet(featureID, newValue);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void eUnset( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public void eUnset( int featureID ) {
+        switch( featureID ) {
         case ProjectPackage.LAYER_FACTORY__MAP:
             setMap((Map) null);
             return;
         }
-        eDynamicUnset(eFeature);
+        super.eUnset(featureID);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public boolean eIsSet( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public boolean eIsSet( int featureID ) {
+        switch( featureID ) {
         case ProjectPackage.LAYER_FACTORY__MAP:
             return getMap() != null;
         }
-        return eDynamicIsSet(eFeature);
+        return super.eIsSet(featureID);
     }
 
     /**
@@ -253,8 +245,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
                 IGeoResource entry = (IGeoResource) obj;
                 Layer ref = createLayer(entry);
 
-                if (ref != null)
-                    layers.add(ref);
+                if (ref != null) layers.add(ref);
             }
         }
         return layers;
@@ -270,8 +261,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
             ref = createLayer(entry);
 
-            if (ref != null)
-                layers.add(ref);
+            if (ref != null) layers.add(ref);
         }
         return layers;
     }
@@ -346,8 +336,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
             return null;
         }
         // check that the service is part of catalog... If not add
-        if (CatalogPlugin.getDefault().getLocalCatalog().getById(IService.class, service.getID(),
-                new NullProgressMonitor()) == null) {
+        if (CatalogPlugin.getDefault().getLocalCatalog()
+                .getById(IService.class, service.getID(), new NullProgressMonitor()) == null) {
             CatalogPlugin.getDefault().getLocalCatalog().add(resource.service(null));
         }
 
@@ -380,8 +370,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
                 } else {
                     resources.add(layerResource);
                 }
-                if (resolve == resource)
-                    preferredResource = layerResource;
+                if (resolve == resource) preferredResource = layerResource;
             }
         }
 
@@ -417,8 +406,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
                     interceptor.run(layer);
                 } catch (CoreException e) {
                     ProjectPlugin
-                            .log(
-                                    "Error creating class: " + element.getAttribute("class") + " part of layer interceptor: " + attribute, e); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+                            .log("Error creating class: " + element.getAttribute("class") + " part of layer interceptor: " + attribute, e); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
                 } catch (Throwable t) {
                     ProjectPlugin.log("Error running interceptor: " + attribute, t); //$NON-NLS-1$
                 }

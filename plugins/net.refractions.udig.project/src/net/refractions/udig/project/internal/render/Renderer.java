@@ -23,13 +23,6 @@ import org.eclipse.emf.ecore.EObject;
 public interface Renderer extends EObject, IRenderer {
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
      * Returns the current state of rendering.
      * <p>
      * The state is the current state of the {@linkplain org.eclipse.core.runtime.jobs.Job}
@@ -49,9 +42,8 @@ public interface Renderer extends EObject, IRenderer {
     public int getState();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.Renderer#getState <em>State</em>}'
-     * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Sets the value of the '{@link net.refractions.udig.project.internal.render.Renderer#getState <em>State</em>}' attribute.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>State</em>' attribute.
      * @see #getState()
      * @generated
@@ -59,9 +51,9 @@ public interface Renderer extends EObject, IRenderer {
     void setState( int value );
 
     /**
-     * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * Returns the value of the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
      * @see net.refractions.udig.project.internal.render.RenderPackage#getRenderer_Name()
@@ -71,9 +63,8 @@ public interface Renderer extends EObject, IRenderer {
     String getName();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.Renderer#getName <em>Name</em>}'
-     * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Sets the value of the '{@link net.refractions.udig.project.internal.render.Renderer#getName <em>Name</em>}' attribute.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Name</em>' attribute.
      * @see #getName()
      * @generated
@@ -95,14 +86,13 @@ public interface Renderer extends EObject, IRenderer {
     IRenderContext getContext();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.Renderer#getContext <em>Context</em>}'
-     * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Sets the value of the '{@link net.refractions.udig.project.internal.render.Renderer#getContext <em>Context</em>}' reference.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Context</em>' reference.
      * @see #getContext()
      * @generated
      */
-    void setContext( IRenderContext context );
+    void setContext( IRenderContext value );
 
     /**
      * Informs the renderer to dispose of resources

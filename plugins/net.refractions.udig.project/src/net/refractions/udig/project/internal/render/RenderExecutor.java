@@ -35,20 +35,13 @@ public interface RenderExecutor extends Renderer {
     String RENDERER_ATTR = "rendererClass"; //$NON-NLS-1$
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
-     * Returns the value of the '<em><b>Renderer</b></em>' reference. <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Renderer</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Renderer</em>' reference isn't clear, there really should be
      * more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * 
      * @return the value of the '<em>Renderer</em>' reference.
      * @see #setRenderer(Renderer)
      * @see net.refractions.udig.project.internal.render.RenderPackage#getRenderExecutor_Renderer()
@@ -58,9 +51,8 @@ public interface RenderExecutor extends Renderer {
     Renderer getRenderer();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.RenderExecutor#getRenderer <em>Renderer</em>}'
-     * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Sets the value of the '{@link net.refractions.udig.project.internal.render.RenderExecutor#getRenderer <em>Renderer</em>}' reference.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Renderer</em>' reference.
      * @see #getRenderer()
      * @generated
@@ -80,13 +72,13 @@ public interface RenderExecutor extends Renderer {
      * @see net.refractions.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
-    public void render(IProgressMonitor monitor ) throws RenderException;
+    public void render( IProgressMonitor monitor ) throws RenderException;
 
     /**
      * @see net.refractions.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
-    public void render( ) throws RenderException;
+    public void render() throws RenderException;
 
     /**
      * This method is called when the rendering is interrupted. If the rendering has to restart or

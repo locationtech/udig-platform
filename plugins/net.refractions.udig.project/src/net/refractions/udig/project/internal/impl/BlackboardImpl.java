@@ -69,7 +69,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     HashMap<String, BlackboardEntry> blackboard = new HashMap<String, BlackboardEntry>();
 
     /** persisters */
-    ArrayList<IPersister<?>> persisters;
+    ArrayList<IPersister< ? >> persisters;
 
     /** providers * */
     ArrayList<IProvider<Object>> providers;
@@ -77,25 +77,16 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     boolean initialized = false;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
      * The cached value of the '{@link #getEntries() <em>Entries</em>}' containment reference list.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see #getEntries()
      * @generated
      * @ordered
      */
-    protected EList entries = null;
+    protected EList<BlackboardEntry> entries;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected BlackboardImpl() {
@@ -104,100 +95,99 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
+    @Override
     protected EClass eStaticClass() {
-        return ProjectPackage.eINSTANCE.getBlackboard();
+        return ProjectPackage.Literals.BLACKBOARD;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings("unchecked")
     public List<BlackboardEntry> getEntries() {
         if (entries == null) {
-            entries = new EObjectContainmentEList(BlackboardEntry.class, this,
+            entries = new EObjectContainmentEList<BlackboardEntry>(BlackboardEntry.class, this,
                     ProjectPackage.BLACKBOARD__ENTRIES);
         }
         return entries;
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")
+    @Override
     public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            Class baseClass, NotificationChain msgs ) {
-        if (featureID >= 0) {
-            switch( eDerivedStructuralFeatureID(featureID, baseClass) ) {
-            case ProjectPackage.BLACKBOARD__ENTRIES:
-                return ((InternalEList) getEntries()).basicRemove(otherEnd, msgs);
-            default:
-                return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-            }
+            NotificationChain msgs ) {
+        switch( featureID ) {
+        case ProjectPackage.BLACKBOARD__ENTRIES:
+            return ((InternalEList< ? >) getEntries()).basicRemove(otherEnd, msgs);
         }
-        return eBasicSetContainer(null, featureID, msgs);
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
+        switch( featureID ) {
         case ProjectPackage.BLACKBOARD__ENTRIES:
             return getEntries();
         }
-        return eDynamicGet(eFeature, resolve);
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")//$NON-NLS-1$
-    public void eSet( EStructuralFeature eFeature, Object newValue ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet( int featureID, Object newValue ) {
+        switch( featureID ) {
         case ProjectPackage.BLACKBOARD__ENTRIES:
             getEntries().clear();
-            getEntries().addAll((Collection) newValue);
+            getEntries().addAll((Collection< ? extends BlackboardEntry>) newValue);
             return;
         }
-        eDynamicSet(eFeature, newValue);
+        super.eSet(featureID, newValue);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void eUnset( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public void eUnset( int featureID ) {
+        switch( featureID ) {
         case ProjectPackage.BLACKBOARD__ENTRIES:
             getEntries().clear();
             return;
         }
-        eDynamicUnset(eFeature);
+        super.eUnset(featureID);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public boolean eIsSet( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public boolean eIsSet( int featureID ) {
+        switch( featureID ) {
         case ProjectPackage.BLACKBOARD__ENTRIES:
             return entries != null && !entries.isEmpty();
         }
-        return eDynamicIsSet(eFeature);
+        return super.eIsSet(featureID);
     }
 
     /*
@@ -217,8 +207,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         if (!initialized) {
             initialize();
         }
-        if (key == null)
-            return null;
+        if (key == null) return null;
 
         // look up the entry
         BlackboardEntry entry = blackboard.get(key);
@@ -234,13 +223,14 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                         return null;
                     }
                     XMLMemento memento = XMLMemento.createReadRoot(new StringReader(memento2));
-                    IPersister<Object> persister = (IPersister<Object>) findPersister(entry, memento);
+                    IPersister<Object> persister = (IPersister<Object>) findPersister(entry,
+                            memento);
                     if (persister != null) {
                         object = persister.load(memento);
                         entry.setObject(object);
                         entry.setObjectClass(object.getClass());
                     } else {
-                    	// real object which cannot be saved between runs
+                        // real object which cannot be saved between runs
                     }
                 } catch (Exception e) {
                     String msg = "Error loading content: " + entry.getObjectClass(); //$NON-NLS-1$
@@ -281,8 +271,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
 
     public Object remove( String key ) {
-        if (key == null)
-            return null;
+        if (key == null) return null;
 
         // look up the entry
         BlackboardEntry entry = blackboard.remove(key);
@@ -328,7 +317,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
         // find the persister to save the state
         @SuppressWarnings("unchecked")
-		IPersister<Object> persister = (IPersister<Object>) findPersister(entry, null);
+        IPersister<Object> persister = (IPersister<Object>) findPersister(entry, null);
         try {
             if (persister != null) {
                 XMLMemento memento = XMLMemento.createWriteRoot("blackboardContent"); //$NON-NLS-1$
@@ -339,7 +328,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                 memento.save(writer);
                 entry.setMemento(writer.getBuffer().toString());
             } else {
-            	// this is a "real" object that cannot be shared between runs
+                // this is a "real" object that cannot be shared between runs
             }
         } catch (Exception e) {
             String msg = "Error persisting content: " + value.getClass(); //$NON-NLS-1$
@@ -464,8 +453,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
         // search for provider matching key
         for( IProvider<Object> provider : providers ) {
-            if (provider.getKey() != null && provider.getKey().equals(key))
-                return provider;
+            if (provider.getKey() != null && provider.getKey().equals(key)) return provider;
         }
 
         return null;
@@ -487,11 +475,11 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
 
     @SuppressWarnings("unchecked")
-    private IPersister<?> findPersister( BlackboardEntry entry, XMLMemento memento ) {
+    private IPersister< ? > findPersister( BlackboardEntry entry, XMLMemento memento ) {
         if (persisters == null) {
             synchronized (this) {
                 if (persisters == null) {
-                    persisters = new ArrayList<IPersister<?>>();
+                    persisters = new ArrayList<IPersister< ? >>();
                     PersisterProcessor p = new PersisterProcessor(persisters);
                     ExtensionPointUtil.process(ProjectPlugin.getPlugin(), IPersister.XPID, p);
                 }
@@ -499,9 +487,9 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         }
 
         // look for a class closest down in the class hierarchy
-        ArrayList<IPersister<?>> possible = new ArrayList<IPersister<?>>();
+        ArrayList<IPersister< ? >> possible = new ArrayList<IPersister< ? >>();
 
-        for( IPersister<?> persister : persisters ) {
+        for( IPersister< ? > persister : persisters ) {
             Class< ? > persistenceTarget = persister.getPersistee();
             if (persistenceTarget == null) {
                 continue; // this persister does not seem to be set up correctly
@@ -547,8 +535,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
             return null;
         }
 
-        Collections.sort(possible, new Comparator<IPersister<?>>(){
-            public int compare( IPersister<?> p1, IPersister<?> p2 ) {
+        Collections.sort(possible, new Comparator<IPersister< ? >>(){
+            public int compare( IPersister< ? > p1, IPersister< ? > p2 ) {
                 if (p1.getPersistee().equals(p2.getPersistee())) {
                     return 0;
                 }
@@ -591,16 +579,17 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     static class PersisterProcessor implements ExtensionPointProcessor {
 
-        List<IPersister<?>> persisters;
+        List<IPersister< ? >> persisters;
 
-        PersisterProcessor( List<IPersister<?>> persisters ) {
+        PersisterProcessor( List<IPersister< ? >> persisters ) {
             this.persisters = persisters;
         }
 
         public void process( IExtension extension, IConfigurationElement element ) throws Exception {
 
             try {
-                IPersister<?> persister = (IPersister<?>) element.createExecutableExtension("class"); //$NON-NLS-1$
+                IPersister< ? > persister = (IPersister< ? >) element
+                        .createExecutableExtension("class"); //$NON-NLS-1$
 
                 if (persister != null) {
                     persister.setExtension(extension);

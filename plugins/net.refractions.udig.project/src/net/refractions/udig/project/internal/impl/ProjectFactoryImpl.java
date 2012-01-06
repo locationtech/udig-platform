@@ -6,6 +6,7 @@ package net.refractions.udig.project.internal.impl;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import net.refractions.udig.core.internal.CorePlugin;
 import net.refractions.udig.core.internal.ExtensionPointList;
 import net.refractions.udig.project.command.CommandStack;
 import net.refractions.udig.project.command.EditCommand;
+import net.refractions.udig.project.command.EditManagerControlCommand;
 import net.refractions.udig.project.command.MapCommand;
 import net.refractions.udig.project.command.NavCommand;
 import net.refractions.udig.project.command.NavCommandStack;
@@ -40,6 +42,7 @@ import net.refractions.udig.project.internal.StyleEntry;
 import net.refractions.udig.project.internal.render.RenderFactory;
 import net.refractions.udig.project.internal.render.impl.ViewportModelImpl;
 import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import net.refractions.udig.ui.palette.ColourPalette;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.palette.ColourScheme;
 
@@ -50,11 +53,15 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.brewer.color.BrewerPalette;
 import org.geotools.data.FeatureEvent;
+import org.geotools.data.FeatureResults;
 import org.geotools.data.Query;
+import org.geotools.feature.SimpleFeature;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.ReferencingFactoryFinder;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
@@ -77,11 +84,23 @@ import com.vividsolutions.jts.geom.Envelope;
  */
 public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
+    public static ProjectFactory init() {
+        try {
+            ProjectFactory theProjectFactory = (ProjectFactory) EPackage.Registry.INSTANCE
+                    .getEFactory("http:///net/refractions/udig/project/internal.ecore"); //$NON-NLS-1$ 
+            if (theProjectFactory != null) {
+                return theProjectFactory;
+            }
+        } catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new ProjectFactoryImpl();
+    }
 
     private static final String CARTESIAN_2D = "CARTESIAN_2D";
     private static final String CARTESIAN_3D = "CARTESIAN_3D";
@@ -101,6 +120,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EObject create( EClass eClass ) {
         switch( eClass.getClassifierID() ) {
         case ProjectPackage.CONTEXT_MODEL:
@@ -135,12 +155,15 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Object createFromString( EDataType eDataType, String initialValue ) {
         switch( eDataType.getClassifierID() ) {
         case ProjectPackage.COORDINATE:
             return createCoordinateFromString(eDataType, initialValue);
         case ProjectPackage.MAP_DISPLAY:
             return createMapDisplayFromString(eDataType, initialValue);
+        case ProjectPackage.FEATURE_RESULTS:
+            return createFeatureResultsFromString(eDataType, initialValue);
         case ProjectPackage.LIST:
             return createListFromString(eDataType, initialValue);
         case ProjectPackage.AFFINE_TRANSFORM:
@@ -175,6 +198,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             return createNavCommandFromString(eDataType, initialValue);
         case ProjectPackage.ENVELOPE:
             return createEnvelopeFromString(eDataType, initialValue);
+        case ProjectPackage.EDIT_MANAGER_CONTROL_COMMAND:
+            return createEditManagerControlCommandFromString(eDataType, initialValue);
         case ProjectPackage.COMMAND:
             return createCommandFromString(eDataType, initialValue);
         case ProjectPackage.URI:
@@ -185,14 +210,22 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             return createColourPaletteFromString(eDataType, initialValue);
         case ProjectPackage.COLOUR_SCHEME:
             return createColourSchemeFromString(eDataType, initialValue);
-        case ProjectPackage.DEFAULT_COLOR:
-            return createDefaultColorFromString(eDataType, initialValue);
         case ProjectPackage.MUTABLE_PICO_CONTAINER:
             return createMutablePicoContainerFromString(eDataType, initialValue);
         case ProjectPackage.REFERENCED_ENVELOPE:
             return createReferencedEnvelopeFromString(eDataType, initialValue);
         case ProjectPackage.FEATURE_EVENT:
             return createFeatureEventFromString(eDataType, initialValue);
+        case ProjectPackage.SIMPLE_FEATURE:
+            return createSimpleFeatureFromString(eDataType, initialValue);
+        case ProjectPackage.ILLEGAL_ARGUMENT_EXCEPTION:
+            return createIllegalArgumentExceptionFromString(eDataType, initialValue);
+        case ProjectPackage.IO_EXCEPTION:
+            return createIOExceptionFromString(eDataType, initialValue);
+        case ProjectPackage.COLOR:
+            return createColorFromString(eDataType, initialValue);
+        case ProjectPackage.BREWER_PALETTE:
+            return createBrewerPaletteFromString(eDataType, initialValue);
         default:
             throw new IllegalArgumentException(
                     "The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -203,6 +236,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String convertToString( EDataType eDataType, Object instanceValue ) {
         switch( eDataType.getClassifierID() ) {
         case ProjectPackage.COORDINATE:
@@ -257,14 +291,22 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             return convertColourPaletteToString(eDataType, instanceValue);
         case ProjectPackage.COLOUR_SCHEME:
             return convertColourSchemeToString(eDataType, instanceValue);
-        case ProjectPackage.DEFAULT_COLOR:
-            return convertDefaultColorToString(eDataType, instanceValue);
         case ProjectPackage.MUTABLE_PICO_CONTAINER:
             return convertMutablePicoContainerToString(eDataType, instanceValue);
         case ProjectPackage.REFERENCED_ENVELOPE:
             return convertReferencedEnvelopeToString(eDataType, instanceValue);
         case ProjectPackage.FEATURE_EVENT:
             return convertFeatureEventToString(eDataType, instanceValue);
+        case ProjectPackage.SIMPLE_FEATURE:
+            return convertSimpleFeatureToString(eDataType, instanceValue);
+        case ProjectPackage.ILLEGAL_ARGUMENT_EXCEPTION:
+            return convertIllegalArgumentExceptionToString(eDataType, instanceValue);
+        case ProjectPackage.IO_EXCEPTION:
+            return convertIOExceptionToString(eDataType, instanceValue);
+        case ProjectPackage.COLOR:
+            return convertColorToString(eDataType, instanceValue);
+        case ProjectPackage.BREWER_PALETTE:
+            return convertBrewerPaletteToString(eDataType, instanceValue);
         default:
             throw new IllegalArgumentException(
                     "The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -377,32 +419,38 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         return super.convertToString(eDataType, instanceValue);
     }
 
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated NOT
+     */
+    public Envelope createEnvelopeFromString( EDataType eDataType, String initialValue ) {
+        return createReferencedEnvelopeFromString(eDataType, initialValue);
+    }
 
     /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated NOT
-	 */
-	public Envelope createEnvelopeFromString(EDataType eDataType,
-			String initialValue) {
-	    return createReferencedEnvelopeFromString(eDataType, initialValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated NOT
-	 */
-	public String convertEnvelopeToString(EDataType eDataType,
-			Object instanceValue) {
-	    return convertReferencedEnvelopeToString(eDataType, instanceValue);
-	}
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated NOT
+     */
+    public String convertEnvelopeToString( EDataType eDataType, Object instanceValue ) {
+        return convertReferencedEnvelopeToString(eDataType, instanceValue);
+    }
 
     /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EditManagerControlCommand createEditManagerControlCommandFromString(
+            EDataType eDataType, String initialValue ) {
+        return (EditManagerControlCommand) super.createFromString(eDataType, initialValue);
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
     public Coordinate createCoordinateFromString( EDataType eDataType, String initialValue ) {
         return (Coordinate) super.createFromString(eDataType, initialValue);
     }
@@ -591,7 +639,6 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         return super.convertToString(eDataType, instanceValue);
     }
 
-    
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
@@ -600,7 +647,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         try {
             return new URL(null, initialValue, CorePlugin.RELAXED_HANDLER);
         } catch (MalformedURLException e) {
-            throw (RuntimeException) new RuntimeException( e );
+            throw (RuntimeException) new RuntimeException(e);
         }
     }
 
@@ -609,7 +656,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * @generated
      */
     public String convertURLToString( EDataType eDataType, Object instanceValue ) {
-        return ((URL)instanceValue).toExternalForm();
+        return super.convertToString(eDataType, instanceValue);
     }
 
     /**
@@ -674,6 +721,15 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      */
     public String convertMapDisplayToString( EDataType eDataType, Object instanceValue ) {
         return super.convertToString(eDataType, instanceValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public FeatureResults createFeatureResultsFromString( EDataType eDataType, String initialValue ) {
+        return (FeatureResults) super.createFromString(eDataType, initialValue);
     }
 
     /**
@@ -745,23 +801,21 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         }
     }
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public BrewerPalette createBrewerPaletteFromString(EDataType eDataType,
-			String initialValue) {
-		return PlatformGIS.getColorBrewer().getPalette(initialValue);
-	}
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated NOT
+     */
+    public BrewerPalette createBrewerPaletteFromString( EDataType eDataType, String initialValue ) {
+        return PlatformGIS.getColorBrewer().getPalette(initialValue);
+    }
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public String convertBrewerPaletteToString(EDataType eDataType,
-			Object instanceValue) {
-		return ((BrewerPalette) instanceValue).getName();
-	}
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated NOT
+     */
+    public String convertBrewerPaletteToString( EDataType eDataType, Object instanceValue ) {
+        return ((BrewerPalette) instanceValue).getName();
+    }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -791,18 +845,19 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             BrewerPalette palette = PlatformGIS.getColorBrewer().getPalette("Dark2"); //$NON-NLS-1$
             return new ColourScheme(palette, 0);
         }
-        String[] strap = parts[2].split(",");  //$NON-NLS-1$
+        String[] strap = parts[2].split(","); //$NON-NLS-1$
         BrewerPalette palette = PlatformGIS.getColorBrewer().getPalette(parts[0]);
         HashMap<Integer, Integer> colourMapping = new HashMap<Integer, Integer>();
-        for (int i = 0; i < strap.length; i++) {
+        for( int i = 0; i < strap.length; i++ ) {
             colourMapping.put(i, Integer.parseInt(strap[i]));
         }
-        String[] strap2 = parts[3].split(",");  //$NON-NLS-1$
+        String[] strap2 = parts[3].split(","); //$NON-NLS-1$
         HashMap<String, Integer> idMapping = new HashMap<String, Integer>();
-        for (int i = 0; i < strap2.length; i++) {
+        for( int i = 0; i < strap2.length; i++ ) {
             idMapping.put(strap2[i], Integer.parseInt(strap2[++i]));
         }
-        ColourScheme scheme = new ColourScheme(palette, colourMapping, idMapping, strap.length, Integer.parseInt(parts[1]));
+        ColourScheme scheme = new ColourScheme(palette, colourMapping, idMapping, strap.length,
+                Integer.parseInt(parts[1]));
         return scheme;
     }
 
@@ -818,15 +873,14 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         int numColours = instance.getSizePalette();
         value = value + numColours + ";"; //$NON-NLS-1$
         HashMap colourMap = instance.getColourMap();
-        for (int i = 0; i < numItems; i++) {
-            if (i > 0)
-                value = value + ","; //$NON-NLS-1$
+        for( int i = 0; i < numItems; i++ ) {
+            if (i > 0) value = value + ","; //$NON-NLS-1$
             value = value + colourMap.get(i);
         }
         value = value + ";"; //$NON-NLS-1$
         HashMap<String, Integer> idMap = instance.getIdMap();
         Iterator<Entry<String, Integer>> it = idMap.entrySet().iterator();
-        while (it.hasNext()) {
+        while( it.hasNext() ) {
             Entry<String, Integer> entry = it.next();
             value = value + entry.getKey() + "," + entry.getValue(); //$NON-NLS-1$
             if (it.hasNext()) {
@@ -842,7 +896,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * @generated NOT
      */
     public Color createDefaultColorFromString( EDataType eDataType, String initialValue ) {
-        
+
         return SLD.toColor(initialValue);
     }
 
@@ -862,7 +916,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * @generated NOT
      */
     public Color createColorFromString( EDataType eDataType, String initialValue ) {
-        
+
         return SLD.toColor(initialValue);
     }
 
@@ -893,54 +947,55 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         return super.convertToString(eDataType, instanceValue);
     }
 
-    private Envelope createEnvelope(String initialValue ) {
+    private Envelope createEnvelope( String initialValue ) {
         if (initialValue.equals("")) //$NON-NLS-1$
             return new Envelope();
 
         String[] coords = initialValue.split(","); //$NON-NLS-1$
-        return new Envelope(new Envelope(Double.parseDouble(coords[0]), Double
-                .parseDouble(coords[1]), Double.parseDouble(coords[2]), Double
-                .parseDouble(coords[3])));
+        return new Envelope(new Envelope(Double.parseDouble(coords[0]),
+                Double.parseDouble(coords[1]), Double.parseDouble(coords[2]),
+                Double.parseDouble(coords[3])));
 
     }
-    
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public ReferencedEnvelope createReferencedEnvelopeFromString(
-			EDataType eDataType, String initialValue) {
-		String[] parts = initialValue.split("@", 2); //$NON-NLS-1$
-		Envelope env = createEnvelope(parts[0]);
-		if( parts.length == 2){
-		    CoordinateReferenceSystem crs = createCoordinateReferenceSystemFromString(ProjectPackage.eINSTANCE.getCoordinateReferenceSystem(), parts[1]);
-		    return new ReferencedEnvelope(env,crs);
-		} else {
-		    return new ReferencedEnvelope(env, DefaultEngineeringCRS.GENERIC_2D);
-		}
-	}
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public String convertReferencedEnvelopeToString(EDataType eDataType,
-			Object instanceValue) {
-	       Envelope env = (Envelope) instanceValue;
-	        if (env.isNull())
-	            return ""; //$NON-NLS-1$
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated NOT
+     */
+    public ReferencedEnvelope createReferencedEnvelopeFromString( EDataType eDataType,
+            String initialValue ) {
+        String[] parts = initialValue.split("@", 2); //$NON-NLS-1$
+        Envelope env = createEnvelope(parts[0]);
+        if (parts.length == 2) {
+            CoordinateReferenceSystem crs = createCoordinateReferenceSystemFromString(
+                    ProjectPackage.eINSTANCE.getCoordinateReferenceSystem(), parts[1]);
+            return new ReferencedEnvelope(env, crs);
+        } else {
+            return new ReferencedEnvelope(env, DefaultEngineeringCRS.GENERIC_2D);
+        }
+    }
 
-	        String envString = env.getMinX()
-	                + "," + env.getMaxX() + "," + env.getMinY() + "," + env.getMaxY(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	        
-	        if( env instanceof ReferencedEnvelope){
-	            String crs = convertCoordinateReferenceSystemToString(ProjectPackage.eINSTANCE.getCoordinateReferenceSystem(), ((ReferencedEnvelope)instanceValue).getCoordinateReferenceSystem());
-	            return envString+"@"+crs;
-	        } else {
-	            return envString;
-	        }
-	        
-	}
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated NOT
+     */
+    public String convertReferencedEnvelopeToString( EDataType eDataType, Object instanceValue ) {
+        Envelope env = (Envelope) instanceValue;
+        if (env.isNull()) return ""; //$NON-NLS-1$
+
+        String envString = env.getMinX()
+                + "," + env.getMaxX() + "," + env.getMinY() + "," + env.getMaxY(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+        if (env instanceof ReferencedEnvelope) {
+            String crs = convertCoordinateReferenceSystemToString(
+                    ProjectPackage.eINSTANCE.getCoordinateReferenceSystem(),
+                    ((ReferencedEnvelope) instanceValue).getCoordinateReferenceSystem());
+            return envString + "@" + crs;
+        } else {
+            return envString;
+        }
+
+    }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -955,6 +1010,63 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * @generated
      */
     public String convertFeatureEventToString( EDataType eDataType, Object instanceValue ) {
+        return super.convertToString(eDataType, instanceValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public org.opengis.feature.simple.SimpleFeature createSimpleFeatureFromString(
+            EDataType eDataType, String initialValue ) {
+        return (org.opengis.feature.simple.SimpleFeature) super.createFromString(eDataType,
+                initialValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertSimpleFeatureToString( EDataType eDataType, Object instanceValue ) {
+        return super.convertToString(eDataType, instanceValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IllegalArgumentException createIllegalArgumentExceptionFromString( EDataType eDataType,
+            String initialValue ) {
+        return (IllegalArgumentException) super.createFromString(eDataType, initialValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertIllegalArgumentExceptionToString( EDataType eDataType, Object instanceValue ) {
+        return super.convertToString(eDataType, instanceValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IOException createIOExceptionFromString( EDataType eDataType, String initialValue ) {
+        return (IOException) super.createFromString(eDataType, initialValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertIOExceptionToString( EDataType eDataType, Object instanceValue ) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -1013,6 +1125,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * @deprecated
      * @generated
      */
+    @Deprecated
     public static ProjectPackage getPackage() {
         return ProjectPackage.eINSTANCE;
     }
@@ -1029,14 +1142,16 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         return map;
     }
 
-    private void runMapCreationInterceptors(Map map) {
-        List<IConfigurationElement> interceptors = ExtensionPointList.getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT); //$NON-NLS-1$
+    private void runMapCreationInterceptors( Map map ) {
+        List<IConfigurationElement> interceptors = ExtensionPointList
+                .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT); //$NON-NLS-1$
         for( IConfigurationElement element : interceptors ) {
-            if( !"mapCreation".equals(element.getName())) //$NON-NLS-1$
+            if (!"mapCreation".equals(element.getName())) //$NON-NLS-1$
                 continue;
-            try  {
-               MapInterceptor interceptor=(MapInterceptor) element.createExecutableExtension("class"); //$NON-NLS-1$
-               interceptor.run(map);
+            try {
+                MapInterceptor interceptor = (MapInterceptor) element
+                        .createExecutableExtension("class"); //$NON-NLS-1$
+                interceptor.run(map);
             } catch (Exception e) {
                 ProjectPlugin.log("", e); //$NON-NLS-1$
             }
@@ -1055,9 +1170,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         map.setProjectInternal(owner);
         map.setViewportModelInternal(RenderFactory.eINSTANCE.createViewportModel());
         runMapCreationInterceptors(map);
-        if(!layers.isEmpty())
-            map.getLayersInternal().addAll(layers);
-        
+        if (!layers.isEmpty()) map.getLayersInternal().addAll(layers);
+
         return map;
     }
 
