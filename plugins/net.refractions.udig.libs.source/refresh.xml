@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="net.refractions.udig.libs.source" default="download.src" basedir=".">
+<project name="net.refractions.udig.libs.source" default="copy.src" basedir=".">
 	
 	<dirname file="${ant.file.net.refractions.udig.libs.source}" property="refresh_libs_src_basedir"/>	
 	<import file="${refresh_libs_src_basedir}/../net.refractions.udig.libs/refresh.xml" />
@@ -8,7 +8,7 @@
 	<!-- ================================= 
           target: download.src              
          ================================= -->
-	<target name="download.src" depends="load_m2_deps" description="Download the source jars for the jars in the net.refractions.udig.libs plugin">
+	<target name="download.src" depends="" description="Download the source jars for the jars in the net.refractions.udig.libs plugin">
 		<mkdir dir="${basedir}/util/bin" />
 		<javac fork="true" srcdir="${basedir}/util/src" destdir="${basedir}/util/bin" debug="on" />
 		<echo>target for refresh: ${refresh_libs_src_basedir}</echo>
@@ -28,6 +28,23 @@
 		</copy>
 	</target>
 
+    <!-- ================================= 
+            target: copy.src
+         ================================= -->
+    <target name="copy.src" description="Copies the source jars for the jars in the net.refractions.udig.libs plugin">
+        <fileset dir="${basedir}/../net.refractions.udig.libs/lib/sources" id="jar.sources">
+            <include name="*-sources.jar" />
+        </fileset>
+        <loadproperties srcfile="${basedir}/dest.properties" />
+        <copy todir="${libs_src_dir}" verbose="true">
+            <fileset refid="jar.sources" />
+            <chainedmapper>
+                <mapper type="flatten" />
+                <mapper type="glob" from="*-sources.jar" to="*src.zip" />
+            </chainedmapper>
+        </copy>
+    </target>
+	
 	<!-- ================================= 
           target: clean              
          ================================= -->
