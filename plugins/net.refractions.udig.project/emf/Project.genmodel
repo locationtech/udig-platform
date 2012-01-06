@@ -280,6 +280,10 @@
       <genOperations ecoreOperation="render.ecore#//ViewportModel/zoom">
         <genParameters ecoreParameter="render.ecore#//ViewportModel/zoom/zoom"/>
       </genOperations>
+      <genOperations ecoreOperation="render.ecore#//ViewportModel/zoom.1">
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/zoom.1/zoom"/>
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/zoom.1/fixedPoint"/>
+      </genOperations>
       <genOperations ecoreOperation="render.ecore#//ViewportModel/zoomToExtent"/>
       <genOperations ecoreOperation="render.ecore#//ViewportModel/zoomToBox">
         <genParameters ecoreParameter="render.ecore#//ViewportModel/zoomToBox/box"/>
