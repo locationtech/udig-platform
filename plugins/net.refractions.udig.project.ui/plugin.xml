@@ -850,10 +850,17 @@
                </category> 
          <operation
                categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
+               class="net.refractions.udig.project.ui.operations.DefineTileSetOp"
+               id="net.refractions.udig.project.ui.defineTileset"
+               name="%tilesetDefine"
+               targetClass="net.refractions.udig.catalog.IGeoResource"/>
+         <operation
+               categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
                class="net.refractions.udig.project.ui.operations.example.MultiTargetOp"
-               id="net.refractions.udig.project.ui.resourceSummary"
+               id="net.refractions.udig.project.ui.define.tileset"
                name="%resourceSummary"
-               targetClass="net.refractions.udig.catalog.IGeoResource"/>      
+               targetClass="net.refractions.udig.catalog.IGeoResource">
+         </operation>      
  	</extension>
       
       <extension

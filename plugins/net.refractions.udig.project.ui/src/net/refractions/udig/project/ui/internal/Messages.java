@@ -325,6 +325,16 @@ public class Messages extends NLS {
     
     public static String mousePreferences_setvalue;
     public static String mousePreferences_title;
+    
+    public static String TileSetOp_title;
+    public static String TileSet_dialog_description;
+    public static String TileSet_dialog_zoom_desc;
+    public static String TileSet_dialog_new_title;
+    public static String TileSet_dialog_new_desc;
+    public static String TileSet_dialog_width;
+    public static String TileSet_dialog_heigth;
+    public static String TileSet_dialog_onoff_desc;
+    public static String TileSet_dialog_image_type;
 
     static {
 		// initialize resource bundle

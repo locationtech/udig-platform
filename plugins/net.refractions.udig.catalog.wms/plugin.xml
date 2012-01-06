@@ -53,4 +53,15 @@
           name="%wmsc.wizard.name">
     </wizardPage>
  </extension>
+ <extension
+          id="net.refractions.udig.catalog.tileset.resolvers"
+          point="net.refractions.udig.catalog.resolvers">
+       <factory
+             class="net.refractions.udig.catalog.internal.wms.tileset.WMSCTileSetAdapter"
+             resolveableType="net.refractions.udig.catalog.internal.wms.WMSGeoResourceImpl">
+          <resolve
+                type="net.refractions.udig.catalog.wmsc.server.TileSet">
+          </resolve>
+       </factory>
+    </extension>
 </plugin>

@@ -5,9 +5,12 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+
+import org.geotools.data.ows.AbstractOpenWebService;
 
 /**
  * Class to help read and write for Tile images to disk in a structured
@@ -20,10 +23,15 @@ public class TileImageReadWriter {
 	
 	private String baseTileFolder = ""; //$NON-NLS-1$
 	private static final String baseSubTileFolder = "tilecache"; //$NON-NLS-1$
-	private TiledWebMapServer server;
+	private URL server;
 	
-	public TileImageReadWriter(TiledWebMapServer server, String baseDir) {
-		this.server = server;
+	public TileImageReadWriter(AbstractOpenWebService service, String baseDir) {
+        try {
+            server = service.getInfo().getSource().toURL();
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 		this.baseTileFolder = baseDir + File.separator + baseSubTileFolder; 
 	}
 
@@ -71,8 +79,7 @@ public class TileImageReadWriter {
 	 * @return
 	 */
 	public String getTileDirectoryPath(Tile tile) {
-		URL service = this.server.getService();
-		String serverURL = service.getHost()+"_"+service.getPath(); //$NON-NLS-1$
+		String serverURL = this.server.getHost()+"_"+this.server.getPath(); //$NON-NLS-1$
 		serverURL = serverURL.replace('\\', '_'); 
 		serverURL = serverURL.replace('/', '_'); 
 		String layers = tile.getTileSet().getLayers();

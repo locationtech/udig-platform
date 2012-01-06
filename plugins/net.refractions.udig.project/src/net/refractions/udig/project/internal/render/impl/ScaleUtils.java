@@ -44,7 +44,29 @@ public final class ScaleUtils {
 	private static final int MAX_ITERATIONS = 10;
 	private static Envelope WORLD = new Envelope(-180, 180, -90, 90);
 
-	private ScaleUtils() {
+    /**
+     * Default pixel size in meters, producing a default of 90.7 DPI
+     */
+    public static final double DEFAULT_PIXEL_SIZE_METER = 0.00028;
+    public static final double METERS_PER_DEGREE = 6378137.0 * 2.0 * Math.PI / 360.0;
+    public static final double DEGREES_PER_METER = 360.0 / 6378137.0 * 2.0 * Math.PI;
+    public static final double FEET_TO_METERS = 0.3048;
+    
+	private ScaleUtils() {/*no instance for you*/}
+
+	/**
+	 * Calculate the resolution of a for a tile given a tile scale in pixels.
+	 * @param bounds The full bounds of a WMS layer
+	 * @param scale The tile scale (viewport_scale * tile.width)
+	 * @param tileWidth The tile width in pixels
+	 * @return the resolution
+	 */
+	public static double calculateResolutionFromScale(ReferencedEnvelope bounds, double scale, int tileWidth) {
+	    if (isLatLong(bounds.getCoordinateReferenceSystem())){
+	        return  (DEFAULT_PIXEL_SIZE_METER * DEGREES_PER_METER) * ( (scale*tileWidth) * DEGREES_PER_METER);
+	    } else {
+	        return DEFAULT_PIXEL_SIZE_METER * scale;
+	    }
 	}
 
 	public static Unit<?> getUnit(CoordinateReferenceSystem crs) {
