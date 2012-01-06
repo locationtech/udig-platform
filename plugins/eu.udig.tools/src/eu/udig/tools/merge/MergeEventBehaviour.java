@@ -28,6 +28,7 @@ import java.util.List;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.MapCommand;
+import net.refractions.udig.project.command.UndoableComposite;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.internal.commands.selection.BBoxSelectionCommand;
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
@@ -73,6 +74,7 @@ import eu.udig.tools.internal.ui.util.DialogUtil;
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
+ * @deprecated it is not used, the mouse actions are grabbed by the MergeTool FIXME it should be deleted
  */
 class MergeEventBehaviour implements EventBehaviour {
 
@@ -124,29 +126,36 @@ class MergeEventBehaviour implements EventBehaviour {
 
 		IToolContext context = handler.getContext();
 
-		SelectionBoxCommand selectBoxCommand = this.mergeContext.getSelectionBoxCommand();
-		Point start = this.mergeContext.getBBoxStartPoint();
+		Point start = this.mergeContext.getBBoxStartPoint();;
+		SelectionBoxCommand selectionBoxCommand = this.mergeContext.getSelectionBoxCommand();
+		
 		switch (eventType) {
 		case PRESSED:
-			// start drawing the bbox.
-			this.mergeContext.setBBoxStartPoint(e.getPoint());
-			selectBoxCommand.setValid(true);
-			selectBoxCommand.setShape(new Rectangle(e.getPoint().x, e.getPoint().y, 0, 0));
-			handler.getContext().sendASyncCommand(selectBoxCommand);
-			break;
+//			// start drawing the bbox.
+//			this.mergeContext.setBBoxStartPoint(e.getPoint());
+//			selectionBoxCommand.setValid(true);
+//			selectionBoxCommand.setShape(new Rectangle(e.getPoint().x, e.getPoint().y, 0, 0));
+//			//handler.getContext().sendASyncCommand(selectBoxCommand);
+//			
+//			return (UndoableMapCommand) selectionBoxCommand;
+			
 		case DRAGGED:
+
 			// Dragged event is always preceded by the pressed event, but
 			// sometimes it
 			// reach dragged event and the start point is null.
-			if (start == null) {
-				start = e.getPoint();
-			}
-			selectBoxCommand.setShape(
-					new Rectangle(	Math.min(start.x, e.x), Math.min(start.y, e.y),
-									Math.abs(e.x - start.x), Math.abs(start.y - e.y)));
-			handler.getContext().getViewportPane().repaint();
-			break;
+//			if (start == null) {
+//				start = e.getPoint();
+//			}
+//			selectionBoxCommand.setShape(
+//					new Rectangle(	Math.min(start.x, e.x), Math.min(start.y, e.y),
+//									Math.abs(e.x - start.x), Math.abs(start.y - e.y)));
+//			handler.getContext().getViewportPane().repaint();
+//
+//			return (UndoableMapCommand) selectionBoxCommand;
+
 		case RELEASED:
+			
 			// finish the draw of the bbox.
 			Coordinate c1 = handler.getContext().getMap().getViewportModel().pixelToWorld(start.x, start.y);
 			Coordinate c2 = handler.getContext().getMap().getViewportModel().pixelToWorld(e.getPoint().x,
@@ -161,146 +170,27 @@ class MergeEventBehaviour implements EventBehaviour {
 				bounds = new Envelope(c1, c2);
 			}
 
-			selectFeaturesUnderBBox(e, bounds, context);
-			selectBoxCommand.setValid(false);
+	        UndoableComposite commands = new UndoableComposite();
+
+			MapCommand selectFeaturesCommand = selectFeaturesUnderBBox(e, bounds, context);
+			//handler.getContext().sendASyncCommand(selectFeaturesCommand);
+
+			selectionBoxCommand.setValid(false);
+			
+			commands.add(selectFeaturesCommand);
+			
 			context.getViewportPane().repaint();
 			
-			mergeContext.addEnvelope(bounds);
-			mergeContext.storeMouseLocation(e);
-			this.lastEnvelope = bounds;
+			this.mergeContext.addBound(bounds);
+			// FIXME this.mergeContext.storeMouseLocation(e);
 
-			viewLauncher(e, context);
-
-			break;
+			MergeCommandViewLauncher viewlauncherCommand = new MergeCommandViewLauncher(this.mergeContext, context);
+			commands.add(viewlauncherCommand);
+			
+			return commands;
 		default:
-			break;
+			return null; // no action
 		}
-		return null; // FIXME it looks like part of design was lost!
-	}
-
-	/**
-	 * <p>
-	 * 
-	 * <pre>
-	 * Get the features under the bbox area.
-	 * Validates the features in bounding box and launch the view.
-	 * </pre>
-	 * 
-	 * </p>
-	 * 
-	 * @param e
-	 * @param context
-	 * 
-	 * FIXME refactor create a command to lunch the view 
-	 */
-	private void viewLauncher(MapMouseEvent e, IToolContext context) {
-
-		final String dlgTitle = Messages.MergeTool_title_tool;
-		SimpleFeature[] features = null;
-		List<SimpleFeature> allFeatures, lastSelectedFeatures;
-
-		try {
-			List<Envelope> bboxList = new ArrayList<Envelope>();
-			bboxList.addAll(mergeContext.getEnvelopeList());
-			// gets the features in bounding box(from this bbox and previous
-			// bbox)
-			allFeatures = getFeatures(bboxList, context);
-			bboxList.clear();
-			// get the features only for this bbox
-			bboxList.add(lastEnvelope);
-			lastSelectedFeatures = getFeatures(bboxList, context);
-
-			if (e.isControlDown()) {
-				// control is down, so those feature are supposed to be deleted.
-				mergeContext.addDeletedFeature(lastSelectedFeatures);
-				mergeContext.removeEnvelope(lastEnvelope);
-			} else {
-				// if a feature is removed from the view of the merge, and here
-				// is added again, update the list.
-				mergeContext.updateDeletedFeatureList(lastSelectedFeatures);
-			}
-			// exclude the deleted features from the allFeatures list.
-			if (mergeContext.getDeletedFeatures().size() > 0) {
-				allFeatures.removeAll(mergeContext.getDeletedFeatures());
-			}
-
-			features = allFeatures.toArray(new SimpleFeature[allFeatures.size()]);
-		} catch (IOException e1) {
-			final String msg = Messages.MergeTool_failed_getting_selection;
-			DialogUtil.openError(dlgTitle, msg);
-			throw (RuntimeException) new RuntimeException(msg).initCause(e1);
-		}
-		assert features != null;
-
-		final MergeFeatureViewLauncher launcher = new MergeFeatureViewLauncher(context, mergeContext);
-
-		launcher.setSourceFeatures(features);
-
-		if (!launcher.isValid()) {
-			launcher.handleError(context, e);
-			launcher.closeView();
-			mergeContext.initContext();
-			return;
-		}
-		try {
-			launcher.launchView();
-		} catch (IllegalStateException ise) {
-			DialogUtil.openError(dlgTitle, ise.getMessage());
-			launcher.closeView();
-			mergeContext.initContext();
-			throw ise;
-		}
-	}
-
-	/**
-	 * Get the features contained on the envelope/s. If there are more than one
-	 * envelope, create a {@link Filter} of those envelopes and return the
-	 * features contained in it.
-	 * 
-	 * @param bbox
-	 * @param context
-	 * @return
-	 * @throws IOException
-	 */
-	private List<SimpleFeature> getFeatures(List<Envelope> bbox, IToolContext context) throws IOException {
-
-		ILayer selectedLayer = context.getSelectedLayer();
-
-		FeatureSource<SimpleFeatureType, SimpleFeature> source = selectedLayer.getResource(FeatureSource.class, null);
-
-		String typename = source.getSchema().getTypeName();
-
-		FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2(null);
-
-		Filter filter = selectedLayer.createBBoxFilter(bbox.get(0), null);
-		Filter mergedFilter;
-		Or filterOR = null;
-		for (int index = 0; index < bbox.size(); index++) {
-
-			mergedFilter = selectedLayer.createBBoxFilter(bbox.get(index), null);
-			filterOR = ff.or(filter, mergedFilter);
-		}
-
-		Query query = new DefaultQuery(typename, filterOR);
-
-		FeatureCollection<SimpleFeatureType, SimpleFeature> features = source.getFeatures(query);
-
-		List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
-		FeatureIterator<SimpleFeature> iter = null;
-		try {
-			iter = features.features();
-			SimpleFeature f;
-			while (iter.hasNext()) {
-				f = iter.next();
-				featureList.add(f);
-			}
-		} finally {
-			if (iter != null) {
-				features.close(iter);
-			}
-		}
-
-		return featureList;
 	}
 
 	/**
@@ -310,7 +200,7 @@ class MergeEventBehaviour implements EventBehaviour {
 	 * @param boundDrawn the bbox drawn by the usr
 	 * @param context 
 	 */
-	private void selectFeaturesUnderBBox(	MapMouseEvent e,
+	private MapCommand selectFeaturesUnderBBox(	MapMouseEvent e,
 											Envelope boundDrawn,
 											IToolContext context) {
 
@@ -324,12 +214,12 @@ class MergeEventBehaviour implements EventBehaviour {
 			command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn, BBoxSelectionCommand.NONE);
 		}
 
-		context.sendASyncCommand(command);
+		return command;
 	}
 
 	public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {
 
 		// TODO Auto-generated method stub
-
+		
 	}
 }

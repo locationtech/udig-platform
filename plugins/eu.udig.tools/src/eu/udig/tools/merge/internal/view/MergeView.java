@@ -20,7 +20,10 @@
  */
 package eu.udig.tools.merge.internal.view;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import net.refractions.udig.project.ILayer;
@@ -36,6 +39,7 @@ import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -57,19 +61,24 @@ import eu.udig.tools.internal.ui.util.StatusBar;
 import eu.udig.tools.merge.MergeContext;
 
 /**
- * The view that will show the Merge UI.
+ * This view shows the feature to merge.
+ * 
+ * <p>
+ * The view allows to select the attributes of the source features that will be merge in the 
+ * target feature (the merge feature).
+ * </p>
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
  */
 public class MergeView extends ViewPart implements IUDIGView {
 
-	public static final String	id				= "eu.udig.tools.merge.internal.view.MergeView";	//$NON-NLS-1$
+	public static final String	ID				= "eu.udig.tools.merge.internal.view.MergeView";	//$NON-NLS-1$
 
 	private IToolContext		context			= null;
 	private MergeComposite		mergeComposite	= null;
 	private MergeFeatureBuilder	mergeBuilder	= null;
-	private SimpleFeature[]		sourceFeatures	= null;
+	private List<SimpleFeature>	sourceFeatures	= null;
 
 
 	private CancelButtonAction	cancelButton	= null;
@@ -177,7 +186,7 @@ public class MergeView extends ViewPart implements IUDIGView {
 		this.finishButton.setEnabled(true);
 	}
 
-	public void setSourceFeatures(SimpleFeature[] sourceFeatures) {
+	public void setSourceFeatures(List<SimpleFeature> sourceFeatures) {
 
 		assert sourceFeatures != null;
 
@@ -186,10 +195,9 @@ public class MergeView extends ViewPart implements IUDIGView {
 	}
 
 	/**
-	 * Valid the merge data:
+	 * Checks the merge parameters:
 	 * <ul>
-	 * <li>Must select two or more feature</li>
-	 * <li>The features selected are polygons they must intersect</li>
+	 * <li>It should be select two or more feature</li>
 	 * </ul>
 	 * 
 	 * @return true if the input are OK
@@ -200,11 +208,12 @@ public class MergeView extends ViewPart implements IUDIGView {
 		boolean valid = true;
 
 		// Must select two or more feature
-		int selectionCount = sourceFeatures.length;
-		if (selectionCount < 2) {
+		if (sourceFeatures.size() < 2) {
 			this.message = Messages.MergeFeatureBehaviour_select_two_or_more;
 			valid = false;
 		}
+		this.mergeComposite.setMessage(this.message, IMessageProvider.WARNING);
+		
 		return valid;
 	}
 
@@ -227,7 +236,7 @@ public class MergeView extends ViewPart implements IUDIGView {
 		final String dlgTitle = Messages.MergeTool_title_tool;
 
 		if (!isValid()) {
-			handleError(context, mergeContext.getMouseLocation());
+			this.mergeComposite.setMessage(this.message, IMessageProvider.ERROR);
 			return;
 		}
 
@@ -280,9 +289,9 @@ public class MergeView extends ViewPart implements IUDIGView {
 	private void mergeCancel() {
 
 		try {
-			ApplicationGIS.getView(false, MergeView.id);
+			ApplicationGIS.getView(false, MergeView.ID);
 			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			IViewPart viewPart = page.findView(MergeView.id);
+			IViewPart viewPart = page.findView(MergeView.ID);
 			page.hideView(viewPart);
 		} finally {
 			unselect(context);
@@ -296,36 +305,36 @@ public class MergeView extends ViewPart implements IUDIGView {
 	 * Called when the delete button is pressed. If a feature is selected on the
 	 * tree view with the source features, it is deleted from there and launched
 	 * again the mergeBuilder.
+	 * 
+	 * @param featureToDelete 
 	 */
-	public void mergeDelete() {
+	public void deleteFromMergeList(SimpleFeature featureToDelete) {
 
-		// get the ID of the feature to be deleted.
-		SimpleFeature featureToDelete = mergeComposite.getSelectedFeature();
+		if (!canDelete(featureToDelete)) {
 
-		if (!isValidDeletion(featureToDelete)) {
-			handleError(context, mergeContext.getMouseLocation());
 			return;
 		}
-		// delete from sourceFeatures array
-		List<SimpleFeature> arrayList = new ArrayList<SimpleFeature>();
+		addDeletedFeature(featureToDelete);
 
-		for (int i = 0; i < sourceFeatures.length; i++) {
-
-			if (!sourceFeatures[i].getID().equals(featureToDelete.getID())) {
-				arrayList.add(sourceFeatures[i]);
-			}
-
-		}
-
-		mergeContext.addDeletedFeature(featureToDelete);
-
-		// create the builder, an launch again.
-		sourceFeatures = arrayList.toArray(new SimpleFeature[arrayList.size()]);
+		// creates the builder, an launch again.
 		MergeFeatureBuilder builder = createMergeBuilder();
-		this.setSourceFeatures(sourceFeatures);
+		this.setSourceFeatures(this.sourceFeatures);
 		this.setBuilder(builder);
-		unselect(context);
+		unselect(this.context);
 	}
+	
+	/**
+	 * Add a feature to the deleted feature list.
+	 * 
+	 * @param feature
+	 */
+	public void addDeletedFeature(SimpleFeature feature) {
+
+		if (!this.sourceFeatures.isEmpty()) {
+			this.sourceFeatures.remove(feature);
+		}
+	}
+	
 
 	/**
 	 * Check if the feature to be deleted from the list could be deleted. If
@@ -335,7 +344,7 @@ public class MergeView extends ViewPart implements IUDIGView {
 	 * @param featureToDelete
 	 * @return
 	 */
-	private boolean isValidDeletion(SimpleFeature featureToDelete) {
+	private boolean canDelete(SimpleFeature featureToDelete) {
 
 		boolean isValid = true;
 
@@ -344,11 +353,13 @@ public class MergeView extends ViewPart implements IUDIGView {
 			this.message = Messages.MergeFeatureView_no_feature_to_delete;
 			return false;
 		}
-		if (sourceFeatures.length == 1) {
+		if (sourceFeatures.size() == 1) {
 
 			this.message = Messages.MergeFeatureView_cant_remove;
 			isValid = false;
 		}
+		
+		this.mergeComposite.setMessage(this.message, IMessageProvider.WARNING);
 
 		return isValid;
 	}
@@ -361,7 +372,7 @@ public class MergeView extends ViewPart implements IUDIGView {
 	@SuppressWarnings("unchecked")
 	private MergeFeatureBuilder createMergeBuilder() throws IllegalStateException {
 
-		SimpleFeatureType type = sourceFeatures[0].getFeatureType();
+		SimpleFeatureType type = sourceFeatures.get(0).getFeatureType();
 		final Class<?> expectedGeometryType = type.getGeometryDescriptor().getType().getBinding();
 		Geometry union;
 		union = GeometryUtil.geometryUnion(DataUtilities.collection(sourceFeatures));

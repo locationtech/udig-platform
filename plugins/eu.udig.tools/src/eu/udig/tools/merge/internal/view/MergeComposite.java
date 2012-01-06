@@ -97,6 +97,9 @@ class MergeComposite extends Composite {
 	private MergeView			mergeView				= null;
 	private Menu				menu;
 
+	/**
+	 * Union geometry
+	 */
 	private static final String	UNION					= "Union";	//$NON-NLS-1$
 	/**
 	 * Index of the column holding the attribute names in both views
@@ -110,7 +113,7 @@ class MergeComposite extends Composite {
 	 * Label to use as attribute value in the merged view when an attribute is
 	 * {@code null}
 	 */
-	private static final String	NULL_LABEL				= "<null>";
+	private static final String	NULL_LABEL				= "<null>"; //$NON-NLS-1$
 
 	private DeleteButtonAction	deleteButton			= null;
 
@@ -123,14 +126,14 @@ class MergeComposite extends Composite {
 
 			setToolTipText(Messages.MergeView_remove_tool_tip);
 			setText(Messages.MergeView_remove_text);
-			String imgFile = "images/trash.gif"; //$NON-NLS-N$
+			String imgFile = "images/trash.gif"; //$NON-NLS-1$
 			setImageDescriptor(ImageDescriptor.createFromFile(MergeView.class, imgFile));
 		}
 
 		@Override
 		public void run() {
 
-			mergeView.mergeDelete();
+			mergeView.deleteFromMergeList(getSelectedFeature());
 		}
 	}
 
@@ -320,7 +323,7 @@ class MergeComposite extends Composite {
 			@Override
 			public void mouseUp(MouseEvent e) {
 
-				mergeView.mergeDelete();
+				mergeView.deleteFromMergeList( getSelectedFeature() );
 			}
 		});
 
@@ -390,7 +393,7 @@ class MergeComposite extends Composite {
 
 	private Image getImage() {
 
-		return registry.get("trash");
+		return registry.get("trash"); //$NON-NLS-1$
 	}
 
 	private void createImageRegistry() {
@@ -398,7 +401,7 @@ class MergeComposite extends Composite {
 		registry = new ImageRegistry();
 
 		String imgFile = "images/" + "trash" + ".gif"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		registry.put("trash", ImageDescriptor.createFromFile(MergeComposite.class, imgFile));
+		registry.put("trash", ImageDescriptor.createFromFile(MergeComposite.class, imgFile)); //$NON-NLS-1$
 
 	}
 
@@ -407,7 +410,7 @@ class MergeComposite extends Composite {
 	 */
 	public void open() {
 
-		assert builder != null : "When code reach here, builder mustn't be null";
+		assert builder != null : "When code reach here, builder mustn't be null"; //$NON-NLS-1$
 		// presents the source in tree view
 		populateSourceFeaturesView();
 
@@ -465,7 +468,7 @@ class MergeComposite extends Composite {
 		if (builder.mergeGeomIsUnion()) {
 			geomName = UNION;
 		} else {
-			geomName = mergedGeometry == null ? "null" : mergedGeometry.getClass().getSimpleName();
+			geomName = mergedGeometry == null ? "null" : mergedGeometry.getClass().getSimpleName(); //$NON-NLS-1$
 		}
 		labelResultGeometry.setText(geomName);
 		final String msg = MessageFormat.format(Messages.MergeFeaturesComposite_result_will_be, geomName);
@@ -479,7 +482,7 @@ class MergeComposite extends Composite {
 	 * @param usrMessage
 	 * @param type
 	 */
-	private void setMessage(String usrMessage, final int type) {
+	public void setMessage(String usrMessage, final int type) {
 
 		InfoMessage info = new InfoMessage(usrMessage, type);
 		message.setImage(info.getImage());

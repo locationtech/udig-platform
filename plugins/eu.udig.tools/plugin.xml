@@ -33,11 +33,12 @@
    <extension
          point="org.eclipse.ui.views">
       <view
+            allowMultiple="false"
+            category="net.refractions.udig.project.ui.project"
             class="eu.udig.tools.merge.internal.view.MergeView"
             icon="icons/etool16/merge_feature_mode.gif"
             id="eu.udig.tools.merge.internal.view.MergeView"
-            name="%plugin.name_merge"
-            restorable="false">
+            name="Merge Features">
       </view>
    </extension>
    <extension

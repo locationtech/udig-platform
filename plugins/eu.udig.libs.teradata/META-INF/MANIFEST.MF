@@ -6,7 +6,5 @@ Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: eu.udig
 Bundle-ClassPath: gtlib/gt-jdbc-teradata-8-SNAPSHOT.jar
 Eclipse-RegisterBuddy: net.refractions.udig.libs
-Require-Bundle: net.refractions.udig.libs;visibility:=reexport,
- eu.udig.libs.teradata.license;resolution:=optional
+Require-Bundle: net.refractions.udig.libs;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.geotools.data.teradata

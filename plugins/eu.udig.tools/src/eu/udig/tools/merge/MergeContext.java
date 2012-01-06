@@ -25,9 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-
-import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -46,19 +43,18 @@ import eu.udig.tools.merge.internal.view.MergeView;
 public class MergeContext {
 
 	private Point				bboxStartPoint	= null;
-	private SelectionBoxCommand	shapeCommand	= new SelectionBoxCommand();
-	private List<Envelope>		envelopeList	= new ArrayList<Envelope>();
-	private List<SimpleFeature>	deletedFeatures	= new ArrayList<SimpleFeature>();
+	private SelectionBoxCommand	selectionBoxCommand	= new SelectionBoxCommand();
+	private List<Envelope>		boundList = new ArrayList<Envelope>();
 
-	private MapMouseEvent		mapMouseEvent	= null;
-
+	/**
+	 * Reinitializes the status context
+	 */
 	public synchronized void initContext() {
 
 		bboxStartPoint = null;
-		shapeCommand = new SelectionBoxCommand();
+		selectionBoxCommand = new SelectionBoxCommand();
 
-		envelopeList.clear();
-		deletedFeatures.clear();
+		boundList.clear();
 	}
 
 	/**
@@ -74,9 +70,9 @@ public class MergeContext {
 	}
 
 	/**
-	 * Get the start point of the bbox.
+	 * Returns the start point of the bbox.
 	 * 
-	 * @return
+	 * @return the left upper corner
 	 */
 	public Point getBBoxStartPoint() {
 
@@ -84,109 +80,44 @@ public class MergeContext {
 	}
 
 	/**
-	 * The command uses to draw a bbox.
+	 * Returns the instance of {@link SelectionBoxCommand} maintained in this context.
 	 * 
-	 * @return the shapeCommand
+	 * @return {@link SelectionBoxCommand}
 	 */
 	public SelectionBoxCommand getSelectionBoxCommand() {
 
-		return shapeCommand;
+		return selectionBoxCommand;
 	}
 
 	/**
-	 * Add an envelope to the envelope list.
+	 * Add an bound to the envelope list.
 	 * 
-	 * @param bounds
+	 * @param bound
 	 */
-	public void addEnvelope(Envelope bounds) {
+	public void addBound(Envelope bound) {
 
-		assert bounds != null;
+		assert bound != null;
 
-		envelopeList.add(bounds);
+		boundList.add(bound);
 	}
 
 	/**
-	 * Remove an envelope from the list of envelopes.
+	 * Removes the indeed bound from the list of bounds.
 	 * 
-	 * @param lastEnvelope
+	 * @param bound
 	 */
-	public void removeEnvelope(Envelope lastEnvelope) {
+	public void removeBound(Envelope bound) {
 
-		assert lastEnvelope != null;
+		assert bound != null;
 
-		envelopeList.remove(lastEnvelope);
+		boundList.remove(bound);
 	}
 
 	/**
-	 * The list of the stored envelopes.
-	 * 
-	 * @return
+	 * @return the list of bounds 
 	 */
-	public List<Envelope> getEnvelopeList() {
+	public List<Envelope> getBoundList() {
 
-		return envelopeList;
+		return boundList;
 	}
-
-	/**
-	 * The list with the deleted features.
-	 * 
-	 * @return
-	 */
-	public List<SimpleFeature> getDeletedFeatures() {
-
-		return deletedFeatures;
-	}
-
-	/**
-	 * Add a feature to the deleted feature list.
-	 * 
-	 * @param feature
-	 */
-	public void addDeletedFeature(SimpleFeature feature) {
-
-		deletedFeatures.add(feature);
-	}
-
-	public void storeMouseLocation(MapMouseEvent e) {
-
-		this.mapMouseEvent = e;
-
-	}
-
-	/**
-	 * Return the last know mouse location. It will be the point were the last
-	 * selected feature is.
-	 * 
-	 * @return
-	 */
-	public MapMouseEvent getMouseLocation() {
-
-		return this.mapMouseEvent;
-	}
-
-	/**
-	 * These features (lastAddedFeatures) are the last selected features to add.
-	 * If they were deleted before, remove from the deleted list.
-	 * 
-	 * @param lastAddedFeatures
-	 */
-	public void updateDeletedFeatureList(List<SimpleFeature> lastAddedFeatures) {
-
-		if (deletedFeatures.size() > 0) {
-			deletedFeatures.removeAll(lastAddedFeatures);
-		}
-
-	}
-
-	/**
-	 * Add a list of features to the deleted feature list.
-	 * 
-	 * @param listOfFeatures
-	 */
-	public void addDeletedFeature(List<SimpleFeature> listOfFeatures) {
-
-		deletedFeatures.addAll(listOfFeatures);
-
-	}
-
 }

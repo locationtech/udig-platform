@@ -14,9 +14,9 @@
  */
 package eu.udig.tools.merge.internal.view;
 
-import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -111,8 +111,8 @@ public class MergeFeatureBuilder {
 	 */
 	private static final Object			NULL_GEOM		= new Object();
 	private EventListenerList			listeners		= new EventListenerList();
-	private SimpleFeatureType			fType;
-	private List<SimpleFeature>			sourceFeatures;
+	private SimpleFeatureType			featureType;
+	private List<SimpleFeature>			sourceFeatures = new LinkedList<SimpleFeature>();
 	private Object						mergedGeometry;
 	private Object[]					mergedFeature;
 	private int							defaultGeometryIndex;
@@ -144,7 +144,7 @@ public class MergeFeatureBuilder {
 	 * @param layer
 	 *            The layer which contains the features.
 	 */
-	public MergeFeatureBuilder(SimpleFeature[] sourceFeatures, Geometry mergedGeometry, ILayer layer) {
+	public MergeFeatureBuilder(List<SimpleFeature> sourceFeatures, Geometry mergedGeometry, ILayer layer) {
 
 		assert sourceFeatures != null;
 		assert layer != null;
@@ -154,35 +154,35 @@ public class MergeFeatureBuilder {
 		if (mergedGeometry == null) {
 			this.mergedGeometry = NULL_GEOM;
 		}
-		if (sourceFeatures.length < 1) {
-			throw new IllegalArgumentException("Expected at least one source feature");
+		if (sourceFeatures.size() < 1) {
+			throw new IllegalArgumentException("Expected at least one source feature"); //$NON-NLS-1$
 		}
-		this.sourceFeatures = new ArrayList<SimpleFeature>(sourceFeatures.length);
-		this.fType = sourceFeatures[0].getFeatureType();
+		this.featureType = sourceFeatures.get(0).getFeatureType();
 
-		for (int i = 0; i < sourceFeatures.length; i++) {
-			SimpleFeature next = sourceFeatures[i];
-			if (fType != next.getFeatureType()) {
-				throw new IllegalArgumentException("Features in the collection must " + "conform to a common schema");
+		for (int i = 0; i < sourceFeatures.size(); i++) {
+			SimpleFeature next = sourceFeatures.get(i);
+			if (featureType != next.getFeatureType()) {
+				throw new IllegalArgumentException("Features in the collection must conform to a common schema"); //$NON-NLS-1$
 			}
 			this.sourceFeatures.add(next);
 		}
 
 		SimpleFeature feature = this.sourceFeatures.get(0);
-		GeometryDescriptor defaultGeometry = fType.getGeometryDescriptor();
+		GeometryDescriptor defaultGeometry = featureType.getGeometryDescriptor();
 		if (null == defaultGeometry) {
-			throw new IllegalArgumentException("Feature schema contains no default geometry");
+			throw new IllegalArgumentException("Feature schema contains no default geometry"); //$NON-NLS-1$
 		}
 		if (mergedGeometry != null) {
 			Class<?> binding = defaultGeometry.getType().getBinding();
 			if (!binding.isAssignableFrom(mergedGeometry.getClass())) {
-				throw new IllegalArgumentException("Can't assign " + mergedGeometry.getClass().getName() + " to "
+				throw new IllegalArgumentException(
+							"Can't assign " + mergedGeometry.getClass().getName() + " to " //$NON-NLS-1$ //$NON-NLS-2$
 							+ defaultGeometry.getClass().getName());
 			}
 		}
-		this.defaultGeometryIndex = fType.indexOf(defaultGeometry.getName());
+		this.defaultGeometryIndex = featureType.indexOf(defaultGeometry.getName());
 
-		mergedFeature = new Object[fType.getAttributeCount()];
+		mergedFeature = new Object[featureType.getAttributeCount()];
 		mergedFeature = feature.getAttributes().toArray(mergedFeature);
 
 		if (mergedGeometry != null) {
@@ -251,11 +251,11 @@ public class MergeFeatureBuilder {
 		try {
 			// feature = SimpleFeatureBuilder.build(fType, mergedFeature, null
 			// );
-			SimpleFeatureBuilder builder = new SimpleFeatureBuilder(fType);
+			SimpleFeatureBuilder builder = new SimpleFeatureBuilder(featureType);
 			builder.addAll(mergedFeature);
 			feature = builder.buildFeature(null); // no id?
 		} catch (IllegalAttributeException e) {
-			throw new IllegalStateException("Can't create merged feature: " + e.getMessage(), e);
+			throw new IllegalStateException("Can't create merged feature: " + e.getMessage(), e); //$NON-NLS-1$
 		}
 		return feature;
 	}
@@ -299,7 +299,7 @@ public class MergeFeatureBuilder {
 
 		assert attIndex < getAttributeCount();
 
-		AttributeDescriptor attributeType = fType.getDescriptor(attIndex);
+		AttributeDescriptor attributeType = featureType.getDescriptor(attIndex);
 
 		return attributeType.getLocalName();
 	}
@@ -401,7 +401,7 @@ public class MergeFeatureBuilder {
 	 */
 	public int getAttributeCount() {
 
-		return fType.getAttributeCount();
+		return featureType.getAttributeCount();
 	}
 
 	/**

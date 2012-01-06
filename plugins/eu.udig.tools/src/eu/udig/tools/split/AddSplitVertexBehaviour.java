@@ -38,7 +38,7 @@ import net.refractions.udig.tools.edit.support.Point;
  * @author Aritz Davila (www.axios.es)
  * @since 1.3.0
  */
-public class AddSplitVertexBehaviour extends AddVertexWhileCreatingBehaviour {
+class AddSplitVertexBehaviour extends AddVertexWhileCreatingBehaviour {
 
 	/**
 	 * This split tool allows duplicate vertex. Thus this method is override to return true.

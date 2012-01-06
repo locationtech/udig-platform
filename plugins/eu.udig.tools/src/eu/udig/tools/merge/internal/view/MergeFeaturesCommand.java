@@ -51,8 +51,6 @@ import org.opengis.feature.simple.SimpleFeatureType;
  */
 public final class MergeFeaturesCommand implements UndoableMapCommand {
 
-	final EditCommandFactory	cmdFac	= null;
-
 	private UndoableComposite	compositeCmd		= null;
 
 	public static MergeFeaturesCommand getInstance(	ILayer layer,

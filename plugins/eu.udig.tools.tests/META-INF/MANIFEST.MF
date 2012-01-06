@@ -16,3 +16,5 @@ Import-Package: com.vividsolutions.jts.geom,
  junit.framework;version="3.8.2",
  org.junit,
  org.opengis.feature.simple
+Export-Package: es.udig.tools.geometry.split,
+ eu.udig.tools.tests

@@ -40,7 +40,7 @@ import eu.udig.tools.internal.ui.util.DialogUtil;
  * @author Aritz Davila (www.axios.es)
  * @since 1.3.0
  */
-public class SplitGeometryBehaviour implements Behaviour {
+class SplitGeometryBehaviour implements Behaviour {
 
 
     public SplitGeometryBehaviour() {
