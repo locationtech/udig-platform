@@ -1298,3 +1298,4 @@ Export-Package: .,
  ucar.unidata.io.http,
  ucar.unidata.util,
  ucar.units
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

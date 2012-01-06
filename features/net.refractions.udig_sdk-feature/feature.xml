@@ -6,15 +6,31 @@
       provider-name="Udig.Refractions.net">
 
    <description url="http://www.example.com/description">
-      Feature gathering up tutorials and example code, in addition to required udig plugins; to form a complete SDK for use as a target platform for development.
+      Feature gathering up source code, tutorials and example code (in addition
+to required udig plugins) to form a complete SDK for use as a target platform.
+
+The complete SDK includes more functionality than the example uDig application.
    </description>
 
    <copyright url="http://www.example.com/copyright">
-      2010 Refractions Research
+      2011 Refractions Research
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license url="http://www.gnu.org/licenses/lgpl-2.1.html">Copyright (C) 2011 Refractions Research
+      
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
    </license>
 
    <includes
@@ -42,6 +58,10 @@
          version="0.0.0"/>
 
    <includes
+         id="net.refractions.udig_tutorials-feature"
+         version="0.0.0"/>
+
+   <includes
          id="net.refractions.udig_application.source-feature"
          version="0.0.0"/>
 
@@ -59,10 +79,6 @@
 
    <includes
          id="net.refractions.udig_tutorials.source-feature"
-         version="0.0.0"/>
-
-   <includes
-         id="net.refractions.udig_tutorials-feature"
          version="0.0.0"/>
 
    <plugin
