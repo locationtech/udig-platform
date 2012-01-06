@@ -33,7 +33,7 @@ public class StyleFilter extends ViewerFilter {
     @SuppressWarnings("nls")
     public void setSearchText( String s ) {
         // Search must be a substring of the existing value
-        this.searchString = ".*" + s + ".*";
+        this.searchString = ".*" + s + ".*"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Override

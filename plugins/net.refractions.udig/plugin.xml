@@ -102,7 +102,7 @@
       <product
             application="net.refractions.udig.ui.application"
             description="User-friendly Desktop Internet GIS"
-            name="uDig">
+            name="uDig SDK">
          <property
                name="appName"
                value="uDig SDK">

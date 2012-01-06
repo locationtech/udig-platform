@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -607,14 +608,25 @@ public class RendererCreatorImpl implements RendererCreator {
         if( configuration==null )
             createConfiguration();
 
-        Set<RenderContext> values;
+        Collection<RenderContext> uniqueValues =  new LinkedList<RenderContext>();
+        
         synchronized (configuration) {
-            values = new HashSet<RenderContext>(configuration.values());
-            
+            Collection<RenderContext> values = configuration.values();
+            for( RenderContext renderCtx : values ) {
+                boolean found = false;
+                for(RenderContext ctx : uniqueValues){
+                    if(renderCtx == ctx) { // reference check
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found)
+                    uniqueValues.add((RenderContext)renderCtx);
+            }
         }
         synchronized (contexts) {
             contexts.clear();
-            for( RenderContext context : values ) {
+            for( RenderContext context : uniqueValues ) {
                 contexts.add(context);
             }
         }

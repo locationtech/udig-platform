@@ -107,8 +107,8 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
                 return;
             }
             markName = mark.getWellKnownName().evaluate(null, String.class);
-            if (markName == null || markName.equals("")) {
-                markName = "circle";
+            if (markName == null || markName.equals("")) { //$NON-NLS-1$
+                markName = "circle"; //$NON-NLS-1$
                 mark.setWellKnownName(ff.literal(markName));
             }
 

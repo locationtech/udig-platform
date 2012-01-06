@@ -46,6 +46,7 @@ import eu.udig.style.advanced.common.IStyleChangesListener;
 import eu.udig.style.advanced.common.styleattributeclasses.PolygonSymbolizerWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.polygons.widgets.PolygonFillParametersComposite;
 import eu.udig.style.advanced.polygons.widgets.PolygonGeneralParametersComposite;
 import eu.udig.style.advanced.polygons.widgets.PolygonLabelsParametersComposite;
@@ -94,7 +95,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
     public void setRule( RuleWrapper ruleWrapper ) {
         this.ruleWrapper = ruleWrapper;
 
-        System.out.println("setting rule: " + ruleWrapper.getName());
+        System.out.println("setting rule: " + ruleWrapper.getName()); //$NON-NLS-1$
 
         if (mainComposite == null) {
             init();
@@ -161,7 +162,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         Group propertiesGroup = new Group(simplePolygonComposite, SWT.SHADOW_ETCHED_IN);
         propertiesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         propertiesGroup.setLayout(new GridLayout(1, false));
-        propertiesGroup.setText("Style Properties");
+        propertiesGroup.setText(Messages.PolygonPropertiesComposite_1);
 
         TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.BORDER);
         tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -172,7 +173,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         Composite generalParametersInternalComposite = generalParametersComposite.getComposite();
 
         TabItem tabItem1 = new TabItem(tabFolder, SWT.NULL);
-        tabItem1.setText("General");
+        tabItem1.setText(Messages.PolygonPropertiesComposite_2);
         tabItem1.setControl(generalParametersInternalComposite);
 
         // BORDER GROUP
@@ -182,7 +183,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         Composite borderParametersInternalComposite = borderParametersComposite.getComposite();
 
         TabItem tabItem2 = new TabItem(tabFolder, SWT.NULL);
-        tabItem2.setText("Border  ");
+        tabItem2.setText(Messages.PolygonPropertiesComposite_3);
         tabItem2.setControl(borderParametersInternalComposite);
 
         // Fill GROUP
@@ -192,7 +193,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         Composite fillParametersInternalComposite = fillParametersComposite.getComposite();
 
         TabItem tabItem3 = new TabItem(tabFolder, SWT.NULL);
-        tabItem3.setText("Fill   ");
+        tabItem3.setText(Messages.PolygonPropertiesComposite_4);
         tabItem3.setControl(fillParametersInternalComposite);
 
         // Label GROUP
@@ -202,7 +203,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         Composite labelParametersInternalComposite = labelsParametersComposite.getComposite();
 
         TabItem tabItem4 = new TabItem(tabFolder, SWT.NULL);
-        tabItem4.setText("Labels  ");
+        tabItem4.setText(Messages.PolygonPropertiesComposite_5);
         tabItem4.setControl(labelParametersInternalComposite);
 
         // Filter GROUP
@@ -212,7 +213,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         Composite filtersInternalComposite = filtersComposite.getComposite();
 
         TabItem tabItem5 = new TabItem(tabFolder, SWT.NULL);
-        tabItem5.setText("Filter  ");
+        tabItem5.setText(Messages.PolygonPropertiesComposite_6);
         tabItem5.setControl(filtersInternalComposite);
 
     }

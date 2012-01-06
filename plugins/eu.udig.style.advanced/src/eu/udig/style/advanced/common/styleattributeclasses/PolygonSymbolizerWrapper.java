@@ -111,7 +111,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
             if (dashArray != null) {
                 dash = Utilities.getDashString(dashArray);
             } else {
-                dash = "";
+                dash = ""; //$NON-NLS-1$
             }
             // dashoffset
             dashOffset = stroke.getDashOffset().evaluate(null, String.class);

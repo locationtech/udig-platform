@@ -57,6 +57,7 @@ import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.filter.expression.Expression;
 
 import eu.udig.style.advanced.StylePlugin;
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.raster.CoverageColorEditor;
 import eu.udig.style.advanced.raster.CoverageRule;
 
@@ -146,7 +147,7 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
             colorRulesEditor.setRulesList(listOfRules);
         } else {
             Label problemLabel = new Label(parent, SWT.NONE);
-            problemLabel.setText("No support for map styling of this type.");
+            problemLabel.setText(Messages.CoverageStyleEditorPage_0);
         }
 
     }
@@ -159,7 +160,7 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
     }
 
     public void gotFocus() {
-        System.out.println("colr got focus");
+        System.out.println("colr got focus"); //$NON-NLS-1$
 
     }
 
@@ -248,7 +249,7 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            String message = "A problem occurred while creating the coverage style.";
+            String message = Messages.CoverageStyleEditorPage_2;
             ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, StylePlugin.PLUGIN_ID, e);
             return false;
         }
@@ -290,7 +291,7 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
 
         fts.addRule(rule);
         style.addFeatureTypeStyle(fts);
-        style.setName("simpleStyle");
+        style.setName("simpleStyle"); //$NON-NLS-1$
 
         return style;
     }
@@ -321,7 +322,7 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
         else
             return 1.0;
         if ((opacityValue.doubleValue() - 1) > 0 || opacityValue.doubleValue() < 0) {
-            throw new IllegalArgumentException(Errors.format(ErrorKeys.ILLEGAL_ARGUMENT_$2, "Opacity", opacityValue));
+            throw new IllegalArgumentException(Errors.format(ErrorKeys.ILLEGAL_ARGUMENT_$2, Messages.CoverageStyleEditorPage_4, opacityValue));
         }
         return opacityValue.doubleValue();
     }

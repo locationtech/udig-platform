@@ -39,6 +39,8 @@ then
         # TODO: figure out how to make libs and libs source have the same qualifier
         mv ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_${TAG}.qualifier \
            ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_${QUALIFIER}
+        mv ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/eu.udig.libs.teradata_${TAG}.qualifier \
+           ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/eu.udig.libs.teradata_${QUALIFIER}
         
         cp ${BASE}/udig-1.3.x.html ${BUILD}/sdk/udig_sdk/udig-${VERSION}.html
         

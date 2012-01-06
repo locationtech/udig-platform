@@ -5,9 +5,6 @@ Bundle-SymbolicName: net.refractions.udig.catalog.tests.wms
 Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.junit,
- net.refractions.udig.libs,
- net.refractions.udig.catalog,
  net.refractions.udig.catalog.wms,
- net.refractions.udig.render.wms.basic;bundle-version="1.2.0"
-Bundle-Activator: net.refractions.udig.catalog.tests.wmsc.Activator
-Bundle-ActivationPolicy: lazy
+ net.refractions.udig.libs
+Export-Package: net.refractions.udig.catalog.wmsc.server

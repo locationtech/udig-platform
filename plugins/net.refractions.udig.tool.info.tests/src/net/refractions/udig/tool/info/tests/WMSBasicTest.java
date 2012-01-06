@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import junit.framework.TestCase;
+import net.refractions.udig.catalog.wmsc.server.MockHttpResponse;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.render.ViewportModel;
@@ -19,6 +20,7 @@ import net.refractions.udig.tool.info.InfoTool;
 import net.refractions.udig.tool.info.LayerPointInfo;
 import net.refractions.udig.tool.info.internal.WMSDescribeLayer;
 
+import org.geotools.data.ows.HTTPResponse;
 import org.geotools.data.ows.Layer;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.data.wms.request.GetFeatureInfoRequest;
@@ -145,14 +147,16 @@ public class WMSBasicTest extends TestCase {
 				
 				ByteArrayInputStream input = new ByteArrayInputStream(success.getBytes());
 				
-				return new GetFeatureInfoResponse("text/html", input);
+				HTTPResponse response = new MockHttpResponse( input, "text/html");
+				return new GetFeatureInfoResponse( response );
 			}
 			
 			String failure = "FAILURE";
 			
 			ByteArrayInputStream input = new ByteArrayInputStream(failure.getBytes());
+			HTTPResponse response = new MockHttpResponse( input, "text/html");
 			
-			return new GetFeatureInfoResponse("text/html", input);
+			return new GetFeatureInfoResponse( response );
 		}
 		
 		

@@ -357,7 +357,7 @@ public class FeaturePropertySource implements IPropertySource2 {
         return geom;
     }
     private Object getAttrProperty( AttributeDescriptor id, Object value ) {
-        Object attr = geomProperties.get(id);
+        Object attr = attrProperties.get(id);
         if (attr == null) {
             attr = new AttributePropertySource(id, value);
             attrProperties.put(id, attr);

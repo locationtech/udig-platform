@@ -42,6 +42,7 @@ import org.geotools.styling.Style;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 
+import eu.udig.style.advanced.internal.Messages;
 import eu.udig.style.advanced.lines.LinePropertiesEditor;
 import eu.udig.style.advanced.utils.Utilities;
 
@@ -76,7 +77,7 @@ public class SimpleLineEditorPage extends StyleEditorPage {
 
         noFeatureLabel = new Label(mainComposite, SWT.NONE);
         noFeatureLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        noFeatureLabel.setText("This editor works only for Line feature layers");
+        noFeatureLabel.setText(Messages.SimpleLineEditorPage_0);
 
         StyleLayer layer = getSelectedLayer();
         IGeoResource resource = layer.getGeoResource();
@@ -157,7 +158,7 @@ public class SimpleLineEditorPage extends StyleEditorPage {
         List<FeatureTypeStyle> featureTypeStyles = newStyle.featureTypeStyles();
         int ftsNum = featureTypeStyles.size();
         if (ftsNum < 1) {
-            MessageDialog.openWarning(getShell(), "Warning", "You can't apply an empty style! Resetting.");
+            MessageDialog.openWarning(getShell(), Messages.SimpleLineEditorPage_1, Messages.SimpleLineEditorPage_2);
             style = oldStyle;
             setStyle(oldStyle);
             layer.revertAll();
@@ -175,13 +176,13 @@ public class SimpleLineEditorPage extends StyleEditorPage {
         StyleBlackboard styleBlackboard = layer.getStyleBlackboard();
         styleBlackboard.put(SLDContent.ID, newStyle);
         try {
-            System.out.println("***********************");
-            System.out.println("***********************");
-            System.out.println("***********************");
+            System.out.println("***********************"); //$NON-NLS-1$
+            System.out.println("***********************"); //$NON-NLS-1$
+            System.out.println("***********************"); //$NON-NLS-1$
             System.out.println(Utilities.styleToString(style));
-            System.out.println("***********************");
-            System.out.println("***********************");
-            System.out.println("***********************");
+            System.out.println("***********************"); //$NON-NLS-1$
+            System.out.println("***********************"); //$NON-NLS-1$
+            System.out.println("***********************"); //$NON-NLS-1$
         } catch (Exception e) {
             e.printStackTrace();
         }
