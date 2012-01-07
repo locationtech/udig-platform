@@ -98,7 +98,7 @@ Includes the ossim feaure (this may be dead code)
                 <repository>
                     <id>indigo-babel-web</id>
                     <layout>p2</layout>
-                    <url>http://download.eclipse.org/technology/babel/update-site/R0.9.0/indigo/</url>
+                    <url>http://download.eclipse.org/technology/babel/update-site/R0.9.1/indigo</url>
                     <releases>
                         <enabled>true</enabled>
                         <updatePolicy>never</updatePolicy>
