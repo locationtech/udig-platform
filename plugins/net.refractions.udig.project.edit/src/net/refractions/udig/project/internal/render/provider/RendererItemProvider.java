@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -27,10 +28,9 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a
- * {@link net.refractions.udig.project.internal.render.Renderer} object. <!-- begin-user-doc -->
+ * This is the item provider adapter for a {@link net.refractions.udig.project.internal.render.Renderer} object.
+ * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
  * @generated
  */
 public class RendererItemProvider extends ItemProviderAdapter
@@ -41,16 +41,9 @@ public class RendererItemProvider extends ItemProviderAdapter
             IItemLabelProvider,
             IItemPropertySource {
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
-     * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!--
+     * This constructs an instance from a factory and a notifier.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     public RendererItemProvider( AdapterFactory adapterFactory ) {
@@ -58,12 +51,13 @@ public class RendererItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!--
+     * This returns the property descriptors for the adapted class.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
-    public List getPropertyDescriptors( Object object ) {
+    @Override
+    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -75,9 +69,9 @@ public class RendererItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * This adds a property descriptor for the Name feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Name feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addNamePropertyDescriptor( Object object ) {
@@ -88,14 +82,14 @@ public class RendererItemProvider extends ItemProviderAdapter
                         getString("_UI_Renderer_name_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Renderer_name_feature", "_UI_Renderer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        RenderPackage.eINSTANCE.getRenderer_Name(), true,
+                        RenderPackage.Literals.RENDERER__NAME, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
-     * This adds a property descriptor for the State feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the State feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addStatePropertyDescriptor( Object object ) {
@@ -106,14 +100,14 @@ public class RendererItemProvider extends ItemProviderAdapter
                         getString("_UI_Renderer_state_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Renderer_state_feature", "_UI_Renderer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        RenderPackage.eINSTANCE.getRenderer_State(), true,
+                        RenderPackage.Literals.RENDERER__STATE, true, false, false,
                         ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
     }
 
     /**
-     * This adds a property descriptor for the Context feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Context feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addContextPropertyDescriptor( Object object ) {
@@ -124,16 +118,28 @@ public class RendererItemProvider extends ItemProviderAdapter
                         getString("_UI_Renderer_context_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Renderer_context_feature", "_UI_Renderer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        RenderPackage.eINSTANCE.getRenderer_Context(), true, null, null, null));
+                        RenderPackage.Literals.RENDERER__CONTEXT, true, false, true, null, null,
+                        null));
     }
 
     /**
-     * This returns Renderer.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * This returns Renderer.gif.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Object getImage( Object object ) {
-        return getResourceLocator().getImage("full/obj16/Renderer"); //$NON-NLS-1$
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/Renderer")); //$NON-NLS-1$
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected boolean shouldComposeCreationImage() {
+        return true;
     }
 
     /**
@@ -144,17 +150,16 @@ public class RendererItemProvider extends ItemProviderAdapter
      */
     public String getText( Object object ) {
         String label = ((Renderer) object).getName();
-        return label == null || label.length() == 0 ? "Renderer" :
-                label; 
+        return label == null || label.length() == 0 ? "Renderer" : label;
     }
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
      * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
+    @Override
     public void notifyChanged( Notification notification ) {
         updateChildren(notification);
 
@@ -169,22 +174,12 @@ public class RendererItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
-     * describing all of the children that can be created under this object. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    protected void collectNewChildDescriptors( Collection newChildDescriptors, Object object ) {
-        super.collectNewChildDescriptors(newChildDescriptors, object);
-    }
-
-    /**
-     * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!--
+     * Return the resource locator for this item provider's resources.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
+    @Override
     public ResourceLocator getResourceLocator() {
         return ProjectEditPlugin.INSTANCE;
     }

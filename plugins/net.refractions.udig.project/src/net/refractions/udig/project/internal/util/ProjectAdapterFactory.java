@@ -9,6 +9,7 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.IProjectElement;
+import net.refractions.udig.project.IStyleBlackboard;
 import net.refractions.udig.project.internal.AbstractContext;
 import net.refractions.udig.project.internal.Blackboard;
 import net.refractions.udig.project.internal.BlackboardEntry;
@@ -43,16 +44,10 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class ProjectAdapterFactory extends AdapterFactoryImpl {
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
      * The cached model package.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
-     */ 
+     */
     static ProjectPackage modelPackage;
 
     /**
@@ -74,6 +69,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * @return whether this factory is applicable for the type of the object.
      * @generated
      */
+    @Override
     public boolean isFactoryForType( Object object ) {
         if (object == modelPackage) {
             return true;
@@ -85,94 +81,122 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * The switch the delegates to the <code>createXXX</code> methods.
+     * The switch that delegates to the <code>createXXX</code> methods.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected ProjectSwitch modelSwitch = new ProjectSwitch(){
-        public Object caseComparable( Comparable object ) {
+    protected ProjectSwitch<Adapter> modelSwitch = new ProjectSwitch<Adapter>(){
+        @Override
+        public Adapter caseComparable( Comparable object ) {
             return createComparableAdapter();
         }
-        public Object caseIMap( IMap object ) {
+        @Override
+        public Adapter caseIMap( IMap object ) {
             return createIMapAdapter();
         }
-        public Object caseILayer( ILayer object ) {
+        @Override
+        public Adapter caseILayer( ILayer object ) {
             return createILayerAdapter();
         }
-        public Object caseIEditManager( IEditManager object ) {
+        @Override
+        public Adapter caseIEditManager( IEditManager object ) {
             return createIEditManagerAdapter();
         }
-        public Object caseIProject( IProject object ) {
+        @Override
+        public Adapter caseIProject( IProject object ) {
             return createIProjectAdapter();
         }
-        public Object caseIAbstractContext( IAbstractContext object ) {
+        @Override
+        public Adapter caseIAbstractContext( IAbstractContext object ) {
             return createIAbstractContextAdapter();
         }
-        public Object caseIBlackboard( IBlackboard object ) {
+        @Override
+        public Adapter caseIBlackboard( IBlackboard object ) {
             return createIBlackboardAdapter();
         }
-        public Object caseIProjectElement( IProjectElement object ) {
+        @Override
+        public Adapter caseIProjectElement( IProjectElement object ) {
             return createIProjectElementAdapter();
         }
-        public Object caseIRenderManager( IRenderManager object ) {
+        @Override
+        public Adapter caseIRenderManager( IRenderManager object ) {
             return createIRenderManagerAdapter();
         }
-        public Object caseIViewportModel( IViewportModel object ) {
+        @Override
+        public Adapter caseIViewportModel( IViewportModel object ) {
             return createIViewportModelAdapter();
         }
-        public Object caseAbstractContext( AbstractContext object ) {
-            return createAbstractContextAdapter();
-        }
-        public Object caseContextModel( ContextModel object ) {
+        @Override
+        public Adapter caseContextModel( ContextModel object ) {
             return createContextModelAdapter();
         }
-        public Object caseEditManager( EditManager object ) {
+        @Override
+        public Adapter caseEditManager( EditManager object ) {
             return createEditManagerAdapter();
         }
-        public Object caseLayer( Layer object ) {
+        @Override
+        public Adapter caseLayer( Layer object ) {
             return createLayerAdapter();
         }
-        public Object caseMap( Map object ) {
+        @Override
+        public Adapter caseMap( Map object ) {
             return createMapAdapter();
         }
-        public Object caseProject( Project object ) {
+        @Override
+        public Adapter caseProject( Project object ) {
             return createProjectAdapter();
         }
-        public Object caseProjectElement( ProjectElement object ) {
+        @Override
+        public Adapter caseProjectElement( ProjectElement object ) {
             return createProjectElementAdapter();
         }
-        public Object caseProjectRegistry( ProjectRegistry object ) {
+        @Override
+        public Adapter caseProjectRegistry( ProjectRegistry object ) {
             return createProjectRegistryAdapter();
         }
-        public Object caseStyleBlackboard( StyleBlackboard object ) {
+        @Override
+        public Adapter caseStyleBlackboard( StyleBlackboard object ) {
             return createStyleBlackboardAdapter();
         }
-        public Object caseStyleEntry( StyleEntry object ) {
+        @Override
+        public Adapter caseStyleEntry( StyleEntry object ) {
             return createStyleEntryAdapter();
         }
-        public Object caseCloneable( Cloneable object ) {
+        @Override
+        public Adapter caseCloneable( Cloneable object ) {
             return createCloneableAdapter();
         }
-        public Object caseLayerFactory( LayerFactory object ) {
+        @Override
+        public Adapter caseLayerFactory( LayerFactory object ) {
             return createLayerFactoryAdapter();
         }
-        public Object caseIAdaptable( IAdaptable object ) {
+        @Override
+        public Adapter caseIAdaptable( IAdaptable object ) {
             return createIAdaptableAdapter();
         }
-        public Object caseIBlockingAdaptable( IBlockingAdaptable object ) {
+        @Override
+        public Adapter caseIBlockingAdaptable( IBlockingAdaptable object ) {
             return createIBlockingAdaptableAdapter();
         }
-        public Object caseBlackboard( Blackboard object ) {
+        @Override
+        public Adapter caseBlackboard( Blackboard object ) {
             return createBlackboardAdapter();
         }
-        public Object caseBlackboardEntry( BlackboardEntry object ) {
+        @Override
+        public Adapter caseBlackboardEntry( BlackboardEntry object ) {
             return createBlackboardEntryAdapter();
         }
-        public Object caseIResolveChangeListener( IResolveChangeListener object ) {
+        @Override
+        public Adapter caseIResolveChangeListener( IResolveChangeListener object ) {
             return createIResolveChangeListenerAdapter();
         }
-        public Object defaultCase( EObject object ) {
+        @Override
+        public Adapter caseIStyleBlackboard( IStyleBlackboard object ) {
+            return createIStyleBlackboardAdapter();
+        }
+        @Override
+        public Adapter defaultCase( EObject object ) {
             return createEObjectAdapter();
         }
     };
@@ -185,8 +209,9 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * @return the adapter for the <code>target</code>.
      * @generated
      */
+    @Override
     public Adapter createAdapter( Notifier target ) {
-        return (Adapter) modelSwitch.doSwitch((EObject) target);
+        return modelSwitch.doSwitch((EObject) target);
     }
 
     /**
@@ -323,19 +348,6 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.PicoBlackboard <em>Pico Blackboard</em>}'.
-     * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
-     * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-     * end-user-doc -->
-     * @return the new adapter.
-     * @see net.refractions.udig.project.internal.PicoBlackboard
-     * @generated
-     */
-    public Adapter createPicoBlackboardAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.Blackboard <em>Blackboard</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
@@ -375,17 +387,16 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '
-     * {@link net.refractions.udig.project.AbstractContext <em>Abstract Context</em>}'. <!--
-     * begin-user-doc --> This default implementation returns null so that we can easily ignore
-     * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-     * end-user-doc -->
-     * 
+     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.AbstractContext
+     * @see net.refractions.udig.project.IStyleBlackboard
      * @generated
      */
-    public Adapter createAbstractContextAdapter() {
+    public Adapter createIStyleBlackboardAdapter() {
         return null;
     }
 

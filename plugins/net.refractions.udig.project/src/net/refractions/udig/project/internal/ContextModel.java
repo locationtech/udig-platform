@@ -30,12 +30,6 @@ import com.vividsolutions.jts.geom.Envelope;
  */
 public interface ContextModel extends EObject {
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
      * Select all selectable layers, with a BoundingBox Geometry filter. Boundingbox must be in the
      * same CRS as the ViewportModel
      * <p>
@@ -129,7 +123,7 @@ public interface ContextModel extends EObject {
      * @param adapter adapter to add as a deep adapter
      * @deprecated use {@link Map#addDeepAdapter(Adapter)}
      */
-    public void addDeepAdapter(Adapter adapter);
+    public void addDeepAdapter( Adapter adapter );
     /**
      * Removes the adapter from all layers and context model.
      *
@@ -137,8 +131,8 @@ public interface ContextModel extends EObject {
      * @param adapter adapter to remove.
      * @deprecated use {@link Map#removeDeepAdapter(Adapter)}
      */
-    public void removeDeepAdapter(Adapter adapter);
-    
+    public void removeDeepAdapter( Adapter adapter );
+
     /**
      * Increases the ZOrder of the layer so it is rendered earlier with incomparison to the other
      * layers. If the Layer is at the bottom of the render list(first to be drawn) it is not

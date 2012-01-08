@@ -46,12 +46,6 @@ public interface Layer
             IResolveChangeListener {
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
      * Returns the owning ContextModel object
      * 
      * @return the owning ContextModel object
@@ -97,7 +91,7 @@ public interface Layer
      * @generated
      */
     void setFilter( Filter value );
-        
+
     /**
      * Sets the spatial bounds of this layer. This property is normally
      * derived from the IGeoResourceInfos, but this provides an override. This
@@ -105,7 +99,7 @@ public interface Layer
      *
      * @param bounds a ReferencedEnvelope indicating the new bounds for the layer
      */
-    public void setBounds(ReferencedEnvelope bounds);
+    public void setBounds( ReferencedEnvelope bounds );
 
     /**
      * StyleBlackboard used to persist user supplied appearance settings.
@@ -429,7 +423,7 @@ public interface Layer
      * @generated
      */
     void setColourScheme( ColourScheme value );
-    
+
     /**
      * @return
      * @uml.property name="defaultColor"
@@ -453,7 +447,6 @@ public interface Layer
      * @model transient='true' type='org.geotools.data.FeatureEvent'
      */
     List<FeatureEvent> getFeatureChanges();
-    
 
     /**
      * Returns the ranges at which the layer is visible

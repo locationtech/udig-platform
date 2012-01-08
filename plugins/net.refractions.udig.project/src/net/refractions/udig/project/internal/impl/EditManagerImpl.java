@@ -69,16 +69,8 @@ import com.vividsolutions.jts.geom.Envelope;
 public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
+     * The default value of the '{@link #getEditFeature() <em>Edit Feature</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
-     * The default value of the '{@link #getEditFeature() <em>Edit SimpleFeature</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see #getEditFeature()
      * @generated
      * @ordered
@@ -86,9 +78,8 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     protected static final SimpleFeature EDIT_FEATURE_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getEditFeature() <em>Edit SimpleFeature</em>}' attribute.
+     * The cached value of the '{@link #getEditFeature() <em>Edit Feature</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see #getEditFeature()
      * @generated
      * @ordered
@@ -96,29 +87,17 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     protected SimpleFeature editFeature = EDIT_FEATURE_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getEditLayerInternal() <em>Edit Layer Internal</em>}'
-     * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The cached value of the '{@link #getEditLayerInternal() <em>Edit Layer Internal</em>}' reference.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getEditLayerInternal()
      * @generated
      * @ordered
      */
-    protected Layer editLayerInternal = null;
-
-    /**
-     * The default value of the '{@link #getTransactionType() <em>Transaction Type</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #getTransactionType()
-     * @generated
-     * @ordered
-     */
-    protected static final Class TRANSACTION_TYPE_EDEFAULT = null;
+    protected Layer editLayerInternal;
 
     /**
      * The default value of the '{@link #isEditLayerLocked() <em>Edit Layer Locked</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see #isEditLayerLocked()
      * @generated
      * @ordered
@@ -143,45 +122,50 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
+    @Override
     protected EClass eStaticClass() {
-        return ProjectPackage.eINSTANCE.getEditManager();
+        return ProjectPackage.Literals.EDIT_MANAGER;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Map getMapInternal() {
-        if (eContainerFeatureID != ProjectPackage.EDIT_MANAGER__MAP_INTERNAL)
-            return null;
-        return (Map) eContainer;
+        if (eContainerFeatureID() != ProjectPackage.EDIT_MANAGER__MAP_INTERNAL) return null;
+        return (Map) eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetMapInternal( Map newMapInternal, NotificationChain msgs ) {
+        msgs = eBasicSetContainer((InternalEObject) newMapInternal,
+                ProjectPackage.EDIT_MANAGER__MAP_INTERNAL, msgs);
+        return msgs;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setMapInternal( Map newMapInternal ) {
-        if (newMapInternal != eContainer
-                || (eContainerFeatureID != ProjectPackage.EDIT_MANAGER__MAP_INTERNAL && newMapInternal != null)) {
-            if (EcoreUtil.isAncestor(this, (EObject) newMapInternal))
+        if (newMapInternal != eInternalContainer()
+                || (eContainerFeatureID() != ProjectPackage.EDIT_MANAGER__MAP_INTERNAL && newMapInternal != null)) {
+            if (EcoreUtil.isAncestor(this, newMapInternal))
                 throw new IllegalArgumentException(
                         "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
             NotificationChain msgs = null;
-            if (eContainer != null)
-                msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
             if (newMapInternal != null)
                 msgs = ((InternalEObject) newMapInternal).eInverseAdd(this,
                         ProjectPackage.MAP__EDIT_MANAGER_INTERNAL, Map.class, msgs);
-            msgs = eBasicSetContainer((InternalEObject) newMapInternal,
-                    ProjectPackage.EDIT_MANAGER__MAP_INTERNAL, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            msgs = basicSetMapInternal(newMapInternal, msgs);
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.EDIT_MANAGER__MAP_INTERNAL, newMapInternal, newMapInternal));
@@ -189,7 +173,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public SimpleFeature getEditFeature() {
@@ -198,7 +181,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Layer getEditLayerInternal() {
@@ -207,7 +189,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Class getTransactionType() {
@@ -261,7 +242,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void startTransaction() {
@@ -271,8 +251,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     }
 
     private SimpleFeature getAdaptableFeature( SimpleFeature feature, Layer layer ) {
-        if (feature == null || feature instanceof IAdaptable)
-            return feature;
+        if (feature == null || feature instanceof IAdaptable) return feature;
 
         return (SimpleFeature) new AdaptableFeature(feature, layer);
     }
@@ -366,11 +345,12 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
         }
 
         for( Layer layer : getMapInternal().getLayersInternal() ) {
-            FeatureStore<?,?> resource = layer.getResource(FeatureStore.class, ProgressManager.instance().get());
-            if( resource == null ) {
+            FeatureStore< ? , ? > resource = layer.getResource(FeatureStore.class, ProgressManager
+                    .instance().get());
+            if (resource == null) {
                 continue;
             }
-            if( resource instanceof UDIGStore) {
+            if (resource instanceof UDIGStore) {
                 UDIGStore store = (UDIGStore) resource;
                 store.editComplete();
             }
@@ -394,8 +374,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
         try {
             transaction.commitInternal();
             for( Layer layer : getMapInternal().getLayersInternal() ) {
-                if (layer.getFeatureChanges().size() != 0)
-                    layer.getFeatureChanges().clear();
+                if (layer.getFeatureChanges().size() != 0) layer.getFeatureChanges().clear();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -461,8 +440,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
                     }
                 }
             }
-            if (selectedLayer != null)
-                selectedLayer.setFilter(Filter.EXCLUDE);
+            if (selectedLayer != null) selectedLayer.setFilter(Filter.EXCLUDE);
             transaction.rollbackInternal();
 
         } catch (IOException e) {
@@ -478,6 +456,144 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
         }
     }
 
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
+            NotificationChain msgs ) {
+        switch( featureID ) {
+        case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
+            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            return basicSetMapInternal((Map) otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
+            NotificationChain msgs ) {
+        switch( featureID ) {
+        case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
+            return basicSetMapInternal(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eBasicRemoveFromContainerFeature( NotificationChain msgs ) {
+        switch( eContainerFeatureID() ) {
+        case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
+            return eInternalContainer().eInverseRemove(this,
+                    ProjectPackage.MAP__EDIT_MANAGER_INTERNAL, Map.class, msgs);
+        }
+        return super.eBasicRemoveFromContainerFeature(msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
+        switch( featureID ) {
+        case ProjectPackage.EDIT_MANAGER__EDIT_FEATURE:
+            return getEditFeature();
+        case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
+            return getMapInternal();
+        case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_INTERNAL:
+            return getEditLayerInternal();
+        case ProjectPackage.EDIT_MANAGER__TRANSACTION_TYPE:
+            return getTransactionType();
+        case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_LOCKED:
+            return isEditLayerLocked();
+        case ProjectPackage.EDIT_MANAGER__SELECTED_LAYER:
+            if (resolve) return getSelectedLayer();
+            return basicGetSelectedLayer();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eSet( int featureID, Object newValue ) {
+        switch( featureID ) {
+        case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
+            setMapInternal((Map) newValue);
+            return;
+        case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_LOCKED:
+            setEditLayerLocked((Boolean) newValue);
+            return;
+        case ProjectPackage.EDIT_MANAGER__SELECTED_LAYER:
+            setSelectedLayer((Layer) newValue);
+            return;
+        }
+        super.eSet(featureID, newValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset( int featureID ) {
+        switch( featureID ) {
+        case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
+            setMapInternal((Map) null);
+            return;
+        case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_LOCKED:
+            setEditLayerLocked(EDIT_LAYER_LOCKED_EDEFAULT);
+            return;
+        case ProjectPackage.EDIT_MANAGER__SELECTED_LAYER:
+            setSelectedLayer((Layer) null);
+            return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet( int featureID ) {
+        switch( featureID ) {
+        case ProjectPackage.EDIT_MANAGER__EDIT_FEATURE:
+            return EDIT_FEATURE_EDEFAULT == null ? editFeature != null : !EDIT_FEATURE_EDEFAULT
+                    .equals(editFeature);
+        case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
+            return getMapInternal() != null;
+        case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_INTERNAL:
+            return editLayerInternal != null;
+        case ProjectPackage.EDIT_MANAGER__TRANSACTION_TYPE:
+            return getTransactionType() != null;
+        case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_LOCKED:
+            return editLayerLocked != EDIT_LAYER_LOCKED_EDEFAULT;
+        case ProjectPackage.EDIT_MANAGER__SELECTED_LAYER:
+            return selectedLayer != null;
+        }
+        return super.eIsSet(featureID);
+    }
+
     private void triggerLayerEvents( HashMap<List<FeatureEvent>, FeatureEvent> modified ) {
         for( java.util.Map.Entry<List<FeatureEvent>, FeatureEvent> entry : modified.entrySet() ) {
             entry.getKey().add(entry.getValue());
@@ -490,162 +606,11 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID, Class baseClass,
-            NotificationChain msgs ) {
-        if (featureID >= 0) {
-            switch( eDerivedStructuralFeatureID(featureID, baseClass) ) {
-            case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
-                if (eContainer != null)
-                    msgs = eBasicRemoveFromContainer(msgs);
-                return eBasicSetContainer(otherEnd, ProjectPackage.EDIT_MANAGER__MAP_INTERNAL, msgs);
-            default:
-                return eDynamicInverseAdd(otherEnd, featureID, baseClass, msgs);
-            }
-        }
-        if (eContainer != null)
-            msgs = eBasicRemoveFromContainer(msgs);
-        return eBasicSetContainer(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            Class baseClass, NotificationChain msgs ) {
-        if (featureID >= 0) {
-            switch( eDerivedStructuralFeatureID(featureID, baseClass) ) {
-            case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
-                return eBasicSetContainer(null, ProjectPackage.EDIT_MANAGER__MAP_INTERNAL, msgs);
-            default:
-                return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-            }
-        }
-        return eBasicSetContainer(null, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public NotificationChain eBasicRemoveFromContainer( NotificationChain msgs ) {
-        if (eContainerFeatureID >= 0) {
-            switch( eContainerFeatureID ) {
-            case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
-                return eContainer.eInverseRemove(this, ProjectPackage.MAP__EDIT_MANAGER_INTERNAL,
-                        Map.class, msgs);
-            default:
-                return eDynamicBasicRemoveFromContainer(msgs);
-            }
-        }
-        return eContainer.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - eContainerFeatureID, null,
-                msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
-        case ProjectPackage.EDIT_MANAGER__EDIT_FEATURE:
-            return getEditFeature();
-        case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
-            return getMapInternal();
-        case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_INTERNAL:
-            return getEditLayerInternal();
-        case ProjectPackage.EDIT_MANAGER__TRANSACTION_TYPE:
-            return getTransactionType();
-        case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_LOCKED:
-            return isEditLayerLocked() ? Boolean.TRUE : Boolean.FALSE;
-        case ProjectPackage.EDIT_MANAGER__SELECTED_LAYER:
-            if (resolve)
-                return getSelectedLayer();
-            return basicGetSelectedLayer();
-        }
-        return eDynamicGet(eFeature, resolve);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public void eSet( EStructuralFeature eFeature, Object newValue ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
-        case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
-            setMapInternal((Map) newValue);
-            return;
-        case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_LOCKED:
-            setEditLayerLocked(((Boolean) newValue).booleanValue());
-            return;
-        case ProjectPackage.EDIT_MANAGER__SELECTED_LAYER:
-            setSelectedLayer((Layer) newValue);
-            return;
-        }
-        eDynamicSet(eFeature, newValue);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public void eUnset( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
-        case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
-            setMapInternal((Map) null);
-            return;
-        case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_LOCKED:
-            setEditLayerLocked(EDIT_LAYER_LOCKED_EDEFAULT);
-            return;
-        case ProjectPackage.EDIT_MANAGER__SELECTED_LAYER:
-            setSelectedLayer((Layer) null);
-            return;
-        }
-        eDynamicUnset(eFeature);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public boolean eIsSet( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
-        case ProjectPackage.EDIT_MANAGER__EDIT_FEATURE:
-            return EDIT_FEATURE_EDEFAULT == null ? editFeature != null : !EDIT_FEATURE_EDEFAULT
-                    .equals(editFeature);
-        case ProjectPackage.EDIT_MANAGER__MAP_INTERNAL:
-            return getMapInternal() != null;
-        case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_INTERNAL:
-            return editLayerInternal != null;
-        case ProjectPackage.EDIT_MANAGER__TRANSACTION_TYPE:
-            return TRANSACTION_TYPE_EDEFAULT == null
-                    ? getTransactionType() != null
-                    : !TRANSACTION_TYPE_EDEFAULT.equals(getTransactionType());
-        case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_LOCKED:
-            return editLayerLocked != EDIT_LAYER_LOCKED_EDEFAULT;
-        case ProjectPackage.EDIT_MANAGER__SELECTED_LAYER:
-            return selectedLayer != null;
-        }
-        return eDynamicIsSet(eFeature);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
+    @Override
     public String toString() {
-        if (eIsProxy())
-            return super.toString();
+        if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (editFeature: "); //$NON-NLS-1$
@@ -667,7 +632,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
             adaptableFeature = new AdaptableFeature(feature, layer);
         }
         // TODO FeatureInterceptor
-        
+
         final SimpleFeature finalFeature = adaptableFeature;
         // setEditFeature(feature, layer);
 
@@ -699,7 +664,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
             protected void closeIterator( Iterator close ) {
             }
         };
-        
+
         store.addFeatures(c);
     }
 
@@ -740,8 +705,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
         }
         if (selectedLayer == null) {
             List<Layer> layers = getMapInternal().getLayersInternal();
-            if (layers.size() != 0)
-                setSelectedLayer(layers.get(layers.size() - 1));
+            if (layers.size() != 0) setSelectedLayer(layers.get(layers.size() - 1));
         }
 
         return selectedLayer;
@@ -749,7 +713,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Layer basicGetSelectedLayer() {
@@ -763,8 +726,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
      */
     public void setSelectedLayer( Layer selectedLayer ) {
         if (!getMapInternal().getLayersInternal().contains(selectedLayer)
-                || selectedLayer == this.selectedLayer)
-            return;
+                || selectedLayer == this.selectedLayer) return;
         setSelectedLayerGen(selectedLayer);
     }
 
@@ -845,8 +807,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
         listeners.remove(null);
         for( IEditManagerListener object : listeners ) {
             try {
-                if (object != null)
-                    object.changed(event);
+                if (object != null) object.changed(event);
             } catch (Throwable e) {
                 ProjectPlugin.log("Error while notifying listener of event: " + event.getType(), e); //$NON-NLS-1$
             }
@@ -863,7 +824,6 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setEditLayerLocked( boolean newEditLayerLocked ) {

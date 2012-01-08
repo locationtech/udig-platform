@@ -205,7 +205,6 @@
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="com.vividsolutions.jts.geom.Coordinate"/>
   <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="net.refractions.udig.project.render.displayAdapter.IMapDisplay"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="FeatureResults" instanceClassName="org.geotools.data.FeatureResults"/>
   <eClassifiers xsi:type="ecore:EDataType" name="List" instanceClassName="java.util.List"/>
   <eClassifiers xsi:type="ecore:EDataType" name="AffineTransform" instanceClassName="java.awt.geom.AffineTransform"/>
   <eClassifiers xsi:type="ecore:EDataType" name="NavCommandStack" instanceClassName="net.refractions.udig.project.command.NavCommandStack"/>
@@ -213,7 +212,6 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Filter" instanceClassName="org.opengis.filter.Filter"/>
   <eClassifiers xsi:type="ecore:EDataType" name="CoordinateReferenceSystem" instanceClassName="org.opengis.referencing.crs.CoordinateReferenceSystem"/>
   <eClassifiers xsi:type="ecore:EDataType" name="CommandStack" instanceClassName="net.refractions.udig.project.command.CommandStack"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Feature" instanceClassName="org.geotools.feature.SimpleFeature"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="java.awt.Point"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Adapter" instanceClassName="org.eclipse.emf.common.notify.Adapter"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IProgressMonitor" instanceClassName="org.eclipse.core.runtime.IProgressMonitor"/>

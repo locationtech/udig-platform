@@ -23,9 +23,11 @@ import net.refractions.udig.project.preferences.PreferenceConstants;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -43,15 +45,14 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.geotools.util.Range;
 
 /**
- * This is the item provider adapter for a {@link net.refractions.udig.project.internal.Layer}
- * object. <!-- begin-user-doc --> The handling of this class is very important:
+ * This is the item provider adapter for a {@link net.refractions.udig.project.internal.Layer} object.
+ * <!-- begin-user-doc --> The handling of this class is very important:
  * <ul>
  * <li>No method can block
  * <li>if you have to catch an IOException you are doing it wrong
  * <li>Responsible for providing an ImageDescriptor (not an Image)
  * </ul>
  * <!-- end-user-doc -->
- * 
  * @generated
  */
 public class LayerItemProvider extends ItemProviderAdapter
@@ -60,7 +61,6 @@ public class LayerItemProvider extends ItemProviderAdapter
             IStructuredItemContentProvider,
             ITreeItemContentProvider,
             IItemLabelProvider,
-            IColorProvider,
             IItemPropertySource {
 
     /** Properties Key used to cache generated name in layer.getProperties() */
@@ -70,16 +70,9 @@ public class LayerItemProvider extends ItemProviderAdapter
     public static final String GENERATED_ICON = "generated icon"; //$NON-NLS-1$
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
-     * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!--
+     * This constructs an instance from a factory and a notifier.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     public LayerItemProvider( AdapterFactory adapterFactory ) {
@@ -129,9 +122,9 @@ public class LayerItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * This adds a property descriptor for the Name feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Name feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addNamePropertyDescriptor( Object object ) {
@@ -142,7 +135,7 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_name_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_name_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_Name(), true,
+                        ProjectPackage.Literals.LAYER__NAME, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
@@ -160,14 +153,14 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_iD_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_iD_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_ID(), true,
+                        ProjectPackage.Literals.LAYER__ID, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
-     * This adds a property descriptor for the Visible feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Visible feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addVisiblePropertyDescriptor( Object object ) {
@@ -178,14 +171,14 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_visible_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_visible_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_Visible(), true,
+                        ProjectPackage.Literals.LAYER__VISIBLE, true, false, false,
                         ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
     }
 
     /**
-     * This adds a property descriptor for the Geo Resource feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Geo Resource feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addGeoResourcePropertyDescriptor( Object object ) {
@@ -196,14 +189,14 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_geoResource_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_geoResource_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_GeoResource(), true,
+                        ProjectPackage.Literals.LAYER__GEO_RESOURCE, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
-     * This adds a property descriptor for the Glyph feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Glyph feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addGlyphPropertyDescriptor( Object object ) {
@@ -214,7 +207,7 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_glyph_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_glyph_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_Glyph(), true,
+                        ProjectPackage.Literals.LAYER__GLYPH, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
@@ -237,9 +230,9 @@ public class LayerItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * This adds a property descriptor for the Geo Resources feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Geo Resources feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addGeoResourcesPropertyDescriptor( Object object ) {
@@ -250,14 +243,14 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_geoResources_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_geoResources_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_GeoResources(), false,
+                        ProjectPackage.Literals.LAYER__GEO_RESOURCES, false, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
-     * This adds a property descriptor for the Catalog Ref feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Catalog Ref feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addCatalogRefPropertyDescriptor( Object object ) {
@@ -268,14 +261,14 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_catalogRef_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_catalogRef_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_CatalogRef(), true,
+                        ProjectPackage.Literals.LAYER__CATALOG_REF, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
-     * This adds a property descriptor for the Filter feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Filter feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addFilterPropertyDescriptor( Object object ) {
@@ -286,14 +279,14 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_filter_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_filter_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_Filter(), false,
+                        ProjectPackage.Literals.LAYER__FILTER, false, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
-     * This adds a property descriptor for the Status feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Status feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addStatusPropertyDescriptor( Object object ) {
@@ -304,14 +297,14 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_status_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_status_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_Status(), true,
+                        ProjectPackage.Literals.LAYER__STATUS, true, false, false,
                         ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
     }
 
     /**
-     * This adds a property descriptor for the CRS feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the CRS feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addCRSPropertyDescriptor( Object object ) {
@@ -322,14 +315,14 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_cRS_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_cRS_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_CRS(), true,
+                        ProjectPackage.Literals.LAYER__CRS, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
-     * This adds a property descriptor for the Properties feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Properties feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addPropertiesPropertyDescriptor( Object object ) {
@@ -340,13 +333,14 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_properties_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_properties_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_Properties(), false, null, null, null));
+                        ProjectPackage.Literals.LAYER__PROPERTIES, false, false, false, null, null,
+                        null));
     }
 
     /**
-     * This adds a property descriptor for the Colour Scheme feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Colour Scheme feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addColourSchemePropertyDescriptor( Object object ) {
@@ -357,14 +351,14 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_colourScheme_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_colourScheme_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_ColourScheme(), true,
+                        ProjectPackage.Literals.LAYER__COLOUR_SCHEME, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
-     * This adds a property descriptor for the Default Color feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Default Color feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addDefaultColorPropertyDescriptor( Object object ) {
@@ -375,14 +369,14 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_defaultColor_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_defaultColor_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_DefaultColor(), true,
+                        ProjectPackage.Literals.LAYER__DEFAULT_COLOR, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
-     * This adds a property descriptor for the SimpleFeature Changes feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Feature Changes feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addFeatureChangesPropertyDescriptor( Object object ) {
@@ -393,8 +387,44 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_featureChanges_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_featureChanges_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_FeatureChanges(), true,
+                        ProjectPackage.Literals.LAYER__FEATURE_CHANGES, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    }
+
+    /**
+     * This adds a property descriptor for the Min Scale Denominator feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addMinScaleDenominatorPropertyDescriptor( Object object ) {
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(
+                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                        getResourceLocator(),
+                        getString("_UI_Layer_minScaleDenominator_feature"), //$NON-NLS-1$
+                        getString(
+                                "_UI_PropertyDescriptor_description", "_UI_Layer_minScaleDenominator_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        ProjectPackage.Literals.LAYER__MIN_SCALE_DENOMINATOR, true, false, false,
+                        ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
+    }
+
+    /**
+     * This adds a property descriptor for the Max Scale Denominator feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addMaxScaleDenominatorPropertyDescriptor( Object object ) {
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(
+                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                        getResourceLocator(),
+                        getString("_UI_Layer_maxScaleDenominator_feature"), //$NON-NLS-1$
+                        getString(
+                                "_UI_PropertyDescriptor_description", "_UI_Layer_maxScaleDenominator_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        ProjectPackage.Literals.LAYER__MAX_SCALE_DENOMINATOR, true, false, false,
+                        ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -413,14 +443,27 @@ public class LayerItemProvider extends ItemProviderAdapter
         return childrenFeatures;
     }
 
-    private Map<Layer, Data> cache=new HashMap<Layer, Data>();
-    private static class Data{
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EStructuralFeature getChildFeature( Object object, Object child ) {
+        // Check the type of the specified child object and return the proper feature to use for
+        // adding (see {@link AddCommand}) it as a child.
+
+        return super.getChildFeature(object, child);
+    }
+
+    private Map<Layer, Data> cache = new HashMap<Layer, Data>();
+    private static class Data {
         ImageDescriptor desc;
         Image image;
         public Data( ImageDescriptor desc, Image image2 ) {
             super();
             this.desc = desc;
-            image=image2;
+            image = image2;
         }
         @Override
         public int hashCode() {
@@ -431,21 +474,16 @@ public class LayerItemProvider extends ItemProviderAdapter
         }
         @Override
         public boolean equals( Object obj ) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
+            if (this == obj) return true;
+            if (obj == null) return false;
+            if (getClass() != obj.getClass()) return false;
             final Data other = (Data) obj;
             if (desc == null) {
-                if (other.desc != null)
-                    return false;
-            } else if (!desc.equals(other.desc))
-                return false;
+                if (other.desc != null) return false;
+            } else if (!desc.equals(other.desc)) return false;
             return true;
         }
-        
+
     }
     /**
      * This returns Layer.gif. <!-- begin-user-doc --> Returns layers glyph property, requesting WMS
@@ -463,16 +501,16 @@ public class LayerItemProvider extends ItemProviderAdapter
         // (We don't want the ImageDescriptor to block on an external WMS)
         //
         ImageDescriptor image = layer.getGlyph();
-        
-        if( image==null ){
-            image=(ImageDescriptor) layer.getProperties().get(GENERATED_ICON);
+
+        if (image == null) {
+            image = (ImageDescriptor) layer.getProperties().get(GENERATED_ICON);
         }
 
         int outOfScaleModifier = SWT.IMAGE_DISABLE;
-        
-        if (image == null ){
+
+        if (image == null) {
             Object object2 = ProjectEditPlugin.INSTANCE.getImage("full/obj16/Layer");
-            if( object2 instanceof ImageDescriptor ){
+            if (object2 instanceof ImageDescriptor) {
                 image = (ImageDescriptor) object2;
             } else {
                 if (object2 instanceof Image) {
@@ -482,27 +520,36 @@ public class LayerItemProvider extends ItemProviderAdapter
                 }
             }
         }
-        
-        if( outOfScale(layer)){
+
+        if (outOfScale(layer)) {
             image = ImageDescriptor.createWithFlags(image, outOfScaleModifier);
         }
-        
+
         return image; //$NON-NLS-1$
     }
-    
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected boolean shouldComposeCreationImage() {
+        return true;
+    }
+
     @Override
     public void dispose() {
         Collection<Data> values = cache.values();
         for( Data data : values ) {
-            try{
-            if( data.image!=null && !data.image.isDisposed() )
-                data.image.dispose();
-            }catch (Throwable e) {
+            try {
+                if (data.image != null && !data.image.isDisposed()) data.image.dispose();
+            } catch (Throwable e) {
                 ProjectEditPlugin.log("Error disposing LayerItemProvider", e); //$NON-NLS-1$
             }
         }
         cache.clear();
-        
+
         super.dispose();
     }
 
@@ -517,17 +564,15 @@ public class LayerItemProvider extends ItemProviderAdapter
         Layer layer = (Layer) object;
         String label = layer.getName();
 
-        if (label != null && label.length() != 0)
-            return label;
+        if (label != null && label.length() != 0) return label;
 
         String title = (String) layer.getProperties().get("generated title"); //$NON-NLS-1$
-        if (title != null)
-            return title;
+        if (title != null) return title;
 
         // Okay have a default
         //
         // return "Untitled";
-        return "Layer"; 
+        return "Layer";
     }
 
     /**
@@ -551,8 +596,8 @@ public class LayerItemProvider extends ItemProviderAdapter
                     false, true));
             return;
         case ProjectPackage.LAYER__ZORDER:
-            fireNotifyChanged(new ViewerNotification(notification, ((ILayer) notification.getNotifier()).getMap(),
-                    true, false));
+            fireNotifyChanged(new ViewerNotification(notification,
+                    ((ILayer) notification.getNotifier()).getMap(), true, false));
             return;
         case ProjectPackage.LAYER__STYLE_BLACKBOARD:
             fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
@@ -563,19 +608,20 @@ public class LayerItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!--
+     * Return the resource locator for this item provider's resources.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
+    @Override
     public ResourceLocator getResourceLocator() {
         return ProjectEditPlugin.INSTANCE;
     }
 
     public Color getBackground( Object element ) {
-        if( element instanceof LayerImpl ){
+        if (element instanceof LayerImpl) {
             ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-            String highlightPref = store.getString(PreferenceConstants.P_HIGHLIGHT); 
+            String highlightPref = store.getString(PreferenceConstants.P_HIGHLIGHT);
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_NONE)) {
                 return null;
             }
@@ -585,7 +631,8 @@ public class LayerItemProvider extends ItemProviderAdapter
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_FOREGROUND)) {
                 return null; //not used yet (flip between black and white?)
             } else if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_BACKGROUND)) {
-                return new Color(PlatformUI.getWorkbench().getDisplay(), awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue());
+                return new Color(PlatformUI.getWorkbench().getDisplay(), awtColor.getRed(),
+                        awtColor.getGreen(), awtColor.getBlue());
             }
         }
         return null;
@@ -593,48 +640,44 @@ public class LayerItemProvider extends ItemProviderAdapter
 
     public Color getForeground( Object element ) {
         if (element instanceof LayerImpl) {
-            
+
             LayerImpl layer = (LayerImpl) element;
-            
+
             Color systemColor = Display.getCurrent().getSystemColor(SWT.COLOR_GRAY);
-            if( outOfScale(layer) ){
+            if (outOfScale(layer)) {
                 return systemColor;
             }
             IMap map = layer.getMap();
-            if( map==null )
-                return null;
+            if (map == null) return null;
             boolean mylarOnAndAffectingLayer = mylarOnAndAffectingLayer(layer, map);
-            
+
             ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
             String highlightPref = store.getString(PreferenceConstants.P_HIGHLIGHT);
-            
+
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_NONE)) {
-                if( mylarOnAndAffectingLayer )
-                    return systemColor;
+                if (mylarOnAndAffectingLayer) return systemColor;
                 return null;
             }
-            
-            float mylarEffect=1.0f;
+
+            float mylarEffect = 1.0f;
             java.awt.Color awtColor = layer.getDefaultColor();
             if (awtColor == null) return null;
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_FOREGROUND)) {
-                    return new Color(PlatformUI.getWorkbench().getDisplay(), 
-                            (int) mylarEffect*awtColor.getRed(), 
-                            (int) mylarEffect*awtColor.getGreen(), 
-                            (int) mylarEffect*awtColor.getBlue());    
+                return new Color(PlatformUI.getWorkbench().getDisplay(), (int) mylarEffect
+                        * awtColor.getRed(), (int) mylarEffect * awtColor.getGreen(),
+                        (int) mylarEffect * awtColor.getBlue());
             } else if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_BACKGROUND)) {
-                    if (awtColor.getRed() + awtColor.getGreen() + awtColor.getBlue() > 512) {
-                        if( mylarOnAndAffectingLayer ){
-                            return systemColor;
-                        }else{
-                            return Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
-                        }
+                if (awtColor.getRed() + awtColor.getGreen() + awtColor.getBlue() > 512) {
+                    if (mylarOnAndAffectingLayer) {
+                        return systemColor;
                     } else {
-                        return new Color(PlatformUI.getWorkbench().getDisplay(), 
-                                (int) mylarEffect*255, 
-                                (int) mylarEffect*255, 
-                                (int) mylarEffect*255);    
+                        return Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
                     }
+                } else {
+                    return new Color(PlatformUI.getWorkbench().getDisplay(),
+                            (int) mylarEffect * 255, (int) mylarEffect * 255,
+                            (int) mylarEffect * 255);
+                }
             }
         }
         return null;
@@ -643,18 +686,17 @@ public class LayerItemProvider extends ItemProviderAdapter
     private boolean outOfScale( Layer layer ) {
         try {
             Set<Range> scales = layer.getScaleRange();
-            if( scales.isEmpty() ){
+            if (scales.isEmpty()) {
                 return false;
             }
             for( Range range : scales ) {
-                if(range.contains(layer.getMap().getViewportModel().getScaleDenominator()) ){
+                if (range.contains(layer.getMap().getViewportModel().getScaleDenominator())) {
                     return false;
                 }
             }
             return true;
-        }
-        catch( Throwable t ){
-            ProjectPlugin.log("Could not aquire scale range", t );
+        } catch (Throwable t) {
+            ProjectPlugin.log("Could not aquire scale range", t);
             return false;
         }
     }
@@ -675,14 +717,14 @@ public class LayerItemProvider extends ItemProviderAdapter
      * @return if mylar is turned on and it is affecting (greying out) the current layer
      */
     private boolean mylarOnAndAffectingLayer( LayerImpl layer, IMap map ) {
-        
+
         //look at blackboard for mylar flag
         Object mylar = map.getBlackboard().get("MYLAR"); //$NON-NLS-1$
-        boolean mylarIsOn = mylar!=null && ((Boolean)mylar).booleanValue();
-        
-        if( mylarIsOn ){
+        boolean mylarIsOn = mylar != null && ((Boolean) mylar).booleanValue();
+
+        if (mylarIsOn) {
             ILayer selectedLayer = map.getEditManager().getSelectedLayer();
-            if( map.getRenderManager()==null){
+            if (map.getRenderManager() == null) {
                 return false;
             }
             return !map.getRenderManager().areLayersRelatedByContext(layer, selectedLayer);

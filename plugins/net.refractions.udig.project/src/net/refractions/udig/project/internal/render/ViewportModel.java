@@ -158,7 +158,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * 				This can mean that the scale chosen will not be able to fit the entire bounds.  This is fine
      * 				when zooming but in other cases it is not acceptable
      */
-    void setBounds( ReferencedEnvelope value, boolean forceContainBBoxZoom);
+    void setBounds( ReferencedEnvelope value, boolean forceContainBBoxZoom );
 
     /**
      * Sets the value of the '{@link net.refractions.udig.project.internal.render.ViewportModel#getBounds <em>Bounds</em>}'

@@ -253,8 +253,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
     public RenderExecutor createRenderExecutor( Renderer renderer ) {
 
         RenderExecutor executor = locateMatch(renderer);
-        if (executor == null)
-            executor = locateClosestFit(renderer);
+        if (executor == null) executor = locateClosestFit(renderer);
 
         executor.setRenderer(renderer);
         return executor;
@@ -281,8 +280,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
                 Bundle bundle = Platform.getBundle(elem.getNamespaceIdentifier());
                 Class< ? > rendererClass = bundle.loadClass(elem
                         .getAttribute(RenderExecutor.RENDERER_ATTR));
-                if (rendererClass.isAssignableFrom(renderer.getClass()))
-                    list.add(elem);
+                if (rendererClass.isAssignableFrom(renderer.getClass())) list.add(elem);
             } catch (Exception e) {
                 ProjectPlugin.log(null, e);
                 // do nothing
@@ -303,8 +301,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
 
                         int dist1 = getDistance(renderer.getClass(), clazz1);
                         int dist2 = getDistance(renderer.getClass(), clazz2);
-                        if (dist1 == dist2)
-                            return 0;
+                        if (dist1 == dist2) return 0;
                         return dist1 < dist2 ? -1 : 1;
                     } catch (Exception e) {
                         ProjectPlugin.log(null, e);
@@ -314,18 +311,15 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
                 }
 
                 private int getDistance( Class< ? > rendererClass, Class< ? > target ) {
-                    if (!target.isAssignableFrom(rendererClass))
-                        return -1;
-                    if (target == rendererClass)
-                        return 0;
+                    if (!target.isAssignableFrom(rendererClass)) return -1;
+                    if (target == rendererClass) return 0;
 
                     for( Class iClass : rendererClass.getInterfaces() ) {
                         if (iClass == target)
                             return 1;
                         else {
                             int distance = getDistance(iClass, target);
-                            if (distance != -1)
-                                return 1 + distance;
+                            if (distance != -1) return 1 + distance;
                         }
                     }
                     return 1 + getDistance(rendererClass.getSuperclass(), target);
@@ -359,8 +353,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
                 RenderExecutor.EXTENSION_ID).iterator(); iter.hasNext(); ) {
             IConfigurationElement elem = iter.next();
             if (elem.getAttribute(RenderExecutor.RENDERER_ATTR).equals(
-                    ofInterest.getClass().getName()))
-                list.add(elem);
+                    ofInterest.getClass().getName())) list.add(elem);
         }
 
         if (!list.isEmpty()) {
@@ -567,8 +560,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      */
     public String convertCoordinateReferenceSystemToString( EDataType eDataType,
             Object instanceValue ) {
-        return ProjectFactory.eINSTANCE.convertToString(ProjectPackage.eINSTANCE
-                .getCoordinateReferenceSystem(), instanceValue);
+        return ProjectFactory.eINSTANCE.convertToString(
+                ProjectPackage.eINSTANCE.getCoordinateReferenceSystem(), instanceValue);
     }
 
     /**
@@ -577,8 +570,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * @generated NOT
      */
     public Envelope createEnvelopeFromString( EDataType eDataType, String initialValue ) {
-        return (Envelope) ProjectFactory.eINSTANCE.createFromString(ProjectPackage.eINSTANCE
-                .getEnvelope(), initialValue);
+        return (Envelope) ProjectFactory.eINSTANCE.createFromString(
+                ProjectPackage.eINSTANCE.getEnvelope(), initialValue);
     }
 
     /**
@@ -605,8 +598,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * @generated NOT
      */
     public String convertReferencedEnvelopeToString( EDataType eDataType, Object instanceValue ) {
-        return ProjectFactory.eINSTANCE.convertToString(ProjectPackage.eINSTANCE
-                .getReferencedEnvelope(), instanceValue);
+        return ProjectFactory.eINSTANCE.convertToString(
+                ProjectPackage.eINSTANCE.getReferencedEnvelope(), instanceValue);
     }
 
     /**
