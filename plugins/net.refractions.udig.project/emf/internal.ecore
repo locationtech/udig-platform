@@ -126,9 +126,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProjectElement" abstract="true" interface="true"
       eSuperTypes="#//IProjectElement #//IAdaptable">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="projectInternal" eType="#//Project"
         eOpposite="#//Project/elementsInternal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProjectRegistry">
     <eOperations name="getProject" eType="#//Project">
@@ -195,11 +195,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BlackboardEntry">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="memento" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="objectClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass"
         volatile="true" transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="object" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
         volatile="true" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="memento" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IResolveChangeListener" instanceClassName="net.refractions.udig.catalog.IResolveChangeListener"
       abstract="true" interface="true"/>
