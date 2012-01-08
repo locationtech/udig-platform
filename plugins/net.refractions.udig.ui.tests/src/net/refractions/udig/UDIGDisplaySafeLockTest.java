@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Display;
 
 public class UDIGDisplaySafeLockTest extends TestCase {
 
-    int                         WAIT_LENGTH = 10000;
+    int WAIT_LENGTH = 10000;
     private UDIGDisplaySafeLock lock;
 
     protected void setUp() throws Exception {
@@ -455,7 +455,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
             lock.unlock();
         }
     }
-    public void testSignalAll() throws Exception {
+    public void XtestSignalAll() throws Exception {
             final Condition condition = lock.newCondition();
             final Exception[] exception=new Exception[1];
             final boolean[] awake=new boolean[2];
