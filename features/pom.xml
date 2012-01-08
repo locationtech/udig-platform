@@ -15,7 +15,7 @@
   <packaging>pom</packaging>
 
    <profiles>
-	
+    
         <profile>
             <id>site</id>
             <modules>
@@ -37,17 +37,10 @@
                  <property><name>all</name></property>
                </activation>
             <modules>
-				<module>net.refractions.udig_sdk-product</module>
+                <module>net.refractions.udig_sdk-product</module>
                 <module>net.refractions.udig_sdk-feature</module>
-                <module>net.refractions.udig_sdk.source-feature</module>
                 <module>net.refractions.udig_tutorials-feature</module>
-                <module>net.refractions.udig_tutorials.source-feature</module>
-
-    			<module>net.refractions.udig.libs.source-feature</module>
-    			<module>net.refractions.udig_application.source-feature</module>
-    			<module>net.refractions.udig_base.source-feature</module>
-    			<module>net.refractions.udig_platform.source-feature</module>
-    			<module>net.refractions.udig_printing.source-feature</module>
+                <module>net.refractions.udig.libs.source-feature</module>
              </modules>
         </profile>
 

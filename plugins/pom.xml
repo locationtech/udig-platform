@@ -17,9 +17,6 @@
    <profiles>
         <profile>
             <id>test</id>
-            <activation>
-              <property><name>all</name></property>
-            </activation>
             <modules>
                 <module>net.refractions.udig.catalog.tests</module>
                 <module>net.refractions.udig.catalog.tests.geotiff</module>
@@ -94,12 +91,7 @@
                 <module>net.refractions.udig.tutorials.workbench</module>
                 <module>net.refractions.udig_tutorials.custom-feature</module>
                 <!-- SDK -->
-                <module>net.refractions.udig_sdk.source</module>
-                <module>net.refractions.udig_tutorials.source</module>
-                <module>net.refractions.udig_platform.source</module>
-                <module>net.refractions.udig_printing.source</module>
                 <module>net.refractions.udig.libs.source</module>
-                <module>net.refractions.udig_application.source</module>
              </modules>
         </profile>
 
