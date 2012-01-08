@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<artifactId>plugins</artifactId>
-		<groupId>net.refractions</groupId>
-		<version>1.3.0-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <artifactId>plugins</artifactId>
+        <groupId>net.refractions</groupId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
 
-	<groupId>net.refractions</groupId>
-	<artifactId>net.refractions.udig.tool.select.tests</artifactId>
-	<version>1.2.0-SNAPSHOT</version>
+    <groupId>net.refractions</groupId>
+    <artifactId>net.refractions.udig.tool.select.tests</artifactId>
+    <version>1.2.0-SNAPSHOT</version>
 
-	<packaging>eclipse-test-plugin</packaging>
+    <packaging>eclipse-test-plugin</packaging>
 
-	<profiles>
-		<profile>
-			<id>Mac OS</id>
-			<activation>
-				<os>
-					<family>mac</family>
-				</os>
-			</activation>
-			<properties>
-				<tycho.test.OSspecific>-XstartOnFirstThread</tycho.test.OSspecific>
-			</properties>
-		</profile>
+    <profiles>
+        <profile>
+            <id>Mac OS</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+            <properties>
+                <tycho.test.OSspecific>-XstartOnFirstThread</tycho.test.OSspecific>
+            </properties>
+        </profile>
 
-		<profile>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<tycho.test.OSspecific />
-			</properties>
-		</profile>
-	</profiles>
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <tycho.test.OSspecific />
+            </properties>
+        </profile>
+    </profiles>
 
-	<properties>
-		<tycho.test.jvmArgs>-Xmx128m -XX:MaxPermSize=256m -Dsdtcore.headless ${tycho.test.OSspecific}</tycho.test.jvmArgs>
-	</properties>
+    <properties>
+        <tycho.test.jvmArgs>-Xmx128m -XX:MaxPermSize=256m -Dsdtcore.headless ${tycho.test.OSspecific}</tycho.test.jvmArgs>
+    </properties>
 
-	<build>
-		<plugins>
+    <build>
+        <plugins>
 
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-surefire-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<useUIHarness>true</useUIHarness>
-					<product>net.refractions.udig-product</product>
-					<argLine>${tycho.test.jvmArgs}</argLine>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-surefire-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <configuration>
+                    <useUIHarness>true</useUIHarness>
+                    <product>net.refractions.udig-product</product>
+                    <argLine>${tycho.test.jvmArgs}</argLine>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>${tycho-provider}</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<environments combine.self="override">
-					</environments>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>${tycho-provider}</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+                <version>${tycho-version}</version>
+                <configuration>
+                    <environments combine.self="override">
+                    </environments>
+                </configuration>
+            </plugin>
 
-		</plugins>
-	</build>
+        </plugins>
+    </build>
 
 </project>
