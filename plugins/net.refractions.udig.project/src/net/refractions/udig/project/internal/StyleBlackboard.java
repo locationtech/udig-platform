@@ -29,12 +29,6 @@ import org.eclipse.emf.ecore.EObject;
 public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
      * List of Style information.
      * <p>
      * Note: This list should not be accessed by client code - it is for use by the EMF model.
@@ -63,7 +57,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
      * @return The requested style object or null if it does not exist
      * @model
      */
-    Object lookup( Class<?> theClass );
+    Object lookup( Class< ? > theClass );
 
     /**
      * Convenience method for testing for the existance of a style.
@@ -110,8 +104,8 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
      *
      * @param ids
      */
-    void setSelected(String[] ids);
-    
+    void setSelected( String[] ids );
+
     /**
      * Removes the style value identified by styleId from the blackboard. FIXME: Can we reduce this
      * to put( styleId, null ) ?

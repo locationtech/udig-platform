@@ -26,12 +26,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  */
 public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry {
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
      * The default value of the '{@link #getKey() <em>Key</em>}' attribute.
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
@@ -72,16 +66,6 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
     protected String memento = MEMENTO_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getObjectClass() <em>Object Class</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #getObjectClass()
-     * @generated
-     * @ordered
-     */
-    protected static final Class OBJECT_CLASS_EDEFAULT = null;
-
-    /**
      * The default value of the '{@link #getObject() <em>Object</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -109,8 +93,9 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     protected EClass eStaticClass() {
-        return ProjectPackage.eINSTANCE.getBlackboardEntry();
+        return ProjectPackage.Literals.BLACKBOARD_ENTRY;
     }
 
     /**
@@ -192,11 +177,13 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
+        switch( featureID ) {
         case ProjectPackage.BLACKBOARD_ENTRY__KEY:
             return getKey();
         case ProjectPackage.BLACKBOARD_ENTRY__MEMENTO:
@@ -206,15 +193,17 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT:
             return getObject();
         }
-        return eDynamicGet(eFeature, resolve);
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void eSet( EStructuralFeature eFeature, Object newValue ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public void eSet( int featureID, Object newValue ) {
+        switch( featureID ) {
         case ProjectPackage.BLACKBOARD_ENTRY__KEY:
             setKey((String) newValue);
             return;
@@ -225,18 +214,20 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
             setObjectClass((Class) newValue);
             return;
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT:
-            setObject((Object) newValue);
+            setObject(newValue);
             return;
         }
-        eDynamicSet(eFeature, newValue);
+        super.eSet(featureID, newValue);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void eUnset( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public void eUnset( int featureID ) {
+        switch( featureID ) {
         case ProjectPackage.BLACKBOARD_ENTRY__KEY:
             setKey(KEY_EDEFAULT);
             return;
@@ -244,43 +235,43 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
             setMemento(MEMENTO_EDEFAULT);
             return;
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT_CLASS:
-            setObjectClass(OBJECT_CLASS_EDEFAULT);
+            setObjectClass((Class) null);
             return;
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT:
             setObject(OBJECT_EDEFAULT);
             return;
         }
-        eDynamicUnset(eFeature);
+        super.eUnset(featureID);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public boolean eIsSet( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public boolean eIsSet( int featureID ) {
+        switch( featureID ) {
         case ProjectPackage.BLACKBOARD_ENTRY__KEY:
             return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
         case ProjectPackage.BLACKBOARD_ENTRY__MEMENTO:
             return MEMENTO_EDEFAULT == null ? memento != null : !MEMENTO_EDEFAULT.equals(memento);
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT_CLASS:
-            return OBJECT_CLASS_EDEFAULT == null
-                    ? getObjectClass() != null
-                    : !OBJECT_CLASS_EDEFAULT.equals(getObjectClass());
+            return getObjectClass() != null;
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT:
             return OBJECT_EDEFAULT == null ? getObject() != null : !OBJECT_EDEFAULT
                     .equals(getObject());
         }
-        return eDynamicIsSet(eFeature);
+        return super.eIsSet(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String toString() {
-        if (eIsProxy())
-            return super.toString();
+        if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (key: "); //$NON-NLS-1$

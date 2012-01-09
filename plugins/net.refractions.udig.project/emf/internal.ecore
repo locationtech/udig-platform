@@ -126,9 +126,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProjectElement" abstract="true" interface="true"
       eSuperTypes="#//IProjectElement #//IAdaptable">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="projectInternal" eType="#//Project"
         eOpposite="#//Project/elementsInternal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProjectRegistry">
     <eOperations name="getProject" eType="#//Project">
@@ -195,17 +195,16 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BlackboardEntry">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="memento" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="objectClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass"
         volatile="true" transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="object" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
         volatile="true" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="memento" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IResolveChangeListener" instanceClassName="net.refractions.udig.catalog.IResolveChangeListener"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="com.vividsolutions.jts.geom.Coordinate"/>
   <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="net.refractions.udig.project.render.displayAdapter.IMapDisplay"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="FeatureResults" instanceClassName="org.geotools.data.FeatureResults"/>
   <eClassifiers xsi:type="ecore:EDataType" name="List" instanceClassName="java.util.List"/>
   <eClassifiers xsi:type="ecore:EDataType" name="AffineTransform" instanceClassName="java.awt.geom.AffineTransform"/>
   <eClassifiers xsi:type="ecore:EDataType" name="NavCommandStack" instanceClassName="net.refractions.udig.project.command.NavCommandStack"/>
@@ -213,7 +212,6 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Filter" instanceClassName="org.opengis.filter.Filter"/>
   <eClassifiers xsi:type="ecore:EDataType" name="CoordinateReferenceSystem" instanceClassName="org.opengis.referencing.crs.CoordinateReferenceSystem"/>
   <eClassifiers xsi:type="ecore:EDataType" name="CommandStack" instanceClassName="net.refractions.udig.project.command.CommandStack"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Feature" instanceClassName="org.geotools.feature.SimpleFeature"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="java.awt.Point"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Adapter" instanceClassName="org.eclipse.emf.common.notify.Adapter"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IProgressMonitor" instanceClassName="org.eclipse.core.runtime.IProgressMonitor"/>

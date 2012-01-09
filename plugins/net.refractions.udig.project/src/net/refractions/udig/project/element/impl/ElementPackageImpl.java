@@ -32,13 +32,6 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     private EClass projectElementAdapterEClass = null;
 
     /**
@@ -75,20 +68,10 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
     private static boolean isInited = false;
 
     /**
-     * Creates, registers, and initializes the <b>Package</b> for this
-     * model, and for any others upon which it depends.  Simple
-     * dependencies are satisfied by calling this method on all
-     * dependent packages before doing anything else.  This method drives
-     * initialization for interdependent packages directly, in parallel
-     * with this package, itself.
-     * <p>Of this package and its interdependencies, all packages which
-     * have not yet been registered by their URI values are first created
-     * and registered.  The packages are then initialized in two steps:
-     * meta-model objects for all of the packages are created before any
-     * are initialized, since one package's meta-model objects may refer to
-     * those of another.
-     * <p>Invocation of this method will not affect any packages that have
-     * already been initialized.
+     * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+     * 
+     * <p>This method is used to initialize {@link ElementPackage#eINSTANCE} when that field is accessed.
+     * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #eNS_URI
@@ -102,8 +85,8 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
 
         // Obtain or create and register package
         ElementPackageImpl theElementPackage = (ElementPackageImpl) (EPackage.Registry.INSTANCE
-                .getEPackage(eNS_URI) instanceof ElementPackageImpl ? EPackage.Registry.INSTANCE
-                .getEPackage(eNS_URI) : new ElementPackageImpl());
+                .get(eNS_URI) instanceof ElementPackageImpl ? EPackage.Registry.INSTANCE
+                .get(eNS_URI) : new ElementPackageImpl());
 
         isInited = true;
 
@@ -130,6 +113,8 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
         // Mark meta-data to indicate it can't be changed
         theElementPackage.freeze();
 
+        // Update the registry and return the package
+        EPackage.Registry.INSTANCE.put(ElementPackage.eNS_URI, theElementPackage);
         return theElementPackage;
     }
 
@@ -184,8 +169,7 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
      * @generated
      */
     public void createPackageContents() {
-        if (isCreated)
-            return;
+        if (isCreated) return;
         isCreated = true;
 
         // Create classes and their features
@@ -211,8 +195,7 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
      * @generated
      */
     public void initializePackageContents() {
-        if (isInitialized)
-            return;
+        if (isInitialized) return;
         isInitialized = true;
 
         // Initialize package
@@ -223,6 +206,10 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
         // Obtain other dependent packages
         ProjectPackage theProjectPackage = (ProjectPackage) EPackage.Registry.INSTANCE
                 .getEPackage(ProjectPackage.eNS_URI);
+
+        // Create type parameters
+
+        // Set bounds for type parameters
 
         // Add supertypes to classes
         projectElementAdapterEClass.getESuperTypes().add(theProjectPackage.getProjectElement());

@@ -5,6 +5,7 @@
  */
 package net.refractions.udig.project.element.impl;
 
+import net.refractions.udig.project.element.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -35,13 +36,6 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
     private static final String EXTENSION_POINT_ID_KEY = "@ElementFactoryImpl.ExtensionPointId.key@"; //$NON-NLS-1$
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
     /**
      * Creates the default factory implementation.
      * <!-- begin-user-doc -->
@@ -76,6 +70,7 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EObject create( EClass eClass ) {
         switch( eClass.getClassifierID() ) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER:
@@ -91,6 +86,7 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Object createFromString( EDataType eDataType, String initialValue ) {
         switch( eDataType.getClassifierID() ) {
         case ElementPackage.IGENERIC_PROJECT_ELEMENT:
@@ -106,6 +102,7 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String convertToString( EDataType eDataType, Object instanceValue ) {
         switch( eDataType.getClassifierID() ) {
         case ElementPackage.IGENERIC_PROJECT_ELEMENT:
@@ -134,11 +131,11 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
     public IGenericProjectElement createIGenericProjectElementFromString( EDataType eDataType,
             String initialValue ) {
         try {
-        	UdigMemento memento = UdigMemento.readString(initialValue);
-            IGenericProjectElement backingObject = createGenericProjectElement(IGenericProjectElement.class,
-                    memento.getString(EXTENSION_POINT_ID_KEY));
+            UdigMemento memento = UdigMemento.readString(initialValue);
+            IGenericProjectElement backingObject = createGenericProjectElement(
+                    IGenericProjectElement.class, memento.getString(EXTENSION_POINT_ID_KEY));
             backingObject.init(memento);
-			return backingObject;
+            return backingObject;
         } catch (IOException e) {
             ProjectPlugin.log("Error parsing memento data for IGenericProject Element", e); //$NON-NLS-1$
             return null;
@@ -172,6 +169,7 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
      * @deprecated
      * @generated
      */
+    @Deprecated
     public static ElementPackage getPackage() {
         return ElementPackage.eINSTANCE;
     }
@@ -180,7 +178,8 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
             Class< ? extends IGenericProjectElement> typeToCreate, String extensionId ) {
         ProjectElementAdapter adapter = createProjectElementAdapter();
 
-        IGenericProjectElement genericProjectElement = createGenericProjectElement(typeToCreate, extensionId);
+        IGenericProjectElement genericProjectElement = createGenericProjectElement(typeToCreate,
+                extensionId);
         adapter.setBackingObject(genericProjectElement);
 
         ((Project) project).getElementsInternal().add(adapter);
@@ -192,14 +191,15 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
         ProjectElementAdapter adapter = createProjectElementAdapter();
         adapter.setName(elemName);
 
-        IGenericProjectElement genericProjectElement = createGenericProjectElement(typeToCreate, extensionId);
+        IGenericProjectElement genericProjectElement = createGenericProjectElement(typeToCreate,
+                extensionId);
         adapter.setBackingObject(genericProjectElement);
 
         ((Project) project).getElementsInternal().add(adapter);
         return adapter;
     }
 
-    private < T extends IGenericProjectElement>T createGenericProjectElement(
+    private <T extends IGenericProjectElement> T createGenericProjectElement(
             Class<T> typeToCreate, String extensionId ) {
         List<IConfigurationElement> list = ExtensionPointList
                 .getExtensionPointList(ProjectElementAdapter.EXT_ID);
@@ -209,7 +209,7 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
                 try {
                     Object obj = configurationElement.createExecutableExtension("class"); //$NON-NLS-1$
                     if (typeToCreate.isAssignableFrom(obj.getClass())) {
-                    	((IGenericProjectElement) obj).setExtensionId(extensionId);
+                        ((IGenericProjectElement) obj).setExtensionId(extensionId);
                         return typeToCreate.cast(obj);
                     } else {
                         throw new IllegalArgumentException("The " + extensionId //$NON-NLS-1$

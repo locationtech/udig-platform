@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<artifactId>features</artifactId>
-		<groupId>net.refractions</groupId>
-		<version>1.3.0-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <artifactId>features</artifactId>
+        <groupId>net.refractions</groupId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
 
-	<groupId>net.refractions</groupId>
-	<artifactId>net.refractions.udig_sdk-product</artifactId>
-	<version>1.3.0.qualifier</version>
+    <groupId>net.refractions</groupId>
+    <artifactId>net.refractions.udig_sdk-product</artifactId>
+    <version>1.3.1.qualifier</version>
 
-	<packaging>eclipse-application</packaging>
+    <packaging>eclipse-application</packaging>
 
-	<!--  properties>
-		<generatedBuildProperties>root.properties</generatedBuildProperties>
-	</properties -->
+    <!--  properties>
+        <generatedBuildProperties>root.properties</generatedBuildProperties>
+    </properties -->
 
-	<build>
-		<finalName>uDig.1.3.0.${BUILD_NUMBER}</finalName>
-		<plugins>
+    <build>
+        <finalName>uDig.1.3.1.${BUILD_NUMBER}</finalName>
+        <plugins>
 
-			<plugin>
-				<groupId>${tycho-provider}</groupId>
-				<artifactId>maven-osgi-packaging-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<directoryName>uDig-sdk</directoryName>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+            <plugin>
+                <groupId>${tycho-provider}</groupId>
+                <artifactId>maven-osgi-packaging-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <configuration>
+                    <directoryName>uDig-sdk</directoryName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

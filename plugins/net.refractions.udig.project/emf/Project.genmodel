@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="uDig - User Friendly Desktop Internet GIS client&#xD;&#xA;http://udig.refractions.net&#xD;&#xA;(C) 2004-2012, Refractions Research Inc.&#xD;&#xA;&#xD;&#xA;This library is free software; you can redistribute it and/or&#xD;&#xA;modify it under the terms of the GNU Lesser General Public&#xD;&#xA;License as published by the Free Software Foundation;&#xD;&#xA;version 2.1 of the License.&#xD;&#xA;&#xD;&#xA;This library is distributed in the hope that it will be useful,&#xD;&#xA;but WITHOUT ANY WARRANTY; without even the implied warranty of&#xD;&#xA;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU&#xD;&#xA;Lesser General Public License for more details.&#xD;&#xA;"
     modelDirectory="/net.refractions.udig.project/src" creationCommands="false" creationIcons="false"
     editDirectory="/net.refractions.udig.project.edit/src" editorDirectory="" modelPluginID="net.refractions.udig.project"
     templateDirectory="" runtimeJar="true" modelName="Project" modelPluginClass="net.refractions.udig.project.internal.ProjectPlugin"
     editPluginClass="net.refractions.udig.project.internal.provider.ProjectEditPlugin"
     editorPluginClass="" nonNLSMarkers="true" suppressEMFTypes="true" codeFormatting="true"
-    testsDirectory="" testSuiteClass="" importerID="org.eclipse.emf.importer.java"
+    testsDirectory="" testSuiteClass="" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="5.0" copyrightFields="false">
-  <foreignModel>@model</foreignModel>
+  <foreignModel>element.ecore</foreignModel>
+  <foreignModel>internal.ecore</foreignModel>
+  <foreignModel>render.ecore</foreignModel>
   <genPackages prefix="Element" basePackage="net.refractions.udig.project" disposableProviderFactory="true"
       ecorePackage="element.ecore#/">
     <genDataTypes ecoreDataType="element.ecore#//IGenericProjectElement"/>
@@ -20,7 +22,6 @@
   <genPackages prefix="Project" basePackage="net.refractions.udig.project" ecorePackage="internal.ecore#/">
     <genDataTypes ecoreDataType="internal.ecore#//Coordinate"/>
     <genDataTypes ecoreDataType="internal.ecore#//MapDisplay"/>
-    <genDataTypes ecoreDataType="internal.ecore#//FeatureResults"/>
     <genDataTypes ecoreDataType="internal.ecore#//List"/>
     <genDataTypes ecoreDataType="internal.ecore#//AffineTransform"/>
     <genDataTypes ecoreDataType="internal.ecore#//NavCommandStack"/>
@@ -28,7 +29,6 @@
     <genDataTypes ecoreDataType="internal.ecore#//Filter"/>
     <genDataTypes ecoreDataType="internal.ecore#//CoordinateReferenceSystem"/>
     <genDataTypes ecoreDataType="internal.ecore#//CommandStack"/>
-    <genDataTypes ecoreDataType="internal.ecore#//Feature"/>
     <genDataTypes ecoreDataType="internal.ecore#//Point"/>
     <genDataTypes ecoreDataType="internal.ecore#//Adapter"/>
     <genDataTypes ecoreDataType="internal.ecore#//IProgressMonitor"/>
@@ -279,6 +279,10 @@
       </genOperations>
       <genOperations ecoreOperation="render.ecore#//ViewportModel/zoom">
         <genParameters ecoreParameter="render.ecore#//ViewportModel/zoom/zoom"/>
+      </genOperations>
+      <genOperations ecoreOperation="render.ecore#//ViewportModel/zoom.1">
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/zoom.1/zoom"/>
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/zoom.1/fixedPoint"/>
       </genOperations>
       <genOperations ecoreOperation="render.ecore#//ViewportModel/zoomToExtent"/>
       <genOperations ecoreOperation="render.ecore#//ViewportModel/zoomToBox">

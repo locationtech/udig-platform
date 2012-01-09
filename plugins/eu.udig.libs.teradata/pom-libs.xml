@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.refractions.udig</groupId>
+	<artifactId>teradata-libs</artifactId>
+	<version>1.3.1</version>
+	<name>uDig - User-friendly Desktop Internet GIS</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<geotools.version>8-SNAPSHOT</geotools.version>
+		<imageio-ext.version>1.1.0</imageio-ext.version>
+		<jfreechart.version>1.0.13</jfreechart.version>
+	</properties>
+
+	<repositories>
+		<!-- Open Source Geospatial Foundation is the official repository used by
+        the GeoTools project for stable releases - use this repository when
+        using an official GeoTools numbered release -->
+		<repository>
+			<id>geotools-release</id>
+			<name>Geotools Release</name>
+			<url>http://download.osgeo.org/webdav/geotools</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+		<!-- The OpenGeo company offers a SNAPSHOT repository populated by GeoTools
+        nightly builds - in general it is much faster then the official repository
+        above -->
+		<repository>
+			<id>geotools-snapshot</id>
+			<name>Geotools Snapshot</name>
+			<url>http://repo.opengeo.org</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+		<!-- The JAI tools maven repository is actually the offical sonaType snapshot repository -->
+		<repository>
+			<id>sonatype-snapshot</id>
+			<name>Sonatype Snapshot Repository</name>
+			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+		<!-- GeoSolutions provide their own repository for imageio-ext builds -->
+		<repository>
+			<id>geosolutions</id>
+			<name>GeoSolutions</name>
+			<url>http://maven.geo-solutions.it</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+		<!-- jgrasstools repo -->
+		<!--<repository>
+            <id>jgrasstools</id>
+            <name>jgrasstools</name>
+            <url>https://jgrasstools.googlecode.com/hg/mavenrepo</url>
+            <url>https://bitbucket.org/moovida/jgrasstools/src/tip/mavenrepo</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>-->
+	</repositories>
+
+	<dependencies>	    
+		<dependency>
+			<groupId>org.geotools.jdbc</groupId>
+			<artifactId>gt-jdbc-teradata</artifactId>
+			<version>${geotools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-jdbc</artifactId>
+			<version>${geotools.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-main</artifactId>
+			<version>${geotools.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-data</artifactId>
+			<version>${geotools.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.media</groupId>
+			<artifactId>jai_core</artifactId>
+			<version>1.1.3</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+
+				<configuration>
+
+					<filesets>
+						<fileset>
+							<directory>${basedir}/gtlib</directory>
+							<includes>
+								<include>*.*</include>
+								<include>sources/*.*</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>					
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<overWrite>true</overWrite>
+							<outputDirectory>${basedir}/gtlib</outputDirectory>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+							<excludeScope>provided</excludeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+            <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-dependency-plugin</artifactId>
+                 <version>2.3</version>
+                 <executions>
+                     <execution>
+                         <id>copy-dependencies-sources</id>
+                         <phase>install</phase>
+                         <goals>
+                             <goal>copy-dependencies</goal>
+                         </goals>
+                         <configuration>
+                             <classifier>sources</classifier>
+                             <overWrite>true</overWrite>
+							<outputDirectory>${basedir}/gtlib/sources</outputDirectory>
+                             <overWriteReleases>true</overWriteReleases>
+                             <overWriteSnapshots>true</overWriteSnapshots>
+                             <excludeScope>provided</excludeScope>
+                             <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+                         </configuration>
+                     </execution>
+                 </executions>
+             </plugin>
+         </plugins>
+    </build>
+</project>

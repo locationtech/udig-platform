@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Teradata Libs Plug-in
 Bundle-SymbolicName: eu.udig.libs.teradata
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.3.1.qualifier
 Bundle-Vendor: eu.udig
 Bundle-ClassPath: gtlib/gt-jdbc-teradata-8-SNAPSHOT.jar
 Eclipse-RegisterBuddy: net.refractions.udig.libs

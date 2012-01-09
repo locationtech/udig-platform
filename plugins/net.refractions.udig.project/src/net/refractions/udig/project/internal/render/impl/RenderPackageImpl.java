@@ -768,8 +768,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * @generated
      */
     public void createPackageContents() {
-        if (isCreated)
-            return;
+        if (isCreated) return;
         isCreated = true;
 
         // Create classes and their features
@@ -855,8 +854,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      */
     @SuppressWarnings("unchecked")
     public void initializePackageContents() {
-        if (isInitialized)
-            return;
+        if (isInitialized) return;
         isInitialized = true;
 
         // Initialize package
@@ -1009,7 +1007,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
         addEParameter(op, ecorePackage.getEDouble(), "maxx", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEDouble(), "miny", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEDouble(), "maxy", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-        //addEException(op, theProjectPackage.getIllegalArgumentException());
+        addEException(op, theProjectPackage.getIllegalArgumentException());
 
         addEOperation(viewportModelEClass, this.getAffineTransform(),
                 "worldToScreenTransform", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -1036,6 +1034,11 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
         op = addEOperation(viewportModelEClass, this.getViewportModel(),
                 "zoom", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEDouble(), "zoom", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+        op = addEOperation(viewportModelEClass, this.getViewportModel(),
+                "zoom", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, ecorePackage.getEDouble(), "zoom", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, this.getCoordinate(), "fixedPoint", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
         addEOperation(viewportModelEClass, null, "zoomToExtent", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 

@@ -32,7 +32,6 @@ import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
 import net.refractions.udig.catalog.ServiceParameterPersister;
 import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.core.internal.CorePlugin;
 import net.refractions.udig.project.internal.impl.LayerImpl;
 import net.refractions.udig.ui.ProgressManager;
 
@@ -371,7 +370,7 @@ public class CatalogRef {
         }
 
         @Override
-        protected void locateService( ID id, Map<String, Serializable> map, Map<String, Serializable> properties  ) {
+        protected void locateService( ID id, Map<String, Serializable> map, Map<String,Serializable> properties, Map<ID, Map<String, Serializable>> resourcePropertyMap  ) {
             if (allParams.containsKey(id))
                 ProjectPlugin
                         .log("LayerCatalogRefPersister#locateService: duplicate resource ids when loading paramers"); //$NON-NLS-1$

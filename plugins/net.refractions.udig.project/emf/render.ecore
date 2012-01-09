@@ -60,6 +60,10 @@
     <eOperations name="zoom" eType="#//ViewportModel">
       <eParameters name="zoom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     </eOperations>
+    <eOperations name="zoom" eType="#//ViewportModel">
+      <eParameters name="zoom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eParameters name="fixedPoint" eType="#//Coordinate"/>
+    </eOperations>
     <eOperations name="zoomToExtent"/>
     <eOperations name="zoomToBox">
       <eParameters name="box" eType="#//Envelope"/>

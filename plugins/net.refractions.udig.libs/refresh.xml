@@ -1,66 +1,8 @@
 <?xml version="1.0"?>
-<project name="refresh_libs" default="build" basedir="." xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+<project name="refresh_libs" default="tools" basedir="." xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 	<description>Download open source jars from the internet.</description>
-
-	<property name="lib" value="${basedir}${file.separator}lib" />
-	
-	<property name="libs_src_dir" value="${lib}${file.separator}sources" />
 	
 	<property environment="env" />
-	
-	<target name="clean" depends="teradata-clean" description="deletes external libraries folder">
-		<delete dir="${lib}" />
-	</target>
-	
-	<target name="load_m2_deps" >
-		<artifact:dependencies filesetId="dependency.fileset" sourcesFilesetId="sources.dependency.fileset" versionsId="dependency.versions" useScope="runtime" cacheDependencyRefs="false">
-			<pom file="${basedir}/../net.refractions.udig.libs/pom-libs.xml"/>
-		</artifact:dependencies>
-	</target>
-
-	<target name="print" depends="load_m2_deps,teradata-print">
-		<description>Print the dependencies the jars</description>
-
-		<!--setproxy proxyhost="192.168.20.1" proxyport="8080"/-->
-		<path id="jars">
-			<fileset refid="dependency.fileset" />
-		</path>
-		<property name="myjars" refid="jars" />
-		<echo message="Jars = ${myjars}" />
-		<!--propertyregex property="listjars"
-		              input="${myjars}"
-		              regexp="\;"
-		              select="{$line.seperator}"
-		              casesensitive="false" /-->
-		<echo message="Jars = ${myjars}" />
-		<echo message="Jars = ${listjars}" />
-	</target>
-
-	<target name="build" depends="load_m2_deps,load-teradata-deps,tools">
-		<description>Download the jars - used by a manual "clean"</description>
-		<available property="already_downloaded" type="dir" file="${lib}" />
-
-		<!--setproxy proxyhost="192.168.20.1" proxyport="8080"/-->
-
-		<antcall target="create" />
-
-		<!-- (flat) copy all downloaded JARs (classes) to plugin directory ${lib} -->
-		<copy todir="${lib}" verbose="true" flatten="true">
-			<fileset refid="dependency.fileset" />
-		</copy>
-		
-		<!-- (flat) copy downloaded source JARs (sources) to plugin directory ${libs_src_dir} -->
-		<!--
-		<copy todir="${libs_src_dir}" flatten="true" verbose="true">
-			<fileset refid="sources.dependency.fileset" />
-			<chainedmapper>
-				<mapper type="flatten" />
-				<globmapper from="*-sources.jar" to="*-sources.zip" />
-			</chainedmapper>
-		</copy>
-		-->
-		<!-- <eclipse.refreshLocal resource="net.refractions.udig.libs/lib" depth="infinite"/>	-->
-	</target>
 	
 	<target name="check-tools">
 	    <available file="${basedir}${file.separator}tools_1.6.0_25.jar" property="tools.present"/>
@@ -74,16 +16,6 @@
 		<get src="http://udig.refractions.net/files/downloads/jre/tools_1.6.0_25.jar" dest="${basedir}${file.separator}tools_1.6.0_25.jar"/>
 	</target>
 	
-	<target name="create" unless="already_downloaded">
-		<description>creates the lib directory if needed</description>
-		<mkdir dir="${lib}" />
-		<mkdir dir="${libs_src_dir}" />
-	</target>
-
-	<!-- Used by headless build please make sure this does everthing from clean to download and fix etc.. -->
-	<target name="full-build" depends="clean, build" description="clean and build">
-	</target>
-
 	<!-- target: extSources_to_project_classpath (manual Build of project n.r.udig/libs as trigger via ".externalToolBuilders/Refresh Libs.launch") -->
 	<target name="extSources_to_project_classpath" description="augments eclipse project .classpath file to link sources to library jars (F3 key)">
 		<!-- eclipse project .classpath file -->
@@ -113,39 +45,5 @@
 		<echo level="info" message="updated ${project_classpath} with links to source archives" />
 	</target>
 	
-	
-	<!-- tasks for kicking off teradata plugin depedencies update -->
-	
-	<property name="teradata.plugin" value="${basedir}${file.separator}..${file.separator}eu.udig.libs.teradata"/>
-	<property name="teradata.ant.file" value="${teradata.plugin}${file.separator}refresh.xml"/>
-	<property name="teradata.ant.properties" value="${teradata.plugin}${file.separator}copy.properties"/>
-	
-	<target name="check-teradata-libs">
-	    <available file="${teradata.ant.file}" property="teradata.present"/>
-	</target>
 
-	<target 
-		name="load-teradata-deps" 
-		description="execute the teradata libs project"
-		depends="check-teradata-libs" if="teradata.present">
-		<ant 
-			antfile="${teradata.ant.file}"
-			target="build"
-			inheritAll="false">
-			<property file="${teradata.ant.properties}"/>			
-		</ant>
-	</target>
-
-	<target name="teradata-clean">
-		<ant antfile="${teradata.ant.file}" target="clean">
-			<property file="${teradata.ant.properties}"/>
-		</ant>
-	</target>
-	<target name="teradata-print">
-		<ant antfile="${teradata.ant.file}" target="print">
-			<property file="${teradata.ant.properties}"/>
-		</ant>
-	</target>
-	
-	<!-- End Teradata section -->
 </project>
