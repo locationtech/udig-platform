@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2011, Refractions Research Inc.
+ * (C) 2012, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,12 +27,13 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
 import net.refractions.udig.catalog.tests.wmsc.Activator;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import net.refractions.udig.project.ui.preferences.PreferenceConstants;
 
 import org.junit.Test;
 
 public class WMSTileSetResolverTest {
 
+    @SuppressWarnings("nls")
     @Test
     public void testResolver() throws Exception {
         Activator instance = Activator.getDefault();
@@ -59,22 +60,18 @@ public class WMSTileSetResolverTest {
 
         ID id = new ID(new ID(url), "tasmania");
 
+        IGeoResource resource = (IGeoResource) catalog.getById(IGeoResource.class, id, null);
+
         /*
          * setup the properties so this adapter is enabled
          */
-        ProjectUIPlugin.getDefault().getPreferenceStore().setValue("tilesetOnOfftasmania", true);
-
-        /*
-         * set the resolutions - as they are never calculated from the dialog
-         */
-        ProjectUIPlugin
-                .getDefault()
-                .getPreferenceStore()
-                .setValue(
-                        "tilesetResolutionstasmania",
-                        "0.009015193399753197 9.015193399753199E-4 4.5075966998765993E-4 1.8030386799506394E-4 9.015193399753197E-5 4.5075966998765985E-5 2.2537983499382992E-5 9.015193399753199E-6");
-
-        IGeoResource resource = (IGeoResource) catalog.getById(IGeoResource.class, id, null);
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_ON_OFF, true);
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_WIDTH, PreferenceConstants.DEFAULT_TILE_SIZE+"");
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_HEIGHT,PreferenceConstants.DEFAULT_TILE_SIZE+"");
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_IMAGE_TYPE,PreferenceConstants.DEFAULT_IMAGE_TYPE);
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_SCALES,
+                "1000000.0 100000.0 50000.0 20000.0 10000.0 5000.0 2500.0 1000.0");
+        
         assertNotNull(resource);
 
         TileSet ts = resource.resolve(TileSet.class, null);

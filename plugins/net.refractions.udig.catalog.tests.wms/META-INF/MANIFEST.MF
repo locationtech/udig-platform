@@ -11,3 +11,5 @@ Require-Bundle: org.junit,
  net.refractions.udig.project.ui
 Export-Package: net.refractions.udig.catalog.wmsc.server
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Activator: net.refractions.udig.catalog.tests.wmsc.Activator
+Bundle-ActivationPolicy: lazy
