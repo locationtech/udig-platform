@@ -346,6 +346,12 @@ public class ID implements Serializable {
     }
     
     /**
+     * @return true if ID represents a child
+     */
+    public boolean isChild() {
+        return id.toString().contains("#");
+    }
+    /**
      * @return true if ID represents a File
      */
     public boolean isFile() {
