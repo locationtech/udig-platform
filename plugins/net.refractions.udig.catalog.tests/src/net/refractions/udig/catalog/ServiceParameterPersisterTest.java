@@ -98,7 +98,7 @@ public class ServiceParameterPersisterTest extends TestCase {
         }
         @Override
         protected void locateService( ID url, Map<String, Serializable> map,
-                Map<String, Serializable> properties ) {
+                Map<String, Serializable> properties, Map<ID, Map<String, Serializable>> resourcePropertyMap ) {
 
             this.id = url;
             this.map = map;
