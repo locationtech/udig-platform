@@ -39,180 +39,249 @@ import org.osgi.service.prefs.Preferences;
  * @author Jesse
  */
 public class ServiceParameterPersister {
-	private static final String COLON_ENCODING = "@col@";
-	private static final String TYPE_QUALIFIER = "@type@"; //$NON-NLS-1$
+    private static final String COLON_ENCODING = "@col@";
+    private static final String TYPE_QUALIFIER = "@type@"; //$NON-NLS-1$
     private static final String PROPERTIES_KEY = "_properties"; //$NON-NLS-1$
     
     private static final String TITLE_KEY = "title"; //$NON-NLS-1$
     private static final String CHILD_PREFIX = "child_"; //$NON-NLS-1$
     
     private static final String VALUE_ID = "value"; //$NON-NLS-1$
-	private static final String TYPE_ID = "type"; //$NON-NLS-1$
+    private static final String TYPE_ID = "type"; //$NON-NLS-1$
     private static final String ENCODING = "UTF-8"; //$NON-NLS-1$
 
-	protected final ICatalog localCatalog;
-	protected final IServiceFactory serviceFactory;
-	/** reference directory to consider when making relative files? */
-	private File reference;
+    protected final ICatalog localCatalog;
+    protected final IServiceFactory serviceFactory;
+    /** reference directory to consider when making relative files? */
+    private File reference;
 
-	public ServiceParameterPersister(final ICatalog localCatalog, final IServiceFactory serviceFactory) {
-		this(localCatalog, serviceFactory, null);
-	}
-	
-	public ServiceParameterPersister(final ICatalog localCatalog, final IServiceFactory serviceFactory, File reference) {
-		super();
-		this.localCatalog = localCatalog;
-		this.serviceFactory = serviceFactory;
-		this.reference=reference;
-	}
-	/**
-	 * Using the connection parameter information in the preferences node
-	 * restore the state of the local catalog.
-	 * 
-	 * @param node
-	 */
-	public void restore(Preferences node) {
-		try {
-			for (String id : node.childrenNames()) {
-				try {
-				    Preferences servicePref = node.node(id);
-					ID url = toId(id);
-					
-					Map<String, Serializable> connectionParams = new HashMap<String, Serializable>();
-					String[] nodes = servicePref.childrenNames();
+    public ServiceParameterPersister(final ICatalog localCatalog, final IServiceFactory serviceFactory) {
+        this(localCatalog, serviceFactory, null);
+    }
+    
+    public ServiceParameterPersister(final ICatalog localCatalog, final IServiceFactory serviceFactory, File reference) {
+        super();
+        this.localCatalog = localCatalog;
+        this.serviceFactory = serviceFactory;
+        this.reference=reference;
+    }
+    
+    /**
+     * Using the connection parameter information in the preferences node
+     * restore the state of the local catalog.
+     * <p>
+     * The format is roughly:<pre> # for each service ID used as child node
+     * file://example.shp:
+     *   # connect parameters are unmarked
+     *   file:
+     *       value: example.shp
+     *       type: java.io.File
+     *   (param key):
+     *       value: (text encoding)
+     *       type: (class name)
+     *   
+     *   # service properties are in "_properties"
+     *   _properties:
+     *       _title:
+     *          value: Example
+     *          type: java.lang.String
+     *       (property key):
+     *          value: (text encoding)
+     *          type: (class name)
+     *          
+     *   # child properties are prefixed with "child_"
+     *   child_file://example.shp#example:
+     *       _title:
+     *           value: Example
+     *           type: java.lang.String
+     *       _properties:
+     *       (property key):
+     *          value: (text encoding)
+     *          type: (class name)
+     * </pre>
+     * @param node
+     */
+    public void restore(Preferences node) {
+        try {
+            SERVICE: for (String id : node.childrenNames()) {
+                if( id == null ){
+                    continue SERVICE;
+                }
+                try {
+                    Preferences servicePref = node.node(id);
+                    ID url = decodeID(id);
                     
-					
-					Map<String,Map<String, Serializable>> resourcePropertyMap = new HashMap<String, Map<String,Serializable>>();
+                    Map<String, Serializable> connectionParams = new HashMap<String, Serializable>();
+                    String[] nodes = servicePref.childrenNames();
+                    
+                    
+                    Map<ID,Map<String, Serializable>> resourcePropertyMap = new HashMap<ID, Map<String,Serializable>>();
                     Map<String, Serializable> properties = new HashMap<String, Serializable>();
                     
-					for (String childName : nodes) {
-					    if( PROPERTIES_KEY.equals(childName)) {
-							Preferences propertiesPref = servicePref.node(PROPERTIES_KEY);
-							propertiesPref.flush();
+                    RESOURCE: for (String childName : nodes) {
+                        if( childName == null ){
+                            continue RESOURCE; // skip
+                        }
+                        if( PROPERTIES_KEY.equals(childName)) {
+                            Preferences propertiesPref = servicePref.node(PROPERTIES_KEY);
+                            propertiesPref.flush();
 
-							properties= restoreProperties(propertiesPref);
-					    }
-					    else if( childName.startsWith(CHILD_PREFIX)){
-					    	Preferences childPref = servicePref.node(childName);
-					    	childPref.flush();
-					    	Map<String, Serializable> childProperties = restoreProperties(childPref);
-					    	
-					    	String childID = childName.substring(CHILD_PREFIX.length() );
-					    	resourcePropertyMap.put(childID, childProperties);
-					    }
-					    else {
-					    	mapAsObject(servicePref, connectionParams, childName);
-					    }
-					}
-					locateService(url, connectionParams, properties);
-				} catch (Throwable t) {
-					CatalogPlugin.log(null, new Exception(t));
-				}
-			}
+                            properties= restoreProperties(propertiesPref);
+                        }
+                        else if( childName.startsWith(CHILD_PREFIX)){
+                            String childIDEncoded = childName.substring(CHILD_PREFIX.length());
+                            if( childIDEncoded.length() == 0 ){
+                                continue RESOURCE;
+                            }
+                            ID childID = decodeID( childIDEncoded );
+                            
+                            Preferences childPref = servicePref.node(childName);
+                            childPref.flush();
+                            Map<String, Serializable> childProperties = restoreProperties(childPref);
+                            
+                            
+                            resourcePropertyMap.put(childID, childProperties);
+                        }
+                        else {
+                            mapAsObject(servicePref, connectionParams, childName);
+                        }
+                    }
+                    locateService(url, connectionParams, properties);
+                } catch (Throwable t) {
+                    CatalogPlugin.log(null, new Exception(t));
+                }
+            }
 
-		} catch (Throwable t) {
-			CatalogPlugin.log(null, new Exception(t));
-		}
-	}
-	/**
-	 * Convert a persisted id string into a URL.
-	 * <p>
-	 * This method will decode the string based ENCODING
-	 * @param id Persisted id string
-	 * @return URL based on provided id string
-	 */
-	private ID toId( String encodedId )  {
+        } catch (Throwable t) {
+            CatalogPlugin.log(null, new Exception(t));
+        }
+    }
+    
+    private String encodeID( ID id ){
+        String str;
+        
+        try {
+            if( id.isFile() ){
+                String path = id.toFile().getAbsolutePath();
+                path = path.replace(":", COLON_ENCODING);
+                    str = URLEncoder.encode(path, ENCODING);
+            }
+            else {
+                str = URLEncoder.encode( id.toString(), ENCODING);
+            }
+        } catch (UnsupportedEncodingException e) {
+            str = id.toString(); // should not happen
+        }
+
+        // postpend type qualifier
+        if( id.getTypeQualifier()!=null){
+            try {
+                str = str +TYPE_QUALIFIER+URLEncoder.encode( id.getTypeQualifier(), ENCODING);
+            } catch (UnsupportedEncodingException e) {
+                str = str + TYPE_QUALIFIER + id.getTypeQualifier();
+            }
+        }
+        return str;
+    }
+    /**
+     * Convert a persisted id string into a URL.
+     * <p>
+     * This method will decode the string based ENCODING
+     * @param id Persisted id string
+     * @return URL based on provided id string
+     */
+    private ID decodeID( String encodedId )  {
         ID id;
         try {
-        	String decodeId = URLDecoder.decode(encodedId, ENCODING);
-        	String[] parts = decodeId.split(TYPE_QUALIFIER);
-        	String qualifier = null;
-        	if( parts.length==2){
-        	    qualifier = parts[1];
-        	}
-        	try {
-        		URL url = new URL(null, parts[0], CorePlugin.RELAXED_HANDLER);
-        		id= new ID(url, qualifier);
-        	} catch (MalformedURLException e) {
-        		String path = parts[0].replaceAll(COLON_ENCODING, ":");
-				id = new ID(new File(path), qualifier);
-        	}        
-        	
+            String decodeId = URLDecoder.decode(encodedId, ENCODING);
+            String[] parts = decodeId.split(TYPE_QUALIFIER);
+            String qualifier = null;
+            if( parts.length==2){
+                qualifier = parts[1];
+            }
+            try {
+                URL url = new URL(null, parts[0], CorePlugin.RELAXED_HANDLER);
+                id= new ID(url, qualifier);
+            } catch (MalformedURLException e) {
+                String path = parts[0].replaceAll(COLON_ENCODING, ":");
+                id = new ID(new File(path), qualifier);
+            }        
+            
         } catch (UnsupportedEncodingException e) {
-        	CatalogPlugin.log("Could not code preferences URL", e); //$NON-NLS-1$
-        	throw new RuntimeException(e);
+            CatalogPlugin.log("Could not code preferences URL", e); //$NON-NLS-1$
+            throw new RuntimeException(e);
         }
         return id;
     }
 
-	/**
-	 * Create an IService from the provided connection parameters
-	 * and add them to the provided catalog.
-	 * 
-	 * @Param targetID In the event of a tie favour the provided targetID
-	 * @param connectionParameters Used to to ask the ServiceFactory for list of candidates 
-	 */
-	protected void locateService(ID targetID, Map<String, Serializable> connectionParameters,  Map<String,Serializable> properties) {
+    /**
+     * Create an IService from the provided connection parameters
+     * and add them to the provided catalog.
+     * 
+     * @Param targetID In the event of a tie favour the provided targetID
+     * @param connectionParameters Used to to ask the ServiceFactory for list of candidates 
+     */
+    protected void locateService(ID targetID, Map<String, Serializable> connectionParameters,  Map<String,Serializable> properties) {
         IService found = localCatalog.getById( IService.class,targetID, null );
-	    
+        
         if( found!=null ){
             return;
         }
         
-		List<IService> newServices = serviceFactory.createService(connectionParameters);
-		if( !newServices.isEmpty() ){
-			for( IService service : newServices ) {
-			    // should we check the local catalog to see if it already
-			    // has an entry for this service?
-			    found = localCatalog.getById( IService.class,service.getID(), null );
-			    if( found == null && service.getID().equals(targetID)){
-			        localCatalog.add(service);
-			        try {
-			            // restore persisted properties			        
-			            service.getPersistentProperties().putAll( properties );
-			        } catch (Exception e) {
-			            // could not restore propreties
-			        }
-			    }
-			    else {
-			        // Service was already available
-			    }
-		    }
-		} else {
-			CatalogPlugin.log("Nothing was able to be loaded from saved preferences: "+connectionParameters, null); //$NON-NLS-1$
-		}
-	}
-	/**
-	 * Performs some post processing on the connection parameters to ensure
-	 * they are prompted from Strings to Objects (if possible).
-	 * 
-	 * @param servicePreferenceNode
-	 * @param connectionParams
-	 * @param currentKey
-	 * @throws MalformedURLException
-	 */
+        List<IService> newServices = serviceFactory.createService(connectionParameters);
+        if( !newServices.isEmpty() ){
+            for( IService service : newServices ) {
+                // should we check the local catalog to see if it already
+                // has an entry for this service?
+                found = localCatalog.getById( IService.class,service.getID(), null );
+                if( found == null && service.getID().equals(targetID)){
+                    localCatalog.add(service);
+                    try {
+                        // restore persisted properties                    
+                        service.getPersistentProperties().putAll( properties );
+                    } catch (Exception e) {
+                        // could not restore propreties
+                    }
+                }
+                else {
+                    // Service was already available
+                }
+            }
+        } else {
+            CatalogPlugin.log("Nothing was able to be loaded from saved preferences: "+connectionParameters, null); //$NON-NLS-1$
+        }
+    }
+    /**
+     * Performs some post processing on the connection parameters to ensure
+     * they are prompted from Strings to Objects (if possible).
+     * 
+     * @param servicePreferenceNode
+     * @param connectionParams
+     * @param currentKey
+     * @throws MalformedURLException
+     */
     private void mapAsObject(Preferences servicePreferenceNode, Map<String, Serializable> connectionParams, String currentKey) {
-		Preferences paramNode = servicePreferenceNode.node(currentKey);
-		String value=paramNode.get(VALUE_ID, null);
-		try {
-			value = URLDecoder.decode(value, ENCODING);
-		} catch (UnsupportedEncodingException e) {
-			CatalogPlugin.log("error decoding value, using undecoded value", e); //$NON-NLS-1$
-		}
-		String type=paramNode.get(TYPE_ID, null);		
-		Serializable obj = toObject( value, type );
-		connectionParams.put(currentKey, obj);
-	}
-	
-	private Serializable toObject( String txt, String type ){
-		try{
-			Class<?> clazz=Class.forName(type);
-			
-			// reference can be null so only decode relative path if reference is not null.
-			// ie assume the URL/File is absolute if reference is null
-			if( reference !=null && (URL.class.isAssignableFrom(clazz) 
-					|| File.class.isAssignableFrom(clazz) )){
-				URL result;
+        Preferences paramNode = servicePreferenceNode.node(currentKey);
+        String value=paramNode.get(VALUE_ID, null);
+        try {
+            value = URLDecoder.decode(value, ENCODING);
+        } catch (UnsupportedEncodingException e) {
+            CatalogPlugin.log("error decoding value, using undecoded value", e); //$NON-NLS-1$
+        }
+        String type=paramNode.get(TYPE_ID, null);        
+        Serializable obj = toObject( value, type );
+        connectionParams.put(currentKey, obj);
+    }
+    
+    private Serializable toObject( String txt, String type ){
+        try{
+            Class<?> clazz=Class.forName(type);
+            
+            // reference can be null so only decode relative path if reference is not null.
+            // ie assume the URL/File is absolute if reference is null
+            if( reference !=null && (URL.class.isAssignableFrom(clazz) 
+                    || File.class.isAssignableFrom(clazz) )){
+                URL result;
                 try {
                     result = URLUtils.constructURL(this.reference, txt);
                     if( URL.class.isAssignableFrom(clazz) )
@@ -222,79 +291,79 @@ public class ServiceParameterPersister {
                 } catch (MalformedURLException e) {
                     CatalogPlugin.log(type+" was not able to use as a URL so we're putting it in to the parameters as a String", null); //$NON-NLS-1$                    
                     return txt;
-                }							
-			}
-			
-			try{
-				// try finding the constructor that takes a string
-				Constructor<?> constructor = clazz.getConstructor(new Class[]{String.class});
-				Object object = constructor.newInstance(new Object[]{txt});
-				return (Serializable) object;
-			}catch(Throwable t){
-				//failed lets try a setter
-				try{
-					Method[] methods = clazz.getMethods();
-					Method bestMatch = findBestMatch(methods);
-					
-					if( bestMatch!=null ){
-						Object obj = clazz.newInstance();
-						bestMatch.invoke(obj, new Object[]{txt});
-						return (Serializable) obj;
-					}
-				}catch (Throwable t2) {
-					CatalogPlugin.log("error that occurred when trying use construction with string: "+type+" value= "+txt, t ); //$NON-NLS-1$ //$NON-NLS-2$
-					CatalogPlugin.log("error that occurred when use a setter: "+type+" value= "+txt, t2 );  //$NON-NLS-1$//$NON-NLS-2$
-				}
-			}
-			
-		} catch(ClassNotFoundException cnfe){
-			CatalogPlugin.log(type+" was not able find declared type so we're putting it in to the parameters as a String", null); //$NON-NLS-1$			
-		}
-		return txt;
-	}
+                }                            
+            }
+            
+            try{
+                // try finding the constructor that takes a string
+                Constructor<?> constructor = clazz.getConstructor(new Class[]{String.class});
+                Object object = constructor.newInstance(new Object[]{txt});
+                return (Serializable) object;
+            }catch(Throwable t){
+                //failed lets try a setter
+                try{
+                    Method[] methods = clazz.getMethods();
+                    Method bestMatch = findBestMatch(methods);
+                    
+                    if( bestMatch!=null ){
+                        Object obj = clazz.newInstance();
+                        bestMatch.invoke(obj, new Object[]{txt});
+                        return (Serializable) obj;
+                    }
+                }catch (Throwable t2) {
+                    CatalogPlugin.log("error that occurred when trying use construction with string: "+type+" value= "+txt, t ); //$NON-NLS-1$ //$NON-NLS-2$
+                    CatalogPlugin.log("error that occurred when use a setter: "+type+" value= "+txt, t2 );  //$NON-NLS-1$//$NON-NLS-2$
+                }
+            }
+            
+        } catch(ClassNotFoundException cnfe){
+            CatalogPlugin.log(type+" was not able find declared type so we're putting it in to the parameters as a String", null); //$NON-NLS-1$            
+        }
+        return txt;
+    }
 
-	private Method findBestMatch(Method[] methods) {
-		Method bestMatch=null;
-		for (Method method : methods) {
-			Class<?>[] methodParams = method.getParameterTypes();
-			if( methodParams.length==1 && methodParams[0].isAssignableFrom(String.class) ){
-				// is this a setter or a parse?
-				if( method.getName().startsWith("parse") ){ //$NON-NLS-1$
-					if( bestMatch==null ){
-						bestMatch=method;
-						continue;
-					}else{
-						if( bestMatch.getName().startsWith("set") ){ //$NON-NLS-1$
-							bestMatch=method;
-							continue;
-						}
-					}
-				}
-				
-				if( method.getName().startsWith("set") ){ //$NON-NLS-1$
-					if( bestMatch==null ){
-						bestMatch=method;
-						continue;
-					}
-				}
-			}
-		}
-		return bestMatch;
-	}
-	
+    private Method findBestMatch(Method[] methods) {
+        Method bestMatch=null;
+        for (Method method : methods) {
+            Class<?>[] methodParams = method.getParameterTypes();
+            if( methodParams.length==1 && methodParams[0].isAssignableFrom(String.class) ){
+                // is this a setter or a parse?
+                if( method.getName().startsWith("parse") ){ //$NON-NLS-1$
+                    if( bestMatch==null ){
+                        bestMatch=method;
+                        continue;
+                    }else{
+                        if( bestMatch.getName().startsWith("set") ){ //$NON-NLS-1$
+                            bestMatch=method;
+                            continue;
+                        }
+                    }
+                }
+                
+                if( method.getName().startsWith("set") ){ //$NON-NLS-1$
+                    if( bestMatch==null ){
+                        bestMatch=method;
+                        continue;
+                    }
+                }
+            }
+        }
+        return bestMatch;
+    }
+    
 
-	/**
-	 * Stores the files into the preferences node.
-	 * 
-	 * @param monitor Progress monitor 
-	 * @param node the preferences to write to
-	 * @param resolves the resolves to commit
-	 * @throws BackingStoreException
-	 * @throws IOException
-	 */
-	public void store(IProgressMonitor monitor, Preferences node,
-			Collection<? extends IResolve> resolves ) throws BackingStoreException, IOException {
-		clearPreferences(node);
+    /**
+     * Stores the files into the preferences node.
+     * 
+     * @param monitor Progress monitor 
+     * @param node the preferences to write to
+     * @param resolves the resolves to commit
+     * @throws BackingStoreException
+     * @throws IOException
+     */
+    public void store(IProgressMonitor monitor, Preferences node,
+            Collection<? extends IResolve> resolves ) throws BackingStoreException, IOException {
+        clearPreferences(node);
         for( IResolve member : resolves ) {
             try {
                 if( !CatalogPlugin.getDefault().getPreferenceStore().getBoolean("SaveTemporaryDataTypes")  //$NON-NLS-1$
@@ -302,36 +371,18 @@ public class ServiceParameterPersister {
                     continue;
                 IService service=null ;
                 if( member instanceof IGeoResource ){
-                	service=((IGeoResource)member).service(monitor);
+                    service=((IGeoResource)member).service(monitor);
                 }else if( member instanceof IService ){
-                	service=(IService)member;
+                    service=(IService)member;
                 }
                 // its not a type that we know how to get the parameters from
                 if( service==null )
-                	continue;
+                    continue;
                 
-                String id;
-				ID iD = service.getID();
-                try {
-				    if( iD.isFile() ){
-				    	
-				        String path = iD.toFile().getAbsolutePath();
-				        path = path.replace(":", COLON_ENCODING);
-						id = URLEncoder.encode(path, ENCODING);
-				    }
-				    else {
-				        id = URLEncoder.encode( iD.toString(), ENCODING);
-				    }
-				    if(iD.getTypeQualifier()!=null){
-				        id = id+TYPE_QUALIFIER+URLEncoder.encode( iD.getTypeQualifier(), ENCODING);
-				    }
-                } catch (UnsupportedEncodingException e1) {
-                    // should never happen
-                    CatalogPlugin.log(null, e1);
-                    throw new BackingStoreException(e1.toString());
-                }
+                ID serviceID = service.getID();
+                String id = encodeID( serviceID );
 
-                    Preferences serviceNode = node.node(id);
+                Preferences serviceNode = node.node(id);
 
                 for ( Map.Entry<String, Serializable> entry : service.getConnectionParams().entrySet()) {
                     String key = entry.getKey().toString();
@@ -339,28 +390,28 @@ public class ServiceParameterPersister {
                     Serializable object = entry.getValue();
                     URL url=null;
                     if( object instanceof URL){
-                    	url = (URL) object;
+                        url = (URL) object;
                     }else if( object instanceof File ){
                         File file = (File) object;
                         URL old=file.toURI().toURL();
-                    	url=file.toURI().toURL();
-                    	if( !old.equals(url)){
-                    	    CatalogPlugin.trace("old url:"+old,null); //$NON-NLS-1$
-                    	    CatalogPlugin.trace("new url:"+url,null); //$NON-NLS-1$
-                    	}
+                        url=file.toURI().toURL();
+                        if( !old.equals(url)){
+                            CatalogPlugin.trace("old url:"+old,null); //$NON-NLS-1$
+                            CatalogPlugin.trace("new url:"+url,null); //$NON-NLS-1$
+                        }
                     }
                     
                     String value;
                     // if reference is null then we can only encode the absolute path
                     if( reference!=null && url !=null ){
-                    	URL relativeURL = URLUtils.toRelativePath(this.reference, url);
-                    	value = URLUtils.urlToString(relativeURL, true);
+                        URL relativeURL = URLUtils.toRelativePath(this.reference, url);
+                        value = URLUtils.urlToString(relativeURL, true);
                     }else{
-                    	value = object == null ? null : object.toString();
+                        value = object == null ? null : object.toString();
                     }
 
                     if (value != null){
-                    	value= URLEncoder.encode( value, ENCODING );
+                        value= URLEncoder.encode( value, ENCODING );
                         Preferences paramNode = serviceNode.node(key);
                         paramNode.put(VALUE_ID, value);
                         paramNode.put(TYPE_ID, object.getClass().getName());
@@ -372,29 +423,51 @@ public class ServiceParameterPersister {
                     Preferences propertiesNode = serviceNode.node(PROPERTIES_KEY);                    
                     storeProperties( propertiesNode, persistentProperties );
                     propertiesNode.flush();
-                    
+                } catch (Exception e) {
+                    throw (RuntimeException) new RuntimeException( ).initCause( e );
+                }
+                try {
                     for( IGeoResource child : service.resources(null)){
-                    	ID childID = child.getID();
-                    	Map<String, Serializable> childProperties = service.getPersistentProperties(childID);
-                    	
-                    	Preferences childNode = serviceNode.node(CHILD_PREFIX+childID.toString());
-                    	storeProperties( childNode, childProperties );
-                    	childNode.flush();
+                        ID childID = child.getID();
+                        
+                        
+                        Map<String, Serializable> childProperties = service.getPersistentProperties(childID);
+                        
+                        String childKey = CHILD_PREFIX+encodeID(childID);
+                        
+                        Preferences childNode = serviceNode.node(childKey);
+                        storeProperties( childNode, childProperties );
+                        childNode.flush();
                     }
                 } catch (Exception e) {
                     throw (RuntimeException) new RuntimeException( ).initCause( e );
                 }
                 
-                if (serviceNode.keys().length > 0)
+                if (serviceNode.keys().length > 0){
                     serviceNode.flush();
+                }
                 monitor.worked(1);
             } catch (RuntimeException e) {
                 CatalogPlugin.log("Error storing: "+member.getIdentifier(), e); //$NON-NLS-1$
             }
         }
         node.flush();
-	}
-
+    }
+    /**
+     * Store a map of properties into the provided preferences.
+     * <p>
+     * Each key is represented as a preference node; with:
+     * <ul>
+     * <li>{@link VALUE_ID}: used to store the encoded text representation of the value</li>
+     * <li>{@link TYPE_ID}: used to store the class name
+     * </ul>
+     * As an example:<pre>
+     * value:1
+     * type:java.lang.Integer
+     * </pre>
+     * @param prefs
+     * @param properties
+     */
     private void storeProperties( Preferences prefs,
             Map<String, Serializable> properties ) {
         
@@ -443,10 +516,10 @@ public class ServiceParameterPersister {
                 String txt = paramNode.get(VALUE_ID,null);
                 if( txt == null ) continue;
                 try {
-					txt= URLDecoder.decode( txt, ENCODING );
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
+                    txt= URLDecoder.decode( txt, ENCODING );
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 String type = paramNode.get(TYPE_ID,null);
                 
                 Serializable value = toObject( txt, type );
@@ -457,7 +530,12 @@ public class ServiceParameterPersister {
         }               
         return map;
     }
-    
+    /**
+     * Used to clear a preference node of all children.
+     * 
+     * @param node
+     * @throws BackingStoreException
+     */
     private void clearPreferences( Preferences node ) throws BackingStoreException {
         for( String name : node.childrenNames() ) {
             Preferences child = node.node(name);
