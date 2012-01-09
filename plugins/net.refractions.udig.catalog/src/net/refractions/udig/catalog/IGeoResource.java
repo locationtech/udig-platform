@@ -248,7 +248,8 @@ public abstract class IGeoResource implements IResolve {
      *         the property.
      */
     public Map<String, Serializable> getPersistentProperties() {
-    	Map<String, Serializable> properties = service.getPersistentProperties( this.getID() );
+    	ID id = this.getID();
+        Map<String, Serializable> properties = service.getPersistentProperties( id );
         return properties;
     }
 
@@ -389,12 +390,14 @@ public abstract class IGeoResource implements IResolve {
             title = info.getTitle();
             if (title != null && service != null) {
                 // cache the title for when we are not connected
-                getPersistentProperties().put("title", title); //$NON-NLS-1$
+                Map<String, Serializable> persistentProperties = getPersistentProperties();
+                persistentProperties.put("title", title); //$NON-NLS-1$
             }
         }
         if (title == null && service != null) {
             // let us grab the title from the cache
-            Serializable s = getPersistentProperties().get("title"); //$NON-NLS-1$
+            Map<String, Serializable> persistentProperties = getPersistentProperties();
+            Serializable s = persistentProperties.get("title"); //$NON-NLS-1$
             title = (s != null ? s.toString() : null);
         }
         return title;

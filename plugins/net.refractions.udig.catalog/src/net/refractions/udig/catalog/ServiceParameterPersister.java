@@ -15,8 +15,10 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.refractions.udig.core.internal.CorePlugin;
 
@@ -146,7 +148,7 @@ public class ServiceParameterPersister {
                             mapAsObject(servicePref, connectionParams, childName);
                         }
                     }
-                    locateService(url, connectionParams, properties);
+                    locateService(url, connectionParams, properties, resourcePropertyMap);
                 } catch (Throwable t) {
                     CatalogPlugin.log(null, new Exception(t));
                 }
@@ -161,10 +163,13 @@ public class ServiceParameterPersister {
         String str;
         
         try {
+            if( id.isChild()){
+                return URLEncoder.encode(id.toString(), ENCODING);
+            }
             if( id.isFile() ){
                 String path = id.toFile().getAbsolutePath();
                 path = path.replace(":", COLON_ENCODING);
-                    str = URLEncoder.encode(path, ENCODING);
+                str = URLEncoder.encode(path, ENCODING);
             }
             else {
                 str = URLEncoder.encode( id.toString(), ENCODING);
@@ -220,33 +225,55 @@ public class ServiceParameterPersister {
      * 
      * @Param targetID In the event of a tie favour the provided targetID
      * @param connectionParameters Used to to ask the ServiceFactory for list of candidates 
+     * @param resourcePropertyMap 
      */
-    protected void locateService(ID targetID, Map<String, Serializable> connectionParameters,  Map<String,Serializable> properties) {
+    protected void locateService(ID targetID, Map<String, Serializable> connectionParameters,  Map<String,Serializable> properties, Map<ID, Map<String, Serializable>> resourcePropertyMap) {
         IService found = localCatalog.getById( IService.class,targetID, null );
-        
-        if( found!=null ){
-            return;
-        }
+//        if( found != null ){
+//            // already exists!
+//            return;
+//        }
         
         List<IService> newServices = serviceFactory.createService(connectionParameters);
         if( !newServices.isEmpty() ){
-            for( IService service : newServices ) {
+            for( Iterator<IService> iter = newServices.iterator(); iter.hasNext(); ){
+                IService service = iter.next();
                 // should we check the local catalog to see if it already
                 // has an entry for this service?
                 found = localCatalog.getById( IService.class,service.getID(), null );
-                if( found == null && service.getID().equals(targetID)){
+                if( found != null && found.getID().equals( targetID)){
+                    service = found; // service already available
+                }
+                else if( service.getID().equals(targetID) ){
+                    // we have  match!
                     localCatalog.add(service);
+                    iter.remove(); // don't dispose this service as we are using it
+                }
+                // restore persisted properties 
+                if( properties != null && !properties.isEmpty()){
                     try {
-                        // restore persisted properties                    
                         service.getPersistentProperties().putAll( properties );
                     } catch (Exception e) {
                         // could not restore propreties
                     }
                 }
-                else {
-                    // Service was already available
+                if( resourcePropertyMap != null && !resourcePropertyMap.isEmpty()){
+                    // restore resource properites
+                    for( Entry<ID, Map<String, Serializable>> entry : resourcePropertyMap.entrySet() ){
+                        try {
+                            ID childID = entry.getKey();
+                            Map<String, Serializable> entryProperties = entry.getValue();
+                            if( entryProperties != null && !entryProperties.isEmpty()){
+                                Map<String, Serializable> resourceProperties = service.getPersistentProperties( childID );
+                                resourceProperties.putAll( entryProperties );
+                            }
+                        } catch (Exception e) {
+                            // could not restore propreties
+                        }
+                    }
                 }
             }
+            serviceFactory.dispose(newServices, null);
         } else {
             CatalogPlugin.log("Nothing was able to be loaded from saved preferences: "+connectionParameters, null); //$NON-NLS-1$
         }
@@ -433,7 +460,8 @@ public class ServiceParameterPersister {
                         
                         Map<String, Serializable> childProperties = service.getPersistentProperties(childID);
                         
-                        String childKey = CHILD_PREFIX+encodeID(childID);
+                        String encodeID = encodeID(childID);
+                        String childKey = CHILD_PREFIX+encodeID;
                         
                         Preferences childNode = serviceNode.node(childKey);
                         storeProperties( childNode, childProperties );
