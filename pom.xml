@@ -34,7 +34,14 @@
         <tycho-provider>org.eclipse.tycho</tycho-provider>
     </properties>
     <!--
-To run a normal build on the command line:
+We need to ask you to download some libs prior to doing a full build:
+   cd plugins/net.refractions.udig.libs
+   mvn clean install -f pom-libs.xml
+   cd ../eu.udig.libs.teradata
+   mvn clean install -f pom-libs.xml
+   cd ../..
+
+Once that is done you can a normal build on the command line:
    mvn install -Dall
 
 If you run into any problems (to list debug and stack trace)
