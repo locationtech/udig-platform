@@ -454,23 +454,25 @@ public class ServiceParameterPersister {
                     throw (RuntimeException) new RuntimeException( ).initCause( e );
                 }
                 try {
-                    for( IGeoResource child : service.resources(null)){
-                        ID childID = child.getID();
-                        
-                        
-                        Map<String, Serializable> childProperties = service.getPersistentProperties(childID);
-                        
-                        String encodeID = encodeID(childID);
-                        String childKey = CHILD_PREFIX+encodeID;
-                        
-                        Preferences childNode = serviceNode.node(childKey);
-                        storeProperties( childNode, childProperties );
-                        childNode.flush();
+                    List< ? extends IGeoResource> resources = service.resources(null);
+                    if( resources != null && !resources.isEmpty() ){
+                        for( IGeoResource child : resources){
+                            ID childID = child.getID();
+                            
+                            
+                            Map<String, Serializable> childProperties = service.getPersistentProperties(childID);
+                            
+                            String encodeID = encodeID(childID);
+                            String childKey = CHILD_PREFIX+encodeID;
+                            
+                            Preferences childNode = serviceNode.node(childKey);
+                            storeProperties( childNode, childProperties );
+                            childNode.flush();
+                        }
                     }
                 } catch (Exception e) {
                     throw (RuntimeException) new RuntimeException( ).initCause( e );
                 }
-                
                 if (serviceNode.keys().length > 0){
                     serviceNode.flush();
                 }
