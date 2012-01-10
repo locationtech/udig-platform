@@ -47,7 +47,7 @@ public class WMSTileSet implements TileSet {
     private int id;
     
     /** the AbstractOpenWebService **/
-    private AbstractOpenWebService server;
+    private AbstractOpenWebService<?,?> server;
 
 	/** Coordinate Reference System of the Tiles */
     private CoordinateReferenceSystem crs;
@@ -466,7 +466,6 @@ public class WMSTileSet implements TileSet {
         double[] d = new double[dresolutions.length];
         System.arraycopy(dresolutions, 0, d, 0, d.length);
         return d;
-//        return Arrays.copyOf(this.dresolutions, this.dresolutions.length);
     }
     
     /**
@@ -506,12 +505,11 @@ public class WMSTileSet implements TileSet {
         this.id = sb.toString().hashCode();
     }
     
-    public AbstractOpenWebService getServer() {
+    public AbstractOpenWebService<?,?> getServer() {
 		return server;
 	}
 
-	public void setServer(AbstractOpenWebService server) {
+	public void setServer(AbstractOpenWebService<?,?> server) {
 		this.server = server;
-	}    
-
+	}
 }

@@ -20,7 +20,7 @@ public interface PreferenceConstants {
     /**
      * Preference to store the resolutions for this tileset
      */
-    public static final String P_TILESET_RESOLUTIONS = "tilesetResolutions"; //$NON-NLS-1$
+    public static final String P_TILESET_SCALES = "tilesetScales"; //$NON-NLS-1$
     
     /**
      * Preference to store the tile width
@@ -41,5 +41,15 @@ public interface PreferenceConstants {
      * Preference to store the tile height
      */
     public static final String P_TILESET_IMAGE_TYPE = "tilesetImageType"; //$NON-NLS-1$
+    
+    /**
+     * Default tileset size
+     */
+    public static final Integer DEFAULT_TILE_SIZE = 265;
+    
+    /**
+     * The default Tileset image type
+     */
+    public static final String DEFAULT_IMAGE_TYPE = "image/png"; //$NON-NLS-1$
     
 }
