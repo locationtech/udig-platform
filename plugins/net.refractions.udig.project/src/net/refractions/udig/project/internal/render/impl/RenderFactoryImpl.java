@@ -155,6 +155,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
             return createReferencedEnvelopeFromString(eDataType, initialValue);
         case RenderPackage.DATE_TIME:
             return createDateTimeFromString(eDataType, initialValue);
+        case RenderPackage.ILLEGAL_ARGUMENT_EXCEPTION:
+            return createIllegalArgumentExceptionFromString(eDataType, initialValue);
         default:
             throw new IllegalArgumentException(
                     "The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -202,6 +204,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
             return convertReferencedEnvelopeToString(eDataType, instanceValue);
         case RenderPackage.DATE_TIME:
             return convertDateTimeToString(eDataType, instanceValue);
+        case RenderPackage.ILLEGAL_ARGUMENT_EXCEPTION:
+            return convertIllegalArgumentExceptionToString(eDataType, instanceValue);
         default:
             throw new IllegalArgumentException(
                     "The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -617,6 +621,25 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * @generated
      */
     public String convertDateTimeToString( EDataType eDataType, Object instanceValue ) {
+        return super.convertToString(eDataType, instanceValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IllegalArgumentException createIllegalArgumentExceptionFromString( EDataType eDataType,
+            String initialValue ) {
+        return (IllegalArgumentException) super.createFromString(eDataType, initialValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertIllegalArgumentExceptionToString( EDataType eDataType, Object instanceValue ) {
         return super.convertToString(eDataType, instanceValue);
     }
 

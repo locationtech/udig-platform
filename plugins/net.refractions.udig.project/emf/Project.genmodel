@@ -7,11 +7,9 @@
     templateDirectory="" runtimeJar="true" modelName="Project" modelPluginClass="net.refractions.udig.project.internal.ProjectPlugin"
     editPluginClass="net.refractions.udig.project.internal.provider.ProjectEditPlugin"
     editorPluginClass="" nonNLSMarkers="true" suppressEMFTypes="true" codeFormatting="true"
-    testsDirectory="" testSuiteClass="" importerID="org.eclipse.emf.importer.ecore"
+    testsDirectory="" testSuiteClass="" importerID="org.eclipse.emf.importer.java"
     complianceLevel="5.0" copyrightFields="false">
-  <foreignModel>element.ecore</foreignModel>
-  <foreignModel>internal.ecore</foreignModel>
-  <foreignModel>render.ecore</foreignModel>
+  <foreignModel>@model</foreignModel>
   <genPackages prefix="Element" basePackage="net.refractions.udig.project" disposableProviderFactory="true"
       ecorePackage="element.ecore#/">
     <genDataTypes ecoreDataType="element.ecore#//IGenericProjectElement"/>
@@ -219,6 +217,7 @@
     </genDataTypes>
     <genDataTypes ecoreDataType="render.ecore#//ReferencedEnvelope"/>
     <genDataTypes ecoreDataType="render.ecore#//DateTime"/>
+    <genDataTypes ecoreDataType="render.ecore#//IllegalArgumentException"/>
     <genClasses ecoreClass="render.ecore#//IRenderManager"/>
     <genClasses ecoreClass="render.ecore#//IViewportModel"/>
     <genClasses ecoreClass="render.ecore#//IMultiLayerRenderer"/>

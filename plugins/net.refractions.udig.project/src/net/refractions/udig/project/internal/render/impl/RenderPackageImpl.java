@@ -242,6 +242,13 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
     private EDataType dateTimeEDataType = null;
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EDataType illegalArgumentExceptionEDataType = null;
+
+    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -742,6 +749,15 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EDataType getIllegalArgumentException() {
+        return illegalArgumentExceptionEDataType;
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated public EDataType getInfoList() { return infoListEDataType; }
@@ -838,6 +854,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
         sortedSetEDataType = createEDataType(SORTED_SET);
         referencedEnvelopeEDataType = createEDataType(REFERENCED_ENVELOPE);
         dateTimeEDataType = createEDataType(DATE_TIME);
+        illegalArgumentExceptionEDataType = createEDataType(ILLEGAL_ARGUMENT_EXCEPTION);
     }
 
     /**
@@ -1007,7 +1024,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
         addEParameter(op, ecorePackage.getEDouble(), "maxx", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEDouble(), "miny", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEDouble(), "maxy", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-        addEException(op, theProjectPackage.getIllegalArgumentException());
+        addEException(op, this.getIllegalArgumentException());
 
         addEOperation(viewportModelEClass, this.getAffineTransform(),
                 "worldToScreenTransform", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -1107,6 +1124,8 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
                 "ReferencedEnvelope", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(dateTimeEDataType, DateTime.class,
                 "DateTime", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEDataType(illegalArgumentExceptionEDataType, IllegalArgumentException.class,
+                "IllegalArgumentException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
         // Create resource
         createResource(eNS_URI);
