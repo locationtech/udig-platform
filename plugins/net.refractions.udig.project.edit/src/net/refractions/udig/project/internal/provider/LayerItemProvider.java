@@ -94,7 +94,6 @@ public class LayerItemProvider extends ItemProviderAdapter
             addNamePropertyDescriptor(object);
             addVisiblePropertyDescriptor(object);
             addGlyphPropertyDescriptor(object);
-            addSelectablePropertyDescriptor(object);
             addFilterPropertyDescriptor(object);
             addStatusPropertyDescriptor(object);
             addCRSPropertyDescriptor(object);
@@ -209,24 +208,6 @@ public class LayerItemProvider extends ItemProviderAdapter
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_glyph_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         ProjectPackage.Literals.LAYER__GLYPH, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-    }
-
-    /**
-     * This adds a property descriptor for the Selectable feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * 
-     * @generated NOT
-     */
-    protected void addSelectablePropertyDescriptor( Object object ) {
-        itemPropertyDescriptors
-                .add(new ItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_selectable_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_selectable_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_Selectable(), false,
-                        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE));
     }
 
     /**
