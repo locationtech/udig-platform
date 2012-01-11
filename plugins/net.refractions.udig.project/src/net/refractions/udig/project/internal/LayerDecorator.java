@@ -22,6 +22,7 @@ import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.ui.palette.ColourScheme;
 

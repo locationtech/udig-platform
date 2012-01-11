@@ -19,7 +19,7 @@ package net.refractions.udig.project.ui.internal;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer.Interaction;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.tool.display.ModalToolCategory;

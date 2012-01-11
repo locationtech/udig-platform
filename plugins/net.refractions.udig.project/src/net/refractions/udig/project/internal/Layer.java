@@ -18,6 +18,7 @@ import net.refractions.udig.catalog.IResolveChangeListener;
 import net.refractions.udig.core.IBlockingAdaptable;
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.IAdaptable;

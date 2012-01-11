@@ -1,7 +1,7 @@
 package net.refractions.udig.project.internal.property;
 
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayer.Interaction;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.ui.operations.AbstractPropertyValue;
 import net.refractions.udig.ui.operations.PropertyValue;
 
@@ -9,7 +9,7 @@ import net.refractions.udig.ui.operations.PropertyValue;
  * Allows tools or operations to check what kind of interactions a layer
  * supports.
  * <p>
- * The following values are defined by {@link ILayer.Interaction}:
+ * The following values are defined by {@link Interaction}:
  * <ul>
  * <li>VISIBLE: interaction_visible</li>
  * <li>BACKGROUND: interaction_background</li>
@@ -25,7 +25,7 @@ public class LayerInteractionProperty extends AbstractPropertyValue<ILayer> {
 
     @Override
     public boolean isTrue( ILayer layer, String text ) {
-        Interaction interaction = ILayer.Interaction.getInteraction(text);
+        Interaction interaction = Interaction.getInteraction(text);
         if( interaction == null ){
             return false; // unable to figure out Interaction to test
         }        

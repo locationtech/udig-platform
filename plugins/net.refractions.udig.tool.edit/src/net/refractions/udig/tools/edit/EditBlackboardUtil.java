@@ -31,9 +31,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayer.Interaction;
 import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.command.UndoableComposite;
 import net.refractions.udig.project.command.UndoableMapCommand;

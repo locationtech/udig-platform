@@ -15,7 +15,7 @@
 package net.refractions.udig.project.internal.commands;
 
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayer.Interaction;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.internal.Layer;

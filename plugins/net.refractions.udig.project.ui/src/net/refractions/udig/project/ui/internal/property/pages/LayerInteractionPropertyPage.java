@@ -14,7 +14,7 @@
  */
 package net.refractions.udig.project.ui.internal.property.pages;
 
-import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.ui.internal.Messages;
 
@@ -193,11 +193,11 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
     protected void setApplyButton(){
         boolean changed = (
                 visibleButton.getSelection() != layer.isVisible()
-                || backgroundButton.getSelection() != layer.getInteraction( ILayer.Interaction.BACKGROUND )
-                || informationButton.getSelection() != layer.getInteraction( ILayer.Interaction.INFO )
+                || backgroundButton.getSelection() != layer.getInteraction( Interaction.BACKGROUND )
+                || informationButton.getSelection() != layer.getInteraction( Interaction.INFO )
                 || selectButton.getSelection() != layer.isSelectable()
-                || editButton.getSelection() != layer.getInteraction( ILayer.Interaction.EDIT )
-                || aoiButton.getSelection() != layer.getInteraction( ILayer.Interaction.AOI ) 
+                || editButton.getSelection() != layer.getInteraction( Interaction.EDIT )
+                || aoiButton.getSelection() != layer.getInteraction( Interaction.AOI ) 
         );
         
         this.getApplyButton().setEnabled(changed);
@@ -211,20 +211,20 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         if( visibleButton.getSelection() != layer.isVisible() ){
             layer.setVisible(visibleButton.getSelection());
         }
-        if( backgroundButton.getSelection() != layer.getInteraction( ILayer.Interaction.BACKGROUND )){
-            layer.setInteraction(ILayer.Interaction.BACKGROUND, backgroundButton.getSelection());
+        if( backgroundButton.getSelection() != layer.getInteraction( Interaction.BACKGROUND )){
+            layer.setInteraction(Interaction.BACKGROUND, backgroundButton.getSelection());
         }
-        if( informationButton.getSelection() != layer.getInteraction( ILayer.Interaction.INFO )){
-            layer.setInteraction(ILayer.Interaction.INFO, informationButton.getSelection());
+        if( informationButton.getSelection() != layer.getInteraction( Interaction.INFO )){
+            layer.setInteraction(Interaction.INFO, informationButton.getSelection());
         }
         if( selectButton.getSelection() != layer.isSelectable() ){
             layer.setSelectable(selectButton.getSelection());
         }
-        if( editButton.getSelection() != layer.getInteraction( ILayer.Interaction.EDIT )){
-            layer.setInteraction(ILayer.Interaction.EDIT, editButton.getSelection());
+        if( editButton.getSelection() != layer.getInteraction( Interaction.EDIT )){
+            layer.setInteraction(Interaction.EDIT, editButton.getSelection());
         }
-        if( aoiButton.getSelection() != layer.getInteraction( ILayer.Interaction.AOI )){
-            layer.setInteraction(ILayer.Interaction.AOI, aoiButton.getSelection());
+        if( aoiButton.getSelection() != layer.getInteraction( Interaction.AOI )){
+            layer.setInteraction(Interaction.AOI, aoiButton.getSelection());
         }
     }
     
@@ -235,7 +235,7 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         visibleButton.setSelection(layer.isVisible());
         
         // set background layer
-        boolean isBackgroundLayer = layer.getInteraction(ILayer.Interaction.BACKGROUND);
+        boolean isBackgroundLayer = layer.getInteraction(Interaction.BACKGROUND);
 		backgroundButton.setSelection(isBackgroundLayer);
         layerButton.setSelection(!isBackgroundLayer);
         setBackgroundLayer(isBackgroundLayer);
@@ -285,7 +285,7 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
     private void setPolygonLayer() {
         aoiButton.setEnabled(isPolygon);
         if (isPolygon) {
-            aoiButton.setSelection(layer.getInteraction(ILayer.Interaction.AOI));
+            aoiButton.setSelection(layer.getInteraction(Interaction.AOI));
         }
         else {
             aoiButton.setSelection(false);
@@ -298,15 +298,15 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
     private void setRasterLayer() {
         if (isRaster) {
             // enable raster options
-            enableButton(informationButton, layer.getInteraction(ILayer.Interaction.INFO));
+            enableButton(informationButton, layer.getInteraction(Interaction.INFO));
             // disable non raster options
             disableButton(selectButton);
             disableButton(editButton);
         }
         else {
-            enableButton(informationButton, layer.getInteraction(ILayer.Interaction.INFO));
+            enableButton(informationButton, layer.getInteraction(Interaction.INFO));
             enableButton(selectButton, layer.isSelectable());
-            enableButton(editButton, layer.getInteraction(ILayer.Interaction.EDIT));
+            enableButton(editButton, layer.getInteraction(Interaction.EDIT));
         }
         
     }
