@@ -10,6 +10,7 @@ import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.IProjectElement;
 import net.refractions.udig.project.IStyleBlackboard;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.internal.AbstractContext;
 import net.refractions.udig.project.internal.Blackboard;
 import net.refractions.udig.project.internal.BlackboardEntry;
@@ -194,6 +195,11 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
         @Override
         public Adapter caseIStyleBlackboard( IStyleBlackboard object ) {
             return createIStyleBlackboardAdapter();
+        }
+        @Override
+        public Adapter caseInteractionToEBooleanObjectMapEntry(
+                java.util.Map.Entry<Interaction, Boolean> object ) {
+            return createInteractionToEBooleanObjectMapEntryAdapter();
         }
         @Override
         public Adapter defaultCase( EObject object ) {
@@ -397,6 +403,20 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createIStyleBlackboardAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Interaction To EBoolean Object Map Entry</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see java.util.Map.Entry
+     * @generated
+     */
+    public Adapter createInteractionToEBooleanObjectMapEntryAdapter() {
         return null;
     }
 

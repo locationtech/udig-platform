@@ -14,6 +14,7 @@ Require-Bundle: net.refractions.udig.project;visibility:=reexport,
  net.refractions.udig.ui,
  org.eclipse.emf.edit.ui;visibility:=reexport,
  org.eclipse.core.runtime,
- net.refractions.udig.catalog.ui
+ net.refractions.udig.catalog.ui,
+ org.eclipse.emf.ecore.edit
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

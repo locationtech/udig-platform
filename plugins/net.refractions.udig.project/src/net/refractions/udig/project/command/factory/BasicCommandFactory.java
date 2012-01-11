@@ -13,8 +13,8 @@ import java.util.List;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayer.Interaction;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;

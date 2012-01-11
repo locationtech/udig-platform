@@ -266,6 +266,30 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link java.util.Map.Entry} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected InteractionToEBooleanObjectMapEntryItemProvider interactionToEBooleanObjectMapEntryItemProvider;
+
+    /**
+     * This creates an adapter for a {@link java.util.Map.Entry}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createInteractionToEBooleanObjectMapEntryAdapter() {
+        if (interactionToEBooleanObjectMapEntryItemProvider == null) {
+            interactionToEBooleanObjectMapEntryItemProvider = new InteractionToEBooleanObjectMapEntryItemProvider(
+                    this);
+        }
+
+        return interactionToEBooleanObjectMapEntryItemProvider;
+    }
+
+    /**
      * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.EditManager} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

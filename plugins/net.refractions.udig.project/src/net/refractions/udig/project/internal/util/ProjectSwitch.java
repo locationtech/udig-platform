@@ -15,6 +15,7 @@ import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.IProjectElement;
 import net.refractions.udig.project.IStyleBlackboard;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.internal.AbstractContext;
 import net.refractions.udig.project.internal.Blackboard;
 import net.refractions.udig.project.internal.BlackboardEntry;
@@ -173,6 +174,13 @@ public class ProjectSwitch<T> extends Switch<T> {
         case ProjectPackage.BLACKBOARD_ENTRY: {
             BlackboardEntry blackboardEntry = (BlackboardEntry) theEObject;
             T result = caseBlackboardEntry(blackboardEntry);
+            if (result == null) result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY: {
+            @SuppressWarnings("unchecked")
+            java.util.Map.Entry<Interaction, Boolean> interactionToEBooleanObjectMapEntry = (java.util.Map.Entry<Interaction, Boolean>) theEObject;
+            T result = caseInteractionToEBooleanObjectMapEntry(interactionToEBooleanObjectMapEntry);
             if (result == null) result = defaultCase(theEObject);
             return result;
         }
@@ -366,6 +374,22 @@ public class ProjectSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseIStyleBlackboard( IStyleBlackboard object ) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Interaction To EBoolean Object Map Entry</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Interaction To EBoolean Object Map Entry</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseInteractionToEBooleanObjectMapEntry(
+            java.util.Map.Entry<Interaction, Boolean> object ) {
         return null;
     }
 
